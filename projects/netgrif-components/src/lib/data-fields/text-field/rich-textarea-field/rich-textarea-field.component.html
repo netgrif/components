@@ -4,7 +4,7 @@
 
     <input type="hidden" [formControl]="formControlRef">
 
-    <div class="border" *ngIf="formControlRef.disabled">
+    <div [ngClass]="{'border': textAreaField.materialAppearance === 'outline'}" *ngIf="formControlRef.disabled">
         <td-markdown>{{textAreaField.value}}</td-markdown>
     </div>
 </div>

@@ -4,6 +4,7 @@ import {RoleAssignmentComponent} from './role-assignment/role-assignment.compone
 import {MaterialModule, TranslateLibModule} from '@netgrif/components-core';
 import {UserInviteComponent} from './user-invite/user-invite.component';
 import {LdapGroupRoleAssignmentComponent} from './ldap-group-role-assignment/ldap-group-role-assignment.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import {LdapGroupRoleAssignmentComponent} from './ldap-group-role-assignment/lda
     imports: [
         CommonModule,
         MaterialModule,
-        TranslateLibModule
+        TranslateLibModule,
+        MatFormFieldModule
     ]
 })
 export class AdminComponentModule {

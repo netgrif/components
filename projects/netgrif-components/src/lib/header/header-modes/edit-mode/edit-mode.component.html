@@ -1,6 +1,6 @@
-<div fxLayout="row" fxFlex="100" fxLayoutAlign="start center">
+<div fxLayout="row" fxFlex="100" fxLayoutAlign="start center" class="netgrif-input netgrif-input-fix netgrif-input-primary-fix">
     <mat-form-field *ngFor="let header of this.headerService.selectedHeaders$ | async; let i = index" fxLayout="row"
-                    fxLayoutAlign=" center" fxFlex [ngStyle]="{'min-width': getMinWidth()}"
+                    fxLayoutAlign=" center" fxFlex [ngStyle]="{'min-width': getMinWidth()}" appearance="outline"
                     [fxHide.lt-xl]="i >= 4 && this.headerService.responsiveHeaders"
                     [fxHide.lt-lg]="i >= 3 && this.headerService.responsiveHeaders"
                     [fxHide.lt-md]="i >= 2 && this.headerService.responsiveHeaders"
