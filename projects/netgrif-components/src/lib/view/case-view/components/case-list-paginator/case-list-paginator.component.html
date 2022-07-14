@@ -8,7 +8,7 @@
         </div>
 
         <mat-accordion multi="true" class="full-width" >
-
+            <div [ngStyle]="{'width': width ? width : '100%' }">
                 <nc-case-panel [responsiveBody]="responsiveBody"
                                [textEllipsis]="textEllipsis"
                                *ngFor="let case_ of cases | slice: (pageIndex) * pageSize : (pageIndex + 1) * pageSize;
@@ -24,7 +24,7 @@
                      class="margin-top-default">
                     <mat-spinner color="primary" diameter="50"></mat-spinner>
                 </div>
-
+            </div>
         </mat-accordion>
         <mat-paginator [length]="length" [pageSize]="pageSize" [pageIndex]="pageIndex" color="primary"
                        [pageSizeOptions]="pageSizeOptions" (page)="onPageChanged($event)" showFirstLastButtons>

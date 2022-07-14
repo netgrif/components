@@ -7,6 +7,16 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Full Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://github.com/netgrif/components/commits/v6.0.0)
 
+## [6.2.0](https://github.com/netgrif/components/releases/tag/v6.1.1) (2022-06-22)
+
+### Fixed
+
+- [NAE-1628] Reset radio buttons button visible on visible radio buttons
+
+### Changed
+
+- [NAE-1648] Redesign datafields
+
 ## [6.1.1](https://github.com/netgrif/components/releases/tag/v6.1.1) (2022-06-09)
 
 ### Fixed

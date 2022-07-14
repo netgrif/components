@@ -1,0 +1,70 @@
+<div class="logo" [ngClass]="{'logo-closed': !configMenu2.opened}" fxLayoutAlign="start center" fxHide.lt-md>
+    <button mat-icon-button (click)="toggleMenu2()" class="mat-button">
+        <mat-icon>menu</mat-icon>
+    </button>
+    <img *ngIf="configMenu2.opened && image !== undefined" #logo [alt]="imageAlt" [src]="image" class="logoimg"
+         [routerLink]="imageRouterLink !== undefined ? imageRouterLink : []">
+</div>
+<mat-toolbar fxHide.gt-sm class="toolbar">
+    <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between stretch">
+        <div fxFlex fxLayoutAlign="start center">
+            <button mat-icon-button (click)="toggleMenu()">
+                <mat-icon>menu</mat-icon>
+            </button>
+        </div>
+        <div class="logo-tool" fxLayoutAlign="center center" fxFlex >
+            <img #logo [alt]="imageAlt" [src]="image" class="logoimg-tool"
+                 [routerLink]="imageRouterLink !== undefined ? imageRouterLink : []">
+        </div>
+        <div fxFlex></div>
+    </mat-toolbar-row>
+</mat-toolbar>
+<mat-spinner *ngIf="!logo"></mat-spinner>
+<mat-sidenav-container class="rail-container" *ngIf="logo">
+    <mat-sidenav mode="side" [(opened)]="configMenu.opened" position="start" [disableClose]="configMenu.disableClose"
+                 class="rail-content">
+
+        <div fxLayout="column" class="rail-color" fxFlex>
+
+            <div *ngTemplateOutlet="portalLeftMenu"></div>
+
+            <div fxFlex></div>
+
+            <div fxLayout="row" class="icon-container" fxLayoutAlign="center center">
+                <nc-language-selector fxLayout="row" [language]="getLang()"></nc-language-selector>
+            </div>
+
+            <mat-menu #railMenu="matMenu">
+                <button mat-menu-item (click)="logout()" fxLayout="row" fxLayoutAlign="start center">
+                    <mat-icon>exit_to_app</mat-icon>
+                    <span>{{ 'toolbar.menu.logout' | translate }}</span>
+                </button>
+            </mat-menu>
+
+            <div fxLayout="row" class="margin-bottom-x2 icon-container" matTooltip="Otvoriť menu"
+                 fxLayoutAlign="center center">
+                <button mat-icon-button [matMenuTriggerFor]="railMenu">
+                    <mat-icon class="icon-large sidemenu-icon">more_vert</mat-icon>
+                </button>
+            </div>
+
+        </div>
+
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+        <mat-sidenav-container class="drawer-container">
+            <mat-sidenav [mode]="configMenu2.mode" [(opened)]="configMenu2.opened" position="start"
+                         [disableClose]="configMenu2.disableClose"
+                         class="drawer-content mat-elevation-z8">
+
+                <div *ngTemplateOutlet="portalRightMenu"></div>
+
+            </mat-sidenav>
+
+            <mat-sidenav-content>
+                <ng-content></ng-content>
+            </mat-sidenav-content>
+        </mat-sidenav-container>
+    </mat-sidenav-content>
+</mat-sidenav-container>
