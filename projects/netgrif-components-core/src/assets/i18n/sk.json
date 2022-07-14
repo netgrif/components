@@ -259,6 +259,9 @@
         },
         "enum": {
             "reset": "Resetovať"
+        },
+        "user": {
+            "selectUser": "Vyberte používateľa"
         }
     },
     "dialog": {
