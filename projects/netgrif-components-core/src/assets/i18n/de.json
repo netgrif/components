@@ -259,6 +259,9 @@
         },
         "enum": {
             "reset": "Rücksetzen"
+        },
+        "user": {
+            "selectUser": "Benutzer auswählen"
         }
     },
     "dialog": {
