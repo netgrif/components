@@ -10,4 +10,8 @@
         background: mat.get-color-from-palette($primary, 500);
         color: mat.get-contrast-color-from-palette($primary, 500);
     }
+
+    .header-color-font {
+        color: mat.get-contrast-color-from-palette($primary, 500);
+    }
 }
