@@ -1,23 +1,38 @@
 import {Component, Input, OnDestroy, OnInit, TemplateRef} from '@angular/core';
-import {Subscription} from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
+import {forkJoin, Observable, Subscription} from 'rxjs';
+import {Router} from '@angular/router';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {LanguageService} from '../../translate/language.service';
 import {UserService} from '../../user/services/user.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
-import { UriConstants, UriService } from '../service/uri.service';
-import { UriNodeResource } from '../model/uri-resource';
-import { Case } from '../../resources/interface/case';
+import {UriService} from '../service/uri.service';
+import {UriNodeResource} from '../model/uri-resource';
+import {Case} from '../../resources/interface/case';
 import {
     DynamicNavigationRouteProviderService
 } from '../../routing/dynamic-navigation-route-provider/dynamic-navigation-route-provider.service';
+import {LoadingEmitter} from "../../utility/loading-emitter";
+import {MatDrawerMode} from "@angular/material/sidenav";
+import {ResizeEvent} from "angular-resizable-element";
+import {User} from "../../user/models/user";
 
 export interface ConfigDoubleMenu {
-    mode: string;
+    mode: MatDrawerMode;
     opened: boolean;
     disableClose: boolean;
+    width: number;
 }
+
+export const FILTER_IDENTIFIERS = [
+    "preference_filter_item"
+];
+export const FILTER_VIEW_TASK_TRANSITION_ID = 'view';
+
+const LEFT_DRAWER_DEFAULT_WIDTH = 60;
+const RIGHT_DRAWER_DEFAULT_WIDTH = 240;
+const RIGHT_DRAWER_DEFAULT_MIN_WIDTH = 180;
+const RIGHT_DRAWER_MAX_WIDTH = 460;
 
 @Component({
     selector: 'ncc-abstract-navigation-double-drawer',
@@ -34,104 +49,153 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     /**
      * Array of folder nodes on left side
      * */
-    _leftNodes: Array<UriNodeResource>;
+    leftNodes: Array<UriNodeResource>;
 
     /**
      * Array of folder nodes on right side
      * */
-    _rightNodes: Array<UriNodeResource>;
+    rightNodes: Array<UriNodeResource>;
 
     /**
      * Processes that can be displayed under folders on right side menu
      * */
-    _filters: Array<Case>;
+    filters: Array<Case>;
 
     protected _leftNodesSubscription: Subscription;
     protected _rightNodesSubscription: Subscription;
     protected _filtersSubscription: Subscription;
-    protected _breakpointSubsc: Subscription;
+    protected _breakpointSubscription: Subscription;
+    protected _rootSubscription: Subscription;
+    protected _currentNodeSubscription: Subscription;
 
-    protected _configMenu: ConfigDoubleMenu = {
+    /**
+     * Currently display uri
+     * Siblings of the node are on the left, children are on the right
+     */
+    currentNode: UriNodeResource
+
+    /**
+     * Stack of parent nodes that will be loaded into leftNodes when backward navigation
+     * is triggered.
+     * On each right menu click the parent of left nodes will be saved to this, and
+     * on each backward navigation the last element will be popped out and used
+     * as parent ID for left side menu.
+     * */
+        // protected _backstack: Stack<UriNodeResource>;
+
+    leftLoading$: LoadingEmitter;
+    rightLoading$: LoadingEmitter;
+
+    protected _configLeftMenu: ConfigDoubleMenu = {
         mode: 'side',
         opened: true,
-        disableClose: true
+        disableClose: false,
+        width: LEFT_DRAWER_DEFAULT_WIDTH
     };
-    protected _configMenu2: ConfigDoubleMenu = {
+    protected _configRightMenu: ConfigDoubleMenu = {
         mode: 'side',
         opened: true,
-        disableClose: true
+        disableClose: false,
+        width: RIGHT_DRAWER_DEFAULT_WIDTH
     };
 
-    constructor(protected _router: Router,
-                protected _breakpoint: BreakpointObserver,
-                protected _languageService: LanguageService,
-                protected _userService: UserService,
-                protected _log: LoggerService,
-                protected _config: ConfigurationService,
-                protected _uriService: UriService,
-                protected _dynamicRoutingService: DynamicNavigationRouteProviderService) {
-        this._leftNodes = new Array<UriNodeResource>();
-        this._rightNodes = new Array<UriNodeResource>();
-        this._filters = new Array<Case>();
+    protected constructor(protected _router: Router,
+                          protected _breakpoint: BreakpointObserver,
+                          protected _languageService: LanguageService,
+                          protected _userService: UserService,
+                          protected _log: LoggerService,
+                          protected _config: ConfigurationService,
+                          protected _uriService: UriService,
+                          protected _dynamicRoutingService: DynamicNavigationRouteProviderService) {
+        // this._backstack = new Stack<UriNodeResource>();
+        this.leftNodes = new Array<UriNodeResource>();
+        this.rightNodes = new Array<UriNodeResource>();
+        this.filters = new Array<Case>();
+        this.leftLoading$ = new LoadingEmitter();
+        this.rightLoading$ = new LoadingEmitter();
     }
 
     ngOnInit(): void {
-        this._leftNodesSubscription = this._uriService.leftNodes.subscribe(nodes => {
-            this._leftNodes = nodes instanceof Array ? nodes : [];
-        });
-        this._rightNodesSubscription = this._uriService.rightNodes.subscribe(nodes => {
-            this._rightNodes = nodes instanceof Array ? nodes : [];
-        });
-        this._filtersSubscription = this._uriService.filters.subscribe(cases => {
-            this._filters = cases instanceof Array ? cases : [];
-        });
-        this._breakpointSubsc = this._breakpoint.observe([Breakpoints.HandsetLandscape]).subscribe(() => {
+        this._breakpointSubscription = this._breakpoint.observe([Breakpoints.HandsetLandscape]).subscribe(() => {
             if (this._breakpoint.isMatched('(max-width: 959.99px)')) {
                 this.resolveLayout(false);
             } else {
                 this.resolveLayout(true);
             }
         });
+        if (!this.currentNode) {
+            this.leftLoading$.on();
+            this.rightLoading$.on();
+        }
+        this._currentNodeSubscription = this._uriService.activeNode$.subscribe(node => {
+            this.currentNode = node;
+            if (!node) return;
+            if (this.leftLoading$.isActive || this.rightLoading$.isActive) {
+                this.leftLoading$.off();
+                this.rightLoading$.off();
+            }
+            if (this._uriService.isRoot(node)) {
+                this.leftNodes = [];
+                this.loadRightSide();
+                return;
+            }
+            if (!this.leftNodes.find(n => n.id === node.id)) {
+                this.loadLeftSide();
+            }
+            this.loadRightSide();
+        });
     }
 
     ngOnDestroy(): void {
-        this._breakpointSubsc.unsubscribe();
-        this._leftNodesSubscription.unsubscribe();
-        this._rightNodesSubscription.unsubscribe();
-        this._filtersSubscription.unsubscribe();
+        this._breakpointSubscription?.unsubscribe();
+        this._leftNodesSubscription?.unsubscribe();
+        this._rightNodesSubscription?.unsubscribe();
+        this._filtersSubscription?.unsubscribe();
+        this._rootSubscription?.unsubscribe();
+        this._currentNodeSubscription?.unsubscribe();
+        this.leftLoading$.complete();
+        this.rightLoading$.complete();
     }
 
-    get configMenu() {
-        return this._configMenu;
+    get configLeftMenu() {
+        return this._configLeftMenu;
     }
 
-    get configMenu2() {
-        return this._configMenu2;
+    get configRightMenu() {
+        return this._configRightMenu;
     }
 
     toggleMenu() {
-        this._configMenu.opened = !this._configMenu.opened;
+        this.toggleRightMenu();
+        this.toggleLeftMenu();
     }
 
-    toggleMenu2() {
-        this._configMenu2.opened = !this._configMenu2.opened;
+    toggleLeftMenu() {
+        this._configLeftMenu.opened = !this._configLeftMenu.opened;
+    }
+
+    toggleRightMenu() {
+        this._configRightMenu.opened = !this._configRightMenu.opened;
     }
 
     protected resolveLayout(bool: boolean): void {
-        this._configMenu = bool ? {
+        this._configLeftMenu = bool ? {
             mode: 'side',
             opened: true,
-            disableClose: true
+            disableClose: true,
+            width: this._configLeftMenu.width
         } : {
             mode: 'over',
             opened: false,
-            disableClose: false
+            disableClose: false,
+            width: this._configLeftMenu.width
         };
-        this._configMenu2 = bool ? {
+        this._configRightMenu = bool ? {
             mode: 'side',
             opened: true,
-            disableClose: true
-        } : this._configMenu;
+            disableClose: true,
+            width: this._configRightMenu.width
+        } : this._configLeftMenu;
     }
 
     getLang() {
@@ -149,12 +213,20 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         });
     }
 
+    get user(): User {
+        return this._userService.user;
+    }
+
+    get canGoBackLoading$(): Observable<boolean> {
+        return this._uriService.parentNodeLoading$;
+    }
+
     /**
      * On home click, the current level is set to 0, and current parent is
      * set to root node.
      * */
     onHomeClick(): void {
-        this._uriService.resetToRoot();
+        this._uriService.reset();
     }
 
     /**
@@ -164,32 +236,45 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
      * Current level is set to a lower number in order to set the left side menu.
      * */
     onBackClick(): void {
-        const leftParent = this._uriService.$backStack.pop();
-        this._uriService.decLevel();
-        this._uriService.$rightParent.next(this._uriService.$leftParent.value);
-        this._uriService.$leftParent.next(leftParent);
+        if (this._uriService.isRoot(this.currentNode)) return;
+        this._uriService.activeNode = this.currentNode.parent;
     }
 
-    /**
-     * The function calls the UriService.resolveRightNodes(parentID: string)
-     * function in order to load all nodes by parent ID.
-     * @param node the object of node that was clicked
-     * */
-    onLeftSideClick(node: UriNodeResource): void {
-        this._uriService.$rightParent.next(node.id);
+    onNodeClick(node: UriNodeResource): void {
+        this._uriService.activeNode = node;
     }
 
-    /**
-     * The function increases the level to load right side nodes into left side
-     * and calls the UriService.resolveRightNodes(parentID: string) function
-     * to load all nodes by parent ID.
-     * @param node the object of node that was clicked
-     * */
-    onRightSideClick(node: UriNodeResource): void {
-        this._uriService.$backStack.push(this._uriService.$leftParent.value);
-        this._uriService.incLevel();
-        this._uriService.$leftParent.next(node.parentId);
-        this._uriService.$rightParent.next(node.id);
+    protected loadLeftSide() {
+        if (this._uriService.isRoot(this.currentNode)) {
+            this.leftNodes = [];
+            return;
+        }
+        this.leftLoading$.on();
+        this._leftNodesSubscription = this._uriService.getSiblingsOfNode(this.currentNode).subscribe(nodes => {
+            this.leftNodes = nodes instanceof Array ? nodes : [];
+            this.leftLoading$.off();
+        }, error => {
+            this._log.error(error);
+            this.leftNodes = [];
+            this.leftLoading$.off();
+        });
+    }
+
+    protected loadRightSide() {
+        this.rightLoading$.on()
+        forkJoin({
+            folders: this._uriService.getChildNodes(this.currentNode),
+            filters: this._uriService.getCasesOfNode(this.currentNode, FILTER_IDENTIFIERS)
+        }).subscribe(result => {
+            this.rightNodes = result.folders instanceof Array ? result.folders : [];
+            this.filters = result.filters instanceof Array ? result.filters : [];
+            this.rightLoading$.off();
+        }, error => {
+            this._log.error(error);
+            this.rightNodes = [];
+            this.filters = [];
+            this.rightLoading$.off();
+        });
     }
 
     /**
@@ -197,33 +282,57 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
      * @returns boolean if the back button should be displayed
      * */
     isOnZeroLevel(): boolean {
-        return this._uriService.$currentLevel == 0;
+        return !!this.currentNode?.level ? this.currentNode.level == 0 : true;
     }
 
     isLeftNodesEmpty(): boolean {
-        return !this._leftNodes || this._leftNodes.length === 0;
+        return this.leftNodes === undefined || this.leftNodes.length === 0;
     }
 
     isRightNodesEmpty(): boolean {
-        return !this._rightNodes || this._rightNodes.length === 0;
+        return this.rightNodes === undefined || this.rightNodes.length === 0;
     }
 
     isFiltersEmpty(): boolean {
-        return !this._filters || this._filters.length === 0;
-    }
-
-    isRightParent(nodeId: string): boolean {
-        return this._uriService.$rightParent.value === nodeId;
+        return this.filters === undefined || this.filters.length === 0;
     }
 
     findFilterTaskId(filterCase: Case): string {
-        return !!filterCase.tasks ? filterCase.tasks.find(taskPair => taskPair.transition === 'view').task : '';
+        return !!filterCase.tasks ? filterCase.tasks.find(taskPair => taskPair.transition === FILTER_VIEW_TASK_TRANSITION_ID).task : '';
     }
 
     buildUrl(filterCase: Case) {
-        const viewTaskId = filterCase.tasks.find(taskPair => taskPair.transition === UriConstants.FILTER_VIEW_TASK_TRANSITION_ID).task;
+        const viewTaskId = filterCase.tasks.find(taskPair => taskPair.transition === FILTER_VIEW_TASK_TRANSITION_ID).task;
         const url = this._dynamicRoutingService.route;
         return `/${url}/${viewTaskId}`;
+    }
+
+    uriNodeTrackBy(index: number, node: UriNodeResource) {
+        return node.id;
+    }
+
+    filterTrackBy(index: number, filter: Case) {
+        return filter.stringId;
+    }
+
+    getFilterIcon(filter: Case): string {
+        return filter.immediateData.find(f => f.stringId === 'icon_name')?.value;
+    }
+
+    getFilterName(filter: Case): string {
+        return filter.immediateData.find(f => f.stringId === 'entry_name')?.value?.defaultValue;
+    }
+
+    onResizeEvent(event: ResizeEvent): void {
+        if (event.rectangle.width > RIGHT_DRAWER_MAX_WIDTH) {
+            this._configRightMenu.width = RIGHT_DRAWER_MAX_WIDTH;
+        } else if (event.rectangle.width < RIGHT_DRAWER_DEFAULT_MIN_WIDTH) {
+            this._configRightMenu.width = RIGHT_DRAWER_DEFAULT_MIN_WIDTH;
+        } else {
+            this._configRightMenu.width = event.rectangle.width;
+        }
+        // this.userPreferenceService._drawerWidthChanged$.next(this.width);
+        // this.contentWidth.next(this.width);
     }
 
 }

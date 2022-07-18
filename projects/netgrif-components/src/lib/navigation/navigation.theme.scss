@@ -23,6 +23,14 @@
         background: mat.get-color-from-palette($primary, 50);
     }
 
+    .rail-selected-color {
+        background-color: mat.get-color-from-palette($primary, 100);
+    }
+
+    .tree-node.active {
+        background-color: mat.get-color-from-palette($primary, 50);
+    }
+
     .active {
         color: mat.get-color-from-palette($primary) !important;
     }

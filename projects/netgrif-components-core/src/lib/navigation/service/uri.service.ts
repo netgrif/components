@@ -1,21 +1,15 @@
-import { Injectable, OnDestroy } from '@angular/core';
-import { LoggerService } from '../../logger/services/logger.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { UriResourceService } from './uri-resource.service';
-import { BehaviorSubject, Subscription } from 'rxjs';
-import { UriNodeResource } from '../model/uri-resource';
-import { hasContent } from '../../utility/pagination/page-has-content';
-import { Case } from '../../resources/interface/case';
-import { CaseResourceService } from '../../resources/engine-endpoint/case-resource.service';
-import { SimpleFilter } from '../../filter/models/simple-filter';
-import { CaseSearchRequestBody, PetriNetSearchRequest } from '../../filter/models/case-search-request-body';
-import { ActiveGroupService } from '../../groups/services/active-group.service';
-import { TaskResourceService } from '../../resources/engine-endpoint/task-resource.service';
-import { strings } from '@angular-devkit/core';
-
-export class UriConstants {
-    public static FILTER_VIEW_TASK_TRANSITION_ID = 'view';
-}
+import {Injectable, OnDestroy} from '@angular/core';
+import {LoggerService} from '../../logger/services/logger.service';
+import {UriResourceService} from './uri-resource.service';
+import {BehaviorSubject, Observable, of} from 'rxjs';
+import {UriNodeResource} from '../model/uri-resource';
+import {Case} from '../../resources/interface/case';
+import {CaseResourceService} from '../../resources/engine-endpoint/case-resource.service';
+import {SimpleFilter} from '../../filter/models/simple-filter';
+import {CaseSearchRequestBody, PetriNetSearchRequest} from '../../filter/models/case-search-request-body';
+import {ActiveGroupService} from '../../groups/services/active-group.service';
+import {map} from "rxjs/operators";
+import {LoadingEmitter} from "../../utility/loading-emitter";
 
 /**
  * Service for managing URIs
@@ -25,198 +19,197 @@ export class UriConstants {
 })
 export class UriService implements OnDestroy {
 
-    private _leftNodesSubscription: Subscription;
-    private _rightNodesSubscription: Subscription;
-    private _filtersSubscription: Subscription;
-
-    private readonly _leftNodes: BehaviorSubject<Array<UriNodeResource>>;
-    private readonly _rightNodes: BehaviorSubject<Array<UriNodeResource>>;
-    private readonly _filters: BehaviorSubject<Array<Case>>
-    private rootNode: UriNodeResource;
-
-    private readonly FILTER_IDENTIFIERS = [
-        "preference_filter_item"
-    ];
-
-    /**
-     * Current level of nodes in _leftNodes
-     * */
-    private currentLevel: number;
-
-    /**
-     * Stack of parent nodes that will be loaded into leftNodes when backward navigation
-     * is triggered.
-     * On each right menu click the parent of left nodes will be saved to this, and
-     * on each backward navigation the last element will be popped out and used
-     * as parent ID for left side menu.
-     * */
-    private backStack: string[];
-
-    /**
-     * Parents of nodes in _leftNodes
-     * */
-    private readonly leftParent: BehaviorSubject<string>
-
-    /**
-     * Parents of nodes in _rightNodes
-     * */
-    private readonly rightParent: BehaviorSubject<string>
+    private _rootNode: UriNodeResource;
+    private readonly _rootLoading$: LoadingEmitter;
+    private readonly _parentLoading$: LoadingEmitter;
+    private readonly _activeNode$: BehaviorSubject<UriNodeResource>
 
     constructor(protected _logger: LoggerService,
-                protected _route: ActivatedRoute,
-                protected _router: Router,
                 protected _resourceService: UriResourceService,
                 protected _caseResourceService: CaseResourceService,
                 protected _activeGroupService: ActiveGroupService) {
-        this.currentLevel = 0;
-        this.backStack = [];
-        this.leftParent = new BehaviorSubject<string>(undefined);
-        this.rightParent = new BehaviorSubject<string>(undefined);
-        this._leftNodes = new BehaviorSubject<Array<UriNodeResource>>([]);
-        this._rightNodes = new BehaviorSubject<Array<UriNodeResource>>([]);
-        this._filters = new BehaviorSubject<Array<Case>>([]);
+        this._rootLoading$ = new LoadingEmitter();
+        this._parentLoading$ = new LoadingEmitter();
+        this._activeNode$ = new BehaviorSubject<UriNodeResource>(undefined);
         this.loadRoot();
-
-        /**
-         * Left parent is responsible for loading left nodes at init and backward
-         * navigation
-         * */
-        this.leftParent.subscribe(value => {
-            this.resolveLeftNodes(value);
-        });
-
-        /**
-         * Right parent is responsible for loading right nodes at right node click
-         * and backward navigation
-         * */
-        this.rightParent.subscribe(value => {
-            if (!!value) {
-                this.resolveRightNodes(value);
-            }
-        });
     }
 
     public ngOnDestroy() {
-        this.leftParent.complete();
-        this.rightParent.complete();
-        this._rightNodes.complete();
-        this._leftNodes.complete();
-        this._filters.complete();
-        this._leftNodesSubscription.unsubscribe();
-        this._rightNodesSubscription.unsubscribe();
-        this._filtersSubscription.unsubscribe();
+        this._rootLoading$.complete();
+        this._parentLoading$.complete();
+        this._activeNode$.complete();
     }
 
-    public get $currentLevel(): number {
-        return this.currentLevel;
+    public get root(): UriNodeResource {
+        return this._rootNode;
     }
 
-    public get $backStack(): string[] {
-        return this.backStack;
+    public get rootLoaded$(): LoadingEmitter {
+        return this._rootLoading$;
     }
 
-    public set $backStack(backStack: string[]) {
-        this.backStack = backStack;
+    public isRoot(node: UriNodeResource): boolean {
+        return node.id === this._rootNode.id && node.uriPath === this._rootNode.uriPath;
     }
 
-    public get $leftParent(): BehaviorSubject<string> {
-        return this.leftParent;
+    public get activeNode(): UriNodeResource {
+        return this._activeNode$.getValue();
     }
 
-    public get $rightParent(): BehaviorSubject<string> {
-        return this.rightParent;
-    }
-
-    public get leftNodes(): BehaviorSubject<Array<UriNodeResource>> {
-        return this._leftNodes;
-    }
-
-    public get rightNodes(): BehaviorSubject<Array<UriNodeResource>> {
-        return this._rightNodes;
-    }
-
-    public get filters(): BehaviorSubject<Array<Case>> {
-        return this._filters;
-    }
-
-    public incLevel(): void {
-        this.currentLevel++;
-    }
-
-    public decLevel(): void {
-        this.currentLevel--;
-    }
-
-    public zeroLevel(): void {
-        this.currentLevel = 0;
-    }
-
-    /**
-     * Child nodes (right panel) are loaded by parent ID
-     * @param parentId the nodes are searched by
-     * */
-    public resolveRightNodes(parentId: string): void {
-        this._rightNodesSubscription = this._resourceService.getNodesByParent(parentId).subscribe(nodes => {
-            this.rightNodes.next(nodes);
-        });
-
-        const searchBody: CaseSearchRequestBody = {
-            process: this.FILTER_IDENTIFIERS.map(id => ({identifier: id} as PetriNetSearchRequest)),
-            uriNodeId: parentId
-        };
-
-        if (!!this._activeGroupService.activeGroup) {
-            searchBody.data = {};
-            searchBody.data['parentId'] = this._activeGroupService.activeGroup.stringId;
+    public set activeNode(node: UriNodeResource) {
+        if (node.parentId && !node.parent) {
+            if (node.parentId === this._rootNode.id) {
+                node.parent = this._rootNode;
+            } else {
+                this._parentLoading$.on();
+                this.getNodeByPath(this.resolveParentPath(node)).subscribe(n => {
+                    node.parent = !n ? this._rootNode : n;
+                    this._parentLoading$.off();
+                }, error => {
+                    this._logger.error(error);
+                    this._parentLoading$.off();
+                });
+            }
         }
-
-        this._filtersSubscription = this._caseResourceService.searchCases(SimpleFilter.fromCaseQuery(searchBody))
-            .subscribe(casesPage => {
-                const array: Array<Case> = [];
-                if (!!casesPage && hasContent(casesPage)) {
-                    casesPage.content.forEach(c => {
-                        array.push(c);
-                    });
-                    this.filters.next(array);
-                } else {
-                    this.filters.next([]);
-                }
-        });
+        this._activeNode$.next(node);
     }
 
-    /**
-     * Parent nodes (left panel) are loaded by level number
-     * @param parentId to be filtered by
-     * */
-    public resolveLeftNodes(parentId?: string): void {
-        this._leftNodesSubscription = this._resourceService.getByLevel(this.currentLevel).subscribe(nodes => {
-            if (!!parentId)
-                this.leftNodes.next(nodes.filter(n => n.parentId === parentId));
-            else
-                this.leftNodes.next(nodes);
-        });
+    public get activeNode$(): Observable<UriNodeResource> {
+        return this._activeNode$;
     }
 
-    /**
-     * Resets parent ID when home button is clicked
-     * */
-    public resetToRoot(): void {
-        this.zeroLevel();
-        this.leftParent.next(undefined);
-        this.rightParent.next(this.rootNode.id)
-        this.$backStack = [];
+    public get parentNodeLoading$(): Observable<boolean> {
+        return this._parentLoading$;
     }
 
+
     /**
-     * Loads root ID into variable
+     * Loads root ID into variable.
+     * When root node is loaded and active node is not set yet the root node is set as active node
      * */
     private loadRoot(): void {
+        this._rootLoading$.on();
         this._resourceService.getRoot().subscribe(node => {
             if (!!node) {
-                this.rootNode = node;
-                this.leftParent.next(undefined);
-                this.rightParent.next(node.id);
+                this._rootNode = node;
+                if (!this.activeNode) {
+                    this.activeNode = this._rootNode;
+                }
             }
-        })
+            this._rootLoading$.off();
+        }, error => {
+            this._logger.error(error);
+            this._rootLoading$.off();
+        });
+    }
+
+    public reset(): UriNodeResource {
+        this.activeNode = this._rootNode;
+        return this._rootNode;
+    }
+
+    /**
+     * Get uri node by uri path.
+     * @param path
+     */
+    public getNodeByPath(path: string): Observable<UriNodeResource> {
+        return this._resourceService.getNodeByUri(path).pipe(
+            map(n => this.capitalizeName(n))
+        );
+    }
+
+    /**
+     * Get child nodes of provides node.
+     * @param node parent node
+     */
+    public getChildNodes(node?: UriNodeResource): Observable<Array<UriNodeResource>> {
+        if (!node) node = this.activeNode;
+        return this._resourceService.getNodesByParent(node.id).pipe(
+            map(nodes => {
+                this.capitalizeNames(nodes);
+                return nodes;
+            })
+        );
+    }
+
+    /**
+     * Get cases under uri node
+     * @param node parent node of cases
+     * @param processIdentifiers optional search filter for process identifier to get only cases from the process
+     */
+    public getCasesOfNode(node?: UriNodeResource, processIdentifiers?: Array<string>): Observable<Array<Case>> {
+        if (!node) node = this.activeNode;
+        const searchBody: CaseSearchRequestBody = {
+            uriNodeId: node.id
+        };
+        if (!!processIdentifiers) {
+            searchBody.process = processIdentifiers.map(id => ({identifier: id} as PetriNetSearchRequest));
+        }
+        // TODO active group is broken a given the wrong id
+        // if (!!this._activeGroupService.activeGroup) {
+        //     searchBody.data = {};
+        //     searchBody.data['parentId'] = this._activeGroupService.activeGroup.stringId;
+        // }
+        return this._caseResourceService.searchCases(SimpleFilter.fromCaseQuery(searchBody)).pipe(
+            map(page => page.content)
+        );
+    }
+
+    /**
+     * Get siblings node of the provided node
+     * @param node siblings node
+     */
+    public getSiblingsOfNode(node?: UriNodeResource): Observable<Array<UriNodeResource>> {
+        if (!node) node = this.activeNode;
+        return this._resourceService.getNodesByParent(node.parentId).pipe(
+            map(nodes => {
+                this.capitalizeNames(nodes);
+                return nodes;
+            })
+        );
+    }
+
+    /**
+     * Get nodes on the same uri level starting from 0. Root node is no 0 level.
+     * @param level
+     * @param parent optional parameter to filter nodes with common parent
+     */
+    public getNodesOnLevel(level: number, parent?: UriNodeResource): Observable<Array<UriNodeResource>> {
+        if (level === 0) return of([this.root]);
+        return this._resourceService.getByLevel(level).pipe(
+            map(nodes => {
+                const ns = !!parent?.id ? nodes.filter(n => n.parentId === parent.id) : nodes;
+                this.capitalizeNames(ns);
+                return ns;
+            })
+        );
+    }
+
+    public resolveParentPath(node?: UriNodeResource): string {
+        if (!node) node = this.activeNode;
+        const lastDelimiter = node.uriPath.lastIndexOf('/');
+        if (lastDelimiter === -1) return 'root';
+        return node.uriPath.substring(0, lastDelimiter);
+    }
+
+    private capitalizeNames(nodes: Array<UriNodeResource>) {
+        if (!(nodes instanceof Array)) return;
+        nodes.forEach(n => this.capitalizeName(n));
+    }
+
+    /**
+     *  /netgrif/nae_system/processes/... => Netgrif -> Nae Systems -> Processes
+     * @param node
+     * @private
+     */
+    private capitalizeName(node: UriNodeResource) {
+        let parts = node.name.split('_');
+        parts = parts.map(p => {
+            if (p === undefined || p.length === 0) return;
+            if (p.length === 1) return p.toUpperCase();
+            return p.charAt(0).toUpperCase() + p.substring(1);
+        });
+        node.name = parts.join(' ');
+        return node;
     }
 }

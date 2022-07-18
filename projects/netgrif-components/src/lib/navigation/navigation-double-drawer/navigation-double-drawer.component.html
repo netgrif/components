@@ -1,9 +1,7 @@
-<div class="logo" [ngClass]="{'logo-closed': !configMenu2.opened}" fxLayoutAlign="start center" fxHide.lt-md>
-    <button mat-icon-button (click)="toggleMenu2()" class="mat-button">
+<div class="drawer-control rail-color" fxLayoutAlign="start center" fxHide.lt-md>
+    <button mat-icon-button (click)="toggleMenu()" class="mat-button mat-typography menu-font-color">
         <mat-icon>menu</mat-icon>
     </button>
-    <img *ngIf="configMenu2.opened && image !== undefined" #logo [alt]="imageAlt" [src]="image" class="logoimg"
-         [routerLink]="imageRouterLink !== undefined ? imageRouterLink : []">
 </div>
 <mat-toolbar fxHide.gt-sm class="toolbar">
     <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between stretch">
@@ -12,7 +10,7 @@
                 <mat-icon>menu</mat-icon>
             </button>
         </div>
-        <div class="logo-tool" fxLayoutAlign="center center" fxFlex >
+        <div class="logo-tool" fxLayoutAlign="center center" fxFlex>
             <img #logo [alt]="imageAlt" [src]="image" class="logoimg-tool"
                  [routerLink]="imageRouterLink !== undefined ? imageRouterLink : []">
         </div>
@@ -20,8 +18,9 @@
     </mat-toolbar-row>
 </mat-toolbar>
 <mat-spinner *ngIf="!logo"></mat-spinner>
-<mat-sidenav-container class="rail-container" *ngIf="logo">
-    <mat-sidenav mode="side" [(opened)]="configMenu.opened" position="start" [disableClose]="configMenu.disableClose"
+<mat-sidenav-container class="rail-container">
+    <mat-sidenav mode="side" [(opened)]="configLeftMenu.opened" position="start"
+                 [disableClose]="configLeftMenu.disableClose"
                  class="rail-content">
 
         <div fxLayout="column" class="rail-color" fxFlex>
@@ -30,23 +29,48 @@
 
             <div fxFlex></div>
 
+            <mat-menu #userRailMenu="matMenu">
+                <div mat-menu-item role="menuitem" class="large-menu-item" fxLayout="row" fxFlexAlign="center center">
+                    <mat-icon class="margin-auto" fxFlex>face</mat-icon>
+                    <div class="large-menu-item" fxLayout="column" fxFlexAlign="start center" fxFlex>
+                        <span class="large-menu-item-text" fxFlex="50">{{user.fullName}}</span>
+                        <span class="large-menu-item-text" style="font-size: 12px;" fxFlex="50">{{user.email}}</span>
+                    </div>
+                </div>
+                <button mat-menu-item (click)="logout()">
+                    <mat-icon>exit_to_app</mat-icon>
+                    <span>{{ 'toolbar.menu.logout' | translate }}</span>
+                </button>
+            </mat-menu>
+            <button mat-icon-button [matMenuTriggerFor]="userRailMenu" class="mat-button mat-typography menu-font-color"
+                    [matTooltip]="user.fullName"
+                    [matTooltipPosition]="'right'">
+                <mat-icon>account_circle</mat-icon>
+            </button>
+
             <div fxLayout="row" class="icon-container" fxLayoutAlign="center center">
                 <nc-language-selector fxLayout="row" [language]="getLang()"></nc-language-selector>
             </div>
 
             <mat-menu #railMenu="matMenu">
-                <button mat-menu-item (click)="logout()" fxLayout="row" fxLayoutAlign="start center">
-                    <mat-icon>exit_to_app</mat-icon>
-                    <span>{{ 'toolbar.menu.logout' | translate }}</span>
+                <button mat-menu-item>
+                    <mat-icon>question</mat-icon>
+                    <span>empty</span>
                 </button>
             </mat-menu>
-
-            <div fxLayout="row" class="margin-bottom-x2 icon-container" matTooltip="Otvoriť menu"
-                 fxLayoutAlign="center center">
-                <button mat-icon-button [matMenuTriggerFor]="railMenu">
-                    <mat-icon class="icon-large sidemenu-icon">more_vert</mat-icon>
-                </button>
-            </div>
+            <!--            <div fxLayout="row" class="margin-bottom-x2 icon-container" matTooltip="Otvoriť menu"-->
+            <!--                 matTooltipPosition="right"-->
+            <!--                 fxLayoutAlign="center center">-->
+            <!--                <button mat-icon-button [matMenuTriggerFor]="railMenu">-->
+            <!--                    <mat-icon class="icon-large sidemenu-icon">more_vert</mat-icon>-->
+            <!--                </button>-->
+            <!--            </div>-->
+            <button mat-icon-button [matMenuTriggerFor]="railMenu"
+                    class="mat-button mat-typography menu-font-color margin-bottom-x2"
+                    [matTooltip]="'Otvoriť menu'"
+                    [matTooltipPosition]="'right'">
+                <mat-icon>more_vert</mat-icon>
+            </button>
 
         </div>
 
@@ -54,9 +78,14 @@
 
     <mat-sidenav-content>
         <mat-sidenav-container class="drawer-container">
-            <mat-sidenav [mode]="configMenu2.mode" [(opened)]="configMenu2.opened" position="start"
-                         [disableClose]="configMenu2.disableClose"
-                         class="drawer-content mat-elevation-z8">
+            <mat-sidenav [mode]="configRightMenu.mode" [(opened)]="configRightMenu.opened" position="start"
+                         [disableClose]="configRightMenu.disableClose"
+                         class="drawer-content mat-elevation-z8"
+                         mwlResizable
+                         [style.width.px]="configRightMenu.width"
+                         [resizeCursorPrecision]="20"
+                         [resizeEdges]="{right: true}"
+                         (resizing)="onResizeEvent($event)">
 
                 <div *ngTemplateOutlet="portalRightMenu || defaultRightSide"></div>
 
@@ -69,42 +98,77 @@
     </mat-sidenav-content>
 </mat-sidenav-container>
 
-<ng-template #defaultRightSide>
-    <div ngClass.gt-sm="padding-top-65">
-        <div class="container" *ngIf='!isRightNodesEmpty()'>
-            <div class="line"><mat-divider></mat-divider></div>
-            <div class="text mat-typography"> Folders </div>
-            <div class="line"><mat-divider></mat-divider></div>
-        </div>
-        <div *ngFor='let node of _rightNodes' (click)="onRightSideClick(node)" class="tree-node" fxLayoutAlign="start center" routerLinkActive="active">
-            <mat-icon class="tree-node-icon">folder</mat-icon>
-            <span class="span">{{node.name}}</span>
-        </div>
+<ng-template #defaultLeftSide>
+    <!--    <div fxLayout="row" class="icon-container" fxLayoutAlign="center center"-->
+    <!--         (click)='onHomeClick()'>-->
+    <!--        <mat-icon class="icon-large" [matTooltip]="'Home'" [matTooltipPosition]="'right'">home</mat-icon>-->
+    <!--    </div>-->
+    <button mat-icon-button (click)="onHomeClick()" class="mat-button mat-typography menu-font-color"
+            [matTooltip]="'Home'"
+            [matTooltipPosition]="'right'">
+        <mat-icon>home</mat-icon>
+    </button>
 
-        <div class="container" *ngIf='!isFiltersEmpty()'>
-            <div class="line"><mat-divider></mat-divider></div>
-            <div class="text mat-typography"> Filters </div>
-            <div class="line"><mat-divider></mat-divider></div>
-        </div>
-        <div *ngFor='let filter of _filters' class="tree-node" fxLayoutAlign="start center" [routerLink]='buildUrl(filter)' routerLinkActive="active">
-            <mat-icon class="tree-node-icon">filter_alt</mat-icon>
-            <span class="span">{{filter.title}}</span>
-        </div>
+    <!--    <div *ngIf='!isOnZeroLevel()' fxLayout="row" class="icon-container" fxLayoutAlign="center center"-->
+    <!--         (click)='onBackClick()'>-->
+    <!--        <mat-icon class="icon-large" [matTooltip]="'Back'" [matTooltipPosition]="'right'">arrow_back</mat-icon>-->
+    <!--    </div>-->
+    <button *ngIf='!isOnZeroLevel() && !(canGoBackLoading$ | async)' mat-icon-button (click)="onBackClick()"
+            class="mat-button mat-typography menu-font-color" [matTooltip]="'Back'" [matTooltipPosition]="'right'">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div *ngIf="(canGoBackLoading$ | async)" fxLayout="column" fxLayoutAlign="center center" class="margin-top-default">
+        <mat-spinner color="primary" diameter="30" mode="indeterminate"></mat-spinner>
+    </div>
+
+    <div class="margin-top-x2"></div>
+    <!--    <div *ngFor='let node of leftNodes; trackBy: uriNodeTrackBy' fxLayout="row" class="icon-container"-->
+    <!--         fxLayoutAlign="center center"-->
+    <!--         (click)='onLeftSideClick(node)'>-->
+    <!--        <mat-icon class="icon-large" [matTooltip]="node.name"-->
+    <!--                  [matTooltipPosition]="'right'">{{node.id === currentNode.id ? 'folder_open' : 'folder'}}</mat-icon>-->
+    <!--    </div>-->
+    <button *ngFor='let node of leftNodes; trackBy: uriNodeTrackBy' mat-icon-button (click)="onNodeClick(node)"
+            class="mat-button mat-typography menu-font-color" [matTooltip]="node.name" [matTooltipPosition]="'right'"
+            [ngClass]="node.id === currentNode.id ? 'rail-selected-color' : ''">
+        <mat-icon>{{node.id === currentNode.id ? 'folder_open' : 'folder'}}</mat-icon>
+    </button>
+
+    <div *ngIf="(leftLoading$ | async)" fxLayout="column" fxLayoutAlign="center center" class="margin-top-default">
+        <mat-spinner color="primary" diameter="30" mode="indeterminate"></mat-spinner>
     </div>
 </ng-template>
 
-<ng-template #defaultLeftSide>
-    <div fxLayout="row" class="icon-container" fxLayoutAlign="center center"
-         (click)='onHomeClick()'>
-        <mat-icon class="icon-large" [matTooltip]="'Home'" [matTooltipPosition]="'right'">home</mat-icon>
+<ng-template #defaultRightSide>
+    <div class="logo" fxLayoutAlign="center center" fxHide.lt-md>
+        <img *ngIf="image !== undefined" [alt]="imageAlt" [src]="image" class="logoimg"
+             [routerLink]="imageRouterLink !== undefined ? imageRouterLink : []">
     </div>
-    <div *ngIf='!isOnZeroLevel()' fxLayout="row" class="icon-container" fxLayoutAlign="center center"
-         (click)='onBackClick()'>
-        <mat-icon class="icon-large" [matTooltip]="'Back'" [matTooltipPosition]="'right'">arrow_back</mat-icon>
+    <div *ngIf="!(rightLoading$ | async)" ngClass.gt-sm="padding-top-8">
+        <div class="container" *ngIf='!isRightNodesEmpty()'>
+            <div class="headline-text mat-typography">Folders</div>
+        </div>
+        <div *ngFor='let node of rightNodes; trackBy: uriNodeTrackBy' (click)="onNodeClick(node)"
+             class="tree-node mat-typography mat-body-2" fxLayoutAlign="start center" routerLinkActive="active">
+            <mat-icon class="tree-node-icon">folder</mat-icon>
+            <span>{{node.name}}</span>
+            <span class="menu-item-focus-overlay"></span>
+        </div>
+
+        <div class="container" *ngIf='!isFiltersEmpty()'>
+            <div *ngIf="!isRightNodesEmpty()" class="line margin-bottom-x2">
+                <mat-divider></mat-divider>
+            </div>
+            <div class="headline-text mat-typography">Views</div>
+        </div>
+        <div *ngFor='let filter of filters; trackBy: filterTrackBy' class="tree-node mat-typography"
+             fxLayoutAlign="start center" [routerLink]='buildUrl(filter)' routerLinkActive="active">
+            <mat-icon class="tree-node-icon">{{getFilterIcon(filter) || 'filter_alt'}}</mat-icon>
+            <span>{{getFilterName(filter) || filter.title}}</span>
+            <span class="menu-item-focus-overlay"></span>
+        </div>
     </div>
-    <mat-divider></mat-divider>
-    <div *ngFor='let node of _leftNodes' fxLayout="row" class="icon-container" fxLayoutAlign="center center"
-         (click)='onLeftSideClick(node)'>
-        <mat-icon class="icon-large" [matTooltip]="node.name" [matTooltipPosition]="'right'">{{isRightParent(node.id) ? 'folder_open' : 'folder'}}</mat-icon>
+    <div *ngIf="(rightLoading$ | async)" fxLayout="column" fxLayoutAlign="center center" class="margin-top-default">
+        <mat-spinner color="primary" diameter="40" mode="indeterminate"></mat-spinner>
     </div>
 </ng-template>
