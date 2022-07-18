@@ -209,6 +209,36 @@
                         "path": "task-view"
                     },
                     "processUri": "examples"
+                },
+                "hidden-workflow-view": {
+                    "component": {
+                        "class": "WorkflowViewExampleComponent",
+                        "from": "./doc/workflow-view-example/workflow-view-example.component"
+                    },
+                    "access": "private",
+                    "navigation": {
+                        "title": "Workflow view",
+                        "icon": "insights",
+                        "hidden": true
+                    },
+                    "routing": {
+                        "path": "workflow-view"
+                    }
+                },
+                "hidden-active-group": {
+                    "component": {
+                        "class": "ActiveGroupComponent",
+                        "from": "./doc/active-group/active-group.component"
+                    },
+                    "access": "private",
+                    "navigation": {
+                        "title": "Active group view",
+                        "icon": "coronavirus",
+                        "hidden": true
+                    },
+                    "routing": {
+                        "path": "active-group"
+                    }
                 }
             }
         },

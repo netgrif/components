@@ -71,6 +71,8 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
      * */
     views: Array<ViewNavigationItem>;
 
+    moreMenuItems: Array<ViewNavigationItem>;
+
     protected _leftNodesSubscription: Subscription;
     protected _rightNodesSubscription: Subscription;
     protected _filtersSubscription: Subscription;
@@ -117,6 +119,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         this.leftLoading$ = new LoadingEmitter();
         this.rightLoading$ = new LoadingEmitter();
         this._childCustomViews = {};
+        this.moreMenuItems = new Array<ViewNavigationItem>();
     }
 
     ngOnInit(): void {
@@ -152,21 +155,41 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         const viewConfigurationPath = this._activatedRoute.snapshot.data[NAE_ROUTING_CONFIGURATION_PATH];
         const viewConfiguration = this._config.getViewByPath(viewConfigurationPath);
         Object.entries(viewConfiguration.children).forEach(([key, childView]) => {
-            if (!childView.processUri) return;
-            const viewId = viewConfigurationPath + '/' + key;
-            if (!this._childCustomViews[childView.processUri]) {
-                this._childCustomViews[childView.processUri] = {};
-            }
-            this._childCustomViews[childView.processUri][viewId] = {
-                id: viewId,
-                // @ts-ignore
-                title: childView?.navigation?.title || key,
-                // @ts-ignore
-                icon: childView?.navigation?.icon || 'view_list',
-                routingPath: childView.routing.path,
-                resource: childView
-            }
+            this.resolveUriForChildViews(viewConfigurationPath + '/' + key, childView);
+            this.resolveHiddenMenuItemFromChildViews(viewConfigurationPath + '/' + key, childView);
         });
+    }
+
+    protected resolveUriForChildViews(configPath: string, childView: View): void {
+        if (!childView.processUri) return;
+        if (!this._childCustomViews[childView.processUri]) {
+            this._childCustomViews[childView.processUri] = {};
+        }
+        this._childCustomViews[childView.processUri][configPath] = {
+            id: configPath,
+            // @ts-ignore
+            title: childView?.navigation?.title || configPath,
+            // @ts-ignore
+            icon: childView?.navigation?.icon || 'view_list',
+            routingPath: childView.routing.path,
+            resource: childView
+        }
+    }
+
+    protected resolveHiddenMenuItemFromChildViews(configPath: string, childView: View): void {
+        if (!childView.navigation) return;
+        // @ts-ignore
+        if (!!(childView?.navigation?.hidden)) {
+            this.moreMenuItems.push({
+                id: configPath,
+                // @ts-ignore
+                icon: childView?.navigation?.icon,
+                // @ts-ignore
+                title: childView?.navigation?.title,
+                resource: childView,
+                routingPath: childView.routing.path
+            });
+        }
     }
 
     ngOnDestroy(): void {
