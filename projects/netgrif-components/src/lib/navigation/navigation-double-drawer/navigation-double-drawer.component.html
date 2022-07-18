@@ -155,16 +155,16 @@
             <span class="menu-item-focus-overlay"></span>
         </div>
 
-        <div class="container" *ngIf='!isFiltersEmpty()'>
+        <div class="container" *ngIf='!isViewsEmpty()'>
             <div *ngIf="!isRightNodesEmpty()" class="line margin-bottom-x2">
                 <mat-divider></mat-divider>
             </div>
             <div class="headline-text mat-typography">Views</div>
         </div>
-        <div *ngFor='let filter of filters; trackBy: filterTrackBy' class="tree-node mat-typography"
-             fxLayoutAlign="start center" [routerLink]='buildUrl(filter)' routerLinkActive="active">
-            <mat-icon class="tree-node-icon">{{getFilterIcon(filter) || 'filter_alt'}}</mat-icon>
-            <span>{{getFilterName(filter) || filter.title}}</span>
+        <div *ngFor='let view of views; trackBy: viewsTrackBy' class="tree-node mat-typography"
+             fxLayoutAlign="start center" [routerLink]='view.routingPath' routerLinkActive="active">
+            <mat-icon class="tree-node-icon">{{view.icon}}</mat-icon>
+            <span>{{view.title}}</span>
             <span class="menu-item-focus-overlay"></span>
         </div>
     </div>

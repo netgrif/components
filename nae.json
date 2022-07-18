@@ -194,6 +194,21 @@
                     "routing": {
                         "path": "group-nav"
                     }
+                },
+                "custom-view": {
+                    "component": {
+                        "class": "TaskViewComponent",
+                        "from": "./doc/task-view/task-view.component"
+                    },
+                    "access": "private",
+                    "navigation": {
+                        "title": "Custom Task View",
+                        "icon": "article"
+                    },
+                    "routing": {
+                        "path": "task-view"
+                    },
+                    "processUri": "examples"
                 }
             }
         },

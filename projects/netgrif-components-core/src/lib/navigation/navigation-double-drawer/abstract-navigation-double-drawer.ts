@@ -1,6 +1,6 @@
 import {Component, Input, OnDestroy, OnInit, TemplateRef} from '@angular/core';
 import {forkJoin, Observable, Subscription} from 'rxjs';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {LanguageService} from '../../translate/language.service';
 import {UserService} from '../../user/services/user.service';
@@ -16,12 +16,22 @@ import {LoadingEmitter} from "../../utility/loading-emitter";
 import {MatDrawerMode} from "@angular/material/sidenav";
 import {ResizeEvent} from "angular-resizable-element";
 import {User} from "../../user/models/user";
+import {View} from "../../../commons/schema";
+import {NAE_ROUTING_CONFIGURATION_PATH} from "../../routing/routing-builder/routing-builder.service";
 
 export interface ConfigDoubleMenu {
     mode: MatDrawerMode;
     opened: boolean;
     disableClose: boolean;
     width: number;
+}
+
+export interface ViewNavigationItem {
+    id: string;
+    title: string;
+    icon: string;
+    routingPath: string;
+    resource: Case | View
 }
 
 export const FILTER_IDENTIFIERS = [
@@ -59,7 +69,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     /**
      * Processes that can be displayed under folders on right side menu
      * */
-    filters: Array<Case>;
+    views: Array<ViewNavigationItem>;
 
     protected _leftNodesSubscription: Subscription;
     protected _rightNodesSubscription: Subscription;
@@ -73,15 +83,6 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
      * Siblings of the node are on the left, children are on the right
      */
     currentNode: UriNodeResource
-
-    /**
-     * Stack of parent nodes that will be loaded into leftNodes when backward navigation
-     * is triggered.
-     * On each right menu click the parent of left nodes will be saved to this, and
-     * on each backward navigation the last element will be popped out and used
-     * as parent ID for left side menu.
-     * */
-        // protected _backstack: Stack<UriNodeResource>;
 
     leftLoading$: LoadingEmitter;
     rightLoading$: LoadingEmitter;
@@ -99,7 +100,10 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         width: RIGHT_DRAWER_DEFAULT_WIDTH
     };
 
+    protected _childCustomViews: { [uri: string]: { [key: string]: ViewNavigationItem } }
+
     protected constructor(protected _router: Router,
+                          protected _activatedRoute: ActivatedRoute,
                           protected _breakpoint: BreakpointObserver,
                           protected _languageService: LanguageService,
                           protected _userService: UserService,
@@ -107,12 +111,12 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                           protected _config: ConfigurationService,
                           protected _uriService: UriService,
                           protected _dynamicRoutingService: DynamicNavigationRouteProviderService) {
-        // this._backstack = new Stack<UriNodeResource>();
         this.leftNodes = new Array<UriNodeResource>();
         this.rightNodes = new Array<UriNodeResource>();
-        this.filters = new Array<Case>();
+        this.views = new Array<ViewNavigationItem>();
         this.leftLoading$ = new LoadingEmitter();
         this.rightLoading$ = new LoadingEmitter();
+        this._childCustomViews = {};
     }
 
     ngOnInit(): void {
@@ -143,6 +147,25 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                 this.loadLeftSide();
             }
             this.loadRightSide();
+        });
+
+        const viewConfigurationPath = this._activatedRoute.snapshot.data[NAE_ROUTING_CONFIGURATION_PATH];
+        const viewConfiguration = this._config.getViewByPath(viewConfigurationPath);
+        Object.entries(viewConfiguration.children).forEach(([key, childView]) => {
+            if (!childView.processUri) return;
+            const viewId = viewConfigurationPath + '/' + key;
+            if (!this._childCustomViews[childView.processUri]) {
+                this._childCustomViews[childView.processUri] = {};
+            }
+            this._childCustomViews[childView.processUri][viewId] = {
+                id: viewId,
+                // @ts-ignore
+                title: childView?.navigation?.title || key,
+                // @ts-ignore
+                icon: childView?.navigation?.icon || 'view_list',
+                routingPath: childView.routing.path,
+                resource: childView
+            }
         });
     }
 
@@ -267,14 +290,33 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             filters: this._uriService.getCasesOfNode(this.currentNode, FILTER_IDENTIFIERS)
         }).subscribe(result => {
             this.rightNodes = result.folders instanceof Array ? result.folders : [];
-            this.filters = result.filters instanceof Array ? result.filters : [];
+            this.views = (result.filters instanceof Array ? result.filters : []).map(f => this.resolveFilterCaseToViewNavigationItem(f));
+            if (!!this._childCustomViews[this.currentNode.uriPath]) {
+                this.views.push(...Object.values(this._childCustomViews[this.currentNode.uriPath]))
+            }
             this.rightLoading$.off();
         }, error => {
             this._log.error(error);
             this.rightNodes = [];
-            this.filters = [];
+            this.views = [];
             this.rightLoading$.off();
         });
+    }
+
+    protected resolveFilterCaseToViewNavigationItem(filter: Case): ViewNavigationItem {
+        return {
+            id: filter.stringId,
+            title: filter.immediateData.find(f => f.stringId === 'entry_name')?.value?.defaultValue || filter.title,
+            icon: filter.immediateData.find(f => f.stringId === 'icon_name')?.value || 'filter_alt',
+            routingPath: this.getFilterRoutingPath(filter),
+            resource: filter
+        };
+    }
+
+    protected getFilterRoutingPath(filterCase: Case) {
+        const viewTaskId = filterCase.tasks.find(taskPair => taskPair.transition === FILTER_VIEW_TASK_TRANSITION_ID).task;
+        const url = this._dynamicRoutingService.route;
+        return `/${url}/${viewTaskId}`;
     }
 
     /**
@@ -293,34 +335,16 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         return this.rightNodes === undefined || this.rightNodes.length === 0;
     }
 
-    isFiltersEmpty(): boolean {
-        return this.filters === undefined || this.filters.length === 0;
-    }
-
-    findFilterTaskId(filterCase: Case): string {
-        return !!filterCase.tasks ? filterCase.tasks.find(taskPair => taskPair.transition === FILTER_VIEW_TASK_TRANSITION_ID).task : '';
-    }
-
-    buildUrl(filterCase: Case) {
-        const viewTaskId = filterCase.tasks.find(taskPair => taskPair.transition === FILTER_VIEW_TASK_TRANSITION_ID).task;
-        const url = this._dynamicRoutingService.route;
-        return `/${url}/${viewTaskId}`;
+    isViewsEmpty(): boolean {
+        return this.views === undefined || this.views.length === 0;
     }
 
     uriNodeTrackBy(index: number, node: UriNodeResource) {
         return node.id;
     }
 
-    filterTrackBy(index: number, filter: Case) {
-        return filter.stringId;
-    }
-
-    getFilterIcon(filter: Case): string {
-        return filter.immediateData.find(f => f.stringId === 'icon_name')?.value;
-    }
-
-    getFilterName(filter: Case): string {
-        return filter.immediateData.find(f => f.stringId === 'entry_name')?.value?.defaultValue;
+    viewsTrackBy(index: number, view: ViewNavigationItem) {
+        return view.id;
     }
 
     onResizeEvent(event: ResizeEvent): void {
@@ -331,6 +355,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         } else {
             this._configRightMenu.width = event.rectangle.width;
         }
+        // TODO implement saving drawer width to user preferences
         // this.userPreferenceService._drawerWidthChanged$.next(this.width);
         // this.contentWidth.next(this.width);
     }
