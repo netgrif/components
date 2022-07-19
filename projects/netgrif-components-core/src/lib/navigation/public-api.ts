@@ -11,12 +11,15 @@ export * from './group-navigation-component-resolver/abstract-group-navigation-c
 /* SERVICES */
 export * from './group-navigation-component-resolver/group-navigation-component-resolver.service';
 export * from './utility/filter-extraction.service';
+export * from './service/uri.service';
+export * from './service/uri-resource.service';
 
 /* MODELS */
 export * from './model/group-navigation-constants';
 export * from './model/group-navigation-component-resolver-component-injection-token';
 export * from './model/filter-case-injection-token';
 export * from './model/group-navigation-item-label';
+export * from './model/uri-resource';
 
 /* UTILITY METHODS */
 export * from './utility/navigation-item-task-utility-methods';

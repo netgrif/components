@@ -1,29 +1,3 @@
-
-<nc-navigation-double-drawer #sidenav [portalLeftMenu]="leftSide" [portalRightMenu]="rightSide" image="assets/img/netgrif_full_white.svg" imageRouterLink="/tabbed-views">
-    <span>idem/nejdem</span>
+<nc-navigation-double-drawer #sidenav image="assets/img/netgrif_full_white.svg" imageRouterLink="/tabbed-views">
     <router-outlet></router-outlet>
-
 </nc-navigation-double-drawer>
-
-<ng-template #rightSide>
-    <div ngClass.gt-sm="padding-top-65">
-        <div class="tree-node" fxLayoutAlign="start center" routerLink="/workflow-view"
-             routerLinkActive="active">
-            <mat-icon class="tree-node-icon">miscellaneous_services</mat-icon>
-            <span class="span">Workflow</span>
-        </div>
-        <div class="tree-node" fxLayoutAlign="start center" routerLink="/drawer-double"
-             routerLinkActive="active">
-            <mat-icon class="tree-node-icon">miscellaneous_services</mat-icon>
-            <span class="span">Double drawer</span>
-        </div>
-    </div>
-</ng-template>
-
-<ng-template #leftSide>
-    <div fxLayout="row" class="icon-container" fxLayoutAlign="center center"
-         routerLink="/workflow-view" routerLinkActive="active-rail">
-        <mat-icon class="icon-large" matTooltip="Konzola">settings
-        </mat-icon>
-    </div>
-</ng-template>
