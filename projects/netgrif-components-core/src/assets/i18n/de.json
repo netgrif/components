@@ -6,7 +6,10 @@
             "logout": "Abmelden",
             "en": "English",
             "sk": "Slowakisch",
-            "de": "Deutsch"
+            "de": "Deutsch",
+            "open": "Menü öffnen",
+            "home": "Startseite",
+            "back": "Zurück"
         }
     },
     "tasks": {

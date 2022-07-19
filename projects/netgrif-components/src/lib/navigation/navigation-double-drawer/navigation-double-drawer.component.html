@@ -68,8 +68,8 @@
             <!--            </div>-->
             <button mat-icon-button [matMenuTriggerFor]="railMenu"
                     class="mat-button mat-typography menu-font-color margin-bottom-x2"
-                    [matTooltip]="'Otvoriť menu'"
-                    [matTooltipPosition]="'right'">
+                    [matTooltip]="'toolbar.menu.open' | translate"
+                    matTooltipPosition="right">
                 <mat-icon>more_vert</mat-icon>
             </button>
 
@@ -105,8 +105,8 @@
     <!--        <mat-icon class="icon-large" [matTooltip]="'Home'" [matTooltipPosition]="'right'">home</mat-icon>-->
     <!--    </div>-->
     <button mat-icon-button (click)="onHomeClick()" class="mat-button mat-typography menu-font-color"
-            [matTooltip]="'Home'"
-            [matTooltipPosition]="'right'">
+            [matTooltip]="'toolbar.menu.home' | translate"
+            matTooltipPosition="right">
         <mat-icon>home</mat-icon>
     </button>
 
@@ -115,7 +115,8 @@
     <!--        <mat-icon class="icon-large" [matTooltip]="'Back'" [matTooltipPosition]="'right'">arrow_back</mat-icon>-->
     <!--    </div>-->
     <button *ngIf='!isOnZeroLevel() && !(canGoBackLoading$ | async)' mat-icon-button (click)="onBackClick()"
-            class="mat-button mat-typography menu-font-color" [matTooltip]="'Back'" [matTooltipPosition]="'right'">
+            class="mat-button mat-typography menu-font-color" [matTooltip]="'toolbar.menu.back' | translate"
+            matTooltipPosition="right">
         <mat-icon>arrow_back</mat-icon>
     </button>
     <div *ngIf="(canGoBackLoading$ | async)" fxLayout="column" fxLayoutAlign="center center" class="margin-top-default">
@@ -166,7 +167,8 @@
             <div *ngIf="!isRightNodesEmpty()" class="line margin-bottom-x2">
                 <mat-divider></mat-divider>
             </div>
-            <div class="cursor-pointer" (click)="toggleSection('views')" fxLayout="row" fxFlexAlign="start center" fxFlex>
+            <div class="cursor-pointer" (click)="toggleSection('views')" fxLayout="row" fxFlexAlign="start center"
+                 fxFlex>
                 <span class="headline-text mat-typography">Views</span>
                 <div fxFlex></div>
                 <span *ngIf="isSectionOpen" [@indicatorRotate]="isSectionOpen.views ? 'expanded' : 'collapsed'"

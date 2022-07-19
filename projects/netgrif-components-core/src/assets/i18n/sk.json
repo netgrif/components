@@ -6,7 +6,10 @@
             "logout": "Odhlasiť sa",
             "en": "Anglický",
             "sk": "Slovenský",
-            "de": "Nemecký"
+            "de": "Nemecký",
+            "open": "Otvoriť menu",
+            "home": "Domov",
+            "back": "Späť"
         }
     },
     "tasks": {
