@@ -153,11 +153,13 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         });
 
         const viewConfigurationPath = this._activatedRoute.snapshot.data[NAE_ROUTING_CONFIGURATION_PATH];
-        const viewConfiguration = this._config.getViewByPath(viewConfigurationPath);
-        Object.entries(viewConfiguration.children).forEach(([key, childView]) => {
-            this.resolveUriForChildViews(viewConfigurationPath + '/' + key, childView);
-            this.resolveHiddenMenuItemFromChildViews(viewConfigurationPath + '/' + key, childView);
-        });
+        if (!!viewConfigurationPath) {
+            const viewConfiguration = this._config.getViewByPath(viewConfigurationPath);
+            Object.entries(viewConfiguration.children).forEach(([key, childView]) => {
+                this.resolveUriForChildViews(viewConfigurationPath + '/' + key, childView);
+                this.resolveHiddenMenuItemFromChildViews(viewConfigurationPath + '/' + key, childView);
+            });
+        }
     }
 
     protected resolveUriForChildViews(configPath: string, childView: View): void {

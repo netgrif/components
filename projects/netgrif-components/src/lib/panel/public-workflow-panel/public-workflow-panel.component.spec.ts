@@ -79,6 +79,7 @@ class PublicTestWrapperComponent {
         initials: '',
         stringId: '',
         title: '',
-        version: ''
+        version: '',
+        uriNodeId: ''
     };
 }

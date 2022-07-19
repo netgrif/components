@@ -114,7 +114,7 @@
     <!--         (click)='onBackClick()'>-->
     <!--        <mat-icon class="icon-large" [matTooltip]="'Back'" [matTooltipPosition]="'right'">arrow_back</mat-icon>-->
     <!--    </div>-->
-    <button *ngIf='!isOnZeroLevel() && !(canGoBackLoading$ | async)' mat-icon-button (click)="onBackClick()"
+    <button *ngIf='!isOnZeroLevel() && (canGoBackLoading$ | async) === false' mat-icon-button (click)="onBackClick()"
             class="mat-button mat-typography menu-font-color" [matTooltip]="'toolbar.menu.back' | translate"
             matTooltipPosition="right">
         <mat-icon>arrow_back</mat-icon>
@@ -146,7 +146,7 @@
         <img *ngIf="image !== undefined" [alt]="imageAlt" [src]="image" class="logoimg"
              [routerLink]="imageRouterLink !== undefined ? imageRouterLink : []">
     </div>
-    <div *ngIf="!(rightLoading$ | async)" ngClass.gt-sm="padding-top-8">
+    <div *ngIf="(rightLoading$ | async) === false" ngClass.gt-sm="padding-top-8">
         <div class="margin-auto cursor-pointer" *ngIf='!isRightNodesEmpty()' (click)="toggleSection('folders')"
              fxLayout="row" fxFlexAlign="start center">
             <span class="headline-text mat-typography">Folders</span>

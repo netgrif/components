@@ -1,8 +1,4 @@
 
-export interface UriNodeResources {
-
-}
-
 export interface UriNodeResource {
     id: string;
     uriPath: string;

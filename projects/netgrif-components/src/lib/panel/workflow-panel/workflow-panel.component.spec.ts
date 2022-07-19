@@ -91,6 +91,7 @@ class TestWrapperComponent {
         initials: '',
         stringId: '',
         title: '',
-        version: ''
+        version: '',
+        uriNodeId: ''
     };
 }
