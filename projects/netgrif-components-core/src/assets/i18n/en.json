@@ -262,6 +262,9 @@
         },
         "enum": {
             "reset": "Reset"
+        },
+        "user": {
+            "selectUser": "Select user"
         }
     },
     "dialog": {

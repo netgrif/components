@@ -86,7 +86,8 @@ export abstract class AbstractSearchModeComponent extends AbstractHeaderModeComp
         let valueReturned = false;
         this._sideMenuService.open(component).onClose.subscribe($event => {
             if ($event.data) {
-                this.formControls[column].setValue($event.data as UserValue);
+                this.formControls[column].setValue(($event.data as UserValue).fullName);
+                this.formControls[column].setValue($event.data as UserValue, {emitModelToViewChange: false});
                 valueReturned = true;
             } else if (!valueReturned) {
                 this.formControls[column].setValue(undefined);
