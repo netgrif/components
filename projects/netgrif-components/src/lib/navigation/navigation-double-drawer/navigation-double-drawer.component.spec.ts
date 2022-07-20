@@ -8,6 +8,7 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {
     AuthenticationMethodService,
     AuthenticationService,
+    AuthenticationModule,
     ConfigurationService,
     MaterialModule,
     MockAuthenticationMethodService,
@@ -45,7 +46,8 @@ describe('NavigationDoubleDrawerComponent', () => {
                 NoopAnimationsModule,
                 TranslateLibModule,
                 HttpClientTestingModule,
-                ResizableModule
+                ResizableModule,
+                AuthenticationModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
