@@ -16,8 +16,9 @@ import {LoadingEmitter} from "../../utility/loading-emitter";
 import {MatDrawerMode} from "@angular/material/sidenav";
 import {ResizeEvent} from "angular-resizable-element";
 import {User} from "../../user/models/user";
-import {View} from "../../../commons/schema";
+import {RoleAccess, View} from "../../../commons/schema";
 import {NAE_ROUTING_CONFIGURATION_PATH} from "../../routing/routing-builder/routing-builder.service";
+import {AccessService} from "../../authorization/permission/access.service";
 
 export interface ConfigDoubleMenu {
     mode: MatDrawerMode;
@@ -26,12 +27,9 @@ export interface ConfigDoubleMenu {
     width: number;
 }
 
-export interface ViewNavigationItem {
+export interface ViewNavigationItem extends View {
     id: string;
-    title: string;
-    icon: string;
-    routingPath: string;
-    resource: Case | View
+    resource?: Case
 }
 
 export const FILTER_IDENTIFIERS = [
@@ -52,8 +50,8 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
 
     @Input() portalLeftMenu: TemplateRef<any>;
     @Input() portalRightMenu: TemplateRef<any>;
-    @Input() imageRouterLink: string;
-    @Input() imageAlt: string = "Icon";
+    @Input() imageRouterLink: string = "/";
+    @Input() imageAlt: string = "Logo";
     @Input() image: string;
 
     /**
@@ -109,6 +107,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                           protected _breakpoint: BreakpointObserver,
                           protected _languageService: LanguageService,
                           protected _userService: UserService,
+                          protected _accessService: AccessService,
                           protected _log: LoggerService,
                           protected _config: ConfigurationService,
                           protected _uriService: UriService,
@@ -164,32 +163,24 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
 
     protected resolveUriForChildViews(configPath: string, childView: View): void {
         if (!childView.processUri) return;
+        if (!this._accessService.canAccessView(childView, configPath)) return;
         if (!this._childCustomViews[childView.processUri]) {
             this._childCustomViews[childView.processUri] = {};
         }
         this._childCustomViews[childView.processUri][configPath] = {
             id: configPath,
-            // @ts-ignore
-            title: childView?.navigation?.title || configPath,
-            // @ts-ignore
-            icon: childView?.navigation?.icon || 'view_list',
-            routingPath: childView.routing.path,
-            resource: childView
+            ...childView
         }
     }
 
     protected resolveHiddenMenuItemFromChildViews(configPath: string, childView: View): void {
         if (!childView.navigation) return;
+        if (!this._accessService.canAccessView(childView, configPath)) return;
         // @ts-ignore
         if (!!(childView?.navigation?.hidden)) {
             this.moreMenuItems.push({
                 id: configPath,
-                // @ts-ignore
-                icon: childView?.navigation?.icon,
-                // @ts-ignore
-                title: childView?.navigation?.title,
-                resource: childView,
-                routingPath: childView.routing.path
+                ...childView
             });
         }
     }
@@ -329,13 +320,37 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     }
 
     protected resolveFilterCaseToViewNavigationItem(filter: Case): ViewNavigationItem {
-        return {
+        const item: ViewNavigationItem = {
+            access: {
+                role: this.resolveAccessRoles(filter)
+            },
+            navigation: {
+                icon: filter.immediateData.find(f => f.stringId === 'icon_name')?.value || 'filter_alt',
+                title: filter.immediateData.find(f => f.stringId === 'entry_name')?.value?.defaultValue || filter.title
+            },
+            routing: {
+                path: this.getFilterRoutingPath(filter)
+            },
             id: filter.stringId,
-            title: filter.immediateData.find(f => f.stringId === 'entry_name')?.value?.defaultValue || filter.title,
-            icon: filter.immediateData.find(f => f.stringId === 'icon_name')?.value || 'filter_alt',
-            routingPath: this.getFilterRoutingPath(filter),
             resource: filter
         };
+
+        if (!this._accessService.canAccessView(item, item.routingPath)) return;
+        return item;
+    }
+
+    private resolveAccessRoles(filter: Case): Array<RoleAccess> {
+        const allowedRoles = filter.immediateData.find(f => f.stringId === 'allowed_roles')?.options;
+        if (!allowedRoles || Object.keys(allowedRoles).length === 0) return [];
+        const roles = [];
+        Object.keys(allowedRoles).forEach(combined => {
+            const parts = combined.split(':');
+            roles.push({
+                processId: parts[1],
+                roleId: parts[0]
+            });
+        });
+        return roles;
     }
 
     protected getFilterRoutingPath(filterCase: Case) {

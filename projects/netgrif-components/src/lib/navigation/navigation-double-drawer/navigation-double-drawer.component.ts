@@ -8,7 +8,7 @@ import {
     LoggerService,
     UserService,
     AbstractNavigationDoubleDrawerComponent,
-    DynamicNavigationRouteProviderService
+    DynamicNavigationRouteProviderService, AccessService
 } from '@netgrif/components-core';
 import {animate, state, style, transition, trigger} from "@angular/animations";
 
@@ -50,16 +50,17 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
         views: true
     };
 
-    constructor(protected _router: Router,
-                protected _activatedRoute: ActivatedRoute,
-                protected _breakpoint: BreakpointObserver,
-                protected _languageService: LanguageService,
-                protected _userService: UserService,
-                protected _log: LoggerService,
-                protected _config: ConfigurationService,
-                protected _uriService: UriService,
-                protected _dynamicRouteProviderService: DynamicNavigationRouteProviderService) {
-        super(_router, _activatedRoute, _breakpoint, _languageService, _userService, _log, _config, _uriService,
+    constructor(_router: Router,
+                _activatedRoute: ActivatedRoute,
+                _breakpoint: BreakpointObserver,
+                _languageService: LanguageService,
+                _userService: UserService,
+                _accessService: AccessService,
+                _log: LoggerService,
+                _config: ConfigurationService,
+                _uriService: UriService,
+                _dynamicRouteProviderService: DynamicNavigationRouteProviderService) {
+        super(_router, _activatedRoute, _breakpoint, _languageService, _userService, _accessService, _log, _config, _uriService,
             _dynamicRouteProviderService)
     }
 

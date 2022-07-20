@@ -54,9 +54,9 @@
 
             <mat-menu #railMenu="matMenu">
                 <button *ngFor='let item of moreMenuItems; trackBy: viewsTrackBy' mat-menu-item
-                        [routerLink]='item.routingPath' routerLinkActive="active">
-                    <mat-icon>{{item.icon}}</mat-icon>
-                    <span>{{item.title}}</span>
+                        [routerLink]='item.routing.path' routerLinkActive="active">
+                    <mat-icon>{{item.navigation.icon}}</mat-icon>
+                    <span>{{item.navigation.title}}</span>
                 </button>
             </mat-menu>
             <!--            <div fxLayout="row" class="margin-bottom-x2 icon-container" matTooltip="Otvoriť menu"-->
@@ -177,9 +177,9 @@
         </div>
         <div [@sectionExpansion]="isSectionOpen.views ? 'expanded' : 'collapsed'" class="box-container">
             <div *ngFor='let view of views; trackBy: viewsTrackBy' class="tree-node mat-typography"
-                 fxLayoutAlign="start center" [routerLink]='view.routingPath' routerLinkActive="active">
-                <mat-icon class="tree-node-icon">{{view.icon}}</mat-icon>
-                <span>{{view.title}}</span>
+                 fxLayoutAlign="start center" [routerLink]='view.routing.path' routerLinkActive="active">
+                <mat-icon class="tree-node-icon">{{view.navigation.icon}}</mat-icon>
+                <span>{{view.navigation.title}}</span>
                 <span class="menu-item-focus-overlay"></span>
             </div>
         </div>
