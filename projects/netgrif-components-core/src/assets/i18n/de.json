@@ -9,7 +9,9 @@
             "de": "Deutsch",
             "open": "Menü öffnen",
             "home": "Startseite",
-            "back": "Zurück"
+            "back": "Zurück",
+            "folders": "Mappen",
+            "views": "Blidschirme"
         }
     },
     "tasks": {

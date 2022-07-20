@@ -53,6 +53,16 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     @Input() imageRouterLink: string = "/";
     @Input() imageAlt: string = "Logo";
     @Input() image: string;
+    @Input() profileRouterLink: string = "/profile";
+    @Input() includeUser: boolean = true;
+    @Input() includeLanguage: boolean = true;
+    @Input() includeMoreMenu: boolean = true;
+    @Input() allClosable: boolean = true;
+    @Input() folderIcon: string = "folder";
+    @Input() openedFolderIcon: string = "folder_open";
+    @Input() filterIcon: string = "filter_alt";
+    @Input() foldersCategoryName: string = 'toolbar.menu.folders';
+    @Input() viewsCategoryName: string = 'toolbar.menu.views';
 
     /**
      * Array of folder nodes on left side
@@ -206,7 +216,9 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
 
     toggleMenu() {
         this.toggleRightMenu();
-        this.toggleLeftMenu();
+        if (this.allClosable) {
+            this.toggleLeftMenu();
+        }
     }
 
     toggleLeftMenu() {
@@ -217,8 +229,8 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         this._configRightMenu.opened = !this._configRightMenu.opened;
     }
 
-    protected resolveLayout(bool: boolean): void {
-        this._configLeftMenu = bool ? {
+    protected resolveLayout(isLargeScreen: boolean): void {
+        this._configLeftMenu = isLargeScreen ? {
             mode: 'side',
             opened: true,
             disableClose: true,
@@ -229,12 +241,17 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             disableClose: false,
             width: this._configLeftMenu.width
         };
-        this._configRightMenu = bool ? {
+        this._configRightMenu = isLargeScreen ? {
             mode: 'side',
             opened: true,
             disableClose: true,
             width: this._configRightMenu.width
-        } : this._configLeftMenu;
+        } : {
+            mode: 'over',
+            opened: false,
+            disableClose: false,
+            width: this._configRightMenu.width
+        };
     }
 
     getLang() {
@@ -291,6 +308,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         this.leftLoading$.on();
         this._leftNodesSubscription = this._uriService.getSiblingsOfNode(this.currentNode).subscribe(nodes => {
             this.leftNodes = nodes instanceof Array ? nodes : [];
+            this.leftNodes.sort((a, b) => this.compareStrings(a.name, b.name));
             this.leftLoading$.off();
         }, error => {
             this._log.error(error);
@@ -306,10 +324,13 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             filters: this._uriService.getCasesOfNode(this.currentNode, FILTER_IDENTIFIERS)
         }).subscribe(result => {
             this.rightNodes = result.folders instanceof Array ? result.folders : [];
+            this.rightNodes.sort((a, b) => this.compareStrings(a.name, b.name));
             this.views = (result.filters instanceof Array ? result.filters : []).map(f => this.resolveFilterCaseToViewNavigationItem(f));
             if (!!this._childCustomViews[this.currentNode.uriPath]) {
                 this.views.push(...Object.values(this._childCustomViews[this.currentNode.uriPath]))
             }
+            // @ts-ignore
+            this.views.sort((a, b) => this.compareStrings(a?.navigation?.title, b?.navigation?.title));
             this.rightLoading$.off();
         }, error => {
             this._log.error(error);
@@ -325,7 +346,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                 role: this.resolveAccessRoles(filter)
             },
             navigation: {
-                icon: filter.immediateData.find(f => f.stringId === 'icon_name')?.value || 'filter_alt',
+                icon: filter.immediateData.find(f => f.stringId === 'icon_name')?.value || this.filterIcon,
                 title: filter.immediateData.find(f => f.stringId === 'entry_name')?.value?.defaultValue || filter.title
             },
             routing: {
@@ -339,7 +360,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         return item;
     }
 
-    private resolveAccessRoles(filter: Case): Array<RoleAccess> {
+    protected resolveAccessRoles(filter: Case): Array<RoleAccess> {
         const allowedRoles = filter.immediateData.find(f => f.stringId === 'allowed_roles')?.options;
         if (!allowedRoles || Object.keys(allowedRoles).length === 0) return [];
         const roles = [];
@@ -357,6 +378,12 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         const viewTaskId = filterCase.tasks.find(taskPair => taskPair.transition === FILTER_VIEW_TASK_TRANSITION_ID).task;
         const url = this._dynamicRoutingService.route;
         return `/${url}/${viewTaskId}`;
+    }
+
+    protected compareStrings(a: string, b: string): number {
+        if (!a && !b) return 0;
+        if (a < b) return -1;
+        return a > b ? 1 : 0;
     }
 
     /**

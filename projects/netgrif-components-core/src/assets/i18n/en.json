@@ -9,7 +9,9 @@
             "de": "German",
             "open": "Open menu",
             "home": "Home",
-            "back": "Back"
+            "back": "Back",
+            "folders": "Folders",
+            "views": "Views"
         }
     },
     "tasks": {

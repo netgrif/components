@@ -30,7 +30,8 @@
             <div fxFlex></div>
 
             <mat-menu #userRailMenu="matMenu">
-                <div mat-menu-item role="menuitem" class="large-menu-item" fxLayout="row" fxFlexAlign="center center">
+                <div mat-menu-item role="menuitem" class="large-menu-item" fxLayout="row" fxFlexAlign="center center"
+                    [routerLink]="profileRouterLink" routerLinkActive="active">
                     <mat-icon class="margin-auto" fxFlex>face</mat-icon>
                     <div class="large-menu-item" fxLayout="column" fxFlexAlign="start center" fxFlex>
                         <span class="large-menu-item-text" fxFlex="50">{{user.fullName}}</span>
@@ -42,13 +43,13 @@
                     <span>{{ 'toolbar.menu.logout' | translate }}</span>
                 </button>
             </mat-menu>
-            <button mat-icon-button [matMenuTriggerFor]="userRailMenu" class="mat-button mat-typography menu-font-color"
+            <button *ngIf="includeUser" mat-icon-button [matMenuTriggerFor]="userRailMenu" class="mat-button mat-typography menu-font-color"
                     [matTooltip]="user.fullName"
                     [matTooltipPosition]="'right'">
                 <mat-icon>account_circle</mat-icon>
             </button>
 
-            <div fxLayout="row" class="icon-container" fxLayoutAlign="center center">
+            <div *ngIf="includeLanguage" fxLayout="row" class="icon-container" fxLayoutAlign="center center">
                 <nc-language-selector fxLayout="row" [language]="getLang()"></nc-language-selector>
             </div>
 
@@ -66,7 +67,7 @@
             <!--                    <mat-icon class="icon-large sidemenu-icon">more_vert</mat-icon>-->
             <!--                </button>-->
             <!--            </div>-->
-            <button mat-icon-button [matMenuTriggerFor]="railMenu"
+            <button *ngIf="includeMoreMenu" mat-icon-button [matMenuTriggerFor]="railMenu"
                     class="mat-button mat-typography menu-font-color margin-bottom-x2"
                     [matTooltip]="'toolbar.menu.open' | translate"
                     matTooltipPosition="right">
@@ -133,7 +134,7 @@
     <button *ngFor='let node of leftNodes; trackBy: uriNodeTrackBy' mat-icon-button (click)="onNodeClick(node)"
             class="mat-button mat-typography menu-font-color" [matTooltip]="node.name" [matTooltipPosition]="'right'"
             [ngClass]="node.id === currentNode.id ? 'rail-selected-color' : ''">
-        <mat-icon>{{node.id === currentNode.id ? 'folder_open' : 'folder'}}</mat-icon>
+        <mat-icon>{{node.id === currentNode.id ? openedFolderIcon : folderIcon}}</mat-icon>
     </button>
 
     <div *ngIf="(leftLoading$ | async)" fxLayout="column" fxLayoutAlign="center center" class="margin-top-default">
@@ -149,7 +150,7 @@
     <div *ngIf="(rightLoading$ | async) === false" ngClass.gt-sm="padding-top-8">
         <div class="margin-auto cursor-pointer" *ngIf='!isRightNodesEmpty()' (click)="toggleSection('folders')"
              fxLayout="row" fxFlexAlign="start center">
-            <span class="headline-text mat-typography">Folders</span>
+            <span class="headline-text mat-typography">{{foldersCategoryName | translate}}</span>
             <div fxFlex></div>
             <span *ngIf="isSectionOpen" [@indicatorRotate]="isSectionOpen.folders ? 'expanded' : 'collapsed'"
                   class="expansion-indicator mat-typography"></span>
@@ -169,7 +170,7 @@
             </div>
             <div class="cursor-pointer" (click)="toggleSection('views')" fxLayout="row" fxFlexAlign="start center"
                  fxFlex>
-                <span class="headline-text mat-typography">Views</span>
+                <span class="headline-text mat-typography">{{viewsCategoryName | translate}}</span>
                 <div fxFlex></div>
                 <span *ngIf="isSectionOpen" [@indicatorRotate]="isSectionOpen.views ? 'expanded' : 'collapsed'"
                       class="expansion-indicator mat-typography"></span>

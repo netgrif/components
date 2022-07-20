@@ -9,7 +9,9 @@
             "de": "Nemecký",
             "open": "Otvoriť menu",
             "home": "Domov",
-            "back": "Späť"
+            "back": "Späť",
+            "folders": "Priečinky",
+            "views": "Obrazovky"
         }
     },
     "tasks": {
