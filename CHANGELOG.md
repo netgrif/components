@@ -22,6 +22,7 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://g
 ### Added
 
 - [NAE-1647] Elastic mapping for I18N data field
+- [NAE-1658] Two-level navigation menu
 
 ## [6.1.1](https://github.com/netgrif/components/releases/tag/v6.1.1) (2022-06-09)
 
