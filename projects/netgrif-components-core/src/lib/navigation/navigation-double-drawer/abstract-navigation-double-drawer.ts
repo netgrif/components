@@ -325,7 +325,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         }).subscribe(result => {
             this.rightNodes = result.folders instanceof Array ? result.folders : [];
             this.rightNodes.sort((a, b) => this.compareStrings(a.name, b.name));
-            this.views = (result.filters instanceof Array ? result.filters : []).map(f => this.resolveFilterCaseToViewNavigationItem(f));
+            this.views = (result.filters instanceof Array ? result.filters : []).map(f => this.resolveFilterCaseToViewNavigationItem(f)).filter(i => !!i);
             if (!!this._childCustomViews[this.currentNode.uriPath]) {
                 this.views.push(...Object.values(this._childCustomViews[this.currentNode.uriPath]))
             }
@@ -340,11 +340,9 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         });
     }
 
-    protected resolveFilterCaseToViewNavigationItem(filter: Case): ViewNavigationItem {
+    protected resolveFilterCaseToViewNavigationItem(filter: Case): ViewNavigationItem | undefined {
         const item: ViewNavigationItem = {
-            access: {
-                role: this.resolveAccessRoles(filter)
-            },
+            access: {},
             navigation: {
                 icon: filter.immediateData.find(f => f.stringId === 'icon_name')?.value || this.filterIcon,
                 title: filter.immediateData.find(f => f.stringId === 'entry_name')?.value?.defaultValue || filter.title
@@ -355,14 +353,15 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             id: filter.stringId,
             resource: filter
         };
-
+        const resolvedRoles = this.resolveAccessRoles(filter);
+        if(!!resolvedRoles) item.access['role'] = resolvedRoles;
         if (!this._accessService.canAccessView(item, item.routingPath)) return;
         return item;
     }
 
-    protected resolveAccessRoles(filter: Case): Array<RoleAccess> {
+    protected resolveAccessRoles(filter: Case): Array<RoleAccess> | undefined {
         const allowedRoles = filter.immediateData.find(f => f.stringId === 'allowed_roles')?.options;
-        if (!allowedRoles || Object.keys(allowedRoles).length === 0) return [];
+        if (!allowedRoles || Object.keys(allowedRoles).length === 0) return undefined;
         const roles = [];
         Object.keys(allowedRoles).forEach(combined => {
             const parts = combined.split(':');
