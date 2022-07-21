@@ -94,7 +94,7 @@
             "showcase": "Nebol zvolený mód zobrazenia používateľa!"
         },
         "ldapGroup": {
-            "choose": "Vyhladajťe Ldap skupinu",
+            "choose": "Vyhladajte Ldap skupinu",
             "noUser": "Neexistuje žiadna Ldap skupina",
             "err": "Nepodarilo sa načítať Ldap skupiny"
         },
