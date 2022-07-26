@@ -95,7 +95,7 @@ export interface InjectedTabData {
     /**
      * Reference to the parent tab view allowing some control over it from the tab content component.
      */
-    tabViewRef: TabViewInterface;
+    tabViewRef: OpenedTabViewInterface;
     /**
      * `true` is emitted into this stream when the tab is switched into.
      *
@@ -144,4 +144,16 @@ export interface TabViewInterface {
      * See [TabView.closeTabUniqueId]{@link TabView#closeTabUniqueId}
      */
     closeTabUniqueId(uniqueId: string, force?: boolean): void;
+}
+
+export interface OpenedTabViewInterface extends TabViewInterface {
+
+    setIcon(icon: string);
+
+    setText(text: string);
+
+    getIcon$(): Observable<string>;
+
+    getText$(): Observable<string>;
+
 }
