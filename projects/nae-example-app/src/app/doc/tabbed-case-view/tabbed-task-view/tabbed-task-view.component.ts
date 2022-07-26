@@ -16,12 +16,9 @@ import {
     tabbedAllowedNetsServiceFactory,
     tabbedTaskViewConfigurationFactory,
     NAE_TASK_VIEW_CONFIGURATION,
-    ChangedFieldsService, NAE_ASYNC_RENDERING_CONFIGURATION, TaskEventOutcome
+    ChangedFieldsService, NAE_ASYNC_RENDERING_CONFIGURATION,
 } from '@netgrif/components-core';
 import {HeaderComponent} from '@netgrif/components';
-import {
-    TaskEventNotification
-} from '../../../../../../netgrif-components-core/src/lib/task-content/model/task-event-notification';
 
 const baseFilterFactory = (injectedTabData: InjectedTabbedTaskViewData) => {
     return {
