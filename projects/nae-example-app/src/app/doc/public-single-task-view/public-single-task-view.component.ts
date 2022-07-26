@@ -1,8 +1,40 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
-import { combineLatest } from 'rxjs';
-import { map } from 'rxjs/operators';
+import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {
+    TaskEventNotification,
+    TaskViewService,
+    CaseResourceService,
+    PublicCaseResourceService,
+    PublicTaskResourceService,
+    SearchService,
+    PublicProcessService,
+    ProcessService,
+    TaskResourceService,
+    SnackBarService,
+    UserService,
+    SessionService,
+    PetriNetResourceService,
+    PublicPetriNetResourceService,
+    LoggerService,
+    ResourceProvider,
+    ConfigurationService,
+    FieldConverterService,
+    AuthenticationService,
+    PublicUrlResolverService,
+    publicBaseFilterFactory,
+    publicFactoryResolver,
+    AllowedNetsService,
+    PublicTaskLoadingService,
+    AllowedNetsServiceFactory,
+    NAE_VIEW_ID_SEGMENT,
+    ViewIdService,
+    NAE_BASE_FILTER,
+    ChangedFieldsService, AbstractSingleTaskViewComponent
+} from '@netgrif/components-core';
+import {HeaderComponent} from '@netgrif/components';
+import {ActivatedRoute, Router} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
+import {combineLatest} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 const localAllowedNetsServiceFactory = (factory: AllowedNetsServiceFactory, route: ActivatedRoute) => {
     const array = [];
@@ -40,7 +72,7 @@ const caseResourceServiceFactory = (userService: UserService, sessionService: Se
 @Component({
     selector: 'nae-app-public-single-task-view',
     templateUrl: './public-single-task-view.component.html',
-    styleUrls: ['./public-single-task-view.component.ts'],
+    styleUrls: ['./public-single-task-view.component.scss'],
     providers: [
         TaskViewService,
         PublicTaskLoadingService,
@@ -83,8 +115,11 @@ export class PublicSingleTaskViewComponent extends AbstractSingleTaskViewCompone
 
     @ViewChild('header') public taskHeaderComponent: HeaderComponent;
 
-    constructor(taskViewService: TaskViewService, publicTaskLoadingService: PublicTaskLoadingService) {
-        super(taskViewService);
+    hidden: boolean;
+
+    constructor(taskViewService: TaskViewService, publicTaskLoadingService: PublicTaskLoadingService, activatedRoute: ActivatedRoute) {
+        super(taskViewService, activatedRoute);
+        this.hidden = false;
         this.loading$ = combineLatest(taskViewService.loading$, publicTaskLoadingService.loading$).pipe(
             map(sources => {
                 return sources[0] || sources[1];

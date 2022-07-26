@@ -9,7 +9,7 @@ export * from './abstract/tabbed-virtual-scroll.component';
 export * from './immediate/abstract-immediate-filter-text.component';
 export * from './immediate/abstract-immediate-filter-text-content.component';
 export * from './panel-item/abstract-panel-item.component';
-//export * from './task-panel-single/abstract-task-single.component';
+export * from './task-panel-single/abstract-single-task.component';
 
 /* DATA */
 export * from './task-panel-list/task-panel-data/task-panel-data';

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TaskSingleComponent } from './task-single.component';
+import { SingleTaskComponent } from './single-task.component';
 
 describe('TaskPanelSingleComponent', () => {
-  let component: TaskSingleComponent;
-  let fixture: ComponentFixture<TaskSingleComponent>;
+  let component: SingleTaskComponent;
+  let fixture: ComponentFixture<SingleTaskComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TaskSingleComponent ]
+      declarations: [ SingleTaskComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TaskSingleComponent);
+    fixture = TestBed.createComponent(SingleTaskComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

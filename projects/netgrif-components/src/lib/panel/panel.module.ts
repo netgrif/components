@@ -15,7 +15,7 @@ import {ImmediateFilterTextComponent} from './immediate/immediate-filter-text/im
 import {ImmediateFilterTextContentComponent} from './immediate/immediate-filter-text-content/immediate-filter-text-content.component';
 import { PanelItemComponent } from './panel-item/panel-item.component';
 import {TaskListPaginationComponent} from './task-panel-list-pagination/task-list-pagination.component';
-import { TaskSingleComponent } from './task-panel-single/task-single.component';
+import { SingleTaskComponent } from './task-panel-single/single-task.component';
 
 @NgModule({
     declarations: [
@@ -29,7 +29,7 @@ import { TaskSingleComponent } from './task-panel-single/task-single.component';
         ImmediateFilterTextContentComponent,
         PanelItemComponent,
         TaskListPaginationComponent,
-        TaskSingleComponent
+        SingleTaskComponent
     ],
     imports: [
         CommonModule,
@@ -51,7 +51,8 @@ import { TaskSingleComponent } from './task-panel-single/task-single.component';
         TaskListComponent,
         PublicWorkflowPanelComponent,
         ImmediateFilterTextComponent,
-        TaskListPaginationComponent
+        TaskListPaginationComponent,
+        SingleTaskComponent
     ]
 })
 export class PanelComponentModule {
