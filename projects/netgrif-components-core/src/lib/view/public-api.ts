@@ -55,3 +55,4 @@ export * from './tree-case-view/tree-component/abstract-tree.component';
 export * from './tree-case-view/tree-component/add-child-node/abstract-add-child-node.component';
 export * from './tree-case-view/tree-component/remove-node/abstract-remove-node.component';
 export * from './tree-case-view/tree-task-content/abstract-tree-task-content.component';
+//export * from './task-view/abstract-single-task-view';

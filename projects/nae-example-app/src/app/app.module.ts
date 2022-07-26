@@ -96,6 +96,7 @@ import { ExampleRedirectComponent } from './doc/redirect/example-redirect.compon
 import { ActiveGroupComponent } from './doc/active-group/active-group.component';
 import { WrapperEmptyViewComponent } from './views/wrapper/wrapper-empty-view.component';
 import {DoubleDrawerExampleComponent} from './doc/double-drawer-example/double-drawer-example.component';
+import { PublicSingleTaskViewComponent } from './doc/public-single-task-view/public-single-task-view.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -148,7 +149,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         TitleConfigComponent,
         ActiveGroupComponent,
         WrapperEmptyViewComponent,
-        DoubleDrawerExampleComponent
+        DoubleDrawerExampleComponent,
+        PublicSingleTaskViewComponent
     ],
     imports: [
         BrowserModule,

@@ -1,0 +1,68 @@
+// import { AfterViewInit, Component, EventEmitter, Inject, Input, OnDestroy, Optional, Output } from '@angular/core';
+// import { Observable, Subject } from 'rxjs';
+// import { TaskPanelData } from '../task-panel-list/task-panel-data/task-panel-data';
+// import { MatExpansionPanel } from '@angular/material/expansion';
+// import { HeaderColumn } from '../../header/models/header-column';
+// import { TaskEventNotification } from '../../task-content/model/task-event-notification';
+// import { TaskViewService } from '../../view/task-view/service/task-view.service';
+// import { LoggerService } from '../../logger/services/logger.service';
+// import { NAE_TAB_DATA } from '../../tabs/tab-data-injection-token/tab-data-injection-token';
+// import { InjectedTabData } from '../../tabs/interfaces';
+// import { ActivatedRoute } from '@angular/router';
+// import { filter } from 'rxjs/operators';
+//
+//
+// @Component({
+//     selector: 'ncc-abstract-task-single',
+//     template: ''
+// })
+// export abstract class AbstractTaskSingleComponent implements OnDestroy {
+//
+//     protected _task$: Observable<TaskPanelData>;
+//     protected _unsubscribe$: Subject<void>;
+//     protected _taskPanelRef: MatExpansionPanel;
+//     @Input() loading$: Observable<boolean>;
+//     @Input() selectedHeaders$: Observable<Array<HeaderColumn>>;
+//     @Input() responsiveBody = true;
+//     @Input() forceLoadDataOnOpen = false;
+//     @Input() textEllipsis = false;
+//     @Output() taskEvent: EventEmitter<TaskEventNotification>;
+//
+//     constructor(protected _taskViewService: TaskViewService,
+//                 protected _log: LoggerService,
+//                 @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData,
+//                 protected route?: ActivatedRoute) {
+//         this.taskEvent = new EventEmitter<TaskEventNotification>();
+//         this._unsubscribe$ = new Subject<void>();
+//     }
+//
+//     ngOnDestroy(): void {
+//         this.taskEvent.complete();
+//         this._unsubscribe$.complete();
+//     }
+//
+//     @Input()
+//     set task$(task: Observable<TaskPanelData>) {
+//         this._task$ = task;
+//     }
+//
+//     get task$(): Observable<TaskPanelData> {
+//         return this._task$;
+//     }
+//
+//     set taskPanelRef(panelRef: MatExpansionPanel) {
+//         this._taskPanelRef = panelRef;
+//     }
+//
+//     public trackBy(_idx: number, item: TaskPanelData): any {
+//         return item.task.stringId; // + (item.task.user ? item.task.user.email : '');
+//     }
+//
+//     /**
+//      * Emits an event into this component's @Output attribute
+//      * @param event the event that will be emitted
+//      */
+//     public emitTaskEvent(event: TaskEventNotification) {
+//         this.taskEvent.emit(event);
+//     }
+// }

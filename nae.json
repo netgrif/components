@@ -518,6 +518,25 @@
                 "path": "tree-view"
             }
         },
+        "demo-single-public-task": {
+            "layout": {
+                "name": "publicTaskView",
+                "params": {
+                    "allowedNets": []
+                }
+            },
+            "component": {
+                "class": "PublicSingleTaskViewComponent",
+                "from": "./doc/public-single-task-view/public-single-task-view.component"
+            },
+            "access": "public",
+            "navigation": {
+                "title": "Public view - transition"
+            },
+            "routing": {
+                "path": "process/:petriNetId/:caseId/:transitionId"
+            }
+        },
         "demo-public-view": {
             "layout": {
                 "name": "publicTaskView",
