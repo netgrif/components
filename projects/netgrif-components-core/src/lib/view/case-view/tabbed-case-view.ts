@@ -67,7 +67,7 @@ export abstract class AbstractTabbedCaseViewComponent extends AbstractCaseViewCo
         this._injectedTabData.tabViewRef.openTab({
             label: {
                 text: openCase.title,
-                icon: openCase.icon
+                icon: openCase.icon ? openCase.icon : 'check_box'
             },
             canBeClosed: true,
             tabContentComponent: this._injectedTabData.tabViewComponent,
