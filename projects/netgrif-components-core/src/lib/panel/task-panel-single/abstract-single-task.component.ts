@@ -26,11 +26,11 @@ export abstract class AbstractSingleTaskComponent implements OnDestroy {
     @Input() textEllipsis = false;
     @Input() preventCollapse = true;
     @Input() hidePanelHeader = true;
-    @Input() actionRowContent: TemplateRef<any>;
     @Input() pageHeader: TemplateRef<any>;
     @Input() pageFooter: TemplateRef<any>;
     @Input() headerTitle: string;
     @Input() footerText: string;
+    @Input() actionButtonTemplates: Array<TemplateRef<any>>;
     @Input() actionRowJustifyContent: 'space-between' | 'flex-start' | 'flex-end' | 'center' | 'space-around' |
         'initial' | 'start' | 'end' | 'left' | 'right' | 'revert' | 'inherit' | 'unset'
     @Output() taskEvent: EventEmitter<TaskEventNotification>;

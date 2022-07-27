@@ -64,9 +64,30 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
     @Input() responsiveBody = true;
     @Input() preventCollapse = false;
     @Input() hidePanelHeader = false;
-    @Input() actionRowContent: TemplateRef<any>;
+    @Input() actionButtonTemplates: Array<TemplateRef<any>>;
     @Input() actionRowJustifyContent: 'space-between' | 'flex-start' | 'flex-end' | 'center' | 'space-around' |
         'initial' | 'start' | 'end' | 'left' | 'right' | 'revert' | 'inherit' | 'unset'
+
+    thisContext = {
+        canAssign: () => this.canAssign(),
+        assign: () => this.assign(),
+        getAssignTitle: () => this.getAssignTitle(),
+        delegate: () => this.delegate(),
+        getDelegateTitle: () => this.getDelegateTitle(),
+        canReassign: () => this.canReassign(),
+        canCancel: () => this.canCancel(),
+        cancel: () => this.cancel(),
+        getCancelTitle: () => this.getCancelTitle(),
+        canFinish: () => this.canFinish(),
+        finish: () => this.finish(),
+        getFinishTitle: () => this.getFinishTitle(),
+        canCollapse: () => this.canCollapse(),
+        collapse: () => this.collapse(),
+        canDisable: (arg: string) => this.canDisable(arg),
+        canDo: (arg: string) => this.canDo(arg),
+        isLoading: () => this.isLoading
+    };
+
 
     @Input()
     set forceLoadDataOnOpen(force: boolean) {

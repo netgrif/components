@@ -2,17 +2,24 @@
     <div fxLayout="column" fxLayoutAlign="start stretch" class="content-margin full-height" >
         <nc-header [hidden]='hidden' #header type="task" class="task-panel-padding-mini"></nc-header>
         <nc-single-task [task$]="task$" [loading$]="loading$" [selectedHeaders$]="selectedHeaders$" (taskEvent)="logEvent($event)"
-                        [actionRowContent]='actionRowContent' [pageHeader]='pageHeader' [pageFooter]='pageFooter'
-                        [actionRowJustifyContent] = '"center"' fxFlex></nc-single-task>
+                        [pageHeader]='pageHeader' [pageFooter]='pageFooter' [actionButtonTemplates]='[finishButton]'
+                        [actionRowJustifyContent]='"center"' fxFlex></nc-single-task>
     </div>
 </div>
 
-<ng-template #actionRowContent>
+<ng-template #finishButton let-finish="finish">
     <div class="public-button-padding">
         <button mat-raised-button color="primary" class="public-button"
                 (click)="finish();">
             <span>{{getFinishTitle()}}</span>
         </button>
+    </div>
+</ng-template>
+
+<ng-template #tempalte let-icon="icon" let-action="action" let-alt="alt">
+    <div (click)="action()">
+        <img src={{icon}} alt={{alt}}>
+        Button
     </div>
 </ng-template>
 
@@ -22,7 +29,7 @@
         <mat-divider class="upper-divider"></mat-divider>
     </div>
     <mat-card class="upper-card">
-        <span class="upper-card-title"><strong>Example header</strong></span>
+        <span class="upper-card-title"><strong>Example task title</strong></span>
     </mat-card>
 </ng-template>
 

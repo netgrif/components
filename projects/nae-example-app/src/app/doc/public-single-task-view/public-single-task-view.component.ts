@@ -129,8 +129,7 @@ export class PublicSingleTaskViewComponent extends AbstractSingleTaskViewCompone
     hidden: boolean;
 
     constructor(taskViewService: TaskViewService, publicTaskLoadingService: PublicTaskLoadingService,
-                activatedRoute: ActivatedRoute, protected _taskContentService: TaskContentService,
-                protected _taskDataService: TaskDataService, protected _finishTaskService: FinishTaskService) {
+                activatedRoute: ActivatedRoute) {
         super(taskViewService, activatedRoute);
         this.hidden = true;
         this.loading$ = combineLatest(taskViewService.loading$, publicTaskLoadingService.loading$).pipe(
@@ -142,31 +141,10 @@ export class PublicSingleTaskViewComponent extends AbstractSingleTaskViewCompone
 
     ngAfterViewInit(): void {
         this.initializeHeader(this.taskHeaderComponent);
-        this.task$.subscribe(t => {
-            if (!!t && !!t.task) {
-                this._taskContentService.task = t.task;
-            }
-        });
     }
 
     logEvent(event: TaskEventNotification) {
         console.log(event);
-    }
-
-    finish() {
-        if (!this._taskContentService.validateTaskData()) {
-            if (!this._taskContentService.task.dataSize || this._taskContentService.task.dataSize <= 0) {
-                this._taskDataService.initializeTaskDataFields();
-            }
-            const invalidFields = this._taskContentService.getInvalidTaskData();
-            document.getElementById(invalidFields[0].stringId).scrollIntoView({
-                behavior: 'smooth',
-                block: 'start',
-                inline: 'nearest'
-            });
-        } else {
-            this._finishTaskService.validateDataAndFinish();
-        }
     }
 
     public getFinishTitle(): string {

@@ -1,10 +1,12 @@
 import { Component, Input, OnDestroy } from '@angular/core';
 import { AbstractViewWithHeadersComponent } from '../abstract/view-with-headers';
-import { Observable, Subscription } from 'rxjs';
+import { forkJoin, Observable, Subscription } from 'rxjs';
 import { TaskPanelData } from '../../panel/task-panel-list/task-panel-data/task-panel-data';
 import { TaskViewService } from './service/task-view.service';
 import { map } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
+import { UserService } from '../../user/services/user.service';
+import { User } from '../../user/models/user';
 
 export class TaskConst {
     public static readonly TRANSITION_ID = 'transitionId';
@@ -45,7 +47,7 @@ export abstract class AbstractSingleTaskViewComponent extends AbstractViewWithHe
     private resolveTransitionTask(tasks: Array<TaskPanelData>): TaskPanelData {
         const transitionTask = tasks.find(t => t.task.transitionId === this.transitionId);
         if (!!transitionTask) {
-            transitionTask.initiallyExpanded = this.initiallyExpanded;
+            transitionTask.initiallyExpanded = transitionTask.task.finishDate === undefined;
         }
         return transitionTask;
     }
