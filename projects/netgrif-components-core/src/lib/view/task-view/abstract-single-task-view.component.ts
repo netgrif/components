@@ -5,8 +5,6 @@ import { TaskPanelData } from '../../panel/task-panel-list/task-panel-data/task-
 import { TaskViewService } from './service/task-view.service';
 import { map } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
-import { UserService } from '../../user/services/user.service';
-import { User } from '../../user/models/user';
 
 export class TaskConst {
     public static readonly TRANSITION_ID = 'transitionId';
