@@ -62,6 +62,7 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
     @Input() public first: boolean;
     @Input() public last: boolean;
     @Input() responsiveBody = true;
+    @Input() preventCollapse = false;
 
     @Input()
     set forceLoadDataOnOpen(force: boolean) {

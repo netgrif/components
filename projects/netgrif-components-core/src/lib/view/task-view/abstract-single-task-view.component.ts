@@ -1,11 +1,14 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { AbstractViewWithHeadersComponent } from '../abstract/view-with-headers';
 import { Observable, Subscription } from 'rxjs';
 import { TaskPanelData } from '../../panel/task-panel-list/task-panel-data/task-panel-data';
 import { TaskViewService } from './service/task-view.service';
 import { map } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
-import { AbstractHeaderComponent } from '../../header/abstract-header.component';
+
+export class TaskConst {
+    public static readonly TRANSITION_ID = 'transitionId';
+}
 
 @Component({
     selector: 'ncc-abstract-single-task-view',
@@ -13,21 +16,21 @@ import { AbstractHeaderComponent } from '../../header/abstract-header.component'
 })
 export abstract class AbstractSingleTaskViewComponent extends AbstractViewWithHeadersComponent implements OnDestroy {
 
+    @Input() initiallyExpanded: boolean = true;
+    @Input() preventCollapse: boolean = true;
     public task$: Observable<TaskPanelData>;
     public loading$: Observable<boolean>;
     private transitionId: string;
-    private readonly urlTransitionId = 'transitionId';
-
     private subRoute: Subscription;
 
     protected constructor(protected taskViewService: TaskViewService,
                           protected activatedRoute: ActivatedRoute) {
         super(taskViewService);
         this.subRoute = this.activatedRoute.paramMap.subscribe(paramMap => {
-            if (!!paramMap && !!paramMap['params'] && !!paramMap['params'][this.urlTransitionId]) {
-                this.transitionId = paramMap['params'][this.urlTransitionId];
+            if (!!paramMap && !!paramMap['params'] && !!paramMap['params'][TaskConst.TRANSITION_ID]) {
+                this.transitionId = paramMap['params'][TaskConst.TRANSITION_ID];
                 this.task$ = this.taskViewService.tasks$.pipe(map<Array<TaskPanelData>, TaskPanelData>(tasks => {
-                    return tasks.find(t => t.task.transitionId === this.transitionId);
+                    return this.resolveTransitionTask(tasks);
                 }));
             }
         });
@@ -37,5 +40,13 @@ export abstract class AbstractSingleTaskViewComponent extends AbstractViewWithHe
     ngOnDestroy() {
         super.ngOnDestroy();
         this.subRoute.unsubscribe();
+    }
+
+    private resolveTransitionTask(tasks: Array<TaskPanelData>): TaskPanelData {
+        const transitionTask = tasks.find(t => t.task.transitionId === this.transitionId);
+        if (!!transitionTask) {
+            transitionTask.initiallyExpanded = this.initiallyExpanded;
+        }
+        return transitionTask;
     }
 }

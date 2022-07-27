@@ -119,7 +119,7 @@ export class PublicSingleTaskViewComponent extends AbstractSingleTaskViewCompone
 
     constructor(taskViewService: TaskViewService, publicTaskLoadingService: PublicTaskLoadingService, activatedRoute: ActivatedRoute) {
         super(taskViewService, activatedRoute);
-        this.hidden = false;
+        this.hidden = true;
         this.loading$ = combineLatest(taskViewService.loading$, publicTaskLoadingService.loading$).pipe(
             map(sources => {
                 return sources[0] || sources[1];
