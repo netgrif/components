@@ -81,12 +81,4 @@ export abstract class AbstractUserAssignComponent {
             });
         }
     }
-
-    public close(): void {
-        this._sideMenuControl.close({
-            opened: false,
-            message: 'No select user',
-            data: null
-        });
-    }
 }
