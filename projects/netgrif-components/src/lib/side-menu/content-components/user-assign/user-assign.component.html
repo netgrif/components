@@ -21,9 +21,17 @@
                              (userSelected)="userWasSelected($event)">
         </nc-user-assign-list>
 
-        <div fxLayout="row" fxLayoutAlign="end center">
-            <button mat-raised-button color="primary"
-                    (click)="assign()">{{ 'tasks.view.assign' | translate | uppercase }}</button>
+        <div fxLayout="row" fxLayoutAlign="start center" >
+            <div fxLayoutAlign="start center">
+                <button mat-raised-button color="primary"
+                        (click)="close()">{{ 'tasks.view.cancel' | translate | uppercase }}</button>
+            </div>
+            <div fxFlex></div>
+            <div>
+                <button mat-raised-button color="primary"
+                        (click)="assign()">{{ 'tasks.view.assign' | translate | uppercase }}</button>
+            </div>
         </div>
+
     </div>
 </div>
