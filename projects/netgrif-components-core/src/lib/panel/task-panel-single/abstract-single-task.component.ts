@@ -31,6 +31,8 @@ export abstract class AbstractSingleTaskComponent implements OnDestroy {
     @Input() pageFooter: TemplateRef<any>;
     @Input() headerTitle: string;
     @Input() footerText: string;
+    @Input() actionRowJustifyContent: 'space-between' | 'flex-start' | 'flex-end' | 'center' | 'space-around' |
+        'initial' | 'start' | 'end' | 'left' | 'right' | 'revert' | 'inherit' | 'unset'
     @Output() taskEvent: EventEmitter<TaskEventNotification>;
 
     constructor(protected _log: LoggerService,

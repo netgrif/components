@@ -19,6 +19,7 @@
                 [preventCollapse]='preventCollapse'
                 [hidePanelHeader]='hidePanelHeader'
                 [actionRowContent]='actionRowContent'
+                [actionRowJustifyContent]='actionRowJustifyContent'
                 class='panel-expanded-spacing'>
             </nc-task-panel>
 
@@ -33,6 +34,7 @@
                 <span class="top-card-title"><strong>{{headerTitle ?? (!!task && !!task.task ? task.task.title : '')}}</strong></span>
             </mat-card>
         </ng-template>
+
         <ng-template #defaultPageFooter>
             <mat-card class='bootom-card footer'>
                 <span class="bottom-card-title footer-font"><strong>{{footerText ?? 'tasks.footer.defaultText' | translate}}</strong></span>

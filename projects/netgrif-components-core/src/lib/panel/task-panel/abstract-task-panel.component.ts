@@ -65,6 +65,8 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
     @Input() preventCollapse = false;
     @Input() hidePanelHeader = false;
     @Input() actionRowContent: TemplateRef<any>;
+    @Input() actionRowJustifyContent: 'space-between' | 'flex-start' | 'flex-end' | 'center' | 'space-around' |
+        'initial' | 'start' | 'end' | 'left' | 'right' | 'revert' | 'inherit' | 'unset'
 
     @Input()
     set forceLoadDataOnOpen(force: boolean) {

@@ -2,7 +2,8 @@
     <div fxLayout="column" fxLayoutAlign="start stretch" class="content-margin full-height" >
         <nc-header [hidden]='hidden' #header type="task" class="task-panel-padding-mini"></nc-header>
         <nc-single-task [task$]="task$" [loading$]="loading$" [selectedHeaders$]="selectedHeaders$" (taskEvent)="logEvent($event)"
-                        [actionRowContent]='actionRowContent' [pageHeader]='pageHeader' [pageFooter]='pageFooter' fxFlex></nc-single-task>
+                        [actionRowContent]='actionRowContent' [pageHeader]='pageHeader' [pageFooter]='pageFooter'
+                        [actionRowJustifyContent] = '"center"' fxFlex></nc-single-task>
     </div>
 </div>
 
