@@ -36,8 +36,8 @@ export abstract class AbstractSingleTaskComponent implements OnDestroy {
     @Output() taskEvent: EventEmitter<TaskEventNotification>;
 
     constructor(protected _log: LoggerService,
-                @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData,
-                protected route?: ActivatedRoute) {
+                @Optional() @Inject(NAE_TAB_DATA) _injectedTabData: InjectedTabData,
+                protected _route?: ActivatedRoute) {
         this.taskEvent = new EventEmitter<TaskEventNotification>();
         this._unsubscribe$ = new Subject<void>();
     }
@@ -61,7 +61,7 @@ export abstract class AbstractSingleTaskComponent implements OnDestroy {
     }
 
     public trackBy(_idx: number, item: TaskPanelData): any {
-        return item.task.stringId; // + (item.task.user ? item.task.user.email : '');
+        return item.task.stringId;
     }
 
     /**

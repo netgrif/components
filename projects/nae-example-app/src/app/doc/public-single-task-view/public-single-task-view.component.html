@@ -11,15 +11,8 @@
     <div class="public-button-padding">
         <button mat-raised-button color="primary" class="public-button"
                 (click)="finish();">
-            <span>{{getFinishTitle()}}</span>
+            <span>{{ 'singleTask.finishButtonTitle' | translate }}</span>
         </button>
-    </div>
-</ng-template>
-
-<ng-template #tempalte let-icon="icon" let-action="action" let-alt="alt">
-    <div (click)="action()">
-        <img src={{icon}} alt={{alt}}>
-        Button
     </div>
 </ng-template>
 
@@ -35,6 +28,6 @@
 
 <ng-template #pageFooter>
     <mat-toolbar color="primary" class="footer-custom">
-        <span>&copy; 2022 NETGRIF, s.r.o.</span>
+        <span>NETGRIF, s.r.o. &copy; 2022</span>
     </mat-toolbar>
 </ng-template>

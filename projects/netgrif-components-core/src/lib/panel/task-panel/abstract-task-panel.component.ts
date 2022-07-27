@@ -7,7 +7,8 @@ import {
     OnDestroy,
     OnInit,
     Optional,
-    Output, TemplateRef,
+    Output,
+    TemplateRef,
     Type
 } from '@angular/core';
 import {MatExpansionPanel} from '@angular/material/expansion';

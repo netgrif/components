@@ -147,8 +147,4 @@ export class PublicSingleTaskViewComponent extends AbstractSingleTaskViewCompone
         console.log(event);
     }
 
-    public getFinishTitle(): string {
-        return 'Uložiť a pokračovať';
-    }
-
 }
