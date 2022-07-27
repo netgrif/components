@@ -57,10 +57,6 @@ export class OpenedTab implements TabContent {
      */
     public tabClosed$: Subject<void>;
 
-    private _labelIcon$: BehaviorSubject<string | undefined>;
-
-    private _labelText$: ReplaySubject<string>;
-
 
     /**
      * @param tabContent - content of the tab
@@ -70,31 +66,31 @@ export class OpenedTab implements TabContent {
         Object.assign(this, tabContent);
         this.tabSelected$ = new BehaviorSubject<boolean>(false);
         this.tabClosed$ = new Subject();
-        this._labelText$ = new ReplaySubject<string>(1);
-        this._labelIcon$ = new BehaviorSubject<string>(this.label?.icon);
+        this.label._labelText$ = new ReplaySubject<string>(1);
+        this.label._labelIcon$ = new BehaviorSubject<string>(this.label?.icon);
         if (!!this.label?.text) {
-            this._labelText$.next(this.label.text);
+            this.label._labelText$.next(this.label.text);
         }
     }
 
     public setIcon(icon: string) {
-        this._labelIcon$.next(icon);
+        this.label._labelIcon$.next(icon);
     }
 
     public setText(text: string) {
-        this._labelText$.next(text);
+        this.label._labelText$.next(text);
     }
 
     public getIcon$(): Observable<string> {
-        return this._labelIcon$.asObservable();
+        return this.label._labelIcon$.asObservable();
     }
 
     public getIcon(): string | undefined {
-        return this._labelIcon$.getValue();
+        return this.label._labelIcon$.getValue();
     }
 
     public getText$(): Observable<string> {
-        return this._labelText$.asObservable();
+        return this.label._labelText$.asObservable();
     }
 
     /**
@@ -103,7 +99,7 @@ export class OpenedTab implements TabContent {
     public destroy(): void {
         this.tabSelected$.complete();
         this.tabClosed$.complete();
-        this._labelText$.complete();
-        this._labelIcon$.complete();
+        this.label._labelText$.complete();
+        this.label._labelIcon$.complete();
     }
 }
