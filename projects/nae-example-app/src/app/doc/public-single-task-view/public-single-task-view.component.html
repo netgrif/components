@@ -2,7 +2,7 @@
     <div fxLayout="column" fxLayoutAlign="start stretch" class="content-margin full-height" >
         <nc-header [hidden]='hidden' #header type="task" class="task-panel-padding-mini"></nc-header>
         <nc-single-task [task$]="task$" [loading$]="loading$" [selectedHeaders$]="selectedHeaders$" (taskEvent)="logEvent($event)"
-                        [actionRowContent]='actionRowContent' fxFlex></nc-single-task>
+                        [actionRowContent]='actionRowContent' [pageHeader]='pageHeader' [pageFooter]='pageFooter' fxFlex></nc-single-task>
     </div>
 </div>
 
@@ -13,4 +13,20 @@
             <span>{{getFinishTitle()}}</span>
         </button>
     </div>
+</ng-template>
+
+<ng-template #pageHeader>
+    <div>
+        <img src="../../../assets/img/netgrif_full_white.svg" alt="logo" class="logoimg">
+        <mat-divider class="upper-divider"></mat-divider>
+    </div>
+    <mat-card class="upper-card">
+        <span class="upper-card-title"><strong>Example header</strong></span>
+    </mat-card>
+</ng-template>
+
+<ng-template #pageFooter>
+    <mat-toolbar color="primary" class="footer-custom">
+        <span>&copy; 2022 NAE s.r.o.</span>
+    </mat-toolbar>
 </ng-template>
