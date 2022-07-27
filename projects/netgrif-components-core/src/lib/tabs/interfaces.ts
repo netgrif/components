@@ -79,10 +79,6 @@ export interface TabLabel {
      */
     count?: ReplaySubject<number>;
 
-    _labelIcon$?: BehaviorSubject<string | undefined>;
-
-    _labelText$?: ReplaySubject<string>;
-
 }
 
 
