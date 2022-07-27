@@ -25,6 +25,7 @@ export abstract class AbstractSingleTaskComponent implements OnDestroy {
     @Input() forceLoadDataOnOpen = false;
     @Input() textEllipsis = false;
     @Input() preventCollapse = true;
+    @Input() hidePanelHeader = true;
     @Output() taskEvent: EventEmitter<TaskEventNotification>;
 
     constructor(protected _log: LoggerService,

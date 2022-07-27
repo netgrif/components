@@ -1,6 +1,6 @@
 <nc-app-panel [panelContent]="taskPanelContent" [panelHeader]="taskPanelHeader"
               (stopLoading)="stopLoading()" (getExpansionPanelRef)="setPanelRef($event)" [first]="first" [last]="last"
-              [preventCollapse]='preventCollapse'>
+              [preventCollapse]='preventCollapse' [hidePanelHeader]='hidePanelHeader'>
     <ng-template #taskPanelHeader>
         <div fxLayoutAlign="start center" fxLayout="row" fxFlex="95" (click)="preventSelectionClick($event)">
             <div *ngFor="let field of featuredFieldsValues; let i = index" fxFlex
