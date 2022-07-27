@@ -50,6 +50,9 @@
             "cancel": "Zrušiť",
             "noData": "Táto úloha nemá žiadne údaje. Stlačte dokončiť pre pokračovanie.",
             "redirecting": "Presmerovanie..."
+        },
+        "footer": {
+            "defaultText": "Netgrif Application Engine © 2022"
         }
     },
     "side-menu": {

@@ -22,3 +22,14 @@
 .full-height {
     height: 100%;
 }
+.public-button {
+    height: 36px;
+    width: 200px;
+}
+
+.public-button-padding {
+    padding: 16px;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+}

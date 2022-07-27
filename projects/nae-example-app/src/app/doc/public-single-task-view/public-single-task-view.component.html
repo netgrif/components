@@ -1,6 +1,16 @@
 <div class="task-tab-background full-height">
     <div fxLayout="column" fxLayoutAlign="start stretch" class="content-margin full-height" >
         <nc-header [hidden]='hidden' #header type="task" class="task-panel-padding-mini"></nc-header>
-        <nc-single-task [task$]="task$" [loading$]="loading$" [selectedHeaders$]="selectedHeaders$" (taskEvent)="logEvent($event)" fxFlex></nc-single-task>
+        <nc-single-task [task$]="task$" [loading$]="loading$" [selectedHeaders$]="selectedHeaders$" (taskEvent)="logEvent($event)"
+                        [actionRowContent]='actionRowContent' fxFlex></nc-single-task>
     </div>
 </div>
+
+<ng-template #actionRowContent>
+    <div class="public-button-padding">
+        <button mat-raised-button color="primary" class="public-button"
+                (click)="finish();">
+            <span>{{getFinishTitle()}}</span>
+        </button>
+    </div>
+</ng-template>

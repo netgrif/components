@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, Input, OnDestroy, Optional, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnDestroy, Optional, Output, TemplateRef } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { TaskPanelData } from '../task-panel-list/task-panel-data/task-panel-data';
 import { MatExpansionPanel } from '@angular/material/expansion';
@@ -26,6 +26,11 @@ export abstract class AbstractSingleTaskComponent implements OnDestroy {
     @Input() textEllipsis = false;
     @Input() preventCollapse = true;
     @Input() hidePanelHeader = true;
+    @Input() actionRowContent: TemplateRef<any>;
+    @Input() pageHeader: TemplateRef<any>;
+    @Input() pageFooter: TemplateRef<any>;
+    @Input() headerTitle: string;
+    @Input() footerText: string;
     @Output() taskEvent: EventEmitter<TaskEventNotification>;
 
     constructor(protected _log: LoggerService,

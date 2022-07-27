@@ -13,3 +13,25 @@
 .task-panel-scroll-container {
     padding: 0 4px;
 }
+
+.top-card {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.top-card-title {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.bottom-card {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.bottom-card-title {
+    display: block;
+    align-items: start;
+    flex-direction: column;
+}

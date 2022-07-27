@@ -7,7 +7,7 @@ import {
     OnDestroy,
     OnInit,
     Optional,
-    Output,
+    Output, TemplateRef,
     Type
 } from '@angular/core';
 import {MatExpansionPanel} from '@angular/material/expansion';
@@ -64,6 +64,7 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
     @Input() responsiveBody = true;
     @Input() preventCollapse = false;
     @Input() hidePanelHeader = false;
+    @Input() actionRowContent: TemplateRef<any>;
 
     @Input()
     set forceLoadDataOnOpen(force: boolean) {
