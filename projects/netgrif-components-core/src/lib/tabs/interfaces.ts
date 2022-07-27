@@ -1,5 +1,5 @@
 import {Type} from '@angular/core';
-import {BehaviorSubject, Observable, ReplaySubject} from 'rxjs';
+import {Observable, ReplaySubject} from 'rxjs';
 
 /**
  * Stores information about content of one opened tab in tab view.

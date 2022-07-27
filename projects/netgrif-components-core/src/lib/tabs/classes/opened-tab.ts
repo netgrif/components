@@ -1,7 +1,7 @@
 import {TabContent, TabLabel} from '../interfaces';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {Type} from '@angular/core';
-import {BehaviorSubject, Observable, ReplaySubject, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {TabLabelStream} from './tab-label-stream';
 
 /**
