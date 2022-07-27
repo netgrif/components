@@ -1,4 +1,4 @@
-import {Injectable, OnDestroy} from '@angular/core';
+import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
 import {LoggerService} from '../../logger/services/logger.service';
 import {UriResourceService} from './uri-resource.service';
 import {BehaviorSubject, Observable, of} from 'rxjs';
@@ -10,6 +10,7 @@ import {CaseSearchRequestBody, PetriNetSearchRequest} from '../../filter/models/
 import {ActiveGroupService} from '../../groups/services/active-group.service';
 import {map} from "rxjs/operators";
 import {LoadingEmitter} from "../../utility/loading-emitter";
+import {NAE_NAVIGATION_MENU_PAGE_SIZE} from '../model/size-menu-injection-token';
 
 /**
  * Service for managing URIs
@@ -27,7 +28,8 @@ export class UriService implements OnDestroy {
     constructor(protected _logger: LoggerService,
                 protected _resourceService: UriResourceService,
                 protected _caseResourceService: CaseResourceService,
-                protected _activeGroupService: ActiveGroupService) {
+                protected _activeGroupService: ActiveGroupService,
+                @Optional() @Inject(NAE_NAVIGATION_MENU_PAGE_SIZE) protected pageSize: string = '20' ) {
         this._rootLoading$ = new LoadingEmitter();
         this._parentLoading$ = new LoadingEmitter();
         this._activeNode$ = new BehaviorSubject<UriNodeResource>(undefined);
@@ -150,7 +152,7 @@ export class UriService implements OnDestroy {
         //     searchBody.data = {};
         //     searchBody.data['parentId'] = this._activeGroupService.activeGroup.stringId;
         // }
-        return this._caseResourceService.searchCases(SimpleFilter.fromCaseQuery(searchBody)).pipe(
+        return this._caseResourceService.searchCases(SimpleFilter.fromCaseQuery(searchBody), {size: this.pageSize}).pipe(
             map(page => page.content)
         );
     }
