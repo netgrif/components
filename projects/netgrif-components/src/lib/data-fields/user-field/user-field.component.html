@@ -12,7 +12,7 @@
             <br>
         </mat-label>
         <button mat-stroked-button
-                *ngIf="dataField.value !== undefined"
+                *ngIf="(dataField.value !== undefined) && (dataField.value !== null)"
                 [disabled]="formControl.disabled"
                 color="primary"
                 (click)="selectUser()">
@@ -20,7 +20,7 @@
             {{dataField.value.fullName}}
         </button>
         <button mat-stroked-button
-                *ngIf="dataField.value === undefined"
+                *ngIf="(dataField.value === undefined) || (dataField.value === null)"
                 [disabled]="formControl.disabled"
                 color="primary"
                 (click)="selectUser()">
