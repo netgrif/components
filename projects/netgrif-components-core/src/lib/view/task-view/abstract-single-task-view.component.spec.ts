@@ -3,7 +3,7 @@ import { SideMenuControl } from '../../side-menu/models/side-menu-control';
 import { NAE_SIDE_MENU_CONTROL } from '../../side-menu/side-menu-injection-token';
 import { Component } from '@angular/core';
 import { TaskViewService } from './service/task-view.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MaterialModule } from '../../material/material.module';
 import { TranslateLibModule } from '../../translate/translate-lib.module';
@@ -23,9 +23,9 @@ import { SearchService } from '../../search/search-service/search.service';
 import { NAE_BASE_FILTER } from '../../search/models/base-filter-injection-token';
 import { SimpleFilter } from '../../filter/models/simple-filter';
 
-describe('AbstractSaveFilterComponent', () => {
-    let component: TestSaveFilterComponent;
-    let fixture: ComponentFixture<TestSaveFilterComponent>;
+describe('AbstractSingleTaskViewComponent', () => {
+    let component: TestAbstractSingleTaskViewComponent;
+    let fixture: ComponentFixture<TestAbstractSingleTaskViewComponent>;
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
@@ -34,6 +34,7 @@ describe('AbstractSaveFilterComponent', () => {
                 TranslateLibModule,
                 HttpClientTestingModule,
                 NoopAnimationsModule,
+                RouterModule.forRoot([])
             ],
             providers: [
                 {
@@ -49,13 +50,13 @@ describe('AbstractSaveFilterComponent', () => {
                 {provide: NAE_BASE_FILTER, useValue: {filter: SimpleFilter.emptyTaskFilter()}}
             ],
             declarations: [
-                TestSaveFilterComponent,
+                TestAbstractSingleTaskViewComponent,
             ]
         }).compileComponents();
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(TestSaveFilterComponent);
+        fixture = TestBed.createComponent(TestAbstractSingleTaskViewComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
@@ -73,7 +74,7 @@ describe('AbstractSaveFilterComponent', () => {
     selector: 'ncc-test-single-task-view',
     template: ''
 })
-class TestSaveFilterComponent extends AbstractSingleTaskViewComponent {
+class TestAbstractSingleTaskViewComponent extends AbstractSingleTaskViewComponent {
     constructor(taskViewService: TaskViewService,
                 activatedRoute: ActivatedRoute) {
         super(taskViewService, activatedRoute);
