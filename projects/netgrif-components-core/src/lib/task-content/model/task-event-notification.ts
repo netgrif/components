@@ -1,5 +1,6 @@
 import {TaskEvent} from './task-event';
 import {Task} from '../../resources/public-api';
+import {TaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/task-event-outcome';
 
 /**
  * Holds the information about an event that occurred to some {@link Task} resource.
@@ -23,19 +24,26 @@ export interface TaskEventNotification {
      * Success state of the event
      */
     success: boolean;
+
+    /**
+     * The task eventOutcome from backend
+     */
+    outcome?: TaskEventOutcome;
 }
 
 /**
  * @param task affected Task object
  * @param event the reported Task event
  * @param success success state of the reported event
+ * @param outcome TaskEventOutcome
  * @returns the notification informing about the event
  */
-export function createTaskEventNotification(task: Task, event: TaskEvent, success: boolean): TaskEventNotification {
+export function createTaskEventNotification(task: Task, event: TaskEvent, success: boolean, outcome?: TaskEventOutcome): TaskEventNotification {
     return {
         taskId: task.stringId,
         transitionId: task.transitionId,
         event,
-        success
+        success,
+        outcome
     };
 }
