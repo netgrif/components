@@ -42,6 +42,7 @@ export abstract class AbstractSingleTaskViewComponent extends AbstractViewWithHe
     ngOnDestroy() {
         super.ngOnDestroy();
         this.subRoute.unsubscribe();
+        this.unsubscribe$.next();
         this.unsubscribe$.complete();
     }
 

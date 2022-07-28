@@ -16,3 +16,4 @@ export * from './task-panel-list/task-panel-data/task-panel-data';
 export * from './task-panel/models/disable-functions';
 export * from './abstract/featured-value';
 export * from './immediate/model/filter-text-injection-token';
+export * from './task-panel/models/task-panel-context'

@@ -45,10 +45,7 @@ import {CurrencyPipe} from '@angular/common';
 import {PermissionService} from '../../authorization/permission/permission.service';
 import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
 import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
-
-export interface Context {
-    [k: string]: (str?: string) => boolean | string | void;
-}
+import { TaskPanelContext } from './models/task-panel-context';
 
 @Component({
     selector: 'ncc-abstract-legal-notice',
@@ -73,7 +70,7 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
     @Input() actionRowJustifyContent: 'space-between' | 'flex-start' | 'flex-end' | 'center' | 'space-around' |
         'initial' | 'start' | 'end' | 'left' | 'right' | 'revert' | 'inherit' | 'unset'
 
-    thisContext: Context = {
+    thisContext: TaskPanelContext = {
         canAssign: () => this.canAssign(),
         assign: () => this.assign(),
         getAssignTitle: () => this.getAssignTitle(),
