@@ -14,11 +14,11 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://g
 - [NAE-1628] Reset radio buttons button visible on visible radio buttons
 - [NAE-1667] Select user translation
 - [NAE-1669] Fix header design
-- [NAE-1672] Change userfield value
+- [NAE-1672] Change userField value
 
 ### Changed
 
-- [NAE-1648] Redesign datafields
+- [NAE-1648] Redesign dataFields
 
 ### Added
 
