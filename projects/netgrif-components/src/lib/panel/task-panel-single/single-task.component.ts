@@ -15,9 +15,9 @@ import { ActivatedRoute } from '@angular/router';
 export class SingleTaskComponent extends AbstractSingleTaskComponent {
 
   constructor(protected _log: LoggerService,
-              @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData,
-              protected route?: ActivatedRoute) {
-      super(_log, injectedTabData, route);
+              protected _route: ActivatedRoute,
+              @Optional() @Inject(NAE_TAB_DATA) _injectedTabData: InjectedTabData) {
+      super(_log, _route, _injectedTabData);
   }
 
 }

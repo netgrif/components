@@ -46,6 +46,10 @@ import {PermissionService} from '../../authorization/permission/permission.servi
 import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
 import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
 
+export interface Context {
+    [k: string]: (str?: string) => boolean | string | void;
+}
+
 @Component({
     selector: 'ncc-abstract-legal-notice',
     template: ''
@@ -69,7 +73,7 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
     @Input() actionRowJustifyContent: 'space-between' | 'flex-start' | 'flex-end' | 'center' | 'space-around' |
         'initial' | 'start' | 'end' | 'left' | 'right' | 'revert' | 'inherit' | 'unset'
 
-    thisContext = {
+    thisContext: Context = {
         canAssign: () => this.canAssign(),
         assign: () => this.assign(),
         getAssignTitle: () => this.getAssignTitle(),

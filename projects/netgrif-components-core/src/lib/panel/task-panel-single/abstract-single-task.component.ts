@@ -16,9 +16,9 @@ import { ActivatedRoute } from '@angular/router';
 })
 export abstract class AbstractSingleTaskComponent implements OnDestroy {
 
-    protected _task$: Observable<TaskPanelData>;
     protected _unsubscribe$: Subject<void>;
     protected _taskPanelRef: MatExpansionPanel;
+    @Input() task$: Observable<TaskPanelData>;
     @Input() loading$: Observable<boolean>;
     @Input() selectedHeaders$: Observable<Array<HeaderColumn>>;
     @Input() responsiveBody = true;
@@ -36,8 +36,8 @@ export abstract class AbstractSingleTaskComponent implements OnDestroy {
     @Output() taskEvent: EventEmitter<TaskEventNotification>;
 
     constructor(protected _log: LoggerService,
-                @Optional() @Inject(NAE_TAB_DATA) _injectedTabData: InjectedTabData,
-                protected _route?: ActivatedRoute) {
+                protected _route: ActivatedRoute,
+                @Optional() @Inject(NAE_TAB_DATA) _injectedTabData: InjectedTabData) {
         this.taskEvent = new EventEmitter<TaskEventNotification>();
         this._unsubscribe$ = new Subject<void>();
     }
@@ -45,15 +45,6 @@ export abstract class AbstractSingleTaskComponent implements OnDestroy {
     ngOnDestroy(): void {
         this.taskEvent.complete();
         this._unsubscribe$.complete();
-    }
-
-    @Input()
-    set task$(task: Observable<TaskPanelData>) {
-        this._task$ = task;
-    }
-
-    get task$(): Observable<TaskPanelData> {
-        return this._task$;
     }
 
     public setPanelRef(panelRef: MatExpansionPanel) {
