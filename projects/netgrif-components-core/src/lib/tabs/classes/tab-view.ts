@@ -247,7 +247,12 @@ export class TabView implements TabViewInterface {
         if (!tab.isTabInitialized) {
             Object.assign(tab.injectedObject, {
                 tabUniqueId: tab.uniqueId,
-                tabViewRef: this.tabViewInterface,
+                tabViewRef: Object.assign({
+                    setIcon: t => tab.setIcon(t),
+                    setText: t => tab.setText(t),
+                    getIcon$: () => tab.getIcon$(),
+                    getText$: () => tab.getText$(),
+                }, this.tabViewInterface),
                 tabSelected$: tab.tabSelected$.asObservable(),
                 tabClosed$: tab.tabClosed$.asObservable(),
             } as InjectedTabData);
@@ -255,7 +260,10 @@ export class TabView implements TabViewInterface {
             const providers: Array<StaticProvider> = [
                 {provide: NAE_TAB_DATA, useValue: tab.injectedObject}
             ];
-            providers.push({provide: NAE_VIEW_ID_SEGMENT, useValue: tab.initial ? tab.uniqueId : TabView.DYNAMIC_TAB_VIEW_ID_SEGMENT});
+            providers.push({
+                provide: NAE_VIEW_ID_SEGMENT,
+                useValue: tab.initial ? tab.uniqueId : TabView.DYNAMIC_TAB_VIEW_ID_SEGMENT
+            });
 
             const injector = Injector.create({providers, parent: this._parentInjector});
 
