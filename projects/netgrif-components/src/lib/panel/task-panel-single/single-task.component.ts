@@ -4,7 +4,7 @@ import {
     InjectedTabData,
     LoggerService,
     NAE_TAB_DATA
-} from 'netgrif-components-core';
+} from '@netgrif/components-core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
