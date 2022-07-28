@@ -50,6 +50,9 @@
             "cancel": "Cancel",
             "noData": "This task has no data. Finish to continue.",
             "redirecting": "Redirecting..."
+        },
+        "footer": {
+            "defaultText": "NETGRIF, s.r.o. © 2022"
         }
     },
     "side-menu": {

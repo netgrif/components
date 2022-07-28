@@ -10,6 +10,8 @@ export abstract class AbstractPanelComponent implements AfterViewInit, OnDestroy
 
     @Input() expansionDisabled = false;
     @Input() preventExpand = false;
+    @Input() preventCollapse = false;
+    @Input() hidePanelHeader = false;
     @Input() panelHeader: TemplateRef<object>;
     @Input() panelContent: TemplateRef<object>;
     @Input() first: boolean;

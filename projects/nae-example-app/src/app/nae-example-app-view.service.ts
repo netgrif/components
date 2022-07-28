@@ -37,6 +37,7 @@ import { ExampleRedirectComponent } from './doc/redirect/example-redirect.compon
 import { ActiveGroupComponent } from './doc/active-group/active-group.component';
 import { WrapperEmptyViewComponent } from './views/wrapper/wrapper-empty-view.component';
 import {DoubleDrawerExampleComponent} from './doc/double-drawer-example/double-drawer-example.component';
+import { PublicSingleTaskViewComponent } from './doc/public-single-task-view/public-single-task-view.component';
 
 @Injectable({
     providedIn: 'root'
@@ -46,6 +47,7 @@ export class NaeExampleAppViewService extends ViewService {
         // This class is managed by schematics. Do not modify it by hand.
         // If you want to add views to the application run the 'create-view' schematic.
         super([{id: 'TitleConfigComponent', class: TitleConfigComponent},
+            {id: 'PublicSingleTaskViewComponent', class: PublicSingleTaskViewComponent},
 			{id: 'WrapperEmptyViewComponent', class: WrapperEmptyViewComponent},
 			{id: 'ActiveGroupComponent', class: ActiveGroupComponent},
             {id: 'ExampleRedirectComponent', class: ExampleRedirectComponent},
