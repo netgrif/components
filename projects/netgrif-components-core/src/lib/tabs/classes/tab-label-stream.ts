@@ -14,5 +14,9 @@ export class TabLabelStream {
         }
     }
 
+    public destroy(): void {
+        this.text$.complete();
+        this.icon$.complete();
+    }
 
 }

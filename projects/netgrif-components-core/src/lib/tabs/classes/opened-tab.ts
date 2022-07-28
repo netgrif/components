@@ -97,7 +97,6 @@ export class OpenedTab implements TabContent {
     public destroy(): void {
         this.tabSelected$.complete();
         this.tabClosed$.complete();
-        this._label$.text$.complete();
-        this._label$.icon$.complete();
+        this._label$.destroy()
     }
 }

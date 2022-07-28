@@ -147,6 +147,11 @@ export interface TabViewInterface {
     closeTabUniqueId(uniqueId: string, force?: boolean): void;
 }
 
+/**
+ * Update information about the label of a tab in tab view.
+ *
+ * See {@link TabContent#label} for more information.
+ * */
 export interface OpenedTabViewInterface extends TabViewInterface {
 
     setIcon(icon: string);
