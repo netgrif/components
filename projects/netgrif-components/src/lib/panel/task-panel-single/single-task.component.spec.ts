@@ -13,7 +13,7 @@ import {
     TaskViewService,
     TestConfigurationService, TestTaskBaseFilterProvider, TestTaskViewAllowedNetsFactory,
     UserResourceService
-} from '@netgrif/components-cor';
+} from '@netgrif/components-core';
 import { RouterTestingModule } from '@angular/router/testing';
 
 describe('SingleTaskComponent', () => {
