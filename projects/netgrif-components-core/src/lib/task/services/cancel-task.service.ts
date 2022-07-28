@@ -25,6 +25,7 @@ import {PermissionService} from '../../authorization/permission/permission.servi
 import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
 import { EventService} from '../../event/services/event.service';
 import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
+import {TaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/task-event-outcome';
 
 /**
  * Service that handles the logic of canceling a task.
@@ -126,7 +127,7 @@ export class CancelTaskService extends TaskHandlingService {
                     this._changedFieldsService.emitChangedFields(changedFieldsMap);
                 }
                 forceReload ? this._taskOperations.forceReload() : this._taskOperations.reload();
-                this.completeActions(afterAction, nextEvent, true);
+                this.completeActions(afterAction, nextEvent, true, outcomeResource.outcome as CancelTaskEventOutcome);
             } else if (outcomeResource.error !== undefined) {
                 if (outcomeResource.error !== '') {
                     this._snackBar.openErrorSnackBar(outcomeResource.error);
@@ -156,8 +157,8 @@ export class CancelTaskService extends TaskHandlingService {
     /**
      * complete all action streams and send notification with selected boolean
      */
-    protected completeActions(afterAction: AfterAction, nextEvent: AfterAction, bool: boolean): void {
-        this.sendNotification(bool);
+    protected completeActions(afterAction: AfterAction, nextEvent: AfterAction, bool: boolean, outcome?: TaskEventOutcome): void {
+        this.sendNotification(bool, outcome);
         afterAction.resolve(bool);
         nextEvent.resolve(bool);
     }
@@ -165,8 +166,9 @@ export class CancelTaskService extends TaskHandlingService {
     /**
      * Publishes a cancel notification to the {@link TaskEventService}
      * @param success whether the cancel operation was successful or not
+     * @param outcome
      */
-    protected sendNotification(success: boolean): void {
-        this._taskEvent.publishTaskEvent(createTaskEventNotification(this._safeTask, TaskEvent.CANCEL, success));
+    protected sendNotification(success: boolean, outcome?: TaskEventOutcome): void {
+        this._taskEvent.publishTaskEvent(createTaskEventNotification(this._safeTask, TaskEvent.CANCEL, success, outcome));
     }
 }
