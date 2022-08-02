@@ -1,16 +1,17 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
-import { EnumerationIconFieldComponent } from './enumeration-icon-field.component';
+import {EnumerationIconFieldComponent} from './enumeration-icon-field.component';
 import {AngularResizeEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {
+    EnumerationField,
+    FieldTypeResource,
     MaterialModule,
     TranslateLibModule,
-    WrappedBoolean,
-    EnumerationField
+    WrappedBoolean
 } from '@netgrif/components-core';
 
 describe('EnumerationIconFieldComponent', () => {
@@ -58,7 +59,7 @@ class TestWrapperComponent {
         visible: true,
         editable: true,
         hidden: true
-    }, undefined, undefined, undefined, undefined, [], {name: 'icon'}, '');
+    }, undefined, undefined, undefined, FieldTypeResource.ENUMERATION, undefined, {name: 'icon'}, '');
     form = new FormControl();
 }
 

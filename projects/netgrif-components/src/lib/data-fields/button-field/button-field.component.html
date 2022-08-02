@@ -13,12 +13,12 @@
         </mat-label>
         <button mat-button
                 [ngClass]="{
-                'mat-raised-button': resolveComponentType() === 'raised',
-                'mat-stroked-button': resolveComponentType() === 'stroked',
-                'mat-flat-button': resolveComponentType() === 'flat',
-                'mat-icon-button': resolveComponentType() === 'icon',
-                'mat-fab': resolveComponentType() === 'fab',
-                'mat-mini-fab': resolveComponentType() === 'minifab',
+                'mat-raised-button': dataField.getComponentType() === 'raised',
+                'mat-stroked-button': dataField.getComponentType() === 'stroked',
+                'mat-flat-button': dataField.getComponentType() === 'flat',
+                'mat-icon-button': dataField.getComponentType() === 'icon',
+                'mat-fab': dataField.getComponentType() === 'fab',
+                'mat-mini-fab': dataField.getComponentType() === 'minifab',
                 'full-button-width': stretch === 'true'}"
                 color="primary"
                 [matTooltip]="dataField.description"
