@@ -16,6 +16,7 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {PanelComponent} from '../panel.component';
 import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
 import {of} from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('PublicWorkflowPanelComponent', () => {
   let component: PublicWorkflowPanelComponent;
@@ -30,7 +31,8 @@ describe('PublicWorkflowPanelComponent', () => {
             BrowserAnimationsModule,
             DataFieldsComponentModule,
             TranslateLibModule,
-            HttpClientTestingModule
+            HttpClientTestingModule,
+            RouterTestingModule.withRoutes([])
         ],
         providers: [
             {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
