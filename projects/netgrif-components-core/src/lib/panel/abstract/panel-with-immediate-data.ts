@@ -6,14 +6,16 @@ import {Component, OnDestroy} from '@angular/core';
 import {FeaturedValue} from './featured-value';
 import {CurrencyPipe} from '@angular/common';
 import {ImmediateData} from '../../resources/interface/immediate-data';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'ncc-abstract-panel-with-immediate',
     template: ''
 })
 export abstract class AbstractPanelWithImmediateDataComponent extends AbstractPanelWithHeaderBindingComponent implements OnDestroy {
-    protected constructor(protected _translate: TranslateService, protected _currencyPipe: CurrencyPipe) {
-        super();
+    protected constructor(protected _translate: TranslateService, protected _currencyPipe: CurrencyPipe,
+                          protected _activatedRoute?: ActivatedRoute) {
+        super(_activatedRoute);
     }
 
     ngOnDestroy(): void {

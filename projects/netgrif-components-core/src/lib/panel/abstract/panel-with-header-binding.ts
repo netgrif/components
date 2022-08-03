@@ -2,19 +2,24 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Observable, Subscription} from 'rxjs';
 import {HeaderColumn, HeaderColumnType} from '../../header/models/header-column';
 import {FeaturedValue} from './featured-value';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
     selector: 'ncc-abstract-panel-with-header-binding',
     template: ''
 })
 export abstract class AbstractPanelWithHeaderBindingComponent implements OnInit, OnDestroy {
+    config: Params;
     public selectedHeaders$: Observable<Array<HeaderColumn>>;
     public firstFeaturedValue: string;
     public featuredFieldsValues: Array<FeaturedValue> = [];
     protected _lastSelectedHeaders: Array<HeaderColumn>;
     protected sub: Subscription;
 
-    protected constructor() {
+    protected constructor(protected _activatedRoute?: ActivatedRoute) {
+        if (!!_activatedRoute) {
+            this._activatedRoute.queryParams.subscribe(paramMap => this.config = paramMap);
+        }
     }
 
     ngOnInit(): void {

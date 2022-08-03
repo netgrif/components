@@ -4,6 +4,7 @@ import {CaseResourceService, PermissionService} from '@netgrif/components-core';
 import {SnackBarService} from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 import {CurrencyPipe} from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'nc-case-panel',
@@ -15,8 +16,9 @@ export class CasePanelComponent extends AbstractCasePanelComponent {
                 protected _snackBarService: SnackBarService, protected _translateService: TranslateService,
                 protected _log: LoggerService, @Optional() protected _overflowService: OverflowService,
                 protected _userService: UserService, protected _currencyPipe: CurrencyPipe,
-                public _permissionService: PermissionService) {
+                public _permissionService: PermissionService, protected _activatedRoute: ActivatedRoute) {
         super(_caseResourceService, _caseViewService, _snackBarService,
-            _translateService, _log, _overflowService, _userService, _currencyPipe, _permissionService);
+            _translateService, _log, _overflowService, _userService, _currencyPipe, _permissionService,
+            _activatedRoute);
     }
 }

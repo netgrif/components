@@ -20,6 +20,7 @@ import {EventOutcomeMessageResource} from '../../resources/interface/message-res
 import {CurrencyPipe} from '@angular/common';
 import {PermissionService} from '../../authorization/permission/permission.service';
 import {PermissionType} from '../../process/permissions';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'ncc-abstract-case-panel',
@@ -39,8 +40,9 @@ export abstract class AbstractCasePanelComponent extends AbstractPanelWithImmedi
     protected constructor(protected _caseResourceService: CaseResourceService, protected _caseViewService: CaseViewService,
                           protected _snackBarService: SnackBarService, protected _translateService: TranslateService,
                           protected _log: LoggerService, protected _overflowService: OverflowService, protected _userService: UserService,
-                          protected _currencyPipe: CurrencyPipe, protected _permissionService: PermissionService) {
-        super(_translateService, _currencyPipe);
+                          protected _currencyPipe: CurrencyPipe, protected _permissionService: PermissionService,
+                          protected _activatedRoute?: ActivatedRoute) {
+        super(_translateService, _currencyPipe, _activatedRoute);
     }
 
     public show(event: MouseEvent): boolean {
