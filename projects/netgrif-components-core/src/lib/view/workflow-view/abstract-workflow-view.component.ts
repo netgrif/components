@@ -9,6 +9,7 @@ import {Net} from '../../process/net';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {LoggerService} from '../../logger/services/logger.service';
 import {ProcessService} from '../../process/process.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'ncc-abstract-workflow-view',
@@ -29,8 +30,9 @@ export abstract class AbstractWorkflowViewComponent extends AbstractViewWithHead
     protected constructor(protected _sideMenuService: SideMenuService,
                           protected _workflowViewService: WorkflowViewService,
                           protected _log: LoggerService,
-                          protected _processService: ProcessService) {
-        super(_workflowViewService);
+                          protected _processService: ProcessService,
+                          protected _activatedRoute?: ActivatedRoute) {
+        super(_workflowViewService, _activatedRoute);
         this.workflows$ = this._workflowViewService.workflows$;
         this.loading$ = this._workflowViewService.loading$;
         this.footerSize = 0;

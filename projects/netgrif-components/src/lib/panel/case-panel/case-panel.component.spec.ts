@@ -25,6 +25,8 @@ import {
     AuthenticationMethodService,
     MockAuthenticationMethodService
 } from '@netgrif/components-core';
+import { RouterModule } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('CasePanelComponent', () => {
     let component: CasePanelComponent;
@@ -40,7 +42,8 @@ describe('CasePanelComponent', () => {
                 DataFieldsComponentModule,
                 TranslateLibModule,
                 HttpClientTestingModule,
-                CurrencyModule
+                CurrencyModule,
+                RouterTestingModule.withRoutes([])
             ],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},

@@ -6,6 +6,7 @@ import {Component, OnDestroy} from '@angular/core';
 import {FeaturedValue} from './featured-value';
 import {CurrencyPipe} from '@angular/common';
 import {ImmediateData} from '../../resources/interface/immediate-data';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'ncc-abstract-panel-with-immediate',

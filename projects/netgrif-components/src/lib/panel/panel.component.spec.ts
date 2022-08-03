@@ -7,6 +7,7 @@ import {FlexModule} from '@angular/flex-layout';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('PanelComponent', () => {
     let component: PanelComponent;
@@ -20,7 +21,8 @@ describe('PanelComponent', () => {
                 FlexModule,
                 NoopAnimationsModule,
                 TranslateLibModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                RouterTestingModule.withRoutes([])
             ],
             declarations: [PanelComponent],
             schemas: [NO_ERRORS_SCHEMA]

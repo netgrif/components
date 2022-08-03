@@ -4,6 +4,7 @@ import {Component, Inject, OnDestroy} from '@angular/core';
 import {NAE_TAB_DATA} from '../../tabs/tab-data-injection-token/tab-data-injection-token';
 import {InjectedTabbedTaskViewData} from './models/injected-tabbed-task-view-data';
 import {Subscription} from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'ncc-abstract-tabbed-task-view',
@@ -13,8 +14,9 @@ export abstract class AbstractTabbedTaskViewComponent extends AbstractTaskViewCo
     protected subTaskView: Subscription;
 
     protected constructor(taskViewService: TaskViewService,
-                          @Inject(NAE_TAB_DATA) protected _injectedTabData: InjectedTabbedTaskViewData) {
-        super(taskViewService);
+                          @Inject(NAE_TAB_DATA) protected _injectedTabData: InjectedTabbedTaskViewData,
+                          protected _activatedRoute?: ActivatedRoute) {
+        super(taskViewService, _activatedRoute);
         this.subTaskView = taskViewService.closeTab.subscribe(() => {
             _injectedTabData.tabViewRef.closeTabIndex(_injectedTabData.tabViewRef.currentlySelectedTab());
         });

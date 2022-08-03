@@ -16,6 +16,7 @@ import {
     AllowedNetsService, UserFilterConstants, TaskSetDataRequestFields
 } from '@netgrif/components-core';
 import {HeaderComponent} from '@netgrif/components';
+import { ActivatedRoute } from '@angular/router';
 
 const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
     return factory.createWithAllNets();
