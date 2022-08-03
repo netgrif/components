@@ -8,6 +8,7 @@ import {
     OnInit,
     Optional,
     Output,
+    TemplateRef,
     Type
 } from '@angular/core';
 import {MatExpansionPanel} from '@angular/material/expansion';
@@ -44,6 +45,7 @@ import {CurrencyPipe} from '@angular/common';
 import {PermissionService} from '../../authorization/permission/permission.service';
 import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
 import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
+import { TaskPanelContext } from './models/task-panel-context';
 
 @Component({
     selector: 'ncc-abstract-legal-notice',
@@ -62,6 +64,32 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
     @Input() public first: boolean;
     @Input() public last: boolean;
     @Input() responsiveBody = true;
+    @Input() preventCollapse = false;
+    @Input() hidePanelHeader = false;
+    @Input() actionButtonTemplates: Array<TemplateRef<any>>;
+    @Input() actionRowJustifyContent: 'space-between' | 'flex-start' | 'flex-end' | 'center' | 'space-around' |
+        'initial' | 'start' | 'end' | 'left' | 'right' | 'revert' | 'inherit' | 'unset'
+
+    thisContext: TaskPanelContext = {
+        canAssign: () => this.canAssign(),
+        assign: () => this.assign(),
+        getAssignTitle: () => this.getAssignTitle(),
+        delegate: () => this.delegate(),
+        getDelegateTitle: () => this.getDelegateTitle(),
+        canReassign: () => this.canReassign(),
+        canCancel: () => this.canCancel(),
+        cancel: () => this.cancel(),
+        getCancelTitle: () => this.getCancelTitle(),
+        canFinish: () => this.canFinish(),
+        finish: () => this.finish(),
+        getFinishTitle: () => this.getFinishTitle(),
+        canCollapse: () => this.canCollapse(),
+        collapse: () => this.collapse(),
+        canDisable: (arg: string) => this.canDisable(arg),
+        canDo: (arg: string) => this.canDo(arg),
+        isLoading: () => this.isLoading
+    };
+
 
     @Input()
     set forceLoadDataOnOpen(force: boolean) {

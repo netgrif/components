@@ -1,0 +1,69 @@
+.task-tab-background{
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    background-color: transparent;
+}
+.search-panel{
+    margin-top: 20px;
+}
+.content-margin{
+    margin: 0 20px;
+}
+.task-panel-padding-mini{
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.search-width {
+    width: 100%;
+}
+
+.full-height {
+    height: 100%;
+}
+.public-button {
+    height: 36px;
+    width: 200px;
+}
+
+.public-button-padding {
+    padding: 16px;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+}
+
+.single-page-task {
+    width: 85% !important;
+    padding-bottom: 25px;
+}
+
+.logoimg {
+    height: 120px;
+    outline: none !important;
+    cursor: pointer;
+}
+
+.upper-card {
+    margin-bottom: 10px;
+}
+
+.upper-card-title {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.upper-divider {
+    border-top-width: 20px;
+    border-top-color: #023b7e;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.footer-custom {
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+

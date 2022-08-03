@@ -28,4 +28,14 @@
     .panel-accent-icon {
         color: mat.get-color-from-palette($accent);
     }
+
+    .footer {
+        background: mat.get-color-from-palette($primary, 500);
+        color: mat.get-contrast-color-from-palette($primary, 500);
+    }
+
+    .footer-font {
+        font-size: 12px;
+        color: mat.get-contrast-color-from-palette($primary, 500);
+    }
 }

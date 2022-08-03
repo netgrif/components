@@ -16,7 +16,7 @@ import {
     tabbedAllowedNetsServiceFactory,
     tabbedTaskViewConfigurationFactory,
     NAE_TASK_VIEW_CONFIGURATION,
-    ChangedFieldsService, NAE_ASYNC_RENDERING_CONFIGURATION
+    ChangedFieldsService, NAE_ASYNC_RENDERING_CONFIGURATION,
 } from '@netgrif/components-core';
 import {HeaderComponent} from '@netgrif/components';
 
