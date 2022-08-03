@@ -328,7 +328,7 @@ export abstract class DataField<T> {
      * @returns type of component in string
      */
     public getComponentType(): string {
-        return !!this.component && !!this.component.name ? this.component.name : '';
+        return this.component?.name ?? '';
     }
 
     public destroy(): void {

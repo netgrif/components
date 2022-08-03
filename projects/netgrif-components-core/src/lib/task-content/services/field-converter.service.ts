@@ -26,6 +26,7 @@ import {I18nField} from '../../data-fields/i18n-field/models/i18n-field';
     providedIn: 'root'
 })
 export class FieldConverterService {
+    private textFieldNames = ['textarea', 'richtextarea', 'htmltextarea', 'editor', 'htmlEditor', 'area']
 
     constructor() {
     }
@@ -36,9 +37,7 @@ export class FieldConverterService {
                 return new BooleanField(item.stringId, item.name, item.value as boolean, item.behavior,
                     item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.TEXT:
-                if (item.component !== undefined && item.component.name !== undefined && (item.component.name === 'textarea' ||
-                    item.component.name === 'richtextarea' || item.component.name === 'htmltextarea' ||
-                    item.component.name === 'editor' || item.component.name === 'htmlEditor' || item.component.name === 'area') ) {
+                if (this.textFieldNames.includes(item.component?.name)) {
                     return new TextAreaField(item.stringId, item.name, this.resolveTextValue(item, item.value), item.behavior,
                         item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
                 }
