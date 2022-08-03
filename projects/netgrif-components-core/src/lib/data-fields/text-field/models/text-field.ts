@@ -5,13 +5,6 @@ import {Validation} from '../../models/validation';
 import {Component} from '../../models/component';
 import {DataField} from '../../models/abstract-data-field';
 
-export enum TextFieldView {
-    DEFAULT = 'default',
-    TEXTAREA = 'textarea',
-    RICHTEXTAREA = 'richtextarea',
-    HTMLTEXTAREA = 'htmltextarea'
-}
-
 export enum TextAreaHeight {
     OUTLINE = 27,
     FILL_STANDARD = 34
@@ -34,14 +27,9 @@ export class TextField extends DataField<string> {
     public static FIELD_HEIGHT = 105;
 
     constructor(stringId: string, title: string, value: string, behavior: Behavior, placeholder?: string,
-                description?: string, layout?: Layout, validations?: Array<Validation>, protected _view = TextFieldView.DEFAULT,
-                _component?: Component, parentTaskId?: string) {
+                description?: string, layout?: Layout, validations?: Array<Validation>, _component?: Component,
+                parentTaskId?: string) {
         super(stringId, title, value, behavior, placeholder, description, layout, validations, _component, parentTaskId);
-    }
-
-    /*@deprecated in 4.3.0*/
-    get view(): TextFieldView {
-        return this._view;
     }
 
     protected resolveValidations(): Array<ValidatorFn> {

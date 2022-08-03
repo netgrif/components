@@ -69,7 +69,6 @@ export interface LocalisedBooleanFields {
     behavior: Behavior;
     value: boolean;
     order: number;
-    view: FieldView;
     defaultValue?: boolean;
 }
 
@@ -221,12 +220,6 @@ export interface FileFieldValue {
     name: string;
     path: string;
 }
-
-export interface FieldView {
-    trueImage: string;
-    falseImage: string;
-}
-
 
 export interface ValidationErrors {
     between?: boolean;

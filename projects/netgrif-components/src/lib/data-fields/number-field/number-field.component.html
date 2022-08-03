@@ -6,7 +6,7 @@
 </nc-data-field-template>
 
 <ng-template #dataFieldTemplate let-showLargeLayout="showLargeLayout">
-    <div [ngSwitch]="resolveComponent()" fxLayout="column">
+    <div [ngSwitch]="dataField.getComponentType()">
         <nc-number-currency-field *ngSwitchCase="'currency'"
                                  [numberField]="dataField"
                                  [formControlRef]="formControl"

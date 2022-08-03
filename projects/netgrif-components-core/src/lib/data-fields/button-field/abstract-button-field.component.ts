@@ -27,22 +27,11 @@ export abstract class AbstractButtonFieldComponent extends AbstractDataFieldComp
     }
 
     /**
-     * This function resolve type of component for HTML
-     * @returns type of component in string
-     */
-    public resolveComponentType(): string {
-        if (this.dataField.component && this.dataField.component.name !== undefined) {
-            return this.dataField.component.name;
-        }
-        return this.dataField.view;
-    }
-
-    /**
      * Function checks if button is icon type
      * @returns true if component type is 'fab', 'minifab' or 'icon'
      */
     public isIconTypeButton(): boolean {
-        return this.resolveComponentType() === 'fab' || this.resolveComponentType() === 'minifab' || this.resolveComponentType() === 'icon';
+        return this.dataField.getComponentType() === 'fab' || this.dataField.getComponentType() === 'minifab' || this.dataField.getComponentType() === 'icon';
     }
 
     /**

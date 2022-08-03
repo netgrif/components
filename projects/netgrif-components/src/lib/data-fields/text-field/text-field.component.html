@@ -5,29 +5,23 @@
 </nc-data-field-template>
 
 <ng-template #textFieldTemplate let-showLargeLayout="showLargeLayout">
-    <div *ngIf="dataField.component !== undefined" [ngSwitch]="dataField.component.name">
+    <div [ngSwitch]="dataField.getComponentType()">
         <nc-password-text-field *ngSwitchCase="'password'" [passwordTextField]="dataField" [formControlRef]="formControl"
                                 [showLargeLayout]="showLargeLayout"></nc-password-text-field>
         <nc-textarea-field *ngSwitchCase="'textarea'" [textAreaField]="dataField" [formControlRef]="formControl"
                            [showLargeLayout]="showLargeLayout"></nc-textarea-field>
+        <nc-textarea-field *ngSwitchCase="'area'" [textAreaField]="dataField" [formControlRef]="formControl"
+                           [showLargeLayout]="showLargeLayout"></nc-textarea-field>
         <nc-rich-textarea-field *ngSwitchCase="'richtextarea'" [textAreaField]="dataField"
+                                [formControlRef]="formControl"
+                                [showLargeLayout]="showLargeLayout"></nc-rich-textarea-field>
+        <nc-rich-textarea-field *ngSwitchCase="'editor'" [textAreaField]="dataField"
                                 [formControlRef]="formControl"
                                 [showLargeLayout]="showLargeLayout"></nc-rich-textarea-field>
         <nc-html-textarea-field *ngSwitchCase="'htmltextarea'" [textAreaField]="dataField"
                                 [formControlRef]="formControl"
                                 [showLargeLayout]="showLargeLayout"></nc-html-textarea-field>
-        <nc-simple-text-field *ngSwitchDefault [textField]="dataField" [formControlRef]="formControl"
-                              [showLargeLayout]="showLargeLayout"></nc-simple-text-field>
-    </div>
-
-    <!-- @deprecated in 4.3.0-->
-    <div *ngIf="dataField.component === undefined" [ngSwitch]="dataField.view">
-        <nc-textarea-field *ngSwitchCase="'textarea'" [textAreaField]="dataField" [formControlRef]="formControl"
-                           [showLargeLayout]="showLargeLayout"></nc-textarea-field>
-        <nc-rich-textarea-field *ngSwitchCase="'richtextarea'" [textAreaField]="dataField"
-                                [formControlRef]="formControl"
-                                [showLargeLayout]="showLargeLayout"></nc-rich-textarea-field>
-        <nc-html-textarea-field *ngSwitchCase="'htmltextarea'" [textAreaField]="dataField"
+        <nc-html-textarea-field *ngSwitchCase="'htmlEditor'" [textAreaField]="dataField"
                                 [formControlRef]="formControl"
                                 [showLargeLayout]="showLargeLayout"></nc-html-textarea-field>
         <nc-simple-text-field *ngSwitchDefault [textField]="dataField" [formControlRef]="formControl"
