@@ -3,6 +3,7 @@ import {Component, OnDestroy} from '@angular/core';
 import {TaskPanelData} from '../../panel/task-panel-list/task-panel-data/task-panel-data';
 import {TaskViewService} from './service/task-view.service';
 import {AbstractViewWithHeadersComponent} from '../abstract/view-with-headers';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'ncc-abstract-task-view',
@@ -13,8 +14,9 @@ export abstract class AbstractTaskViewComponent extends AbstractViewWithHeadersC
     public tasks$: Observable<Array<TaskPanelData>>;
     public loading$: Observable<boolean>;
 
-    protected constructor(protected taskViewService: TaskViewService) {
-        super(taskViewService);
+    protected constructor(protected taskViewService: TaskViewService,
+                          protected _activatedRoute?: ActivatedRoute) {
+        super(taskViewService, _activatedRoute);
         this.tasks$ = this.taskViewService.tasks$;
         this.loading$ = this.taskViewService.loading$;
     }

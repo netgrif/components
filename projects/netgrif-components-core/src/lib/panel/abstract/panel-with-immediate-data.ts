@@ -13,9 +13,8 @@ import { ActivatedRoute } from '@angular/router';
     template: ''
 })
 export abstract class AbstractPanelWithImmediateDataComponent extends AbstractPanelWithHeaderBindingComponent implements OnDestroy {
-    protected constructor(protected _translate: TranslateService, protected _currencyPipe: CurrencyPipe,
-                          protected _activatedRoute?: ActivatedRoute) {
-        super(_activatedRoute);
+    protected constructor(protected _translate: TranslateService, protected _currencyPipe: CurrencyPipe) {
+        super();
     }
 
     ngOnDestroy(): void {

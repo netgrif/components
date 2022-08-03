@@ -9,17 +9,13 @@ import { ActivatedRoute, Params } from '@angular/router';
     template: ''
 })
 export abstract class AbstractPanelWithHeaderBindingComponent implements OnInit, OnDestroy {
-    config: Params;
     public selectedHeaders$: Observable<Array<HeaderColumn>>;
     public firstFeaturedValue: string;
     public featuredFieldsValues: Array<FeaturedValue> = [];
     protected _lastSelectedHeaders: Array<HeaderColumn>;
     protected sub: Subscription;
 
-    protected constructor(protected _activatedRoute?: ActivatedRoute) {
-        if (!!_activatedRoute) {
-            this._activatedRoute.queryParams.subscribe(paramMap => this.config = paramMap);
-        }
+    protected constructor() {
     }
 
     ngOnInit(): void {

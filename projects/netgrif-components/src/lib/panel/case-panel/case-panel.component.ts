@@ -18,7 +18,6 @@ export class CasePanelComponent extends AbstractCasePanelComponent {
                 protected _userService: UserService, protected _currencyPipe: CurrencyPipe,
                 public _permissionService: PermissionService, protected _activatedRoute: ActivatedRoute) {
         super(_caseResourceService, _caseViewService, _snackBarService,
-            _translateService, _log, _overflowService, _userService, _currencyPipe, _permissionService,
-            _activatedRoute);
+            _translateService, _log, _overflowService, _userService, _currencyPipe, _permissionService);
     }
 }

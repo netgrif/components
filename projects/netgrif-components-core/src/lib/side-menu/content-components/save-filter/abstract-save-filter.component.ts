@@ -8,6 +8,7 @@ import {TaskEventNotification} from '../../../task-content/model/task-event-noti
 import {TaskEvent} from '../../../task-content/model/task-event';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {UserFiltersService} from '../../../filter/user-filters.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'ncc-abstract-save-filter',
@@ -20,8 +21,9 @@ export abstract class AbstractSaveFilterComponent extends AbstractTaskViewCompon
     protected constructor(@Inject(NAE_SIDE_MENU_CONTROL) protected _sideMenuControl: SideMenuControl,
                           protected _userFilterService: UserFiltersService,
                           protected _log: LoggerService,
-                          taskViewService: TaskViewService) {
-        super(taskViewService);
+                          taskViewService: TaskViewService,
+                          protected _activatedRoute?: ActivatedRoute) {
+        super(taskViewService, _activatedRoute);
         if (this._sideMenuControl.data) {
             this._injectedData = this._sideMenuControl.data as SaveFilterInjectionData;
         }

@@ -40,9 +40,8 @@ export abstract class AbstractCasePanelComponent extends AbstractPanelWithImmedi
     protected constructor(protected _caseResourceService: CaseResourceService, protected _caseViewService: CaseViewService,
                           protected _snackBarService: SnackBarService, protected _translateService: TranslateService,
                           protected _log: LoggerService, protected _overflowService: OverflowService, protected _userService: UserService,
-                          protected _currencyPipe: CurrencyPipe, protected _permissionService: PermissionService,
-                          protected _activatedRoute?: ActivatedRoute) {
-        super(_translateService, _currencyPipe, _activatedRoute);
+                          protected _currencyPipe: CurrencyPipe, protected _permissionService: PermissionService) {
+        super(_translateService, _currencyPipe);
     }
 
     public show(event: MouseEvent): boolean {
