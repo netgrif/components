@@ -3,7 +3,7 @@
     "extends": "nae-default",
     "providers": {
         "auth": {
-            "address": "https://ugkk-uat.netgrif.cloud/api/",
+            "address": "http://localhost:8080/api/",
             "authentication": "Basic",
             "endpoints": {
                 "login": "auth/login",
@@ -21,32 +21,32 @@
         "resources": [
             {
                 "name": "case",
-                "address": "https://ugkk-uat.netgrif.cloud/api/",
+                "address": "http://localhost:8080/api/",
                 "format": "json"
             },
             {
                 "name": "task",
-                "address": "https://ugkk-uat.netgrif.cloud/api/",
+                "address": "http://localhost:8080/api/",
                 "format": "json"
             },
             {
                 "name": "petrinet",
-                "address": "https://ugkk-uat.netgrif.cloud/api/",
+                "address": "http://localhost:8080/api/",
                 "format": "json"
             },
             {
                 "name": "user",
-                "address": "https://ugkk-uat.netgrif.cloud/api/",
+                "address": "http://localhost:8080/api/",
                 "format": "json"
             },
             {
                 "name": "dashboard",
-                "address": "https://ugkk-uat.netgrif.cloud/api/",
+                "address": "http://localhost:8080/api/",
                 "format": "json"
             },
             {
                 "name": "filter",
-                "address": "https://ugkk-uat.netgrif.cloud/api/",
+                "address": "http://localhost:8080/api/",
                 "format": "json"
             }
         ]
