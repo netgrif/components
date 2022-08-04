@@ -86,58 +86,6 @@ export class PublicTaskResourceService extends TaskResourceService {
     }
 
     /**
-     *  Get all task data
-     *
-     *  GET
-     *
-     *  If you want to process the raw backend response use [rawGetData]{@link TaskResourceService#rawGetData} instead.
-     *
-     * @param taskId ID of the task who's data should be retrieved from the server
-     * @returns processed data groups of the given task. If the task has no data an empty array will be returned.
-     */
-    public getData(taskId: string): Observable<Array<DataGroup>> {
-        return this.rawGetData(taskId).pipe(
-            map((responseOutcome: EventOutcomeMessageResource) => {
-                const dataGroupsArray = this.changeType((responseOutcome.outcome as GetDataGroupsEventOutcome).data, 'dataGroups');
-                if (!Array.isArray(dataGroupsArray)) {
-                    return [];
-                }
-                const result = [];
-                dataGroupsArray.forEach(dataGroupResource => {
-                    const dataFields: Array<DataField<any>> = [];
-                    if (!dataGroupResource.fields._embedded) {
-                        return; // continue
-                    }
-                    const fields = [];
-                    Object.keys(dataGroupResource.fields._embedded).forEach(localizedFields => {
-                        fields.push(...dataGroupResource.fields._embedded[localizedFields]);
-                    });
-                    fields.sort((a, b) => a.order - b.order);
-                    dataFields.push(...fields.map(dataFieldResource => this._fieldConverter.toClass(dataFieldResource)));
-                    const dataGroupObject: DataGroup = {
-                        fields: dataFields,
-                        stretch: dataGroupResource.stretch,
-                        title: dataGroupResource.title,
-                        layout: dataGroupResource.layout,
-                        alignment: dataGroupResource.alignment,
-                    };
-                    if (dataGroupResource.parentTaskId !== undefined) {
-                        dataGroupObject.parentTaskId = dataGroupResource.parentTaskId;
-                        dataGroupObject.parentTransitionId = dataGroupResource.parentTransitionId;
-                        dataGroupObject.parentTaskRefId = dataGroupResource.parentTaskRefId;
-                        dataGroupObject.nestingLevel = dataGroupResource.nestingLevel;
-                    }
-                    if (dataGroupResource.parentCaseId !== undefined) {
-                        dataGroupObject['parentCaseId'] = dataGroupResource.parentCaseId;
-                    }
-                    result.push(dataGroupObject);
-                });
-                return result;
-            })
-        );
-    }
-
-    /**
      * Set task data
      * POST
      */
