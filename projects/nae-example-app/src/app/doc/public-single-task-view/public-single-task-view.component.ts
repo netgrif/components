@@ -37,8 +37,7 @@ import {
     TaskRequestStateService,
     TaskEventService,
     NAE_TASK_OPERATIONS,
-    SubjectTaskOperations,
-    TaskEvent
+    SubjectTaskOperations
 } from '@netgrif/components-core';
 import {HeaderComponent} from '@netgrif/components';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -153,11 +152,7 @@ export class PublicSingleTaskViewComponent extends AbstractSingleTaskViewCompone
     }
 
     logEvent(event: TaskEventNotification) {
-        if (!!event && event.event === TaskEvent.FINISH) {
-            const aCase = event.outcome.aCase;
-            const formCaseIdentifier = aCase.immediateData.find((field) => field.stringId === 'new_case_id').value
-            this._router.navigate(['process', 'data', formCaseIdentifier, 't1']);
-        }
+        console.log(event);
     }
 
 }
