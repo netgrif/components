@@ -9,7 +9,6 @@ import {filter, map} from 'rxjs/operators';
 import {FilterType} from '../../../filter/models/filter-type';
 import {Filter} from '../../../filter/models/filter';
 import {Page} from '../../interface/page';
-import {ChangedFieldContainer} from '../../interface/changed-field-container';
 import {TaskSetDataRequestBody} from '../../interface/task-set-data-request-body';
 import {TaskReference} from '../../interface/task-reference';
 import {DataGroup} from '../../interface/data-groups';
@@ -115,13 +114,23 @@ export class PublicTaskResourceService extends TaskResourceService {
                     });
                     fields.sort((a, b) => a.order - b.order);
                     dataFields.push(...fields.map(dataFieldResource => this._fieldConverter.toClass(dataFieldResource)));
-                    result.push({
+                    const dataGroupObject: DataGroup = {
                         fields: dataFields,
                         stretch: dataGroupResource.stretch,
                         title: dataGroupResource.title,
                         layout: dataGroupResource.layout,
-                        alignment: dataGroupResource.alignment
-                    });
+                        alignment: dataGroupResource.alignment,
+                    };
+                    if (dataGroupResource.parentTaskId !== undefined) {
+                        dataGroupObject.parentTaskId = dataGroupResource.parentTaskId;
+                        dataGroupObject.parentTransitionId = dataGroupResource.parentTransitionId;
+                        dataGroupObject.parentTaskRefId = dataGroupResource.parentTaskRefId;
+                        dataGroupObject.nestingLevel = dataGroupResource.nestingLevel;
+                    }
+                    if (dataGroupResource.parentCaseId !== undefined) {
+                        dataGroupObject['parentCaseId'] = dataGroupResource.parentCaseId;
+                    }
+                    result.push(dataGroupObject);
                 });
                 return result;
             })

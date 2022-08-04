@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import {
     TaskEventNotification,
     TaskViewService,
@@ -33,10 +33,15 @@ import {
     TaskContentService,
     TaskDataService,
     FinishTaskService,
-    SingleTaskContentService, TaskRequestStateService, TaskEventService, NAE_TASK_OPERATIONS, SubjectTaskOperations
+    SingleTaskContentService,
+    TaskRequestStateService,
+    TaskEventService,
+    NAE_TASK_OPERATIONS,
+    SubjectTaskOperations,
+    TaskEvent
 } from '@netgrif/components-core';
 import {HeaderComponent} from '@netgrif/components';
-import {ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {combineLatest} from 'rxjs';
 import {map} from 'rxjs/operators';
@@ -119,16 +124,17 @@ const caseResourceServiceFactory = (userService: UserService, sessionService: Se
         TaskRequestStateService,
         TaskEventService,
         {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
+        {provide: AllowedNetsServiceFactory, useClass: AllowedNetsServiceFactory},
     ]
 })
-export class PublicSingleTaskViewComponent extends AbstractSingleTaskViewComponent implements AfterViewInit {
+export class PublicSingleTaskViewComponent extends AbstractSingleTaskViewComponent implements OnInit, AfterViewInit {
 
     @ViewChild('header') public taskHeaderComponent: HeaderComponent;
 
     hidden: boolean;
 
     constructor(taskViewService: TaskViewService, publicTaskLoadingService: PublicTaskLoadingService,
-                activatedRoute: ActivatedRoute) {
+                activatedRoute: ActivatedRoute, protected _router: Router) {
         super(taskViewService, activatedRoute);
         this.hidden = true;
         this.loading$ = combineLatest(taskViewService.loading$, publicTaskLoadingService.loading$).pipe(
@@ -138,12 +144,20 @@ export class PublicSingleTaskViewComponent extends AbstractSingleTaskViewCompone
         );
     }
 
+    ngOnInit(): void {
+        this._router.routeReuseStrategy.shouldReuseRoute = () => false
+    }
+
     ngAfterViewInit(): void {
         this.initializeHeader(this.taskHeaderComponent);
     }
 
     logEvent(event: TaskEventNotification) {
-        console.log(event);
+        if (!!event && event.event === TaskEvent.FINISH) {
+            const aCase = event.outcome.aCase;
+            const formCaseIdentifier = aCase.immediateData.find((field) => field.stringId === 'new_case_id').value
+            this._router.navigate(['process', 'data', formCaseIdentifier, 't1']);
+        }
     }
 
 }
