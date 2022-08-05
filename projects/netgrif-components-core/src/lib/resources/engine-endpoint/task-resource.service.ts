@@ -204,45 +204,45 @@ export class TaskResourceService extends AbstractResourceService implements Coun
     public getData(taskId: string): Observable<Array<DataGroup>> {
         return this.rawGetData(taskId).pipe(
             map((responseOutcome: EventOutcomeMessageResource) => {
-                if (responseOutcome.success) {
-                    const dataGroupsArray = this.changeType((responseOutcome.outcome as GetDataGroupsEventOutcome).data, 'dataGroups');
-                    if (!Array.isArray(dataGroupsArray)) {
-                        return [];
-                    }
-                    const result = [];
-                    dataGroupsArray.forEach(dataGroupResource => {
-                        const dataFields: Array<DataField<any>> = [];
-                        if (!dataGroupResource.fields._embedded) {
-                            return; // continue
-                        }
-                        const fields = [];
-                        Object.keys(dataGroupResource.fields._embedded).forEach(localizedFields => {
-                            fields.push(...dataGroupResource.fields._embedded[localizedFields]);
-                        });
-                        fields.sort((a, b) => a.order - b.order);
-                        dataFields.push(...fields.map(dataFieldResource => this._fieldConverter.toClass(dataFieldResource)));
-                        const dataGroupObject: DataGroup = {
-                            fields: dataFields,
-                            stretch: dataGroupResource.stretch,
-                            title: dataGroupResource.title,
-                            layout: dataGroupResource.layout,
-                            alignment: dataGroupResource.alignment,
-                        };
-                        if (dataGroupResource.parentTaskId !== undefined) {
-                            dataGroupObject.parentTaskId = dataGroupResource.parentTaskId;
-                            dataGroupObject.parentTransitionId = dataGroupResource.parentTransitionId;
-                            dataGroupObject.parentTaskRefId = dataGroupResource.parentTaskRefId;
-                            dataGroupObject.nestingLevel = dataGroupResource.nestingLevel;
-                        }
-                        if (dataGroupResource.parentCaseId !== undefined) {
-                            dataGroupObject['parentCaseId'] = dataGroupResource.parentCaseId;
-                        }
-                        result.push(dataGroupObject);
-                    });
-                    return result;
-                } else {
-                    throw new Error(responseOutcome.error)
+                if (responseOutcome.error) {
+                    throw new Error(responseOutcome.error);
                 }
+
+                const dataGroupsArray = this.changeType((responseOutcome.outcome as GetDataGroupsEventOutcome).data, 'dataGroups');
+                if (!Array.isArray(dataGroupsArray)) {
+                    return [];
+                }
+                const result = [];
+                dataGroupsArray.forEach(dataGroupResource => {
+                    const dataFields: Array<DataField<any>> = [];
+                    if (!dataGroupResource.fields._embedded) {
+                        return; // continue
+                    }
+                    const fields = [];
+                    Object.keys(dataGroupResource.fields._embedded).forEach(localizedFields => {
+                        fields.push(...dataGroupResource.fields._embedded[localizedFields]);
+                    });
+                    fields.sort((a, b) => a.order - b.order);
+                    dataFields.push(...fields.map(dataFieldResource => this._fieldConverter.toClass(dataFieldResource)));
+                    const dataGroupObject: DataGroup = {
+                        fields: dataFields,
+                        stretch: dataGroupResource.stretch,
+                        title: dataGroupResource.title,
+                        layout: dataGroupResource.layout,
+                        alignment: dataGroupResource.alignment,
+                    };
+                    if (dataGroupResource.parentTaskId !== undefined) {
+                        dataGroupObject.parentTaskId = dataGroupResource.parentTaskId;
+                        dataGroupObject.parentTransitionId = dataGroupResource.parentTransitionId;
+                        dataGroupObject.parentTaskRefId = dataGroupResource.parentTaskRefId;
+                        dataGroupObject.nestingLevel = dataGroupResource.nestingLevel;
+                    }
+                    if (dataGroupResource.parentCaseId !== undefined) {
+                        dataGroupObject['parentCaseId'] = dataGroupResource.parentCaseId;
+                    }
+                    result.push(dataGroupObject);
+                });
+                return result;
             })
         );
     }
