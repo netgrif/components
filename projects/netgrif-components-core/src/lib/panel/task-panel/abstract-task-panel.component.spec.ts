@@ -110,6 +110,7 @@ describe('AbtsractTaskPanelComponent', () => {
                 DataFocusPolicyService,
                 AssignPolicyService,
                 FinishPolicyService,
+                OverflowService,
                 {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
                 {
                     provide: AllowedNetsService,
