@@ -1,12 +1,23 @@
-import {waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { PublicWorkflowPanelComponent } from './public-workflow-panel.component';
+import {PublicWorkflowPanelComponent} from './public-workflow-panel.component';
 import {
     AuthenticationMethodService,
-    AuthenticationService, ConfigurationService, HeaderColumn, HeaderColumnType,
+    AuthenticationService,
+    ConfigurationService,
+    HeaderColumn,
+    HeaderColumnType,
     MaterialModule,
-    MockAuthenticationMethodService, MockAuthenticationService, MockUserResourceService, PetriNetReference, TestConfigurationService,
-    TranslateLibModule, UserResourceService, WorkflowMetaField, WorkflowViewService
+    OverflowService,
+    MockAuthenticationMethodService,
+    MockAuthenticationService,
+    MockUserResourceService,
+    PetriNetReference,
+    TestConfigurationService,
+    TranslateLibModule,
+    UserResourceService,
+    WorkflowMetaField,
+    WorkflowViewService
 } from '@netgrif/components-core';
 import {CommonModule} from '@angular/common';
 import {FlexModule} from '@angular/flex-layout';
@@ -18,41 +29,42 @@ import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
 import {of} from 'rxjs';
 
 describe('PublicWorkflowPanelComponent', () => {
-  let component: PublicWorkflowPanelComponent;
-  let fixture: ComponentFixture<PublicTestWrapperComponent>;
+    let component: PublicWorkflowPanelComponent;
+    let fixture: ComponentFixture<PublicTestWrapperComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-        imports: [
-            MaterialModule,
-            CommonModule,
-            FlexModule,
-            BrowserAnimationsModule,
-            DataFieldsComponentModule,
-            TranslateLibModule,
-            HttpClientTestingModule
-        ],
-        providers: [
-            {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-            {provide: AuthenticationService, useClass: MockAuthenticationService},
-            {provide: UserResourceService, useClass: MockUserResourceService},
-            {provide: ConfigurationService, useClass: TestConfigurationService},
-            WorkflowViewService
-        ],
-      declarations: [ PublicWorkflowPanelComponent, PanelComponent, PublicTestWrapperComponent]
-    })
-    .compileComponents();
-  }));
+    beforeEach(waitForAsync(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                MaterialModule,
+                CommonModule,
+                FlexModule,
+                BrowserAnimationsModule,
+                DataFieldsComponentModule,
+                TranslateLibModule,
+                HttpClientTestingModule
+            ],
+            providers: [
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                {provide: AuthenticationService, useClass: MockAuthenticationService},
+                {provide: UserResourceService, useClass: MockUserResourceService},
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                WorkflowViewService,
+                OverflowService,
+            ],
+            declarations: [PublicWorkflowPanelComponent, PanelComponent, PublicTestWrapperComponent]
+        })
+            .compileComponents();
+    }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(PublicTestWrapperComponent);
-    component = fixture.debugElement.children[0].componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(PublicTestWrapperComponent);
+        component = fixture.debugElement.children[0].componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });
 
 @Component({
