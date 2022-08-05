@@ -16,6 +16,7 @@ import {SortDirection} from '@angular/material/sort';
 import {HeaderChangeType} from './models/user-changes/header-change-type';
 import {ViewIdService} from '../user/services/view-id.service';
 import {Net} from '../process/net';
+import { OverflowService } from './services/overflow.service';
 
 @Injectable()
 export abstract class AbstractHeaderService implements OnDestroy {
@@ -38,6 +39,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
     protected constructor(protected _headerType: HeaderType,
                           protected _preferences: UserPreferenceService,
                           @Optional() private _viewIdService: ViewIdService,
+                          @Optional() protected _overflowService: OverflowService,
                           protected _logger: LoggerService) {
         this.loading = new LoadingEmitter(true);
         this._headerChange$ = new Subject<HeaderChange>();
@@ -76,6 +78,10 @@ export abstract class AbstractHeaderService implements OnDestroy {
 
     get headerType(): HeaderType {
         return this._headerType;
+    }
+
+    get overflowMode(): boolean {
+        return this._overflowService.overflowMode;
     }
 
     get headerColumnCount(): number {

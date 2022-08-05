@@ -1,9 +1,10 @@
 <div fxFlex="100" fxLayout="row" fxLayoutAlign=" center">
     <div *ngFor="let header of this.headerService.selectedHeaders$ | async; let i = index"
-         [fxHide.lt-xl]="i >= 4 && this.headerService.responsiveHeaders"
-         [fxHide.lt-lg]="i >= 3 && this.headerService.responsiveHeaders"
-         [fxHide.lt-md]="i >= 2 && this.headerService.responsiveHeaders"
-         [fxHide.lt-sm]="i >= 1 && this.headerService.responsiveHeaders" fxFlex [ngStyle]="{'min-width': getMinWidth()}">
+         [fxHide.lt-xl]="i >= 4 && this.headerService.responsiveHeaders && !this.headerService.overflowMode"
+         [fxHide.lt-lg]="i >= 3 && this.headerService.responsiveHeaders && !this.headerService.overflowMode"
+         [fxHide.lt-md]="i >= 2 && this.headerService.responsiveHeaders && !this.headerService.overflowMode"
+         [fxHide.lt-sm]="i >= 1 && this.headerService.responsiveHeaders && !this.headerService.overflowMode"
+         fxFlex [ngStyle]="{'min-width': getMinWidth()}">
         <div
             *ngIf="!!header && header.fieldType !== 'button'; then thenBlock else elseBlock"
             fxFlex></div>

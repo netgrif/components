@@ -6,12 +6,16 @@ import {UserPreferenceService} from '../../user/services/user-preference.service
 import {LoggerService} from '../../logger/services/logger.service';
 import {WorkflowMetaField} from './workflow-meta-enum';
 import {ViewIdService} from '../../user/services/view-id.service';
+import {OverflowService} from '../services/overflow.service';
 
 @Injectable()
 export class WorkflowHeaderService extends AbstractHeaderService implements OnDestroy {
 
-    constructor(preferences: UserPreferenceService, @Optional() viewIdService: ViewIdService, logger: LoggerService) {
-        super(HeaderType.WORKFLOW, preferences, viewIdService, logger);
+    constructor(preferences: UserPreferenceService,
+                @Optional() viewIdService: ViewIdService,
+                @Optional() protected overflowService: OverflowService,
+                logger: LoggerService) {
+        super(HeaderType.WORKFLOW, preferences, viewIdService, overflowService, logger);
         this.loadHeadersFromPreferences();
         this.loading.off();
     }

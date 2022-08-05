@@ -14,4 +14,8 @@
     .header-color-font {
         color: mat.get-contrast-color-from-palette($primary, 500);
     }
+
+    .mat-input-element {
+        caret-color: mat.get-contrast-color-from-palette($primary, 500);
+    }
 }

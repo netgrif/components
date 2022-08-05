@@ -46,6 +46,7 @@ import {PermissionService} from '../../authorization/permission/permission.servi
 import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
 import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
 import { TaskPanelContext } from './models/task-panel-context';
+import {OverflowService} from '../../header/services/overflow.service';
 
 @Component({
     selector: 'ncc-abstract-legal-notice',
@@ -130,7 +131,8 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
                           protected _translate: TranslateService,
                           protected _currencyPipe: CurrencyPipe,
                           protected _changedFieldsService: ChangedFieldsService,
-                          protected _permissionService: PermissionService) {
+                          protected _permissionService: PermissionService,
+                          protected _overflowService: OverflowService) {
         super(_translate, _currencyPipe);
         this.taskEvent = new EventEmitter<TaskEventNotification>();
         this.panelRefOutput = new EventEmitter<MatExpansionPanel>();
@@ -340,6 +342,10 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
     public getFinishTitle(): string {
         return (this.taskPanelData.task.finishTitle === '' || this.taskPanelData.task.finishTitle)
             ? this.taskPanelData.task.finishTitle : 'tasks.view.finish';
+    }
+
+    get overflowMode(): boolean {
+        return this._overflowService.overflowMode;
     }
 
     public canDisable(type: string): boolean {

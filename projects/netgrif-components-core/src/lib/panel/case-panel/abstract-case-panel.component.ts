@@ -87,6 +87,10 @@ export abstract class AbstractCasePanelComponent extends AbstractPanelWithImmedi
         });
     }
 
+    get overflowMode(): boolean {
+        return this._overflowService.overflowMode;
+    }
+
     public canDelete(): boolean {
         return this._permissionService.hasCasePermission(this.case_, PermissionType.DELETE);
     }

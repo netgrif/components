@@ -22,7 +22,7 @@ export class CaseHeaderService extends AbstractHeaderService implements OnDestro
                 @Optional() viewIdService: ViewIdService,
                 @Optional() protected overflowService: OverflowService,
                 @Optional() @Inject(NAE_DEFAULT_HEADERS) naeDefaultHeaders: Array<string>) {
-        super(HeaderType.CASE, preferences, viewIdService, logger);
+        super(HeaderType.CASE, preferences, viewIdService, overflowService, logger);
         this.subAllowedNets = _allowedNetsService.allowedNets$.subscribe(allowedNets => {
             this.setAllowedNets(allowedNets);
             if (naeDefaultHeaders && Array.isArray(naeDefaultHeaders) && naeDefaultHeaders.length > 0) {
