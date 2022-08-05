@@ -15,7 +15,7 @@ import {
     MaterialModule,
     MockAuthenticationMethodService,
     MockAuthenticationService,
-    MockUserResourceService, NAE_BASE_FILTER, TaskPanelComponent,
+    MockUserResourceService, NAE_BASE_FILTER, OverflowService,
     SearchService, TestCaseBaseFilterProvider, TestCaseViewAllowedNetsFactory,
     TestConfigurationService,
     TestViewService,
