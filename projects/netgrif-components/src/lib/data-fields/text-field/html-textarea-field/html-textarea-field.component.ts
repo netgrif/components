@@ -14,8 +14,10 @@ export class HtmlTextareaFieldComponent extends AbstractHtmlTextareaFieldCompone
     }
 
     ngAfterViewInit(): void {
-        if(!this.textAreaField?.placeholder) {
-            this.textAreaField.placeholder = this._translate.instant('dataField.textarea.insertText');
-        }
+        setTimeout(() => {
+            if (!this.textAreaField?.placeholder) {
+                this.textAreaField.placeholder = this._translate.instant('dataField.textarea.insertText');
+            }
+        })
     }
 }
