@@ -24,7 +24,7 @@ import {PetriNetReference} from '../../resources/interface/petri-net-reference';
 import {RouterTestingModule} from '@angular/router/testing';
 import {WorkflowViewService} from '../../view/workflow-view/workflow-view.service';
 import {take} from 'rxjs/operators';
-import {OverflowService} from 'netgrif-components-core';
+import { OverflowService } from '../../header/services/overflow.service';
 
 describe('AbstractWorkflowPanelComponent', () => {
     let component: TestWorkflowPanelComponent;
