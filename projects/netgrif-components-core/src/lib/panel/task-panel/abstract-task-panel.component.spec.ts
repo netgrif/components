@@ -60,7 +60,7 @@ import {FinishTaskEventOutcome} from '../../event/model/event-outcomes/task-outc
 import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
 import {createMockCase} from '../../utility/tests/utility/create-mock-case';
 import {createMockNet} from '../../utility/tests/utility/create-mock-net';
-import {OverflowService} from 'netgrif-components-core';
+import { OverflowService } from '../../header/services/overflow.service';
 
 describe('AbtsractTaskPanelComponent', () => {
     let component: TestTaskPanelComponent;
