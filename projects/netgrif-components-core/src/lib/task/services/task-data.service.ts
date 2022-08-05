@@ -433,6 +433,14 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
             });
     }
 
+    /**
+     * Processes a unsuccessful outcome of a `setData` request
+     * @param setTaskId the Id of the task whose data was set
+     * @param response the resulting Event outcome of the set data request
+     * @param afterAction the action that should be performed after the request is processed
+     * @param nextEvent indicates to the event queue that the next event can be processed
+     * @param body hold the data that was sent in request
+     */
     protected processUnsuccessfulSetDataRequest(setTaskId: string,
                                               response: EventOutcomeMessageResource,
                                               afterAction: AfterAction,
