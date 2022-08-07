@@ -38,9 +38,9 @@ export abstract class AbstractHeaderService implements OnDestroy {
 
     protected constructor(protected _headerType: HeaderType,
                           protected _preferences: UserPreferenceService,
+                          protected _logger: LoggerService,
                           @Optional() private _viewIdService: ViewIdService,
-                          @Optional() protected _overflowService: OverflowService,
-                          protected _logger: LoggerService) {
+                          @Optional() protected _overflowService: OverflowService) {
         this.loading = new LoadingEmitter(true);
         this._headerChange$ = new Subject<HeaderChange>();
         this.fieldsGroup = [{groupTitle: 'Meta data', fields: this.createMetaHeaders()}];

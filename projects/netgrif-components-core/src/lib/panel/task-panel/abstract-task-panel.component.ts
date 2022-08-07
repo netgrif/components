@@ -132,8 +132,8 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
                           protected _currencyPipe: CurrencyPipe,
                           protected _changedFieldsService: ChangedFieldsService,
                           protected _permissionService: PermissionService,
-                          protected _overflowService: OverflowService) {
-        super(_translate, _currencyPipe);
+                          overflowService: OverflowService) {
+        super(_translate, _currencyPipe, overflowService);
         this.taskEvent = new EventEmitter<TaskEventNotification>();
         this.panelRefOutput = new EventEmitter<MatExpansionPanel>();
         this._subTaskEvent = _taskEventService.taskEventNotifications$.subscribe(event => {
@@ -342,10 +342,6 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
     public getFinishTitle(): string {
         return (this.taskPanelData.task.finishTitle === '' || this.taskPanelData.task.finishTitle)
             ? this.taskPanelData.task.finishTitle : 'tasks.view.finish';
-    }
-
-    get overflowMode(): boolean {
-        return this._overflowService.overflowMode;
     }
 
     public canDisable(type: string): boolean {

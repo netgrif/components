@@ -12,10 +12,10 @@ import {OverflowService} from '../services/overflow.service';
 export class WorkflowHeaderService extends AbstractHeaderService implements OnDestroy {
 
     constructor(preferences: UserPreferenceService,
+                logger: LoggerService,
                 @Optional() viewIdService: ViewIdService,
-                @Optional() protected overflowService: OverflowService,
-                logger: LoggerService) {
-        super(HeaderType.WORKFLOW, preferences, viewIdService, overflowService, logger);
+                @Optional() overflowService: OverflowService) {
+        super(HeaderType.WORKFLOW, preferences, logger, viewIdService, overflowService);
         this.loadHeadersFromPreferences();
         this.loading.off();
     }

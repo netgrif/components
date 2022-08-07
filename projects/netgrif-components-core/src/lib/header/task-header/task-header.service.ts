@@ -20,9 +20,9 @@ export class TaskHeaderService extends AbstractHeaderService implements OnDestro
                 preferences: UserPreferenceService,
                 logger: LoggerService,
                 @Optional() viewIdService: ViewIdService,
-                @Optional() protected overflowService: OverflowService,
+                @Optional() overflowService: OverflowService,
                 @Optional() @Inject(NAE_DEFAULT_HEADERS) naeDefaultHeaders: Array<string>) {
-        super(HeaderType.TASK, preferences, viewIdService, overflowService, logger);
+        super(HeaderType.TASK, preferences, logger, viewIdService, overflowService);
         this.subAllowedNets = _allowedNetsService.allowedNets$.subscribe(allowedNets => {
             this.setTaskAllowedNets(allowedNets);
             if (naeDefaultHeaders && Array.isArray(naeDefaultHeaders) && naeDefaultHeaders.length > 0) {
