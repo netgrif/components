@@ -335,6 +335,10 @@ export abstract class TaskContentService implements OnDestroy {
         }
     }
 
+    public getReferencedFieldTask(field): string {
+        return Object.keys(this.taskFieldsIndex).find(taskId => Object.keys(this.taskFieldsIndex[taskId].fields).includes(field));
+    }
+
     private isFieldInTaskRef(changedField: string): boolean {
         return !!this.taskFieldsIndex &&
             Object.keys(this.taskFieldsIndex)
@@ -343,8 +347,7 @@ export abstract class TaskContentService implements OnDestroy {
 
     private getReferencedTransitionId(changedField: string): string {
         if (!!this.taskFieldsIndex) {
-           const taskFieldsIndexId = Object.keys(this.taskFieldsIndex).find(taskId =>
-                Object.keys(this.taskFieldsIndex[taskId].fields).includes(changedField));
+           const taskFieldsIndexId = this.getReferencedFieldTask(changedField);
            return this.taskFieldsIndex[taskFieldsIndexId].transitionId;
         }
         return undefined;

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import {
     AbstractSingleTaskViewComponent,
     AllowedNetsService,
@@ -45,6 +45,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
+
 
 const localAllowedNetsServiceFactory = (factory: AllowedNetsServiceFactory, route: ActivatedRoute) => {
     const array = [];
@@ -126,9 +127,10 @@ const caseResourceServiceFactory = (userService: UserService, sessionService: Se
         TaskRequestStateService,
         TaskEventService,
         {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
+        {provide: AllowedNetsServiceFactory, useClass: AllowedNetsServiceFactory},
     ]
 })
-export class PublicSingleTaskViewComponent extends AbstractSingleTaskViewComponent implements AfterViewInit {
+export class PublicSingleTaskViewComponent extends AbstractSingleTaskViewComponent implements OnInit, AfterViewInit {
 
     @ViewChild('header') public taskHeaderComponent: HeaderComponent;
 
@@ -143,6 +145,10 @@ export class PublicSingleTaskViewComponent extends AbstractSingleTaskViewCompone
                 return sources[0] || sources[1];
             })
         );
+    }
+
+    ngOnInit(): void {
+        this._router.routeReuseStrategy.shouldReuseRoute = () => false
     }
 
     ngAfterViewInit(): void {

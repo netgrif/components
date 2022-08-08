@@ -4,12 +4,12 @@
     <ng-template #taskPanelHeader>
         <div fxLayoutAlign="start center" fxLayout="row" fxFlex="95" (click)="preventSelectionClick($event)">
             <div *ngFor="let field of featuredFieldsValues; let i = index" fxFlex
-                  class="text-column-div"
-                  [fxHide.lt-xl]="i >= 4 && responsiveBody"
-                  [fxHide.lt-lg]="i >= 3 && responsiveBody"
-                  [fxHide.lt-md]="i >= 2 && responsiveBody"
-                  [fxHide.lt-sm]="i >= 1 && responsiveBody"
-                    [ngClass]="{'panel-header-padding': !textEllipsis && field.type !== 'button'}">
+                 class="text-column-div"
+                 [fxHide.lt-xl]="i >= 4 && responsiveBody && !overflowMode"
+                 [fxHide.lt-lg]="i >= 3 && responsiveBody && !overflowMode"
+                 [fxHide.lt-md]="i >= 2 && responsiveBody && !overflowMode"
+                 [fxHide.lt-sm]="i >= 1 && responsiveBody && !overflowMode"
+                 [ngClass]="{'panel-header-padding': !textEllipsis && field.type !== 'button'}">
                 <nc-panel-item
                     [leadingIcon]="taskPanelData.task.icon"
                     [leadingIconEnabled]="i === 0"
@@ -56,9 +56,10 @@
                 <ng-template [cdkPortalOutlet]="portal"></ng-template>
             </div>
             <mat-action-row [ngStyle]="{'justify-content': actionRowJustifyContent ?? 'flex-end' }">
-                <mat-spinner class='action-row-spinner' *ngIf="isLoading && hidePanelHeader" [diameter]="20"></mat-spinner>
+                <mat-spinner class='action-row-spinner' *ngIf="isLoading && hidePanelHeader"
+                             [diameter]="20"></mat-spinner>
                 <div fxLayout.lt-sm="column" fxLayoutAlign.lt-sm="center stretch" ngClass.lt-sm="width-100"
-                    *ngFor='let button of (!!actionButtonTemplates && actionButtonTemplates.length > 0 ?
+                     *ngFor='let button of (!!actionButtonTemplates && actionButtonTemplates.length > 0 ?
                     actionButtonTemplates : [assignButton, delegateButton, reassignButton, cancelButton, finishButton, collapseButton])'>
                     <ng-container *ngTemplateOutlet='button; context:thisContext'></ng-container>
                 </div>

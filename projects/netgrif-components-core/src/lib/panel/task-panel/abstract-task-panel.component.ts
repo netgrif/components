@@ -46,6 +46,7 @@ import {PermissionService} from '../../authorization/permission/permission.servi
 import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
 import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
 import { TaskPanelContext } from './models/task-panel-context';
+import {OverflowService} from '../../header/services/overflow.service';
 
 @Component({
     selector: 'ncc-abstract-legal-notice',
@@ -130,8 +131,9 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
                           protected _translate: TranslateService,
                           protected _currencyPipe: CurrencyPipe,
                           protected _changedFieldsService: ChangedFieldsService,
-                          protected _permissionService: PermissionService) {
-        super(_translate, _currencyPipe);
+                          protected _permissionService: PermissionService,
+                          overflowService: OverflowService) {
+        super(_translate, _currencyPipe, overflowService);
         this.taskEvent = new EventEmitter<TaskEventNotification>();
         this.panelRefOutput = new EventEmitter<MatExpansionPanel>();
         this._subTaskEvent = _taskEventService.taskEventNotifications$.subscribe(event => {

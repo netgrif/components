@@ -14,7 +14,10 @@ import {
     HeaderColumn,
     HeaderColumnType,
     MaterialModule,
-    NAE_BASE_FILTER, TestCaseBaseFilterProvider, TestCaseViewAllowedNetsFactory,
+    NAE_BASE_FILTER,
+    OverflowService,
+    TestCaseBaseFilterProvider,
+    TestCaseViewAllowedNetsFactory,
     TranslateLibModule
 } from '@netgrif/components-core';
 import {
@@ -48,6 +51,7 @@ describe('CasePanelComponent', () => {
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 CaseViewService,
                 SearchService,
+                OverflowService,
                 {
                     provide: NAE_BASE_FILTER,
                     useFactory: TestCaseBaseFilterProvider
