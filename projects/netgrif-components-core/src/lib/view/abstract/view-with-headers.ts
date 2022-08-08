@@ -2,7 +2,7 @@ import {Observable, ReplaySubject} from 'rxjs';
 import {HeaderColumn} from '../../header/models/header-column';
 import {AbstractHeaderComponent} from '../../header/abstract-header.component';
 import {AbstractSortableViewComponent} from './sortable-view';
-import { Component, Input, OnDestroy } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
