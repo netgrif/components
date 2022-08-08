@@ -27,10 +27,10 @@
                         (click)="userMultiSelect = !userMultiSelect">
                     <mat-icon>{{userMultiSelect ? 'group' : 'person'}}</mat-icon>
                 </button>
-                <button mat-icon-button matTooltip="Select All" (click)="selectAllUsers(true)">
+                <button mat-icon-button matTooltip="{{ 'side-menu.tooltip.SelectAll' | translate }}" (click)="selectAllUsers(true)">
                     <mat-icon>done_all</mat-icon>
                 </button>
-                <button mat-icon-button matTooltip="Deselect All" (click)="selectAllUsers(false)">
+                <button mat-icon-button matTooltip="{{ 'side-menu.tooltip.DeselectAll' | translate }}" (click)="selectAllUsers(false)">
                     <mat-icon>clear</mat-icon>
                 </button>
             </mat-toolbar>
