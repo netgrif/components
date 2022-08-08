@@ -27,34 +27,36 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {PanelComponent} from '../panel.component';
 import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
 import {of} from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('PublicWorkflowPanelComponent', () => {
     let component: PublicWorkflowPanelComponent;
     let fixture: ComponentFixture<PublicTestWrapperComponent>;
 
-    beforeEach(waitForAsync(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                MaterialModule,
-                CommonModule,
-                FlexModule,
-                BrowserAnimationsModule,
-                DataFieldsComponentModule,
-                TranslateLibModule,
-                HttpClientTestingModule
-            ],
-            providers: [
-                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-                {provide: AuthenticationService, useClass: MockAuthenticationService},
-                {provide: UserResourceService, useClass: MockUserResourceService},
-                {provide: ConfigurationService, useClass: TestConfigurationService},
-                WorkflowViewService,
-                OverflowService,
-            ],
-            declarations: [PublicWorkflowPanelComponent, PanelComponent, PublicTestWrapperComponent]
-        })
-            .compileComponents();
-    }));
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+        imports: [
+            MaterialModule,
+            CommonModule,
+            FlexModule,
+            BrowserAnimationsModule,
+            DataFieldsComponentModule,
+            TranslateLibModule,
+            HttpClientTestingModule,
+            RouterTestingModule.withRoutes([])
+        ],
+        providers: [
+            {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+            {provide: AuthenticationService, useClass: MockAuthenticationService},
+            {provide: UserResourceService, useClass: MockUserResourceService},
+            {provide: ConfigurationService, useClass: TestConfigurationService},
+            WorkflowViewService,
+            OverflowService
+        ],
+      declarations: [ PublicWorkflowPanelComponent, PanelComponent, PublicTestWrapperComponent]
+    })
+    .compileComponents();
+  }));
 
     beforeEach(() => {
         fixture = TestBed.createComponent(PublicTestWrapperComponent);
