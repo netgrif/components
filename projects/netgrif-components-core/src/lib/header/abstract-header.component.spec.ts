@@ -89,7 +89,7 @@ describe('AbstractHeaderComponent', () => {
 class TestHeaderComponent extends AbstractHeaderComponent {
     constructor(protected _injector: Injector,
                 protected _translate: TranslateService,
-                @Optional() protected overflowService: OverflowService) {
-        super(_injector, _translate, overflowService);
+                @Optional() protected _overflowService: OverflowService) {
+        super(_injector, _translate, _overflowService);
     }
 }
