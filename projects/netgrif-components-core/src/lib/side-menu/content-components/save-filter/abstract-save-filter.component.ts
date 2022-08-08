@@ -22,7 +22,7 @@ export abstract class AbstractSaveFilterComponent extends AbstractTaskViewCompon
                           protected _userFilterService: UserFiltersService,
                           protected _log: LoggerService,
                           taskViewService: TaskViewService,
-                          protected _activatedRoute?: ActivatedRoute) {
+                          _activatedRoute?: ActivatedRoute) {
         super(taskViewService, _activatedRoute);
         if (this._sideMenuControl.data) {
             this._injectedData = this._sideMenuControl.data as SaveFilterInjectionData;
