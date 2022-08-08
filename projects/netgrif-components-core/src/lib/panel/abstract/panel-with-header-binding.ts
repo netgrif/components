@@ -2,7 +2,6 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Observable, Subscription} from 'rxjs';
 import {HeaderColumn, HeaderColumnType} from '../../header/models/header-column';
 import {FeaturedValue} from './featured-value';
-import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
     selector: 'ncc-abstract-panel-with-header-binding',

@@ -15,7 +15,7 @@ export abstract class AbstractTaskViewComponent extends AbstractViewWithHeadersC
     public loading$: Observable<boolean>;
 
     protected constructor(protected taskViewService: TaskViewService,
-                          protected _activatedRoute?: ActivatedRoute) {
+                          _activatedRoute?: ActivatedRoute) {
         super(taskViewService, _activatedRoute);
         this.tasks$ = this.taskViewService.tasks$;
         this.loading$ = this.taskViewService.loading$;

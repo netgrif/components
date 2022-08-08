@@ -25,10 +25,10 @@ export abstract class AbstractSingleTaskViewComponent extends AbstractViewWithHe
     protected unsubscribe$: Subject<void>;
 
     protected constructor(protected taskViewService: TaskViewService,
-                          protected activatedRoute: ActivatedRoute) {
+                          activatedRoute: ActivatedRoute) {
         super(taskViewService, activatedRoute);
         this.unsubscribe$ = new Subject<void>();
-        this.subRoute = this.activatedRoute.paramMap.subscribe(paramMap => {
+        this.subRoute = this._activatedRoute.paramMap.subscribe(paramMap => {
             if (!!(paramMap?.['params']?.[TaskConst.TRANSITION_ID])) {
                 this.transitionId = paramMap['params'][TaskConst.TRANSITION_ID];
                 this.task$ = this.taskViewService.tasks$.pipe(map<Array<TaskPanelData>, TaskPanelData>(tasks => {

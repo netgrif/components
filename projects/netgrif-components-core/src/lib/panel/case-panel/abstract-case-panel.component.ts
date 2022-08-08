@@ -20,7 +20,6 @@ import {EventOutcomeMessageResource} from '../../resources/interface/message-res
 import {CurrencyPipe} from '@angular/common';
 import {PermissionService} from '../../authorization/permission/permission.service';
 import {PermissionType} from '../../process/permissions';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'ncc-abstract-case-panel',
