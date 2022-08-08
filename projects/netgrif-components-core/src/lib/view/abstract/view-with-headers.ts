@@ -11,7 +11,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 })
 export abstract class AbstractViewWithHeadersComponent implements OnDestroy {
 
-    config: Params
+    public config: Params;
     protected _selectedHeaders$: ReplaySubject<Array<HeaderColumn>>;
 
     protected constructor(private _sortableView?: AbstractSortableViewComponent, protected _activatedRoute?: ActivatedRoute) {
