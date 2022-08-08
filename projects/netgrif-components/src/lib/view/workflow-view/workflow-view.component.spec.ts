@@ -18,6 +18,7 @@ import {
     TranslateLibModule,
     UserResourceService,
     ViewService,
+    OverflowService,
     WorkflowHeaderService
 } from '@netgrif/components-core';
 import {PanelComponentModule} from '../../panel/panel.module';
@@ -49,7 +50,8 @@ describe('WorkflowViewComponent', () => {
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: ViewService, useClass: TestViewService},
-                WorkflowHeaderService
+                WorkflowHeaderService,
+                OverflowService
             ]
         })
             .compileComponents();

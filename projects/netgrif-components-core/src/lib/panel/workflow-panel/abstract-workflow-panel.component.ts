@@ -14,6 +14,7 @@ import {TranslateService, TranslationChangeEvent} from '@ngx-translate/core';
 import {WorkflowMetaField} from '../../header/workflow-header/workflow-meta-enum';
 import {WorkflowViewService} from '../../view/workflow-view/workflow-view.service';
 import {FeaturedValue} from '../abstract/featured-value';
+import {OverflowService} from '../../header/services/overflow.service';
 
 
 export interface WorkflowPanelContent {
@@ -47,7 +48,8 @@ export abstract class AbstractWorkflowPanelComponent extends AbstractPanelWithHe
 
     protected constructor(protected _log: LoggerService,
                           protected _translate: TranslateService,
-                          protected _workflowService: WorkflowViewService) {
+                          protected _workflowService: WorkflowViewService,
+                          protected _overflowService: OverflowService) {
         super();
 
         this._subscription = _translate.onLangChange.subscribe((event: TranslationChangeEvent) => {
@@ -79,6 +81,10 @@ export abstract class AbstractWorkflowPanelComponent extends AbstractPanelWithHe
 
     public setPanelRef(panelRef: MatExpansionPanel) {
         this.panelRef = panelRef;
+    }
+
+    get overflowMode(): boolean {
+        return this._overflowService.overflowMode;
     }
 
     /**

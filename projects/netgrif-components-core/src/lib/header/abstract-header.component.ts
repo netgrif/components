@@ -19,7 +19,7 @@ import {Subscription} from 'rxjs';
 export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
 
     protected readonly DEFAULT_COLUMN_COUNT = 6;
-    protected readonly DEFAULT_COLUMN_WIDTH = 190;
+    protected readonly DEFAULT_COLUMN_WIDTH = 220;
 
     @Input() type: HeaderType = HeaderType.CASE;
     @Input() hideEditMode = false;
