@@ -207,10 +207,14 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
                 this.state.error = true;
                 this.state.uploading = false;
                 this.state.progress = 0;
+                if (error?.error?.message) {
+                    this._snackbar.openErrorSnackBar(error.error.message);
+                } else {
+                    this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.fileUploadFailed'));
+                }
                 this._log.error(
                     `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)} uploading has failed!`, error
                 );
-                this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.fileUploadFailed'));
                 this.dataField.touch = true;
                 this.dataField.update();
                 this.fileUploadEl.nativeElement.value = '';
