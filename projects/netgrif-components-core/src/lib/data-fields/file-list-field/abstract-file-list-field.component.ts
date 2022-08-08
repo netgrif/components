@@ -208,7 +208,7 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
                 this.state.uploading = false;
                 this.state.progress = 0;
                 if (error?.error?.message) {
-                    this._snackbar.openErrorSnackBar(error.error.message);
+                    this._snackbar.openErrorSnackBar(this._translate.instant(error.error.message));
                 } else {
                     this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.fileUploadFailed'));
                 }
