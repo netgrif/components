@@ -1,7 +1,7 @@
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {Injectable} from '@angular/core';
 import {Params, ProviderProgress, ResourceProvider} from '../resource-provider.service';
-import {Observable, throwError} from 'rxjs';
+import {Observable} from 'rxjs';
 import {Count} from '../interface/count';
 import {EventOutcomeMessageResource, MessageResource} from '../interface/message-resource';
 import {filter, map} from 'rxjs/operators';
