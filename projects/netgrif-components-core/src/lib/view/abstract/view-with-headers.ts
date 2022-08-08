@@ -4,6 +4,7 @@ import {AbstractHeaderComponent} from '../../header/abstract-header.component';
 import {AbstractSortableViewComponent} from './sortable-view';
 import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { ConfigParams } from '../../panel/configuration/config-params';
 
 @Component({
     selector: 'ncc-abstract-view-with-headers',
@@ -34,5 +35,9 @@ export abstract class AbstractViewWithHeadersComponent implements OnDestroy {
 
     ngOnDestroy(): void {
         this._selectedHeaders$.complete();
+    }
+
+    showHeader(): boolean {
+        return !(this.config?.[ConfigParams.PANEL_HEADER] === 'false')
     }
 }
