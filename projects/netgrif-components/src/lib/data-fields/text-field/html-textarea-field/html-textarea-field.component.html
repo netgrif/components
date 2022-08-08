@@ -1,6 +1,6 @@
 <div class="height-100" #quillContainer>
     <quill-editor theme="snow" *ngIf="!formControlRef.disabled" [(ngModel)]="textAreaField.value"
-                  [modules]="quillModules" [bounds]="quillContainer"></quill-editor>
+                  [modules]="quillModules" [bounds]="quillContainer" placeholder="{{ textAreaField.placeholder |translate}}"></quill-editor>
     <mat-error *ngIf="textAreaField.isInvalid(formControlRef)">{{getErrorMessage()}}</mat-error>
     <input type="hidden" [formControl]="formControlRef">
     <div *ngIf="formControlRef.disabled" class="ql-snow user-select-auto" [ngClass]="{'border' : textAreaField.materialAppearance === 'outline'}">

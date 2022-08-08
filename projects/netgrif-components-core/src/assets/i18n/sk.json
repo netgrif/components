@@ -101,6 +101,10 @@
             "noUser": "Neexistuje žiadna Ldap skupina",
             "err": "Nepodarilo sa načítať Ldap skupiny"
         },
+        "tooltip": {
+            "SelectAll": "Označiť všetko",
+            "DeselectAll": "Odznačit všetko"
+        },
         "option-selector": {
             "select": "Zvoliť",
             "choose-one-option": "Vyberte jednu z možností"
@@ -270,6 +274,9 @@
         },
         "user": {
             "selectUser": "Vyberte používateľa"
+        },
+        "textarea": {
+            "insertText": "Sem zadajte text..."
         }
     },
     "dialog": {

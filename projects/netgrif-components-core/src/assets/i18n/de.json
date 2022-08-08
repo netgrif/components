@@ -101,6 +101,10 @@
             "noUser": "LDAP-Gruppe nicht gefunden",
             "err": "LDAP-Gruppe konnte nicht geladen werden"
         },
+        "tooltip": {
+            "SelectAll": "Alle auswählen",
+            "DeselectAll": "Alle abwählen"
+        },
         "option-selector": {
             "select": "Auswählen",
             "choose-one-option": "Wählen Sie eine Option aus"
@@ -270,6 +274,9 @@
         },
         "user": {
             "selectUser": "Benutzer auswählen"
+        },
+        "textarea": {
+            "insertText": "Hier Text eingeben..."
         }
     },
     "dialog": {
