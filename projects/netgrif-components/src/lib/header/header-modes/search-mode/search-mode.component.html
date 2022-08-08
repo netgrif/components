@@ -9,7 +9,7 @@
             *ngIf="!!header && header.fieldType !== 'button'; then thenBlock else elseBlock"
             fxFlex></div>
         <ng-template #thenBlock>
-            <div fxLayout="row" fxLayoutAlign=" center" fxFlex [ngSwitch]="header.fieldType" class="netgrif-input netgrif-input-fix netgrif-input-primary-fix">
+            <div fxLayout="row" fxLayoutAlign=" center" fxFlex [ngSwitch]="header.fieldType" class="netgrif-input netgrif-header-input netgrif-input-fix netgrif-input-primary-fix">
                 <mat-form-field color="primary" fxLayout="row" fxLayoutAlign=" center" fxFlex *ngSwitchCase="'date'" appearance="outline">
                     <mat-label>{{header.title | translate}}</mat-label>
                     <input matInput autocomplete="off"
