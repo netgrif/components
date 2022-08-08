@@ -25,7 +25,6 @@ import {
     AuthenticationMethodService,
     MockAuthenticationMethodService
 } from '@netgrif/components-core';
-import { RouterModule } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
 describe('CasePanelComponent', () => {

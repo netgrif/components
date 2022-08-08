@@ -15,7 +15,7 @@ export abstract class AbstractTabbedTaskViewComponent extends AbstractTaskViewCo
 
     protected constructor(taskViewService: TaskViewService,
                           @Inject(NAE_TAB_DATA) protected _injectedTabData: InjectedTabbedTaskViewData,
-                          protected _activatedRoute?: ActivatedRoute) {
+                          _activatedRoute?: ActivatedRoute) {
         super(taskViewService, _activatedRoute);
         this.subTaskView = taskViewService.closeTab.subscribe(() => {
             _injectedTabData.tabViewRef.closeTabIndex(_injectedTabData.tabViewRef.currentlySelectedTab());

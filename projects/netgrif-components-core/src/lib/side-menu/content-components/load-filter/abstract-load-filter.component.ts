@@ -10,7 +10,6 @@ import {getImmediateData} from '../../../utility/get-immediate-data';
 import {UserFilterConstants} from '../../../filter/models/user-filter-constants';
 import {SavedFilterMetadata} from '../../../search/models/persistance/saved-filter-metadata';
 import {SimpleFilter} from '../../../filter/models/simple-filter';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'ncc-abstract-load-filter',
@@ -22,8 +21,7 @@ export abstract class AbstractLoadFilterComponent extends AbstractCaseViewCompon
 
     protected constructor(@Inject(NAE_SIDE_MENU_CONTROL) protected _sideMenuControl: SideMenuControl,
                           protected _log: LoggerService,
-                          caseViewService: CaseViewService,
-                          protected _activatedRoute?: ActivatedRoute) {
+                          caseViewService: CaseViewService) {
         super(caseViewService);
         if (this._sideMenuControl.data) {
             this._injectedData = this._sideMenuControl.data as LoadFilterInjectionData;

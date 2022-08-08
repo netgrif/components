@@ -2,7 +2,7 @@ import {AfterViewInit, Component, EventEmitter, Input, OnDestroy, Output, Templa
 import {MatExpansionPanel} from '@angular/material/expansion';
 import {CaseListFontColorService} from '../utility/service/case-list-font-color.service';
 import { ActivatedRoute, Params } from '@angular/router';
-import { config } from 'rxjs';
+import { ConfigParams } from './configuration/config-params';
 
 @Component({
     selector: 'ncc-abstract-panel',
@@ -60,7 +60,7 @@ export abstract class AbstractPanelComponent implements AfterViewInit, OnDestroy
         if (!!this.hidePanelHeader) {
             return false;
         }
-        return !(!!this.config && this.config['panelHeader'] === 'false');
+        return !(this.config?.[ConfigParams.PANEL_HEADER] === 'false')
     }
 
     getCaseFontColor(): string {

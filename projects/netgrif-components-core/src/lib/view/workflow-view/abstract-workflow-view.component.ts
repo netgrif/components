@@ -31,7 +31,7 @@ export abstract class AbstractWorkflowViewComponent extends AbstractViewWithHead
                           protected _workflowViewService: WorkflowViewService,
                           protected _log: LoggerService,
                           protected _processService: ProcessService,
-                          protected _activatedRoute?: ActivatedRoute) {
+                          _activatedRoute?: ActivatedRoute) {
         super(_workflowViewService, _activatedRoute);
         this.workflows$ = this._workflowViewService.workflows$;
         this.loading$ = this._workflowViewService.loading$;
