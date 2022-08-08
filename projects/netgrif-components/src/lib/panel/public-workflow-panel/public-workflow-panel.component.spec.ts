@@ -50,13 +50,13 @@ describe('PublicWorkflowPanelComponent', () => {
             {provide: AuthenticationService, useClass: MockAuthenticationService},
             {provide: UserResourceService, useClass: MockUserResourceService},
             {provide: ConfigurationService, useClass: TestConfigurationService},
-            WorkflowViewService
+            WorkflowViewService,
+            OverflowService
         ],
       declarations: [ PublicWorkflowPanelComponent, PanelComponent, PublicTestWrapperComponent]
     })
     .compileComponents();
   }));
-
 
     beforeEach(() => {
         fixture = TestBed.createComponent(PublicTestWrapperComponent);

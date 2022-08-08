@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {
     AbstractSingleTaskViewComponent,
     AllowedNetsService,
@@ -31,7 +31,6 @@ import {
     SubjectTaskOperations,
     TaskContentService,
     TaskDataService,
-    TaskEvent,
     TaskEventNotification,
     TaskEventService,
     TaskRequestStateService,
@@ -40,19 +39,19 @@ import {
     UserService,
     ViewIdService
 } from '@netgrif/components-core';
-import { HeaderComponent } from '@netgrif/components';
-import { ActivatedRoute, Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
-import { combineLatest } from 'rxjs';
-import { map } from 'rxjs/operators';
+import {ActivatedRoute, Router} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
+import {combineLatest} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {HeaderComponent} from '@netgrif/components';
 
-
-const localAllowedNetsServiceFactory = (factory: AllowedNetsServiceFactory, route: ActivatedRoute) => {
-    const array = [];
-    if (route.snapshot.paramMap.get('petriNetId') !== null) {
-        array.push(route.snapshot.paramMap.get('petriNetId'));
-    }
-    return factory.createFromArray(array);
+const taskResourceServiceFactory = (userService: UserService, sessionService: SessionService, authService: AuthenticationService,
+                                    router: Router, publicResolverService: PublicUrlResolverService,
+                                    logger: LoggerService, provider: ResourceProvider, config: ConfigurationService,
+                                    fieldConverter: FieldConverterService, redirectService: RedirectService) => {
+    return publicFactoryResolver(userService, sessionService, authService, router, publicResolverService,
+        new TaskResourceService(provider, config, fieldConverter, logger),
+        new PublicTaskResourceService(provider, config, fieldConverter, logger), redirectService);
 };
 
 const processServiceFactory = (userService: UserService, sessionService: SessionService, authService: AuthenticationService,
@@ -63,13 +62,12 @@ const processServiceFactory = (userService: UserService, sessionService: Session
         new PublicProcessService(publicPetriNetResource, loggerService), redirectService);
 };
 
-const taskResourceServiceFactory = (userService: UserService, sessionService: SessionService, authService: AuthenticationService,
-                                    router: Router, publicResolverService: PublicUrlResolverService,
-                                    logger: LoggerService, provider: ResourceProvider, config: ConfigurationService,
-                                    fieldConverter: FieldConverterService, redirectService: RedirectService) => {
-    return publicFactoryResolver(userService, sessionService, authService, router, publicResolverService,
-        new TaskResourceService(provider, config, fieldConverter, logger),
-        new PublicTaskResourceService(provider, config, fieldConverter, logger), redirectService);
+const localAllowedNetsServiceFactory = (factory: AllowedNetsServiceFactory, route: ActivatedRoute) => {
+    const array = [];
+    if (route.snapshot.paramMap.get('petriNetId') !== null) {
+        array.push(route.snapshot.paramMap.get('petriNetId'));
+    }
+    return factory.createFromArray(array);
 };
 
 const caseResourceServiceFactory = (userService: UserService, sessionService: SessionService, authService: AuthenticationService,
@@ -118,8 +116,8 @@ const caseResourceServiceFactory = (userService: UserService, sessionService: Se
             useFactory: localAllowedNetsServiceFactory,
             deps: [AllowedNetsServiceFactory, ActivatedRoute]
         },
-        {   provide: NAE_VIEW_ID_SEGMENT, useValue: 'publicTaskView'},
-        {   provide: AllowedNetsServiceFactory, useClass: AllowedNetsServiceFactory},
+        {provide: NAE_VIEW_ID_SEGMENT, useValue: 'publicTaskView'},
+        {provide: AllowedNetsServiceFactory, useClass: AllowedNetsServiceFactory},
         ViewIdService,
         {provide: TaskContentService, useClass: SingleTaskContentService},
         TaskDataService,
@@ -137,7 +135,7 @@ export class PublicSingleTaskViewComponent extends AbstractSingleTaskViewCompone
     hidden: boolean;
 
     constructor(taskViewService: TaskViewService, publicTaskLoadingService: PublicTaskLoadingService,
-                activatedRoute: ActivatedRoute, protected router: Router) {
+                activatedRoute: ActivatedRoute, protected _router: Router) {
         super(taskViewService, activatedRoute);
         this.hidden = false;
         this.loading$ = combineLatest(taskViewService.loading$, publicTaskLoadingService.loading$).pipe(
