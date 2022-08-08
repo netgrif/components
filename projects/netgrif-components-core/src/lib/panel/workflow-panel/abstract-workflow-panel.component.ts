@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, Optional} from '@angular/core';
 import {MatExpansionPanel} from '@angular/material/expansion';
 import {AbstractPanelWithHeaderBindingComponent} from '../abstract/panel-with-header-binding';
 import {HeaderColumn} from '../../header/models/header-column';
@@ -49,7 +49,7 @@ export abstract class AbstractWorkflowPanelComponent extends AbstractPanelWithHe
     protected constructor(protected _log: LoggerService,
                           protected _translate: TranslateService,
                           protected _workflowService: WorkflowViewService,
-                          protected _overflowService: OverflowService) {
+                          @Optional() protected _overflowService: OverflowService) {
         super();
 
         this._subscription = _translate.onLangChange.subscribe((event: TranslationChangeEvent) => {
@@ -84,7 +84,11 @@ export abstract class AbstractWorkflowPanelComponent extends AbstractPanelWithHe
     }
 
     get overflowMode(): boolean {
-        return this._overflowService.overflowMode;
+        if(this._overflowService !== null){
+            return this._overflowService.overflowMode;
+        } else {
+            return false;
+        }
     }
 
     /**

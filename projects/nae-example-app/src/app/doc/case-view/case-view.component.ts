@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Optional, ViewChild} from '@angular/core';
 import {
     AbstractCaseViewComponent,
     Case,
@@ -34,7 +34,6 @@ const baseFilterFactory = () => {
     providers: [
         CategoryFactory,
         CaseViewService,
-        OverflowService,
         SearchService,
         {   provide: NAE_BASE_FILTER,
             useFactory: baseFilterFactory},
@@ -52,8 +51,8 @@ export class CaseViewComponent extends AbstractCaseViewComponent implements Afte
 
     additionalFilterData: TaskSetDataRequestFields;
 
-    constructor(caseViewService: CaseViewService, protected overflowService: OverflowService) {
-        super(caseViewService, overflowService, undefined, {
+    constructor(caseViewService: CaseViewService) {
+        super(caseViewService, undefined, undefined, {
             enableCaseTitle: true,
             isCaseTitleRequired: false
         });
