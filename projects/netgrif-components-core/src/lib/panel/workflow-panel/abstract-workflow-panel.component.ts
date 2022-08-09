@@ -50,7 +50,7 @@ export abstract class AbstractWorkflowPanelComponent extends AbstractPanelWithHe
                           protected _translate: TranslateService,
                           protected _workflowService: WorkflowViewService,
                           @Optional() protected _overflowService: OverflowService) {
-        super();
+        super(_overflowService);
 
         this._subscription = _translate.onLangChange.subscribe((event: TranslationChangeEvent) => {
             this.panelContent.netIdentifier.title = this._translate.instant(this.TRANSLATION_NET);
@@ -81,14 +81,6 @@ export abstract class AbstractWorkflowPanelComponent extends AbstractPanelWithHe
 
     public setPanelRef(panelRef: MatExpansionPanel) {
         this.panelRef = panelRef;
-    }
-
-    get overflowMode(): boolean {
-        if(this._overflowService !== null){
-            return this._overflowService.overflowMode;
-        } else {
-            return false;
-        }
     }
 
     /**

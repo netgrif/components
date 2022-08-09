@@ -41,10 +41,10 @@ export abstract class AbstractCasePanelComponent extends AbstractPanelWithImmedi
                           protected _snackBarService: SnackBarService,
                           protected _translateService: TranslateService,
                           protected _log: LoggerService,
-                          @Optional() protected _overflowService: OverflowService,
                           protected _userService: UserService,
                           protected _currencyPipe: CurrencyPipe,
-                          protected _permissionService: PermissionService) {
+                          protected _permissionService: PermissionService,
+                          @Optional() protected _overflowService: OverflowService,) {
         super(_translateService, _currencyPipe, _overflowService);
     }
 

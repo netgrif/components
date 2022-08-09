@@ -16,15 +16,7 @@ export abstract class AbstractPanelWithImmediateDataComponent extends AbstractPa
     protected constructor(protected _translate: TranslateService,
                           protected _currencyPipe: CurrencyPipe,
                           @Optional() protected _overflowService: OverflowService) {
-        super();
-    }
-
-    get overflowMode(): boolean {
-        if(!!this._overflowService){
-        return this._overflowService.overflowMode;
-        } else {
-            return false;
-        }
+        super(_overflowService);
     }
 
     ngOnDestroy(): void {
