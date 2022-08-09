@@ -9,7 +9,7 @@
         <nc-required-label *ngIf='dataField.behavior.required' [isIn]='!dataField.disabled'></nc-required-label>
         <br>
     </mat-label>
-    <button mat-stroked-button class='user-list-item-margin'
+    <button *ngIf='!formControl.disabled' mat-stroked-button class='user-list-item-margin'
             [disabled]='formControl.disabled'
             color='primary'
             (click)='selectUser()'>
