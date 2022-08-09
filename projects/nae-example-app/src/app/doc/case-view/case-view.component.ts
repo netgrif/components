@@ -35,6 +35,7 @@ const baseFilterFactory = () => {
         CategoryFactory,
         CaseViewService,
         SearchService,
+        OverflowService,
         {   provide: NAE_BASE_FILTER,
             useFactory: baseFilterFactory},
         {   provide: AllowedNetsService,
@@ -51,8 +52,8 @@ export class CaseViewComponent extends AbstractCaseViewComponent implements Afte
 
     additionalFilterData: TaskSetDataRequestFields;
 
-    constructor(caseViewService: CaseViewService) {
-        super(caseViewService, undefined, undefined, {
+    constructor(caseViewService: CaseViewService, @Optional() overflowService: OverflowService) {
+        super(caseViewService, overflowService, undefined, {
             enableCaseTitle: true,
             isCaseTitleRequired: false
         });
