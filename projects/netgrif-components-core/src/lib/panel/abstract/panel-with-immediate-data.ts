@@ -20,7 +20,7 @@ export abstract class AbstractPanelWithImmediateDataComponent extends AbstractPa
     }
 
     get overflowMode(): boolean {
-        if(this._overflowService !== null){
+        if(!!this._overflowService){
         return this._overflowService.overflowMode;
         } else {
             return false;
