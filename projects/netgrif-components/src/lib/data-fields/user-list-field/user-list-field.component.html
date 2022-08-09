@@ -23,7 +23,7 @@
                     color='primary'>
                 <mat-icon>how_to_reg</mat-icon>
                 {{user.fullName}}
-                <mat-icon (click)='deleteUser(user.id)' color='warn'>close</mat-icon>
+                <mat-icon (click)='deleteUser(user.id)' color='warn' *ngIf='!formControl.disabled'>close</mat-icon>
             </button>
             <mat-error *ngIf='dataField.isInvalid(formControl)'>{{'dataField.validations.required' | translate}}</mat-error>
         </span>
