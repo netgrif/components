@@ -20,8 +20,7 @@
         <span *ngFor='let user of dataField.value' class='user-list-item-margin'>
             <button mat-stroked-button
                     [disabled]='formControl.disabled'
-                    color='primary'
-                    (click)='selectUser()'>
+                    color='primary'>
                 <mat-icon>how_to_reg</mat-icon>
                 {{user.fullName}}
                 <mat-icon (click)='deleteUser(user.id)' color='warn'>close</mat-icon>
