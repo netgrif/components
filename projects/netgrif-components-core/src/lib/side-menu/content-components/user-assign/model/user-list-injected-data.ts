@@ -7,6 +7,6 @@ import {UserValue} from '../../../../data-fields/user-field/models/user-value';
  */
 export interface UserListInjectedData extends SideMenuInjectionData {
     roles: Array<string> | Array<ProcessRole>;
-    value: UserValue;
+    value: UserValue | Array<UserValue>;
     negativeRoles?: Array<string> | Array<ProcessRole>;
 }

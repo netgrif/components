@@ -1,1 +1,33 @@
-<p>user-list-field works!</p>
+<nc-data-field-template *ngIf='!dataField.behavior.hidden'
+                        [dataField]='dataField'
+                        [dataFieldTemplate]='dataFieldTemplate'
+                        [offset]='taskOffset'>
+</nc-data-field-template>
+
+<ng-template #dataFieldTemplate let-showLargeLayout='showLargeLayout'>
+    <mat-label class='netgrif-label' *ngIf='!showLargeLayout.value'>{{dataField.title}}
+        <nc-required-label *ngIf='dataField.behavior.required' [isIn]='!dataField.disabled'></nc-required-label>
+        <br>
+    </mat-label>
+    <button mat-stroked-button class='user-list-item-margin'
+            [disabled]='formControl.disabled'
+            color='primary'
+            (click)='selectUser()'>
+        <mat-icon>person_add</mat-icon>
+        {{'dataField.user.selectUser' | translate}}
+    </button>
+    <span *ngIf='dataField?.value?.length > 0'>
+        <span *ngFor='let user of dataField.value' class='user-list-item-margin'>
+            <button mat-stroked-button
+                    [disabled]='formControl.disabled'
+                    color='primary'
+                    (click)='selectUser()'>
+                <mat-icon>how_to_reg</mat-icon>
+                {{user.fullName}}
+                <mat-icon (click)='deleteUser(user.id)' color='warn'>close</mat-icon>
+            </button>
+            <mat-error *ngIf='dataField.isInvalid(formControl)'>{{'dataField.validations.required' | translate}}</mat-error>
+        </span>
+    </span>
+
+</ng-template>

@@ -21,6 +21,7 @@ import {TaskRefField} from '../../data-fields/task-ref-field/model/task-ref-fiel
 import {DynamicEnumerationField} from '../../data-fields/enumeration-field/models/dynamic-enumeration-field';
 import {FilterField} from '../../data-fields/filter-field/models/filter-field';
 import {I18nField} from '../../data-fields/i18n-field/models/i18n-field';
+import { UserListField } from '../../data-fields/user-list-field/models/user-list-field';
 
 @Injectable({
     providedIn: 'root'
@@ -95,6 +96,13 @@ export class FieldConverterService {
                 }
                 return new UserField(item.stringId, item.name, item.behavior, user,
                     item.roles, item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
+            case FieldTypeResource.USER_LIST:
+                let userList = new Array<UserValue>();
+                if (item.value?.length > 0) {
+                    item.value.forEach(u => userList.push(new UserValue(u.id, u.name, u.surname, u.email)))
+                }
+                return new UserListField(item.stringId, item.name, item.behavior, userList,
+                    item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.BUTTON:
                 /*@deprecated in 4.3.0*/
                 const typeBtn = this.resolveButtonView(item);
@@ -139,6 +147,8 @@ export class FieldConverterService {
             return FieldTypeResource.FILE_LIST;
         } else if (item instanceof UserField) {
             return FieldTypeResource.USER;
+        } else if (item instanceof UserListField) {
+            return FieldTypeResource.USER_LIST;
         } else if (item instanceof TaskRefField) {
             return FieldTypeResource.TASK_REF;
         } else if (item instanceof EnumerationField || item instanceof MultichoiceField) {
@@ -191,6 +201,9 @@ export class FieldConverterService {
         }
         if (this.resolveType(field) === FieldTypeResource.USER) {
             return value.id;
+        }
+        if (this.resolveType(field) === FieldTypeResource.USER_LIST) {
+            return value.map(u => u.id);
         }
         if (this.resolveType(field) === FieldTypeResource.DATE_TIME) {
             if (moment.isMoment(value)) {

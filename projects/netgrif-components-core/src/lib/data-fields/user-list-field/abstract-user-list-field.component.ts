@@ -1,6 +1,5 @@
 import { Component, Inject, Input, OnInit, Optional } from '@angular/core';
 import { AbstractDataFieldComponent } from '../models/abstract-data-field-component';
-import { UserField } from '../user-field/models/user-field';
 import { SideMenuService } from '../../side-menu/services/side-menu.service';
 import { SnackBarService } from '../../snack-bar/services/snack-bar.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -49,11 +48,16 @@ export abstract class AbstractUserListFieldComponent  extends AbstractDataFieldC
     public selectAbstractUser(component) {
         let valueReturned = false;
         this._sideMenuService.open(component, SideMenuSize.MEDIUM,
-            {roles: this.dataField.roles, value: this.dataField.value} as UserListInjectedData).onClose.subscribe($event => {
+            {value: this.dataField.value} as UserListInjectedData).onClose.subscribe($event => {
             if ($event.data) {
-                this.dataField.value = $event.data as UserValue;
+                if (!this.dataField.value) {
+                    this.dataField.value = new Array<UserValue>();
+                }
+                const existingValue = [...this.dataField.value];
+                existingValue.push($event.data as UserValue);
+                this.dataField.value = existingValue;
                 this._snackbar.openGenericSnackBar(
-                    this._translate.instant('dataField.snackBar.userAssigned', {userName: this.dataField.value.fullName}),
+                    this._translate.instant('dataField.snackBar.userAssigned', {userName: this.dataField.value[this.dataField.value.length - 1].fullName}),
                     'how_to_reg'
                 );
                 valueReturned = true;
@@ -61,6 +65,15 @@ export abstract class AbstractUserListFieldComponent  extends AbstractDataFieldC
                 this._snackbar.openWarningSnackBar(this._translate.instant('dataField.snackBar.notSelectedUser'));
             }
         });
+    }
+
+    public removeAbstractUser(userId: string) {
+        const existingValue = [...this.dataField.value];
+        const index = existingValue.findIndex(user => user.id === userId);
+        if (index > -1) {
+            existingValue.splice(index, 1);
+            this.dataField.value = existingValue;
+        }
     }
 
 }
