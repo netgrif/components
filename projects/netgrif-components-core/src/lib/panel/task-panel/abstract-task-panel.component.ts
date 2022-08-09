@@ -132,7 +132,7 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
                           protected _currencyPipe: CurrencyPipe,
                           protected _changedFieldsService: ChangedFieldsService,
                           protected _permissionService: PermissionService,
-                          overflowService: OverflowService) {
+                          @Optional() overflowService: OverflowService) {
         super(_translate, _currencyPipe, overflowService);
         this.taskEvent = new EventEmitter<TaskEventNotification>();
         this.panelRefOutput = new EventEmitter<MatExpansionPanel>();

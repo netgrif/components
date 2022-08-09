@@ -24,7 +24,8 @@ import {
     TaskRequestStateService,
     TaskViewService,
     PermissionService,
-    ChangedFieldsService, OverflowService
+    ChangedFieldsService,
+    OverflowService
 } from '@netgrif/components-core';
 import {TaskContentComponent} from '../../task-content/task-content/task-content.component';
 import {TranslateService} from '@ngx-translate/core';
@@ -73,7 +74,7 @@ export class TaskPanelComponent extends AbstractTaskPanelComponent {
                 protected _currencyPipe: CurrencyPipe,
                 protected _changedFieldsService: ChangedFieldsService,
                 protected _permissionService: PermissionService,
-                overflowService: OverflowService) {
+                @Optional() overflowService: OverflowService) {
         super(_taskContentService, _log, _taskViewService, _paperView, _taskEventService, _assignTaskService,
             _delegateTaskService, _cancelTaskService, _finishTaskService, _taskState, _taskDataService,
             _assignPolicyService, _callChain, _taskOperations, _disableFunctions, _translate, _currencyPipe, _changedFieldsService,

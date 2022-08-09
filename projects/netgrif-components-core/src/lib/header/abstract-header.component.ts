@@ -1,4 +1,4 @@
-import {Component, Injector, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Injector, Input, OnDestroy, OnInit, Optional} from '@angular/core';
 import {AbstractHeaderService} from './abstract-header-service';
 import {CaseHeaderService} from './case-header/case-header.service';
 import {TaskHeaderService} from './task-header/task-header.service';
@@ -40,7 +40,7 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
 
     constructor(protected _injector: Injector,
                 protected _translate: TranslateService,
-                protected _overflowService: OverflowService) {
+                @Optional() protected _overflowService: OverflowService) {
         (this._overflowService !== null) ?
             this.initializeFormControls(true) :
             this.initializeFormControls(false);
