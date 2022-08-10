@@ -21,18 +21,18 @@ import {ActivatedRoute, Router} from '@angular/router';
 
 const processServiceFactory = (userService: UserService, sessionService: SessionService, authService: AuthenticationService,
                                router: Router, publicResolverService: PublicUrlResolverService, petriNetResource: PetriNetResourceService,
-                               publicPetriNetResource: PublicPetriNetResourceService, loggerService: LoggerService) => {
+                               publicPetriNetResource: PublicPetriNetResourceService, loggerService: LoggerService, redirectService: RedirectService) => {
     return publicFactoryResolver(userService, sessionService, authService, router, publicResolverService,
         new ProcessService(petriNetResource, loggerService),
-        new PublicProcessService(publicPetriNetResource, loggerService));
+        new PublicProcessService(publicPetriNetResource, loggerService), redirectService);
 };
 
 const petriNetResourceFactory = (userService: UserService, sessionService: SessionService, authService: AuthenticationService,
                                  router: Router, publicResolverService: PublicUrlResolverService, provider: ResourceProvider,
-                                 config: ConfigurationService) => {
+                                 config: ConfigurationService, redirectService: RedirectService) => {
     return publicFactoryResolver(userService, sessionService, authService, router, publicResolverService,
         new PetriNetResourceService(provider, config),
-        new PublicPetriNetResourceService(provider, config));
+        new PublicPetriNetResourceService(provider, config), redirectService);
 };
 
 @Component({
@@ -45,13 +45,13 @@ const petriNetResourceFactory = (userService: UserService, sessionService: Sessi
             provide: ProcessService,
             useFactory: processServiceFactory,
             deps: [UserService, SessionService, AuthenticationService, Router, PublicUrlResolverService, PetriNetResourceService,
-                PublicPetriNetResourceService, LoggerService]
+                PublicPetriNetResourceService, LoggerService, RedirectService]
         },
         {
             provide: PetriNetResourceService,
             useFactory: petriNetResourceFactory,
             deps: [UserService, SessionService, AuthenticationService, Router, PublicUrlResolverService,
-                ResourceProvider, ConfigurationService]
+                ResourceProvider, ConfigurationService, RedirectService]
         },
     ]
 })
