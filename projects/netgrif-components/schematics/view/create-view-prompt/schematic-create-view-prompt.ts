@@ -19,7 +19,10 @@ import {addViewToViewService} from '../_utility/view-service-functions';
 import {ImportToAdd} from '../../_commons/import-to-add';
 import {createTreeCaseView} from './views/tree-case-view/create-tree-case-view';
 import {createGroupView} from './views/group-view/create-group-view';
-
+import { createPublicTaskView } from './views/public-task-view/create-public-task-view';
+import { createPublicWorkflowView } from './views/public-workflow-view/create-public-workflow-view';
+import { createPublicSingleTaskView } from './views/public-single-task-view/create-public-single-task-view';
+import {createPublicResolverView} from './views/public-resolver-view/create-public-resolver-view';
 
 export function schematicEntryPoint(schematicArguments: CreateViewArguments): Rule {
     return (tree: Tree) => {
@@ -48,6 +51,18 @@ function createView(tree: Tree, args: CreateViewArguments, addViewToService: boo
             break;
         case 'taskView':
             rules.push(createTaskView(tree, args, addViewToService));
+            break;
+        case 'publicTaskView':
+            rules.push(createPublicTaskView(tree, args, addViewToService));
+            break;
+        case 'publicSingleTaskView':
+            rules.push(createPublicSingleTaskView(tree, args, addViewToService));
+            break;
+        case 'publicWorkflowView':
+            rules.push(createPublicWorkflowView(tree, args, addViewToService));
+            break;
+        case 'publicResolverView':
+            rules.push(createPublicResolverView(tree, args, addViewToService));
             break;
         case 'caseView':
             rules.push(createCaseView(tree, args, addViewToService));
