@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, Optional} from '@angular/core';
 import {MatExpansionPanel} from '@angular/material/expansion';
 import {AbstractPanelWithHeaderBindingComponent} from '../abstract/panel-with-header-binding';
 import {HeaderColumn} from '../../header/models/header-column';
@@ -14,6 +14,7 @@ import {TranslateService, TranslationChangeEvent} from '@ngx-translate/core';
 import {WorkflowMetaField} from '../../header/workflow-header/workflow-meta-enum';
 import {WorkflowViewService} from '../../view/workflow-view/workflow-view.service';
 import {FeaturedValue} from '../abstract/featured-value';
+import {OverflowService} from '../../header/services/overflow.service';
 
 
 export interface WorkflowPanelContent {
@@ -47,8 +48,9 @@ export abstract class AbstractWorkflowPanelComponent extends AbstractPanelWithHe
 
     protected constructor(protected _log: LoggerService,
                           protected _translate: TranslateService,
-                          protected _workflowService: WorkflowViewService) {
-        super();
+                          protected _workflowService: WorkflowViewService,
+                          @Optional() protected _overflowService: OverflowService) {
+        super(_overflowService);
 
         this._subscription = _translate.onLangChange.subscribe((event: TranslationChangeEvent) => {
             this.panelContent.netIdentifier.title = this._translate.instant(this.TRANSLATION_NET);

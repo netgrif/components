@@ -16,6 +16,7 @@ import {SortDirection} from '@angular/material/sort';
 import {HeaderChangeType} from './models/user-changes/header-change-type';
 import {ViewIdService} from '../user/services/view-id.service';
 import {Net} from '../process/net';
+import {OverflowService} from './services/overflow.service';
 
 @Injectable()
 export abstract class AbstractHeaderService implements OnDestroy {
@@ -37,8 +38,9 @@ export abstract class AbstractHeaderService implements OnDestroy {
 
     protected constructor(protected _headerType: HeaderType,
                           protected _preferences: UserPreferenceService,
+                          protected _logger: LoggerService,
                           @Optional() private _viewIdService: ViewIdService,
-                          protected _logger: LoggerService) {
+                          @Optional() protected _overflowService: OverflowService) {
         this.loading = new LoadingEmitter(true);
         this._headerChange$ = new Subject<HeaderChange>();
         this.fieldsGroup = [{groupTitle: 'Meta data', fields: this.createMetaHeaders()}];
@@ -76,6 +78,14 @@ export abstract class AbstractHeaderService implements OnDestroy {
 
     get headerType(): HeaderType {
         return this._headerType;
+    }
+
+    get overflowMode(): boolean {
+        if (!!this._overflowService) {
+            return this._overflowService.overflowMode;
+        } else {
+            return false;
+        }
     }
 
     get headerColumnCount(): number {
@@ -298,7 +308,11 @@ export abstract class AbstractHeaderService implements OnDestroy {
                 header.sortDirection = '';
             }
         });
-        this._headerChange$.next({headerType: this.headerType, changeType: HeaderChangeType.SORT, description: sortChangeDescription});
+        this._headerChange$.next({
+            headerType: this.headerType,
+            changeType: HeaderChangeType.SORT,
+            description: sortChangeDescription
+        });
     }
 
     /**

@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, Optional} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Case} from '../../resources/interface/case';
 import {toMoment} from '../../resources/types/nae-date-type';
@@ -36,11 +36,16 @@ export abstract class AbstractCasePanelComponent extends AbstractPanelWithImmedi
     @Input() showDeleteMenu = false;
     @Input() textEllipsis = false;
 
-    protected constructor(protected _caseResourceService: CaseResourceService, protected _caseViewService: CaseViewService,
-                          protected _snackBarService: SnackBarService, protected _translateService: TranslateService,
-                          protected _log: LoggerService, protected _overflowService: OverflowService, protected _userService: UserService,
-                          protected _currencyPipe: CurrencyPipe, protected _permissionService: PermissionService) {
-        super(_translateService, _currencyPipe);
+    protected constructor(protected _caseResourceService: CaseResourceService,
+                          protected _caseViewService: CaseViewService,
+                          protected _snackBarService: SnackBarService,
+                          protected _translateService: TranslateService,
+                          protected _log: LoggerService,
+                          protected _userService: UserService,
+                          protected _currencyPipe: CurrencyPipe,
+                          protected _permissionService: PermissionService,
+                          @Optional() protected _overflowService: OverflowService,) {
+        super(_translateService, _currencyPipe, _overflowService);
     }
 
     public show(event: MouseEvent): boolean {
