@@ -184,6 +184,64 @@
             "navigation": true,
             "routing": {
                 "path": "drawer-double"
+            },
+            "children": {
+                "group-navigation-double-drawer-outlet": {
+                    "layout": {
+                        "name": "groupNavigation"
+                    },
+                    "navigation": false,
+                    "routing": {
+                        "path": "group-nav"
+                    }
+                },
+                "custom-view": {
+                    "component": {
+                        "class": "TaskViewComponent",
+                        "from": "./doc/task-view/task-view.component"
+                    },
+                    "access": "private",
+                    "navigation": {
+                        "title": "Custom Task View",
+                        "icon": "article"
+                    },
+                    "routing": {
+                        "path": "task-view"
+                    },
+                    "processUri": "examples"
+                },
+                "hidden-workflow-view": {
+                    "component": {
+                        "class": "WorkflowViewExampleComponent",
+                        "from": "./doc/workflow-view-example/workflow-view-example.component"
+                    },
+                    "access": {
+                        "authority": ["ROLE_ADMIN"]
+                    },
+                    "navigation": {
+                        "title": "Workflow view",
+                        "icon": "insights",
+                        "hidden": true
+                    },
+                    "routing": {
+                        "path": "workflow-view"
+                    }
+                },
+                "hidden-active-group": {
+                    "component": {
+                        "class": "ActiveGroupComponent",
+                        "from": "./doc/active-group/active-group.component"
+                    },
+                    "access": "private",
+                    "navigation": {
+                        "title": "Active group view",
+                        "icon": "coronavirus",
+                        "hidden": true
+                    },
+                    "routing": {
+                        "path": "active-group"
+                    }
+                }
             }
         },
         "demo-rail": {
@@ -460,6 +518,25 @@
                 "path": "tree-view"
             }
         },
+        "demo-single-public-task": {
+            "layout": {
+                "name": "publicTaskView",
+                "params": {
+                    "allowedNets": []
+                }
+            },
+            "component": {
+                "class": "PublicSingleTaskViewComponent",
+                "from": "./doc/public-single-task-view/public-single-task-view.component"
+            },
+            "access": "public",
+            "navigation": {
+                "title": "Public view - transition"
+            },
+            "routing": {
+                "path": "process/:petriNetId/:caseId/:transitionId"
+            }
+        },
         "demo-public-view": {
             "layout": {
                 "name": "publicTaskView",
@@ -714,27 +791,6 @@
             "navigation": true,
             "routing": {
                 "path": "active-group"
-            }
-        },
-        "wrapper": {
-            "layout": {
-                "name": "emptyView"
-            },
-            "access": "private",
-            "navigation": false,
-            "routing": {
-                "path": "wrap"
-            },
-            "children": {
-                "group-navigation-outlet": {
-                    "layout": {
-                        "name": "groupNavigation"
-                    },
-                    "navigation": false,
-                    "routing": {
-                        "path": "group-nav"
-                    }
-                }
             }
         },
         "dashboard": {

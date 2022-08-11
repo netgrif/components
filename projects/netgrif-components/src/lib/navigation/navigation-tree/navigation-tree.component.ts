@@ -1,15 +1,14 @@
 import {Component} from '@angular/core';
 import {Router} from '@angular/router';
 import {
-    AbstractNavigationTreeComponent, AuthorityGuardService,
-    ConfigurationService,
-    LoggerService,
-    RoleGuardService,
-    UserService,
-    GroupGuardService,
+    AbstractNavigationTreeComponent, AccessService,
     ActiveGroupService,
+    ConfigurationService,
+    DynamicNavigationRouteProviderService,
+    LanguageService,
+    LoggerService,
     TaskResourceService,
-    LanguageService, DynamicNavigationRouteProviderService
+    UserService
 } from '@netgrif/components-core';
 
 @Component({
@@ -23,9 +22,7 @@ export class NavigationTreeComponent extends AbstractNavigationTreeComponent {
                 router: Router,
                 log: LoggerService,
                 userService: UserService,
-                roleGuard: RoleGuardService,
-                authorityGuard: AuthorityGuardService,
-                groupGuard: GroupGuardService,
+                accessService: AccessService,
                 activeGroupService: ActiveGroupService,
                 taskResourceService: TaskResourceService,
                 languageService: LanguageService,
@@ -35,9 +32,7 @@ export class NavigationTreeComponent extends AbstractNavigationTreeComponent {
             router,
             log,
             userService,
-            roleGuard,
-            authorityGuard,
-            groupGuard,
+            accessService,
             activeGroupService,
             taskResourceService,
             languageService,

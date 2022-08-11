@@ -7,15 +7,31 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Full Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://github.com/netgrif/components/commits/v6.0.0)
 
-## [6.2.0](https://github.com/netgrif/components/releases/tag/v6.1.1) (2022-06-22)
+## [6.2.0](https://github.com/netgrif/components/releases/tag/v6.2.0) (2022-08-09)
 
 ### Fixed
 
 - [NAE-1628] Reset radio buttons button visible on visible radio buttons
+- [NAE-1667] Select user translation
+- [NAE-1669] Fix header design
+- [NAE-1672] Change userField value
+- [NAE-1680] Public view + change behavior bug
+- [NAE-1690] Fix header responsive overflow mode
+- [NAE-1681] Delete file function works with parent task in taskRef-ed file field.
 
 ### Changed
 
-- [NAE-1648] Redesign datafields
+- [NAE-1648] Redesign dataFields
+- [NAE-1682] Translate tooltip admin view
+- [NAE-1677] Message from exception thrown in SET event on data field is not propagated in EventOutcome
+
+### Added
+
+- [NAE-1647] Elastic mapping for I18N data field
+- [NAE-1658] Two-level navigation menu
+- [NAE-1671] Dynamic case title in tab
+- [NAE-1642] Redirect to transition via URL
+- [NAE-1643] Configure public view via request parameters
 
 ## [6.1.1](https://github.com/netgrif/components/releases/tag/v6.1.1) (2022-06-09)
 

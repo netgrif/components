@@ -1,14 +1,15 @@
 <div fxFlex="100" fxLayout="row" fxLayoutAlign=" center">
     <div *ngFor="let header of this.headerService.selectedHeaders$ | async; let i = index"
-         [fxHide.lt-xl]="i >= 4 && this.headerService.responsiveHeaders"
-         [fxHide.lt-lg]="i >= 3 && this.headerService.responsiveHeaders"
-         [fxHide.lt-md]="i >= 2 && this.headerService.responsiveHeaders"
-         [fxHide.lt-sm]="i >= 1 && this.headerService.responsiveHeaders" fxFlex [ngStyle]="{'min-width': getMinWidth()}">
+         [fxHide.lt-xl]="i >= 4 && this.headerService.responsiveHeaders && !this.headerService.overflowMode"
+         [fxHide.lt-lg]="i >= 3 && this.headerService.responsiveHeaders && !this.headerService.overflowMode"
+         [fxHide.lt-md]="i >= 2 && this.headerService.responsiveHeaders && !this.headerService.overflowMode"
+         [fxHide.lt-sm]="i >= 1 && this.headerService.responsiveHeaders && !this.headerService.overflowMode"
+         fxFlex [ngStyle]="{'min-width': getMinWidth()}">
         <div
             *ngIf="!!header && header.fieldType !== 'button'; then thenBlock else elseBlock"
             fxFlex></div>
         <ng-template #thenBlock>
-            <div fxLayout="row" fxLayoutAlign=" center" fxFlex [ngSwitch]="header.fieldType" class="netgrif-input netgrif-input-fix netgrif-input-primary-fix">
+            <div fxLayout="row" fxLayoutAlign=" center" fxFlex [ngSwitch]="header.fieldType" class="netgrif-input netgrif-header-input netgrif-input-fix netgrif-input-primary-fix">
                 <mat-form-field color="primary" fxLayout="row" fxLayoutAlign=" center" fxFlex *ngSwitchCase="'date'" appearance="outline">
                     <mat-label>{{header.title | translate}}</mat-label>
                     <input matInput autocomplete="off"
@@ -17,10 +18,11 @@
                            [placeholder]="'headers.date' | translate"
                            (click)="datepicker.open()"
                            (keydown.enter)="datepicker.close()">
-                    <mat-datepicker-toggle matPrefix [for]="datepicker"></mat-datepicker-toggle>
+<!--                    <mat-datepicker-toggle matPrefix [for]="datepicker"></mat-datepicker-toggle>-->
                     <mat-datepicker #datepicker></mat-datepicker>
                 </mat-form-field>
-                <mat-form-field color="primary" fxLayout="row" fxLayoutAlign=" center" fxFlex *ngSwitchCase="'dateTime'" appearance="outline">
+                <mat-form-field color="primary" fxLayout="row" fxLayoutAlign=" center" fxFlex *ngSwitchCase="'dateTime'"
+                                appearance="outline">
                     <mat-label>{{header.title | translate}}</mat-label>
                     <input matInput autocomplete="off"
                            [ngxMatDatetimePicker]="datetimepicker"
@@ -28,7 +30,7 @@
                            [placeholder]="'headers.dateTime' | translate"
                            (click)="datetimepicker.open()"
                            (keydown.enter)="datetimepicker.close()">
-                    <mat-datepicker-toggle matPrefix [for]="datetimepicker"></mat-datepicker-toggle>
+<!--                    <mat-datepicker-toggle matPrefix [for]="datetimepicker"></mat-datepicker-toggle>-->
                     <ngx-mat-datetime-picker #datetimepicker
                                              [showSpinners]="true"
                                              [showSeconds]="false"
@@ -38,25 +40,28 @@
                                              [enableMeridian]="false">
                     </ngx-mat-datetime-picker>
                 </mat-form-field>
+
                 <mat-form-field color="primary" fxLayout="row" fxLayoutAlign=" center" fxFlex *ngSwitchCase="'number'" appearance="outline">
                     <mat-label>{{header.title | translate}}</mat-label>
                     <input matInput type="number" [formControl]="formControls[i]">
                 </mat-form-field>
-                <div fxLayout="row" fxLayoutAlign="center center" *ngSwitchCase="'boolean'" >
-                    <mat-slide-toggle color="accent" [formControl]="formControls[i]">
-                        {{header.title | translate}}
-                    </mat-slide-toggle>
-                </div>
-                <div fxLayout="column" fxLayoutAlign="center start" *ngSwitchCase="'user'">
+
+                <mat-form-field color="primary" fxLayout="row" fxLayoutAlign=" center" fxFlex *ngSwitchCase="'boolean'" appearance="outline">
                     <mat-label>{{header.title | translate}}</mat-label>
-                    <button mat-flat-button
-                            color="accent"
-                            (click)="selectUser(i)">
-                        <mat-icon>person_search</mat-icon>
-                        {{formControls[i].value ? formControls[i].value.fullName : ('headers.selectUser' | translate)}}
-                    </button>
-                </div>
-                <mat-form-field color="primary" fxLayout="row" fxLayoutAlign=" center" fxFlex *ngSwitchDefault appearance="outline">
+                    <mat-select matInput [formControl]="formControls[i]">
+                        <mat-option>---</mat-option>
+                        <mat-option [value]="true">{{'dataField.values.boolean.true' | translate}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field color="primary" fxLayout="row" fxLayoutAlign=" center" fxFlex *ngSwitchCase="'user'"  appearance="outline">
+                    <mat-label>{{header.title | translate}}</mat-label>
+                    <input matInput (click)="selectUser(i)" autocomplete="false"
+                            [formControl]="formControls[i]">
+                </mat-form-field>
+
+                <mat-form-field color="primary" fxLayout="row" fxLayoutAlign=" center" fxFlex *ngSwitchDefault
+                                appearance="outline">
                     <mat-label>{{header.title | translate}}</mat-label>
                     <input matInput [formControl]="formControls[i]">
                 </mat-form-field>

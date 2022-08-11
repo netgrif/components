@@ -1,14 +1,15 @@
 <nc-app-panel [panelContent]="taskPanelContent" [panelHeader]="taskPanelHeader"
-              (stopLoading)="stopLoading()" (getExpansionPanelRef)="setPanelRef($event)" [first]="first" [last]="last">
+              (stopLoading)="stopLoading()" (getExpansionPanelRef)="setPanelRef($event)" [first]="first" [last]="last"
+              [preventCollapse]='preventCollapse' [hidePanelHeader]='hidePanelHeader'>
     <ng-template #taskPanelHeader>
         <div fxLayoutAlign="start center" fxLayout="row" fxFlex="95" (click)="preventSelectionClick($event)">
             <div *ngFor="let field of featuredFieldsValues; let i = index" fxFlex
-                  class="text-column-div"
-                  [fxHide.lt-xl]="i >= 4 && responsiveBody"
-                  [fxHide.lt-lg]="i >= 3 && responsiveBody"
-                  [fxHide.lt-md]="i >= 2 && responsiveBody"
-                  [fxHide.lt-sm]="i >= 1 && responsiveBody"
-                    [ngClass]="{'panel-header-padding': !textEllipsis && field.type !== 'button'}">
+                 class="text-column-div"
+                 [fxHide.lt-xl]="i >= 4 && responsiveBody && !overflowMode"
+                 [fxHide.lt-lg]="i >= 3 && responsiveBody && !overflowMode"
+                 [fxHide.lt-md]="i >= 2 && responsiveBody && !overflowMode"
+                 [fxHide.lt-sm]="i >= 1 && responsiveBody && !overflowMode"
+                 [ngClass]="{'panel-header-padding': !textEllipsis && field.type !== 'button'}">
                 <nc-panel-item
                     [leadingIcon]="taskPanelData.task.icon"
                     [leadingIconEnabled]="i === 0"
@@ -54,22 +55,45 @@
             <div class="task-panel-body" [ngClass]="{'paper-view': isPaperView()}" fxFlex="100">
                 <ng-template [cdkPortalOutlet]="portal"></ng-template>
             </div>
-            <mat-action-row>
-                <div fxLayout.lt-sm="column" fxLayoutAlign.lt-sm="center stretch" ngClass.lt-sm="width-100">
-                    <button *ngIf="canAssign()" (click)="assign()" mat-button [disabled]="canDisable('assign')">
-                        {{ getAssignTitle() | translate | uppercase }}</button>
-                    <button *ngIf="canDo('delegate')" (click)="delegate()" mat-button [disabled]="canDisable('delegate')">
-                        {{ getDelegateTitle() | translate | uppercase }}</button>
-                    <button *ngIf="canReassign()" (click)="delegate()" mat-button [disabled]="canDisable('reassign')">
-                        {{ 'tasks.view.reassign' | translate | uppercase }}</button>
-                    <button *ngIf="canCancel()" (click)="cancel()" mat-button [disabled]="canDisable('cancel')">
-                        {{ getCancelTitle() | translate | uppercase }}</button>
-                    <button *ngIf="canFinish()" (click)="finish()" mat-button [disabled]="canDisable('finish')">
-                        {{ getFinishTitle() | translate | uppercase }}</button>
-                    <button *ngIf="canCollapse()" color="primary" (click)="collapse()" mat-button>
-                        {{ 'tasks.view.collapse' | translate | uppercase }}</button>
+            <mat-action-row [ngStyle]="{'justify-content': actionRowJustifyContent ?? 'flex-end' }">
+                <mat-spinner class='action-row-spinner' *ngIf="isLoading && hidePanelHeader"
+                             [diameter]="20"></mat-spinner>
+                <div fxLayout.lt-sm="column" fxLayoutAlign.lt-sm="center stretch" ngClass.lt-sm="width-100"
+                     *ngFor='let button of (!!actionButtonTemplates && actionButtonTemplates.length > 0 ?
+                    actionButtonTemplates : [assignButton, delegateButton, reassignButton, cancelButton, finishButton, collapseButton])'>
+                    <ng-container *ngTemplateOutlet='button; context:thisContext'></ng-container>
                 </div>
             </mat-action-row>
         </div>
     </ng-template>
 </nc-app-panel>
+
+<ng-template #assignButton>
+    <button *ngIf="canAssign()" (click)="assign()" mat-button [disabled]="canDisable('assign')">
+        {{ getAssignTitle() | translate | uppercase }}</button>
+</ng-template>
+
+<ng-template #delegateButton>
+    <button *ngIf="canDo('delegate')" (click)="delegate()" mat-button [disabled]="canDisable('delegate')">
+        {{ getDelegateTitle() | translate | uppercase }}</button>
+</ng-template>
+
+<ng-template #reassignButton>
+    <button *ngIf="canReassign()" (click)="delegate()" mat-button [disabled]="canDisable('reassign')">
+        {{ 'tasks.view.reassign' | translate | uppercase }}</button>
+</ng-template>
+
+<ng-template #cancelButton>
+    <button *ngIf="canCancel()" (click)="cancel()" mat-button [disabled]="canDisable('cancel')">
+        {{ getCancelTitle() | translate | uppercase }}</button>
+</ng-template>
+
+<ng-template #finishButton>
+    <button *ngIf="canFinish()" (click)="finish()" mat-button [disabled]="canDisable('finish')">
+        {{ getFinishTitle() | translate | uppercase }}</button>
+</ng-template>
+
+<ng-template #collapseButton>
+    <button *ngIf="canCollapse()" color="primary" (click)="collapse()" mat-button>
+        {{ 'tasks.view.collapse' | translate | uppercase }}</button>
+</ng-template>

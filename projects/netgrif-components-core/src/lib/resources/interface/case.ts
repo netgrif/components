@@ -3,6 +3,7 @@ import {PetriNetObjectId} from './petri-net-object-id';
 import {ImmediateData} from './immediate-data';
 import {NaeDate} from '../types/nae-date-type';
 import {Permissions, UserPermissions, UserRefs} from '../../process/permissions';
+import { TaskPair } from './task-pair';
 
 /**
  * Object from Backend
@@ -42,6 +43,11 @@ export interface Case {
      * **Example:** personal_information
      */
     processIdentifier: string;
+
+    /**
+     * Uri node ID
+     * */
+
     /**
      * **Example:** New instance - Personal information
      */
@@ -122,6 +128,10 @@ export interface Case {
      * **Example:** []
      */
     viewRoles?: Array<string>;
+    /**
+     * Set of TaskPair
+     * */
+    tasks?: Array<TaskPair>;
 }
 
 

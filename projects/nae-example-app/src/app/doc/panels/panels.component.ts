@@ -74,6 +74,7 @@ export class PanelsComponent implements OnInit {
             stringId: 'ID',
             title: 'Workflow title',
             identifier: 'NET',
+            uriNodeId: 'NET',
             version: '1.0.0',
             initials: 'NET',
             defaultCaseName: 'Nepoviem',

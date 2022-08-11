@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {AbstractWorkflowPanelComponent, LoggerService, WorkflowViewService} from '@netgrif/components-core';
+import {Component, Optional} from '@angular/core';
+import {AbstractWorkflowPanelComponent, LoggerService, OverflowService, WorkflowViewService} from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
@@ -8,7 +8,7 @@ import {TranslateService} from '@ngx-translate/core';
     styleUrls: ['./workflow-panel.component.scss']
 })
 export class WorkflowPanelComponent extends AbstractWorkflowPanelComponent {
-    constructor(log: LoggerService, translate: TranslateService, workflowService: WorkflowViewService) {
-        super(log, translate, workflowService);
+    constructor(log: LoggerService, translate: TranslateService, workflowService: WorkflowViewService, @Optional() overflowService: OverflowService) {
+        super(log, translate, workflowService, overflowService);
     }
 }

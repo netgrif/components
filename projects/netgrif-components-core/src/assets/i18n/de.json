@@ -6,7 +6,12 @@
             "logout": "Abmelden",
             "en": "English",
             "sk": "Slowakisch",
-            "de": "Deutsch"
+            "de": "Deutsch",
+            "open": "Menü öffnen",
+            "home": "Startseite",
+            "back": "Zurück",
+            "folders": "Mappen",
+            "views": "Blidschirme"
         }
     },
     "tasks": {
@@ -45,6 +50,9 @@
             "cancel": "Stornieren",
             "noData": "Diese Aufgabe hat keine Dateien. Schließen Sie die Aufgabe ab, um fortzufahren.",
             "redirecting": "Umleiten..."
+        },
+        "footer": {
+            "defaultText": "NETGRIF, s.r.o. © 2022"
         }
     },
     "side-menu": {
@@ -92,6 +100,10 @@
             "choose": "LDAP-Gruppe suchen",
             "noUser": "LDAP-Gruppe nicht gefunden",
             "err": "LDAP-Gruppe konnte nicht geladen werden"
+        },
+        "tooltip": {
+            "SelectAll": "Alle auswählen",
+            "DeselectAll": "Alle abwählen"
         },
         "option-selector": {
             "select": "Auswählen",
@@ -259,6 +271,12 @@
         },
         "enum": {
             "reset": "Rücksetzen"
+        },
+        "user": {
+            "selectUser": "Benutzer auswählen"
+        },
+        "textarea": {
+            "insertText": "Hier Text eingeben..."
         }
     },
     "dialog": {

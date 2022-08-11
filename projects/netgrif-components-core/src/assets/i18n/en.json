@@ -6,7 +6,12 @@
             "logout": "Logout",
             "en": "English",
             "sk": "Slovak",
-            "de": "German"
+            "de": "German",
+            "open": "Open menu",
+            "home": "Home",
+            "back": "Back",
+            "folders": "Folders",
+            "views": "Views"
         }
     },
     "tasks": {
@@ -45,6 +50,9 @@
             "cancel": "Cancel",
             "noData": "This task has no data. Finish to continue.",
             "redirecting": "Redirecting..."
+        },
+        "footer": {
+            "defaultText": "NETGRIF, s.r.o. © 2022"
         }
     },
     "side-menu": {
@@ -92,6 +100,10 @@
             "choose": "Search Ldap group",
             "noUser": "Not found Ldap group",
             "err": "Failed to load Ldap group"
+        },
+        "tooltip": {
+            "SelectAll": "Select All",
+            "DeselectAll": "Deselect All"
         },
         "option-selector": {
             "select": "Select",
@@ -259,6 +271,12 @@
         },
         "enum": {
             "reset": "Reset"
+        },
+        "user": {
+            "selectUser": "Select user"
+        },
+        "textarea": {
+            "insertText": "Insert text here..."
         }
     },
     "dialog": {

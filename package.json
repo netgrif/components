@@ -1,6 +1,6 @@
 {
     "name": "@netgrif/components-project",
-    "version": "6.2.0-rc.2",
+    "version": "6.2.0-rc.12",
     "description": "Netgrif Application Engine Frontend project. Project includes angular libraries as base for NAE applications.",
     "homepage": "https://components.netgrif.com",
     "license": "SEE LICENSE IN LICENSE",
@@ -59,6 +59,7 @@
         "project:local-build": "npm run ncc:local-build && npm run nc:local-build",
         "project:full-test": "npm run ncc:full-test && npm run ncc:build && npm run nc:full-test",
         "project:start": "npm run project:local-build && ng serve",
+        "project:start:lite": "npm run nc:local-build && ng serve",
         "project:sonar": "node scripts/sonar-scanner-analysis.js",
         "components:start": "npm run nc:local-build && ng serve",
         "example:start": "ng serve",

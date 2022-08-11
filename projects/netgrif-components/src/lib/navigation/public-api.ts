@@ -14,3 +14,7 @@ export * from './group-navigation-component-resolver/default-components/default-
 export * from './group-navigation-component-resolver/default-components/default-tab-view/default-tab-view.component';
 export * from './group-navigation-component-resolver/default-components/default-tabbed-case-view/default-tabbed-case-view.component';
 export * from './group-navigation-component-resolver/default-components/default-tabbed-task-view/default-tabbed-task-view.component';
+
+/* FUNCTIONS */
+export * from './group-navigation-component-resolver/default-components/model/factory-methods';
+export * from './group-navigation-component-resolver/default-components/model/injected-tabbed-case-view-data-with-navigation-item-task-data';

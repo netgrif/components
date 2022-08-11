@@ -1,0 +1,33 @@
+<div class="task-tab-background full-height">
+    <div fxLayout="column" fxLayoutAlign="start stretch" class="content-margin full-height" >
+        <nc-header [hidden]='hidden' #header type="task" class="task-panel-padding-mini"></nc-header>
+        <nc-single-task [task$]="task$" [loading$]="loading$" [selectedHeaders$]="selectedHeaders$" (taskEvent)="logEvent($event)"
+                        [pageHeader]='pageHeader' [pageFooter]='pageFooter' [actionButtonTemplates]='[finishButton]'
+                        [actionRowJustifyContent]='"center"' fxFlex></nc-single-task>
+    </div>
+</div>
+
+<ng-template #finishButton let-finish="finish">
+    <div class="public-button-padding">
+        <button mat-raised-button color="primary" class="public-button"
+                (click)="finish();">
+            <span>{{ 'singleTask.finishButtonTitle' | translate }}</span>
+        </button>
+    </div>
+</ng-template>
+
+<ng-template #pageHeader>
+    <div>
+        <img src="../../../assets/img/netgrif_full_white.svg" alt="logo" class="logoimg">
+        <mat-divider class="upper-divider"></mat-divider>
+    </div>
+    <mat-card class="upper-card">
+        <span class="upper-card-title"><strong>Example task title</strong></span>
+    </mat-card>
+</ng-template>
+
+<ng-template #pageFooter>
+    <mat-toolbar color="primary" class="footer-custom">
+        <span>NETGRIF, s.r.o. &copy; 2022</span>
+    </mat-toolbar>
+</ng-template>

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, Optional, ViewChild} from '@angular/core';
 import {
     CaseViewService,
     CategoryFactory,
@@ -75,7 +75,7 @@ export class TabbedCaseViewComponent extends AbstractTabbedCaseViewComponent imp
 
     constructor(caseViewService: CaseViewService,
                 loggerService: LoggerService,
-                overflowService: OverflowService,
+                @Optional() overflowService: OverflowService,
                 @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedCaseViewData) {
         super(caseViewService, loggerService, injectedTabData, overflowService, undefined, undefined, {
             enableCaseTitle: true,
