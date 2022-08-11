@@ -22,6 +22,7 @@ import {DynamicEnumerationField} from '../../data-fields/enumeration-field/model
 import {FilterField} from '../../data-fields/filter-field/models/filter-field';
 import {I18nField} from '../../data-fields/i18n-field/models/i18n-field';
 import { UserListField } from '../../data-fields/user-list-field/models/user-list-field';
+import { UserListValue } from '../../data-fields/user-list-field/models/user-list-value';
 
 @Injectable({
     providedIn: 'root'
@@ -97,11 +98,11 @@ export class FieldConverterService {
                 return new UserField(item.stringId, item.name, item.behavior, user,
                     item.roles, item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.USER_LIST:
-                let userList = new Array<UserValue>();
-                if (item.value?.length > 0) {
-                    item.value.forEach(u => userList.push(new UserValue(u.id, u.name, u.surname, u.email)))
+                let userListValue = new UserListValue([]);
+                if (item.value) {
+                    item.value.userValues.forEach(u => userListValue.addUserValue(new UserValue(u.id, u.name, u.surname, u.email)));
                 }
-                return new UserListField(item.stringId, item.name, item.behavior, userList,
+                return new UserListField(item.stringId, item.name, item.behavior, userListValue,
                     item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.BUTTON:
                 /*@deprecated in 4.3.0*/
@@ -203,7 +204,7 @@ export class FieldConverterService {
             return value.id;
         }
         if (this.resolveType(field) === FieldTypeResource.USER_LIST) {
-            return value.map(u => u.id);
+            return value.userValues.map(u => u.id);
         }
         if (this.resolveType(field) === FieldTypeResource.DATE_TIME) {
             if (moment.isMoment(value)) {

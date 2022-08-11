@@ -8,6 +8,7 @@ import { SideMenuSize } from '../../side-menu/models/side-menu-size';
 import { UserListInjectedData } from '../../side-menu/content-components/user-assign/model/user-list-injected-data';
 import { UserValue } from '../user-field/models/user-value';
 import { UserListField } from './models/user-list-field';
+import { UserListValue } from './models/user-list-value';
 
 @Component({
   selector: 'ncc-abstract-user-list-field',
@@ -50,14 +51,15 @@ export abstract class AbstractUserListFieldComponent  extends AbstractDataFieldC
         this._sideMenuService.open(component, SideMenuSize.MEDIUM,
             {value: this.dataField.value} as UserListInjectedData).onClose.subscribe($event => {
             if ($event.data) {
-                if (!this.dataField.value) {
-                    this.dataField.value = new Array<UserValue>();
+                const existingValue = new UserListValue([]);
+                if (!!this.dataField.value) {
+                    existingValue.addUserValues(this.dataField.value.userValues)
                 }
-                const existingValue = [...this.dataField.value];
-                existingValue.push($event.data as UserValue);
+                existingValue.addUserValue($event.data as UserValue);
                 this.dataField.value = existingValue;
                 this._snackbar.openGenericSnackBar(
-                    this._translate.instant('dataField.snackBar.userAssigned', {userName: this.dataField.value[this.dataField.value.length - 1].fullName}),
+                    this._translate.instant('dataField.snackBar.userAssigned',
+                    {userName: this.dataField.value.getLast().fullName}),
                     'how_to_reg'
                 );
                 valueReturned = true;
@@ -67,13 +69,10 @@ export abstract class AbstractUserListFieldComponent  extends AbstractDataFieldC
         });
     }
 
-    public removeAbstractUser(userId: string) {
-        const existingValue = [...this.dataField.value];
-        const index = existingValue.findIndex(user => user.id === userId);
-        if (index > -1) {
-            existingValue.splice(index, 1);
-            this.dataField.value = existingValue;
-        }
+    public removeAbstractUser(user: UserValue) {
+        const existingUsers = new UserListValue([...this.dataField.value.userValues]);
+        existingUsers.removeUserValue(user);
+        this.dataField.value = existingUsers;
     }
 
 }

@@ -5,7 +5,8 @@ import {
     AbstractUserListFieldComponent,
     NAE_INFORM_ABOUT_INVALID_DATA,
     SideMenuService,
-    SnackBarService
+    SnackBarService,
+    UserValue
 } from '@netgrif/components-core';
 
 @Component({
@@ -26,7 +27,7 @@ export class UserListFieldComponent extends AbstractUserListFieldComponent {
         this.selectAbstractUser(UserAssignComponent);
     }
 
-    public deleteUser(userId: string) {
-        this.removeAbstractUser(userId);
+    public deleteUser(user: UserValue) {
+        this.removeAbstractUser(user);
     }
 }
