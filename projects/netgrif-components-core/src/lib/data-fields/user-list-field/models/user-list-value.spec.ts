@@ -1,4 +1,3 @@
-import { UserListField } from './user-list-field';
 import { TestBed } from '@angular/core/testing';
 import { UserValue } from '../../user-field/models/user-value';
 import { UserListValue } from './user-list-value';
