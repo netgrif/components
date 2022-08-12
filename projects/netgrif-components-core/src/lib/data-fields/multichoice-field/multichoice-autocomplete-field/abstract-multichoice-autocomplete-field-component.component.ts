@@ -17,7 +17,7 @@ export abstract class AbstractMultichoiceAutocompleteFieldComponentComponent imp
     @Input() multichoiceField: MultichoiceField;
     @Input() formControlRef: FormControl;
     @Input() showLargeLayout: WrappedBoolean;
-    @ViewChild('input') input: ElementRef<HTMLInputElement>;
+    @ViewChild('input') input: ElementRef;
 
     separatorKeysCodes: number[] = [ENTER, COMMA];
 
@@ -71,6 +71,9 @@ export abstract class AbstractMultichoiceAutocompleteFieldComponentComponent imp
      * @return  return matched options
      */
     private _filter(value: string): Array<MultichoiceFieldValue> {
+        if(Array.isArray(value)){
+            value = '';
+        }
         const filterValue = value?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
         return this.multichoiceField.choices.filter(option => option.value.toLowerCase().normalize('NFD')

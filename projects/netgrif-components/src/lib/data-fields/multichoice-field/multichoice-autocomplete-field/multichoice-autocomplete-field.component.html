@@ -19,14 +19,15 @@
             [matAutocomplete]="auto"
             [matChipInputFor]="chipList"
             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-            (keyup)="change()"
-        >
+            (keyup)="change()">
     </mat-chip-list>
     <mat-autocomplete [displayWith]="renderSelection" autoActiveFirstOption #auto="matAutocomplete">
-        <mat-option *ngFor="let option of filteredOptions | async" [value]="option.key">
+        <mat-option [value]="null">---</mat-option>
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option.key" (click)="change()">
             {{option.value}}
         </mat-option>
     </mat-autocomplete>
     <mat-hint>{{multichoiceField.description}}</mat-hint>
-    <mat-error *ngIf="multichoiceField.isInvalid(formControlRef)">{{'dataField.validations.required' | translate}}</mat-error>
+    <mat-error
+        *ngIf="multichoiceField.isInvalid(formControlRef)">{{'dataField.validations.required' | translate}}</mat-error>
 </mat-form-field>
