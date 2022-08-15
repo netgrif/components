@@ -36,7 +36,8 @@ export function createPublicTaskView(tree: Tree, args: CreateTaskViewArguments &
         new ImportToAdd('FlexModule', '@angular/flex-layout'),
         new ImportToAdd('MaterialModule', '@netgrif/components-core'),
         new ImportToAdd('PanelComponentModule', '@netgrif/components'),
-        new ImportToAdd('SearchComponentModule', '@netgrif/components')
+        new ImportToAdd('SearchComponentModule', '@netgrif/components'),
+        new ImportToAdd('HeaderComponentModule', '@netgrif/components')
     ]);
 
     if (addViewToService) {

@@ -37,7 +37,8 @@ export function createPublicWorkflowView(tree: Tree, args: CreateTaskViewArgumen
         new ImportToAdd('MaterialModule', '@netgrif/components-core'),
         new ImportToAdd('PanelComponentModule', '@netgrif/components'),
         new ImportToAdd('SearchComponentModule', '@netgrif/components'),
-        new ImportToAdd('WorkflowViewComponentModule', '@netgrif/components')
+        new ImportToAdd('WorkflowViewComponentModule', '@netgrif/components'),
+        new ImportToAdd('HeaderComponentModule', '@netgrif/components')
 
     ]);
 
