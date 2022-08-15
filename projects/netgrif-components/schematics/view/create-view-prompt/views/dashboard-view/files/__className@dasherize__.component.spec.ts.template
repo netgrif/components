@@ -1,9 +1,15 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {<%= classify(className) %>Component} from './<%= dasherize(className) %>.component';
-import {MaterialModule, ConfigurationService} from '@netgrif/components-core';
+import {
+    MaterialModule,
+    ConfigurationService
+    AuthenticationMethodService,
+    MockAuthenticationMethodService
+} from '@netgrif/components-core';
 import {DashboardComponentModule} from '@netgrif/components';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {<%= configName %>ConfigurationService} from '<%= configImportPath %>';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('<%= classify(className) %>Component', () => {
      let component: <%= classify(className) %>Component;
@@ -11,10 +17,11 @@ describe('<%= classify(className) %>Component', () => {
 
      beforeEach(waitForAsync(() => {
          TestBed.configureTestingModule({
-             imports: [DashboardComponentModule, MaterialModule, HttpClientTestingModule],
+             imports: [NoopAnimationsModule, DashboardComponentModule, MaterialModule, HttpClientTestingModule],
              declarations: [<%= classify(className) %>Component],
              providers: [
-                 {provide: ConfigurationService, useClass: <%= configName %>ConfigurationService}
+                 {provide: ConfigurationService, useClass: <%= configName %>ConfigurationService},
+                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService}
              ]
          }).compileComponents();
      }));
