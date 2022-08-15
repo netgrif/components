@@ -10,7 +10,7 @@ export const publicFactoryResolver = (userService: UserService, sessionService: 
                                       redirectService: RedirectService, url?: string) => {
     if (!sessionService.isInitialized) {
         publicResolverService.url = router.url;
-        if (url == undefined) {
+        if (url === undefined) {
             router.navigate(['/public-resolver'], {queryParams: redirectService.queryParams});
         } else {
             router.navigate([url], {queryParams: redirectService.queryParams});

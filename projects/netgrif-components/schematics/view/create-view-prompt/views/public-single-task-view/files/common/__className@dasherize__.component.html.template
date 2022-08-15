@@ -18,7 +18,7 @@
 
 <ng-template #pageHeader>
     <div>
-        <img src="../../../assets/img/netgrif_full_white.svg" alt="logo" class="logoimg">
+        <!-- <img src="TODO LINK" alt="logo" class="logoimg"> -->
         <mat-divider class="upper-divider"></mat-divider>
     </div>
     <mat-card class="upper-card">
@@ -28,6 +28,6 @@
 
 <ng-template #pageFooter>
     <mat-toolbar color="primary" class="footer-custom">
-        <span>NETGRIF, s.r.o. &copy; 2022</span>
+        <!-- TODO -->
     </mat-toolbar>
 </ng-template>

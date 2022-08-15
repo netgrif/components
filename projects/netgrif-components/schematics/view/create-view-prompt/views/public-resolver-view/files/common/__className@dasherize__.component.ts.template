@@ -20,20 +20,20 @@ export class <%= classify(className) %>Component implements OnInit, OnDestroy {
 
     constructor(protected _userService: UserService, protected _sessionService: SessionService, protected _router: Router,
                 protected _auth: AuthenticationService, protected _publicResolver: PublicUrlResolverService,
-                protected redirectService: RedirectService) {
+                protected _redirectService: RedirectService) {
     }
 
     ngOnInit(): void {
         this._userSub = this._userService.user$.subscribe(user => {
             if (!!user && user.id !== '') {
-                this._router.navigate([this.redirectService.parseRedirectPath(this._publicResolver.url)],
-                    { queryParams: this.redirectService.queryParams });
+                this._router.navigate([this._redirectService.parseRedirectPath(this._publicResolver.url)],
+                    { queryParams: this._redirectService.queryParams });
                 this._publicResolver.url = undefined;
             } else {
                 if (!this._sessionService.verified && !this._sessionService.isVerifying &&
                     this._sessionService.isInitialized && !this._auth.isAuthenticated) {
-                    this._router.navigate([this.redirectService.parseRedirectPath(this._publicResolver.url)],
-                        { queryParams: this.redirectService.queryParams });
+                    this._router.navigate([this._redirectService.parseRedirectPath(this._publicResolver.url)],
+                        { queryParams: this._redirectService.queryParams });
                     this._publicResolver.url = undefined;
                 }
             }
