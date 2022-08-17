@@ -195,6 +195,7 @@ export abstract class DataField<T> {
             this.resolvePrevValue(value);
         }
         this._value.next(value);
+        this.update()
         this._reverting = false;
     }
 
