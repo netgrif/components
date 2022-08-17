@@ -1,5 +1,5 @@
 import {ConfigurationInput} from '../models/configuration-input';
-import {ElementRef, Input, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, ViewChild} from '@angular/core';
 import {Category} from '../models/category/category';
 import {OperatorTemplatePart} from '../models/operator-template-part';
 import {SearchAutocompleteOption} from '../models/category/search-autocomplete-option';
@@ -7,6 +7,10 @@ import {Observable} from 'rxjs';
 import {AutocompleteOptions} from '../models/category/autocomplete-options';
 import {MatSelect} from '@angular/material/select';
 
+@Component({
+    selector: 'ncc-abstract-search-configuration-input',
+    template: ''
+})
 export abstract class AbstractSearchConfigurationInputComponent {
 
     /**

@@ -1,4 +1,4 @@
-import {Injector, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Injector, Input, OnDestroy, OnInit, Optional} from '@angular/core';
 import {AbstractHeaderService} from './abstract-header-service';
 import {CaseHeaderService} from './case-header/case-header.service';
 import {TaskHeaderService} from './task-header/task-header.service';
@@ -12,10 +12,14 @@ import {OverflowService} from './services/overflow.service';
 import {stopPropagation} from '../utility/stop-propagation';
 import {Subscription} from 'rxjs';
 
+@Component({
+    selector: 'ncc-abstract-header',
+    template: ''
+})
 export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
 
     protected readonly DEFAULT_COLUMN_COUNT = 6;
-    protected readonly DEFAULT_COLUMN_WIDTH = 190;
+    protected readonly DEFAULT_COLUMN_WIDTH = 220;
 
     @Input() type: HeaderType = HeaderType.CASE;
     @Input() hideEditMode = false;
@@ -36,7 +40,7 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
 
     constructor(protected _injector: Injector,
                 protected _translate: TranslateService,
-                protected _overflowService: OverflowService) {
+                @Optional() protected _overflowService: OverflowService) {
         (this._overflowService !== null) ?
             this.initializeFormControls(true) :
             this.initializeFormControls(false);

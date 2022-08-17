@@ -1,5 +1,3 @@
-@import '~@angular/material/theming';
-
 @mixin tabs-theme($theme) {
     .center-tabs {
         .mat-tab-labels {
@@ -11,6 +9,11 @@
         .mat-tab-labels {
             justify-content: flex-end;
         }
+    }
+
+    .mat-tab-label-container {
+        border-radius: 6px;
+        background: white;
     }
 }
 

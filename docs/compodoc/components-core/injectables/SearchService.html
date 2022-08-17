@@ -618,8 +618,8 @@ use the <a href="../injectables/SearchService.html#addGeneratedLeafPredicate">ad
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="366"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:366</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="367"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:367</a></div>
                 </td>
             </tr>
 
@@ -2012,20 +2012,21 @@ export class SearchService implements OnDestroy {
         this._loadingFromMetadata$.on();
 
         const generatorObservables &#x3D; [];
-
-        for (const clause of metadata.predicateMetadata) {
-            const branchId &#x3D; this._rootPredicate.addNewClausePredicate(BooleanOperator.OR);
-            const branchPredicate &#x3D; (
-                this._rootPredicate.getPredicateMap().get(branchId)
-                    .getWrappedPredicate() as unknown as EditableClausePredicateWithGenerators
-            );
-            for (const predicate of clause) {
-                const localBranchReference &#x3D; branchPredicate;
-                generatorObservables.push(
-                    this._categoryFactory.getFromMetadata(predicate).pipe(tap(generator &#x3D;&gt; {
-                        localBranchReference.addNewPredicateFromGenerator(generator);
-                    }))
+        if (Array.isArray(metadata.predicateMetadata)) {
+            for (const clause of metadata.predicateMetadata) {
+                const branchId &#x3D; this._rootPredicate.addNewClausePredicate(BooleanOperator.OR);
+                const branchPredicate &#x3D; (
+                    this._rootPredicate.getPredicateMap().get(branchId)
+                        .getWrappedPredicate() as unknown as EditableClausePredicateWithGenerators
                 );
+                for (const predicate of clause) {
+                    const localBranchReference &#x3D; branchPredicate;
+                    generatorObservables.push(
+                        this._categoryFactory.getFromMetadata(predicate).pipe(tap(generator &#x3D;&gt; {
+                            localBranchReference.addNewPredicateFromGenerator(generator);
+                        }))
+                    );
+                }
             }
         }
 

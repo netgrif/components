@@ -8,7 +8,7 @@ import {
     CustomDateAdapter,
     CurrencyModule
 } from '@netgrif/components-core';
-import {AngularResizedEventModule} from 'angular-resize-event';
+import {AngularResizeEventModule} from 'angular-resize-event';
 import {HttpClientModule} from '@angular/common/http';
 import {ReactiveFormsModule} from '@angular/forms';
 import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-picker';
@@ -58,6 +58,9 @@ import {SideMenuUserAssignComponentModule} from '../side-menu/content-components
 import { I18nFieldComponent } from './i18n-field/i18n-field.component';
 import { I18nDividerFieldComponent } from './i18n-field/i18n-divider-field/i18n-divider-field.component';
 import { I18nTextFieldComponent } from './i18n-field/i18n-text-field/i18n-text-field.component';
+import { EasymdeWrapperComponent } from './text-field/rich-textarea-field/easymde-wrapper/easymde-wrapper.component';
+import {BrowserModule} from '@angular/platform-browser';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
     declarations: [
@@ -96,6 +99,7 @@ import { I18nTextFieldComponent } from './i18n-field/i18n-text-field/i18n-text-f
         I18nFieldComponent,
         I18nDividerFieldComponent,
         I18nTextFieldComponent,
+        EasymdeWrapperComponent,
     ],
     exports: [
         BooleanFieldComponent,
@@ -118,7 +122,7 @@ import { I18nTextFieldComponent } from './i18n-field/i18n-text-field/i18n-text-f
         FlexLayoutModule,
         MaterialModule,
         CovalentModule,
-        AngularResizedEventModule,
+        AngularResizeEventModule,
         HttpClientModule,
         ReactiveFormsModule,
         NgxMatDatetimePickerModule,
@@ -129,14 +133,12 @@ import { I18nTextFieldComponent } from './i18n-field/i18n-text-field/i18n-text-f
         MatDialogModule,
         AdvancedSearchComponentModule,
         MatProgressSpinnerModule,
-        CurrencyModule
+        CurrencyModule,
+        BrowserModule,
+        BrowserAnimationsModule
     ],
     providers: [
-        {provide: DateAdapter, useClass: CustomDateAdapter}
-    ],
-    entryComponents: [
-        PreviewDialogComponent,
-        FilterFieldContentComponent
+        { provide: DateAdapter, useClass: CustomDateAdapter }
     ]
 })
 export class DataFieldsComponentModule {

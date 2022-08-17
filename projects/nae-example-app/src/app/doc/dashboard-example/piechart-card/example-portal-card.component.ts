@@ -1,5 +1,5 @@
 import {Component, Injector, NgModule, OnInit} from '@angular/core';
-import {AbstractCustomCard, DashboardResourceService, DashboardSingleData} from '@netgrif/components-core';
+import {AbstractCustomCardComponent, DashboardResourceService, DashboardSingleData} from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 import {AggregationResult, LoggerService} from '@netgrif/components-core';
 
@@ -8,7 +8,7 @@ import {AggregationResult, LoggerService} from '@netgrif/components-core';
     templateUrl: './example-portal-card.component.html',
     styleUrls: ['./example-portal-card.component.scss']
 })
-export class ExamplePortalCardComponent extends AbstractCustomCard implements OnInit {
+export class ExamplePortalCardComponent extends AbstractCustomCardComponent implements OnInit {
 
     isDoughnut = false;
     legendPosition = 'right';

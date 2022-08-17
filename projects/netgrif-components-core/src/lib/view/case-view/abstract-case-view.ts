@@ -2,14 +2,21 @@ import {Case} from '../../resources/interface/case';
 import {Observable, Subscription} from 'rxjs';
 import {HeaderType} from '../../header/models/header-type';
 import {CaseViewService} from './service/case-view-service';
-import {ViewWithHeaders} from '../abstract/view-with-headers';
+import {AbstractViewWithHeadersComponent} from '../abstract/view-with-headers';
 import {Authority} from '../../resources/interface/authority';
 import {OverflowService} from '../../header/services/overflow.service';
-import {NewCaseCreationConfigurationData} from '../../side-menu/content-components/new-case/model/new-case-injection-data';
-import {OnDestroy} from '@angular/core';
+import {
+    NAE_NEW_CASE_CREATION_CONFIGURATION_DATA,
+    NewCaseCreationConfigurationData
+} from '../../side-menu/content-components/new-case/model/new-case-injection-data';
+import {Component, Inject, Optional, OnDestroy} from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
-
-export abstract class AbstractCaseView extends ViewWithHeaders implements OnDestroy {
+@Component({
+    selector: 'ncc-abstract-case-view',
+    template: ''
+})
+export abstract class AbstractCaseViewComponent extends AbstractViewWithHeadersComponent implements OnDestroy{
 
     public readonly MINIMAL_OFFSET = 120;
     public readonly headerType: HeaderType = HeaderType.CASE;
@@ -22,11 +29,12 @@ export abstract class AbstractCaseView extends ViewWithHeaders implements OnDest
     protected constructor(protected _caseViewService: CaseViewService,
                           protected _overflowService?: OverflowService,
                           protected _authority: Array<Authority> = [{authority: 'ROLE_USER'}],
-                          protected _newCaseCreationConfig: NewCaseCreationConfigurationData = {
+                          @Optional() @Inject(NAE_NEW_CASE_CREATION_CONFIGURATION_DATA) protected _newCaseCreationConfig: NewCaseCreationConfigurationData = {
                               enableCaseTitle: true,
                               isCaseTitleRequired: true
-                          }) {
-        super(_caseViewService);
+                          },
+                          protected _activatedRoute?: ActivatedRoute) {
+        super(_caseViewService, _activatedRoute);
         this._caseViewService.loading$.subscribe(loading => {
             this.loading = loading;
         });

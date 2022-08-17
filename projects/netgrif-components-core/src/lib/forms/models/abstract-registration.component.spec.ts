@@ -71,7 +71,7 @@ describe('AbstractRegistrationComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-reg',
+    selector: 'ncc-test-reg',
     template: ''
 })
 class TestRegFormComponent extends AbstractRegistrationComponent {

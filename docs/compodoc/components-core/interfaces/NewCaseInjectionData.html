@@ -146,10 +146,13 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {SideMenuInjectionData} from &#x27;../../../models/side-menu-injection-data&#x27;;
 import {Observable} from &#x27;rxjs&#x27;;
 import {PetriNetReference} from &#x27;../../../../resources/interface/petri-net-reference&#x27;;
+import {InjectionToken} from &#x27;@angular/core&#x27;;
 
 export interface NewCaseInjectionData extends SideMenuInjectionData {
     allowedNets$: Observable&lt;Array&lt;PetriNetReference&gt;&gt;;
 }
+
+export const NAE_NEW_CASE_CREATION_CONFIGURATION_DATA &#x3D; new InjectionToken&lt;NewCaseCreationConfigurationData&gt;(&#x27;NewCaseCreationConfigurationData&#x27;);
 
 /**
  * injection token used for new case title configuration

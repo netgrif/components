@@ -22,9 +22,8 @@ import {CovalentModule, MaterialModule, NAE_NEW_CASE_COMPONENT, SnackBarModule, 
         HotkeyModule.forRoot()
     ],
     exports: [NewCaseComponent],
-    entryComponents: [NewCaseComponent],
     providers: [
-        {provide: NAE_NEW_CASE_COMPONENT, useValue: NewCaseComponent}
+        { provide: NAE_NEW_CASE_COMPONENT, useValue: NewCaseComponent }
     ]
 })
 export class SideMenuNewCaseComponentModule {

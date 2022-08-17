@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/schema",
-    "id": "SchematicsCreateNcFiles",
+    "$id": "SchematicsCreateNcFiles",
     "title": "Create vital files for Nc project",
     "type": "object",
     "properties": {}

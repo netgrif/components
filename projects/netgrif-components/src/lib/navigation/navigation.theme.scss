@@ -1,9 +1,41 @@
-@import '~@angular/material/theming';
+@use '@angular/material' as mat;
 
 @mixin navigation-theme($theme) {
+    $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
 
     .active-navigation-route {
-        background-color: rgba(mat-color($accent), 0.3);
+        background-color: rgba(mat.get-color-from-palette($accent), 0.3);
+    }
+
+    .active-rail {
+        background: white;
+        border-bottom: 1px solid #dddddd;
+        border-top: 1px solid #dddddd;
+        border-left: 3px solid mat.get-color-from-palette($primary);
+
+        .icon-large {
+            color: mat.get-color-from-palette($primary) !important;
+        }
+    }
+
+    .rail-color {
+        background: mat.get-color-from-palette($primary, 50);
+    }
+
+    .rail-selected-color {
+        background-color: mat.get-color-from-palette($primary, 100);
+    }
+
+    .tree-node.active {
+        background-color: mat.get-color-from-palette($primary, 50);
+    }
+
+    .active {
+        color: mat.get-color-from-palette($primary) !important;
+    }
+
+    .logo, .toolbar {
+        background: mat.get-color-from-palette($primary, 50);
     }
 }

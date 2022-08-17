@@ -7,16 +7,9 @@
         <div class="panel-main-content" *ngTemplateOutlet="liveExample">
         </div>
         <h2>Code snippet</h2>
-        <td-highlight lang="html">
-            <![CDATA[
-            {{codeSnippet}}
-            ]]>
-        </td-highlight>
     </mat-tab>
     <mat-tab label="API">
         <h2>API reference</h2>
-        <td-highlight lang="ts" class="max-content">{{apiModuleImport}}
-        </td-highlight>
         <h2>Properties</h2>
         <table mat-table [dataSource]="apiProperties" class="mat-elevation-z8">
             <caption>Module objects properties</caption>

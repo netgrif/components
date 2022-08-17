@@ -53,7 +53,7 @@ describe('AbstractFilterFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-filter',
+    selector: 'ncc-test-filter',
     template: ''
 })
 class TestFilterComponent extends AbstractFilterFieldComponent {
@@ -68,8 +68,8 @@ class TestFilterComponent extends AbstractFilterFieldComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-filter [dataField]="field"></nae-test-filter>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-filter [dataField]="field"></ncc-test-filter>'
 })
 class TestWrapperComponent {
     field = new FilterField('', '', '', {
@@ -78,7 +78,7 @@ class TestWrapperComponent {
 }
 
 @Component({
-    selector: 'nae-test-filter-content',
+    selector: 'ncc-test-filter-content',
     template: ''
 })
 class TestFilterContentComponent extends AbstractFilterFieldContentComponent {

@@ -4,7 +4,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {Component, Injector} from '@angular/core';
-import {AbstractCountCard} from './abstract-count-card';
+import {AbstractCountCardComponent} from './abstract-count-card';
 import {CountCard} from '../model/count-card';
 import {FilterType} from '../../../filter/models/filter-type';
 import {DashboardCardTypes} from '../model/dashboard-card-types';
@@ -41,18 +41,18 @@ describe('AbstractCountCardComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-count-card',
+    selector: 'ncc-test-count-card',
     template: ''
 })
-class TestCountCardComponent extends AbstractCountCard {
+class TestCountCardComponent extends AbstractCountCardComponent {
     constructor(protected _injector: Injector) {
         super(_injector);
     }
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-count-card [card]="card"></nae-test-count-card>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-count-card [card]="card"></ncc-test-count-card>'
 })
 class TestWrapperComponent {
     card: CountCard = {

@@ -20,12 +20,6 @@ import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
         MaterialModule,
         FlexLayoutModule,
         FlexModule
-    ],
-    entryComponents: [
-        GenericSnackBarComponent,
-        WarningSnackBarComponent,
-        ErrorSnackBarComponent,
-        SuccessSnackBarComponent
     ]
 })
 export class SnackBarModule {

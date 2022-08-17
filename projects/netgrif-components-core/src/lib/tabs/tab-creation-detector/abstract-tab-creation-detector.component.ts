@@ -1,4 +1,4 @@
-import {Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 /**
  * @ignore
@@ -6,6 +6,10 @@ import {Input, OnInit} from '@angular/core';
  * It is necessary if the tab content is lazy loaded, because the
  * ComponentPortal's outlet must be initialized before the Portal itself is created.
  */
+@Component({
+    selector: 'ncc-abstract-tab-creation-detector',
+    template: ''
+})
 export abstract class AbstractTabCreationDetectorComponent implements OnInit {
 
     /**

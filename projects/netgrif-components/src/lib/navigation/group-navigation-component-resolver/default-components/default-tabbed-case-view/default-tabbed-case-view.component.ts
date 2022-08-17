@@ -7,7 +7,7 @@ import {
     NAE_SEARCH_CATEGORIES,
     CaseViewService,
     AllowedNetsServiceFactory,
-    TabbedCaseView,
+    AbstractTabbedCaseViewComponent,
     NAE_TAB_DATA,
     LoggerService,
     SavedFilterMetadata,
@@ -52,7 +52,7 @@ import {
         },
     ]
 })
-export class DefaultTabbedCaseViewComponent extends TabbedCaseView implements AfterViewInit {
+export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewComponent implements AfterViewInit {
 
     @ViewChild('header') public caseHeaderComponent: HeaderComponent;
 

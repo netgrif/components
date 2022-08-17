@@ -1,5 +1,5 @@
 import {GroupNavigationComponentResolverService} from './group-navigation-component-resolver.service';
-import {Injector, OnDestroy, OnInit} from '@angular/core';
+import {Component, Injector, OnDestroy, OnInit} from '@angular/core';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {GroupNavigationConstants} from '../model/group-navigation-constants';
@@ -8,6 +8,10 @@ import {filter} from 'rxjs/operators';
 import {destroySubscription} from '../../utility/destroy-subscription';
 import {LoggerService} from '../../logger/services/logger.service';
 
+@Component({
+    selector: 'ncc-abstract-group-nagiation-resolver',
+    template: ''
+})
 export abstract class AbstractGroupNavigationComponentResolverComponent implements OnInit, OnDestroy {
 
     public portal: ComponentPortal<any>;

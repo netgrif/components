@@ -1,4 +1,14 @@
-import {AfterViewInit, ElementRef, Inject, Input, OnDestroy, OnInit, Optional, ViewChild} from '@angular/core';
+import {
+    AfterViewInit,
+    Component,
+    ElementRef,
+    Inject,
+    Input,
+    OnDestroy,
+    OnInit,
+    Optional,
+    ViewChild
+} from '@angular/core';
 import {FileField, FilePreviewType} from './models/file-field';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
@@ -8,7 +18,7 @@ import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
-import {BehaviorSubject} from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import {ResizedEvent} from 'angular-resize-event';
 import {take} from 'rxjs/operators';
 import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
@@ -26,13 +36,17 @@ export interface FileState {
 
 const preview = 'preview';
 
-const fieldHeight = 105;
+const fieldHeight = 75;
 
 const fieldPadding = 16;
 
 /**
  * Component that is created in the body of the task panel accord on the Petri Net, which must be bind properties.
  */
+@Component({
+    selector: 'ncc-abstract-file-field',
+    template: ''
+})
 export abstract class AbstractFileFieldComponent extends AbstractDataFieldComponent implements OnInit, AfterViewInit, OnDestroy {
 
     /**
@@ -99,6 +113,10 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
      * Extension of file to preview
      */
     public previewExtension: FilePreviewType;
+    /**
+     * Form control subscription
+     */
+    private updatedFieldSubscription: Subscription;
 
     /**
      * Only inject services.
@@ -147,11 +165,19 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 }
             }
         }
+        this.updatedFieldSubscription = this.dataField.updated.subscribe( () => {
+            if (!!this.filePreview
+                && !!this.dataField.value
+                && !!this.dataField.value.name) {
+                this.initializePreviewIfDisplayable();
+            }
+        })
     }
 
     ngOnDestroy(): void {
         super.ngOnDestroy();
         this.fullSource.complete();
+        this.updatedFieldSubscription.unsubscribe();
     }
 
     public chooseFile() {
@@ -236,7 +262,11 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 this._log.error(
                     `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)} uploading has failed!`, error
                 );
-                this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.fileUploadFailed'));
+                if (error?.error?.message) {
+                    this._snackbar.openErrorSnackBar(this._translate.instant(error.error.message));
+                } else {
+                    this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.fileUploadFailed'));
+                }
                 this.dataField.touch = true;
                 this.dataField.update();
                 this.fileUploadEl.nativeElement.value = '';
@@ -420,7 +450,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
 
     public changeMaxWidth(event: ResizedEvent) {
         if (!!this.imageEl) {
-            this.imageEl.nativeElement.style.maxWidth = event.newWidth + 'px';
+            this.imageEl.nativeElement.style.maxWidth = event.newRect.width + 'px';
         }
     }
 

@@ -38,15 +38,15 @@ describe('AbstractFilterSelectorListItemComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-filter',
+    selector: 'ncc-test-filter',
     template: ''
 })
 class TestFilterComponent extends AbstractFilterSelectorListItemComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-filter [filter]="filter"></nae-test-filter>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-filter [filter]="filter"></ncc-test-filter>'
 })
 class TestWrapperComponent {
     filter = new SimpleFilter('', FilterType.CASE, {});

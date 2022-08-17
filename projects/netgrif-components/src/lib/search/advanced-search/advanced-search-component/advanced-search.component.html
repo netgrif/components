@@ -1,4 +1,4 @@
-<div fxLayout="row wrap" fxLayoutAlign="start center">
+<div fxLayout="row wrap" fxLayoutAlign="start center" class="netgrif-input">
     <div *ngFor="let item of getPredicateMap() | keyvalue; trackBy: trackByPredicates; first as first" fxLayout="row" fxLayoutAlign="start center">
         <div *ngIf="!first" class="bool-operator-margin">{{'search.and' | translate | uppercase}}</div>
         <nc-search-clause [predicate]="item.value" [predicateId]="item.key" [remove$]="removeChild$" [editable]="editable"

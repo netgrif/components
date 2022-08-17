@@ -54,7 +54,7 @@ describe('AbstractUserAssignComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-user',
+    selector: 'ncc-test-user',
     template: ''
 })
 class TestUserComponent extends AbstractUserAssignComponent {
