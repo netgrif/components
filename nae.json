@@ -241,6 +241,17 @@
                     "routing": {
                         "path": "active-group"
                     }
+                },
+                "demo-breadcrumbs": {
+                    "component": {
+                        "class": "BreadcrumbsExampleComponent",
+                        "from": "./doc/breadcrumbs-example/breadcrumbs-example.component"
+                    },
+                    "access": "private",
+                    "navigation": true,
+                    "routing": {
+                        "path": "breadcrumbs"
+                    }
                 }
             }
         },
