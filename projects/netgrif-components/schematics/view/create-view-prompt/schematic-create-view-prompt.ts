@@ -27,7 +27,7 @@ import {createPublicResolverView} from './views/public-resolver-view/create-publ
 
 export function schematicEntryPoint(schematicArguments: CreateViewArguments): Rule {
     return (tree: Tree) => {
-        console.log('Create View ' + schematicArguments.viewType + ' [' + schematicArguments.path + ']');
+        console.log('Creating view ' + schematicArguments.viewType + ' [' + schematicArguments.path + ']');
         checkPathValidity(tree, schematicArguments.path);
         return createView(tree, schematicArguments);
     };
