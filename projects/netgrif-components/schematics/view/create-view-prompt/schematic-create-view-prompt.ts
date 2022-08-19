@@ -101,9 +101,7 @@ function createView(tree: Tree, args: CreateViewArguments, addViewToService: boo
             addViewToViewService(tree, new ImportToAdd(args.componentName, args.customImportPath));
             break;
         default:
-            // throw new SchematicsException(`Unknown view type '${args.viewType}'`);
-            console.log(`Unknown view type '${args.viewType}'`);
-            break;
+            throw new SchematicsException(`Unknown view type '${args.viewType}'`);
     }
     if (addViewToService) {
         rules.push(addViewToNaeJson(args));

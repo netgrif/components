@@ -1,5 +1,6 @@
 import {ImportToAdd} from './import-to-add';
 import {classify, dasherize} from './angular-cli-devkit-core-strings';
+import {SchematicsException} from '@angular-devkit/schematics';
 
 // TODO 28.5.2020 find a better way of handling common files between lib and schematics
 
@@ -75,9 +76,7 @@ export class ViewClassInfo extends ImportToAdd {
             case 'publicResolverView':
                 return 'PublicResolverView';
             default:
-                // throw new SchematicsException(`Unknown 4view type '${view}'`);
-                console.log(`Unknown view type '${view}'`);
-                break;
+                throw new SchematicsException(`Unknown view type '${view}'`);
         }
     }
 }
