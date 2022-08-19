@@ -1,6 +1,7 @@
 import {
     chain,
-    Rule, schematic,
+    schematic,
+    Rule,
     SchematicsException,
     Tree
 } from '@angular-devkit/schematics';
@@ -19,13 +20,14 @@ import {addViewToViewService} from '../_utility/view-service-functions';
 import {ImportToAdd} from '../../_commons/import-to-add';
 import {createTreeCaseView} from './views/tree-case-view/create-tree-case-view';
 import {createGroupView} from './views/group-view/create-group-view';
-import { createPublicTaskView } from './views/public-task-view/create-public-task-view';
-import { createPublicWorkflowView } from './views/public-workflow-view/create-public-workflow-view';
-import { createPublicSingleTaskView } from './views/public-single-task-view/create-public-single-task-view';
+import {createPublicTaskView} from './views/public-task-view/create-public-task-view';
+import {createPublicWorkflowView} from './views/public-workflow-view/create-public-workflow-view';
+import {createPublicSingleTaskView} from './views/public-single-task-view/create-public-single-task-view';
 import {createPublicResolverView} from './views/public-resolver-view/create-public-resolver-view';
 
 export function schematicEntryPoint(schematicArguments: CreateViewArguments): Rule {
     return (tree: Tree) => {
+        console.log('Create View ' + schematicArguments.viewType + ' [' + schematicArguments.path + ']');
         checkPathValidity(tree, schematicArguments.path);
         return createView(tree, schematicArguments);
     };
@@ -99,7 +101,9 @@ function createView(tree: Tree, args: CreateViewArguments, addViewToService: boo
             addViewToViewService(tree, new ImportToAdd(args.componentName, args.customImportPath));
             break;
         default:
-            throw new SchematicsException(`Unknown view type '${args.viewType}'`);
+            // throw new SchematicsException(`Unknown view type '${args.viewType}'`);
+            console.log(`Unknown view type '${args.viewType}'`);
+            break;
     }
     if (addViewToService) {
         rules.push(addViewToNaeJson(args));

@@ -58,7 +58,7 @@
         },
         "access": {
             "description": "access type",
-            "type": "string",
+            "type":  ["object", "string"],
             "x-prompt": {
                 "type": "list",
                 "message": "select a access type",
