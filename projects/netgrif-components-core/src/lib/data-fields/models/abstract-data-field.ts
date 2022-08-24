@@ -195,7 +195,6 @@ export abstract class DataField<T> {
             this.resolvePrevValue(value);
         }
         this._value.next(value);
-        this.update()
         this._reverting = false;
     }
 
@@ -354,6 +353,7 @@ export abstract class DataField<T> {
         ).subscribe(newValue => {
             this._valid = this._determineFormControlValidity(formControl);
             formControl.setValue(newValue);
+            this.update();
         });
 
         this.updateFormControlState(formControl);
