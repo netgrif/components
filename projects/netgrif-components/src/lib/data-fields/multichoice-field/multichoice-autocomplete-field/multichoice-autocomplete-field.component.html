@@ -1,11 +1,10 @@
 <mat-form-field [appearance]="multichoiceField.materialAppearance" class="full-width" color="primary">
     <mat-label *ngIf="!showLargeLayout.value">{{multichoiceField.title}}</mat-label>
-    <mat-chip-list #chipList aria-label="Autocomplete">
+    <mat-chip-list #chipList aria-label="Autocomplete" [formControl]="formControlRef">
         <mat-chip
-            *ngFor="let option of multichoiceField.value"
-            (removed)="remove(option)">
+            *ngFor="let option of multichoiceField.value" (removed)="remove(option)">
             {{option}}
-            <button matChipRemove>
+            <button *ngIf="!formControlRef.disabled" matChipRemove>
                 <mat-icon>cancel</mat-icon>
             </button>
         </mat-chip>
@@ -13,7 +12,6 @@
             aria-label="Autocomplete"
             matInput
             #input
-            [formControl]="formControlRef"
             [placeholder]="multichoiceField.placeholder"
             [required]="multichoiceField.behavior.required"
             [matAutocomplete]="auto"
@@ -23,7 +21,7 @@
     </mat-chip-list>
     <mat-autocomplete [displayWith]="renderSelection" autoActiveFirstOption #auto="matAutocomplete">
         <mat-option [value]="null">---</mat-option>
-        <mat-option *ngFor="let option of filteredOptions | async" [value]="option.key" (click)="change()">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option.key" (onSelectionChange)="add(option)">
             {{option.value}}
         </mat-option>
     </mat-autocomplete>

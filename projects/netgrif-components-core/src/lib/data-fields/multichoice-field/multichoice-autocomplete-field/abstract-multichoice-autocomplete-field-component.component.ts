@@ -9,8 +9,8 @@ import {Observable, of} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 
 @Component({
-  selector: 'ncc-abstract-multichoice-autocomplete-field',
-  template: ''
+    selector: 'ncc-abstract-multichoice-autocomplete-field',
+    template: ''
 })
 export abstract class AbstractMultichoiceAutocompleteFieldComponentComponent implements OnInit, OnDestroy {
 
@@ -26,7 +26,7 @@ export abstract class AbstractMultichoiceAutocompleteFieldComponentComponent imp
     ngOnInit() {
         this.filteredOptions = this.formControlRef.valueChanges.pipe(
             startWith(''),
-            map(value => this._filter(value))
+            map(value => this._filter(value).filter((option) => !this.multichoiceField.value.includes(option.key)))
         );
     }
 
@@ -38,25 +38,31 @@ export abstract class AbstractMultichoiceAutocompleteFieldComponentComponent imp
         const value = (event.value || '').trim();
 
         if (value) {
-            this.multichoiceField.value.push(value);
+            const choiceArray = [...this.multichoiceField.value];
+            choiceArray.push(value);
+            this.multichoiceField.value = choiceArray;
+            this.input.nativeElement.value = '';
+            this.change();
+        } else {
+            this.input.nativeElement.value = '';
+            this.change();
         }
-
-        event.chipInput!.clear();
-        this.formControlRef.setValue(null);
-
     }
 
     remove(value: string): void {
         const index = this.multichoiceField.value.indexOf(value);
 
         if (index >= 0) {
-            this.multichoiceField.value.splice(index, 1);
+            const choiceArray = [...this.multichoiceField.value];
+            choiceArray.splice(index, 1);
+            this.multichoiceField.value = choiceArray;
+            this.change();
         }
     }
 
     change() {
         if (this.input.nativeElement.value !== undefined) {
-            this.filteredOptions = of(this._filter(this.input.nativeElement.value));
+            this.filteredOptions = of(this._filter(this.input.nativeElement.value).filter((option) => !this.multichoiceField.value.includes(option.key)));
         }
     }
 
@@ -65,13 +71,8 @@ export abstract class AbstractMultichoiceAutocompleteFieldComponentComponent imp
         this.formControlRef.setValue(null);
     }
 
-    /**
-     * Function to filter out matchless options without accent and case-sensitive differences
-     * @param  value to compare matching options
-     * @return  return matched options
-     */
     private _filter(value: string): Array<MultichoiceFieldValue> {
-        if(Array.isArray(value)){
+        if (Array.isArray(value)) {
             value = '';
         }
         const filterValue = value?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
