@@ -15,6 +15,7 @@ import {
 import {Observable} from 'rxjs';
 import {NAE_AUTOSWITCH_TAB_TOKEN} from './models/autoswitch-token';
 import {NAE_OPEN_EXISTING_TAB} from './models/open-existing-tab-token';
+import { ActivatedRoute } from '@angular/router';
 
 export interface InjectedTabbedCaseViewData extends InjectedTabData {
     tabViewComponent: Type<any>;
@@ -38,9 +39,10 @@ export abstract class AbstractTabbedCaseViewComponent extends AbstractCaseViewCo
                           @Optional() @Inject(NAE_NEW_CASE_CREATION_CONFIGURATION_DATA) protected _newCaseCreationConfig: NewCaseCreationConfigurationData = {
                               enableCaseTitle: true,
                               isCaseTitleRequired: true
-                          }) {
+                          },
+                          protected _activatedRoute?: ActivatedRoute) {
 
-        super(caseViewService, _overflowService, undefined, _newCaseCreationConfig);
+        super(caseViewService, _overflowService, undefined, _newCaseCreationConfig, _activatedRoute);
         this._correctlyInjected = !!this._injectedTabData.tabViewComponent && this._injectedTabData.tabViewOrder !== undefined;
         if (!this._correctlyInjected) {
             this._loggerService.warn('AbstractTabbedCaseViewComponent must inject a filled object of type InjectedTabbedCaseViewData to work properly!');
