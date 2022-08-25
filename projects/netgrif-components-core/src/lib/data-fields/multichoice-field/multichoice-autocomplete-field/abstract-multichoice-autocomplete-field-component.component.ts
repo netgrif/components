@@ -4,7 +4,6 @@ import {FormControl} from '@angular/forms';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
-import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 import {Observable, of} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 
@@ -64,11 +63,6 @@ export abstract class AbstractMultichoiceAutocompleteFieldComponentComponent imp
         if (this.input.nativeElement.value !== undefined) {
             this.filteredOptions = of(this._filter(this.input.nativeElement.value).filter((option) => !this.multichoiceField.value.includes(option.key)));
         }
-    }
-
-    selected(event: MatAutocompleteSelectedEvent): void {
-        this.multichoiceField.value.push(event.option.viewValue);
-        this.formControlRef.setValue(null);
     }
 
     private _filter(value: string): Array<MultichoiceFieldValue> {
