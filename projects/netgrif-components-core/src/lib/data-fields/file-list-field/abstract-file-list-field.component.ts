@@ -182,22 +182,34 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
                 if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.UPLOAD) {
                     this.state.progress = (response as ProviderProgress).progress;
                 } else {
+                    this.state.completed = true;
+                    this.state.uploading = false;
+                    this.state.progress = 0;
                     this._log.debug(
                         `Files [${this.dataField.stringId}] were successfully uploaded`
                     );
-                    const changedFieldsMap: ChangedFieldsMap = this._eventService.parseChangedFieldsFromOutcomeTree(response.outcome);
-                    this.dataField.emitChangedFields(changedFieldsMap);
-                    this.state.completed = true;
-                    this.state.error = false;
-                    this.state.uploading = false;
-                    this.state.progress = 0;
-                    filesToUpload.forEach(fileToUpload => {
-                        this.uploadedFiles.push(fileToUpload.name);
-                        this.dataField.value.namesPaths.push({name: fileToUpload.name});
-                        this.formControl.setValue(this.dataField.value.namesPaths.map(namePath => {
-                            return namePath['name'];
-                        }).join('/'));
-                    });
+                    if (response.error) {
+                        this.state.error = true;
+                        this._log.error(
+                            `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)} uploading has failed!`, response.error
+                        );
+                        if (response.error) {
+                            this._snackbar.openErrorSnackBar(this._translate.instant(response.error));
+                        } else {
+                            this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.fileUploadFailed'));
+                        }
+                    } else {
+                        const changedFieldsMap: ChangedFieldsMap = this._eventService.parseChangedFieldsFromOutcomeTree(response.outcome);
+                        this.dataField.emitChangedFields(changedFieldsMap);
+                        this.state.error = false;
+                        filesToUpload.forEach(fileToUpload => {
+                            this.uploadedFiles.push(fileToUpload.name);
+                            this.dataField.value.namesPaths.push({name: fileToUpload.name});
+                            this.formControl.setValue(this.dataField.value.namesPaths.map(namePath => {
+                                return namePath['name'];
+                            }).join('/'));
+                        });
+                    }
                     this.dataField.touch = true;
                     this.dataField.update();
                     this.fileUploadEl.nativeElement.value = '';
