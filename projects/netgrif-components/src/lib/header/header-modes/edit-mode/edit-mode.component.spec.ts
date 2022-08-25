@@ -14,7 +14,7 @@ import {
     MaterialModule,
     MockAuthenticationMethodService,
     MockAuthenticationService,
-    MockUserResourceService, NAE_BASE_FILTER,
+    MockUserResourceService, NAE_BASE_FILTER, OverflowService,
     SearchService, TestCaseBaseFilterProvider, TestCaseViewAllowedNetsFactory,
     TestConfigurationService,
     TestViewService,
@@ -45,6 +45,7 @@ describe('EditModeComponent', () => {
                 CaseViewService,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 SearchService,
+                OverflowService,
                 {
                     provide: NAE_BASE_FILTER,
                     useFactory: TestCaseBaseFilterProvider

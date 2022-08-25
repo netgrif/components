@@ -101,6 +101,10 @@
             "noUser": "Not found Ldap group",
             "err": "Failed to load Ldap group"
         },
+        "tooltip": {
+            "SelectAll": "Select All",
+            "DeselectAll": "Deselect All"
+        },
         "option-selector": {
             "select": "Select",
             "choose-one-option": "Choose one of the provided options"
@@ -270,6 +274,9 @@
         },
         "user": {
             "selectUser": "Select user"
+        },
+        "textarea": {
+            "insertText": "Insert text here..."
         }
     },
     "dialog": {

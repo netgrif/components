@@ -204,6 +204,10 @@ export class TaskResourceService extends AbstractResourceService implements Coun
     public getData(taskId: string): Observable<Array<DataGroup>> {
         return this.rawGetData(taskId).pipe(
             map((responseOutcome: EventOutcomeMessageResource) => {
+                if (responseOutcome.error) {
+                    throw new Error(responseOutcome.error);
+                }
+
                 const dataGroupsArray = this.changeType((responseOutcome.outcome as GetDataGroupsEventOutcome).data, 'dataGroups');
                 if (!Array.isArray(dataGroupsArray)) {
                     return [];

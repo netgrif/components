@@ -11,6 +11,7 @@ import {
     TaskViewService,
     ViewIdService,
     NAE_BASE_FILTER,
+    OverflowService,
     AllowedNetsService,
     AllowedNetsServiceFactory,
     tabbedAllowedNetsServiceFactory,
@@ -35,6 +36,7 @@ const baseFilterFactory = (injectedTabData: InjectedTabbedTaskViewData) => {
         TaskViewService,
         SearchService,
         ChangedFieldsService,
+        OverflowService,
         {
             provide: NAE_BASE_FILTER,
             useFactory: baseFilterFactory,

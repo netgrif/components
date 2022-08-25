@@ -11,6 +11,7 @@ import {
     NAE_VIEW_ID_SEGMENT,
     ViewIdService,
     CategoryFactory,
+    OverflowService,
     NAE_SEARCH_CATEGORIES,
     defaultTaskSearchCategoriesFactory,
     NAE_ASYNC_RENDERING_CONFIGURATION,
