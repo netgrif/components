@@ -50,6 +50,7 @@ import {ProfileComponent} from './doc/profile/profile.component';
 import {NavigationExampleComponent} from './doc/navigation-example/navigation-example.component';
 import {ButtonsNavComponent} from './doc/navigation-example/buttons-nav/buttons-nav.component';
 import {RolesAssignComponent} from './doc/roles-assign/roles-assign.component';
+import {LdapGroupRolesAssignComponent} from './doc/ldap-group-roles-assign/ldap-group-roles-assign.component';
 import {NaeExampleAppViewService} from './nae-example-app-view.service';
 import {TreeViewExampleComponent} from './doc/tree-view-example/tree-view-example.component';
 import {MatIconModule} from '@angular/material/icon';
@@ -76,7 +77,7 @@ import {
     TabsComponentModule,
     ToolbarComponentModule,
     TreeCaseViewComponentModule,
-    WorkflowViewComponentModule,
+    WorkflowViewComponentModule
 } from '@netgrif/components';
 import {UserInviteComponent} from './doc/user-invite/user-invite.component';
 import {ExamplePortalCardComponent} from './doc/dashboard-example/piechart-card/example-portal-card.component';
@@ -94,6 +95,8 @@ import { TitleConfigComponent } from './doc/demo-title-config/title-config.compo
 import { ExampleRedirectComponent } from './doc/redirect/example-redirect.component';
 import { ActiveGroupComponent } from './doc/active-group/active-group.component';
 import { WrapperEmptyViewComponent } from './views/wrapper/wrapper-empty-view.component';
+import {DoubleDrawerExampleComponent} from './doc/double-drawer-example/double-drawer-example.component';
+import { PublicSingleTaskViewComponent } from './doc/public-single-task-view/public-single-task-view.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -129,6 +132,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         NavigationExampleComponent,
         ButtonsNavComponent,
         RolesAssignComponent,
+        LdapGroupRolesAssignComponent,
         TreeViewExampleComponent,
         UserInviteComponent,
         ExamplePortalCardComponent,
@@ -145,6 +149,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         TitleConfigComponent,
         ActiveGroupComponent,
         WrapperEmptyViewComponent,
+        DoubleDrawerExampleComponent,
+        PublicSingleTaskViewComponent
     ],
     imports: [
         BrowserModule,
@@ -194,62 +200,17 @@ export function HttpLoaderFactory(http: HttpClient) {
         EmailSubmissionFormComponentModule,
         RedirectComponentModule
     ],
-    entryComponents: [
-        ContentComponent,
-        UserInviteComponent,
-        TabbedCaseViewComponent,
-        TabbedTaskViewComponent,
-        AuthenticationComponent,
-        LoginFormComponent,
-        PasswordFormComponent,
-        RegisterFormComponent,
-        DrawerExampleComponent,
-        RailExampleComponent,
-        HeadersComponent,
-        SidemenuExampleComponent,
-        SnackBarExampleComponent,
-        DialogExampleComponent,
-        TabViewExampleComponent,
-        ToolbarExampleComponent,
-        PanelsComponent,
-        TaskViewComponent,
-        CaseViewComponent,
-        TabbedViewsExampleComponent,
-        WorkflowViewExampleComponent,
-        DashboardExampleComponent,
-        FilterRepositoryExampleComponent,
-        ProfileComponent,
-        NavigationExampleComponent,
-        ButtonsNavComponent,
-        RolesAssignComponent,
-        TreeViewExampleComponent,
-        ExamplePortalCardComponent,
-        ResetPasswordFormComponent,
-        PublicTaskViewComponent,
-        PublicWorkflowViewComponent,
-        PublicResolverComponent,
-        GroupViewComponent,
-        ExampleRedirectComponent,
-        GroupViewComponent,
-        DemoTitleConfigContent0TaskViewComponent,
-        DemoTitleConfigContent1CaseViewComponent,
-        DemoTitleConfigContent2CaseViewComponent,
-        DemoTitleConfigContent3CaseViewComponent,
-        TitleConfigComponent,
-        ActiveGroupComponent,
-        WrapperEmptyViewComponent
-    ],
     providers: [{
-        provide: ConfigurationService,
-        useClass: NaeExampleAppConfigurationService
-    },
-        {provide: NAE_SNACKBAR_VERTICAL_POSITION, useValue: SnackBarVerticalPosition.TOP},
-        {provide: NAE_SNACKBAR_HORIZONTAL_POSITION, useValue: SnackBarHorizontalPosition.LEFT},
+            provide: ConfigurationService,
+            useClass: NaeExampleAppConfigurationService
+        },
+        { provide: NAE_SNACKBAR_VERTICAL_POSITION, useValue: SnackBarVerticalPosition.TOP },
+        { provide: NAE_SNACKBAR_HORIZONTAL_POSITION, useValue: SnackBarHorizontalPosition.LEFT },
         ResourceProvider,
         TranslateService,
         TranslatePipe,
         TranslateStore,
-        {provide: ViewService, useClass: NaeExampleAppViewService},
+        { provide: ViewService, useClass: NaeExampleAppViewService },
     ],
     bootstrap: [AppComponent]
 })

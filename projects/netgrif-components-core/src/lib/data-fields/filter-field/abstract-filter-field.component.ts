@@ -1,11 +1,15 @@
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
-import {Inject, Injector, Input, OnInit, Optional, StaticProvider} from '@angular/core';
+import {Component, Inject, Injector, Input, OnInit, Optional, StaticProvider} from '@angular/core';
 import {FilterField} from './models/filter-field';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 import {ComponentPortal, ComponentType} from '@angular/cdk/portal';
 import {AbstractFilterFieldContentComponent} from './abstract-filter-field-content.component';
 import {NAE_FILTER_FIELD} from './models/filter-field-injection-token';
 
+@Component({
+    selector: 'ncc-abstract-filter-field',
+    template: ''
+})
 export abstract class AbstractFilterFieldComponent extends AbstractDataFieldComponent implements OnInit {
 
     @Input() dataField: FilterField;

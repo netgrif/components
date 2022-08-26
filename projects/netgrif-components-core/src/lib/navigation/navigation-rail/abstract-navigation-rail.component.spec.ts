@@ -61,7 +61,7 @@ describe('AbstractNavigationRailComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-nav-rail',
+    selector: 'ncc-test-nav-rail',
     template: ''
 })
 class TestRailComponent extends AbstractNavigationRailComponent {

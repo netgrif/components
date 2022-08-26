@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/schema",
-    "id": "SchematicsCreateNaeFiles",
+    "$id": "SchematicsCreateNaeFiles",
     "title": "Create vital files for NAE project",
     "type": "object",
     "properties": {}

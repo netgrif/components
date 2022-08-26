@@ -56,15 +56,7 @@ If you don't want to create own implementation of web components, check out our 
 To use the library, it must be configured as Angular application.
 
 Firstly, create new Angular project. We recommend following [official guide](https://angular.io/guide/setup-local).
-At the moment @netgrif/components-core does not support Ivy engine, your can turn it off with attribute in `tsconfig.json`:
 
-```json
-{
-    "angularCompilerOptions":{
-        "enableIvy": false
-    }
-}
-```
 
 ### NAE.json
 

@@ -41,7 +41,7 @@ describe('AbstractInternalLinkComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-nav-tree',
+    selector: 'ncc-test-nav-tree',
     template: ''
 })
 class TestLinkComponent extends AbstractInternalLinkComponent {

@@ -1,11 +1,8 @@
 import {chain, Rule, Tree} from '@angular-devkit/schematics';
 import {strings} from '@angular-devkit/core';
-import {addEntryComponentToModule} from '@schematics/angular/utility/ast-utils';
 import {
-    commitChangesToFile,
     createFilesFromTemplates,
     createRelativePath,
-    getAppModule,
     getProjectInfo
 } from '../../../../_utility/utility-functions';
 import {getViewIdSegmentFromPath, updateAppModule} from '../../../_utility/view-utility-functions';
@@ -57,15 +54,6 @@ export function createCaseView(tree: Tree, args: CreateViewArguments & TabbedVie
         new ImportToAdd('CaseViewComponentModule', '@netgrif/components'),
         new ImportToAdd('SearchComponentModule', '@netgrif/components')
     ]);
-
-    const appModule = getAppModule(tree, projectInfo.path);
-    const changes = addEntryComponentToModule(
-        appModule.sourceFile,
-        appModule.fileEntry.path,
-        'NewCaseComponent',
-        '@netgrif/components'
-    );
-    commitChangesToFile(tree, appModule.fileEntry, changes);
 
     if (addViewToService) {
         addViewToViewService(tree, view);

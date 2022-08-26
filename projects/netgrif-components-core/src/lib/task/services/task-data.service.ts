@@ -239,7 +239,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
      * @param nextEvent indicates to the event queue that the next event can be processed
      */
     protected processErroneousGetDataRequest(gottenTaskId: string,
-                                             error: HttpErrorResponse,
+                                             error: HttpErrorResponse | Error,
                                              afterAction: AfterAction,
                                              nextEvent: AfterAction) {
         this._taskState.stopLoading(gottenTaskId);
@@ -252,9 +252,11 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
             return;
         }
 
-        if (error.status === 500 && error.error.message && error.error.message.startsWith('Could not find task with id')) {
+        if (error instanceof HttpErrorResponse && error.status === 500 && error.error.message && error.error.message.startsWith('Could not find task with id')) {
             this._snackBar.openWarningSnackBar(this._translate.instant('tasks.snackbar.noLongerExists'));
             this._taskOperations.reload();
+        } else if (error instanceof Error) {
+            this._snackBar.openErrorSnackBar(this._translate.instant(error.message));
         } else {
             this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.noGroup')}
                         ${this._taskContentService.task.title} ${this._translate.instant('tasks.snackbar.failedToLoad')}`);
@@ -413,10 +415,55 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
 
         this._taskResourceService.setData(this._safeTask.stringId, body).pipe(take(1))
             .subscribe((response: EventOutcomeMessageResource) => {
-                this.processSuccessfulSetDataRequest(setTaskId, response.outcome, afterAction, nextEvent, body);
+                if (!this.isTaskRelevant(setTaskId)) {
+                    this._log.debug('current task changed before the set data response could be received, discarding...');
+                    this._taskState.stopLoading(setTaskId);
+                    this._taskState.stopUpdating(setTaskId);
+                    afterAction.complete();
+                    nextEvent.resolve(false);
+                    return;
+                }
+                if (response.success) {
+                    this.processSuccessfulSetDataRequest(setTaskId, response, afterAction, nextEvent, body);
+                } else if (response.error !== undefined) {
+                    this.processUnsuccessfulSetDataRequest(setTaskId, response, afterAction, nextEvent, body);
+                }
             }, error => {
                 this.processErroneousSetDataRequest(setTaskId, error, afterAction, nextEvent, body);
             });
+    }
+
+    /**
+     * Processes a unsuccessful outcome of a `setData` request
+     * @param setTaskId the Id of the task whose data was set
+     * @param response the resulting Event outcome of the set data request
+     * @param afterAction the action that should be performed after the request is processed
+     * @param nextEvent indicates to the event queue that the next event can be processed
+     * @param body hold the data that was sent in request
+     */
+    protected processUnsuccessfulSetDataRequest(setTaskId: string,
+                                              response: EventOutcomeMessageResource,
+                                              afterAction: AfterAction,
+                                              nextEvent: AfterAction,
+                                              body: TaskSetDataRequestBody) {
+        if (response.error !== '') {
+            this._snackBar.openErrorSnackBar(this._translate.instant(response.error));
+        } else {
+            this._snackBar.openErrorSnackBar(this._translate.instant('tasks.snackbar.failedSave'));
+        }
+        if (response.outcome) {
+            const outcome = response.outcome;
+            const changedFieldsMap: ChangedFieldsMap = this._eventService.parseChangedFieldsFromOutcomeTree(outcome);
+
+            if (Object.keys(changedFieldsMap).length > 0) {
+                this._changedFieldsService.emitChangedFields(changedFieldsMap);
+            }
+        }
+        this.revertToPreviousValue();
+        this.clearWaitingForResponseFlag(body);
+        this.updateStateInfo(afterAction, false, setTaskId);
+        nextEvent.resolve(false);
+        this._taskOperations.reload();
     }
 
     /**
@@ -428,26 +475,18 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
      * @param body hold the data that was sent in request
      */
     protected processSuccessfulSetDataRequest(setTaskId: string,
-                                              response: EventOutcome,
+                                              response: EventOutcomeMessageResource,
                                               afterAction: AfterAction,
                                               nextEvent: AfterAction,
                                               body: TaskSetDataRequestBody) {
-        if (!this.isTaskRelevant(setTaskId)) {
-            this._log.debug('current task changed before the set data response could be received, discarding...');
-            this._taskState.stopLoading(setTaskId);
-            this._taskState.stopUpdating(setTaskId);
-            afterAction.complete();
-            nextEvent.resolve(false);
-            return;
-        }
-
-        const changedFieldsMap: ChangedFieldsMap = this._eventService.parseChangedFieldsFromOutcomeTree(response);
+        const outcome = response.outcome;
+        const changedFieldsMap: ChangedFieldsMap = this._eventService.parseChangedFieldsFromOutcomeTree(outcome);
 
         if (Object.keys(changedFieldsMap).length > 0) {
             this._changedFieldsService.emitChangedFields(changedFieldsMap);
         }
         this.clearWaitingForResponseFlag(body);
-        this._snackBar.openSuccessSnackBar(!!response.message ? response.message : this._translate.instant('tasks.snackbar.dataSaved'));
+        this._snackBar.openSuccessSnackBar(!!outcome.message ? outcome.message : this._translate.instant('tasks.snackbar.dataSaved'));
         this.updateStateInfo(afterAction, true, setTaskId);
         nextEvent.resolve(true);
     }

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Injector, OnInit, Output} from '@angular/core';
 import {
-    AbstractCustomCard,
+    AbstractCustomCardComponent,
     AggregationResult, DashboardEventContent,
     DashboardResourceService,
     DashboardSingleData,
@@ -14,7 +14,7 @@ import {TranslateService} from '@ngx-translate/core';
     templateUrl: './barchart-card.component.html',
     styleUrls: ['./barchart-card.component.scss']
 })
-export class BarchartCardComponent extends AbstractCustomCard implements OnInit {
+export class BarchartCardComponent extends AbstractCustomCardComponent implements OnInit {
 
     @Output() selectEvent: EventEmitter<DashboardEventContent>;
 

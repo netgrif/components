@@ -24,6 +24,10 @@ export class Net implements PetriNetReferenceWithPermissions {
      */
     private _identifier: string;
     /**
+    * @ignore
+    * */
+    private _uriNodeId: string;
+    /**
      * @ignore
      */
     private _version: string;
@@ -79,6 +83,7 @@ export class Net implements PetriNetReferenceWithPermissions {
         this._transitions = [];
         this._transactions = [];
         this._roles = [];
+        this._uriNodeId = net.uriNodeId;
     }
 
     get stringId(): string {
@@ -183,5 +188,13 @@ export class Net implements PetriNetReferenceWithPermissions {
 
     set permissions(value: Permissions) {
         this._permissions = value;
+    }
+
+    get uriNodeId(): string {
+        return this._uriNodeId;
+    }
+
+    set uriNodeId(uriNodeId: string) {
+        this._uriNodeId = uriNodeId;
     }
 }

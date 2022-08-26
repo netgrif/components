@@ -63,6 +63,8 @@ export interface CaseSearchRequestBody {
      * If more than one group ID is specified, the returned cases are instances of one of the groups.
      */
     group?: string | Array<string>;
+
+    uriNodeId?: string;
 }
 
 /**

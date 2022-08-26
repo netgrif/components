@@ -19,6 +19,10 @@ export interface PetriNetReference {
      */
     identifier: string;
     /**
+     * Uri node ID
+     */
+    uriNodeId: string;
+    /**
      * Version net
      */
     version: string;

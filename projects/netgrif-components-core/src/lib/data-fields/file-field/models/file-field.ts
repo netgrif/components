@@ -74,6 +74,10 @@ export class FileField extends DataField<FileFieldValue> {
         return this._value.getValue();
     }
 
+    get updated(): Observable<void> {
+        return this._update.asObservable();
+    }
+
     public valueWithoutChange(value: FileFieldValue) {
         this.changed = false;
         this._value.next(value ?? {});

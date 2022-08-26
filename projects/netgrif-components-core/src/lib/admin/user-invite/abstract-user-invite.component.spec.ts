@@ -45,7 +45,7 @@ describe('AbstractUserInviteComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-role-assignment',
+    selector: 'ncc-test-role-assignment',
     template: '',
 })
 class TestUserInviteComponent extends AbstractUserInviteComponent {

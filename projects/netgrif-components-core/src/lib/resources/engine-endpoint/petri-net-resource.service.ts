@@ -104,7 +104,7 @@ export class PetriNetResourceService extends AbstractResourceService {
      * **Request URL:** {{baseUrl}}/api/petrinet/{identifier}/{version}
      */
     public getOne(identifier: string, version: string, params?: Params): Observable<PetriNetReference> {
-        return this._resourceProvider.get$('petrinet/' + identifier + '/' + version, this.SERVER_URL, params)
+        return this._resourceProvider.get$('petrinet/' + btoa(identifier) + '/' + version, this.SERVER_URL, params)
             .pipe(map(r => this.changeType(r, 'petriNetReferences')));
     }
 

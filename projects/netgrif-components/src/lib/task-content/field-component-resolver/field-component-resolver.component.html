@@ -1,4 +1,4 @@
-<div fxLayout="row" fxLayoutAlign="start center" [ngClass]="{'min-row-height': isField()}" [ngSwitch]="getElementType()">
+<div fxLayout="row" fxLayoutAlign="start center" class="netgrif-input" [ngClass]="{'min-row-height': isField() && !isCustomHeight()}" [ngSwitch]="getElementType()">
     <nc-boolean-field *ngSwitchCase="fieldTypeEnum.BOOLEAN" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>
     </nc-boolean-field>
 
@@ -20,10 +20,10 @@
     <nc-multichoice-field *ngSwitchCase="fieldTypeEnum.MULTICHOICE_MAP" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>
     </nc-multichoice-field>
 
-    <nc-date-field *ngSwitchCase="fieldTypeEnum.DATE" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>
+    <nc-date-field *ngSwitchCase="fieldTypeEnum.DATE" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex class="date-field-fix">
     </nc-date-field>
 
-    <nc-date-time-field *ngSwitchCase="fieldTypeEnum.DATE_TIME" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>
+    <nc-date-time-field *ngSwitchCase="fieldTypeEnum.DATE_TIME" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex class="date-field-fix">
     </nc-date-time-field>
 
     <nc-file-field *ngSwitchCase="fieldTypeEnum.FILE" [dataField]="getDataField()" [taskId]="getTaskId()" [taskOffset]="getFieldOffset()" fxFlex>
@@ -41,7 +41,7 @@
     <nc-filter-field *ngSwitchCase="fieldTypeEnum.FILTER" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex="">
     </nc-filter-field>
 
-    <nc-i18n-field *ngSwitchCase="fieldTypeEnum.I18N" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex="">
+    <nc-i18n-field *ngSwitchCase="fieldTypeEnum.I18N" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>
     </nc-i18n-field>
 
     <div *ngSwitchCase="taskElementEnum.DATA_GROUP_TITLE" fxFlex fxLayout="row" fxLayoutAlign="center center">

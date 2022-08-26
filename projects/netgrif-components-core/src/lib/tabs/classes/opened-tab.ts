@@ -1,7 +1,8 @@
 import {TabContent, TabLabel} from '../interfaces';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {Type} from '@angular/core';
-import {BehaviorSubject, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
+import {TabLabelStream} from './tab-label-stream';
 
 /**
  * Holds the information of tab opened in a tab view.
@@ -57,6 +58,8 @@ export class OpenedTab implements TabContent {
      */
     public tabClosed$: Subject<void>;
 
+    protected _label$: TabLabelStream;
+
     /**
      * @param tabContent - content of the tab
      * @param uniqueId - unique identifier for the tab
@@ -65,6 +68,27 @@ export class OpenedTab implements TabContent {
         Object.assign(this, tabContent);
         this.tabSelected$ = new BehaviorSubject<boolean>(false);
         this.tabClosed$ = new Subject();
+        this._label$ = new TabLabelStream(this.label?.icon, this.label?.text)
+    }
+
+    public setIcon(icon: string) {
+        this._label$.icon$.next(icon);
+    }
+
+    public setText(text: string) {
+        this._label$.text$.next(text);
+    }
+
+    public getIcon$(): Observable<string> {
+        return this._label$.icon$.asObservable();
+    }
+
+    public getIcon(): string | undefined {
+        return this._label$.icon$.getValue();
+    }
+
+    public getText$(): Observable<string> {
+        return this._label$.text$.asObservable();
     }
 
     /**
@@ -73,5 +97,6 @@ export class OpenedTab implements TabContent {
     public destroy(): void {
         this.tabSelected$.complete();
         this.tabClosed$.complete();
+        this._label$.destroy()
     }
 }

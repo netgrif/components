@@ -2,7 +2,6 @@ import {BooleanOperator} from '../boolean-operator';
 import {Subject} from 'rxjs';
 import {EditableElementaryPredicate} from './editable-elementary-predicate';
 import {IncrementingCounter} from '../../../utility/incrementing-counter';
-import {OnDestroy} from '@angular/core';
 import {Query} from '../query/query';
 import {EditablePredicate} from './editable-predicate';
 import {Predicate} from './predicate';
@@ -12,7 +11,7 @@ import {Predicate} from './predicate';
  * A complex, editable `Predicate`. Represents an inner node in the predicate tree, that can process changes of `Query` objects
  * held by its child nodes. It can notify the parent tree node about changes to the held `Query`.
  */
-export class EditableClausePredicate extends EditablePredicate implements OnDestroy {
+export class EditableClausePredicate extends EditablePredicate {
 
     protected _predicates: Map<number, Predicate>;
     protected _childUpdated$: Subject<void>;
@@ -35,15 +34,16 @@ export class EditableClausePredicate extends EditablePredicate implements OnDest
         });
     }
 
-    ngOnDestroy(): void {
-        this._childUpdated$.complete();
-    }
-
     get query(): Query {
         return this._query;
     }
 
-    show() {
+    public destroy(): void {
+        super.destroy();
+        this._childUpdated$.complete();
+    }
+
+    public show() {
         super.show();
         this.showAll();
     }

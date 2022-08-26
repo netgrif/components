@@ -1,9 +1,13 @@
-import {Injector, Input, OnInit, StaticProvider} from '@angular/core';
+import {Component, Injector, Input, OnInit, StaticProvider} from '@angular/core';
 import {FilterMetadataAllowedNets} from '../../search/models/persistance/filter-metadata-allowed-nets';
 import {ComponentPortal, ComponentType} from '@angular/cdk/portal';
 import {AbstractImmediateFilterTextContentComponent} from './abstract-immediate-filter-text-content.component';
 import {NAE_FILTER_TEXT} from './model/filter-text-injection-token';
 
+@Component({
+    selector: 'ncc-abstract-immediate-filter-text',
+    template: ''
+})
 export abstract class AbstractImmediateFilterTextComponent implements OnInit {
 
     @Input() public ellipsis: boolean;

@@ -17,6 +17,7 @@ export class RedirectService {
                 protected _log: LoggerService,
                 protected _config: ConfigurationService,
                 protected _route: ActivatedRoute) {
+        this._route.queryParams.subscribe(params => this.lastQueryParams = params);
     }
 
     get lastUrl(): Array<UrlSegment> {

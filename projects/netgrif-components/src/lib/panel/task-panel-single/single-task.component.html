@@ -1,0 +1,44 @@
+<div fxLayout='column' fxLayoutAlign='start center' fxFlex>
+    <ng-container *ngIf='task$ | async as task'>
+
+        <div *ngIf='(loading$ | async) === false && !task' fxLayout='column' fxLayoutAlign='center center'
+             fxFlex>
+            <mat-icon color='accent'>check_box</mat-icon>
+            <span class='font-size-20'>{{ 'tasks.view.noTasksSatisfyingThisFilter' | translate }}</span>
+        </div>
+
+        <div class='full-width full-heigh task-tab-background' fxFlex='100'>
+            <div *ngTemplateOutlet='pageHeader ?? defaultPageHeader'></div>
+            <nc-task-panel
+                [textEllipsis]='textEllipsis'
+                [taskPanelData]='task' [selectedHeaders$]='selectedHeaders$'
+                [forceLoadDataOnOpen]='forceLoadDataOnOpen'
+                [responsiveBody]='responsiveBody'
+                (taskEvent)='emitTaskEvent($event)'
+                (panelRefOutput)='setPanelRef($event)'
+                [preventCollapse]='preventCollapse'
+                [hidePanelHeader]='hidePanelHeader'
+                [actionButtonTemplates]='actionButtonTemplates'
+                [actionRowJustifyContent]='actionRowJustifyContent'
+                class='panel-expanded-spacing'>
+            </nc-task-panel>
+
+            <div *ngIf='loading$ | async' fxLayout='column' fxLayoutAlign='center center'>
+                <mat-spinner color='primary' diameter='52'></mat-spinner>
+            </div>
+            <div *ngTemplateOutlet='pageFooter ?? defaultPageFooter'></div>
+        </div>
+
+        <ng-template #defaultPageHeader>
+            <mat-card class="top-card">
+                <span class="top-card-title"><strong>{{headerTitle ?? (!!task && !!task.task ? task.task.title : '')}}</strong></span>
+            </mat-card>
+        </ng-template>
+
+        <ng-template #defaultPageFooter>
+            <mat-card class='bootom-card footer'>
+                <span class="bottom-card-title footer-font"><strong>{{footerText ?? 'tasks.footer.defaultText' | translate}}</strong></span>
+            </mat-card>
+        </ng-template>
+    </ng-container>
+</div>

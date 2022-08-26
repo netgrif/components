@@ -66,7 +66,7 @@
                 <h3>Extends</h3>
             </p>
             <p class="comment">
-                        <code><a href="../interfaces/View.html" target="_self" >SortableView</a></code>
+                        <code><a href="../components/AbstractSortableViewComponent.html" target="_self" >AbstractSortableViewComponent</a></code>
             </p>
 
 
@@ -138,14 +138,6 @@
                                     <span class="modifier">Protected</span>
                                 <a href="#_tasks$" >_tasks$</a>
                             </li>
-                            <li>
-                                    <span class="modifier">Protected</span>
-                                <a href="#_lastHeaderSearchState" >_lastHeaderSearchState</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Protected</span>
-                                <a href="#_subHeader" >_subHeader</a>
-                            </li>
                         </ul>
                     </td>
                 </tr>
@@ -179,6 +171,10 @@
                                 <a href="#nextPage" >nextPage</a>
                             </li>
                             <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#nextPagePagination" >nextPagePagination</a>
+                            </li>
+                            <li>
                                 <a href="#ngOnDestroy" >ngOnDestroy</a>
                             </li>
                             <li>
@@ -188,18 +184,6 @@
                             <li>
                                     <span class="modifier">Public</span>
                                 <a href="#reloadCurrentPage" >reloadCurrentPage</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Protected</span>
-                                <a href="#addSortParams" >addSortParams</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Protected</span>
-                                <a href="#getSortId" >getSortId</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Public</span>
-                                <a href="#registerHeaderChange" >registerHeaderChange</a>
                             </li>
                         </ul>
                     </td>
@@ -234,6 +218,9 @@
                                 </li>
                                 <li>
                                     <a href="#closeTab" >closeTab</a>
+                                </li>
+                                <li>
+                                    <a href="#pagination" >pagination</a>
                                 </li>
                                 <li>
                                     <a href="#activeFilter" >activeFilter</a>
@@ -432,8 +419,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="344"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/task-view/service/task-view.service.ts:344</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="361"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/task-view/service/task-view.service.ts:361</a></div>
                 </td>
             </tr>
 
@@ -514,14 +501,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Inherited from         <code><a href="../interfaces/View.html" target="_self" >SortableView</a></code>
-</div>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../interfaces/View.html#source" target="_self" >SortableView:340</a></code>
-</div>
+                    <div class="io-line">Defined in <a href="" data-line="357"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/task-view/service/task-view.service.ts:357</a></div>
                 </td>
             </tr>
 
@@ -559,14 +540,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Inherited from         <code><a href="../interfaces/View.html" target="_self" >SortableView</a></code>
-</div>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../interfaces/View.html#source" target="_self" >SortableView:335</a></code>
-</div>
+                    <div class="io-line">Defined in <a href="" data-line="352"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/task-view/service/task-view.service.ts:352</a></div>
                 </td>
             </tr>
 
@@ -604,8 +579,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="201"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/task-view/service/task-view.service.ts:201</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="205"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/task-view/service/task-view.service.ts:205</a></div>
                 </td>
             </tr>
 
@@ -674,8 +649,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="285"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/task-view/service/task-view.service.ts:285</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="289"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/task-view/service/task-view.service.ts:289</a></div>
                 </td>
             </tr>
 
@@ -750,6 +725,100 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="nextPagePagination"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>nextPagePagination</b></span>
+                        <a href="#nextPagePagination"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>nextPagePagination(length: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, pageIndex: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, requestContext?: <a href="../interfaces/Page.html" target="_self">PageLoadRequestContext</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="304"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/task-view/service/task-view.service.ts:304</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>length</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>pageIndex</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>requestContext</td>
+                                    <td>
+                                                <code><a href="../interfaces/Page.html" target="_self" >PageLoadRequestContext</a></code>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="ngOnDestroy"></a>
                     <span class="name">
                         <span ><b>ngOnDestroy</b></span>
@@ -766,14 +835,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Inherited from         <code><a href="../interfaces/View.html" target="_self" >SortableView</a></code>
-</div>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../interfaces/View.html#source" target="_self" >SortableView:154</a></code>
-</div>
+                    <div class="io-line">Defined in <a href="" data-line="154"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/task-view/service/task-view.service.ts:154</a></div>
                 </td>
             </tr>
 
@@ -811,14 +874,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Inherited from         <code><a href="../interfaces/View.html" target="_self" >SortableView</a></code>
-</div>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../interfaces/View.html#source" target="_self" >SortableView:304</a></code>
-</div>
+                    <div class="io-line">Defined in <a href="" data-line="321"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/task-view/service/task-view.service.ts:321</a></div>
                 </td>
             </tr>
 
@@ -856,8 +913,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="320"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/task-view/service/task-view.service.ts:320</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="337"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/task-view/service/task-view.service.ts:337</a></div>
                 </td>
             </tr>
 
@@ -884,203 +941,6 @@
 
                                     <td>
                                         Yes
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="addSortParams"></a>
-                    <span class="name">
-                        <span class="modifier">Protected</span>
-                        <span ><b>addSortParams</b></span>
-                        <a href="#addSortParams"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>addSortParams(params: <a href="../miscellaneouss/Params.html" target="_self">HttpParams</a>)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Inherited from         <code><a href="../interfaces/View.html" target="_self" >SortableView</a></code>
-</div>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../interfaces/View.html#source" target="_self" >SortableView:51</a></code>
-</div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>params</td>
-                                    <td>
-                                                <code><a href="../miscellaneous/typealiases.html#Params" target="_self" >HttpParams</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../miscellaneous/typealiases.html#Params" target="_self" >HttpParams</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="getSortId"></a>
-                    <span class="name">
-                        <span class="modifier">Protected</span>
-                        <span ><b>getSortId</b></span>
-                        <a href="#getSortId"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getSortId()</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Inherited from         <code><a href="../interfaces/View.html" target="_self" >SortableView</a></code>
-</div>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../interfaces/View.html#source" target="_self" >SortableView:59</a></code>
-</div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="registerHeaderChange"></a>
-                    <span class="name">
-                        <span class="modifier">Public</span>
-                        <span ><b>registerHeaderChange</b></span>
-                        <a href="#registerHeaderChange"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>registerHeaderChange(headerChange$: Observable<HeaderChange>)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Inherited from         <code><a href="../interfaces/View.html" target="_self" >SortableView</a></code>
-</div>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../interfaces/View.html#source" target="_self" >SortableView:34</a></code>
-</div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>headerChange$</td>
-                                    <td>
-                                            <code>Observable&lt;HeaderChange&gt;</code>
-                                    </td>
-
-                                    <td>
-                                        No
                                     </td>
 
 
@@ -1485,74 +1345,6 @@
 
         </tbody>
     </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="_lastHeaderSearchState"></a>
-                    <span class="name">
-                            <span class="modifier">Protected</span>
-                        <span ><b>_lastHeaderSearchState</b></span>
-                        <a href="#_lastHeaderSearchState"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../interfaces/SortChangeDescription.html" target="_self" >SortChangeDescription</a></code>
-
-                    </td>
-                </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <div class="io-line">Inherited from         <code><a href="../interfaces/View.html" target="_self" >SortableView</a></code>
-</div>
-                            </td>
-                        </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in         <code><a href="../interfaces/View.html#source" target="_self" >SortableView:15</a></code>
-</div>
-                        </td>
-                    </tr>
-
-
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="_subHeader"></a>
-                    <span class="name">
-                            <span class="modifier">Protected</span>
-                        <span ><b>_subHeader</b></span>
-                        <a href="#_subHeader"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Type : </i>    <code>Subscription</code>
-
-                    </td>
-                </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <div class="io-line">Inherited from         <code><a href="../interfaces/View.html" target="_self" >SortableView</a></code>
-</div>
-                            </td>
-                        </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in         <code><a href="../interfaces/View.html#source" target="_self" >SortableView:16</a></code>
-</div>
-                        </td>
-                    </tr>
-
-
-        </tbody>
-    </table>
 </section>
 
             <section>
@@ -1695,6 +1487,28 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
+                        <a name="pagination"></a>
+                        <span class="name"><b>pagination</b><a href="#pagination"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>pagination()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="189" class="link-to-prism">projects/netgrif-components-core/src/lib/view/task-view/service/task-view.service.ts:189</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
                         <a name="activeFilter"></a>
                         <span class="name"><b>activeFilter</b><a href="#activeFilter"><span class="icon ion-ios-link"></span></a></span>
                     </td>
@@ -1707,7 +1521,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="189" class="link-to-prism">projects/netgrif-components-core/src/lib/view/task-view/service/task-view.service.ts:189</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="193" class="link-to-prism">projects/netgrif-components-core/src/lib/view/task-view/service/task-view.service.ts:193</a></div>
                                 </td>
                             </tr>
 
@@ -1729,7 +1543,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="197" class="link-to-prism">projects/netgrif-components-core/src/lib/view/task-view/service/task-view.service.ts:197</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="201" class="link-to-prism">projects/netgrif-components-core/src/lib/view/task-view/service/task-view.service.ts:201</a></div>
                                 </td>
                             </tr>
 
@@ -1740,7 +1554,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="193" class="link-to-prism">projects/netgrif-components-core/src/lib/view/task-view/service/task-view.service.ts:193</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="197" class="link-to-prism">projects/netgrif-components-core/src/lib/view/task-view/service/task-view.service.ts:197</a></div>
                                 </td>
                             </tr>
                     <tr>
@@ -1811,7 +1625,7 @@ import {TaskPageLoadRequestResult} from &#x27;../models/task-page-load-request-r
 import {LoadingWithFilterEmitter} from &#x27;../../../utility/loading-with-filter-emitter&#x27;;
 import {arrayToObservable} from &#x27;../../../utility/array-to-observable&#x27;;
 import {SearchIndexResolverService} from &#x27;../../../search/search-keyword-resolver-service/search-index-resolver.service&#x27;;
-import {SortableView} from &#x27;../../abstract/sortable-view&#x27;;
+import {AbstractSortableViewComponent} from &#x27;../../abstract/sortable-view&#x27;;
 import {NAE_TASK_VIEW_CONFIGURATION} from &#x27;../models/task-view-configuration-injection-token&#x27;;
 import {TaskViewConfiguration} from &#x27;../models/task-view-configuration&#x27;;
 import {ChangedFieldsMap} from &#x27;../../../event/services/interfaces/changed-fields-map&#x27;;
@@ -1820,7 +1634,7 @@ import {createSortParam, PaginationSort} from &#x27;../../../utility/pagination/
 
 
 @Injectable()
-export class TaskViewService extends SortableView implements OnDestroy {
+export class TaskViewService extends AbstractSortableViewComponent implements OnDestroy {
 
     protected _tasks$: Observable&lt;Array&lt;TaskPanelData&gt;&gt;;
     protected _changedFields$: Subject&lt;ChangedFieldsMap&gt;;
@@ -1975,6 +1789,10 @@ export class TaskViewService extends SortableView implements OnDestroy {
         return this._closeTab$.asObservable();
     }
 
+    public get pagination(): Pagination {
+        return this._pagination;
+    }
+
     protected get activeFilter(): Filter {
         return this._searchService.activeFilter;
     }
@@ -2084,6 +1902,19 @@ export class TaskViewService extends SortableView implements OnDestroy {
         if (renderedRange.end &#x3D;&#x3D;&#x3D; totalLoaded) {
             this._requestedPage$.next(requestContext);
         }
+    }
+
+    public nextPagePagination(length: number, pageIndex: number, requestContext?: PageLoadRequestContext): void {
+        if (requestContext &#x3D;&#x3D;&#x3D; undefined) {
+            requestContext &#x3D; new PageLoadRequestContext(this.activeFilter, this._pagination);
+            requestContext.pagination.size &#x3D; length;
+            requestContext.pagination.number &#x3D; pageIndex;
+        }
+
+        if (this.isLoadingRelevantFilter(requestContext) || this._endOfData) {
+            return;
+        }
+        this._requestedPage$.next(requestContext);
     }
 
     private isLoadingRelevantFilter(requestContext?: PageLoadRequestContext): boolean {
