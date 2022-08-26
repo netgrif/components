@@ -337,20 +337,21 @@ export class SearchService implements OnDestroy {
         this._loadingFromMetadata$.on();
 
         const generatorObservables = [];
-
-        for (const clause of metadata.predicateMetadata) {
-            const branchId = this._rootPredicate.addNewClausePredicate(BooleanOperator.OR);
-            const branchPredicate = (
-                this._rootPredicate.getPredicateMap().get(branchId)
-                    .getWrappedPredicate() as unknown as EditableClausePredicateWithGenerators
-            );
-            for (const predicate of clause) {
-                const localBranchReference = branchPredicate;
-                generatorObservables.push(
-                    this._categoryFactory.getFromMetadata(predicate).pipe(tap(generator => {
-                        localBranchReference.addNewPredicateFromGenerator(generator);
-                    }))
+        if (Array.isArray(metadata.predicateMetadata)) {
+            for (const clause of metadata.predicateMetadata) {
+                const branchId = this._rootPredicate.addNewClausePredicate(BooleanOperator.OR);
+                const branchPredicate = (
+                    this._rootPredicate.getPredicateMap().get(branchId)
+                        .getWrappedPredicate() as unknown as EditableClausePredicateWithGenerators
                 );
+                for (const predicate of clause) {
+                    const localBranchReference = branchPredicate;
+                    generatorObservables.push(
+                        this._categoryFactory.getFromMetadata(predicate).pipe(tap(generator => {
+                            localBranchReference.addNewPredicateFromGenerator(generator);
+                        }))
+                    );
+                }
             }
         }
 

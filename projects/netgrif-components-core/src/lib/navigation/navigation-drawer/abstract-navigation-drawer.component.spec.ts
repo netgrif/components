@@ -90,7 +90,7 @@ describe('AbstractNavigationDrawerComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-nav-drawer',
+    selector: 'ncc-test-nav-drawer',
     template: '<mat-sidenav-container class="drawer-container"  (panright)="swipeRight()" (panleft)="swipeLeft()">\n' +
         '    <mat-sidenav #sidenav [mode]="config.mode" [(opened)]="opened" position="start"\n' +
         '                 [disableClose]="config.disableClose" class="drawer-content mat-elevation-z10">\n' +

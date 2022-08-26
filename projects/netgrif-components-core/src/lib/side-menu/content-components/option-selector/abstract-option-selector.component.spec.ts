@@ -45,7 +45,7 @@ describe('AbstractOptionSelectorComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-option',
+    selector: 'ncc-test-option',
     template: ''
 })
 class TestOptionComponent extends AbstractOptionSelectorComponent {

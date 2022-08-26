@@ -2,9 +2,13 @@ import {AbstractDataFieldComponent} from '../models/abstract-data-field-componen
 import {AbstractTimeInstanceField, AbstractTimeInstanceFieldValidation} from './models/abstract-time-instance-field';
 import {TranslateService} from '@ngx-translate/core';
 import moment, {Moment} from 'moment';
-import {Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional} from '@angular/core';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 
+@Component({
+    selector: 'ncc-abstract-time-instance-field',
+    template: ''
+})
 export abstract class AbstractTimeInstanceFieldComponent extends AbstractDataFieldComponent {
 
     protected constructor(protected _translate: TranslateService,

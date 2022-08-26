@@ -79,7 +79,6 @@
             </p>
             <p class="comment">
                             <code><a href="../interfaces/TaskOperations.html" target="_self" >TaskOperations</a></code>
-                            <code><a href="https://angular.io/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
             </p>
 
 
@@ -127,10 +126,10 @@
                                 <a href="#close" >close</a>
                             </li>
                             <li>
-                                <a href="#forceReload" >forceReload</a>
+                                <a href="#destroy" >destroy</a>
                             </li>
                             <li>
-                                <a href="#ngOnDestroy" >ngOnDestroy</a>
+                                <a href="#forceReload" >forceReload</a>
                             </li>
                             <li>
                                 <a href="#open" >open</a>
@@ -355,6 +354,45 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="destroy"></a>
+                    <span class="name">
+                        <span ><b>destroy</b></span>
+                        <a href="#destroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>destroy()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="69"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/models/subject-task-operations.ts:69</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Completes the underlying streams</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="forceReload"></a>
                     <span class="name">
                         <span ><b>forceReload</b></span>
@@ -380,45 +418,6 @@
             <tr>
                 <td class="col-md-4">
                     <div class="io-description"><p>Emits into the <a href="../classes/SubjectTaskOperations.html#forceReload$">forceReload$</a> stream.</p>
-</div>
-
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="ngOnDestroy"></a>
-                    <span class="name">
-                        <span ><b>ngOnDestroy</b></span>
-                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-<code>ngOnDestroy()</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="69"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/models/subject-task-operations.ts:69</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>Completes the underlying streams</p>
 </div>
 
                     <div class="io-description">
@@ -617,7 +616,7 @@ import {OnDestroy} from &#x27;@angular/core&#x27;;
 /**
  * An implementation of the {@link TaskOperations} interface that provides a Subject for both operations.
  */
-export class SubjectTaskOperations implements TaskOperations, OnDestroy {
+export class SubjectTaskOperations implements TaskOperations {
 
     protected _open: Subject&lt;void&gt;;
     protected _close: Subject&lt;void&gt;;
@@ -678,7 +677,7 @@ export class SubjectTaskOperations implements TaskOperations, OnDestroy {
     /**
      * Completes the underlying streams
      */
-    ngOnDestroy(): void {
+    destroy(): void {
         this._open.complete();
         this._close.complete();
         this._reload.complete();

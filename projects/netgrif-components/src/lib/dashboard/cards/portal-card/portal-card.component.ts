@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Injector, Input, OnInit, Output} from '@angular/core';
-import {AbstractCustomCard, DashboardEventContent, DashboardResourceService} from '@netgrif/components-core';
+import {AbstractCustomCardComponent, DashboardEventContent, DashboardResourceService} from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 import {ComponentPortal, Portal} from '@angular/cdk/portal';
 import {AggregationResult, LoggerService} from '@netgrif/components-core';
@@ -9,10 +9,10 @@ import {AggregationResult, LoggerService} from '@netgrif/components-core';
     templateUrl: './portal-card.component.html',
     styleUrls: ['./portal-card.component.scss']
 })
-export class PortalCardComponent extends AbstractCustomCard implements OnInit {
+export class PortalCardComponent extends AbstractCustomCardComponent implements OnInit {
 
     public injectedDashboard: Portal<any>;
-    @Input() public componentPortal: ComponentPortal<AbstractCustomCard>;
+    @Input() public componentPortal: ComponentPortal<AbstractCustomCardComponent>;
     @Output() selectEvent: EventEmitter<DashboardEventContent>;
 
     constructor(protected _injector: Injector,

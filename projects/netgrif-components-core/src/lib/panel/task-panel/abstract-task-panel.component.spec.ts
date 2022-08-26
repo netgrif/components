@@ -60,6 +60,7 @@ import {FinishTaskEventOutcome} from '../../event/model/event-outcomes/task-outc
 import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
 import {createMockCase} from '../../utility/tests/utility/create-mock-case';
 import {createMockNet} from '../../utility/tests/utility/create-mock-net';
+import { OverflowService } from '../../header/services/overflow.service';
 
 describe('AbtsractTaskPanelComponent', () => {
     let component: TestTaskPanelComponent;
@@ -68,7 +69,8 @@ describe('AbtsractTaskPanelComponent', () => {
 
     beforeEach(waitForAsync(() => {
         const mockAssignPolicyService = {
-            performAssignPolicy: () => {}
+            performAssignPolicy: () => {
+            }
         };
 
         TestBed.configureTestingModule({
@@ -108,8 +110,13 @@ describe('AbtsractTaskPanelComponent', () => {
                 DataFocusPolicyService,
                 AssignPolicyService,
                 FinishPolicyService,
+                OverflowService,
                 {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
-                {provide: AllowedNetsService, useFactory: TestTaskViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
+                {
+                    provide: AllowedNetsService,
+                    useFactory: TestTaskViewAllowedNetsFactory,
+                    deps: [AllowedNetsServiceFactory]
+                }
             ],
             declarations: [
                 TestTaskPanelComponent,
@@ -175,7 +182,7 @@ describe('AbtsractTaskPanelComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-task-panel',
+    selector: 'ncc-test-task-panel',
     template: '<mat-expansion-panel #matExpansionPanel>' +
         '</mat-expansion-panel>'
 })
@@ -201,11 +208,12 @@ class TestTaskPanelComponent extends AbstractTaskPanelComponent implements After
                 parentInjector: Injector,
                 protected _currencyPipe: CurrencyPipe,
                 protected _changedFieldsService: ChangedFieldsService,
-                protected _permissionService: PermissionService) {
+                protected _permissionService: PermissionService,
+                protected _overflowService: OverflowService) {
         super(_taskContentService, _log, _taskViewService, _paperView, _taskEventService, _assignTaskService,
             _delegateTaskService, _cancelTaskService, _finishTaskService, _taskState, _taskDataService,
             _assignPolicyService, _callChain, _taskOperations, undefined, _translate, _currencyPipe, _changedFieldsService,
-            _permissionService);
+            _permissionService, _overflowService);
     }
 
     ngAfterViewInit() {
@@ -218,8 +226,8 @@ class TestTaskPanelComponent extends AbstractTaskPanelComponent implements After
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-task-panel [taskPanelData]="taskPanel" [selectedHeaders$]="selectedHeaders$"></nae-test-task-panel>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-task-panel [taskPanelData]="taskPanel" [selectedHeaders$]="selectedHeaders$"></ncc-test-task-panel>'
 })
 class TestWrapperComponent {
     taskPanel: TaskPanelData = {
@@ -359,9 +367,9 @@ class MyTaskResources {
                 } as FinishTaskEventOutcome
             });
         } else if (stringId === 'false') {
-            return of({error: 'error', changedFields: { changedFields: [] }});
+            return of({error: 'error', changedFields: {changedFields: []}});
         } else if (stringId === 'error') {
-            return of({error: 'error', changedFields: { changedFields: [] }}).pipe(map(res => {
+            return of({error: 'error', changedFields: {changedFields: []}}).pipe(map(res => {
                 throw throwError(res);
             }));
         }

@@ -39,7 +39,7 @@ export function addSymbolToDecoratorMetadata(
     importPath: string | null = null,
 ): Change[] {
     const nodes = getDecoratorMetadata(source, decoratorName, '@angular/core');
-    let node: any = nodes[0];  // tslint:disable-line:no-any
+    let node: any = nodes[0];  // eslint-disable-line @typescript-eslint/no-explicit-any
 
     // Find the decorator declaration.
     if (!node) {
@@ -105,7 +105,7 @@ export function addSymbolToDecoratorMetadata(
     }
 
     if (!node) {
-        // tslint:disable-next-line: no-console
+        // eslint-disable-next-line no-console
         console.error('No app module found. Please add your new class to your component.');
 
         return [];

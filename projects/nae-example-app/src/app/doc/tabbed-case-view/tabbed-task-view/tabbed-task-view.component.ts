@@ -7,16 +7,17 @@ import {
     NAE_SEARCH_CATEGORIES,
     NAE_TAB_DATA,
     SearchService,
-    TabbedTaskView,
+    AbstractTabbedTaskViewComponent,
     TaskViewService,
     ViewIdService,
     NAE_BASE_FILTER,
+    OverflowService,
     AllowedNetsService,
     AllowedNetsServiceFactory,
     tabbedAllowedNetsServiceFactory,
     tabbedTaskViewConfigurationFactory,
     NAE_TASK_VIEW_CONFIGURATION,
-    ChangedFieldsService, NAE_ASYNC_RENDERING_CONFIGURATION
+    ChangedFieldsService, NAE_ASYNC_RENDERING_CONFIGURATION,
 } from '@netgrif/components-core';
 import {HeaderComponent} from '@netgrif/components';
 
@@ -35,6 +36,7 @@ const baseFilterFactory = (injectedTabData: InjectedTabbedTaskViewData) => {
         TaskViewService,
         SearchService,
         ChangedFieldsService,
+        OverflowService,
         {
             provide: NAE_BASE_FILTER,
             useFactory: baseFilterFactory,
@@ -56,7 +58,7 @@ const baseFilterFactory = (injectedTabData: InjectedTabbedTaskViewData) => {
         {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultTaskSearchCategoriesFactory, deps: [CategoryFactory]},
     ]
 })
-export class TabbedTaskViewComponent extends TabbedTaskView implements AfterViewInit {
+export class TabbedTaskViewComponent extends AbstractTabbedTaskViewComponent implements AfterViewInit {
 
     @ViewChild('header') public taskHeaderComponent: HeaderComponent;
 

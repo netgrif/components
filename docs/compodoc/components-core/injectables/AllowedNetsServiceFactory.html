@@ -127,7 +127,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">projects/netgrif-components-core/src/lib/allowed-nets/services/factory/allowed-nets-service-factory.ts:62</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">projects/netgrif-components-core/src/lib/allowed-nets/services/factory/allowed-nets-service-factory.ts:61</a></div>
                             </td>
                         </tr>
 
@@ -228,8 +228,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="93"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/allowed-nets/services/factory/allowed-nets-service-factory.ts:93</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="92"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/allowed-nets/services/factory/allowed-nets-service-factory.ts:92</a></div>
                 </td>
             </tr>
 
@@ -305,8 +305,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="105"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/allowed-nets/services/factory/allowed-nets-service-factory.ts:105</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="104"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/allowed-nets/services/factory/allowed-nets-service-factory.ts:104</a></div>
                 </td>
             </tr>
 
@@ -384,8 +384,8 @@ Allowed nets are loaded from the configuration of the view.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="137"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/allowed-nets/services/factory/allowed-nets-service-factory.ts:137</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="136"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/allowed-nets/services/factory/allowed-nets-service-factory.ts:136</a></div>
                 </td>
             </tr>
 
@@ -463,8 +463,8 @@ Allowed nets are set from filter process immediate data</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="125"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/allowed-nets/services/factory/allowed-nets-service-factory.ts:125</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="124"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/allowed-nets/services/factory/allowed-nets-service-factory.ts:124</a></div>
                 </td>
             </tr>
 
@@ -542,8 +542,8 @@ When a new value is emitted the allowed nets will be updated.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="74"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/allowed-nets/services/factory/allowed-nets-service-factory.ts:74</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="73"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/allowed-nets/services/factory/allowed-nets-service-factory.ts:73</a></div>
                 </td>
             </tr>
 
@@ -577,7 +577,7 @@ When a new value is emitted the allowed nets will be updated.</p>
 import {ProcessService} from &#x27;../../../process/process.service&#x27;;
 import {AllowedNetsService} from &#x27;../allowed-nets.service&#x27;;
 import {switchMap} from &#x27;rxjs/operators&#x27;;
-import {Observable, of} from &#x27;rxjs&#x27;;
+import { BehaviorSubject, Observable, of } from &#x27;rxjs&#x27;;
 import {PetriNetResourceService} from &#x27;../../../resources/engine-endpoint/petri-net-resource.service&#x27;;
 import {ConfigurationService} from &#x27;../../../configuration/configuration.service&#x27;;
 import {CaseViewParams} from &#x27;../../../view/case-view/models/case-view-params&#x27;;
@@ -616,16 +616,15 @@ export function navigationItemTaskAllowedNetsServiceFactory(factory: AllowedNets
         throw new Error(&#x60;Provided navigation item task data does not contain a filter field with ID &#x27;${UserFilterConstants.FILTER_FIELD_ID
         }&#x27;! Allowed nets cannot be generated from it!&#x60;);
     }
-
-    const nets &#x3D; [...filterField.allowedNets];
+    const nets &#x3D; new BehaviorSubject&lt;Array&lt;string&gt;&gt;(Array.from(new Set&lt;string&gt;([...filterField.allowedNets])));
 
     if (filterField.filterMetadata.inheritAllowedNets) {
-        nets.push(...baseAllowedNets.allowedNets);
+        baseAllowedNets.allowedNets$.subscribe(allowedNets &#x3D;&gt; {
+            const netSet &#x3D; new Set&lt;string&gt;(allowedNets);
+            nets.next(Array.from(netSet));
+        });
     }
-
-    const uniqueNets &#x3D; new Set&lt;string&gt;(nets);
-
-    return factory.createFromArray(Array.from(uniqueNets));
+    return factory.createFromObservable(nets.asObservable());
 }
 
 /**

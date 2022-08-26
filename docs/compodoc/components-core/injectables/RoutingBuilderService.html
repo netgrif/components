@@ -78,7 +78,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(router: <a href="https://angular.io/api/router/Router" target="_blank">Router</a>, _configService: <a href="../classes/ConfigurationService.html" target="_self">ConfigurationService</a>, _viewService: <a href="../interfaces/View.html" target="_self">ViewService</a>, _logger: <a href="../injectables/LoggerService.html" target="_self">LoggerService</a>, _dynamicNavigationRouteService: <a href="../injectables/DynamicNavigationRouteProviderService.html" target="_self">DynamicNavigationRouteProviderService</a>, _groupNavigationComponentResolverComponent: <a href="../classes/AbstractGroupNavigationComponentResolverComponent.html" target="_self">Type&lt;AbstractGroupNavigationComponentResolverComponent&gt;</a>)</code>
+<code>constructor(router: <a href="https://angular.io/api/router/Router" target="_blank">Router</a>, _configService: <a href="../classes/ConfigurationService.html" target="_self">ConfigurationService</a>, _viewService: <a href="../interfaces/View.html" target="_self">ViewService</a>, _logger: <a href="../injectables/LoggerService.html" target="_self">LoggerService</a>, _dynamicNavigationRouteService: <a href="../injectables/DynamicNavigationRouteProviderService.html" target="_self">DynamicNavigationRouteProviderService</a>, _groupNavigationComponentResolverComponent: <a href="../components/AbstractGroupNavigationComponentResolverComponent.html" target="_self">Type&lt;AbstractGroupNavigationComponentResolverComponent&gt;</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -164,7 +164,7 @@
                                                         <td>_groupNavigationComponentResolverComponent</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../classes/AbstractGroupNavigationComponentResolverComponent.html" target="_self" >Type&lt;AbstractGroupNavigationComponentResolverComponent&gt;</a></code>
+                                                                        <code><a href="../components/AbstractGroupNavigationComponentResolverComponent.html" target="_self" >Type&lt;AbstractGroupNavigationComponentResolverComponent&gt;</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -226,6 +226,7 @@ export class RoutingBuilderService {
                 private _dynamicNavigationRouteService: DynamicNavigationRouteProviderService,
                 @Optional() @Inject(NAE_GROUP_NAVIGATION_COMPONENT_RESOLVER_COMPONENT)
                 private _groupNavigationComponentResolverComponent: Type&lt;AbstractGroupNavigationComponentResolverComponent&gt;) {
+        router.relativeLinkResolution &#x3D; &#x27;legacy&#x27;;
         router.config.splice(0, router.config.length);
         for (const [pathSegment, view] of Object.entries(_configService.get().views)) {
             const route &#x3D; this.constructRouteObject(view, pathSegment);

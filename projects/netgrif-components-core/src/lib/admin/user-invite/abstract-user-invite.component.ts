@@ -8,9 +8,13 @@ import {OrganizationListService} from './services/organization-list.service';
 import {SignUpService} from '../../authentication/sign-up/services/sign-up.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {UserInvitationRequest} from '../../authentication/sign-up/models/user-invitation-request';
-import {OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {take} from 'rxjs/operators';
 
+@Component({
+    selector: 'ncc-abstract-user-invite',
+    template: ''
+})
 export abstract class AbstractUserInviteComponent implements OnInit {
 
     public invitedEmailControl: FormControl;

@@ -261,6 +261,7 @@ describe('PermissionService', () => {
     it('should test hasNetPermission', () => {
         const net = new Net({
             identifier: '',
+            uriNodeId: '',
             stringId: '',
             immediateData: [],
             author: {email: '', fullName: ''},

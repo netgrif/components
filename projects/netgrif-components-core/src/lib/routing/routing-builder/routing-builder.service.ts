@@ -17,8 +17,11 @@ import {
 import {
     AbstractGroupNavigationComponentResolverComponent
 } from '../../navigation/group-navigation-component-resolver/abstract-group-navigation-component-resolver.component';
-import {DynamicNavigationRouteProviderService} from '../dynamic-navigation-route-provider/dynamic-navigation-route-provider.service';
+import {
+    DynamicNavigationRouteProviderService
+} from '../dynamic-navigation-route-provider/dynamic-navigation-route-provider.service';
 
+export const NAE_ROUTING_CONFIGURATION_PATH = "configPath";
 
 /**
  * Uses the information from nae.json to construct the application's routing
@@ -37,6 +40,7 @@ export class RoutingBuilderService {
                 private _dynamicNavigationRouteService: DynamicNavigationRouteProviderService,
                 @Optional() @Inject(NAE_GROUP_NAVIGATION_COMPONENT_RESOLVER_COMPONENT)
                 private _groupNavigationComponentResolverComponent: Type<AbstractGroupNavigationComponentResolverComponent>) {
+        router.relativeLinkResolution = 'legacy';
         router.config.splice(0, router.config.length);
         for (const [pathSegment, view] of Object.entries(_configService.get().views)) {
             const route = this.constructRouteObject(view, pathSegment);
@@ -60,6 +64,9 @@ export class RoutingBuilderService {
 
         const route: Route = {
             path: view.routing.path,
+            data: {
+                [NAE_ROUTING_CONFIGURATION_PATH]: configPath
+            },
             component
         };
 

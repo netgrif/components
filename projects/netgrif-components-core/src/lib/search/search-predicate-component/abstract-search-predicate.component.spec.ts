@@ -77,7 +77,7 @@ describe('AbstractSearchPredicateComponent', () => {
 });
 
 @Component({
-    selector: 'nae-search-predicate',
+    selector: 'ncc-search-predicate',
     template: ''
 })
 class TestSearchPredicateComponent extends AbstractSearchPredicateComponent {
@@ -90,8 +90,8 @@ class TestSearchPredicateComponent extends AbstractSearchPredicateComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-search-predicate [predicate]="predicate" [predicateId]="0" [remove$]="remove$"></nae-search-predicate>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-search-predicate [predicate]="predicate" [predicateId]="0" [remove$]="remove$"></ncc-search-predicate>'
 })
 class TestWrapperComponent implements OnDestroy {
 

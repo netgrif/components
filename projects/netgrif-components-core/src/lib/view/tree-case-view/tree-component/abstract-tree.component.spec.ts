@@ -47,7 +47,7 @@ describe('TreeComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-tree',
+    selector: 'ncc-test-tree',
     template: '',
     providers: [CaseTreeService]
 })

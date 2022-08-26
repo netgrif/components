@@ -1,6 +1,6 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {DateFieldComponent} from './date-field.component';
-import {AngularResizedEventModule} from 'angular-resize-event';
+import {AngularResizeEventModule} from 'angular-resize-event';
 import {DataFieldTemplateComponent} from '../data-field-template/data-field-template.component';
 import {RequiredLabelComponent} from '../required-label/required-label.component';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
@@ -29,7 +29,7 @@ describe('DateFieldComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
-                AngularResizedEventModule,
+                AngularResizeEventModule,
                 TranslateLibModule,
                 HttpClientTestingModule, NoopAnimationsModule
             ],
