@@ -176,7 +176,7 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Input, OnDestroy, OnInit} from &#x27;@angular/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, Input, OnDestroy, OnInit} from &#x27;@angular/core&#x27;;
 import {AbstractHeaderService} from &#x27;../../abstract-header-service&#x27;;
 import {HeaderColumn} from &#x27;../../models/header-column&#x27;;
 import {FormControl} from &#x27;@angular/forms&#x27;;
@@ -193,6 +193,10 @@ export interface HeaderOption {
     fields: Array&lt;HeaderColumn&gt;;
 }
 
+@Component({
+    selector: &#x27;ncc-abstract-edit-mode&#x27;,
+    template: &#x27;&#x27;
+})
 export abstract class AbstractEditModeComponent extends AbstractHeaderModeComponent implements OnInit, OnDestroy {
     public formControls: Array&lt;FormControl&gt; &#x3D; [];
     public filterOptions: Array&lt;Observable&lt;Array&lt;HeaderOption&gt;&gt;&gt; &#x3D; [];

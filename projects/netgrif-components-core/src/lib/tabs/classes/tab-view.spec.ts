@@ -62,11 +62,11 @@ describe('TabView', () => {
             tabContentComponent: TabTestComponent
         }, true);
 
-        expect(tabs.selectedIndex).toEqual(1);
+        expect(tabs.selectedIndex.value).toEqual(1);
         tabs.switchToTabIndex(0);
-        expect(tabs.selectedIndex).toEqual(0);
+        expect(tabs.selectedIndex.value).toEqual(0);
         tabs.switchToTabUniqueId('1');
-        expect(tabs.selectedIndex).toEqual(1);
+        expect(tabs.selectedIndex.value).toEqual(1);
 
         tabs.openTab({
             label: {
@@ -78,7 +78,7 @@ describe('TabView', () => {
         }, false);
         tabs.initializeTab(2);
         tabs.switchToTabIndex(2);
-        expect(tabs.selectedIndex).toEqual(2);
+        expect(tabs.selectedIndex.value).toEqual(2);
 
         tabs.closeTabIndex(2);
         expect(tabs.openedTabs.length).toEqual(2);
@@ -107,7 +107,7 @@ describe('TabView', () => {
             }
         }, true);
         expect(tabView.openedTabs.length).toEqual(1);
-        expect(tabView.selectedIndex).toEqual(0);
+        expect(tabView.selectedIndex.value).toEqual(0);
         tabView.openTab({
             canBeClosed: false,
             tabContentComponent: TabTestComponent,
@@ -116,7 +116,7 @@ describe('TabView', () => {
             }
         }, true);
         expect(tabView.openedTabs.length).toEqual(2);
-        expect(tabView.selectedIndex).toEqual(1);
+        expect(tabView.selectedIndex.value).toEqual(1);
         tabView.openTab({
             canBeClosed: false,
             tabContentComponent: TabTestComponent,
@@ -125,7 +125,7 @@ describe('TabView', () => {
             }
         }, true);
         expect(tabView.openedTabs.length).toEqual(2);
-        expect(tabView.selectedIndex).toEqual(0);
+        expect(tabView.selectedIndex.value).toEqual(0);
     });
 
     it('should return correct tab uniqueId', () => {

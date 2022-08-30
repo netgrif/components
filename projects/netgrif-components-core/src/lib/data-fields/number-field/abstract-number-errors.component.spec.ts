@@ -4,7 +4,7 @@ import {AbstractNumberErrorsComponent} from './abstract-number-errors.component'
 import {NumberField} from './models/number-field';
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {MaterialModule} from '../../material/material.module';
-import {AngularResizedEventModule} from 'angular-resize-event';
+import {AngularResizeEventModule} from 'angular-resize-event';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -28,7 +28,7 @@ describe('AbstractNumberErrorsComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
-                AngularResizedEventModule,
+                AngularResizeEventModule,
                 TranslateLibModule,
                 HttpClientTestingModule,
                 NoopAnimationsModule
@@ -69,7 +69,7 @@ describe('AbstractNumberErrorsComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-num-err',
+    selector: 'ncc-test-num-err',
     template: ''
 })
 class TestNumErrorComponent extends AbstractNumberErrorsComponent {
@@ -79,8 +79,8 @@ class TestNumErrorComponent extends AbstractNumberErrorsComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-num-err [numberField]="field" [formControlRef]="fc"></nae-test-num-err>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-num-err [numberField]="field" [formControlRef]="fc"></ncc-test-num-err>'
 })
 class TestWrapperComponent implements OnDestroy {
     field = new NumberField('', '', 4, {

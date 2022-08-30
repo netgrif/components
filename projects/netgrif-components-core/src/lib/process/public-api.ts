@@ -5,3 +5,5 @@ export * from './transaction';
 export * from './netRole';
 export * from './public-process.service';
 export * from './petri-net-reference-with-permissions';
+export * from './permissions';
+export * from './rolesAndPermissions'

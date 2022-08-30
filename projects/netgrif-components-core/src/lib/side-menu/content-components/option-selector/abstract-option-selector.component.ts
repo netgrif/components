@@ -3,7 +3,12 @@ import {Option, OptionSelectorInjectionData} from './model/option-selector-injec
 import {FormControl, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
+import {Component} from '@angular/core';
 
+@Component({
+    selector: 'ncc-abstract-option-selector',
+    template: ''
+})
 export abstract class AbstractOptionSelectorComponent {
 
     data: OptionSelectorInjectionData;

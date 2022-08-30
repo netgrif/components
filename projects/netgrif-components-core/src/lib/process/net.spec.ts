@@ -13,6 +13,7 @@ describe('Net', () => {
             createdDate: [2020, 1, 1, 1, 1],
             author: {email: 'mail', fullName: 'name'},
             immediateData: [],
+            uriNodeId: 'string'
         })).toBeTruthy();
     });
 
@@ -27,6 +28,7 @@ describe('Net', () => {
             createdDate: [2020, 1, 1, 1, 1],
             author: {email: 'mail', fullName: 'name'},
             immediateData: [],
+            uriNodeId: 'string'
         });
         expect(net.stringId).toEqual('true');
         expect(net.title).toEqual('string');

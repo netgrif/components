@@ -1,7 +1,7 @@
 import {AbstractEnumerationAutocompleteDynamicFieldComponent} from './abstract-enumeration-autocomplete-dynamic-field.component';
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {MaterialModule} from '../../../material/material.module';
-import {AngularResizedEventModule} from 'angular-resize-event';
+import {AngularResizeEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
@@ -19,7 +19,7 @@ describe('AbstractEnumerationAutocompleteDynamicFieldComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
-                AngularResizedEventModule,
+                AngularResizeEventModule,
                 BrowserAnimationsModule,
                 TranslateLibModule,
                 HttpClientTestingModule,
@@ -43,7 +43,7 @@ describe('AbstractEnumerationAutocompleteDynamicFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-enum-auto',
+    selector: 'ncc-test-enum-auto',
     template: ''
 })
 class TestEnumAutoComponent extends AbstractEnumerationAutocompleteDynamicFieldComponent {
@@ -53,9 +53,9 @@ class TestEnumAutoComponent extends AbstractEnumerationAutocompleteDynamicFieldC
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-enum-auto [showLargeLayout]="label" [enumerationField]="field" [formControlRef]="form">' +
-        '</nae-test-enum-auto>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-enum-auto [showLargeLayout]="label" [enumerationField]="field" [formControlRef]="form">' +
+        '</ncc-test-enum-auto>'
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();

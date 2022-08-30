@@ -1,4 +1,4 @@
-import {EventEmitter, Inject, Input, OnDestroy, Optional, Output} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnDestroy, Optional, Output} from '@angular/core';
 import {DatafieldGridLayoutElement} from '../model/datafield-grid-layout-element';
 import {FieldConverterService} from '../services/field-converter.service';
 import {TaskContentService} from '../services/task-content.service';
@@ -22,6 +22,10 @@ import {SplitDataGroup} from '../model/split-data-group';
 import {Subgrid} from '../model/subgrid';
 import {IncrementingCounter} from '../../utility/incrementing-counter';
 
+@Component({
+    selector: 'ncc-abstract-task-content',
+    template: ''
+})
 export abstract class AbstractTaskContentComponent implements OnDestroy {
     readonly DEFAULT_LAYOUT_TYPE = DataGroupLayoutType.LEGACY;
     readonly DEFAULT_FIELD_ALIGNMENT = FieldAlignment.CENTER;

@@ -1,6 +1,6 @@
 import {TaskEventOutcome} from './task-event-outcome';
 
-// tslint:disable-next-line:no-empty-interface
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface FinishTaskEventOutcome extends TaskEventOutcome {
 
 }

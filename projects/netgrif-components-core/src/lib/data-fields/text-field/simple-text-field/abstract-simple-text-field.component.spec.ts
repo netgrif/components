@@ -1,5 +1,5 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
-import {AngularResizedEventModule} from 'angular-resize-event';
+import {AngularResizeEventModule} from 'angular-resize-event';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {Component, CUSTOM_ELEMENTS_SCHEMA, NgZone} from '@angular/core';
@@ -27,7 +27,7 @@ describe('AbstractSimpleTextFieldComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
-                AngularResizedEventModule,
+                AngularResizeEventModule,
                 NoopAnimationsModule,
                 TranslateLibModule,
                 HttpClientTestingModule
@@ -61,7 +61,7 @@ describe('AbstractSimpleTextFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-text',
+    selector: 'ncc-test-text',
     template: ''
 })
 class TestTextComponent extends AbstractSimpleTextFieldComponent {
@@ -71,11 +71,11 @@ class TestTextComponent extends AbstractSimpleTextFieldComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: `<nae-test-text [showLargeLayout]="label"
+    selector: 'ncc-test-wrapper',
+    template: `<ncc-test-text [showLargeLayout]="label"
                                       [textField]="field"
                                       [formControlRef]="formControl">
-                </nae-test-text>`
+                </ncc-test-text>`
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();

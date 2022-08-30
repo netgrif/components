@@ -4,6 +4,7 @@ import {NavigationComponentModule} from '../../../navigation.module';
 import {
     FilterField, FilterType,
     NAE_NAVIGATION_ITEM_TASK_DATA,
+    OverflowService,
     TestMockDependenciesModule,
     UserFilterConstants
 } from '@netgrif/components-core';
@@ -19,7 +20,7 @@ describe('DefaultSimpleTaskViewComponent', () => {
             imports: [
                 NavigationComponentModule,
                 TestMockDependenciesModule,
-                RouterModule.forRoot([]),
+                RouterModule.forRoot([], { relativeLinkResolution: 'legacy' }),
                 NoopAnimationsModule,
             ],
             providers: [
@@ -46,7 +47,8 @@ describe('DefaultSimpleTaskViewComponent', () => {
                             ]
                         }
                     ]
-                }
+                },
+                OverflowService
             ]
         })
             .compileComponents();

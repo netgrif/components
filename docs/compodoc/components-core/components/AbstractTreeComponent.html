@@ -1,0 +1,1104 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components Core library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li
+  >
+  AbstractTreeComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/abstract-tree.component.ts</code>
+</p>
+
+
+
+
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>ncc-abstract-tree</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#treeRootAddingChild" >treeRootAddingChild</a>
+                            </li>
+                            <li>
+                                <a href="#treeRootLoading" >treeRootLoading</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#addRootChildNode" >addRootChildNode</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#expandPath" >expandPath</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#eagerLoaded" >eagerLoaded</a>
+                            </li>
+                            <li>
+                                <a href="#filter" >filter</a>
+                            </li>
+                            <li>
+                                <a href="#showTreeRoot" >showTreeRoot</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Outputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#treeRootAddingChild" >treeRootAddingChild</a>
+                            </li>
+                            <li>
+                                <a href="#treeRootLoading" >treeRootLoading</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#filter" >filter</a>
+                                </li>
+                                <li>
+                                    <a href="#showTreeRoot" >showTreeRoot</a>
+                                </li>
+                                <li>
+                                    <a href="#eagerLoaded" >eagerLoaded</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                                <span class="modifier">Protected</span>
+                        <code>constructor(_treeService: <a href="../injectables/CaseTreeService.html" target="_self">CaseTreeService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/abstract-tree.component.ts:36</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>_treeService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/CaseTreeService.html" target="_self" >CaseTreeService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+    <section>
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="eagerLoaded"></a>
+                        <b>eagerLoaded</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="92" class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/abstract-tree.component.ts:92</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Weather the tree is eager loaded or not.</p>
+<p>Defaults to <code>false</code>.</p>
+<p>It is not recommended to eager load large trees as each node sends a separate backend request to load its data.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="filter"></a>
+                        <b>filter</b>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/abstract-tree.component.ts:60</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The <a href="../classes/Filter.html">Filter</a> that determines the root node of the tree.</p>
+<p>The tree can only have one root. If more than one case is returned by the Filter.
+The first result will be used as the tree root.</p>
+<p>If you want to have multiple nodes in the first level checkout the <a href="../components/AbstractTreeComponent.html#showTreeRoot">showTreeRoot</a> property.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="showTreeRoot"></a>
+                        <b>showTreeRoot</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="75" class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/abstract-tree.component.ts:75</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Whether the tree root should be displayed as a node or not.</p>
+<p><code>true</code> displays the root as the only node in the first level.</p>
+<p><code>false</code> displays the root&#39;s child nodes in the first level.</p>
+<p>If you want to add more children while the root is hidden use the [addRootChildNode]
+<a href="../components/AbstractTreeComponent.html#addRootChildNode">AbstractTreeComponent</a> method.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+    <section>
+    <h3 id="outputs">Outputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="treeRootAddingChild"></a>
+                        <b>treeRootAddingChild</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/abstract-tree.component.ts:36</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p><code>true</code> is emitted whenever the tree&#39;s root node is adding a new child node.</p>
+<p><code>false</code> is emitted when the root node is no longer adding a new child node.</p>
+<p>The first value emitted from this Output is <code>false</code>, when the tree finishes initializing.</p>
+<p>No further calls to add a child node should be made, while a child is being added.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="treeRootLoading"></a>
+                        <b>treeRootLoading</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/abstract-tree.component.ts:25</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p><code>true</code> is emitted whenever the tree&#39;s root node is in it&#39;s loading state.</p>
+<p><code>false</code> is emitted when the root node is no longer in the loading state.</p>
+<p>The first value emitted from this Output is <code>false</code>, when the tree finishes initializing.</p>
+<p>The root node enters it&#39;s loading state when it&#39;s children are being loaded.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addRootChildNode"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>addRootChildNode</b></span>
+                        <a href="#addRootChildNode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>addRootChildNode()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="145"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/abstract-tree.component.ts:145</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Adds a child to the root node.</p>
+<p>Useful if you set the <a href="../components/AbstractTreeComponent.html#showTreeRoot">showTreeRoot</a> property to <code>false</code>.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="expandPath"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>expandPath</b></span>
+                        <a href="#expandPath"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>expandPath(path: <a href="../interfaces/CaseTreePath.html" target="_self">CaseTreePath</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="154"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/abstract-tree.component.ts:154</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Expands all nodes in the tree dictated by the argument.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>path</td>
+                                    <td>
+                                                <code><a href="../interfaces/CaseTreePath.html" target="_self" >CaseTreePath</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>nodes that should be expanded along with their path from the root node</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="treeRootAddingChild"></a>
+                    <span class="name">
+                        <span ><b>treeRootAddingChild</b></span>
+                        <a href="#treeRootAddingChild"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new EventEmitter&lt;boolean&gt;()</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @Output()<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/abstract-tree.component.ts:36</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p><code>true</code> is emitted whenever the tree&#39;s root node is adding a new child node.</p>
+<p><code>false</code> is emitted when the root node is no longer adding a new child node.</p>
+<p>The first value emitted from this Output is <code>false</code>, when the tree finishes initializing.</p>
+<p>No further calls to add a child node should be made, while a child is being added.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="treeRootLoading"></a>
+                    <span class="name">
+                        <span ><b>treeRootLoading</b></span>
+                        <a href="#treeRootLoading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new EventEmitter&lt;boolean&gt;()</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @Output()<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/abstract-tree.component.ts:25</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p><code>true</code> is emitted whenever the tree&#39;s root node is in it&#39;s loading state.</p>
+<p><code>false</code> is emitted when the root node is no longer in the loading state.</p>
+<p>The first value emitted from this Output is <code>false</code>, when the tree finishes initializing.</p>
+<p>The root node enters it&#39;s loading state when it&#39;s children are being loaded.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="filter"></a>
+                        <span class="name"><b>filter</b><a href="#filter"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>set</b><code>filter(filter: <a href="../classes/Filter.html" target="_self">Filter</a>)</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/abstract-tree.component.ts:60</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>The <a href="../classes/Filter.html">Filter</a> that determines the root node of the tree.</p>
+<p>The tree can only have one root. If more than one case is returned by the Filter.
+The first result will be used as the tree root.</p>
+<p>If you want to have multiple nodes in the first level checkout the <a href="../components/AbstractTreeComponent.html#showTreeRoot">showTreeRoot</a> property.</p>
+</div>
+
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <table class="params">
+                                            <thead>
+                                                <tr>
+                                                    <td>Name</td>
+                                                        <td>Type</td>
+                                                    <td>Optional</td>
+                                                        <td>Description</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr>
+                                                            <td>filter</td>
+                                                    
+                                                            <td>
+                                                                            <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
+                                                            </td>
+                                                    
+                                                        <td>
+                                                                No
+                                                        </td>
+                                                        
+                                                            <td>
+                                                                    <code><p>Case Filter that determines the tree root</p>
+</code>
+                                                            </td>
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="showTreeRoot"></a>
+                        <span class="name"><b>showTreeRoot</b><a href="#showTreeRoot"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>set</b><code>showTreeRoot(showTreeRoot: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>)</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="75" class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/abstract-tree.component.ts:75</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Whether the tree root should be displayed as a node or not.</p>
+<p><code>true</code> displays the root as the only node in the first level.</p>
+<p><code>false</code> displays the root&#39;s child nodes in the first level.</p>
+<p>If you want to add more children while the root is hidden use the [addRootChildNode]
+<a href="../components/AbstractTreeComponent.html#addRootChildNode">AbstractTreeComponent</a> method.</p>
+</div>
+
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <table class="params">
+                                            <thead>
+                                                <tr>
+                                                    <td>Name</td>
+                                                        <td>Type</td>
+                                                    <td>Optional</td>
+                                                        <td>Description</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr>
+                                                            <td>showTreeRoot</td>
+                                                    
+                                                            <td>
+                                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                                            </td>
+                                                    
+                                                        <td>
+                                                                No
+                                                        </td>
+                                                        
+                                                            <td>
+                                                                    <code><p>whether the root node should be displayed in the tree or not</p>
+</code>
+                                                            </td>
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="eagerLoaded"></a>
+                        <span class="name"><b>eagerLoaded</b><a href="#eagerLoaded"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>set</b><code>eagerLoaded(eager: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>)</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="92" class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/abstract-tree.component.ts:92</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Weather the tree is eager loaded or not.</p>
+<p>Defaults to <code>false</code>.</p>
+<p>It is not recommended to eager load large trees as each node sends a separate backend request to load its data.</p>
+</div>
+
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <table class="params">
+                                            <thead>
+                                                <tr>
+                                                    <td>Name</td>
+                                                        <td>Type</td>
+                                                    <td>Optional</td>
+                                                        <td>Description</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr>
+                                                            <td>eager</td>
+                                                    
+                                                            <td>
+                                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                                            </td>
+                                                    
+                                                        <td>
+                                                                No
+                                                        </td>
+                                                        
+                                                            <td>
+                                                                    <code><p>the new setting for eager loading</p>
+</code>
+                                                            </td>
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+</section>
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, EventEmitter, Input, Output} from &#x27;@angular/core&#x27;;
+import {NestedTreeControl} from &#x27;@angular/cdk/tree&#x27;;
+import {Filter} from &#x27;../../../filter/models/filter&#x27;;
+import {CaseTreeService} from &#x27;./case-tree.service&#x27;;
+import {CaseTreeNode} from &#x27;./model/case-tree-node&#x27;;
+import {TreePetriflowIdentifiers} from &#x27;../model/tree-petriflow-identifiers&#x27;;
+import {MatTreeNestedDataSource} from &#x27;@angular/material/tree&#x27;;
+import {CaseTreePath} from &#x27;./model/case-tree-path&#x27;;
+
+@Component({
+    selector: &#x27;ncc-abstract-tree&#x27;,
+    template: &#x27;&#x27;
+})
+export abstract class AbstractTreeComponent {
+
+    /**
+     * &#x60;true&#x60; is emitted whenever the tree&#x27;s root node is in it&#x27;s loading state.
+     *
+     * &#x60;false&#x60; is emitted when the root node is no longer in the loading state.
+     *
+     * The first value emitted from this Output is &#x60;false&#x60;, when the tree finishes initializing.
+     *
+     * The root node enters it&#x27;s loading state when it&#x27;s children are being loaded.
+     */
+    @Output() treeRootLoading &#x3D; new EventEmitter&lt;boolean&gt;();
+
+    /**
+     * &#x60;true&#x60; is emitted whenever the tree&#x27;s root node is adding a new child node.
+     *
+     * &#x60;false&#x60; is emitted when the root node is no longer adding a new child node.
+     *
+     * The first value emitted from this Output is &#x60;false&#x60;, when the tree finishes initializing.
+     *
+     * No further calls to add a child node should be made, while a child is being added.
+     */
+    @Output() treeRootAddingChild &#x3D; new EventEmitter&lt;boolean&gt;();
+
+    protected constructor(protected _treeService: CaseTreeService) {
+        this._treeService.treeRootLoaded$.subscribe(success &#x3D;&gt; {
+            if (success) {
+                this._treeService.rootNodeLoading$.subscribe(loading &#x3D;&gt; {
+                    this.treeRootLoading.emit(loading);
+                });
+                this._treeService.rootNodeAddingChild$.subscribe(addingChild &#x3D;&gt; {
+                    this.treeRootAddingChild.emit(addingChild);
+                });
+            }
+        });
+    }
+
+    /**
+     * The {@link Filter} that determines the root node of the tree.
+     *
+     * The tree can only have one root. If more than one case is returned by the Filter.
+     * The first result will be used as the tree root.
+     *
+     * If you want to have multiple nodes in the first level checkout the [showTreeRoot]{@link AbstractTreeComponent#showTreeRoot} property.
+     * @param filter Case Filter that determines the tree root
+     */
+    @Input() set filter(filter: Filter) {
+        this._treeService.rootFilter &#x3D; filter;
+    }
+
+    /**
+     * Whether the tree root should be displayed as a node or not.
+     *
+     * &#x60;true&#x60; displays the root as the only node in the first level.
+     *
+     * &#x60;false&#x60; displays the root&#x27;s child nodes in the first level.
+     *
+     * If you want to add more children while the root is hidden use the [addRootChildNode]
+     * {@link AbstractTreeComponent#addRootChildNode} method.
+     * @param showTreeRoot whether the root node should be displayed in the tree or not
+     */
+    @Input() set showTreeRoot(showTreeRoot: boolean) {
+        this._treeService.treeRootLoaded$.subscribe(success &#x3D;&gt; {
+            if (success) {
+                this._treeService.initializeTree(showTreeRoot);
+            }
+        });
+    }
+
+    /**
+     * Weather the tree is eager loaded or not.
+     *
+     * Defaults to &#x60;false&#x60;.
+     *
+     * It is not recommended to eager load large trees as each node sends a separate backend request to load its data.
+     *
+     * @param eager the new setting for eager loading
+     */
+    @Input() set eagerLoaded(eager: boolean) {
+        this._treeService.isEagerLoaded &#x3D; eager;
+    }
+
+    /**
+     * @ignore
+     */
+    public get dataSource(): MatTreeNestedDataSource&lt;CaseTreeNode&gt; {
+        return this._treeService.dataSource;
+    }
+
+    /**
+     * @ignore
+     */
+    public get treeControl(): NestedTreeControl&lt;CaseTreeNode&gt; {
+        return this._treeService.treeControl;
+    }
+
+    /**
+     * @ignore
+     */
+    hasChild &#x3D; (_: number, node: CaseTreeNode) &#x3D;&gt; {
+        const childrenCaseRef &#x3D; node.case.immediateData.find(data &#x3D;&gt; data.stringId &#x3D;&#x3D;&#x3D; TreePetriflowIdentifiers.CHILDREN_CASE_REF);
+        return !!childrenCaseRef &amp;&amp; !!childrenCaseRef.value &amp;&amp; childrenCaseRef.value.length &gt; 0;
+    }
+
+    /**
+     * @ignore
+     */
+    caseNodeClicked(node: CaseTreeNode) {
+        this._treeService.changeActiveNode(node);
+    }
+
+    /**
+     * @ignore
+     */
+    toggleCaseNode(event: Event, node: CaseTreeNode) {
+        event.stopPropagation();
+        this._treeService.toggleNode(node);
+    }
+
+    /**
+     * @ignore
+     */
+    selectedCaseNode(node: CaseTreeNode) {
+        return node &#x3D;&#x3D;&#x3D; this._treeService.currentNode;
+    }
+
+    /**
+     * Adds a child to the root node.
+     *
+     * Useful if you set the [showTreeRoot]{@link AbstractTreeComponent#showTreeRoot} property to &#x60;false&#x60;.
+     */
+    public addRootChildNode(): void {
+        this._treeService.addRootChildNode();
+    }
+
+    /**
+     * Expands all nodes in the tree dictated by the argument.
+     *
+     * @param path nodes that should be expanded along with their path from the root node
+     */
+    public expandPath(path: CaseTreePath): void {
+        this._treeService.expandPath(path);
+    }
+}
+</code></pre>
+    </div>
+
+
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div></div>'
+    var COMPONENTS = [{'name': 'AbstractAddChildNodeComponent', 'selector': 'ncc-abstract-add-child-node'},{'name': 'AbstractAdvancedSearchComponent', 'selector': 'ncc-abstract-advanced-search'},{'name': 'AbstractAuthenticationOverlayComponent', 'selector': 'ncc-abstract-auth-overlay'},{'name': 'AbstractBooleanFieldComponent', 'selector': 'ncc-abstract-boolean-field'},{'name': 'AbstractButtonFieldComponent', 'selector': 'ncc-abstract-button-field'},{'name': 'AbstractCaseListComponent', 'selector': 'ncc-abstract-case-list'},{'name': 'AbstractCaseListPaginatorComponent', 'selector': 'ncc-abstract-case-list-paginator'},{'name': 'AbstractCasePanelComponent', 'selector': 'ncc-abstract-case-panel'},{'name': 'AbstractCaseViewComponent', 'selector': 'ncc-abstract-case-view'},{'name': 'AbstractCountCardComponent', 'selector': 'ncc-abstract-count-card'},{'name': 'AbstractCurrencyNumberFieldComponent', 'selector': 'ncc-abstract-currency-field'},{'name': 'AbstractCustomCardComponent', 'selector': 'ncc-abstract-custom-card'},{'name': 'AbstractDashboardContentComponent', 'selector': 'ncc-abstract-dashboard-content'},{'name': 'AbstractDataFieldComponent', 'selector': 'ncc-abstract-datafield'},{'name': 'AbstractDataFieldTemplateComponent', 'selector': 'ncc-abstract-datafield-template'},{'name': 'AbstractDateFieldComponent', 'selector': 'ncc-abstract-date-field'},{'name': 'AbstractDateTimeFieldComponent', 'selector': 'ncc-abstract-date-time-field'},{'name': 'AbstractDefaultCaseList', 'selector': 'ncc-abstract-default-case-list'},{'name': 'AbstractDefaultNumberFieldComponent', 'selector': 'ncc-abstract-number-default-field'},{'name': 'AbstractDefaultTaskList', 'selector': 'ncc-abstract-default-task-list'},{'name': 'AbstractDialog', 'selector': 'ncc-abstract-dialog'},{'name': 'AbstractEditModeComponent', 'selector': 'ncc-abstract-edit-mode'},{'name': 'AbstractEmailSubmissionFormComponent', 'selector': 'ncc-abstract-email-submission-form'},{'name': 'AbstractEnumerationAutocompleteDynamicFieldComponent', 'selector': 'ncc-abstract-enumeration-autocomplete-dynamic-field'},{'name': 'AbstractEnumerationAutocompleteSelectFieldComponent', 'selector': 'ncc-abstract-enumeration-autocomplete-field'},{'name': 'AbstractEnumerationFieldComponent', 'selector': 'ncc-abstract-enumeration-field'},{'name': 'AbstractEnumerationIconFieldComponent', 'selector': 'ncc-abstract-enumerataion-icon-field'},{'name': 'AbstractEnumerationListFieldComponent', 'selector': 'ncc-abstract-enumeration-list-field'},{'name': 'AbstractEnumerationSelectFieldComponent', 'selector': 'ncc-abstract-enumeration-select-field'},{'name': 'AbstractEnumerationStepperFieldComponent', 'selector': 'ncc-abstract-enumeration-stepper-field'},{'name': 'AbstractFieldComponentResolverComponent', 'selector': 'ncc-abstract-field-component-resolver'},{'name': 'AbstractFileFieldComponent', 'selector': 'ncc-abstract-file-field'},{'name': 'AbstractFileListFieldComponent', 'selector': 'ncc-abstract-filelist-field'},{'name': 'AbstractFilterFieldComponent', 'selector': 'ncc-abstract-filter-field'},{'name': 'AbstractFilterFieldContentComponent', 'selector': 'ncc-abstract-filtercontent-field'},{'name': 'AbstractFilterSelectorComponent', 'selector': 'ncc-abstract-filter-selector'},{'name': 'AbstractForgottenPasswordComponent', 'selector': 'ncc-abstract-forgotten-password'},{'name': 'AbstractFulltextSearchComponent', 'selector': 'ncc-abstract-fulltext-search'},{'name': 'AbstractGroupNavigationComponentResolverComponent', 'selector': 'ncc-abstract-group-nagiation-resolver'},{'name': 'AbstractHeaderComponent', 'selector': 'ncc-abstract-header'},{'name': 'AbstractHeaderModeComponent', 'selector': 'ncc-abstract-header-mode'},{'name': 'AbstractHtmlTextareaFieldComponent', 'selector': 'ncc-abstract-html-area-field'},{'name': 'AbstractI18nDividerFieldComponent', 'selector': 'ncc-abstract-i18n-divider-field'},{'name': 'AbstractI18nErrorsComponent', 'selector': 'ncc-abstract-i18n-errors'},{'name': 'AbstractI18nFieldComponent', 'selector': 'ncc-abstract-i18n-field'},{'name': 'AbstractI18nTextFieldComponent', 'selector': 'ncc-abstract-i18n-text-field'},{'name': 'AbstractIframeCardComponent', 'selector': 'ncc-abstract-iframe-card'},{'name': 'AbstractImmediateFilterTextComponent', 'selector': 'ncc-abstract-immediate-filter-text'},{'name': 'AbstractImmediateFilterTextContentComponent', 'selector': 'ncc-abstract-immediate-filter-text-content'},{'name': 'AbstractImportNetComponent', 'selector': 'ncc-abstract-import-net'},{'name': 'AbstractInternalLinkComponent', 'selector': 'ncc-abstract-internal-link'},{'name': 'AbstractLanguageSelectorComponent', 'selector': 'ncc-abstract-language-selector'},{'name': 'AbstractLdapGroupRoleAssignment', 'selector': 'ncc-abstract-ldap-group-role-assignment'},{'name': 'AbstractLegalNoticeComponent', 'selector': 'ncc-abstract-legal-notice'},{'name': 'AbstractLoadFilterComponent', 'selector': 'ncc-abstract-load-filter'},{'name': 'AbstractLoadingModeComponent', 'selector': 'ncc-abstract-loading-mode'},{'name': 'AbstractLoginFormComponent', 'selector': 'ncc-abstract-login-field'},{'name': 'AbstractLogoutShortcutComponent', 'selector': 'ncc-abstract-logout-shortcut'},{'name': 'AbstractMultichoiceFieldComponent', 'selector': 'ncc-abstract-multichoice-field'},{'name': 'AbstractMultichoiceListFieldComponent', 'selector': 'ncc-abstract-multichoice-list-field'},{'name': 'AbstractMultichoiceSelectFieldComponent', 'selector': 'ncc-abstract-multichoice-select-field'},{'name': 'AbstractNavigationDrawerComponent', 'selector': 'ncc-abstract-navigation-drawer'},{'name': 'AbstractNavigationRailComponent', 'selector': 'ncc-abstract-navigation-rail'},{'name': 'AbstractNavigationResizableDrawerComponent', 'selector': 'ncc-abstract-navigation-resizable-drawer'},{'name': 'AbstractNavigationTreeComponent', 'selector': 'ncc-abstract-navigation-tree'},{'name': 'AbstractNewCaseComponent', 'selector': 'ncc-abstract-new-case'},{'name': 'AbstractNumberErrorsComponent', 'selector': 'ncc-abstract-number-errors-field'},{'name': 'AbstractNumberFieldComponent', 'selector': 'ncc-abstract-number-field'},{'name': 'AbstractOptionSelectorComponent', 'selector': 'ncc-abstract-option-selector'},{'name': 'AbstractPanelComponent', 'selector': 'ncc-abstract-panel'},{'name': 'AbstractPanelItemComponent', 'selector': 'ncc-abstract-panel-item-component'},{'name': 'AbstractPanelWithHeaderBindingComponent', 'selector': 'ncc-abstract-panel-with-header-binding'},{'name': 'AbstractPanelWithImmediateDataComponent', 'selector': 'ncc-abstract-panel-with-immediate'},{'name': 'AbstractPasswordTextFieldComponent', 'selector': 'ncc-abstract-password-text-field'},{'name': 'AbstractProfileComponent', 'selector': 'ncc-abstract-profile'},{'name': 'AbstractQuickPanelComponent', 'selector': 'ncc-abstract-quick-panel'},{'name': 'AbstractRegistrationComponent', 'selector': 'ncc-abstract-registration'},{'name': 'AbstractRegistrationFormComponent', 'selector': 'ncc-abstract-registration-form'},{'name': 'AbstractRemoveNodeComponent', 'selector': 'ncc-abstract-remove-node'},{'name': 'AbstractRichTextareaFieldComponent', 'selector': 'ncc-abstract-rich-text-field'},{'name': 'AbstractRoleAssignmentComponent', 'selector': 'ncc-abstract-role'},{'name': 'AbstractSaveFilterComponent', 'selector': 'ncc-abstract-save-filter'},{'name': 'AbstractSearchClauseComponent', 'selector': 'ncc-abstract-search-clause'},{'name': 'AbstractSearchComponent', 'selector': 'ncc-abstract-search'},{'name': 'AbstractSearchConfigurationInputComponent', 'selector': 'ncc-abstract-search-configuration-input'},{'name': 'AbstractSearchModeComponent', 'selector': 'ncc-abstract-seatch-mode'},{'name': 'AbstractSearchOperandInputComponent', 'selector': 'ncc-abstract-search-operand-input'},{'name': 'AbstractSearchPredicateComponent', 'selector': 'ncc-abstract-search-predicate'},{'name': 'AbstractSideMenuContainerComponent', 'selector': 'ncc-abstract-side-menu-container'},{'name': 'AbstractSimpleTextFieldComponent', 'selector': 'ncc-abstract-simple-text-field'},{'name': 'AbstractSortableViewComponent', 'selector': 'ncc-abstract-sortable-view'},{'name': 'AbstractSortModeComponent', 'selector': 'ncc-abstract-sort-mode'},{'name': 'AbstractTabbedCaseViewComponent', 'selector': 'ncc-abstract-tabbed-case-view'},{'name': 'AbstractTabbedTaskViewComponent', 'selector': 'ncc-abstract-tabbed-task-view'},{'name': 'AbstractTabViewComponent', 'selector': 'ncc-abstract-tab-view'},{'name': 'AbstractTaskContentComponent', 'selector': 'ncc-abstract-task-content'},{'name': 'AbstractTaskListComponent', 'selector': 'ncc-abstract-task-list'},{'name': 'AbstractTaskListPaginationComponent', 'selector': 'ncc-abstract-task-list-pagination-component'},{'name': 'AbstractTaskPanelComponent', 'selector': 'ncc-abstract-legal-notice'},{'name': 'AbstractTaskViewComponent', 'selector': 'ncc-abstract-task-view'},{'name': 'AbstractTextareaFieldComponent', 'selector': 'ncc-abstract-text-area-field'},{'name': 'AbstractTextFieldComponent', 'selector': 'ncc-abstract-text-field'},{'name': 'AbstractTimeInstanceFieldComponent', 'selector': 'ncc-abstract-time-instance-field'},{'name': 'AbstractToolbarComponent', 'selector': 'ncc-abstract-toolbar'},{'name': 'AbstractTreeComponent', 'selector': 'ncc-abstract-tree'},{'name': 'AbstractTreeTaskContentComponent', 'selector': 'ncc-abstract-tree-task-content'},{'name': 'AbstractUserAssignComponent', 'selector': 'ncc-abstract-user-assign'},{'name': 'AbstractUserAssignItemComponent', 'selector': 'ncc-abstract-user-assign-item'},{'name': 'AbstractUserAssignListComponent', 'selector': 'ncc-abstract-user-assign-list'},{'name': 'AbstractUserCardComponent', 'selector': 'ncc-abstract-user-card'},{'name': 'AbstractUserFieldComponent', 'selector': 'ncc-abstract-user-field'},{'name': 'AbstractUserInviteComponent', 'selector': 'ncc-abstract-user-invite'},{'name': 'AbstractViewWithHeadersComponent', 'selector': 'ncc-abstract-view-with-headers'},{'name': 'AbstractWorkflowPanelComponent', 'selector': 'ncc-abstract-workflow-panel'},{'name': 'AbstractWorkflowViewComponent', 'selector': 'ncc-abstract-workflow-view'},{'name': 'AlertDialogComponent', 'selector': 'ncc-simple-dialog'},{'name': 'ConfirmDialogComponent', 'selector': 'ncc-question-dialog'},{'name': 'ErrorSnackBarComponent', 'selector': 'ncc-error-snack-bar'},{'name': 'GenericSnackBarComponent', 'selector': 'ncc-generic-snack-bar'},{'name': 'PromptDialogComponent', 'selector': 'ncc-question-dialog-with-answer'},{'name': 'SnackBar', 'selector': 'ncc-abstract-snackbar'},{'name': 'SuccessSnackBarComponent', 'selector': 'ncc-success-snack-bar'},{'name': 'TabbedVirtualScrollComponent', 'selector': 'ncc-abstract-tabbed-virtual-scroll'},{'name': 'WarningSnackBarComponent', 'selector': 'ncc-warning-snack-bar'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'AbstractTreeComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'AbstractTreeComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

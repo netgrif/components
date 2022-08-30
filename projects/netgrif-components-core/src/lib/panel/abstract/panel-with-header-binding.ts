@@ -1,17 +1,29 @@
-import {OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, Optional} from '@angular/core';
 import {Observable, Subscription} from 'rxjs';
 import {HeaderColumn, HeaderColumnType} from '../../header/models/header-column';
 import {FeaturedValue} from './featured-value';
+import {OverflowService} from '../../header/services/overflow.service';
 
-
-export abstract class PanelWithHeaderBinding implements OnInit, OnDestroy {
+@Component({
+    selector: 'ncc-abstract-panel-with-header-binding',
+    template: ''
+})
+export abstract class AbstractPanelWithHeaderBindingComponent implements OnInit, OnDestroy {
     public selectedHeaders$: Observable<Array<HeaderColumn>>;
     public firstFeaturedValue: string;
     public featuredFieldsValues: Array<FeaturedValue> = [];
     protected _lastSelectedHeaders: Array<HeaderColumn>;
     protected sub: Subscription;
 
-    protected constructor() {
+    protected constructor(@Optional() protected _overflowService: OverflowService) {
+    }
+
+    get overflowMode(): boolean {
+        if(!!this._overflowService){
+            return this._overflowService.overflowMode;
+        } else {
+            return false;
+        }
     }
 
     ngOnInit(): void {
@@ -41,10 +53,9 @@ export abstract class PanelWithHeaderBinding implements OnInit, OnDestroy {
         }
 
         this.featuredFieldsValues.splice(0, this.featuredFieldsValues.length);
-        this.firstFeaturedValue = this.getFeaturedValue(this._lastSelectedHeaders[0]).value;
-        for (let i = 1; i < this._lastSelectedHeaders.length; i++) {
-            this.featuredFieldsValues.push(this.getFeaturedValue(this._lastSelectedHeaders[i]));
-        }
+        this.featuredFieldsValues.push(
+            ...this._lastSelectedHeaders.map<FeaturedValue>(item => this.getFeaturedValue(item))
+        );
     }
 
     protected getFeaturedValue(selectedHeader: HeaderColumn): FeaturedValue {

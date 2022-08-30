@@ -1,10 +1,11 @@
-import {Component} from '@angular/core';
+import {Component, Optional} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {
     AbstractWorkflowPanelComponent,
     WorkflowViewService,
     LoggerService,
-    PetriNetResourceService
+    PetriNetResourceService,
+    OverflowService
 } from '@netgrif/components-core';
 
 @Component({
@@ -16,7 +17,8 @@ export class PublicWorkflowPanelComponent extends AbstractWorkflowPanelComponent
     constructor(log: LoggerService,
                 translate: TranslateService,
                 workflowService: WorkflowViewService,
-                petriNetResource: PetriNetResourceService) {
-        super(log, translate, workflowService, petriNetResource);
+                petriNetResource: PetriNetResourceService,
+                @Optional() overflowService: OverflowService) {
+        super(log, translate, workflowService, petriNetResource, overflowService);
     }
 }

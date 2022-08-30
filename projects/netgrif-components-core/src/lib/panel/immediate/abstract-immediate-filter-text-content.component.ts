@@ -1,4 +1,4 @@
-import {Inject, OnDestroy} from '@angular/core';
+import {Component, Inject, OnDestroy} from '@angular/core';
 import {FilterTextConfiguration, NAE_FILTER_TEXT} from './model/filter-text-injection-token';
 import {SearchService} from '../../search/search-service/search.service';
 import {Subscription} from 'rxjs';
@@ -6,6 +6,10 @@ import {filter, take} from 'rxjs/operators';
 import {FilterTextSegment} from '../../search/models/persistance/filter-text-segment';
 import {TranslateService} from '@ngx-translate/core';
 
+@Component({
+    selector: 'ncc-abstract-immediate-filter-text-content',
+    template: ''
+})
 export abstract class AbstractImmediateFilterTextContentComponent implements OnDestroy {
 
     private readonly _searchServiceSub: Subscription;

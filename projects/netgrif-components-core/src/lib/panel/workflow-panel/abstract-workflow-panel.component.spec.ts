@@ -25,6 +25,7 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {WorkflowViewService} from '../../view/workflow-view/workflow-view.service';
 import {take} from 'rxjs/operators';
 import {PetriNetResourceService} from '../../resources/engine-endpoint/petri-net-resource.service';
+import { OverflowService } from '../../header/services/overflow.service';
 
 describe('AbstractWorkflowPanelComponent', () => {
     let component: TestWorkflowPanelComponent;
@@ -48,7 +49,8 @@ describe('AbstractWorkflowPanelComponent', () => {
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                WorkflowViewService
+                WorkflowViewService,
+                OverflowService
             ],
             declarations: [TestWorkflowPanelComponent, TestWrapperComponent],
             schemas: [NO_ERRORS_SCHEMA],
@@ -87,21 +89,23 @@ describe('AbstractWorkflowPanelComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-workflow-panel',
+    selector: 'ncc-test-workflow-panel',
     template: ''
 })
 class TestWorkflowPanelComponent extends AbstractWorkflowPanelComponent {
-    constructor(log: LoggerService,
-                translate: TranslateService,
-                workflowService: WorkflowViewService,
-                petriNetResource: PetriNetResourceService) {
-        super(log, translate, workflowService, petriNetResource);
+  
+      constructor(log: LoggerService,
+                  translate: TranslateService,
+                  workflowService: WorkflowViewService,
+                  petriNetResource: PetriNetResourceService,
+                  overflowService: OverflowService) {
+        super(log, translate, workflowService, petriNetResource, overflowService);
     }
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-workflow-panel [workflow]="workflow" [selectedHeaders$]="selectedHeaders"></nae-test-workflow-panel>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-workflow-panel [workflow]="workflow" [selectedHeaders$]="selectedHeaders"></ncc-test-workflow-panel>'
 })
 class TestWrapperComponent {
     public selectedHeaders = of([
@@ -122,6 +126,7 @@ class TestWrapperComponent {
         initials: '',
         stringId: '',
         title: '',
-        version: ''
+        version: '',
+        uriNodeId: ''
     };
 }

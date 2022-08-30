@@ -1,6 +1,6 @@
-import {Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, Optional} from '@angular/core';
 import {MatExpansionPanel} from '@angular/material/expansion';
-import {PanelWithHeaderBinding} from '../abstract/panel-with-header-binding';
+import {AbstractPanelWithHeaderBindingComponent} from '../abstract/panel-with-header-binding';
 import {HeaderColumn} from '../../header/models/header-column';
 import {Observable, Subscription} from 'rxjs';
 import {LoggerService} from '../../logger/services/logger.service';
@@ -16,6 +16,7 @@ import {WorkflowViewService} from '../../view/workflow-view/workflow-view.servic
 import {FeaturedValue} from '../abstract/featured-value';
 import {PetriNetResourceService} from '../../resources/engine-endpoint/petri-net-resource.service';
 import {ProgressType, ProviderProgress} from '../../resources/resource-provider.service';
+import {OverflowService} from '../../header/services/overflow.service';
 
 
 export interface WorkflowPanelContent {
@@ -26,7 +27,11 @@ export interface WorkflowPanelContent {
     uploaded: DateTimeField;
 }
 
-export abstract class AbstractWorkflowPanelComponent extends PanelWithHeaderBinding implements OnInit, OnDestroy {
+@Component({
+    selector: 'ncc-abstract-workflow-panel',
+    template: ''
+})
+export abstract class AbstractWorkflowPanelComponent extends AbstractPanelWithHeaderBindingComponent implements OnInit, OnDestroy {
 
     @Input() public workflow: Net;
     @Input() public selectedHeaders$: Observable<Array<HeaderColumn>>;
@@ -46,8 +51,9 @@ export abstract class AbstractWorkflowPanelComponent extends PanelWithHeaderBind
     protected constructor(protected _log: LoggerService,
                           protected _translate: TranslateService,
                           protected _workflowService: WorkflowViewService,
-                          protected _petriNetResource: PetriNetResourceService) {
-        super();
+                          protected _petriNetResource: PetriNetResourceService,
+                          @Optional() protected _overflowService: OverflowService) {
+        super(_overflowService);
 
         this._subscription = _translate.onLangChange.subscribe((event: TranslationChangeEvent) => {
             this.panelContent.netIdentifier.title = this._translate.instant(this.TRANSLATION_NET);

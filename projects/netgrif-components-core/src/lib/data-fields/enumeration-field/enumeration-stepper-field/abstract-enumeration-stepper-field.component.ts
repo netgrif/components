@@ -1,9 +1,13 @@
-import {AfterViewChecked, ElementRef, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {AfterViewChecked, Component, ElementRef, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {EnumerationField} from '../models/enumeration-field';
 import {FormControl} from '@angular/forms';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 
-export class AbstractEnumerationStepperFieldComponent implements OnInit, AfterViewChecked {
+@Component({
+    selector: 'ncc-abstract-enumeration-stepper-field',
+    template: ''
+})
+export abstract class AbstractEnumerationStepperFieldComponent implements OnInit, AfterViewChecked {
 
     @Input() enumerationField: EnumerationField;
     @Input() formControlRef: FormControl;

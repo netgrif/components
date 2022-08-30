@@ -293,7 +293,17 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {AfterViewInit, ElementRef, Inject, Input, OnDestroy, OnInit, Optional, ViewChild} from &#x27;@angular/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+    AfterViewInit,
+    Component,
+    ElementRef,
+    Inject,
+    Input,
+    OnDestroy,
+    OnInit,
+    Optional,
+    ViewChild
+} from &#x27;@angular/core&#x27;;
 import {TaskResourceService} from &#x27;../../resources/engine-endpoint/task-resource.service&#x27;;
 import {LoggerService} from &#x27;../../logger/services/logger.service&#x27;;
 import {SnackBarService} from &#x27;../../snack-bar/services/snack-bar.service&#x27;;
@@ -318,6 +328,10 @@ export interface FilesState {
     error: boolean;
 }
 
+@Component({
+    selector: &#x27;ncc-abstract-filelist-field&#x27;,
+    template: &#x27;&#x27;
+})
 export abstract class AbstractFileListFieldComponent extends AbstractDataFieldComponent implements OnInit, AfterViewInit, OnDestroy {
 
     public uploadedFiles: Array&lt;string&gt;;
