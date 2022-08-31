@@ -93,7 +93,7 @@ class MyResources {
 
 
 @Component({
-    selector: 'ncc-test-wrapper',
+    selector: 'nc-test-wrapper',
     template: '<nc-create-case-button [newCaseCreationConfig]="newCaseCreationConfig"></nc-create-case-button>'
 })
 class TestWrapperComponent {
