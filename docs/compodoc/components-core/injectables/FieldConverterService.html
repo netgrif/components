@@ -1295,7 +1295,7 @@ export class FieldConverterService {
                 if (item.subType !&#x3D;&#x3D; undefined &amp;&amp; item.subType &#x3D;&#x3D;&#x3D; &#x27;area&#x27;) {
                     type &#x3D; TextFieldView.TEXTAREA;
                 }
-                if (item.view !&#x3D;&#x3D; undefined &amp;&amp; item.view.value !&#x3D;&#x3D; undefined &amp;&amp; item.view.value &#x3D;&#x3D;&#x3D; &#x27;editor&#x27;) {
+                if (item.view !&#x3D;&#x3D; undefined &amp;&amp; item.view.value !&#x3D;&#x3D; undefined &amp;&amp; (item.view.value &#x3D;&#x3D;&#x3D; &#x27;editor&#x27; || item.view.value &#x3D;&#x3D;&#x3D; TextFieldView.RICHTEXTAREA)) {
                     type &#x3D; TextFieldView.RICHTEXTAREA;
                     return new TextAreaField(item.stringId, item.name, item.value as string, item.behavior, item.placeholder,
                         item.description, item.layout, item.validations, type);
@@ -1307,7 +1307,7 @@ export class FieldConverterService {
                         item.description, item.layout, item.validations, type);
                 }
                 if (item.component !&#x3D;&#x3D; undefined &amp;&amp; item.component.name !&#x3D;&#x3D; undefined &amp;&amp; (item.component.name &#x3D;&#x3D;&#x3D; &#x27;editor&#x27; ||
-                    item.component.name &#x3D;&#x3D;&#x3D; &#x27;htmltextarea&#x27;)) {
+                    item.component.name &#x3D;&#x3D;&#x3D; TextFieldView.HTMLTEXTAREA || item.component.name &#x3D;&#x3D;&#x3D; TextFieldView.RICHTEXTAREA)) {
                     return new TextAreaField(item.stringId, item.name, this.resolveTextValue(item, item.value),
                         item.behavior, item.placeholder, item.description, item.layout, item.validations, type, item.component,
                         item.parentTaskId);

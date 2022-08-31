@@ -1,6 +1,6 @@
 <mat-toolbar color="primary">{{ data.title | translate}}</mat-toolbar>
-<div fxLayout="column" fxLayoutAlign="start stretch">
-    <mat-form-field class="select-field-margin">
+<div fxLayout="column" fxLayoutAlign="start stretch" class="netgrif-input">
+    <mat-form-field class="select-field-margin" appearance="outline">
         <input type="text" matInput required
                [placeholder]="'side-menu.option-selector.choose-one-option' | translate"
                [formControl]="selectorFormControl"
@@ -13,6 +13,6 @@
         </mat-autocomplete>
     </mat-form-field>
     <div fxLayout="row" fxLayoutAlign="center center">
-        <button mat-stroked-button (click)="submit()">{{'side-menu.option-selector.select' | translate}}</button>
+        <button mat-raised-button (click)="submit()">{{'side-menu.option-selector.select' | translate}}</button>
     </div>
 </div>

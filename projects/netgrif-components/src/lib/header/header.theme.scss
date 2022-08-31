@@ -1,8 +1,23 @@
-@import '~@angular/material/theming';
+@use '@angular/material' as mat;
 
 @mixin header-component($theme) {
     $primary: map-get($theme, primary);
     .active-header-item {
-        background: rgba(mat-color($primary), 0.3);
+        background: rgba(mat.get-color-from-palette($primary), 0.3);
+    }
+
+    .header-color {
+        background: mat.get-color-from-palette($primary, 500);
+        color: mat.get-contrast-color-from-palette($primary, 500);
+    }
+
+    .header-color-font {
+        color: mat.get-contrast-color-from-palette($primary, 500);
+    }
+
+    .netgrif-header-input {
+        .mat-input-element {
+            caret-color: mat.get-contrast-color-from-palette($primary, 500) !important;
+        }
     }
 }

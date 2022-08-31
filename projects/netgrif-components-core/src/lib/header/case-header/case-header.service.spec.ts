@@ -86,6 +86,7 @@ describe('CaseHeaderService', () => {
     it('set allowed nets', () => {
         service.setAllowedNets([{
             stringId: 'string',
+            uriNodeId: 'string',
             title: 'string',
             identifier: 'string',
             version: 'string',

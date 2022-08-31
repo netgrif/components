@@ -1,7 +1,7 @@
 <mat-toolbar color="primary">{{ 'side-menu.filter-selector.choose-filter' | translate}}</mat-toolbar>
 <div class="filter-selector-root side-menu-root">
-    <div class="input-margin">
-        <mat-form-field class="full-width-input">
+    <div class="input-margin netgrif-input">
+        <mat-form-field class="full-width-input" appearance="outline">
             <mat-label>{{'side-menu.filter-selector.search-filter' | translate}}</mat-label>
             <input matInput type="text" [formControl]="searchFormControl">
         </mat-form-field>
@@ -23,7 +23,7 @@
         </mat-selection-list>
     </div>
     <div fxLayout="row" fxLayoutAlign="end center">
-        <button mat-stroked-button color="primary" class="submit-button-padding"
+        <button mat-raised-button color="primary" class="submit-button-padding"
                 (click)="filterSelectionConfirmed()">{{ 'side-menu.filter-selector.select' | translate }}</button>
     </div>
 </div>

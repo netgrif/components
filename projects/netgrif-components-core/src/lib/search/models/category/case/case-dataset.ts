@@ -1,50 +1,47 @@
-import {OperatorService} from '../../../operator-service/operator.service';
-import {LoggerService} from '../../../../logger/services/logger.service';
-import {Operator} from '../../operator/operator';
-import {Query} from '../../query/query';
-import {OptionalDependencies} from '../../../category-factory/optional-dependencies';
-import {SearchInputType} from '../search-input-type';
-import {DatafieldMapKey} from '../../datafield-map-key';
-import {SearchAutocompleteOption} from '../search-autocomplete-option';
-import {BooleanOperator} from '../../boolean-operator';
-import {CaseProcess} from './case-process';
-import {EqualsDate} from '../../operator/equals-date';
-import {Substring} from '../../operator/substring';
-import {EqualsDateTime} from '../../operator/equals-date-time';
-import {Equals} from '../../operator/equals';
-import {BehaviorSubject, Observable, of, ReplaySubject, Subscription} from 'rxjs';
-import {debounceTime, map, startWith, switchMap} from 'rxjs/operators';
-import {hasContent} from '../../../../utility/pagination/page-has-content';
-import {Category} from '../category';
-import {NotEquals} from '../../operator/not-equals';
-import {MoreThan} from '../../operator/more-than';
-import {LessThan} from '../../operator/less-than';
-import {InRange} from '../../operator/in-range';
-import {IsNull} from '../../operator/is-null';
-import {Like} from '../../operator/like';
-import {NotEqualsDate} from '../../operator/not-equals-date';
-import {MoreThanDate} from '../../operator/more-than-date';
-import {LessThanDate} from '../../operator/less-than-date';
-import {InRangeDate} from '../../operator/in-range-date';
-import {MoreThanDateTime} from '../../operator/more-than-date-time';
-import {LessThanDateTime} from '../../operator/less-than-date-time';
-import {InRangeDateTime} from '../../operator/in-range-date-time';
-import {AutocompleteOptions} from '../autocomplete-options';
-import {ConfigurationInput} from '../../configuration-input';
-import {SearchIndex} from '../../search-index';
-import {Type} from '@angular/core';
-import {Categories} from '../categories';
-import {FormControl} from '@angular/forms';
-import moment, {Moment} from 'moment';
-import {CategoryMetadataConfiguration} from '../../persistance/generator-metadata';
-import {MoreThanEqual} from '../../operator/more-than-equal';
-import {LessThanEqual} from '../../operator/less-than-equal';
-import {MoreThanEqualDate} from '../../operator/more-than-equal-date';
-import {LessThanEqualDate} from '../../operator/less-than-equal-date';
-import {MoreThanEqualDateTime} from '../../operator/more-than-equal-date-time';
-import {LessThanEqualDateTime} from '../../operator/less-than-equal-date-time';
-import {FilterTextSegment} from '../../persistance/filter-text-segment';
-import {UserAutocomplete} from '../user-autocomplete';
+import { OperatorService } from '../../../operator-service/operator.service';
+import { LoggerService } from '../../../../logger/services/logger.service';
+import { Operator } from '../../operator/operator';
+import { Query } from '../../query/query';
+import { OptionalDependencies } from '../../../category-factory/optional-dependencies';
+import { SearchInputType } from '../search-input-type';
+import { DatafieldMapKey } from '../../datafield-map-key';
+import { SearchAutocompleteOption } from '../search-autocomplete-option';
+import { BooleanOperator } from '../../boolean-operator';
+import { CaseProcess } from './case-process';
+import { EqualsDate } from '../../operator/equals-date';
+import { Substring } from '../../operator/substring';
+import { EqualsDateTime } from '../../operator/equals-date-time';
+import { Equals } from '../../operator/equals';
+import { BehaviorSubject, Observable, of, ReplaySubject, Subscription } from 'rxjs';
+import { Category } from '../category';
+import { NotEquals } from '../../operator/not-equals';
+import { MoreThan } from '../../operator/more-than';
+import { LessThan } from '../../operator/less-than';
+import { InRange } from '../../operator/in-range';
+import { IsNull } from '../../operator/is-null';
+import { Like } from '../../operator/like';
+import { NotEqualsDate } from '../../operator/not-equals-date';
+import { MoreThanDate } from '../../operator/more-than-date';
+import { LessThanDate } from '../../operator/less-than-date';
+import { InRangeDate } from '../../operator/in-range-date';
+import { MoreThanDateTime } from '../../operator/more-than-date-time';
+import { LessThanDateTime } from '../../operator/less-than-date-time';
+import { InRangeDateTime } from '../../operator/in-range-date-time';
+import { AutocompleteOptions } from '../autocomplete-options';
+import { ConfigurationInput } from '../../configuration-input';
+import { SearchIndex } from '../../search-index';
+import { Categories } from '../categories';
+import { FormControl } from '@angular/forms';
+import moment, { Moment } from 'moment';
+import { CategoryMetadataConfiguration } from '../../persistance/generator-metadata';
+import { MoreThanEqual } from '../../operator/more-than-equal';
+import { LessThanEqual } from '../../operator/less-than-equal';
+import { MoreThanEqualDate } from '../../operator/more-than-equal-date';
+import { LessThanEqualDate } from '../../operator/less-than-equal-date';
+import { MoreThanEqualDateTime } from '../../operator/more-than-equal-date-time';
+import { LessThanEqualDateTime } from '../../operator/less-than-equal-date-time';
+import { FilterTextSegment } from '../../persistance/filter-text-segment';
+import { UserAutocomplete } from '../user-autocomplete';
 
 interface Datafield {
     netIdentifier: string;
@@ -264,6 +261,8 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
             case 'user':
             case 'userList':
                 return resolver.getIndex(datafield.fieldId, SearchIndex.USER_ID);
+            case 'i18n':
+                return resolver.getIndex(datafield.fieldId, SearchIndex.TEXT, this.isSelectedOperator(Equals) || this.isSelectedOperator(NotEquals) || this.isSelectedOperator(Substring))
             default:
                 return resolver.getIndex(datafield.fieldId, SearchIndex.FULLTEXT,
                     this.isSelectedOperator(Equals) || this.isSelectedOperator(NotEquals) || this.isSelectedOperator(Substring));

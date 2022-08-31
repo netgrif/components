@@ -7,6 +7,7 @@
            [placeholder]="enumerationField.placeholder"
            [formControl]="formControlRef"
            [matAutocomplete]="auto"
+           [required]="enumerationField.behavior.required"
            (keyup)="change()">
     <mat-spinner *ngIf="enumerationField.loading" matSuffix diameter="30"></mat-spinner>
     <mat-autocomplete [displayWith]="renderSelection" autoActiveFirstOption #auto="matAutocomplete">

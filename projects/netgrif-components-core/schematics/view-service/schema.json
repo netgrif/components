@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/schema",
-    "id": "SchematicsCreateViewService",
+    "$id": "SchematicsCreateViewService",
     "title": "Create View Service Schematic",
     "type": "object",
     "properties": {}

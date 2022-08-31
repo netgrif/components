@@ -3,6 +3,7 @@ import {FormControl} from '@angular/forms';
 import {SideMenuControl} from '../../models/side-menu-control';
 import {UserListInjectedData} from './model/user-list-injected-data';
 import {ProcessRole} from '../../../resources/interface/process-role';
+import {Component} from '@angular/core';
 
 /**
  * Is the main - parent component of the entire user assignment in the side menu.
@@ -10,6 +11,10 @@ import {ProcessRole} from '../../../resources/interface/process-role';
  * Holds logic link of the [UserAssignListComponent]{@link AbstractUserAssignListComponent}
  * along with searching, selecting, and then assigning to the user field.
  */
+@Component({
+    selector: 'ncc-abstract-user-assign',
+    template: ''
+})
 export abstract class AbstractUserAssignComponent {
     /**
      * Form control for user search value.

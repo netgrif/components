@@ -1,9 +1,13 @@
 import {NumberField, NumberFieldValidation} from './models/number-field';
 import {TranslateService} from '@ngx-translate/core';
-import {Input} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {WrappedBoolean} from '../data-field-template/models/wrapped-boolean';
 
+@Component({
+    selector: 'ncc-abstract-number-errors-field',
+    template: ''
+})
 export abstract class AbstractNumberErrorsComponent {
 
     @Input() showLargeLayout: WrappedBoolean;

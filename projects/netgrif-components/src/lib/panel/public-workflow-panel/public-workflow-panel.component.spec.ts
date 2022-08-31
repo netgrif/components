@@ -1,12 +1,23 @@
-import {waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { PublicWorkflowPanelComponent } from './public-workflow-panel.component';
+import {PublicWorkflowPanelComponent} from './public-workflow-panel.component';
 import {
     AuthenticationMethodService,
-    AuthenticationService, ConfigurationService, HeaderColumn, HeaderColumnType,
+    AuthenticationService,
+    ConfigurationService,
+    HeaderColumn,
+    HeaderColumnType,
     MaterialModule,
-    MockAuthenticationMethodService, MockAuthenticationService, MockUserResourceService, PetriNetReference, TestConfigurationService,
-    TranslateLibModule, UserResourceService, WorkflowMetaField, WorkflowViewService
+    OverflowService,
+    MockAuthenticationMethodService,
+    MockAuthenticationService,
+    MockUserResourceService,
+    PetriNetReference,
+    TestConfigurationService,
+    TranslateLibModule,
+    UserResourceService,
+    WorkflowMetaField,
+    WorkflowViewService
 } from '@netgrif/components-core';
 import {CommonModule} from '@angular/common';
 import {FlexModule} from '@angular/flex-layout';
@@ -16,10 +27,11 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {PanelComponent} from '../panel.component';
 import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
 import {of} from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('PublicWorkflowPanelComponent', () => {
-  let component: PublicWorkflowPanelComponent;
-  let fixture: ComponentFixture<PublicTestWrapperComponent>;
+    let component: PublicWorkflowPanelComponent;
+    let fixture: ComponentFixture<PublicTestWrapperComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -30,29 +42,31 @@ describe('PublicWorkflowPanelComponent', () => {
             BrowserAnimationsModule,
             DataFieldsComponentModule,
             TranslateLibModule,
-            HttpClientTestingModule
+            HttpClientTestingModule,
+            RouterTestingModule.withRoutes([])
         ],
         providers: [
             {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
             {provide: AuthenticationService, useClass: MockAuthenticationService},
             {provide: UserResourceService, useClass: MockUserResourceService},
             {provide: ConfigurationService, useClass: TestConfigurationService},
-            WorkflowViewService
+            WorkflowViewService,
+            OverflowService
         ],
       declarations: [ PublicWorkflowPanelComponent, PanelComponent, PublicTestWrapperComponent]
     })
     .compileComponents();
   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(PublicTestWrapperComponent);
-    component = fixture.debugElement.children[0].componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(PublicTestWrapperComponent);
+        component = fixture.debugElement.children[0].componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });
 
 @Component({
@@ -79,6 +93,7 @@ class PublicTestWrapperComponent {
         initials: '',
         stringId: '',
         title: '',
-        version: ''
+        version: '',
+        uriNodeId: ''
     };
 }

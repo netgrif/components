@@ -1,4 +1,7 @@
 <div>
+    <mat-label class="netgrif-label" *ngIf="!showLargeLayout.value">{{enumerationField.title}}
+        <nc-required-label *ngIf="enumerationField.behavior.required" [isIn]="true"></nc-required-label>
+        <br></mat-label>
     <div *ngFor="let option of enumerationField.choices; let i = index">
         <div class="enum-icon-item enum-icon-item-row" (click)="setEnumValue(option.key)" [ngClass]="{'enum-icon-item-active': isSelected(option.key)}">
             <mat-icon *ngIf="resolveIconType(option.key) === 'material'">{{resolveIconValue(option.key)}}</mat-icon>
@@ -9,4 +12,3 @@
         <mat-divider class="enum-icon-divider" *ngIf="i !== enumerationField.choices.length - 1 && resolveDivider(option.key)"></mat-divider>
     </div>
 </div>
-

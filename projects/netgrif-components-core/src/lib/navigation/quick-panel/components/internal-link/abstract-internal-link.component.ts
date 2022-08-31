@@ -1,14 +1,15 @@
-import {Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 
-export abstract class AbstractInternalLinkComponent implements OnInit {
+@Component({
+    selector: 'ncc-abstract-internal-link',
+    template: ''
+})
+export abstract class AbstractInternalLinkComponent {
 
     @Input() public link: string;
     @Input() public icon: string;
 
     constructor() {
-    }
-
-    ngOnInit(): void {
     }
 
 }

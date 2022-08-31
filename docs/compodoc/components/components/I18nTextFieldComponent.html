@@ -84,6 +84,10 @@
         <tbody>
 
 
+            <tr>
+                <td class="col-md-3">encapsulation</td>
+                <td class="col-md-9"><code>ViewEncapsulation.None</code></td>
+            </tr>
 
 
 
@@ -128,12 +132,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(translateService: TranslateService)</code>
+<code>constructor(languageIconsService: LanguageIconsService, translateService: TranslateService, domSanitizer: <a href="https://angular.io/api/platform-browser/DomSanitizer" target="_blank">DomSanitizer</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">projects/netgrif-components/src/lib/data-fields/i18n-field/i18n-text-field/i18n-text-field.component.ts:10</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">projects/netgrif-components/src/lib/data-fields/i18n-field/i18n-text-field/i18n-text-field.component.ts:29</a></div>
                             </td>
                         </tr>
 
@@ -151,10 +155,34 @@
                                         </thead>
                                         <tbody>
                                                 <tr>
+                                                        <td>languageIconsService</td>
+                                                  
+                                                        <td>
+                                                                    <code>LanguageIconsService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
                                                         <td>translateService</td>
                                                   
                                                         <td>
                                                                     <code>TranslateService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>domSanitizer</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/platform-browser/DomSanitizer" target="_blank" >DomSanitizer</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -181,18 +209,37 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component} from &#x27;@angular/core&#x27;;
-import {AbstractI18nTextFieldComponent} from &#x27;@netgrif/components-core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, ViewEncapsulation} from &#x27;@angular/core&#x27;;
+import {AbstractI18nTextFieldComponent, LanguageIconsService} from &#x27;@netgrif/components-core&#x27;;
 import {TranslateService} from &#x27;@ngx-translate/core&#x27;;
+import {DomSanitizer} from &#x27;@angular/platform-browser&#x27;;
+import {animate, state, style, transition, trigger} from &#x27;@angular/animations&#x27;;
 
 @Component({
     selector: &#x27;nc-i18n-text-field&#x27;,
     templateUrl: &#x27;./i18n-text-field.component.html&#x27;,
-    styleUrls: [&#x27;./i18n-text-field.component.scss&#x27;]
+    styleUrls: [&#x27;./i18n-text-field.component.scss&#x27;],
+    encapsulation: ViewEncapsulation.None,
+    animations: [
+        trigger(&#x27;languageWrapper&#x27;, [
+            state(&#x27;true&#x27;, style({
+                transform: &#x27;scaleY(1)&#x27;
+            })),
+            state(&#x27;false&#x27;, style({
+                transform: &#x27;scaleY(0)&#x27;
+            })),
+            transition(&#x27;true &#x3D;&gt; false&#x27;, [
+                animate(&#x27;0.1s&#x27;)
+            ]),
+            transition(&#x27;false &#x3D;&gt; true&#x27;, [
+                animate(&#x27;0.1s&#x27;)
+            ]),
+        ])
+    ]
 })
 export class I18nTextFieldComponent extends AbstractI18nTextFieldComponent {
-    constructor(translateService: TranslateService) {
-        super(translateService);
+    constructor(languageIconsService: LanguageIconsService, translateService: TranslateService, domSanitizer: DomSanitizer) {
+        super(languageIconsService, translateService, domSanitizer);
     }
 }
 </code></pre>
@@ -205,7 +252,7 @@ export class I18nTextFieldComponent extends AbstractI18nTextFieldComponent {
             &lt;mat-label *ngIf&#x3D;&quot;!showLargeLayout.value&quot;&gt;{{textI18nField.title}}&lt;/mat-label&gt;
             &lt;input matInput
                    [disabled]&#x3D;&quot;true&quot;
-                   [ngModel]&#x3D;&quot;getTranslation()&quot;
+                   [ngModel]&#x3D;&quot;currentValue[selectedLanguage]&quot;
                    [placeholder]&#x3D;&quot;textI18nField.placeholder&quot;
                    [required]&#x3D;&quot;textI18nField.behavior.required&quot;&gt;
             &lt;mat-hint&gt;{{textI18nField.description}}&lt;/mat-hint&gt;
@@ -215,14 +262,66 @@ export class I18nTextFieldComponent extends AbstractI18nTextFieldComponent {
         &lt;div class&#x3D;&quot;full-width&quot;
              [ngStyle]&#x3D;&quot;textPropertyEnabled(&#x27;fontSize&#x27;) &amp;&amp; {&#x27;font-size&#x27;: getTextFontSize()}&quot;&gt;
             &lt;span [ngStyle]&#x3D;&quot;textPropertyEnabled(&#x27;textColor&#x27;) &amp;&amp; {&#x27;color&#x27;: getTextColor()}&quot;&gt;
-                {{getTranslation()}}
+                {{currentValue[selectedLanguage]}}
             &lt;/span&gt;
         &lt;/div&gt;
     &lt;/ng-template&gt;
 &lt;/ng-template&gt;
 &lt;ng-template [ngIf]&#x3D;&quot;!textI18nField.disabled&quot;&gt;
     &lt;div class&#x3D;&quot;full-width&quot;&gt;
-        &lt;!-- TODO: add editable view for text component --&gt;
+        &lt;div #i18nLabel class&#x3D;&quot;i18n-label&quot; [ngClass]&#x3D;&quot;{&#x27;invalid-form-label&#x27;: textI18nField.isInvalid(formControlRef)}&quot;&gt;
+            {{textI18nField.title}}
+            &lt;nc-required-label *ngIf&#x3D;&quot;textI18nField.behavior.required&quot; [isIn]&#x3D;&quot;!textI18nField.disabled&quot;&gt;&lt;/nc-required-label&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;form-input button-icon-input full-width&quot; fxLayout&#x3D;&quot;row&quot; fxLayoutAlign&#x3D;&quot;start center&quot;
+             [ngClass]&#x3D;&quot;{&#x27;invalid-form-input&#x27;: textI18nField.isInvalid(formControlRef)}&quot;
+             [ngStyle]&#x3D;&quot;{
+                    &#x27;-webkit-clip-path&#x27;: getCutProperty(i18nLabel),
+                    &#x27;clip-path&#x27;: getCutProperty(i18nLabel)
+            }&quot;&gt;
+            &lt;button mat-icon-button color&#x3D;&quot;accent&quot; [matTooltip]&#x3D;&quot;&#x27;dataField.i18n.languageSelect&#x27; | translate&quot;
+                    class&#x3D;&quot;language-selector-button&quot; (click)&#x3D;&quot;languageDropdown.open()&quot;&gt;
+                &lt;div class&#x3D;&quot;language-svg-wrapper&quot;
+                     [innerHTML]&#x3D;&quot;getLanguageIcons()[this.selectedLanguage].svgIcon&quot;&gt;&lt;/div&gt;
+            &lt;/button&gt;
+            &lt;mat-select #languageDropdown class&#x3D;&quot;language-select&quot;&gt;
+                &lt;mat-option *ngFor&#x3D;&quot;let languageKey of languageKeys&quot;
+                            [value]&#x3D;&quot;languageKey&quot; (click)&#x3D;&quot;selectLanguage(languageKey)&quot;&gt;
+                    &lt;div fxLayout&#x3D;&quot;row&quot; fxLayoutAlign&#x3D;&quot; center&quot;&gt;
+                        &lt;div [innerHTML]&#x3D;&quot;getLanguageIcons()[languageKey].svgIcon&quot; class&#x3D;&quot;language-option-icon&quot;&gt;&lt;/div&gt;
+                        &lt;span class&#x3D;&quot;language-option-value&quot;&gt;{{getLanguageIcons()[languageKey].languageName}}&lt;/span&gt;
+                    &lt;/div&gt;
+                &lt;/mat-option&gt;
+            &lt;/mat-select&gt;
+            &lt;input class&#x3D;&quot;selected-language-value&quot;
+                   type&#x3D;&quot;text&quot;
+                   [placeholder]&#x3D;&quot;textI18nField.placeholder&quot;
+                   [required]&#x3D;&quot;textI18nField.behavior.required&quot;
+                   [(ngModel)]&#x3D;&quot;currentValue[selectedLanguage]&quot;
+                   (blur)&#x3D;&quot;setSelectedValue()&quot;&gt;
+            &lt;button mat-icon-button (click)&#x3D;&quot;toggleFilled()&quot;
+                    [matTooltip]&#x3D;&quot;(filledShown ? &#x27;dataField.i18n.hideTranslations&#x27; : &#x27;dataField.i18n.showTranslations&#x27;) | translate&quot;&gt;
+                &lt;mat-icon color&#x3D;&quot;warn&quot;&gt;{{filledShown ? &#x27;arrow_drop_up&#x27; : &#x27;arrow_drop_down&#x27;}}&lt;/mat-icon&gt;
+            &lt;/button&gt;
+        &lt;/div&gt;
+
+        &lt;div fxLayout&#x3D;&quot;column&quot; class&#x3D;&quot;filled-languages-wrapper&quot;
+             [@languageWrapper]&#x3D;&quot;filledShown&quot;
+             (@languageWrapper.start)&#x3D;&quot;$event.element.style.display &#x3D; &#x27;block&#x27;&quot;
+             (@languageWrapper.done)&#x3D;&quot;$event.element.style.display &#x3D; ($event.toState ? &#x27;block&#x27; : &#x27;none&#x27;)&quot;&gt;
+            &lt;div *ngFor&#x3D;&quot;let filledKey of filledKeys&quot; fxLayout&#x3D;&quot;row&quot; fxLayoutAlign&#x3D;&quot; center&quot; class&#x3D;&quot;filled-language-row&quot;&gt;
+                &lt;div class&#x3D;&quot;filled-language-icon&quot; [innerHTML]&#x3D;&quot;getLanguageIcons()[filledKey].svgIcon&quot;&gt;&lt;/div&gt;
+                &lt;span class&#x3D;&quot;filled-language-value&quot;&gt;{{currentValue[filledKey]}}&lt;/span&gt;
+                &lt;button class&#x3D;&quot;filled-language-button&quot; *ngIf&#x3D;&quot;!isDefaultValue(filledKey)&quot; mat-icon-button
+                        (click)&#x3D;&quot;removeTranslation(filledKey)&quot; [matTooltip]&#x3D;&quot;&#x27;dataField.i18n.deleteTranslation&#x27; | translate&quot;&gt;
+                    &lt;mat-icon color&#x3D;&quot;warn&quot;&gt;close&lt;/mat-icon&gt;
+                &lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;mat-hint class&#x3D;&quot;i18n-hint-error&quot;
+                  *ngIf&#x3D;&quot;!textI18nField.isInvalid(formControlRef)&quot;&gt;{{textI18nField.description}}&lt;/mat-hint&gt;
+        &lt;mat-error class&#x3D;&quot;i18n-hint-error&quot;
+                   *ngIf&#x3D;&quot;textI18nField.isInvalid(formControlRef)&quot;&gt;{{getErrorMessage()}}&lt;/mat-error&gt;
     &lt;/div&gt;
 &lt;/ng-template&gt;
 </code></pre>
@@ -236,6 +335,124 @@ export class I18nTextFieldComponent extends AbstractI18nTextFieldComponent {
     display: block;
     margin: 0 auto;
     width: 100%;
+}
+
+.selected-language-value {
+    outline: none;
+    padding: 9px 0;
+    width: calc(100% - 56px);
+    font-size: 14px;
+    border: 0;
+    margin-left: 8px;
+    background: transparent;
+}
+
+.form-input {
+    background: transparent;
+    color: #333333;
+    outline: none;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    text-align: left;
+    font-size: 14px;
+    line-height: 15.75px;
+    border-radius: 6px;
+    min-width: 5px;
+    box-sizing: border-box;
+    height: 52px;
+}
+
+.form-input:hover {
+    border: solid 2px black;
+}
+
+.button-icon-input {
+    padding: 2px;
+}
+
+.button-icon-input:hover {
+    padding: 1px !important;
+}
+
+.i18n-hint-error {
+    padding: 0 1em;
+    font-size: 75%;
+}
+
+.language-svg-wrapper {
+    height: 20px;
+    line-height: normal;
+}
+
+.language-selector-button {
+    width: auto;
+    margin-left: 8px;
+    margin-right: 4px;
+}
+
+.language-selector-wrapper {
+    margin: 0 8px;
+}
+
+.language-svg-icon {
+    border: solid 1px black;
+}
+
+.filled-language-row {
+    min-height: 28px;
+    padding: 4px 0;
+}
+
+.filled-language-row:not(:last-child) {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.filled-languages-wrapper {
+    border-radius: 0 0 6px 6px;
+    border-left: 1px solid rgba(0, 0, 0, 0.12);
+    border-right: 1px solid rgba(0, 0, 0, 0.12);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    margin-top: -5px;
+    padding-top: 5px;
+    transform-origin: top;
+}
+
+.filled-language-icon {
+    margin: 0 10px;
+    height: 20px;
+}
+
+.filled-language-value {
+    margin-left: 20px;
+}
+
+.filled-language-button {
+    margin-left: auto;
+    height: 24px;
+    width: 24px;
+    line-height: normal;
+    margin-right: 10px;
+}
+
+.language-select {
+    width: 18px !important;
+}
+
+.language-option-icon {
+    margin-left: 0;
+}
+
+.language-option-value {
+    margin-left: 16px;
+}
+
+.i18n-label {
+    transform: translate(0.4em,-0.4em) scale(.75);
+    transform-origin: left;
+    color: rgba(0, 0, 0, 0.6);
+    background: transparent;
+    width: fit-content;
+    padding: 0 0.5em;
+    height: 0;
 }
 </code></pre>
     </div>
@@ -265,8 +482,8 @@ export class I18nTextFieldComponent extends AbstractI18nTextFieldComponent {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><ng-template [ngIf]="textI18nField.disabled">    <ng-template [ngIf]="!isPlainText()">        <mat-form-field [appearance]="textI18nField.materialAppearance" class="full-width" color="primary">            <mat-label *ngIf="!showLargeLayout.value">{{textI18nField.title}}</mat-label>            <input matInput                   [disabled]="true"                   [ngModel]="getTranslation()"                   [placeholder]="textI18nField.placeholder"                   [required]="textI18nField.behavior.required">            <mat-hint>{{textI18nField.description}}</mat-hint>        </mat-form-field>    </ng-template>    <ng-template [ngIf]="isPlainText()">        <div class="full-width"             [ngStyle]="textPropertyEnabled(\'fontSize\') && {\'font-size\': getTextFontSize()}">            <span [ngStyle]="textPropertyEnabled(\'textColor\') && {\'color\': getTextColor()}">                {{getTranslation()}}            </span>        </div>    </ng-template></ng-template><ng-template [ngIf]="!textI18nField.disabled">    <div class="full-width">        <!-- TODO: add editable view for text component -->    </div></ng-template></div>'
-    var COMPONENTS = [{'name': 'AddChildNodeComponent', 'selector': 'nc-add-child-node'},{'name': 'AdvancedSearchComponent', 'selector': 'nc-advanced-search'},{'name': 'AuthenticationOverlayComponent', 'selector': 'nc-authentication-overlay'},{'name': 'BarchartCardComponent', 'selector': 'nc-barchart-card'},{'name': 'BooleanFieldComponent', 'selector': 'nc-boolean-field'},{'name': 'ButtonFieldComponent', 'selector': 'nc-button-field'},{'name': 'CaseListComponent', 'selector': 'nc-case-list'},{'name': 'CasePanelComponent', 'selector': 'nc-case-panel'},{'name': 'CaseSearchComponent', 'selector': 'nc-case-search'},{'name': 'CountCardComponent', 'selector': 'nc-count-card'},{'name': 'DashboardContentComponent', 'selector': 'nc-dashboard-content'},{'name': 'DataFieldTemplateComponent', 'selector': 'nc-data-field-template'},{'name': 'DateFieldComponent', 'selector': 'nc-date-field'},{'name': 'DateTimeFieldComponent', 'selector': 'nc-date-time-field'},{'name': 'DefaultSimpleTaskViewComponent', 'selector': 'nc-default-simple-task-view'},{'name': 'DefaultTabbedCaseViewComponent', 'selector': 'nc-default-tabbed-case-view'},{'name': 'DefaultTabbedTaskViewComponent', 'selector': 'nc-default-tabbed-task-view'},{'name': 'DefaultTabViewComponent', 'selector': 'nc-default-tab-view'},{'name': 'EditModeComponent', 'selector': 'nc-edit-mode'},{'name': 'EmailSubmissionFormComponent', 'selector': 'nc-email-submission-form'},{'name': 'EnumerationAutocompleteDynamicFieldComponent', 'selector': 'nc-enumeration-autocomplete-dynamic-field'},{'name': 'EnumerationAutocompleteSelectFieldComponent', 'selector': 'nc-enumeration-autocomplete-select-field'},{'name': 'EnumerationFieldComponent', 'selector': 'nc-enumeration-field'},{'name': 'EnumerationIconFieldComponent', 'selector': 'nc-enumeration-icon-field'},{'name': 'EnumerationListFieldComponent', 'selector': 'nc-enumeration-list-field'},{'name': 'EnumerationSelectFieldComponent', 'selector': 'nc-enumeration-select-field'},{'name': 'EnumerationStepperFieldComponent', 'selector': 'nc-enumeration-stepper-field'},{'name': 'FieldComponentResolverComponent', 'selector': 'nc-field-component-resolver'},{'name': 'FileFieldComponent', 'selector': 'nc-file-field'},{'name': 'FileListFieldComponent', 'selector': 'nc-file-list-field'},{'name': 'FilterFieldComponent', 'selector': 'nc-filter-field'},{'name': 'FilterFieldContentComponent', 'selector': 'nc-filter-field-content'},{'name': 'FilterSelectorComponent', 'selector': 'nc-filter-selector'},{'name': 'ForgottenPasswordFormComponent', 'selector': 'nc-forgotten-password-form'},{'name': 'FulltextSearchComponent', 'selector': 'nc-fulltext-search'},{'name': 'GroupNavigationComponentResolverComponent', 'selector': 'nc-group-navigation-component-resolver'},{'name': 'HeaderComponent', 'selector': 'nc-header'},{'name': 'HtmlTextareaFieldComponent', 'selector': 'nc-html-textarea-field'},{'name': 'I18nDividerFieldComponent', 'selector': 'nc-i18n-divider-field'},{'name': 'I18nFieldComponent', 'selector': 'nc-i18n-field'},{'name': 'I18nTextFieldComponent', 'selector': 'nc-i18n-text-field'},{'name': 'IframeCardComponent', 'selector': 'nc-iframe-card'},{'name': 'ImmediateFilterTextComponent', 'selector': 'nc-immediate-filter-text'},{'name': 'ImmediateFilterTextContentComponent', 'selector': 'nc-immediate-filter-text-content'},{'name': 'ImportNetComponent', 'selector': 'nc-import-net'},{'name': 'InternalLinkComponent', 'selector': 'nc-internal-link'},{'name': 'LanguageSelectorComponent', 'selector': 'nc-language-selector'},{'name': 'LegalNoticeComponent', 'selector': 'nc-legal-notice'},{'name': 'LinearGaugeCardComponent', 'selector': 'nc-linear-gauge-card'},{'name': 'LineChartCardComponent', 'selector': 'nc-line-chart-card'},{'name': 'LoadFilterComponent', 'selector': 'nc-load-filter'},{'name': 'LoadingModeComponent', 'selector': 'nc-loading-mode'},{'name': 'LoginFormComponent', 'selector': 'nc-login-form'},{'name': 'LogoutShortcutComponent', 'selector': 'nc-logout-shortcut'},{'name': 'MultichoiceFieldComponent', 'selector': 'nc-multichoice-field'},{'name': 'MultichoiceListFieldComponent', 'selector': 'nc-multichoice-list-field'},{'name': 'MultichoiceSelectFieldComponent', 'selector': 'nc-multichoice-select-field'},{'name': 'NavigationDrawerComponent', 'selector': 'nc-navigation-drawer'},{'name': 'NavigationRailComponent', 'selector': 'nc-navigation-rail'},{'name': 'NavigationTreeComponent', 'selector': 'nc-navigation-tree'},{'name': 'NewCaseComponent', 'selector': 'nc-new-case'},{'name': 'NumberCurrencyFieldComponent', 'selector': 'nc-number-currency-field'},{'name': 'NumberDefaultFieldComponent', 'selector': 'nc-number-default-field'},{'name': 'NumberFieldComponent', 'selector': 'nc-number-field'},{'name': 'OptionSelectorComponent', 'selector': 'nc-option-selector'},{'name': 'PanelComponent', 'selector': 'nc-app-panel'},{'name': 'PasswordTextFieldComponent', 'selector': 'nc-password-text-field'},{'name': 'PieChartCardComponent', 'selector': 'nc-pie-chart-card'},{'name': 'PortalCardComponent', 'selector': 'nc-portal-card'},{'name': 'PreviewDialogComponent', 'selector': 'nc-preview-dialog'},{'name': 'ProfileComponent', 'selector': 'nc-user-profile'},{'name': 'PublicWorkflowPanelComponent', 'selector': 'nc-public-workflow-panel'},{'name': 'QuickPanelComponent', 'selector': 'nc-quick-panel'},{'name': 'RedirectComponent', 'selector': 'nc-redirect'},{'name': 'RegistrationFormComponent', 'selector': 'nc-registration-form'},{'name': 'RemoveNodeComponent', 'selector': 'nc-remove-node'},{'name': 'RequiredLabelComponent', 'selector': 'nc-required-label'},{'name': 'RichTextareaFieldComponent', 'selector': 'nc-rich-textarea-field'},{'name': 'RoleAssignmentComponent', 'selector': 'nc-role-assignment'},{'name': 'SaveFilterComponent', 'selector': 'nc-save-filter'},{'name': 'SearchClauseComponent', 'selector': 'nc-search-clause'},{'name': 'SearchComponent', 'selector': 'nc-search'},{'name': 'SearchConfigurationInputComponent', 'selector': 'nc-search-configuration-input'},{'name': 'SearchModeComponent', 'selector': 'nc-search-mode'},{'name': 'SearchOperandInputComponent', 'selector': 'nc-search-operand-input'},{'name': 'SearchPredicateComponent', 'selector': 'nc-search-predicate'},{'name': 'SideMenuContainerComponent', 'selector': 'nc-side-menu-container'},{'name': 'SimpleTextFieldComponent', 'selector': 'nc-simple-text-field'},{'name': 'SortModeComponent', 'selector': 'nc-sort-mode'},{'name': 'TabViewComponent', 'selector': 'nc-tab-view'},{'name': 'TaskContentComponent', 'selector': 'nc-task-content'},{'name': 'TaskListComponent', 'selector': 'nc-task-list'},{'name': 'TaskPanelComponent', 'selector': 'nc-task-panel'},{'name': 'TaskSearchComponent', 'selector': 'nc-task-search'},{'name': 'TextareaFieldComponent', 'selector': 'nc-textarea-field'},{'name': 'TextFieldComponent', 'selector': 'nc-text-field'},{'name': 'ToolbarComponent', 'selector': 'nc-toolbar'},{'name': 'TreeComponent', 'selector': 'nc-tree-component'},{'name': 'TreeTaskContentComponent', 'selector': 'nc-tree-task-content'},{'name': 'UserAssignComponent', 'selector': 'nc-user-assign'},{'name': 'UserAssignItemComponent', 'selector': 'nc-user-assign-item'},{'name': 'UserAssignListComponent', 'selector': 'nc-user-assign-list'},{'name': 'UserCardComponent', 'selector': 'nc-user-card'},{'name': 'UserFieldComponent', 'selector': 'nc-user-field'},{'name': 'UserInviteComponent', 'selector': 'nc-user-invite'},{'name': 'WorkflowPanelComponent', 'selector': 'nc-workflow-panel'},{'name': 'WorkflowViewComponent', 'selector': 'nc-workflow-view'}];
+        var COMPONENT_TEMPLATE = '<div><ng-template [ngIf]="textI18nField.disabled">    <ng-template [ngIf]="!isPlainText()">        <mat-form-field [appearance]="textI18nField.materialAppearance" class="full-width" color="primary">            <mat-label *ngIf="!showLargeLayout.value">{{textI18nField.title}}</mat-label>            <input matInput                   [disabled]="true"                   [ngModel]="currentValue[selectedLanguage]"                   [placeholder]="textI18nField.placeholder"                   [required]="textI18nField.behavior.required">            <mat-hint>{{textI18nField.description}}</mat-hint>        </mat-form-field>    </ng-template>    <ng-template [ngIf]="isPlainText()">        <div class="full-width"             [ngStyle]="textPropertyEnabled(\'fontSize\') && {\'font-size\': getTextFontSize()}">            <span [ngStyle]="textPropertyEnabled(\'textColor\') && {\'color\': getTextColor()}">                {{currentValue[selectedLanguage]}}            </span>        </div>    </ng-template></ng-template><ng-template [ngIf]="!textI18nField.disabled">    <div class="full-width">        <div #i18nLabel class="i18n-label" [ngClass]="{\'invalid-form-label\': textI18nField.isInvalid(formControlRef)}">            {{textI18nField.title}}            <nc-required-label *ngIf="textI18nField.behavior.required" [isIn]="!textI18nField.disabled"></nc-required-label>        </div>        <div class="form-input button-icon-input full-width" fxLayout="row" fxLayoutAlign="start center"             [ngClass]="{\'invalid-form-input\': textI18nField.isInvalid(formControlRef)}"             [ngStyle]="{                    \'-webkit-clip-path\': getCutProperty(i18nLabel),                    \'clip-path\': getCutProperty(i18nLabel)            }">            <button mat-icon-button color="accent" [matTooltip]="\'dataField.i18n.languageSelect\' | translate"                    class="language-selector-button" (click)="languageDropdown.open()">                <div class="language-svg-wrapper"                     [innerHTML]="getLanguageIcons()[this.selectedLanguage].svgIcon"></div>            </button>            <mat-select #languageDropdown class="language-select">                <mat-option *ngFor="let languageKey of languageKeys"                            [value]="languageKey" (click)="selectLanguage(languageKey)">                    <div fxLayout="row" fxLayoutAlign=" center">                        <div [innerHTML]="getLanguageIcons()[languageKey].svgIcon" class="language-option-icon"></div>                        <span class="language-option-value">{{getLanguageIcons()[languageKey].languageName}}</span>                    </div>                </mat-option>            </mat-select>            <input class="selected-language-value"                   type="text"                   [placeholder]="textI18nField.placeholder"                   [required]="textI18nField.behavior.required"                   [(ngModel)]="currentValue[selectedLanguage]"                   (blur)="setSelectedValue()">            <button mat-icon-button (click)="toggleFilled()"                    [matTooltip]="(filledShown ? \'dataField.i18n.hideTranslations\' : \'dataField.i18n.showTranslations\') | translate">                <mat-icon color="warn">{{filledShown ? \'arrow_drop_up\' : \'arrow_drop_down\'}}</mat-icon>            </button>        </div>        <div fxLayout="column" class="filled-languages-wrapper"             [@languageWrapper]="filledShown"             (@languageWrapper.start)="$event.element.style.display = \'block\'"             (@languageWrapper.done)="$event.element.style.display = ($event.toState ? \'block\' : \'none\')">            <div *ngFor="let filledKey of filledKeys" fxLayout="row" fxLayoutAlign=" center" class="filled-language-row">                <div class="filled-language-icon" [innerHTML]="getLanguageIcons()[filledKey].svgIcon"></div>                <span class="filled-language-value">{{currentValue[filledKey]}}</span>                <button class="filled-language-button" *ngIf="!isDefaultValue(filledKey)" mat-icon-button                        (click)="removeTranslation(filledKey)" [matTooltip]="\'dataField.i18n.deleteTranslation\' | translate">                    <mat-icon color="warn">close</mat-icon>                </button>            </div>        </div>        <mat-hint class="i18n-hint-error"                  *ngIf="!textI18nField.isInvalid(formControlRef)">{{textI18nField.description}}</mat-hint>        <mat-error class="i18n-hint-error"                   *ngIf="textI18nField.isInvalid(formControlRef)">{{getErrorMessage()}}</mat-error>    </div></ng-template></div>'
+    var COMPONENTS = [{'name': 'AddChildNodeComponent', 'selector': 'nc-add-child-node'},{'name': 'AdvancedSearchComponent', 'selector': 'nc-advanced-search'},{'name': 'AuthenticationOverlayComponent', 'selector': 'nc-authentication-overlay'},{'name': 'BarchartCardComponent', 'selector': 'nc-barchart-card'},{'name': 'BooleanFieldComponent', 'selector': 'nc-boolean-field'},{'name': 'ButtonFieldComponent', 'selector': 'nc-button-field'},{'name': 'CaseListComponent', 'selector': 'nc-case-list'},{'name': 'CaseListPaginatorComponent', 'selector': 'nc-case-list-paginator'},{'name': 'CasePanelComponent', 'selector': 'nc-case-panel'},{'name': 'CaseSearchComponent', 'selector': 'nc-case-search'},{'name': 'CountCardComponent', 'selector': 'nc-count-card'},{'name': 'DashboardContentComponent', 'selector': 'nc-dashboard-content'},{'name': 'DataFieldTemplateComponent', 'selector': 'nc-data-field-template'},{'name': 'DateFieldComponent', 'selector': 'nc-date-field'},{'name': 'DateTimeFieldComponent', 'selector': 'nc-date-time-field'},{'name': 'DefaultSimpleTaskViewComponent', 'selector': 'nc-default-simple-task-view'},{'name': 'DefaultTabbedCaseViewComponent', 'selector': 'nc-default-tabbed-case-view'},{'name': 'DefaultTabbedTaskViewComponent', 'selector': 'nc-default-tabbed-task-view'},{'name': 'DefaultTabViewComponent', 'selector': 'nc-default-tab-view'},{'name': 'EasymdeWrapperComponent', 'selector': 'nc-easymde-wrapper'},{'name': 'EditModeComponent', 'selector': 'nc-edit-mode'},{'name': 'EmailSubmissionFormComponent', 'selector': 'nc-email-submission-form'},{'name': 'EnumerationAutocompleteDynamicFieldComponent', 'selector': 'nc-enumeration-autocomplete-dynamic-field'},{'name': 'EnumerationAutocompleteSelectFieldComponent', 'selector': 'nc-enumeration-autocomplete-select-field'},{'name': 'EnumerationFieldComponent', 'selector': 'nc-enumeration-field'},{'name': 'EnumerationIconFieldComponent', 'selector': 'nc-enumeration-icon-field'},{'name': 'EnumerationListFieldComponent', 'selector': 'nc-enumeration-list-field'},{'name': 'EnumerationSelectFieldComponent', 'selector': 'nc-enumeration-select-field'},{'name': 'EnumerationStepperFieldComponent', 'selector': 'nc-enumeration-stepper-field'},{'name': 'FieldComponentResolverComponent', 'selector': 'nc-field-component-resolver'},{'name': 'FileFieldComponent', 'selector': 'nc-file-field'},{'name': 'FileListFieldComponent', 'selector': 'nc-file-list-field'},{'name': 'FilterFieldComponent', 'selector': 'nc-filter-field'},{'name': 'FilterFieldContentComponent', 'selector': 'nc-filter-field-content'},{'name': 'FilterSelectorComponent', 'selector': 'nc-filter-selector'},{'name': 'ForgottenPasswordFormComponent', 'selector': 'nc-forgotten-password-form'},{'name': 'FulltextSearchComponent', 'selector': 'nc-fulltext-search'},{'name': 'GroupNavigationComponentResolverComponent', 'selector': 'nc-group-navigation-component-resolver'},{'name': 'HeaderComponent', 'selector': 'nc-header'},{'name': 'HtmlTextareaFieldComponent', 'selector': 'nc-html-textarea-field'},{'name': 'I18nDividerFieldComponent', 'selector': 'nc-i18n-divider-field'},{'name': 'I18nFieldComponent', 'selector': 'nc-i18n-field'},{'name': 'I18nTextFieldComponent', 'selector': 'nc-i18n-text-field'},{'name': 'IframeCardComponent', 'selector': 'nc-iframe-card'},{'name': 'ImmediateFilterTextComponent', 'selector': 'nc-immediate-filter-text'},{'name': 'ImmediateFilterTextContentComponent', 'selector': 'nc-immediate-filter-text-content'},{'name': 'ImportNetComponent', 'selector': 'nc-import-net'},{'name': 'InternalLinkComponent', 'selector': 'nc-internal-link'},{'name': 'LanguageSelectorComponent', 'selector': 'nc-language-selector'},{'name': 'LdapGroupRoleAssignmentComponent', 'selector': 'nc-ldap-group-role-assignment'},{'name': 'LegalNoticeComponent', 'selector': 'nc-legal-notice'},{'name': 'LinearGaugeCardComponent', 'selector': 'nc-linear-gauge-card'},{'name': 'LineChartCardComponent', 'selector': 'nc-line-chart-card'},{'name': 'LoadFilterComponent', 'selector': 'nc-load-filter'},{'name': 'LoadingModeComponent', 'selector': 'nc-loading-mode'},{'name': 'LoginFormComponent', 'selector': 'nc-login-form'},{'name': 'LogoutShortcutComponent', 'selector': 'nc-logout-shortcut'},{'name': 'MultichoiceFieldComponent', 'selector': 'nc-multichoice-field'},{'name': 'MultichoiceListFieldComponent', 'selector': 'nc-multichoice-list-field'},{'name': 'MultichoiceSelectFieldComponent', 'selector': 'nc-multichoice-select-field'},{'name': 'NavigationDrawerComponent', 'selector': 'nc-navigation-drawer'},{'name': 'NavigationRailComponent', 'selector': 'nc-navigation-rail'},{'name': 'NavigationTreeComponent', 'selector': 'nc-navigation-tree'},{'name': 'NewCaseComponent', 'selector': 'nc-new-case'},{'name': 'NumberCurrencyFieldComponent', 'selector': 'nc-number-currency-field'},{'name': 'NumberDefaultFieldComponent', 'selector': 'nc-number-default-field'},{'name': 'NumberFieldComponent', 'selector': 'nc-number-field'},{'name': 'OptionSelectorComponent', 'selector': 'nc-option-selector'},{'name': 'PanelComponent', 'selector': 'nc-app-panel'},{'name': 'PanelItemComponent', 'selector': 'nc-panel-item'},{'name': 'PasswordTextFieldComponent', 'selector': 'nc-password-text-field'},{'name': 'PieChartCardComponent', 'selector': 'nc-pie-chart-card'},{'name': 'PortalCardComponent', 'selector': 'nc-portal-card'},{'name': 'PreviewDialogComponent', 'selector': 'nc-preview-dialog'},{'name': 'ProfileComponent', 'selector': 'nc-user-profile'},{'name': 'PublicWorkflowPanelComponent', 'selector': 'nc-public-workflow-panel'},{'name': 'QuickPanelComponent', 'selector': 'nc-quick-panel'},{'name': 'RedirectComponent', 'selector': 'nc-redirect'},{'name': 'RegistrationFormComponent', 'selector': 'nc-registration-form'},{'name': 'RemoveNodeComponent', 'selector': 'nc-remove-node'},{'name': 'RequiredLabelComponent', 'selector': 'nc-required-label'},{'name': 'RichTextareaFieldComponent', 'selector': 'nc-rich-textarea-field'},{'name': 'RoleAssignmentComponent', 'selector': 'nc-role-assignment'},{'name': 'SaveFilterComponent', 'selector': 'nc-save-filter'},{'name': 'SearchClauseComponent', 'selector': 'nc-search-clause'},{'name': 'SearchComponent', 'selector': 'nc-search'},{'name': 'SearchConfigurationInputComponent', 'selector': 'nc-search-configuration-input'},{'name': 'SearchModeComponent', 'selector': 'nc-search-mode'},{'name': 'SearchOperandInputComponent', 'selector': 'nc-search-operand-input'},{'name': 'SearchPredicateComponent', 'selector': 'nc-search-predicate'},{'name': 'SideMenuContainerComponent', 'selector': 'nc-side-menu-container'},{'name': 'SimpleTextFieldComponent', 'selector': 'nc-simple-text-field'},{'name': 'SortModeComponent', 'selector': 'nc-sort-mode'},{'name': 'TabViewComponent', 'selector': 'nc-tab-view'},{'name': 'TaskContentComponent', 'selector': 'nc-task-content'},{'name': 'TaskListComponent', 'selector': 'nc-task-list'},{'name': 'TaskListPaginationComponent', 'selector': 'nc-task-list-pagination'},{'name': 'TaskPanelComponent', 'selector': 'nc-task-panel'},{'name': 'TaskSearchComponent', 'selector': 'nc-task-search'},{'name': 'TextareaFieldComponent', 'selector': 'nc-textarea-field'},{'name': 'TextFieldComponent', 'selector': 'nc-text-field'},{'name': 'ToolbarComponent', 'selector': 'nc-toolbar'},{'name': 'TreeComponent', 'selector': 'nc-tree-component'},{'name': 'TreeTaskContentComponent', 'selector': 'nc-tree-task-content'},{'name': 'UserAssignComponent', 'selector': 'nc-user-assign'},{'name': 'UserAssignItemComponent', 'selector': 'nc-user-assign-item'},{'name': 'UserAssignListComponent', 'selector': 'nc-user-assign-list'},{'name': 'UserCardComponent', 'selector': 'nc-user-card'},{'name': 'UserFieldComponent', 'selector': 'nc-user-field'},{'name': 'UserInviteComponent', 'selector': 'nc-user-invite'},{'name': 'WorkflowPanelComponent', 'selector': 'nc-workflow-panel'},{'name': 'WorkflowViewComponent', 'selector': 'nc-workflow-view'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'I18nTextFieldComponent'};
 </script>

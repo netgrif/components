@@ -51,7 +51,7 @@ describe('AbstractRemoveNodeComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-remove',
+    selector: 'ncc-test-remove',
     template: ''
 })
 class TestRemoveComponent extends AbstractRemoveNodeComponent {
@@ -61,8 +61,8 @@ class TestRemoveComponent extends AbstractRemoveNodeComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-remove [node]="node"></nae-test-remove>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-remove [node]="node"></ncc-test-remove>'
 })
 class TestComponent {
     node = new CaseTreeNode(undefined, undefined);

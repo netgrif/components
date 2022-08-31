@@ -150,12 +150,10 @@
                                 <a href="#addNewElementaryPredicate" >addNewElementaryPredicate</a>
                             </li>
                             <li>
-                                <a href="#ngOnDestroy" >ngOnDestroy</a>
-                            </li>
-                            <li>
                                 <a href="#removePredicate" >removePredicate</a>
                             </li>
                             <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#show" >show</a>
                             </li>
                             <li>
@@ -358,7 +356,7 @@
                         </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in         <code><a href="../classess/EditableClausePredicate.html#source" target="_self" >EditableClausePredicate:19</a></code>
+                                <div class="io-line">Defined in         <code><a href="../classess/EditableClausePredicate.html#source" target="_self" >EditableClausePredicate:18</a></code>
 </div>
                         </td>
                     </tr>
@@ -392,7 +390,7 @@
                         </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in         <code><a href="../classess/EditableClausePredicate.html#source" target="_self" >EditableClausePredicate:18</a></code>
+                                <div class="io-line">Defined in         <code><a href="../classess/EditableClausePredicate.html#source" target="_self" >EditableClausePredicate:17</a></code>
 </div>
                         </td>
                     </tr>
@@ -426,7 +424,7 @@
                         </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in         <code><a href="../classess/EditableClausePredicate.html#source" target="_self" >EditableClausePredicate:20</a></code>
+                                <div class="io-line">Defined in         <code><a href="../classess/EditableClausePredicate.html#source" target="_self" >EditableClausePredicate:19</a></code>
 </div>
                         </td>
                     </tr>
@@ -867,8 +865,14 @@ connects it to the update notifications stream and adds it to the predicate subt
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="54"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/models/predicate/editable-clause-predicate-with-generators.ts:54</a></div>
+                    <div class="io-line">Inherited from         <code><a href="../classess/EditablePredicate.html" target="_self" >EditablePredicate</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classess/EditablePredicate.html#source" target="_self" >EditablePredicate:54</a></code>
+</div>
                 </td>
             </tr>
 
@@ -1014,49 +1018,6 @@ connects it to the update notifications stream and adds it to the predicate subt
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="ngOnDestroy"></a>
-                    <span class="name">
-                        <span ><b>ngOnDestroy</b></span>
-                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-<code>ngOnDestroy()</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Inherited from         <code><a href="../classess/EditableClausePredicate.html" target="_self" >EditableClausePredicate</a></code>
-</div>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/EditableClausePredicate.html#source" target="_self" >EditableClausePredicate:38</a></code>
-</div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
                     <a name="removePredicate"></a>
                     <span class="name">
                         <span ><b>removePredicate</b></span>
@@ -1133,6 +1094,7 @@ connects it to the update notifications stream and adds it to the predicate subt
                 <td class="col-md-4">
                     <a name="show"></a>
                     <span class="name">
+                        <span class="modifier">Public</span>
                         <span ><b>show</b></span>
                         <a href="#show"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1140,7 +1102,8 @@ connects it to the update notifications stream and adds it to the predicate subt
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>show()</code>
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>show()</code>
                 </td>
             </tr>
 
@@ -1890,6 +1853,7 @@ export class EditableClausePredicateWithGenerators extends EditableClausePredica
      * Cleans-up the inner state of this object
      */
     destroy(): void {
+        super.destroy();
         for (const predicate of this._predicates.values()) {
             predicate.destroy();
         }

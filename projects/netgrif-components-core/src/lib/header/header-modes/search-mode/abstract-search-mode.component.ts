@@ -1,4 +1,4 @@
-import {Input, OnDestroy, OnInit, Type} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, Type} from '@angular/core';
 import {AbstractHeaderService} from '../../abstract-header-service';
 import {FormControl} from '@angular/forms';
 import {debounceTime, map} from 'rxjs/operators';
@@ -7,6 +7,10 @@ import {SideMenuService} from '../../../side-menu/services/side-menu.service';
 import {Subscription} from 'rxjs';
 import {AbstractHeaderModeComponent} from '../abstract-header-mode.component';
 
+@Component({
+    selector: 'ncc-abstract-seatch-mode',
+    template: ''
+})
 export abstract class AbstractSearchModeComponent extends AbstractHeaderModeComponent implements OnInit, OnDestroy {
 
     /**
@@ -82,7 +86,8 @@ export abstract class AbstractSearchModeComponent extends AbstractHeaderModeComp
         let valueReturned = false;
         this._sideMenuService.open(component).onClose.subscribe($event => {
             if ($event.data) {
-                this.formControls[column].setValue($event.data as UserValue);
+                this.formControls[column].setValue(($event.data as UserValue).fullName);
+                this.formControls[column].setValue($event.data as UserValue, {emitModelToViewChange: false});
                 valueReturned = true;
             } else if (!valueReturned) {
                 this.formControls[column].setValue(undefined);

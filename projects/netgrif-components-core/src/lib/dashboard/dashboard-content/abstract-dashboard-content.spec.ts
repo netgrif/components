@@ -2,7 +2,7 @@ import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {Component} from '@angular/core';
-import {AbstractDashboardContent} from './abstract-dashboard-content';
+import {AbstractDashboardContentComponent} from './abstract-dashboard-content';
 import {LoggerService} from '../../logger/services/logger.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
@@ -36,18 +36,18 @@ describe('AbstractDashboardContentComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-dashboard',
+    selector: 'ncc-test-dashboard',
     template: ''
 })
-class TestDashboardContentComponent extends AbstractDashboardContent {
+class TestDashboardContentComponent extends AbstractDashboardContentComponent {
     constructor(protected _log: LoggerService) {
         super(_log);
     }
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-dashboard [params]="params"></nae-test-dashboard>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-dashboard [params]="params"></ncc-test-dashboard>'
 })
 class TestWrapperComponent {
     public params: DashboardParams = {

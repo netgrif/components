@@ -1,7 +1,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {DefaultTabbedTaskViewComponent} from './default-tabbed-task-view.component';
 import {NavigationComponentModule} from '../../../navigation.module';
-import {NAE_TAB_DATA, SimpleFilter, TestMockDependenciesModule} from '@netgrif/components-core';
+import {NAE_TAB_DATA, OverflowService, SimpleFilter, TestMockDependenciesModule} from '@netgrif/components-core';
 import {of} from 'rxjs';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
@@ -19,6 +19,7 @@ describe('DefaultTabbedTaskViewComponent', () => {
                 RouterTestingModule.withRoutes([]),
             ],
             providers: [
+                OverflowService,
                 {
                     provide: NAE_TAB_DATA,
                     useValue: {

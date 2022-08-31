@@ -5,15 +5,12 @@ import {Component, OnInit} from '@angular/core';
     templateUrl: './drawer-example.component.html',
     styleUrls: ['./drawer-example.component.scss']
 })
-export class DrawerExampleComponent implements OnInit {
+export class DrawerExampleComponent {
 
     fixed: boolean;
 
     constructor() {
         this.fixed = true;
-    }
-
-    ngOnInit(): void {
     }
 
     openStatusChanged($event) {

@@ -52,6 +52,7 @@ export class EditableClausePredicateWithGenerators extends EditableClausePredica
      * Cleans-up the inner state of this object
      */
     destroy(): void {
+        super.destroy();
         for (const predicate of this._predicates.values()) {
             predicate.destroy();
         }
