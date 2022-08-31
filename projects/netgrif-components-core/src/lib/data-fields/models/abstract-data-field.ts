@@ -353,6 +353,7 @@ export abstract class DataField<T> {
         ).subscribe(newValue => {
             this._valid = this._determineFormControlValidity(formControl);
             formControl.setValue(newValue);
+            this.update();
         });
 
         this.updateFormControlState(formControl);
