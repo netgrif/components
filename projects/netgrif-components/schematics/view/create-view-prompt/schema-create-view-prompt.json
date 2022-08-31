@@ -28,7 +28,9 @@
                 "dashboard",
                 "groupView",
                 "customView",
-                "treeCaseView"
+                "treeCaseView",
+                "workflowView",
+                "roleAssignmentView"
             ],
             "x-prompt": {
                 "type": "list",
@@ -48,7 +50,9 @@
                     "dashboard",
                     "groupView",
                     "customView",
-                    "treeCaseView"
+                    "treeCaseView",
+                    "workflowView",
+                    "roleAssignmentView"
                 ]
             }
         },

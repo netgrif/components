@@ -74,6 +74,8 @@ function findMissingView(naeViews: Views, generatedViews: Set<string>, pathPrefi
                     access: view.access,
                     enableCaseTitle: view.layout.enableCaseTitle,
                     isCaseTitleRequired: view.layout.isCaseTitleRequired,
+                    showDeleteMenu: view.layout.showDeleteMenu,
+                    confirmWorkflowDeletion: view.layout.confirmWorkflowDeletion
                 });
             }
         } else {

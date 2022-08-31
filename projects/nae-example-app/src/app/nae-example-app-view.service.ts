@@ -36,6 +36,7 @@ import { TitleConfigComponent } from './doc/demo-title-config/title-config.compo
 import { ExampleRedirectComponent } from './doc/redirect/example-redirect.component';
 import { ActiveGroupComponent } from './doc/active-group/active-group.component';
 import { WrapperEmptyViewComponent } from './views/wrapper/wrapper-empty-view.component';
+import { ConsoleTestRoleAssignmentViewComponent } from './views/console-test/console-test-role-assignment-view.component';
 import {DoubleDrawerExampleComponent} from './doc/double-drawer-example/double-drawer-example.component';
 import { PublicSingleTaskViewComponent } from './doc/public-single-task-view/public-single-task-view.component';
 
@@ -46,10 +47,12 @@ export class NaeExampleAppViewService extends ViewService {
     constructor(configurationService: ConfigurationService, router: Router, loggerService: LoggerService) {
         // This class is managed by schematics. Do not modify it by hand.
         // If you want to add views to the application run the 'create-view' schematic.
-        super([{id: 'TitleConfigComponent', class: TitleConfigComponent},
+        super([
+            {id: 'TitleConfigComponent', class: TitleConfigComponent},
+            {id: 'ConsoleTestRoleAssignmentViewComponent', class: ConsoleTestRoleAssignmentViewComponent},
             {id: 'PublicSingleTaskViewComponent', class: PublicSingleTaskViewComponent},
-			{id: 'WrapperEmptyViewComponent', class: WrapperEmptyViewComponent},
-			{id: 'ActiveGroupComponent', class: ActiveGroupComponent},
+			      {id: 'WrapperEmptyViewComponent', class: WrapperEmptyViewComponent},
+			      {id: 'ActiveGroupComponent', class: ActiveGroupComponent},
             {id: 'ExampleRedirectComponent', class: ExampleRedirectComponent},
             {id: 'GroupViewComponent', class: GroupViewComponent},
             {id: 'UserInviteComponent', class: UserInviteComponent},

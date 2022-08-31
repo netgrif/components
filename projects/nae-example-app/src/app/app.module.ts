@@ -95,6 +95,7 @@ import { TitleConfigComponent } from './doc/demo-title-config/title-config.compo
 import { ExampleRedirectComponent } from './doc/redirect/example-redirect.component';
 import { ActiveGroupComponent } from './doc/active-group/active-group.component';
 import { WrapperEmptyViewComponent } from './views/wrapper/wrapper-empty-view.component';
+import { ConsoleTestRoleAssignmentViewComponent } from './views/console-test/console-test-role-assignment-view.component';
 import {DoubleDrawerExampleComponent} from './doc/double-drawer-example/double-drawer-example.component';
 import { PublicSingleTaskViewComponent } from './doc/public-single-task-view/public-single-task-view.component';
 
@@ -149,6 +150,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         TitleConfigComponent,
         ActiveGroupComponent,
         WrapperEmptyViewComponent,
+        ConsoleTestRoleAssignmentViewComponent,
         DoubleDrawerExampleComponent,
         PublicSingleTaskViewComponent
     ],
