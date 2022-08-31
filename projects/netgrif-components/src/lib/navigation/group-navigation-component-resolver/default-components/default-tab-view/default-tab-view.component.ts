@@ -29,10 +29,10 @@ export class DefaultTabViewComponent {
 
     constructor(@Inject(NAE_NAVIGATION_ITEM_TASK_DATA) protected _navigationItemTaskData: Array<DataGroup>) {
         const labelData = extractIconAndTitle(this._navigationItemTaskData);
-        const createCaseButtonTitle: string = _navigationItemTaskData[0].fields
-            .find(field => field.stringId === 'create_case_button_title').value;
+        const createCaseButtonTitle: string = _navigationItemTaskData[0]?.fields
+            .find(field => field.stringId === 'create_case_button_title')?.value;
         const createCaseButtonIcon: string = _navigationItemTaskData[0].fields
-            .find(field => field.stringId === 'create_case_button_icon').value;
+            .find(field => field.stringId === 'create_case_button_icon')?.value;
         const newCaseButtonConfig: NewCaseCreationConfigurationData = {
             enableCaseTitle: true,
             isCaseTitleRequired: true,
