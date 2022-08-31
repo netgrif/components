@@ -21,7 +21,7 @@
     </div>
 
     <!-- @deprecated in 4.3.0-->
-    <div *ngIf="dataField.component == undefined" [ngSwitch]="dataField.view">
+    <div *ngIf="dataField.component === undefined" [ngSwitch]="dataField.view">
         <nc-textarea-field *ngSwitchCase="'textarea'" [textAreaField]="dataField" [formControlRef]="formControl"
                            [showLargeLayout]="showLargeLayout"></nc-textarea-field>
         <nc-rich-textarea-field *ngSwitchCase="'richtextarea'" [textAreaField]="dataField"

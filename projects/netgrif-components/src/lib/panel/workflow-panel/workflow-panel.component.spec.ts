@@ -22,9 +22,12 @@ import {
     TranslateLibModule,
     UserResourceService,
     WorkflowMetaField,
+    OverflowService,
     WorkflowViewService
 } from '@netgrif/components-core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import { RouterModule } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 
 
 describe('WorkflowPanelComponent', () => {
@@ -40,14 +43,16 @@ describe('WorkflowPanelComponent', () => {
                 BrowserAnimationsModule,
                 DataFieldsComponentModule,
                 TranslateLibModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                RouterTestingModule.withRoutes([])
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                WorkflowViewService
+                WorkflowViewService,
+                OverflowService
             ],
             declarations: [WorkflowPanelComponent, PanelComponent, TestWrapperComponent],
             schemas: [NO_ERRORS_SCHEMA],
@@ -91,6 +96,7 @@ class TestWrapperComponent {
         initials: '',
         stringId: '',
         title: '',
-        version: ''
+        version: '',
+        uriNodeId: ''
     };
 }

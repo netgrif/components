@@ -1,4 +1,4 @@
-import {Inject, OnDestroy, ViewChild} from '@angular/core';
+import {Component, Inject, OnDestroy, ViewChild} from '@angular/core';
 import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token';
 import {SideMenuControl} from '../../models/side-menu-control';
 import {FilterRepository} from '../../../filter/filter.repository';
@@ -22,6 +22,10 @@ import {Subscription} from 'rxjs';
  * select any filter this event will not be published.
  *
  */
+@Component({
+    selector: 'ncc-abstract-filter-selector',
+    template: ''
+})
 export abstract class AbstractFilterSelectorComponent implements OnDestroy {
 
     /**

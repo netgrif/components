@@ -1,0 +1,33 @@
+<div fxLayout="column" fxLayoutAlign="start center" fxFlex>
+    <ng-container *ngIf="cases$ | async as cases">
+
+        <div *ngIf="(loading$ | async) === false && cases.length === 0" fxLayout="column"
+             fxLayoutAlign="center center" fxFlex>
+            <mat-icon color="accent" class="margin-bottom-default">storage</mat-icon>
+            <span class="font-size-20">{{ 'view-list.noCasesSatisfyingThisFilter' | translate}}</span>
+        </div>
+
+        <mat-accordion multi="true" class="full-width" >
+            <div [ngStyle]="{'width': width ? width : '100%' }">
+                <nc-case-panel [responsiveBody]="responsiveBody"
+                               [textEllipsis]="textEllipsis"
+                               *ngFor="let case_ of cases | slice: (pageIndex) * pageSize : (pageIndex + 1) * pageSize;
+                                let first = first;
+                                let last = last;
+                                trackBy: trackById"
+                               [showCasePanelIcon]="showCasePanelIcon"
+                               [showDeleteMenu]="showDeleteMenu" [first]="first" [last]="last"
+                               [case_]="case_" [selectedHeaders$]="selectedHeaders$" (click)="onCaseClick(case_)">
+                </nc-case-panel>
+
+                <div *ngIf="loading$ | async" fxLayout="column" fxLayoutAlign="center center"
+                     class="margin-top-default">
+                    <mat-spinner color="primary" diameter="50"></mat-spinner>
+                </div>
+            </div>
+        </mat-accordion>
+        <mat-paginator [length]="length" [pageSize]="pageSize" [pageIndex]="pageIndex" color="primary"
+                       [pageSizeOptions]="pageSizeOptions" (page)="onPageChanged($event)" showFirstLastButtons>
+        </mat-paginator>
+    </ng-container>
+</div>

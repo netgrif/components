@@ -5,7 +5,7 @@ import {
     FilterField,
     FilterType,
     NAE_TAB_DATA,
-    NAE_VIEW_ID_SEGMENT,
+    NAE_VIEW_ID_SEGMENT, OverflowService,
     TestMockDependenciesModule,
     UserFilterConstants
 } from '@netgrif/components-core';
@@ -28,6 +28,7 @@ describe('DefaultTabbedCaseViewComponent', () => {
             ],
             providers: [
                 {   provide: NAE_VIEW_ID_SEGMENT, useValue: 'id'},
+                OverflowService,
                 {
                     provide: NAE_TAB_DATA,
                     useValue: {

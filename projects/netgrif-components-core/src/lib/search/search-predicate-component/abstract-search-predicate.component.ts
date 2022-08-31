@@ -1,4 +1,4 @@
-import {Inject, Input, OnDestroy, OnInit, Type, ViewChild} from '@angular/core';
+import {Component, Inject, Input, OnDestroy, OnInit, Type, ViewChild} from '@angular/core';
 import {Subject, Subscription} from 'rxjs';
 import {NAE_SEARCH_CATEGORIES} from '../category-factory/search-categories-injection-token';
 import {Category} from '../models/category/category';
@@ -17,6 +17,10 @@ import {CategoryFactory} from '../category-factory/category-factory';
 /**
  * Is responsible for the interactive creation of a single {@link ElementaryPredicate} object instance.
  */
+@Component({
+    selector: 'ncc-abstract-search-predicate',
+    template: ''
+})
 export abstract class AbstractSearchPredicateComponent implements OnInit, OnDestroy {
 
     /**

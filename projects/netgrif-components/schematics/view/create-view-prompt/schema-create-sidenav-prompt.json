@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/schema",
-    "id": "SchematicsCreateViewPromptAboutSidenav",
+    "$id": "SchematicsCreateViewPromptAboutSidenav",
     "title": "Prompt schematic for inputting sidenav options",
     "type": "object",
     "properties": {

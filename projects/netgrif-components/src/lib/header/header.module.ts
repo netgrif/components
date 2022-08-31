@@ -8,6 +8,7 @@ import {SortModeComponent} from './header-modes/sort-mode/sort-mode.component';
 import {SearchModeComponent} from './header-modes/search-mode/search-mode.component';
 import {LoadingModeComponent} from './header-modes/loading-mode/loading-mode.component';
 import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-picker';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 @NgModule({
     declarations: [
@@ -30,7 +31,8 @@ import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-
         FlexModule,
         TranslateLibModule,
         MaterialModule,
-        NgxMatDatetimePickerModule
+        NgxMatDatetimePickerModule,
+        MatFormFieldModule
     ]
 })
 export class HeaderComponentModule {

@@ -89,7 +89,7 @@ describe('AbstractNewCaseComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-newcase',
+    selector: 'ncc-test-newcase',
     template: ''
 })
 class TestNewCaseComponent extends AbstractNewCaseComponent {

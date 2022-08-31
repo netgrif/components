@@ -9,7 +9,7 @@ import {
     NAE_TAB_DATA,
     SearchService,
     SimpleFilter,
-    TabbedCaseView,
+    AbstractTabbedCaseViewComponent,
     ViewIdService,
     Filter,
     FilterType,
@@ -69,7 +69,7 @@ const baseFilterFactory = (injectedData: ExampleInjectedData) => {
         {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
     ]
 })
-export class DemoTitleConfigContent3CaseViewComponent extends TabbedCaseView implements AfterViewInit {
+export class DemoTitleConfigContent3CaseViewComponent extends AbstractTabbedCaseViewComponent implements AfterViewInit {
 
     @ViewChild('header') public caseHeaderComponent: HeaderComponent;
 

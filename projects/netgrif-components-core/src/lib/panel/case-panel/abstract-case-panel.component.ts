@@ -1,4 +1,4 @@
-import {Input} from '@angular/core';
+import {Component, Input, Optional} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Case} from '../../resources/interface/case';
 import {toMoment} from '../../resources/types/nae-date-type';
@@ -11,7 +11,7 @@ import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
 import {LoggerService} from '../../logger/services/logger.service';
 import {OverflowService} from '../../header/services/overflow.service';
-import {PanelWithImmediateData} from '../abstract/panel-with-immediate-data';
+import {AbstractPanelWithImmediateDataComponent} from '../abstract/panel-with-immediate-data';
 import {UserService} from '../../user/services/user.service';
 import {take} from 'rxjs/operators';
 import {getImmediateData} from '../../utility/get-immediate-data';
@@ -21,8 +21,11 @@ import {CurrencyPipe} from '@angular/common';
 import {PermissionService} from '../../authorization/permission/permission.service';
 import {PermissionType} from '../../process/permissions';
 
-
-export abstract class AbstractCasePanelComponent extends PanelWithImmediateData {
+@Component({
+    selector: 'ncc-abstract-case-panel',
+    template: ''
+})
+export abstract class AbstractCasePanelComponent extends AbstractPanelWithImmediateDataComponent {
 
     @Input() public case_: Case;
     @Input() public selectedHeaders$: Observable<Array<HeaderColumn>>;
@@ -33,11 +36,16 @@ export abstract class AbstractCasePanelComponent extends PanelWithImmediateData 
     @Input() showDeleteMenu = false;
     @Input() textEllipsis = false;
 
-    protected constructor(protected _caseResourceService: CaseResourceService, protected _caseViewService: CaseViewService,
-                          protected _snackBarService: SnackBarService, protected _translateService: TranslateService,
-                          protected _log: LoggerService, protected _overflowService: OverflowService, protected _userService: UserService,
-                          protected _currencyPipe: CurrencyPipe, protected _permissionService: PermissionService) {
-        super(_translateService, _currencyPipe);
+    protected constructor(protected _caseResourceService: CaseResourceService,
+                          protected _caseViewService: CaseViewService,
+                          protected _snackBarService: SnackBarService,
+                          protected _translateService: TranslateService,
+                          protected _log: LoggerService,
+                          protected _userService: UserService,
+                          protected _currencyPipe: CurrencyPipe,
+                          protected _permissionService: PermissionService,
+                          @Optional() protected _overflowService: OverflowService,) {
+        super(_translateService, _currencyPipe, _overflowService);
     }
 
     public show(event: MouseEvent): boolean {

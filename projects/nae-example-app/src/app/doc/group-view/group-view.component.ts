@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {
-    AbstractTaskView, CategoryFactory,
+    AbstractTaskViewComponent, CategoryFactory,
     defaultTaskSearchCategoriesFactory, NAE_SEARCH_CATEGORIES, NextGroupService,
     SearchService,
     SimpleFilter, TaskSearchCaseQuery,
@@ -49,7 +49,7 @@ const baseFilterFactory = (nextGroupService: NextGroupService) => {
         {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultTaskSearchCategoriesFactory, deps: [CategoryFactory]},
     ]
 })
-export class GroupViewComponent extends AbstractTaskView implements AfterViewInit {
+export class GroupViewComponent extends AbstractTaskViewComponent implements AfterViewInit {
 
     @ViewChild('header') public taskHeaderComponent: HeaderComponent;
 

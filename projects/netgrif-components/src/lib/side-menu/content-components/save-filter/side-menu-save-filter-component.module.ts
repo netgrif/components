@@ -14,9 +14,8 @@ import {PanelComponentModule} from '../../../panel/panel.module';
     ],
     declarations: [SaveFilterComponent],
     exports: [SaveFilterComponent],
-    entryComponents: [SaveFilterComponent],
     providers: [
-        {provide: NAE_SAVE_FILTER_COMPONENT, useValue: SaveFilterComponent}
+        { provide: NAE_SAVE_FILTER_COMPONENT, useValue: SaveFilterComponent }
     ]
 })
 export class SideMenuSaveFilterComponentModule {

@@ -10,7 +10,7 @@ import {
     TestConfigurationService,
     TranslateLibModule
 } from '@netgrif/components-core';
-import {AngularResizedEventModule} from 'angular-resize-event';
+import {AngularResizeEventModule} from 'angular-resize-event';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {FlexLayoutModule} from '@angular/flex-layout';
@@ -27,7 +27,7 @@ describe('PreviewDialogComponent', () => {
             imports: [
                 MaterialModule,
                 FlexLayoutModule,
-                AngularResizedEventModule,
+                AngularResizeEventModule,
                 HttpClientTestingModule,
                 TranslateLibModule,
                 NoopAnimationsModule

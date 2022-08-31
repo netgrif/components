@@ -3799,7 +3799,7 @@ export abstract class DataField&lt;T&gt; {
      * @param b - second compared value
      */
     protected valueEquality(a: T, b: T): boolean {
-        return a &#x3D;&#x3D;&#x3D; b;
+        return a &#x3D;&#x3D;&#x3D; b || (Number.isNaN(a) &amp;&amp; Number.isNaN(b));
     }
 
     /**

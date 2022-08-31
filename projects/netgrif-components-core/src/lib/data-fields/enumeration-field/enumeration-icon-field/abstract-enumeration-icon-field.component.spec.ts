@@ -1,7 +1,7 @@
 import {AbstractEnumerationIconFieldComponent} from './abstract-enumeration-icon-field.component';
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {MaterialModule} from '../../../material/material.module';
-import {AngularResizedEventModule} from 'angular-resize-event';
+import {AngularResizeEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
@@ -18,7 +18,7 @@ describe('AbstractEnumerationIconFieldComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
-                AngularResizedEventModule,
+                AngularResizeEventModule,
                 BrowserAnimationsModule,
                 TranslateLibModule,
                 HttpClientTestingModule,
@@ -43,7 +43,7 @@ describe('AbstractEnumerationIconFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-enum-select',
+    selector: 'ncc-test-enum-select',
     template: ''
 })
 class TestEnumSelectComponent extends AbstractEnumerationIconFieldComponent {
@@ -53,9 +53,9 @@ class TestEnumSelectComponent extends AbstractEnumerationIconFieldComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-enum-select [showLargeLayout]="label" [enumerationField]="field" [formControlRef]="form">' +
-        '</nae-test-enum-select>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-enum-select [showLargeLayout]="label" [enumerationField]="field" [formControlRef]="form">' +
+        '</ncc-test-enum-select>'
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();

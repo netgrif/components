@@ -87,7 +87,7 @@ describe('AbstractEditModeComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-edit',
+    selector: 'ncc-test-edit',
     template: ''
 })
 class TestEditModeComponent extends AbstractEditModeComponent {
@@ -97,8 +97,8 @@ class TestEditModeComponent extends AbstractEditModeComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-edit [headerService]="service"></nae-test-edit>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-edit [headerService]="service"></ncc-test-edit>'
 })
 class TestWrapperComponent {
     constructor(public service: CaseHeaderService) {

@@ -8,7 +8,7 @@
          [ngStyle]="{'max-height': this.resolveContentHeightCss()}">
         <div fxLayout="column" fxLayoutAlign="start stretch"
              *ngFor="let subgrid of dataSource; trackBy: trackBySubgridFn">
-            <div [gdAreas]="subgrid.gridAreas" [gdColumns]="subgrid.getGridColumns()" class="grid-rows-auto">
+            <div [gdAreas]="subgrid.gridAreas" [gdColumns]="subgrid.getGridColumns()" class="grid-rows-auto" [ngClass.lt-sm]="{'responsive-grid': true}">
                 <div *ngFor="let item of subgrid.content; trackBy: trackByFn"
                      [gdArea]="item.gridAreaId"
                      class="border" fxLayout="row" [fxLayoutAlign]="getItemAlignment(item)">

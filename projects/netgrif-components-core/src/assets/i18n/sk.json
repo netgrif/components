@@ -6,7 +6,12 @@
             "logout": "Odhlasiť sa",
             "en": "Anglický",
             "sk": "Slovenský",
-            "de": "Nemecký"
+            "de": "Nemecký",
+            "open": "Otvoriť menu",
+            "home": "Domov",
+            "back": "Späť",
+            "folders": "Priečinky",
+            "views": "Obrazovky"
         }
     },
     "tasks": {
@@ -45,6 +50,9 @@
             "cancel": "Zrušiť",
             "noData": "Táto úloha nemá žiadne údaje. Stlačte dokončiť pre pokračovanie.",
             "redirecting": "Presmerovanie..."
+        },
+        "footer": {
+            "defaultText": "NETGRIF, s.r.o. © 2022"
         }
     },
     "side-menu": {
@@ -87,6 +95,15 @@
             "noUser": "Neexistujú žiadni používatelia",
             "err": "Nepodarilo sa načítať používateľov",
             "showcase": "Nebol zvolený mód zobrazenia používateľa!"
+        },
+        "ldapGroup": {
+            "choose": "Vyhladajte Ldap skupinu",
+            "noUser": "Neexistuje žiadna Ldap skupina",
+            "err": "Nepodarilo sa načítať Ldap skupiny"
+        },
+        "tooltip": {
+            "SelectAll": "Označiť všetko",
+            "DeselectAll": "Odznačit všetko"
         },
         "option-selector": {
             "select": "Zvoliť",
@@ -211,7 +228,10 @@
             "weekend": "Zadaný dátum musí byť víkendový deň",
             "workday": "Zadaný dátum musí byť pracovný deň",
             "enumeration": "Musí byť vybraná jedna z možností",
-            "min": "Zadané číslo musí byť väčšie ako {{length}}"
+            "min": "Zadané číslo musí byť väčšie ako {{length}}",
+            "translationRequired": "Musí byť vyplnený preklad pre jazyky: <{{translation}}>",
+            "translationOnly": "Je povolený iba preklad pre jazyky: <{{translation}}>",
+            "requiredI18n": "Aspoň jedna hodnota musí byť vyplnená"
         },
         "snackBar": {
             "downloadFail": " sťahovanie zlyhalo",
@@ -240,11 +260,23 @@
             "clickToDownload": "Kliknutím stiahnite súbor {{fileName}}",
             "clickToDelete": "Kliknutím vymažte súbor"
         },
+        "i18n": {
+            "languageSelect": "Výber jazyka",
+            "deleteTranslation": "Zmazanie prekladu",
+            "showTranslations": "Zobrazenie prekladov",
+            "hideTranslations": "Skrytie prekladov"
+        },
         "dynamicEnum": {
             "noData": "Vášmu vyhľadávaniu nezodpovedajú žiadne položky"
         },
         "enum": {
             "reset": "Resetovať"
+        },
+        "user": {
+            "selectUser": "Vyberte používateľa"
+        },
+        "textarea": {
+            "insertText": "Sem zadajte text..."
         }
     },
     "dialog": {
@@ -350,6 +382,10 @@
         "user-list": {
             "noUsersWereFound": "Momentálne nie sú v systéme žiadni používatelia",
             "listTitle": "Používatelia"
+        },
+        "ldapGroup-list": {
+            "noLdapGroupsWereFound": "Žiadna LDAP skupina nebola najdená",
+            "listTitle": "Ldap Skupiny"
         },
         "process-list": {
             "newestVersion": "Najnovšia verzia",

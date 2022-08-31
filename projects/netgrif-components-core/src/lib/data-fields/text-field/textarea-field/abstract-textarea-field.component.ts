@@ -1,4 +1,4 @@
-import {AfterViewInit, Input} from '@angular/core';
+import {AfterViewInit, Component, Input} from '@angular/core';
 import {ElementRef, NgZone, ViewChild} from '@angular/core';
 import {TextAreaHeight, TextField} from '../models/text-field';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
@@ -8,6 +8,10 @@ import {take} from 'rxjs/operators';
 import {CdkTextareaAutosize} from '@angular/cdk/text-field';
 import {AbstractTextErrorsComponent} from '../abstract-text-errors.component';
 
+@Component({
+    selector: 'ncc-abstract-text-area-field',
+    template: ''
+})
 export abstract class AbstractTextareaFieldComponent extends AbstractTextErrorsComponent implements AfterViewInit {
 
     @Input() textAreaField: TextField;

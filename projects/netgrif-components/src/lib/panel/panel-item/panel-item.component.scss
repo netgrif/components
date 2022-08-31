@@ -1,0 +1,28 @@
+.text-column-margin {
+    margin-right: 15px;
+    line-height: 24px;
+}
+
+.panel-icon {
+    margin-right: 8px;
+}
+
+.text-column-ellipsis {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+.text-column-word-wrap {
+    word-break: break-word !important;
+    white-space: pre-line !important;
+}
+
+.pre-line-dialog {
+    white-space: pre-line !important;
+}
+
+.width-100 {
+    width: 100%;
+}
+

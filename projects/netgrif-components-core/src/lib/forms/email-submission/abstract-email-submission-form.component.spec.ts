@@ -50,7 +50,7 @@ describe('AbstractEmailSubmissionFormComponent ', () => {
 });
 
 @Component({
-    selector: 'nae-test-password',
+    selector: 'ncc-test-password',
     template: ''
 })
 class TestPassFormComponent extends AbstractEmailSubmissionFormComponent {

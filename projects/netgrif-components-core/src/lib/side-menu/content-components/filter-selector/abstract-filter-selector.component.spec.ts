@@ -75,7 +75,7 @@ describe('AbstractFilterSelectorComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-files',
+    selector: 'ncc-test-files',
     template: ''
 })
 class TestFilterSelectorComponent extends AbstractFilterSelectorComponent {

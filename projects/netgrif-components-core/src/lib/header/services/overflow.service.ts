@@ -10,7 +10,7 @@ interface OverflowState {
 @Injectable()
 export class OverflowService {
 
-    protected readonly DEFAULT_COLUMN_WIDTH = 190;
+    protected readonly DEFAULT_COLUMN_WIDTH = 200;
     protected readonly DEFAULT_COLUMN_COUNT = 6;
     private _overflowMode: boolean;
     private _columnWidth: number;

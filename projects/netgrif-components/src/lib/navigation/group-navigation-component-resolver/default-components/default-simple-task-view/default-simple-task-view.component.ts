@@ -3,7 +3,7 @@ import {
     SearchService,
     AllowedNetsService,
     ViewIdService,
-    AbstractTaskView,
+    AbstractTaskViewComponent,
     TaskViewService,
     CategoryFactory,
     NAE_BASE_FILTER,
@@ -54,7 +54,7 @@ import {ActivatedRoute} from '@angular/router';
         },
     ]
 })
-export class DefaultSimpleTaskViewComponent extends AbstractTaskView implements AfterViewInit {
+export class DefaultSimpleTaskViewComponent extends AbstractTaskViewComponent implements AfterViewInit {
 
     @ViewChild('header') public taskHeaderComponent: HeaderComponent;
 
