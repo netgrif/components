@@ -14,7 +14,9 @@ import {
     MockAuthenticationMethodService,
     MockAuthenticationService,
     MockUserResourceService,
-    TestConfigurationService, TestNoAllowedNetsFactory,
+    OverflowService,
+    TestConfigurationService,
+    TestNoAllowedNetsFactory,
     TestViewService,
     TranslateLibModule,
     UserResourceService,
@@ -43,6 +45,7 @@ describe('SortModeComponent', () => {
             ],
             providers: [
                 CaseHeaderService,
+                OverflowService,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},

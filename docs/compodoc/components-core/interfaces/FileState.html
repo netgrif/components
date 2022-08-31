@@ -293,7 +293,17 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {AfterViewInit, ElementRef, Inject, Input, OnDestroy, OnInit, Optional, ViewChild} from &#x27;@angular/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+    AfterViewInit,
+    Component,
+    ElementRef,
+    Inject,
+    Input,
+    OnDestroy,
+    OnInit,
+    Optional,
+    ViewChild
+} from &#x27;@angular/core&#x27;;
 import {FileField, FilePreviewType} from &#x27;./models/file-field&#x27;;
 import {AbstractDataFieldComponent} from &#x27;../models/abstract-data-field-component&#x27;;
 import {TaskResourceService} from &#x27;../../resources/engine-endpoint/task-resource.service&#x27;;
@@ -303,7 +313,7 @@ import {SnackBarService} from &#x27;../../snack-bar/services/snack-bar.service&#
 import {TranslateService} from &#x27;@ngx-translate/core&#x27;;
 import {NAE_INFORM_ABOUT_INVALID_DATA} from &#x27;../models/invalid-data-policy-token&#x27;;
 import {DomSanitizer, SafeUrl} from &#x27;@angular/platform-browser&#x27;;
-import {BehaviorSubject} from &#x27;rxjs&#x27;;
+import { BehaviorSubject, Subscription } from &#x27;rxjs&#x27;;
 import {ResizedEvent} from &#x27;angular-resize-event&#x27;;
 import {take} from &#x27;rxjs/operators&#x27;;
 import {EventOutcomeMessageResource} from &#x27;../../resources/interface/message-resource&#x27;;
@@ -328,6 +338,10 @@ const fieldPadding &#x3D; 16;
 /**
  * Component that is created in the body of the task panel accord on the Petri Net, which must be bind properties.
  */
+@Component({
+    selector: &#x27;ncc-abstract-file-field&#x27;,
+    template: &#x27;&#x27;
+})
 export abstract class AbstractFileFieldComponent extends AbstractDataFieldComponent implements OnInit, AfterViewInit, OnDestroy {
 
     /**
@@ -394,6 +408,10 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
      * Extension of file to preview
      */
     public previewExtension: FilePreviewType;
+    /**
+     * Form control subscription
+     */
+    private updatedFieldSubscription: Subscription;
 
     /**
      * Only inject services.
@@ -442,11 +460,19 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 }
             }
         }
+        this.updatedFieldSubscription &#x3D; this.dataField.updated.subscribe( () &#x3D;&gt; {
+            if (!!this.filePreview
+                &amp;&amp; !!this.dataField.value
+                &amp;&amp; !!this.dataField.value.name) {
+                this.initializePreviewIfDisplayable();
+            }
+        })
     }
 
     ngOnDestroy(): void {
         super.ngOnDestroy();
         this.fullSource.complete();
+        this.updatedFieldSubscription.unsubscribe();
     }
 
     public chooseFile() {
@@ -715,7 +741,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
 
     public changeMaxWidth(event: ResizedEvent) {
         if (!!this.imageEl) {
-            this.imageEl.nativeElement.style.maxWidth &#x3D; event.newWidth + &#x27;px&#x27;;
+            this.imageEl.nativeElement.style.maxWidth &#x3D; event.newRect.width + &#x27;px&#x27;;
         }
     }
 

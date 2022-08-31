@@ -1,6 +1,6 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Optional, ViewChild} from '@angular/core';
 import {
-    AbstractCaseView,
+    AbstractCaseViewComponent,
     Case,
     CaseViewService,
     SearchService,
@@ -34,8 +34,8 @@ const baseFilterFactory = () => {
     providers: [
         CategoryFactory,
         CaseViewService,
-        OverflowService,
         SearchService,
+        OverflowService,
         {   provide: NAE_BASE_FILTER,
             useFactory: baseFilterFactory},
         {   provide: AllowedNetsService,
@@ -46,13 +46,13 @@ const baseFilterFactory = () => {
         {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
     ],
 })
-export class CaseViewComponent extends AbstractCaseView implements AfterViewInit {
+export class CaseViewComponent extends AbstractCaseViewComponent implements AfterViewInit {
 
     @ViewChild('header') public caseHeaderComponent: HeaderComponent;
 
     additionalFilterData: TaskSetDataRequestFields;
 
-    constructor(caseViewService: CaseViewService, protected overflowService: OverflowService) {
+    constructor(caseViewService: CaseViewService, @Optional() overflowService: OverflowService) {
         super(caseViewService, overflowService, undefined, {
             enableCaseTitle: true,
             isCaseTitleRequired: false

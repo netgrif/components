@@ -1,6 +1,6 @@
 <mat-toolbar color="primary">{{ 'side-menu.import-net.upload' | translate}}</mat-toolbar>
 
-<div fxLayout="column" class="container side-menu-root">
+<div fxLayout="column" class="container side-menu-root netgrif-input">
 
     <ul class="file-list">
         <li *ngFor="let file of fileList" [@fadeInOut]="'in'">
@@ -30,7 +30,7 @@
     <input type="file" id="sidemenu-fileUpload" name="fileUpload" multiple="multiple"
            accept="text/xml" class="display-none"/>
 
-    <mat-form-field color="primary">
+    <mat-form-field color="primary" appearance="outline">
         <mat-label>Release</mat-label>
         <mat-select [formControl]="releaseTypeControl">
             <mat-option *ngFor="let type of releaseTypes" [value]="type">

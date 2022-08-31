@@ -1,4 +1,4 @@
-import {Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {TranslateService} from '@ngx-translate/core';
@@ -6,6 +6,10 @@ import {AbstractTextErrorsComponent} from '../abstract-text-errors.component';
 import {TextAreaField} from '../models/text-area-field';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 
+@Component({
+    selector: 'ncc-abstract-html-area-field',
+    template: ''
+})
 export abstract class AbstractHtmlTextareaFieldComponent extends AbstractTextErrorsComponent implements OnInit {
 
     public quillModules = {

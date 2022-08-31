@@ -1,4 +1,4 @@
-import {Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Subject} from 'rxjs';
 import {KeyValue} from '@angular/common';
 import {EditableClausePredicateWithGenerators} from '../models/predicate/editable-clause-predicate-with-generators';
@@ -9,6 +9,10 @@ import {PredicateWithGenerator} from '../models/predicate/predicate-with-generat
  * Is responsible for the interactive creation of an OR {@link ClausePredicate} object instance.
  * The nested Predicates are {@link ElementaryPredicate} instances created by {@link AbstractSearchPredicateComponent}.
  */
+@Component({
+    selector: 'ncc-abstract-search-clause',
+    template: ''
+})
 export abstract class AbstractSearchClauseComponent implements OnInit, OnDestroy {
 
     /**

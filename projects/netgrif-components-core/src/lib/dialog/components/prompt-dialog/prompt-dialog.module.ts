@@ -20,9 +20,6 @@ import {TranslateLibModule} from '../../../translate/translate-lib.module';
         FormsModule,
         FlexLayoutModule,
         TranslateLibModule
-    ],
-    entryComponents: [
-        PromptDialogComponent
     ]
 })
 export class PromptDialogModule {

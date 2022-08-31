@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, Optional, ViewChild} from '@angular/core';
 import {
     CaseViewService,
     CategoryFactory,
@@ -10,7 +10,7 @@ import {
     NAE_TAB_DATA,
     SearchService,
     SimpleFilter,
-    TabbedCaseView,
+    AbstractTabbedCaseViewComponent,
     ViewIdService,
     Filter,
     NAE_NEW_CASE_CONFIGURATION,
@@ -69,13 +69,13 @@ const newCaseConfigFactory = (injectedTabData: ExampleInjectedData) => {
         {provide: NAE_NEW_CASE_CONFIGURATION, useFactory: newCaseConfigFactory, deps: [NAE_TAB_DATA]}
     ]
 })
-export class TabbedCaseViewComponent extends TabbedCaseView implements AfterViewInit {
+export class TabbedCaseViewComponent extends AbstractTabbedCaseViewComponent implements AfterViewInit {
 
     @ViewChild('header') public caseHeaderComponent: HeaderComponent;
 
     constructor(caseViewService: CaseViewService,
                 loggerService: LoggerService,
-                overflowService: OverflowService,
+                @Optional() overflowService: OverflowService,
                 @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedCaseViewData) {
         super(caseViewService, loggerService, injectedTabData, overflowService, undefined, undefined, {
             enableCaseTitle: true,

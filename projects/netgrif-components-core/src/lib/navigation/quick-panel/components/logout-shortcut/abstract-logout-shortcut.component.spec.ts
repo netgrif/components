@@ -66,7 +66,7 @@ describe('AbstractLogoutShortcutComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-logout',
+    selector: 'ncc-test-logout',
     template: ''
 })
 class TestLogoutComponent extends AbstractLogoutShortcutComponent {

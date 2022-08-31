@@ -57,7 +57,7 @@ class TestViewService extends ViewService {
 }
 
 @Component({
-    selector: 'nae-test-1',
+    selector: 'ncc-test-1',
     template: '',
     styles: []
 })
@@ -65,7 +65,7 @@ class Test1Component {
 }
 
 @Component({
-    selector: 'nae-test-2',
+    selector: 'ncc-test-2',
     template: '',
     styles: []
 })

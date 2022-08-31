@@ -18,8 +18,7 @@ import {CovalentModule, MaterialModule, TranslateLibModule} from '@netgrif/compo
         FormsModule,
         TranslateLibModule
     ],
-    exports: [ImportNetComponent],
-    entryComponents: [ImportNetComponent]
+    exports: [ImportNetComponent]
 })
 export class SideMenuImportNetComponentModule {
 }

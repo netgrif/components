@@ -39,8 +39,9 @@ the functionality and compatibility with Application Engine.
 The library has defined peer dependencies that are not installed automatically with npm. You can install dependencies with this command:
 
 ```shell
-npm i -S @angular-material-components/datetime-picker@4 @angular-material-components/moment-adapter@4 @angular/animations@10 @angular/cdk@10 @angular/common@10 @angular/compiler@10 @angular/core@10 @angular/flex-layout@10 @angular/forms@10 @angular/material@10 @angular/material-moment-adapter@10 @angular/platform-browser@10 @angular/platform-browser-dynamic@10 @angular/router@10 @covalent/core@3 @covalent/highlight@3 @covalent/markdown@3 @covalent/text-editor@3 @ngx-translate/core@13 @ngx-translate/http-loader@6 @schematics/angular@10 angular-resizable-element@3 angular-resize-event@2 angular2-hotkeys@2 hammerjs@2 json-schema-to-typescript@8 jszip@3 moment@2 natural-orderby@2 rxjs@6 zone.js@0.10
+npm i -S @angular-material-components/datetime-picker@7.0.1 @angular-material-components/moment-adapter@7.0.0 @angular/animations@13.3 @angular/cdk@13.3 @angular/common@13.3.1 @angular/compiler@13.3.1 @angular/core@13.3.1 @angular/flex-layout@13.0.0-beta.38 @angular/forms@13.3.1 @angular/material@13.3.1 @angular/material-moment-adapter@13.3.1 @angular/platform-browser@13.3.1 @angular/platform-browser-dynamic@13.3.1 @angular/router@13.3.1 @covalent/markdown@4.1.0 @ngx-translate/core@13.0.0 @ngx-translate/http-loader@6.0.0 @schematics/angular@13.3.0 @swimlane/ngx-charts@20.1.0 @types/mousetrap@1.6.9 angular-resizable-element@3.3.0 angular-resize-event@3.1.1 angular2-hotkeys@2.4.0 easymde@2.16.1 hammerjs@2.0.8 json-schema-to-typescript@8.1.0 jszip@3.2.2 marked@4.0.12 moment@2.24.0 mousetrap@1.6.5 natural-orderby@2.0.3 ngx-quill@16.2.0 palette-creator@0.5.4 quill@1.3.7 rxjs@6.5.4 showdown@2.0.3 tslib@2.0.0 zone.js@0.11.4
 ```
+
 
 ## Installation
 
@@ -57,15 +58,7 @@ If you want to developer own set of NAE components, just install the core librar
 To start building your NAE web application, it must be configured as Angular application and as NAE application as well.
 
 Firstly, create new Angular project. We recommend following [official guide](https://angular.io/guide/setup-local).
-At the moment @netgrif/components does not support Ivy engine, your can turn it off with attribute in `tsconfig.json`:
 
-```json
-{
-    "angularCompilerOptions":{
-        "enableIvy": false
-    }
-}
-```
 
 ### NAE.json
 

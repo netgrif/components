@@ -6,7 +6,12 @@
             "logout": "Abmelden",
             "en": "English",
             "sk": "Slowakisch",
-            "de": "Deutsch"
+            "de": "Deutsch",
+            "open": "Menü öffnen",
+            "home": "Startseite",
+            "back": "Zurück",
+            "folders": "Mappen",
+            "views": "Blidschirme"
         }
     },
     "tasks": {
@@ -45,6 +50,9 @@
             "cancel": "Stornieren",
             "noData": "Diese Aufgabe hat keine Dateien. Schließen Sie die Aufgabe ab, um fortzufahren.",
             "redirecting": "Umleiten..."
+        },
+        "footer": {
+            "defaultText": "NETGRIF, s.r.o. © 2022"
         }
     },
     "side-menu": {
@@ -87,6 +95,15 @@
             "noUser": "Es gibt keine Benützer",
             "err": "Beim laden der Benützer ist eine Fehler aufgetreten",
             "showcase": "Benützeransichtmodus ist nicht ausgewählt!"
+        },
+        "ldapGroup": {
+            "choose": "LDAP-Gruppe suchen",
+            "noUser": "LDAP-Gruppe nicht gefunden",
+            "err": "LDAP-Gruppe konnte nicht geladen werden"
+        },
+        "tooltip": {
+            "SelectAll": "Alle auswählen",
+            "DeselectAll": "Alle abwählen"
         },
         "option-selector": {
             "select": "Auswählen",
@@ -211,7 +228,10 @@
             "weekend": "Das eingegebene Datum muss das Wochenende sein",
             "workday": "Das eingegebene Datum muss ein Wochentag sein",
             "enumeration": "Eine von der angebotenen Optionen muss ausgewählt sein",
-            "min": "Die eingegebene Nummer muss größer als {{length}} sein"
+            "min": "Die eingegebene Nummer muss größer als {{length}} sein",
+            "translationRequired": "Übersetzung für Sprachen: <{{translation}}> muss eingegeben werden",
+            "translationOnly": "Nur die Übersetzung für Sprachen: <{{translation}}> ist erlaubt",
+            "requiredI18n": "Es muss mindestens ein Wert eingegeben werden"
         },
         "snackBar": {
             "downloadFail": " könnte nicht heruntergeladen werden",
@@ -240,11 +260,23 @@
             "clickToDownload": "Klicken Sie, um {{fileName}} herunterzuladen",
             "clickToDelete": "Klicken Sie, um die Datei zu löschen"
         },
+        "i18n": {
+            "languageSelect": "Sprache auswählen",
+            "deleteTranslation": "Übersetzung löschen",
+            "showTranslations": "Übersetzungen anzeigen",
+            "hideTranslations": "Übersetzungen ausblenden"
+        },
         "dynamicEnum": {
             "noData": "Keine Einträge entsprechen Ihrer Suchanfrage"
         },
         "enum": {
             "reset": "Rücksetzen"
+        },
+        "user": {
+            "selectUser": "Benutzer auswählen"
+        },
+        "textarea": {
+            "insertText": "Hier Text eingeben..."
         }
     },
     "dialog": {
@@ -350,6 +382,10 @@
         "user-list": {
             "noUsersWereFound": "Derzeit befinden sich keine Benutzer im System",
             "listTitle": "Benutzer"
+        },
+        "ldapGroup-list": {
+            "noLdapGroupsWereFound": "Keine LDAP Gruppe wurde gefunden",
+            "listTitle": "LDAP Gruppen"
         },
         "process-list": {
             "newestVersion": "Neuste Version",

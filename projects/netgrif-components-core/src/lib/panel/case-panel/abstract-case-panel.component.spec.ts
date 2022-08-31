@@ -63,7 +63,11 @@ describe('AbstractCasePanelComponent', () => {
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 SignUpService,
-                {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
+                {
+                    provide: AllowedNetsService,
+                    useFactory: TestCaseViewAllowedNetsFactory,
+                    deps: [AllowedNetsServiceFactory]
+                }
             ],
             declarations: [
                 TestCasePanelComponent,
@@ -97,26 +101,30 @@ describe('AbstractCasePanelComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-case-panel',
+    selector: 'ncc-test-case-panel',
     template: ''
 })
 class TestCasePanelComponent extends AbstractCasePanelComponent {
-    constructor(protected _caseResourceService: CaseResourceService, protected _caseViewService: CaseViewService,
-                protected _snackBarService: SnackBarService, protected _translateService: TranslateService,
-                protected _log: LoggerService, @Optional() protected overflowService: OverflowService,
-                protected _userService: UserService, protected _currencyPipe: CurrencyPipe,
-                protected _permissionService: PermissionService) {
-        super(_caseResourceService, _caseViewService, _snackBarService, _translateService, _log, overflowService,
-            _userService, _currencyPipe, _permissionService);
+    constructor(protected _caseResourceService: CaseResourceService,
+                protected _caseViewService: CaseViewService,
+                protected _snackBarService: SnackBarService,
+                protected _translateService: TranslateService,
+                protected _log: LoggerService,
+                protected _userService: UserService,
+                protected _currencyPipe: CurrencyPipe,
+                protected _permissionService: PermissionService,
+                @Optional() protected overflowService: OverflowService) {
+        super(_caseResourceService, _caseViewService, _snackBarService, _translateService, _log,
+            _userService, _currencyPipe, _permissionService, overflowService,);
     }
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-case-panel [selectedHeaders$]="selectedHeaders" [case_]="case_"> </nae-test-case-panel>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-case-panel [selectedHeaders$]="selectedHeaders" [case_]="case_"> </ncc-test-case-panel>'
 })
 class TestWrapperComponent {
-    selectedHeaders =  of([
+    selectedHeaders = of([
         new HeaderColumn(HeaderColumnType.META, CaseMetaField.VISUAL_ID, 'string', 'string'),
         new HeaderColumn(HeaderColumnType.META, CaseMetaField.AUTHOR, 'string', 'string'),
         new HeaderColumn(HeaderColumnType.META, CaseMetaField.TITLE, 'string', 'string'),
@@ -155,7 +163,7 @@ class TestWrapperComponent {
             {stringId: 'date', title: 'string', type: 'date', value: [2020, 1, 1, 10, 10]},
             {stringId: 'string', title: 'string', type: 'string', value: 'dasdsadsad'},
             {stringId: 'dateTime', title: 'string', type: 'dateTime', value: [2020, 1, 1, 10, 10]},
-            {stringId: 'enum', title: 'string', type: 'enumeration', value: { defaultValue: 'dasd'}},
+            {stringId: 'enum', title: 'string', type: 'enumeration', value: {defaultValue: 'dasd'}},
         ]
     };
 }

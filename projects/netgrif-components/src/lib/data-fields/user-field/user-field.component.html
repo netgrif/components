@@ -7,7 +7,7 @@
 <ng-template #dataFieldTemplate let-showLargeLayout="showLargeLayout">
 
     <div>
-        <mat-label *ngIf="!showLargeLayout.value">{{dataField.title}}
+        <mat-label class="netgrif-label" *ngIf="!showLargeLayout.value">{{dataField.title}}
             <nc-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nc-required-label>
             <br>
         </mat-label>
@@ -25,7 +25,7 @@
                 color="primary"
                 (click)="selectUser()">
             <mat-icon>person_add</mat-icon>
-            Select user
+            {{'dataField.user.selectUser' | translate}}
         </button>
         <mat-error *ngIf="dataField.isInvalid(formControl)">{{'dataField.validations.required' | translate}}</mat-error>
     </div>

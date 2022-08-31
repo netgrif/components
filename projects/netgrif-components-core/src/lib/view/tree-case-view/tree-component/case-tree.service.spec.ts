@@ -642,7 +642,8 @@ class TreeTestProcessService {
                 email: '',
                 fullName: ''
             },
-            immediateData: []
+            immediateData: [],
+            uriNodeId: ''
         }));
     }
 }

@@ -1,4 +1,4 @@
-import {Inject, OnDestroy, ViewChild} from '@angular/core';
+import {Component, Inject, OnDestroy, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {StepperSelectionEvent} from '@angular/cdk/stepper';
 import {map, startWith, tap} from 'rxjs/operators';
@@ -22,6 +22,10 @@ interface Form {
     version?: string;
 }
 
+@Component({
+    selector: 'ncc-abstract-new-case',
+    template: ''
+})
 export abstract class AbstractNewCaseComponent implements OnDestroy {
 
     processFormControl = new FormControl('', Validators.required);

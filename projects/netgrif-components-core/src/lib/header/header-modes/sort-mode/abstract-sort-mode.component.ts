@@ -1,8 +1,13 @@
-import {Input} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {AbstractHeaderService} from '../../abstract-header-service';
 import {Sort} from '@angular/material/sort';
 import {AbstractHeaderModeComponent} from '../abstract-header-mode.component';
 
+
+@Component({
+    selector: 'ncc-abstract-sort-mode',
+    template: ''
+})
 export abstract class AbstractSortModeComponent extends AbstractHeaderModeComponent {
 
     @Input()

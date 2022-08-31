@@ -1,16 +1,21 @@
-import {AfterViewInit, Input, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Input, ViewChild} from '@angular/core';
 import {SideMenuService} from '../../side-menu/services/side-menu.service';
 import {WorkflowViewService} from './workflow-view.service';
 import {AbstractHeaderComponent} from '../../header/abstract-header.component';
-import {ViewWithHeaders} from '../abstract/view-with-headers';
+import {AbstractViewWithHeadersComponent} from '../abstract/view-with-headers';
 import {HeaderType} from '../../header/models/header-type';
 import {Observable} from 'rxjs';
 import {Net} from '../../process/net';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {LoggerService} from '../../logger/services/logger.service';
 import {ProcessService} from '../../process/process.service';
+import { ActivatedRoute } from '@angular/router';
 
-export abstract class AbstractWorkflowViewComponent extends ViewWithHeaders implements AfterViewInit {
+@Component({
+    selector: 'ncc-abstract-workflow-view',
+    template: ''
+})
+export abstract class AbstractWorkflowViewComponent extends AbstractViewWithHeadersComponent implements AfterViewInit {
 
     @Input() public footerSize: number;
     @Input() showDeleteMenu = false;
@@ -25,8 +30,9 @@ export abstract class AbstractWorkflowViewComponent extends ViewWithHeaders impl
     protected constructor(protected _sideMenuService: SideMenuService,
                           protected _workflowViewService: WorkflowViewService,
                           protected _log: LoggerService,
-                          protected _processService: ProcessService) {
-        super(_workflowViewService);
+                          protected _processService: ProcessService,
+                          _activatedRoute?: ActivatedRoute) {
+        super(_workflowViewService, _activatedRoute);
         this.workflows$ = this._workflowViewService.workflows$;
         this.loading$ = this._workflowViewService.loading$;
         this.footerSize = 0;

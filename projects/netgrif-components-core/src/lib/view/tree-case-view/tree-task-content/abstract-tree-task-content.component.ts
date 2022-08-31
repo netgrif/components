@@ -1,4 +1,4 @@
-import {AfterViewInit, Input} from '@angular/core';
+import {AfterViewInit, Component, Input} from '@angular/core';
 import {TaskContentService} from '../../../task-content/services/task-content.service';
 import {AssignTaskService} from '../../../task/services/assign-task.service';
 import {TaskEventService} from '../../../task-content/services/task-event.service';
@@ -8,6 +8,10 @@ import {TreeTaskContentService} from './tree-task-content.service';
 import {Observable} from 'rxjs';
 import {PermissionService} from '../../../authorization/permission/permission.service';
 
+@Component({
+    selector: 'ncc-abstract-tree-task-content',
+    template: ''
+})
 export abstract class AbstractTreeTaskContentComponent implements AfterViewInit {
 
     @Input() public displayTaskControlButtons = true;

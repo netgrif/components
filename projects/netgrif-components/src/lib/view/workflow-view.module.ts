@@ -26,11 +26,7 @@ import {DataFieldsComponentModule} from '../data-fields/data-fields.module';
     ],
     exports: [
         WorkflowViewComponent,
-    ],
-    entryComponents: [
-        ImportNetComponent
     ]
-
 })
 export class WorkflowViewComponentModule {
 }

@@ -24,6 +24,7 @@ import {ProfileComponent} from './doc/profile/profile.component';
 import {NavigationExampleComponent} from './doc/navigation-example/navigation-example.component';
 import {ButtonsNavComponent} from './doc/navigation-example/buttons-nav/buttons-nav.component';
 import {RolesAssignComponent} from './doc/roles-assign/roles-assign.component';
+import {LdapGroupRolesAssignComponent} from './doc/ldap-group-roles-assign/ldap-group-roles-assign.component';
 import {TreeViewExampleComponent} from './doc/tree-view-example/tree-view-example.component';
 import {UserInviteComponent} from './doc/user-invite/user-invite.component';
 import {ResetPasswordFormComponent} from './doc/forms/reset-password-form/reset-password-form.component';
@@ -36,6 +37,8 @@ import { ExampleRedirectComponent } from './doc/redirect/example-redirect.compon
 import { ActiveGroupComponent } from './doc/active-group/active-group.component';
 import { WrapperEmptyViewComponent } from './views/wrapper/wrapper-empty-view.component';
 import { ConsoleTestRoleAssignmentViewComponent } from './views/console-test/console-test-role-assignment-view.component';
+import {DoubleDrawerExampleComponent} from './doc/double-drawer-example/double-drawer-example.component';
+import { PublicSingleTaskViewComponent } from './doc/public-single-task-view/public-single-task-view.component';
 
 @Injectable({
     providedIn: 'root'
@@ -44,9 +47,12 @@ export class NaeExampleAppViewService extends ViewService {
     constructor(configurationService: ConfigurationService, router: Router, loggerService: LoggerService) {
         // This class is managed by schematics. Do not modify it by hand.
         // If you want to add views to the application run the 'create-view' schematic.
-        super([{id: 'ConsoleTestRoleAssignmentViewComponent', class: ConsoleTestRoleAssignmentViewComponent},
-			{id: 'WrapperEmptyViewComponent', class: WrapperEmptyViewComponent},
-			{id: 'ActiveGroupComponent', class: ActiveGroupComponent},
+        super([
+            {id: 'TitleConfigComponent', class: TitleConfigComponent},
+            {id: 'ConsoleTestRoleAssignmentViewComponent', class: ConsoleTestRoleAssignmentViewComponent},
+            {id: 'PublicSingleTaskViewComponent', class: PublicSingleTaskViewComponent},
+			      {id: 'WrapperEmptyViewComponent', class: WrapperEmptyViewComponent},
+			      {id: 'ActiveGroupComponent', class: ActiveGroupComponent},
             {id: 'ExampleRedirectComponent', class: ExampleRedirectComponent},
             {id: 'GroupViewComponent', class: GroupViewComponent},
             {id: 'UserInviteComponent', class: UserInviteComponent},
@@ -69,11 +75,13 @@ export class NaeExampleAppViewService extends ViewService {
             {id: 'HeadersComponent', class: HeadersComponent},
             {id: 'RailExampleComponent', class: RailExampleComponent},
             {id: 'DrawerExampleComponent', class: DrawerExampleComponent},
+            {id: 'DoubleDrawerExampleComponent', class: DoubleDrawerExampleComponent},
             {id: 'RegisterFormComponent', class: RegisterFormComponent},
             {id: 'PasswordFormComponent', class: PasswordFormComponent},
             {id: 'LoginFormComponent', class: LoginFormComponent},
             {id: 'AuthenticationComponent', class: AuthenticationComponent},
             {id: 'RolesAssignComponent', class: RolesAssignComponent},
+            {id: 'LdapGroupRolesAssignComponent', class: LdapGroupRolesAssignComponent},
             {id: 'PublicTaskViewComponent', class: PublicTaskViewComponent},
             {id: 'PublicWorkflowViewComponent', class: PublicWorkflowViewComponent},
             {id: 'PublicResolverComponent', class: PublicResolverComponent},

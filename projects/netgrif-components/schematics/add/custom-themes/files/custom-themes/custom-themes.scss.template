@@ -1,9 +1,9 @@
-@import '~@angular/material/theming';
+@import '@angular/material/theming';
 @import 'custom-light-theme.scss';
 <% if (darkExists) { %>
 @import 'custom-dark-theme.scss';
 <% } %>
-@import '~@netgrif/components/nae-theme';
+@import '@netgrif/components/nae-theme';
 
 $typography: mat-typography-config(
     $font-family: 'Roboto, monospace',

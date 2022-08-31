@@ -4,9 +4,9 @@
 
 The following NPM packages may be included in this product:
 
- - @angular-devkit/core@10.2.4
- - @angular-devkit/schematics@10.2.4
- - @schematics/angular@10.2.4
+ - @angular-devkit/core@13.3.1
+ - @angular-devkit/schematics@13.3.1
+ - @schematics/angular@13.3.1
 
 These packages each contain the following license and notice below:
 
@@ -102,14 +102,14 @@ MIT
 
 The following NPM packages may be included in this product:
 
- - @angular/animations@10.2.5
- - @angular/common@10.2.5
- - @angular/compiler@10.2.5
- - @angular/core@10.2.5
- - @angular/forms@10.2.5
- - @angular/platform-browser-dynamic@10.2.5
- - @angular/platform-browser@10.2.5
- - @angular/router@10.2.5
+ - @angular/animations@13.3.1
+ - @angular/common@13.3.1
+ - @angular/compiler@13.3.1
+ - @angular/core@13.3.1
+ - @angular/forms@13.3.1
+ - @angular/platform-browser-dynamic@13.3.1
+ - @angular/platform-browser@13.3.1
+ - @angular/router@13.3.1
 
 These packages each contain the following license and notice below:
 
@@ -126,10 +126,10 @@ License: MIT
 
 The following NPM packages may be included in this product:
 
- - @angular/cdk@10.2.7
+ - @angular/cdk@13.3.1
  - @angular/flex-layout@10.0.0-beta.32
- - @angular/material-moment-adapter@10.2.7
- - @angular/material@10.2.7
+ - @angular/material-moment-adapter@13.3.1
+ - @angular/material@13.3.1
 
 These packages each contain the following license and notice below:
 

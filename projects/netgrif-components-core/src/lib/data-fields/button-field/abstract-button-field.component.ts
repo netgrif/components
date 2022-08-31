@@ -1,4 +1,4 @@
-import {Inject, Input, Optional} from '@angular/core';
+import {Component, Inject, Input, Optional} from '@angular/core';
 import {ButtonField, ButtonFieldValidation} from './models/button-field';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 import {TranslateService} from '@ngx-translate/core';
@@ -6,6 +6,10 @@ import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token
 import {DialogService} from '../../dialog/services/dialog.service';
 import {take} from 'rxjs/operators';
 
+@Component({
+    selector: 'ncc-abstract-button-field',
+    template: ''
+})
 export abstract class AbstractButtonFieldComponent extends AbstractDataFieldComponent {
 
     @Input() dataField: ButtonField;

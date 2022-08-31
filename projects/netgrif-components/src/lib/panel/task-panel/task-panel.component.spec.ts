@@ -53,7 +53,7 @@ import {
     AllowedNetsService,
     TestTaskViewAllowedNetsFactory,
     AllowedNetsServiceFactory,
-    CurrencyModule, ChangedFieldsService
+    CurrencyModule, ChangedFieldsService, OverflowService
 } from '@netgrif/components-core';
 import {of, Subject, throwError} from 'rxjs';
 import {map} from 'rxjs/operators';
@@ -104,6 +104,7 @@ describe('TaskPanelComponent', () => {
                 AssignTaskService,
                 DelegateTaskService,
                 CancelTaskService,
+                OverflowService,
                 FinishTaskService,
                 TaskRequestStateService,
                 DataFocusPolicyService,
