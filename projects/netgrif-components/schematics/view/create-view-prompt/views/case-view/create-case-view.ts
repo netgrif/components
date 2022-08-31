@@ -31,8 +31,8 @@ export function createCaseView(tree: Tree, args: CreateViewArguments & TabbedVie
         configName: projectInfo.projectNameClassified,
         configImportPath: createRelativePath(view.fileImportPath, `./${projectInfo.projectNameDasherized}-configuration.service`),
         caseCreationConfig: {
-            enableCaseTitle: args.enableCaseTitle === undefined ? true : args.enableCaseTitle,
-            isCaseTitleRequired: args.isCaseTitleRequired === undefined ? false : args.isCaseTitleRequired
+            enableCaseTitle: args.enableCaseTitle ?? true ,
+            isCaseTitleRequired: args.isCaseTitleRequired ?? false
         }
     };
 
