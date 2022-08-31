@@ -111,7 +111,7 @@ export abstract class AbstractWorkflowPanelComponent extends AbstractPanelWithHe
         });
     }
 
-    protected downloadViaAnchor(blob: Blob): void {
+    public downloadViaAnchor(blob: Blob): void {
         const a = document.createElement('a');
         document.body.appendChild(a);
         a.setAttribute('style', 'display: none');

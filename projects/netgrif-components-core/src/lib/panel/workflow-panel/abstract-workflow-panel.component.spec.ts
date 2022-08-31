@@ -62,7 +62,7 @@ describe('AbstractWorkflowPanelComponent', () => {
         component = fixture.debugElement.children[0].componentInstance;
         fixture.detectChanges();
         translate = TestBed.inject(TranslateService);
-        downloadSpy = spyOn(TestBed.inject(Document), 'appendChild');
+        downloadSpy = spyOn(TestBed.inject(AbstractWorkflowPanelComponent), 'downloadViaAnchor');
     }));
 
     it('should create', () => {
