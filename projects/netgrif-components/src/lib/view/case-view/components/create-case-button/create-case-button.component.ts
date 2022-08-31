@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Observable} from 'rxjs';
-import {Case, CaseViewService, NewCaseCreationConfigurationData} from '@netgrif/components-core';
+import {Case, CaseViewService, NewCaseCreationConfigurationData, NewCaseButtonConfiguration} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-create-case-button',
@@ -27,7 +27,7 @@ export class CreateCaseButtonComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        const config = this.newCaseCreationConfig.newCaseButtonConfig;
+        const config: NewCaseButtonConfiguration = this.newCaseCreationConfig['newCaseButtonConfig'];
         if (!!config) {
             this._resolvedCaseButtonIcon = config.createCaseButtonIcon;
             this._resolvedCaseButtonTitle = config.createCaseButtonTitle;
