@@ -20,12 +20,8 @@ export function createPublicTaskView(tree: Tree, args: CreateTaskViewArguments &
     const templateParams = {
         prefix: projectInfo.projectPrefixDasherized,
         className: view.nameWithoutComponent,
-        viewPath: args.path,
         dasherize: strings.dasherize,
         classify: strings.classify,
-        configName: projectInfo.projectNameClassified,
-        configImportPath: createRelativePath(view.fileImportPath, `./${projectInfo.projectNameDasherized}-configuration.service`),
-        isDefaultTabbedTaskView: !!args.isDefaultTabbedTaskView
     };
 
     const commonPathPrefix = './views/public-task-view/files/';
