@@ -1,11 +1,14 @@
-import {ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {SearchInputType} from '../models/category/search-input-type';
 import {Observable, Subscription} from 'rxjs';
 import {SearchAutocompleteOption} from '../models/category/search-autocomplete-option';
 import {debounceTime} from 'rxjs/operators';
 
-
+@Component({
+    selector: 'ncc-abstract-search-operand-input',
+    template: ''
+})
 export abstract class AbstractSearchOperandInputComponent implements OnInit, OnDestroy {
 
     /**

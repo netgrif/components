@@ -2,10 +2,11 @@
     <ng-template #header>
         <div fxLayoutAlign="start center" fxLayout="row" fxFlex="95">
             <div *ngFor="let field of featuredFieldsValues; let i = index" fxLayoutAlign="start center" fxFlex
-                 [fxHide.lt-xl]="i >= 4 && responsiveBody"
-                 [fxHide.lt-lg]="i >= 3 && responsiveBody"
-                 [fxHide.lt-md]="i >= 2 && responsiveBody"
-                 [fxHide.lt-sm]="i >= 1 && responsiveBody">
+                 [fxHide.lt-xl]="i >= 4 && responsiveBody && !overflowMode"
+                 [fxHide.lt-lg]="i >= 3 && responsiveBody && !overflowMode"
+                 [fxHide.lt-md]="i >= 2 && responsiveBody && !overflowMode"
+                 [fxHide.lt-sm]="i >= 1 && responsiveBody && !overflowMode"
+            >
                 <mat-icon class="workflow-panel-icon panel-primary-icon"
                           *ngIf="!!field.icon && !!field.value">{{field.icon}}</mat-icon>
                 {{field.value}}

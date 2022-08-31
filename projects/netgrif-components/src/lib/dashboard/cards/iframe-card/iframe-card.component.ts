@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AbstractIframeCard} from '@netgrif/components-core';
+import {AbstractIframeCardComponent} from '@netgrif/components-core';
 import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
@@ -7,7 +7,7 @@ import {DomSanitizer} from '@angular/platform-browser';
     templateUrl: './iframe-card.component.html',
     styleUrls: ['./iframe-card.component.scss']
 })
-export class IframeCardComponent extends AbstractIframeCard {
+export class IframeCardComponent extends AbstractIframeCardComponent {
 
     constructor(protected _sanitizer: DomSanitizer) {
         super(_sanitizer);

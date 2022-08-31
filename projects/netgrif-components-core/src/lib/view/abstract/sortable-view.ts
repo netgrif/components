@@ -4,13 +4,16 @@ import {Observable, Subscription} from 'rxjs';
 import {HeaderChange} from '../../header/models/user-changes/header-change';
 import {HttpParams} from '@angular/common/http';
 import {HeaderChangeType} from '../../header/models/user-changes/header-change-type';
-import {OnDestroy} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {SearchIndexResolverService} from '../../search/search-keyword-resolver-service/search-index-resolver.service';
 import {SearchIndex} from '../../search/models/search-index';
 import {PaginationParams} from '../../utility/pagination/pagination-params';
 
-
-export abstract class SortableView implements OnDestroy {
+@Component({
+    selector: 'ncc-abstract-sortable-view',
+    template: ''
+})
+export abstract class AbstractSortableViewComponent implements OnDestroy {
 
     protected _lastHeaderSearchState: SortChangeDescription;
     protected _subHeader: Subscription;

@@ -1,0 +1,2741 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components Core library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li
+  >
+  AbstractFileFieldComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>projects/netgrif-components-core/src/lib/data-fields/file-field/abstract-file-field.component.ts</code>
+</p>
+
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Component that is created in the body of the task panel accord on the Petri Net, which must be bind properties.</p>
+
+    </p>
+
+    <p class="comment">
+        <h3>Extends</h3>
+    </p>
+    <p class="comment">
+                <code><a href="../interfaces/Component.html" target="_self" >AbstractDataFieldComponent</a></code>
+    </p>
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+                    <code><a href="../interfaces/View.html" target="_self" >AfterViewInit</a></code>
+                    <code><a href="https://angular.io/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
+    </p>
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>ncc-abstract-file-field</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#dataField" >dataField</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Static</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#DEFAULT_PREVIEW_BORDER_COLOR" >DEFAULT_PREVIEW_BORDER_COLOR</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Static</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#DEFAULT_PREVIEW_BORDER_STYLE" >DEFAULT_PREVIEW_BORDER_STYLE</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Static</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#DEFAULT_PREVIEW_BORDER_WIDTH" >DEFAULT_PREVIEW_BORDER_WIDTH</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#filePreview" >filePreview</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#fileUploadEl" >fileUploadEl</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#fullSource" >fullSource</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#imageDivEl" >imageDivEl</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#imageEl" >imageEl</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#isDisplayable" >isDisplayable</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#previewExtension" >previewExtension</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#previewSource" >previewSource</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#state" >state</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#taskId" >taskId</a>
+                            </li>
+                            <li>
+                                <a href="#taskOffset" >taskOffset</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#borderPropertyEnabled" >borderPropertyEnabled</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#changeMaxWidth" >changeMaxWidth</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#chooseFile" >chooseFile</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#constructDisplayName" >constructDisplayName</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#deleteFile" >deleteFile</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#download" >download</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#downloadViaAnchor" >downloadViaAnchor</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#getHeight" >getHeight</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#getPreviewBorderColor" >getPreviewBorderColor</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#getPreviewBorderStyle" >getPreviewBorderStyle</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#getPreviewBorderWidth" >getPreviewBorderWidth</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#initFileFieldImage" >initFileFieldImage</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#isBorderDefault" >isBorderDefault</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#isBorderLGBTQ" >isBorderLGBTQ</a>
+                            </li>
+                            <li>
+                                <a href="#isEmpty" >isEmpty</a>
+                            </li>
+                            <li>
+                                <a href="#ngAfterViewInit" >ngAfterViewInit</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnDestroy" >ngOnDestroy</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#resolveParentTaskId" >resolveParentTaskId</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#showPreviewDialog" >showPreviewDialog</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#upload" >upload</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#dataField" >dataField</a>
+                            </li>
+                            <li>
+                                <a href="#taskId" >taskId</a>
+                            </li>
+                            <li>
+                                <a href="#taskOffset" >taskOffset</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#defaultState" >defaultState</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                                <span class="modifier">Protected</span>
+                        <code>constructor(_taskResourceService: <a href="../injectables/TaskResourceService.html" target="_self">TaskResourceService</a>, _log: <a href="../injectables/LoggerService.html" target="_self">LoggerService</a>, _snackbar: <a href="../injectables/SnackBarService.html" target="_self">SnackBarService</a>, _translate: TranslateService, _eventService: <a href="../injectables/EventService.html" target="_self">EventService</a>, informAboutInvalidData: boolean | null, _sanitizer: <a href="https://angular.io/api/platform-browser/DomSanitizer" target="_blank">DomSanitizer</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="119" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/file-field/abstract-file-field.component.ts:119</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Only inject services.
+Option injected trough <code>NAE_INFORM_ABOUT_INVALID_DATA</code> InjectionToken</p>
+</div>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                                    <td>Description</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>_taskResourceService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/TaskResourceService.html" target="_self" >TaskResourceService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <code><p>Provides to download a file from the backend</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_log</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/LoggerService.html" target="_self" >LoggerService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <code><p>Logger service</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_snackbar</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/SnackBarService.html" target="_self" >SnackBarService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <code><p>Snackbar service to notify user</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_translate</td>
+                                                  
+                                                        <td>
+                                                                    <code>TranslateService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <code><p>Translate service for I18N</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_eventService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/EventService.html" target="_self" >EventService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <code><p>used for parsing of backend response</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>informAboutInvalidData</td>
+                                                  
+                                                        <td>
+                                                                    <code>boolean | null</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <code><p>whether the backend should be notified about invalid values.
+Option injected trough <code>NAE_INFORM_ABOUT_INVALID_DATA</code> InjectionToken</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_sanitizer</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/platform-browser/DomSanitizer" target="_blank" >DomSanitizer</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <code><p>Sanitize url of image preview</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+    <section>
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="dataField"></a>
+                        <b>dataField</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/FileField.html" target="_self" >FileField</a></code>
+
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4" colspan="2">
+                                    <div class="io-line">Inherited from         <code><a href="../interfaces/Component.html" target="_self" >AbstractDataFieldComponent</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractDataFieldComponent:73</a></code>
+</div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Binding property as instance from parent component.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="taskId"></a>
+                        <b>taskId</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="69" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/file-field/abstract-file-field.component.ts:69</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Task mongo string id is binding property from parent component.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="taskOffset"></a>
+                        <b>taskOffset</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4" colspan="2">
+                                    <div class="io-line">Inherited from         <code><a href="../interfaces/Component.html" target="_self" >AbstractDataFieldComponent</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractDataFieldComponent:20</a></code>
+</div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="borderPropertyEnabled"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>borderPropertyEnabled</b></span>
+                        <a href="#borderPropertyEnabled"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>borderPropertyEnabled(property: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="502"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/file-field/abstract-file-field.component.ts:502</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>property</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="changeMaxWidth"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>changeMaxWidth</b></span>
+                        <a href="#changeMaxWidth"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>changeMaxWidth(event: ResizedEvent)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="447"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/file-field/abstract-file-field.component.ts:447</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>event</td>
+                                    <td>
+                                            <code>ResizedEvent</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="chooseFile"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>chooseFile</b></span>
+                        <a href="#chooseFile"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>chooseFile()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="183"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/file-field/abstract-file-field.component.ts:183</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="constructDisplayName"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>constructDisplayName</b></span>
+                        <a href="#constructDisplayName"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>constructDisplayName()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="380"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/file-field/abstract-file-field.component.ts:380</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Construct display name.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteFile"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>deleteFile</b></span>
+                        <a href="#deleteFile"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>deleteFile()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="331"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/file-field/abstract-file-field.component.ts:331</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="download"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>download</b></span>
+                        <a href="#download"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>download()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="272"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/file-field/abstract-file-field.component.ts:272</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="downloadViaAnchor"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>downloadViaAnchor</b></span>
+                        <a href="#downloadViaAnchor"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>downloadViaAnchor(blob: Blob)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="316"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/file-field/abstract-file-field.component.ts:316</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>blob</td>
+                                    <td>
+                                            <code>Blob</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getHeight"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>getHeight</b></span>
+                        <a href="#getHeight"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getHeight()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="462"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/file-field/abstract-file-field.component.ts:462</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getPreviewBorderColor"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>getPreviewBorderColor</b></span>
+                        <a href="#getPreviewBorderColor"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getPreviewBorderColor()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="481"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/file-field/abstract-file-field.component.ts:481</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getPreviewBorderStyle"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>getPreviewBorderStyle</b></span>
+                        <a href="#getPreviewBorderStyle"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getPreviewBorderStyle()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="474"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/file-field/abstract-file-field.component.ts:474</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getPreviewBorderWidth"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>getPreviewBorderWidth</b></span>
+                        <a href="#getPreviewBorderWidth"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getPreviewBorderWidth()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="467"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/file-field/abstract-file-field.component.ts:467</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="initFileFieldImage"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>initFileFieldImage</b></span>
+                        <a href="#initFileFieldImage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>initFileFieldImage()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="394"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/file-field/abstract-file-field.component.ts:394</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Initialize file field image from backend if it is image type.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isBorderDefault"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>isBorderDefault</b></span>
+                        <a href="#isBorderDefault"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>isBorderDefault()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="495"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/file-field/abstract-file-field.component.ts:495</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isBorderLGBTQ"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>isBorderLGBTQ</b></span>
+                        <a href="#isBorderLGBTQ"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>isBorderLGBTQ()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="488"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/file-field/abstract-file-field.component.ts:488</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isEmpty"></a>
+                    <span class="name">
+                        <span ><b>isEmpty</b></span>
+                        <a href="#isEmpty"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>isEmpty()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="363"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/file-field/abstract-file-field.component.ts:363</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngAfterViewInit"></a>
+                    <span class="name">
+                        <span ><b>ngAfterViewInit</b></span>
+                        <a href="#ngAfterViewInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngAfterViewInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="155"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/file-field/abstract-file-field.component.ts:155</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <span ><b>ngOnDestroy</b></span>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../interfaces/Component.html" target="_self" >AbstractDataFieldComponent</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractDataFieldComponent:177</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../interfaces/Component.html" target="_self" >AbstractDataFieldComponent</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractDataFieldComponent:149</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Set :</p>
+<ul>
+<li>File field to <a href="FileFieldService">FileFieldService</a></li>
+<li>Display name</li>
+</ul>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resolveParentTaskId"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>resolveParentTaskId</b></span>
+                        <a href="#resolveParentTaskId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resolveParentTaskId()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="506"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/file-field/abstract-file-field.component.ts:506</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="showPreviewDialog"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>showPreviewDialog</b></span>
+                        <a href="#showPreviewDialog"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>showPreviewDialog()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="429"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/file-field/abstract-file-field.component.ts:429</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="upload"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>upload</b></span>
+                        <a href="#upload"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>upload()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="198"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/file-field/abstract-file-field.component.ts:198</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Call after click on file field.</p>
+<p>If file field has no file uploaded
+<a href="AbstractFilesUploadComponent">FilesUploadComponent</a> via <a href="../injectables/SideMenuService.html">SideMenu</a> opens.</p>
+<p>Otherwise opens a file picker from which the user can select files.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dataField"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>dataField</b></span>
+                        <a href="#dataField"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/FileField.html" target="_self" >FileField</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @Input()<br />
+                        </code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Inherited from         <code><a href="../interfaces/Component.html" target="_self" >AbstractDataFieldComponent</a></code>
+</div>
+                            </td>
+                        </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractDataFieldComponent:73</a></code>
+</div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Binding property as instance from parent component.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="DEFAULT_PREVIEW_BORDER_COLOR"></a>
+                    <span class="name">
+                            <span class="modifier">Static</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>DEFAULT_PREVIEW_BORDER_COLOR</b></span>
+                        <a href="#DEFAULT_PREVIEW_BORDER_COLOR"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;black&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/file-field/abstract-file-field.component.ts:63</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>The CSS color string of the default file preview border.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="DEFAULT_PREVIEW_BORDER_STYLE"></a>
+                    <span class="name">
+                            <span class="modifier">Static</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>DEFAULT_PREVIEW_BORDER_STYLE</b></span>
+                        <a href="#DEFAULT_PREVIEW_BORDER_STYLE"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;none&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/file-field/abstract-file-field.component.ts:59</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>The CSS style attribute of the default file preview border.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="DEFAULT_PREVIEW_BORDER_WIDTH"></a>
+                    <span class="name">
+                            <span class="modifier">Static</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>DEFAULT_PREVIEW_BORDER_WIDTH</b></span>
+                        <a href="#DEFAULT_PREVIEW_BORDER_WIDTH"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/file-field/abstract-file-field.component.ts:55</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>The width of the default file preview border in pixels. The <code>px</code> string is appended in the code.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="filePreview"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>filePreview</b></span>
+                        <a href="#filePreview"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="87" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/file-field/abstract-file-field.component.ts:87</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>If file preview should be displayed</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="fileUploadEl"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>fileUploadEl</b></span>
+                        <a href="#fileUploadEl"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>ElementRef&lt;HTMLInputElement&gt;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChild(&#x27;fileUploadInput&#x27;)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="77" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/file-field/abstract-file-field.component.ts:77</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>File picker element reference from component template that is initialized after view init.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="fullSource"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>fullSource</b></span>
+                        <a href="#fullSource"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Behavior.html" target="_self" >BehaviorSubject&lt;SafeUrl&gt;</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="111" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/file-field/abstract-file-field.component.ts:111</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Full size file url</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="imageDivEl"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>imageDivEl</b></span>
+                        <a href="#imageDivEl"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/ElementRef" target="_blank" >ElementRef</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChild(&#x27;imageDiv&#x27;)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="83" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/file-field/abstract-file-field.component.ts:83</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="imageEl"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>imageEl</b></span>
+                        <a href="#imageEl"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/ElementRef" target="_blank" >ElementRef</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChild(&#x27;imageEl&#x27;)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="81" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/file-field/abstract-file-field.component.ts:81</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Image field view element reference from component template that is initialized after view init.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isDisplayable"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>isDisplayable</b></span>
+                        <a href="#isDisplayable"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="91" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/file-field/abstract-file-field.component.ts:91</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>If file type can be displayed</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="previewExtension"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>previewExtension</b></span>
+                        <a href="#previewExtension"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/enumerations.html#FilePreviewType" target="_self" >FilePreviewType</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="115" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/file-field/abstract-file-field.component.ts:115</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Extension of file to preview</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="previewSource"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>previewSource</b></span>
+                        <a href="#previewSource"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/platform-browser/SafeUrl" target="_blank" >SafeUrl</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="103" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/file-field/abstract-file-field.component.ts:103</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Url of preview file</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="state"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>state</b></span>
+                        <a href="#state"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/FileState.html" target="_self" >FileState</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/file-field/abstract-file-field.component.ts:65</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="taskId"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>taskId</b></span>
+                        <a href="#taskId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @Input()<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="69" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/file-field/abstract-file-field.component.ts:69</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Task mongo string id is binding property from parent component.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="taskOffset"></a>
+                    <span class="name">
+                        <span ><b>taskOffset</b></span>
+                        <a href="#taskOffset"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @Input()<br />
+                        </code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Inherited from         <code><a href="../interfaces/Component.html" target="_self" >AbstractDataFieldComponent</a></code>
+</div>
+                            </td>
+                        </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractDataFieldComponent:20</a></code>
+</div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="defaultState"></a>
+                        <span class="name"><b>defaultState</b><a href="#defaultState"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>defaultState()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="367" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/file-field/abstract-file-field.component.ts:367</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+</section>
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+    AfterViewInit,
+    Component,
+    ElementRef,
+    Inject,
+    Input,
+    OnDestroy,
+    OnInit,
+    Optional,
+    ViewChild
+} from &#x27;@angular/core&#x27;;
+import {FileField, FilePreviewType} from &#x27;./models/file-field&#x27;;
+import {AbstractDataFieldComponent} from &#x27;../models/abstract-data-field-component&#x27;;
+import {TaskResourceService} from &#x27;../../resources/engine-endpoint/task-resource.service&#x27;;
+import {ProgressType, ProviderProgress} from &#x27;../../resources/resource-provider.service&#x27;;
+import {LoggerService} from &#x27;../../logger/services/logger.service&#x27;;
+import {SnackBarService} from &#x27;../../snack-bar/services/snack-bar.service&#x27;;
+import {TranslateService} from &#x27;@ngx-translate/core&#x27;;
+import {NAE_INFORM_ABOUT_INVALID_DATA} from &#x27;../models/invalid-data-policy-token&#x27;;
+import {DomSanitizer, SafeUrl} from &#x27;@angular/platform-browser&#x27;;
+import { BehaviorSubject, Subscription } from &#x27;rxjs&#x27;;
+import {ResizedEvent} from &#x27;angular-resize-event&#x27;;
+import {take} from &#x27;rxjs/operators&#x27;;
+import {EventOutcomeMessageResource} from &#x27;../../resources/interface/message-resource&#x27;;
+import {EventService} from &#x27;../../event/services/event.service&#x27;;
+import {ChangedFieldsMap} from &#x27;../../event/services/interfaces/changed-fields-map&#x27;;
+import {FileFieldIdBody} from &#x27;../models/file-field-id-body&#x27;;
+
+export interface FileState {
+    progress: number;
+    uploading: boolean;
+    downloading: boolean;
+    completed: boolean;
+    error: boolean;
+}
+
+const preview &#x3D; &#x27;preview&#x27;;
+
+const fieldHeight &#x3D; 105;
+
+const fieldPadding &#x3D; 16;
+
+/**
+ * Component that is created in the body of the task panel accord on the Petri Net, which must be bind properties.
+ */
+@Component({
+    selector: &#x27;ncc-abstract-file-field&#x27;,
+    template: &#x27;&#x27;
+})
+export abstract class AbstractFileFieldComponent extends AbstractDataFieldComponent implements OnInit, AfterViewInit, OnDestroy {
+
+    /**
+     * The width of the default file preview border in pixels. The &#x60;px&#x60; string is appended in the code.
+     */
+    public static readonly DEFAULT_PREVIEW_BORDER_WIDTH &#x3D; 0;
+    /**
+     * The CSS style attribute of the default file preview border.
+     */
+    public static readonly DEFAULT_PREVIEW_BORDER_STYLE &#x3D; &#x27;none&#x27;;
+    /**
+     * The CSS color string of the default file preview border.
+     */
+    public static readonly DEFAULT_PREVIEW_BORDER_COLOR &#x3D; &#x27;black&#x27;;
+
+    public state: FileState;
+    /**
+     * Task mongo string id is binding property from parent component.
+     */
+    @Input() public taskId: string;
+    /**
+     * Binding property as instance from parent component.
+     */
+    @Input() public dataField: FileField;
+    /**
+     * File picker element reference from component template that is initialized after view init.
+     */
+    @ViewChild(&#x27;fileUploadInput&#x27;) public fileUploadEl: ElementRef&lt;HTMLInputElement&gt;;
+    /**
+     * Image field view element reference from component template that is initialized after view init.
+     */
+    @ViewChild(&#x27;imageEl&#x27;) public imageEl: ElementRef;
+
+    @ViewChild(&#x27;imageDiv&#x27;) public imageDivEl: ElementRef;
+    /**
+     * If file preview should be displayed
+     */
+    public filePreview &#x3D; false;
+    /**
+     * If file type can be displayed
+     */
+    public isDisplayable &#x3D; false;
+    /**
+     * Max height of preview
+     */
+    private maxHeight: string;
+    /**
+     * Store file for preview
+     */
+    private fileForPreview: Blob;
+    /**
+     * Url of preview file
+     */
+    public previewSource: SafeUrl;
+    /**
+     * Store file to show/download
+     */
+    private fileForDownload: Blob;
+    /**
+     * Full size file url
+     */
+    public fullSource: BehaviorSubject&lt;SafeUrl&gt;;
+    /**
+     * Extension of file to preview
+     */
+    public previewExtension: FilePreviewType;
+    /**
+     * Form control subscription
+     */
+    private updatedFieldSubscription: Subscription;
+
+    /**
+     * Only inject services.
+     * @param _taskResourceService Provides to download a file from the backend
+     * @param _log Logger service
+     * @param _snackbar Snackbar service to notify user
+     * @param _translate Translate service for I18N
+     * @param _eventService used for parsing of backend response
+     * @param informAboutInvalidData whether the backend should be notified about invalid values.
+     * Option injected trough &#x60;NAE_INFORM_ABOUT_INVALID_DATA&#x60; InjectionToken
+     * @param _sanitizer Sanitize url of image preview
+     */
+    protected constructor(protected _taskResourceService: TaskResourceService,
+                          protected _log: LoggerService,
+                          protected _snackbar: SnackBarService,
+                          protected _translate: TranslateService,
+                          protected _eventService: EventService,
+                          @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null,
+                          protected _sanitizer: DomSanitizer) {
+        super(informAboutInvalidData);
+        this.state &#x3D; this.defaultState;
+        this.fullSource &#x3D; new BehaviorSubject&lt;SafeUrl&gt;(null);
+    }
+
+    /**
+     * Set :
+     *  - File field to [FileFieldService]{@link FileFieldService}
+     *  - Display name
+     */
+    ngOnInit() {
+        super.ngOnInit();
+        this.filePreview &#x3D; this.dataField &amp;&amp; this.dataField.component &amp;&amp; this.dataField.component.name
+            &amp;&amp; this.dataField.component.name &#x3D;&#x3D;&#x3D; preview;
+    }
+
+    ngAfterViewInit() {
+        if (this.fileUploadEl) {
+            this.fileUploadEl.nativeElement.onchange &#x3D; () &#x3D;&gt; {
+                this.upload();
+            };
+        }
+        if (this.filePreview) {
+            if (!!this.imageDivEl) {
+                if (!this.isEmpty()) {
+                    this.initializePreviewIfDisplayable();
+                }
+            }
+        }
+        this.updatedFieldSubscription &#x3D; this.dataField.updated.subscribe( () &#x3D;&gt; {
+            if (!!this.filePreview
+                &amp;&amp; !!this.dataField.value
+                &amp;&amp; !!this.dataField.value.name) {
+                this.initializePreviewIfDisplayable();
+            }
+        })
+    }
+
+    ngOnDestroy(): void {
+        super.ngOnDestroy();
+        this.fullSource.complete();
+        this.updatedFieldSubscription.unsubscribe();
+    }
+
+    public chooseFile() {
+        if (this.state.uploading || this.formControl.disabled) {
+            return;
+        }
+        this.fileUploadEl.nativeElement.click();
+    }
+
+    /**
+     * Call after click on file field.
+     *
+     * If file field has no file uploaded
+     * [FilesUploadComponent]{@link AbstractFilesUploadComponent} via [SideMenu]{@link SideMenuService} opens.
+     *
+     * Otherwise opens a file picker from which the user can select files.
+     */
+    public upload() {
+        if (!this.fileUploadEl.nativeElement.files || this.fileUploadEl.nativeElement.files.length &#x3D;&#x3D;&#x3D; 0) {
+            return;
+        }
+        if (!this.taskId) {
+            this._log.error(&#x27;File cannot be uploaded. No task is set to the field.&#x27;);
+            return;
+        }
+        if (this.dataField.value &amp;&amp;
+            this.dataField.value.name &amp;&amp;
+            this.fileUploadEl.nativeElement.files.item(0).name &#x3D;&#x3D;&#x3D; this.dataField.value.name) {
+            this._log.error(&#x27;User chose the same file. Uploading skipped&#x27;);
+            this._snackbar.openErrorSnackBar(this._translate.instant(&#x27;dataField.snackBar.wontUploadSameFile&#x27;));
+            this.fileUploadEl.nativeElement.value &#x3D; &#x27;&#x27;;
+            return;
+        }
+        if (this.dataField.maxUploadSizeInBytes &amp;&amp;
+            this.dataField.maxUploadSizeInBytes &lt; this.fileUploadEl.nativeElement.files.item(0).size) {
+            this._log.error(&#x27;File cannot be uploaded. Maximum size of file exceeded.&#x27;);
+            this._snackbar.openErrorSnackBar(
+                this._translate.instant(&#x27;dataField.snackBar.maxFilesSizeExceeded&#x27;) + this.dataField.maxUploadSizeInBytes
+            );
+            this.fileUploadEl.nativeElement.value &#x3D; &#x27;&#x27;;
+            return;
+        }
+        this.state &#x3D; this.defaultState;
+        this.state.uploading &#x3D; true;
+        const fileFormData &#x3D; new FormData();
+        const fileToUpload &#x3D; this.fileUploadEl.nativeElement.files.item(0) as File;
+        const data: FileFieldIdBody &#x3D; {};
+        data[this.resolveParentTaskId()] &#x3D; this.dataField.stringId;
+        fileFormData.append(&#x27;file&#x27;, fileToUpload);
+        fileFormData.append(&#x27;data&#x27;, new Blob([JSON.stringify(data)], {type: &#x27;application/json&#x27;}));
+        this._taskResourceService.uploadFile(this.taskId, this.dataField.stringId, fileFormData, false)
+            .subscribe((response: EventOutcomeMessageResource) &#x3D;&gt; {
+                if ((response as ProviderProgress).type &amp;&amp; (response as ProviderProgress).type &#x3D;&#x3D;&#x3D; ProgressType.UPLOAD) {
+                    this.state.progress &#x3D; (response as ProviderProgress).progress;
+                } else {
+                    const changedFieldsMap: ChangedFieldsMap &#x3D; this._eventService.parseChangedFieldsFromOutcomeTree(response.outcome);
+                    this.dataField.emitChangedFields(changedFieldsMap);
+                    this._log.debug(
+                        &#x60;File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0).name} was successfully uploaded&#x60;
+                    );
+                    this.state.completed &#x3D; true;
+                    this.state.error &#x3D; false;
+                    this.state.uploading &#x3D; false;
+                    this.state.progress &#x3D; 0;
+                    this.dataField.downloaded &#x3D; false;
+                    this.dataField.value.name &#x3D; fileToUpload.name;
+                    if (this.filePreview) {
+                        this.initializePreviewIfDisplayable();
+                    }
+                    this.fullSource.next(undefined);
+                    this.fileForDownload &#x3D; undefined;
+                    this.formControl.setValue(this.dataField.value.name);
+                    this.dataField.touch &#x3D; true;
+                    this.dataField.update();
+                    this.fileUploadEl.nativeElement.value &#x3D; &#x27;&#x27;;
+                }
+            }, error &#x3D;&gt; {
+                this.state.completed &#x3D; true;
+                this.state.error &#x3D; true;
+                this.state.uploading &#x3D; false;
+                this.state.progress &#x3D; 0;
+                this._log.error(
+                    &#x60;File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)} uploading has failed!&#x60;, error
+                );
+                this._snackbar.openErrorSnackBar(this._translate.instant(&#x27;dataField.snackBar.fileUploadFailed&#x27;));
+                this.dataField.touch &#x3D; true;
+                this.dataField.update();
+                this.fileUploadEl.nativeElement.value &#x3D; &#x27;&#x27;;
+            });
+    }
+
+    public download() {
+        if (!this.checkFileBeforeDownload()) {
+            return;
+        }
+        if (!!this.fileForDownload) {
+            this.downloadViaAnchor(this.fileForDownload);
+            return;
+        }
+        this.state &#x3D; this.defaultState;
+        this.state.downloading &#x3D; true;
+        this._taskResourceService.downloadFile(this.resolveParentTaskId(),
+            this.dataField.stringId).subscribe(response &#x3D;&gt; {
+            if (!(response as ProviderProgress).type || (response as ProviderProgress).type !&#x3D;&#x3D; ProgressType.DOWNLOAD) {
+                this._log.debug(&#x60;File [${this.dataField.stringId}] ${this.dataField.value.name} was successfully downloaded&#x60;);
+                this.downloadViaAnchor(response as Blob);
+                if (this.filePreview) {
+                    this.initDownloadFile(response);
+                }
+                this.state.downloading &#x3D; false;
+                this.state.progress &#x3D; 0;
+                this.dataField.downloaded &#x3D; true;
+            }
+        }, error &#x3D;&gt; {
+            this._log.error(&#x60;Downloading file [${this.dataField.stringId}] ${this.dataField.value.name} has failed!&#x60;, error);
+            this._snackbar.openErrorSnackBar(
+                this.dataField.value.name + &#x27; &#x27; + this._translate.instant(&#x27;dataField.snackBar.downloadFail&#x27;)
+            );
+            this.state.downloading &#x3D; false;
+            this.state.progress &#x3D; 0;
+        });
+    }
+
+    private initDownloadFile(response: Blob | ProviderProgress) {
+        if (response instanceof Blob) {
+            if (this.previewExtension &#x3D;&#x3D;&#x3D; FilePreviewType.pdf) {
+                this.fileForDownload &#x3D; new Blob([response], {type: &#x27;application/pdf&#x27;});
+                this.fullSource.next(this._sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(this.fileForDownload)));
+            } else {
+                this.fileForDownload &#x3D; new Blob([response], {type: &#x27;application/octet-stream&#x27;});
+                this.fullSource.next(this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.fileForDownload)));
+            }
+        }
+    }
+
+    protected downloadViaAnchor(blob: Blob): void {
+        const a &#x3D; document.createElement(&#x27;a&#x27;);
+        document.body.appendChild(a);
+        a.setAttribute(&#x27;style&#x27;, &#x27;display: none&#x27;);
+        if (!this.fileForDownload) {
+            blob &#x3D; new Blob([blob], {type: &#x27;application/octet-stream&#x27;});
+        }
+        const url &#x3D; window.URL.createObjectURL(!!this.fileForDownload ? this.fileForDownload : blob);
+        a.href &#x3D; url;
+        a.download &#x3D; this.dataField.value.name;
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+    }
+
+    public deleteFile() {
+        if (!this.dataField.value || !this.dataField.value.name) {
+            return;
+        }
+        if (!this.taskId) {
+            this._log.error(&#x27;File cannot be deleted. No task is set to the field.&#x27;);
+            return;
+        }
+
+        this._taskResourceService.deleteFile(this.taskId,
+            this.dataField.stringId).pipe(take(1)).subscribe(response &#x3D;&gt; {
+            if (response.success) {
+                const filename &#x3D; this.dataField.value.name;
+                this.dataField.value &#x3D; {};
+                this.formControl.setValue(&#x27;&#x27;);
+                this.dataField.update();
+                this.dataField.downloaded &#x3D; false;
+                this.fullSource.next(undefined);
+                this.fileForDownload &#x3D; undefined;
+                this.previewSource &#x3D; undefined;
+                this.fileForPreview &#x3D; undefined;
+                this._log.debug(&#x60;File [${this.dataField.stringId}] ${filename} was successfully deleted&#x60;);
+                this.formControl.markAsTouched();
+            } else {
+                this._log.error(&#x60;Deleting file [${this.dataField.stringId}] ${this.dataField.value.name} has failed!&#x60;, response.error);
+                this._snackbar.openErrorSnackBar(
+                    this.dataField.value.name + &#x27; &#x27; + this._translate.instant(&#x27;dataField.snackBar.fileDeleteFailed&#x27;)
+                );
+            }
+        });
+    }
+
+    isEmpty(): boolean {
+        return !this.dataField.value || !this.dataField.value.name;
+    }
+
+    protected get defaultState(): FileState {
+        return {
+            progress: 0,
+            completed: false,
+            error: false,
+            uploading: false,
+            downloading: false
+        };
+    }
+
+    /**
+     * Construct display name.
+     */
+    public constructDisplayName(): string {
+        if (!!this.dataField) {
+            if (!!this.dataField.value &amp;&amp; !!this.dataField.value.name) {
+                return this.dataField.value.name;
+            } else if (!!this.dataField.placeholder) {
+                return this.dataField.placeholder;
+            }
+        }
+        return this._translate.instant(&#x27;dataField.file.noFile&#x27;);
+    }
+
+    /**
+     * Initialize file field image from backend if it is image type.
+     */
+    protected initFileFieldImage() {
+        if (!this.checkFileBeforeDownload()) {
+            return;
+        }
+        this.state.downloading &#x3D; true;
+        this._taskResourceService.downloadFilePreview(this.resolveParentTaskId(), this.dataField.stringId).subscribe(response &#x3D;&gt; {
+            if (response instanceof Blob) {
+                this._log.debug(&#x60;Preview of file [${this.dataField.stringId}] ${this.dataField.value.name} was successfully downloaded&#x60;);
+                this.fileForPreview &#x3D; new Blob([response], {type: &#x27;application/octet-stream&#x27;});
+                this.previewSource &#x3D; this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.fileForPreview));
+            }
+            if (response &#x3D;&#x3D; null || response instanceof Blob) {
+                this.state.downloading &#x3D; false;
+            }
+        }, error &#x3D;&gt; {
+            this._log.error(&#x60;Downloading file [${this.dataField.stringId}] ${this.dataField.value.name} has failed!&#x60;, error);
+            this._snackbar.openErrorSnackBar(
+                this.dataField.value.name + &#x27; &#x27; + this._translate.instant(&#x27;dataField.snackBar.downloadFail&#x27;)
+            );
+            this.state.downloading &#x3D; false;
+            this.state.progress &#x3D; 0;
+        });
+    }
+
+    private checkFileBeforeDownload() {
+        if (this.isEmpty()) {
+            return false;
+        }
+        if (!this.taskId) {
+            this._log.error(&#x27;File cannot be downloaded. No task is set to the field.&#x27;);
+            return false;
+        }
+        return true;
+    }
+
+    public showPreviewDialog() {
+        if (!this.checkFileBeforeDownload()) {
+            return;
+        }
+        this._taskResourceService.downloadFile(this.taskId, this.dataField.stringId).subscribe(response &#x3D;&gt; {
+            if (!(response as ProviderProgress).type || (response as ProviderProgress).type !&#x3D;&#x3D; ProgressType.DOWNLOAD) {
+                this._log.debug(&#x60;File [${this.dataField.stringId}] ${this.dataField.value.name} was successfully downloaded&#x60;);
+                this.initDownloadFile(response);
+            }
+        }, error &#x3D;&gt; {
+            this._log.error(&#x60;Downloading file [${this.dataField.stringId}] ${this.dataField.value.name} has failed!&#x60;, error);
+            this._snackbar.openErrorSnackBar(
+                this.dataField.value.name + &#x27; &#x27; + this._translate.instant(&#x27;dataField.snackBar.downloadFail&#x27;)
+            );
+            this.state.progress &#x3D; 0;
+        });
+    }
+
+    public changeMaxWidth(event: ResizedEvent) {
+        if (!!this.imageEl) {
+            this.imageEl.nativeElement.style.maxWidth &#x3D; event.newRect.width + &#x27;px&#x27;;
+        }
+    }
+
+    private initializePreviewIfDisplayable() {
+        const extension &#x3D; this.dataField.value.name.split(&#x27;.&#x27;).reverse()[0];
+        this.isDisplayable &#x3D; Object.values(FilePreviewType).includes(extension as any);
+        if (this.isDisplayable) {
+            this.previewExtension &#x3D; FilePreviewType[extension];
+            this.initFileFieldImage();
+        }
+    }
+
+    public getHeight() {
+        return this.dataField.layout &amp;&amp; this.dataField.layout.rows &amp;&amp; this.dataField.layout.rows !&#x3D;&#x3D; 1 ?
+            (this.dataField.layout.rows) * fieldHeight - fieldPadding : fieldHeight - fieldPadding;
+    }
+
+    public getPreviewBorderWidth(): string {
+        if (this.borderPropertyEnabled(&#x27;borderWidth&#x27;)) {
+            return this.dataField.component.properties.borderWidth + &#x27;px&#x27;;
+        }
+        return &#x60;${AbstractFileFieldComponent.DEFAULT_PREVIEW_BORDER_WIDTH}px&#x60;;
+    }
+
+    public getPreviewBorderStyle(): string {
+        if (this.borderPropertyEnabled(&#x27;borderStyle&#x27;)) {
+            return this.dataField.component.properties.borderStyle;
+        }
+        return AbstractFileFieldComponent.DEFAULT_PREVIEW_BORDER_STYLE;
+    }
+
+    public getPreviewBorderColor(): string {
+        if (this.borderPropertyEnabled(&#x27;borderColor&#x27;)) {
+            return this.dataField.component.properties.borderColor;
+        }
+        return AbstractFileFieldComponent.DEFAULT_PREVIEW_BORDER_COLOR;
+    }
+
+    public isBorderLGBTQ(): boolean {
+        if (this.borderPropertyEnabled(&#x27;borderLGBTQ&#x27;)) {
+            return this.dataField.component.properties.borderLGBTQ &#x3D;&#x3D;&#x3D; &#x27;true&#x27;;
+        }
+        return false;
+    }
+
+    public isBorderDefault(): boolean {
+        if (this.borderPropertyEnabled(&#x27;borderEnabled&#x27;)) {
+            return this.dataField.component.properties.borderEnabled &#x3D;&#x3D;&#x3D; &#x27;true&#x27;;
+        }
+        return false;
+    }
+
+    public borderPropertyEnabled(property: string): boolean {
+        return !!this.dataField.component &amp;&amp; !!this.dataField.component.properties &amp;&amp; property in this.dataField.component.properties;
+    }
+
+    protected resolveParentTaskId(): string {
+        return !!this.dataField.parentTaskId ? this.dataField.parentTaskId : this.taskId;
+    }
+}
+</code></pre>
+    </div>
+
+
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div></div>'
+    var COMPONENTS = [{'name': 'AbstractAddChildNodeComponent', 'selector': 'ncc-abstract-add-child-node'},{'name': 'AbstractAdvancedSearchComponent', 'selector': 'ncc-abstract-advanced-search'},{'name': 'AbstractAuthenticationOverlayComponent', 'selector': 'ncc-abstract-auth-overlay'},{'name': 'AbstractBooleanFieldComponent', 'selector': 'ncc-abstract-boolean-field'},{'name': 'AbstractButtonFieldComponent', 'selector': 'ncc-abstract-button-field'},{'name': 'AbstractCaseListComponent', 'selector': 'ncc-abstract-case-list'},{'name': 'AbstractCaseListPaginatorComponent', 'selector': 'ncc-abstract-case-list-paginator'},{'name': 'AbstractCasePanelComponent', 'selector': 'ncc-abstract-case-panel'},{'name': 'AbstractCaseViewComponent', 'selector': 'ncc-abstract-case-view'},{'name': 'AbstractCountCardComponent', 'selector': 'ncc-abstract-count-card'},{'name': 'AbstractCurrencyNumberFieldComponent', 'selector': 'ncc-abstract-currency-field'},{'name': 'AbstractCustomCardComponent', 'selector': 'ncc-abstract-custom-card'},{'name': 'AbstractDashboardContentComponent', 'selector': 'ncc-abstract-dashboard-content'},{'name': 'AbstractDataFieldComponent', 'selector': 'ncc-abstract-datafield'},{'name': 'AbstractDataFieldTemplateComponent', 'selector': 'ncc-abstract-datafield-template'},{'name': 'AbstractDateFieldComponent', 'selector': 'ncc-abstract-date-field'},{'name': 'AbstractDateTimeFieldComponent', 'selector': 'ncc-abstract-date-time-field'},{'name': 'AbstractDefaultCaseList', 'selector': 'ncc-abstract-default-case-list'},{'name': 'AbstractDefaultNumberFieldComponent', 'selector': 'ncc-abstract-number-default-field'},{'name': 'AbstractDefaultTaskList', 'selector': 'ncc-abstract-default-task-list'},{'name': 'AbstractDialog', 'selector': 'ncc-abstract-dialog'},{'name': 'AbstractEditModeComponent', 'selector': 'ncc-abstract-edit-mode'},{'name': 'AbstractEmailSubmissionFormComponent', 'selector': 'ncc-abstract-email-submission-form'},{'name': 'AbstractEnumerationAutocompleteDynamicFieldComponent', 'selector': 'ncc-abstract-enumeration-autocomplete-dynamic-field'},{'name': 'AbstractEnumerationAutocompleteSelectFieldComponent', 'selector': 'ncc-abstract-enumeration-autocomplete-field'},{'name': 'AbstractEnumerationFieldComponent', 'selector': 'ncc-abstract-enumeration-field'},{'name': 'AbstractEnumerationIconFieldComponent', 'selector': 'ncc-abstract-enumerataion-icon-field'},{'name': 'AbstractEnumerationListFieldComponent', 'selector': 'ncc-abstract-enumeration-list-field'},{'name': 'AbstractEnumerationSelectFieldComponent', 'selector': 'ncc-abstract-enumeration-select-field'},{'name': 'AbstractEnumerationStepperFieldComponent', 'selector': 'ncc-abstract-enumeration-stepper-field'},{'name': 'AbstractFieldComponentResolverComponent', 'selector': 'ncc-abstract-field-component-resolver'},{'name': 'AbstractFileFieldComponent', 'selector': 'ncc-abstract-file-field'},{'name': 'AbstractFileListFieldComponent', 'selector': 'ncc-abstract-filelist-field'},{'name': 'AbstractFilterFieldComponent', 'selector': 'ncc-abstract-filter-field'},{'name': 'AbstractFilterFieldContentComponent', 'selector': 'ncc-abstract-filtercontent-field'},{'name': 'AbstractFilterSelectorComponent', 'selector': 'ncc-abstract-filter-selector'},{'name': 'AbstractForgottenPasswordComponent', 'selector': 'ncc-abstract-forgotten-password'},{'name': 'AbstractFulltextSearchComponent', 'selector': 'ncc-abstract-fulltext-search'},{'name': 'AbstractGroupNavigationComponentResolverComponent', 'selector': 'ncc-abstract-group-nagiation-resolver'},{'name': 'AbstractHeaderComponent', 'selector': 'ncc-abstract-header'},{'name': 'AbstractHeaderModeComponent', 'selector': 'ncc-abstract-header-mode'},{'name': 'AbstractHtmlTextareaFieldComponent', 'selector': 'ncc-abstract-html-area-field'},{'name': 'AbstractI18nDividerFieldComponent', 'selector': 'ncc-abstract-i18n-divider-field'},{'name': 'AbstractI18nErrorsComponent', 'selector': 'ncc-abstract-i18n-errors'},{'name': 'AbstractI18nFieldComponent', 'selector': 'ncc-abstract-i18n-field'},{'name': 'AbstractI18nTextFieldComponent', 'selector': 'ncc-abstract-i18n-text-field'},{'name': 'AbstractIframeCardComponent', 'selector': 'ncc-abstract-iframe-card'},{'name': 'AbstractImmediateFilterTextComponent', 'selector': 'ncc-abstract-immediate-filter-text'},{'name': 'AbstractImmediateFilterTextContentComponent', 'selector': 'ncc-abstract-immediate-filter-text-content'},{'name': 'AbstractImportNetComponent', 'selector': 'ncc-abstract-import-net'},{'name': 'AbstractInternalLinkComponent', 'selector': 'ncc-abstract-internal-link'},{'name': 'AbstractLanguageSelectorComponent', 'selector': 'ncc-abstract-language-selector'},{'name': 'AbstractLdapGroupRoleAssignment', 'selector': 'ncc-abstract-ldap-group-role-assignment'},{'name': 'AbstractLegalNoticeComponent', 'selector': 'ncc-abstract-legal-notice'},{'name': 'AbstractLoadFilterComponent', 'selector': 'ncc-abstract-load-filter'},{'name': 'AbstractLoadingModeComponent', 'selector': 'ncc-abstract-loading-mode'},{'name': 'AbstractLoginFormComponent', 'selector': 'ncc-abstract-login-field'},{'name': 'AbstractLogoutShortcutComponent', 'selector': 'ncc-abstract-logout-shortcut'},{'name': 'AbstractMultichoiceFieldComponent', 'selector': 'ncc-abstract-multichoice-field'},{'name': 'AbstractMultichoiceListFieldComponent', 'selector': 'ncc-abstract-multichoice-list-field'},{'name': 'AbstractMultichoiceSelectFieldComponent', 'selector': 'ncc-abstract-multichoice-select-field'},{'name': 'AbstractNavigationDrawerComponent', 'selector': 'ncc-abstract-navigation-drawer'},{'name': 'AbstractNavigationRailComponent', 'selector': 'ncc-abstract-navigation-rail'},{'name': 'AbstractNavigationResizableDrawerComponent', 'selector': 'ncc-abstract-navigation-resizable-drawer'},{'name': 'AbstractNavigationTreeComponent', 'selector': 'ncc-abstract-navigation-tree'},{'name': 'AbstractNewCaseComponent', 'selector': 'ncc-abstract-new-case'},{'name': 'AbstractNumberErrorsComponent', 'selector': 'ncc-abstract-number-errors-field'},{'name': 'AbstractNumberFieldComponent', 'selector': 'ncc-abstract-number-field'},{'name': 'AbstractOptionSelectorComponent', 'selector': 'ncc-abstract-option-selector'},{'name': 'AbstractPanelComponent', 'selector': 'ncc-abstract-panel'},{'name': 'AbstractPanelItemComponent', 'selector': 'ncc-abstract-panel-item-component'},{'name': 'AbstractPanelWithHeaderBindingComponent', 'selector': 'ncc-abstract-panel-with-header-binding'},{'name': 'AbstractPanelWithImmediateDataComponent', 'selector': 'ncc-abstract-panel-with-immediate'},{'name': 'AbstractPasswordTextFieldComponent', 'selector': 'ncc-abstract-password-text-field'},{'name': 'AbstractProfileComponent', 'selector': 'ncc-abstract-profile'},{'name': 'AbstractQuickPanelComponent', 'selector': 'ncc-abstract-quick-panel'},{'name': 'AbstractRegistrationComponent', 'selector': 'ncc-abstract-registration'},{'name': 'AbstractRegistrationFormComponent', 'selector': 'ncc-abstract-registration-form'},{'name': 'AbstractRemoveNodeComponent', 'selector': 'ncc-abstract-remove-node'},{'name': 'AbstractRichTextareaFieldComponent', 'selector': 'ncc-abstract-rich-text-field'},{'name': 'AbstractRoleAssignmentComponent', 'selector': 'ncc-abstract-role'},{'name': 'AbstractSaveFilterComponent', 'selector': 'ncc-abstract-save-filter'},{'name': 'AbstractSearchClauseComponent', 'selector': 'ncc-abstract-search-clause'},{'name': 'AbstractSearchComponent', 'selector': 'ncc-abstract-search'},{'name': 'AbstractSearchConfigurationInputComponent', 'selector': 'ncc-abstract-search-configuration-input'},{'name': 'AbstractSearchModeComponent', 'selector': 'ncc-abstract-seatch-mode'},{'name': 'AbstractSearchOperandInputComponent', 'selector': 'ncc-abstract-search-operand-input'},{'name': 'AbstractSearchPredicateComponent', 'selector': 'ncc-abstract-search-predicate'},{'name': 'AbstractSideMenuContainerComponent', 'selector': 'ncc-abstract-side-menu-container'},{'name': 'AbstractSimpleTextFieldComponent', 'selector': 'ncc-abstract-simple-text-field'},{'name': 'AbstractSortableViewComponent', 'selector': 'ncc-abstract-sortable-view'},{'name': 'AbstractSortModeComponent', 'selector': 'ncc-abstract-sort-mode'},{'name': 'AbstractTabbedCaseViewComponent', 'selector': 'ncc-abstract-tabbed-case-view'},{'name': 'AbstractTabbedTaskViewComponent', 'selector': 'ncc-abstract-tabbed-task-view'},{'name': 'AbstractTabViewComponent', 'selector': 'ncc-abstract-tab-view'},{'name': 'AbstractTaskContentComponent', 'selector': 'ncc-abstract-task-content'},{'name': 'AbstractTaskListComponent', 'selector': 'ncc-abstract-task-list'},{'name': 'AbstractTaskListPaginationComponent', 'selector': 'ncc-abstract-task-list-pagination-component'},{'name': 'AbstractTaskPanelComponent', 'selector': 'ncc-abstract-legal-notice'},{'name': 'AbstractTaskViewComponent', 'selector': 'ncc-abstract-task-view'},{'name': 'AbstractTextareaFieldComponent', 'selector': 'ncc-abstract-text-area-field'},{'name': 'AbstractTextFieldComponent', 'selector': 'ncc-abstract-text-field'},{'name': 'AbstractTimeInstanceFieldComponent', 'selector': 'ncc-abstract-time-instance-field'},{'name': 'AbstractToolbarComponent', 'selector': 'ncc-abstract-toolbar'},{'name': 'AbstractTreeComponent', 'selector': 'ncc-abstract-tree'},{'name': 'AbstractTreeTaskContentComponent', 'selector': 'ncc-abstract-tree-task-content'},{'name': 'AbstractUserAssignComponent', 'selector': 'ncc-abstract-user-assign'},{'name': 'AbstractUserAssignItemComponent', 'selector': 'ncc-abstract-user-assign-item'},{'name': 'AbstractUserAssignListComponent', 'selector': 'ncc-abstract-user-assign-list'},{'name': 'AbstractUserCardComponent', 'selector': 'ncc-abstract-user-card'},{'name': 'AbstractUserFieldComponent', 'selector': 'ncc-abstract-user-field'},{'name': 'AbstractUserInviteComponent', 'selector': 'ncc-abstract-user-invite'},{'name': 'AbstractViewWithHeadersComponent', 'selector': 'ncc-abstract-view-with-headers'},{'name': 'AbstractWorkflowPanelComponent', 'selector': 'ncc-abstract-workflow-panel'},{'name': 'AbstractWorkflowViewComponent', 'selector': 'ncc-abstract-workflow-view'},{'name': 'AlertDialogComponent', 'selector': 'ncc-simple-dialog'},{'name': 'ConfirmDialogComponent', 'selector': 'ncc-question-dialog'},{'name': 'ErrorSnackBarComponent', 'selector': 'ncc-error-snack-bar'},{'name': 'GenericSnackBarComponent', 'selector': 'ncc-generic-snack-bar'},{'name': 'PromptDialogComponent', 'selector': 'ncc-question-dialog-with-answer'},{'name': 'SnackBar', 'selector': 'ncc-abstract-snackbar'},{'name': 'SuccessSnackBarComponent', 'selector': 'ncc-success-snack-bar'},{'name': 'TabbedVirtualScrollComponent', 'selector': 'ncc-abstract-tabbed-virtual-scroll'},{'name': 'WarningSnackBarComponent', 'selector': 'ncc-warning-snack-bar'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'AbstractFileFieldComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'AbstractFileFieldComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

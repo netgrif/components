@@ -95,7 +95,7 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {AfterViewInit, OnInit} from &#x27;@angular/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {AfterViewInit, Component} from &#x27;@angular/core&#x27;;
 import {FormControl} from &#x27;@angular/forms&#x27;;
 import {SideMenuControl} from &#x27;../../models/side-menu-control&#x27;;
 import {PetriNetResourceService} from &#x27;../../../resources/engine-endpoint/petri-net-resource.service&#x27;;
@@ -124,7 +124,11 @@ interface FileList {
     [key: string]: FileUploadModel;
 }
 
-export abstract class AbstractImportNetComponent implements OnInit, AfterViewInit {
+@Component({
+    selector: &#x27;ncc-abstract-import-net&#x27;,
+    template: &#x27;&#x27;
+})
+export abstract class AbstractImportNetComponent implements AfterViewInit {
 
     public files: FileList &#x3D; {};
     public releaseTypes: Array&lt;string&gt; &#x3D; [&#x27;Major&#x27;, &#x27;Minor&#x27;, &#x27;Patch&#x27;];
@@ -138,9 +142,6 @@ export abstract class AbstractImportNetComponent implements OnInit, AfterViewIni
                 protected _log: LoggerService,
                 protected _snackbar: SnackBarService,
                 protected _translate: TranslateService) {
-    }
-
-    ngOnInit() {
     }
 
     ngAfterViewInit(): void {

@@ -1,4 +1,4 @@
-import {Injector, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Injector, Input, OnDestroy, OnInit} from '@angular/core';
 import {CountCard} from '../model/count-card';
 import {CountService} from '../../../resources/abstract-endpoint/count-service';
 import {Filter} from '../../../filter/models/filter';
@@ -8,7 +8,11 @@ import {TaskResourceService} from '../../../resources/engine-endpoint/task-resou
 import {SimpleFilter} from '../../../filter/models/simple-filter';
 import {Subscription} from 'rxjs';
 
-export abstract class AbstractCountCard implements OnInit, OnDestroy {
+@Component({
+    selector: 'ncc-abstract-count-card',
+    template: ''
+})
+export abstract class AbstractCountCardComponent implements OnInit, OnDestroy {
 
     @Input() public card: CountCard;
     protected _countService: CountService;

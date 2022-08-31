@@ -57,7 +57,7 @@ describe('AbstractAdvancedSearchComponent', () => {
 
 
 @Component({
-    selector: 'nae-test-fulltext-search',
+    selector: 'ncc-test-fulltext-search',
     template: '',
     providers: [AdvancedSearchComponentInitializationService]
 })

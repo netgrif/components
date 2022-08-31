@@ -21,7 +21,7 @@ describe('PetriNetResourceService', () => {
     });
 
     it('should getAll', (done) => {
-        inject([HttpTestingController],
+            inject([HttpTestingController],
                 (httpMock: HttpTestingController) => {
                     service.getAll().subscribe(res => {
                         expect(res.length).toEqual(0);
@@ -37,7 +37,7 @@ describe('PetriNetResourceService', () => {
     );
 
     it('should getDataPetriNet', (done) => {
-        inject([HttpTestingController],
+            inject([HttpTestingController],
                 (httpMock: HttpTestingController) => {
                     service.getDataPetriNet({}).subscribe(res => {
                         expect(res.length).toEqual(0);
@@ -53,7 +53,7 @@ describe('PetriNetResourceService', () => {
     );
 
     it('should getPetriNetTranstions', (done) => {
-        inject([HttpTestingController],
+            inject([HttpTestingController],
                 (httpMock: HttpTestingController) => {
                     service.getPetriNetTransitions('id').subscribe(res => {
                         expect(res.length).toEqual(0);
@@ -69,7 +69,7 @@ describe('PetriNetResourceService', () => {
     );
 
     it('should getPetriNetTransactions', (done) => {
-        inject([HttpTestingController],
+            inject([HttpTestingController],
                 (httpMock: HttpTestingController) => {
                     service.getPetriNetTransactions('id').subscribe(res => {
                         expect(res.length).toEqual(0);
@@ -85,7 +85,7 @@ describe('PetriNetResourceService', () => {
     );
 
     it('should getNetFile', (done) => {
-        inject([HttpTestingController],
+            inject([HttpTestingController],
                 (httpMock: HttpTestingController) => {
                     const response = new Blob();
                     service.getNetFile('id').subscribe(res => {
@@ -102,7 +102,7 @@ describe('PetriNetResourceService', () => {
     );
 
     it('should getPetriNetRoles', (done) => {
-        inject([HttpTestingController],
+            inject([HttpTestingController],
                 (httpMock: HttpTestingController) => {
                     service.getPetriNetRoles('id').subscribe(res => {
                         expect(res.processRoles.length).toEqual(0);
@@ -118,14 +118,14 @@ describe('PetriNetResourceService', () => {
     );
 
     it('should getOne', (done) => {
-        inject([HttpTestingController],
+            inject([HttpTestingController],
                 (httpMock: HttpTestingController) => {
                     service.getOne('id', 'vers').subscribe(res => {
                         expect(res.stringId).toEqual('string');
                         done();
                     });
 
-                    const reqLog = httpMock.expectOne('http://localhost:8080/api/petrinet/id/vers');
+                    const reqLog = httpMock.expectOne(`http://localhost:8080/api/petrinet/${btoa('id')}/vers`);
                     expect(reqLog.request.method).toEqual('GET');
 
                     reqLog.flush({stringId: 'string'});
@@ -134,7 +134,7 @@ describe('PetriNetResourceService', () => {
     );
 
     it('should getOneById', (done) => {
-        inject([HttpTestingController],
+            inject([HttpTestingController],
                 (httpMock: HttpTestingController) => {
                     service.getOneById('id').subscribe(res => {
                         expect(res.petriNetReferences[0].stringId).toEqual('string');
@@ -150,7 +150,7 @@ describe('PetriNetResourceService', () => {
     );
 
     it('should searchPetriNets', (done) => {
-        inject([HttpTestingController],
+            inject([HttpTestingController],
                 (httpMock: HttpTestingController) => {
                     service.searchPetriNets({}).subscribe(res => {
                         expect(res.content.length).toEqual(0);

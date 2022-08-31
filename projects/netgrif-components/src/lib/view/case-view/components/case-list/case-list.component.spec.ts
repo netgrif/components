@@ -33,7 +33,7 @@ describe('CaseListComponent', () => {
                 TranslateLibModule,
                 PanelComponentModule,
                 NoopAnimationsModule,
-                RouterModule.forRoot([]),
+                RouterModule.forRoot([], { relativeLinkResolution: 'legacy' }),
                 RouterTestingModule.withRoutes([])
             ],
             providers: [

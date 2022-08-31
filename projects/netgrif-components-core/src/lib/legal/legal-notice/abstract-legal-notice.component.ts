@@ -1,7 +1,11 @@
-import {Input} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {Services} from '../../../commons/schema';
 
+@Component({
+    selector: 'ncc-abstract-legal-notice',
+    template: ''
+})
 export abstract class AbstractLegalNoticeComponent {
 
     /**

@@ -5,7 +5,7 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {Component} from '@angular/core';
 import {IframeCard} from '../model/iframe-card';
 import {DashboardCardTypes} from '../model/dashboard-card-types';
-import {AbstractIframeCard} from './abstract-iframe-card';
+import {AbstractIframeCardComponent} from './abstract-iframe-card';
 import {DomSanitizer} from '@angular/platform-browser';
 
 describe('AbstractIframeCardComponent', () => {
@@ -35,18 +35,18 @@ describe('AbstractIframeCardComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-iframe-card',
+    selector: 'ncc-test-iframe-card',
     template: ''
 })
-class TestIframeCardComponent extends AbstractIframeCard {
+class TestIframeCardComponent extends AbstractIframeCardComponent {
     constructor(protected _sanitizer: DomSanitizer) {
         super(_sanitizer);
     }
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-iframe-card [card]="card"></nae-test-iframe-card>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-iframe-card [card]="card"></ncc-test-iframe-card>'
 })
 class TestWrapperComponent {
     card: IframeCard = {

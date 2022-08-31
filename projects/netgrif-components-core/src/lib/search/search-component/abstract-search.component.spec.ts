@@ -89,7 +89,7 @@ describe('AbstractSearchComponent', () => {
 
 
 @Component({
-    selector: 'nae-test-search',
+    selector: 'ncc-test-search',
     template: ''
 })
 class TestSearchComponent extends AbstractSearchComponent {

@@ -17,6 +17,7 @@ import {
     MockAuthenticationMethodService,
     MockAuthenticationService,
     MockUserResourceService,
+    OverflowService,
     SuccessSnackBarComponent,
     TestConfigurationService, TestNoAllowedNetsFactory,
     TestViewService,
@@ -37,7 +38,7 @@ describe('HeaderComponent', () => {
                 TranslateLibModule,
                 HttpClientTestingModule,
                 MatIconModule,
-                RouterModule.forRoot([])
+                RouterModule.forRoot([], { relativeLinkResolution: 'legacy' })
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
@@ -46,7 +47,8 @@ describe('HeaderComponent', () => {
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: CaseViewService, useValue: {allowedNets$: of([])}},
                 {provide: ViewService, useClass: TestViewService},
-                {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
+                {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
+                OverflowService
             ],
             declarations: [
                 ErrorSnackBarComponent,

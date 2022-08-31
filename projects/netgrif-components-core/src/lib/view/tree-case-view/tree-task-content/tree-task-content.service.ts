@@ -275,6 +275,9 @@ export class TreeTaskContentService implements OnDestroy {
         if (this.shouldCancelTask) {
             this._cancel.cancel();
         }
+        if (this._taskOperations) {
+            this._taskOperations.destroy();
+        }
     }
 
     /**

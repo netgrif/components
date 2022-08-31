@@ -669,8 +669,8 @@ immediate data field. Returns <code>undefined</code> if the request body cannot 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="285"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-task-content/tree-task-content.service.ts:285</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="288"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-task-content/tree-task-content.service.ts:288</a></div>
                 </td>
             </tr>
 
@@ -1342,6 +1342,9 @@ export class TreeTaskContentService implements OnDestroy {
     ngOnDestroy(): void {
         if (this.shouldCancelTask) {
             this._cancel.cancel();
+        }
+        if (this._taskOperations) {
+            this._taskOperations.destroy();
         }
     }
 

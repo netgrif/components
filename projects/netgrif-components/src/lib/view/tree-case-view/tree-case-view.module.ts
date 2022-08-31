@@ -29,9 +29,7 @@ import {DataFieldsComponentModule} from '../../data-fields/data-fields.module';
     exports: [
         TreeComponent,
         TreeTaskContentComponent,
-    ],
-    entryComponents: []
-
+    ]
 })
 export class TreeCaseViewComponentModule {
 }

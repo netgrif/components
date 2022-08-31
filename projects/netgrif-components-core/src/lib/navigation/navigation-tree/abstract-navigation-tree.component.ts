@@ -1,4 +1,4 @@
-import {Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {Services, View, Views} from '../../../commons/schema';
@@ -7,10 +7,9 @@ import {MatTreeNestedDataSource} from '@angular/material/tree';
 import {forkJoin, Observable, of, ReplaySubject, Subscription} from 'rxjs';
 import {LoggerService} from '../../logger/services/logger.service';
 import {UserService} from '../../user/services/user.service';
-import {RoleGuardService} from '../../authorization/role/role-guard.service';
-import {AuthorityGuardService} from '../../authorization/authority/authority-guard.service';
-import {GroupGuardService} from '../../authorization/group/group-guard.service';
-import {AbstractNavigationResizableDrawerComponent} from '../navigation-drawer/abstract-navigation-resizable-drawer.component';
+import {
+    AbstractNavigationResizableDrawerComponent
+} from '../navigation-drawer/abstract-navigation-resizable-drawer.component';
 import {ActiveGroupService} from '../../groups/services/active-group.service';
 import {concatMap, debounceTime, filter, map, take} from 'rxjs/operators';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
@@ -25,6 +24,7 @@ import {LanguageService} from '../../translate/language.service';
 import {
     DynamicNavigationRouteProviderService
 } from '../../routing/dynamic-navigation-route-provider/dynamic-navigation-route-provider.service';
+import {AccessService} from "../../authorization/permission/access.service";
 
 export interface NavigationNode {
     name: string;
@@ -35,6 +35,10 @@ export interface NavigationNode {
     translate?: boolean;
 }
 
+@Component({
+    selector: 'ncc-abstract-navigation-tree',
+    template: ''
+})
 export abstract class AbstractNavigationTreeComponent extends AbstractNavigationResizableDrawerComponent implements OnInit, OnDestroy {
 
     @Input() public viewPath: string;
@@ -56,9 +60,7 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
                           protected _router: Router,
                           protected _log: LoggerService,
                           protected _userService: UserService,
-                          protected _roleGuard: RoleGuardService,
-                          protected _authorityGuard: AuthorityGuardService,
-                          protected _groupGuard: GroupGuardService,
+                          protected _accessService: AccessService,
                           protected _activeGroupService: ActiveGroupService,
                           protected _taskResourceService: TaskResourceService,
                           protected _languageService: LanguageService,
@@ -173,7 +175,7 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
                 throw new Error('Route segment doesnt exist in view ' + parentUrl + '/' + viewKey + ' !');
             }
 
-            if (!this.canAccessView(view, this.appendRouteSegment(parentUrl, routeSegment))) {
+            if (!this._accessService.canAccessView(view, this.appendRouteSegment(parentUrl, routeSegment))) {
                 return; // continue
             }
 
@@ -276,58 +278,6 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
         });
     }
 
-    /**
-     * @param view the view whose access permissions we want to check
-     * @param url URL to which the view maps. Is used only for error message generation
-     * @returns whether the user can access the provided view
-     */
-    protected canAccessView(view: View, url: string): boolean {
-        if (!view.hasOwnProperty('access')) {
-            return true;
-        }
-
-        if (typeof view.access === 'string') {
-            if (view.access === 'public') {
-                return true;
-            }
-            if (view.access !== 'private') {
-                throw new Error(`Unknown access option '${view.access}'. Only 'public' or 'private' is allowed.`);
-            }
-            return !this._userService.user.isEmpty();
-        }
-
-        return !this._userService.user.isEmpty() // AuthGuard
-                && this.passesRoleGuard(view, url)
-                && this.passesAuthorityGuard(view)
-                && this.passesGroupGuard(view, url);
-    }
-
-    /**
-     * @param view the view whose access permissions we want to check
-     * @param url URL to which the view maps. Is used only for error message generation
-     * @returns whether the user passes the role guard condition for accessing the specified view
-     */
-    protected passesRoleGuard(view: View, url: string): boolean {
-        return !view.access.hasOwnProperty('role') || this._roleGuard.canAccessView(view, url);
-    }
-
-    /**
-     * @param view the view whose access permissions we want to check
-     * @returns whether the user passes the authority guard condition for accessing the specified view
-     */
-    protected passesAuthorityGuard(view: View): boolean {
-        return !view.access.hasOwnProperty('authority') || this._authorityGuard.canAccessView(view);
-    }
-
-    /**
-     * @param view the view whose access permissions we want to check
-     * @param url URL to which the view maps. Is used only for error message generation
-     * @returns whether the user passes the role guard condition for accessing the specified view
-     */
-    protected passesGroupGuard(view: View, url: string): boolean {
-        return !view.access.hasOwnProperty('group') || this._groupGuard.canAccessView(view, url);
-    }
-
     protected resolveChange() {
         const view = this._config.getViewByPath(this.viewPath);
         if (view && view.children) {
@@ -365,7 +315,10 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
     protected generateGroupNavigationNodes(): Observable<Array<NavigationNode>> {
         return forkJoin(this._activeGroupService.activeGroups.map(groupCase => {
             return this._taskResourceService.searchTask(SimpleFilter.fromTaskQuery(
-                {case: {id: groupCase.stringId}, transitionId: GroupNavigationConstants.NAVIGATION_CONFIG_TRANSITION_ID as string}
+                {
+                    case: {id: groupCase.stringId},
+                    transitionId: GroupNavigationConstants.NAVIGATION_CONFIG_TRANSITION_ID as string
+                }
             )).pipe(
                 map(taskPage => {
                     if (hasContent(taskPage)) {
@@ -415,7 +368,7 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
             throw new Error('The navigation configuration task contains no task ref with entries. Navigation cannot be constructed');
         }
 
-        for (let order = 0; order < navEntriesTaskRef.value.length; order ++) {
+        for (let order = 0; order < navEntriesTaskRef.value.length; order++) {
             const index = entryDataGroupIndices[order];
             const label = extractIconAndTitle(navConfigDatagroups.slice(index,
                 index + GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY));
@@ -428,11 +381,11 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
             }
             newNode.url = `/${url}/${navEntriesTaskRef.value[order]}`;
             const allowedRoles = extractRoles(navConfigDatagroups.slice(index,
-                index + GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY),
+                    index + GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY),
                 GroupNavigationConstants.NAVIGATION_ENTRY_ALLOWED_ROLES_FIELD_ID_SUFFIX);
 
             const bannedRoles = extractRoles(navConfigDatagroups.slice(index,
-                index + GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY),
+                    index + GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY),
                 GroupNavigationConstants.NAVIGATION_ENTRY_BANNED_ROLES_FIELD_ID_SUFFIX);
 
             const splitAllowedRoles = this.extractRoleAndNetId(allowedRoles);

@@ -22,7 +22,7 @@ import {TaskPageLoadRequestResult} from '../models/task-page-load-request-result
 import {LoadingWithFilterEmitter} from '../../../utility/loading-with-filter-emitter';
 import {arrayToObservable} from '../../../utility/array-to-observable';
 import {SearchIndexResolverService} from '../../../search/search-keyword-resolver-service/search-index-resolver.service';
-import {SortableView} from '../../abstract/sortable-view';
+import {AbstractSortableViewComponent} from '../../abstract/sortable-view';
 import {NAE_TASK_VIEW_CONFIGURATION} from '../models/task-view-configuration-injection-token';
 import {TaskViewConfiguration} from '../models/task-view-configuration';
 import {ChangedFieldsMap} from '../../../event/services/interfaces/changed-fields-map';
@@ -31,7 +31,7 @@ import {createSortParam, PaginationSort} from '../../../utility/pagination/pagin
 
 
 @Injectable()
-export class TaskViewService extends SortableView implements OnDestroy {
+export class TaskViewService extends AbstractSortableViewComponent implements OnDestroy {
 
     protected _tasks$: Observable<Array<TaskPanelData>>;
     protected _changedFields$: Subject<ChangedFieldsMap>;
@@ -186,6 +186,10 @@ export class TaskViewService extends SortableView implements OnDestroy {
         return this._closeTab$.asObservable();
     }
 
+    public get pagination(): Pagination {
+        return this._pagination;
+    }
+
     protected get activeFilter(): Filter {
         return this._searchService.activeFilter;
     }
@@ -295,6 +299,19 @@ export class TaskViewService extends SortableView implements OnDestroy {
         if (renderedRange.end === totalLoaded) {
             this._requestedPage$.next(requestContext);
         }
+    }
+
+    public nextPagePagination(length: number, pageIndex: number, requestContext?: PageLoadRequestContext): void {
+        if (requestContext === undefined) {
+            requestContext = new PageLoadRequestContext(this.activeFilter, this._pagination);
+            requestContext.pagination.size = length;
+            requestContext.pagination.number = pageIndex;
+        }
+
+        if (this.isLoadingRelevantFilter(requestContext) || this._endOfData) {
+            return;
+        }
+        this._requestedPage$.next(requestContext);
     }
 
     private isLoadingRelevantFilter(requestContext?: PageLoadRequestContext): boolean {

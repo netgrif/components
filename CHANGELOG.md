@@ -5,20 +5,67 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres
 to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-Full
-Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://github.com/netgrif/components/commits/v6.0.0)
+Full Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://github.com/netgrif/components/commits/v6.0.0)
 
-## [6.1.0](https://github.com/netgrif/components/releases/tag/v6.1.0) (2022-04-25)
+## [6.2.0](https://github.com/netgrif/components/releases/tag/v6.2.0) (2022-08-24)
+
+### Fixed
+
+- [NAE-1628] Reset radio buttons button visible on visible radio buttons
+- [NAE-1667] Select user translation
+- [NAE-1669] Fix header design
+- [NAE-1672] Change userField value
+- [NAE-1680] Public view + change behavior bug
+- [NAE-1690] Fix header responsive overflow mode
+- [NAE-1681] Delete file function works with parent task in taskRef-ed file field.
+- [NAE-1701] Reload validity on the change required field
+
+### Changed
+
+- [NAE-1648] Redesign dataFields
+- [NAE-1682] Translate tooltip admin view
+- [NAE-1677] Message from exception thrown in SET event on data field is not propagated in EventOutcome
+
+### Added
+
+- [NAE-1647] Elastic mapping for I18N data field
+- [NAE-1658] Two-level navigation menu
+- [NAE-1671] Dynamic case title in tab
+- [NAE-1642] Redirect to transition via URL
+- [NAE-1643] Configure public view via request parameters
+
+## [6.1.1](https://github.com/netgrif/components/releases/tag/v6.1.1) (2022-06-09)
+
+### Fixed
+
+- [NAE-1649] File field preview component bug
+- [NAE-1656] Export  nc-panel-item
+- [NAE-1653] Create view schematic not functional after angular 13 update
+
+## [6.1.0](https://github.com/netgrif/components/releases/tag/v6.1.0) (2022-06-01)
 
 ### Fixed
 
 - [NAE-1470] Unable to copy from html text area
 - [NAE-1526] Visible HTML text area with no value displays undefined
 - [NAE-1591] Unit tests failing on "An error was thrown in afterAll"
+- [NAE-1435] Number field value NaN causes 'Maximum call stack size exceeded'
+- [NAE-1555] Required select enumeration does not display asterix
 
 ### Changed
 
+- [NAE-1061] Resource pagination with paginator footer
 - [NAE-1604] Remove case creation button if there are no nets where user can create an instance
+- [NAE-1363] Refactor panel featured values
+- [NAE-1462] Change BaseAllowedNetService to always use observables
+- [NAE-1381] Public view task loading
+- [NAE-1609] Angular 13 upgrade
+- [NAE-1585] Security update to resolve vulnerabilities
+
+### Added
+
+- [NAE-1627] LDAP Groups resolving and mapping
+- [NAE-1468] i18n Data field
 
 ## [6.0.4](https://github.com/netgrif/components/releases/tag/v6.0.4) (2022-04-12)
 

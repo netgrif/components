@@ -10,7 +10,7 @@ import {
     url,
 } from '@angular-devkit/schematics';
 import {FileEntry, UpdateRecorder, DirEntry} from '@angular-devkit/schematics/src/tree/interface';
-import {experimental, normalize, strings} from '@angular-devkit/core';
+import {normalize, strings} from '@angular-devkit/core';
 import {Change, InsertChange} from '@schematics/angular/utility/change';
 import {FileData} from './models/file-data';
 import {FileSystemNode} from './models/file-system-node';
@@ -27,7 +27,7 @@ export function getProjectInfo(tree: Tree): ProjectInfo {
 
     const workspaceContent = workspaceConfig.toString();
 
-    const workspace: experimental.workspace.WorkspaceSchema = JSON.parse(workspaceContent);
+    const workspace = JSON.parse(workspaceContent);
 
     const result = new ProjectInfo();
 

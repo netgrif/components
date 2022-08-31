@@ -7,7 +7,7 @@ import {AbstractPasswordTextFieldComponent} from '@netgrif/components-core';
   templateUrl: './password-text-field.component.html',
   styleUrls: ['./password-text-field.component.scss']
 })
-export class PasswordTextFieldComponent extends AbstractPasswordTextFieldComponent implements OnInit {
+export class PasswordTextFieldComponent extends AbstractPasswordTextFieldComponent {
 
     hide: boolean;
 
@@ -15,8 +15,4 @@ export class PasswordTextFieldComponent extends AbstractPasswordTextFieldCompone
         super(_translate);
         this.hide = true;
     }
-
-  ngOnInit(): void {
-  }
-
 }

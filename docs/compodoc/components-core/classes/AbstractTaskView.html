@@ -167,15 +167,15 @@
                                         <tbody>
                                                 <tr>
                                                         <td>taskViewService</td>
-                                                  
+
                                                         <td>
                                                                         <code><a href="../injectables/TaskViewService.html" target="_self" >TaskViewService</a></code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                 </tr>
                                         </tbody>
                                     </table>
@@ -187,7 +187,7 @@
 </section>
 
             <section>
-    
+
     <h3 id="inputs">
         Properties
     </h3>
@@ -282,7 +282,7 @@
 </section>
 
             <section>
-    
+
     <h3 id="methods">
         Methods
     </h3>
@@ -399,7 +399,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -422,7 +422,7 @@ import {TaskViewService} from &#x27;./service/task-view.service&#x27;;
 import {ViewWithHeaders} from &#x27;../abstract/view-with-headers&#x27;;
 
 
-export abstract class AbstractTaskView extends ViewWithHeaders implements OnDestroy {
+export abstract class AbstractTaskViewComponent extends ViewWithHeaders implements OnDestroy {
 
     public tasks$: Observable&lt;Array&lt;TaskPanelData&gt;&gt;;
     public loading$: Observable&lt;boolean&gt;;
@@ -443,7 +443,7 @@ export abstract class AbstractTaskView extends ViewWithHeaders implements OnDest
 
 
 
-                   
+
 
 
 
@@ -471,7 +471,7 @@ export abstract class AbstractTaskView extends ViewWithHeaders implements OnDest
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       
+
        <script type="module" src="../js/menu-wc.js" defer></script>
        <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
