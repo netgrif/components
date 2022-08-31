@@ -61,6 +61,7 @@ import { I18nTextFieldComponent } from './i18n-field/i18n-text-field/i18n-text-f
 import { EasymdeWrapperComponent } from './text-field/rich-textarea-field/easymde-wrapper/easymde-wrapper.component';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { CaseRefFieldComponent } from './case-ref-field/case-ref-field.component';
 
 @NgModule({
     declarations: [
@@ -100,6 +101,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
         I18nDividerFieldComponent,
         I18nTextFieldComponent,
         EasymdeWrapperComponent,
+        CaseRefFieldComponent,
     ],
     exports: [
         BooleanFieldComponent,
@@ -115,7 +117,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
         TextFieldComponent,
         UserFieldComponent,
         FilterFieldComponent,
-        I18nFieldComponent
+        I18nFieldComponent,
+        CaseRefFieldComponent
     ],
     imports: [
         CommonModule,

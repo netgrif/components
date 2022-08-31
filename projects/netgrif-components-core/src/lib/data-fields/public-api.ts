@@ -58,6 +58,7 @@ export * from './task-ref-field/model/task-ref-field';
 export * from './enumeration-field/models/dynamic-enumeration-field';
 export * from './filter-field/models/filter-field';
 export * from './i18n-field/models/i18n-field';
+export * from './case-ref-field/models/case-ref-field';
 
 /* Interfaces */
 export * from './models/changed-fields';

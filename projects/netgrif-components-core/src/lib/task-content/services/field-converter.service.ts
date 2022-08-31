@@ -21,6 +21,7 @@ import {TaskRefField} from '../../data-fields/task-ref-field/model/task-ref-fiel
 import {DynamicEnumerationField} from '../../data-fields/enumeration-field/models/dynamic-enumeration-field';
 import {FilterField} from '../../data-fields/filter-field/models/filter-field';
 import {I18nField} from '../../data-fields/i18n-field/models/i18n-field';
+import {CaseRefField} from '../../data-fields/case-ref-field/models/case-ref-field';
 
 @Injectable({
     providedIn: 'root'
@@ -117,6 +118,9 @@ export class FieldConverterService {
             case FieldTypeResource.I18N:
                 return new I18nField(item.stringId, item.name, item.value ?? {defaultValue: ''}, item.behavior, item.placeholder,
                     item.description, item.layout, item.validations, item.component);
+            case FieldTypeResource.CASE_REF:
+                return new CaseRefField(item.stringId, item.name, item.value ?? {defaultValue: ''}, item.behavior, item.placeholder,
+                    item.description, item.layout, item.validations, item.component);
         }
     }
 
@@ -141,6 +145,8 @@ export class FieldConverterService {
             return FieldTypeResource.USER;
         } else if (item instanceof TaskRefField) {
             return FieldTypeResource.TASK_REF;
+        } else if (item instanceof CaseRefField) {
+            return FieldTypeResource.CASE_REF;
         } else if (item instanceof EnumerationField || item instanceof MultichoiceField) {
             return item.fieldType;
         } else if (item instanceof FilterField) {
