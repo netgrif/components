@@ -16,14 +16,15 @@ export function createSidenavOrToolbarView(tree: Tree, sidenavOptions: SidenavPr
         sidenavOptions.createViewArguments.viewType,
         sidenavOptions.createViewArguments.componentName
     );
-    let drawerType = '<nc-navigation-drawer';
-    checkTypeOfSideNav();
+    let drawerType = 'nc-navigation-drawer';
+    let drawerParam = '';
     const rules = [];
     let isSideNav = false;
     let isToolbar = false;
     let nameOfComponent = '';
 
     checkArgsToCreateAppropriateView();
+    checkTypeOfSideNav();
 
     rules.push(createFilesFromTemplates('./views/sidenav-toolbar-view/files',
         `${projectInfo.path}/views/${sidenavOptions.createViewArguments.path}`, {
@@ -35,6 +36,7 @@ export function createSidenavOrToolbarView(tree: Tree, sidenavOptions: SidenavPr
             isSideNav,
             isToolbar,
             drawerType,
+            drawerParam,
             configName: projectInfo.projectNameClassified,
             configImportPath: createRelativePath(view.fileImportPath, `./${projectInfo.projectNameDasherized}-configuration.service`),
             viewIdSegment: getViewIdSegmentFromPath(sidenavOptions.createViewArguments.path)
@@ -59,6 +61,12 @@ export function createSidenavOrToolbarView(tree: Tree, sidenavOptions: SidenavPr
 
     function checkArgsToCreateAppropriateView() {
         switch (sidenavOptions.createViewArguments.viewType) {
+            case 'doubleDrawerView':
+                isSideNav = true;
+                drawerType='nc-navigation-double-drawer'
+                nameOfComponent = 'navigation-double-drawer';
+                drawerParam += ' image="assets/img/netgrif_full_white.svg" imageRouterLink="/"'
+                break;
             case 'sidenavView':
                 isSideNav = true;
                 nameOfComponent = 'sidenav-view';
@@ -78,16 +86,14 @@ export function createSidenavOrToolbarView(tree: Tree, sidenavOptions: SidenavPr
 
     function checkTypeOfSideNav(): void {
         if (sidenavOptions.user === undefined || sidenavOptions.quickPanel === undefined || sidenavOptions.navigation === undefined) {
-            drawerType += '>';
             return;
         }
         if (sidenavOptions.user)
-            drawerType += ' user="true"';
+            drawerParam += ' user="true"';
         if (sidenavOptions.quickPanel)
-            drawerType += ' quickPanel="true"';
+            drawerParam += ' quickPanel="true"';
         if (sidenavOptions.navigation)
-            drawerType += ' navigation="true"';
-        drawerType += '>';
+            drawerParam += ' navigation="true"';
     }
 }
 

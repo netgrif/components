@@ -2,7 +2,7 @@
 <nc-toolbar  logoSrc="" logoAlt="" ></nc-toolbar>
 <% } %>
 <% if (isSideNav) { %>
-<%= drawerType %>
+<<%= drawerType %><%= drawerParam %>>
     <router-outlet></router-outlet>
-</nc-navigation-drawer>
+</<%= drawerType %>>
 <% } %>

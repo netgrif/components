@@ -84,6 +84,7 @@ function createView(tree: Tree, args: CreateViewArguments, addViewToService: boo
         case 'treeCaseView':
             rules.push(createTreeCaseView(tree, args, addViewToService));
             break;
+        case 'doubleDrawerView':
         case 'toolbarView':
             rules.push(createSidenavOrToolbarView(tree, {
                 createViewArguments: args,

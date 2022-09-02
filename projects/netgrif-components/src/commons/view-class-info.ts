@@ -54,6 +54,8 @@ export class ViewClassInfo extends ImportToAdd {
                 return 'EmptyView';
             case 'sidenavView':
                 return 'SidenavView';
+            case 'doubleDrawerView':
+                return 'DoubleDrawerView';
             case 'toolbarView':
                 return 'ToolbarView';
             case 'sidenavAndToolbarView':

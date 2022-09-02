@@ -290,6 +290,7 @@
         "login": {
             "length": "Prihlasovacie meno musí mať aspoň 4 písmená",
             "login": "Prihlasovacie meno",
+            "wrongCredentials": "Nesprávne prihlasovacie údaje!",
             "loginButton": "Prihlásiť",
             "reset": "Obnova hesla",
             "sign": "Registrovať",
