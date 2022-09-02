@@ -1,5 +1,5 @@
 <% if (isToolbar) { %>
-<nc-toolbar></nc-toolbar>
+<nc-toolbar  logoSrc="" logoAlt="" ></nc-toolbar>
 <% } %>
 <% if (isSideNav) { %>
 <%= drawerType %>

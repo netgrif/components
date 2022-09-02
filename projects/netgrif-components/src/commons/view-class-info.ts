@@ -64,6 +64,12 @@ export class ViewClassInfo extends ImportToAdd {
                 return 'GroupView';
             case 'treeCaseView':
                 return 'TreeCaseView';
+            case 'workflowView':
+                return 'WorkflowView';
+            case 'roleAssignmentView':
+                return 'RoleAssignmentView';
+              case 'ldapRoleAssignmentView':
+                return 'LdapRoleAssignmentView';
             default:
                 throw new Error(`Unknown view type '${view}'`);
         }

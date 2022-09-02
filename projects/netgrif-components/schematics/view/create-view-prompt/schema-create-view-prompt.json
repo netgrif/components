@@ -30,7 +30,8 @@
                 "customView",
                 "treeCaseView",
                 "workflowView",
-                "roleAssignmentView"
+                "roleAssignmentView",
+                "ldapRoleAssignmentView"
             ],
             "x-prompt": {
                 "type": "list",
@@ -52,7 +53,8 @@
                     "customView",
                     "treeCaseView",
                     "workflowView",
-                    "roleAssignmentView"
+                    "roleAssignmentView",
+                    "ldapRoleAssignmentView"
                 ]
             }
         },

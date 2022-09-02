@@ -71,6 +71,8 @@ export class ViewClassInfo extends ImportToAdd {
                 return 'WorkflowView';
             case 'roleAssignmentView':
                 return 'RoleAssignmentView';
+            case 'ldapRoleAssignmentView':
+                return 'LdapRoleAssignmentView';
             default:
                 throw new SchematicsException(`Unknown view type '${view}'`);
         }

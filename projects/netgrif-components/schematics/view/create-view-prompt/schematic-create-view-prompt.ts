@@ -26,6 +26,7 @@ import {createPublicTaskView} from './views/public-task-view/create-public-task-
 import {createPublicWorkflowView} from './views/public-workflow-view/create-public-workflow-view';
 import {createPublicSingleTaskView} from './views/public-single-task-view/create-public-single-task-view';
 import {createPublicResolverView} from './views/public-resolver-view/create-public-resolver-view';
+import {createLdapRoleAssignmentView} from './views/ldap-role-assignment-view/ldap-role-assignment-view';
 
 export function schematicEntryPoint(schematicArguments: CreateViewArguments): Rule {
     return (tree: Tree) => {
@@ -107,6 +108,9 @@ function createView(tree: Tree, args: CreateViewArguments, addViewToService: boo
             break;
         case 'roleAssignmentView':
             rules.push(createRoleAssignmentView(tree, args, addViewToService));
+            break;
+        case 'ldapRoleAssignmentView':
+            rules.push(createLdapRoleAssignmentView(tree, args, addViewToService));
             break;
         default:
             throw new SchematicsException(`Unknown view type '${args.viewType}'`);
