@@ -52,7 +52,7 @@ function findMissingView(naeViews: Views, generatedViews: Set<string>, pathPrefi
         const viewPath = constructRoutePath(pathPrefix, pathSegment);
 
         if (viewPath === undefined) {
-            throw new SchematicsException('TOTOk');
+            throw new SchematicsException(`Please set viewPath! (PathSegment: ${pathSegment} )`);
         }
 
         if (view.layout === undefined && view.component === undefined) {
