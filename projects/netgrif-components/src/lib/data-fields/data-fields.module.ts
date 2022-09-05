@@ -64,6 +64,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
     MultichoiceAutocompleteFieldComponent
 } from './multichoice-field/multichoice-autocomplete-field/multichoice-autocomplete-field.component';
+import { UserListFieldComponent } from './user-list-field/user-list-field.component';
 
 @NgModule({
     declarations: [
@@ -104,23 +105,25 @@ import {
         I18nDividerFieldComponent,
         I18nTextFieldComponent,
         EasymdeWrapperComponent,
+        UserListFieldComponent,
     ],
-    exports: [
-        BooleanFieldComponent,
-        ButtonFieldComponent,
-        DataFieldTemplateComponent,
-        DateFieldComponent,
-        DateTimeFieldComponent,
-        EnumerationFieldComponent,
-        FileFieldComponent,
-        FileListFieldComponent,
-        MultichoiceFieldComponent,
-        NumberFieldComponent,
-        TextFieldComponent,
-        UserFieldComponent,
-        FilterFieldComponent,
-        I18nFieldComponent
-    ],
+	exports: [
+		BooleanFieldComponent,
+		ButtonFieldComponent,
+		DataFieldTemplateComponent,
+		DateFieldComponent,
+		DateTimeFieldComponent,
+		EnumerationFieldComponent,
+		FileFieldComponent,
+		FileListFieldComponent,
+		MultichoiceFieldComponent,
+		NumberFieldComponent,
+		TextFieldComponent,
+		UserFieldComponent,
+		FilterFieldComponent,
+		I18nFieldComponent,
+		UserListFieldComponent
+	],
     imports: [
         CommonModule,
         FlexLayoutModule,

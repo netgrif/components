@@ -45,12 +45,8 @@ export abstract class AbstractCaseViewComponent extends AbstractViewWithHeadersC
         this.authorityToCreate = _authority.map(a => a.authority);
     }
 
-    public createNewCase(): Observable<Case> {
-        if (this._newCaseCreationConfig.enableCaseTitle === false && this._caseViewService.getAllowedNetsCount() === 1) {
-            return this._caseViewService.createDefaultNewCase();
-        } else {
-            return this._caseViewService.createNewCase(this._newCaseCreationConfig);
-        }
+    get newCaseCreationConfig(): NewCaseCreationConfigurationData {
+        return this._newCaseCreationConfig;
     }
 
     public abstract handleCaseClick(clickedCase: Case): void;
