@@ -57,6 +57,8 @@ export class ViewClassInfo extends ImportToAdd {
                 return 'EmptyView';
             case 'sidenavView':
                 return 'SidenavView';
+            case 'doubleDrawerView':
+                return 'DoubleDrawerView';
             case 'toolbarView':
                 return 'ToolbarView';
             case 'sidenavAndToolbarView':
@@ -71,6 +73,8 @@ export class ViewClassInfo extends ImportToAdd {
                 return 'WorkflowView';
             case 'roleAssignmentView':
                 return 'RoleAssignmentView';
+            case 'ldapRoleAssignmentView':
+                return 'LdapRoleAssignmentView';
             default:
                 throw new SchematicsException(`Unknown view type '${view}'`);
         }

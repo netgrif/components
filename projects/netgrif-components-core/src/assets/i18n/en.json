@@ -290,6 +290,7 @@
         "login": {
             "length": "The login name must have at least 4 letters",
             "login": "Username",
+            "wrongCredentials": "Wrong credentials!",
             "loginButton": "Log in",
             "reset": "Reset password",
             "sign": "Sign Up",

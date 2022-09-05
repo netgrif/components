@@ -43,7 +43,7 @@ export class ViewClassInfo extends ImportToAdd {
         return path.replace(regexDash, '_').replace(/\//g, '-').toLocaleLowerCase();
     }
 
-    private static resolveClassSuffixForView(view: string): string {
+    private static resolveClassSuffixForView(view: string): string | undefined {
         switch (view) {
             case 'login':
                 return 'Login';
@@ -57,6 +57,8 @@ export class ViewClassInfo extends ImportToAdd {
                 return 'EmptyView';
             case 'sidenavView':
                 return 'SidenavView';
+            case 'doubleDrawerView':
+                return 'DoubleDrawerView';
             case 'toolbarView':
                 return 'ToolbarView';
             case 'sidenavAndToolbarView':
@@ -67,10 +69,6 @@ export class ViewClassInfo extends ImportToAdd {
                 return 'Dashboard';
             case 'treeCaseView':
                 return 'TreeCaseView';
-            case 'workflowView':
-                return 'WorkflowView';
-            case 'roleAssignmentView':
-                return 'RoleAssignmentView';
             case 'publicTaskView':
                 return 'PublicTaskView';
             case 'publicWorkflowView':
@@ -79,6 +77,12 @@ export class ViewClassInfo extends ImportToAdd {
                 return 'PublicSingleTaskView';
             case 'publicResolverView':
                 return 'PublicResolverView';
+            case 'workflowView':
+                return 'WorkflowView';
+            case 'roleAssignmentView':
+                return 'RoleAssignmentView';
+            case 'ldapRoleAssignmentView':
+                return 'LdapRoleAssignmentView';
             default:
                 throw new SchematicsException(`Unknown view type '${view}'`);
         }

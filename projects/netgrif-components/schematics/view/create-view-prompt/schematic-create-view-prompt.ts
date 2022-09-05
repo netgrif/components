@@ -1,6 +1,7 @@
 import {
     chain,
-    Rule, schematic,
+    schematic,
+    Rule,
     SchematicsException,
     Tree
 } from '@angular-devkit/schematics';
@@ -25,9 +26,11 @@ import {createPublicTaskView} from './views/public-task-view/create-public-task-
 import {createPublicWorkflowView} from './views/public-workflow-view/create-public-workflow-view';
 import {createPublicSingleTaskView} from './views/public-single-task-view/create-public-single-task-view';
 import {createPublicResolverView} from './views/public-resolver-view/create-public-resolver-view';
+import {createLdapRoleAssignmentView} from './views/ldap-role-assignment-view/ldap-role-assignment-view';
 
 export function schematicEntryPoint(schematicArguments: CreateViewArguments): Rule {
     return (tree: Tree) => {
+        console.log('Creating view ' + schematicArguments.viewType + ' [' + schematicArguments.path + ']');
         checkPathValidity(tree, schematicArguments.path);
         return createView(tree, schematicArguments);
     };
@@ -81,6 +84,7 @@ function createView(tree: Tree, args: CreateViewArguments, addViewToService: boo
         case 'treeCaseView':
             rules.push(createTreeCaseView(tree, args, addViewToService));
             break;
+        case 'doubleDrawerView':
         case 'toolbarView':
             rules.push(createSidenavOrToolbarView(tree, {
                 createViewArguments: args,
@@ -105,6 +109,9 @@ function createView(tree: Tree, args: CreateViewArguments, addViewToService: boo
             break;
         case 'roleAssignmentView':
             rules.push(createRoleAssignmentView(tree, args, addViewToService));
+            break;
+        case 'ldapRoleAssignmentView':
+            rules.push(createLdapRoleAssignmentView(tree, args, addViewToService));
             break;
         default:
             throw new SchematicsException(`Unknown view type '${args.viewType}'`);

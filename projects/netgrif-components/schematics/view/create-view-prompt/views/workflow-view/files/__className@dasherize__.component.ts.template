@@ -11,10 +11,11 @@ import {Subscription} from 'rxjs';
 @Component({
     selector: '<%= prefix %>-<%= dasherize(className) %>',
     templateUrl: './<%= dasherize(className) %>.component.html',
-    styleUrls: ['./<%= dasherize(className) %>.component.scss'],
+    styleUrls: ['./<%= dasherize(className) %>.component.scss']<% if (confirmWorkflowDeletion !== undefined) { %>,
     providers: [
         {provide: NAE_WORKFLOW_SERVICE_CONFIRM_DELETE, useValue: <%= confirmWorkflowDeletion %>}
     ]
+    <% } %>
 })
 export class <%= classify(className) %>Component implements OnInit, AfterViewInit, OnDestroy {
 

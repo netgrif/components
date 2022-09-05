@@ -290,6 +290,7 @@
         "login": {
             "length": "Das Benützername muss mindestens 4 Zeichen enthalten",
             "login": "Benützername",
+            "wrongCredentials": "Falsche Anmeldeinformationen!",
             "loginButton": "Anmelden",
             "reset": "Kennwort wiederherstellen",
             "sign": "Registrieren",
