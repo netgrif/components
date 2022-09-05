@@ -71,6 +71,14 @@ export class ViewClassInfo extends ImportToAdd {
                 return 'WorkflowView';
             case 'roleAssignmentView':
                 return 'RoleAssignmentView';
+            case 'publicTaskView':
+                return 'PublicTaskView';
+            case 'publicWorkflowView':
+                return 'PublicWorkflowView';
+            case 'publicSingleTaskView':
+                return 'PublicSingleTaskView';
+            case 'publicResolverView':
+                return 'PublicResolverView';
             default:
                 throw new SchematicsException(`Unknown view type '${view}'`);
         }
