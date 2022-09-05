@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {UriService} from '../service/uri.service';
 
 @Component({
@@ -7,16 +7,24 @@ import {UriService} from '../service/uri.service';
 })
 export abstract class AbstractBreadcrumbsComponent {
 
-    private static ROOT: string = 'root';
-    private _showPaths: boolean;
+    @Input() showHome: boolean = true;
+    @Input() lengthOfPath: number = 30;
+    @Input() partsAfterDots: number = 2;
+    private static DOTS: string = '...';
+    private static DELIMETER: string = '/';
+    private _showPaths: boolean = false;
 
     constructor(protected _uriService: UriService) {
     }
 
-    public getPath(): string[] {
-        const tmp = this._uriService.activeNode?.uriPath.split('/').filter(s => s !== AbstractBreadcrumbsComponent.ROOT);
-        if (tmp?.length > 3 && !this._showPaths) {
-            return [tmp[0], '...' , tmp[tmp.length - 2], tmp[tmp.length - 1]]
+    public getPath(): Array<string> {
+        const tmp = this._uriService.getSplittedPath();
+        if (tmp?.length > this.partsAfterDots + 1 && this._uriService.activeNode?.uriPath.length > this.lengthOfPath && !this._showPaths) {
+            const newPath = [tmp[0], AbstractBreadcrumbsComponent.DOTS];
+            for (let i = tmp.length - this.partsAfterDots; i < tmp.length; i++) {
+                newPath.push(tmp[i]);
+            }
+            return newPath;
         }
         return tmp === undefined ? [] : tmp;
     }
@@ -26,17 +34,17 @@ export abstract class AbstractBreadcrumbsComponent {
     }
 
     public changePath(path: string, count: number) {
-        if (path === '...' && count === 1) {
+        if (path === AbstractBreadcrumbsComponent.DOTS && count === 1) {
             this._showPaths = true;
             return;
         }
         let fullPath: string = '';
-        const tmp = this._uriService.activeNode?.uriPath.split('/').filter(s => s !== AbstractBreadcrumbsComponent.ROOT);
+        const tmp = this._uriService.getSplittedPath();
         if (tmp === undefined) return;
-        const control = this._showPaths ? count : this.resultCounter(count, tmp);
+        const control = this.resultCounter(count, tmp);
         for (let i = 0; i <= control; i++) {
             fullPath += tmp[i];
-            if (i !== count) fullPath += '/';
+            if (i !== control) fullPath += AbstractBreadcrumbsComponent.DELIMETER;
         }
         this._uriService.getNodeByPath(fullPath).subscribe(node => {
             this._uriService.activeNode = node;
@@ -44,8 +52,9 @@ export abstract class AbstractBreadcrumbsComponent {
     }
 
     private resultCounter(count: number, tmp: string[]): number {
-        if (count === 2) return tmp.length - 2;
-        if (count === 3) return tmp.length - 1;
+        if (tmp?.length > this.partsAfterDots + 1 && this._uriService.activeNode?.uriPath.length > this.lengthOfPath && !this._showPaths) {
+            return tmp.length - this.partsAfterDots + (count - 2);
+        }
         return count;
     }
 }
