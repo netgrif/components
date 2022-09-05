@@ -61,6 +61,7 @@ import { I18nTextFieldComponent } from './i18n-field/i18n-text-field/i18n-text-f
 import { EasymdeWrapperComponent } from './text-field/rich-textarea-field/easymde-wrapper/easymde-wrapper.component';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { UserListFieldComponent } from './user-list-field/user-list-field.component';
 
 @NgModule({
     declarations: [
@@ -100,23 +101,25 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
         I18nDividerFieldComponent,
         I18nTextFieldComponent,
         EasymdeWrapperComponent,
+        UserListFieldComponent,
     ],
-    exports: [
-        BooleanFieldComponent,
-        ButtonFieldComponent,
-        DataFieldTemplateComponent,
-        DateFieldComponent,
-        DateTimeFieldComponent,
-        EnumerationFieldComponent,
-        FileFieldComponent,
-        FileListFieldComponent,
-        MultichoiceFieldComponent,
-        NumberFieldComponent,
-        TextFieldComponent,
-        UserFieldComponent,
-        FilterFieldComponent,
-        I18nFieldComponent
-    ],
+	exports: [
+		BooleanFieldComponent,
+		ButtonFieldComponent,
+		DataFieldTemplateComponent,
+		DateFieldComponent,
+		DateTimeFieldComponent,
+		EnumerationFieldComponent,
+		FileFieldComponent,
+		FileListFieldComponent,
+		MultichoiceFieldComponent,
+		NumberFieldComponent,
+		TextFieldComponent,
+		UserFieldComponent,
+		FilterFieldComponent,
+		I18nFieldComponent,
+		UserListFieldComponent
+	],
     imports: [
         CommonModule,
         FlexLayoutModule,
