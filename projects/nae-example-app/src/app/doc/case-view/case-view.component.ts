@@ -55,7 +55,11 @@ export class CaseViewComponent extends AbstractCaseViewComponent implements Afte
     constructor(caseViewService: CaseViewService, @Optional() overflowService: OverflowService) {
         super(caseViewService, overflowService, undefined, {
             enableCaseTitle: true,
-            isCaseTitleRequired: false
+            isCaseTitleRequired: false,
+            newCaseButtonConfig: {
+                createCaseButtonTitle: 'test',
+                createCaseButtonIcon: 'home'
+            }
         });
         this.additionalFilterData = {
             [UserFilterConstants.ORIGIN_VIEW_ID_FIELD_ID]: {
