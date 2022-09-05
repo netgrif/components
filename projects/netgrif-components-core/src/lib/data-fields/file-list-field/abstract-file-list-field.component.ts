@@ -78,7 +78,7 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
 
     ngOnInit(): void {
         super.ngOnInit();
-        this.valueChange$ = this.dataField.valueChanges().subscribe(newValue => {
+        this.valueChange$ = this.dataField.valueChanges().subscribe(() => {
             this.parseResponse();
         });
         if (this.dataField.validations && this.dataField.validations.length !== 0) {
@@ -288,8 +288,11 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
         }
 
         this._taskResourceService.deleteFile(this.taskId,
-            this.dataField.stringId, fileName).pipe(take(1)).subscribe(response => {
+            this.dataField.stringId, fileName).pipe(take(1)).subscribe((response: EventOutcomeMessageResource) => {
             if (response.success) {
+                const changedFieldsMap: ChangedFieldsMap = this._eventService.parseChangedFieldsFromOutcomeTree(response.outcome);
+                this.dataField.emitChangedFields(changedFieldsMap);
+                this.fileUploadEl.nativeElement.value = '';
                 this.uploadedFiles = this.uploadedFiles.filter(uploadedFile => uploadedFile !== fileName);
                 if (this.dataField.value.namesPaths) {
                     this.dataField.value.namesPaths = this.dataField.value.namesPaths.filter(namePath => namePath.name !== fileName);
