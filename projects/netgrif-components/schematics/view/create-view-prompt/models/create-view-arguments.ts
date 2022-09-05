@@ -7,4 +7,6 @@ export interface  CreateViewArguments {
     access: { [k: string]: any; } | ('public' | 'private');
     enableCaseTitle?: boolean;
     isCaseTitleRequired?: boolean;
+    showDeleteMenu?: boolean;
+    confirmWorkflowDeletion?: boolean;
 }

@@ -67,6 +67,10 @@ export class ViewClassInfo extends ImportToAdd {
                 return 'Dashboard';
             case 'treeCaseView':
                 return 'TreeCaseView';
+            case 'workflowView':
+                return 'WorkflowView';
+            case 'roleAssignmentView':
+                return 'RoleAssignmentView';
             case 'publicTaskView':
                 return 'PublicTaskView';
             case 'publicWorkflowView':

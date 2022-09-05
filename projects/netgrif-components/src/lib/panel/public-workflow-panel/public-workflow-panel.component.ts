@@ -4,6 +4,7 @@ import {
     AbstractWorkflowPanelComponent,
     WorkflowViewService,
     LoggerService,
+    PetriNetResourceService,
     OverflowService
 } from '@netgrif/components-core';
 
@@ -13,7 +14,11 @@ import {
   styleUrls: ['./public-workflow-panel.component.scss']
 })
 export class PublicWorkflowPanelComponent extends AbstractWorkflowPanelComponent {
-    constructor(log: LoggerService, translate: TranslateService, workflowService: WorkflowViewService, @Optional() overflowService: OverflowService) {
-        super(log, translate, workflowService, overflowService);
+    constructor(log: LoggerService,
+                translate: TranslateService,
+                workflowService: WorkflowViewService,
+                petriNetResource: PetriNetResourceService,
+                @Optional() overflowService: OverflowService) {
+        super(log, translate, workflowService, petriNetResource, overflowService);
     }
 }
