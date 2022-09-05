@@ -30,7 +30,9 @@
                 "customView",
                 "treeCaseView",
                 "workflowView",
-                "roleAssignmentView"
+                "roleAssignmentView",
+                "ldapRoleAssignmentView",
+                "doubleDrawerView"
             ],
             "x-prompt": {
                 "type": "list",
@@ -52,7 +54,9 @@
                     "customView",
                     "treeCaseView",
                     "workflowView",
-                    "roleAssignmentView"
+                    "roleAssignmentView",
+                    "ldapRoleAssignmentView",
+                    "doubleDrawerView"
                 ]
             }
         },
@@ -62,7 +66,7 @@
         },
         "access": {
             "description": "access type",
-            "type": "string",
+            "type":  ["object", "string"],
             "x-prompt": {
                 "type": "list",
                 "message": "select a access type",
