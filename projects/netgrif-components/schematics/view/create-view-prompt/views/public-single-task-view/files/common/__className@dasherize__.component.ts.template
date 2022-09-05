@@ -33,6 +33,7 @@ import {
     TaskContentService,
     TaskDataService,
     FinishTaskService,
+    RedirectService,
     SingleTaskContentService, TaskRequestStateService, TaskEventService, NAE_TASK_OPERATIONS, SubjectTaskOperations
 } from '@netgrif/components-core';
 import {HeaderComponent} from '@netgrif/components';

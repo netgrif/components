@@ -29,7 +29,8 @@ import {
     NAE_VIEW_ID_SEGMENT,
     ViewIdService,
     NAE_BASE_FILTER,
-    ChangedFieldsService
+    ChangedFieldsService,
+    RedirectService
 } from '@netgrif/components-core';
 import {HeaderComponent} from '@netgrif/components';
 import {ActivatedRoute, Router} from '@angular/router';
