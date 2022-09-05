@@ -6,7 +6,7 @@ import {MAT_SNACK_BAR_DATA, MatSnackBarRef} from '@angular/material/snack-bar';
     selector: 'ncc-abstract-snackbar',
     template: ''
 })
-export abstract class SnackBar<T> {
+export abstract class SnackBarComponent<T> {
 
     protected constructor(public snackBarRef: MatSnackBarRef<T>, @Inject(MAT_SNACK_BAR_DATA) public data: SnackBarInjectionData) {
     }

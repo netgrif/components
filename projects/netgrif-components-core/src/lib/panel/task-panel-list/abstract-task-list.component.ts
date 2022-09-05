@@ -5,7 +5,7 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {NAE_TAB_DATA} from '../../tabs/tab-data-injection-token/tab-data-injection-token';
 import {InjectedTabData} from '../../tabs/interfaces';
 import {ActivatedRoute} from '@angular/router';
-import {AbstractDefaultTaskList} from './default-task-panel-list/abstract-default-task-list';
+import {AbstractDefaultTaskListComponent} from './default-task-panel-list/abstract-default-task-list.component';
 import {Observable} from 'rxjs';
 import {TaskPanelData} from './task-panel-data/task-panel-data';
 
@@ -13,7 +13,7 @@ import {TaskPanelData} from './task-panel-data/task-panel-data';
     selector: 'ncc-abstract-task-list',
     template: ''
 })
-export abstract class AbstractTaskListComponent extends AbstractDefaultTaskList {
+export abstract class AbstractTaskListComponent extends AbstractDefaultTaskListComponent {
 
     @Input()
     set tasks$(tasks: Observable<Array<TaskPanelData>>) {
