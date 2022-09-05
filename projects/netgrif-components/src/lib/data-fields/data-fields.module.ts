@@ -62,6 +62,7 @@ import { EasymdeWrapperComponent } from './text-field/rich-textarea-field/easymd
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { CaseRefFieldComponent } from './case-ref-field/case-ref-field.component';
+import {PetriflowCanvasModule} from '@netgrif/petriflow.svg';
 
 @NgModule({
     declarations: [
@@ -138,7 +139,8 @@ import { CaseRefFieldComponent } from './case-ref-field/case-ref-field.component
         MatProgressSpinnerModule,
         CurrencyModule,
         BrowserModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        PetriflowCanvasModule
     ],
     providers: [
         { provide: DateAdapter, useClass: CustomDateAdapter }
