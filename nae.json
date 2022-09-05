@@ -980,8 +980,7 @@
                     "tabs": [
                         {
                             "view": {
-                                "name": "caseView",
-                                "componentName": "TabbedCaseView"
+                                "name": "caseView"
                             },
                             "canBeClosed": false,
                             "label": {

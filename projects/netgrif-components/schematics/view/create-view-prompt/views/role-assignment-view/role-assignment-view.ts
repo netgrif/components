@@ -1,35 +1,36 @@
-import {Rule, Tree, chain} from '@angular-devkit/schematics';
-import {strings} from '@angular-devkit/core';
-import {createFilesFromTemplates, createRelativePath, getProjectInfo} from '../../../../_utility/utility-functions';
-import {getViewIdSegmentFromPath, updateAppModule} from '../../../_utility/view-utility-functions';
-import {addViewToViewService} from '../../../_utility/view-service-functions';
-import {ViewClassInfo} from '../../../../_commons/view-class-info';
-import {ImportToAdd} from '../../../../_commons/import-to-add';
+import {chain, Rule, Tree} from '@angular-devkit/schematics';
 import {CreateViewArguments} from '../../models/create-view-arguments';
+import {createFilesFromTemplates, createRelativePath, getProjectInfo} from '../../../../_utility/utility-functions';
+import {ViewClassInfo} from '../../../../_commons/view-class-info';
+import {strings} from '@angular-devkit/core';
+import {updateAppModule} from '../../../_utility/view-utility-functions';
+import {ImportToAdd} from '../../../../_commons/import-to-add';
+import {addViewToViewService} from '../../../_utility/view-service-functions';
 
-
-export function createDashboardView(tree: Tree, args: CreateViewArguments, addViewToService: boolean): Rule {
+export function createRoleAssignmentView(tree: Tree, args: CreateViewArguments, addViewToService: boolean): Rule {
     const projectInfo = getProjectInfo(tree);
     const rules = [];
     const view = new ViewClassInfo(
         args.path,
         args.viewType,
-        args.componentName);
+        args.componentName
+    );
+    const destinationPath = `${projectInfo.path}/views/${args.path}`;
 
-    rules.push(createFilesFromTemplates('./views/dashboard-view/files', `${projectInfo.path}/views/${args.path}`, {
+    const templateParams = {
         prefix: projectInfo.projectPrefixDasherized,
         className: view.nameWithoutComponent,
-        webPath: args.path,
+        viewPath: args.path,
         dasherize: strings.dasherize,
         classify: strings.classify,
         configName: projectInfo.projectNameClassified,
         configImportPath: createRelativePath(view.fileImportPath, `./${projectInfo.projectNameDasherized}-configuration.service`),
-        viewIdSegment: getViewIdSegmentFromPath(args.path)
-    }));
+        modulePath: createRelativePath(view.fileImportPath, './app.module'),
+    };
 
+    rules.push(createFilesFromTemplates('./views/role-assignment-view/files', destinationPath, templateParams));
     updateAppModule(tree, view.className, view.fileImportPath, [
-        new ImportToAdd('DashboardComponentModule', '@netgrif/components'),
-        new ImportToAdd('PieChartModule', '@swimlane/ngx-charts')
+        new ImportToAdd('AdminComponentModule', '@netgrif/components')
     ]);
 
     if (addViewToService) {

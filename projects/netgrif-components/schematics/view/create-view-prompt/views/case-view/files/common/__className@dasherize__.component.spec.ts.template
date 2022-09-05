@@ -6,7 +6,9 @@ import {
     MaterialModule,
     NAE_TAB_DATA,
     AuthenticationMethodService,
-    MockAuthenticationMethodService
+    MockAuthenticationMethodService,
+    OverflowService,
+    NAE_VIEW_ID_SEGMENT
 } from '@netgrif/components-core';
 import {
     HeaderComponentModule
@@ -32,7 +34,9 @@ describe('<%= classify(className) %>Component', () => {
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: NAE_TAB_DATA, useValue: {tabViewComponent: undefined, tabViewOrder: 1}},
                 {provide: ConfigurationService, useClass: <%= configName %>ConfigurationService},
-                CaseHeaderService
+                {provide: NAE_VIEW_ID_SEGMENT, useValue: 'case'},
+                CaseHeaderService,
+                OverflowService,
                 ],
             declarations: [<%= classify(className) %>Component],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]

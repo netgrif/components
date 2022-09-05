@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, Optional, ViewChild} from '@angular/core';
 import {
     AllowedNetsService,
     AllowedNetsServiceFactory,
@@ -14,6 +14,7 @@ import {
     SimpleFilter,
     AbstractTabbedCaseViewComponent,
     ViewIdService,
+    OverflowService
 } from '@netgrif/components-core';
 import {HeaderComponent} from '@netgrif/components';
 
@@ -35,6 +36,7 @@ const baseFilterFactory = () => {
         CategoryFactory,
         CaseViewService,
         SearchService,
+        OverflowService,
         {   provide: NAE_BASE_FILTER,
             useFactory: baseFilterFactory},
         {   provide: AllowedNetsService,
@@ -50,8 +52,9 @@ export class <%= classify(className) %>Component extends AbstractTabbedCaseViewC
 
     constructor(caseViewService: CaseViewService,
                 loggerService: LoggerService,
+                @Optional() overflowService: OverflowService,
                 @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedCaseViewData) {
-        super(caseViewService, loggerService, injectedTabData, undefined, undefined, undefined, {
+        super(caseViewService, loggerService, injectedTabData, overflowService, undefined, undefined, {
             enableCaseTitle: <%= caseCreationConfig.enableCaseTitle %>,
             isCaseTitleRequired: <%= caseCreationConfig.isCaseTitleRequired %>
         });
