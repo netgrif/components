@@ -38,6 +38,7 @@ import {ActiveGroupComponent} from './doc/active-group/active-group.component';
 import {WrapperEmptyViewComponent} from './views/wrapper/wrapper-empty-view.component';
 import {DoubleDrawerExampleComponent} from './doc/double-drawer-example/double-drawer-example.component';
 import {PublicSingleTaskViewComponent} from './doc/public-single-task-view/public-single-task-view.component';
+import {BreadcrumbsExampleComponent} from './doc/breadcrumbs-example/breadcrumbs-example.component';
 
 @Injectable({
     providedIn: 'root'
@@ -47,6 +48,7 @@ export class NaeExampleAppViewService extends ViewService {
         // This class is managed by schematics. Do not modify it by hand.
         // If you want to add views to the application run the 'create-view' schematic.
         super([
+            {id: 'BreadcrumbsExampleComponent', class: BreadcrumbsExampleComponent},
             {id: 'TitleConfigComponent', class: TitleConfigComponent},
             {id: 'PublicSingleTaskViewComponent', class: PublicSingleTaskViewComponent},
             {id: 'WrapperEmptyViewComponent', class: WrapperEmptyViewComponent},
