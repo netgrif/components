@@ -45,7 +45,7 @@ export abstract class AbstractUserAssignComponent {
      * The user that is initially selected, or `undefined` if none is
      */
     public get initiallySelectedUser(): UserValue | undefined {
-        return this.injectedData ? this.injectedData.value : undefined;
+        return this.injectedData ? this.injectedData.value as UserValue : undefined;
     }
 
     public get roles(): Array<string> | Array<ProcessRole> {

@@ -427,6 +427,7 @@
     },
     "workflow": {
         "delete": "löschen",
+        "download": "herunterladen",
         "dialog": {
             "header": "Sind Sie sicher, dass Sie den Prozess '{{name}}' mit Version '{{version}}' löschen wollen?",
             "content": "Alle Fälle aus diesem Prozess werden gleichzeitig gelöscht!",
