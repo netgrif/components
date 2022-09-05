@@ -530,12 +530,6 @@
             }
         },
         "demo-single-public-task": {
-            "layout": {
-                "name": "publicTaskView",
-                "params": {
-                    "allowedNets": []
-                }
-            },
             "component": {
                 "class": "PublicSingleTaskViewComponent",
                 "from": "./doc/public-single-task-view/public-single-task-view.component"
@@ -549,12 +543,6 @@
             }
         },
         "demo-public-view": {
-            "layout": {
-                "name": "publicTaskView",
-                "params": {
-                    "allowedNets": []
-                }
-            },
             "component": {
                 "class": "PublicTaskViewComponent",
                 "from": "./doc/public-task-view/public-task-view.component"
@@ -568,12 +556,6 @@
             }
         },
         "demo-public-view-case": {
-            "layout": {
-                "name": "publicTaskView",
-                "params": {
-                    "allowedNets": []
-                }
-            },
             "component": {
                 "class": "PublicTaskViewComponent",
                 "from": "./doc/public-task-view/public-task-view.component"
@@ -587,12 +569,6 @@
             }
         },
         "demo-public-view-workflow": {
-            "layout": {
-                "name": "publicWorkflowView",
-                "params": {
-                    "allowedNets": []
-                }
-            },
             "component": {
                 "class": "PublicWorkflowViewComponent",
                 "from": "./doc/public-workflow-view/public-workflow-view.component"
@@ -606,12 +582,6 @@
             }
         },
         "demo-public-view-resolver": {
-            "layout": {
-                "name": "publicResolverView",
-                "params": {
-                    "allowedNets": []
-                }
-            },
             "component": {
                 "class": "PublicResolverComponent",
                 "from": "./doc/public-resolver/public-resolver.component"

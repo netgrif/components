@@ -426,6 +426,7 @@
     },
     "workflow": {
         "delete": "zmazať",
+        "download": "stiahnuť",
         "dialog": {
             "header": "Ste si istý, že chcete vymazať proces '{{name}}' verzia '{{version}}'?",
             "content": "Spolu s procesom budú vymazané aj všetky prípady z neho vytvorené!",

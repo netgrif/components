@@ -10,6 +10,7 @@ export enum FieldTypeResource {
     DATE = 'date',
     DATE_TIME = 'dateTime',
     USER = 'user',
+    USER_LIST = 'userList',
     BUTTON = 'button',
     FILE = 'file',
     FILE_LIST = 'fileList',

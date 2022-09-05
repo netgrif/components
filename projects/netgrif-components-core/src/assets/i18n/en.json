@@ -426,6 +426,7 @@
     },
     "workflow": {
         "delete": "delete",
+        "download": "download",
         "dialog": {
             "header": "Are you sure you want to delete the process '{{name}}' with version '{{version}}'?",
             "content": "Doing so will remove all cases created from this process!",
