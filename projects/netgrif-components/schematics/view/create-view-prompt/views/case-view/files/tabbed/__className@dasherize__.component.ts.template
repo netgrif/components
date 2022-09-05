@@ -19,7 +19,7 @@ import {
 import {HeaderComponent} from '@netgrif/components';
 
 const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
-    return factory.createFromArray([]);
+    return factory.createFromConfig('<%= viewPath %>');
 };
 
 const baseFilterFactory = () => {
