@@ -65,6 +65,7 @@ import {
     MultichoiceAutocompleteFieldComponent
 } from './multichoice-field/multichoice-autocomplete-field/multichoice-autocomplete-field.component';
 import { UserListFieldComponent } from './user-list-field/user-list-field.component';
+import { TaskRefFieldComponent } from './task-ref-field/task-ref-field.component';
 
 @NgModule({
     declarations: [
@@ -106,6 +107,7 @@ import { UserListFieldComponent } from './user-list-field/user-list-field.compon
         I18nTextFieldComponent,
         EasymdeWrapperComponent,
         UserListFieldComponent,
+        TaskRefFieldComponent,
     ],
 	exports: [
 		BooleanFieldComponent,

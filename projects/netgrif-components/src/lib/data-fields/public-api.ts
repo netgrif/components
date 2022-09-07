@@ -16,5 +16,6 @@ export * from './user-field/user-field.component';
 export * from './filter-field/filter-field.component';
 export * from './i18n-field/i18n-field.component';
 export * from './user-list-field/user-list-field.component';
+export * from './task-ref-field/task-ref-field.component';
 
 /* Class */
