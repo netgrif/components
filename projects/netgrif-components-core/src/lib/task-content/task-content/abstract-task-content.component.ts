@@ -22,6 +22,7 @@ import {SplitDataGroup} from '../model/split-data-group';
 import {Subgrid} from '../model/subgrid';
 import {IncrementingCounter} from '../../utility/incrementing-counter';
 import {PreprocessedDataGroups} from '../model/preprocessed-data-groups';
+import {TaskRefDashboardTile} from '../../data-fields/task-ref-field/model/task-ref-dashboard-tile';
 
 @Component({
     selector: 'ncc-abstract-task-content',
@@ -251,8 +252,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
 
         const result = new Map<string, Subgrid>();
 
-        const preprocessingResult = this.preprocessDataGroups(dataGroups);
-        dataGroups = preprocessingResult.dataGroups;
+        dataGroups = this.preprocessDataGroups(dataGroups)
 
         const defaultLayout = this.taskContentService.task.layout && this.taskContentService.task.layout.type
             ? this.taskContentService.task.layout.type
@@ -336,10 +336,28 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
     /**
      * Clones the content of the data groups to prevent unintentional memory accesses to source data.
      * Rearranges the data groups to accommodate taskrefs. Filters out hidden and forbidden fields.
+     * Populates dashboard task ref fields with dashboard tile data.
      * @param dataGroups
-     * @returns the preprocesses data groups
+     * @returns the preprocessed data groups
      */
-    protected preprocessDataGroups(dataGroups: Array<DataGroup>): PreprocessedDataGroups {
+    protected preprocessDataGroups(dataGroups: Array<DataGroup>): Array<DataGroup> {
+        const filterAndRearrangeResult = this.filterAndRearrangeDataGroups(dataGroups);
+
+        if (filterAndRearrangeResult.containsDashboardTaskRef) {
+            return this.preprocessDashboardTaskRef(filterAndRearrangeResult.dataGroups);
+        }
+
+        return filterAndRearrangeResult.dataGroups;
+    }
+
+    /**
+     * Clones the content of the data groups to prevent unintentional memory accesses to source data.
+     * Rearranges the data groups to accommodate taskrefs. Filters out hidden and forbidden fields.
+     * Determines if the data groups contain a dashboard task ref field.
+     * @param dataGroups
+     * @returns the preprocessed data groups with metadata
+     */
+    protected filterAndRearrangeDataGroups(dataGroups: Array<DataGroup>): PreprocessedDataGroups {
         dataGroups = this.cloneAndFilterHidden(dataGroups);
 
         let containsDashboard = false;
@@ -425,7 +443,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
         dataGroup.fields.sort((a, b) => a.localLayout.y - b.localLayout.y);
         const taskRefPosition = dataGroup.fields.findIndex(f => this.isTaskRef(f));
         const result: SplitDataGroup = {
-            taskRef: dataGroup.fields[taskRefPosition]
+            taskRef: dataGroup.fields[taskRefPosition] as TaskRefField
         };
 
         if (taskRefPosition !== 0) {
@@ -473,6 +491,58 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
             parentTaskRefId: originalDataGroup.parentTaskRefId,
             nestingLevel: originalDataGroup.nestingLevel,
         }
+    }
+
+    /**
+     * Identifies data groups that represent dashboard tiles,
+     * removes them from the data group array and passes them onto the task ref field instance.
+     * @param dataGroups
+     * @returns an array of data group objects that does not contain dashboard tiles referenced by the dashboard task ref
+     * @protected
+     */
+    protected preprocessDashboardTaskRef(dataGroups: Array<DataGroup>): Array<DataGroup> {
+        // TODO support more than one dashboard task ref in a task
+
+        let dashboardTaskRefField: TaskRefField;
+        for (const dg of dataGroups) {
+            for (const field of dg.fields) {
+                if (this.isTaskRef(field) && field.component?.name === TaskRefComponents.DASHBOARD) {
+                    dashboardTaskRefField = field as TaskRefField;
+                    break;
+                }
+            }
+            if (dashboardTaskRefField !== undefined) {
+                break;
+            }
+        }
+        if (dashboardTaskRefField === undefined) {
+            this._logger.error('preprocessDashboardTaskRef method was called on task content without dashboard task refs!');
+            return dataGroups;
+        }
+
+        if (dashboardTaskRefField.value.length === 0) {
+            return dataGroups;
+        }
+
+        const tiles = new Map<string, TaskRefDashboardTile>();
+
+        // TODO resolve transitive tile content
+        const nonDashboardDataGroups = [];
+        for (const dg of dataGroups) {
+            if (dg.parentTaskRefId !== dashboardTaskRefField.stringId) {
+                nonDashboardDataGroups.push(dg);
+                continue;
+            }
+            if (tiles.has(dg.parentTaskId)) {
+                const tile = tiles.get(dg.parentTaskId);
+                tile.dataGroups.push(dg);
+            } else {
+                tiles.set(dg.parentTaskId, {dataGroups: [dg]});
+            }
+        }
+
+        dashboardTaskRefField.dashboardTiles = Array.from(tiles.values());
+        return nonDashboardDataGroups;
     }
 
     /**
