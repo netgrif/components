@@ -17,10 +17,11 @@ import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {NAE_ASYNC_RENDERING_CONFIGURATION} from '../model/async-rendering-configuration-injection-token';
 import {AsyncRenderingConfiguration} from '../model/async-rendering-configuration';
-import {TaskRefField} from '../../data-fields/task-ref-field/model/task-ref-field';
+import {TaskRefComponents, TaskRefField} from '../../data-fields/task-ref-field/model/task-ref-field';
 import {SplitDataGroup} from '../model/split-data-group';
 import {Subgrid} from '../model/subgrid';
 import {IncrementingCounter} from '../../utility/incrementing-counter';
+import {PreprocessedDataGroups} from '../model/preprocessed-data-groups';
 
 @Component({
     selector: 'ncc-abstract-task-content',
@@ -250,7 +251,8 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
 
         const result = new Map<string, Subgrid>();
 
-        dataGroups = this.preprocessDataGroups(dataGroups);
+        const preprocessingResult = this.preprocessDataGroups(dataGroups);
+        dataGroups = preprocessingResult.dataGroups;
 
         const defaultLayout = this.taskContentService.task.layout && this.taskContentService.task.layout.type
             ? this.taskContentService.task.layout.type
@@ -337,9 +339,10 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
      * @param dataGroups
      * @returns the preprocesses data groups
      */
-    protected preprocessDataGroups(dataGroups: Array<DataGroup>): Array<DataGroup> {
+    protected preprocessDataGroups(dataGroups: Array<DataGroup>): PreprocessedDataGroups {
         dataGroups = this.cloneAndFilterHidden(dataGroups);
 
+        let containsDashboard = false;
         const result = [];
         for (let i = 0; i < dataGroups.length; i++) {
             const group = dataGroups[i];
@@ -350,6 +353,11 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
             const split = this.splitDataGroupOnTaskRef(group);
             if (split.startGroup !== undefined) {
                 result.push(split.startGroup);
+            }
+
+            if (split.taskRef.component?.name === TaskRefComponents.DASHBOARD) {
+                result.push(this.createDashboardTaskRefDataGroup(group, split.taskRef));
+                containsDashboard = true;
             }
 
             if (split.taskRef.value.length === 0 || split.endGroup === undefined) {
@@ -377,7 +385,10 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
             dataGroups.splice(firstNonDescendantIndex, 0, split.endGroup);
         }
 
-        return result;
+        return {
+            dataGroups: result,
+            containsDashboardTaskRef: containsDashboard
+        };
     }
 
     /**
@@ -441,6 +452,27 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
         }
 
         return result;
+    }
+
+    /**
+     * Creates a new data group that contains only the passed task ref.
+     * The information about nesting and parent task/case are preserved from the passed original data group.
+     * @param originalDataGroup source of the information about parent task/case
+     * @param taskRef the task ref that will be added to the new data group
+     * @protected
+     */
+    protected createDashboardTaskRefDataGroup(originalDataGroup: DataGroup, taskRef: TaskRefField): DataGroup {
+        return {
+            fields: [taskRef],
+            alignment: undefined,
+            stretch: false,
+            title: '',
+            parentTaskId: originalDataGroup.parentTaskId,
+            parentTransitionId: originalDataGroup.parentTransitionId,
+            parentCaseId: originalDataGroup.parentCaseId,
+            parentTaskRefId: originalDataGroup.parentTaskRefId,
+            nestingLevel: originalDataGroup.nestingLevel,
+        }
     }
 
     /**
