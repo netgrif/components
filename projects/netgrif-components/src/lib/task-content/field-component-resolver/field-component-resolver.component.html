@@ -47,7 +47,7 @@
     <nc-i18n-field *ngSwitchCase="fieldTypeEnum.I18N" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>
     </nc-i18n-field>
 
-    <nc-task-ref-field *ngSwitchCase="fieldTypeEnum.TASK_REF" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>
+    <nc-task-ref-field *ngSwitchCase="fieldTypeEnum.TASK_REF" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" [taskContentComponentClassReference]="taskContentComponentClassReference" fxFlex>
     </nc-task-ref-field>
 
     <div *ngSwitchCase="taskElementEnum.DATA_GROUP_TITLE" fxFlex fxLayout="row" fxLayoutAlign="center center">

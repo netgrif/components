@@ -1,5 +1,5 @@
-import {Component, Inject, Optional} from '@angular/core';
-import {AbstractTaskRefFieldComponent, LoggerService, NAE_INFORM_ABOUT_INVALID_DATA, TaskRefDashboardTile} from '@netgrif/components-core';
+import {Component, Inject, Input, Optional, Type} from '@angular/core';
+import {AbstractTaskRefFieldComponent, LoggerService, NAE_INFORM_ABOUT_INVALID_DATA, TaskRefDashboardTile} from 'netgrif-components-core';
 
 @Component({
     selector: 'nc-task-ref-field',
@@ -7,6 +7,8 @@ import {AbstractTaskRefFieldComponent, LoggerService, NAE_INFORM_ABOUT_INVALID_D
     styleUrls: ['./task-ref-field.component.scss']
 })
 export class TaskRefFieldComponent extends AbstractTaskRefFieldComponent {
+
+    @Input() taskContentComponentClassReference: Type<any>;
 
     constructor(logger: LoggerService,
                 @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {

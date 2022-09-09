@@ -1,2 +1,9 @@
-<p>task-ref-dashboard-tile works!</p>
-<p>{{tile.isEmpty}}</p>
+<ng-template [ngIf]="!tile.isEmpty" [ngIfElse]="newDashboardTile">
+    <ng-template [cdkPortalOutlet]="portal"></ng-template>
+</ng-template>
+
+<ng-template #newDashboardTile>
+    <div>
+        +
+    </div>
+</ng-template>
