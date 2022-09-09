@@ -6,7 +6,7 @@ import {PaperViewService} from '../../navigation/quick-panel/components/paper-vi
 import {LoggerService} from '../../logger/services/logger.service';
 import {TaskEventNotification} from '../model/task-event-notification';
 import {TaskEventService} from '../services/task-event.service';
-import {DataGroup, DataGroupAlignment} from '../../resources/interface/data-groups';
+import {DataGroup, DataGroupAlignment, ParentDataGroupInformation} from '../../resources/interface/data-groups';
 import {TaskElementType} from '../model/task-content-element-type';
 import {DataField} from '../../data-fields/models/abstract-data-field';
 import {DataGroupCompact, DataGroupHideEmptyRows, DataGroupLayout, DataGroupLayoutType} from '../../resources/interface/data-group-layout';
@@ -17,7 +17,7 @@ import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {NAE_ASYNC_RENDERING_CONFIGURATION} from '../model/async-rendering-configuration-injection-token';
 import {AsyncRenderingConfiguration} from '../model/async-rendering-configuration';
-import {TaskRefComponents, TaskRefField} from '../../data-fields/task-ref-field/model/task-ref-field';
+import {TaskRefComponents, TaskRefDashboardConstants, TaskRefField} from '../../data-fields/task-ref-field/model/task-ref-field';
 import {SplitDataGroup} from '../model/split-data-group';
 import {Subgrid} from '../model/subgrid';
 import {IncrementingCounter} from '../../utility/incrementing-counter';
@@ -502,12 +502,19 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
      */
     protected preprocessDashboardTaskRef(dataGroups: Array<DataGroup>): Array<DataGroup> {
         // TODO support more than one dashboard task ref in a task
-
         let dashboardTaskRefField: TaskRefField;
+        let dashboardParentInformation: ParentDataGroupInformation;
         for (const dg of dataGroups) {
             for (const field of dg.fields) {
                 if (this.isTaskRef(field) && field.component?.name === TaskRefComponents.DASHBOARD) {
                     dashboardTaskRefField = field as TaskRefField;
+                    dashboardParentInformation = {
+                        parentTaskId: dg.parentTaskId,
+                        parentTransitionId: dg.parentTransitionId,
+                        parentCaseId: dg.parentCaseId,
+                        parentTaskRefId: dg.parentTaskRefId,
+                        nestingLevel: dg.nestingLevel
+                    }
                     break;
                 }
             }
@@ -530,6 +537,19 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
         const nonDashboardDataGroups = [];
         for (const dg of dataGroups) {
             if (dg.parentTaskRefId !== dashboardTaskRefField.stringId) {
+                if (dg.parentTaskId === dashboardParentInformation.parentTaskId
+                    && dg.parentTransitionId === dashboardParentInformation.parentTransitionId
+                    && dg.parentCaseId === dashboardParentInformation.parentCaseId
+                    && dg.parentTaskRefId === dashboardParentInformation.parentTaskRefId
+                    && dg.nestingLevel === dashboardParentInformation.nestingLevel) {
+                    for (const filed of dg.fields) {
+                        if (filed.stringId === TaskRefDashboardConstants.DASHBOARD_COLS) {
+                            dashboardTaskRefField.dashboardCols = filed.value;
+                        } else if (filed.stringId === TaskRefDashboardConstants.DASHBOARD_ROWS) {
+                            dashboardTaskRefField.dashboardRows = filed.value;
+                        }
+                    }
+                }
                 nonDashboardDataGroups.push(dg);
                 continue;
             }

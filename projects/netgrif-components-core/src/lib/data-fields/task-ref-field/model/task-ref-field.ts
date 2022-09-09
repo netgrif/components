@@ -13,9 +13,19 @@ export enum TaskRefComponents {
     DASHBOARD = 'dashboard'
 }
 
+/**
+ * A collection of Task ref field dashboard component constants used to reference elements of the underlying processes
+ */
+export enum TaskRefDashboardConstants {
+    DASHBOARD_ROWS = 'rows',
+    DASHBOARD_COLS = 'cols'
+}
+
 export class TaskRefField extends DataField<Array<string>> {
 
-    private _dashboardTiles?: Array<TaskRefDashboardTile>;
+    protected _dashboardTiles?: Array<TaskRefDashboardTile>;
+    private _dashboardRows?: number;
+    private _dashboardCols?: number;
 
     constructor(stringId: string, title: string, initialValue: Array<string>, behavior: Behavior,
                 placeholder?: string, description?: string, layout?: Layout, validations?: Array<Validation>, component?: Component,
@@ -29,5 +39,21 @@ export class TaskRefField extends DataField<Array<string>> {
 
     set dashboardTiles(value: Array<TaskRefDashboardTile>) {
         this._dashboardTiles = value;
+    }
+
+    get dashboardRows(): number {
+        return this._dashboardRows;
+    }
+
+    set dashboardRows(value: number) {
+        this._dashboardRows = value;
+    }
+
+    get dashboardCols(): number {
+        return this._dashboardCols;
+    }
+
+    set dashboardCols(value: number) {
+        this._dashboardCols = value;
     }
 }
