@@ -32,6 +32,7 @@ export class TaskRefDashboardTileComponent extends AbstractTaskRefDashboardTileC
             const fakeTask = Object.assign({}, t);
             fakeTask.dataGroups = this.tile.dataGroups;
             this._myTaskContentService.task = fakeTask;
+            this._myTaskContentService.$shouldCreate.next(fakeTask.dataGroups);
         });
 
         this.portal = new ComponentPortal(this.taskContentComponentClassReference, null, this._injector);
