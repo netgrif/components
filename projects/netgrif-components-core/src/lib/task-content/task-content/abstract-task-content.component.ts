@@ -484,7 +484,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
             fields: [taskRef],
             alignment: undefined,
             stretch: false,
-            title: '',
+            title: undefined,
             parentTaskId: originalDataGroup.parentTaskId,
             parentTransitionId: originalDataGroup.parentTransitionId,
             parentCaseId: originalDataGroup.parentCaseId,

@@ -10,16 +10,16 @@ export interface DataGroup extends ParentDataGroupInformation{
      */
     fields: Array<DataField<any>>;
     /**
-     * Name datagroup
+     * Name of the data group
      */
-    title: string;
+    title?: string;
     /**
-     * Desing alignment
+     * Design alignment
      * ***Example:*** start
      */
     alignment: DataGroupAlignment;
     /**
-     * Desing stretch
+     * Design stretch
      *
      * ***Example:*** true
      */
