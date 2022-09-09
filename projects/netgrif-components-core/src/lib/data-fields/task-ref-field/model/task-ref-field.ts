@@ -18,7 +18,17 @@ export enum TaskRefComponents {
  */
 export enum TaskRefDashboardConstants {
     DASHBOARD_ROWS = 'rows',
-    DASHBOARD_COLS = 'cols'
+    DASHBOARD_COLS = 'cols',
+}
+
+/**
+ * A collection of Task ref field dashboard tile component constants used to reference elements of the underlying processes
+ */
+export enum TaskRefDashboardTileConstants {
+    DASHBOARD_TILE_X = 'x',
+    DASHBOARD_TILE_Y = 'y',
+    DASHBOARD_TILE_ROWS = 'rows',
+    DASHBOARD_TILE_COLS = 'cols'
 }
 
 export class TaskRefField extends DataField<Array<string>> {

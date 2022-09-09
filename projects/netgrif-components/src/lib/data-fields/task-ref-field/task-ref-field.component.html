@@ -1,1 +1,4 @@
-<p>task-ref-field works!</p>
+<!-- TODO extract dashboard implementation into a separate component class to follow the structure of other field implementations -->
+<div class="fill-available-space" [gdColumns]="getGridColumns()" [gdRows]="getGridRows()">
+    <nc-task-ref-dashboard-tile *ngFor="let tile of dashboardTiles" [tile]="tile" [gdColumn]="getTileGridColumn(tile)" [gdRow]="getTileGridRow(tile)"></nc-task-ref-dashboard-tile>
+</div>

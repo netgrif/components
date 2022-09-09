@@ -40,6 +40,7 @@ export * from './i18n-field/i18n-divider-field/abstract-i18n-divider-field.compo
 export * from './i18n-field/abstract-i18n-errors.component';
 export * from './user-list-field/abstract-user-list-field.component';
 export * from './task-ref-field/abstract-task-ref-field.component';
+export * from './task-ref-field/task-ref-dashboard-field/task-ref-dashboard-tile/abstract-task-ref-dashboard-tile.component';
 
 /* Class */
 export * from './models/abstract-data-field';
@@ -72,6 +73,7 @@ export * from './models/component';
 export * from './models/properties';
 export * from './data-field-template/models/wrapped-boolean';
 export * from './i18n-field/models/language-icons';
+export * from './task-ref-field/model/task-ref-dashboard-tile';
 
 /* Tokens */
 export * from './models/boolean-label-enabled-token';

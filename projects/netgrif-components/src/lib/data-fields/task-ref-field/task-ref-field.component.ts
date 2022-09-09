@@ -1,5 +1,5 @@
 import {Component, Inject, Optional} from '@angular/core';
-import {AbstractTaskRefFieldComponent, NAE_INFORM_ABOUT_INVALID_DATA} from '@netgrif/components-core';
+import {AbstractTaskRefFieldComponent, LoggerService, NAE_INFORM_ABOUT_INVALID_DATA, TaskRefDashboardTile} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-task-ref-field',
@@ -8,8 +8,25 @@ import {AbstractTaskRefFieldComponent, NAE_INFORM_ABOUT_INVALID_DATA} from '@net
 })
 export class TaskRefFieldComponent extends AbstractTaskRefFieldComponent {
 
-    constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
-        super(informAboutInvalidData);
+    constructor(logger: LoggerService,
+                @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+        super(logger, informAboutInvalidData);
+    }
+
+    getGridColumns(): string {
+        return `repeat(${this.dataField.dashboardCols}, 1fr)`;
+    }
+
+    getGridRows(): string {
+        return `repeat(${this.dataField.dashboardRows}, 1fr)`;
+    }
+
+    getTileGridColumn(tile: TaskRefDashboardTile): string {
+        return `${tile.x + 1} / ${tile.x + tile.cols}`;
+    }
+
+    getTileGridRow(tile: TaskRefDashboardTile): string {
+        return `${tile.y + 1} / ${tile.y + tile.rows}`;
     }
 
 }
