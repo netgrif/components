@@ -344,7 +344,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
         const filterAndRearrangeResult = this.filterAndRearrangeDataGroups(dataGroups);
 
         if (filterAndRearrangeResult.containsDashboardTaskRef) {
-            return this.preprocessDashboardTaskRef(filterAndRearrangeResult.dataGroups);
+            return this.preprocessDashboardTaskRef(filterAndRearrangeResult.dataGroups, dataGroups);
         }
 
         return filterAndRearrangeResult.dataGroups;
@@ -496,15 +496,16 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
     /**
      * Identifies data groups that represent dashboard tiles,
      * removes them from the data group array and passes them onto the task ref field instance.
-     * @param dataGroups
+     * @param preprocessedDataGroups
+     * @param rawDataGroups
      * @returns an array of data group objects that does not contain dashboard tiles referenced by the dashboard task ref
      * @protected
      */
-    protected preprocessDashboardTaskRef(dataGroups: Array<DataGroup>): Array<DataGroup> {
+    protected preprocessDashboardTaskRef(preprocessedDataGroups: Array<DataGroup>, rawDataGroups: Array<DataGroup>): Array<DataGroup> {
         // TODO support more than one dashboard task ref in a task
         let dashboardTaskRefField: TaskRefField;
         let dashboardParentInformation: ParentDataGroupInformation;
-        for (const dg of dataGroups) {
+        for (const dg of preprocessedDataGroups) {
             for (const field of dg.fields) {
                 if (this.isTaskRef(field) && field.component?.name === TaskRefComponents.DASHBOARD) {
                     dashboardTaskRefField = field as TaskRefField;
@@ -524,32 +525,19 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
         }
         if (dashboardTaskRefField === undefined) {
             this._logger.error('preprocessDashboardTaskRef method was called on task content without dashboard task refs!');
-            return dataGroups;
+            return preprocessedDataGroups;
         }
 
         if (dashboardTaskRefField.value.length === 0) {
-            return dataGroups;
+            return preprocessedDataGroups;
         }
 
         const tiles = new Map<string, TaskRefDashboardTile>();
 
         // TODO resolve transitive tile content
         const nonDashboardDataGroups = [];
-        for (const dg of dataGroups) {
+        for (const dg of preprocessedDataGroups) {
             if (dg.parentTaskRefId !== dashboardTaskRefField.stringId) {
-                if (dg.parentTaskId === dashboardParentInformation.parentTaskId
-                    && dg.parentTransitionId === dashboardParentInformation.parentTransitionId
-                    && dg.parentCaseId === dashboardParentInformation.parentCaseId
-                    && dg.parentTaskRefId === dashboardParentInformation.parentTaskRefId
-                    && dg.nestingLevel === dashboardParentInformation.nestingLevel) {
-                    for (const filed of dg.fields) {
-                        if (filed.stringId === TaskRefDashboardConstants.DASHBOARD_COLS) {
-                            dashboardTaskRefField.dashboardCols = filed.value;
-                        } else if (filed.stringId === TaskRefDashboardConstants.DASHBOARD_ROWS) {
-                            dashboardTaskRefField.dashboardRows = filed.value;
-                        }
-                    }
-                }
                 nonDashboardDataGroups.push(dg);
                 continue;
             }
@@ -558,6 +546,22 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
                 tile.dataGroups.push(dg);
             } else {
                 tiles.set(dg.parentTaskId, {dataGroups: [dg]});
+            }
+        }
+
+        for (const rdg of rawDataGroups) {
+            if (rdg.parentTaskId === dashboardParentInformation.parentTaskId
+                && rdg.parentTransitionId === dashboardParentInformation.parentTransitionId
+                && rdg.parentCaseId === dashboardParentInformation.parentCaseId
+                && rdg.parentTaskRefId === dashboardParentInformation.parentTaskRefId
+                && rdg.nestingLevel === dashboardParentInformation.nestingLevel) {
+                for (const filed of rdg.fields) {
+                    if (filed.stringId === TaskRefDashboardConstants.DASHBOARD_COLS) {
+                        dashboardTaskRefField.dashboardCols = filed.value;
+                    } else if (filed.stringId === TaskRefDashboardConstants.DASHBOARD_ROWS) {
+                        dashboardTaskRefField.dashboardRows = filed.value;
+                    }
+                }
             }
         }
 
