@@ -28,7 +28,8 @@ export enum TaskRefDashboardTileConstants {
     DASHBOARD_TILE_X = 'x',
     DASHBOARD_TILE_Y = 'y',
     DASHBOARD_TILE_ROWS = 'rows',
-    DASHBOARD_TILE_COLS = 'cols'
+    DASHBOARD_TILE_COLS = 'cols',
+    DASHBOARD_TILE_PROCESS_IDENTIFIER = 'dashboard_tile'
 }
 
 export class TaskRefField extends DataField<Array<string>> {

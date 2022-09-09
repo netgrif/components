@@ -1,5 +1,11 @@
 import {Component, Injector, Input, OnDestroy, OnInit, Self, SkipSelf, Type} from '@angular/core';
-import {AbstractTaskRefDashboardTileComponent, TaskContentService, UnlimitedTaskContentService} from 'netgrif-components-core';
+import {
+    AbstractTaskRefDashboardTileComponent,
+    CaseResourceService,
+    ProcessService,
+    TaskContentService,
+    UnlimitedTaskContentService
+} from '@netgrif/components-core';
 import {Subscription} from 'rxjs';
 import {ComponentPortal} from '@angular/cdk/portal';
 
@@ -16,19 +22,21 @@ export class TaskRefDashboardTileComponent extends AbstractTaskRefDashboardTileC
     portal: ComponentPortal<any>;
     @Input() taskContentComponentClassReference: Type<any>;
 
-    protected _sub: Subscription;
+    private _subTask: Subscription;
 
     constructor(protected _injector: Injector,
+                caseResourceService: CaseResourceService,
+                processService: ProcessService,
                 @SkipSelf() protected _parentTaskContentService: TaskContentService,
                 @Self() protected _myTaskContentService: TaskContentService) {
-        super();
+        super(caseResourceService, processService);
     }
 
     ngOnInit(): void {
         if (this.tile.isEmpty) {
             return;
         }
-        this._sub = this._parentTaskContentService.task$.subscribe(t => {
+        this._subTask = this._parentTaskContentService.task$.subscribe(t => {
             const fakeTask = Object.assign({}, t);
             fakeTask.dataGroups = this.tile.dataGroups;
             this._myTaskContentService.task = fakeTask;
@@ -39,8 +47,9 @@ export class TaskRefDashboardTileComponent extends AbstractTaskRefDashboardTileC
     }
 
     ngOnDestroy(): void {
-        if (this._sub !== undefined) {
-            this._sub.unsubscribe();
+        super.ngOnDestroy();
+        if (this._subTask !== undefined) {
+            this._subTask.unsubscribe();
         }
     }
 
