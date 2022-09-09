@@ -490,6 +490,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
             parentCaseId: originalDataGroup.parentCaseId,
             parentTaskRefId: originalDataGroup.parentTaskRefId,
             nestingLevel: originalDataGroup.nestingLevel,
+            layout: originalDataGroup.layout
         }
     }
 
