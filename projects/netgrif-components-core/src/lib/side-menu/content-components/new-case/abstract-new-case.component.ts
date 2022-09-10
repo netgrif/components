@@ -148,12 +148,12 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
             this._caseResourceService.createCase(newCase)
                 .subscribe(
                     (response: EventOutcomeMessageResource) => {
-                        this._snackBarService.openSuccessSnackBar(response.outcome.message === undefined
+                        this._snackBarService.openSuccessSnackBar(response.outcome?.message === undefined
                             ? this._translate.instant('side-menu.new-case.createCase') + ' ' + newCase.title
                             : response.outcome.message);
                         this._sideMenuControl.close({
                             opened: false,
-                            message: response.outcome.message === undefined
+                            message: response.outcome?.message === undefined
                                 ? 'Confirm new case setup'
                                 : response.outcome.message
                             ,

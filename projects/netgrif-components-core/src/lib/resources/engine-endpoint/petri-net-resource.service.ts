@@ -14,6 +14,7 @@ import {Page} from '../interface/page';
 import {processMessageResponse} from '../../utility/process-message-response';
 import {AbstractResourceService} from '../abstract-endpoint/abstract-resource.service';
 import RolesAndPermissions from '../../process/rolesAndPermissions';
+import {PetriNetImport} from '../interface/petri-net-import';
 
 @Injectable({
     providedIn: 'root'
@@ -169,5 +170,17 @@ export class PetriNetResourceService extends AbstractResourceService {
     public deletePetriNet(netId: string): Observable<MessageResource> {
         return this._resourceProvider.delete$<MessageResource>('petrinet/' + netId, this.SERVER_URL)
             .pipe(switchMap(processMessageResponse));
+    }
+
+    /**
+     * get One Net by ID
+     *
+     * **Request Type:** GET
+     *
+     * **Request URL:** {{baseUrl}}/api/petrinet/{id}
+     */
+    public getNetByCaseId(caseId: string, params?: Params): Observable<PetriNetImport> {
+        return this._resourceProvider.get$('petrinet/case/' + caseId, this.SERVER_URL, params)
+            .pipe(map(r => this.changeType(r, undefined)));
     }
 }
