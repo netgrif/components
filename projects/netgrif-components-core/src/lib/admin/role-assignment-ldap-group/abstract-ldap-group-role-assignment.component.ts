@@ -12,7 +12,7 @@ import {LdapGroupListItem, LdapGroupListService} from '../../groups/services/lda
     selector: 'ncc-abstract-ldap-group-role-assignment',
     template: ''
 })
-export abstract class AbstractLdapGroupRoleAssignment implements OnInit, AfterViewInit, OnDestroy {
+export abstract class AbstractLdapGroupRoleAssignmentComponent implements OnInit, AfterViewInit, OnDestroy {
 
     @ViewChild('ldapGroupList') public ldapGroupList: MatSelectionList;
     @ViewChild(CdkVirtualScrollViewport) public viewport: CdkVirtualScrollViewport;
