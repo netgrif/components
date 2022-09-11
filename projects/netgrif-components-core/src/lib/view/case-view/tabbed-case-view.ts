@@ -55,16 +55,6 @@ export abstract class AbstractTabbedCaseViewComponent extends AbstractCaseViewCo
         }
     }
 
-    public createNewCase(): Observable<Case> {
-        const myCase = super.createNewCase();
-        myCase.subscribe( kaze => {
-            if (this._caseViewService.viewEnabled(kaze)) {
-                this.openTab(kaze);
-            }
-        });
-        return myCase;
-    }
-
     protected openTab(openCase: Case) {
         this._injectedTabData.tabViewRef.openTab({
             label: {

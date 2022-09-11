@@ -1,19 +1,19 @@
 import {Component, Inject} from '@angular/core';
-import {AbstractDialog} from '../../models/abstract-dialog';
+import {AbstractDialogComponent} from '../../models/abstract-dialog.component';
 import {DialogData} from '../../models/DialogData';
 import {DialogResult} from '../../models/DialogResult';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 /**
  * Simple modal dialog with its own layout (which only shows information) based on a material design
- * that injected data and inherits from an [AbstractDialog]{@link AbstractDialog}.
+ * that injected data and inherits from an [AbstractDialog]{@link AbstractDialogComponent}.
  */
 @Component({
     selector: 'ncc-simple-dialog',
     templateUrl: './alert-dialog.component.html',
     styleUrls: ['./alert-dialog.component.scss']
 })
-export class AlertDialogComponent extends AbstractDialog<AlertDialogComponent> {
+export class AlertDialogComponent extends AbstractDialogComponent<AlertDialogComponent> {
     /**
      * Only injecting.
      * @param dialogRef Reference to a dialog opened via the MatDialog service.

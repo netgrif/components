@@ -1,0 +1,9 @@
+<button *ngIf="!resolvedCaseButtonTitle; else titleButton" mat-mini-fab color="primary" (click)="createNewCase()">
+    <mat-icon class="net-upload" aria-hidden="false">{{!!resolvedCaseButtonIcon ? resolvedCaseButtonIcon : 'add'}}</mat-icon>
+</button>
+<ng-template #titleButton>
+    <button  mat-raised-button color="primary" (click)="createNewCase()">
+        <mat-icon *ngIf="!!resolvedCaseButtonIcon" class="button-icon" aria-hidden="false">{{resolvedCaseButtonIcon}}</mat-icon>
+        <span>{{resolvedCaseButtonTitle}}</span>
+    </button>
+</ng-template>

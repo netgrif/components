@@ -8,7 +8,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
     selector: 'ncc-abstract-dialog',
     template: ''
 })
-export abstract class AbstractDialog<T> {
+export abstract class AbstractDialogComponent<T> {
     /**
      * Only injecting.
      * @param dialogRef Reference to a dialog opened via the MatDialog service.

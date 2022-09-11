@@ -2,7 +2,7 @@ import {Component, Inject, Input, Optional} from '@angular/core';
 import {Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
 import {ActivatedRoute} from '@angular/router';
-import {AbstractDefaultTaskList} from '../default-task-panel-list/abstract-default-task-list';
+import {AbstractDefaultTaskListComponent} from '../default-task-panel-list/abstract-default-task-list.component';
 import {TaskPanelData} from '../task-panel-data/task-panel-data';
 import {TaskViewService} from '../../../view/task-view/service/task-view.service';
 import {LoggerService} from '../../../logger/services/logger.service';
@@ -13,7 +13,7 @@ import {InjectedTabData} from '../../../tabs/interfaces';
     selector: 'ncc-abstract-task-list-pagination-component',
     template: ''
 })
-export abstract class AbstractTaskListPaginationComponent extends AbstractDefaultTaskList {
+export abstract class AbstractTaskListPaginationComponent extends AbstractDefaultTaskListComponent {
 
     public length: number;
     public pageSize = 20;

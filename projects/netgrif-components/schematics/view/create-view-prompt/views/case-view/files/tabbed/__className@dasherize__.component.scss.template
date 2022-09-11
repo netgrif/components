@@ -1,6 +1,7 @@
 .case-view-container {
     margin: 8px;
     height: calc(100% - 16px);
+    overflow: auto
 }
 
 .case-view-search-container {
@@ -18,4 +19,31 @@
 
 .search-width {
     width: 100%;
+}
+
+.full-height {
+    height: 100%;
+}
+
+.overflow-div {
+    overflow-x: scroll;
+}
+
+.transform-div {
+    transform:rotateX(180deg);
+    -ms-transform:rotateX(180deg); /* IE 9 */
+    -webkit-transform:rotateX(180deg);
+}
+
+.custom-scrollbar {
+
+    &::-webkit-scrollbar {
+        width: 15px;
+        height: 15px;
+        cursor: pointer;
+    }
+}
+
+.max-width-fix {
+    max-width: calc(100% - 8px) !important;
 }
