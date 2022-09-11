@@ -49,6 +49,7 @@ export * from './interface/place-import';
 export * from './interface/transition-import';
 export * from './interface/position';
 export * from './interface/petri-net-import';
+export * from './interface/arc-type';
 export * from './types/nae-date-type';
 
 /* ABSTRACTIONS */

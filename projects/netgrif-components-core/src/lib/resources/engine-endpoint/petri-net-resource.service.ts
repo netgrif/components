@@ -173,11 +173,11 @@ export class PetriNetResourceService extends AbstractResourceService {
     }
 
     /**
-     * get One Net by ID
+     * get One Net by  case ID
      *
      * **Request Type:** GET
      *
-     * **Request URL:** {{baseUrl}}/api/petrinet/{id}
+     * **Request URL:** {{baseUrl}}/api/petrinet/case/{id}
      */
     public getNetByCaseId(caseId: string, params?: Params): Observable<PetriNetImport> {
         return this._resourceProvider.get$('petrinet/case/' + caseId, this.SERVER_URL, params)

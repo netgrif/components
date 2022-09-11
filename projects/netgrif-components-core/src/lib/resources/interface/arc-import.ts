@@ -1,4 +1,5 @@
 import {Position} from './position';
+import {ArcType} from './arc-type';
 
 export interface ArcImport {
     destinationId: string;
@@ -7,5 +8,5 @@ export interface ArcImport {
     multiplicity: number;
     stringId: string;
     breakpoints: Array<Position>;
-    type: string;
+    type: ArcType;
 }

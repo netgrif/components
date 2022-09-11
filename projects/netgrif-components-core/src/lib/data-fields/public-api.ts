@@ -37,6 +37,7 @@ export * from './i18n-field/abstract-i18n-field.component';
 export * from './i18n-field/i18n-text-field/abstract-i18n-text-field.component';
 export * from './i18n-field/i18n-divider-field/abstract-i18n-divider-field.component';
 export * from './i18n-field/abstract-i18n-errors.component';
+export * from './case-ref-field/abstract-case-ref-field.component';
 
 /* Class */
 export * from './models/abstract-data-field';
