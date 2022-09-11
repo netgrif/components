@@ -7,7 +7,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Full Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://github.com/netgrif/components/commits/v6.0.0)
 
-## [6.2.0](https://github.com/netgrif/components/releases/tag/v6.2.0) (2022-08-24)
+## [6.2.0](https://github.com/netgrif/components/releases/tag/v6.2.0) (2022-09-11)
 
 ### Fixed
 
@@ -19,6 +19,7 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://g
 - [NAE-1690] Fix header responsive overflow mode
 - [NAE-1681] Delete file function works with parent task in taskRef-ed file field.
 - [NAE-1701] Reload validity on the change required field
+- [NAE-1708] Fix lint issues
 
 ### Changed
 
