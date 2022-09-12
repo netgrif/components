@@ -13,5 +13,6 @@ export interface UserResource extends UserResourceSmall {
     authorities: Array<Authority>;
     nextGroups: Array<string>;
     processRoles: Array<ProcessRole>;
+    impersonated?: UserResource;
     _links?: any;
 }

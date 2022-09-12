@@ -14,7 +14,8 @@ export class User implements IUser {
         public authorities: Array<string>,
         public roles: Array<ProcessRole>,
         public groups?: Array<string>,
-        public nextGroups?: Array<string>
+        public nextGroups?: Array<string>,
+        public impersonated?: User
     ) {
     }
 
@@ -41,5 +42,12 @@ export class User implements IUser {
      */
     public isEmpty(): boolean {
         return this.id === '';
+    }
+
+    /**
+     * @returns self if no impersonated user is present, or impersonated user otherwise
+     */
+    public getSelfOrImpersonated(): User {
+        return this.impersonated ? this.impersonated : this;
     }
 }

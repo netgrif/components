@@ -7,3 +7,4 @@ export const NAE_NEW_CASE_COMPONENT = new InjectionToken<ComponentType<unknown>>
 export const NAE_OPTION_SELECTOR_COMPONENT = new InjectionToken<ComponentType<unknown>>('NaeOptionSelectorComponent');
 export const NAE_SAVE_FILTER_COMPONENT = new InjectionToken<ComponentType<unknown>>('NaeSaveFilterComponent');
 export const NAE_LOAD_FILTER_COMPONENT = new InjectionToken<ComponentType<unknown>>('NaeLoadFilterComponent');
+export const NAE_USER_IMPERSONATE_COMPONENT = new InjectionToken<ComponentType<unknown>>('NaeUserImpersonateComponent');

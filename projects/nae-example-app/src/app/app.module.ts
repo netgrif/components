@@ -98,6 +98,7 @@ import { WrapperEmptyViewComponent } from './views/wrapper/wrapper-empty-view.co
 import {DoubleDrawerExampleComponent} from './doc/double-drawer-example/double-drawer-example.component';
 import { PublicSingleTaskViewComponent } from './doc/public-single-task-view/public-single-task-view.component';
 import { BreadcrumbsExampleComponent } from './doc/breadcrumbs-example/breadcrumbs-example.component';
+import { ImpersonationComponent } from './doc/impersonation/impersonation.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -152,7 +153,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         WrapperEmptyViewComponent,
         DoubleDrawerExampleComponent,
         PublicSingleTaskViewComponent,
-        BreadcrumbsExampleComponent
+        BreadcrumbsExampleComponent,
+        ImpersonationComponent,
     ],
     imports: [
         BrowserModule,

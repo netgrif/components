@@ -1,0 +1,15 @@
+@use '@angular/material' as mat;
+
+@mixin user-assign-item-component-theme($theme) {
+    $primary: map-get($theme, primary);
+
+    .user-assign-item-selected {
+        background-color: mat.get-color-from-palette($primary, 300);
+        color: mat.get-contrast-color-from-palette($primary, 300) !important;
+    }
+
+    .user-assign-item-selected:hover {
+        background-color: mat.get-color-from-palette($primary, 500) !important;
+        color: mat.get-contrast-color-from-palette($primary, 500) !important;
+    }
+}

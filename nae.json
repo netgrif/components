@@ -164,6 +164,17 @@
                 "path": "recover/:token"
             }
         },
+        "demo-impersonation": {
+            "component": {
+                "class": "ImpersonationComponent",
+                "from": "./doc/impersonation/impersonation.component"
+            },
+            "access": "private",
+            "navigation": true,
+            "routing": {
+                "path": "impersonation-view"
+            }
+        },
         "demo-drawer": {
             "component": {
                 "class": "DrawerExampleComponent",
@@ -216,7 +227,9 @@
                         "from": "./doc/workflow-view-example/workflow-view-example.component"
                     },
                     "access": {
-                        "authority": ["ROLE_ADMIN"]
+                        "authority": [
+                            "ROLE_ADMIN"
+                        ]
                     },
                     "navigation": {
                         "title": "Workflow view",

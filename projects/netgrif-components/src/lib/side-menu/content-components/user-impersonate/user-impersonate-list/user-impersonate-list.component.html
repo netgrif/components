@@ -1,0 +1,27 @@
+<div fxLayout="column" fxLayoutAlign="start center" fxFlex>
+    <ng-container *ngIf="users$ | async as users">
+        <div *ngIf="!loading && users.length === 0" fxFlex="100" fxLayout="column" fxLayoutAlign="center center">
+            <mat-icon color="accent" class="margin-bottom-default">person_add_disabled</mat-icon>
+            <span class="font-size-20">{{ 'side-menu.user.noUser' | translate }}</span>
+        </div>
+
+        <div class="full-height full-width" fxFlex="100">
+            <cdk-virtual-scroll-viewport itemSize="60" (scrolledIndexChange)="loadNextPage()"
+                                         class="full-height full-width">
+                <nc-user-impersonate-item
+                    *cdkVirtualFor="let user of users;
+                                    trackBy: trackBy;
+                                    templateCacheSize: 0"
+                    [user]="user"
+                    [selectedId$]="selectedUser$"
+                    (click)="select(user)">
+                </nc-user-impersonate-item>
+
+                <div *ngIf="loading" fxLayout="column" fxLayoutAlign="center center"
+                     class="margin-top-default">
+                    <mat-spinner color="primary" diameter="40"></mat-spinner>
+                </div>
+            </cdk-virtual-scroll-viewport>
+        </div>
+    </ng-container>
+</div>
