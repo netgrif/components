@@ -1,12 +1,13 @@
-<nc-app-panel [panelHeader]="casePanelHeader" [preventExpand]="true" [first]="first" [last]="last" [caseColor] = case_.color>
+<nc-app-panel [panelHeader]="casePanelHeader" [preventExpand]="true" [first]="first" [last]="last"
+              [caseColor]=case_.color>
     <ng-template #casePanelHeader>
         <div fxLayoutAlign="start center" fxLayout="row" fxFlex="95" (click)="preventSelectionClick($event)">
             <div *ngFor="let field of featuredFieldsValues; let i = index" fxFlex
                  class="text-column-div" [ngStyle]="{'min-width': getMinWidth()}"
-                 [fxHide.lt-xl]="i >= 4 && responsiveBody"
-                 [fxHide.lt-lg]="i >= 3 && responsiveBody"
-                 [fxHide.lt-md]="i >= 2 && responsiveBody"
-                 [fxHide.lt-sm]="i >= 1 && responsiveBody"
+                 [fxHide.lt-xl]="i >= 4 && responsiveBody && !overflowMode"
+                 [fxHide.lt-lg]="i >= 3 && responsiveBody && !overflowMode"
+                 [fxHide.lt-md]="i >= 2 && responsiveBody && !overflowMode"
+                 [fxHide.lt-sm]="i >= 1 && responsiveBody && !overflowMode"
                  [ngClass]="{'panel-header-padding': !textEllipsis && field.type !== 'button'}">
                 <nc-panel-item
                     [leadingIcon]="case_.icon"

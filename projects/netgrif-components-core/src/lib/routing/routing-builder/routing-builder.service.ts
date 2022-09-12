@@ -17,8 +17,11 @@ import {
 import {
     AbstractGroupNavigationComponentResolverComponent
 } from '../../navigation/group-navigation-component-resolver/abstract-group-navigation-component-resolver.component';
-import {DynamicNavigationRouteProviderService} from '../dynamic-navigation-route-provider/dynamic-navigation-route-provider.service';
+import {
+    DynamicNavigationRouteProviderService
+} from '../dynamic-navigation-route-provider/dynamic-navigation-route-provider.service';
 
+export const NAE_ROUTING_CONFIGURATION_PATH = "configPath";
 
 /**
  * Uses the information from nae.json to construct the application's routing
@@ -61,6 +64,9 @@ export class RoutingBuilderService {
 
         const route: Route = {
             path: view.routing.path,
+            data: {
+                [NAE_ROUTING_CONFIGURATION_PATH]: configPath
+            },
             component
         };
 

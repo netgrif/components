@@ -15,6 +15,7 @@ export * from './file-field/abstract-file-field.component';
 export * from './file-field/abstract-preview-dialog/preview-dialog-data';
 export * from './file-list-field/abstract-file-list-field.component';
 export * from './multichoice-field/abstract-multichoice-field.component';
+export * from './multichoice-field/multichoice-autocomplete-field/abstract-multichoice-autocomplete-field-component.component';
 export * from './multichoice-field/multichoice-list-field/abstract-multichoice-list-field.component';
 export * from './multichoice-field/multichoice-select-field/abstract-multichoice-select-field.component';
 export * from './number-field/abstract-number-field.component';
@@ -37,6 +38,7 @@ export * from './i18n-field/abstract-i18n-field.component';
 export * from './i18n-field/i18n-text-field/abstract-i18n-text-field.component';
 export * from './i18n-field/i18n-divider-field/abstract-i18n-divider-field.component';
 export * from './i18n-field/abstract-i18n-errors.component';
+export * from './user-list-field/abstract-user-list-field.component';
 
 /* Class */
 export * from './models/abstract-data-field';
@@ -58,6 +60,7 @@ export * from './task-ref-field/model/task-ref-field';
 export * from './enumeration-field/models/dynamic-enumeration-field';
 export * from './filter-field/models/filter-field';
 export * from './i18n-field/models/i18n-field';
+export * from './user-list-field/models/user-list-field';
 
 /* Interfaces */
 export * from './models/changed-fields';

@@ -25,24 +25,6 @@
         padding: 8px 16px !important;
     }
 
-    .mat-radio-label {
-        height: auto !important;
-        min-height: 48px;
-        white-space: normal !important;
-        line-height: normal !important;
-    }
-
-    .mat-list-option {
-        height: auto !important;
-        min-height: 48px;
-        white-space: normal !important;
-        line-height: normal !important;
-        padding: 8px 0 !important;
-        display: flex !important;
-        justify-content: center;
-        flex-direction: column;
-    }
-
     .horizontal-state-primary {
         background-color: mat.get-color-from-palette($primary);
     }
@@ -73,21 +55,216 @@
     }
 
     .filled-language-row:hover {
-        background-color: rgba(mat-color($primary), 0.2);
+        background-color: rgba(mat.get-color-from-palette($primary), 0.2);
     }
 
     .form-input:focus-within:not(.invalid-form-input) {
-        border: solid 2px mat-color($primary) !important;
+        border: solid 2px mat.get-color-from-palette($primary) !important;
         padding: 1px !important;
     }
 
     .invalid-form-input {
-        border: solid 2px mat-color($warn) !important;
+        border: solid 2px mat.get-color-from-palette($primary) !important;
         padding: 1px !important;
     }
 
     .invalid-form-label {
-        color: mat-color($warn) !important;
+        color: mat.get-color-from-palette($primary) !important;
+    }
+
+    .netgrif-input {
+        .mat-form-field-infix {
+            padding: 8px 0 12px 0 !important;
+            font-weight: 400 !important;
+            font-size: 14px !important;
+            line-height: 20px !important;
+            min-width: 130px;
+        }
+
+        .mat-form-field-label-wrapper {
+            top: -1.1em !important;
+            font-weight: 400 !important;
+            font-size: 14px !important;
+            line-height: 20px !important;
+        }
+
+        .mat-select-arrow-wrapper {
+            transform: translateY(0) !important;
+        }
+
+        .mat-error {
+            font-size: 10px !important;
+            line-height: 18px !important;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .mat-hint {
+            font-size: 11px !important;
+            line-height: 18px !important;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .ql-toolbar.ql-snow {
+            border-radius: 6px 6px 0 0;
+        }
+
+        .ql-container.ql-snow {
+            border-radius: 0 0 6px 6px;
+        }
+
+        .mat-radio-label {
+            min-height: 36px !important;
+        }
+
+        .netgrif-label {
+            font-weight: 500;
+        }
+
+        .mat-list-option {
+            height: auto !important;
+            min-height: 36px;
+            padding: 0 !important;
+            white-space: normal !important;
+            line-height: normal !important;
+            display: flex !important;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .mat-list-option:focus {
+            outline: none;
+        }
+
+        .mat-list-base .mat-list-item .mat-list-item-content, .mat-list-base .mat-list-option .mat-list-item-content {
+            min-height: 36px;
+            padding: 0 8px !important;
+        }
+
+        .mat-list-base .mat-list-option.mat-list-option .mat-list-item-content .mat-list-text {
+            padding-top: 8px;
+            padding-bottom: 8px;
+        }
+
+        .mat-list-base {
+            padding-top: 4px !important;
+        }
+
+        .mat-form-field-subscript-wrapper {
+            margin-top: 0.45em;
+            top: calc(100% - 2.05em);
+        }
+
+    }
+
+    .netgrif-input-fix {
+        .mat-form-field-wrapper {
+            padding-bottom: 0 !important;
+        }
+
+        input:-webkit-autofill,
+        input:-webkit-autofill:focus {
+            background: transparent !important;
+        }
+    }
+
+    .netgrif-input-search-fix {
+        .mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix .mat-icon-button {
+            width: unset !important;
+            height: unset !important;
+            top: 5px !important;
+        }
+    }
+
+    .netgrif-icon-fix {
+        margin-bottom: 18px;
+    }
+
+    .netgrif-input-primary-fix {
+        .mat-form-field-appearance-outline {
+            .mat-form-field-outline {
+                color: mat.get-contrast-color-from-palette($primary, 500);
+            }
+
+            .mat-form-field-outline-thick {
+                color: mat.get-contrast-color-from-palette($primary ,500);
+            }
+
+            &.mat-focused {
+                .mat-form-field-outline-thick {
+                    color: mat.get-contrast-color-from-palette($primary, 500);
+                }
+            }
+        }
+
+        .mat-form-field-label {
+            color: mat.get-contrast-color-from-palette($primary, 500);
+        }
+
+        .mat-form-field.mat-focused .mat-form-field-label {
+            color: mat.get-contrast-color-from-palette($primary, 500);
+        }
+
+        .mat-datepicker-toggle {
+            color: mat.get-contrast-color-from-palette($primary, 500) !important;
+        }
+
+        ::placeholder {
+            color: mat.get-contrast-color-from-palette($primary, 500) !important;
+        }
+    }
+
+    .date-field-fix {
+        .mat-form-field-appearance-outline .mat-form-field-flex {
+            padding: 0 0.75em 0 0.5em !important;
+        }
+    }
+
+    .form-input-error {
+        border-color: mat.get-color-from-palette($warn) !important;
+    }
+}
+
+.mat-calendar-arrow {
+    border: none !important;
+    width: 10px !important;
+    height: 5px !important;
+}
+ngx-mat-calendar-header .mat-calendar-arrow {
+    border-left: 5px solid transparent !important;
+    border-right: 5px solid transparent !important;
+    border-top-width: 5px !important;
+    border-top-style: solid !important;
+    width: 0 !important;
+    height: 0 !important;
+}
+
+ngx-mat-calendar {
+    .mat-calendar-body-cell {
+        position: relative !important;
+    }
+}
+
+mat-calendar {
+    .mat-calendar-arrow {
+        width: 0;
+        height: 0;
+    }
+
+    .mat-calendar-body-cell {
+        position: absolute !important;
+        height: 100%;
+    }
+}
+
+ngx-mat-datetime-content {
+    .mat-calendar-arrow {
+        width: 0;
     }
 }
 

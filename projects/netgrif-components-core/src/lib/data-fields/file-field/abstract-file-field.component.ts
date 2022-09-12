@@ -18,7 +18,7 @@ import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import {BehaviorSubject, Subscription} from 'rxjs';
 import {ResizedEvent} from 'angular-resize-event';
 import {take} from 'rxjs/operators';
 import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
@@ -36,7 +36,7 @@ export interface FileState {
 
 const preview = 'preview';
 
-const fieldHeight = 105;
+const fieldHeight = 75;
 
 const fieldPadding = 16;
 
@@ -165,7 +165,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 }
             }
         }
-        this.updatedFieldSubscription = this.dataField.updated.subscribe( () => {
+        this.updatedFieldSubscription = this.dataField.updated.subscribe(() => {
             if (!!this.filePreview
                 && !!this.dataField.value
                 && !!this.dataField.value.name) {
@@ -233,23 +233,36 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.UPLOAD) {
                     this.state.progress = (response as ProviderProgress).progress;
                 } else {
-                    const changedFieldsMap: ChangedFieldsMap = this._eventService.parseChangedFieldsFromOutcomeTree(response.outcome);
-                    this.dataField.emitChangedFields(changedFieldsMap);
-                    this._log.debug(
-                        `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0).name} was successfully uploaded`
-                    );
                     this.state.completed = true;
-                    this.state.error = false;
                     this.state.uploading = false;
                     this.state.progress = 0;
-                    this.dataField.downloaded = false;
-                    this.dataField.value.name = fileToUpload.name;
-                    if (this.filePreview) {
-                        this.initializePreviewIfDisplayable();
+
+                    if (response.error) {
+                        this.state.error = true;
+                        this._log.error(
+                            `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)} uploading has failed!`, response.error
+                        );
+                        if (response.error) {
+                            this._snackbar.openErrorSnackBar(this._translate.instant(response.error));
+                        } else {
+                            this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.fileUploadFailed'));
+                        }
+                    } else {
+                        const changedFieldsMap: ChangedFieldsMap = this._eventService.parseChangedFieldsFromOutcomeTree(response.outcome);
+                        this.dataField.emitChangedFields(changedFieldsMap);
+                        this._log.debug(
+                            `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0).name} was successfully uploaded`
+                        );
+                        this.state.error = false;
+                        this.dataField.downloaded = false;
+                        this.dataField.value.name = fileToUpload.name;
+                        if (this.filePreview) {
+                            this.initializePreviewIfDisplayable();
+                        }
+                        this.fullSource.next(undefined);
+                        this.fileForDownload = undefined;
+                        this.formControl.setValue(this.dataField.value.name);
                     }
-                    this.fullSource.next(undefined);
-                    this.fileForDownload = undefined;
-                    this.formControl.setValue(this.dataField.value.name);
                     this.dataField.touch = true;
                     this.dataField.update();
                     this.fileUploadEl.nativeElement.value = '';
@@ -262,7 +275,11 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 this._log.error(
                     `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)} uploading has failed!`, error
                 );
-                this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.fileUploadFailed'));
+                if (error?.error?.message) {
+                    this._snackbar.openErrorSnackBar(this._translate.instant(error.error.message));
+                } else {
+                    this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.fileUploadFailed'));
+                }
                 this.dataField.touch = true;
                 this.dataField.update();
                 this.fileUploadEl.nativeElement.value = '';

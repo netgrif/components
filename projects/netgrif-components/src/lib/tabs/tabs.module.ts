@@ -14,6 +14,7 @@ import {MaterialModule, TranslateLibModule} from '@netgrif/components-core';
     ],
     exports: [
         TabViewComponent,
+        TabCreationDetectorComponent,
     ],
     imports: [
         CommonModule,

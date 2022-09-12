@@ -17,7 +17,7 @@ import {InjectedTabData} from '../../../tabs/interfaces';
     selector: 'ncc-abstract-default-task-list',
     template: ''
 })
-export abstract class AbstractDefaultTaskList extends TabbedVirtualScrollComponent implements AfterViewInit, OnDestroy {
+export abstract class AbstractDefaultTaskListComponent extends TabbedVirtualScrollComponent implements AfterViewInit, OnDestroy {
 
     protected _tasks$: Observable<Array<TaskPanelData>>;
     protected _redirectTaskId: string;
@@ -66,7 +66,7 @@ export abstract class AbstractDefaultTaskList extends TabbedVirtualScrollCompone
     }
 
     public trackBy(_idx: number, item: TaskPanelData): any {
-        return item.task.stringId; // + (item.task.user ? item.task.user.email : '');
+        return item.task.stringId;
     }
 
     /**

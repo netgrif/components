@@ -1,7 +1,8 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, Optional} from '@angular/core';
 import {Observable, Subscription} from 'rxjs';
 import {HeaderColumn, HeaderColumnType} from '../../header/models/header-column';
 import {FeaturedValue} from './featured-value';
+import {OverflowService} from '../../header/services/overflow.service';
 
 @Component({
     selector: 'ncc-abstract-panel-with-header-binding',
@@ -14,7 +15,15 @@ export abstract class AbstractPanelWithHeaderBindingComponent implements OnInit,
     protected _lastSelectedHeaders: Array<HeaderColumn>;
     protected sub: Subscription;
 
-    protected constructor() {
+    protected constructor(@Optional() protected _overflowService: OverflowService) {
+    }
+
+    get overflowMode(): boolean {
+        if(!!this._overflowService){
+            return this._overflowService.overflowMode;
+        } else {
+            return false;
+        }
     }
 
     ngOnInit(): void {

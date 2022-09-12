@@ -32,6 +32,7 @@ import {LanguageService} from '../../translate/language.service';
 import {
     DynamicNavigationRouteProviderService
 } from '../../routing/dynamic-navigation-route-provider/dynamic-navigation-route-provider.service';
+import {AccessService} from "../../authorization/permission/access.service";
 
 describe('AbstractNavigationTreeComponent', () => {
     let component: TestTreeComponent;
@@ -358,9 +359,7 @@ class TestTreeComponent extends AbstractNavigationTreeComponent {
                 router: Router,
                 log: LoggerService,
                 userService: UserService,
-                roleGuard: RoleGuardService,
-                authorityGuard: AuthorityGuardService,
-                groupGuard: GroupGuardService,
+                accessService: AccessService,
                 activeGroupService: ActiveGroupService,
                 taskResourceService: TaskResourceService,
                 languageService: LanguageService,
@@ -370,9 +369,7 @@ class TestTreeComponent extends AbstractNavigationTreeComponent {
             router,
             log,
             userService,
-            roleGuard,
-            authorityGuard,
-            groupGuard,
+            accessService,
             activeGroupService,
             taskResourceService,
             languageService,

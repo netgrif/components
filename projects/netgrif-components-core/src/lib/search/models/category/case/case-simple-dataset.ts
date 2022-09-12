@@ -16,6 +16,7 @@ import {SearchIndex} from '../../search-index';
 import {Categories} from '../categories';
 import {CategoryGeneratorMetadata} from '../../persistance/generator-metadata';
 import {Observable} from 'rxjs';
+import { NotEquals } from '../../operator/not-equals';
 
 /**
  * This class aims to be a simpler more limited version of the {@link CaseDataset} {@link Category} implementation.
@@ -91,6 +92,9 @@ export class CaseSimpleDataset extends NoConfigurationCategory<string> {
             case 'user':
             case 'userList':
                 this._elasticKeyword = resolver.getIndex(this._fieldId, SearchIndex.USER_ID);
+                break;
+            case 'i18n':
+                this._elasticKeyword = resolver.getIndex(this._fieldId, SearchIndex.TEXT, this.isSelectedOperator(Equals) || this.isSelectedOperator(NotEquals) || this.isSelectedOperator(Substring))
                 break;
             default:
                 this._elasticKeyword = resolver.getIndex(this._fieldId, SearchIndex.FULLTEXT, this.isSelectedOperator(Substring));

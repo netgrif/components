@@ -5,7 +5,10 @@ import {
     BooleanField,
     FilterField,
     FilterType, GroupNavigationConstants,
-    NAE_NAVIGATION_ITEM_TASK_DATA, TestMockDependenciesModule, TestViewService,
+    NAE_NAVIGATION_ITEM_TASK_DATA,
+    OverflowService,
+    TestMockDependenciesModule,
+    TestViewService,
     TextField,
     UserFilterConstants, ViewService
 } from '@netgrif/components-core';
@@ -26,6 +29,7 @@ describe('DefaultTabViewComponent', () => {
             ],
             providers: [
                 {   provide: ViewService, useClass: TestViewService},
+                OverflowService,
                 {
                     provide: NAE_NAVIGATION_ITEM_TASK_DATA,
                     useValue: [

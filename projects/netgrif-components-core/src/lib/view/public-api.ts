@@ -27,6 +27,8 @@ export * from './abstract/sortable-view';
 export * from './abstract/page-load-request-context';
 
 /* INJECTION TOKENS */
+export * from './case-view/models/autoswitch-token'
+export * from './case-view/models/open-existing-tab-token'
 export * from './case-view/models/new-case-configuration-injection-token';
 export * from './task-view/models/injection-token-task-endpoint';
 export * from './task-view/models/task-view-configuration-injection-token';
@@ -53,3 +55,4 @@ export * from './tree-case-view/tree-component/abstract-tree.component';
 export * from './tree-case-view/tree-component/add-child-node/abstract-add-child-node.component';
 export * from './tree-case-view/tree-component/remove-node/abstract-remove-node.component';
 export * from './tree-case-view/tree-task-content/abstract-tree-task-content.component';
+export * from './task-view/abstract-single-task-view.component';

@@ -1,5 +1,5 @@
 <div>
-    <mat-label *ngIf="!showLargeLayout.value">{{enumerationField.title}}
+    <mat-label class="netgrif-label" *ngIf="!showLargeLayout.value">{{enumerationField.title}}
         <nc-required-label *ngIf="enumerationField.behavior.required" [isIn]="true"></nc-required-label>
         <br></mat-label>
     <div *ngFor="let option of enumerationField.choices; let i = index">

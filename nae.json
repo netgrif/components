@@ -175,6 +175,86 @@
                 "path": "drawer"
             }
         },
+        "demo-double-drawer": {
+            "component": {
+                "class": "DoubleDrawerExampleComponent",
+                "from": "./doc/double-drawer-example/double-drawer-example.component"
+            },
+            "access": "private",
+            "navigation": true,
+            "routing": {
+                "path": "drawer-double"
+            },
+            "children": {
+                "group-navigation-double-drawer-outlet": {
+                    "layout": {
+                        "name": "groupNavigation"
+                    },
+                    "navigation": false,
+                    "routing": {
+                        "path": "group-nav"
+                    }
+                },
+                "custom-view": {
+                    "component": {
+                        "class": "TaskViewComponent",
+                        "from": "./doc/task-view/task-view.component"
+                    },
+                    "access": "private",
+                    "navigation": {
+                        "title": "Custom Task View",
+                        "icon": "article"
+                    },
+                    "routing": {
+                        "path": "task-view"
+                    },
+                    "processUri": "examples"
+                },
+                "hidden-workflow-view": {
+                    "component": {
+                        "class": "WorkflowViewExampleComponent",
+                        "from": "./doc/workflow-view-example/workflow-view-example.component"
+                    },
+                    "access": {
+                        "authority": ["ROLE_ADMIN"]
+                    },
+                    "navigation": {
+                        "title": "Workflow view",
+                        "icon": "insights",
+                        "hidden": true
+                    },
+                    "routing": {
+                        "path": "workflow-view"
+                    }
+                },
+                "hidden-active-group": {
+                    "component": {
+                        "class": "ActiveGroupComponent",
+                        "from": "./doc/active-group/active-group.component"
+                    },
+                    "access": "private",
+                    "navigation": {
+                        "title": "Active group view",
+                        "icon": "coronavirus",
+                        "hidden": true
+                    },
+                    "routing": {
+                        "path": "active-group"
+                    }
+                },
+                "demo-breadcrumbs": {
+                    "component": {
+                        "class": "BreadcrumbsExampleComponent",
+                        "from": "./doc/breadcrumbs-example/breadcrumbs-example.component"
+                    },
+                    "access": "private",
+                    "navigation": true,
+                    "routing": {
+                        "path": "breadcrumbs"
+                    }
+                }
+            }
+        },
         "demo-rail": {
             "component": {
                 "class": "RailExampleComponent",
@@ -449,13 +529,20 @@
                 "path": "tree-view"
             }
         },
-        "demo-public-view": {
-            "layout": {
-                "name": "publicTaskView",
-                "params": {
-                    "allowedNets": []
-                }
+        "demo-single-public-task": {
+            "component": {
+                "class": "PublicSingleTaskViewComponent",
+                "from": "./doc/public-single-task-view/public-single-task-view.component"
             },
+            "access": "public",
+            "navigation": {
+                "title": "Public view - transition"
+            },
+            "routing": {
+                "path": "process/:petriNetId/:caseId/:transitionId"
+            }
+        },
+        "demo-public-view": {
             "component": {
                 "class": "PublicTaskViewComponent",
                 "from": "./doc/public-task-view/public-task-view.component"
@@ -469,12 +556,6 @@
             }
         },
         "demo-public-view-case": {
-            "layout": {
-                "name": "publicTaskView",
-                "params": {
-                    "allowedNets": []
-                }
-            },
             "component": {
                 "class": "PublicTaskViewComponent",
                 "from": "./doc/public-task-view/public-task-view.component"
@@ -488,12 +569,6 @@
             }
         },
         "demo-public-view-workflow": {
-            "layout": {
-                "name": "publicWorkflowView",
-                "params": {
-                    "allowedNets": []
-                }
-            },
             "component": {
                 "class": "PublicWorkflowViewComponent",
                 "from": "./doc/public-workflow-view/public-workflow-view.component"
@@ -507,12 +582,6 @@
             }
         },
         "demo-public-view-resolver": {
-            "layout": {
-                "name": "publicResolverView",
-                "params": {
-                    "allowedNets": []
-                }
-            },
             "component": {
                 "class": "PublicResolverComponent",
                 "from": "./doc/public-resolver/public-resolver.component"
@@ -703,27 +772,6 @@
             "navigation": true,
             "routing": {
                 "path": "active-group"
-            }
-        },
-        "wrapper": {
-            "layout": {
-                "name": "emptyView"
-            },
-            "access": "private",
-            "navigation": false,
-            "routing": {
-                "path": "wrap"
-            },
-            "children": {
-                "group-navigation-outlet": {
-                    "layout": {
-                        "name": "groupNavigation"
-                    },
-                    "navigation": false,
-                    "routing": {
-                        "path": "group-nav"
-                    }
-                }
             }
         },
         "dashboard": {
@@ -932,8 +980,7 @@
                     "tabs": [
                         {
                             "view": {
-                                "name": "caseView",
-                                "componentName": "TabbedCaseView"
+                                "name": "caseView"
                             },
                             "canBeClosed": false,
                             "label": {

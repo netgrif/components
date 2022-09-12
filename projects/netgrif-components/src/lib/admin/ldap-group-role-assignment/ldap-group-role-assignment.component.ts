@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {
-    AbstractLdapGroupRoleAssignment,
+    AbstractLdapGroupRoleAssignmentComponent,
     RoleAssignmentLdapGroupService,
 } from '@netgrif/components-core';
 
@@ -12,7 +12,7 @@ import {
         RoleAssignmentLdapGroupService
     ]
 })
-export class LdapGroupRoleAssignmentComponent extends AbstractLdapGroupRoleAssignment {
+export class LdapGroupRoleAssignmentComponent extends AbstractLdapGroupRoleAssignmentComponent {
     constructor(protected _service: RoleAssignmentLdapGroupService) {
         super(_service);
     }

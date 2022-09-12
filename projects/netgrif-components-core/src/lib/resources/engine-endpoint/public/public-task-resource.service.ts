@@ -9,7 +9,6 @@ import {filter, map} from 'rxjs/operators';
 import {FilterType} from '../../../filter/models/filter-type';
 import {Filter} from '../../../filter/models/filter';
 import {Page} from '../../interface/page';
-import {ChangedFieldContainer} from '../../interface/changed-field-container';
 import {TaskSetDataRequestBody} from '../../interface/task-set-data-request-body';
 import {TaskReference} from '../../interface/task-reference';
 import {DataGroup} from '../../interface/data-groups';
@@ -84,48 +83,6 @@ export class PublicTaskResourceService extends TaskResourceService {
     public rawGetData(taskId: string): Observable<EventOutcomeMessageResource> {
         return this._provider.get$('public/task/' + taskId + '/data', this.SERVER_URL)
             .pipe(map(r => this.changeType(r, 'dataGroups')));
-    }
-
-    /**
-     *  Get all task data
-     *
-     *  GET
-     *
-     *  If you want to process the raw backend response use [rawGetData]{@link TaskResourceService#rawGetData} instead.
-     *
-     * @param taskId ID of the task who's data should be retrieved from the server
-     * @returns processed data groups of the given task. If the task has no data an empty array will be returned.
-     */
-    public getData(taskId: string): Observable<Array<DataGroup>> {
-        return this.rawGetData(taskId).pipe(
-            map((responseOutcome: EventOutcomeMessageResource) => {
-                const dataGroupsArray = this.changeType((responseOutcome.outcome as GetDataGroupsEventOutcome).data, 'dataGroups');
-                if (!Array.isArray(dataGroupsArray)) {
-                    return [];
-                }
-                const result = [];
-                dataGroupsArray.forEach(dataGroupResource => {
-                    const dataFields: Array<DataField<any>> = [];
-                    if (!dataGroupResource.fields._embedded) {
-                        return; // continue
-                    }
-                    const fields = [];
-                    Object.keys(dataGroupResource.fields._embedded).forEach(localizedFields => {
-                        fields.push(...dataGroupResource.fields._embedded[localizedFields]);
-                    });
-                    fields.sort((a, b) => a.order - b.order);
-                    dataFields.push(...fields.map(dataFieldResource => this._fieldConverter.toClass(dataFieldResource)));
-                    result.push({
-                        fields: dataFields,
-                        stretch: dataGroupResource.stretch,
-                        title: dataGroupResource.title,
-                        layout: dataGroupResource.layout,
-                        alignment: dataGroupResource.alignment
-                    });
-                });
-                return result;
-            })
-        );
     }
 
     /**

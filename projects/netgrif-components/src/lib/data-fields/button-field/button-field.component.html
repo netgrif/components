@@ -5,20 +5,21 @@
 </nc-data-field-template>
 
 <ng-template #button let-showLargeLayout="showLargeLayout">
-    <div>
-        <mat-label *ngIf="!showLargeLayout.value">
+    <div [ngClass]="{'flex-end': align === 'end', 'flex-start': align === 'start', 'flex-center': align === 'center', 'full-button-width': stretch === 'true'}">
+        <mat-label class="netgrif-label" *ngIf="!showLargeLayout.value">
             {{dataField.title}}
             <nc-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nc-required-label>
             <br>
         </mat-label>
         <button mat-button
                 [ngClass]="{
-                'mat-raised-button': resolveComponentType() === 'raised',
-                'mat-stroked-button': resolveComponentType() === 'stroked',
-                'mat-flat-button': resolveComponentType() === 'flat',
-                'mat-icon-button': resolveComponentType() === 'icon',
-                'mat-fab': resolveComponentType() === 'fab',
-                'mat-mini-fab': resolveComponentType() === 'minifab'}"
+                'mat-raised-button': dataField.getComponentType() === 'raised',
+                'mat-stroked-button': dataField.getComponentType() === 'stroked',
+                'mat-flat-button': dataField.getComponentType() === 'flat',
+                'mat-icon-button': dataField.getComponentType() === 'icon',
+                'mat-fab': dataField.getComponentType() === 'fab',
+                'mat-mini-fab': dataField.getComponentType() === 'minifab',
+                'full-button-width': stretch === 'true'}"
                 color="primary"
                 [matTooltip]="dataField.description"
                 [disabled]="formControl.disabled || dataField.waitingForResponse"

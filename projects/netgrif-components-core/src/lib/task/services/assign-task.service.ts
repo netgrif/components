@@ -23,6 +23,7 @@ import {EventOutcomeMessageResource} from '../../resources/interface/message-res
 import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
 import {EventService} from '../../event/services/event.service';
 import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
+import {TaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/task-event-outcome';
 
 
 /**
@@ -124,7 +125,7 @@ export class AssignTaskService extends TaskHandlingService {
                         this._changedFieldsService.emitChangedFields(changedFieldsMap);
                     }
                     forceReload ? this._taskOperations.forceReload() : this._taskOperations.reload();
-                    this.completeActions(afterAction, nextEvent, true);
+                    this.completeActions(afterAction, nextEvent, true, outcomeResource.outcome as AssignTaskEventOutcome);
                     this._snackBar.openSuccessSnackBar(!!outcomeResource.outcome.message
                         ? outcomeResource.outcome.message
                         : this._translate.instant('tasks.snackbar.assignTaskSuccess'));
@@ -165,8 +166,8 @@ export class AssignTaskService extends TaskHandlingService {
     /**
      * complete all action streams and send notification with selected boolean
      */
-    protected completeActions(afterAction: AfterAction, nextEvent: AfterAction, bool: boolean): void {
-        this.sendNotification(bool);
+    protected completeActions(afterAction: AfterAction, nextEvent: AfterAction, bool: boolean, outcome?: TaskEventOutcome): void {
+        this.sendNotification(bool, outcome);
         afterAction.resolve(bool);
         nextEvent.resolve(bool);
     }
@@ -174,8 +175,9 @@ export class AssignTaskService extends TaskHandlingService {
     /**
      * Publishes an assign notification to the {@link TaskEventService}
      * @param success whether the assign operation was successful or not
+     * @param outcome
      */
-    protected sendNotification(success: boolean): void {
-        this._taskEvent.publishTaskEvent(createTaskEventNotification(this._safeTask, TaskEvent.ASSIGN, success));
+    protected sendNotification(success: boolean, outcome?: TaskEventOutcome): void {
+        this._taskEvent.publishTaskEvent(createTaskEventNotification(this._safeTask, TaskEvent.ASSIGN, success, outcome));
     }
 }
