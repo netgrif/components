@@ -65,6 +65,6 @@ class TestWrapperComponent {
         visible: true,
         editable: true,
         hidden: true
-    }, undefined, undefined, undefined, undefined, undefined, undefined, {name: 'icon'});
+    }, undefined, undefined, undefined, undefined, undefined, {name: 'icon'});
     form = new FormControl();
 }

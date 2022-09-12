@@ -5,14 +5,14 @@
     background-color: transparent;
 }
 .search-panel{
-    margin-top: 16px;
+    margin-top: 8px;
 }
 .content-margin{
-    margin: 0 16px;
+    margin: 0 8px;
 }
 .task-panel-padding-mini{
-    padding-bottom: 16px;
-    padding-top: 16px;
+    padding-bottom: 8px;
+    padding-top: 8px;
 }
 .full-height {
     height: 100%;

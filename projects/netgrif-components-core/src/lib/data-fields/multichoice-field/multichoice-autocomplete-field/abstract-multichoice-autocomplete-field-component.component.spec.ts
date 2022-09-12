@@ -10,8 +10,8 @@ import {TranslateLibModule} from '../../../translate/translate-lib.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
-import {DynamicEnumerationField} from '../../enumeration-field/models/dynamic-enumeration-field';
 import {FormControl} from '@angular/forms';
+import {MultichoiceField} from '../models/multichoice-field';
 
 describe('AbstractMultichoiceAutocompleteFieldComponentComponent', () => {
     let component: TestEnumAutoComponent;
@@ -60,12 +60,12 @@ class TestEnumAutoComponent extends AbstractMultichoiceAutocompleteFieldComponen
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();
-    field = new DynamicEnumerationField('', '', 'test', [{key: 'test', value: 'test'}], {
+    field = new MultichoiceField('', '', [''], [], {
         required: true,
         optional: true,
         visible: true,
         editable: true,
         hidden: true
-    }, undefined, undefined, undefined, undefined, undefined, undefined, {name: 'autocomplete_dynamic'});
+    });
     form = new FormControl();
 }
