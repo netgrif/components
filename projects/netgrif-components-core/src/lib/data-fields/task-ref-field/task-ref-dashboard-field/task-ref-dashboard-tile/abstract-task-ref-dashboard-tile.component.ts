@@ -1,11 +1,12 @@
 import {Component, Input, OnDestroy} from '@angular/core';
 import {TaskRefDashboardTile} from '../../model/task-ref-dashboard-tile';
 import {CaseResourceService} from '../../../../resources/engine-endpoint/case-resource.service';
-import {TaskRefDashboardTileConstants} from '../../model/task-ref-field';
+import {TaskRefDashboardTileConstants, TaskRefField} from '../../model/task-ref-field';
 import {Subscription} from 'rxjs';
 import {ProcessService} from '../../../../process/process.service';
 import {switchMap} from 'rxjs/operators';
 import {CreateCaseEventOutcome} from '../../../../event/model/event-outcomes/case-outcomes/create-case-event-outcome';
+import {FormControl} from '@angular/forms';
 
 @Component({
     selector: 'ncc-abstract-task-ref-dashboard-tile',
@@ -14,6 +15,8 @@ import {CreateCaseEventOutcome} from '../../../../event/model/event-outcomes/cas
 export abstract class AbstractTaskRefDashboardTileComponent implements OnDestroy {
 
     @Input() tile: TaskRefDashboardTile;
+    @Input() taskRef: TaskRefField;
+    @Input() fc: FormControl;
 
     private _sub: Subscription;
 

@@ -2,6 +2,8 @@
 <div class="fill-available-space" [gdColumns]="getGridColumns()" [gdRows]="getGridRows()">
     <nc-task-ref-dashboard-tile *ngFor="let tile of dashboardTiles"
                                 [tile]="tile"
+                                [taskRef]="dataField"
+                                [fc]="formControl"
                                 [gdColumn]="getTileGridColumn(tile)"
                                 [gdRow]="getTileGridRow(tile)"
                                 [taskContentComponentClassReference]="taskContentComponentClassReference"></nc-task-ref-dashboard-tile>

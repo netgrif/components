@@ -4,7 +4,7 @@
 
 <ng-template #newDashboardTile>
     <div class="fill-available-space" fxLayout="row" fxLayoutAlign="center center">
-        <button mat-fab color="primary" (click)="createNewDashboardTile()">
+        <button mat-fab color="primary" *ngIf="!fc.disabled" (click)="createNewDashboardTile()">
             <mat-icon>add</mat-icon>
         </button>
     </div>
