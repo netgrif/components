@@ -1,9 +1,12 @@
 import {Component, Injector, Input, OnDestroy, OnInit, Self, SkipSelf, Type} from '@angular/core';
 import {
     AbstractTaskRefDashboardTileComponent,
+    CallChainService,
     CaseResourceService,
+    LoggerService,
     ProcessService,
     TaskContentService,
+    TaskResourceService,
     UnlimitedTaskContentService
 } from '@netgrif/components-core';
 import {Subscription} from 'rxjs';
@@ -24,12 +27,15 @@ export class TaskRefDashboardTileComponent extends AbstractTaskRefDashboardTileC
 
     private _subTask: Subscription;
 
-    constructor(protected _injector: Injector,
-                caseResourceService: CaseResourceService,
+    constructor(caseResourceService: CaseResourceService,
                 processService: ProcessService,
+                logger: LoggerService,
+                taskResourceService: TaskResourceService,
+                callChainService: CallChainService,
+                protected _injector: Injector,
                 @SkipSelf() protected _parentTaskContentService: TaskContentService,
                 @Self() protected _myTaskContentService: TaskContentService) {
-        super(caseResourceService, processService);
+        super(caseResourceService, processService, logger, taskResourceService, callChainService);
     }
 
     ngOnInit(): void {
