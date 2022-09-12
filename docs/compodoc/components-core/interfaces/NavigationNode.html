@@ -365,10 +365,9 @@ import {MatTreeNestedDataSource} from &#x27;@angular/material/tree&#x27;;
 import {forkJoin, Observable, of, ReplaySubject, Subscription} from &#x27;rxjs&#x27;;
 import {LoggerService} from &#x27;../../logger/services/logger.service&#x27;;
 import {UserService} from &#x27;../../user/services/user.service&#x27;;
-import {RoleGuardService} from &#x27;../../authorization/role/role-guard.service&#x27;;
-import {AuthorityGuardService} from &#x27;../../authorization/authority/authority-guard.service&#x27;;
-import {GroupGuardService} from &#x27;../../authorization/group/group-guard.service&#x27;;
-import {AbstractNavigationResizableDrawerComponent} from &#x27;../navigation-drawer/abstract-navigation-resizable-drawer.component&#x27;;
+import {
+    AbstractNavigationResizableDrawerComponent
+} from &#x27;../navigation-drawer/abstract-navigation-resizable-drawer.component&#x27;;
 import {ActiveGroupService} from &#x27;../../groups/services/active-group.service&#x27;;
 import {concatMap, debounceTime, filter, map, take} from &#x27;rxjs/operators&#x27;;
 import {TaskResourceService} from &#x27;../../resources/engine-endpoint/task-resource.service&#x27;;
@@ -383,6 +382,7 @@ import {LanguageService} from &#x27;../../translate/language.service&#x27;;
 import {
     DynamicNavigationRouteProviderService
 } from &#x27;../../routing/dynamic-navigation-route-provider/dynamic-navigation-route-provider.service&#x27;;
+import {AccessService} from &quot;../../authorization/permission/access.service&quot;;
 
 export interface NavigationNode {
     name: string;
@@ -418,9 +418,7 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
                           protected _router: Router,
                           protected _log: LoggerService,
                           protected _userService: UserService,
-                          protected _roleGuard: RoleGuardService,
-                          protected _authorityGuard: AuthorityGuardService,
-                          protected _groupGuard: GroupGuardService,
+                          protected _accessService: AccessService,
                           protected _activeGroupService: ActiveGroupService,
                           protected _taskResourceService: TaskResourceService,
                           protected _languageService: LanguageService,
@@ -535,7 +533,7 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
                 throw new Error(&#x27;Route segment doesnt exist in view &#x27; + parentUrl + &#x27;/&#x27; + viewKey + &#x27; !&#x27;);
             }
 
-            if (!this.canAccessView(view, this.appendRouteSegment(parentUrl, routeSegment))) {
+            if (!this._accessService.canAccessView(view, this.appendRouteSegment(parentUrl, routeSegment))) {
                 return; // continue
             }
 
@@ -638,58 +636,6 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
         });
     }
 
-    /**
-     * @param view the view whose access permissions we want to check
-     * @param url URL to which the view maps. Is used only for error message generation
-     * @returns whether the user can access the provided view
-     */
-    protected canAccessView(view: View, url: string): boolean {
-        if (!view.hasOwnProperty(&#x27;access&#x27;)) {
-            return true;
-        }
-
-        if (typeof view.access &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
-            if (view.access &#x3D;&#x3D;&#x3D; &#x27;public&#x27;) {
-                return true;
-            }
-            if (view.access !&#x3D;&#x3D; &#x27;private&#x27;) {
-                throw new Error(&#x60;Unknown access option &#x27;${view.access}&#x27;. Only &#x27;public&#x27; or &#x27;private&#x27; is allowed.&#x60;);
-            }
-            return !this._userService.user.isEmpty();
-        }
-
-        return !this._userService.user.isEmpty() // AuthGuard
-                &amp;&amp; this.passesRoleGuard(view, url)
-                &amp;&amp; this.passesAuthorityGuard(view)
-                &amp;&amp; this.passesGroupGuard(view, url);
-    }
-
-    /**
-     * @param view the view whose access permissions we want to check
-     * @param url URL to which the view maps. Is used only for error message generation
-     * @returns whether the user passes the role guard condition for accessing the specified view
-     */
-    protected passesRoleGuard(view: View, url: string): boolean {
-        return !view.access.hasOwnProperty(&#x27;role&#x27;) || this._roleGuard.canAccessView(view, url);
-    }
-
-    /**
-     * @param view the view whose access permissions we want to check
-     * @returns whether the user passes the authority guard condition for accessing the specified view
-     */
-    protected passesAuthorityGuard(view: View): boolean {
-        return !view.access.hasOwnProperty(&#x27;authority&#x27;) || this._authorityGuard.canAccessView(view);
-    }
-
-    /**
-     * @param view the view whose access permissions we want to check
-     * @param url URL to which the view maps. Is used only for error message generation
-     * @returns whether the user passes the role guard condition for accessing the specified view
-     */
-    protected passesGroupGuard(view: View, url: string): boolean {
-        return !view.access.hasOwnProperty(&#x27;group&#x27;) || this._groupGuard.canAccessView(view, url);
-    }
-
     protected resolveChange() {
         const view &#x3D; this._config.getViewByPath(this.viewPath);
         if (view &amp;&amp; view.children) {
@@ -727,7 +673,10 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
     protected generateGroupNavigationNodes(): Observable&lt;Array&lt;NavigationNode&gt;&gt; {
         return forkJoin(this._activeGroupService.activeGroups.map(groupCase &#x3D;&gt; {
             return this._taskResourceService.searchTask(SimpleFilter.fromTaskQuery(
-                {case: {id: groupCase.stringId}, transitionId: GroupNavigationConstants.NAVIGATION_CONFIG_TRANSITION_ID as string}
+                {
+                    case: {id: groupCase.stringId},
+                    transitionId: GroupNavigationConstants.NAVIGATION_CONFIG_TRANSITION_ID as string
+                }
             )).pipe(
                 map(taskPage &#x3D;&gt; {
                     if (hasContent(taskPage)) {
@@ -777,7 +726,7 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
             throw new Error(&#x27;The navigation configuration task contains no task ref with entries. Navigation cannot be constructed&#x27;);
         }
 
-        for (let order &#x3D; 0; order &lt; navEntriesTaskRef.value.length; order ++) {
+        for (let order &#x3D; 0; order &lt; navEntriesTaskRef.value.length; order++) {
             const index &#x3D; entryDataGroupIndices[order];
             const label &#x3D; extractIconAndTitle(navConfigDatagroups.slice(index,
                 index + GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY));
@@ -790,11 +739,11 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
             }
             newNode.url &#x3D; &#x60;/${url}/${navEntriesTaskRef.value[order]}&#x60;;
             const allowedRoles &#x3D; extractRoles(navConfigDatagroups.slice(index,
-                index + GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY),
+                    index + GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY),
                 GroupNavigationConstants.NAVIGATION_ENTRY_ALLOWED_ROLES_FIELD_ID_SUFFIX);
 
             const bannedRoles &#x3D; extractRoles(navConfigDatagroups.slice(index,
-                index + GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY),
+                    index + GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY),
                 GroupNavigationConstants.NAVIGATION_ENTRY_BANNED_ROLES_FIELD_ID_SUFFIX);
 
             const splitAllowedRoles &#x3D; this.extractRoleAndNetId(allowedRoles);
