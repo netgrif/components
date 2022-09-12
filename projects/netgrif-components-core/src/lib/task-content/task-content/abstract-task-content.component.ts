@@ -341,24 +341,26 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
      * @returns the preprocessed data groups
      */
     protected preprocessDataGroups(dataGroups: Array<DataGroup>): Array<DataGroup> {
-        const filterAndRearrangeResult = this.filterAndRearrangeDataGroups(dataGroups);
+        const rearrangeResult = this.rearrangeDataGroups(dataGroups);
+        let unfilteredDataGroups = rearrangeResult.dataGroups;
 
-        if (filterAndRearrangeResult.containsDashboardTaskRef) {
-            return this.preprocessDashboardTaskRef(filterAndRearrangeResult.dataGroups, dataGroups);
+        if (rearrangeResult.containsDashboardTaskRef) {
+            unfilteredDataGroups = this.preprocessDashboardTaskRef(rearrangeResult.dataGroups, dataGroups);
         }
 
-        return filterAndRearrangeResult.dataGroups;
+        return this.cloneAndFilterHidden(unfilteredDataGroups);
     }
 
     /**
      * Clones the content of the data groups to prevent unintentional memory accesses to source data.
-     * Rearranges the data groups to accommodate taskrefs. Filters out hidden and forbidden fields.
+     * Rearranges the data groups to accommodate taskrefs.
      * Determines if the data groups contain a dashboard task ref field.
      * @param dataGroups
      * @returns the preprocessed data groups with metadata
      */
-    protected filterAndRearrangeDataGroups(dataGroups: Array<DataGroup>): PreprocessedDataGroups {
-        dataGroups = this.cloneAndFilterHidden(dataGroups);
+    protected rearrangeDataGroups(dataGroups: Array<DataGroup>): PreprocessedDataGroups {
+        dataGroups = this.cloneDataGroups(dataGroups);
+        this.initializeLocalFieldLayout(dataGroups);
 
         let containsDashboard = false;
         const result = [];
@@ -407,6 +409,32 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
             dataGroups: result,
             containsDashboardTaskRef: containsDashboard
         };
+    }
+
+    /**
+     * Creates a duplicate of the provided data group array.
+     *
+     * Only the data groups are cloned, the fields are only copied as references.
+     * @param dataGroups the data groups that should be cloned
+     * @returns the duplicated data groups
+     */
+    protected cloneDataGroups(dataGroups: Array<DataGroup>): Array<DataGroup> {
+        return dataGroups.map(g => g);
+    }
+
+    /**
+     * Passes over all the fields in the provided data groups and if they are visible, initializes their local layout attribute.
+     * @param dataGroups the containers of the fields that should have their local layout initialized
+     */
+    protected initializeLocalFieldLayout(dataGroups: Array<DataGroup>): void {
+        for (const g of dataGroups) {
+            for (const f of g.fields) {
+                if (f.behavior.hidden || f.behavior.forbidden) {
+                    continue;
+                }
+                f.resetLocalLayout();
+            }
+        }
     }
 
     /**
