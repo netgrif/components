@@ -7,6 +7,7 @@ import {Subscription} from 'rxjs';
 import {CustomCard} from '../../../dashboard/cards/model/custom-dashboard-model/custom-card';
 import {DashboardCardTypes} from '../../../dashboard/cards/model/dashboard-card-types';
 import {FilterType} from '../../../filter/models/filter-type';
+import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 
 @Component({
     selector: 'ncc-abstract-dashboard-line-chart-text-field',
@@ -16,6 +17,7 @@ export abstract class AbstractDashboardLineChartTextFieldComponent extends Abstr
 
     @Input() textField: TextField;
     @Input() formControlRef: FormControl;
+    @Input() showLargeLayout: WrappedBoolean;
 
     public card?: CustomCard;
     public initialized: boolean = false;
