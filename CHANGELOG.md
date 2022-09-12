@@ -32,7 +32,6 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.2.0](https://g
 - [NAE-1457] Schematic support for public view generation
 - [NAE-1606] Configuration of case creation button from menu item
 - [NAE-1648] Redesign dataFields
-- [NAE-1682] Translate tooltip admin view
 - [NAE-1677] Message from exception thrown in SET event on data field is not propagated in EventOutcome
 - [NAE-1682] Translate tooltip admin view
 - [NAE-1695] Fix generated tests in schematics
