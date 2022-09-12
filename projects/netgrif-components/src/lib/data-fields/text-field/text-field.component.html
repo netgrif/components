@@ -6,16 +6,19 @@
 
 <ng-template #textFieldTemplate let-showLargeLayout="showLargeLayout">
     <div *ngIf="dataField.component !== undefined" [ngSwitch]="dataField.component.name">
-        <nc-password-text-field *ngSwitchCase="'password'" [passwordTextField]="dataField" [formControlRef]="formControl"
+        <nc-password-text-field *ngSwitchCase="textFieldComponentEnum.PASSWORD" [passwordTextField]="dataField" [formControlRef]="formControl"
                                 [showLargeLayout]="showLargeLayout"></nc-password-text-field>
-        <nc-textarea-field *ngSwitchCase="'textarea'" [textAreaField]="dataField" [formControlRef]="formControl"
+        <nc-textarea-field *ngSwitchCase="textFieldComponentEnum.TEXT_AREA" [textAreaField]="dataField" [formControlRef]="formControl"
                            [showLargeLayout]="showLargeLayout"></nc-textarea-field>
-        <nc-rich-textarea-field *ngSwitchCase="'richtextarea'" [textAreaField]="dataField"
+        <nc-rich-textarea-field *ngSwitchCase="textFieldComponentEnum.RICH_TEXT_AREA" [textAreaField]="dataField"
                                 [formControlRef]="formControl"
                                 [showLargeLayout]="showLargeLayout"></nc-rich-textarea-field>
-        <nc-html-textarea-field *ngSwitchCase="'htmltextarea'" [textAreaField]="dataField"
+        <nc-html-textarea-field *ngSwitchCase="textFieldComponentEnum.HTML_TEXT_AREA" [textAreaField]="dataField"
                                 [formControlRef]="formControl"
                                 [showLargeLayout]="showLargeLayout"></nc-html-textarea-field>
+        <nc-dashboard-line-chart-text-field *ngSwitchCase="textFieldComponentEnum.DASHBOARD_LINE_CHART"
+                                            [textField]="dataField"
+                                            [formControlRef]="formControl"></nc-dashboard-line-chart-text-field>
         <nc-simple-text-field *ngSwitchDefault [textField]="dataField" [formControlRef]="formControl"
                               [showLargeLayout]="showLargeLayout"></nc-simple-text-field>
     </div>

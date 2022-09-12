@@ -29,6 +29,7 @@ export * from './text-field/rich-textarea-field/abstract-rich-textarea-field.com
 export * from './text-field/html-textarea-field/abstract-html-textarea-field.component';
 export * from './text-field/password-text-field/abstract-password-text-field.component';
 export * from './text-field/textarea-field/abstract-textarea-field.component';
+export * from './text-field/dashboard-line-chart-text-field/abstract-dashboard-line-chart-text-field.component';
 export * from './user-field/abstract-user-field.component';
 export * from './enumeration-field/enumeration-icon-field/abstract-enumeration-icon-field.component';
 export * from './enumeration-field/enumeration-autocomplete-dynamic-field/abstract-enumeration-autocomplete-dynamic-field.component';

@@ -12,6 +12,17 @@ export enum TextFieldView {
     HTMLTEXTAREA = 'htmltextarea'
 }
 
+/**
+ * A collection of Text field component names supported by the application engine.
+ */
+export enum TextFieldComponent {
+    PASSWORD = 'password',
+    TEXT_AREA = 'text_area',
+    RICH_TEXT_AREA = 'richtextarea',
+    HTML_TEXT_AREA = 'htmltextarea',
+    DASHBOARD_LINE_CHART = 'dashboard_line_chart',
+}
+
 export enum TextAreaHeight {
     OUTLINE = 27,
     FILL_STANDARD = 34

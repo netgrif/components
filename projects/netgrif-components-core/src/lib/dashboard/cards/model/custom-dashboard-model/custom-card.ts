@@ -5,11 +5,11 @@ import {FilterType} from '../../../../filter/models/filter-type';
 import {AggregationQuery} from './aggregation-query';
 
 export interface CustomCard extends DashboardCard {
-    title: string;
-    query: AggregationQuery;
-    units: string;
-    xAxisLabel: string;
-    yAxisLabel: string;
+    title?: string;
+    query?: AggregationQuery;
+    units?: string;
+    xAxisLabel?: string;
+    yAxisLabel?: string;
     resourceType: FilterType;
-    filter: CaseSearchRequestBody | TaskSearchRequestBody;
+    filter?: CaseSearchRequestBody | TaskSearchRequestBody;
 }

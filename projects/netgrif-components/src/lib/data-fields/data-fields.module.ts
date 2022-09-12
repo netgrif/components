@@ -67,6 +67,8 @@ import {
 import { UserListFieldComponent } from './user-list-field/user-list-field.component';
 import { TaskRefFieldComponent } from './task-ref-field/task-ref-field.component';
 import { TaskRefDashboardTileComponent } from './task-ref-field/task-ref-dashboard-field/task-ref-dashboard-tile/task-ref-dashboard-tile.component';
+import { DashboardLineChartTextFieldComponent } from './text-field/dashboard-line-chart-text-field/dashboard-line-chart-text-field.component';
+import {DashboardComponentModule} from '../dashboard/dashboard.module';
 
 @NgModule({
     declarations: [
@@ -110,6 +112,7 @@ import { TaskRefDashboardTileComponent } from './task-ref-field/task-ref-dashboa
         UserListFieldComponent,
         TaskRefFieldComponent,
         TaskRefDashboardTileComponent,
+        DashboardLineChartTextFieldComponent,
     ],
     exports: [
         BooleanFieldComponent,
@@ -147,7 +150,8 @@ import { TaskRefDashboardTileComponent } from './task-ref-field/task-ref-dashboa
         MatProgressSpinnerModule,
         CurrencyModule,
         BrowserModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        DashboardComponentModule
     ],
     providers: [
         { provide: DateAdapter, useClass: CustomDateAdapter }
