@@ -7,7 +7,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Full Changelog: [https://github.com/netgrif/components/commits/v6.2.0](https://github.com/netgrif/components/commits/v6.2.0)
 
-## [6.2.0](https://github.com/netgrif/components/releases/tag/v6.2.0) (2022-09-11)
+## [6.2.0](https://github.com/netgrif/components/releases/tag/v6.2.0) (2022-09-12)
 
 ### Fixed
 
@@ -28,6 +28,7 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.2.0](https://g
 
 ### Changed
 
+- [NAE-1156] View Deprecation and All Data
 - [NAE-1457] Schematic support for public view generation
 - [NAE-1606] Configuration of case creation button from menu item
 - [NAE-1648] Redesign dataFields
