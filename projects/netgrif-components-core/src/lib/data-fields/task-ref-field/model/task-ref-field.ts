@@ -19,6 +19,7 @@ export enum TaskRefComponents {
 export enum TaskRefDashboardConstants {
     DASHBOARD_ROWS = 'rows',
     DASHBOARD_COLS = 'cols',
+    DASHBOARD_TASK_REF = 'dashboard',
 }
 
 /**

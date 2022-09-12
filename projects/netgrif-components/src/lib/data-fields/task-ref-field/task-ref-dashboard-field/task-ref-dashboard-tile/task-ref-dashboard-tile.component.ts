@@ -1,11 +1,13 @@
-import {Component, Injector, Input, OnDestroy, OnInit, Self, SkipSelf, Type} from '@angular/core';
+import {Component, Inject, Injector, Input, OnDestroy, OnInit, Self, SkipSelf, Type} from '@angular/core';
 import {
     AbstractTaskRefDashboardTileComponent,
     CallChainService,
     CaseResourceService,
     LoggerService,
+    NAE_TASK_OPERATIONS,
     ProcessService,
     TaskContentService,
+    TaskOperations,
     TaskResourceService,
     UnlimitedTaskContentService
 } from '@netgrif/components-core';
@@ -32,10 +34,11 @@ export class TaskRefDashboardTileComponent extends AbstractTaskRefDashboardTileC
                 logger: LoggerService,
                 taskResourceService: TaskResourceService,
                 callChainService: CallChainService,
+                @SkipSelf() parentTaskContentService: TaskContentService,
+                @Inject(NAE_TASK_OPERATIONS) taskOperations: TaskOperations,
                 protected _injector: Injector,
-                @SkipSelf() protected _parentTaskContentService: TaskContentService,
                 @Self() protected _myTaskContentService: TaskContentService) {
-        super(caseResourceService, processService, logger, taskResourceService, callChainService);
+        super(caseResourceService, processService, logger, taskResourceService, callChainService, parentTaskContentService, taskOperations);
     }
 
     ngOnInit(): void {

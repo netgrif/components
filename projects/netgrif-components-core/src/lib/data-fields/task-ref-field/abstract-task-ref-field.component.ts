@@ -42,7 +42,7 @@ export abstract class AbstractTaskRefFieldComponent extends AbstractDataFieldCom
         }
         for (let y = 0; y < occupiedTiles.length; y++) {
             for (let x = 0; x < occupiedTiles[y].length; x++) {
-                if (!occupiedTiles[x][y]) {
+                if (!occupiedTiles[y][x]) {
                     this.dashboardTiles.push(this.createEmptyDashboardTile(x, y));
                 }
             }

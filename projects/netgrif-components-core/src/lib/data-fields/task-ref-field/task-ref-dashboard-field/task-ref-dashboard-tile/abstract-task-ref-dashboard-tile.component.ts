@@ -1,7 +1,7 @@
-import {Component, Input, OnDestroy} from '@angular/core';
+import {Component, Inject, Input, OnDestroy} from '@angular/core';
 import {TaskRefDashboardTile} from '../../model/task-ref-dashboard-tile';
 import {CaseResourceService} from '../../../../resources/engine-endpoint/case-resource.service';
-import {TaskRefDashboardTileConstants, TaskRefField} from '../../model/task-ref-field';
+import {TaskRefDashboardConstants, TaskRefDashboardTileConstants, TaskRefField} from '../../model/task-ref-field';
 import {Subject, Subscription} from 'rxjs';
 import {ProcessService} from '../../../../process/process.service';
 import {switchMap} from 'rxjs/operators';
@@ -12,6 +12,9 @@ import {TaskSetDataRequestBody} from '../../../../resources/interface/task-set-d
 import {TaskResourceService} from '../../../../resources/engine-endpoint/task-resource.service';
 import {CallChainService} from '../../../../utility/call-chain/call-chain.service';
 import {FieldTypeResource} from '../../../../task-content/model/field-type-resource';
+import {TaskContentService} from '../../../../task-content/services/task-content.service';
+import {TaskOperations} from '../../../../task/interfaces/task-operations';
+import {NAE_TASK_OPERATIONS} from '../../../../task/models/task-operations-injection-token';
 
 @Component({
     selector: 'ncc-abstract-task-ref-dashboard-tile',
@@ -29,7 +32,9 @@ export abstract class AbstractTaskRefDashboardTileComponent implements OnDestroy
                           protected _processService: ProcessService,
                           protected _logger: LoggerService,
                           protected _taskResourceService: TaskResourceService,
-                          protected _callChainService: CallChainService) {
+                          protected _callChainService: CallChainService,
+                          protected _parentTaskContentService: TaskContentService,
+                          @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations) {
     }
 
     ngOnDestroy(): void {
@@ -77,7 +82,22 @@ export abstract class AbstractTaskRefDashboardTileComponent implements OnDestroy
                 }
 
                 // reference new tile in task ref
-                console.log('hello');
+                this._taskResourceService.setData(this._parentTaskContentService.task.stringId, {
+                    [this._parentTaskContentService.task.stringId]: {
+                        [TaskRefDashboardConstants.DASHBOARD_TASK_REF]: {
+                            type: FieldTypeResource.TASK_REF,
+                            value: [...this.taskRef.value, _case.tasks[0].task]
+                        }
+                    }
+                }).subscribe( outcome => {
+                    if (outcome.error) {
+                        this._logger.error(`Could reference created task ref dashboard tile in the task ref`, outcome.error);
+                        return;
+                    }
+                    this._taskOperations.forceReload();
+                }, error => {
+                    this._logger.error(`Could reference created task ref dashboard tile in the task ref`, error);
+                });
             }));
         }, error => {
             this._logger.error(`Could not create task ref dashboard tile case`, error);
