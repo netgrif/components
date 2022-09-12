@@ -293,7 +293,7 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, Input, OnDestroy, OnInit} from &#x27;@angular/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, Input, OnDestroy, OnInit, Optional} from &#x27;@angular/core&#x27;;
 import {MatExpansionPanel} from &#x27;@angular/material/expansion&#x27;;
 import {AbstractPanelWithHeaderBindingComponent} from &#x27;../abstract/panel-with-header-binding&#x27;;
 import {HeaderColumn} from &#x27;../../header/models/header-column&#x27;;
@@ -309,6 +309,9 @@ import {TranslateService, TranslationChangeEvent} from &#x27;@ngx-translate/core
 import {WorkflowMetaField} from &#x27;../../header/workflow-header/workflow-meta-enum&#x27;;
 import {WorkflowViewService} from &#x27;../../view/workflow-view/workflow-view.service&#x27;;
 import {FeaturedValue} from &#x27;../abstract/featured-value&#x27;;
+import {PetriNetResourceService} from &#x27;../../resources/engine-endpoint/petri-net-resource.service&#x27;;
+import {ProgressType, ProviderProgress} from &#x27;../../resources/resource-provider.service&#x27;;
+import {OverflowService} from &#x27;../../header/services/overflow.service&#x27;;
 
 
 export interface WorkflowPanelContent {
@@ -342,8 +345,10 @@ export abstract class AbstractWorkflowPanelComponent extends AbstractPanelWithHe
 
     protected constructor(protected _log: LoggerService,
                           protected _translate: TranslateService,
-                          protected _workflowService: WorkflowViewService) {
-        super();
+                          protected _workflowService: WorkflowViewService,
+                          protected _petriNetResource: PetriNetResourceService,
+                          @Optional() protected _overflowService: OverflowService) {
+        super(_overflowService);
 
         this._subscription &#x3D; _translate.onLangChange.subscribe((event: TranslationChangeEvent) &#x3D;&gt; {
             this.panelContent.netIdentifier.title &#x3D; this._translate.instant(this.TRANSLATION_NET);
@@ -383,6 +388,36 @@ export abstract class AbstractWorkflowPanelComponent extends AbstractPanelWithHe
      */
     public deleteWorkflow(): void {
         this._workflowService.deleteWorkflow(this.workflow);
+    }
+
+    /**
+     * Handles the logic that should be executed when the &quot;download workflow&quot; button is clicked.
+     *
+     * Calls the appropriate method in the {@link WorkflowViewService}.
+     */
+    public downloadNetFile() {
+        this._petriNetResource.getNetFile(this.workflow.stringId).subscribe(response &#x3D;&gt; {
+            if (!(response as ProviderProgress).type || (response as ProviderProgress).type !&#x3D;&#x3D; ProgressType.DOWNLOAD) {
+                this._log.debug(&#x60;File ${this.workflow.identifier} was successfully downloaded&#x60;);
+                this.downloadViaAnchor(response as Blob);
+            }
+        }, error &#x3D;&gt; {
+            this._log.error(&#x60;Downloading file ${this.workflow.identifier} has failed!&#x60;, error);
+        });
+    }
+
+    public downloadViaAnchor(blob: Blob): void {
+        const a &#x3D; document.createElement(&#x27;a&#x27;);
+        document.body.appendChild(a);
+        a.setAttribute(&#x27;style&#x27;, &#x27;display: none&#x27;);
+        blob &#x3D; new Blob([blob], {type: blob.type});
+
+        const url &#x3D; window.URL.createObjectURL(blob);
+        a.href &#x3D; url;
+        a.download &#x3D; this.workflow.identifier;
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
     }
 
     /**

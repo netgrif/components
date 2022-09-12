@@ -188,18 +188,12 @@ export interface MultichoiceFieldValue {
     value: string;
 }
 
-/*@deprecated in 4.3.0*/
-export enum MultichoiceFieldView {
-    DEFAULT &#x3D; &#x27;default&#x27;,
-    LIST &#x3D; &#x27;list&#x27;
-}
-
-export class MultichoiceField extends DataField&lt;Array&lt;string&gt;&gt; {
+export class MultichoiceField  extends DataField&lt;Array&lt;string&gt;&gt; {
 
     constructor(stringId: string, title: string, values: Array&lt;string&gt;, private _choices: Array&lt;MultichoiceFieldValue&gt;,
                 behavior: Behavior, placeholder?: string, description?: string, layout?: Layout,
-                private _view &#x3D; MultichoiceFieldView.DEFAULT, private readonly _fieldType &#x3D; FieldTypeResource.MULTICHOICE,
-                validations?: Array&lt;Validation&gt;, component?: Component, parentTaskId?: string) {
+                private readonly _fieldType &#x3D; FieldTypeResource.MULTICHOICE, validations?: Array&lt;Validation&gt;,
+                component?: Component, parentTaskId?: string) {
         super(stringId, title, values, behavior, placeholder, description, layout, validations, component, parentTaskId);
     }
 
@@ -209,16 +203,6 @@ export class MultichoiceField extends DataField&lt;Array&lt;string&gt;&gt; {
 
     get choices(): Array&lt;MultichoiceFieldValue&gt; {
         return this._choices;
-    }
-
-    /*@deprecated in 4.3.0*/
-    set view(view: MultichoiceFieldView) {
-        this._view &#x3D; view;
-    }
-
-    /*@deprecated in 4.3.0*/
-    get view(): MultichoiceFieldView {
-        return this._view;
     }
 
     get fieldType(): FieldTypeResource {

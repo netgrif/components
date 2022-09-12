@@ -600,8 +600,8 @@ POST</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="308"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/resources/engine-endpoint/task-resource.service.ts:308</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="312"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/resources/engine-endpoint/task-resource.service.ts:312</a></div>
                 </td>
             </tr>
 
@@ -697,8 +697,8 @@ DELETE</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="263"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/resources/engine-endpoint/task-resource.service.ts:263</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="267"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/resources/engine-endpoint/task-resource.service.ts:267</a></div>
                 </td>
             </tr>
 
@@ -794,8 +794,8 @@ GET</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="320"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/resources/engine-endpoint/task-resource.service.ts:320</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="324"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/resources/engine-endpoint/task-resource.service.ts:324</a></div>
                 </td>
             </tr>
 
@@ -1572,8 +1572,8 @@ POST</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="251"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/resources/engine-endpoint/task-resource.service.ts:251</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="255"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/resources/engine-endpoint/task-resource.service.ts:255</a></div>
                 </td>
             </tr>
 
@@ -1657,8 +1657,8 @@ POST</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="286"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/resources/engine-endpoint/task-resource.service.ts:286</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="290"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/resources/engine-endpoint/task-resource.service.ts:290</a></div>
                 </td>
             </tr>
 
@@ -2263,6 +2263,10 @@ export class TaskResourceService extends AbstractResourceService implements Coun
     public getData(taskId: string): Observable&lt;Array&lt;DataGroup&gt;&gt; {
         return this.rawGetData(taskId).pipe(
             map((responseOutcome: EventOutcomeMessageResource) &#x3D;&gt; {
+                if (responseOutcome.error) {
+                    throw new Error(responseOutcome.error);
+                }
+
                 const dataGroupsArray &#x3D; this.changeType((responseOutcome.outcome as GetDataGroupsEventOutcome).data, &#x27;dataGroups&#x27;);
                 if (!Array.isArray(dataGroupsArray)) {
                     return [];
