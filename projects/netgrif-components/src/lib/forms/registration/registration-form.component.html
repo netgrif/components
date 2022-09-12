@@ -1,31 +1,31 @@
 <div fxLayout="column" fxLayoutGap="24px" *ngIf="tokenVerified && (loadingToken | async) === false">
-    <form [formGroup]="rootFormGroup" (ngSubmit)="onSubmit()" class="full-width">
-        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
-            <mat-icon color="primary">email</mat-icon>
-            <mat-form-field fxFlex="100">
+    <form [formGroup]="rootFormGroup" (ngSubmit)="onSubmit()" class="full-width netgrif-input">
+        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px" class="netgrif-input">
+            <mat-icon color="primary" class="netgrif-icon-fix">email</mat-icon>
+            <mat-form-field fxFlex="100" appearance="outline">
                 <input matInput placeholder="{{ 'forms.register.email' | translate}}" disabled [value]="userEmail"
                        autocomplete="username">
             </mat-form-field>
         </div>
-        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
-            <mat-icon color="primary">account_circle</mat-icon>
-            <mat-form-field fxFlex="100">
+        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px" class="netgrif-input " >
+            <mat-icon color="primary" class="netgrif-icon-fix">account_circle</mat-icon>
+            <mat-form-field fxFlex="100" appearance="outline">
                 <input matInput placeholder="{{ 'forms.register.name' | translate }}" formControlName="name" required
                        autocomplete="given-name">
                 <mat-error *ngIf="!isFieldValid('name')">{{getErrorMessage('name')}}</mat-error>
             </mat-form-field>
         </div>
-        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
-            <mat-icon color="primary">account_circle_outline</mat-icon>
-            <mat-form-field fxFlex="100">
+        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px" class="netgrif-input" >
+            <mat-icon color="primary" class="netgrif-icon-fix">account_circle_outline</mat-icon>
+            <mat-form-field fxFlex="100" appearance="outline">
                 <input matInput placeholder="{{ 'forms.register.surname' | translate }}" formControlName="surname"
                        required autocomplete="family-name">
                 <mat-error *ngIf="!isFieldValid('surname')">{{getErrorMessage('surname')}}</mat-error>
             </mat-form-field>
         </div>
-        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
-            <mat-icon color="primary">vpn_key</mat-icon>
-            <mat-form-field fxFlex="100">
+        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px" class="netgrif-input">
+            <mat-icon color="primary" class="netgrif-icon-fix">vpn_key</mat-icon>
+            <mat-form-field fxFlex="100" appearance="outline">
                 <input matInput placeholder="{{ 'forms.login.enterPass' | translate }}"
                        [type]="hidePassword ? 'password' : 'text'"
                        formControlName="password" required autocomplete="new-password">
@@ -40,9 +40,9 @@
                 <mat-error *ngIf="!isFieldValid('password')">{{getErrorMessage('password')}}</mat-error>
             </mat-form-field>
         </div>
-        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
-            <mat-icon color="primary">vpn_key</mat-icon>
-            <mat-form-field fxFlex="100">
+        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px" class="netgrif-input">
+            <mat-icon color="primary" class="netgrif-icon-fix">vpn_key</mat-icon>
+            <mat-form-field fxFlex="100" appearance="outline">
                 <input matInput placeholder="{{ 'forms.register.repeatPass' | translate }}"
                        [type]="hideRepeatPassword ? 'password' : 'text'"
                        formControlName="confirmPassword" required autocomplete="new-password">

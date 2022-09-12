@@ -2,14 +2,14 @@ import {Injectable} from '@angular/core';
 import {DataFieldResource} from '../model/resource-interface';
 import {DataField} from '../../data-fields/models/abstract-data-field';
 import {BooleanField} from '../../data-fields/boolean-field/models/boolean-field';
-import {TextField, TextFieldView} from '../../data-fields/text-field/models/text-field';
+import {TextField} from '../../data-fields/text-field/models/text-field';
 import {NumberField} from '../../data-fields/number-field/models/number-field';
-import {EnumerationField, EnumerationFieldValue, EnumerationFieldView} from '../../data-fields/enumeration-field/models/enumeration-field';
-import {MultichoiceField, MultichoiceFieldValue, MultichoiceFieldView} from '../../data-fields/multichoice-field/models/multichoice-field';
+import {EnumerationField, EnumerationFieldValue} from '../../data-fields/enumeration-field/models/enumeration-field';
+import {MultichoiceField, MultichoiceFieldValue} from '../../data-fields/multichoice-field/models/multichoice-field';
 import {DateField} from '../../data-fields/date-field/models/date-field';
 import {DateTimeField} from '../../data-fields/date-time-field/models/date-time-field';
 import {UserField} from '../../data-fields/user-field/models/user-field';
-import {ButtonField, ButtonFieldView} from '../../data-fields/button-field/models/button-field';
+import {ButtonField} from '../../data-fields/button-field/models/button-field';
 import {FileField} from '../../data-fields/file-field/models/file-field';
 import moment from 'moment';
 import {UserValue} from '../../data-fields/user-field/models/user-value';
@@ -21,11 +21,14 @@ import {TaskRefField} from '../../data-fields/task-ref-field/model/task-ref-fiel
 import {DynamicEnumerationField} from '../../data-fields/enumeration-field/models/dynamic-enumeration-field';
 import {FilterField} from '../../data-fields/filter-field/models/filter-field';
 import {I18nField} from '../../data-fields/i18n-field/models/i18n-field';
+import { UserListField } from '../../data-fields/user-list-field/models/user-list-field';
+import { UserListValue } from '../../data-fields/user-list-field/models/user-list-value';
 
 @Injectable({
     providedIn: 'root'
 })
 export class FieldConverterService {
+    private textFieldNames = ['textarea', 'richtextarea', 'htmltextarea', 'editor', 'htmlEditor', 'area']
 
     constructor() {
     }
@@ -36,30 +39,12 @@ export class FieldConverterService {
                 return new BooleanField(item.stringId, item.name, item.value as boolean, item.behavior,
                     item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.TEXT:
-                /*@deprecated in 4.3.0*/
-                let type = TextFieldView.DEFAULT;
-                if (item.subType !== undefined && item.subType === 'area') {
-                    type = TextFieldView.TEXTAREA;
-                }
-                if (item.view !== undefined && item.view.value !== undefined && (item.view.value === 'editor' || item.view.value === TextFieldView.RICHTEXTAREA)) {
-                    type = TextFieldView.RICHTEXTAREA;
-                    return new TextAreaField(item.stringId, item.name, item.value as string, item.behavior, item.placeholder,
-                        item.description, item.layout, item.validations, type);
-                } else if (item.view !== undefined && item.view.value !== undefined && item.view.value === 'area') {
-                    type = TextFieldView.TEXTAREA;
-                } else if (item.view !== undefined && item.view.value !== undefined && item.view.value === 'htmlEditor') {
-                    type = TextFieldView.HTMLTEXTAREA;
-                    return new TextAreaField(item.stringId, item.name, item.value as string, item.behavior, item.placeholder,
-                        item.description, item.layout, item.validations, type);
-                }
-                if (item.component !== undefined && item.component.name !== undefined && (item.component.name === 'editor' ||
-                    item.component.name === TextFieldView.HTMLTEXTAREA || item.component.name === TextFieldView.RICHTEXTAREA)) {
-                    return new TextAreaField(item.stringId, item.name, this.resolveTextValue(item, item.value),
-                        item.behavior, item.placeholder, item.description, item.layout, item.validations, type, item.component,
-                        item.parentTaskId);
+                if (this.textFieldNames.includes(item.component?.name)) {
+                    return new TextAreaField(item.stringId, item.name, this.resolveTextValue(item, item.value), item.behavior,
+                        item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
                 }
                 return new TextField(item.stringId, item.name, this.resolveTextValue(item, item.value), item.behavior, item.placeholder,
-                    item.description, item.layout, item.validations, type, item.component, item.parentTaskId);
+                    item.description, item.layout, item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.NUMBER:
                 return new NumberField(item.stringId, item.name, item.value as number, item.behavior, item.validations, item.placeholder,
                     item.description, item.layout, item.formatFilter, this.resolveNumberComponent(item), item.parentTaskId);
@@ -68,11 +53,11 @@ export class FieldConverterService {
                 return this.resolveEnumField(item);
             case FieldTypeResource.MULTICHOICE:
                 return new MultichoiceField(item.stringId, item.name, item.value, this.resolveMultichoiceChoices(item),
-                    item.behavior, item.placeholder, item.description, item.layout, this.resolveMultichoiceViewType(item),
-                    item.type, item.validations, item.component, item.parentTaskId);
+                    item.behavior, item.placeholder, item.description, item.layout, item.type, item.validations,
+                    item.component, item.parentTaskId);
             case FieldTypeResource.MULTICHOICE_MAP:
                 return new MultichoiceField(item.stringId, item.name, item.value, this.resolveMultichoiceOptions(item),
-                    item.behavior, item.placeholder, item.description, item.layout, this.resolveMultichoiceViewType(item),
+                    item.behavior, item.placeholder, item.description, item.layout,
                     item.type, item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.DATE:
                 let date;
@@ -95,11 +80,16 @@ export class FieldConverterService {
                 }
                 return new UserField(item.stringId, item.name, item.behavior, user,
                     item.roles, item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
+            case FieldTypeResource.USER_LIST:
+                let userListValue = new UserListValue([]);
+                if (item.value) {
+                    item.value.userValues.forEach(u => userListValue.addUserValue(new UserValue(u.id, u.name, u.surname, u.email)));
+                }
+                return new UserListField(item.stringId, item.name, item.behavior, userListValue,
+                    item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.BUTTON:
-                /*@deprecated in 4.3.0*/
-                const typeBtn = this.resolveButtonView(item);
                 return new ButtonField(item.stringId, item.name, item.behavior, item.value as number,
-                    item.placeholder, item.description, item.layout, typeBtn, item.validations, item.component, item.parentTaskId);
+                    item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.FILE:
                 return new FileField(item.stringId, item.name, item.behavior, item.value ? item.value : {},
                     item.placeholder, item.description, item.layout, null, null, item.validations, item.component,
@@ -139,6 +129,8 @@ export class FieldConverterService {
             return FieldTypeResource.FILE_LIST;
         } else if (item instanceof UserField) {
             return FieldTypeResource.USER;
+        } else if (item instanceof UserListField) {
+            return FieldTypeResource.USER_LIST;
         } else if (item instanceof TaskRefField) {
             return FieldTypeResource.TASK_REF;
         } else if (item instanceof EnumerationField || item instanceof MultichoiceField) {
@@ -147,30 +139,6 @@ export class FieldConverterService {
             return FieldTypeResource.FILTER;
         } else if (item instanceof I18nField) {
             return FieldTypeResource.I18N;
-        }
-    }
-
-    /*@deprecated in 4.3.0*/
-    public resolveButtonView(item: DataFieldResource): ButtonFieldView {
-        if (item.view !== undefined && item.view.value !== undefined) {
-            switch (item.view.value) {
-                case ButtonFieldView.STROKED:
-                    return ButtonFieldView.STROKED;
-                case ButtonFieldView.RAISED:
-                    return ButtonFieldView.RAISED;
-                case ButtonFieldView.FAB:
-                    return ButtonFieldView.FAB;
-                case ButtonFieldView.FLAT:
-                    return ButtonFieldView.FLAT;
-                case ButtonFieldView.ICON:
-                    return ButtonFieldView.ICON;
-                case ButtonFieldView.MINIFAB:
-                    return ButtonFieldView.MINIFAB;
-                default:
-                    return ButtonFieldView.STANDARD;
-            }
-        } else if (item instanceof ButtonField) {
-            return ButtonFieldView.STANDARD;
         }
     }
 
@@ -191,6 +159,9 @@ export class FieldConverterService {
         }
         if (this.resolveType(field) === FieldTypeResource.USER) {
             return value.id;
+        }
+        if (this.resolveType(field) === FieldTypeResource.USER_LIST) {
+            return value.userValues.map(u => u.id);
         }
         if (this.resolveType(field) === FieldTypeResource.DATE_TIME) {
             if (moment.isMoment(value)) {
@@ -221,32 +192,13 @@ export class FieldConverterService {
             : this.resolveEnumOptions(enumField);
         if (enumField.component && enumField.component.name === 'autocomplete_dynamic') {
             return new DynamicEnumerationField(enumField.stringId, enumField.name, enumField.value, options,
-                enumField.behavior, enumField.placeholder, enumField.description, enumField.layout, this.resolveEnumViewType(enumField),
+                enumField.behavior, enumField.placeholder, enumField.description, enumField.layout,
                 enumField.type, enumField.validations, enumField.component, enumField.parentTaskId);
         } else {
             return new EnumerationField(enumField.stringId, enumField.name, enumField.value, options,
-                enumField.behavior, enumField.placeholder, enumField.description, enumField.layout, this.resolveEnumViewType(enumField),
+                enumField.behavior, enumField.placeholder, enumField.description, enumField.layout,
                 enumField.type, enumField.validations, enumField.component, enumField.parentTaskId);
         }
-    }
-
-    /**
-     * @param enumField enumeration field resource object who's view type we want to resolve
-     * @returns the view type defined in the field object, or default if none, or invalid type is defined
-     * @deprecated in 4.3.0
-     */
-    protected resolveEnumViewType(enumField: DataFieldResource): EnumerationFieldView {
-        let typeEnum = EnumerationFieldView.DEFAULT;
-        if (enumField.view && enumField.view.value !== undefined) {
-            if (enumField.view.value === 'list') {
-                typeEnum = EnumerationFieldView.LIST;
-            } else if (enumField.view.value === 'autocomplete') {
-                typeEnum = EnumerationFieldView.AUTOCOMPLETE;
-            } else if (enumField.view.value === 'stepper') {
-                typeEnum = EnumerationFieldView.STEPPER;
-            }
-        }
-        return typeEnum;
     }
 
     /**
@@ -275,21 +227,6 @@ export class FieldConverterService {
      */
     protected resolveEnumOptions(enumField: DataFieldResource): Array<EnumerationFieldValue> {
         return Object.entries(enumField.options).map(entry => ({key: entry[0], value: entry[1]}));
-    }
-
-    /**
-     * @param multiField multichoice field resource object who's view type we want to resolve
-     * @returns the view type defined in the field object, or default if none, or invalid type is defined
-     * @deprecated in 4.3.0
-     */
-    protected resolveMultichoiceViewType(multiField: DataFieldResource): MultichoiceFieldView {
-        let typeMulti = MultichoiceFieldView.DEFAULT;
-        if (multiField.view && multiField.view.value !== undefined) {
-            if (multiField.view.value === 'list') {
-                typeMulti = MultichoiceFieldView.LIST;
-            }
-        }
-        return typeMulti;
     }
 
     /**

@@ -1,0 +1,40 @@
+.tree-node {
+    outline: none !important;
+    cursor: pointer;
+    padding: 2px;
+    color: rgba(0, 0, 0, 0.6);
+
+    mat-icon.tree-node-icon {
+        line-height: 40px;
+        height: 40px;
+        width: 24px;
+        margin-right: 4px;
+    }
+
+    .margin-component {
+        width: 8px;
+        margin-right: 4px;
+    }
+
+
+}
+
+.padding-top-65 {
+    padding-top: 49px;
+}
+
+.icon-large {
+    height: 40px;
+    width: 40px;
+    font-size: 40px;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.icon-container {
+    outline: none !important;
+    height: 46px;
+}
+
+.icon-large:hover {
+    cursor: pointer;
+}

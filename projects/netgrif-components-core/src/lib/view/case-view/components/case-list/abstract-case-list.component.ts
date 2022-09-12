@@ -10,13 +10,13 @@ import {LoggerService} from '../../../../logger/services/logger.service';
 import {NAE_TAB_DATA} from '../../../../tabs/tab-data-injection-token/tab-data-injection-token';
 import {InjectedTabData} from '../../../../tabs/interfaces';
 import {ActivatedRoute} from '@angular/router';
-import {AbstractDefaultCaseList} from '../default-case-list/abstract-default-case-list';
+import {AbstractDefaultCaseListComponent} from '../default-case-list/abstract-default-case-list.component';
 
 @Component({
     selector: 'ncc-abstract-case-list',
     template: ''
 })
-export abstract class AbstractCaseListComponent extends AbstractDefaultCaseList {
+export abstract class AbstractCaseListComponent extends AbstractDefaultCaseListComponent {
 
     @ViewChild(CdkVirtualScrollViewport) public viewport: CdkVirtualScrollViewport;
 

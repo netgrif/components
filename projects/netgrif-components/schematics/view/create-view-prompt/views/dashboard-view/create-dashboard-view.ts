@@ -29,6 +29,7 @@ export function createDashboardView(tree: Tree, args: CreateViewArguments, addVi
 
     updateAppModule(tree, view.className, view.fileImportPath, [
         new ImportToAdd('DashboardComponentModule', '@netgrif/components'),
+        new ImportToAdd('PieChartModule', '@swimlane/ngx-charts')
     ]);
 
     if (addViewToService) {

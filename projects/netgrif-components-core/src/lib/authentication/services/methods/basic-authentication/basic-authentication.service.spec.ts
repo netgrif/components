@@ -1,9 +1,8 @@
-import {fakeAsync, inject, TestBed, tick} from '@angular/core/testing';
+import {inject, TestBed} from '@angular/core/testing';
 import {ConfigurationService} from '../../../../configuration/configuration.service';
 import {HttpClient} from '@angular/common/http';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {BasicAuthenticationService} from './basic-authentication.service';
-import {AuthenticationModule} from '../../../authentication.module';
 import {AuthenticationMethodService} from '../../authentication-method.service';
 import {TestConfigurationService} from '../../../../utility/tests/test-config';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -68,6 +67,13 @@ describe('BasicAuthenticationService', () => {
                 req.flush({success: 'success'});
             }
         )();
+    });
+
+    it('should decode non-latin characters', (done) => {
+        const encoded = service.encodeBase64('ššščččôôôžžťťť');
+        const decoded = service.decodeBase64(encoded);
+        expect(decoded).toEqual('ššščččôôôžžťťť');
+        done();
     });
 
     afterEach(inject([HttpTestingController], (mock: HttpTestingController) => {

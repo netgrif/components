@@ -32,10 +32,13 @@ import {PublicTaskViewComponent} from './doc/public-task-view/public-task-view.c
 import {PublicWorkflowViewComponent} from './doc/public-workflow-view/public-workflow-view.component';
 import {PublicResolverComponent} from './doc/public-resolver/public-resolver.component';
 import {GroupViewComponent} from './doc/group-view/group-view.component';
-import { TitleConfigComponent } from './doc/demo-title-config/title-config.component';
-import { ExampleRedirectComponent } from './doc/redirect/example-redirect.component';
-import { ActiveGroupComponent } from './doc/active-group/active-group.component';
-import { WrapperEmptyViewComponent } from './views/wrapper/wrapper-empty-view.component';
+import {TitleConfigComponent} from './doc/demo-title-config/title-config.component';
+import {ExampleRedirectComponent} from './doc/redirect/example-redirect.component';
+import {ActiveGroupComponent} from './doc/active-group/active-group.component';
+import {WrapperEmptyViewComponent} from './views/wrapper/wrapper-empty-view.component';
+import {DoubleDrawerExampleComponent} from './doc/double-drawer-example/double-drawer-example.component';
+import {PublicSingleTaskViewComponent} from './doc/public-single-task-view/public-single-task-view.component';
+import {BreadcrumbsExampleComponent} from './doc/breadcrumbs-example/breadcrumbs-example.component';
 
 @Injectable({
     providedIn: 'root'
@@ -44,9 +47,12 @@ export class NaeExampleAppViewService extends ViewService {
     constructor(configurationService: ConfigurationService, router: Router, loggerService: LoggerService) {
         // This class is managed by schematics. Do not modify it by hand.
         // If you want to add views to the application run the 'create-view' schematic.
-        super([{id: 'TitleConfigComponent', class: TitleConfigComponent},
-			{id: 'WrapperEmptyViewComponent', class: WrapperEmptyViewComponent},
-			{id: 'ActiveGroupComponent', class: ActiveGroupComponent},
+        super([
+            {id: 'BreadcrumbsExampleComponent', class: BreadcrumbsExampleComponent},
+            {id: 'TitleConfigComponent', class: TitleConfigComponent},
+            {id: 'PublicSingleTaskViewComponent', class: PublicSingleTaskViewComponent},
+            {id: 'WrapperEmptyViewComponent', class: WrapperEmptyViewComponent},
+            {id: 'ActiveGroupComponent', class: ActiveGroupComponent},
             {id: 'ExampleRedirectComponent', class: ExampleRedirectComponent},
             {id: 'GroupViewComponent', class: GroupViewComponent},
             {id: 'UserInviteComponent', class: UserInviteComponent},
@@ -69,6 +75,7 @@ export class NaeExampleAppViewService extends ViewService {
             {id: 'HeadersComponent', class: HeadersComponent},
             {id: 'RailExampleComponent', class: RailExampleComponent},
             {id: 'DrawerExampleComponent', class: DrawerExampleComponent},
+            {id: 'DoubleDrawerExampleComponent', class: DoubleDrawerExampleComponent},
             {id: 'RegisterFormComponent', class: RegisterFormComponent},
             {id: 'PasswordFormComponent', class: PasswordFormComponent},
             {id: 'LoginFormComponent', class: LoginFormComponent},
@@ -78,6 +85,9 @@ export class NaeExampleAppViewService extends ViewService {
             {id: 'PublicTaskViewComponent', class: PublicTaskViewComponent},
             {id: 'PublicWorkflowViewComponent', class: PublicWorkflowViewComponent},
             {id: 'PublicResolverComponent', class: PublicResolverComponent},
-            {id: 'ResetPasswordFormComponent', class: ResetPasswordFormComponent}], configurationService, router, loggerService);
+            {
+                id: 'ResetPasswordFormComponent',
+                class: ResetPasswordFormComponent
+            }], configurationService, router, loggerService);
     }
 }

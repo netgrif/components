@@ -1,6 +1,8 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnDestroy, Output, TemplateRef, ViewChild} from '@angular/core';
 import {MatExpansionPanel} from '@angular/material/expansion';
 import {CaseListFontColorService} from '../utility/service/case-list-font-color.service';
+import { ActivatedRoute, Params } from '@angular/router';
+import { ConfigParams } from './configuration/config-params';
 
 @Component({
     selector: 'ncc-abstract-panel',
@@ -8,8 +10,11 @@ import {CaseListFontColorService} from '../utility/service/case-list-font-color.
 })
 export abstract class AbstractPanelComponent implements AfterViewInit, OnDestroy {
 
+    config: Params;
     @Input() expansionDisabled = false;
     @Input() preventExpand = false;
+    @Input() preventCollapse = false;
+    @Input() hidePanelHeader = false;
     @Input() panelHeader: TemplateRef<object>;
     @Input() panelContent: TemplateRef<object>;
     @Input() first: boolean;
@@ -21,7 +26,11 @@ export abstract class AbstractPanelComponent implements AfterViewInit, OnDestroy
 
     @ViewChild('matExpansionPanel') matExpansionPanel;
 
-    protected constructor(protected _caseListFontColorService: CaseListFontColorService) {
+    protected constructor(protected _caseListFontColorService: CaseListFontColorService,
+                          protected _activatedRoute?: ActivatedRoute) {
+        if (!!_activatedRoute) {
+            this._activatedRoute.queryParams.subscribe(paramMap => this.config = paramMap);
+        }
     }
 
     ngOnDestroy(): void {
@@ -45,6 +54,13 @@ export abstract class AbstractPanelComponent implements AfterViewInit, OnDestroy
         if (this.preventExpand) {
             this.matExpansionPanel.close();
         }
+    }
+
+    showPanelHeader(): boolean {
+        if (!!this.hidePanelHeader) {
+            return false;
+        }
+        return !(this.config?.[ConfigParams.PANEL_HEADER] === 'false')
     }
 
     getCaseFontColor(): string {

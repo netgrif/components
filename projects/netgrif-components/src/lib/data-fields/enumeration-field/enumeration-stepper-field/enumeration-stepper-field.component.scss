@@ -1,3 +1,4 @@
+// HORIZONTAL DEFAULT
 .horizontal-stepper {
     display: flex;
 }
@@ -63,7 +64,6 @@
     border-top-style: solid;
     flex: auto;
     height: 0;
-    margin: 0 -16px;
     min-width: 12px;
 }
 
@@ -71,6 +71,82 @@
     flex: auto;
     display: flex;
 }
+
+// VERTICAL DEFAULT
+
+.vertical-step-header {
+    box-sizing: border-box;
+    flex-direction: column;
+    height: auto;
+    padding: 24px;
+    overflow: hidden;
+    outline: none;
+    position: relative;
+    -webkit-tap-highlight-color: transparent;
+    display: flex;
+    align-items: center;
+}
+
+.vertical-step-header:first-child::before {
+    top: 44px;
+}
+
+.vertical-step-header:not(:first-child)::before {
+    top: 0;
+}
+
+.vertical-step-header:not(:last-child)::after {
+    bottom: 0;
+}
+
+.vertical-step-header:not(:last-child)::after,
+.vertical-step-header:not(:first-child)::before {
+    border-left-width: 1px;
+    border-left-style: solid;
+    content: "";
+    display: inline-block;
+    width: 0;
+    position: absolute;
+    height: calc(50% - 20px);
+    left: 36px;
+}
+
+.vertical-state {
+    color: white;
+    border-radius: 50%;
+    height: 24px;
+    width: 24px;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.vertical-state-label {
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 36px;
+    vertical-align: middle;
+    text-align: center;
+    width: 100%;
+    word-wrap: break-word;
+}
+
+.vertical-line {
+    position: relative;
+    border-left-width: 1px;
+    border-left-style: solid;
+    flex: auto;
+    height: 0;
+    margin: 0 36px;
+    min-height: 12px;
+}
+
+.vertical-step {
+    flex: auto;
+    display: flex;
+}
+
+// ARROW STEPPER
 
 .stepper-label {
     white-space: nowrap;
@@ -89,6 +165,7 @@
     border-radius: 10px;
     min-height: 70px;
     background-color: #F9F9F9;
+    padding: 0 32px;
 }
 
 .stepper-arrow-text {
@@ -98,8 +175,21 @@
     line-height: 24px;
     color: #333333;
     cursor: pointer;
+    text-align: center;
 }
 
 .stepper-disabled {
     cursor: unset !important;
 }
+
+.touch-action-enabled {
+    touch-action: auto !important;
+    -webkit-user-drag: auto !important;
+}
+
+@media only screen and (max-width: 959px) {
+    .stepper-arrow-text {
+        word-break: break-word;
+    }
+}
+

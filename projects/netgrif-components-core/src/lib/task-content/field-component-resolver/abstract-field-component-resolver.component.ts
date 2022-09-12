@@ -42,7 +42,8 @@ export abstract class AbstractFieldComponentResolverComponent {
     }
 
     getTaskId(): string {
-        return this.taskContentService.task.stringId;
+        const referencedTaskId = this.taskContentService.getReferencedFieldTask(this.getDataField().stringId);
+        return referencedTaskId ?? this.taskContentService.task.stringId;
     }
 
     isField(): boolean {

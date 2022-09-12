@@ -1,15 +1,16 @@
 <mat-radio-group
     color="primary"
-    class="full-width example-radio-group"
+    class="full-width example-radio-group netgrif-label"
     aria-labelledby="example-radio-group-label"
     [required]="enumerationField.behavior.required"
     [formControl]="formControlRef">
     <mat-label *ngIf="!showLargeLayout.value">{{enumerationField.title}}
         <nc-required-label *ngIf="enumerationField.behavior.required" [isIn]="true"></nc-required-label>
-        <button *ngIf="enumerationField.behavior.editable" mat-button (click)="resetEnum()">{{'dataField.enum.reset' | translate}}</button>
+        <button mat-button *ngIf="!formControlRef.disabled" (click)="resetEnum()">{{'dataField.enum.reset' | translate}}</button>
         <br></mat-label>
     <mat-radio-button class="example-radio-button" *ngFor="let option of enumerationField.choices" [value]="option.key">
         {{option.value}}
     </mat-radio-button>
+    <mat-hint *ngIf="enumerationField.description !== undefined && enumerationField.description !== ''">{{enumerationField.description}}</mat-hint>
     <mat-error *ngIf="enumerationField.isInvalid(formControlRef)">{{'dataField.validations.required' | translate}}</mat-error>
 </mat-radio-group>

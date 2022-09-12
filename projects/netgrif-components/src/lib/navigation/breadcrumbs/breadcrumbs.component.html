@@ -1,0 +1,10 @@
+<div class="breadcrumbs">
+    <div *ngIf="showHome">
+        <span class="breadcrumbs-span" (click)="reset()">{{'toolbar.menu.home' | translate}}</span>
+        <span class="delimeter" *ngIf="getPath()?.length > 0">/</span>
+    </div>
+    <div *ngFor="let path of getPath();let i = index;let last = last;">
+        <span class="breadcrumbs-span" (click)="changePath(path, i)">{{path | titlecase}}</span>
+        <span class="delimeter" *ngIf="!last">/</span>
+    </div>
+</div>

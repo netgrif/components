@@ -15,3 +15,22 @@
 .margin-auto{
     margin: 0 auto;
 }
+
+.flex-end {
+    display: flex;
+    place-content: flex-end;
+}
+
+.flex-start {
+    display: flex;
+    place-content: flex-start;
+}
+
+.flex-center {
+    display: flex;
+    place-content: center;
+}
+
+.full-button-width {
+    width: 100%;
+}

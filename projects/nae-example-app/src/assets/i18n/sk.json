@@ -13,5 +13,8 @@
     "translateNavTest": "jeden",
     "translateNav": {
         "Test": "jeden-jeden"
+    },
+    "singleTask": {
+        "finishButtonTitle": "Uložiť a dokončiť"
     }
 }

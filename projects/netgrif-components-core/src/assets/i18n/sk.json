@@ -6,7 +6,12 @@
             "logout": "Odhlasiť sa",
             "en": "Anglický",
             "sk": "Slovenský",
-            "de": "Nemecký"
+            "de": "Nemecký",
+            "open": "Otvoriť menu",
+            "home": "Domov",
+            "back": "Späť",
+            "folders": "Priečinky",
+            "views": "Obrazovky"
         }
     },
     "tasks": {
@@ -45,6 +50,9 @@
             "cancel": "Zrušiť",
             "noData": "Táto úloha nemá žiadne údaje. Stlačte dokončiť pre pokračovanie.",
             "redirecting": "Presmerovanie..."
+        },
+        "footer": {
+            "defaultText": "NETGRIF, s.r.o. © 2022"
         }
     },
     "side-menu": {
@@ -89,9 +97,13 @@
             "showcase": "Nebol zvolený mód zobrazenia používateľa!"
         },
         "ldapGroup": {
-            "choose": "Vyhladajťe Ldap skupinu",
+            "choose": "Vyhladajte Ldap skupinu",
             "noUser": "Neexistuje žiadna Ldap skupina",
             "err": "Nepodarilo sa načítať Ldap skupiny"
+        },
+        "tooltip": {
+            "SelectAll": "Označiť všetko",
+            "DeselectAll": "Odznačit všetko"
         },
         "option-selector": {
             "select": "Zvoliť",
@@ -259,6 +271,12 @@
         },
         "enum": {
             "reset": "Resetovať"
+        },
+        "user": {
+            "selectUser": "Vyberte používateľa"
+        },
+        "textarea": {
+            "insertText": "Sem zadajte text..."
         }
     },
     "dialog": {
@@ -272,6 +290,7 @@
         "login": {
             "length": "Prihlasovacie meno musí mať aspoň 4 písmená",
             "login": "Prihlasovacie meno",
+            "wrongCredentials": "Nesprávne prihlasovacie údaje!",
             "loginButton": "Prihlásiť",
             "reset": "Obnova hesla",
             "sign": "Registrovať",
@@ -408,6 +427,7 @@
     },
     "workflow": {
         "delete": "zmazať",
+        "download": "stiahnuť",
         "dialog": {
             "header": "Ste si istý, že chcete vymazať proces '{{name}}' verzia '{{version}}'?",
             "content": "Spolu s procesom budú vymazané aj všetky prípady z neho vytvorené!",

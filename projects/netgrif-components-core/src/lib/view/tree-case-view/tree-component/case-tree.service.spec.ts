@@ -421,6 +421,10 @@ class TreeTestCaseResourceService {
         this.createMockTreeNode(rootNode);
     }
 
+    public getOneCase(caseId: string): Observable<Case> {
+        return of(this.mockCases.get(caseId));
+    }
+
     private createMockTreeNode(node: MockTreeNode): string {
         const treeCase = createMockCase(`${node.stringId ? node.stringId : this._idGenerator.next()}`, 'mockTree');
         node.stringId = treeCase.stringId;
@@ -642,7 +646,8 @@ class TreeTestProcessService {
                 email: '',
                 fullName: ''
             },
-            immediateData: []
+            immediateData: [],
+            uriNodeId: ''
         }));
     }
 }

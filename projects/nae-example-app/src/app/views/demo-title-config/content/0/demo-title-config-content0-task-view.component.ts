@@ -10,12 +10,12 @@ import {
     NAE_TAB_DATA,
     NAE_TASK_VIEW_CONFIGURATION,
     SearchService,
-    TabbedTaskView,
     tabbedAllowedNetsServiceFactory,
     tabbedTaskViewConfigurationFactory,
     TaskViewService,
     ViewIdService,
-    ChangedFieldsService
+    ChangedFieldsService,
+    AbstractTabbedTaskViewComponent
 } from '@netgrif/components-core';
 import {
     HeaderComponent,
