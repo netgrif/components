@@ -20,6 +20,10 @@
                                             [textField]="dataField"
                                             [showLargeLayout]="showLargeLayout"
                                             [formControlRef]="formControl"></nc-dashboard-line-chart-text-field>
+        <nc-dashboard-pie-chart-text-field *ngSwitchCase="textFieldComponentEnum.DASHBOARD_PIE_CHART"
+                                            [textField]="dataField"
+                                            [showLargeLayout]="showLargeLayout"
+                                            [formControlRef]="formControl"></nc-dashboard-pie-chart-text-field>
         <nc-simple-text-field *ngSwitchDefault [textField]="dataField" [formControlRef]="formControl"
                               [showLargeLayout]="showLargeLayout"></nc-simple-text-field>
     </div>

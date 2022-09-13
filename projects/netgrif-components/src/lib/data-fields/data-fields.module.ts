@@ -69,6 +69,7 @@ import { TaskRefFieldComponent } from './task-ref-field/task-ref-field.component
 import { TaskRefDashboardTileComponent } from './task-ref-field/task-ref-dashboard-field/task-ref-dashboard-tile/task-ref-dashboard-tile.component';
 import { DashboardLineChartTextFieldComponent } from './text-field/dashboard-line-chart-text-field/dashboard-line-chart-text-field.component';
 import {DashboardComponentModule} from '../dashboard/dashboard.module';
+import { DashboardPieChartTextFieldComponent } from './text-field/dashboard-pie-chart-text-field/dashboard-pie-chart-text-field.component';
 
 @NgModule({
     declarations: [
@@ -113,6 +114,7 @@ import {DashboardComponentModule} from '../dashboard/dashboard.module';
         TaskRefFieldComponent,
         TaskRefDashboardTileComponent,
         DashboardLineChartTextFieldComponent,
+        DashboardPieChartTextFieldComponent,
     ],
     exports: [
         BooleanFieldComponent,

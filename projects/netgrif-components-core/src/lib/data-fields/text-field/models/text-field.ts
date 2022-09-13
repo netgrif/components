@@ -21,6 +21,7 @@ export enum TextFieldComponent {
     RICH_TEXT_AREA = 'richtextarea',
     HTML_TEXT_AREA = 'htmltextarea',
     DASHBOARD_LINE_CHART = 'dashboard_line_chart',
+    DASHBOARD_PIE_CHART = 'dashboard_pie_chart',
 }
 
 export enum TextAreaHeight {
