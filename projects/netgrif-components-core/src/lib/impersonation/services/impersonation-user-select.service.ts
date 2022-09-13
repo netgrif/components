@@ -18,6 +18,9 @@ export class ImpersonationUserSelectService {
                 @Optional() @Inject(NAE_USER_IMPERSONATE_COMPONENT) protected _userImpersonateComponent: any,
     ) {}
 
+    /**
+     * Opens side menu with users who can be impersonated by logged user
+     */
     public selectImpersonate(): void {
         this._sideMenuService.open(this._userImpersonateComponent, SideMenuSize.MEDIUM).onClose.subscribe(event => {
             this._log.debug('Impersonable user select :' + event);

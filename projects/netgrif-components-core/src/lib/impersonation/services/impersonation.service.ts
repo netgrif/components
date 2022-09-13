@@ -2,17 +2,20 @@ import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {take} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
-import {AbstractResourceService, ResourceProvider} from '../../resources/public-api';
+import {AbstractResourceService, ResourceProvider, UserResource} from '../../resources/public-api';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {UserService} from '../../user/services/user.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {FilterRepository} from '../../filter/filter.repository';
 import {LoggerService} from '../../logger/services/logger.service';
+import {Observable, Subject} from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ImpersonationService extends AbstractResourceService {
+
+    private _impersonating$ = new Subject<boolean>();
 
     public constructor(protected provider: ResourceProvider,
                        protected _router: Router,
@@ -25,10 +28,14 @@ export class ImpersonationService extends AbstractResourceService {
         super('impersonation', provider, _configService);
     }
 
+    public get impersonating(): Observable<boolean> {
+        return this._impersonating$.asObservable();
+    }
+
     public impersonate(userId: number): void {
-        this.provider.post$('impersonate/' + userId, this.SERVER_URL, {}).subscribe(user => {
-            this._triggerReload();
+        this.provider.post$('impersonate/' + userId, this.SERVER_URL, {}).subscribe((user: UserResource) => {
             this._snackbar.openSuccessSnackBar(this._translate.instant('impersonation.user.successfullyRepresented'));
+            this._triggerReload(true);
         }, (response => {
             if (response.status === 400) {
                 response.error.alreadyImpersonated ?
@@ -37,32 +44,25 @@ export class ImpersonationService extends AbstractResourceService {
             } else {
                 this._snackbar.openErrorSnackBar(this._translate.instant('impersonation.action.failed'));
             }
+            this._impersonating$.next(false);
         }));
     }
 
     public cease(): void {
         this.provider.post$('impersonate/clear', this.SERVER_URL, {}).subscribe(user => {
             this._snackbar.openSuccessSnackBar(this._translate.instant('impersonation.action.deactivated'));
-            return this._triggerReload();
+            return this._triggerReload(false);
         }, (error => {
             this._snackbar.openErrorSnackBar(this._translate.instant('impersonation.action.failed'));
         }));
     }
 
-    private _triggerReload(): void {
+    private _triggerReload(isImpersonating: boolean): void {
         this._userService.user$.pipe(take(1)).subscribe(user => {
             this._filter.removeAllFilters();
-            // TODO 1678 return observable
+            this._impersonating$.next(isImpersonating);
         });
         this._userService.reload();
     }
 
-}
-
-export class UserQuery {
-    protected search;
-
-    constructor(search) {
-        this.search = search;
-    }
 }

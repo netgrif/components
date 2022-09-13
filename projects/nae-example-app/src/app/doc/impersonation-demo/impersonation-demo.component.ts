@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ImpersonationUserSelectService} from 'netgrif-components-core';
+import {ImpersonationService, ImpersonationUserSelectService} from 'netgrif-components-core';
 
 @Component({
     selector: 'nae-app-impersonation-demo',
@@ -8,14 +8,24 @@ import {ImpersonationUserSelectService} from 'netgrif-components-core';
 })
 export class ImpersonationDemoComponent implements OnInit {
 
-    constructor(private _impersonation: ImpersonationUserSelectService) {
+    constructor(
+        private _impersonationSelect: ImpersonationUserSelectService,
+        private _impersonation: ImpersonationService,
+    ) {
+        this._impersonation.impersonating.subscribe((isImpersonating: boolean) => {
+            console.log("Is impersonating " + isImpersonating);
+        });
     }
 
     ngOnInit(): void {
     }
 
     public impersonate(): void {
-        this._impersonation.selectImpersonate();
+        this._impersonationSelect.selectImpersonate();
+    }
+
+    public stopImpersonate(): void {
+        this._impersonation.cease();
     }
 
 }
