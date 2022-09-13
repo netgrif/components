@@ -7,9 +7,10 @@ import {AggregationQuery} from './aggregation-query';
 export interface CustomCard extends DashboardCard {
     title?: string;
     query?: AggregationQuery;
+    componentName?: string;
     units?: string;
     xAxisLabel?: string;
     yAxisLabel?: string;
-    resourceType: FilterType;
+    resourceType?: FilterType;
     filter?: CaseSearchRequestBody | TaskSearchRequestBody;
 }
