@@ -35,10 +35,12 @@ export abstract class AbstractTaskRefFieldComponent extends AbstractDataFieldCom
         }
         const occupiedTiles = this.createFlagGrid(gridRows, gridCols);
         this.dashboardTiles = [];
-        for (const extractedTile of this.dataField.dashboardTiles) {
-            const tile = this.createDashboardTile(extractedTile);
-            this.dashboardTiles.push(tile);
-            this.occupySpace(occupiedTiles, tile.y, tile.x, tile.cols, tile.rows);
+        if (this.dataField.dashboardTiles && this.dataField.dashboardTiles.length > 0) {
+            for (const extractedTile of this.dataField.dashboardTiles) {
+                const tile = this.createDashboardTile(extractedTile);
+                this.dashboardTiles.push(tile);
+                this.occupySpace(occupiedTiles, tile.y, tile.x, tile.cols, tile.rows);
+            }
         }
         for (let y = 0; y < occupiedTiles.length; y++) {
             for (let x = 0; x < occupiedTiles[y].length; x++) {

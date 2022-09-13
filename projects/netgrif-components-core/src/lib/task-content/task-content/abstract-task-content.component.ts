@@ -557,10 +557,6 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
             return preprocessedDataGroups;
         }
 
-        if (dashboardTaskRefField.value.length === 0) {
-            return preprocessedDataGroups;
-        }
-
         const tiles = new Map<string, TaskRefDashboardTile>();
 
         // TODO resolve transitive tile content

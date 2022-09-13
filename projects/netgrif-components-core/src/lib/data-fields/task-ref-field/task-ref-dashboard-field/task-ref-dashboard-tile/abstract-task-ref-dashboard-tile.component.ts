@@ -74,6 +74,10 @@ export abstract class AbstractTaskRefDashboardTileComponent implements OnDestroy
                     [TaskRefDashboardTileConstants.DASHBOARD_TILE_COLS]: {
                         type: FieldTypeResource.NUMBER,
                         value: this.tile.cols
+                    },
+                    [TaskRefDashboardTileConstants.DASHBOARD_TILE_PARENT_ID]: {
+                        type: FieldTypeResource.TEXT,
+                        value: this._parentTaskContentService.task.caseId
                     }
                 }
             }, this._callChainService.create(success => {
