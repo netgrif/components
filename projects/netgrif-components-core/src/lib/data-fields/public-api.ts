@@ -89,3 +89,4 @@ export * from './models/material-appearance';
 
 /* Services */
 export * from './i18n-field/language-icons.service';
+export * from './text-field/dashboard-portal-text-field/dashboard-portal-component-registry.service';
