@@ -341,6 +341,7 @@ export interface TabLabel {
      * Tab count is displayed in it&#x27;s label, ich stream is provided
      */
     count?: ReplaySubject&lt;number&gt;;
+
 }
 
 
@@ -358,7 +359,7 @@ export interface InjectedTabData {
     /**
      * Reference to the parent tab view allowing some control over it from the tab content component.
      */
-    tabViewRef: TabViewInterface;
+    tabViewRef: OpenedTabViewInterface;
     /**
      * &#x60;true&#x60; is emitted into this stream when the tab is switched into.
      *
@@ -407,6 +408,23 @@ export interface TabViewInterface {
      * See [TabView.closeTabUniqueId]{@link TabView#closeTabUniqueId}
      */
     closeTabUniqueId(uniqueId: string, force?: boolean): void;
+}
+
+/**
+ * Update information about the label of a tab in tab view.
+ *
+ * See {@link TabContent#label} for more information.
+ * */
+export interface OpenedTabViewInterface extends TabViewInterface {
+
+    setIcon(icon: string);
+
+    setText(text: string);
+
+    getIcon$(): Observable&lt;string&gt;;
+
+    getText$(): Observable&lt;string&gt;;
+
 }
 </code></pre>
     </div>

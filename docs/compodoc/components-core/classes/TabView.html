@@ -1297,8 +1297,8 @@ Creates a new <a href="ComponentPortal">ComponentPortal</a> for the tab and prov
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="267"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/tabs/classes/tab-view.ts:267</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="275"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/tabs/classes/tab-view.ts:275</a></div>
                 </td>
             </tr>
 
@@ -1604,7 +1604,12 @@ export class TabView implements TabViewInterface {
         if (!tab.isTabInitialized) {
             Object.assign(tab.injectedObject, {
                 tabUniqueId: tab.uniqueId,
-                tabViewRef: this.tabViewInterface,
+                tabViewRef: Object.assign({
+                    setIcon: t &#x3D;&gt; tab.setIcon(t),
+                    setText: t &#x3D;&gt; tab.setText(t),
+                    getIcon$: () &#x3D;&gt; tab.getIcon$(),
+                    getText$: () &#x3D;&gt; tab.getText$(),
+                }, this.tabViewInterface),
                 tabSelected$: tab.tabSelected$.asObservable(),
                 tabClosed$: tab.tabClosed$.asObservable(),
             } as InjectedTabData);
@@ -1612,7 +1617,10 @@ export class TabView implements TabViewInterface {
             const providers: Array&lt;StaticProvider&gt; &#x3D; [
                 {provide: NAE_TAB_DATA, useValue: tab.injectedObject}
             ];
-            providers.push({provide: NAE_VIEW_ID_SEGMENT, useValue: tab.initial ? tab.uniqueId : TabView.DYNAMIC_TAB_VIEW_ID_SEGMENT});
+            providers.push({
+                provide: NAE_VIEW_ID_SEGMENT,
+                useValue: tab.initial ? tab.uniqueId : TabView.DYNAMIC_TAB_VIEW_ID_SEGMENT
+            });
 
             const injector &#x3D; Injector.create({providers, parent: this._parentInjector});
 

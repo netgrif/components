@@ -1,5 +1,5 @@
 import { Component} from '@angular/core';
-import {AbstractMultichoiceAutocompleteFieldComponentComponent} from 'netgrif-components-core';
+import {AbstractMultichoiceAutocompleteFieldComponentComponent} from '@netgrif/components-core';
 
 @Component({
   selector: 'nc-multichoice-autocomplete-field',

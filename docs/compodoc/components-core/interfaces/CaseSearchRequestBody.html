@@ -155,6 +155,13 @@ method in <a href="../injectables/CaseResourceService.html">CaseResourceService<
                                             transition
                                         </a>
                                 </li>
+                                <li>
+                                            <span class="modifier">Optional</span>
+                                        <a href="#uriNodeId" 
+>
+                                            uriNodeId
+                                        </a>
+                                </li>
                             </ul>
                         </td>
                     </tr>
@@ -573,6 +580,44 @@ If more than one transition ID is specified, the returned cases must have tasks 
                             </tr>
                         </tbody>
                     </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="uriNodeId"></a>
+                                        <span class="name "><b>uriNodeId</b>
+                                            <a href="#uriNodeId">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>uriNodeId:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
+
+
+
+
+                        </tbody>
+                    </table>
             </section>
     </div>
 
@@ -635,6 +680,8 @@ If more than one transition ID is specified, the returned cases must have tasks 
      * If more than one group ID is specified, the returned cases are instances of one of the groups.
      */
     group?: string | Array&lt;string&gt;;
+
+    uriNodeId?: string;
 }
 
 /**

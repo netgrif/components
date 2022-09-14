@@ -32,7 +32,6 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.2.0](https://g
 - [NAE-1457] Schematic support for public view generation
 - [NAE-1606] Configuration of case creation button from menu item
 - [NAE-1648] Redesign dataFields
-- [NAE-1682] Translate tooltip admin view
 - [NAE-1677] Message from exception thrown in SET event on data field is not propagated in EventOutcome
 - [NAE-1682] Translate tooltip admin view
 - [NAE-1695] Fix generated tests in schematics
@@ -49,8 +48,6 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.2.0](https://g
 - [NAE-1658] Two-level navigation menu
 - [NAE-1662] Navigation breadcrumbs
 - [NAE-1671] Dynamic case title in tab
-- [NAE-1642] Redirect to transition via URL
-- [NAE-1643] Configure public view via request parameters
 - [NAE-1679] User list frontend component
 
 ## [6.1.1](https://github.com/netgrif/components/releases/tag/v6.1.1) (2022-06-09)
