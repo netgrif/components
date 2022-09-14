@@ -5,7 +5,7 @@
 </nc-data-field-template>
 
 <ng-template #multiFieldTemplate let-showLargeLayout="showLargeLayout">
-    <div *ngIf="dataField.component !== undefined" [ngSwitch]="dataField.getComponentType()">
+    <div [ngSwitch]="dataField.getComponentType()">
         <nc-multichoice-autocomplete-field *ngSwitchCase="'autocomplete'"
                                            [showLargeLayout]="showLargeLayout"
                                            [multichoiceField]="dataField"

@@ -83,7 +83,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">projects/netgrif-components-core/src/lib/routing/routing-builder/routing-builder.service.ts:31</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">projects/netgrif-components-core/src/lib/routing/routing-builder/routing-builder.service.ts:34</a></div>
                             </td>
                         </tr>
 
@@ -206,8 +206,11 @@ import {
 import {
     AbstractGroupNavigationComponentResolverComponent
 } from &#x27;../../navigation/group-navigation-component-resolver/abstract-group-navigation-component-resolver.component&#x27;;
-import {DynamicNavigationRouteProviderService} from &#x27;../dynamic-navigation-route-provider/dynamic-navigation-route-provider.service&#x27;;
+import {
+    DynamicNavigationRouteProviderService
+} from &#x27;../dynamic-navigation-route-provider/dynamic-navigation-route-provider.service&#x27;;
 
+export const NAE_ROUTING_CONFIGURATION_PATH &#x3D; &quot;configPath&quot;;
 
 /**
  * Uses the information from nae.json to construct the application&#x27;s routing
@@ -250,6 +253,9 @@ export class RoutingBuilderService {
 
         const route: Route &#x3D; {
             path: view.routing.path,
+            data: {
+                [NAE_ROUTING_CONFIGURATION_PATH]: configPath
+            },
             component
         };
 

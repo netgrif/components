@@ -182,10 +182,6 @@
                             </li>
                             <li>
                                     <span class="modifier">Protected</span>
-                                <a href="#canAccessView" >canAccessView</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Protected</span>
                                 <a href="#convertDatagroupsToNavEntries" >convertDatagroupsToNavEntries</a>
                             </li>
                             <li>
@@ -237,18 +233,6 @@
                             </li>
                             <li>
                                 <a href="#ngOnInit" >ngOnInit</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Protected</span>
-                                <a href="#passesAuthorityGuard" >passesAuthorityGuard</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Protected</span>
-                                <a href="#passesGroupGuard" >passesGroupGuard</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Protected</span>
-                                <a href="#passesRoleGuard" >passesRoleGuard</a>
                             </li>
                             <li>
                                     <span class="modifier">Protected</span>
@@ -312,7 +296,7 @@
                 <tr>
                     <td class="col-md-4">
                                 <span class="modifier">Protected</span>
-                        <code>constructor(_config: <a href="../classes/ConfigurationService.html" target="_self">ConfigurationService</a>, _router: <a href="https://angular.io/api/router/Router" target="_blank">Router</a>, _log: <a href="../injectables/LoggerService.html" target="_self">LoggerService</a>, _userService: <a href="../injectables/UserService.html" target="_self">UserService</a>, _roleGuard: <a href="../guards/RoleGuardService.html" target="_self">RoleGuardService</a>, _authorityGuard: <a href="../guards/AuthorityGuardService.html" target="_self">AuthorityGuardService</a>, _groupGuard: <a href="../guards/GroupGuardService.html" target="_self">GroupGuardService</a>, _activeGroupService: <a href="../injectables/ActiveGroupService.html" target="_self">ActiveGroupService</a>, _taskResourceService: <a href="../injectables/TaskResourceService.html" target="_self">TaskResourceService</a>, _languageService: <a href="../injectables/LanguageService.html" target="_self">LanguageService</a>, _navigationRouteProvider: <a href="../injectables/DynamicNavigationRouteProviderService.html" target="_self">DynamicNavigationRouteProviderService</a>)</code>
+                        <code>constructor(_config: <a href="../classes/ConfigurationService.html" target="_self">ConfigurationService</a>, _router: <a href="https://angular.io/api/router/Router" target="_blank">Router</a>, _log: <a href="../injectables/LoggerService.html" target="_self">LoggerService</a>, _userService: <a href="../injectables/UserService.html" target="_self">UserService</a>, _accessService: <a href="../injectables/AccessService.html" target="_self">AccessService</a>, _activeGroupService: <a href="../injectables/ActiveGroupService.html" target="_self">ActiveGroupService</a>, _taskResourceService: <a href="../injectables/TaskResourceService.html" target="_self">TaskResourceService</a>, _languageService: <a href="../injectables/LanguageService.html" target="_self">LanguageService</a>, _navigationRouteProvider: <a href="../injectables/DynamicNavigationRouteProviderService.html" target="_self">DynamicNavigationRouteProviderService</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -383,34 +367,10 @@
                                                     
                                                 </tr>
                                                 <tr>
-                                                        <td>_roleGuard</td>
+                                                        <td>_accessService</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../guards/RoleGuardService.html" target="_self" >RoleGuardService</a></code>
-                                                        </td>
-                                                  
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
-                                                </tr>
-                                                <tr>
-                                                        <td>_authorityGuard</td>
-                                                  
-                                                        <td>
-                                                                        <code><a href="../guards/AuthorityGuardService.html" target="_self" >AuthorityGuardService</a></code>
-                                                        </td>
-                                                  
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
-                                                </tr>
-                                                <tr>
-                                                        <td>_groupGuard</td>
-                                                  
-                                                        <td>
-                                                                        <code><a href="../guards/GroupGuardService.html" target="_self" >GroupGuardService</a></code>
+                                                                        <code><a href="../injectables/AccessService.html" target="_self" >AccessService</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -599,8 +559,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="266"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:266</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="264"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:264</a></div>
                 </td>
             </tr>
 
@@ -695,8 +655,8 @@ Returns <code>parentUrl</code> if <code>routeSegment</code> is falsy (empty stri
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="223"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:223</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="221"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:221</a></div>
                 </td>
             </tr>
 
@@ -771,98 +731,6 @@ Returns <code>parentUrl</code> if <code>routeSegment</code> is falsy (empty stri
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="canAccessView"></a>
-                    <span class="name">
-                        <span class="modifier">Protected</span>
-                        <span ><b>canAccessView</b></span>
-                        <a href="#canAccessView"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>canAccessView(view: <a href="../interfaces/View.html" target="_self">View</a>, url: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="288"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:288</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>view</td>
-                                    <td>
-                                                <code><a href="../interfaces/View.html" target="_self" >View</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>the view whose access permissions we want to check</p>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>url</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>URL to which the view maps. Is used only for error message generation</p>
-
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        <p>whether the user can access the provided view</p>
-
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
                     <a name="convertDatagroupsToNavEntries"></a>
                     <span class="name">
                         <span class="modifier">Protected</span>
@@ -881,8 +749,8 @@ Returns <code>parentUrl</code> if <code>routeSegment</code> is falsy (empty stri
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="396"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:396</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="345"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:345</a></div>
                 </td>
             </tr>
 
@@ -951,8 +819,8 @@ Returns <code>parentUrl</code> if <code>routeSegment</code> is falsy (empty stri
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="461"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:461</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="410"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:410</a></div>
                 </td>
             </tr>
 
@@ -1029,8 +897,8 @@ Returns <code>parentUrl</code> if <code>routeSegment</code> is falsy (empty stri
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="369"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:369</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="315"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:315</a></div>
                 </td>
             </tr>
 
@@ -1068,8 +936,8 @@ Returns <code>parentUrl</code> if <code>routeSegment</code> is falsy (empty stri
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="243"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:243</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="241"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:241</a></div>
                 </td>
             </tr>
 
@@ -1138,8 +1006,8 @@ Returns <code>parentUrl</code> if <code>routeSegment</code> is falsy (empty stri
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="235"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:235</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="233"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:233</a></div>
                 </td>
             </tr>
 
@@ -1220,8 +1088,8 @@ Returns <code>parentUrl</code> if <code>routeSegment</code> is falsy (empty stri
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="251"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:251</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="249"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:249</a></div>
                 </td>
             </tr>
 
@@ -1296,8 +1164,8 @@ Returns <code>parentUrl</code> if <code>routeSegment</code> is falsy (empty stri
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="255"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:255</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="253"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:253</a></div>
                 </td>
             </tr>
 
@@ -1366,8 +1234,8 @@ Returns <code>parentUrl</code> if <code>routeSegment</code> is falsy (empty stri
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="114"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:114</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="112"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:112</a></div>
                 </td>
             </tr>
 
@@ -1448,8 +1316,8 @@ Returns <code>parentUrl</code> if <code>routeSegment</code> is falsy (empty stri
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="202"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:202</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="200"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:200</a></div>
                 </td>
             </tr>
 
@@ -1518,8 +1386,8 @@ Returns <code>parentUrl</code> if <code>routeSegment</code> is falsy (empty stri
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="214"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:214</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="212"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:212</a></div>
                 </td>
             </tr>
 
@@ -1588,8 +1456,8 @@ Returns <code>parentUrl</code> if <code>routeSegment</code> is falsy (empty stri
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="347"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:347</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="293"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:293</a></div>
                 </td>
             </tr>
 
@@ -1661,8 +1529,8 @@ Returns <code>parentUrl</code> if <code>routeSegment</code> is falsy (empty stri
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="357"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:357</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="303"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:303</a></div>
                 </td>
             </tr>
 
@@ -1754,8 +1622,8 @@ Returns <code>parentUrl</code> if <code>routeSegment</code> is falsy (empty stri
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="99"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:99</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="97"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:97</a></div>
                 </td>
             </tr>
 
@@ -1797,7 +1665,7 @@ Returns <code>parentUrl</code> if <code>routeSegment</code> is falsy (empty stri
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractNavigationResizableDrawerComponent:79</a></code>
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractNavigationResizableDrawerComponent:77</a></code>
 </div>
                 </td>
             </tr>
@@ -1808,266 +1676,6 @@ Returns <code>parentUrl</code> if <code>routeSegment</code> is falsy (empty stri
 
                     <div class="io-description">
                         <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="passesAuthorityGuard"></a>
-                    <span class="name">
-                        <span class="modifier">Protected</span>
-                        <span ><b>passesAuthorityGuard</b></span>
-                        <a href="#passesAuthorityGuard"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>passesAuthorityGuard(view: <a href="../interfaces/View.html" target="_self">View</a>)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="322"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:322</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>view</td>
-                                    <td>
-                                                <code><a href="../interfaces/View.html" target="_self" >View</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>the view whose access permissions we want to check</p>
-
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        <p>whether the user passes the authority guard condition for accessing the specified view</p>
-
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="passesGroupGuard"></a>
-                    <span class="name">
-                        <span class="modifier">Protected</span>
-                        <span ><b>passesGroupGuard</b></span>
-                        <a href="#passesGroupGuard"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>passesGroupGuard(view: <a href="../interfaces/View.html" target="_self">View</a>, url: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="331"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:331</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>view</td>
-                                    <td>
-                                                <code><a href="../interfaces/View.html" target="_self" >View</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>the view whose access permissions we want to check</p>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>url</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>URL to which the view maps. Is used only for error message generation</p>
-
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        <p>whether the user passes the role guard condition for accessing the specified view</p>
-
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="passesRoleGuard"></a>
-                    <span class="name">
-                        <span class="modifier">Protected</span>
-                        <span ><b>passesRoleGuard</b></span>
-                        <a href="#passesRoleGuard"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>passesRoleGuard(view: <a href="../interfaces/View.html" target="_self">View</a>, url: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="314"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:314</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>view</td>
-                                    <td>
-                                                <code><a href="../interfaces/View.html" target="_self" >View</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>the view whose access permissions we want to check</p>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>url</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>URL to which the view maps. Is used only for error message generation</p>
-
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        <p>whether the user passes the role guard condition for accessing the specified view</p>
 
                     </div>
                 </td>
@@ -2096,8 +1704,8 @@ Returns <code>parentUrl</code> if <code>routeSegment</code> is falsy (empty stri
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="335"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:335</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="281"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:281</a></div>
                 </td>
             </tr>
 
@@ -2135,8 +1743,8 @@ Returns <code>parentUrl</code> if <code>routeSegment</code> is falsy (empty stri
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="270"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:270</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="268"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:268</a></div>
                 </td>
             </tr>
 
@@ -2217,8 +1825,8 @@ Returns <code>parentUrl</code> if <code>routeSegment</code> is falsy (empty stri
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="118"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:118</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="116"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:116</a></div>
                 </td>
             </tr>
 
@@ -2256,8 +1864,8 @@ Returns <code>parentUrl</code> if <code>routeSegment</code> is falsy (empty stri
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="145"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:145</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="143"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:143</a></div>
                 </td>
             </tr>
 
@@ -2367,8 +1975,8 @@ closest ancestor that has navigation</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="129"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:129</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="127"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/navigation-tree/abstract-navigation-tree.component.ts:127</a></div>
                 </td>
             </tr>
 
@@ -2690,10 +2298,9 @@ import {MatTreeNestedDataSource} from &#x27;@angular/material/tree&#x27;;
 import {forkJoin, Observable, of, ReplaySubject, Subscription} from &#x27;rxjs&#x27;;
 import {LoggerService} from &#x27;../../logger/services/logger.service&#x27;;
 import {UserService} from &#x27;../../user/services/user.service&#x27;;
-import {RoleGuardService} from &#x27;../../authorization/role/role-guard.service&#x27;;
-import {AuthorityGuardService} from &#x27;../../authorization/authority/authority-guard.service&#x27;;
-import {GroupGuardService} from &#x27;../../authorization/group/group-guard.service&#x27;;
-import {AbstractNavigationResizableDrawerComponent} from &#x27;../navigation-drawer/abstract-navigation-resizable-drawer.component&#x27;;
+import {
+    AbstractNavigationResizableDrawerComponent
+} from &#x27;../navigation-drawer/abstract-navigation-resizable-drawer.component&#x27;;
 import {ActiveGroupService} from &#x27;../../groups/services/active-group.service&#x27;;
 import {concatMap, debounceTime, filter, map, take} from &#x27;rxjs/operators&#x27;;
 import {TaskResourceService} from &#x27;../../resources/engine-endpoint/task-resource.service&#x27;;
@@ -2708,6 +2315,7 @@ import {LanguageService} from &#x27;../../translate/language.service&#x27;;
 import {
     DynamicNavigationRouteProviderService
 } from &#x27;../../routing/dynamic-navigation-route-provider/dynamic-navigation-route-provider.service&#x27;;
+import {AccessService} from &quot;../../authorization/permission/access.service&quot;;
 
 export interface NavigationNode {
     name: string;
@@ -2743,9 +2351,7 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
                           protected _router: Router,
                           protected _log: LoggerService,
                           protected _userService: UserService,
-                          protected _roleGuard: RoleGuardService,
-                          protected _authorityGuard: AuthorityGuardService,
-                          protected _groupGuard: GroupGuardService,
+                          protected _accessService: AccessService,
                           protected _activeGroupService: ActiveGroupService,
                           protected _taskResourceService: TaskResourceService,
                           protected _languageService: LanguageService,
@@ -2860,7 +2466,7 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
                 throw new Error(&#x27;Route segment doesnt exist in view &#x27; + parentUrl + &#x27;/&#x27; + viewKey + &#x27; !&#x27;);
             }
 
-            if (!this.canAccessView(view, this.appendRouteSegment(parentUrl, routeSegment))) {
+            if (!this._accessService.canAccessView(view, this.appendRouteSegment(parentUrl, routeSegment))) {
                 return; // continue
             }
 
@@ -2963,58 +2569,6 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
         });
     }
 
-    /**
-     * @param view the view whose access permissions we want to check
-     * @param url URL to which the view maps. Is used only for error message generation
-     * @returns whether the user can access the provided view
-     */
-    protected canAccessView(view: View, url: string): boolean {
-        if (!view.hasOwnProperty(&#x27;access&#x27;)) {
-            return true;
-        }
-
-        if (typeof view.access &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
-            if (view.access &#x3D;&#x3D;&#x3D; &#x27;public&#x27;) {
-                return true;
-            }
-            if (view.access !&#x3D;&#x3D; &#x27;private&#x27;) {
-                throw new Error(&#x60;Unknown access option &#x27;${view.access}&#x27;. Only &#x27;public&#x27; or &#x27;private&#x27; is allowed.&#x60;);
-            }
-            return !this._userService.user.isEmpty();
-        }
-
-        return !this._userService.user.isEmpty() // AuthGuard
-                &amp;&amp; this.passesRoleGuard(view, url)
-                &amp;&amp; this.passesAuthorityGuard(view)
-                &amp;&amp; this.passesGroupGuard(view, url);
-    }
-
-    /**
-     * @param view the view whose access permissions we want to check
-     * @param url URL to which the view maps. Is used only for error message generation
-     * @returns whether the user passes the role guard condition for accessing the specified view
-     */
-    protected passesRoleGuard(view: View, url: string): boolean {
-        return !view.access.hasOwnProperty(&#x27;role&#x27;) || this._roleGuard.canAccessView(view, url);
-    }
-
-    /**
-     * @param view the view whose access permissions we want to check
-     * @returns whether the user passes the authority guard condition for accessing the specified view
-     */
-    protected passesAuthorityGuard(view: View): boolean {
-        return !view.access.hasOwnProperty(&#x27;authority&#x27;) || this._authorityGuard.canAccessView(view);
-    }
-
-    /**
-     * @param view the view whose access permissions we want to check
-     * @param url URL to which the view maps. Is used only for error message generation
-     * @returns whether the user passes the role guard condition for accessing the specified view
-     */
-    protected passesGroupGuard(view: View, url: string): boolean {
-        return !view.access.hasOwnProperty(&#x27;group&#x27;) || this._groupGuard.canAccessView(view, url);
-    }
-
     protected resolveChange() {
         const view &#x3D; this._config.getViewByPath(this.viewPath);
         if (view &amp;&amp; view.children) {
@@ -3052,7 +2606,10 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
     protected generateGroupNavigationNodes(): Observable&lt;Array&lt;NavigationNode&gt;&gt; {
         return forkJoin(this._activeGroupService.activeGroups.map(groupCase &#x3D;&gt; {
             return this._taskResourceService.searchTask(SimpleFilter.fromTaskQuery(
-                {case: {id: groupCase.stringId}, transitionId: GroupNavigationConstants.NAVIGATION_CONFIG_TRANSITION_ID as string}
+                {
+                    case: {id: groupCase.stringId},
+                    transitionId: GroupNavigationConstants.NAVIGATION_CONFIG_TRANSITION_ID as string
+                }
             )).pipe(
                 map(taskPage &#x3D;&gt; {
                     if (hasContent(taskPage)) {
@@ -3102,7 +2659,7 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
             throw new Error(&#x27;The navigation configuration task contains no task ref with entries. Navigation cannot be constructed&#x27;);
         }
 
-        for (let order &#x3D; 0; order &lt; navEntriesTaskRef.value.length; order ++) {
+        for (let order &#x3D; 0; order &lt; navEntriesTaskRef.value.length; order++) {
             const index &#x3D; entryDataGroupIndices[order];
             const label &#x3D; extractIconAndTitle(navConfigDatagroups.slice(index,
                 index + GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY));
@@ -3115,11 +2672,11 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
             }
             newNode.url &#x3D; &#x60;/${url}/${navEntriesTaskRef.value[order]}&#x60;;
             const allowedRoles &#x3D; extractRoles(navConfigDatagroups.slice(index,
-                index + GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY),
+                    index + GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY),
                 GroupNavigationConstants.NAVIGATION_ENTRY_ALLOWED_ROLES_FIELD_ID_SUFFIX);
 
             const bannedRoles &#x3D; extractRoles(navConfigDatagroups.slice(index,
-                index + GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY),
+                    index + GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY),
                 GroupNavigationConstants.NAVIGATION_ENTRY_BANNED_ROLES_FIELD_ID_SUFFIX);
 
             const splitAllowedRoles &#x3D; this.extractRoleAndNetId(allowedRoles);
@@ -3184,7 +2741,7 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
         var COMPONENT_TEMPLATE = '<div></div>'
-    var COMPONENTS = [{'name': 'AbstractAddChildNodeComponent', 'selector': 'ncc-abstract-add-child-node'},{'name': 'AbstractAdvancedSearchComponent', 'selector': 'ncc-abstract-advanced-search'},{'name': 'AbstractAuthenticationOverlayComponent', 'selector': 'ncc-abstract-auth-overlay'},{'name': 'AbstractBooleanFieldComponent', 'selector': 'ncc-abstract-boolean-field'},{'name': 'AbstractButtonFieldComponent', 'selector': 'ncc-abstract-button-field'},{'name': 'AbstractCaseListComponent', 'selector': 'ncc-abstract-case-list'},{'name': 'AbstractCaseListPaginatorComponent', 'selector': 'ncc-abstract-case-list-paginator'},{'name': 'AbstractCasePanelComponent', 'selector': 'ncc-abstract-case-panel'},{'name': 'AbstractCaseViewComponent', 'selector': 'ncc-abstract-case-view'},{'name': 'AbstractCountCardComponent', 'selector': 'ncc-abstract-count-card'},{'name': 'AbstractCurrencyNumberFieldComponent', 'selector': 'ncc-abstract-currency-field'},{'name': 'AbstractCustomCardComponent', 'selector': 'ncc-abstract-custom-card'},{'name': 'AbstractDashboardContentComponent', 'selector': 'ncc-abstract-dashboard-content'},{'name': 'AbstractDataFieldComponent', 'selector': 'ncc-abstract-datafield'},{'name': 'AbstractDataFieldTemplateComponent', 'selector': 'ncc-abstract-datafield-template'},{'name': 'AbstractDateFieldComponent', 'selector': 'ncc-abstract-date-field'},{'name': 'AbstractDateTimeFieldComponent', 'selector': 'ncc-abstract-date-time-field'},{'name': 'AbstractDefaultCaseList', 'selector': 'ncc-abstract-default-case-list'},{'name': 'AbstractDefaultNumberFieldComponent', 'selector': 'ncc-abstract-number-default-field'},{'name': 'AbstractDefaultTaskList', 'selector': 'ncc-abstract-default-task-list'},{'name': 'AbstractDialog', 'selector': 'ncc-abstract-dialog'},{'name': 'AbstractEditModeComponent', 'selector': 'ncc-abstract-edit-mode'},{'name': 'AbstractEmailSubmissionFormComponent', 'selector': 'ncc-abstract-email-submission-form'},{'name': 'AbstractEnumerationAutocompleteDynamicFieldComponent', 'selector': 'ncc-abstract-enumeration-autocomplete-dynamic-field'},{'name': 'AbstractEnumerationAutocompleteSelectFieldComponent', 'selector': 'ncc-abstract-enumeration-autocomplete-field'},{'name': 'AbstractEnumerationFieldComponent', 'selector': 'ncc-abstract-enumeration-field'},{'name': 'AbstractEnumerationIconFieldComponent', 'selector': 'ncc-abstract-enumerataion-icon-field'},{'name': 'AbstractEnumerationListFieldComponent', 'selector': 'ncc-abstract-enumeration-list-field'},{'name': 'AbstractEnumerationSelectFieldComponent', 'selector': 'ncc-abstract-enumeration-select-field'},{'name': 'AbstractEnumerationStepperFieldComponent', 'selector': 'ncc-abstract-enumeration-stepper-field'},{'name': 'AbstractFieldComponentResolverComponent', 'selector': 'ncc-abstract-field-component-resolver'},{'name': 'AbstractFileFieldComponent', 'selector': 'ncc-abstract-file-field'},{'name': 'AbstractFileListFieldComponent', 'selector': 'ncc-abstract-filelist-field'},{'name': 'AbstractFilterFieldComponent', 'selector': 'ncc-abstract-filter-field'},{'name': 'AbstractFilterFieldContentComponent', 'selector': 'ncc-abstract-filtercontent-field'},{'name': 'AbstractFilterSelectorComponent', 'selector': 'ncc-abstract-filter-selector'},{'name': 'AbstractForgottenPasswordComponent', 'selector': 'ncc-abstract-forgotten-password'},{'name': 'AbstractFulltextSearchComponent', 'selector': 'ncc-abstract-fulltext-search'},{'name': 'AbstractGroupNavigationComponentResolverComponent', 'selector': 'ncc-abstract-group-nagiation-resolver'},{'name': 'AbstractHeaderComponent', 'selector': 'ncc-abstract-header'},{'name': 'AbstractHeaderModeComponent', 'selector': 'ncc-abstract-header-mode'},{'name': 'AbstractHtmlTextareaFieldComponent', 'selector': 'ncc-abstract-html-area-field'},{'name': 'AbstractI18nDividerFieldComponent', 'selector': 'ncc-abstract-i18n-divider-field'},{'name': 'AbstractI18nErrorsComponent', 'selector': 'ncc-abstract-i18n-errors'},{'name': 'AbstractI18nFieldComponent', 'selector': 'ncc-abstract-i18n-field'},{'name': 'AbstractI18nTextFieldComponent', 'selector': 'ncc-abstract-i18n-text-field'},{'name': 'AbstractIframeCardComponent', 'selector': 'ncc-abstract-iframe-card'},{'name': 'AbstractImmediateFilterTextComponent', 'selector': 'ncc-abstract-immediate-filter-text'},{'name': 'AbstractImmediateFilterTextContentComponent', 'selector': 'ncc-abstract-immediate-filter-text-content'},{'name': 'AbstractImportNetComponent', 'selector': 'ncc-abstract-import-net'},{'name': 'AbstractInternalLinkComponent', 'selector': 'ncc-abstract-internal-link'},{'name': 'AbstractLanguageSelectorComponent', 'selector': 'ncc-abstract-language-selector'},{'name': 'AbstractLdapGroupRoleAssignment', 'selector': 'ncc-abstract-ldap-group-role-assignment'},{'name': 'AbstractLegalNoticeComponent', 'selector': 'ncc-abstract-legal-notice'},{'name': 'AbstractLoadFilterComponent', 'selector': 'ncc-abstract-load-filter'},{'name': 'AbstractLoadingModeComponent', 'selector': 'ncc-abstract-loading-mode'},{'name': 'AbstractLoginFormComponent', 'selector': 'ncc-abstract-login-field'},{'name': 'AbstractLogoutShortcutComponent', 'selector': 'ncc-abstract-logout-shortcut'},{'name': 'AbstractMultichoiceFieldComponent', 'selector': 'ncc-abstract-multichoice-field'},{'name': 'AbstractMultichoiceListFieldComponent', 'selector': 'ncc-abstract-multichoice-list-field'},{'name': 'AbstractMultichoiceSelectFieldComponent', 'selector': 'ncc-abstract-multichoice-select-field'},{'name': 'AbstractNavigationDrawerComponent', 'selector': 'ncc-abstract-navigation-drawer'},{'name': 'AbstractNavigationRailComponent', 'selector': 'ncc-abstract-navigation-rail'},{'name': 'AbstractNavigationResizableDrawerComponent', 'selector': 'ncc-abstract-navigation-resizable-drawer'},{'name': 'AbstractNavigationTreeComponent', 'selector': 'ncc-abstract-navigation-tree'},{'name': 'AbstractNewCaseComponent', 'selector': 'ncc-abstract-new-case'},{'name': 'AbstractNumberErrorsComponent', 'selector': 'ncc-abstract-number-errors-field'},{'name': 'AbstractNumberFieldComponent', 'selector': 'ncc-abstract-number-field'},{'name': 'AbstractOptionSelectorComponent', 'selector': 'ncc-abstract-option-selector'},{'name': 'AbstractPanelComponent', 'selector': 'ncc-abstract-panel'},{'name': 'AbstractPanelItemComponent', 'selector': 'ncc-abstract-panel-item-component'},{'name': 'AbstractPanelWithHeaderBindingComponent', 'selector': 'ncc-abstract-panel-with-header-binding'},{'name': 'AbstractPanelWithImmediateDataComponent', 'selector': 'ncc-abstract-panel-with-immediate'},{'name': 'AbstractPasswordTextFieldComponent', 'selector': 'ncc-abstract-password-text-field'},{'name': 'AbstractProfileComponent', 'selector': 'ncc-abstract-profile'},{'name': 'AbstractQuickPanelComponent', 'selector': 'ncc-abstract-quick-panel'},{'name': 'AbstractRegistrationComponent', 'selector': 'ncc-abstract-registration'},{'name': 'AbstractRegistrationFormComponent', 'selector': 'ncc-abstract-registration-form'},{'name': 'AbstractRemoveNodeComponent', 'selector': 'ncc-abstract-remove-node'},{'name': 'AbstractRichTextareaFieldComponent', 'selector': 'ncc-abstract-rich-text-field'},{'name': 'AbstractRoleAssignmentComponent', 'selector': 'ncc-abstract-role'},{'name': 'AbstractSaveFilterComponent', 'selector': 'ncc-abstract-save-filter'},{'name': 'AbstractSearchClauseComponent', 'selector': 'ncc-abstract-search-clause'},{'name': 'AbstractSearchComponent', 'selector': 'ncc-abstract-search'},{'name': 'AbstractSearchConfigurationInputComponent', 'selector': 'ncc-abstract-search-configuration-input'},{'name': 'AbstractSearchModeComponent', 'selector': 'ncc-abstract-seatch-mode'},{'name': 'AbstractSearchOperandInputComponent', 'selector': 'ncc-abstract-search-operand-input'},{'name': 'AbstractSearchPredicateComponent', 'selector': 'ncc-abstract-search-predicate'},{'name': 'AbstractSideMenuContainerComponent', 'selector': 'ncc-abstract-side-menu-container'},{'name': 'AbstractSimpleTextFieldComponent', 'selector': 'ncc-abstract-simple-text-field'},{'name': 'AbstractSortableViewComponent', 'selector': 'ncc-abstract-sortable-view'},{'name': 'AbstractSortModeComponent', 'selector': 'ncc-abstract-sort-mode'},{'name': 'AbstractTabbedCaseViewComponent', 'selector': 'ncc-abstract-tabbed-case-view'},{'name': 'AbstractTabbedTaskViewComponent', 'selector': 'ncc-abstract-tabbed-task-view'},{'name': 'AbstractTabViewComponent', 'selector': 'ncc-abstract-tab-view'},{'name': 'AbstractTaskContentComponent', 'selector': 'ncc-abstract-task-content'},{'name': 'AbstractTaskListComponent', 'selector': 'ncc-abstract-task-list'},{'name': 'AbstractTaskListPaginationComponent', 'selector': 'ncc-abstract-task-list-pagination-component'},{'name': 'AbstractTaskPanelComponent', 'selector': 'ncc-abstract-legal-notice'},{'name': 'AbstractTaskViewComponent', 'selector': 'ncc-abstract-task-view'},{'name': 'AbstractTextareaFieldComponent', 'selector': 'ncc-abstract-text-area-field'},{'name': 'AbstractTextFieldComponent', 'selector': 'ncc-abstract-text-field'},{'name': 'AbstractTimeInstanceFieldComponent', 'selector': 'ncc-abstract-time-instance-field'},{'name': 'AbstractToolbarComponent', 'selector': 'ncc-abstract-toolbar'},{'name': 'AbstractTreeComponent', 'selector': 'ncc-abstract-tree'},{'name': 'AbstractTreeTaskContentComponent', 'selector': 'ncc-abstract-tree-task-content'},{'name': 'AbstractUserAssignComponent', 'selector': 'ncc-abstract-user-assign'},{'name': 'AbstractUserAssignItemComponent', 'selector': 'ncc-abstract-user-assign-item'},{'name': 'AbstractUserAssignListComponent', 'selector': 'ncc-abstract-user-assign-list'},{'name': 'AbstractUserCardComponent', 'selector': 'ncc-abstract-user-card'},{'name': 'AbstractUserFieldComponent', 'selector': 'ncc-abstract-user-field'},{'name': 'AbstractUserInviteComponent', 'selector': 'ncc-abstract-user-invite'},{'name': 'AbstractViewWithHeadersComponent', 'selector': 'ncc-abstract-view-with-headers'},{'name': 'AbstractWorkflowPanelComponent', 'selector': 'ncc-abstract-workflow-panel'},{'name': 'AbstractWorkflowViewComponent', 'selector': 'ncc-abstract-workflow-view'},{'name': 'AlertDialogComponent', 'selector': 'ncc-simple-dialog'},{'name': 'ConfirmDialogComponent', 'selector': 'ncc-question-dialog'},{'name': 'ErrorSnackBarComponent', 'selector': 'ncc-error-snack-bar'},{'name': 'GenericSnackBarComponent', 'selector': 'ncc-generic-snack-bar'},{'name': 'PromptDialogComponent', 'selector': 'ncc-question-dialog-with-answer'},{'name': 'SnackBar', 'selector': 'ncc-abstract-snackbar'},{'name': 'SuccessSnackBarComponent', 'selector': 'ncc-success-snack-bar'},{'name': 'TabbedVirtualScrollComponent', 'selector': 'ncc-abstract-tabbed-virtual-scroll'},{'name': 'WarningSnackBarComponent', 'selector': 'ncc-warning-snack-bar'}];
+    var COMPONENTS = [{'name': 'AbstractAddChildNodeComponent', 'selector': 'ncc-abstract-add-child-node'},{'name': 'AbstractAdvancedSearchComponent', 'selector': 'ncc-abstract-advanced-search'},{'name': 'AbstractAuthenticationOverlayComponent', 'selector': 'ncc-abstract-auth-overlay'},{'name': 'AbstractBooleanFieldComponent', 'selector': 'ncc-abstract-boolean-field'},{'name': 'AbstractBreadcrumbsComponent', 'selector': 'ncc-breadcrumbs-component'},{'name': 'AbstractButtonFieldComponent', 'selector': 'ncc-abstract-button-field'},{'name': 'AbstractCaseListComponent', 'selector': 'ncc-abstract-case-list'},{'name': 'AbstractCaseListPaginatorComponent', 'selector': 'ncc-abstract-case-list-paginator'},{'name': 'AbstractCasePanelComponent', 'selector': 'ncc-abstract-case-panel'},{'name': 'AbstractCaseViewComponent', 'selector': 'ncc-abstract-case-view'},{'name': 'AbstractCountCardComponent', 'selector': 'ncc-abstract-count-card'},{'name': 'AbstractCurrencyNumberFieldComponent', 'selector': 'ncc-abstract-currency-field'},{'name': 'AbstractCustomCardComponent', 'selector': 'ncc-abstract-custom-card'},{'name': 'AbstractDashboardContentComponent', 'selector': 'ncc-abstract-dashboard-content'},{'name': 'AbstractDataFieldComponent', 'selector': 'ncc-abstract-datafield'},{'name': 'AbstractDataFieldTemplateComponent', 'selector': 'ncc-abstract-datafield-template'},{'name': 'AbstractDateFieldComponent', 'selector': 'ncc-abstract-date-field'},{'name': 'AbstractDateTimeFieldComponent', 'selector': 'ncc-abstract-date-time-field'},{'name': 'AbstractDefaultCaseListComponent', 'selector': 'ncc-abstract-default-case-list'},{'name': 'AbstractDefaultNumberFieldComponent', 'selector': 'ncc-abstract-number-default-field'},{'name': 'AbstractDefaultTaskListComponent', 'selector': 'ncc-abstract-default-task-list'},{'name': 'AbstractDialogComponent', 'selector': 'ncc-abstract-dialog'},{'name': 'AbstractEditModeComponent', 'selector': 'ncc-abstract-edit-mode'},{'name': 'AbstractEmailSubmissionFormComponent', 'selector': 'ncc-abstract-email-submission-form'},{'name': 'AbstractEnumerationAutocompleteDynamicFieldComponent', 'selector': 'ncc-abstract-enumeration-autocomplete-dynamic-field'},{'name': 'AbstractEnumerationAutocompleteSelectFieldComponent', 'selector': 'ncc-abstract-enumeration-autocomplete-field'},{'name': 'AbstractEnumerationFieldComponent', 'selector': 'ncc-abstract-enumeration-field'},{'name': 'AbstractEnumerationIconFieldComponent', 'selector': 'ncc-abstract-enumerataion-icon-field'},{'name': 'AbstractEnumerationListFieldComponent', 'selector': 'ncc-abstract-enumeration-list-field'},{'name': 'AbstractEnumerationSelectFieldComponent', 'selector': 'ncc-abstract-enumeration-select-field'},{'name': 'AbstractEnumerationStepperFieldComponent', 'selector': 'ncc-abstract-enumeration-stepper-field'},{'name': 'AbstractFieldComponentResolverComponent', 'selector': 'ncc-abstract-field-component-resolver'},{'name': 'AbstractFileFieldComponent', 'selector': 'ncc-abstract-file-field'},{'name': 'AbstractFileListFieldComponent', 'selector': 'ncc-abstract-filelist-field'},{'name': 'AbstractFilterFieldComponent', 'selector': 'ncc-abstract-filter-field'},{'name': 'AbstractFilterFieldContentComponent', 'selector': 'ncc-abstract-filtercontent-field'},{'name': 'AbstractFilterSelectorComponent', 'selector': 'ncc-abstract-filter-selector'},{'name': 'AbstractForgottenPasswordComponent', 'selector': 'ncc-abstract-forgotten-password'},{'name': 'AbstractFulltextSearchComponent', 'selector': 'ncc-abstract-fulltext-search'},{'name': 'AbstractGroupNavigationComponentResolverComponent', 'selector': 'ncc-abstract-group-nagiation-resolver'},{'name': 'AbstractHeaderComponent', 'selector': 'ncc-abstract-header'},{'name': 'AbstractHeaderModeComponent', 'selector': 'ncc-abstract-header-mode'},{'name': 'AbstractHtmlTextareaFieldComponent', 'selector': 'ncc-abstract-html-area-field'},{'name': 'AbstractI18nDividerFieldComponent', 'selector': 'ncc-abstract-i18n-divider-field'},{'name': 'AbstractI18nErrorsComponent', 'selector': 'ncc-abstract-i18n-errors'},{'name': 'AbstractI18nFieldComponent', 'selector': 'ncc-abstract-i18n-field'},{'name': 'AbstractI18nTextFieldComponent', 'selector': 'ncc-abstract-i18n-text-field'},{'name': 'AbstractIframeCardComponent', 'selector': 'ncc-abstract-iframe-card'},{'name': 'AbstractImmediateFilterTextComponent', 'selector': 'ncc-abstract-immediate-filter-text'},{'name': 'AbstractImmediateFilterTextContentComponent', 'selector': 'ncc-abstract-immediate-filter-text-content'},{'name': 'AbstractImportNetComponent', 'selector': 'ncc-abstract-import-net'},{'name': 'AbstractInternalLinkComponent', 'selector': 'ncc-abstract-internal-link'},{'name': 'AbstractLanguageSelectorComponent', 'selector': 'ncc-abstract-language-selector'},{'name': 'AbstractLdapGroupRoleAssignmentComponent', 'selector': 'ncc-abstract-ldap-group-role-assignment'},{'name': 'AbstractLegalNoticeComponent', 'selector': 'ncc-abstract-legal-notice'},{'name': 'AbstractLoadFilterComponent', 'selector': 'ncc-abstract-load-filter'},{'name': 'AbstractLoadingModeComponent', 'selector': 'ncc-abstract-loading-mode'},{'name': 'AbstractLoginFormComponent', 'selector': 'ncc-abstract-login-field'},{'name': 'AbstractLogoutShortcutComponent', 'selector': 'ncc-abstract-logout-shortcut'},{'name': 'AbstractMultichoiceAutocompleteFieldComponentComponent', 'selector': 'ncc-abstract-multichoice-autocomplete-field'},{'name': 'AbstractMultichoiceFieldComponent', 'selector': 'ncc-abstract-multichoice-field'},{'name': 'AbstractMultichoiceListFieldComponent', 'selector': 'ncc-abstract-multichoice-list-field'},{'name': 'AbstractMultichoiceSelectFieldComponent', 'selector': 'ncc-abstract-multichoice-select-field'},{'name': 'AbstractNavigationDoubleDrawerComponent', 'selector': 'ncc-abstract-navigation-double-drawer'},{'name': 'AbstractNavigationDrawerComponent', 'selector': 'ncc-abstract-navigation-drawer'},{'name': 'AbstractNavigationRailComponent', 'selector': 'ncc-abstract-navigation-rail'},{'name': 'AbstractNavigationResizableDrawerComponent', 'selector': 'ncc-abstract-navigation-resizable-drawer'},{'name': 'AbstractNavigationTreeComponent', 'selector': 'ncc-abstract-navigation-tree'},{'name': 'AbstractNewCaseComponent', 'selector': 'ncc-abstract-new-case'},{'name': 'AbstractNumberErrorsComponent', 'selector': 'ncc-abstract-number-errors-field'},{'name': 'AbstractNumberFieldComponent', 'selector': 'ncc-abstract-number-field'},{'name': 'AbstractOptionSelectorComponent', 'selector': 'ncc-abstract-option-selector'},{'name': 'AbstractPanelComponent', 'selector': 'ncc-abstract-panel'},{'name': 'AbstractPanelItemComponent', 'selector': 'ncc-abstract-panel-item-component'},{'name': 'AbstractPanelWithHeaderBindingComponent', 'selector': 'ncc-abstract-panel-with-header-binding'},{'name': 'AbstractPanelWithImmediateDataComponent', 'selector': 'ncc-abstract-panel-with-immediate'},{'name': 'AbstractPasswordTextFieldComponent', 'selector': 'ncc-abstract-password-text-field'},{'name': 'AbstractProfileComponent', 'selector': 'ncc-abstract-profile'},{'name': 'AbstractQuickPanelComponent', 'selector': 'ncc-abstract-quick-panel'},{'name': 'AbstractRegistrationComponent', 'selector': 'ncc-abstract-registration'},{'name': 'AbstractRegistrationFormComponent', 'selector': 'ncc-abstract-registration-form'},{'name': 'AbstractRemoveNodeComponent', 'selector': 'ncc-abstract-remove-node'},{'name': 'AbstractRichTextareaFieldComponent', 'selector': 'ncc-abstract-rich-text-field'},{'name': 'AbstractRoleAssignmentComponent', 'selector': 'ncc-abstract-role'},{'name': 'AbstractSaveFilterComponent', 'selector': 'ncc-abstract-save-filter'},{'name': 'AbstractSearchClauseComponent', 'selector': 'ncc-abstract-search-clause'},{'name': 'AbstractSearchComponent', 'selector': 'ncc-abstract-search'},{'name': 'AbstractSearchConfigurationInputComponent', 'selector': 'ncc-abstract-search-configuration-input'},{'name': 'AbstractSearchModeComponent', 'selector': 'ncc-abstract-seatch-mode'},{'name': 'AbstractSearchOperandInputComponent', 'selector': 'ncc-abstract-search-operand-input'},{'name': 'AbstractSearchPredicateComponent', 'selector': 'ncc-abstract-search-predicate'},{'name': 'AbstractSideMenuContainerComponent', 'selector': 'ncc-abstract-side-menu-container'},{'name': 'AbstractSimpleTextFieldComponent', 'selector': 'ncc-abstract-simple-text-field'},{'name': 'AbstractSingleTaskComponent', 'selector': 'ncc-abstract-single-task'},{'name': 'AbstractSingleTaskViewComponent', 'selector': 'ncc-abstract-single-task-view'},{'name': 'AbstractSortableViewComponent', 'selector': 'ncc-abstract-sortable-view'},{'name': 'AbstractSortModeComponent', 'selector': 'ncc-abstract-sort-mode'},{'name': 'AbstractTabbedCaseViewComponent', 'selector': 'ncc-abstract-tabbed-case-view'},{'name': 'AbstractTabbedTaskViewComponent', 'selector': 'ncc-abstract-tabbed-task-view'},{'name': 'AbstractTabViewComponent', 'selector': 'ncc-abstract-tab-view'},{'name': 'AbstractTaskContentComponent', 'selector': 'ncc-abstract-task-content'},{'name': 'AbstractTaskListComponent', 'selector': 'ncc-abstract-task-list'},{'name': 'AbstractTaskListPaginationComponent', 'selector': 'ncc-abstract-task-list-pagination-component'},{'name': 'AbstractTaskPanelComponent', 'selector': 'ncc-abstract-legal-notice'},{'name': 'AbstractTaskViewComponent', 'selector': 'ncc-abstract-task-view'},{'name': 'AbstractTextareaFieldComponent', 'selector': 'ncc-abstract-text-area-field'},{'name': 'AbstractTextFieldComponent', 'selector': 'ncc-abstract-text-field'},{'name': 'AbstractTimeInstanceFieldComponent', 'selector': 'ncc-abstract-time-instance-field'},{'name': 'AbstractToolbarComponent', 'selector': 'ncc-abstract-toolbar'},{'name': 'AbstractTreeComponent', 'selector': 'ncc-abstract-tree'},{'name': 'AbstractTreeTaskContentComponent', 'selector': 'ncc-abstract-tree-task-content'},{'name': 'AbstractUserAssignComponent', 'selector': 'ncc-abstract-user-assign'},{'name': 'AbstractUserAssignItemComponent', 'selector': 'ncc-abstract-user-assign-item'},{'name': 'AbstractUserAssignListComponent', 'selector': 'ncc-abstract-user-assign-list'},{'name': 'AbstractUserCardComponent', 'selector': 'ncc-abstract-user-card'},{'name': 'AbstractUserFieldComponent', 'selector': 'ncc-abstract-user-field'},{'name': 'AbstractUserInviteComponent', 'selector': 'ncc-abstract-user-invite'},{'name': 'AbstractUserListFieldComponent', 'selector': 'ncc-abstract-user-list-field'},{'name': 'AbstractViewWithHeadersComponent', 'selector': 'ncc-abstract-view-with-headers'},{'name': 'AbstractWorkflowPanelComponent', 'selector': 'ncc-abstract-workflow-panel'},{'name': 'AbstractWorkflowViewComponent', 'selector': 'ncc-abstract-workflow-view'},{'name': 'AlertDialogComponent', 'selector': 'ncc-simple-dialog'},{'name': 'ConfirmDialogComponent', 'selector': 'ncc-question-dialog'},{'name': 'ErrorSnackBarComponent', 'selector': 'ncc-error-snack-bar'},{'name': 'GenericSnackBarComponent', 'selector': 'ncc-generic-snack-bar'},{'name': 'PromptDialogComponent', 'selector': 'ncc-question-dialog-with-answer'},{'name': 'SnackBarComponent', 'selector': 'ncc-abstract-snackbar'},{'name': 'SuccessSnackBarComponent', 'selector': 'ncc-success-snack-bar'},{'name': 'TabbedVirtualScrollComponent', 'selector': 'ncc-abstract-tabbed-virtual-scroll'},{'name': 'WarningSnackBarComponent', 'selector': 'ncc-warning-snack-bar'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'AbstractNavigationTreeComponent'};
 </script>

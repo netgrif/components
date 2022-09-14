@@ -408,6 +408,8 @@ export class ViewClassInfo extends ImportToAdd {
                 return &#x27;EmptyView&#x27;;
             case &#x27;sidenavView&#x27;:
                 return &#x27;SidenavView&#x27;;
+            case &#x27;doubleDrawerView&#x27;:
+                return &#x27;DoubleDrawerView&#x27;;
             case &#x27;toolbarView&#x27;:
                 return &#x27;ToolbarView&#x27;;
             case &#x27;sidenavAndToolbarView&#x27;:
@@ -418,6 +420,12 @@ export class ViewClassInfo extends ImportToAdd {
                 return &#x27;Dashboard&#x27;;
             case &#x27;treeCaseView&#x27;:
                 return &#x27;TreeCaseView&#x27;;
+            case &#x27;workflowView&#x27;:
+                return &#x27;WorkflowView&#x27;;
+            case &#x27;roleAssignmentView&#x27;:
+                return &#x27;RoleAssignmentView&#x27;;
+            case &#x27;ldapRoleAssignmentView&#x27;:
+                return &#x27;LdapRoleAssignmentView&#x27;;
             default:
                 throw new Error(&#x60;Unknown view type &#x27;${view}&#x27;&#x60;);
         }
