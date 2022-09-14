@@ -202,6 +202,7 @@ class TestTaskPanelComponent extends AbstractTaskPanelComponent implements After
                 protected _taskState: TaskRequestStateService,
                 protected _taskDataService: TaskDataService,
                 protected _assignPolicyService: AssignPolicyService,
+                protected _finishPolicyService: FinishPolicyService,
                 protected _callChain: CallChainService,
                 protected _translate: TranslateService,
                 @Inject(NAE_TASK_OPERATIONS) _taskOperations: SubjectTaskOperations,
@@ -212,7 +213,7 @@ class TestTaskPanelComponent extends AbstractTaskPanelComponent implements After
                 protected _overflowService: OverflowService) {
         super(_taskContentService, _log, _taskViewService, _paperView, _taskEventService, _assignTaskService,
             _delegateTaskService, _cancelTaskService, _finishTaskService, _taskState, _taskDataService,
-            _assignPolicyService, _callChain, _taskOperations, undefined, _translate, _currencyPipe, _changedFieldsService,
+            _assignPolicyService, _finishPolicyService, _callChain, _taskOperations, undefined, _translate, _currencyPipe, _changedFieldsService,
             _permissionService, _overflowService);
     }
 
