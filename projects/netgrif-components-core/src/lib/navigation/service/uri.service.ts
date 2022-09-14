@@ -19,6 +19,7 @@ import {LoadingEmitter} from "../../utility/loading-emitter";
 })
 export class UriService implements OnDestroy {
 
+    private static ROOT: string = 'root';
     private _rootNode: UriNodeResource;
     private readonly _rootLoading$: LoadingEmitter;
     private readonly _parentLoading$: LoadingEmitter;
@@ -190,6 +191,10 @@ export class UriService implements OnDestroy {
         const lastDelimiter = node.uriPath.lastIndexOf('/');
         if (lastDelimiter === -1) return 'root';
         return node.uriPath.substring(0, lastDelimiter);
+    }
+
+    public getSplittedPath(): Array<string> {
+        return this.activeNode?.uriPath.split('/').filter(s => s !== UriService.ROOT);
     }
 
     private capitalizeNames(nodes: Array<UriNodeResource>) {

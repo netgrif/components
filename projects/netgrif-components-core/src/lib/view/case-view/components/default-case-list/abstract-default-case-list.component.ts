@@ -14,7 +14,7 @@ import {TabbedVirtualScrollComponent} from '../../../../panel/abstract/tabbed-vi
     selector: 'ncc-abstract-default-case-list',
     template: ''
 })
-export abstract class AbstractDefaultCaseList extends TabbedVirtualScrollComponent implements OnDestroy {
+export abstract class AbstractDefaultCaseListComponent extends TabbedVirtualScrollComponent implements OnDestroy {
 
     @Input() selectedHeaders$: Observable<Array<HeaderColumn>>;
     @Input() responsiveBody = true;

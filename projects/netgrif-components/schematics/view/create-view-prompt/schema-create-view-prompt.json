@@ -18,13 +18,21 @@
                 "tabView",
                 "caseView",
                 "taskView",
+                "publicTaskView",
+                "publicSingleTaskView",
+                "publicWorkflowView",
+                "publicResolverView",
                 "sidenavView",
                 "toolbarView",
                 "sidenavAndToolbarView",
                 "dashboard",
                 "groupView",
                 "customView",
-                "treeCaseView"
+                "treeCaseView",
+                "workflowView",
+                "roleAssignmentView",
+                "ldapRoleAssignmentView",
+                "doubleDrawerView"
             ],
             "x-prompt": {
                 "type": "list",
@@ -34,13 +42,21 @@
                     "login",
                     "caseView",
                     "taskView",
+                    "publicTaskView",
+                    "publicSingleTaskView",
+                    "publicWorkflowView",
+                    "publicResolverView",
                     "sidenavView",
                     "toolbarView",
                     "sidenavAndToolbarView",
                     "dashboard",
                     "groupView",
                     "customView",
-                    "treeCaseView"
+                    "treeCaseView",
+                    "workflowView",
+                    "roleAssignmentView",
+                    "ldapRoleAssignmentView",
+                    "doubleDrawerView"
                 ]
             }
         },
@@ -50,7 +66,7 @@
         },
         "access": {
             "description": "access type",
-            "type": "string",
+            "type":  ["object", "string"],
             "x-prompt": {
                 "type": "list",
                 "message": "select a access type",

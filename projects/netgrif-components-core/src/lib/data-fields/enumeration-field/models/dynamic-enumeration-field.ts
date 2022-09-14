@@ -1,4 +1,4 @@
-import {EnumerationField, EnumerationFieldValue, EnumerationFieldView} from './enumeration-field';
+import {EnumerationField, EnumerationFieldValue} from './enumeration-field';
 import {Behavior} from '../../models/behavior';
 import {Layout} from '../../models/layout';
 import {FieldTypeResource} from '../../../task-content/model/field-type-resource';
@@ -16,11 +16,10 @@ export class DynamicEnumerationField extends EnumerationField {
 
     constructor(stringId: string, title: string, value: string,
                 protected _choices: Array<EnumerationFieldValue>, behavior: Behavior, placeholder?: string, description?: string,
-                layout?: Layout, protected _view = EnumerationFieldView.DEFAULT,
-                protected readonly _fieldType = FieldTypeResource.ENUMERATION,
+                layout?: Layout, protected readonly _fieldType = FieldTypeResource.ENUMERATION,
                 validations?: Array<Validation>, component?: Component, parentTaskId?: string) {
-        super(stringId, title, value, _choices, behavior, placeholder, description, layout,
-            _view, _fieldType, validations, component, parentTaskId);
+        super(stringId, title, value, _choices, behavior, placeholder, description, layout, _fieldType, validations,
+            component, parentTaskId);
         this._choicesChange$ = new Subject<void>();
         this._loading = new LoadingEmitter();
     }

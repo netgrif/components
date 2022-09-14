@@ -12,12 +12,4 @@ export class NumberFieldComponent extends AbstractNumberFieldComponent {
                 @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
         super(translate, informAboutInvalidData);
     }
-
-    resolveComponent(): string {
-        if (this.dataField.component !== undefined) {
-            return this.dataField.component.name;
-        } else {
-            return 'default';
-        }
-    }
 }

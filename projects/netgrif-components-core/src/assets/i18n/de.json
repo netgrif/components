@@ -290,6 +290,7 @@
         "login": {
             "length": "Das Benützername muss mindestens 4 Zeichen enthalten",
             "login": "Benützername",
+            "wrongCredentials": "Falsche Anmeldeinformationen!",
             "loginButton": "Anmelden",
             "reset": "Kennwort wiederherstellen",
             "sign": "Registrieren",
@@ -426,6 +427,7 @@
     },
     "workflow": {
         "delete": "löschen",
+        "download": "herunterladen",
         "dialog": {
             "header": "Sind Sie sicher, dass Sie den Prozess '{{name}}' mit Version '{{version}}' löschen wollen?",
             "content": "Alle Fälle aus diesem Prozess werden gleichzeitig gelöscht!",

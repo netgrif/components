@@ -14,8 +14,4 @@ export abstract class AbstractI18nFieldComponent extends AbstractDataFieldCompon
     constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
         super(informAboutInvalidData);
     }
-
-    public getType(): string {
-        return !!this.dataField.component?.name ? this.dataField.component.name : '';
-    }
 }

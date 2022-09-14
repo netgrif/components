@@ -1,6 +1,7 @@
 import {
     chain,
-    Rule, schematic,
+    schematic,
+    Rule,
     SchematicsException,
     Tree
 } from '@angular-devkit/schematics';
@@ -19,10 +20,17 @@ import {addViewToViewService} from '../_utility/view-service-functions';
 import {ImportToAdd} from '../../_commons/import-to-add';
 import {createTreeCaseView} from './views/tree-case-view/create-tree-case-view';
 import {createGroupView} from './views/group-view/create-group-view';
-
+import {createWorkflowView} from './views/workflow-view/create-workflow-view';
+import {createRoleAssignmentView} from './views/role-assignment-view/role-assignment-view';
+import {createPublicTaskView} from './views/public-task-view/create-public-task-view';
+import {createPublicWorkflowView} from './views/public-workflow-view/create-public-workflow-view';
+import {createPublicSingleTaskView} from './views/public-single-task-view/create-public-single-task-view';
+import {createPublicResolverView} from './views/public-resolver-view/create-public-resolver-view';
+import {createLdapRoleAssignmentView} from './views/ldap-role-assignment-view/ldap-role-assignment-view';
 
 export function schematicEntryPoint(schematicArguments: CreateViewArguments): Rule {
     return (tree: Tree) => {
+        console.log('Creating view ' + schematicArguments.viewType + ' [' + schematicArguments.path + ']');
         checkPathValidity(tree, schematicArguments.path);
         return createView(tree, schematicArguments);
     };
@@ -49,6 +57,18 @@ function createView(tree: Tree, args: CreateViewArguments, addViewToService: boo
         case 'taskView':
             rules.push(createTaskView(tree, args, addViewToService));
             break;
+        case 'publicTaskView':
+            rules.push(createPublicTaskView(tree, args, addViewToService));
+            break;
+        case 'publicSingleTaskView':
+            rules.push(createPublicSingleTaskView(tree, args, addViewToService));
+            break;
+        case 'publicWorkflowView':
+            rules.push(createPublicWorkflowView(tree, args, addViewToService));
+            break;
+        case 'publicResolverView':
+            rules.push(createPublicResolverView(tree, args, addViewToService));
+            break;
         case 'caseView':
             rules.push(createCaseView(tree, args, addViewToService));
             break;
@@ -64,6 +84,7 @@ function createView(tree: Tree, args: CreateViewArguments, addViewToService: boo
         case 'treeCaseView':
             rules.push(createTreeCaseView(tree, args, addViewToService));
             break;
+        case 'doubleDrawerView':
         case 'toolbarView':
             rules.push(createSidenavOrToolbarView(tree, {
                 createViewArguments: args,
@@ -82,6 +103,15 @@ function createView(tree: Tree, args: CreateViewArguments, addViewToService: boo
                 throw new SchematicsException(`Custom components must define both a 'class' and a 'from' attribute! Path: '${args.path}'`);
             }
             addViewToViewService(tree, new ImportToAdd(args.componentName, args.customImportPath));
+            break;
+        case 'workflowView':
+            rules.push(createWorkflowView(tree, args, addViewToService));
+            break;
+        case 'roleAssignmentView':
+            rules.push(createRoleAssignmentView(tree, args, addViewToService));
+            break;
+        case 'ldapRoleAssignmentView':
+            rules.push(createLdapRoleAssignmentView(tree, args, addViewToService));
             break;
         default:
             throw new SchematicsException(`Unknown view type '${args.viewType}'`);
