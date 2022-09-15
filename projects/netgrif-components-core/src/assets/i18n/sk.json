@@ -87,7 +87,8 @@
             "errThird": "Farba je povinné pole.",
             "noNets": "Žiadne povolené siete",
             "createCase": "Úspešne vytvorený nový prípad",
-            "defaultCaseName": "s prednastaveným názvom prípadu"
+            "defaultCaseName": "s prednastaveným názvom prípadu",
+            "createCaseError": "Nový prípad vytvorený, nastala však chyba pri vykonávanií akcií"
         },
         "user": {
             "assign": "Priradiť používateľa",
