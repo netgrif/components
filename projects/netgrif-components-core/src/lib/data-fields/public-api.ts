@@ -31,6 +31,7 @@ export * from './text-field/password-text-field/abstract-password-text-field.com
 export * from './text-field/textarea-field/abstract-textarea-field.component';
 export * from './text-field/dashboard-line-chart-text-field/abstract-dashboard-line-chart-text-field.component';
 export * from './text-field/dashboard-pie-chart-text-field/abstract-dashboard-pie-chart-text-field.component';
+export * from './text-field/dashboard-bar-chart-text-field/abstract-dashboard-bar-chart-text-field.component';
 export * from './text-field/dashboard-portal-text-field/abstract-dashboard-portal-text-field.component';
 export * from './user-field/abstract-user-field.component';
 export * from './enumeration-field/enumeration-icon-field/abstract-enumeration-icon-field.component';

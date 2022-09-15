@@ -22,6 +22,7 @@ export enum TextFieldComponent {
     HTML_TEXT_AREA = 'htmltextarea',
     DASHBOARD_LINE_CHART = 'dashboard_line_chart',
     DASHBOARD_PIE_CHART = 'dashboard_pie_chart',
+    DASHBOARD_BAR_CHART = 'dashboard_bar_chart',
     DASHBOARD_PORTAL = 'dashboard_portal',
 }
 

@@ -5,9 +5,9 @@ import {
     CovalentModule,
     CurrencyModule,
     CustomDateAdapter,
+    DashboardPortalComponentRegistryService,
     MaterialModule,
-    TranslateLibModule,
-    DashboardPortalComponentRegistryService
+    TranslateLibModule
 } from '@netgrif/components-core';
 import {AngularResizeEventModule} from 'angular-resize-event';
 import {HttpClientModule} from '@angular/common/http';
@@ -96,6 +96,9 @@ import {
 } from './text-field/dashboard-portal-text-field/dashboard-portal-text-field.component';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {EmailSubmissionFormComponent} from '../forms/email-submission/email-submission-form.component';
+import {
+    DashboardBarChartTextFieldComponent
+} from './text-field/dashboard-bar-chart-text-field/dashboard-bar-chart-text-field.component';
 
 @NgModule({
     declarations: [
@@ -142,6 +145,7 @@ import {EmailSubmissionFormComponent} from '../forms/email-submission/email-subm
         DashboardLineChartTextFieldComponent,
         DashboardPieChartTextFieldComponent,
         DashboardPortalTextFieldComponent,
+        DashboardBarChartTextFieldComponent,
     ],
     exports: [
         BooleanFieldComponent,
