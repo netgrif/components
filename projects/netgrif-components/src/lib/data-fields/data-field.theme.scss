@@ -220,5 +220,26 @@
     .form-input-error {
         border-color: mat.get-color-from-palette($warn) !important;
     }
+
+    .svg-inactive-stroke {
+        stroke: black !important;
+    }
+
+    .svg-inactive-fill {
+        fill: black !important;
+    }
+
+    .svg-active-stroke {
+        stroke: map-get($primary, A200) !important;
+    }
+
+    .svg-active-fill {
+        fill: map-get($primary, A200) !important;
+    }
+
+    .svg-transition-enabled {
+        stroke: green;
+        fill: yellowgreen;
+    }
 }
 

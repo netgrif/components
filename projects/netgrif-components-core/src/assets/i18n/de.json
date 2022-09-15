@@ -245,7 +245,8 @@
             "maxFilesExceeded": "Die maximale Anzahl hochladbarer Dateien ist überschritten: ",
             "maxFilesSizeExceeded": "Die maximale Größe der hochgeladenen Dateien wird überschritten: ",
             "notSelectedUser": "Es wurde kein Benutzer ausgewählt",
-            "userAssigned": "Benutzer {{userName}} wurde zugewiesen"
+            "userAssigned": "Benutzer {{userName}} wurde zugewiesen",
+            "caseNetGetFailed": "Das Abrufen des Fallnetzes ist fehlgeschlagen"
         },
         "values": {
             "boolean": {

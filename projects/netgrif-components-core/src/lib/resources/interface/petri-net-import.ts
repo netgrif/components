@@ -6,4 +6,6 @@ export interface PetriNetImport {
     transitions: Array<TransitionImport>;
     places: Array<PlaceImport>;
     arcs: Array<ArcImport>;
+    assignedTasks: Array<string>;
+    finishedTasks: Array<string>;
 }

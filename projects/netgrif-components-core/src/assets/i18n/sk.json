@@ -245,7 +245,8 @@
             "maxFilesExceeded": "Je presiahnutý maximálny počet nahratých súborov: ",
             "maxFilesSizeExceeded": "Je presiahnutá maximálna veľkosť nahrávaných súborov: ",
             "notSelectedUser": "Nebol vybraný žiadny používateľ",
-            "userAssigned": "Používateľ {{userName}} bol pridelený"
+            "userAssigned": "Používateľ {{userName}} bol pridelený",
+            "caseNetGetFailed": "Načítanie siete podľa prípadu zlyhalo"
         },
         "values": {
             "boolean": {

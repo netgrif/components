@@ -9,7 +9,9 @@ import {
     ConfigurationService,
     TestConfigurationService,
     CaseRefField,
-    PetriNetResourceService
+    PetriNetResourceService,
+    SnackBarModule,
+    ErrorSnackBarComponent
 } from '@netgrif/components-core';
 import {CaseRefFieldComponent} from './case-ref-field.component';
 import {AngularResizeEventModule} from 'angular-resize-event';
@@ -18,6 +20,7 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {PetriflowCanvasModule} from '@netgrif/petriflow.svg';
 import {Component} from '@angular/core';
 import {of} from 'rxjs';
+import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 
 describe('CaseRefFieldComponent', () => {
     let component: CaseRefFieldComponent;
@@ -32,7 +35,7 @@ describe('CaseRefFieldComponent', () => {
                 HttpClientTestingModule,
                 NoopAnimationsModule,
                 PetriflowCanvasModule,
-
+                SnackBarModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
@@ -41,8 +44,7 @@ describe('CaseRefFieldComponent', () => {
                 {provide: PetriNetResourceService, useClass: MyPetriNetResource},
             ],
             declarations: [CaseRefFieldComponent]
-        })
-            .compileComponents();
+        }).compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
         fixture.detectChanges();
