@@ -99,6 +99,9 @@ import {EmailSubmissionFormComponent} from '../forms/email-submission/email-subm
 import {
     DashboardBarChartTextFieldComponent
 } from './text-field/dashboard-bar-chart-text-field/dashboard-bar-chart-text-field.component';
+import {
+    DashboardIframeTextFieldComponent
+} from './text-field/dashboard-iframe-text-field/dashboard-iframe-text-field.component';
 
 @NgModule({
     declarations: [
@@ -146,6 +149,7 @@ import {
         DashboardPieChartTextFieldComponent,
         DashboardPortalTextFieldComponent,
         DashboardBarChartTextFieldComponent,
+        DashboardIframeTextFieldComponent,
     ],
     exports: [
         BooleanFieldComponent,

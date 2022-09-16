@@ -1,46 +1,18 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {AbstractTextErrorsComponent} from '../abstract-text-errors.component';
-import {TextField} from '../models/text-field';
-import {FormControl} from '@angular/forms';
+import {Component} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {Subscription} from 'rxjs';
 import {CustomCard} from '../../../dashboard/cards/model/custom-dashboard-model/custom-card';
 import {DashboardCardTypes} from '../../../dashboard/cards/model/dashboard-card-types';
 import {FilterType} from '../../../filter/models/filter-type';
-import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
+import {AbstractDashboardTextFieldComponent} from '../abstract-dashboard-text-field.component';
 
 @Component({
     selector: 'ncc-abstract-dashboard-pie-chart-text-field',
     template: ''
 })
-export abstract class AbstractDashboardPieChartTextFieldComponent extends AbstractTextErrorsComponent implements OnInit, OnDestroy {
-
-    @Input() textField: TextField;
-    @Input() formControlRef: FormControl;
-    @Input() showLargeLayout: WrappedBoolean;
-
-    public card?: CustomCard;
-    public initialized: boolean = false;
-    private _sub: Subscription;
+export abstract class AbstractDashboardPieChartTextFieldComponent extends AbstractDashboardTextFieldComponent {
 
     protected constructor(translate: TranslateService) {
         super(translate);
-    }
-
-    // TODO: create abstract dashboard chart text field class
-    ngOnInit(): void {
-        if (this.formControlRef.value !== undefined) {
-            this.card = this.createCard(this.formControlRef.value);
-            this.initialized = true;
-        }
-        this._sub = this.formControlRef.valueChanges.subscribe(json => {
-            this.card = this.createCard(json);
-            this.initialized = true;
-        });
-    }
-
-    ngOnDestroy(): void {
-        this._sub.unsubscribe();
     }
 
     protected createCard(textFieldValue: string): CustomCard {
@@ -54,9 +26,5 @@ export abstract class AbstractDashboardPieChartTextFieldComponent extends Abstra
             resourceType: FilterType.CASE,
             layout: {x: 0, y: 0, rows: 1, cols: 1}
         };
-    }
-
-    public getErrorMessage() {
-        return this.buildErrorMessage(this.textField, this.formControlRef);
     }
 }

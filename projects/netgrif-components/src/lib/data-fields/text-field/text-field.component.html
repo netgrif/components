@@ -28,6 +28,10 @@
                                         [textField]="dataField"
                                         [showLargeLayout]="showLargeLayout"
                                         [formControlRef]="formControl"></nc-dashboard-bar-chart-text-field>
+        <nc-dashboard-iframe-text-field *ngSwitchCase="textFieldComponentEnum.DASHBOARD_IFRAME"
+                                        [textField]="dataField"
+                                        [showLargeLayout]="showLargeLayout"
+                                        [formControlRef]="formControl"></nc-dashboard-iframe-text-field>
         <nc-dashboard-portal-text-field *ngSwitchCase="textFieldComponentEnum.DASHBOARD_PORTAL"
                                            [textField]="dataField"
                                            [showLargeLayout]="showLargeLayout"

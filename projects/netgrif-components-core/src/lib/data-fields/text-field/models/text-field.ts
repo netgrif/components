@@ -23,6 +23,7 @@ export enum TextFieldComponent {
     DASHBOARD_LINE_CHART = 'dashboard_line_chart',
     DASHBOARD_PIE_CHART = 'dashboard_pie_chart',
     DASHBOARD_BAR_CHART = 'dashboard_bar_chart',
+    DASHBOARD_IFRAME = 'dashboard_iframe',
     DASHBOARD_PORTAL = 'dashboard_portal',
 }
 
