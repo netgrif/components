@@ -12,7 +12,7 @@ export class ImpersonationDemoComponent implements OnInit {
         private _impersonationSelect: ImpersonationUserSelectService,
         private _impersonation: ImpersonationService,
     ) {
-        this._impersonation.impersonating.subscribe((isImpersonating: boolean) => {
+        this._impersonation.impersonating$.subscribe((isImpersonating: boolean) => {
             console.log("Is impersonating " + isImpersonating);
         });
     }

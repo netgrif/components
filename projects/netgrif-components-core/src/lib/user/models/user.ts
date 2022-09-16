@@ -48,6 +48,13 @@ export class User implements IUser {
      * @returns self if no impersonated user is present, or impersonated user otherwise
      */
     public getSelfOrImpersonated(): User {
-        return this.impersonated ? this.impersonated : this;
+        return this.isImpersonating() ? this.impersonated : this;
+    }
+
+    /**
+     * @returns true if user is impersonating another user
+     */
+    public isImpersonating(): boolean {
+        return !!this.impersonated;
     }
 }

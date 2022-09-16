@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {Router} from '@angular/router';
 import {take} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
@@ -8,14 +8,18 @@ import {UserService} from '../../user/services/user.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {FilterRepository} from '../../filter/filter.repository';
 import {LoggerService} from '../../logger/services/logger.service';
-import {Observable, Subject} from 'rxjs';
+import {Observable, Subject, Subscription} from 'rxjs';
+import {User} from '../../user/models/user';
 
 @Injectable({
     providedIn: 'root'
 })
-export class ImpersonationService extends AbstractResourceService {
+export class ImpersonationService extends AbstractResourceService implements OnDestroy {
 
     private _impersonating$ = new Subject<boolean>();
+
+    private _lastUser: User;
+    private _sub: Subscription;
 
     public constructor(protected provider: ResourceProvider,
                        protected _router: Router,
@@ -26,16 +30,23 @@ export class ImpersonationService extends AbstractResourceService {
                        protected _log: LoggerService,
                        private _translate: TranslateService) {
         super('impersonation', provider, _configService);
+        this._sub = this._userService.user$.subscribe(user => {
+            if (this._lastUser && this._lastUser.isImpersonating() != user.isImpersonating()) {
+                this._filter.removeAllFilters();
+                this._impersonating$.next(user.isImpersonating());
+            }
+            this._lastUser = user;
+        });
     }
 
-    public get impersonating(): Observable<boolean> {
+    public get impersonating$(): Observable<boolean> {
         return this._impersonating$.asObservable();
     }
 
     public impersonate(userId: number): void {
         this.provider.post$('impersonate/' + userId, this.SERVER_URL, {}).subscribe((user: UserResource) => {
             this._snackbar.openSuccessSnackBar(this._translate.instant('impersonation.user.successfullyRepresented'));
-            this._triggerReload(true);
+            this._triggerReload();
         }, (response => {
             if (response.status === 400) {
                 response.error.alreadyImpersonated ?
@@ -44,25 +55,26 @@ export class ImpersonationService extends AbstractResourceService {
             } else {
                 this._snackbar.openErrorSnackBar(this._translate.instant('impersonation.action.failed'));
             }
-            this._impersonating$.next(false);
         }));
     }
 
     public cease(): void {
         this.provider.post$('impersonate/clear', this.SERVER_URL, {}).subscribe(user => {
             this._snackbar.openSuccessSnackBar(this._translate.instant('impersonation.action.deactivated'));
-            return this._triggerReload(false);
+            return this._triggerReload();
         }, (error => {
             this._snackbar.openErrorSnackBar(this._translate.instant('impersonation.action.failed'));
         }));
     }
 
-    private _triggerReload(isImpersonating: boolean): void {
-        this._userService.user$.pipe(take(1)).subscribe(user => {
-            this._filter.removeAllFilters();
-            this._impersonating$.next(isImpersonating);
-        });
+    private _triggerReload(): void {
         this._userService.reload();
+    }
+
+    ngOnDestroy(): void {
+        if (this._sub) {
+            this._sub.unsubscribe();
+        }
     }
 
 }
