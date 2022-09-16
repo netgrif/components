@@ -354,7 +354,9 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             resource: filter
         };
         const resolvedRoles = this.resolveAccessRoles(filter);
+        const resolvedBannedRoles = this.resolveBannedRoles(filter);
         if(!!resolvedRoles) item.access['role'] = resolvedRoles;
+        if(!!resolvedBannedRoles) item.access['bannedRole'] = resolvedBannedRoles;
         if (!this._accessService.canAccessView(item, item.routingPath)) return;
         return item;
     }
@@ -364,6 +366,20 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         if (!allowedRoles || Object.keys(allowedRoles).length === 0) return undefined;
         const roles = [];
         Object.keys(allowedRoles).forEach(combined => {
+            const parts = combined.split(':');
+            roles.push({
+                processId: parts[1],
+                roleId: parts[0]
+            });
+        });
+        return roles;
+    }
+
+    protected resolveBannedRoles(filter: Case): Array<RoleAccess> | undefined {
+        const bannedRoles = filter.immediateData.find(f => f.stringId === 'banned_roles')?.options;
+        if (!bannedRoles || Object.keys(bannedRoles).length === 0) return undefined;
+        const roles = [];
+        Object.keys(bannedRoles).forEach(combined => {
             const parts = combined.split(':');
             roles.push({
                 processId: parts[1],
