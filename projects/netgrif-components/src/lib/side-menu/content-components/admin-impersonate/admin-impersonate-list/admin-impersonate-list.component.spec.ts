@@ -1,5 +1,5 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
-import {UserImpersonateListComponent} from './user-impersonate-list.component';
+import {AdminImpersonateListComponent} from './admin-impersonate-list.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
 import {FormControl} from '@angular/forms';
@@ -18,7 +18,7 @@ import {
 import {UserImpersonateItemComponent} from './user-impersonate-item/user-impersonate-item.component';
 
 describe('UserImpersonateListComponent', () => {
-    let component: UserImpersonateListComponent;
+    let component: AdminImpersonateListComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
     beforeEach(waitForAsync(() => {
@@ -34,7 +34,7 @@ describe('UserImpersonateListComponent', () => {
                 {provide: ConfigurationService, useClass: TestConfigurationService}
             ],
             declarations: [
-                UserImpersonateListComponent,
+                AdminImpersonateListComponent,
                 UserImpersonateItemComponent,
                 ErrorSnackBarComponent,
                 TestWrapperComponent

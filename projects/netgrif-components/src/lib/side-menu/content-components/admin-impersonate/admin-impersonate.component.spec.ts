@@ -12,13 +12,13 @@ import {
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {Observable} from 'rxjs';
-import {UserImpersonateComponent} from './user-impersonate.component';
+import {AdminImpersonateComponent} from './admin-impersonate.component';
 import {UserImpersonateListComponent} from './user-impersonate-list/user-impersonate-list.component';
 import {UserImpersonateItemComponent} from './user-impersonate-list/user-impersonate-item/user-impersonate-item.component';
 
 describe('UserImpersonateComponent', () => {
-    let component: UserImpersonateComponent;
-    let fixture: ComponentFixture<UserImpersonateComponent>;
+    let component: AdminImpersonateComponent;
+    let fixture: ComponentFixture<AdminImpersonateComponent>;
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
@@ -38,7 +38,7 @@ describe('UserImpersonateComponent', () => {
                 {provide: ConfigurationService, useClass: TestConfigurationService}
             ],
             declarations: [
-                UserImpersonateComponent,
+                AdminImpersonateComponent,
                 UserImpersonateListComponent,
                 UserImpersonateItemComponent
             ]
@@ -46,7 +46,7 @@ describe('UserImpersonateComponent', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(UserImpersonateComponent);
+        fixture = TestBed.createComponent(AdminImpersonateComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

@@ -8,14 +8,14 @@ import {AbstractUserAssignComponent, NAE_SIDE_MENU_CONTROL, SideMenuControl, Use
  * along with searching, selecting, and then assigning to the user field.
  */
 @Component({
-    selector: 'nc-user-impersonate',
-    templateUrl: './user-impersonate.component.html',
-    styleUrls: ['./user-impersonate.component.scss'],
+    selector: 'nc-admin-impersonate',
+    templateUrl: './admin-impersonate.component.html',
+    styleUrls: ['./admin-impersonate.component.scss'],
     providers: [{
         provide: UserListService, useClass: ImpersonationUserListService
     }]
 })
-export class UserImpersonateComponent extends AbstractUserAssignComponent {
+export class AdminImpersonateComponent extends AbstractUserAssignComponent {
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) protected _sideMenuControl: SideMenuControl) {
         super(_sideMenuControl);
     }

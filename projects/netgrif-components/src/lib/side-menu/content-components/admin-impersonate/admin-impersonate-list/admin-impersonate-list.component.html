@@ -8,14 +8,14 @@
         <div class="full-height full-width" fxFlex="100">
             <cdk-virtual-scroll-viewport itemSize="60" (scrolledIndexChange)="loadNextPage()"
                                          class="full-height full-width">
-                <nc-user-impersonate-item
+                <nc-admin-impersonate-item
                     *cdkVirtualFor="let user of users;
                                     trackBy: trackBy;
                                     templateCacheSize: 0"
                     [user]="user"
                     [selectedId$]="selectedUser$"
                     (click)="select(user)">
-                </nc-user-impersonate-item>
+                </nc-admin-impersonate-item>
 
                 <div *ngIf="loading" fxLayout="column" fxLayoutAlign="center center"
                      class="margin-top-default">

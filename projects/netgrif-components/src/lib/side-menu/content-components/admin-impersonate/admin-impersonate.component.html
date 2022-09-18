@@ -13,13 +13,13 @@
             </mat-form-field>
         </div>
 
-        <nc-user-impersonate-list fxFlex
+        <nc-admin-impersonate-list fxFlex
                              [searchUserControl]="searchUserControl"
                              [roles]="roles"
                              [negativeRoles]="negativeRoles"
                              [initiallySelectedUser]="initiallySelectedUser"
                              (userSelected)="userWasSelected($event)">
-        </nc-user-impersonate-list>
+        </nc-admin-impersonate-list>
 
         <div fxLayout="row" fxLayoutAlign="end center">
             <button mat-raised-button color="primary"

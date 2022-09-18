@@ -1,11 +1,11 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
-import {UserImpersonateItemComponent} from './user-impersonate-item.component';
+import {AdminImpersonateItemComponent} from './admin-impersonate-item.component';
 import {Component} from '@angular/core';
 import {MaterialModule, TranslateLibModule, UserValue} from '@netgrif/components-core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('UserAssignItemComponent', () => {
-    let component: UserImpersonateItemComponent;
+    let component: AdminImpersonateItemComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
     beforeEach(waitForAsync(() => {
@@ -14,7 +14,7 @@ describe('UserAssignItemComponent', () => {
                 TranslateLibModule,
                 NoopAnimationsModule],
             declarations: [
-                UserImpersonateItemComponent,
+                AdminImpersonateItemComponent,
                 TestWrapperComponent
             ]
         })
