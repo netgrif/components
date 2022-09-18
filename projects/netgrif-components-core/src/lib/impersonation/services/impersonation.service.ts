@@ -43,18 +43,19 @@ export class ImpersonationService extends AbstractResourceService implements OnD
         return this._impersonating$.asObservable();
     }
 
-    public impersonate(userId: number): void {
-        this.provider.post$('impersonate/' + userId, this.SERVER_URL, {}).subscribe((user: UserResource) => {
-            this._snackbar.openSuccessSnackBar(this._translate.instant('impersonation.user.successfullyRepresented'));
-            this._triggerReload();
+    public impersonateUser(userId: string): void {
+        this.provider.post$('impersonate/user/' + userId, this.SERVER_URL, {}).subscribe((user: UserResource) => {
+            this.resolveSuccess(user);
         }, (response => {
-            if (response.status === 400) {
-                response.error.alreadyImpersonated ?
-                    this._snackbar.openErrorSnackBar(this._translate.instant('impersonation.user.currentlyAlreadyRepresented')) :
-                    this._snackbar.openErrorSnackBar(this._translate.instant('impersonation.user.currentlyLogged'));
-            } else {
-                this._snackbar.openErrorSnackBar(this._translate.instant('impersonation.action.failed'));
-            }
+            this.resolveError(response);
+        }));
+    }
+
+    public impersonateByConfig(configId: string): void {
+        this.provider.post$('impersonate/config/' + configId, this.SERVER_URL, {}).subscribe((user: UserResource) => {
+            this.resolveSuccess(user);
+        }, (response => {
+            this.resolveError(response);
         }));
     }
 
@@ -67,7 +68,22 @@ export class ImpersonationService extends AbstractResourceService implements OnD
         }));
     }
 
-    private _triggerReload(): void {
+    protected resolveSuccess(user: UserResource) {
+        this._snackbar.openSuccessSnackBar(this._translate.instant('impersonation.user.successfullyRepresented'));
+        this._triggerReload();
+    }
+
+    protected resolveError(response: any) {
+        if (response.status === 400) {
+            response.error.alreadyImpersonated ?
+                this._snackbar.openErrorSnackBar(this._translate.instant('impersonation.user.currentlyAlreadyRepresented')) :
+                this._snackbar.openErrorSnackBar(this._translate.instant('impersonation.user.currentlyLogged'));
+        } else {
+            this._snackbar.openErrorSnackBar(this._translate.instant('impersonation.action.failed'));
+        }
+    }
+
+    protected _triggerReload(): void {
         this._userService.reload();
     }
 

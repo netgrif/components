@@ -6,7 +6,7 @@ import {FormsModule} from '@angular/forms';
 import {
     CovalentModule,
     MaterialModule,
-    NAE_USER_IMPERSONATE_COMPONENT,
+    NAE_ADMIN_IMPERSONATE_COMPONENT,
     TranslateLibModule
 } from '@netgrif/components-core';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -34,7 +34,7 @@ import {
     ],
     exports: [AdminImpersonateComponent],
     providers: [
-        { provide: NAE_USER_IMPERSONATE_COMPONENT, useValue: AdminImpersonateComponent },
+        { provide: NAE_ADMIN_IMPERSONATE_COMPONENT, useValue: AdminImpersonateComponent },
     ]
 })
 export class SideMenuAdminImpersonateComponentModule {

@@ -1,3 +1,5 @@
+/* MODELS */
+export * from './models/user-impersonation-constants';
 
 /* SERVICES */
 export * from './services/impersonation.service';
