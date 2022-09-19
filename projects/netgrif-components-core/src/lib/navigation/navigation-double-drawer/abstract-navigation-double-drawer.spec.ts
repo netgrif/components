@@ -80,6 +80,11 @@ describe('AbstractNavigationDoubleDrawerComponent', () => {
         done();
     });
 
+    it('should logout', () => {
+        component.logout();
+        expect(component.user.id).toEqual('');
+    });
+
     afterEach(() => {
         TestBed.resetTestingModule();
     });
