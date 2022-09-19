@@ -1,5 +1,5 @@
 <div class="full-width full-height" fxLayout="column" fxLayoutAlign="start stretch">
-    <mat-toolbar color="primary">{{ 'side-menu.user.assign' | translate | uppercase }}</mat-toolbar>
+    <mat-toolbar color="primary">{{ 'side-menu.impersonation.title' | translate | uppercase }}</mat-toolbar>
     <div class="user-assign-container side-menu-root" fxLayout="column" fxFlex>
         <div fxLayout="row" fxLayoutAlign="start center" class="netgrif-input netgrif-input-fix">
             <mat-icon fxFlex class="search-icon">search</mat-icon>
@@ -23,7 +23,7 @@
 
         <div fxLayout="row" fxLayoutAlign="end center">
             <button mat-raised-button color="primary"
-                    (click)="assign()">{{ 'tasks.view.assign' | translate | uppercase }}</button>
+                    (click)="assign()">{{ 'side-menu.impersonation.submit' | translate | uppercase }}</button>
         </div>
     </div>
 </div>

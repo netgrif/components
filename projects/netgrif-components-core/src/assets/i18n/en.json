@@ -108,6 +108,12 @@
         "option-selector": {
             "select": "Select",
             "choose-one-option": "Choose one of the provided options"
+        },
+        "impersonation": {
+            "title": "Impersonate user",
+            "submit": "Impersonate",
+            "cease": "Cancel impersonation",
+            "impersonating": "impersonating"
         }
     },
     "search": {
@@ -456,5 +462,16 @@
     },
     "dynamicNavigation": {
         "couldNotResolveView": "An error has occurred during the view resolution process. The view could not be displayed"
+    },
+    "impersonation": {
+        "user": {
+            "successfullyRepresented": "User successfully represented",
+            "currentlyAlreadyRepresented": "User is already currently represented",
+            "currentlyLogged": "User is currently logged in"
+        },
+        "action": {
+            "failed": "Action failed",
+            "deactivated": "Representation was successfully deactivated"
+        }
     }
 }
