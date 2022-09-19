@@ -83,6 +83,7 @@ describe('AbstractNavigationDoubleDrawerComponent', () => {
     afterEach(() => {
         TestBed.resetTestingModule();
     });
+
 });
 
 @Component({
