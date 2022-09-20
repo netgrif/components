@@ -7,6 +7,7 @@ import { TestLoggingConfigurationService } from '../../utility/tests/test-loggin
 import { AuthenticationModule } from '../../authentication/authentication.module';
 import { UriResourceService } from './uri-resource.service';
 import { MockUriResourceService } from '../../utility/tests/mocks/mock-uri-resource.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('UriService', () => {
     let service: UriService;
@@ -16,7 +17,8 @@ describe('UriService', () => {
             imports: [
                 HttpClientTestingModule,
                 NoopAnimationsModule,
-                AuthenticationModule
+                AuthenticationModule,
+                RouterTestingModule.withRoutes([])
             ],
             providers: [
                 {provide: ConfigurationService, useClass: TestLoggingConfigurationService},
