@@ -43,7 +43,11 @@ function localAllowedNetsFactory(factory: AllowedNetsServiceFactory): AllowedNet
             useFactory: localAllowedNetsFactory,
             deps: [AllowedNetsServiceFactory]},
         {   provide: NAE_DEFAULT_HEADERS,
-            useValue: ['meta-title', `${UserImpersonationConstants.IMPERSONATION_CONFIG_NET_IDENTIFIER}-impersonated`]}
+            useValue: [
+                `${UserImpersonationConstants.IMPERSONATION_CONFIG_NET_IDENTIFIER}-${UserImpersonationConstants.IMPERSONATION_CONFIG_FIELD_IMPERSONATED}`,
+                `${UserImpersonationConstants.IMPERSONATION_CONFIG_NET_IDENTIFIER}-${UserImpersonationConstants.IMPERSONATION_CONFIG_FIELD_ROLES}`,
+                `${UserImpersonationConstants.IMPERSONATION_CONFIG_NET_IDENTIFIER}-${UserImpersonationConstants.IMPERSONATION_CONFIG_FIELD_AUTHS}`,
+            ]}
     ]
 })
 export class UserImpersonateComponent extends AbstractUserImpersonateComponent implements AfterViewInit {

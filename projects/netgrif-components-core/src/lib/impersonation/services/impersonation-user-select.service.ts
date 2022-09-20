@@ -41,7 +41,7 @@ export class ImpersonationUserSelectService {
                 this._impersonation.impersonateUser(event.data._id);
             });
         } else {
-            this._sideMenuService.open(this._userImpersonateComponent, SideMenuSize.LARGE, this.injectedData()).onClose.subscribe(event => {
+            this._sideMenuService.open(this._userImpersonateComponent, SideMenuSize.XL, this.injectedData()).onClose.subscribe(event => {
                 this._log.debug('Impersonable config select :' + event);
                 if (event.data === undefined) {
                     return;
@@ -60,7 +60,7 @@ export class ImpersonationUserSelectService {
             query: `
             (dataSet.impersonators.keyValue:${this._user.user.id}) AND
             (dataSet.is_active.booleanValue:true) AND
-            ((!(_exists_:dataSet.valid_from.timestampValue)) OR (dataSet.valid_from.timestampValue:< ${currentTime.valueOf()})) AND
+            ((!(_exists_:dataSet.valid_from.timestampValue)) OR (dataSet.valid_from.timestampValue:<` + currentTime.valueOf() + `)) AND
             ((!(_exists_:dataSet.valid_to.timestampValue)) OR (dataSet.valid_to.timestampValue:>${currentTime.valueOf()}))
             `
         });
