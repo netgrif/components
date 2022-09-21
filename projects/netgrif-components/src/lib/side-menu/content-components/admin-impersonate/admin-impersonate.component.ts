@@ -4,7 +4,7 @@ import {AbstractUserAssignComponent, NAE_SIDE_MENU_CONTROL, SideMenuControl, Use
 /**
  * Is the main - parent component of the entire user assignment in the side menu.
  *
- * Holds logic link of the [UserAssignListComponent]{@link UserAssignListComponent}
+ * Holds logic link of the [AdminImpersonateListComponent]{@link AdminImpersonateListComponent}
  * along with searching, selecting, and then assigning to the user field.
  */
 @Component({

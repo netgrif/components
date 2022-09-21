@@ -1,6 +1,6 @@
-import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {
-    ConfigurationService,
+    ConfigurationService, ImpersonationUserListService,
     MaterialModule,
     NAE_SIDE_MENU_CONTROL,
     SideMenuControl,
@@ -13,10 +13,12 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {Observable} from 'rxjs';
 import {AdminImpersonateComponent} from './admin-impersonate.component';
-import {UserImpersonateListComponent} from './user-impersonate-list/user-impersonate-list.component';
-import {UserImpersonateItemComponent} from './user-impersonate-list/user-impersonate-item/user-impersonate-item.component';
+import {AdminImpersonateListComponent} from './admin-impersonate-list/admin-impersonate-list.component';
+import {
+    AdminImpersonateItemComponent
+} from './admin-impersonate-list/admin-impersonate-item/admin-impersonate-item.component';
 
-describe('UserImpersonateComponent', () => {
+describe('AdminImpersonateComponent', () => {
     let component: AdminImpersonateComponent;
     let fixture: ComponentFixture<AdminImpersonateComponent>;
 
@@ -30,7 +32,7 @@ describe('UserImpersonateComponent', () => {
                 SnackBarModule
             ],
             providers: [
-                UserListService,
+                {provide: UserListService, useClass: ImpersonationUserListService},
                 {
                     provide: NAE_SIDE_MENU_CONTROL, useValue: new SideMenuControl(() => {
                     }, new Observable<boolean>(), null)
@@ -39,8 +41,8 @@ describe('UserImpersonateComponent', () => {
             ],
             declarations: [
                 AdminImpersonateComponent,
-                UserImpersonateListComponent,
-                UserImpersonateItemComponent
+                AdminImpersonateListComponent,
+                AdminImpersonateItemComponent
             ]
         }).compileComponents();
     }));

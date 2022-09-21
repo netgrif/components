@@ -4,7 +4,7 @@ import {Component} from '@angular/core';
 import {MaterialModule, TranslateLibModule, UserValue} from '@netgrif/components-core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
-describe('UserAssignItemComponent', () => {
+describe('AdminImpersonateItemComponent', () => {
     let component: AdminImpersonateItemComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 

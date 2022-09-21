@@ -13,12 +13,15 @@ import {map} from 'rxjs/operators';
 })
 export class ImpersonationUserResourceService extends UserResourceService {
 
+    protected _IMPERSONATION_SERVER_URL: string;
+
     constructor(protected provider: ResourceProvider, protected _configService: ConfigurationService) {
         super(provider, _configService);
+        this._IMPERSONATION_SERVER_URL = this.getResourceAddress('impersonation');
     }
 
     public search(body: object, params?: Params): Observable<Page<UserResource>> {
-        return this.provider.post$('/impersonate/search', this.SERVER_URL, {query: (body as any).fulltext}, params)
+        return this.provider.post$('/impersonate/search', this._IMPERSONATION_SERVER_URL, {query: (body as any).fulltext}, params)
             .pipe(map((r) => this.getResourcePage<UserResource>(r, 'users')));
     }
 }

@@ -1,4 +1,4 @@
-import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {AdminImpersonateListComponent} from './admin-impersonate-list.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
@@ -7,7 +7,7 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {
     ConfigurationService,
-    ErrorSnackBarComponent,
+    ErrorSnackBarComponent, ImpersonationUserListService,
     MaterialModule,
     TestConfigurationService,
     TranslateLibModule,
@@ -15,9 +15,9 @@ import {
     UserListService,
     UserValue
 } from '@netgrif/components-core';
-import {UserImpersonateItemComponent} from './user-impersonate-item/user-impersonate-item.component';
+import {AdminImpersonateItemComponent} from './admin-impersonate-item/admin-impersonate-item.component';
 
-describe('UserImpersonateListComponent', () => {
+describe('AdminImpersonateListComponent', () => {
     let component: AdminImpersonateListComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
@@ -30,12 +30,12 @@ describe('UserImpersonateListComponent', () => {
                 TranslateLibModule
             ],
             providers: [
-                UserListService,
+                {provide: UserListService, useClass: ImpersonationUserListService},
                 {provide: ConfigurationService, useClass: TestConfigurationService}
             ],
             declarations: [
                 AdminImpersonateListComponent,
-                UserImpersonateItemComponent,
+                AdminImpersonateItemComponent,
                 ErrorSnackBarComponent,
                 TestWrapperComponent
             ],

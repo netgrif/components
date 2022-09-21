@@ -1,14 +1,14 @@
 @use '@angular/material' as mat;
 
-@mixin user-assign-item-component-theme($theme) {
+@mixin admin-impersonate-item-component-theme($theme) {
     $primary: map-get($theme, primary);
 
-    .user-assign-item-selected {
+    .admin-impersonate-item-selected {
         background-color: mat.get-color-from-palette($primary, 300);
         color: mat.get-contrast-color-from-palette($primary, 300) !important;
     }
 
-    .user-assign-item-selected:hover {
+    .admin-impersonate-item-selected:hover {
         background-color: mat.get-color-from-palette($primary, 500) !important;
         color: mat.get-contrast-color-from-palette($primary, 500) !important;
     }
