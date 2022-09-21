@@ -47,47 +47,62 @@ export abstract class AbstractCaseRefFieldComponent implements AfterViewInit {
     ngAfterViewInit(): void {
         this._petriNetResourceService.getNetByCaseId(this.dataField.value).subscribe(net => {
             if (net) {
-                const trans: Array<PetriflowTransition> = [];
-                const places: Array<PetriflowPlace> = [];
-                const arcs: Array<PetriflowArc<any>> = [];
-                let minX: number = Number.MAX_SAFE_INTEGER;
-                let minY: number = Number.MAX_SAFE_INTEGER;
-                net.transitions.forEach((value) => {
-                    trans.push(this.createTransitions(value));
-                    minX = Math.min(minX, value.position.x);
-                    minY = Math.min(minY, value.position.y);
-                })
-                net.places.forEach((value) => {
-                    places.push(this.createPlace(value));
-                    minX = Math.min(minX, value.position.x);
-                    minY = Math.min(minY, value.position.y);
-                })
-                net.arcs.forEach((arc) => {
-                    arcs.push(this.createArcs(trans, places, arc, net));
-                    arc.breakpoints?.forEach(value => {
-                        minX = Math.min(minX, value.x);
-                        minY = Math.min(minY, value.y);
-                    });
-                });
-                trans.forEach(value => {
-                    if (net.assignedTasks.includes(value.canvasElement.label.textContent)) {
-                        value.activate();
-                    }
-                    if (this.isEnabled(value, places, arcs)) {
-                        value.canvasElement.element.classList.add('svg-transition-enabled');
-                    }
-                });
-                this._petriflowCanvasService.panzoom?.moveTo(-minX + 20, -minY + 20);
-                if (this.dataField.component?.properties?.lock === 'true') {
-                    setTimeout(() => {
-                        this._petriflowCanvasService.panzoom?.pause();
-                    })
-                }
+                this.createNet(net);
             }
         }, error => {
-            this._log.error('Getting net by Case ID failed', error);
+            this._log.error('Getting net by Case ID failed in field ['+ this.dataField.stringId + ']', error);
             this._snackBar.openErrorSnackBar(this._translate.instant('dataField.snackBar.caseNetGetFailed'));
         });
+    }
+
+    protected createNet(net: PetriNetImport) {
+        const trans: Array<PetriflowTransition> = [];
+        const places: Array<PetriflowPlace> = [];
+        const arcs: Array<PetriflowArc<any>> = [];
+        let minX: number = Number.MAX_SAFE_INTEGER;
+        let minY: number = Number.MAX_SAFE_INTEGER;
+        net.transitions.forEach((value) => {
+            const t = this.createTransitions(value)
+            trans.push(t);
+            minX = Math.min(minX, value.position.x);
+            minY = Math.min(minY, value.position.y);
+            this.setPlaceActions(t.canvasElement.element);
+        })
+        net.places.forEach((value) => {
+            const p = this.createPlace(value)
+            places.push(p);
+            minX = Math.min(minX, value.position.x);
+            minY = Math.min(minY, value.position.y);
+            this.setPlaceActions(p.canvasElement.element);
+            p.canvasElement.markingTokens.forEach(markingToken => {
+                this.setPlaceActions(markingToken);
+            });
+        })
+        net.arcs.forEach((arc) => {
+            const a = this.createArcs(trans, places, arc, net)
+            arcs.push(a);
+            arc.breakpoints?.forEach(value => {
+                minX = Math.min(minX, value.x);
+                minY = Math.min(minY, value.y);
+            });
+            this.setPlaceActions(a.element.arcLine);
+        });
+        trans.forEach(value => {
+            if (net.assignedTasks.includes(value.canvasElement.label.textContent)) {
+                value.select();
+            }
+            if (this.isEnabled(value, places, arcs)) {
+                value.canvasElement.element.classList.add('svg-transition-enabled');
+                value.canvasElement.element.setAttributeNS(null, 'fill', 'yellowgreen');
+                value.canvasElement.element.setAttributeNS(null, 'stroke', 'green');
+            }
+        });
+        this._petriflowCanvasService.panzoom?.moveTo(-minX + 20, -minY + 20);
+        if (this.dataField.component?.properties?.lock === 'true') {
+            setTimeout(() => {
+                this._petriflowCanvasService.panzoom?.pause();
+            })
+        }
     }
 
     protected createTransitions(value: TransitionImport): PetriflowTransition {
@@ -112,14 +127,15 @@ export abstract class AbstractCaseRefFieldComponent implements AfterViewInit {
             source = places.find(value => value.canvasElement.label.textContent === arc.sourceId);
             destination = trans.find(value => value.canvasElement.label.textContent === arc.destinationId);
             if (net.assignedTasks.includes(destination.canvasElement.label.textContent)) {
-                source.activate();
-                destination.activate();
+                source.select();
+                destination.select();
                 activable = true;
             }
         } else {
             destination = places.find(value => value.canvasElement.label.textContent === arc.destinationId);
             if (net.finishedTasks.includes(source.canvasElement.label.textContent)) {
-                source.activate();
+                source.select();
+                destination.select();
                 activable = true;
             }
         }
@@ -127,10 +143,10 @@ export abstract class AbstractCaseRefFieldComponent implements AfterViewInit {
             this._log.error("Can't find source or destination for arc [" + arc.importId + "]");
         } else {
             const newArc: Arc = this.createArc(arc, source, destination);
-            if (activable) {
-                newArc.activate();
-            }
             const petriflowArc: PetriflowArc<Arc> = this.createPetriflowArc(arc, newArc, source);
+            if (activable) {
+                petriflowArc.select();
+            }
             this._petriflowCanvasService.canvas.container.appendChild(newArc.container);
             this._petriflowCanvasService.petriflowElementsCollection.arcs.push(petriflowArc);
             return petriflowArc;
@@ -225,4 +241,10 @@ export abstract class AbstractCaseRefFieldComponent implements AfterViewInit {
         return (this.dataField.layout && this.dataField.layout.rows && this.dataField.layout.rows) > 1 ?
             this.dataField.layout.rows * CaseRefField.FIELD_HEIGHT : CaseRefField.FIELD_HEIGHT;
     }
+
+    protected setPlaceActions(svgElement: SVGElement) {
+        svgElement.onmouseenter = () => {};
+        svgElement.onmouseleave = () => {};
+    }
+
 }
