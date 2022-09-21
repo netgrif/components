@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, Injector} from '@angular/core';
 import {ComponentPortal} from '@angular/cdk/portal';
 
 @Injectable({
@@ -6,20 +6,20 @@ import {ComponentPortal} from '@angular/cdk/portal';
 })
 export class DashboardPortalComponentRegistryService {
 
-    private registry: Map<string, () => ComponentPortal<any>>;
+    private registry: Map<string, (injector: Injector) => ComponentPortal<any>>;
 
     constructor() {
-        this.registry = new Map<string, () => ComponentPortal<any>>();
+        this.registry = new Map<string, (injector: Injector) => ComponentPortal<any>>();
     }
 
-    public register(component: string, factory: () => ComponentPortal<any>): void {
+    public register(component: string, factory: (injector: Injector) => ComponentPortal<any>): void {
         this.registry.set(component, factory);
     }
 
-    public get(component: string): ComponentPortal<any> {
+    public get(component: string, injector?: Injector): ComponentPortal<any> {
         if (!this.registry.has(component)) {
             return undefined
         }
-        return this.registry.get(component)();
+        return this.registry.get(component)(injector);
     }
 }

@@ -7,7 +7,7 @@ import {
     CustomDateAdapter,
     DashboardPortalComponentRegistryService,
     MaterialModule,
-    TranslateLibModule
+    TranslateLibModule,
 } from '@netgrif/components-core';
 import {AngularResizeEventModule} from 'angular-resize-event';
 import {HttpClientModule} from '@angular/common/http';
@@ -195,10 +195,4 @@ import {
     ]
 })
 export class DataFieldsComponentModule {
-
-    constructor(registry: DashboardPortalComponentRegistryService) {
-        registry.register('email', () => {
-            return new ComponentPortal(EmailSubmissionFormComponent);
-        });
-    }
 }

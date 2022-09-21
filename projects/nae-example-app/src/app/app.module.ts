@@ -1,11 +1,12 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {Injector, NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {
     AuthenticationModule,
     ConfigurationService,
     CovalentModule,
+    DashboardPortalComponentRegistryService,
     DialogModule,
     MaterialModule,
     NAE_SNACKBAR_HORIZONTAL_POSITION,
@@ -63,13 +64,16 @@ import {
     AuthenticationComponentModule,
     CaseViewComponentModule,
     DashboardComponentModule,
-    DataFieldsComponentModule, EmailSubmissionFormComponentModule,
+    DataFieldsComponentModule,
+    EmailSubmissionFormComponent,
+    EmailSubmissionFormComponentModule,
     ForgottenPasswordFormComponentModule,
     HeaderComponentModule,
     LoginFormComponentModule,
     NavigationComponentModule,
     PanelComponentModule,
-    ProfileComponentModule, RedirectComponentModule,
+    ProfileComponentModule,
+    RedirectComponentModule,
     RegistrationFormComponentModule,
     SearchComponentModule,
     SideMenuComponentModule,
@@ -82,22 +86,31 @@ import {
 import {UserInviteComponent} from './doc/user-invite/user-invite.component';
 import {ExamplePortalCardComponent} from './doc/dashboard-example/piechart-card/example-portal-card.component';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
-import { ResetPasswordFormComponent } from './doc/forms/reset-password-form/reset-password-form.component';
-import { PublicTaskViewComponent } from './doc/public-task-view/public-task-view.component';
-import { PublicWorkflowViewComponent } from './doc/public-workflow-view/public-workflow-view.component';
+import {ResetPasswordFormComponent} from './doc/forms/reset-password-form/reset-password-form.component';
+import {PublicTaskViewComponent} from './doc/public-task-view/public-task-view.component';
+import {PublicWorkflowViewComponent} from './doc/public-workflow-view/public-workflow-view.component';
 import {PublicResolverComponent} from './doc/public-resolver/public-resolver.component';
-import { GroupViewComponent } from './doc/group-view/group-view.component';
-import { DemoTitleConfigContent0TaskViewComponent } from './doc/demo-title-config/content/0/demo-title-config-content0-task-view.component';
-import { DemoTitleConfigContent1CaseViewComponent } from './doc/demo-title-config/content/1/demo-title-config-content1-case-view.component';
-import { DemoTitleConfigContent2CaseViewComponent } from './doc/demo-title-config/content/2/demo-title-config-content2-case-view.component';
-import { DemoTitleConfigContent3CaseViewComponent } from './doc/demo-title-config/content/3/demo-title-config-content3-case-view.component';
-import { TitleConfigComponent } from './doc/demo-title-config/title-config.component';
-import { ExampleRedirectComponent } from './doc/redirect/example-redirect.component';
-import { ActiveGroupComponent } from './doc/active-group/active-group.component';
-import { WrapperEmptyViewComponent } from './views/wrapper/wrapper-empty-view.component';
+import {GroupViewComponent} from './doc/group-view/group-view.component';
+import {
+    DemoTitleConfigContent0TaskViewComponent
+} from './doc/demo-title-config/content/0/demo-title-config-content0-task-view.component';
+import {
+    DemoTitleConfigContent1CaseViewComponent
+} from './doc/demo-title-config/content/1/demo-title-config-content1-case-view.component';
+import {
+    DemoTitleConfigContent2CaseViewComponent
+} from './doc/demo-title-config/content/2/demo-title-config-content2-case-view.component';
+import {
+    DemoTitleConfigContent3CaseViewComponent
+} from './doc/demo-title-config/content/3/demo-title-config-content3-case-view.component';
+import {TitleConfigComponent} from './doc/demo-title-config/title-config.component';
+import {ExampleRedirectComponent} from './doc/redirect/example-redirect.component';
+import {ActiveGroupComponent} from './doc/active-group/active-group.component';
+import {WrapperEmptyViewComponent} from './views/wrapper/wrapper-empty-view.component';
 import {DoubleDrawerExampleComponent} from './doc/double-drawer-example/double-drawer-example.component';
-import { PublicSingleTaskViewComponent } from './doc/public-single-task-view/public-single-task-view.component';
-import { BreadcrumbsExampleComponent } from './doc/breadcrumbs-example/breadcrumbs-example.component';
+import {PublicSingleTaskViewComponent} from './doc/public-single-task-view/public-single-task-view.component';
+import {BreadcrumbsExampleComponent} from './doc/breadcrumbs-example/breadcrumbs-example.component';
+import {ComponentPortal} from '@angular/cdk/portal';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -203,18 +216,26 @@ export function HttpLoaderFactory(http: HttpClient) {
         RedirectComponentModule
     ],
     providers: [{
-            provide: ConfigurationService,
-            useClass: NaeExampleAppConfigurationService
-        },
-        { provide: NAE_SNACKBAR_VERTICAL_POSITION, useValue: SnackBarVerticalPosition.TOP },
-        { provide: NAE_SNACKBAR_HORIZONTAL_POSITION, useValue: SnackBarHorizontalPosition.LEFT },
+        provide: ConfigurationService,
+        useClass: NaeExampleAppConfigurationService
+    },
+        {provide: NAE_SNACKBAR_VERTICAL_POSITION, useValue: SnackBarVerticalPosition.TOP},
+        {provide: NAE_SNACKBAR_HORIZONTAL_POSITION, useValue: SnackBarHorizontalPosition.LEFT},
         ResourceProvider,
         TranslateService,
         TranslatePipe,
         TranslateStore,
-        { provide: ViewService, useClass: NaeExampleAppViewService },
+        {provide: ViewService, useClass: NaeExampleAppViewService},
     ],
     bootstrap: [AppComponent]
 })
 export class AppModule {
+
+    constructor(registry: DashboardPortalComponentRegistryService) {
+        registry.register('email', () => new ComponentPortal(EmailSubmissionFormComponent));
+        registry.register('workflow-view', () => new ComponentPortal(WorkflowViewExampleComponent));
+        registry.register('task-view', () => new ComponentPortal(TaskViewComponent));
+        registry.register('case-view', () => new ComponentPortal(CaseViewComponent));
+        registry.register('tab-view', (injector: Injector) => new ComponentPortal(TabbedViewsExampleComponent, null, injector));
+    }
 }
