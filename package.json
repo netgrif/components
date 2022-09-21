@@ -1,6 +1,6 @@
 {
     "name": "@netgrif/components-project",
-    "version": "6.2.0-rc.12",
+    "version": "6.3.0-rc.1",
     "description": "Netgrif Application Engine Frontend project. Project includes angular libraries as base for NAE applications.",
     "homepage": "https://components.netgrif.com",
     "license": "SEE LICENSE IN LICENSE",
@@ -21,6 +21,7 @@
         "application engine",
         "nae",
         "engine",
+        "components-core",
         "workflow engine",
         "components",
         "netgrif components",

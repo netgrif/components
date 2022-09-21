@@ -11,14 +11,6 @@ export interface EnumerationFieldValue {
     value: string;
 }
 
-/*@deprecated in 4.3.0*/
-export enum EnumerationFieldView {
-    DEFAULT = 'default',
-    LIST = 'list',
-    AUTOCOMPLETE = 'autocomplete',
-    STEPPER = 'stepper'
-}
-
 export enum EnumerationFieldValidation {
     WRONG_VALUE = 'wrongValue',
     REQUIRED = 'required'
@@ -28,8 +20,7 @@ export class EnumerationField extends DataField<string> {
 
     constructor(stringId: string, title: string, value: string,
                 protected _choices: Array<EnumerationFieldValue>, behavior: Behavior, placeholder?: string, description?: string,
-                layout?: Layout, protected _view = EnumerationFieldView.DEFAULT,
-                protected readonly _fieldType = FieldTypeResource.ENUMERATION,
+                layout?: Layout, protected readonly _fieldType = FieldTypeResource.ENUMERATION,
                 validations?: Array<Validation>, component?: Component, parentTaskId?: string) {
         super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId);
     }
@@ -40,16 +31,6 @@ export class EnumerationField extends DataField<string> {
 
     get choices(): Array<EnumerationFieldValue> {
         return this._choices;
-    }
-
-    /*@deprecated in 4.3.0*/
-    set view(view: EnumerationFieldView) {
-        this._view = view;
-    }
-
-    /*@deprecated in 4.3.0*/
-    get view(): EnumerationFieldView {
-        return this._view;
     }
 
     get fieldType(): FieldTypeResource {
@@ -72,9 +53,5 @@ export class EnumerationField extends DataField<string> {
             return null;
         }
         return this._choices.find(choice => choice.key === control.value || control.value === null) ? null : {wrongValue: true};
-    }
-
-    getType(): string {
-        return !!this.component && !!this.component.name ? this.component.name : this.view;
     }
 }

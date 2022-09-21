@@ -35,6 +35,9 @@
     <nc-user-field *ngSwitchCase="fieldTypeEnum.USER" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>
     </nc-user-field>
 
+    <nc-user-list-field *ngSwitchCase="fieldTypeEnum.USER_LIST" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>
+    </nc-user-list-field>
+
     <nc-button-field *ngSwitchCase="fieldTypeEnum.BUTTON" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>
     </nc-button-field>
 

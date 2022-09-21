@@ -7,10 +7,14 @@ import { RedirectService } from '../../routing/redirect-service/redirect.service
 
 export const publicFactoryResolver = (userService: UserService, sessionService: SessionService, authService: AuthenticationService,
                                       router: Router, publicResolverService: PublicUrlResolverService, privateService, publicService,
-                                      redirectService: RedirectService) => {
+                                      redirectService: RedirectService, url?: string) => {
     if (!sessionService.isInitialized) {
         publicResolverService.url = router.url;
-        router.navigate(['/public-resolver'], {queryParams: redirectService.queryParams});
+        if (url === undefined) {
+            router.navigate(['/public-resolver'], {queryParams: redirectService.queryParams});
+        } else {
+            router.navigate([url], {queryParams: redirectService.queryParams});
+        }
     } else if (authService.isAuthenticated && userService.user.id !== '' && userService.user.email !== 'anonymous@netgrif.com') {
         return privateService;
     } else {

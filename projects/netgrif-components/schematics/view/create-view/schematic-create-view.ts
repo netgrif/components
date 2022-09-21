@@ -2,6 +2,7 @@ import {
     Rule,
     schematic,
     Tree,
+    chain,
     SchematicsException
 } from '@angular-devkit/schematics';
 import {getNaeConfiguration} from '../../_utility/utility-functions';
@@ -15,16 +16,25 @@ import {Views} from '@netgrif/components-core';
 export function schematicEntryPoint(): Rule {
     return (tree: Tree) => {
         const naeConfig = getNaeConfiguration(tree);
-        return schematic('create-view-prompt', getSchematicArguments(tree, naeConfig.views));
+        let arrayCreateSchematic: Array<Rule> = [];
+        getSchematicArguments(tree, naeConfig.views).forEach(it => {
+            arrayCreateSchematic.push(schematic('create-view-prompt', it))
+        })
+        return chain(arrayCreateSchematic);
     };
 }
 
-function getSchematicArguments(tree: Tree, naeViews: Views): NullableCreateViewArguments {
+function getSchematicArguments(tree: Tree, naeViews: Views): Array<NullableCreateViewArguments> {
     if (Object.keys(naeViews).length === 0) {
-        return emptyArguments();
+        return [emptyArguments()];
     }
     const generatedViews = getGeneratedViewClassNames(tree);
-    return findMissingView(naeViews, generatedViews);
+    const arrayMissingView = findMissingView(naeViews, generatedViews).filter(filterUndefined);
+    return arrayMissingView.length === 0 ? [emptyArguments()] : arrayMissingView;
+}
+
+function filterUndefined(item: NullableCreateViewArguments) {
+    return item.path !== undefined;
 }
 
 /**
@@ -35,10 +45,15 @@ function getSchematicArguments(tree: Tree, naeViews: Views): NullableCreateViewA
  * @returns [CreateViewArguments]{@link CreateViewArguments} of the missing view.
  * Arguments will be empty (and thus a prompt will be displayed) if no missing views exist
  */
-function findMissingView(naeViews: Views, generatedViews: Set<string>, pathPrefix: string = ''): NullableCreateViewArguments {
+function findMissingView(naeViews: Views, generatedViews: Set<string>, pathPrefix: string = ''): Array<NullableCreateViewArguments> {
+    let arrayMissingView: Array<NullableCreateViewArguments> = [];
     for (const pathSegment of Object.keys(naeViews)) {
         const view = naeViews[pathSegment];
         const viewPath = constructRoutePath(pathPrefix, pathSegment);
+
+        if (viewPath === undefined) {
+            throw new SchematicsException(`Please set viewPath! (PathSegment: ${pathSegment} )`);
+        }
 
         if (view.layout === undefined && view.component === undefined) {
             throw new SchematicsException(
@@ -46,38 +61,41 @@ function findMissingView(naeViews: Views, generatedViews: Set<string>, pathPrefi
         }
 
         if (!!view.layout) {
+            if (view.layout.name === 'groupNavigation') {
+                continue;
+            }
             const viewClassInfo = new ViewClassInfo(viewPath, view.layout.name, view.layout.componentName);
             if (!generatedViews.has(viewClassInfo.className)) {
-               return {
-                   path: viewPath,
-                   viewType: view.layout.name,
-                   componentName: view.layout.componentName,
-                   layoutParams: view.layout.params,
-                   access: view.access,
-                   enableCaseTitle: view.layout.enableCaseTitle,
-                   isCaseTitleRequired: view.layout.isCaseTitleRequired,
-               };
+                arrayMissingView.push({
+                    path: viewPath,
+                    viewType: view.layout.name,
+                    componentName: view.layout.componentName,
+                    layoutParams: view.layout.params,
+                    access: view.access,
+                    enableCaseTitle: view.layout.enableCaseTitle,
+                    isCaseTitleRequired: view.layout.isCaseTitleRequired,
+                    showDeleteMenu: view.layout.showDeleteMenu,
+                    confirmWorkflowDeletion: view.layout.confirmWorkflowDeletion
+                });
             }
         } else {
             if (view.component !== undefined && !generatedViews.has(view.component.class)) {
-                return {
+                arrayMissingView.push({
                     path: viewPath,
                     viewType: 'customView',
                     componentName: view.component.class,
                     customImportPath: view.component.from,
                     access: view.access
-                };
+                });
             }
         }
         if (!!view.children) {
             const result = findMissingView(view.children, generatedViews, viewPath);
-            if (result.path !== undefined) {
-                return result;
-            }
+            arrayMissingView.push(...result);
         }
     }
 
-    return emptyArguments();
+    return arrayMissingView;
 }
 
 function emptyArguments(): NullableCreateViewArguments {

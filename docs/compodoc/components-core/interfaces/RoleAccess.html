@@ -382,6 +382,8 @@ export interface View {
         name: string;
         enableCaseTitle?: boolean;
         isCaseTitleRequired?: boolean;
+        showDeleteMenu?: boolean;
+        confirmWorkflowDeletion?: boolean;
         params?: {
             orientation?: string;
             [k: string]: any;

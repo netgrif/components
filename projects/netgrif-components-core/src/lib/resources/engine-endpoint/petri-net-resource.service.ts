@@ -92,9 +92,20 @@ export class PetriNetResourceService extends AbstractResourceService {
      *
      * **Request URL:** {{baseUrl}}/api/petrinet/{netId}/file
      */
-    public getNetFile(netId: string, params?: Params): Observable<any> {  // TODO: response
-        return this._resourceProvider.get$('petrinet/' + netId + '/file', this.SERVER_URL, params)
-            .pipe(map(r => this.changeType(r, undefined)));
+    public getNetFile(netId: string): Observable<ProviderProgress | Blob> {
+        return this._resourceProvider.getBlob$('petrinet/' + netId + '/file', this.SERVER_URL).pipe(
+            map(event => {
+                switch (event.type) {
+                    case HttpEventType.DownloadProgress:
+                        return ResourceProvider.getProgress(event);
+                    case HttpEventType.Response:
+                        return event.body;
+                    default:
+                        return undefined;
+                }
+            }),
+            filter(value => !!value)
+        );
     }
 
     /**

@@ -1,11 +1,16 @@
 <nc-data-field-template *ngIf="!dataField.behavior.hidden"
-                         [dataField]="dataField"
-                         [dataFieldTemplate]="multiFieldTemplate"
-                         [offset]="taskOffset">
+                        [dataField]="dataField"
+                        [dataFieldTemplate]="multiFieldTemplate"
+                        [offset]="taskOffset">
 </nc-data-field-template>
 
 <ng-template #multiFieldTemplate let-showLargeLayout="showLargeLayout">
-    <div *ngIf="dataField.component !== undefined" [ngSwitch]="dataField.component.name">
+    <div [ngSwitch]="dataField.getComponentType()">
+        <nc-multichoice-autocomplete-field *ngSwitchCase="'autocomplete'"
+                                           [showLargeLayout]="showLargeLayout"
+                                           [multichoiceField]="dataField"
+                                           [formControlRef]="formControl">
+        </nc-multichoice-autocomplete-field>
         <nc-multichoice-list-field *ngSwitchCase="'list'"
                                    [showLargeLayout]="showLargeLayout"
                                    [multichoiceField]="dataField"
@@ -15,20 +20,6 @@
                                      [showLargeLayout]="showLargeLayout"
                                      [multichoiceField]="dataField"
                                      [formControlRef]="formControl">
-        </nc-multichoice-select-field>
-    </div>
-
-    <!-- @deprecated in 4.3.0-->
-    <div *ngIf="dataField.component === undefined" [ngSwitch]="dataField.view">
-        <nc-multichoice-list-field *ngSwitchCase="'list'"
-                                    [showLargeLayout]="showLargeLayout"
-                                    [multichoiceField]="dataField"
-                                    [formControlRef]="formControl">
-        </nc-multichoice-list-field>
-        <nc-multichoice-select-field *ngSwitchDefault
-                                      [showLargeLayout]="showLargeLayout"
-                                      [multichoiceField]="dataField"
-                                      [formControlRef]="formControl">
         </nc-multichoice-select-field>
     </div>
 </ng-template>

@@ -152,8 +152,17 @@
                                 <a href="#_taskDisableButtonFunctions" >_taskDisableButtonFunctions</a>
                             </li>
                             <li>
+                                <a href="#actionButtonTemplates" >actionButtonTemplates</a>
+                            </li>
+                            <li>
+                                <a href="#actionRowJustifyContent" >actionRowJustifyContent</a>
+                            </li>
+                            <li>
                                     <span class="modifier">Public</span>
                                 <a href="#first" >first</a>
+                            </li>
+                            <li>
+                                <a href="#hidePanelHeader" >hidePanelHeader</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
@@ -174,6 +183,9 @@
                                 <a href="#portal" >portal</a>
                             </li>
                             <li>
+                                <a href="#preventCollapse" >preventCollapse</a>
+                            </li>
+                            <li>
                                 <a href="#responsiveBody" >responsiveBody</a>
                             </li>
                             <li>
@@ -185,6 +197,9 @@
                             </li>
                             <li>
                                 <a href="#textEllipsis" >textEllipsis</a>
+                            </li>
+                            <li>
+                                <a href="#thisContext" >thisContext</a>
                             </li>
                             <li>
                                     <span class="modifier">Protected</span>
@@ -347,16 +362,28 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                <a href="#actionButtonTemplates" >actionButtonTemplates</a>
+                            </li>
+                            <li>
+                                <a href="#actionRowJustifyContent" >actionRowJustifyContent</a>
+                            </li>
+                            <li>
                                 <a href="#first" >first</a>
                             </li>
                             <li>
                                 <a href="#forceLoadDataOnOpen" >forceLoadDataOnOpen</a>
                             </li>
                             <li>
+                                <a href="#hidePanelHeader" >hidePanelHeader</a>
+                            </li>
+                            <li>
                                 <a href="#last" >last</a>
                             </li>
                             <li>
                                 <a href="#panelContentComponent" >panelContentComponent</a>
+                            </li>
+                            <li>
+                                <a href="#preventCollapse" >preventCollapse</a>
                             </li>
                             <li>
                                 <a href="#responsiveBody" >responsiveBody</a>
@@ -425,12 +452,12 @@
                 <tr>
                     <td class="col-md-4">
                                 <span class="modifier">Protected</span>
-                        <code>constructor(_taskContentService: <a href="../injectables/TaskContentService.html" target="_self">TaskContentService</a>, _log: <a href="../injectables/LoggerService.html" target="_self">LoggerService</a>, _taskViewService: <a href="../injectables/TaskViewService.html" target="_self">TaskViewService</a>, _paperView: <a href="../injectables/PaperViewService.html" target="_self">PaperViewService</a>, _taskEventService: <a href="../injectables/TaskEventService.html" target="_self">TaskEventService</a>, _assignTaskService: <a href="../injectables/AssignTaskService.html" target="_self">AssignTaskService</a>, _delegateTaskService: <a href="../injectables/DelegateTaskService.html" target="_self">DelegateTaskService</a>, _cancelTaskService: <a href="../injectables/CancelTaskService.html" target="_self">CancelTaskService</a>, _finishTaskService: <a href="../injectables/FinishTaskService.html" target="_self">FinishTaskService</a>, _taskState: <a href="../injectables/TaskRequestStateService.html" target="_self">TaskRequestStateService</a>, _taskDataService: <a href="../injectables/TaskDataService.html" target="_self">TaskDataService</a>, _assignPolicyService: <a href="../injectables/AssignPolicyService.html" target="_self">AssignPolicyService</a>, _callChain: <a href="../injectables/CallChainService.html" target="_self">CallChainService</a>, _taskOperations: <a href="../classes/SubjectTaskOperations.html" target="_self">SubjectTaskOperations</a>, _disableFunctions: <a href="../interfaces/DisableButtonFuntions.html" target="_self">DisableButtonFuntions</a>, _translate: TranslateService, _currencyPipe: <a href="https://angular.io/api/common/CurrencyPipe" target="_blank">CurrencyPipe</a>, _changedFieldsService: <a href="../injectables/ChangedFieldsService.html" target="_self">ChangedFieldsService</a>, _permissionService: <a href="../injectables/PermissionService.html" target="_self">PermissionService</a>)</code>
+                        <code>constructor(_taskContentService: <a href="../injectables/TaskContentService.html" target="_self">TaskContentService</a>, _log: <a href="../injectables/LoggerService.html" target="_self">LoggerService</a>, _taskViewService: <a href="../injectables/TaskViewService.html" target="_self">TaskViewService</a>, _paperView: <a href="../injectables/PaperViewService.html" target="_self">PaperViewService</a>, _taskEventService: <a href="../injectables/TaskEventService.html" target="_self">TaskEventService</a>, _assignTaskService: <a href="../injectables/AssignTaskService.html" target="_self">AssignTaskService</a>, _delegateTaskService: <a href="../injectables/DelegateTaskService.html" target="_self">DelegateTaskService</a>, _cancelTaskService: <a href="../injectables/CancelTaskService.html" target="_self">CancelTaskService</a>, _finishTaskService: <a href="../injectables/FinishTaskService.html" target="_self">FinishTaskService</a>, _taskState: <a href="../injectables/TaskRequestStateService.html" target="_self">TaskRequestStateService</a>, _taskDataService: <a href="../injectables/TaskDataService.html" target="_self">TaskDataService</a>, _assignPolicyService: <a href="../injectables/AssignPolicyService.html" target="_self">AssignPolicyService</a>, _finishPolicyService: <a href="../injectables/FinishPolicyService.html" target="_self">FinishPolicyService</a>, _callChain: <a href="../injectables/CallChainService.html" target="_self">CallChainService</a>, _taskOperations: <a href="../classes/SubjectTaskOperations.html" target="_self">SubjectTaskOperations</a>, _disableFunctions: <a href="../interfaces/DisableButtonFuntions.html" target="_self">DisableButtonFuntions</a>, _translate: TranslateService, _currencyPipe: <a href="https://angular.io/api/common/CurrencyPipe" target="_blank">CurrencyPipe</a>, _changedFieldsService: <a href="../injectables/ChangedFieldsService.html" target="_self">ChangedFieldsService</a>, _permissionService: <a href="../injectables/PermissionService.html" target="_self">PermissionService</a>, overflowService: <a href="../injectables/OverflowService.html" target="_self">OverflowService</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="85" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:85</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="115" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:115</a></div>
                             </td>
                         </tr>
 
@@ -592,6 +619,18 @@
                                                     
                                                 </tr>
                                                 <tr>
+                                                        <td>_finishPolicyService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/FinishPolicyService.html" target="_self" >FinishPolicyService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
                                                         <td>_callChain</td>
                                                   
                                                         <td>
@@ -675,6 +714,18 @@
                                                     </td>
                                                     
                                                 </tr>
+                                                <tr>
+                                                        <td>overflowService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/OverflowService.html" target="_self" >OverflowService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -686,6 +737,48 @@
 
     <section>
     <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="actionButtonTemplates"></a>
+                        <b>actionButtonTemplates</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Array&lt;TemplateRef&lt;any&gt;&gt;</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="71" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:71</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="actionRowJustifyContent"></a>
+                        <b>actionRowJustifyContent</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>&quot;space-between&quot; | &quot;flex-start&quot; | &quot;flex-end&quot; | &quot;center&quot; | &quot;space-around&quot; | &quot;initial&quot; | &quot;start&quot; | &quot;end&quot; | &quot;left&quot; | &quot;right&quot; | &quot;revert&quot; | &quot;inherit&quot; | &quot;unset&quot;</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="72" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:72</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -702,7 +795,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:62</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:66</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -723,7 +816,33 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="67" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:67</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="97" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:97</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="hidePanelHeader"></a>
+                        <b>hidePanelHeader</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="70" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:70</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -744,7 +863,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:63</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="67" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:67</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -765,7 +884,33 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:60</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:64</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="preventCollapse"></a>
+                        <b>preventCollapse</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="69" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:69</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -791,7 +936,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:64</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:68</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -812,7 +957,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:61</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:65</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -827,7 +972,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="197" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:197</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="229" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:229</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -853,7 +998,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="72" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:72</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="102" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:102</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -877,7 +1022,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="77" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:77</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="107" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:107</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -898,7 +1043,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="76" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:76</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="106" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:106</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -937,8 +1082,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="228"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:228</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="260"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:260</a></div>
                 </td>
             </tr>
 
@@ -976,8 +1121,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="273"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:273</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="306"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:306</a></div>
                 </td>
             </tr>
 
@@ -1015,8 +1160,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="281"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:281</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="314"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:314</a></div>
                 </td>
             </tr>
 
@@ -1052,8 +1197,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="240"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:240</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="273"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:273</a></div>
                 </td>
             </tr>
 
@@ -1091,8 +1236,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="289"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:289</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="322"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:322</a></div>
                 </td>
             </tr>
 
@@ -1130,8 +1275,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="317"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:317</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="350"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:350</a></div>
                 </td>
             </tr>
 
@@ -1200,8 +1345,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="293"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:293</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="326"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:326</a></div>
                 </td>
             </tr>
 
@@ -1266,8 +1411,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="285"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:285</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="318"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:318</a></div>
                 </td>
             </tr>
 
@@ -1305,8 +1450,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="277"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:277</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="310"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:310</a></div>
                 </td>
             </tr>
 
@@ -1342,8 +1487,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="263"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:263</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="296"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:296</a></div>
                 </td>
             </tr>
 
@@ -1382,8 +1527,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="194"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:194</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="226"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:226</a></div>
                 </td>
             </tr>
 
@@ -1419,8 +1564,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="236"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:236</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="269"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:269</a></div>
                 </td>
             </tr>
 
@@ -1456,8 +1601,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="268"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:268</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="301"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:301</a></div>
                 </td>
             </tr>
 
@@ -1493,8 +1638,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="247"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:247</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="280"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:280</a></div>
                 </td>
             </tr>
 
@@ -1532,8 +1677,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="297"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:297</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="330"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:330</a></div>
                 </td>
             </tr>
 
@@ -1571,8 +1716,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="302"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:302</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="335"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:335</a></div>
                 </td>
             </tr>
 
@@ -1610,8 +1755,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="307"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:307</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="340"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:340</a></div>
                 </td>
             </tr>
 
@@ -1655,7 +1800,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractPanelWithHeaderBindingComponent:358</a></code>
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractPanelWithHeaderBindingComponent:391</a></code>
 </div>
                 </td>
             </tr>
@@ -1731,7 +1876,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractPanelWithHeaderBindingComponent:327</a></code>
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractPanelWithHeaderBindingComponent:360</a></code>
 </div>
                 </td>
             </tr>
@@ -1801,8 +1946,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="312"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:312</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="345"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:345</a></div>
                 </td>
             </tr>
 
@@ -1840,8 +1985,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="219"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:219</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="251"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:251</a></div>
                 </td>
             </tr>
 
@@ -1877,8 +2022,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="166"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:166</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="198"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:198</a></div>
                 </td>
             </tr>
 
@@ -1920,7 +2065,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractPanelWithHeaderBindingComponent:366</a></code>
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractPanelWithHeaderBindingComponent:399</a></code>
 </div>
                 </td>
             </tr>
@@ -1963,7 +2108,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractPanelWithHeaderBindingComponent:149</a></code>
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractPanelWithHeaderBindingComponent:181</a></code>
 </div>
                 </td>
             </tr>
@@ -2002,8 +2147,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="214"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:214</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="246"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:246</a></div>
                 </td>
             </tr>
 
@@ -2072,8 +2217,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="223"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:223</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="255"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:255</a></div>
                 </td>
             </tr>
 
@@ -2142,8 +2287,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="210"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:210</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="242"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:242</a></div>
                 </td>
             </tr>
 
@@ -2187,7 +2332,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractPanelWithImmediateDataComponent:75</a></code>
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractPanelWithImmediateDataComponent:102</a></code>
 </div>
                 </td>
             </tr>
@@ -2311,7 +2456,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractPanelWithImmediateDataComponent:23</a></code>
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractPanelWithImmediateDataComponent:26</a></code>
 </div>
                 </td>
             </tr>
@@ -2387,7 +2532,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractPanelWithHeaderBindingComponent:52</a></code>
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractPanelWithHeaderBindingComponent:61</a></code>
 </div>
                 </td>
             </tr>
@@ -2463,7 +2608,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractPanelWithHeaderBindingComponent:35</a></code>
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractPanelWithHeaderBindingComponent:44</a></code>
 </div>
                 </td>
             </tr>
@@ -2541,7 +2686,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractPanelWithHeaderBindingComponent:41</a></code>
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractPanelWithHeaderBindingComponent:50</a></code>
 </div>
                 </td>
             </tr>
@@ -2583,7 +2728,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:59</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:63</a></div>
                         </td>
                     </tr>
 
@@ -2610,7 +2755,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="81" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:81</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="111" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:111</a></div>
                         </td>
                     </tr>
 
@@ -2637,7 +2782,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="84" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:84</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="114" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:114</a></div>
                         </td>
                     </tr>
 
@@ -2664,7 +2809,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="83" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:83</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="113" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:113</a></div>
                         </td>
                     </tr>
 
@@ -2691,7 +2836,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="82" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:82</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="112" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:112</a></div>
                         </td>
                     </tr>
 
@@ -2718,7 +2863,77 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="85" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:85</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="115" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:115</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="actionButtonTemplates"></a>
+                    <span class="name">
+                        <span ><b>actionButtonTemplates</b></span>
+                        <a href="#actionButtonTemplates"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Array&lt;TemplateRef&lt;any&gt;&gt;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @Input()<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="71" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:71</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="actionRowJustifyContent"></a>
+                    <span class="name">
+                        <span ><b>actionRowJustifyContent</b></span>
+                        <a href="#actionRowJustifyContent"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>&quot;space-between&quot; | &quot;flex-start&quot; | &quot;flex-end&quot; | &quot;center&quot; | &quot;space-around&quot; | &quot;initial&quot; | &quot;start&quot; | &quot;end&quot; | &quot;left&quot; | &quot;right&quot; | &quot;revert&quot; | &quot;inherit&quot; | &quot;unset&quot;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @Input()<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="72" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:72</a></div>
                         </td>
                     </tr>
 
@@ -2754,7 +2969,41 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:62</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:66</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="hidePanelHeader"></a>
+                    <span class="name">
+                        <span ><b>hidePanelHeader</b></span>
+                        <a href="#hidePanelHeader"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @Input()<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="70" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:70</a></div>
                         </td>
                     </tr>
 
@@ -2790,7 +3039,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:63</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="67" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:67</a></div>
                         </td>
                     </tr>
 
@@ -2825,7 +3074,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:60</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:64</a></div>
                         </td>
                     </tr>
 
@@ -2852,7 +3101,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="80" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:80</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="110" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:110</a></div>
                         </td>
                     </tr>
 
@@ -2887,7 +3136,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="77" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:77</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="107" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:107</a></div>
                         </td>
                     </tr>
 
@@ -2914,7 +3163,41 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="79" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:79</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="109" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:109</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="preventCollapse"></a>
+                    <span class="name">
+                        <span ><b>preventCollapse</b></span>
+                        <a href="#preventCollapse"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @Input()<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="69" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:69</a></div>
                         </td>
                     </tr>
 
@@ -2948,7 +3231,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:64</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:68</a></div>
                         </td>
                     </tr>
 
@@ -2990,7 +3273,7 @@
                         </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractPanelWithHeaderBindingComponent:61</a></code>
+                                <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractPanelWithHeaderBindingComponent:65</a></code>
 </div>
                         </td>
                     </tr>
@@ -3026,7 +3309,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="76" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:76</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="106" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:106</a></div>
                         </td>
                     </tr>
 
@@ -3066,7 +3349,56 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="72" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:72</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="102" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:102</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="thisContext"></a>
+                    <span class="name">
+                        <span ><b>thisContext</b></span>
+                        <a href="#thisContext"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/TaskPanelContext.html" target="_self" >TaskPanelContext</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+        canAssign: () &#x3D;&gt; this.canAssign(),
+        assign: () &#x3D;&gt; this.assign(),
+        getAssignTitle: () &#x3D;&gt; this.getAssignTitle(),
+        delegate: () &#x3D;&gt; this.delegate(),
+        getDelegateTitle: () &#x3D;&gt; this.getDelegateTitle(),
+        canReassign: () &#x3D;&gt; this.canReassign(),
+        canCancel: () &#x3D;&gt; this.canCancel(),
+        cancel: () &#x3D;&gt; this.cancel(),
+        getCancelTitle: () &#x3D;&gt; this.getCancelTitle(),
+        canFinish: () &#x3D;&gt; this.canFinish(),
+        finish: () &#x3D;&gt; this.finish(),
+        getFinishTitle: () &#x3D;&gt; this.getFinishTitle(),
+        canCollapse: () &#x3D;&gt; this.canCollapse(),
+        collapse: () &#x3D;&gt; this.collapse(),
+        canDisable: (arg: string) &#x3D;&gt; this.canDisable(arg),
+        canDo: (arg: string) &#x3D;&gt; this.canDo(arg),
+        isLoading: () &#x3D;&gt; this.isLoading
+    }</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="75" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:75</a></div>
                         </td>
                     </tr>
 
@@ -3099,7 +3431,7 @@
                         </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractPanelWithHeaderBindingComponent:14</a></code>
+                                <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractPanelWithHeaderBindingComponent:15</a></code>
 </div>
                         </td>
                     </tr>
@@ -3138,7 +3470,7 @@
                         </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractPanelWithHeaderBindingComponent:13</a></code>
+                                <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractPanelWithHeaderBindingComponent:14</a></code>
 </div>
                         </td>
                     </tr>
@@ -3172,7 +3504,7 @@
                         </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractPanelWithHeaderBindingComponent:12</a></code>
+                                <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractPanelWithHeaderBindingComponent:13</a></code>
 </div>
                         </td>
                     </tr>
@@ -3206,7 +3538,7 @@
                         </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractPanelWithHeaderBindingComponent:15</a></code>
+                                <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractPanelWithHeaderBindingComponent:16</a></code>
 </div>
                         </td>
                     </tr>
@@ -3237,7 +3569,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="67" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:67</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="97" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:97</a></div>
                                 </td>
                             </tr>
                     <tr>
@@ -3295,7 +3627,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="202" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:202</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="234" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:234</a></div>
                                 </td>
                             </tr>
 
@@ -3306,7 +3638,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="197" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:197</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="229" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:229</a></div>
                                 </td>
                             </tr>
                     <tr>
@@ -3364,7 +3696,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="206" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:206</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="238" class="link-to-prism">projects/netgrif-components-core/src/lib/panel/task-panel/abstract-task-panel.component.ts:238</a></div>
                                 </td>
                             </tr>
 
@@ -3385,6 +3717,7 @@
     OnInit,
     Optional,
     Output,
+    TemplateRef,
     Type
 } from &#x27;@angular/core&#x27;;
 import {MatExpansionPanel} from &#x27;@angular/material/expansion&#x27;;
@@ -3421,6 +3754,9 @@ import {CurrencyPipe} from &#x27;@angular/common&#x27;;
 import {PermissionService} from &#x27;../../authorization/permission/permission.service&#x27;;
 import {ChangedFieldsService} from &#x27;../../changed-fields/services/changed-fields.service&#x27;;
 import {ChangedFieldsMap} from &#x27;../../event/services/interfaces/changed-fields-map&#x27;;
+import { TaskPanelContext } from &#x27;./models/task-panel-context&#x27;;
+import {OverflowService} from &#x27;../../header/services/overflow.service&#x27;;
+import { FinishPolicyService } from &#x27;../../task/services/finish-policy.service&#x27;;
 
 @Component({
     selector: &#x27;ncc-abstract-legal-notice&#x27;,
@@ -3439,6 +3775,32 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
     @Input() public first: boolean;
     @Input() public last: boolean;
     @Input() responsiveBody &#x3D; true;
+    @Input() preventCollapse &#x3D; false;
+    @Input() hidePanelHeader &#x3D; false;
+    @Input() actionButtonTemplates: Array&lt;TemplateRef&lt;any&gt;&gt;;
+    @Input() actionRowJustifyContent: &#x27;space-between&#x27; | &#x27;flex-start&#x27; | &#x27;flex-end&#x27; | &#x27;center&#x27; | &#x27;space-around&#x27; |
+        &#x27;initial&#x27; | &#x27;start&#x27; | &#x27;end&#x27; | &#x27;left&#x27; | &#x27;right&#x27; | &#x27;revert&#x27; | &#x27;inherit&#x27; | &#x27;unset&#x27;
+
+    thisContext: TaskPanelContext &#x3D; {
+        canAssign: () &#x3D;&gt; this.canAssign(),
+        assign: () &#x3D;&gt; this.assign(),
+        getAssignTitle: () &#x3D;&gt; this.getAssignTitle(),
+        delegate: () &#x3D;&gt; this.delegate(),
+        getDelegateTitle: () &#x3D;&gt; this.getDelegateTitle(),
+        canReassign: () &#x3D;&gt; this.canReassign(),
+        canCancel: () &#x3D;&gt; this.canCancel(),
+        cancel: () &#x3D;&gt; this.cancel(),
+        getCancelTitle: () &#x3D;&gt; this.getCancelTitle(),
+        canFinish: () &#x3D;&gt; this.canFinish(),
+        finish: () &#x3D;&gt; this.finish(),
+        getFinishTitle: () &#x3D;&gt; this.getFinishTitle(),
+        canCollapse: () &#x3D;&gt; this.canCollapse(),
+        collapse: () &#x3D;&gt; this.collapse(),
+        canDisable: (arg: string) &#x3D;&gt; this.canDisable(arg),
+        canDo: (arg: string) &#x3D;&gt; this.canDo(arg),
+        isLoading: () &#x3D;&gt; this.isLoading
+    };
+
 
     @Input()
     set forceLoadDataOnOpen(force: boolean) {
@@ -3473,14 +3835,16 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
                           protected _taskState: TaskRequestStateService,
                           protected _taskDataService: TaskDataService,
                           protected _assignPolicyService: AssignPolicyService,
+                          protected _finishPolicyService: FinishPolicyService,
                           protected _callChain: CallChainService,
                           protected _taskOperations: SubjectTaskOperations,
                           @Optional() @Inject(NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS) protected _disableFunctions: DisableButtonFuntions,
                           protected _translate: TranslateService,
                           protected _currencyPipe: CurrencyPipe,
                           protected _changedFieldsService: ChangedFieldsService,
-                          protected _permissionService: PermissionService) {
-        super(_translate, _currencyPipe);
+                          protected _permissionService: PermissionService,
+                          @Optional() overflowService: OverflowService) {
+        super(_translate, _currencyPipe, overflowService);
         this.taskEvent &#x3D; new EventEmitter&lt;TaskEventNotification&gt;();
         this.panelRefOutput &#x3D; new EventEmitter&lt;MatExpansionPanel&gt;();
         this._subTaskEvent &#x3D; _taskEventService.taskEventNotifications$.subscribe(event &#x3D;&gt; {
@@ -3606,6 +3970,7 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
         this._assignTaskService.assign(this._callChain.create((afterAction &#x3D;&gt; {
             if (afterAction) {
                 this._taskDataService.initializeTaskDataFields();
+                this._finishPolicyService.performFinishPolicy();
             }
         })));
     }
@@ -3781,7 +4146,7 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
         var COMPONENT_TEMPLATE = '<div></div>'
-    var COMPONENTS = [{'name': 'AbstractAddChildNodeComponent', 'selector': 'ncc-abstract-add-child-node'},{'name': 'AbstractAdvancedSearchComponent', 'selector': 'ncc-abstract-advanced-search'},{'name': 'AbstractAuthenticationOverlayComponent', 'selector': 'ncc-abstract-auth-overlay'},{'name': 'AbstractBooleanFieldComponent', 'selector': 'ncc-abstract-boolean-field'},{'name': 'AbstractButtonFieldComponent', 'selector': 'ncc-abstract-button-field'},{'name': 'AbstractCaseListComponent', 'selector': 'ncc-abstract-case-list'},{'name': 'AbstractCaseListPaginatorComponent', 'selector': 'ncc-abstract-case-list-paginator'},{'name': 'AbstractCasePanelComponent', 'selector': 'ncc-abstract-case-panel'},{'name': 'AbstractCaseViewComponent', 'selector': 'ncc-abstract-case-view'},{'name': 'AbstractCountCardComponent', 'selector': 'ncc-abstract-count-card'},{'name': 'AbstractCurrencyNumberFieldComponent', 'selector': 'ncc-abstract-currency-field'},{'name': 'AbstractCustomCardComponent', 'selector': 'ncc-abstract-custom-card'},{'name': 'AbstractDashboardContentComponent', 'selector': 'ncc-abstract-dashboard-content'},{'name': 'AbstractDataFieldComponent', 'selector': 'ncc-abstract-datafield'},{'name': 'AbstractDataFieldTemplateComponent', 'selector': 'ncc-abstract-datafield-template'},{'name': 'AbstractDateFieldComponent', 'selector': 'ncc-abstract-date-field'},{'name': 'AbstractDateTimeFieldComponent', 'selector': 'ncc-abstract-date-time-field'},{'name': 'AbstractDefaultCaseList', 'selector': 'ncc-abstract-default-case-list'},{'name': 'AbstractDefaultNumberFieldComponent', 'selector': 'ncc-abstract-number-default-field'},{'name': 'AbstractDefaultTaskList', 'selector': 'ncc-abstract-default-task-list'},{'name': 'AbstractDialog', 'selector': 'ncc-abstract-dialog'},{'name': 'AbstractEditModeComponent', 'selector': 'ncc-abstract-edit-mode'},{'name': 'AbstractEmailSubmissionFormComponent', 'selector': 'ncc-abstract-email-submission-form'},{'name': 'AbstractEnumerationAutocompleteDynamicFieldComponent', 'selector': 'ncc-abstract-enumeration-autocomplete-dynamic-field'},{'name': 'AbstractEnumerationAutocompleteSelectFieldComponent', 'selector': 'ncc-abstract-enumeration-autocomplete-field'},{'name': 'AbstractEnumerationFieldComponent', 'selector': 'ncc-abstract-enumeration-field'},{'name': 'AbstractEnumerationIconFieldComponent', 'selector': 'ncc-abstract-enumerataion-icon-field'},{'name': 'AbstractEnumerationListFieldComponent', 'selector': 'ncc-abstract-enumeration-list-field'},{'name': 'AbstractEnumerationSelectFieldComponent', 'selector': 'ncc-abstract-enumeration-select-field'},{'name': 'AbstractEnumerationStepperFieldComponent', 'selector': 'ncc-abstract-enumeration-stepper-field'},{'name': 'AbstractFieldComponentResolverComponent', 'selector': 'ncc-abstract-field-component-resolver'},{'name': 'AbstractFileFieldComponent', 'selector': 'ncc-abstract-file-field'},{'name': 'AbstractFileListFieldComponent', 'selector': 'ncc-abstract-filelist-field'},{'name': 'AbstractFilterFieldComponent', 'selector': 'ncc-abstract-filter-field'},{'name': 'AbstractFilterFieldContentComponent', 'selector': 'ncc-abstract-filtercontent-field'},{'name': 'AbstractFilterSelectorComponent', 'selector': 'ncc-abstract-filter-selector'},{'name': 'AbstractForgottenPasswordComponent', 'selector': 'ncc-abstract-forgotten-password'},{'name': 'AbstractFulltextSearchComponent', 'selector': 'ncc-abstract-fulltext-search'},{'name': 'AbstractGroupNavigationComponentResolverComponent', 'selector': 'ncc-abstract-group-nagiation-resolver'},{'name': 'AbstractHeaderComponent', 'selector': 'ncc-abstract-header'},{'name': 'AbstractHeaderModeComponent', 'selector': 'ncc-abstract-header-mode'},{'name': 'AbstractHtmlTextareaFieldComponent', 'selector': 'ncc-abstract-html-area-field'},{'name': 'AbstractI18nDividerFieldComponent', 'selector': 'ncc-abstract-i18n-divider-field'},{'name': 'AbstractI18nErrorsComponent', 'selector': 'ncc-abstract-i18n-errors'},{'name': 'AbstractI18nFieldComponent', 'selector': 'ncc-abstract-i18n-field'},{'name': 'AbstractI18nTextFieldComponent', 'selector': 'ncc-abstract-i18n-text-field'},{'name': 'AbstractIframeCardComponent', 'selector': 'ncc-abstract-iframe-card'},{'name': 'AbstractImmediateFilterTextComponent', 'selector': 'ncc-abstract-immediate-filter-text'},{'name': 'AbstractImmediateFilterTextContentComponent', 'selector': 'ncc-abstract-immediate-filter-text-content'},{'name': 'AbstractImportNetComponent', 'selector': 'ncc-abstract-import-net'},{'name': 'AbstractInternalLinkComponent', 'selector': 'ncc-abstract-internal-link'},{'name': 'AbstractLanguageSelectorComponent', 'selector': 'ncc-abstract-language-selector'},{'name': 'AbstractLdapGroupRoleAssignment', 'selector': 'ncc-abstract-ldap-group-role-assignment'},{'name': 'AbstractLegalNoticeComponent', 'selector': 'ncc-abstract-legal-notice'},{'name': 'AbstractLoadFilterComponent', 'selector': 'ncc-abstract-load-filter'},{'name': 'AbstractLoadingModeComponent', 'selector': 'ncc-abstract-loading-mode'},{'name': 'AbstractLoginFormComponent', 'selector': 'ncc-abstract-login-field'},{'name': 'AbstractLogoutShortcutComponent', 'selector': 'ncc-abstract-logout-shortcut'},{'name': 'AbstractMultichoiceFieldComponent', 'selector': 'ncc-abstract-multichoice-field'},{'name': 'AbstractMultichoiceListFieldComponent', 'selector': 'ncc-abstract-multichoice-list-field'},{'name': 'AbstractMultichoiceSelectFieldComponent', 'selector': 'ncc-abstract-multichoice-select-field'},{'name': 'AbstractNavigationDrawerComponent', 'selector': 'ncc-abstract-navigation-drawer'},{'name': 'AbstractNavigationRailComponent', 'selector': 'ncc-abstract-navigation-rail'},{'name': 'AbstractNavigationResizableDrawerComponent', 'selector': 'ncc-abstract-navigation-resizable-drawer'},{'name': 'AbstractNavigationTreeComponent', 'selector': 'ncc-abstract-navigation-tree'},{'name': 'AbstractNewCaseComponent', 'selector': 'ncc-abstract-new-case'},{'name': 'AbstractNumberErrorsComponent', 'selector': 'ncc-abstract-number-errors-field'},{'name': 'AbstractNumberFieldComponent', 'selector': 'ncc-abstract-number-field'},{'name': 'AbstractOptionSelectorComponent', 'selector': 'ncc-abstract-option-selector'},{'name': 'AbstractPanelComponent', 'selector': 'ncc-abstract-panel'},{'name': 'AbstractPanelItemComponent', 'selector': 'ncc-abstract-panel-item-component'},{'name': 'AbstractPanelWithHeaderBindingComponent', 'selector': 'ncc-abstract-panel-with-header-binding'},{'name': 'AbstractPanelWithImmediateDataComponent', 'selector': 'ncc-abstract-panel-with-immediate'},{'name': 'AbstractPasswordTextFieldComponent', 'selector': 'ncc-abstract-password-text-field'},{'name': 'AbstractProfileComponent', 'selector': 'ncc-abstract-profile'},{'name': 'AbstractQuickPanelComponent', 'selector': 'ncc-abstract-quick-panel'},{'name': 'AbstractRegistrationComponent', 'selector': 'ncc-abstract-registration'},{'name': 'AbstractRegistrationFormComponent', 'selector': 'ncc-abstract-registration-form'},{'name': 'AbstractRemoveNodeComponent', 'selector': 'ncc-abstract-remove-node'},{'name': 'AbstractRichTextareaFieldComponent', 'selector': 'ncc-abstract-rich-text-field'},{'name': 'AbstractRoleAssignmentComponent', 'selector': 'ncc-abstract-role'},{'name': 'AbstractSaveFilterComponent', 'selector': 'ncc-abstract-save-filter'},{'name': 'AbstractSearchClauseComponent', 'selector': 'ncc-abstract-search-clause'},{'name': 'AbstractSearchComponent', 'selector': 'ncc-abstract-search'},{'name': 'AbstractSearchConfigurationInputComponent', 'selector': 'ncc-abstract-search-configuration-input'},{'name': 'AbstractSearchModeComponent', 'selector': 'ncc-abstract-seatch-mode'},{'name': 'AbstractSearchOperandInputComponent', 'selector': 'ncc-abstract-search-operand-input'},{'name': 'AbstractSearchPredicateComponent', 'selector': 'ncc-abstract-search-predicate'},{'name': 'AbstractSideMenuContainerComponent', 'selector': 'ncc-abstract-side-menu-container'},{'name': 'AbstractSimpleTextFieldComponent', 'selector': 'ncc-abstract-simple-text-field'},{'name': 'AbstractSortableViewComponent', 'selector': 'ncc-abstract-sortable-view'},{'name': 'AbstractSortModeComponent', 'selector': 'ncc-abstract-sort-mode'},{'name': 'AbstractTabbedCaseViewComponent', 'selector': 'ncc-abstract-tabbed-case-view'},{'name': 'AbstractTabbedTaskViewComponent', 'selector': 'ncc-abstract-tabbed-task-view'},{'name': 'AbstractTabViewComponent', 'selector': 'ncc-abstract-tab-view'},{'name': 'AbstractTaskContentComponent', 'selector': 'ncc-abstract-task-content'},{'name': 'AbstractTaskListComponent', 'selector': 'ncc-abstract-task-list'},{'name': 'AbstractTaskListPaginationComponent', 'selector': 'ncc-abstract-task-list-pagination-component'},{'name': 'AbstractTaskPanelComponent', 'selector': 'ncc-abstract-legal-notice'},{'name': 'AbstractTaskViewComponent', 'selector': 'ncc-abstract-task-view'},{'name': 'AbstractTextareaFieldComponent', 'selector': 'ncc-abstract-text-area-field'},{'name': 'AbstractTextFieldComponent', 'selector': 'ncc-abstract-text-field'},{'name': 'AbstractTimeInstanceFieldComponent', 'selector': 'ncc-abstract-time-instance-field'},{'name': 'AbstractToolbarComponent', 'selector': 'ncc-abstract-toolbar'},{'name': 'AbstractTreeComponent', 'selector': 'ncc-abstract-tree'},{'name': 'AbstractTreeTaskContentComponent', 'selector': 'ncc-abstract-tree-task-content'},{'name': 'AbstractUserAssignComponent', 'selector': 'ncc-abstract-user-assign'},{'name': 'AbstractUserAssignItemComponent', 'selector': 'ncc-abstract-user-assign-item'},{'name': 'AbstractUserAssignListComponent', 'selector': 'ncc-abstract-user-assign-list'},{'name': 'AbstractUserCardComponent', 'selector': 'ncc-abstract-user-card'},{'name': 'AbstractUserFieldComponent', 'selector': 'ncc-abstract-user-field'},{'name': 'AbstractUserInviteComponent', 'selector': 'ncc-abstract-user-invite'},{'name': 'AbstractViewWithHeadersComponent', 'selector': 'ncc-abstract-view-with-headers'},{'name': 'AbstractWorkflowPanelComponent', 'selector': 'ncc-abstract-workflow-panel'},{'name': 'AbstractWorkflowViewComponent', 'selector': 'ncc-abstract-workflow-view'},{'name': 'AlertDialogComponent', 'selector': 'ncc-simple-dialog'},{'name': 'ConfirmDialogComponent', 'selector': 'ncc-question-dialog'},{'name': 'ErrorSnackBarComponent', 'selector': 'ncc-error-snack-bar'},{'name': 'GenericSnackBarComponent', 'selector': 'ncc-generic-snack-bar'},{'name': 'PromptDialogComponent', 'selector': 'ncc-question-dialog-with-answer'},{'name': 'SnackBar', 'selector': 'ncc-abstract-snackbar'},{'name': 'SuccessSnackBarComponent', 'selector': 'ncc-success-snack-bar'},{'name': 'TabbedVirtualScrollComponent', 'selector': 'ncc-abstract-tabbed-virtual-scroll'},{'name': 'WarningSnackBarComponent', 'selector': 'ncc-warning-snack-bar'}];
+    var COMPONENTS = [{'name': 'AbstractAddChildNodeComponent', 'selector': 'ncc-abstract-add-child-node'},{'name': 'AbstractAdvancedSearchComponent', 'selector': 'ncc-abstract-advanced-search'},{'name': 'AbstractAuthenticationOverlayComponent', 'selector': 'ncc-abstract-auth-overlay'},{'name': 'AbstractBooleanFieldComponent', 'selector': 'ncc-abstract-boolean-field'},{'name': 'AbstractBreadcrumbsComponent', 'selector': 'ncc-breadcrumbs-component'},{'name': 'AbstractButtonFieldComponent', 'selector': 'ncc-abstract-button-field'},{'name': 'AbstractCaseListComponent', 'selector': 'ncc-abstract-case-list'},{'name': 'AbstractCaseListPaginatorComponent', 'selector': 'ncc-abstract-case-list-paginator'},{'name': 'AbstractCasePanelComponent', 'selector': 'ncc-abstract-case-panel'},{'name': 'AbstractCaseViewComponent', 'selector': 'ncc-abstract-case-view'},{'name': 'AbstractCountCardComponent', 'selector': 'ncc-abstract-count-card'},{'name': 'AbstractCurrencyNumberFieldComponent', 'selector': 'ncc-abstract-currency-field'},{'name': 'AbstractCustomCardComponent', 'selector': 'ncc-abstract-custom-card'},{'name': 'AbstractDashboardContentComponent', 'selector': 'ncc-abstract-dashboard-content'},{'name': 'AbstractDataFieldComponent', 'selector': 'ncc-abstract-datafield'},{'name': 'AbstractDataFieldTemplateComponent', 'selector': 'ncc-abstract-datafield-template'},{'name': 'AbstractDateFieldComponent', 'selector': 'ncc-abstract-date-field'},{'name': 'AbstractDateTimeFieldComponent', 'selector': 'ncc-abstract-date-time-field'},{'name': 'AbstractDefaultCaseListComponent', 'selector': 'ncc-abstract-default-case-list'},{'name': 'AbstractDefaultNumberFieldComponent', 'selector': 'ncc-abstract-number-default-field'},{'name': 'AbstractDefaultTaskListComponent', 'selector': 'ncc-abstract-default-task-list'},{'name': 'AbstractDialogComponent', 'selector': 'ncc-abstract-dialog'},{'name': 'AbstractEditModeComponent', 'selector': 'ncc-abstract-edit-mode'},{'name': 'AbstractEmailSubmissionFormComponent', 'selector': 'ncc-abstract-email-submission-form'},{'name': 'AbstractEnumerationAutocompleteDynamicFieldComponent', 'selector': 'ncc-abstract-enumeration-autocomplete-dynamic-field'},{'name': 'AbstractEnumerationAutocompleteSelectFieldComponent', 'selector': 'ncc-abstract-enumeration-autocomplete-field'},{'name': 'AbstractEnumerationFieldComponent', 'selector': 'ncc-abstract-enumeration-field'},{'name': 'AbstractEnumerationIconFieldComponent', 'selector': 'ncc-abstract-enumerataion-icon-field'},{'name': 'AbstractEnumerationListFieldComponent', 'selector': 'ncc-abstract-enumeration-list-field'},{'name': 'AbstractEnumerationSelectFieldComponent', 'selector': 'ncc-abstract-enumeration-select-field'},{'name': 'AbstractEnumerationStepperFieldComponent', 'selector': 'ncc-abstract-enumeration-stepper-field'},{'name': 'AbstractFieldComponentResolverComponent', 'selector': 'ncc-abstract-field-component-resolver'},{'name': 'AbstractFileFieldComponent', 'selector': 'ncc-abstract-file-field'},{'name': 'AbstractFileListFieldComponent', 'selector': 'ncc-abstract-filelist-field'},{'name': 'AbstractFilterFieldComponent', 'selector': 'ncc-abstract-filter-field'},{'name': 'AbstractFilterFieldContentComponent', 'selector': 'ncc-abstract-filtercontent-field'},{'name': 'AbstractFilterSelectorComponent', 'selector': 'ncc-abstract-filter-selector'},{'name': 'AbstractForgottenPasswordComponent', 'selector': 'ncc-abstract-forgotten-password'},{'name': 'AbstractFulltextSearchComponent', 'selector': 'ncc-abstract-fulltext-search'},{'name': 'AbstractGroupNavigationComponentResolverComponent', 'selector': 'ncc-abstract-group-nagiation-resolver'},{'name': 'AbstractHeaderComponent', 'selector': 'ncc-abstract-header'},{'name': 'AbstractHeaderModeComponent', 'selector': 'ncc-abstract-header-mode'},{'name': 'AbstractHtmlTextareaFieldComponent', 'selector': 'ncc-abstract-html-area-field'},{'name': 'AbstractI18nDividerFieldComponent', 'selector': 'ncc-abstract-i18n-divider-field'},{'name': 'AbstractI18nErrorsComponent', 'selector': 'ncc-abstract-i18n-errors'},{'name': 'AbstractI18nFieldComponent', 'selector': 'ncc-abstract-i18n-field'},{'name': 'AbstractI18nTextFieldComponent', 'selector': 'ncc-abstract-i18n-text-field'},{'name': 'AbstractIframeCardComponent', 'selector': 'ncc-abstract-iframe-card'},{'name': 'AbstractImmediateFilterTextComponent', 'selector': 'ncc-abstract-immediate-filter-text'},{'name': 'AbstractImmediateFilterTextContentComponent', 'selector': 'ncc-abstract-immediate-filter-text-content'},{'name': 'AbstractImportNetComponent', 'selector': 'ncc-abstract-import-net'},{'name': 'AbstractInternalLinkComponent', 'selector': 'ncc-abstract-internal-link'},{'name': 'AbstractLanguageSelectorComponent', 'selector': 'ncc-abstract-language-selector'},{'name': 'AbstractLdapGroupRoleAssignmentComponent', 'selector': 'ncc-abstract-ldap-group-role-assignment'},{'name': 'AbstractLegalNoticeComponent', 'selector': 'ncc-abstract-legal-notice'},{'name': 'AbstractLoadFilterComponent', 'selector': 'ncc-abstract-load-filter'},{'name': 'AbstractLoadingModeComponent', 'selector': 'ncc-abstract-loading-mode'},{'name': 'AbstractLoginFormComponent', 'selector': 'ncc-abstract-login-field'},{'name': 'AbstractLogoutShortcutComponent', 'selector': 'ncc-abstract-logout-shortcut'},{'name': 'AbstractMultichoiceAutocompleteFieldComponentComponent', 'selector': 'ncc-abstract-multichoice-autocomplete-field'},{'name': 'AbstractMultichoiceFieldComponent', 'selector': 'ncc-abstract-multichoice-field'},{'name': 'AbstractMultichoiceListFieldComponent', 'selector': 'ncc-abstract-multichoice-list-field'},{'name': 'AbstractMultichoiceSelectFieldComponent', 'selector': 'ncc-abstract-multichoice-select-field'},{'name': 'AbstractNavigationDoubleDrawerComponent', 'selector': 'ncc-abstract-navigation-double-drawer'},{'name': 'AbstractNavigationDrawerComponent', 'selector': 'ncc-abstract-navigation-drawer'},{'name': 'AbstractNavigationRailComponent', 'selector': 'ncc-abstract-navigation-rail'},{'name': 'AbstractNavigationResizableDrawerComponent', 'selector': 'ncc-abstract-navigation-resizable-drawer'},{'name': 'AbstractNavigationTreeComponent', 'selector': 'ncc-abstract-navigation-tree'},{'name': 'AbstractNewCaseComponent', 'selector': 'ncc-abstract-new-case'},{'name': 'AbstractNumberErrorsComponent', 'selector': 'ncc-abstract-number-errors-field'},{'name': 'AbstractNumberFieldComponent', 'selector': 'ncc-abstract-number-field'},{'name': 'AbstractOptionSelectorComponent', 'selector': 'ncc-abstract-option-selector'},{'name': 'AbstractPanelComponent', 'selector': 'ncc-abstract-panel'},{'name': 'AbstractPanelItemComponent', 'selector': 'ncc-abstract-panel-item-component'},{'name': 'AbstractPanelWithHeaderBindingComponent', 'selector': 'ncc-abstract-panel-with-header-binding'},{'name': 'AbstractPanelWithImmediateDataComponent', 'selector': 'ncc-abstract-panel-with-immediate'},{'name': 'AbstractPasswordTextFieldComponent', 'selector': 'ncc-abstract-password-text-field'},{'name': 'AbstractProfileComponent', 'selector': 'ncc-abstract-profile'},{'name': 'AbstractQuickPanelComponent', 'selector': 'ncc-abstract-quick-panel'},{'name': 'AbstractRegistrationComponent', 'selector': 'ncc-abstract-registration'},{'name': 'AbstractRegistrationFormComponent', 'selector': 'ncc-abstract-registration-form'},{'name': 'AbstractRemoveNodeComponent', 'selector': 'ncc-abstract-remove-node'},{'name': 'AbstractRichTextareaFieldComponent', 'selector': 'ncc-abstract-rich-text-field'},{'name': 'AbstractRoleAssignmentComponent', 'selector': 'ncc-abstract-role'},{'name': 'AbstractSaveFilterComponent', 'selector': 'ncc-abstract-save-filter'},{'name': 'AbstractSearchClauseComponent', 'selector': 'ncc-abstract-search-clause'},{'name': 'AbstractSearchComponent', 'selector': 'ncc-abstract-search'},{'name': 'AbstractSearchConfigurationInputComponent', 'selector': 'ncc-abstract-search-configuration-input'},{'name': 'AbstractSearchModeComponent', 'selector': 'ncc-abstract-seatch-mode'},{'name': 'AbstractSearchOperandInputComponent', 'selector': 'ncc-abstract-search-operand-input'},{'name': 'AbstractSearchPredicateComponent', 'selector': 'ncc-abstract-search-predicate'},{'name': 'AbstractSideMenuContainerComponent', 'selector': 'ncc-abstract-side-menu-container'},{'name': 'AbstractSimpleTextFieldComponent', 'selector': 'ncc-abstract-simple-text-field'},{'name': 'AbstractSingleTaskComponent', 'selector': 'ncc-abstract-single-task'},{'name': 'AbstractSingleTaskViewComponent', 'selector': 'ncc-abstract-single-task-view'},{'name': 'AbstractSortableViewComponent', 'selector': 'ncc-abstract-sortable-view'},{'name': 'AbstractSortModeComponent', 'selector': 'ncc-abstract-sort-mode'},{'name': 'AbstractTabbedCaseViewComponent', 'selector': 'ncc-abstract-tabbed-case-view'},{'name': 'AbstractTabbedTaskViewComponent', 'selector': 'ncc-abstract-tabbed-task-view'},{'name': 'AbstractTabViewComponent', 'selector': 'ncc-abstract-tab-view'},{'name': 'AbstractTaskContentComponent', 'selector': 'ncc-abstract-task-content'},{'name': 'AbstractTaskListComponent', 'selector': 'ncc-abstract-task-list'},{'name': 'AbstractTaskListPaginationComponent', 'selector': 'ncc-abstract-task-list-pagination-component'},{'name': 'AbstractTaskPanelComponent', 'selector': 'ncc-abstract-legal-notice'},{'name': 'AbstractTaskViewComponent', 'selector': 'ncc-abstract-task-view'},{'name': 'AbstractTextareaFieldComponent', 'selector': 'ncc-abstract-text-area-field'},{'name': 'AbstractTextFieldComponent', 'selector': 'ncc-abstract-text-field'},{'name': 'AbstractTimeInstanceFieldComponent', 'selector': 'ncc-abstract-time-instance-field'},{'name': 'AbstractToolbarComponent', 'selector': 'ncc-abstract-toolbar'},{'name': 'AbstractTreeComponent', 'selector': 'ncc-abstract-tree'},{'name': 'AbstractTreeTaskContentComponent', 'selector': 'ncc-abstract-tree-task-content'},{'name': 'AbstractUserAssignComponent', 'selector': 'ncc-abstract-user-assign'},{'name': 'AbstractUserAssignItemComponent', 'selector': 'ncc-abstract-user-assign-item'},{'name': 'AbstractUserAssignListComponent', 'selector': 'ncc-abstract-user-assign-list'},{'name': 'AbstractUserCardComponent', 'selector': 'ncc-abstract-user-card'},{'name': 'AbstractUserFieldComponent', 'selector': 'ncc-abstract-user-field'},{'name': 'AbstractUserInviteComponent', 'selector': 'ncc-abstract-user-invite'},{'name': 'AbstractUserListFieldComponent', 'selector': 'ncc-abstract-user-list-field'},{'name': 'AbstractViewWithHeadersComponent', 'selector': 'ncc-abstract-view-with-headers'},{'name': 'AbstractWorkflowPanelComponent', 'selector': 'ncc-abstract-workflow-panel'},{'name': 'AbstractWorkflowViewComponent', 'selector': 'ncc-abstract-workflow-view'},{'name': 'AlertDialogComponent', 'selector': 'ncc-simple-dialog'},{'name': 'ConfirmDialogComponent', 'selector': 'ncc-question-dialog'},{'name': 'ErrorSnackBarComponent', 'selector': 'ncc-error-snack-bar'},{'name': 'GenericSnackBarComponent', 'selector': 'ncc-generic-snack-bar'},{'name': 'PromptDialogComponent', 'selector': 'ncc-question-dialog-with-answer'},{'name': 'SnackBarComponent', 'selector': 'ncc-abstract-snackbar'},{'name': 'SuccessSnackBarComponent', 'selector': 'ncc-success-snack-bar'},{'name': 'TabbedVirtualScrollComponent', 'selector': 'ncc-abstract-tabbed-virtual-scroll'},{'name': 'WarningSnackBarComponent', 'selector': 'ncc-warning-snack-bar'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'AbstractTaskPanelComponent'};
 </script>

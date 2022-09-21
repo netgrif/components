@@ -5,33 +5,59 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres
 to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-Full Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://github.com/netgrif/components/commits/v6.0.0)
+Full Changelog: [https://github.com/netgrif/components/commits/v6.2.1](https://github.com/netgrif/components/commits/v6.2.1)
 
-## [6.2.0](https://github.com/netgrif/components/releases/tag/v6.2.0) (2022-08-09)
+## [6.3.0](https://github.com/netgrif/components/releases/tag/v6.2.1) (2022-09-21)
+
+
+## [6.2.1](https://github.com/netgrif/components/releases/tag/v6.2.1) (2022-09-15)
 
 ### Fixed
 
+- [NAE-1719] Auto finish no data does not work without auto assign
+
+## [6.2.0](https://github.com/netgrif/components/releases/tag/v6.2.0) (2022-09-12)
+
+### Fixed
+
+- [NAE-1427] Allowed nets factory ignores allowedNets in nae.json
+- [NAE-1430] Generated sidenav ignores inputs
+- [NAE-1626] Trigger of set event for fileList value deletion is not implemented
 - [NAE-1628] Reset radio buttons button visible on visible radio buttons
+- [NAE-1635] Tree view has incorrect object for set data
+- [NAE-1639] Non-Latin1 characters cannot be used in passwords
 - [NAE-1667] Select user translation
 - [NAE-1669] Fix header design
 - [NAE-1672] Change userField value
 - [NAE-1680] Public view + change behavior bug
 - [NAE-1690] Fix header responsive overflow mode
 - [NAE-1681] Delete file function works with parent task in taskRef-ed file field.
+- [NAE-1701] Reload validity on the change required field
+- [NAE-1708] Fix lint issues
 
 ### Changed
 
+- [NAE-1156] View Deprecation and All Data
+- [NAE-1457] Schematic support for public view generation
+- [NAE-1606] Configuration of case creation button from menu item
 - [NAE-1648] Redesign dataFields
-- [NAE-1682] Translate tooltip admin view
 - [NAE-1677] Message from exception thrown in SET event on data field is not propagated in EventOutcome
+- [NAE-1682] Translate tooltip admin view
+- [NAE-1695] Fix generated tests in schematics
 
 ### Added
 
-- [NAE-1647] Elastic mapping for I18N data field
-- [NAE-1658] Two-level navigation menu
-- [NAE-1671] Dynamic case title in tab
+- [NAE-1436] Create all views schematic
+- [NAE-1437] Missing view components schematics
+- [NAE-1631] Process download in workflow view
 - [NAE-1642] Redirect to transition via URL
 - [NAE-1643] Configure public view via request parameters
+- [NAE-1647] Elastic mapping for I18N data field
+- [NAE-1650] Multi-choice autocomplete field component missing
+- [NAE-1658] Two-level navigation menu
+- [NAE-1662] Navigation breadcrumbs
+- [NAE-1671] Dynamic case title in tab
+- [NAE-1679] User list frontend component
 
 ## [6.1.1](https://github.com/netgrif/components/releases/tag/v6.1.1) (2022-06-09)
 

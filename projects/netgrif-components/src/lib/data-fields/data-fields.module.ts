@@ -63,6 +63,10 @@ import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { CaseRefFieldComponent } from './case-ref-field/case-ref-field.component';
 import {PetriflowCanvasModule} from '@netgrif/petriflow.svg';
+import {
+    MultichoiceAutocompleteFieldComponent
+} from './multichoice-field/multichoice-autocomplete-field/multichoice-autocomplete-field.component';
+import { UserListFieldComponent } from './user-list-field/user-list-field.component';
 
 @NgModule({
     declarations: [
@@ -80,6 +84,7 @@ import {PetriflowCanvasModule} from '@netgrif/petriflow.svg';
         MultichoiceFieldComponent,
         MultichoiceSelectFieldComponent,
         MultichoiceListFieldComponent,
+        MultichoiceAutocompleteFieldComponent,
         NumberFieldComponent,
         TextFieldComponent,
         TextareaFieldComponent,
@@ -102,6 +107,7 @@ import {PetriflowCanvasModule} from '@netgrif/petriflow.svg';
         I18nDividerFieldComponent,
         I18nTextFieldComponent,
         EasymdeWrapperComponent,
+        UserListFieldComponent,
         CaseRefFieldComponent,
     ],
     exports: [
@@ -119,7 +125,8 @@ import {PetriflowCanvasModule} from '@netgrif/petriflow.svg';
         UserFieldComponent,
         FilterFieldComponent,
         I18nFieldComponent,
-        CaseRefFieldComponent
+        CaseRefFieldComponent,
+        UserListFieldComponent
     ],
     imports: [
         CommonModule,

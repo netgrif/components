@@ -215,53 +215,50 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {OperatorService} from &#x27;../../../operator-service/operator.service&#x27;;
-import {LoggerService} from &#x27;../../../../logger/services/logger.service&#x27;;
-import {Operator} from &#x27;../../operator/operator&#x27;;
-import {Query} from &#x27;../../query/query&#x27;;
-import {OptionalDependencies} from &#x27;../../../category-factory/optional-dependencies&#x27;;
-import {SearchInputType} from &#x27;../search-input-type&#x27;;
-import {DatafieldMapKey} from &#x27;../../datafield-map-key&#x27;;
-import {SearchAutocompleteOption} from &#x27;../search-autocomplete-option&#x27;;
-import {BooleanOperator} from &#x27;../../boolean-operator&#x27;;
-import {CaseProcess} from &#x27;./case-process&#x27;;
-import {EqualsDate} from &#x27;../../operator/equals-date&#x27;;
-import {Substring} from &#x27;../../operator/substring&#x27;;
-import {EqualsDateTime} from &#x27;../../operator/equals-date-time&#x27;;
-import {Equals} from &#x27;../../operator/equals&#x27;;
-import {BehaviorSubject, Observable, of, ReplaySubject, Subscription} from &#x27;rxjs&#x27;;
-import {debounceTime, map, startWith, switchMap} from &#x27;rxjs/operators&#x27;;
-import {hasContent} from &#x27;../../../../utility/pagination/page-has-content&#x27;;
-import {Category} from &#x27;../category&#x27;;
-import {NotEquals} from &#x27;../../operator/not-equals&#x27;;
-import {MoreThan} from &#x27;../../operator/more-than&#x27;;
-import {LessThan} from &#x27;../../operator/less-than&#x27;;
-import {InRange} from &#x27;../../operator/in-range&#x27;;
-import {IsNull} from &#x27;../../operator/is-null&#x27;;
-import {Like} from &#x27;../../operator/like&#x27;;
-import {NotEqualsDate} from &#x27;../../operator/not-equals-date&#x27;;
-import {MoreThanDate} from &#x27;../../operator/more-than-date&#x27;;
-import {LessThanDate} from &#x27;../../operator/less-than-date&#x27;;
-import {InRangeDate} from &#x27;../../operator/in-range-date&#x27;;
-import {MoreThanDateTime} from &#x27;../../operator/more-than-date-time&#x27;;
-import {LessThanDateTime} from &#x27;../../operator/less-than-date-time&#x27;;
-import {InRangeDateTime} from &#x27;../../operator/in-range-date-time&#x27;;
-import {AutocompleteOptions} from &#x27;../autocomplete-options&#x27;;
-import {ConfigurationInput} from &#x27;../../configuration-input&#x27;;
-import {SearchIndex} from &#x27;../../search-index&#x27;;
-import {Type} from &#x27;@angular/core&#x27;;
-import {Categories} from &#x27;../categories&#x27;;
-import {FormControl} from &#x27;@angular/forms&#x27;;
-import moment, {Moment} from &#x27;moment&#x27;;
-import {CategoryMetadataConfiguration} from &#x27;../../persistance/generator-metadata&#x27;;
-import {MoreThanEqual} from &#x27;../../operator/more-than-equal&#x27;;
-import {LessThanEqual} from &#x27;../../operator/less-than-equal&#x27;;
-import {MoreThanEqualDate} from &#x27;../../operator/more-than-equal-date&#x27;;
-import {LessThanEqualDate} from &#x27;../../operator/less-than-equal-date&#x27;;
-import {MoreThanEqualDateTime} from &#x27;../../operator/more-than-equal-date-time&#x27;;
-import {LessThanEqualDateTime} from &#x27;../../operator/less-than-equal-date-time&#x27;;
-import {FilterTextSegment} from &#x27;../../persistance/filter-text-segment&#x27;;
-import {UserAutocomplete} from &#x27;../user-autocomplete&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { OperatorService } from &#x27;../../../operator-service/operator.service&#x27;;
+import { LoggerService } from &#x27;../../../../logger/services/logger.service&#x27;;
+import { Operator } from &#x27;../../operator/operator&#x27;;
+import { Query } from &#x27;../../query/query&#x27;;
+import { OptionalDependencies } from &#x27;../../../category-factory/optional-dependencies&#x27;;
+import { SearchInputType } from &#x27;../search-input-type&#x27;;
+import { DatafieldMapKey } from &#x27;../../datafield-map-key&#x27;;
+import { SearchAutocompleteOption } from &#x27;../search-autocomplete-option&#x27;;
+import { BooleanOperator } from &#x27;../../boolean-operator&#x27;;
+import { CaseProcess } from &#x27;./case-process&#x27;;
+import { EqualsDate } from &#x27;../../operator/equals-date&#x27;;
+import { Substring } from &#x27;../../operator/substring&#x27;;
+import { EqualsDateTime } from &#x27;../../operator/equals-date-time&#x27;;
+import { Equals } from &#x27;../../operator/equals&#x27;;
+import { BehaviorSubject, Observable, of, ReplaySubject, Subscription } from &#x27;rxjs&#x27;;
+import { Category } from &#x27;../category&#x27;;
+import { NotEquals } from &#x27;../../operator/not-equals&#x27;;
+import { MoreThan } from &#x27;../../operator/more-than&#x27;;
+import { LessThan } from &#x27;../../operator/less-than&#x27;;
+import { InRange } from &#x27;../../operator/in-range&#x27;;
+import { IsNull } from &#x27;../../operator/is-null&#x27;;
+import { Like } from &#x27;../../operator/like&#x27;;
+import { NotEqualsDate } from &#x27;../../operator/not-equals-date&#x27;;
+import { MoreThanDate } from &#x27;../../operator/more-than-date&#x27;;
+import { LessThanDate } from &#x27;../../operator/less-than-date&#x27;;
+import { InRangeDate } from &#x27;../../operator/in-range-date&#x27;;
+import { MoreThanDateTime } from &#x27;../../operator/more-than-date-time&#x27;;
+import { LessThanDateTime } from &#x27;../../operator/less-than-date-time&#x27;;
+import { InRangeDateTime } from &#x27;../../operator/in-range-date-time&#x27;;
+import { AutocompleteOptions } from &#x27;../autocomplete-options&#x27;;
+import { ConfigurationInput } from &#x27;../../configuration-input&#x27;;
+import { SearchIndex } from &#x27;../../search-index&#x27;;
+import { Categories } from &#x27;../categories&#x27;;
+import { FormControl } from &#x27;@angular/forms&#x27;;
+import moment, { Moment } from &#x27;moment&#x27;;
+import { CategoryMetadataConfiguration } from &#x27;../../persistance/generator-metadata&#x27;;
+import { MoreThanEqual } from &#x27;../../operator/more-than-equal&#x27;;
+import { LessThanEqual } from &#x27;../../operator/less-than-equal&#x27;;
+import { MoreThanEqualDate } from &#x27;../../operator/more-than-equal-date&#x27;;
+import { LessThanEqualDate } from &#x27;../../operator/less-than-equal-date&#x27;;
+import { MoreThanEqualDateTime } from &#x27;../../operator/more-than-equal-date-time&#x27;;
+import { LessThanEqualDateTime } from &#x27;../../operator/less-than-equal-date-time&#x27;;
+import { FilterTextSegment } from &#x27;../../persistance/filter-text-segment&#x27;;
+import { UserAutocomplete } from &#x27;../user-autocomplete&#x27;;
 
 interface Datafield {
     netIdentifier: string;
@@ -481,6 +478,8 @@ export class CaseDataset extends Category&lt;Datafield&gt; implements Autocomple
             case &#x27;user&#x27;:
             case &#x27;userList&#x27;:
                 return resolver.getIndex(datafield.fieldId, SearchIndex.USER_ID);
+            case &#x27;i18n&#x27;:
+                return resolver.getIndex(datafield.fieldId, SearchIndex.TEXT, this.isSelectedOperator(Equals) || this.isSelectedOperator(NotEquals) || this.isSelectedOperator(Substring))
             default:
                 return resolver.getIndex(datafield.fieldId, SearchIndex.FULLTEXT,
                     this.isSelectedOperator(Equals) || this.isSelectedOperator(NotEquals) || this.isSelectedOperator(Substring));

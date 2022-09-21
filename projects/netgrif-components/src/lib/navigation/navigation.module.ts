@@ -41,6 +41,7 @@ import {TabsComponentModule} from '../tabs/tabs.module';
 import {CaseViewComponentModule} from '../view/case-view/case-view.module';
 import { NavigationDoubleDrawerComponent } from './navigation-double-drawer/navigation-double-drawer.component';
 import { MatDividerModule } from '@angular/material/divider';
+import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import { MatDividerModule } from '@angular/material/divider';
         DefaultTabbedTaskViewComponent,
         DefaultTabbedCaseViewComponent,
         DefaultTabViewComponent,
-        NavigationDoubleDrawerComponent
+        NavigationDoubleDrawerComponent,
+        BreadcrumbsComponent
     ],
 	imports: [
 		CommonModule,
@@ -82,7 +84,8 @@ import { MatDividerModule } from '@angular/material/divider';
         DefaultSimpleTaskViewComponent,
         DefaultTabbedTaskViewComponent,
         DefaultTabbedCaseViewComponent,
-        DefaultTabViewComponent
+        DefaultTabViewComponent,
+        BreadcrumbsComponent
     ],
     providers: [
         { provide: NAE_GROUP_NAVIGATION_COMPONENT_RESOLVER_COMPONENT, useValue: GroupNavigationComponentResolverComponent },

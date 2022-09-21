@@ -1,0 +1,19 @@
+.breadcrumbs {
+    margin: 8px;
+    -webkit-box-align: center;
+    align-items: center;
+    align-self: center;
+    display: flex;
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+    flex-wrap: wrap;
+}
+
+.breadcrumbs-span:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.delimeter {
+    margin: 0 8px;
+}
