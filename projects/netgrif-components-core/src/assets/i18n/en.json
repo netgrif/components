@@ -88,7 +88,7 @@
             "noNets": "No allowed Nets",
             "createCase": "Successful create new case",
             "defaultCaseName": "with default case name",
-            "createCaseError": "New case created, but an error occurred while executing actions"
+            "createCaseError": "A new case was created, but an error occurred while executing actions"
         },
         "user": {
             "assign": "User Assign",

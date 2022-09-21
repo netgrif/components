@@ -88,7 +88,7 @@
             "noNets": "Es gibt keine erlaubte Netze",
             "createCase": "Neuen Fall würde erfolgreich erzeugt",
             "defaultCaseName": "mit einem Standardfallnamen",
-            "createCaseError": "Neuer Fall erstellt, aber beim Ausführen von Aktionen ist ein Fehler aufgetreten"
+            "createCaseError": "Neuer Fall wurde erstellt, aber beim Ausführen von Aktionen ist ein Fehler aufgetreten"
         },
         "user": {
             "assign": "Benützer zuweisen",
