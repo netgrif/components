@@ -6,7 +6,7 @@ import {ImpersonationService, ImpersonationUserSelectService} from 'netgrif-comp
     templateUrl: './impersonation-demo.component.html',
     styleUrls: ['./impersonation-demo.component.scss']
 })
-export class ImpersonationDemoComponent implements OnInit {
+export class ImpersonationDemoComponent {
 
     constructor(
         private _impersonationSelect: ImpersonationUserSelectService,
@@ -15,9 +15,6 @@ export class ImpersonationDemoComponent implements OnInit {
         this._impersonation.impersonating$.subscribe((isImpersonating: boolean) => {
             console.log("Is impersonating " + isImpersonating);
         });
-    }
-
-    ngOnInit(): void {
     }
 
     public impersonate(): void {

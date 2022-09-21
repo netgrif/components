@@ -6,16 +6,13 @@ import {ImpersonationService, ImpersonationUserSelectService, UserService} from 
     templateUrl: './impersonate-quick-panel.component.html',
     styleUrls: ['./impersonate-quick-panel.component.scss']
 })
-export class ImpersonateQuickPanelComponent implements OnInit {
+export class ImpersonateQuickPanelComponent {
 
     constructor(
         private impersonateUserSelect: ImpersonationUserSelectService,
         private impersonationService: ImpersonationService,
         private user: UserService,
     ) {}
-
-    ngOnInit(): void {
-    }
 
     public impersonate(): void {
         this.impersonateUserSelect.selectImpersonate();
