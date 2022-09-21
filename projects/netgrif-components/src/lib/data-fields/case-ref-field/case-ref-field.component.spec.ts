@@ -10,8 +10,7 @@ import {
     TestConfigurationService,
     CaseRefField,
     PetriNetResourceService,
-    SnackBarModule,
-    ErrorSnackBarComponent
+    SnackBarModule
 } from '@netgrif/components-core';
 import {CaseRefFieldComponent} from './case-ref-field.component';
 import {AngularResizeEventModule} from 'angular-resize-event';
@@ -20,7 +19,6 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {PetriflowCanvasModule} from '@netgrif/petriflow.svg';
 import {Component} from '@angular/core';
 import {of} from 'rxjs';
-import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 
 describe('CaseRefFieldComponent', () => {
     let component: CaseRefFieldComponent;

@@ -3,7 +3,6 @@ import {Layout} from '../../models/layout';
 import {Validation} from '../../models/validation';
 import {Component} from '../../models/component';
 import {DataField} from '../../models/abstract-data-field';
-import {TextFieldView} from '../../text-field/models/text-field';
 
 export class CaseRefField extends DataField<string> {
 
