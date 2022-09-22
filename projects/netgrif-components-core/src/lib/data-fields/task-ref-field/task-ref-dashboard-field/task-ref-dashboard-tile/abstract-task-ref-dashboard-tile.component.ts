@@ -15,6 +15,8 @@ import {FieldTypeResource} from '../../../../task-content/model/field-type-resou
 import {TaskContentService} from '../../../../task-content/services/task-content.service';
 import {TaskOperations} from '../../../../task/interfaces/task-operations';
 import {NAE_TASK_OPERATIONS} from '../../../../task/models/task-operations-injection-token';
+import {TaskDataService} from '../../../../task/services/task-data.service';
+import {AfterAction} from '../../../../utility/call-chain/after-action';
 
 @Component({
     selector: 'ncc-abstract-task-ref-dashboard-tile',
@@ -34,6 +36,7 @@ export abstract class AbstractTaskRefDashboardTileComponent implements OnDestroy
                           protected _taskResourceService: TaskResourceService,
                           protected _callChainService: CallChainService,
                           protected _parentTaskContentService: TaskContentService,
+                          protected _taskDataService: TaskDataService,
                           @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations) {
     }
 
@@ -98,7 +101,7 @@ export abstract class AbstractTaskRefDashboardTileComponent implements OnDestroy
                         this._logger.error(`Could reference created task ref dashboard tile in the task ref`, outcome.error);
                         return;
                     }
-                    this._taskOperations.forceReload();
+                    this._taskDataService.performGetDataRequest(new AfterAction(), true, new AfterAction());
                 }, error => {
                     this._logger.error(`Could reference created task ref dashboard tile in the task ref`, error);
                 });

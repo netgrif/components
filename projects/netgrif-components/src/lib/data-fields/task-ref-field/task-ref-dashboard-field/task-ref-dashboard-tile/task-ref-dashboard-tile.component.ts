@@ -6,7 +6,7 @@ import {
     LoggerService,
     NAE_TASK_OPERATIONS,
     ProcessService,
-    TaskContentService,
+    TaskContentService, TaskDataService,
     TaskOperations,
     TaskResourceService,
     UnlimitedTaskContentService
@@ -34,11 +34,12 @@ export class TaskRefDashboardTileComponent extends AbstractTaskRefDashboardTileC
                 logger: LoggerService,
                 taskResourceService: TaskResourceService,
                 callChainService: CallChainService,
+                taskDataService: TaskDataService,
                 @SkipSelf() parentTaskContentService: TaskContentService,
                 @Inject(NAE_TASK_OPERATIONS) taskOperations: TaskOperations,
                 protected _injector: Injector,
                 @Self() protected _myTaskContentService: TaskContentService) {
-        super(caseResourceService, processService, logger, taskResourceService, callChainService, parentTaskContentService, taskOperations);
+        super(caseResourceService, processService, logger, taskResourceService, callChainService, parentTaskContentService, taskDataService, taskOperations);
     }
 
     ngOnInit(): void {
