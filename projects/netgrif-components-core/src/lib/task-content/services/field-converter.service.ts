@@ -109,7 +109,7 @@ export class FieldConverterService {
                 return new I18nField(item.stringId, item.name, item.value ?? {defaultValue: ''}, item.behavior, item.placeholder,
                     item.description, item.layout, item.validations, item.component);
             case FieldTypeResource.CASE_REF:
-                return new CaseRefField(item.stringId, item.name, item.value ?? {defaultValue: ''}, item.behavior, item.placeholder,
+                return new CaseRefField(item.stringId, item.name, item.value ?? [], item.behavior, item.placeholder,
                     item.description, item.layout, item.validations, item.component);
         }
     }

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input} from '@angular/core';
+import {AfterViewInit, Component, Inject, Input, Optional} from '@angular/core';
 import {
     PetriflowArc,
     PetriflowCanvasConfigurationService,
@@ -29,29 +29,34 @@ import {PetriNetImport} from '../../resources/interface/petri-net-import';
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
+import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
+import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 
 @Component({
     selector: 'ncc-abstract-case-ref-field',
     template: ''
 })
-export abstract class AbstractCaseRefFieldComponent implements AfterViewInit {
+export abstract class AbstractCaseRefFieldComponent extends AbstractDataFieldComponent implements AfterViewInit {
 
     @Input() public dataField: CaseRefField;
 
     constructor(protected _petriflowCanvasService: PetriflowCanvasService, protected _petriflowFactoryService: PetriflowCanvasFactoryService,
                 protected _petriflowConfigService: PetriflowCanvasConfigurationService, protected _caseResourceService: CaseResourceService,
                 protected _petriNetResourceService: PetriNetResourceService, protected _log: LoggerService, protected _snackBar: SnackBarService,
-                protected _translate: TranslateService) {
+                protected _translate: TranslateService, @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+        super(informAboutInvalidData);
     }
 
     ngAfterViewInit(): void {
-        this._petriNetResourceService.getNetByCaseId(this.dataField.value).subscribe(net => {
-            if (net) {
-                this.createNet(net);
+        this.formControl.valueChanges.subscribe(value => {
+            if (value?.length > 0) {
+                this._petriNetResourceService.getNetByCaseId(value[0]).subscribe(net => {
+                    this.createNet(net);
+                }, error => {
+                    this._log.error('Getting net by Case ID failed in field ['+ this.dataField.stringId + ']', error);
+                    this._snackBar.openErrorSnackBar(this._translate.instant('dataField.snackBar.caseNetGetFailed'));
+                });
             }
-        }, error => {
-            this._log.error('Getting net by Case ID failed in field ['+ this.dataField.stringId + ']', error);
-            this._snackBar.openErrorSnackBar(this._translate.instant('dataField.snackBar.caseNetGetFailed'));
         });
     }
 
@@ -66,16 +71,16 @@ export abstract class AbstractCaseRefFieldComponent implements AfterViewInit {
             trans.push(t);
             minX = Math.min(minX, value.position.x);
             minY = Math.min(minY, value.position.y);
-            this.setPlaceActions(t.canvasElement.element);
+            this.setEmptyEvents(t.canvasElement.element);
         })
         net.places.forEach((value) => {
             const p = this.createPlace(value)
             places.push(p);
             minX = Math.min(minX, value.position.x);
             minY = Math.min(minY, value.position.y);
-            this.setPlaceActions(p.canvasElement.element);
+            this.setEmptyEvents(p.canvasElement.element);
             p.canvasElement.markingTokens.forEach(markingToken => {
-                this.setPlaceActions(markingToken);
+                this.setEmptyEvents(markingToken);
             });
         })
         net.arcs.forEach((arc) => {
@@ -85,7 +90,7 @@ export abstract class AbstractCaseRefFieldComponent implements AfterViewInit {
                 minX = Math.min(minX, value.x);
                 minY = Math.min(minY, value.y);
             });
-            this.setPlaceActions(a.element.arcLine);
+            this.setEmptyEvents(a.element.arcLine);
         });
         trans.forEach(value => {
             if (net.assignedTasks.includes(value.canvasElement.label.textContent)) {
@@ -242,7 +247,7 @@ export abstract class AbstractCaseRefFieldComponent implements AfterViewInit {
             this.dataField.layout.rows * CaseRefField.FIELD_HEIGHT : CaseRefField.FIELD_HEIGHT;
     }
 
-    protected setPlaceActions(svgElement: SVGElement) {
+    protected setEmptyEvents(svgElement: SVGElement) {
         svgElement.onmouseenter = () => {};
         svgElement.onmouseleave = () => {};
     }

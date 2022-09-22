@@ -1,10 +1,10 @@
-import {Component} from '@angular/core';
+import {Component, Inject, Optional} from '@angular/core';
 import {
     AbstractCaseRefFieldComponent,
     CaseResourceService,
     PetriNetResourceService,
     LoggerService,
-    SnackBarService
+    SnackBarService, NAE_INFORM_ABOUT_INVALID_DATA
 } from '@netgrif/components-core';
 import {
     PetriflowCanvasConfigurationService,
@@ -23,9 +23,9 @@ export class CaseRefFieldComponent extends AbstractCaseRefFieldComponent {
     constructor(protected _petriflowCanvasService: PetriflowCanvasService, protected _petriflowFactoryService: PetriflowCanvasFactoryService,
                 protected _petriflowConfigService: PetriflowCanvasConfigurationService, protected _caseResourceService: CaseResourceService,
                 protected _petriNetResourceService: PetriNetResourceService, protected _log: LoggerService, protected _snackBar: SnackBarService,
-                protected _translate: TranslateService){
+                protected _translate: TranslateService, @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null){
         super(_petriflowCanvasService, _petriflowFactoryService, _petriflowConfigService, _caseResourceService, _petriNetResourceService,
-            _log, _snackBar, _translate);
+            _log, _snackBar, _translate, informAboutInvalidData);
     }
 
 }

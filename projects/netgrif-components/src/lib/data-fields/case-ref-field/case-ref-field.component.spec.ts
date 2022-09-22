@@ -62,7 +62,7 @@ describe('CaseRefFieldComponent', () => {
     template: '<nc-case-ref-field [dataField]="field"></nc-case-ref-field>'
 })
 class TestWrapperComponent {
-    field = new CaseRefField('', '', '', {
+    field = new CaseRefField('', '', [], {
         required: true,
     });
 }
