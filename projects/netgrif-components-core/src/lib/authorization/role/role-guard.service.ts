@@ -42,13 +42,13 @@ export class RoleGuardService implements CanActivate {
             if (view.access.hasOwnProperty('bannedRole')) {
                 const bannedRoles = this.parseRoleConstraints(view.access.bannedRole, url);
 
-                return bannedRoles.length > 0 && !bannedRoles.some(constraint => {
+                return (bannedRoles.length == 0) || (bannedRoles.length > 0 && !bannedRoles.some(constraint => {
                     if (constraint.roleIdentifier) {
                         return this._userService.hasRoleByIdentifier(constraint.roleIdentifier, constraint.processIdentifier);
                     } else {
                         return this._userService.hasRoleByName(constraint.roleName, constraint.processIdentifier);
                     }
-                })
+                }));
             }
 
             if (view.access.hasOwnProperty('role')) {
