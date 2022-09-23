@@ -1,6 +1,5 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import {Router} from '@angular/router';
-import {take} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
 import {AbstractResourceService, ResourceProvider, UserResource} from '../../resources/public-api';
 import {ConfigurationService} from '../../configuration/configuration.service';
@@ -30,13 +29,7 @@ export class ImpersonationService extends AbstractResourceService implements OnD
                        protected _log: LoggerService,
                        private _translate: TranslateService) {
         super('impersonation', provider, _configService);
-        this._sub = this._userService.user$.subscribe(user => {
-            if (this._lastUser && this._lastUser.isImpersonating() != user.isImpersonating()) {
-                this._filter.removeAllFilters();
-                this._impersonating$.next(user.isImpersonating());
-            }
-            this._lastUser = user;
-        });
+        this._sub = this._userService.user$.subscribe(user => this._resolveUserChange(user));
     }
 
     public get impersonating$(): Observable<boolean> {
@@ -45,17 +38,17 @@ export class ImpersonationService extends AbstractResourceService implements OnD
 
     public impersonateUser(userId: string): void {
         this.provider.post$('impersonate/user/' + userId, this.SERVER_URL, {}).subscribe((user: UserResource) => {
-            this.resolveSuccess(user);
+            this._resolveSuccess(user);
         }, (response => {
-            this.resolveError(response);
+            this._resolveError(response);
         }));
     }
 
     public impersonateByConfig(configId: string): void {
         this.provider.post$('impersonate/config/' + configId, this.SERVER_URL, {}).subscribe((user: UserResource) => {
-            this.resolveSuccess(user);
+            this._resolveSuccess(user);
         }, (response => {
-            this.resolveError(response);
+            this._resolveError(response);
         }));
     }
 
@@ -68,12 +61,12 @@ export class ImpersonationService extends AbstractResourceService implements OnD
         }));
     }
 
-    protected resolveSuccess(user: UserResource) {
+    protected _resolveSuccess(user: UserResource) {
         this._snackbar.openSuccessSnackBar(this._translate.instant('impersonation.user.successfullyRepresented'));
         this._triggerReload();
     }
 
-    protected resolveError(response: any) {
+    protected _resolveError(response: any) {
         if (response.status === 400) {
             response.error.alreadyImpersonated ?
                 this._snackbar.openErrorSnackBar(this._translate.instant('impersonation.user.currentlyAlreadyRepresented')) :
@@ -87,10 +80,17 @@ export class ImpersonationService extends AbstractResourceService implements OnD
         this._userService.reload();
     }
 
+    protected _resolveUserChange(user: User) {
+        if (this._lastUser && this._lastUser.isImpersonating() != user.isImpersonating()) {
+            this._filter.removeAllFilters();
+            this._impersonating$.next(user.isImpersonating());
+        }
+        this._lastUser = user;
+    }
+
     ngOnDestroy(): void {
         if (this._sub) {
             this._sub.unsubscribe();
         }
     }
-
 }
