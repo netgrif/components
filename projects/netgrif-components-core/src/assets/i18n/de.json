@@ -465,13 +465,13 @@
     },
     "impersonation": {
         "user": {
-            "successfullyRepresented": "User successfully represented",
-            "currentlyAlreadyRepresented": "User is already currently represented",
-            "currentlyLogged": "User is currently logged in"
+            "successfullyRepresented": "Benutzer erfolgreich vertreten",
+            "currentlyAlreadyRepresented": "Benutzer ist bereits aktuell vertreten",
+            "currentlyLogged": "Benutzer ist derzeit angemeldet"
         },
         "action": {
-            "failed": "Action failed",
-            "deactivated": "Representation was successfully deactivated"
+            "failed": "Aktion ist fehlgeschlagen",
+            "deactivated": "Vertretung wurde erfolgreich deaktiviert"
         }
     }
 }
