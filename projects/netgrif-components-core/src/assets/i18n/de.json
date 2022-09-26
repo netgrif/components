@@ -94,7 +94,7 @@
             "choose": "Benutzer auswählen",
             "noUser": "Es gibt keine Benutzer",
             "err": "Beim laden der Benutzer ist eine Fehler aufgetreten",
-            "showcase": "Benutzeransicht Modus ist nicht ausgewählt!"
+            "showcase": "Die Benutzeransicht ist nicht gesetzt!"
         },
         "ldapGroup": {
             "choose": "LDAP-Gruppe suchen",
