@@ -90,11 +90,11 @@
             "defaultCaseName": "mit einem Standardfallnamen"
         },
         "user": {
-            "assign": "Benutzer zuweisen",
-            "choose": "Benutzer auswählen",
-            "noUser": "Es gibt keine Benutzer",
-            "err": "Beim laden der Benutzer ist eine Fehler aufgetreten",
-            "showcase": "Benutzeransicht Modus ist nicht ausgewählt!"
+            "assign": "Benützer zuweisen",
+            "choose": "Benützer auswählen",
+            "noUser": "Es gibt keine Benützer",
+            "err": "Beim laden der Benützer ist eine Fehler aufgetreten",
+            "showcase": "Benützeransichtmodus ist nicht ausgewählt!"
         },
         "ldapGroup": {
             "choose": "LDAP-Gruppe suchen",
@@ -288,8 +288,8 @@
             "enterEmail": "Ihre E-Mail Adresse eingeben"
         },
         "login": {
-            "length": "Das Benutzername muss mindestens 4 Zeichen enthalten",
-            "login": "Benutzername",
+            "length": "Das Benützername muss mindestens 4 Zeichen enthalten",
+            "login": "Benützername",
             "wrongCredentials": "Falsche Anmeldeinformationen!",
             "loginButton": "Anmelden",
             "reset": "Kennwort wiederherstellen",
