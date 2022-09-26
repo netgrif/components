@@ -216,7 +216,9 @@
                         "from": "./doc/workflow-view-example/workflow-view-example.component"
                     },
                     "access": {
-                        "authority": ["ROLE_ADMIN"]
+                        "authority": [
+                            "ROLE_ADMIN"
+                        ]
                     },
                     "navigation": {
                         "title": "Workflow view",
@@ -1238,8 +1240,9 @@
             ]
         },
         "auth": {
-            "loginRedirect": "login",
-            "logoutRedirect": "login"
+            "toLoginRedirect": "login",
+            "onLoginRedirect": "tabbed-views",
+            "onLogoutRedirect": "login"
         },
         "routing": {
             "defaultRedirect": "authentication",

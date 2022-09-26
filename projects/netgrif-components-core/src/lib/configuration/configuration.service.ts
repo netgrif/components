@@ -15,6 +15,8 @@ export abstract class ConfigurationService {
     }
 
     /**
+     * Calls to this method should be avoided as creating a deep copy of the configuration has a large overhead
+     *
      * @returns a deep copy of the entire configuration object
      */
     public get(): NetgrifApplicationEngine {
@@ -182,6 +184,32 @@ export abstract class ConfigurationService {
     public getServicesConfiguration(): Services | undefined {
         const subtree = this.getConfigurationSubtree(['services']) as Services;
         return subtree !== undefined ? this.deepCopy(subtree) as Services : undefined;
+    }
+
+    /**
+     * @returns the value stored in the [onLogoutRedirect]{@link Services#auth.onLogoutRedirect} attribute if defined.
+     * If not and the deprecated attribute [logoutRedirect]{@link Services#auth.logoutRedirect} is defined then its value is returned.
+     * Otherwise, `undefined` is returned.
+     */
+    public getOnLogoutPath(): string | undefined {
+        return this.configuration?.services?.auth?.onLogoutRedirect ?? this.configuration?.services?.auth?.logoutRedirect;
+    }
+
+    /**
+     * @returns the value stored in the [toLoginRedirect]{@link Services#auth.toLoginRedirect} attribute if defined.
+     * If not and the deprecated attribute [loginRedirect]{@link Services#auth.loginRedirect} is defined then its value is returned.
+     * Otherwise, `undefined` is returned.
+     */
+    public getToLoginPath(): string | undefined {
+        return this.configuration?.services?.auth?.toLoginRedirect ?? this.configuration?.services?.auth?.loginRedirect;
+    }
+
+    /**
+     * @returns the value stored in the [onLoginRedirect]{@link Services#auth.onLoginRedirect} attribute if defined.
+     * Otherwise, `undefined` is returned.
+     */
+    public getOnLoginPath(): string | undefined {
+        return this.configuration?.services?.auth?.onLoginRedirect;
     }
 
     private getView(searched: string, view: View): Array<string> {
