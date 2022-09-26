@@ -110,10 +110,10 @@
             "choose-one-option": "Wählen Sie eine Option aus"
         },
         "impersonation": {
-            "title": "Impersonate user",
-            "submit": "Impersonate",
-            "cease": "Cancel impersonation",
-            "impersonating": "impersonating"
+            "title": "Benutzer vertreten",
+            "submit": "Vertreten",
+            "cease": "Vertretung abbrechen",
+            "impersonating": "in Vertretung als"
         }
     },
     "search": {
