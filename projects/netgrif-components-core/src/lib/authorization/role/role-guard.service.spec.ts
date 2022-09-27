@@ -48,13 +48,23 @@ describe('RoleGuardService', () => {
         expect(service).toBeTruthy();
     });
 
-    it('should access view', () => {
-        const view = {access: {role: [], bannedRole: []} as Access} as View
-        expect(service.canAccessView(view, 'test')).toBeFalse();
+    it('should access view with role only', () => {
+        const view = {access: {role: ['test.role_user']} as Access} as View
+        expect(service.canAccessView(view, 'test')).toBeTrue();
     });
 
     it('should not access view', () => {
-        const view = {access: {role: [], bannedRole: ['test.ROLE_USER']} as Access} as View
+        const view = {access: {role: [], bannedRole: []} as Access} as View
+        expect(service.canAccessView(view, 'test')).toBeTrue();
+    });
+
+    it('should not access view with banned role only', () => {
+        const view = {access: {bannedRole: ['test.banned_role']} as Access} as View
+        expect(service.canAccessView(view, 'test')).toBeFalse();
+    });
+
+    it('should not access view with role and banned role', () => {
+        const view = {access: {role: ['test.role_user'], bannedRole: ['test.banned_role']} as Access} as View
         expect(service.canAccessView(view, 'test')).toBeFalse();
     });
 });
@@ -64,13 +74,21 @@ class CustomMockUserService extends MockUserService {
     constructor() {
         super();
         this._user = new User('123', 'test@netgrif.com', 'Test', 'User', ['ROLE_USER'], [{
-            stringId: 'ROLE_USER',
-            name: 'id',
+            stringId: 'role_user',
+            name: 'role_user',
             description: '',
-            importId: 'id',
+            importId: 'role_user',
             netImportId: 'test',
             netVersion: '1.0.0',
-            netStringId: 'stringId',
-        }]);
+            netStringId: 'test',
+        },{
+            stringId: 'banned_role',
+            name: 'banned_role',
+            description: '',
+            importId: 'banned_role',
+            netImportId: 'test',
+            netVersion: '1.0.0',
+            netStringId: 'test',
+        } ]);
     }
 }
