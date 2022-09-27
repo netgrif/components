@@ -27,7 +27,7 @@ export class ImpersonationService extends AbstractResourceService implements OnD
                        protected _snackbar: SnackBarService,
                        protected _filter: FilterRepository,
                        protected _log: LoggerService,
-                       private _translate: TranslateService) {
+                       protected _translate: TranslateService) {
         super('impersonation', provider, _configService);
         this._sub = this._userService.user$.subscribe(user => this._resolveUserChange(user));
     }

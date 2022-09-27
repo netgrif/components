@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ImpersonationService, ImpersonationUserSelectService} from 'netgrif-components-core';
+import {ImpersonationService, ImpersonationUserSelectService, LoggerService} from '@netgrif/components-core';
 
 @Component({
     selector: 'nae-app-impersonation-demo',
@@ -11,9 +11,10 @@ export class ImpersonationDemoComponent {
     constructor(
         private _impersonationSelect: ImpersonationUserSelectService,
         private _impersonation: ImpersonationService,
+        private _log: LoggerService,
     ) {
         this._impersonation.impersonating$.subscribe((isImpersonating: boolean) => {
-            console.log("Is impersonating " + isImpersonating);
+            this._log.debug("Is impersonating " + isImpersonating);
         });
     }
 

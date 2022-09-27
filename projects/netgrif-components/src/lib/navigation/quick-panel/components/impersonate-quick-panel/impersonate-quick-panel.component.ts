@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {ImpersonationService, ImpersonationUserSelectService, UserService} from 'netgrif-components-core';
+import {ImpersonationService, ImpersonationUserSelectService, UserService} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-impersonate-quick-panel',

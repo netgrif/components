@@ -11,7 +11,7 @@
 //     SimpleFilter,
 //     SnackBarService,
 //     TranslateLibModule
-// } from 'netgrif-components-core';
+// } from '@netgrif/components-core';
 // import {
 //     NaeExampleAppConfigurationService
 // } from '../../../../../../nae-example-app/src/app/nae-example-app-configuration.service';

@@ -6,12 +6,9 @@ import {
     ConfigurationService,
     MaterialModule,
     MockAuthenticationMethodService,
-    SnackBarService,
+    SnackBarService, TestConfigurationService,
     TranslateLibModule
-} from 'netgrif-components-core';
-import {
-    NaeExampleAppConfigurationService
-} from '../../../../../../../nae-example-app/src/app/nae-example-app-configuration.service';
+} from '@netgrif/components-core';
 import {CommonModule} from '@angular/common';
 import {RouterTestingModule} from '@angular/router/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
@@ -35,7 +32,7 @@ describe('ImpersonateQuickPanelComponent', () => {
             providers: [
                 SnackBarService,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-                {provide: ConfigurationService, useClass: NaeExampleAppConfigurationService},
+                {provide: ConfigurationService, useClass: TestConfigurationService},
             ]
         })
             .compileComponents();
