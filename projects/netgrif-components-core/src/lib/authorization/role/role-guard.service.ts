@@ -44,7 +44,9 @@ export class RoleGuardService implements CanActivate {
                 const allowedRoles = this.parseRoleConstraints(view.access.role, url);
 
                 if (bannedRoles.length == 0 && allowedRoles.length == 0) {
-                    return true;
+                    this._log.warn("Both 'roles' and 'bannedRole' are defined on view [" + view.routing + "], but" +
+                        " they are empty lists. No one will be able to navigate to that view.")
+                    return false;
                 }
 
                 if (bannedRoles.some(role => this.decideAccessByRole(role))) {
@@ -55,8 +57,8 @@ export class RoleGuardService implements CanActivate {
 
             if (view.access.hasOwnProperty('bannedRole')) {
                 const bannedRoles = this.parseRoleConstraints(view.access.bannedRole, url);
-                return bannedRoles.length == 0 || !bannedRoles.some(constraint => {
-                    return  this.decideAccessByRole(constraint);
+                return !bannedRoles.some(constraint => {
+                    return this.decideAccessByRole(constraint);
                 });
             }
 

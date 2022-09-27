@@ -55,7 +55,7 @@ describe('RoleGuardService', () => {
 
     it('should not access view', () => {
         const view = {access: {role: [], bannedRole: []} as Access} as View
-        expect(service.canAccessView(view, 'test')).toBeTrue();
+        expect(service.canAccessView(view, 'test')).toBeFalse();
     });
 
     it('should not access view with banned role only', () => {
