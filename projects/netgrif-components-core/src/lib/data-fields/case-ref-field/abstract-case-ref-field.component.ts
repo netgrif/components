@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, Input, Optional} from '@angular/core';
+import {AfterViewInit, Component, Inject, Input, OnDestroy, Optional} from '@angular/core';
 import {
     PetriflowArc,
     PetriflowCanvasConfigurationService,
@@ -31,14 +31,16 @@ import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'ncc-abstract-case-ref-field',
     template: ''
 })
-export abstract class AbstractCaseRefFieldComponent extends AbstractDataFieldComponent implements AfterViewInit {
+export abstract class AbstractCaseRefFieldComponent extends AbstractDataFieldComponent implements AfterViewInit, OnDestroy {
 
     @Input() public dataField: CaseRefField;
+    protected sub: Subscription;
 
     constructor(protected _petriflowCanvasService: PetriflowCanvasService, protected _petriflowFactoryService: PetriflowCanvasFactoryService,
                 protected _petriflowConfigService: PetriflowCanvasConfigurationService, protected _caseResourceService: CaseResourceService,
@@ -48,7 +50,7 @@ export abstract class AbstractCaseRefFieldComponent extends AbstractDataFieldCom
     }
 
     ngAfterViewInit(): void {
-        this.formControl.valueChanges.subscribe(value => {
+        this.sub = this.formControl.valueChanges.subscribe(value => {
             if (value?.length > 0) {
                 this._petriNetResourceService.getNetByCaseId(value[0]).subscribe(net => {
                     this.createNet(net);
@@ -252,4 +254,8 @@ export abstract class AbstractCaseRefFieldComponent extends AbstractDataFieldCom
         svgElement.onmouseleave = () => {};
     }
 
+    ngOnDestroy() {
+        super.ngOnDestroy();
+        this.sub.unsubscribe();
+    }
 }
