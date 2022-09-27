@@ -8,6 +8,7 @@
            [formControl]="formControlRef"
            [matAutocomplete]="auto"
            [required]="enumerationField.behavior.required"
+           (focus)="change()"
            (keyup)="change()">
     <mat-autocomplete [displayWith]="renderSelection" autoActiveFirstOption #auto="matAutocomplete">
         <mat-option [value]="null">---</mat-option>

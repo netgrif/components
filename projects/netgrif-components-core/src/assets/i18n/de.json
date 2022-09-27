@@ -87,14 +87,15 @@
             "errThird": "Sie müssen eine Farbe auswählen.",
             "noNets": "Es gibt keine erlaubte Netze",
             "createCase": "Neuen Fall würde erfolgreich erzeugt",
-            "defaultCaseName": "mit einem Standardfallnamen"
+            "defaultCaseName": "mit einem Standardfallnamen",
+            "createCaseError": "Neuer Fall wurde erstellt, aber beim Ausführen von Aktionen ist ein Fehler aufgetreten"
         },
         "user": {
-            "assign": "Benützer zuweisen",
-            "choose": "Benützer auswählen",
-            "noUser": "Es gibt keine Benützer",
-            "err": "Beim laden der Benützer ist eine Fehler aufgetreten",
-            "showcase": "Benützeransichtmodus ist nicht ausgewählt!"
+            "assign": "Benutzer zuweisen",
+            "choose": "Benutzer auswählen",
+            "noUser": "Es gibt keine Benutzer",
+            "err": "Beim laden der Benutzer ist eine Fehler aufgetreten",
+            "showcase": "Die Benutzeransicht ist nicht gesetzt!"
         },
         "ldapGroup": {
             "choose": "LDAP-Gruppe suchen",
@@ -288,8 +289,8 @@
             "enterEmail": "Ihre E-Mail Adresse eingeben"
         },
         "login": {
-            "length": "Das Benützername muss mindestens 4 Zeichen enthalten",
-            "login": "Benützername",
+            "length": "Das Benutzername muss mindestens 4 Zeichen enthalten",
+            "login": "Benutzername",
             "wrongCredentials": "Falsche Anmeldeinformationen!",
             "loginButton": "Anmelden",
             "reset": "Kennwort wiederherstellen",

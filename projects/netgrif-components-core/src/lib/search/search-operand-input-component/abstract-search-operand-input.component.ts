@@ -62,7 +62,7 @@ export abstract class AbstractSearchOperandInputComponent implements OnInit, OnD
         return this._filteredOptions$;
     }
 
-    public get isInputFilled(): boolean {
+    public isInputFilled(): boolean {
         if (!this._inputConfirmed) {
             return false;
         }
@@ -79,7 +79,7 @@ export abstract class AbstractSearchOperandInputComponent implements OnInit, OnD
             }
             this._initialExpansion = false;
 
-            if (!this.isInputFilled) {
+            if (!this.isInputFilled()) {
                 setTimeout(() => {
                     input.nativeElement.focus();
                 });
