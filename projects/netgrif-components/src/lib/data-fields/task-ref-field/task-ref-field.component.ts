@@ -20,7 +20,7 @@ export class TaskRefFieldComponent extends AbstractTaskRefFieldComponent {
     }
 
     getGridRows(): string {
-        return `repeat(${this.dataField.dashboardRows}, 1fr)`;
+        return `repeat(${this.dataField.dashboardRows}, minmax(320px, auto))`;
     }
 
     getTileGridColumn(tile: TaskRefDashboardTile): string {

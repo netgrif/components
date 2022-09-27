@@ -101,7 +101,7 @@ export abstract class AbstractTaskRefDashboardTileComponent implements OnDestroy
                         this._logger.error(`Could reference created task ref dashboard tile in the task ref`, outcome.error);
                         return;
                     }
-                    this._taskDataService.performGetDataRequest(new AfterAction(), true, new AfterAction());
+                    this._taskDataService.initializeTaskDataFields(new AfterAction(), true);
                 }, error => {
                     this._logger.error(`Could reference created task ref dashboard tile in the task ref`, error);
                 });

@@ -1,5 +1,5 @@
 <mat-card class="dashboard-card custom-mat-card" fxLayout="row" fxLayoutAlign="start start">
-    <ngx-charts-line-chart class="custom-chart"
+    <ngx-charts-line-chart class="custom-chart dashboard-line-chart"
                            [legend]="showLegend"
                            [showXAxisLabel]="showXAxisLabel"
                            [showYAxisLabel]="showYAxisLabel"
@@ -9,7 +9,6 @@
                            [yAxisLabel]="card.yAxisLabel"
                            [timeline]="timeline"
                            [results]="multi"
-                           (select)="onSelect($event)"
-    >
+                           (select)="onSelect($event)">
     </ngx-charts-line-chart>
 </mat-card>

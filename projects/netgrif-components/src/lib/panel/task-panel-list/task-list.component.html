@@ -9,7 +9,7 @@
 
         <mat-accordion [multi]="allowMultiOpen" class="full-width" fxFlex="100">
             <cdk-virtual-scroll-viewport itemSize="52" (scrolledIndexChange)="loadNextPage()"
-                                         class="task-panel-scroll-container full-width full-height">
+                                         class="task-panel-scroll-container full-width full-height dashboard-task-list">
                 <nc-task-panel
                     [textEllipsis]="textEllipsis"
                     *cdkVirtualFor="let task of tasks;

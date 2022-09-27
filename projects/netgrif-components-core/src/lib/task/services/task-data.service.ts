@@ -125,7 +125,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
      * @param force set to `true` if you need force reload of all task data
      * @param nextEvent indicates to the event queue that the next event can be processed
      */
-    public performGetDataRequest(afterAction: AfterAction, force: boolean, nextEvent: AfterAction) {
+    protected performGetDataRequest(afterAction: AfterAction, force: boolean, nextEvent: AfterAction) {
         if (this._safeTask.dataSize > 0 && !force) {
             this.sendNotification(TaskEvent.GET_DATA, true);
             afterAction.resolve(true);
