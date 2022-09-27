@@ -42,6 +42,11 @@ export class RoleGuardService implements CanActivate {
             if (view.access.hasOwnProperty('role') && view.access.hasOwnProperty('bannedRole')) {
                 const bannedRoles = this.parseRoleConstraints(view.access.bannedRole, url);
                 const allowedRoles = this.parseRoleConstraints(view.access.role, url);
+
+                if (bannedRoles.length == 0 && allowedRoles.length == 0) {
+                    return true;
+                }
+
                 if (bannedRoles.some(role => this.decideAccessByRole(role))) {
                     return false;
                 }
