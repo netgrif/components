@@ -6,8 +6,9 @@ import {authenticationServiceFactory} from './authentication.factory';
 import {ConfigurationService} from '../configuration/configuration.service';
 import {AuthenticationMethodService} from './services/authentication-method.service';
 import {OverlayModule} from '@angular/cdk/overlay';
-import {MatProgressSpinnerModule, MatSpinner} from '@angular/material/progress-spinner';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {AnonymousAuthenticationInterceptor} from './services/anonymous-authentication-interceptor';
+import { TimezoneInterceptor } from './services/timezone-interceptor';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import {AnonymousAuthenticationInterceptor} from './services/anonymous-authentic
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: AnonymousAuthenticationInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: TimezoneInterceptor, multi: true },
         { provide: AuthenticationMethodService, useFactory: authenticationServiceFactory, deps: [ConfigurationService, HttpClient] },
         // AuthenticationEffects
     ]
