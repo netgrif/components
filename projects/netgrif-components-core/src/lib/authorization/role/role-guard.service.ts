@@ -43,12 +43,13 @@ export class RoleGuardService implements CanActivate {
                 const bannedRoles = this.parseRoleConstraints(view.access.bannedRole, url);
                 const allowedRoles = this.parseRoleConstraints(view.access.role, url);
 
-                if (bannedRoles.length == 0 && allowedRoles.length == 0) {
+                if (bannedRoles.some(role => this.decideAccessByRole(role))) {
                     return false;
                 }
 
-                if (bannedRoles.some(role => this.decideAccessByRole(role))) {
-                    return false;
+                if (allowedRoles.length === 0) {
+                    this._log.warn(`View at '${url}' defines role access constraint with an empty array!`
+                        + ` No users will be allowed to enter this view!`);
                 }
                 return allowedRoles.some(role => this.decideAccessByRole(role)); // user was not denied access by a banned role, they need at least one allowed role
             }
@@ -62,6 +63,10 @@ export class RoleGuardService implements CanActivate {
 
             if (view.access.hasOwnProperty('role')) {
                 const allowedRoles = this.parseRoleConstraints(view.access.role, url);
+                if (allowedRoles.length === 0) {
+                    this._log.warn(`View at '${url}' defines role access constraint with an empty array!`
+                        + ` No users will be allowed to enter this view!`);
+                }
                 return allowedRoles.some(constraint => {
                     return this.decideAccessByRole(constraint);
                 });
@@ -77,8 +82,6 @@ export class RoleGuardService implements CanActivate {
         }
         if (Array.isArray(roleConstrains)) {
             if (roleConstrains.length === 0) {
-                this._log.warn(`View at '${viewUrl}' defines role access constraint with an empty array!`
-                    + ` No users will be allowed to enter this view!`);
                 return [];
             }
             if (typeof roleConstrains[0] === 'string') {
