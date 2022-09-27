@@ -44,8 +44,6 @@ export class RoleGuardService implements CanActivate {
                 const allowedRoles = this.parseRoleConstraints(view.access.role, url);
 
                 if (bannedRoles.length == 0 && allowedRoles.length == 0) {
-                    this._log.warn("Both 'roles' and 'bannedRole' are defined on view [" + view.routing + "], but" +
-                        " they are empty lists. No one will be able to navigate to that view.")
                     return false;
                 }
 
