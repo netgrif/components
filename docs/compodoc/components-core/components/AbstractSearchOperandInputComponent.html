@@ -168,6 +168,10 @@
                                 <a href="#editInput" >editInput</a>
                             </li>
                             <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#isInputFilled" >isInputFilled</a>
+                            </li>
+                            <li>
                                     <span class="modifier">Protected</span>
                                 <a href="#isInputValueSet" >isInputValueSet</a>
                             </li>
@@ -221,9 +225,6 @@
                             <ul class="index-list">
                                 <li>
                                     <a href="#filteredOptions$" >filteredOptions$</a>
-                                </li>
-                                <li>
-                                    <a href="#isInputFilled" >isInputFilled</a>
                                 </li>
                                 <li>
                                     <a href="#categoryInput" >categoryInput</a>
@@ -519,6 +520,45 @@
 
                     <div class="io-description">
                         <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isInputFilled"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>isInputFilled</b></span>
+                        <a href="#isInputFilled"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>isInputFilled()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="65"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-operand-input-component/abstract-search-operand-input.component.ts:65</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
 
                     </div>
                 </td>
@@ -915,28 +955,6 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="isInputFilled"></a>
-                        <span class="name"><b>isInputFilled</b><a href="#isInputFilled"><span class="icon ion-ios-link"></span></a></span>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="col-md-4">
-                        <span class="accessor"><b>get</b><code>isInputFilled()</code></span>
-                    </td>
-                </tr>
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-operand-input-component/abstract-search-operand-input.component.ts:65</a></div>
-                                </td>
-                            </tr>
-
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
                         <a name="categoryInput"></a>
                         <span class="name"><b>categoryInput</b><a href="#categoryInput"><span class="icon ion-ios-link"></span></a></span>
                     </td>
@@ -1061,7 +1079,7 @@ export abstract class AbstractSearchOperandInputComponent implements OnInit, OnD
         return this._filteredOptions$;
     }
 
-    public get isInputFilled(): boolean {
+    public isInputFilled(): boolean {
         if (!this._inputConfirmed) {
             return false;
         }
@@ -1078,7 +1096,7 @@ export abstract class AbstractSearchOperandInputComponent implements OnInit, OnD
             }
             this._initialExpansion &#x3D; false;
 
-            if (!this.isInputFilled) {
+            if (!this.isInputFilled()) {
                 setTimeout(() &#x3D;&gt; {
                     input.nativeElement.focus();
                 });

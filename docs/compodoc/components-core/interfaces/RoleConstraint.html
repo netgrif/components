@@ -266,29 +266,51 @@ export class RoleGuardService implements CanActivate {
     }
 
     public canAccessView(view: View, url: string): boolean {
-        if (typeof view.access !&#x3D;&#x3D; &#x27;string&#x27; &amp;&amp; view.access.hasOwnProperty(&#x27;role&#x27;)) {
-            const allowedRoles &#x3D; this.parseRoleConstraints(view.access.role, url);
+        if (typeof view.access !&#x3D;&#x3D; &#x27;string&#x27; &amp;&amp; (view.access.hasOwnProperty(&#x27;role&#x27;) || view.access.hasOwnProperty(&#x27;bannedRole&#x27;))) {
 
-            return allowedRoles.some(constraint &#x3D;&gt; {
-                if (constraint.roleIdentifier) {
-                    return this._userService.hasRoleByIdentifier(constraint.roleIdentifier, constraint.processIdentifier);
-                } else {
-                    return this._userService.hasRoleByName(constraint.roleName, constraint.processIdentifier);
+            if (view.access.hasOwnProperty(&#x27;role&#x27;) &amp;&amp; view.access.hasOwnProperty(&#x27;bannedRole&#x27;)) {
+                const bannedRoles &#x3D; this.parseRoleConstraints(view.access.bannedRole, url);
+                const allowedRoles &#x3D; this.parseRoleConstraints(view.access.role, url);
+
+                if (bannedRoles.some(role &#x3D;&gt; this.decideAccessByRole(role))) {
+                    return false;
                 }
-            });
+
+                if (allowedRoles.length &#x3D;&#x3D;&#x3D; 0) {
+                    this._log.warn(&#x60;View at &#x27;${url}&#x27; defines role access constraint with an empty array!&#x60;
+                        + &#x60; No users will be allowed to enter this view!&#x60;);
+                }
+                return allowedRoles.some(role &#x3D;&gt; this.decideAccessByRole(role)); // user was not denied access by a banned role, they need at least one allowed role
+            }
+
+            if (view.access.hasOwnProperty(&#x27;bannedRole&#x27;)) {
+                const bannedRoles &#x3D; this.parseRoleConstraints(view.access.bannedRole, url);
+                return !bannedRoles.some(constraint &#x3D;&gt; {
+                    return this.decideAccessByRole(constraint);
+                });
+            }
+
+            if (view.access.hasOwnProperty(&#x27;role&#x27;)) {
+                const allowedRoles &#x3D; this.parseRoleConstraints(view.access.role, url);
+                if (allowedRoles.length &#x3D;&#x3D;&#x3D; 0) {
+                    this._log.warn(&#x60;View at &#x27;${url}&#x27; defines role access constraint with an empty array!&#x60;
+                        + &#x60; No users will be allowed to enter this view!&#x60;);
+                }
+                return allowedRoles.some(constraint &#x3D;&gt; {
+                    return this.decideAccessByRole(constraint);
+                });
+            }
         }
         throw new Error(&#x27;Role guard is declared for a view with no role guard configuration!&#x27;
             + &#x60; Add role guard configuration for view at ${url}, or remove the guard.&#x60;);
     }
 
-    protected parseRoleConstraints(roleConstrains: Access[&#x27;role&#x27;], viewUrl: string): Array&lt;RoleConstraint&gt; {
+    protected parseRoleConstraints(roleConstrains: Access[&#x27;role&#x27;] | Access[&#x27;bannedRole&#x27;], viewUrl: string): Array&lt;RoleConstraint&gt; {
         if (typeof roleConstrains &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
             return this.parseStringRoleConstraints(roleConstrains);
         }
         if (Array.isArray(roleConstrains)) {
             if (roleConstrains.length &#x3D;&#x3D;&#x3D; 0) {
-                this._log.warn(&#x60;View at &#x27;${viewUrl}&#x27; defines role access constraint with an empty array!&#x60;
-                    + &#x60; No users will be allowed to enter this view!&#x60;);
                 return [];
             }
             if (typeof roleConstrains[0] &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
@@ -329,6 +351,14 @@ export class RoleGuardService implements CanActivate {
             }
             return {processIdentifier: constraint.processId, roleIdentifier: constraint.roleId};
         });
+    }
+
+    private decideAccessByRole(constraint: RoleConstraint): boolean {
+        if (constraint.roleIdentifier) {
+            return this._userService.hasRoleByIdentifier(constraint.roleIdentifier, constraint.processIdentifier);
+        } else {
+            return this._userService.hasRoleByName(constraint.roleName, constraint.processIdentifier);
+        }
     }
 
 }
