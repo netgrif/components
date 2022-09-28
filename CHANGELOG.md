@@ -15,7 +15,7 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.2.2](https://g
 - [NAE-1712] Advanced search in case of date operators is blinking (very quickly opening and closing)
 - [NAE-1713] Advanced search searching based on case data does not work
 - [NAE-1715] Currency component not working properly
-- [NAE-1716] Autocomplete component not working properly on enumration_map field
+- [NAE-1716] Autocomplete component not working properly on enumeration_map field
 - [NAE-1717] Banned roles not hiding menu entries
 - [NAE-1721] Create case event bad handling on frontend
 - [NAE-1724] Incorrect german translation
