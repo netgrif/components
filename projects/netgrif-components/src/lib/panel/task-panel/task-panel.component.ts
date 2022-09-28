@@ -4,28 +4,29 @@ import {
     AbstractTaskPanelComponent,
     AssignPolicyService,
     AssignTaskService,
+    BOOLEAN_VALUE_LABEL_ENABLED,
     CallChainService,
     CancelTaskService,
+    ChangedFieldsService,
     DataFocusPolicyService,
     DelegateTaskService,
     DisableButtonFuntions,
     FinishPolicyService,
     FinishTaskService,
     LoggerService,
+    NAE_TASK_FORCE_OPEN,
     NAE_TASK_OPERATIONS,
     NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS,
-    BOOLEAN_VALUE_LABEL_ENABLED,
+    OverflowService,
     PaperViewService,
+    PermissionService,
     SingleTaskContentService,
     SubjectTaskOperations,
     TaskContentService,
     TaskDataService,
     TaskEventService,
     TaskRequestStateService,
-    TaskViewService,
-    PermissionService,
-    ChangedFieldsService,
-    OverflowService
+    TaskViewService
 } from '@netgrif/components-core';
 import {TaskContentComponent} from '../../task-content/task-content/task-content.component';
 import {TranslateService} from '@ngx-translate/core';
@@ -74,11 +75,15 @@ export class TaskPanelComponent extends AbstractTaskPanelComponent {
                 protected _currencyPipe: CurrencyPipe,
                 protected _changedFieldsService: ChangedFieldsService,
                 protected _permissionService: PermissionService,
-                @Optional() overflowService: OverflowService) {
+                @Optional() overflowService: OverflowService,
+                @Optional() @Inject(NAE_TASK_FORCE_OPEN) protected _taskForceOpen: boolean) {
         super(_taskContentService, _log, _taskViewService, _paperView, _taskEventService, _assignTaskService,
             _delegateTaskService, _cancelTaskService, _finishTaskService, _taskState, _taskDataService,
             _assignPolicyService, _callChain, _taskOperations, _disableFunctions, _translate, _currencyPipe, _changedFieldsService,
-            _permissionService, overflowService);
+            _permissionService, overflowService, _taskForceOpen);
+        if (_taskForceOpen) {
+            this.hidePanelHeader = true;
+        }
     }
 
     protected createContentPortal(): void {

@@ -111,6 +111,13 @@ import {DoubleDrawerExampleComponent} from './doc/double-drawer-example/double-d
 import {PublicSingleTaskViewComponent} from './doc/public-single-task-view/public-single-task-view.component';
 import {BreadcrumbsExampleComponent} from './doc/breadcrumbs-example/breadcrumbs-example.component';
 import {ComponentPortal} from '@angular/cdk/portal';
+import {DashboardCaseExampleComponent} from './doc/dashboard-case-example/dashboard-case-example.component';
+import {
+    SingleTabbedCaseViewComponent
+} from './doc/single-tabbed-view/single-tabbed-case-view/single-tabbed-case-view.component';
+import {
+    SingleTabbedTaskViewComponent
+} from './doc/single-tabbed-view/single-tabbed-task-view/single-tabbed-task-view.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -165,7 +172,10 @@ export function HttpLoaderFactory(http: HttpClient) {
         WrapperEmptyViewComponent,
         DoubleDrawerExampleComponent,
         PublicSingleTaskViewComponent,
-        BreadcrumbsExampleComponent
+        BreadcrumbsExampleComponent,
+        DashboardCaseExampleComponent,
+        SingleTabbedCaseViewComponent,
+        SingleTabbedTaskViewComponent
     ],
     imports: [
         BrowserModule,
