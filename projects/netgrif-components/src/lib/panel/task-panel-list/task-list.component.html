@@ -8,7 +8,7 @@
         </div>
 
         <mat-accordion [multi]="allowMultiOpen" class="full-width" fxFlex="100">
-            <cdk-virtual-scroll-viewport itemSize="52" (scrolledIndexChange)="loadNextPage()"
+            <cdk-virtual-scroll-viewport itemSize="52" (scrolledIndexChange)="loadNextPage()" #taskListVirtualScroll
                                          class="task-panel-scroll-container full-width full-height dashboard-task-list">
                 <nc-task-panel
                     [textEllipsis]="textEllipsis"
@@ -23,6 +23,7 @@
                     [responsiveBody]="responsiveBody"
                     (taskEvent)="emitTaskEvent($event)"
                     (panelRefOutput)="addToPanelRefs(task, $event)"
+                    [taskListVirtualScroll]="taskListVirtualScroll"
                     class="panel-expanded-spacing">
                 </nc-task-panel>
 

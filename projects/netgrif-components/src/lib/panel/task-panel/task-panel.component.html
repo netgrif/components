@@ -51,7 +51,8 @@
         </div>
     </ng-template>
     <ng-template #taskPanelContent>
-        <div class="panel-main-content" fxLayout="column">
+        <div class="panel-main-content" fxLayout="column"
+             [ngStyle]="isForceOpen() && {'min-height': getContentMinHeight()}">
             <div class="task-panel-body" [ngClass]="{'paper-view': isPaperView()}" fxFlex="100">
                 <ng-template [cdkPortalOutlet]="portal"></ng-template>
             </div>

@@ -48,6 +48,7 @@ import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-m
 import {TaskPanelContext} from './models/task-panel-context';
 import {OverflowService} from '../../header/services/overflow.service';
 import {NAE_TASK_FORCE_OPEN} from '../../view/task-view/models/injection-token-task-force-open';
+import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 
 @Component({
     selector: 'ncc-abstract-legal-notice',
@@ -61,6 +62,7 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
      */
     protected _taskPanelData: TaskPanelData;
     protected _forceLoadDataOnOpen = false;
+    @Input() taskListVirtualScroll: CdkVirtualScrollViewport;
     @Input() panelContentComponent: Type<any>;
     @Input() public selectedHeaders$: Observable<Array<HeaderColumn>>;
     @Input() public first: boolean;
@@ -405,5 +407,13 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
         this._taskOperations.destroy();
         this._subPanelUpdate.unsubscribe();
         this.taskEvent.complete();
+    }
+
+    public isForceOpen(): boolean {
+        return this._taskForceOpen && !!this.taskListVirtualScroll?.getElementRef()?.nativeElement;
+    }
+
+    public getContentMinHeight(): string {
+        return this.taskListVirtualScroll.getElementRef().nativeElement.offsetHeight - 32 + 'px';
     }
 }
