@@ -466,7 +466,7 @@
     "impersonation": {
         "user": {
             "successfullyRepresented": "Používateľ bol úspešne zastúpený",
-            "currentlyAlreadyRepresented": "Používateľ je momentálne už zastúpený",
+            "currentlyAlreadyRepresented": "Používateľ je momentálne zastupovaný",
             "currentlyLogged": "Používateľ je momentálne prihlásený"
         },
         "action": {

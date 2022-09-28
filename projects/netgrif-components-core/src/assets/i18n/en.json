@@ -466,7 +466,7 @@
     "impersonation": {
         "user": {
             "successfullyRepresented": "User successfully represented",
-            "currentlyAlreadyRepresented": "User is already currently represented",
+            "currentlyAlreadyRepresented": "User is already being represented by someone else",
             "currentlyLogged": "User is currently logged in"
         },
         "action": {

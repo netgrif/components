@@ -11,7 +11,7 @@ import {AbstractUserAssignListComponent, UserListService} from '@netgrif/compone
 })
 export class AdminImpersonateListComponent extends AbstractUserAssignListComponent {
 
-    constructor(protected _userListService: UserListService) {
-        super(_userListService);
+    constructor(userListService: UserListService) {
+        super(userListService);
     }
 }

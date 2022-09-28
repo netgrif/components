@@ -20,8 +20,8 @@ export class ImpersonationUserResourceService extends UserResourceService {
         this._IMPERSONATION_SERVER_URL = this.getResourceAddress('impersonation');
     }
 
-    public search(body: object, params?: Params): Observable<Page<UserResource>> {
-        return this.provider.post$('/impersonate/search', this._IMPERSONATION_SERVER_URL, {query: (body as any).fulltext}, params)
+    public search(body: {fulltext: string}, params?: Params): Observable<Page<UserResource>> {
+        return this.provider.post$('/impersonate/search', this._IMPERSONATION_SERVER_URL, {query: body.fulltext}, params)
             .pipe(map((r) => this.getResourcePage<UserResource>(r, 'users')));
     }
 }

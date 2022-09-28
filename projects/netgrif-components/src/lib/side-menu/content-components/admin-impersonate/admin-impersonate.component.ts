@@ -16,7 +16,7 @@ import {AbstractUserAssignComponent, NAE_SIDE_MENU_CONTROL, SideMenuControl, Use
     }]
 })
 export class AdminImpersonateComponent extends AbstractUserAssignComponent {
-    constructor(@Inject(NAE_SIDE_MENU_CONTROL) protected _sideMenuControl: SideMenuControl) {
-        super(_sideMenuControl);
+    constructor(@Inject(NAE_SIDE_MENU_CONTROL) sideMenuControl: SideMenuControl) {
+        super(sideMenuControl);
     }
 }
