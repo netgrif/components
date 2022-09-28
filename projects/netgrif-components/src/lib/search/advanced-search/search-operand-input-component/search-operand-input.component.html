@@ -1,4 +1,4 @@
-<div *ngIf="!isInputFilled; then operandSelection else operandDisplay"></div>
+<div *ngIf="!isInputFilled(); then operandSelection else operandDisplay"></div>
 
 <ng-template #operandSelection>
     <div [ngSwitch]="inputType">

@@ -353,14 +353,16 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             id: filter.stringId,
             resource: filter
         };
-        const resolvedRoles = this.resolveAccessRoles(filter);
+        const resolvedRoles = this.resolveAccessRoles(filter, 'allowed_roles');
+        const resolvedBannedRoles = this.resolveAccessRoles(filter, 'banned_roles');
         if(!!resolvedRoles) item.access['role'] = resolvedRoles;
+        if(!!resolvedBannedRoles) item.access['bannedRole'] = resolvedBannedRoles;
         if (!this._accessService.canAccessView(item, item.routingPath)) return;
         return item;
     }
 
-    protected resolveAccessRoles(filter: Case): Array<RoleAccess> | undefined {
-        const allowedRoles = filter.immediateData.find(f => f.stringId === 'allowed_roles')?.options;
+    protected resolveAccessRoles(filter: Case, roleType: string): Array<RoleAccess> | undefined {
+        const allowedRoles = filter.immediateData.find(f => f.stringId === roleType)?.options;
         if (!allowedRoles || Object.keys(allowedRoles).length === 0) return undefined;
         const roles = [];
         Object.keys(allowedRoles).forEach(combined => {
