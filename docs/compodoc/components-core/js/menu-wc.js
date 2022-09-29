@@ -1138,6 +1138,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                     <a href="injectables/MockPetrinetResourceService.html" data-type="entity-link" >MockPetrinetResourceService</a>
                                 </li>
                                 <li class="link">
+                                    <a href="injectables/MockUriResourceService.html" data-type="entity-link" >MockUriResourceService</a>
+                                </li>
+                                <li class="link">
                                     <a href="injectables/MockUserPreferenceService.html" data-type="entity-link" >MockUserPreferenceService</a>
                                 </li>
                                 <li class="link">
