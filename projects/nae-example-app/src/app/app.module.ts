@@ -154,7 +154,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         WrapperEmptyViewComponent,
         DoubleDrawerExampleComponent,
         PublicSingleTaskViewComponent,
-        BreadcrumbsExampleComponent,
+        BreadcrumbsExampleComponent
     ],
     imports: [
         BrowserModule,

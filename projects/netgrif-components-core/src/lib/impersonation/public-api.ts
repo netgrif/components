@@ -1,5 +1,6 @@
 /* MODELS */
 export * from './models/user-impersonation-constants';
+export * from './models/user-impersonate-config-metadata';
 
 /* SERVICES */
 export * from './services/impersonation.service';
