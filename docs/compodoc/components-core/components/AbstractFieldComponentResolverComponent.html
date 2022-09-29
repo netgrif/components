@@ -481,8 +481,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="53"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/field-component-resolver/abstract-field-component-resolver.component.ts:53</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="52"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/field-component-resolver/abstract-field-component-resolver.component.ts:52</a></div>
                 </td>
             </tr>
 
@@ -518,8 +518,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="49"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/field-component-resolver/abstract-field-component-resolver.component.ts:49</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="48"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/field-component-resolver/abstract-field-component-resolver.component.ts:48</a></div>
                 </td>
             </tr>
 
@@ -717,8 +717,7 @@ export abstract class AbstractFieldComponentResolverComponent {
     }
 
     getTaskId(): string {
-        const referencedTaskId &#x3D; this.taskContentService.getReferencedFieldTask(this.getDataField().stringId);
-        return referencedTaskId ?? this.taskContentService.task.stringId;
+        return this.taskContentService.task.stringId;
     }
 
     isField(): boolean {

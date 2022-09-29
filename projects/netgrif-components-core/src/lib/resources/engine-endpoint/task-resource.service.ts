@@ -10,7 +10,7 @@ import {Task} from '../interface/task';
 import {CountService} from '../abstract-endpoint/count-service';
 import {Filter} from '../../filter/models/filter';
 import {FilterType} from '../../filter/models/filter-type';
-import {HttpEventType} from '@angular/common/http';
+import { HttpEventType, HttpParams } from '@angular/common/http';
 import {Page} from '../interface/page';
 import {FieldConverterService} from '../../task-content/services/field-converter.service';
 import {TaskSetDataRequestBody} from '../interface/task-set-data-request-body';
@@ -309,9 +309,9 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      * Delete file from the task
      * DELETE
      */
-    public deleteFile(taskId: string, fieldId: string, name?: string): Observable<MessageResource> {
+    public deleteFile(taskId: string, fieldId: string, name?: string, param?: HttpParams): Observable<MessageResource> {
         const url = !!name ? 'task/' + taskId + '/file/' + fieldId + '/' + name : 'task/' + taskId + '/file/' + fieldId;
-        return this._resourceProvider.delete$(url, this.SERVER_URL).pipe(
+        return this._resourceProvider.delete$(url, this.SERVER_URL, param).pipe(
             map(r => this.changeType(r, undefined))
         );
     }

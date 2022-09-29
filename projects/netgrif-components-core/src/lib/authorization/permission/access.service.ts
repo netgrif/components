@@ -56,7 +56,7 @@ export class AccessService {
      * @returns whether the user passes the role guard condition for accessing the specified view
      */
     public passesRoleGuard(view: View, url: string): boolean {
-        return !view.access.hasOwnProperty('role') || this._roleGuard.canAccessView(view, url);
+        return (!view.access.hasOwnProperty('role') && !view.access.hasOwnProperty('bannedRole')) || this._roleGuard.canAccessView(view, url);
     }
 
     /**

@@ -245,6 +245,7 @@ export interface Access {
      *  For `string` values the format is: <net import id>.<role name>
      */
     role?: Array<string> | string | RoleAccess | Array<RoleAccess>;
+    bannedRole?: Array<string> | string | RoleAccess | Array<RoleAccess>;
     group?: Array<string> | string;
     authority?: Array<string> | string;
 

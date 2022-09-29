@@ -257,15 +257,18 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
             case 'file':
             case 'fileList':
                 return resolver.getIndex(datafield.fieldId, SearchIndex.FILE_NAME,
-                    this.isSelectedOperator(Equals) || this.isSelectedOperator(NotEquals) || this.isSelectedOperator(Substring));
+                    this.isSelectedOperator(Equals) || this.isSelectedOperator(NotEquals) || this.isSelectedOperator(Substring)
+                    || this.isSelectedOperator(IsNull));
             case 'user':
             case 'userList':
                 return resolver.getIndex(datafield.fieldId, SearchIndex.USER_ID);
             case 'i18n':
-                return resolver.getIndex(datafield.fieldId, SearchIndex.TEXT, this.isSelectedOperator(Equals) || this.isSelectedOperator(NotEquals) || this.isSelectedOperator(Substring))
+                return resolver.getIndex(datafield.fieldId, SearchIndex.TEXT, this.isSelectedOperator(Equals) || this.isSelectedOperator(NotEquals) || this.isSelectedOperator(Substring)
+                    || this.isSelectedOperator(IsNull));
             default:
                 return resolver.getIndex(datafield.fieldId, SearchIndex.FULLTEXT,
-                    this.isSelectedOperator(Equals) || this.isSelectedOperator(NotEquals) || this.isSelectedOperator(Substring));
+                    this.isSelectedOperator(Equals) || this.isSelectedOperator(NotEquals) || this.isSelectedOperator(Substring)
+                    || this.isSelectedOperator(IsNull));
         }
     }
 
