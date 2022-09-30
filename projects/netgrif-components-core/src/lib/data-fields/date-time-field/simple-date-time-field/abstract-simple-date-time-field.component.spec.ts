@@ -79,7 +79,7 @@ class TestDateTimeFieldComponent extends AbstractSimpleDateTimeFieldComponent {
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-date-time [dataField]="field" [changedFields]="changedFields"></ncc-test-date-time>'
+    template: '<ncc-simple-test-date-time [dataField]="field" [changedFields]="changedFields"></ncc-simple-test-date-time>'
 })
 class TestWrapperComponent {
     field = new DateTimeField('', '', moment('2020-03-09'), {

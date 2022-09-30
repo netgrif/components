@@ -67,7 +67,7 @@ describe('AbstractZonedDateTimeFieldComponent', () => {
 });
 
 @Component({
-    selector: 'ncc-simple-test-date-time',
+    selector: 'ncc-zoned-test-date-time',
     template: ''
 })
 class TestDateTimeFieldComponent extends AbstractZonedDateTimeFieldComponent {
@@ -79,7 +79,7 @@ class TestDateTimeFieldComponent extends AbstractZonedDateTimeFieldComponent {
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-date-time [dataField]="field" [changedFields]="changedFields"></ncc-test-date-time>'
+    template: '<ncc-zoned-test-date-time [dataField]="field" [changedFields]="changedFields"></ncc-zoned-test-date-time>'
 })
 class TestWrapperComponent {
     field = new DateTimeField('', '', moment('2020-03-09'), {
