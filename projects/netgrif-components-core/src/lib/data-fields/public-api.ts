@@ -39,6 +39,8 @@ export * from './i18n-field/i18n-text-field/abstract-i18n-text-field.component';
 export * from './i18n-field/i18n-divider-field/abstract-i18n-divider-field.component';
 export * from './i18n-field/abstract-i18n-errors.component';
 export * from './user-list-field/abstract-user-list-field.component';
+export * from './date-time-field/simple-date-time-field/abstract-simple-date-time-field.component';
+export * from './date-time-field/zoned-date-time-field/abstract-zoned-date-time-field.component';
 
 /* Class */
 export * from './models/abstract-data-field';

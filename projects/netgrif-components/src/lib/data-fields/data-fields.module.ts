@@ -65,6 +65,8 @@ import {
     MultichoiceAutocompleteFieldComponent
 } from './multichoice-field/multichoice-autocomplete-field/multichoice-autocomplete-field.component';
 import { UserListFieldComponent } from './user-list-field/user-list-field.component';
+import { SimpleDateTimeFieldComponent } from './date-time-field/simple-date-time-field/simple-date-time-field.component';
+import { ZonedDateTimeFieldComponent } from './date-time-field/zoned-date-time-field/zoned-date-time-field.component';
 
 @NgModule({
     declarations: [
@@ -106,6 +108,8 @@ import { UserListFieldComponent } from './user-list-field/user-list-field.compon
         I18nTextFieldComponent,
         EasymdeWrapperComponent,
         UserListFieldComponent,
+        SimpleDateTimeFieldComponent,
+        ZonedDateTimeFieldComponent
     ],
 	exports: [
 		BooleanFieldComponent,
