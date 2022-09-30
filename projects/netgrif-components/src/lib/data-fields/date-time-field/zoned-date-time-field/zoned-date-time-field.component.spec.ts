@@ -4,7 +4,7 @@ import {DataFieldTemplateComponent} from '../../data-field-template/data-field-t
 import {RequiredLabelComponent} from '../../required-label/required-label.component';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import moment from 'moment';
-import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-picker';
+import { NgxMatDatetimePickerModule, NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
 import {BehaviorSubject} from 'rxjs';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {
@@ -19,7 +19,8 @@ import {
     MockUserResourceService,
     TestConfigurationService,
     TranslateLibModule,
-    UserResourceService
+    UserResourceService,
+    WrappedBoolean
 } from '@netgrif/components-core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import { ZonedDateTimeFieldComponent } from './zoned-date-time-field.component';
@@ -34,6 +35,7 @@ describe('ZonedDateTimeFieldComponent', () => {
                 MaterialModule,
                 AngularResizeEventModule,
                 NgxMatDatetimePickerModule,
+                NgxMatNativeDateModule,
                 TranslateLibModule, HttpClientTestingModule, NoopAnimationsModule
             ],
             providers: [
@@ -67,7 +69,7 @@ describe('ZonedDateTimeFieldComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-zoned-date-time-field [dataField]="field" [changedFields]="changedFields"></nc-zoned-date-time-field>'
+    template: '<nc-zoned-date-time-field [dataField]="field" [changedFields]="changedFields" [showLargeLayout]="showLargeLayout"></nc-zoned-date-time-field>'
 })
 class TestWrapperComponent {
     field = new DateTimeField('', '', moment('2020-03-09'), {
@@ -78,5 +80,10 @@ class TestWrapperComponent {
         hidden: true
     }, undefined, undefined, undefined, []);
     changedFields = new BehaviorSubject<ChangedFields>({behavior: {editable: true}});
+    showLargeLayout = new WrappedBoolean();
+
+    constructor() {
+        this.showLargeLayout.value = true;
+    }
 }
 
