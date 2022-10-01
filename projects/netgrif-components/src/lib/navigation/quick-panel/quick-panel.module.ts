@@ -6,6 +6,7 @@ import {LanguageSelectorComponent} from './components/language-selector/language
 import {InternalLinkComponent} from './components/internal-link/internal-link.component';
 import {RouterModule} from '@angular/router';
 import {MaterialModule, TranslateLibModule} from '@netgrif/components-core';
+import { ImpersonateQuickPanelComponent } from './components/impersonate-quick-panel/impersonate-quick-panel.component';
 
 
 @NgModule({
@@ -13,13 +14,15 @@ import {MaterialModule, TranslateLibModule} from '@netgrif/components-core';
         QuickPanelComponent,
         LogoutShortcutComponent,
         LanguageSelectorComponent,
-        InternalLinkComponent
+        InternalLinkComponent,
+        ImpersonateQuickPanelComponent
     ],
     exports: [
         QuickPanelComponent,
         LogoutShortcutComponent,
         LanguageSelectorComponent,
-        InternalLinkComponent
+        InternalLinkComponent,
+        ImpersonateQuickPanelComponent
     ],
     imports: [
         CommonModule,

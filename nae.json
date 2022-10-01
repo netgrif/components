@@ -48,6 +48,11 @@
                 "name": "filter",
                 "address": "http://localhost:8080/api/",
                 "format": "json"
+            },
+            {
+                "name": "impersonation",
+                "address": "http://localhost:8080/api/",
+                "format": "json"
             }
         ]
     },
@@ -164,6 +169,17 @@
                 "path": "recover/:token"
             }
         },
+        "demo-impersonation": {
+            "component": {
+                "class": "ImpersonationDemoComponent",
+                "from": "./doc/impersonation-demo/impersonation-demo.component"
+            },
+            "access": "private",
+            "navigation": true,
+            "routing": {
+                "path": "impersonation-view"
+            }
+        },
         "demo-drawer": {
             "component": {
                 "class": "DrawerExampleComponent",
@@ -216,7 +232,9 @@
                         "from": "./doc/workflow-view-example/workflow-view-example.component"
                     },
                     "access": {
-                        "authority": ["ROLE_ADMIN"]
+                        "authority": [
+                            "ROLE_ADMIN"
+                        ]
                     },
                     "navigation": {
                         "title": "Workflow view",

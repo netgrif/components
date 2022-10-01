@@ -109,6 +109,12 @@
         "option-selector": {
             "select": "Zvoliť",
             "choose-one-option": "Vyberte jednu z možností"
+        },
+        "impersonation": {
+            "title": "Zastúpenie používateľa",
+            "submit": "Zastúpiť",
+            "cease": "Zrušiť zastúpenie",
+            "impersonating": "v zastúpení"
         }
     },
     "search": {
@@ -457,5 +463,16 @@
     },
     "dynamicNavigation": {
         "couldNotResolveView": "Počas načítania zobrazenia sa vyskytla chyba. Zobrazenie nie je možné zobraziť"
+    },
+    "impersonation": {
+        "user": {
+            "successfullyRepresented": "Používateľ bol úspešne zastúpený",
+            "currentlyAlreadyRepresented": "Používateľ je momentálne zastupovaný",
+            "currentlyLogged": "Používateľ je momentálne prihlásený"
+        },
+        "action": {
+            "failed": "Akciu sa nepodarilo vykonať",
+            "deactivated": "Zastupovanie bolo úspešne deaktivované"
+        }
     }
 }

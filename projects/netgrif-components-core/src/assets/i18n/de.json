@@ -109,6 +109,12 @@
         "option-selector": {
             "select": "Auswählen",
             "choose-one-option": "Wählen Sie eine Option aus"
+        },
+        "impersonation": {
+            "title": "Benutzer vertreten",
+            "submit": "Vertreten",
+            "cease": "Vertretung abbrechen",
+            "impersonating": "in Vertretung als"
         }
     },
     "search": {
@@ -457,5 +463,16 @@
     },
     "dynamicNavigation": {
         "couldNotResolveView": "Ein Fehler ist aufgetreten während des Ansichtauflösungsprocess. Der Ansicht kann nicht angezeigt werden"
+    },
+    "impersonation": {
+        "user": {
+            "successfullyRepresented": "Benutzer wird jetzt vertreten",
+            "currentlyAlreadyRepresented": "Für den Benutzer existiert bereits eine Vertretung",
+            "currentlyLogged": "Benutzer ist bereits angemeldet"
+        },
+        "action": {
+            "failed": "Aktion ist fehlgeschlagen",
+            "deactivated": "Vertretung wurde erfolgreich deaktiviert"
+        }
     }
 }
