@@ -5,7 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres
 to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-Full Changelog: [https://github.com/netgrif/components/commits/v6.2.2](https://github.com/netgrif/components/commits/v6.2.2)
+Full Changelog: [https://github.com/netgrif/components/commits/v6.3.0](https://github.com/netgrif/components/commits/v6.3.0)
+
+## [6.3.0](https://github.com/netgrif/application-engine/releases/tag/v6.3.0) (2022-10-01)
+
+### Added
+
+- [NAE-1678] User impersonation
 
 ## [6.2.2](https://github.com/netgrif/components/releases/tag/v6.2.2) (2022-09-28)
 
@@ -19,10 +25,6 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.2.2](https://g
 - [NAE-1717] Banned roles not hiding menu entries
 - [NAE-1721] Create case event bad handling on frontend
 - [NAE-1724] Incorrect german translation
-
-
-## [6.3.0](https://github.com/netgrif/components/releases/tag/v6.2.1) (2022-09-21)
-
 
 ## [6.2.1](https://github.com/netgrif/components/releases/tag/v6.2.1) (2022-09-15)
 
@@ -78,7 +80,7 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.2.2](https://g
 ### Fixed
 
 - [NAE-1649] File field preview component bug
-- [NAE-1656] Export  nc-panel-item
+- [NAE-1656] Export nc-panel-item
 - [NAE-1653] Create view schematic not functional after angular 13 update
 
 ## [6.1.0](https://github.com/netgrif/components/releases/tag/v6.1.0) (2022-06-01)
