@@ -25,6 +25,7 @@ import {
 } from './admin-impersonate/side-menu-admin-impersonate-component.module';
 import {AdminImpersonateComponent} from './admin-impersonate/admin-impersonate.component';
 import {UserImpersonateComponent} from './user-impersonate/user-impersonate.component';
+import {SideMenuUserImpersonateComponentModule} from './user-impersonate/side-menu-user-impersonate-component.module';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import {UserImpersonateComponent} from './user-impersonate/user-impersonate.comp
         CommonModule,
         SideMenuUserAssignComponentModule,
         SideMenuAdminImpersonateComponentModule,
+        SideMenuUserImpersonateComponentModule,
         SideMenuNewCaseComponentModule,
         SideMenuImportNetComponentModule,
         SideMenuFilterSelectorComponentModule,
@@ -42,6 +44,7 @@ import {UserImpersonateComponent} from './user-impersonate/user-impersonate.comp
     exports: [
         SideMenuUserAssignComponentModule,
         SideMenuAdminImpersonateComponentModule,
+        SideMenuUserImpersonateComponentModule,
         SideMenuNewCaseComponentModule,
         SideMenuImportNetComponentModule,
         SideMenuFilterSelectorComponentModule,

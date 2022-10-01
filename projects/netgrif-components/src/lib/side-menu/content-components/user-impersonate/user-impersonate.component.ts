@@ -57,7 +57,7 @@ export class UserImpersonateComponent extends AbstractUserImpersonateComponent i
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) sideMenuControl: SideMenuControl,
                 log: LoggerService,
                 caseViewService: CaseViewService) {
-        super(sideMenuControl, log, caseViewService);
+        super(sideMenuControl, caseViewService);
     }
 
     ngAfterViewInit(): void {

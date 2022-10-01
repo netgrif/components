@@ -466,9 +466,9 @@
     },
     "impersonation": {
         "user": {
-            "successfullyRepresented": "Benutzer erfolgreich vertreten",
-            "currentlyAlreadyRepresented": "Benutzer ist bereits aktuell vertreten",
-            "currentlyLogged": "Benutzer ist derzeit angemeldet"
+            "successfullyRepresented": "Benutzer wird jetzt vertreten",
+            "currentlyAlreadyRepresented": "Für den Benutzer existiert bereits eine Vertretung",
+            "currentlyLogged": "Benutzer ist bereits angemeldet"
         },
         "action": {
             "failed": "Aktion ist fehlgeschlagen",

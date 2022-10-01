@@ -1,7 +1,6 @@
 import {SideMenuControl} from '../../models/side-menu-control';
 import {Component, Inject} from '@angular/core';
 import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token';
-import {LoggerService} from '../../../logger/services/logger.service';
 import {CaseViewService} from '../../../view/case-view/service/case-view-service';
 import {Case} from '../../../resources/interface/case';
 import {AbstractCaseViewComponent} from '../../../view/case-view/abstract-case-view';
@@ -17,7 +16,6 @@ export abstract class AbstractUserImpersonateComponent extends AbstractCaseViewC
     protected _injectedData: UserImpersonateInjectionData;
 
     protected constructor(@Inject(NAE_SIDE_MENU_CONTROL) protected _sideMenuControl: SideMenuControl,
-                          protected _log: LoggerService,
                           caseViewService: CaseViewService) {
         super(caseViewService);
         if (this._sideMenuControl.data) {
