@@ -609,14 +609,16 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             id: filter.stringId,
             resource: filter
         };
-        const resolvedRoles &#x3D; this.resolveAccessRoles(filter);
+        const resolvedRoles &#x3D; this.resolveAccessRoles(filter, &#x27;allowed_roles&#x27;);
+        const resolvedBannedRoles &#x3D; this.resolveAccessRoles(filter, &#x27;banned_roles&#x27;);
         if(!!resolvedRoles) item.access[&#x27;role&#x27;] &#x3D; resolvedRoles;
+        if(!!resolvedBannedRoles) item.access[&#x27;bannedRole&#x27;] &#x3D; resolvedBannedRoles;
         if (!this._accessService.canAccessView(item, item.routingPath)) return;
         return item;
     }
 
-    protected resolveAccessRoles(filter: Case): Array&lt;RoleAccess&gt; | undefined {
-        const allowedRoles &#x3D; filter.immediateData.find(f &#x3D;&gt; f.stringId &#x3D;&#x3D;&#x3D; &#x27;allowed_roles&#x27;)?.options;
+    protected resolveAccessRoles(filter: Case, roleType: string): Array&lt;RoleAccess&gt; | undefined {
+        const allowedRoles &#x3D; filter.immediateData.find(f &#x3D;&gt; f.stringId &#x3D;&#x3D;&#x3D; roleType)?.options;
         if (!allowedRoles || Object.keys(allowedRoles).length &#x3D;&#x3D;&#x3D; 0) return undefined;
         const roles &#x3D; [];
         Object.keys(allowedRoles).forEach(combined &#x3D;&gt; {
