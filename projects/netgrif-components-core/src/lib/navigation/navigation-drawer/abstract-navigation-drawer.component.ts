@@ -47,7 +47,7 @@ export abstract class AbstractNavigationDrawerComponent implements OnInit, After
         this.openedChange = new EventEmitter<boolean>();
         this._fixed = true;
         this.opened = true;
-        this.quickPanelItems = ['language', 'settings', 'logout'];
+        this.quickPanelItems = ['language', 'settings', 'logout', 'impersonation'];
         if (this.userPreferenceService.drawerWidth !== undefined) {
             this.contentWidth = new BehaviorSubject<number>(this.userPreferenceService.drawerWidth);
         } else {

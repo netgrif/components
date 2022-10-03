@@ -49,6 +49,7 @@ import {TaskPanelContext} from './models/task-panel-context';
 import {OverflowService} from '../../header/services/overflow.service';
 import {NAE_TASK_FORCE_OPEN} from '../../view/task-view/models/injection-token-task-force-open';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
+import { FinishPolicyService } from '../../task/services/finish-policy.service';
 
 @Component({
     selector: 'ncc-abstract-legal-notice',
@@ -128,6 +129,7 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
                           protected _taskState: TaskRequestStateService,
                           protected _taskDataService: TaskDataService,
                           protected _assignPolicyService: AssignPolicyService,
+                          protected _finishPolicyService: FinishPolicyService,
                           protected _callChain: CallChainService,
                           protected _taskOperations: SubjectTaskOperations,
                           @Optional() @Inject(NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS) protected _disableFunctions: DisableButtonFuntions,
@@ -265,6 +267,7 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
         this._assignTaskService.assign(this._callChain.create((afterAction => {
             if (afterAction) {
                 this._taskDataService.initializeTaskDataFields();
+                this._finishPolicyService.performFinishPolicy();
             }
         })));
     }

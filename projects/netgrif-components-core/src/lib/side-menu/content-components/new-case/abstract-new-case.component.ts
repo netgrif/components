@@ -148,17 +148,27 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
             this._caseResourceService.createCase(newCase)
                 .subscribe(
                     (response: EventOutcomeMessageResource) => {
-                        this._snackBarService.openSuccessSnackBar(response.outcome.message === undefined
-                            ? this._translate.instant('side-menu.new-case.createCase') + ' ' + newCase.title
-                            : response.outcome.message);
-                        this._sideMenuControl.close({
-                            opened: false,
-                            message: response.outcome.message === undefined
-                                ? 'Confirm new case setup'
-                                : response.outcome.message
-                            ,
-                            data: (response.outcome as CreateCaseEventOutcome).aCase
-                        });
+                        if (!!response.outcome) {
+                            this._snackBarService.openSuccessSnackBar(response.outcome.message === undefined
+                                ? this._translate.instant('side-menu.new-case.createCase') + ' ' + newCase.title
+                                : response.outcome.message);
+                            this._sideMenuControl.close({
+                                opened: false,
+                                message: response.outcome.message === undefined
+                                    ? 'Confirm new case setup'
+                                    : response.outcome.message
+                                ,
+                                data: (response.outcome as CreateCaseEventOutcome).aCase
+                            });
+                        } else if (!!response.error) {
+                            this._snackBarService.openWarningSnackBar(this._translate.instant('side-menu.new-case.createCaseError') + ' ' + newCase.title);
+                            this._sideMenuControl.close({
+                                opened: false,
+                                message: response.error === undefined
+                                    ? 'Confirm new case setup'
+                                    : response.error
+                            });
+                        }
                     },
                     error => this._snackBarService.openErrorSnackBar(error.message ? error.message : error)
                 );

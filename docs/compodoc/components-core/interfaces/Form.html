@@ -371,17 +371,27 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
             this._caseResourceService.createCase(newCase)
                 .subscribe(
                     (response: EventOutcomeMessageResource) &#x3D;&gt; {
-                        this._snackBarService.openSuccessSnackBar(response.outcome.message &#x3D;&#x3D;&#x3D; undefined
-                            ? this._translate.instant(&#x27;side-menu.new-case.createCase&#x27;) + &#x27; &#x27; + newCase.title
-                            : response.outcome.message);
-                        this._sideMenuControl.close({
-                            opened: false,
-                            message: response.outcome.message &#x3D;&#x3D;&#x3D; undefined
-                                ? &#x27;Confirm new case setup&#x27;
-                                : response.outcome.message
-                            ,
-                            data: (response.outcome as CreateCaseEventOutcome).aCase
-                        });
+                        if (!!response.outcome) {
+                            this._snackBarService.openSuccessSnackBar(response.outcome.message &#x3D;&#x3D;&#x3D; undefined
+                                ? this._translate.instant(&#x27;side-menu.new-case.createCase&#x27;) + &#x27; &#x27; + newCase.title
+                                : response.outcome.message);
+                            this._sideMenuControl.close({
+                                opened: false,
+                                message: response.outcome.message &#x3D;&#x3D;&#x3D; undefined
+                                    ? &#x27;Confirm new case setup&#x27;
+                                    : response.outcome.message
+                                ,
+                                data: (response.outcome as CreateCaseEventOutcome).aCase
+                            });
+                        } else if (!!response.error) {
+                            this._snackBarService.openWarningSnackBar(this._translate.instant(&#x27;side-menu.new-case.createCaseError&#x27;) + &#x27; &#x27; + newCase.title);
+                            this._sideMenuControl.close({
+                                opened: false,
+                                message: response.error &#x3D;&#x3D;&#x3D; undefined
+                                    ? &#x27;Confirm new case setup&#x27;
+                                    : response.error
+                            });
+                        }
                     },
                     error &#x3D;&gt; this._snackBarService.openErrorSnackBar(error.message ? error.message : error)
                 );

@@ -118,6 +118,7 @@ import {
 import {
     SingleTabbedTaskViewComponent
 } from './doc/single-tabbed-view/single-tabbed-task-view/single-tabbed-task-view.component';
+import {ImpersonationDemoComponent} from './doc/impersonation-demo/impersonation-demo.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -150,6 +151,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         DashboardExampleComponent,
         FilterRepositoryExampleComponent,
         ProfileComponent,
+        ImpersonationDemoComponent,
         NavigationExampleComponent,
         ButtonsNavComponent,
         RolesAssignComponent,

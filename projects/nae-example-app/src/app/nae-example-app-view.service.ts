@@ -40,6 +40,7 @@ import {DoubleDrawerExampleComponent} from './doc/double-drawer-example/double-d
 import {PublicSingleTaskViewComponent} from './doc/public-single-task-view/public-single-task-view.component';
 import {BreadcrumbsExampleComponent} from './doc/breadcrumbs-example/breadcrumbs-example.component';
 import {DashboardCaseExampleComponent} from './doc/dashboard-case-example/dashboard-case-example.component';
+import {ImpersonationDemoComponent} from './doc/impersonation-demo/impersonation-demo.component';
 
 @Injectable({
     providedIn: 'root'
@@ -49,6 +50,7 @@ export class NaeExampleAppViewService extends ViewService {
         // This class is managed by schematics. Do not modify it by hand.
         // If you want to add views to the application run the 'create-view' schematic.
         super([
+            {id: 'ImpersonationDemoComponent', class: ImpersonationDemoComponent},
             {id: 'BreadcrumbsExampleComponent', class: BreadcrumbsExampleComponent},
             {id: 'TitleConfigComponent', class: TitleConfigComponent},
             {id: 'PublicSingleTaskViewComponent', class: PublicSingleTaskViewComponent},

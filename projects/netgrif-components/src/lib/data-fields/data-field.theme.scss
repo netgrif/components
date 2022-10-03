@@ -95,11 +95,19 @@
         .mat-error {
             font-size: 10px !important;
             line-height: 18px !important;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            width: 100%;
+            overflow: hidden;
         }
 
         .mat-hint {
             font-size: 11px !important;
             line-height: 18px !important;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            width: 100%;
+            overflow: hidden;
         }
 
         .ql-toolbar.ql-snow {
@@ -226,6 +234,44 @@
         border-style: dashed;
         border-radius: 16px;
         border-width: thin;
+    }
+}
+
+.mat-calendar-arrow {
+    border: none !important;
+    width: 10px !important;
+    height: 5px !important;
+}
+ngx-mat-calendar-header .mat-calendar-arrow {
+    border-left: 5px solid transparent !important;
+    border-right: 5px solid transparent !important;
+    border-top-width: 5px !important;
+    border-top-style: solid !important;
+    width: 0 !important;
+    height: 0 !important;
+}
+
+ngx-mat-calendar {
+    .mat-calendar-body-cell {
+        position: relative !important;
+    }
+}
+
+mat-calendar {
+    .mat-calendar-arrow {
+        width: 0;
+        height: 0;
+    }
+
+    .mat-calendar-body-cell {
+        position: absolute !important;
+        height: 100%;
+    }
+}
+
+ngx-mat-datetime-content {
+    .mat-calendar-arrow {
+        width: 0;
     }
 }
 

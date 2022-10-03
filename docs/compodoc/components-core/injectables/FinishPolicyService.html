@@ -624,7 +624,7 @@ export class FinishPolicyService extends TaskHandlingService {
      * @param afterAction the action that should be performed when the finish policy finishes
      */
     public performFinishPolicy(afterAction: AfterAction &#x3D; new AfterAction()): void {
-        if (this._safeTask.finishPolicy &#x3D;&#x3D;&#x3D; FinishPolicy.autoNoData) {
+        if (this._safeTask.finishPolicy &#x3D;&#x3D;&#x3D; FinishPolicy.autoNoData &amp;&amp; !!this._safeTask.user) {
             this.autoNoDataFinishPolicy(afterAction);
         } else {
             this.manualFinishPolicy(afterAction);
