@@ -9,6 +9,7 @@ import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, NO_ERRORS_SCHEMA, Optional} f
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 import {AbstractTaskRefFieldComponent} from './abstract-task-ref-field.component';
 import {TaskRefField} from './model/task-ref-field';
+import {LoggerService} from '../../logger/services/logger.service';
 
 describe('AbstractTaskRefFieldComponent', () => {
     let component: TestTaskRefComponent;
@@ -43,8 +44,9 @@ describe('AbstractTaskRefFieldComponent', () => {
     template: ''
 })
 class TestTaskRefComponent extends AbstractTaskRefFieldComponent {
-    constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
-        super(informAboutInvalidData);
+    constructor(protected _logger: LoggerService,
+                @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+        super(_logger, informAboutInvalidData);
     }
 }
 
