@@ -5,7 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres
 to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-Full Changelog: [https://github.com/netgrif/components/commits/v6.2.2](https://github.com/netgrif/components/commits/v6.2.2)
+Full Changelog: [https://github.com/netgrif/components/commits/v6.2.3](https://github.com/netgrif/components/commits/v6.2.3)
+
+## [6.2.3](https://github.com/netgrif/components/releases/tag/v6.2.3) (2022-10-03)
+
+### Fixed
+
+- [NAE-1729] User field null value on frontend throwing error
+- [NAE-1731] Missing write access to /home/.../node_modules/@netgrif/components
+- [NAE-1732] LDAP group role assignment component tile tooltip
+- [NAE-1734] Overlay on login page
+
 
 ## [6.2.2](https://github.com/netgrif/components/releases/tag/v6.2.2) (2022-09-28)
 
