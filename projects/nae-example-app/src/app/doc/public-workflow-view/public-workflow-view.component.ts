@@ -18,6 +18,9 @@ import {
     publicFactoryResolver, RedirectService
 } from '@netgrif/components-core';
 import {ActivatedRoute, Router} from '@angular/router';
+import {
+    ProcessServiceProvider
+} from '../../../../../netgrif-components-core/src/lib/providers/process-service/process-service.provider';
 
 const processServiceFactory = (userService: UserService, sessionService: SessionService, authService: AuthenticationService,
                                router: Router, publicResolverService: PublicUrlResolverService, petriNetResource: PetriNetResourceService,
@@ -41,12 +44,7 @@ const petriNetResourceFactory = (userService: UserService, sessionService: Sessi
     styleUrls: ['./public-workflow-view.component.scss'],
     providers: [
         WorkflowViewService,
-        {
-            provide: ProcessService,
-            useFactory: processServiceFactory,
-            deps: [UserService, SessionService, AuthenticationService, Router, PublicUrlResolverService, PetriNetResourceService,
-                PublicPetriNetResourceService, LoggerService, RedirectService]
-        },
+        ProcessServiceProvider,
         {
             provide: PetriNetResourceService,
             useFactory: petriNetResourceFactory,
