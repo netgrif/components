@@ -15,7 +15,9 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.2.3](https://g
 - [NAE-1731] Missing write access to /home/.../node_modules/@netgrif/components
 - [NAE-1732] LDAP group role assignment component tile tooltip
 - [NAE-1734] Overlay on login page
-
+- [NAE-1736] Rich textarea fix cursor
+- [NAE-1737] Bug i18n field placeholder
+- [NAE-1738] Multichoice map autocomplete init key
 
 ## [6.2.2](https://github.com/netgrif/components/releases/tag/v6.2.2) (2022-09-28)
 
