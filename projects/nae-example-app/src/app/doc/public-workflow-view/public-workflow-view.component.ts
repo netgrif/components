@@ -5,34 +5,18 @@ import {
     WorkflowViewService,
     LoggerService,
     ProcessService,
-    PublicProcessService,
-    PublicPetriNetResourceService,
     PetriNetResourceService,
     Net,
-    UserService,
-    SessionService,
-    AuthenticationService,
-    ResourceProvider,
-    ConfigurationService,
-    PublicUrlResolverService,
-    publicFactoryResolver, RedirectService
+    PublicViewFactory
 } from '@netgrif/components-core';
 import {ActivatedRoute, Router} from '@angular/router';
 
-const processServiceFactory = (userService: UserService, sessionService: SessionService, authService: AuthenticationService,
-                               router: Router, publicResolverService: PublicUrlResolverService, petriNetResource: PetriNetResourceService,
-                               publicPetriNetResource: PublicPetriNetResourceService, loggerService: LoggerService, redirectService: RedirectService) => {
-    return publicFactoryResolver(userService, sessionService, authService, router, publicResolverService,
-        new ProcessService(petriNetResource, loggerService),
-        new PublicProcessService(publicPetriNetResource, loggerService), redirectService);
+const processServiceFactory = (publicViewFactory: PublicViewFactory) => {
+    return publicViewFactory.resolveProcessService();
 };
 
-const petriNetResourceFactory = (userService: UserService, sessionService: SessionService, authService: AuthenticationService,
-                                 router: Router, publicResolverService: PublicUrlResolverService, provider: ResourceProvider,
-                                 config: ConfigurationService, redirectService: RedirectService) => {
-    return publicFactoryResolver(userService, sessionService, authService, router, publicResolverService,
-        new PetriNetResourceService(provider, config),
-        new PublicPetriNetResourceService(provider, config), redirectService);
+const petriNetResourceFactory = (publicViewFactory: PublicViewFactory) => {
+    return publicViewFactory.resolvePetriNetResource();
 };
 
 @Component({
@@ -44,14 +28,12 @@ const petriNetResourceFactory = (userService: UserService, sessionService: Sessi
         {
             provide: ProcessService,
             useFactory: processServiceFactory,
-            deps: [UserService, SessionService, AuthenticationService, Router, PublicUrlResolverService, PetriNetResourceService,
-                PublicPetriNetResourceService, LoggerService, RedirectService]
+            deps: [PublicViewFactory]
         },
         {
             provide: PetriNetResourceService,
             useFactory: petriNetResourceFactory,
-            deps: [UserService, SessionService, AuthenticationService, Router, PublicUrlResolverService,
-                ResourceProvider, ConfigurationService, RedirectService]
+            deps: [PublicViewFactory]
         },
     ]
 })
