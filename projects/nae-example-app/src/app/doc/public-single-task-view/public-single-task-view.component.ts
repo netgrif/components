@@ -3,17 +3,31 @@ import {
     AbstractSingleTaskViewComponent,
     AllowedNetsService,
     AllowedNetsServiceFactory,
+    AuthenticationService,
     CaseResourceService,
     ChangedFieldsService,
+    ConfigurationService,
+    FieldConverterService,
     FinishTaskService,
+    LoggerService,
     NAE_BASE_FILTER,
     NAE_TASK_OPERATIONS,
     NAE_VIEW_ID_SEGMENT,
+    PetriNetResourceService,
     ProcessService,
+    publicBaseFilterFactory,
+    PublicCaseResourceService,
+    publicFactoryResolver,
+    PublicPetriNetResourceService,
+    PublicProcessService,
     PublicTaskLoadingService,
-    RedirectService,
+    PublicTaskResourceService,
+    PublicUrlResolverService, RedirectService,
+    ResourceProvider,
     SearchService,
+    SessionService,
     SingleTaskContentService,
+    SnackBarService,
     SubjectTaskOperations,
     TaskContentService,
     TaskDataService,
@@ -22,20 +36,30 @@ import {
     TaskRequestStateService,
     TaskResourceService,
     TaskViewService,
-    ViewIdService,
-    PublicViewFactory
+    UserService,
+    ViewIdService
 } from '@netgrif/components-core';
 import {ActivatedRoute, Router} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
 import {combineLatest} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {HeaderComponent} from '@netgrif/components';
 
-const taskResourceServiceFactory = (publicViewFactory: PublicViewFactory) => {
-    return publicViewFactory.resolveTaskResource();
+const taskResourceServiceFactory = (userService: UserService, sessionService: SessionService, authService: AuthenticationService,
+                                    router: Router, publicResolverService: PublicUrlResolverService,
+                                    logger: LoggerService, provider: ResourceProvider, config: ConfigurationService,
+                                    fieldConverter: FieldConverterService, redirectService: RedirectService) => {
+    return publicFactoryResolver(userService, sessionService, authService, router, publicResolverService,
+        new TaskResourceService(provider, config, fieldConverter, logger),
+        new PublicTaskResourceService(provider, config, fieldConverter, logger), redirectService);
 };
 
-const processServiceFactory = (publicViewFactory: PublicViewFactory) => {
-    return publicViewFactory.resolveProcessService();
+const processServiceFactory = (userService: UserService, sessionService: SessionService, authService: AuthenticationService,
+                               router: Router, publicResolverService: PublicUrlResolverService, petriNetResource: PetriNetResourceService,
+                               publicPetriNetResource: PublicPetriNetResourceService, loggerService: LoggerService, redirectService: RedirectService) => {
+    return publicFactoryResolver(userService, sessionService, authService, router, publicResolverService,
+        new ProcessService(petriNetResource, loggerService),
+        new PublicProcessService(publicPetriNetResource, loggerService), redirectService);
 };
 
 const localAllowedNetsServiceFactory = (factory: AllowedNetsServiceFactory, route: ActivatedRoute) => {
@@ -46,13 +70,13 @@ const localAllowedNetsServiceFactory = (factory: AllowedNetsServiceFactory, rout
     return factory.createFromArray(array);
 };
 
-const caseResourceServiceFactory = (publicViewFactory: PublicViewFactory) => {
-    return publicViewFactory.resolveCaseResource();
+const caseResourceServiceFactory = (userService: UserService, sessionService: SessionService, authService: AuthenticationService,
+                                    router: Router, publicResolverService: PublicUrlResolverService,
+                                    provider: ResourceProvider, config: ConfigurationService, redirectService: RedirectService) => {
+    return publicFactoryResolver(userService, sessionService, authService, router, publicResolverService,
+        new CaseResourceService(provider, config),
+        new PublicCaseResourceService(provider, config), redirectService);
 };
-
-const baseFilterFactory = (publicViewFactory: PublicViewFactory, route: ActivatedRoute) => {
-    return publicViewFactory.baseFilter(route);
-}
 
 @Component({
     selector: 'nae-app-public-single-task-view',
@@ -67,22 +91,25 @@ const baseFilterFactory = (publicViewFactory: PublicViewFactory, route: Activate
         {
             provide: ProcessService,
             useFactory: processServiceFactory,
-            deps: [PublicViewFactory]
+            deps: [UserService, SessionService, AuthenticationService, Router, PublicUrlResolverService, PetriNetResourceService,
+                PublicPetriNetResourceService, LoggerService, RedirectService]
         },
         {
             provide: TaskResourceService,
             useFactory: taskResourceServiceFactory,
-            deps: [PublicViewFactory]
+            deps: [UserService, SessionService, AuthenticationService, Router, PublicUrlResolverService,
+                LoggerService, ResourceProvider, ConfigurationService, FieldConverterService, RedirectService]
         },
         {
             provide: CaseResourceService,
             useFactory: caseResourceServiceFactory,
-            deps: [PublicViewFactory]
+            deps: [UserService, SessionService, AuthenticationService, Router, PublicUrlResolverService,
+                ResourceProvider, ConfigurationService, RedirectService]
         },
         {
             provide: NAE_BASE_FILTER,
-            useFactory: baseFilterFactory,
-            deps: [PublicViewFactory, ActivatedRoute]
+            useFactory: publicBaseFilterFactory,
+            deps: [Router, ActivatedRoute, ProcessService, CaseResourceService, SnackBarService, TranslateService, PublicTaskLoadingService, RedirectService]
         },
         {
             provide: AllowedNetsService,
@@ -129,4 +156,5 @@ export class PublicSingleTaskViewComponent extends AbstractSingleTaskViewCompone
     logEvent(event: TaskEventNotification) {
         console.log(event);
     }
+
 }

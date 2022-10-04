@@ -5,9 +5,6 @@ import {AuthenticationService} from '../../authentication/services/authenticatio
 import {PublicUrlResolverService} from '../services/public-url-resolver.service';
 import { RedirectService } from '../../routing/redirect-service/redirect.service';
 
-/**
- * @deprecated in 6.3.0 - user {@link PublicViewFactory#publicFactoryResolver}
- * */
 export const publicFactoryResolver = (userService: UserService, sessionService: SessionService, authService: AuthenticationService,
                                       router: Router, publicResolverService: PublicUrlResolverService, privateService, publicService,
                                       redirectService: RedirectService, url?: string) => {

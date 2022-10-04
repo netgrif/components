@@ -8,9 +8,6 @@ import {FilterType} from '../../filter/models/filter-type';
 import {TranslateService} from '@ngx-translate/core';
 import {PublicTaskLoadingService} from '../../view/task-view/service/public-task-loading.service';
 
-/**
- * @deprecated in 6.3.0 - user {@link PublicViewFactory#baseFilter}
- * */
 export const publicBaseFilterFactory = (router: Router, route: ActivatedRoute, process: ProcessService,
                                         caseResourceService: CaseResourceService, snackBarService: SnackBarService,
                                         translate: TranslateService, publicTaskLoadingService: PublicTaskLoadingService) => {

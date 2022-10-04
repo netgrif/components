@@ -2,9 +2,7 @@ import {Injectable} from '@angular/core';
 import {LoadingEmitter} from '../../../utility/loading-emitter';
 import {Observable} from 'rxjs';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class PublicTaskLoadingService {
 
     protected _loading$: LoadingEmitter;
