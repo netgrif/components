@@ -84,7 +84,7 @@ export abstract class AbstractMultichoiceAutocompleteFieldComponentComponent imp
         return key;
     }
 
-    public getValueFromKey(key: string) {
-        return this.multichoiceField.choices.find(choice => choice.key === key).value;
+    public getValueFromKey(key: string): string | undefined {
+        return this.multichoiceField.choices.find(choice => choice.key === key)?.value;
     }
 }
