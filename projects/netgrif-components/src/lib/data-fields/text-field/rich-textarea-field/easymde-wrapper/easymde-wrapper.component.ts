@@ -31,6 +31,7 @@ export class EasymdeWrapperComponent implements OnDestroy, AfterViewInit, Contro
         this.options = {
             autoDownloadFontAwesome: true,
             minHeight: '95px',
+            spellChecker: false,
             toolbar: ['bold', 'italic', 'heading', 'strikethrough', '|', 'code', 'quote', 'unordered-list', 'ordered-list', '|',
                 'link', 'image', 'table', '|', 'horizontal-rule', 'preview', '|', 'guide'],
             shortcuts: {
@@ -60,14 +61,6 @@ export class EasymdeWrapperComponent implements OnDestroy, AfterViewInit, Contro
         this._easyMDE = new EasyMDE(this.options);
         this._easyMDE.value(this.textAreaField.value);
         this._easyMDE.codemirror.on('change', this._onChange);
-        this.formControlRef.valueChanges.subscribe(value => {
-            if (this._easyMDE) {
-                if (!this._fromEditor) {
-                    this._easyMDE.value(value);
-                }
-                this._fromEditor = false;
-            }
-        });
     }
 
     private _onChange = (): void => {
