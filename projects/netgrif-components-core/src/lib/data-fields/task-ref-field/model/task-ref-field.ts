@@ -5,35 +5,6 @@ import {Component} from '../../models/component';
 import {Validation} from '../../models/validation';
 import {TaskRefDashboardTile} from './task-ref-dashboard-tile';
 
-
-/**
- * A collection of Task ref field component names supported by the application engine.
- */
-export enum TaskRefComponents {
-    DASHBOARD = 'dashboard'
-}
-
-/**
- * A collection of Task ref field dashboard component constants used to reference elements of the underlying processes
- */
-export enum TaskRefDashboardConstants {
-    DASHBOARD_ROWS = 'rows',
-    DASHBOARD_COLS = 'cols',
-    DASHBOARD_TASK_REF = 'dashboard',
-}
-
-/**
- * A collection of Task ref field dashboard tile component constants used to reference elements of the underlying processes
- */
-export enum TaskRefDashboardTileConstants {
-    DASHBOARD_TILE_X = 'x',
-    DASHBOARD_TILE_Y = 'y',
-    DASHBOARD_TILE_ROWS = 'rows',
-    DASHBOARD_TILE_COLS = 'cols',
-    DASHBOARD_TILE_PARENT_ID = 'parent_dashboard_id',
-    DASHBOARD_TILE_PROCESS_IDENTIFIER = 'dashboard_tile'
-}
-
 export class TaskRefField extends DataField<Array<string>> {
 
     protected _dashboardTiles?: Array<TaskRefDashboardTile>;

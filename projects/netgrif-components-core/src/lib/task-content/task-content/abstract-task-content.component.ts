@@ -9,7 +9,12 @@ import {TaskEventService} from '../services/task-event.service';
 import {DataGroup, DataGroupAlignment, ParentDataGroupInformation} from '../../resources/interface/data-groups';
 import {TaskElementType} from '../model/task-content-element-type';
 import {DataField} from '../../data-fields/models/abstract-data-field';
-import {DataGroupCompact, DataGroupHideEmptyRows, DataGroupLayout, DataGroupLayoutType} from '../../resources/interface/data-group-layout';
+import {
+    DataGroupCompact,
+    DataGroupHideEmptyRows,
+    DataGroupLayout,
+    DataGroupLayoutType
+} from '../../resources/interface/data-group-layout';
 import {FieldAlignment} from '../../resources/interface/field-alignment';
 import {FieldTypeResource} from '../model/field-type-resource';
 import {LoadingEmitter} from '../../utility/loading-emitter';
@@ -17,7 +22,9 @@ import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {NAE_ASYNC_RENDERING_CONFIGURATION} from '../model/async-rendering-configuration-injection-token';
 import {AsyncRenderingConfiguration} from '../model/async-rendering-configuration';
-import {TaskRefComponents, TaskRefDashboardConstants, TaskRefField} from '../../data-fields/task-ref-field/model/task-ref-field';
+import {TaskRefDashboardConstants} from '../../data-fields/task-ref-field/model/task-ref-dashboard-constants';
+import {TaskRefField} from '../../data-fields/task-ref-field/model/task-ref-field';
+import {TaskRefComponents} from '../../data-fields/task-ref-field/model/task-ref-components';
 import {SplitDataGroup} from '../model/split-data-group';
 import {Subgrid} from '../model/subgrid';
 import {IncrementingCounter} from '../../utility/incrementing-counter';
@@ -252,7 +259,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
 
         const result = new Map<string, Subgrid>();
 
-        dataGroups = this.preprocessDataGroups(dataGroups)
+        dataGroups = this.preprocessDataGroups(dataGroups);
 
         const defaultLayout = this.taskContentService.task.layout && this.taskContentService.task.layout.type
             ? this.taskContentService.task.layout.type
@@ -419,7 +426,12 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
      * @returns the duplicated data groups
      */
     protected cloneDataGroups(dataGroups: Array<DataGroup>): Array<DataGroup> {
-        return dataGroups.map(g => g);
+        return dataGroups.map(group => {
+            const g = {...group};
+            g.fields = g.fields.map(field => field);
+            return g;
+        });
+
     }
 
     /**

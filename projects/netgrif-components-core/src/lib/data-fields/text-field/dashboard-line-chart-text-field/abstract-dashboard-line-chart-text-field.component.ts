@@ -16,14 +16,14 @@ export abstract class AbstractDashboardLineChartTextFieldComponent extends Abstr
     }
 
     protected createCard(textFieldValue: string): CustomCard {
+        const parsedValue = JSON.parse(textFieldValue) as CustomCard;
         return {
             type: DashboardCardTypes.LINE,
-            query: JSON.parse(textFieldValue),
-            // TODO parse from config (text field value)
-            units: 'TODO units',
-            xAxisLabel: 'TODO x axis label',
-            yAxisLabel: 'TODO y axis label',
-            resourceType: FilterType.CASE,
+            query: parsedValue.query,
+            title: parsedValue.title,
+            xAxisLabel: parsedValue.xAxisLabel,
+            yAxisLabel: parsedValue.yAxisLabel,
+            resourceType: !!parsedValue.resourceType ? parsedValue.resourceType : FilterType.CASE,
             layout: {x: 0, y: 0, rows: 1, cols: 1}
         };
     }

@@ -16,14 +16,12 @@ export abstract class AbstractDashboardPieChartTextFieldComponent extends Abstra
     }
 
     protected createCard(textFieldValue: string): CustomCard {
+        const parsedValue = JSON.parse(textFieldValue) as CustomCard;
         return {
             type: DashboardCardTypes.PIE,
-            query: JSON.parse(textFieldValue),
-            // TODO parse from config (text field value)
-            units: 'TODO units',
-            xAxisLabel: 'TODO x axis label',
-            yAxisLabel: 'TODO y axis label',
-            resourceType: FilterType.CASE,
+            query: parsedValue.query,
+            title: parsedValue.title,
+            resourceType: !!parsedValue.resourceType ? parsedValue.resourceType : FilterType.CASE,
             layout: {x: 0, y: 0, rows: 1, cols: 1}
         };
     }

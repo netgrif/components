@@ -242,10 +242,10 @@ export function HttpLoaderFactory(http: HttpClient) {
 export class AppModule {
 
     constructor(registry: DashboardPortalComponentRegistryService) {
-        registry.register('email', () => new ComponentPortal(EmailSubmissionFormComponent));
-        registry.register('workflow-view', () => new ComponentPortal(WorkflowViewExampleComponent));
-        registry.register('task-view', () => new ComponentPortal(TaskViewComponent));
-        registry.register('case-view', () => new ComponentPortal(CaseViewComponent));
+        registry.register('email', (injector: Injector) => new ComponentPortal(EmailSubmissionFormComponent, null, injector));
+        registry.register('workflow-view', (injector: Injector) => new ComponentPortal(WorkflowViewExampleComponent, null, injector));
+        registry.register('task-view', (injector: Injector) => new ComponentPortal(TaskViewComponent, null, injector));
+        registry.register('case-view', (injector: Injector) => new ComponentPortal(CaseViewComponent, null, injector));
         registry.register('tab-view', (injector: Injector) => new ComponentPortal(TabbedViewsExampleComponent, null, injector));
     }
 }

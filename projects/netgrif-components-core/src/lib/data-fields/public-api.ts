@@ -89,6 +89,9 @@ export * from './filter-field/models/filter-field-injection-token';
 /* Enums */
 export * from './models/template-appearance';
 export * from './models/material-appearance';
+export * from './task-ref-field/model/task-ref-components';
+export * from './task-ref-field/model/task-ref-dashboard-constants';
+export * from './task-ref-field/model/task-ref-dashboard-tile-constants';
 
 /* Services */
 export * from './i18n-field/language-icons.service';

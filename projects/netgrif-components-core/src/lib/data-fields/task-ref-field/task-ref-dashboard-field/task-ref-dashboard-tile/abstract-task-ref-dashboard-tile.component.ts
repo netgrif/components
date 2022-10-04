@@ -1,7 +1,9 @@
 import {Component, Inject, Input, OnDestroy} from '@angular/core';
 import {TaskRefDashboardTile} from '../../model/task-ref-dashboard-tile';
 import {CaseResourceService} from '../../../../resources/engine-endpoint/case-resource.service';
-import {TaskRefDashboardConstants, TaskRefDashboardTileConstants, TaskRefField} from '../../model/task-ref-field';
+import {TaskRefField} from '../../model/task-ref-field';
+import {TaskRefDashboardConstants} from '../../model/task-ref-dashboard-constants';
+import {TaskRefDashboardTileConstants} from '../../model/task-ref-dashboard-tile-constants';
 import {Subject, Subscription} from 'rxjs';
 import {ProcessService} from '../../../../process/process.service';
 import {switchMap} from 'rxjs/operators';
@@ -46,7 +48,7 @@ export abstract class AbstractTaskRefDashboardTileComponent implements OnDestroy
         }
     }
 
-    createNewDashboardTile() {
+    public createNewDashboardTile(): void {
         this._sub = this._processService.getNet(TaskRefDashboardTileConstants.DASHBOARD_TILE_PROCESS_IDENTIFIER).pipe(
             switchMap(net => this._caseResourceService.createCase({
                 netId: net.stringId,
@@ -96,14 +98,14 @@ export abstract class AbstractTaskRefDashboardTileComponent implements OnDestroy
                             value: [...this.taskRef.value, _case.tasks[0].task]
                         }
                     }
-                }).subscribe( outcome => {
+                }).subscribe(outcome => {
                     if (outcome.error) {
-                        this._logger.error(`Could reference created task ref dashboard tile in the task ref`, outcome.error);
+                        this._logger.error(`Could not reference created task ref dashboard tile in the task ref`, outcome.error);
                         return;
                     }
                     this._taskDataService.initializeTaskDataFields(new AfterAction(), true);
                 }, error => {
-                    this._logger.error(`Could reference created task ref dashboard tile in the task ref`, error);
+                    this._logger.error(`Could not reference created task ref dashboard tile in the task ref`, error);
                 });
             }));
         }, error => {
