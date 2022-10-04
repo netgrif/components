@@ -1,27 +1,25 @@
 
 import { Router } from '@angular/router';
-import { ProcessService } from '../../process/process.service';
+import { CaseResourceService } from '../../resources/engine-endpoint/case-resource.service';
 import { UserService } from '../../user/services/user.service';
 import { SessionService } from '../../authentication/session/services/session.service';
 import { AuthenticationService } from '../../authentication/services/authentication/authentication.service';
 import { PublicUrlResolverService } from '../../public/services/public-url-resolver.service';
-import { PetriNetResourceService } from '../../resources/engine-endpoint/petri-net-resource.service';
-import { PublicPetriNetResourceService } from '../../resources/engine-endpoint/public/public-petri-net-resource.service';
-import { LoggerService } from '../../logger/services/logger.service';
+import { ResourceProvider } from '../../resources/resource-provider.service';
+import { ConfigurationService } from '../../configuration/configuration.service';
 import { RedirectService } from '../../routing/redirect-service/redirect.service';
 import { publicFactoryResolver } from '../../public/factories/public-factory-resolver';
-import { PublicProcessService } from '../../process/public-process.service';
+import { PublicCaseResourceService } from '../../resources/engine-endpoint/public/public-case-resource.service';
 
-export const ProcessServiceProvider = {
-    provide: ProcessService,
+export const CaseResourceServiceProvider = {
+    provide: CaseResourceService,
     useFactory: (userService: UserService,
                  sessionService: SessionService,
                  authService: AuthenticationService,
                  router: Router,
                  publicResolverService: PublicUrlResolverService,
-                 petriNetResource: PetriNetResourceService,
-                 publicPetriNetResource: PublicPetriNetResourceService,
-                 loggerService: LoggerService,
+                 provider: ResourceProvider,
+                 config: ConfigurationService,
                  redirectService: RedirectService) => {
         return publicFactoryResolver(
             userService,
@@ -29,8 +27,8 @@ export const ProcessServiceProvider = {
             authService,
             router,
             publicResolverService,
-            new ProcessService(petriNetResource, loggerService),
-            new PublicProcessService(publicPetriNetResource, loggerService),
+            new CaseResourceService(provider, config),
+            new PublicCaseResourceService(provider, config),
             redirectService
         );
     },
@@ -40,9 +38,8 @@ export const ProcessServiceProvider = {
         AuthenticationService,
         Router,
         PublicUrlResolverService,
-        PetriNetResourceService,
-        PublicPetriNetResourceService,
-        LoggerService,
+        ResourceProvider,
+        ConfigurationService,
         RedirectService
     ]
 }

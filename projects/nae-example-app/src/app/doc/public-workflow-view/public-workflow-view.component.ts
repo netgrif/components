@@ -5,38 +5,11 @@ import {
     WorkflowViewService,
     LoggerService,
     ProcessService,
-    PublicProcessService,
-    PublicPetriNetResourceService,
-    PetriNetResourceService,
     Net,
-    UserService,
-    SessionService,
-    AuthenticationService,
-    ResourceProvider,
-    ConfigurationService,
-    PublicUrlResolverService,
-    publicFactoryResolver, RedirectService
+    ProcessServiceProvider,
+    PetriNetResourceServiceProvider
 } from '@netgrif/components-core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {
-    ProcessServiceProvider
-} from '../../../../../netgrif-components-core/src/lib/providers/process-service/process-service.provider';
-
-const processServiceFactory = (userService: UserService, sessionService: SessionService, authService: AuthenticationService,
-                               router: Router, publicResolverService: PublicUrlResolverService, petriNetResource: PetriNetResourceService,
-                               publicPetriNetResource: PublicPetriNetResourceService, loggerService: LoggerService, redirectService: RedirectService) => {
-    return publicFactoryResolver(userService, sessionService, authService, router, publicResolverService,
-        new ProcessService(petriNetResource, loggerService),
-        new PublicProcessService(publicPetriNetResource, loggerService), redirectService);
-};
-
-const petriNetResourceFactory = (userService: UserService, sessionService: SessionService, authService: AuthenticationService,
-                                 router: Router, publicResolverService: PublicUrlResolverService, provider: ResourceProvider,
-                                 config: ConfigurationService, redirectService: RedirectService) => {
-    return publicFactoryResolver(userService, sessionService, authService, router, publicResolverService,
-        new PetriNetResourceService(provider, config),
-        new PublicPetriNetResourceService(provider, config), redirectService);
-};
 
 @Component({
     selector: 'nae-app-public-workflow-view',
@@ -45,12 +18,7 @@ const petriNetResourceFactory = (userService: UserService, sessionService: Sessi
     providers: [
         WorkflowViewService,
         ProcessServiceProvider,
-        {
-            provide: PetriNetResourceService,
-            useFactory: petriNetResourceFactory,
-            deps: [UserService, SessionService, AuthenticationService, Router, PublicUrlResolverService,
-                ResourceProvider, ConfigurationService, RedirectService]
-        },
+        PetriNetResourceServiceProvider,
     ]
 })
 export class PublicWorkflowViewComponent extends AbstractWorkflowViewComponent {
