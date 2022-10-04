@@ -7,6 +7,9 @@ import {TranslateService} from '@ngx-translate/core';
 import {CreateCaseEventOutcome} from '../../event/model/event-outcomes/case-outcomes/create-case-event-outcome';
 import {PublicTaskLoadingService} from '../../view/task-view/service/public-task-loading.service';
 
+/**
+ * @deprecated in 6.3.0 - user {@link PublicViewFactory#getNetAndCreateCase}
+ * */
 export const getNetAndCreateCase = (router: Router,
                                     route: ActivatedRoute,
                                     process: ProcessService,
