@@ -210,7 +210,7 @@
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>value:         <code><a href="../classes/UserValue.html" target="_self" >UserValue</a></code>
+                                        <code>value:     <code>UserValue | UserListValue</code>
 </code>
                                     </td>
                                 </tr>
@@ -218,7 +218,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>        <code><a href="../classes/UserValue.html" target="_self" >UserValue</a></code>
+                                            <i>Type : </i>    <code>UserValue | UserListValue</code>
 
                                         </td>
                                     </tr>
@@ -237,13 +237,14 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {SideMenuInjectionData} from &#x27;../../../models/side-menu-injection-data&#x27;;
 import {ProcessRole} from &#x27;../../../../resources/interface/process-role&#x27;;
 import {UserValue} from &#x27;../../../../data-fields/user-field/models/user-value&#x27;;
+import { UserListValue } from &#x27;../../../../data-fields/user-list-field/models/user-list-value&#x27;;
 
 /**
  * Interface that represents the input data to the side menu for the user assign component.
  */
 export interface UserListInjectedData extends SideMenuInjectionData {
     roles: Array&lt;string&gt; | Array&lt;ProcessRole&gt;;
-    value: UserValue;
+    value: UserValue | UserListValue;
     negativeRoles?: Array&lt;string&gt; | Array&lt;ProcessRole&gt;;
 }
 </code></pre>

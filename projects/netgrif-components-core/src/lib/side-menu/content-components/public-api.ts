@@ -9,6 +9,7 @@ export * from './filter-selector/filter-selector-list-item/abstract-filter-selec
 export * from './option-selector/abstract-option-selector.component';
 export * from './save-filter/abstract-save-filter.component';
 export * from './load-filter/abstract-load-filter.component';
+export * from './user-impersonate/abstract-user-impersonate.component';
 
 /* MODELS */
 export * from './filter-selector/model/filter-selector-injection-data';
@@ -18,3 +19,4 @@ export * from './save-filter/model/save-filter-injection-data';
 export * from './load-filter/model/load-filter-injection-data';
 export * from './injection-tokens';
 export * from './new-case/model/new-case-injection-data';
+export * from './user-impersonate/model/user-impersonate-injection-data';

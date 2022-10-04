@@ -13,6 +13,7 @@ export abstract class AbstractCurrencyNumberFieldComponent extends AbstractNumbe
     fieldType: string;
     public readonly NUMBER_TYPE = 'number';
     public readonly TEXT_TYPE = 'text';
+    public readonly WHITESPACE = ' ';
 
     protected constructor(protected _currencyPipe: CurrencyPipe, translateService: TranslateService) {
         super(translateService);
@@ -24,7 +25,7 @@ export abstract class AbstractCurrencyNumberFieldComponent extends AbstractNumbe
         this.numberField.valueChanges().subscribe(value => {
             if (value !== undefined) {
                 if (this.fieldType === this.TEXT_TYPE) {
-                    this.transformedValue = this.transformCurrency(value.toString());
+                    this.transformedValue = this.transformCurrency(value.toString()) + this.WHITESPACE;
                 }
             } else {
                 this.transformedValue = '';

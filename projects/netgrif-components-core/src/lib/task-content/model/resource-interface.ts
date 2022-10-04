@@ -18,11 +18,6 @@ export interface DataFieldResource {
     value?: string | number | Array<string> | boolean | Array<number> | any;
     defaultValue?: string | number | Array<string> | boolean;
     choices?: Array<string>;
-    /*@deprecated*/
-    view?: {
-        /*@deprecated*/
-        value: string;
-    };
     minValue?: number;
     minDate?: string;
     validations?: Array<Validation>;

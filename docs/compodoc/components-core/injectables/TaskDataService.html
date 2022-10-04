@@ -155,6 +155,10 @@ a single Task object managed by a <a href="../injectables/TaskContentService.htm
                             </li>
                             <li>
                                     <span class="modifier">Protected</span>
+                                <a href="#processUnsuccessfulSetDataRequest" >processUnsuccessfulSetDataRequest</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
                                 <a href="#revertSetDataRequest" >revertSetDataRequest</a>
                             </li>
                             <li>
@@ -447,8 +451,8 @@ a single Task object managed by a <a href="../injectables/TaskContentService.htm
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="340"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:340</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="342"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:342</a></div>
                 </td>
             </tr>
 
@@ -541,8 +545,8 @@ a single Task object managed by a <a href="../injectables/TaskContentService.htm
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="526"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:526</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="565"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:565</a></div>
                 </td>
             </tr>
 
@@ -733,8 +737,8 @@ and the <code>afterAction</code> will not be executed.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="361"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:361</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="363"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:363</a></div>
                 </td>
             </tr>
 
@@ -951,8 +955,8 @@ and the <code>afterAction</code> will not be executed.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="403"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:403</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="405"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:405</a></div>
                 </td>
             </tr>
 
@@ -1069,7 +1073,7 @@ and the <code>afterAction</code> will not be executed.</p>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>processErroneousGetDataRequest(gottenTaskId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, error: <a href="https://angular.io/api/common/http/HttpErrorResponse" target="_blank">HttpErrorResponse</a>, afterAction: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>, nextEvent: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>)</code>
+                    <code>processErroneousGetDataRequest(gottenTaskId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, error: HttpErrorResponse | Error, afterAction: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>, nextEvent: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>)</code>
                 </td>
             </tr>
 
@@ -1118,7 +1122,7 @@ and the <code>afterAction</code> will not be executed.</p>
                                 <tr>
                                     <td>error</td>
                                     <td>
-                                                <code><a href="https://angular.io/api/common/http/HttpErrorResponse" target="_blank" >HttpErrorResponse</a></code>
+                                            <code>HttpErrorResponse | Error</code>
                                     </td>
 
                                     <td>
@@ -1201,8 +1205,8 @@ and the <code>afterAction</code> will not be executed.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="463"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:463</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="502"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:502</a></div>
                 </td>
             </tr>
 
@@ -1460,15 +1464,15 @@ and the <code>afterAction</code> will not be executed.</p>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>processSuccessfulSetDataRequest(setTaskId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, response: <a href="../interfaces/EventOutcome.html" target="_self">EventOutcome</a>, afterAction: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>, nextEvent: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>, body: <a href="../interfaces/TaskSetDataRequestBody.html" target="_self">TaskSetDataRequestBody</a>)</code>
+                    <code>processSuccessfulSetDataRequest(setTaskId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, response: <a href="../interfaces/EventOutcomeMessageResource.html" target="_self">EventOutcomeMessageResource</a>, afterAction: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>, nextEvent: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>, body: <a href="../interfaces/TaskSetDataRequestBody.html" target="_self">TaskSetDataRequestBody</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="430"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:430</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="477"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:477</a></div>
                 </td>
             </tr>
 
@@ -1509,7 +1513,148 @@ and the <code>afterAction</code> will not be executed.</p>
                                 <tr>
                                     <td>response</td>
                                     <td>
-                                                <code><a href="../interfaces/EventOutcome.html" target="_self" >EventOutcome</a></code>
+                                                <code><a href="../interfaces/EventOutcomeMessageResource.html" target="_self" >EventOutcomeMessageResource</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the resulting Event outcome of the set data request</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>afterAction</td>
+                                    <td>
+                                                <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the action that should be performed after the request is processed</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>nextEvent</td>
+                                    <td>
+                                                <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>indicates to the event queue that the next event can be processed</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>body</td>
+                                    <td>
+                                                <code><a href="../interfaces/TaskSetDataRequestBody.html" target="_self" >TaskSetDataRequestBody</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>hold the data that was sent in request</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="processUnsuccessfulSetDataRequest"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>processUnsuccessfulSetDataRequest</b></span>
+                        <a href="#processUnsuccessfulSetDataRequest"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>processUnsuccessfulSetDataRequest(setTaskId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, response: <a href="../interfaces/EventOutcomeMessageResource.html" target="_self">EventOutcomeMessageResource</a>, afterAction: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>, nextEvent: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>, body: <a href="../interfaces/TaskSetDataRequestBody.html" target="_self">TaskSetDataRequestBody</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="444"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:444</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Processes a unsuccessful outcome of a <code>setData</code> request</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>setTaskId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the Id of the task whose data was set</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>response</td>
+                                    <td>
+                                                <code><a href="../interfaces/EventOutcomeMessageResource.html" target="_self" >EventOutcomeMessageResource</a></code>
                                     </td>
 
                                     <td>
@@ -1608,8 +1753,8 @@ and the <code>afterAction</code> will not be executed.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="491"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:491</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="530"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:530</a></div>
                 </td>
             </tr>
 
@@ -1685,8 +1830,8 @@ and the <code>afterAction</code> will not be executed.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="567"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:567</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="606"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:606</a></div>
                 </td>
             </tr>
 
@@ -1778,8 +1923,8 @@ and the <code>afterAction</code> will not be executed.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="278"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:278</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="280"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:280</a></div>
                 </td>
             </tr>
 
@@ -1863,8 +2008,8 @@ and the <code>afterAction</code> will not be executed.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="353"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:353</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="355"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:355</a></div>
                 </td>
             </tr>
 
@@ -2402,7 +2547,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
      * @param nextEvent indicates to the event queue that the next event can be processed
      */
     protected processErroneousGetDataRequest(gottenTaskId: string,
-                                             error: HttpErrorResponse,
+                                             error: HttpErrorResponse | Error,
                                              afterAction: AfterAction,
                                              nextEvent: AfterAction) {
         this._taskState.stopLoading(gottenTaskId);
@@ -2415,9 +2560,11 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
             return;
         }
 
-        if (error.status &#x3D;&#x3D;&#x3D; 500 &amp;&amp; error.error.message &amp;&amp; error.error.message.startsWith(&#x27;Could not find task with id&#x27;)) {
+        if (error instanceof HttpErrorResponse &amp;&amp; error.status &#x3D;&#x3D;&#x3D; 500 &amp;&amp; error.error.message &amp;&amp; error.error.message.startsWith(&#x27;Could not find task with id&#x27;)) {
             this._snackBar.openWarningSnackBar(this._translate.instant(&#x27;tasks.snackbar.noLongerExists&#x27;));
             this._taskOperations.reload();
+        } else if (error instanceof Error) {
+            this._snackBar.openErrorSnackBar(this._translate.instant(error.message));
         } else {
             this._snackBar.openErrorSnackBar(&#x60;${this._translate.instant(&#x27;tasks.snackbar.noGroup&#x27;)}
                         ${this._taskContentService.task.title} ${this._translate.instant(&#x27;tasks.snackbar.failedToLoad&#x27;)}&#x60;);
@@ -2576,10 +2723,55 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
 
         this._taskResourceService.setData(this._safeTask.stringId, body).pipe(take(1))
             .subscribe((response: EventOutcomeMessageResource) &#x3D;&gt; {
-                this.processSuccessfulSetDataRequest(setTaskId, response.outcome, afterAction, nextEvent, body);
+                if (!this.isTaskRelevant(setTaskId)) {
+                    this._log.debug(&#x27;current task changed before the set data response could be received, discarding...&#x27;);
+                    this._taskState.stopLoading(setTaskId);
+                    this._taskState.stopUpdating(setTaskId);
+                    afterAction.complete();
+                    nextEvent.resolve(false);
+                    return;
+                }
+                if (response.success) {
+                    this.processSuccessfulSetDataRequest(setTaskId, response, afterAction, nextEvent, body);
+                } else if (response.error !&#x3D;&#x3D; undefined) {
+                    this.processUnsuccessfulSetDataRequest(setTaskId, response, afterAction, nextEvent, body);
+                }
             }, error &#x3D;&gt; {
                 this.processErroneousSetDataRequest(setTaskId, error, afterAction, nextEvent, body);
             });
+    }
+
+    /**
+     * Processes a unsuccessful outcome of a &#x60;setData&#x60; request
+     * @param setTaskId the Id of the task whose data was set
+     * @param response the resulting Event outcome of the set data request
+     * @param afterAction the action that should be performed after the request is processed
+     * @param nextEvent indicates to the event queue that the next event can be processed
+     * @param body hold the data that was sent in request
+     */
+    protected processUnsuccessfulSetDataRequest(setTaskId: string,
+                                              response: EventOutcomeMessageResource,
+                                              afterAction: AfterAction,
+                                              nextEvent: AfterAction,
+                                              body: TaskSetDataRequestBody) {
+        if (response.error !&#x3D;&#x3D; &#x27;&#x27;) {
+            this._snackBar.openErrorSnackBar(this._translate.instant(response.error));
+        } else {
+            this._snackBar.openErrorSnackBar(this._translate.instant(&#x27;tasks.snackbar.failedSave&#x27;));
+        }
+        if (response.outcome) {
+            const outcome &#x3D; response.outcome;
+            const changedFieldsMap: ChangedFieldsMap &#x3D; this._eventService.parseChangedFieldsFromOutcomeTree(outcome);
+
+            if (Object.keys(changedFieldsMap).length &gt; 0) {
+                this._changedFieldsService.emitChangedFields(changedFieldsMap);
+            }
+        }
+        this.revertToPreviousValue();
+        this.clearWaitingForResponseFlag(body);
+        this.updateStateInfo(afterAction, false, setTaskId);
+        nextEvent.resolve(false);
+        this._taskOperations.reload();
     }
 
     /**
@@ -2591,26 +2783,18 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
      * @param body hold the data that was sent in request
      */
     protected processSuccessfulSetDataRequest(setTaskId: string,
-                                              response: EventOutcome,
+                                              response: EventOutcomeMessageResource,
                                               afterAction: AfterAction,
                                               nextEvent: AfterAction,
                                               body: TaskSetDataRequestBody) {
-        if (!this.isTaskRelevant(setTaskId)) {
-            this._log.debug(&#x27;current task changed before the set data response could be received, discarding...&#x27;);
-            this._taskState.stopLoading(setTaskId);
-            this._taskState.stopUpdating(setTaskId);
-            afterAction.complete();
-            nextEvent.resolve(false);
-            return;
-        }
-
-        const changedFieldsMap: ChangedFieldsMap &#x3D; this._eventService.parseChangedFieldsFromOutcomeTree(response);
+        const outcome &#x3D; response.outcome;
+        const changedFieldsMap: ChangedFieldsMap &#x3D; this._eventService.parseChangedFieldsFromOutcomeTree(outcome);
 
         if (Object.keys(changedFieldsMap).length &gt; 0) {
             this._changedFieldsService.emitChangedFields(changedFieldsMap);
         }
         this.clearWaitingForResponseFlag(body);
-        this._snackBar.openSuccessSnackBar(!!response.message ? response.message : this._translate.instant(&#x27;tasks.snackbar.dataSaved&#x27;));
+        this._snackBar.openSuccessSnackBar(!!outcome.message ? outcome.message : this._translate.instant(&#x27;tasks.snackbar.dataSaved&#x27;));
         this.updateStateInfo(afterAction, true, setTaskId);
         nextEvent.resolve(true);
     }

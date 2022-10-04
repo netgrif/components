@@ -12,6 +12,8 @@ export * from './authentication.factory';
 
 /* SERVICES */
 export * from './anonymous/anonymous.service';
+export * from './services/anonymous-authentication-interceptor'
+export * from './services/authentication-interceptor'
 
 /* COMPONENTS */
 export * from './components/abstract-authentication-overlay';
