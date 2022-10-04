@@ -5,7 +5,7 @@
             <input matInput
                    [disabled]="true"
                    [ngModel]="currentValue[selectedLanguage]"
-                   [placeholder]="textI18nField.placeholder"
+                   [placeholder]="textI18nField.placeholder ? textI18nField.placeholder : ''"
                    [required]="textI18nField.behavior.required">
             <mat-hint>{{textI18nField.description}}</mat-hint>
         </mat-form-field>
@@ -47,7 +47,7 @@
             </mat-select>
             <input class="selected-language-value"
                    type="text"
-                   [placeholder]="textI18nField.placeholder"
+                   [placeholder]="textI18nField.placeholder ? textI18nField.placeholder : ''"
                    [required]="textI18nField.behavior.required"
                    [(ngModel)]="currentValue[selectedLanguage]"
                    (blur)="setSelectedValue()">
@@ -61,11 +61,13 @@
              [@languageWrapper]="filledShown"
              (@languageWrapper.start)="$event.element.style.display = 'block'"
              (@languageWrapper.done)="$event.element.style.display = ($event.toState ? 'block' : 'none')">
-            <div *ngFor="let filledKey of filledKeys" fxLayout="row" fxLayoutAlign=" center" class="filled-language-row">
+            <div *ngFor="let filledKey of filledKeys" fxLayout="row" fxLayoutAlign=" center"
+                 class="filled-language-row">
                 <div class="filled-language-icon" [innerHTML]="getLanguageIcons()[filledKey].svgIcon"></div>
                 <span class="filled-language-value">{{currentValue[filledKey]}}</span>
                 <button class="filled-language-button" *ngIf="!isDefaultValue(filledKey)" mat-icon-button
-                        (click)="removeTranslation(filledKey)" [matTooltip]="'dataField.i18n.deleteTranslation' | translate">
+                        (click)="removeTranslation(filledKey)"
+                        [matTooltip]="'dataField.i18n.deleteTranslation' | translate">
                     <mat-icon color="warn">close</mat-icon>
                 </button>
             </div>
