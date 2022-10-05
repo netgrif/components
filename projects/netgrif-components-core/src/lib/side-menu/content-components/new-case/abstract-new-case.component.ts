@@ -155,8 +155,8 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
             this._caseResourceService.createCase(newCase)
                 .subscribe(
                     (response: EventOutcomeMessageResource) => {
+                        this.loadingSubmit.off();
                         if (!!response.outcome) {
-                            this.loadingSubmit.off();
                             this._snackBarService.openSuccessSnackBar(response.outcome.message === undefined
                                 ? this._translate.instant('side-menu.new-case.createCase') + ' ' + newCase.title
                                 : response.outcome.message);
@@ -169,7 +169,6 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
                                 data: (response.outcome as CreateCaseEventOutcome).aCase
                             });
                         } else if (!!response.error) {
-                            this.loadingSubmit.off();
                             this._snackBarService.openWarningSnackBar(this._translate.instant('side-menu.new-case.createCaseError') + ' ' + newCase.title);
                             this._sideMenuControl.close({
                                 opened: false,
@@ -179,7 +178,10 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
                             });
                         }
                     },
-                    error => this._snackBarService.openErrorSnackBar(error.message ? error.message : error)
+                    error => {
+                        this.loadingSubmit.off();
+                        this._snackBarService.openErrorSnackBar(error.message ? error.message : error);
+                    }
                 );
         }
     }
