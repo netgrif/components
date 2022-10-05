@@ -12,6 +12,7 @@
         <mat-slide-toggle color="primary" [formControl]="formControl">
             {{createValueLabel()}}
         </mat-slide-toggle>
+        <mat-hint>{{dataField.description}}</mat-hint>
         <mat-error *ngIf="dataField.isInvalid(formControl)">{{getErrorMessage()}}</mat-error>
     </div>
 </ng-template>
