@@ -7,10 +7,11 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Full Changelog: [https://github.com/netgrif/components/commits/v6.2.3](https://github.com/netgrif/components/commits/v6.2.3)
 
-## [6.2.3](https://github.com/netgrif/components/releases/tag/v6.2.3) (2022-10-03)
+## [6.2.3](https://github.com/netgrif/components/releases/tag/v6.2.3) (2022-10-05)
 
 ### Fixed
 
+- [NAE-1367] Boolean does not have desc
 - [NAE-1729] User field null value on frontend throwing error
 - [NAE-1731] Missing write access to /home/.../node_modules/@netgrif/components
 - [NAE-1732] LDAP group role assignment component tile tooltip
@@ -18,6 +19,9 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.2.3](https://g
 - [NAE-1736] Rich textarea fix cursor
 - [NAE-1737] Bug i18n field placeholder
 - [NAE-1738] Multichoice map autocomplete init key
+- [NAE-1739] Currency symbol is displayed on new line, when editing currency field
+- [NAE-1740] Disable "create case" button, while case is creating
+- [NAE-1741] 'Undefined' error on frontend when checking i18n translation equality
 
 ## [6.2.2](https://github.com/netgrif/components/releases/tag/v6.2.2) (2022-09-28)
 
