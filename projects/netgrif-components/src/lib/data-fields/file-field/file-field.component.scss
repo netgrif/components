@@ -105,8 +105,8 @@
 .border-LGBTQ {
     border: 5px solid transparent;
     border-image: linear-gradient(to bottom right, #B827FC 0%, #2C90FC 25%, #B8FD33 50%, #FEC837 75%, #FD1892 100%);
-    animation: rainbow 10s infinite;
     border-image-slice: 1;
+    animation: rainbow 10s infinite;
 }
 @keyframes rainbow {
     0% {  border-image: linear-gradient(to bottom right, #B827FC 0%, #2C90FC 25%, #B8FD33 50%, #FEC837 75%, #FD1892 100%);
