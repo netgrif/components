@@ -19,6 +19,13 @@ export abstract class AbstractI18nDividerFieldComponent {
         }
     }
 
+    public isDividerLGBTQ(): boolean {
+        if (this.dividerPropertyEnabled('dividerLGBTQ')) {
+            return this.dividerI18nField.component.properties.dividerLGBTQ === 'true';
+        }
+        return false;
+    }
+
     public getDividerFontSize(): string {
         if (this.dividerPropertyEnabled('fontSize')) {
             return this.dividerI18nField.component.properties.fontSize + 'px';

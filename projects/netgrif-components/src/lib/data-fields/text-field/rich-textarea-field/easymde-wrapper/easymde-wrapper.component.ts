@@ -47,6 +47,7 @@ export class EasymdeWrapperComponent implements OnDestroy, AfterViewInit, Contro
 
     writeValue(value: any): void {
         this.textAreaField.value = !value ? '' : value;
+        this._fromEditor = false;
     }
     registerOnChange(fn: any): void {
         this.propagateChange = fn;
@@ -61,6 +62,15 @@ export class EasymdeWrapperComponent implements OnDestroy, AfterViewInit, Contro
         this._easyMDE = new EasyMDE(this.options);
         this._easyMDE.value(this.textAreaField.value);
         this._easyMDE.codemirror.on('change', this._onChange);
+        this.formControlRef.valueChanges.subscribe(value => {
+            if (this._easyMDE) {
+                if (!this._fromEditor) {
+                    this._fromEditor = true;
+                    this._easyMDE.value(value);
+                    this._fromEditor = false;
+                }
+            }
+        });
     }
 
     private _onChange = (): void => {

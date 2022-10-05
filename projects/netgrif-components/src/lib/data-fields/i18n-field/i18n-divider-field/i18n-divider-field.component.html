@@ -1,12 +1,13 @@
 <div fxFlex fxLayout="row" fxLayoutAlign="center center">
     <div fxFlex="20" class="divider-line"
-         [ngClass]="{'primary-background-color': !dividerPropertyEnabled('dividerColor')}"
+         [ngClass]="{'divider-line-lgbt': isDividerLGBTQ(), 'primary-background-color': !dividerPropertyEnabled('dividerColor')}"
          [ngStyle]="dividerPropertyEnabled('dividerColor') && {'background': getDividerColor()}"></div>
     <span [ngClass]="{'margin-default': dividerI18nField.value.defaultValue !== ''}"
           [ngStyle]="dividerPropertyEnabled('fontSize') && {'font-size': getDividerFontSize()}">
         {{dividerI18nField.value.defaultValue}}
     </span>
     <div fxFlex class="divider-line"
-         [ngClass]="{'primary-background-color': !dividerPropertyEnabled('dividerColor')}"
+         [ngClass]="{'divider-line-lgbt': isDividerLGBTQ(), 'primary-background-color': !dividerPropertyEnabled('dividerColor')}"
          [ngStyle]="dividerPropertyEnabled('dividerColor') && {'background': getDividerColor()}"></div>
 </div>
+
