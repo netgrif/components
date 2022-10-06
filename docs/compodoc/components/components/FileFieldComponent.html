@@ -556,6 +556,27 @@ export class FileFieldComponent extends AbstractFileFieldComponent {
     border: 5px solid transparent;
     border-image: linear-gradient(to bottom right, #B827FC 0%, #2C90FC 25%, #B8FD33 50%, #FEC837 75%, #FD1892 100%);
     border-image-slice: 1;
+    animation: rainbow 10s infinite;
+}
+@keyframes rainbow {
+    0% {  border-image: linear-gradient(to bottom right, #B827FC 0%, #2C90FC 25%, #B8FD33 50%, #FEC837 75%, #FD1892 100%);
+        border-image-slice: 1;
+    }
+    20% {  border-image: linear-gradient(to bottom right, #2C90FC 0%, #B8FD33 25%, #FEC837 50%, #FD1892 75%, #B827FC 100%);
+        border-image-slice: 1;
+    }
+    40% {  border-image: linear-gradient(to bottom right, #B8FD33 0%, #FEC837 25%, #FD1892 50%, #B827FC 75%, #2C90FC 100%);
+        border-image-slice: 1;
+    }
+    60% {  border-image: linear-gradient(to bottom right, #FEC837 0%, #FD1892 25%, #B827FC 50%, #2C90FC 75%, #B8FD33 100%);
+        border-image-slice: 1;
+    }
+    80% { border-image: linear-gradient(to bottom right,  #FD1892 0%, #B827FC 25%, #2C90FC 50%, #B8FD33 75%, #FEC837 100%);
+        border-image-slice: 1;
+    }
+    100% {  border-image: linear-gradient(to bottom right, #B827FC 0%, #2C90FC 25%, #B8FD33 50%, #FEC837 75%, #FD1892 100%);
+        border-image-slice: 1;
+    }
 }
 
 .border-default {
