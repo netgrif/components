@@ -1,0 +1,15 @@
+@use '@angular/material' as mat;
+
+@mixin admin-impersonate-item-component-theme($theme) {
+    $primary: map-get($theme, primary);
+
+    .admin-impersonate-item-selected {
+        background-color: mat.get-color-from-palette($primary, 300);
+        color: mat.get-contrast-color-from-palette($primary, 300) !important;
+    }
+
+    .admin-impersonate-item-selected:hover {
+        background-color: mat.get-color-from-palette($primary, 500) !important;
+        color: mat.get-contrast-color-from-palette($primary, 500) !important;
+    }
+}

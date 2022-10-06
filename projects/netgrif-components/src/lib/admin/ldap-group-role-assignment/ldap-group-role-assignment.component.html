@@ -4,7 +4,7 @@
         <ng-container *ngIf="ldapGroup.ldapGroups$ | async as ldapGroups_">
 
             <mat-toolbar color="primary" class="min-height-72">
-                <span matTooltip="{{ldapGroups_.length}}/{{ldapGroup.totalLdapGroups}}">
+                <span matTooltip="{{ 'admin.ldapGroup-list.count' | translate }}: {{ldapGroups_.length}}">
                     {{'admin.ldapGroup-list.listTitle' | translate}}
                 </span>
                 <div fxFlex="5"></div>

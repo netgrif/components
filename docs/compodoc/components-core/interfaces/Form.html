@@ -238,6 +238,7 @@ import semver from &#x27;semver&#x27;;
 import {CreateCaseEventOutcome} from &#x27;../../../event/model/event-outcomes/case-outcomes/create-case-event-outcome&#x27;;
 import {EventOutcomeMessageResource} from &#x27;../../../resources/interface/message-resource&#x27;;
 import {MatOption} from &#x27;@angular/material/core&#x27;;
+import { LoadingEmitter } from &#x27;../../../utility/loading-emitter&#x27;;
 
 interface Form {
     value: string;
@@ -266,6 +267,7 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
     @ViewChild(&#x27;stepper1&#x27;) stepper1;
     @ViewChild(&#x27;stepper2&#x27;) stepper2;
 
+    public loadingSubmit: LoadingEmitter;
     protected _options$: ReplaySubject&lt;Array&lt;Form&gt;&gt;;
     protected _injectedData: NewCaseInjectionData;
     protected _hasMultipleNets$: ReplaySubject&lt;boolean&gt;;
@@ -292,6 +294,7 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
         this._hasMultipleNets$ &#x3D; new ReplaySubject(1);
         this._notInitialized$ &#x3D; new BehaviorSubject&lt;boolean&gt;(true);
         this._options$ &#x3D; new ReplaySubject(1);
+        this.loadingSubmit &#x3D; new LoadingEmitter(false);
 
         this._allowedNetsSubscription &#x3D; this._injectedData.allowedNets$.pipe(
             map(nets &#x3D;&gt; nets.map(petriNet &#x3D;&gt; ({
@@ -337,6 +340,7 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
 
     ngOnDestroy(): void {
         this._hasMultipleNets$.complete();
+        this.loadingSubmit.complete();
         this._allowedNetsSubscription.unsubscribe();
     }
 
@@ -361,29 +365,46 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
     }
 
     public createNewCase(): void {
+        if(this.loadingSubmit.value){
+           return
+        }
         if (this.titleFormControl.valid || !this.isCaseTitleRequired()) {
             const newCase &#x3D; {
                 title: this.titleFormControl.value &#x3D;&#x3D;&#x3D; &#x27;&#x27; ? null : this.titleFormControl.value,
                 color: &#x27;panel-primary-icon&#x27;,
                 netId: this.options.length &#x3D;&#x3D;&#x3D; 1 ? this.options[0].value : this.processFormControl.value.value
             };
-
+            this.loadingSubmit.on();
             this._caseResourceService.createCase(newCase)
                 .subscribe(
                     (response: EventOutcomeMessageResource) &#x3D;&gt; {
-                        this._snackBarService.openSuccessSnackBar(response.outcome.message &#x3D;&#x3D;&#x3D; undefined
-                            ? this._translate.instant(&#x27;side-menu.new-case.createCase&#x27;) + &#x27; &#x27; + newCase.title
-                            : response.outcome.message);
-                        this._sideMenuControl.close({
-                            opened: false,
-                            message: response.outcome.message &#x3D;&#x3D;&#x3D; undefined
-                                ? &#x27;Confirm new case setup&#x27;
-                                : response.outcome.message
-                            ,
-                            data: (response.outcome as CreateCaseEventOutcome).aCase
-                        });
+                        this.loadingSubmit.off();
+                        if (!!response.outcome) {
+                            this._snackBarService.openSuccessSnackBar(response.outcome.message &#x3D;&#x3D;&#x3D; undefined
+                                ? this._translate.instant(&#x27;side-menu.new-case.createCase&#x27;) + &#x27; &#x27; + newCase.title
+                                : response.outcome.message);
+                            this._sideMenuControl.close({
+                                opened: false,
+                                message: response.outcome.message &#x3D;&#x3D;&#x3D; undefined
+                                    ? &#x27;Confirm new case setup&#x27;
+                                    : response.outcome.message
+                                ,
+                                data: (response.outcome as CreateCaseEventOutcome).aCase
+                            });
+                        } else if (!!response.error) {
+                            this._snackBarService.openWarningSnackBar(this._translate.instant(&#x27;side-menu.new-case.createCaseError&#x27;) + &#x27; &#x27; + newCase.title);
+                            this._sideMenuControl.close({
+                                opened: false,
+                                message: response.error &#x3D;&#x3D;&#x3D; undefined
+                                    ? &#x27;Confirm new case setup&#x27;
+                                    : response.error
+                            });
+                        }
                     },
-                    error &#x3D;&gt; this._snackBarService.openErrorSnackBar(error.message ? error.message : error)
+                    error &#x3D;&gt; {
+                        this.loadingSubmit.off();
+                        this._snackBarService.openErrorSnackBar(error.message ? error.message : error);
+                    }
                 );
         }
     }

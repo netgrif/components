@@ -3,7 +3,7 @@ import {LanguageService} from '../../../translate/language.service';
 import {PaperViewService} from './paper-view.service';
 import {AbstractNavigationResizableDrawerComponent} from '../../navigation-drawer/abstract-navigation-resizable-drawer.component';
 
-export type QuickPanelItem = 'language' | 'settings' | 'logout';
+export type QuickPanelItem = 'language' | 'settings' | 'logout' | 'impersonation';
 
 @Component({
     selector: 'ncc-abstract-quick-panel',

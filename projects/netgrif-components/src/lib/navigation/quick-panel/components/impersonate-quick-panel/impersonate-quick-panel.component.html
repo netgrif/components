@@ -1,0 +1,6 @@
+<button *ngIf="!isImpersonating()" [matTooltip]="'side-menu.impersonation.submit' | translate" (click)="impersonate()" mat-icon-button>
+    <mat-icon>supervisor_account</mat-icon>
+</button>
+<button *ngIf="isImpersonating()" [matTooltip]="'side-menu.impersonation.cease' | translate" (click)="stopImpersonating()" mat-icon-button>
+    <mat-icon>clear</mat-icon>
+</button>

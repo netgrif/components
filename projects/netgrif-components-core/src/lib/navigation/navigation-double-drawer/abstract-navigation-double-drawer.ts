@@ -19,6 +19,8 @@ import {User} from "../../user/models/user";
 import {RoleAccess, View} from "../../../commons/schema";
 import {NAE_ROUTING_CONFIGURATION_PATH} from "../../routing/routing-builder/routing-builder.service";
 import {AccessService} from "../../authorization/permission/access.service";
+import {ImpersonationUserSelectService} from '../../impersonation/services/impersonation-user-select.service';
+import {ImpersonationService} from '../../impersonation/services/impersonation.service';
 
 export interface ConfigDoubleMenu {
     mode: MatDrawerMode;
@@ -57,6 +59,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     @Input() includeUser: boolean = true;
     @Input() includeLanguage: boolean = true;
     @Input() includeMoreMenu: boolean = true;
+    @Input() includeImpersonation: boolean = true;
     @Input() allClosable: boolean = true;
     @Input() folderIcon: string = "folder";
     @Input() openedFolderIcon: string = "folder_open";
@@ -121,6 +124,8 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                           protected _log: LoggerService,
                           protected _config: ConfigurationService,
                           protected _uriService: UriService,
+                          protected _impersonationUserSelect: ImpersonationUserSelectService,
+                          protected _impersonation: ImpersonationService,
                           protected _dynamicRoutingService: DynamicNavigationRouteProviderService) {
         this.leftNodes = new Array<UriNodeResource>();
         this.rightNodes = new Array<UriNodeResource>();
@@ -269,6 +274,14 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         });
     }
 
+    impersonate(): void {
+        this._impersonationUserSelect.selectImpersonate();
+    }
+
+    stopImpersonating(): void {
+        this._impersonation.cease();
+    }
+
     get user(): User {
         return this._userService.user;
     }
@@ -353,14 +366,16 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             id: filter.stringId,
             resource: filter
         };
-        const resolvedRoles = this.resolveAccessRoles(filter);
+        const resolvedRoles = this.resolveAccessRoles(filter, 'allowed_roles');
+        const resolvedBannedRoles = this.resolveAccessRoles(filter, 'banned_roles');
         if(!!resolvedRoles) item.access['role'] = resolvedRoles;
+        if(!!resolvedBannedRoles) item.access['bannedRole'] = resolvedBannedRoles;
         if (!this._accessService.canAccessView(item, item.routingPath)) return;
         return item;
     }
 
-    protected resolveAccessRoles(filter: Case): Array<RoleAccess> | undefined {
-        const allowedRoles = filter.immediateData.find(f => f.stringId === 'allowed_roles')?.options;
+    protected resolveAccessRoles(filter: Case, roleType: string): Array<RoleAccess> | undefined {
+        const allowedRoles = filter.immediateData.find(f => f.stringId === roleType)?.options;
         if (!allowedRoles || Object.keys(allowedRoles).length === 0) return undefined;
         const roles = [];
         Object.keys(allowedRoles).forEach(combined => {

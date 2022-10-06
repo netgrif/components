@@ -319,6 +319,7 @@ import {EventService} from &#x27;../../event/services/event.service&#x27;;
 import {ChangedFieldsMap} from &#x27;../../event/services/interfaces/changed-fields-map&#x27;;
 import {Subscription} from &#x27;rxjs&#x27;;
 import {FileFieldIdBody} from &#x27;../models/file-field-id-body&#x27;;
+import { HttpParams } from &#x27;@angular/common/http&#x27;;
 
 export interface FilesState {
     progress: number;
@@ -581,9 +582,11 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
             this._log.error(&#x27;File cannot be deleted. No task is set to the field.&#x27;);
             return;
         }
+        let param &#x3D; new HttpParams();
+        param &#x3D; param.set(&quot;parentTaskId&quot;, this.resolveParentTaskId());
 
         this._taskResourceService.deleteFile(this.taskId,
-            this.dataField.stringId, fileName).pipe(take(1)).subscribe((response: EventOutcomeMessageResource) &#x3D;&gt; {
+            this.dataField.stringId, fileName, param).pipe(take(1)).subscribe((response: EventOutcomeMessageResource) &#x3D;&gt; {
             if (response.success) {
                 const changedFieldsMap: ChangedFieldsMap &#x3D; this._eventService.parseChangedFieldsFromOutcomeTree(response.outcome);
                 this.dataField.emitChangedFields(changedFieldsMap);
