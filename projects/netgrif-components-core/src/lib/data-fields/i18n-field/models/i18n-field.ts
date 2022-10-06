@@ -36,8 +36,8 @@ export class I18nField extends DataField<I18nFieldValue> {
     }
 
     private static translationsEquality(a: I18nFieldValue, b: I18nFieldValue): boolean {
-        const aKeys = Object.keys(a.translations).sort();
-        const bKeys = Object.keys(b.translations).sort();
+        const aKeys = !!a.translations ? Object.keys(a.translations).sort() : [];
+        const bKeys = !!b.translations ? Object.keys(b.translations).sort() : [];
         if (aKeys.length !== bKeys.length
             || !aKeys.every((element, index) => {
                 return element === bKeys[index];
@@ -166,14 +166,14 @@ export class I18nField extends DataField<I18nFieldValue> {
     private validTranslationRequired(countries: Array<string>): ValidatorFn {
         return (fc: FormControl): { [key: string]: any } | null => {
             return countries.every(languageCode => languageCode in fc.value.translations)
-                ? (null) : ({translationRequired: true});
+                ? null : ({translationRequired: true});
         };
     }
 
     private validTranslationOnly(countries: Array<string>): ValidatorFn {
         return (fc: FormControl): { [key: string]: any } | null => {
             return Object.keys(fc.value.translations).every(translation => countries.includes(translation))
-                ? (null) : ({translationOnly: true});
+                ? null : ({translationOnly: true});
         };
     }
 

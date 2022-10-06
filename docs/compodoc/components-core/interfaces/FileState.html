@@ -462,6 +462,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             }
         }
         this.updatedFieldSubscription &#x3D; this.dataField.updated.subscribe(() &#x3D;&gt; {
+            this.previewSource &#x3D; undefined;
             if (!!this.filePreview
                 &amp;&amp; !!this.dataField.value
                 &amp;&amp; !!this.dataField.value.name) {
