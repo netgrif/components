@@ -92,6 +92,10 @@
             transform: translateY(0) !important;
         }
 
+        .mat-select-disabled .mat-select-trigger {
+            user-select: all !important;
+        }
+
         .mat-error {
             font-size: 10px !important;
             line-height: 18px !important;
