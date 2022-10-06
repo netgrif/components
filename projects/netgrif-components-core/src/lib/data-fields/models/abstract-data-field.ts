@@ -164,7 +164,7 @@ export abstract class DataField<T> {
         this._placeholder = placeholder;
     }
 
-    get placeholder(): string {
+    get placeholder(): string | undefined {
         return this._placeholder;
     }
 

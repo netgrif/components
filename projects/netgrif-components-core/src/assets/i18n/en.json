@@ -393,7 +393,9 @@
         },
         "ldapGroup-list": {
             "noLdapGroupsWereFound": "No LDAP group was found",
-            "listTitle": "Ldap Groups"
+            "listTitle": "LDAP groups",
+            "count": "Number of groups"
+
         },
         "process-list": {
             "newestVersion": "Newest version",

@@ -393,7 +393,8 @@
         },
         "ldapGroup-list": {
             "noLdapGroupsWereFound": "Žiadna LDAP skupina nebola najdená",
-            "listTitle": "Ldap Skupiny"
+            "listTitle": "LDAP Skupiny",
+            "count": "Počet skupín"
         },
         "process-list": {
             "newestVersion": "Najnovšia verzia",
