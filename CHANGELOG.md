@@ -7,7 +7,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Full Changelog: [https://github.com/netgrif/components/commits/v6.2.3](https://github.com/netgrif/components/commits/v6.2.3)
 
-## [6.2.3](https://github.com/netgrif/components/releases/tag/v6.2.3) (2022-10-05)
+## [6.2.3](https://github.com/netgrif/components/releases/tag/v6.2.3) (2022-10-06)
 
 ### Fixed
 
@@ -23,6 +23,9 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.2.3](https://g
 - [NAE-1739] Currency symbol is displayed on new line, when editing currency field
 - [NAE-1740] Disable "create case" button, while case is creating
 - [NAE-1741] 'Undefined' error on frontend when checking i18n translation equality
+- [NAE-1742] I18nField throws error on frontend when its value is null
+- [NAE-1743] File preview  change to null  object
+
 
 ## [6.2.2](https://github.com/netgrif/components/releases/tag/v6.2.2) (2022-09-28)
 
