@@ -1,5 +1,5 @@
 import {Component, Inject, Input, Optional, Type} from '@angular/core';
-import {AbstractTaskRefFieldComponent, LoggerService, NAE_INFORM_ABOUT_INVALID_DATA, TaskRefDashboardTile} from 'netgrif-components-core';
+import {AbstractTaskRefFieldComponent, LoggerService, NAE_INFORM_ABOUT_INVALID_DATA, TaskRefDashboardTile} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-task-ref-field',

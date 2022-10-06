@@ -28,7 +28,7 @@ export class DashboardPortalTextFieldComponent extends AbstractDashboardPortalTe
         });
     }
 
-    private initializePortalComponent(): void {
+    protected initializePortalComponent(): void {
         this.componentPortal = this.registry.get(this.card?.componentName, this.injector);
     }
 

@@ -14,7 +14,7 @@ import {
     TranslateLibModule,
     UserResourceService,
     WrappedBoolean
-} from 'netgrif-components-core';
+} from '@netgrif/components-core';
 import {FormControl} from '@angular/forms';
 import {AngularResizeEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';

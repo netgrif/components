@@ -31,6 +31,7 @@ export abstract class AbstractTaskRefDashboardTileComponent implements OnDestroy
     @Input() fc: FormControl;
 
     private _sub: Subscription;
+    private caseCreating = false;
 
     protected constructor(protected _caseResourceService: CaseResourceService,
                           protected _processService: ProcessService,
@@ -49,6 +50,10 @@ export abstract class AbstractTaskRefDashboardTileComponent implements OnDestroy
     }
 
     public createNewDashboardTile(): void {
+        if (this.caseCreating) {
+            return;
+        }
+        this.caseCreating = true;
         this._sub = this._processService.getNet(TaskRefDashboardTileConstants.DASHBOARD_TILE_PROCESS_IDENTIFIER).pipe(
             switchMap(net => this._caseResourceService.createCase({
                 netId: net.stringId,
