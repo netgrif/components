@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UserListFieldComponent } from './user-list-field.component';
-import { MaterialModule, SideMenuService, TranslateLibModule, UserListField } from 'netgrif-components-core';
+import { MaterialModule, SideMenuService, TranslateLibModule, UserListField } from '@netgrif/components-core';
 import { AngularResizeEventModule } from 'angular-resize-event';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
