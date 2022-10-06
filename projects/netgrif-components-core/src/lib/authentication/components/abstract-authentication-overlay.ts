@@ -27,6 +27,8 @@ export abstract class AbstractAuthenticationOverlayComponent implements OnInit, 
                 this.userService.user$.subscribe(user => {
                     if (!!user && !!user.id && user.id.length > 0) {
                         this.redirect(!active);
+                    } else if (!active) {
+                        this._spinnerOverlay.spin$.next(false);
                     }
                 });
             });

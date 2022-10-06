@@ -38,7 +38,7 @@
         font-weight: 700 !important;
     }
 
-    .enum-icon-item:hover {
+    .enum-icon-item-hover:hover {
         color: mat.get-color-from-palette($primary) !important;
     }
 
@@ -90,6 +90,10 @@
 
         .mat-select-arrow-wrapper {
             transform: translateY(0) !important;
+        }
+
+        .mat-select-disabled .mat-select-trigger {
+            user-select: all !important;
         }
 
         .mat-error {

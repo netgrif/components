@@ -1,6 +1,6 @@
 {
     "name": "@netgrif/components-project",
-    "version": "6.2.2",
+    "version": "6.2.3-rc.1",
     "description": "Netgrif Application Engine Frontend project. Project includes angular libraries as base for NAE applications.",
     "homepage": "https://components.netgrif.com",
     "license": "SEE LICENSE IN LICENSE",
@@ -47,7 +47,7 @@
         "ncc:prod-build": "npm run ncc:full-test && npm run ncc:build && npm run ncc:doc",
         "ncc:prod-build-without-tests": "npm run ncc:build && npm run ncc:doc",
         "nc:clean": "node projects/netgrif-components/src/scripts/delete-local-build-link.js",
-        "nc:build": "ng build netgrif-components --configuration production && npm run nc:build-schematics",
+        "nc:build": "npm run nc:clean && ng build netgrif-components --configuration production && npm run nc:build-schematics",
         "nc:local-build": "npm run nc:build && npm i ./dist/netgrif-components --save-optional  --legacy-peer-deps",
         "nc:build-schematics": "node projects/netgrif-components/src/scripts/build-schematics.js",
         "nc:lint": "ng lint netgrif-components",

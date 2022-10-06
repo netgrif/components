@@ -9,7 +9,7 @@ import {
     MaterialModule,
     MockAuthenticationMethodService,
     TestConfigurationService, TranslateLibModule,
-} from 'netgrif-components-core';
+} from '@netgrif/components-core';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
