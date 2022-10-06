@@ -3,7 +3,7 @@
         <nc-required-label *ngIf="enumerationField.behavior.required" [isIn]="true"></nc-required-label>
         <br></mat-label>
     <div *ngFor="let option of enumerationField.choices; let i = index">
-        <div class="enum-icon-item enum-icon-item-row" (click)="setEnumValue(option.key)" [ngClass]="{'enum-icon-item-active': isSelected(option.key)}">
+        <div class="enum-icon-item enum-icon-item-row" (click)="setEnumValue(option.key)" [ngClass]="{'enum-icon-item-active': isSelected(option.key), 'enum-icon-item-hover': !formControlRef.disabled}">
             <mat-icon *ngIf="resolveIconType(option.key) === 'material'">{{resolveIconValue(option.key)}}</mat-icon>
             <mat-icon *ngIf="resolveIconType(option.key) === 'svg'" [svgIcon]="resolveIconValue(option.key)"></mat-icon>
             <span fxFlex class="enum-icon-text">{{option.value}}</span>
