@@ -12,6 +12,7 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.2.3](https://g
 ### Fixed
 
 - [NAE-1367] Boolean does not have desc
+- [NAE-1537] It is not possible to copy a value from a visible enumeration
 - [NAE-1729] User field null value on frontend throwing error
 - [NAE-1731] Missing write access to /home/.../node_modules/@netgrif/components
 - [NAE-1732] LDAP group role assignment component tile tooltip
