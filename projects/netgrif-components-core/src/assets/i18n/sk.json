@@ -87,7 +87,8 @@
             "errThird": "Farba je povinné pole.",
             "noNets": "Žiadne povolené siete",
             "createCase": "Úspešne vytvorený nový prípad",
-            "defaultCaseName": "s prednastaveným názvom prípadu"
+            "defaultCaseName": "s prednastaveným názvom prípadu",
+            "createCaseError": "Nový prípad vytvorený, nastala však chyba pri vykonávaní akcií"
         },
         "user": {
             "assign": "Priradiť používateľa",
@@ -108,6 +109,12 @@
         "option-selector": {
             "select": "Zvoliť",
             "choose-one-option": "Vyberte jednu z možností"
+        },
+        "impersonation": {
+            "title": "Zastúpenie používateľa",
+            "submit": "Zastúpiť",
+            "cease": "Zrušiť zastúpenie",
+            "impersonating": "v zastúpení"
         }
     },
     "search": {
@@ -386,7 +393,8 @@
         },
         "ldapGroup-list": {
             "noLdapGroupsWereFound": "Žiadna LDAP skupina nebola najdená",
-            "listTitle": "Ldap Skupiny"
+            "listTitle": "LDAP Skupiny",
+            "count": "Počet skupín"
         },
         "process-list": {
             "newestVersion": "Najnovšia verzia",
@@ -456,5 +464,16 @@
     },
     "dynamicNavigation": {
         "couldNotResolveView": "Počas načítania zobrazenia sa vyskytla chyba. Zobrazenie nie je možné zobraziť"
+    },
+    "impersonation": {
+        "user": {
+            "successfullyRepresented": "Používateľ bol úspešne zastúpený",
+            "currentlyAlreadyRepresented": "Používateľ je momentálne zastupovaný",
+            "currentlyLogged": "Používateľ je momentálne prihlásený"
+        },
+        "action": {
+            "failed": "Akciu sa nepodarilo vykonať",
+            "deactivated": "Zastupovanie bolo úspešne deaktivované"
+        }
     }
 }

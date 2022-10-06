@@ -292,8 +292,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="50"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/authentication/components/abstract-authentication-overlay.ts:50</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="52"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/authentication/components/abstract-authentication-overlay.ts:52</a></div>
                 </td>
             </tr>
 
@@ -368,8 +368,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="41"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/authentication/components/abstract-authentication-overlay.ts:41</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="43"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/authentication/components/abstract-authentication-overlay.ts:43</a></div>
                 </td>
             </tr>
 
@@ -534,6 +534,8 @@ export abstract class AbstractAuthenticationOverlayComponent implements OnInit, 
                 this.userService.user$.subscribe(user &#x3D;&gt; {
                     if (!!user &amp;&amp; !!user.id &amp;&amp; user.id.length &gt; 0) {
                         this.redirect(!active);
+                    } else if (!active) {
+                        this._spinnerOverlay.spin$.next(false);
                     }
                 });
             });

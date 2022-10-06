@@ -33,6 +33,8 @@ import {TaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/t
 import {createMockCase} from '../../utility/tests/utility/create-mock-case';
 import {createMockNet} from '../../utility/tests/utility/create-mock-net';
 import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
+import {User} from '../../user/models/user';
+import {ProcessRole} from '../../resources/interface/process-role';
 
 describe('CancelTaskService', () => {
     let service: CancelTaskService;
@@ -249,12 +251,7 @@ class TestTaskResourceService {
 
 class TestUserService {
     public get user() {
-        return {
-            email: 'mail',
-            roles: [{
-                stringId: 'role'
-            }]
-        };
+        return new User('id', 'mail', '', '', [], [{stringId: 'role'} as ProcessRole]);
     }
 
     public hasRoleById(): boolean {

@@ -87,7 +87,8 @@
             "errThird": "Color is required.",
             "noNets": "No allowed Nets",
             "createCase": "Successful create new case",
-            "defaultCaseName": "with default case name"
+            "defaultCaseName": "with default case name",
+            "createCaseError": "A new case was created, but an error occurred while executing actions"
         },
         "user": {
             "assign": "User Assign",
@@ -108,6 +109,12 @@
         "option-selector": {
             "select": "Select",
             "choose-one-option": "Choose one of the provided options"
+        },
+        "impersonation": {
+            "title": "Impersonate user",
+            "submit": "Impersonate",
+            "cease": "Cancel impersonation",
+            "impersonating": "impersonating"
         }
     },
     "search": {
@@ -386,7 +393,9 @@
         },
         "ldapGroup-list": {
             "noLdapGroupsWereFound": "No LDAP group was found",
-            "listTitle": "Ldap Groups"
+            "listTitle": "LDAP groups",
+            "count": "Number of groups"
+
         },
         "process-list": {
             "newestVersion": "Newest version",
@@ -456,5 +465,16 @@
     },
     "dynamicNavigation": {
         "couldNotResolveView": "An error has occurred during the view resolution process. The view could not be displayed"
+    },
+    "impersonation": {
+        "user": {
+            "successfullyRepresented": "User successfully represented",
+            "currentlyAlreadyRepresented": "User is already being represented by someone else",
+            "currentlyLogged": "User is currently logged in"
+        },
+        "action": {
+            "failed": "Action failed",
+            "deactivated": "Representation was successfully deactivated"
+        }
     }
 }

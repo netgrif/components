@@ -19,6 +19,7 @@
         </div>
         <div fxLayout="column" fxLayoutAlign="center center" class="full-width full-showcase-text padding-default">
             <span>{{user.fullName}}</span>
+            <span class="impersonated-user-name" *ngIf="user.isImpersonating()">{{'side-menu.impersonation.impersonating' | translate }} {{user.getSelfOrImpersonated().fullName}}</span>
             <span>{{user.email}}</span>
         </div>
     </div>

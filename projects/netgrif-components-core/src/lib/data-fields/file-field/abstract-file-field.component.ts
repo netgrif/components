@@ -25,6 +25,7 @@ import {EventOutcomeMessageResource} from '../../resources/interface/message-res
 import {EventService} from '../../event/services/event.service';
 import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
 import {FileFieldIdBody} from '../models/file-field-id-body';
+import { HttpParams } from '@angular/common/http';
 
 export interface FileState {
     progress: number;
@@ -166,6 +167,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             }
         }
         this.updatedFieldSubscription = this.dataField.updated.subscribe(() => {
+            this.previewSource = undefined;
             if (!!this.filePreview
                 && !!this.dataField.value
                 && !!this.dataField.value.name) {
@@ -353,9 +355,11 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             this._log.error('File cannot be deleted. No task is set to the field.');
             return;
         }
+        let param = new HttpParams();
+        param = param.set("parentTaskId", this.resolveParentTaskId());
 
         this._taskResourceService.deleteFile(this.taskId,
-            this.dataField.stringId).pipe(take(1)).subscribe(response => {
+            this.dataField.stringId, undefined, param).pipe(take(1)).subscribe(response => {
             if (response.success) {
                 const filename = this.dataField.value.name;
                 this.dataField.value = {};
@@ -447,7 +451,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         if (!this.checkFileBeforeDownload()) {
             return;
         }
-        this._taskResourceService.downloadFile(this.taskId, this.dataField.stringId).subscribe(response => {
+        this._taskResourceService.downloadFile(this.resolveParentTaskId(), this.dataField.stringId).subscribe(response => {
             if (!(response as ProviderProgress).type || (response as ProviderProgress).type !== ProgressType.DOWNLOAD) {
                 this._log.debug(`File [${this.dataField.stringId}] ${this.dataField.value.name} was successfully downloaded`);
                 this.initDownloadFile(response);

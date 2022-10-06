@@ -320,6 +320,7 @@ import {EventOutcomeMessageResource} from &#x27;../../resources/interface/messag
 import {EventService} from &#x27;../../event/services/event.service&#x27;;
 import {ChangedFieldsMap} from &#x27;../../event/services/interfaces/changed-fields-map&#x27;;
 import {FileFieldIdBody} from &#x27;../models/file-field-id-body&#x27;;
+import { HttpParams } from &#x27;@angular/common/http&#x27;;
 
 export interface FileState {
     progress: number;
@@ -461,6 +462,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             }
         }
         this.updatedFieldSubscription &#x3D; this.dataField.updated.subscribe(() &#x3D;&gt; {
+            this.previewSource &#x3D; undefined;
             if (!!this.filePreview
                 &amp;&amp; !!this.dataField.value
                 &amp;&amp; !!this.dataField.value.name) {
@@ -648,9 +650,11 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             this._log.error(&#x27;File cannot be deleted. No task is set to the field.&#x27;);
             return;
         }
+        let param &#x3D; new HttpParams();
+        param &#x3D; param.set(&quot;parentTaskId&quot;, this.resolveParentTaskId());
 
         this._taskResourceService.deleteFile(this.taskId,
-            this.dataField.stringId).pipe(take(1)).subscribe(response &#x3D;&gt; {
+            this.dataField.stringId, undefined, param).pipe(take(1)).subscribe(response &#x3D;&gt; {
             if (response.success) {
                 const filename &#x3D; this.dataField.value.name;
                 this.dataField.value &#x3D; {};
@@ -742,7 +746,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         if (!this.checkFileBeforeDownload()) {
             return;
         }
-        this._taskResourceService.downloadFile(this.taskId, this.dataField.stringId).subscribe(response &#x3D;&gt; {
+        this._taskResourceService.downloadFile(this.resolveParentTaskId(), this.dataField.stringId).subscribe(response &#x3D;&gt; {
             if (!(response as ProviderProgress).type || (response as ProviderProgress).type !&#x3D;&#x3D; ProgressType.DOWNLOAD) {
                 this._log.debug(&#x60;File [${this.dataField.stringId}] ${this.dataField.value.name} was successfully downloaded&#x60;);
                 this.initDownloadFile(response);
