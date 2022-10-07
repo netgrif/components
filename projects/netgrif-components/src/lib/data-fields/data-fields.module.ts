@@ -102,6 +102,8 @@ import {
 import {
     DashboardIframeTextFieldComponent
 } from './text-field/dashboard-iframe-text-field/dashboard-iframe-text-field.component';
+import { RouterModule } from '@angular/router';
+import { TabbedCaseViewFilterContentComponent } from './filter-field/tabbed-case-view-filter-content/tabbed-case-view-filter-content.component';
 
 @NgModule({
     declarations: [
@@ -150,6 +152,7 @@ import {
         DashboardPortalTextFieldComponent,
         DashboardBarChartTextFieldComponent,
         DashboardIframeTextFieldComponent,
+        TabbedCaseViewFilterContentComponent,
     ],
     exports: [
         BooleanFieldComponent,
@@ -188,7 +191,8 @@ import {
         CurrencyModule,
         BrowserModule,
         BrowserAnimationsModule,
-        DashboardComponentModule
+        DashboardComponentModule,
+        RouterModule
     ],
     providers: [
         {provide: DateAdapter, useClass: CustomDateAdapter}

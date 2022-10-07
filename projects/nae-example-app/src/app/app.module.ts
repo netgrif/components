@@ -67,6 +67,7 @@ import {
     DataFieldsComponentModule,
     EmailSubmissionFormComponent,
     EmailSubmissionFormComponentModule,
+    FilterFieldContentModule,
     ForgottenPasswordFormComponentModule,
     HeaderComponentModule,
     LoginFormComponentModule,
@@ -81,7 +82,8 @@ import {
     TabsComponentModule,
     ToolbarComponentModule,
     TreeCaseViewComponentModule,
-    WorkflowViewComponentModule
+    WorkflowViewComponentModule,
+    FilterFieldTabViewComponent
 } from '@netgrif/components';
 import {UserInviteComponent} from './doc/user-invite/user-invite.component';
 import {ExamplePortalCardComponent} from './doc/dashboard-example/piechart-card/example-portal-card.component';
@@ -225,7 +227,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         WorkflowViewComponentModule,
         NgxChartsModule,
         EmailSubmissionFormComponentModule,
-        RedirectComponentModule
+        RedirectComponentModule,
+        FilterFieldContentModule
     ],
     providers: [{
         provide: ConfigurationService,
@@ -249,5 +252,6 @@ export class AppModule {
         registry.register('task-view', (injector: Injector) => new ComponentPortal(TaskViewComponent, null, injector));
         registry.register('case-view', (injector: Injector) => new ComponentPortal(CaseViewComponent, null, injector));
         registry.register('tab-view', (injector: Injector) => new ComponentPortal(TabbedViewsExampleComponent, null, injector));
+        registry.register('tabbed-case-filter', (injector: Injector) => new ComponentPortal(FilterFieldTabViewComponent, null, injector));
     }
 }
