@@ -2,7 +2,7 @@ import { AfterViewInit, Component, Injector, Input, OnInit } from '@angular/core
 import { ComponentPortal } from '@angular/cdk/portal';
 import {
     DashboardPortalComponentRegistryService,
-    extractFilterFromFilterField, FilterField,
+    FilterField,
     NAE_BASE_FILTER,
     BaseFilter,
     SimpleFilter,
