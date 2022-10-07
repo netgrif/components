@@ -48,7 +48,6 @@ export abstract class AbstractEnumerationAutocompleteSelectFieldComponent implem
     change() {
         if (this.text.nativeElement.value !== undefined) {
             this.filteredOptions = of(this._filter(this.text.nativeElement.value));
-            console.log(of(this._filter(this.text.nativeElement.value)));
         }
     }
 

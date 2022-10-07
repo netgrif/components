@@ -5,7 +5,6 @@ import {
     CovalentModule,
     CurrencyModule,
     CustomDateAdapter,
-    DashboardPortalComponentRegistryService,
     MaterialModule,
     TranslateLibModule,
 } from '@netgrif/components-core';
@@ -94,8 +93,6 @@ import {
 import {
     DashboardPortalTextFieldComponent
 } from './text-field/dashboard-portal-text-field/dashboard-portal-text-field.component';
-import {ComponentPortal} from '@angular/cdk/portal';
-import {EmailSubmissionFormComponent} from '../forms/email-submission/email-submission-form.component';
 import {
     DashboardBarChartTextFieldComponent
 } from './text-field/dashboard-bar-chart-text-field/dashboard-bar-chart-text-field.component';

@@ -1,9 +1,9 @@
-import { AfterViewInit, Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Inject, ViewChild } from '@angular/core';
 import {
     AbstractTabbedCaseViewComponent, AllowedNetsService, AllowedNetsServiceFactory,
     CaseViewService, CategoryFactory, defaultCaseSearchCategoriesFactory,
     InjectedTabbedCaseViewData,
-    LoggerService, NAE_BASE_FILTER, NAE_NEW_CASE_CONFIGURATION, NAE_SEARCH_CATEGORIES,
+    LoggerService, NAE_NEW_CASE_CONFIGURATION, NAE_SEARCH_CATEGORIES,
     NAE_TAB_DATA, OverflowService, SearchService, UserFilterConstants, ViewIdService
 } from '@netgrif/components-core';
 import { HeaderComponent } from '../../header/header.component';

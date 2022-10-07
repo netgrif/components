@@ -1,7 +1,5 @@
-import { Component, Inject } from '@angular/core';
+import { Component } from '@angular/core';
 import {
-    BaseFilter,
-    NAE_BASE_FILTER,
     TabContent
 } from '@netgrif/components-core';
 import {
