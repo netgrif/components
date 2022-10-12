@@ -66,6 +66,11 @@ export abstract class AbstractEnumerationAutocompleteSelectFieldComponent implem
         this.formControlRef.setValue(event.option.value);
     }
 
+
+    isInvalid(): boolean {
+        return !this.formControlRef.disabled && !this.formControlRef.valid && this.text.control.touched;
+    }
+
     public renderSelection = (key) => {
         if (key !== undefined && key !== '' && key !== null) {
             if (this.enumerationField.choices.find(choice => choice.key === key)) {
