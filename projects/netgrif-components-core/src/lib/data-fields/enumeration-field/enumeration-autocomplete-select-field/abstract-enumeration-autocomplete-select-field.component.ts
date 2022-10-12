@@ -6,6 +6,7 @@ import {EnumerationField, EnumerationFieldValidation, EnumerationFieldValue} fro
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {TranslateService} from '@ngx-translate/core';
 import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
+import {EnumerationAutocompleteFilterProperty} from './enumeration-autocomplete-filter-property';
 
 @Component({
     selector: 'ncc-abstract-enumeration-autocomplete-field',
@@ -44,18 +45,6 @@ export abstract class AbstractEnumerationAutocompleteSelectFieldComponent implem
         this.filteredOptions = undefined;
     }
 
-    /**
-     * Function to filter out matchless options without accent and case-sensitive differences
-     * @param  value to compare matching options
-     * @return  return matched options
-     */
-    private _filter(value: string): Array<EnumerationFieldValue> {
-        const filterValue = value?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-
-        return this.enumerationField.choices.filter(option => option.value.toLowerCase().normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '').indexOf(filterValue) === 0);
-    }
-
     change() {
         if (this.text.value !== undefined) {
             this.filteredOptions = of(this._filter(this.text.value));
@@ -69,6 +58,50 @@ export abstract class AbstractEnumerationAutocompleteSelectFieldComponent implem
 
     isInvalid(): boolean {
         return !this.formControlRef.disabled && !this.formControlRef.valid && this.text.control.touched;
+    }
+
+    protected checkPropertyInComponent(property: string): boolean {
+        return !!this.enumerationField.component && !!this.enumerationField.component.properties && property in this.enumerationField.component.properties;
+    }
+
+    protected filterType(): string | undefined {
+        if (this.checkPropertyInComponent('filter')) {
+            return this.enumerationField.component.properties.filter;
+        }
+    }
+
+    protected _filter(value: string): Array<EnumerationFieldValue> {
+        let filterType = this.filterType()?.toLowerCase()
+        switch (filterType) {
+            case EnumerationAutocompleteFilterProperty.SUBSTRING:
+                return this._filterInclude(value);
+            case EnumerationAutocompleteFilterProperty.PREFIX:
+                return this._filterIndexOf(value);
+            default:
+                return this._filterIndexOf(value);
+        }
+    }
+
+    protected _filterInclude(value: string): Array<EnumerationFieldValue> {
+        const filterValue = value?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        return this.enumerationField.choices.filter(option =>
+            option.value.toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .includes(filterValue));
+    }
+
+
+    /**
+     * Function to filter out matchless options without accent and case-sensitive differences
+     * @param  value to compare matching options
+     * @return  return matched options
+     */
+    protected _filterIndexOf(value: string): Array<EnumerationFieldValue> {
+        const filterValue = value?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+        return this.enumerationField.choices.filter(option => option.value.toLowerCase().normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '').indexOf(filterValue) === 0);
     }
 
     public renderSelection = (key) => {
