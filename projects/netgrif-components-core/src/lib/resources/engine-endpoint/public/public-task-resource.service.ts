@@ -171,7 +171,7 @@ export class PublicTaskResourceService extends TaskResourceService {
      */
     public deleteFile(taskId: string, fieldId: string, name?: string, param?: HttpParams): Observable<MessageResource> {
         const url = !!name ? `public/task/${taskId}/file/${fieldId}/${name}` : `public/task/${taskId}/file/${fieldId}`;
-        return this._resourceProvider.delete$(url, this.SERVER_URL).pipe(
+        return this._resourceProvider.delete$(url, this.SERVER_URL, param).pipe(
             map(r => this.changeType(r, undefined))
         );
     }
