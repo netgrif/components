@@ -146,6 +146,10 @@
                                     <span class="modifier">Public</span>
                                 <a href="#getDividerFontSize" >getDividerFontSize</a>
                             </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#isDividerLGBTQ" >isDividerLGBTQ</a>
+                            </li>
                         </ul>
                     </td>
                 </tr>
@@ -275,8 +279,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="28"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/i18n-field/i18n-divider-field/abstract-i18n-divider-field.component.ts:28</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="35"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/i18n-field/i18n-divider-field/abstract-i18n-divider-field.component.ts:35</a></div>
                 </td>
             </tr>
 
@@ -384,6 +388,45 @@
 
             <tr>
                 <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="29"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/i18n-field/i18n-divider-field/abstract-i18n-divider-field.component.ts:29</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isDividerLGBTQ"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>isDividerLGBTQ</b></span>
+                        <a href="#isDividerLGBTQ"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>isDividerLGBTQ()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
                     <div class="io-line">Defined in <a href="" data-line="22"
                             class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/i18n-field/i18n-divider-field/abstract-i18n-divider-field.component.ts:22</a></div>
                 </td>
@@ -394,7 +437,7 @@
                 <td class="col-md-4">
 
                     <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
 
                     </div>
                 </td>
@@ -537,6 +580,13 @@ export abstract class AbstractI18nDividerFieldComponent {
         if (this.dividerPropertyEnabled(&#x27;dividerColor&#x27;)) {
             return this.dividerI18nField.component.properties.dividerColor;
         }
+    }
+
+    public isDividerLGBTQ(): boolean {
+        if (this.dividerPropertyEnabled(&#x27;dividerLGBTQ&#x27;)) {
+            return this.dividerI18nField.component.properties.dividerLGBTQ &#x3D;&#x3D;&#x3D; &#x27;true&#x27;;
+        }
+        return false;
     }
 
     public getDividerFontSize(): string {

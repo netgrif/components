@@ -164,7 +164,7 @@ export abstract class DataField<T> {
         this._placeholder = placeholder;
     }
 
-    get placeholder(): string {
+    get placeholder(): string | undefined {
         return this._placeholder;
     }
 
@@ -271,6 +271,10 @@ export abstract class DataField<T> {
 
     set touch(set: boolean) {
         this._touch.next(set);
+    }
+
+    get touch$(): Observable<boolean> {
+        return this._touch.asObservable();
     }
 
     get component(): Component {

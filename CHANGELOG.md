@@ -5,7 +5,37 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres
 to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-Full Changelog: [https://github.com/netgrif/components/commits/v6.2.2](https://github.com/netgrif/components/commits/v6.2.2)
+Full Changelog: [https://github.com/netgrif/components/commits/v6.2.4](https://github.com/netgrif/components/commits/v6.2.4)
+
+## [6.2.4](https://github.com/netgrif/components/releases/tag/v6.2.4) (2022-10-12)
+
+### Fixed
+
+- [NAE-1744] Public view does not work delete file
+- [NAE-1745] Enumeration autocomplete constantly sending value
+
+### Added
+
+- [NAE-1751] Autocomplete new filter "include"
+
+## [6.2.3](https://github.com/netgrif/components/releases/tag/v6.2.3) (2022-10-06)
+
+### Fixed
+
+- [NAE-1367] Boolean does not have desc
+- [NAE-1537] It is not possible to copy a value from a visible enumeration
+- [NAE-1729] User field null value on frontend throwing error
+- [NAE-1731] Missing write access to /home/.../node_modules/@netgrif/components
+- [NAE-1732] LDAP group role assignment component tile tooltip
+- [NAE-1734] Overlay on login page
+- [NAE-1736] Rich textarea fix cursor
+- [NAE-1737] Bug i18n field placeholder
+- [NAE-1738] Multichoice map autocomplete init key
+- [NAE-1739] Currency symbol is displayed on new line, when editing currency field
+- [NAE-1740] Disable "create case" button, while case is creating
+- [NAE-1741] 'Undefined' error on frontend when checking i18n translation equality
+- [NAE-1742] I18nField throws error on frontend when its value is null
+- [NAE-1743] File preview change to null object
 
 ## [6.2.2](https://github.com/netgrif/components/releases/tag/v6.2.2) (2022-09-28)
 
@@ -19,7 +49,6 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.2.2](https://g
 - [NAE-1717] Banned roles not hiding menu entries
 - [NAE-1721] Create case event bad handling on frontend
 - [NAE-1724] Incorrect german translation
-
 
 ## [6.2.1](https://github.com/netgrif/components/releases/tag/v6.2.1) (2022-09-15)
 
@@ -75,7 +104,7 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.2.2](https://g
 ### Fixed
 
 - [NAE-1649] File field preview component bug
-- [NAE-1656] Export  nc-panel-item
+- [NAE-1656] Export nc-panel-item
 - [NAE-1653] Create view schematic not functional after angular 13 update
 
 ## [6.1.0](https://github.com/netgrif/components/releases/tag/v6.1.0) (2022-06-01)

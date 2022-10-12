@@ -6,6 +6,7 @@ import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {Observable, of} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
+import {MultichoiceAutocompleteFilterProperty} from './multichoice-autocomplete-filter-property';
 
 @Component({
     selector: 'ncc-abstract-multichoice-autocomplete-field',
@@ -34,7 +35,7 @@ export abstract class AbstractMultichoiceAutocompleteFieldComponentComponent imp
     }
 
     add(event: MatChipInputEvent): void {
-        const value = (event.value || '').trim();
+        const value = (event['key'] || '').trim();
 
         if (value) {
             const choiceArray = [...this.multichoiceField.value];
@@ -65,7 +66,37 @@ export abstract class AbstractMultichoiceAutocompleteFieldComponentComponent imp
         }
     }
 
-    private _filter(value: string): Array<MultichoiceFieldValue> {
+    protected checkPropertyInComponent(property: string): boolean {
+        return !!this.multichoiceField.component && !!this.multichoiceField.component.properties && property in this.multichoiceField.component.properties;
+    }
+
+    protected filterType(): string | undefined {
+        if (this.checkPropertyInComponent('filter')) {
+            return this.multichoiceField.component.properties.filter;
+        }
+    }
+
+    protected _filter(value: string): Array<MultichoiceFieldValue> {
+        let filterType = this.filterType()?.toLowerCase()
+        switch (filterType) {
+            case MultichoiceAutocompleteFilterProperty.SUBSTRING:
+                return this._filterInclude(value);
+            case MultichoiceAutocompleteFilterProperty.PREFIX:
+                return this._filterIndexOf(value);
+            default:
+                return this._filterIndexOf(value);
+        }
+    }
+
+    protected _filterInclude(value: string): Array<MultichoiceFieldValue> {
+        if (Array.isArray(value)) {
+            value = '';
+        }
+        const filterValue = value?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        return this.multichoiceField.choices.filter(option => option.value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(filterValue));
+    }
+
+    protected _filterIndexOf(value: string): Array<MultichoiceFieldValue> {
         if (Array.isArray(value)) {
             value = '';
         }
@@ -82,5 +113,9 @@ export abstract class AbstractMultichoiceAutocompleteFieldComponentComponent imp
             }
         }
         return key;
+    }
+
+    public getValueFromKey(key: string): string | undefined {
+        return this.multichoiceField.choices.find(choice => choice.key === key)?.value;
     }
 }

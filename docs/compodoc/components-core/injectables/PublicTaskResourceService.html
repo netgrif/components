@@ -446,7 +446,7 @@ GET</p>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>deleteFile(taskId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, fieldId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, name?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>deleteFile(taskId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, fieldId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, name?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, param?: <a href="../miscellaneouss/Params.html" target="_self">HttpParams</a>)</code>
                 </td>
             </tr>
 
@@ -510,6 +510,18 @@ DELETE</p>
                                     <td>name</td>
                                     <td>
                                                 <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>param</td>
+                                    <td>
+                                                <code><a href="../miscellaneous/typealiases.html#Params" target="_self" >HttpParams</a></code>
                                     </td>
 
                                     <td>
@@ -2187,7 +2199,7 @@ import {TaskReference} from &#x27;../../interface/task-reference&#x27;;
 import {DataGroup} from &#x27;../../interface/data-groups&#x27;;
 import {DataField} from &#x27;../../../data-fields/models/abstract-data-field&#x27;;
 import {Task} from &#x27;../../interface/task&#x27;;
-import {HttpEventType} from &#x27;@angular/common/http&#x27;;
+import {HttpEventType, HttpParams} from &#x27;@angular/common/http&#x27;;
 import {EventOutcomeMessageResource, MessageResource} from &#x27;../../interface/message-resource&#x27;;
 import {GetDataGroupsEventOutcome} from &#x27;../../../event/model/event-outcomes/data-outcomes/get-data-groups-event-outcome&#x27;;
 
@@ -2342,9 +2354,9 @@ export class PublicTaskResourceService extends TaskResourceService {
      * Delete file from the task
      * DELETE
      */
-    public deleteFile(taskId: string, fieldId: string, name?: string): Observable&lt;MessageResource&gt; {
+    public deleteFile(taskId: string, fieldId: string, name?: string, param?: HttpParams): Observable&lt;MessageResource&gt; {
         const url &#x3D; !!name ? &#x60;public/task/${taskId}/file/${fieldId}/${name}&#x60; : &#x60;public/task/${taskId}/file/${fieldId}&#x60;;
-        return this._resourceProvider.delete$(url, this.SERVER_URL).pipe(
+        return this._resourceProvider.delete$(url, this.SERVER_URL, param).pipe(
             map(r &#x3D;&gt; this.changeType(r, undefined))
         );
     }
