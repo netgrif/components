@@ -91,6 +91,8 @@ export * from './filter-field/models/filter-field-injection-token';
 /* Enums */
 export * from './models/template-appearance';
 export * from './models/material-appearance';
+export * from './enumeration-field/enumeration-autocomplete-select-field/enumeration-autocomplete-filter-property'
+export * from './multichoice-field/multichoice-autocomplete-field/multichoice-autocomplete-filter-property'
 export * from './task-ref-field/model/task-ref-components';
 export * from './task-ref-field/model/task-ref-dashboard-constants';
 export * from './task-ref-field/model/task-ref-dashboard-tile-constants';
