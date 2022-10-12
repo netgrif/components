@@ -6,6 +6,7 @@ import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {Observable, of} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
+import {MultichoiceAutocompleteFilterProperty} from './multichoice-autocomplete-filter-property';
 
 @Component({
     selector: 'ncc-abstract-multichoice-autocomplete-field',
@@ -76,11 +77,11 @@ export abstract class AbstractMultichoiceAutocompleteFieldComponentComponent imp
     }
 
     protected _filter(value: string): Array<MultichoiceFieldValue> {
-        let filterType = this.filterType().toLowerCase()
+        let filterType = this.filterType()?.toLowerCase()
         switch (filterType) {
-            case "include":
+            case MultichoiceAutocompleteFilterProperty.SUBSTRING:
                 return this._filterInclude(value);
-            case "indexof":
+            case MultichoiceAutocompleteFilterProperty.PREFIX:
                 return this._filterIndexOf(value);
             default:
                 return this._filterIndexOf(value);

@@ -6,7 +6,7 @@ import {EnumerationField, EnumerationFieldValidation, EnumerationFieldValue} fro
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {TranslateService} from '@ngx-translate/core';
 import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
-import {MultichoiceFieldValue} from '../../multichoice-field/models/multichoice-field';
+import {EnumerationAutocompleteFilterProperty} from './enumeration-autocomplete-filter-property';
 
 @Component({
     selector: 'ncc-abstract-enumeration-autocomplete-field',
@@ -71,11 +71,11 @@ export abstract class AbstractEnumerationAutocompleteSelectFieldComponent implem
     }
 
     protected _filter(value: string): Array<EnumerationFieldValue> {
-        let filterType = this.filterType().toLowerCase()
+        let filterType = this.filterType()?.toLowerCase()
         switch (filterType) {
-            case "include":
+            case EnumerationAutocompleteFilterProperty.SUBSTRING:
                 return this._filterInclude(value);
-            case "indexof":
+            case EnumerationAutocompleteFilterProperty.PREFIX:
                 return this._filterIndexOf(value);
             default:
                 return this._filterIndexOf(value);
