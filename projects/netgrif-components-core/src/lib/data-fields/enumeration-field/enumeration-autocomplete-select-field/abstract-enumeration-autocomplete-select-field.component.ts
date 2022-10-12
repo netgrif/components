@@ -25,7 +25,7 @@ export abstract class AbstractEnumerationAutocompleteSelectFieldComponent implem
     }
 
     ngOnInit() {
-        this.tmpValue = this.formControlRef.value??'';
+        this.tmpValue = this.formControlRef.value ?? '';
         this.filteredOptions = this.formControlRef.valueChanges.pipe(
             startWith(''),
             map(value => this._filter(value))
@@ -35,11 +35,9 @@ export abstract class AbstractEnumerationAutocompleteSelectFieldComponent implem
                 this.text.control.markAsTouched();
             }
         });
-        this.formControlRef.valueChanges.subscribe(
-            it => {
-                this.tmpValue = it??'';
-            }
-        )
+        this.formControlRef.valueChanges.subscribe(it => {
+            this.tmpValue = it ?? '';
+        });
     }
 
     ngOnDestroy(): void {
@@ -64,7 +62,7 @@ export abstract class AbstractEnumerationAutocompleteSelectFieldComponent implem
         }
     }
 
-     select(event: MatAutocompleteSelectedEvent){
+    select(event: MatAutocompleteSelectedEvent) {
         this.formControlRef.setValue(event.option.value);
     }
 
