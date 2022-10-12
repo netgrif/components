@@ -273,6 +273,10 @@ export abstract class DataField<T> {
         this._touch.next(set);
     }
 
+    get touch$(): Observable<boolean> {
+        return this._touch.asObservable();
+    }
+
     get component(): Component {
         return this._component;
     }
