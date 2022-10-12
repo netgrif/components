@@ -97,7 +97,7 @@ export abstract class AbstractEnumerationAutocompleteSelectFieldComponent implem
      * @param  value to compare matching options
      * @return  return matched options
      */
-    private _filterIndexOf(value: string): Array<EnumerationFieldValue> {
+    protected _filterIndexOf(value: string): Array<EnumerationFieldValue> {
         const filterValue = value?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
         return this.enumerationField.choices.filter(option => option.value.toLowerCase().normalize('NFD')
