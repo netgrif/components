@@ -7,6 +7,12 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Full Changelog: [https://github.com/netgrif/components/commits/v6.2.3](https://github.com/netgrif/components/commits/v6.2.3)
 
+## [6.2.4](https://github.com/netgrif/components/releases/tag/v6.2.4) (2022-10-12)
+
+### Fixed
+
+- [NAE-1744] Public view does not work delete file
+
 ## [6.2.3](https://github.com/netgrif/components/releases/tag/v6.2.3) (2022-10-06)
 
 ### Fixed
