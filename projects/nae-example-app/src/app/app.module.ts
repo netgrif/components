@@ -83,7 +83,7 @@ import {
     ToolbarComponentModule,
     TreeCaseViewComponentModule,
     WorkflowViewComponentModule,
-    FilterFieldTabViewComponent
+    FilterFieldTabViewComponent, FilterFieldTabbedCaseViewComponent, DefaultTabbedTaskViewComponent
 } from '@netgrif/components';
 import {UserInviteComponent} from './doc/user-invite/user-invite.component';
 import {ExamplePortalCardComponent} from './doc/dashboard-example/piechart-card/example-portal-card.component';
@@ -121,6 +121,9 @@ import {
     SingleTabbedTaskViewComponent
 } from './doc/single-tabbed-view/single-tabbed-task-view/single-tabbed-task-view.component';
 import {ImpersonationDemoComponent} from './doc/impersonation-demo/impersonation-demo.component';
+import {
+    Dashboard
+} from '../../../netgrif-components-core/src/lib/data-fields/text-field/dashboard-portal-text-field/dashboard-view-constants';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -252,6 +255,8 @@ export class AppModule {
         registry.register('task-view', (injector: Injector) => new ComponentPortal(TaskViewComponent, null, injector));
         registry.register('case-view', (injector: Injector) => new ComponentPortal(CaseViewComponent, null, injector));
         registry.register('tab-view', (injector: Injector) => new ComponentPortal(TabbedViewsExampleComponent, null, injector));
-        registry.register('tabbed-case-filter', (injector: Injector) => new ComponentPortal(FilterFieldTabViewComponent, null, injector));
+        registry.register(Dashboard.FILTER_TAB_VIEW_ID, (injector: Injector) => new ComponentPortal(FilterFieldTabViewComponent, null, injector));
+        registry.registerType(Dashboard.FILTER_CASE_VIEW_ID, FilterFieldTabbedCaseViewComponent);
+        registry.registerType(Dashboard.FILTER_TASK_VIEW_ID, DefaultTabbedTaskViewComponent);
     }
 }

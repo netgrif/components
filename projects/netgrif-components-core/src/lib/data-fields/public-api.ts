@@ -40,6 +40,8 @@ export * from './enumeration-field/enumeration-icon-field/abstract-enumeration-i
 export * from './enumeration-field/enumeration-autocomplete-dynamic-field/abstract-enumeration-autocomplete-dynamic-field.component';
 export * from './filter-field/abstract-filter-field.component';
 export * from './filter-field/abstract-filter-field-content.component';
+export * from './filter-field/abstract-filter-field-tab-view.component';
+export * from './filter-field/abstract-filter-field-tab-view-content.component';
 export * from './i18n-field/abstract-i18n-field.component';
 export * from './i18n-field/i18n-text-field/abstract-i18n-text-field.component';
 export * from './i18n-field/i18n-divider-field/abstract-i18n-divider-field.component';
@@ -92,6 +94,7 @@ export * from './models/material-appearance';
 export * from './task-ref-field/model/task-ref-components';
 export * from './task-ref-field/model/task-ref-dashboard-constants';
 export * from './task-ref-field/model/task-ref-dashboard-tile-constants';
+export * from './text-field/dashboard-portal-text-field/dashboard-view-constants';
 
 /* Services */
 export * from './i18n-field/language-icons.service';

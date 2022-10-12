@@ -9,7 +9,6 @@ import { SearchComponentModule } from '../search/search.module';
 import { CaseViewComponentModule } from '../view/case-view/case-view.module';
 import { HeaderComponentModule } from '../header/header.module';
 
-
 @NgModule({
     declarations: [
         FilterFieldTabViewComponent,

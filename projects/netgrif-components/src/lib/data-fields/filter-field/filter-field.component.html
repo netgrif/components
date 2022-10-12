@@ -4,13 +4,9 @@
                         [offset]="taskOffset">
 </nc-data-field-template>
 
-<ng-template #filterFieldTemplate let-showLargeLayout="showLargeLayout" [ngSwitch]='dataField.getComponentType()'>
+<ng-template #filterFieldTemplate let-showLargeLayout="showLargeLayout">
     <!--  TODO: title based on large layout  -->
-    <nc-tabbed-case-view-filter-content *ngSwitchCase="'tabbed-case-view'"
-                                        [filterField]='dataField'>
-
-    </nc-tabbed-case-view-filter-content>
-    <ng-template [ngIf]="initialized" *ngSwitchDefault>
+    <ng-template [ngIf]="initialized">
         <ng-template [cdkPortalOutlet]="portal"></ng-template>
     </ng-template>
     <!--  TODO: description?  -->

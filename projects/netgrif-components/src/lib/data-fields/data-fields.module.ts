@@ -100,7 +100,7 @@ import {
     DashboardIframeTextFieldComponent
 } from './text-field/dashboard-iframe-text-field/dashboard-iframe-text-field.component';
 import { RouterModule } from '@angular/router';
-import { TabbedCaseViewFilterContentComponent } from './filter-field/tabbed-case-view-filter-content/tabbed-case-view-filter-content.component';
+import { FilterFieldTabViewContentComponent } from './filter-field/tab-view-filter-field/filter-field-tab-view-content.component';
 
 @NgModule({
     declarations: [
@@ -149,7 +149,7 @@ import { TabbedCaseViewFilterContentComponent } from './filter-field/tabbed-case
         DashboardPortalTextFieldComponent,
         DashboardBarChartTextFieldComponent,
         DashboardIframeTextFieldComponent,
-        TabbedCaseViewFilterContentComponent,
+        FilterFieldTabViewContentComponent,
     ],
     exports: [
         BooleanFieldComponent,

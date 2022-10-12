@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Inject, Type } from '@angular/core';
 import {
-    TabContent
+    DashboardPortalComponentRegistryService,
+    AbstractFilterFieldTabViewComponent,
+    NAE_FILTER_FIELD,
+    FilterField
 } from '@netgrif/components-core';
 import {
     DefaultTabbedTaskViewComponent
@@ -14,22 +17,10 @@ import {
   templateUrl: './filter-field-tab-view.component.html',
   styleUrls: ['./filter-field-tab-view.component.scss'],
 })
-export class FilterFieldTabViewComponent {
+export class FilterFieldTabViewComponent extends AbstractFilterFieldTabViewComponent {
 
-    tabs: Array<TabContent>;
-
-    constructor() {
-        this.tabs = [
-            {
-                label: {text: 'Test', icon: 'home'},
-                canBeClosed: false,
-                tabContentComponent: FilterFieldTabbedCaseViewComponent,
-                injectedObject: {
-                    tabViewComponent: DefaultTabbedTaskViewComponent,
-                    tabViewOrder: 0,
-                }
-            }
-        ];
+    constructor(registry: DashboardPortalComponentRegistryService,
+                @Inject(NAE_FILTER_FIELD) filterField: FilterField) {
+        super(registry, filterField, FilterFieldTabbedCaseViewComponent, DefaultTabbedTaskViewComponent);
     }
-
 }
