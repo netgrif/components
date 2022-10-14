@@ -24,11 +24,11 @@ export class TaskRefFieldComponent extends AbstractTaskRefFieldComponent {
     }
 
     getTileGridColumn(tile: TaskRefDashboardTile): string {
-        return `${tile.x + 1} / ${tile.x + tile.cols}`;
+        return `${tile.x + 1} / span ${tile.cols}`;
     }
 
     getTileGridRow(tile: TaskRefDashboardTile): string {
-        return `${tile.y + 1} / ${tile.y + tile.rows}`;
+        return `${tile.y + 1} / span ${tile.rows}`;
     }
 
 }
