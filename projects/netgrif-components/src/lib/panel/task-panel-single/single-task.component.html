@@ -7,7 +7,7 @@
             <span class='font-size-20'>{{ 'tasks.view.noTasksSatisfyingThisFilter' | translate }}</span>
         </div>
 
-        <div class='full-width full-heigh task-tab-background' fxFlex='100'>
+        <div class='full-width full-height task-tab-background' fxFlex='100'>
             <div *ngTemplateOutlet='pageHeader ?? defaultPageHeader'></div>
             <nc-task-panel
                 [textEllipsis]='textEllipsis'
@@ -16,10 +16,8 @@
                 [responsiveBody]='responsiveBody'
                 (taskEvent)='emitTaskEvent($event)'
                 (panelRefOutput)='setPanelRef($event)'
-                [preventCollapse]='preventCollapse'
-                [hidePanelHeader]='hidePanelHeader'
-                [actionButtonTemplates]='actionButtonTemplates'
-                [actionRowJustifyContent]='actionRowJustifyContent'
+                [first]='true'
+                [last]='true'
                 class='panel-expanded-spacing'>
             </nc-task-panel>
 
@@ -36,7 +34,7 @@
         </ng-template>
 
         <ng-template #defaultPageFooter>
-            <mat-card class='bootom-card footer'>
+            <mat-card class='bottom-card footer'>
                 <span class="bottom-card-title footer-font"><strong>{{footerText ?? 'tasks.footer.defaultText' | translate}}</strong></span>
             </mat-card>
         </ng-template>

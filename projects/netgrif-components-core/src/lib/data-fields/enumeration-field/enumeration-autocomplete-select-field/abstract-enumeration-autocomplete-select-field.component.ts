@@ -1,5 +1,5 @@
 import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {FormControl, NgModel} from '@angular/forms';
+import { AbstractControl, FormControl, NgModel, ValidationErrors } from '@angular/forms';
 import {Observable, of} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {EnumerationField, EnumerationFieldValidation, EnumerationFieldValue} from '../models/enumeration-field';
@@ -21,12 +21,14 @@ export abstract class AbstractEnumerationAutocompleteSelectFieldComponent implem
     public tmpValue: string;
 
     filteredOptions: Observable<Array<EnumerationFieldValue>>;
+    filteredOptionsArray: Array<EnumerationFieldValue>;
 
     constructor(protected _translate: TranslateService) {
     }
 
     ngOnInit() {
         this.tmpValue = this.formControlRef.value ?? '';
+        this.formControlRef.addValidators(this.checkFilteredOptions);
         this.filteredOptions = this.formControlRef.valueChanges.pipe(
             startWith(''),
             map(value => this._filter(value))
@@ -121,4 +123,12 @@ export abstract class AbstractEnumerationAutocompleteSelectFieldComponent implem
             return this._translate.instant('dataField.validations.enumeration');
         }
     }
+
+    private checkFilteredOptions(control: AbstractControl): ValidationErrors | null {
+        if (!!this.filteredOptionsArray && this.filteredOptionsArray.length === 0) {
+            return {wrongValue: true};
+        }
+        return null;
+    }
+
 }
