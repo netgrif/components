@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy } from '@angular/core';
 import { AbstractViewWithHeadersComponent } from '../abstract/view-with-headers';
-import { Observable, Subject, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
 import { TaskPanelData } from '../../panel/task-panel-list/task-panel-data/task-panel-data';
 import { TaskViewService } from './service/task-view.service';
 import { map, takeUntil } from 'rxjs/operators';
@@ -18,22 +18,26 @@ export abstract class AbstractSingleTaskViewComponent extends AbstractViewWithHe
 
     @Input() initiallyExpanded: boolean = true;
     @Input() preventCollapse: boolean = true;
-    public task$: Observable<TaskPanelData>;
+    public taskPanelData: BehaviorSubject<TaskPanelData>;
     public loading$: Observable<boolean>;
     private transitionId: string;
     private subRoute: Subscription;
-    protected unsubscribe$: Subject<void>;
+    protected subPanelData: Subscription;
 
     protected constructor(protected taskViewService: TaskViewService,
                           activatedRoute: ActivatedRoute) {
         super(taskViewService, activatedRoute);
-        this.unsubscribe$ = new Subject<void>();
+        this.subPanelData = new Subscription();
+        this.taskPanelData = new BehaviorSubject<TaskPanelData>(undefined);
         this.subRoute = this._activatedRoute.paramMap.subscribe(paramMap => {
             if (!!(paramMap?.['params']?.[TaskConst.TRANSITION_ID])) {
                 this.transitionId = paramMap['params'][TaskConst.TRANSITION_ID];
-                this.task$ = this.taskViewService.tasks$.pipe(map<Array<TaskPanelData>, TaskPanelData>(tasks => {
-                    return this.resolveTransitionTask(tasks);
-                }), takeUntil(this.unsubscribe$));
+                this.subPanelData = this.taskViewService.tasks$.subscribe(tasks =>  {
+                    if (!!tasks && tasks.length > 0) {
+                        this.taskPanelData.next(this.resolveTransitionTask(tasks));
+                    }
+                });
+                console.log('resolveTransition: ' + this.transitionId);
             }
         });
         this.loading$ = this.taskViewService.loading$;
@@ -42,8 +46,11 @@ export abstract class AbstractSingleTaskViewComponent extends AbstractViewWithHe
     ngOnDestroy() {
         super.ngOnDestroy();
         this.subRoute.unsubscribe();
-        this.unsubscribe$.next();
-        this.unsubscribe$.complete();
+        this.subPanelData.unsubscribe();
+    }
+
+    get task$(): Observable<TaskPanelData> {
+        return this.taskPanelData.asObservable();
     }
 
     private resolveTransitionTask(tasks: Array<TaskPanelData>): TaskPanelData {
@@ -51,6 +58,7 @@ export abstract class AbstractSingleTaskViewComponent extends AbstractViewWithHe
         if (!!transitionTask) {
             transitionTask.initiallyExpanded = transitionTask.task.finishDate === undefined;
         }
+        console.log('resolveTransitionTask: ' + transitionTask)
         return transitionTask;
     }
 }
