@@ -149,7 +149,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
 
     /**
      * Processes a successful outcome of a `getData` request
-     * @param gottenTaskId the Id of the task whose data was requested
+     * @param gottenTaskId the ID of the task whose data was requested
      * @param dataGroups the returned data groups of the task
      * @param afterAction the action that should be performed after the request is processed
      * @param nextEvent indicates to the event queue that the next event can be processed
@@ -233,7 +233,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
 
     /**
      * Processes an erroneous outcome of a `getData` request
-     * @param gottenTaskId the Id of the task whose data was requested
+     * @param gottenTaskId the ID of the task whose data was requested
      * @param error the returned error
      * @param afterAction the action that should be performed after the request is processed
      * @param nextEvent indicates to the event queue that the next event can be processed
@@ -397,7 +397,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
 
     /**
      * Performs a `setData` request on the task currently stored in the `taskContent` service
-     * @param setTaskId id of the task
+     * @param setTaskId ID of the task
      * @param body content of the `setData` request
      * @param afterAction the action that should be performed after the request is processed
      * @param nextEvent indicates to the event queue that the next event can be processed
@@ -434,18 +434,18 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
     }
 
     /**
-     * Processes a unsuccessful outcome of a `setData` request
-     * @param setTaskId the Id of the task whose data was set
+     * Processes an unsuccessful outcome of a `setData` request
+     * @param setTaskId the ID of the task whose data was set
      * @param response the resulting Event outcome of the set data request
      * @param afterAction the action that should be performed after the request is processed
      * @param nextEvent indicates to the event queue that the next event can be processed
      * @param body hold the data that was sent in request
      */
     protected processUnsuccessfulSetDataRequest(setTaskId: string,
-                                              response: EventOutcomeMessageResource,
-                                              afterAction: AfterAction,
-                                              nextEvent: AfterAction,
-                                              body: TaskSetDataRequestBody) {
+                                                response: EventOutcomeMessageResource,
+                                                afterAction: AfterAction,
+                                                nextEvent: AfterAction,
+                                                body: TaskSetDataRequestBody) {
         if (response.error !== '') {
             this._snackBar.openErrorSnackBar(this._translate.instant(response.error));
         } else {
@@ -468,7 +468,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
 
     /**
      * Processes a successful outcome of a `setData` request
-     * @param setTaskId the Id of the task whose data was set
+     * @param setTaskId the ID of the task whose data was set
      * @param response the resulting Event outcome of the set data request
      * @param afterAction the action that should be performed after the request is processed
      * @param nextEvent indicates to the event queue that the next event can be processed
@@ -493,7 +493,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
 
     /**
      * Processes an erroneous outcome of a `setData` request
-     * @param setTaskId the Id of the task whose data was set
+     * @param setTaskId the ID of the task whose data was set
      * @param error the returned error
      * @param afterAction the action that should be performed after the request is processed
      * @param nextEvent indicates to the event queue that the next event can be processed
@@ -586,7 +586,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
      *
      * @param afterAction the call chain steam of the update data method
      * @param result result of the update data request
-     * @param setTaskId the Id of the {@link Task}, who's state should be updated
+     * @param setTaskId the ID of the {@link Task}, who's state should be updated
      */
     protected updateStateInfo(afterAction: AfterAction, result: boolean, setTaskId: string): void {
         this._taskState.stopLoading(setTaskId);

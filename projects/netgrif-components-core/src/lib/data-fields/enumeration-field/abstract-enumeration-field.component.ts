@@ -13,6 +13,9 @@ export abstract class AbstractEnumerationFieldComponent extends AbstractDataFiel
     @Input() dataField: EnumerationField;
 
     protected constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+        if (informAboutInvalidData == null) {
+            informAboutInvalidData = false;
+        }
         super(informAboutInvalidData);
         this._formControl = new FormControl('');
     }
