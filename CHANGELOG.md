@@ -9,6 +9,10 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.2.4](https://g
 
 ## [6.3.0](https://github.com/netgrif/components/releases/tag/v6.3.0) (2022-10-01)
 
+### Fixed
+
+- [NAE-1762] Public view URL encoding
+
 ### Added
 
 - [NAE-1678] User impersonation
