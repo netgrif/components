@@ -31,10 +31,10 @@ import {UserComparatorService} from '../../user/services/user-comparator.service
 import {TaskSetDataRequestContext} from '../models/task-set-data-request-context';
 import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
 import {EventService} from '../../event/services/event.service';
-import {EventOutcome} from '../../resources/interface/event-outcome';
 import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
 import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
 import {TaskFields} from '../../task-content/model/task-fields';
+import {EnumerationField} from "../../data-fields/enumeration-field/models/enumeration-field";
 
 /**
  * Handles the loading and updating of data fields and behaviour of
@@ -348,12 +348,16 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         field.changed = false;
     }
 
+    protected isAutocompleteEnumException(field: DataField<unknown>): boolean{
+        return (field instanceof EnumerationField) && (field.getComponentType() === 'autocomplete') && !field.valid;
+    }
+
     /**
      * @param field the checked field
      * @returns whether the field was updated on frontend and thus the backend should be notified
      */
     protected wasFieldUpdated(field: DataField<unknown>): boolean {
-        return field.initialized && field.changed && (field.valid || field.sendInvalidValues);
+        return field.initialized && field.changed && (field.valid || field.sendInvalidValues) && (!this.isAutocompleteEnumException(field));
     }
 
     /**
