@@ -1,9 +1,8 @@
 import { Component, Input, OnDestroy } from '@angular/core';
 import { AbstractViewWithHeadersComponent } from '../abstract/view-with-headers';
-import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { TaskPanelData } from '../../panel/task-panel-list/task-panel-data/task-panel-data';
 import { TaskViewService } from './service/task-view.service';
-import { map, takeUntil } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 
 export class TaskConst {
@@ -37,7 +36,6 @@ export abstract class AbstractSingleTaskViewComponent extends AbstractViewWithHe
                         this.taskPanelData.next(this.resolveTransitionTask(tasks));
                     }
                 });
-                console.log('resolveTransition: ' + this.transitionId);
             }
         });
         this.loading$ = this.taskViewService.loading$;
@@ -58,7 +56,6 @@ export abstract class AbstractSingleTaskViewComponent extends AbstractViewWithHe
         if (!!transitionTask) {
             transitionTask.initiallyExpanded = transitionTask.task.finishDate === undefined;
         }
-        console.log('resolveTransitionTask: ' + transitionTask)
         return transitionTask;
     }
 }

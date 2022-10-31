@@ -8,7 +8,7 @@
         </div>
 
         <mat-accordion [multi]="false" class="full-width" fxFlex="100">
-            <cdk-virtual-scroll-viewport itemSize="52" class="task-panel-scroll-container full-width full-height">
+            <cdk-virtual-scroll-viewport itemSize="1" class="task-panel-scroll-container full-width full-height">
                 <div *ngTemplateOutlet='pageHeader ?? defaultPageHeader'></div>
                 <nc-task-panel
                     [textEllipsis]='textEllipsis'
