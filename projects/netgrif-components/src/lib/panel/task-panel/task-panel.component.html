@@ -55,10 +55,10 @@
             <div class="task-panel-body" [ngClass]="{'paper-view': isPaperView()}" fxFlex="100">
                 <ng-template [cdkPortalOutlet]="portal"></ng-template>
             </div>
-            <mat-action-row [ngStyle]="{'justify-content': actionRowJustifyContent ?? 'flex-end' }">
+            <mat-action-row fxLayout.lt-sm="column" [ngStyle]="{'justify-content': actionRowJustifyContent ?? 'flex-end' }">
                 <mat-spinner class='action-row-spinner' *ngIf="isLoading && hidePanelHeader"
                              [diameter]="20"></mat-spinner>
-                <div fxLayout.lt-sm="column" fxLayoutAlign.lt-sm="center stretch" ngClass.lt-sm="width-100"
+                <div fxLayoutAlign.lt-sm="center stretch" ngClass.lt-sm="width-100"
                      *ngFor='let button of (!!actionButtonTemplates && actionButtonTemplates.length > 0 ?
                     actionButtonTemplates : [assignButton, delegateButton, reassignButton, cancelButton, finishButton, collapseButton])'>
                     <ng-container *ngTemplateOutlet='button; context:thisContext'></ng-container>
