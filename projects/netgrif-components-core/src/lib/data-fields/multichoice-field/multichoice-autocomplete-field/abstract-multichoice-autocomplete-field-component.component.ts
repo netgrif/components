@@ -35,7 +35,7 @@ export abstract class AbstractMultichoiceAutocompleteFieldComponentComponent imp
     }
 
     add(event: MatChipInputEvent): void {
-        const value = (event['key'] || '').trim();
+        const value = (event['key'] || '');
 
         if (value) {
             const choiceArray = [...this.multichoiceField.value];
@@ -62,7 +62,7 @@ export abstract class AbstractMultichoiceAutocompleteFieldComponentComponent imp
 
     change() {
         if (this.input.nativeElement.value !== undefined) {
-            this.filteredOptions = of(this._filter(this.input.nativeElement.value).filter((option) => !this.multichoiceField.value.includes(option.key)));
+            this.filteredOptions = of(this._filter(this.input.nativeElement.value).filter((option) => !this.multichoiceField?.value.includes(option.key)));
         }
     }
 
