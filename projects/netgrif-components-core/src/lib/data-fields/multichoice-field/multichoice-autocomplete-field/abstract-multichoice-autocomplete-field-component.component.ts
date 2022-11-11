@@ -5,7 +5,7 @@ import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {Observable, of} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import {map, startWith, tap} from 'rxjs/operators';
 import {MultichoiceAutocompleteFilterProperty} from './multichoice-autocomplete-filter-property';
 
 @Component({
@@ -38,6 +38,7 @@ export abstract class AbstractMultichoiceAutocompleteFieldComponentComponent imp
         const value = (event['key'] || '');
 
         if (value) {
+            this.multichoiceField.value = this.multichoiceField.value === null ? [] : this.multichoiceField.value
             const choiceArray = [...this.multichoiceField.value];
             choiceArray.push(value);
             this.multichoiceField.value = choiceArray;
