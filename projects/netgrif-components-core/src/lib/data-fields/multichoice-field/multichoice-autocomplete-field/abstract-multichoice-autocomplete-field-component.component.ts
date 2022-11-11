@@ -25,7 +25,6 @@ export abstract class AbstractMultichoiceAutocompleteFieldComponentComponent imp
 
     ngOnInit() {
         this.formControlRef.valueChanges.subscribe(newVal => {
-            startWith('')
             this.filteredOptions = of(this._filter(newVal ?? '').filter((option) => !this.multichoiceField.value?.includes(option.key)));
         })
     }
