@@ -24,10 +24,10 @@ export abstract class AbstractMultichoiceAutocompleteFieldComponentComponent imp
     filteredOptions: Observable<Array<MultichoiceFieldValue>>;
 
     ngOnInit() {
-        this.filteredOptions = this.formControlRef.valueChanges.pipe(
-            startWith(''),
-            map(value => this._filter(value).filter((option) => !this.multichoiceField.value.includes(option.key)))
-        );
+        this.formControlRef.valueChanges.subscribe(newVal => {
+            startWith('')
+            this.filteredOptions = of(this._filter(newVal ?? '').filter((option) => !this.multichoiceField.value?.includes(option.key)));
+        })
     }
 
     ngOnDestroy(): void {
