@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy } from '@angular/core';
 import { AbstractViewWithHeadersComponent } from '../abstract/view-with-headers';
-import { BehaviorSubject, Observable, ReplaySubject, Subscription } from 'rxjs';
+import { Observable, ReplaySubject, Subscription } from 'rxjs';
 import { TaskPanelData } from '../../panel/task-panel-list/task-panel-data/task-panel-data';
 import { TaskViewService } from './service/task-view.service';
 import { ActivatedRoute } from '@angular/router';
