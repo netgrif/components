@@ -4,8 +4,7 @@ import {FormControl} from '@angular/forms';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
-import {Observable, of} from 'rxjs';
-import {map, startWith, tap} from 'rxjs/operators';
+import {Observable, of, Subscription} from 'rxjs';
 import {MultichoiceAutocompleteFilterProperty} from './multichoice-autocomplete-filter-property';
 
 @Component({
@@ -21,16 +20,19 @@ export abstract class AbstractMultichoiceAutocompleteFieldComponentComponent imp
 
     separatorKeysCodes: number[] = [ENTER, COMMA];
 
+    subscriptionChangeData$: Subscription;
+
     filteredOptions: Observable<Array<MultichoiceFieldValue>>;
 
     ngOnInit() {
-        this.formControlRef.valueChanges.subscribe(newVal => {
+        this.subscriptionChangeData$ =this.formControlRef.valueChanges.subscribe(newVal => {
             this.filteredOptions = of(this._filter(newVal ?? '').filter((option) => !this.multichoiceField.value?.includes(option.key)));
         })
     }
 
     ngOnDestroy(): void {
         this.filteredOptions = undefined;
+        this.subscriptionChangeData$.unsubscribe();
     }
 
     add(event: MatChipInputEvent): void {
