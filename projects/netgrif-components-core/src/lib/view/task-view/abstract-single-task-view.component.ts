@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy } from '@angular/core';
 import { AbstractViewWithHeadersComponent } from '../abstract/view-with-headers';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject, Subscription } from 'rxjs';
 import { TaskPanelData } from '../../panel/task-panel-list/task-panel-data/task-panel-data';
 import { TaskViewService } from './service/task-view.service';
 import { ActivatedRoute } from '@angular/router';
@@ -17,7 +17,7 @@ export abstract class AbstractSingleTaskViewComponent extends AbstractViewWithHe
 
     @Input() initiallyExpanded: boolean = true;
     @Input() preventCollapse: boolean = true;
-    public taskPanelData: BehaviorSubject<TaskPanelData>;
+    public taskPanelData: ReplaySubject<TaskPanelData>;
     public loading$: Observable<boolean>;
     private transitionId: string;
     private subRoute: Subscription;
@@ -27,7 +27,7 @@ export abstract class AbstractSingleTaskViewComponent extends AbstractViewWithHe
                           activatedRoute: ActivatedRoute) {
         super(taskViewService, activatedRoute);
         this.subPanelData = new Subscription();
-        this.taskPanelData = new BehaviorSubject<TaskPanelData>(undefined);
+        this.taskPanelData = new ReplaySubject<TaskPanelData>(1);
         this.subRoute = this._activatedRoute.paramMap.subscribe(paramMap => {
             if (!!(paramMap?.['params']?.[TaskConst.TRANSITION_ID])) {
                 this.transitionId = paramMap['params'][TaskConst.TRANSITION_ID];
