@@ -36,7 +36,7 @@ export abstract class AbstractMultichoiceAutocompleteFieldComponentComponent imp
     }
 
     add(event: MatChipInputEvent): void {
-        const value = (event['key'] || '');
+        const value = event['key'] ?? '';
 
         if (value) {
             this.multichoiceField.value = this.multichoiceField.value === null ? [] : this.multichoiceField.value
