@@ -5,6 +5,8 @@ import {AbstractControl, ValidationErrors, ValidatorFn, Validators} from '@angul
 import {FieldTypeResource} from '../../../task-content/model/field-type-resource';
 import {Component} from '../../models/component';
 import {Validation} from '../../models/validation';
+import {Observable} from "rxjs";
+import {debounceTime} from "rxjs/operators";
 
 export interface EnumerationFieldValue {
     key: string;
@@ -17,6 +19,7 @@ export enum EnumerationFieldValidation {
 }
 
 export class EnumerationField extends DataField<string> {
+    protected REQUEST_DEBOUNCE_TIME = 600;
 
     constructor(stringId: string, title: string, value: string,
                 protected _choices: Array<EnumerationFieldValue>, behavior: Behavior, placeholder?: string, description?: string,
@@ -26,7 +29,7 @@ export class EnumerationField extends DataField<string> {
     }
 
     set choices(choices: Array<EnumerationFieldValue>) {
-         this._choices = choices;
+        this._choices = choices;
     }
 
     get choices(): Array<EnumerationFieldValue> {
@@ -35,6 +38,10 @@ export class EnumerationField extends DataField<string> {
 
     get fieldType(): FieldTypeResource {
         return this._fieldType;
+    }
+
+    public valueChanges(): Observable<string> {
+        return this._value.pipe(debounceTime(this.REQUEST_DEBOUNCE_TIME));
     }
 
     protected resolveFormControlValidators(): Array<ValidatorFn> {

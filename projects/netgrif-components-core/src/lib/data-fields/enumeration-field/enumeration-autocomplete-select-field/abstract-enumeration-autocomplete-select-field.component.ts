@@ -1,12 +1,11 @@
-import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {FormControl, NgModel} from '@angular/forms';
+import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {FormControl} from '@angular/forms';
 import {Observable, of} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {EnumerationField, EnumerationFieldValidation, EnumerationFieldValue} from '../models/enumeration-field';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {TranslateService} from '@ngx-translate/core';
-import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
-import {EnumerationAutocompleteFilterProperty} from './enumeration-autocomplete-filter-property';
+import {EnumerationAutocompleteFilterProperty} from "./enumeration-autocomplete-filter-property";
 
 @Component({
     selector: 'ncc-abstract-enumeration-autocomplete-field',
@@ -17,8 +16,7 @@ export abstract class AbstractEnumerationAutocompleteSelectFieldComponent implem
     @Input() enumerationField: EnumerationField;
     @Input() formControlRef: FormControl;
     @Input() showLargeLayout: WrappedBoolean;
-    @ViewChild('input') text: NgModel;
-    public tmpValue: string;
+    @ViewChild('input') text: ElementRef;
 
     filteredOptions: Observable<Array<EnumerationFieldValue>>;
 
@@ -26,38 +24,14 @@ export abstract class AbstractEnumerationAutocompleteSelectFieldComponent implem
     }
 
     ngOnInit() {
-        this.tmpValue = this.formControlRef.value ?? '';
         this.filteredOptions = this.formControlRef.valueChanges.pipe(
             startWith(''),
             map(value => this._filter(value))
         );
-        this.enumerationField.touch$.subscribe(touch => {
-            if (touch) {
-                this.text.control.markAsTouched();
-            }
-        });
-        this.formControlRef.valueChanges.subscribe(it => {
-            this.tmpValue = it ?? '';
-        });
     }
 
     ngOnDestroy(): void {
         this.filteredOptions = undefined;
-    }
-
-    change() {
-        if (this.text.value !== undefined) {
-            this.filteredOptions = of(this._filter(this.text.value));
-        }
-    }
-
-    select(event: MatAutocompleteSelectedEvent) {
-        this.formControlRef.setValue(event.option.value);
-    }
-
-
-    isInvalid(): boolean {
-        return !this.formControlRef.disabled && !this.formControlRef.valid && this.text.control.touched;
     }
 
     protected checkPropertyInComponent(property: string): boolean {
@@ -102,6 +76,12 @@ export abstract class AbstractEnumerationAutocompleteSelectFieldComponent implem
 
         return this.enumerationField.choices.filter(option => option.value.toLowerCase().normalize('NFD')
             .replace(/[\u0300-\u036f]/g, '').indexOf(filterValue) === 0);
+    }
+
+    change() {
+        if (this.text.nativeElement.value !== undefined) {
+            this.filteredOptions = of(this._filter(this.text.nativeElement.value));
+        }
     }
 
     public renderSelection = (key) => {
