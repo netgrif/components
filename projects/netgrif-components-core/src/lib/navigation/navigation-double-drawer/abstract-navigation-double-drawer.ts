@@ -1,24 +1,25 @@
-import {Component, Input, OnDestroy, OnInit, TemplateRef} from '@angular/core';
-import {forkJoin, Observable, Subscription} from 'rxjs';
-import {ActivatedRoute, Router} from '@angular/router';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
-import {LanguageService} from '../../translate/language.service';
-import {UserService} from '../../user/services/user.service';
-import {LoggerService} from '../../logger/services/logger.service';
+import {Component, Input, OnDestroy, OnInit, TemplateRef} from '@angular/core';
+import {MatDrawerMode} from '@angular/material/sidenav';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ResizeEvent} from 'angular-resizable-element';
+import {forkJoin, Observable, of, Subscription} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {RoleAccess, View} from '../../../commons/schema';
+import {AccessService} from '../../authorization/permission/access.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
-import {UriService} from '../service/uri.service';
-import {UriNodeResource} from '../model/uri-resource';
+import {LoggerService} from '../../logger/services/logger.service';
 import {Case} from '../../resources/interface/case';
 import {
-    DynamicNavigationRouteProviderService
+    DynamicNavigationRouteProviderService,
 } from '../../routing/dynamic-navigation-route-provider/dynamic-navigation-route-provider.service';
-import {LoadingEmitter} from "../../utility/loading-emitter";
-import {MatDrawerMode} from "@angular/material/sidenav";
-import {ResizeEvent} from "angular-resizable-element";
-import {User} from "../../user/models/user";
-import {RoleAccess, View} from "../../../commons/schema";
-import {NAE_ROUTING_CONFIGURATION_PATH} from "../../routing/routing-builder/routing-builder.service";
-import {AccessService} from "../../authorization/permission/access.service";
+import {NAE_ROUTING_CONFIGURATION_PATH} from '../../routing/routing-builder/routing-builder.service';
+import {LanguageService} from '../../translate/language.service';
+import {User} from '../../user/models/user';
+import {UserService} from '../../user/services/user.service';
+import {LoadingEmitter} from '../../utility/loading-emitter';
+import {UriNodeResource} from '../model/uri-resource';
+import {UriService} from '../service/uri.service';
 
 export interface ConfigDoubleMenu {
     mode: MatDrawerMode;
@@ -29,11 +30,11 @@ export interface ConfigDoubleMenu {
 
 export interface ViewNavigationItem extends View {
     id: string;
-    resource?: Case
+    resource?: Case;
 }
 
 export const FILTER_IDENTIFIERS = [
-    "preference_filter_item"
+    'preference_filter_item',
 ];
 export const FILTER_VIEW_TASK_TRANSITION_ID = 'view';
 
@@ -50,17 +51,17 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
 
     @Input() portalLeftMenu: TemplateRef<any>;
     @Input() portalRightMenu: TemplateRef<any>;
-    @Input() imageRouterLink: string = "/";
-    @Input() imageAlt: string = "Logo";
+    @Input() imageRouterLink: string = '/';
+    @Input() imageAlt: string = 'Logo';
     @Input() image: string;
-    @Input() profileRouterLink: string = "/profile";
+    @Input() profileRouterLink: string = '/profile';
     @Input() includeUser: boolean = true;
     @Input() includeLanguage: boolean = true;
     @Input() includeMoreMenu: boolean = true;
     @Input() allClosable: boolean = true;
-    @Input() folderIcon: string = "folder";
-    @Input() openedFolderIcon: string = "folder_open";
-    @Input() filterIcon: string = "filter_alt";
+    @Input() folderIcon: string = 'folder';
+    @Input() openedFolderIcon: string = 'folder_open';
+    @Input() filterIcon: string = 'filter_alt';
     @Input() foldersCategoryName: string = 'toolbar.menu.folders';
     @Input() viewsCategoryName: string = 'toolbar.menu.views';
 
@@ -92,7 +93,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
      * Currently display uri
      * Siblings of the node are on the left, children are on the right
      */
-    currentNode: UriNodeResource
+    currentNode: UriNodeResource;
 
     leftLoading$: LoadingEmitter;
     rightLoading$: LoadingEmitter;
@@ -101,16 +102,16 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         mode: 'side',
         opened: true,
         disableClose: false,
-        width: LEFT_DRAWER_DEFAULT_WIDTH
+        width: LEFT_DRAWER_DEFAULT_WIDTH,
     };
     protected _configRightMenu: ConfigDoubleMenu = {
         mode: 'side',
         opened: true,
         disableClose: false,
-        width: RIGHT_DRAWER_DEFAULT_WIDTH
+        width: RIGHT_DRAWER_DEFAULT_WIDTH,
     };
 
-    protected _childCustomViews: { [uri: string]: { [key: string]: ViewNavigationItem } }
+    protected _childCustomViews: { [uri: string]: { [key: string]: ViewNavigationItem } };
 
     protected constructor(protected _router: Router,
                           protected _activatedRoute: ActivatedRoute,
@@ -179,8 +180,8 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         }
         this._childCustomViews[childView.processUri][configPath] = {
             id: configPath,
-            ...childView
-        }
+            ...childView,
+        };
     }
 
     protected resolveHiddenMenuItemFromChildViews(configPath: string, childView: View): void {
@@ -190,7 +191,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         if (!!(childView?.navigation?.hidden)) {
             this.moreMenuItems.push({
                 id: configPath,
-                ...childView
+                ...childView,
             });
         }
     }
@@ -234,23 +235,23 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             mode: 'side',
             opened: true,
             disableClose: true,
-            width: this._configLeftMenu.width
+            width: this._configLeftMenu.width,
         } : {
             mode: 'over',
             opened: false,
             disableClose: false,
-            width: this._configLeftMenu.width
+            width: this._configLeftMenu.width,
         };
         this._configRightMenu = isLargeScreen ? {
             mode: 'side',
             opened: true,
             disableClose: true,
-            width: this._configRightMenu.width
+            width: this._configRightMenu.width,
         } : {
             mode: 'over',
             opened: false,
             disableClose: false,
-            width: this._configRightMenu.width
+            width: this._configRightMenu.width,
         };
     }
 
@@ -318,20 +319,30 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     }
 
     protected loadRightSide() {
-        this.rightLoading$.on()
-        forkJoin({
-            folders: this._uriService.getChildNodes(this.currentNode),
-            filters: this._uriService.getCasesOfNode(this.currentNode, FILTER_IDENTIFIERS)
-        }).subscribe(result => {
-            this.rightNodes = result.folders instanceof Array ? result.folders : [];
-            this.rightNodes.sort((a, b) => this.compareStrings(a.name, b.name));
-            this.views = (result.filters instanceof Array ? result.filters : []).map(f => this.resolveFilterCaseToViewNavigationItem(f)).filter(i => !!i);
-            if (!!this._childCustomViews[this.currentNode.uriPath]) {
-                this.views.push(...Object.values(this._childCustomViews[this.currentNode.uriPath]))
-            }
-            // @ts-ignore
-            this.views.sort((a, b) => this.compareStrings(a?.navigation?.title, b?.navigation?.title));
-            this.rightLoading$.off();
+        this.rightLoading$.on();
+        this._uriService.getCasesOfNode(this.currentNode, FILTER_IDENTIFIERS, 0, 1).subscribe(page => {
+            this._log.debug('Number of filters for uri ' + this.currentNode.uriPath + ': ' + page?.pagination?.totalElements);
+            forkJoin({
+                folders: this._uriService.getChildNodes(this.currentNode),
+                filters: page?.pagination?.totalElements === 0 ? of([]) : this._uriService.getCasesOfNode(this.currentNode, FILTER_IDENTIFIERS, 0, page.pagination.totalElements).pipe(
+                    map(p => p.content),
+                ),
+            }).subscribe(result => {
+                this.rightNodes = result.folders instanceof Array ? result.folders : [];
+                this.rightNodes.sort((a, b) => this.compareStrings(a.name, b.name));
+                this.views = (result.filters instanceof Array ? result.filters : []).map(f => this.resolveFilterCaseToViewNavigationItem(f)).filter(i => !!i);
+                if (!!this._childCustomViews[this.currentNode.uriPath]) {
+                    this.views.push(...Object.values(this._childCustomViews[this.currentNode.uriPath]));
+                }
+                // @ts-ignore
+                this.views.sort((a, b) => this.compareStrings(a?.navigation?.title, b?.navigation?.title));
+                this.rightLoading$.off();
+            }, error => {
+                this._log.error(error);
+                this.rightNodes = [];
+                this.views = [];
+                this.rightLoading$.off();
+            });
         }, error => {
             this._log.error(error);
             this.rightNodes = [];
@@ -345,16 +356,16 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             access: {},
             navigation: {
                 icon: filter.immediateData.find(f => f.stringId === 'icon_name')?.value || this.filterIcon,
-                title: filter.immediateData.find(f => f.stringId === 'entry_name')?.value?.defaultValue || filter.title
+                title: filter.immediateData.find(f => f.stringId === 'entry_name')?.value?.defaultValue || filter.title,
             },
             routing: {
-                path: this.getFilterRoutingPath(filter)
+                path: this.getFilterRoutingPath(filter),
             },
             id: filter.stringId,
-            resource: filter
+            resource: filter,
         };
         const resolvedRoles = this.resolveAccessRoles(filter);
-        if(!!resolvedRoles) item.access['role'] = resolvedRoles;
+        if (!!resolvedRoles) item.access['role'] = resolvedRoles;
         if (!this._accessService.canAccessView(item, item.routingPath)) return;
         return item;
     }
@@ -367,7 +378,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             const parts = combined.split(':');
             roles.push({
                 processId: parts[1],
-                roleId: parts[0]
+                roleId: parts[0],
             });
         });
         return roles;
