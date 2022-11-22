@@ -72,6 +72,11 @@ describe('ConfigurationService', () => {
                         name: 'dashboard',
                         address: 'http://localhost:8080/api/',
                         format: 'json'
+                    },
+                    {
+                        name: 'impersonation',
+                        address: 'http://localhost:8080/api/',
+                        format: 'json'
                     }
                 ]
             });

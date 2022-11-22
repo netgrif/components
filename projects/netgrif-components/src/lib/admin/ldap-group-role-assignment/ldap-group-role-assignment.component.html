@@ -4,7 +4,7 @@
         <ng-container *ngIf="ldapGroup.ldapGroups$ | async as ldapGroups_">
 
             <mat-toolbar color="primary" class="min-height-72">
-                <span matTooltip="{{ldapGroups_.length}}/{{ldapGroup.totalLdapGroups}}">
+                <span matTooltip="{{ 'admin.ldapGroup-list.count' | translate }}: {{ldapGroups_.length}}">
                     {{'admin.ldapGroup-list.listTitle' | translate}}
                 </span>
                 <div fxFlex="5"></div>
@@ -22,10 +22,10 @@
                 </div>
 
                 <span style="flex: 1 1 auto;"></span>
-                <button mat-icon-button matTooltip="Select All" (click)="selectAllLdapGroup(true)">
+                <button mat-icon-button matTooltip="{{ 'side-menu.tooltip.SelectAll' | translate }}" (click)="selectAllLdapGroup(true)">
                     <mat-icon>done_all</mat-icon>
                 </button>
-                <button mat-icon-button matTooltip="Deselect All" (click)="selectAllLdapGroup(false)">
+                <button mat-icon-button matTooltip="{{ 'side-menu.tooltip.DeselectAll' | translate }}" (click)="selectAllLdapGroup(false)">
                     <mat-icon>clear</mat-icon>
                 </button>
             </mat-toolbar>

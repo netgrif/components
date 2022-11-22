@@ -133,6 +133,10 @@ Also provides some general functionality that is needed when working with task c
                                 <a href="#getInvalidTaskData" >getInvalidTaskData</a>
                             </li>
                             <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#getReferencedFieldTask" >getReferencedFieldTask</a>
+                            </li>
+                            <li>
                                 <a href="#ngOnDestroy" >ngOnDestroy</a>
                             </li>
                             <li>
@@ -488,6 +492,72 @@ Also provides some general functionality that is needed when working with task c
                     <div class="io-description">
                         <p>array of invalid datafields</p>
 
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getReferencedFieldTask"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>getReferencedFieldTask</b></span>
+                        <a href="#getReferencedFieldTask"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getReferencedFieldTask(field)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="338"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/services/task-content.service.ts:338</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>field</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
                     </div>
                 </td>
             </tr>
@@ -1659,6 +1729,10 @@ export abstract class TaskContentService implements OnDestroy {
         }
     }
 
+    public getReferencedFieldTask(field): string {
+        return Object.keys(this.taskFieldsIndex).find(taskId &#x3D;&gt; Object.keys(this.taskFieldsIndex[taskId].fields).includes(field));
+    }
+
     private isFieldInTaskRef(changedField: string): boolean {
         return !!this.taskFieldsIndex &amp;&amp;
             Object.keys(this.taskFieldsIndex)
@@ -1667,8 +1741,7 @@ export abstract class TaskContentService implements OnDestroy {
 
     private getReferencedTransitionId(changedField: string): string {
         if (!!this.taskFieldsIndex) {
-           const taskFieldsIndexId &#x3D; Object.keys(this.taskFieldsIndex).find(taskId &#x3D;&gt;
-                Object.keys(this.taskFieldsIndex[taskId].fields).includes(changedField));
+           const taskFieldsIndexId &#x3D; this.getReferencedFieldTask(changedField);
            return this.taskFieldsIndex[taskFieldsIndexId].transitionId;
         }
         return undefined;

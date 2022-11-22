@@ -18,13 +18,14 @@ import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import {BehaviorSubject, Subscription} from 'rxjs';
 import {ResizedEvent} from 'angular-resize-event';
 import {take} from 'rxjs/operators';
 import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
 import {EventService} from '../../event/services/event.service';
 import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
 import {FileFieldIdBody} from '../models/file-field-id-body';
+import { HttpParams } from '@angular/common/http';
 
 export interface FileState {
     progress: number;
@@ -165,7 +166,8 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 }
             }
         }
-        this.updatedFieldSubscription = this.dataField.updated.subscribe( () => {
+        this.updatedFieldSubscription = this.dataField.updated.subscribe(() => {
+            this.previewSource = undefined;
             if (!!this.filePreview
                 && !!this.dataField.value
                 && !!this.dataField.value.name) {
@@ -233,23 +235,36 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.UPLOAD) {
                     this.state.progress = (response as ProviderProgress).progress;
                 } else {
-                    const changedFieldsMap: ChangedFieldsMap = this._eventService.parseChangedFieldsFromOutcomeTree(response.outcome);
-                    this.dataField.emitChangedFields(changedFieldsMap);
-                    this._log.debug(
-                        `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0).name} was successfully uploaded`
-                    );
                     this.state.completed = true;
-                    this.state.error = false;
                     this.state.uploading = false;
                     this.state.progress = 0;
-                    this.dataField.downloaded = false;
-                    this.dataField.value.name = fileToUpload.name;
-                    if (this.filePreview) {
-                        this.initializePreviewIfDisplayable();
+
+                    if (response.error) {
+                        this.state.error = true;
+                        this._log.error(
+                            `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)} uploading has failed!`, response.error
+                        );
+                        if (response.error) {
+                            this._snackbar.openErrorSnackBar(this._translate.instant(response.error));
+                        } else {
+                            this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.fileUploadFailed'));
+                        }
+                    } else {
+                        const changedFieldsMap: ChangedFieldsMap = this._eventService.parseChangedFieldsFromOutcomeTree(response.outcome);
+                        this.dataField.emitChangedFields(changedFieldsMap);
+                        this._log.debug(
+                            `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0).name} was successfully uploaded`
+                        );
+                        this.state.error = false;
+                        this.dataField.downloaded = false;
+                        this.dataField.value.name = fileToUpload.name;
+                        if (this.filePreview) {
+                            this.initializePreviewIfDisplayable();
+                        }
+                        this.fullSource.next(undefined);
+                        this.fileForDownload = undefined;
+                        this.formControl.setValue(this.dataField.value.name);
                     }
-                    this.fullSource.next(undefined);
-                    this.fileForDownload = undefined;
-                    this.formControl.setValue(this.dataField.value.name);
                     this.dataField.touch = true;
                     this.dataField.update();
                     this.fileUploadEl.nativeElement.value = '';
@@ -262,7 +277,11 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 this._log.error(
                     `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)} uploading has failed!`, error
                 );
-                this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.fileUploadFailed'));
+                if (error?.error?.message) {
+                    this._snackbar.openErrorSnackBar(this._translate.instant(error.error.message));
+                } else {
+                    this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.fileUploadFailed'));
+                }
                 this.dataField.touch = true;
                 this.dataField.update();
                 this.fileUploadEl.nativeElement.value = '';
@@ -336,9 +355,11 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             this._log.error('File cannot be deleted. No task is set to the field.');
             return;
         }
+        let param = new HttpParams();
+        param = param.set("parentTaskId", this.resolveParentTaskId());
 
         this._taskResourceService.deleteFile(this.taskId,
-            this.dataField.stringId).pipe(take(1)).subscribe(response => {
+            this.dataField.stringId, undefined, param).pipe(take(1)).subscribe(response => {
             if (response.success) {
                 const filename = this.dataField.value.name;
                 this.dataField.value = {};
@@ -430,7 +451,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         if (!this.checkFileBeforeDownload()) {
             return;
         }
-        this._taskResourceService.downloadFile(this.taskId, this.dataField.stringId).subscribe(response => {
+        this._taskResourceService.downloadFile(this.resolveParentTaskId(), this.dataField.stringId).subscribe(response => {
             if (!(response as ProviderProgress).type || (response as ProviderProgress).type !== ProgressType.DOWNLOAD) {
                 this._log.debug(`File [${this.dataField.stringId}] ${this.dataField.value.name} was successfully downloaded`);
                 this.initDownloadFile(response);

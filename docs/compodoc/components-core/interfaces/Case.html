@@ -163,6 +163,13 @@
                                         </a>
                                 </li>
                                 <li>
+                                            <span class="modifier">Optional</span>
+                                        <a href="#tasks" 
+>
+                                            tasks
+                                        </a>
+                                </li>
+                                <li>
                                         <a href="#title" 
 >
                                             title
@@ -240,7 +247,7 @@
                             <tr>
                                 <td class="col-md-4">
                                     <div class="io-description"><p><strong>Example:</strong> {</p>
-<p>&quot;email&quot;: &quot;<a href="mailto:&#101;&#120;&#97;&#109;&#112;&#108;&#x65;&#64;&#x6e;&#101;&#116;&#x67;&#x72;&#105;&#102;&#x2e;&#x63;&#111;&#x6d;">&#101;&#120;&#97;&#109;&#112;&#108;&#x65;&#64;&#x6e;&#101;&#116;&#x67;&#x72;&#105;&#102;&#x2e;&#x63;&#111;&#x6d;</a>&quot;,</p>
+<p>&quot;email&quot;: &quot;<a href="mailto:&#x65;&#x78;&#97;&#109;&#x70;&#x6c;&#101;&#x40;&#x6e;&#x65;&#116;&#103;&#114;&#x69;&#102;&#46;&#x63;&#x6f;&#x6d;">&#x65;&#x78;&#97;&#109;&#x70;&#x6c;&#101;&#x40;&#x6e;&#x65;&#116;&#103;&#114;&#x69;&#102;&#46;&#x63;&#x6f;&#x6d;</a>&quot;,</p>
 <p>&quot;fullName&quot;: &quot;Example Netgrif&quot;</p>
 <p>}</p>
 </div>
@@ -726,6 +733,50 @@
                         <tbody>
                                 <tr>
                                     <td class="col-md-4">
+                                        <a name="tasks"></a>
+                                        <span class="name "><b>tasks</b>
+                                            <a href="#tasks">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>tasks:     <code>Array&lt;TaskPair&gt;</code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>    <code>Array&lt;TaskPair&gt;</code>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
+
+
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Set of TaskPair</p>
+</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
                                         <a name="title"></a>
                                         <span class="name "><b>title</b>
                                             <a href="#title">
@@ -936,6 +987,7 @@ import {PetriNetObjectId} from &#x27;./petri-net-object-id&#x27;;
 import {ImmediateData} from &#x27;./immediate-data&#x27;;
 import {NaeDate} from &#x27;../types/nae-date-type&#x27;;
 import {Permissions, UserPermissions, UserRefs} from &#x27;../../process/permissions&#x27;;
+import { TaskPair } from &#x27;./task-pair&#x27;;
 
 /**
  * Object from Backend
@@ -975,6 +1027,11 @@ export interface Case {
      * **Example:** personal_information
      */
     processIdentifier: string;
+
+    /**
+     * Uri node ID
+     * */
+
     /**
      * **Example:** New instance - Personal information
      */
@@ -1055,6 +1112,10 @@ export interface Case {
      * **Example:** []
      */
     viewRoles?: Array&lt;string&gt;;
+    /**
+     * Set of TaskPair
+     * */
+    tasks?: Array&lt;TaskPair&gt;;
 }
 
 

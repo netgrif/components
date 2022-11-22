@@ -37,29 +37,51 @@ export class RoleGuardService implements CanActivate {
     }
 
     public canAccessView(view: View, url: string): boolean {
-        if (typeof view.access !== 'string' && view.access.hasOwnProperty('role')) {
-            const allowedRoles = this.parseRoleConstraints(view.access.role, url);
+        if (typeof view.access !== 'string' && (view.access.hasOwnProperty('role') || view.access.hasOwnProperty('bannedRole'))) {
 
-            return allowedRoles.some(constraint => {
-                if (constraint.roleIdentifier) {
-                    return this._userService.hasRoleByIdentifier(constraint.roleIdentifier, constraint.processIdentifier);
-                } else {
-                    return this._userService.hasRoleByName(constraint.roleName, constraint.processIdentifier);
+            if (view.access.hasOwnProperty('role') && view.access.hasOwnProperty('bannedRole')) {
+                const bannedRoles = this.parseRoleConstraints(view.access.bannedRole, url);
+                const allowedRoles = this.parseRoleConstraints(view.access.role, url);
+
+                if (bannedRoles.some(role => this.decideAccessByRole(role))) {
+                    return false;
                 }
-            });
+
+                if (allowedRoles.length === 0) {
+                    this._log.warn(`View at '${url}' defines role access constraint with an empty array!`
+                        + ` No users will be allowed to enter this view!`);
+                }
+                return allowedRoles.some(role => this.decideAccessByRole(role)); // user was not denied access by a banned role, they need at least one allowed role
+            }
+
+            if (view.access.hasOwnProperty('bannedRole')) {
+                const bannedRoles = this.parseRoleConstraints(view.access.bannedRole, url);
+                return !bannedRoles.some(constraint => {
+                    return this.decideAccessByRole(constraint);
+                });
+            }
+
+            if (view.access.hasOwnProperty('role')) {
+                const allowedRoles = this.parseRoleConstraints(view.access.role, url);
+                if (allowedRoles.length === 0) {
+                    this._log.warn(`View at '${url}' defines role access constraint with an empty array!`
+                        + ` No users will be allowed to enter this view!`);
+                }
+                return allowedRoles.some(constraint => {
+                    return this.decideAccessByRole(constraint);
+                });
+            }
         }
         throw new Error('Role guard is declared for a view with no role guard configuration!'
             + ` Add role guard configuration for view at ${url}, or remove the guard.`);
     }
 
-    protected parseRoleConstraints(roleConstrains: Access['role'], viewUrl: string): Array<RoleConstraint> {
+    protected parseRoleConstraints(roleConstrains: Access['role'] | Access['bannedRole'], viewUrl: string): Array<RoleConstraint> {
         if (typeof roleConstrains === 'string') {
             return this.parseStringRoleConstraints(roleConstrains);
         }
         if (Array.isArray(roleConstrains)) {
             if (roleConstrains.length === 0) {
-                this._log.warn(`View at '${viewUrl}' defines role access constraint with an empty array!`
-                    + ` No users will be allowed to enter this view!`);
                 return [];
             }
             if (typeof roleConstrains[0] === 'string') {
@@ -100,6 +122,14 @@ export class RoleGuardService implements CanActivate {
             }
             return {processIdentifier: constraint.processId, roleIdentifier: constraint.roleId};
         });
+    }
+
+    private decideAccessByRole(constraint: RoleConstraint): boolean {
+        if (constraint.roleIdentifier) {
+            return this._userService.hasRoleByIdentifier(constraint.roleIdentifier, constraint.processIdentifier);
+        } else {
+            return this._userService.hasRoleByName(constraint.roleName, constraint.processIdentifier);
+        }
     }
 
 }

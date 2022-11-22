@@ -141,9 +141,6 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                <a href="#getType" >getType</a>
-                            </li>
-                            <li>
                                     <span class="modifier">Protected</span>
                                 <a href="#resolveFormControlValidators" >resolveFormControlValidators</a>
                             </li>
@@ -170,6 +167,10 @@
                             <li>
                                     <span class="modifier">Public</span>
                                 <a href="#disconnectFormControl" >disconnectFormControl</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#getComponentType" >getComponentType</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
@@ -247,9 +248,6 @@
                                     <a href="#choices" >choices</a>
                                 </li>
                                 <li>
-                                    <a href="#view" >view</a>
-                                </li>
-                                <li>
                                     <a href="#fieldType" >fieldType</a>
                                 </li>
                             </ul>
@@ -265,12 +263,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(stringId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, title: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, value: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, _choices: <a href="../interfaces/EnumerationFieldValue.html" target="_self">Array&lt;EnumerationFieldValue&gt;</a>, behavior: <a href="../interfaces/Behavior.html" target="_self">Behavior</a>, placeholder?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, description?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, layout?: <a href="../interfaces/Layout.html" target="_self">Layout</a>, _view, _fieldType, validations?: <a href="../interfaces/Validation.html" target="_self">Array&lt;Validation&gt;</a>, component?: <a href="../interfaces/Component.html" target="_self">Component</a>, parentTaskId?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+<code>constructor(stringId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, title: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, value: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, _choices: <a href="../interfaces/EnumerationFieldValue.html" target="_self">Array&lt;EnumerationFieldValue&gt;</a>, behavior: <a href="../interfaces/Behavior.html" target="_self">Behavior</a>, placeholder?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, description?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, layout?: <a href="../interfaces/Layout.html" target="_self">Layout</a>, _fieldType, validations?: <a href="../interfaces/Validation.html" target="_self">Array&lt;Validation&gt;</a>, component?: <a href="../interfaces/Component.html" target="_self">Component</a>, parentTaskId?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/enumeration-field/models/enumeration-field.ts:27</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/enumeration-field/models/enumeration-field.ts:19</a></div>
                             </td>
                         </tr>
 
@@ -380,17 +378,6 @@
                                                   
                                                     <td>
                                                             Yes
-                                                    </td>
-                                                    
-                                                </tr>
-                                                <tr>
-                                                        <td>_view</td>
-                                                  
-                                                        <td>
-                                                        </td>
-                                                  
-                                                    <td>
-                                                            No
                                                     </td>
                                                     
                                                 </tr>
@@ -833,43 +820,6 @@ without affecting the base configuration.</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="getType"></a>
-                    <span class="name">
-                        <span ><b>getType</b></span>
-                        <a href="#getType"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-<code>getType()</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="77"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/enumeration-field/models/enumeration-field.ts:77</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
                     <a name="resolveFormControlValidators"></a>
                     <span class="name">
                         <span class="modifier">Protected</span>
@@ -894,7 +844,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:59</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:40</a></code>
 </div>
                 </td>
             </tr>
@@ -939,7 +889,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:421</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:434</a></code>
 </div>
                 </td>
             </tr>
@@ -1022,7 +972,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:486</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:499</a></code>
 </div>
                 </td>
             </tr>
@@ -1109,7 +1059,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:529</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:542</a></code>
 </div>
                 </td>
             </tr>
@@ -1197,7 +1147,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:461</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:474</a></code>
 </div>
                 </td>
             </tr>
@@ -1242,7 +1192,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:326</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:338</a></code>
 </div>
                 </td>
             </tr>
@@ -1287,7 +1237,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:364</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:377</a></code>
 </div>
                 </td>
             </tr>
@@ -1298,6 +1248,59 @@ without affecting the base configuration.</p>
 
                     <div class="io-description">
                         <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getComponentType"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>getComponentType</b></span>
+                        <a href="#getComponentType"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getComponentType()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classess/DataField.html" target="_self" >DataField</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:334</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This function resolve type of component for HTML</p>
+</div>
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>type of component in string</p>
 
                     </div>
                 </td>
@@ -1332,7 +1335,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:546</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:559</a></code>
 </div>
                 </td>
             </tr>
@@ -1408,7 +1411,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:336</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:348</a></code>
 </div>
                 </td>
             </tr>
@@ -1484,7 +1487,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:456</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:469</a></code>
 </div>
                 </td>
             </tr>
@@ -1560,7 +1563,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:553</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:566</a></code>
 </div>
                 </td>
             </tr>
@@ -1607,7 +1610,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:502</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:515</a></code>
 </div>
                 </td>
             </tr>
@@ -1683,7 +1686,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:522</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:535</a></code>
 </div>
                 </td>
             </tr>
@@ -1759,7 +1762,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:465</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:478</a></code>
 </div>
                 </td>
             </tr>
@@ -1804,7 +1807,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:280</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:284</a></code>
 </div>
                 </td>
             </tr>
@@ -1849,7 +1852,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:389</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:402</a></code>
 </div>
                 </td>
             </tr>
@@ -1925,7 +1928,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:310</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:314</a></code>
 </div>
                 </td>
             </tr>
@@ -1970,7 +1973,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:383</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:396</a></code>
 </div>
                 </td>
             </tr>
@@ -2046,7 +2049,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:314</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:318</a></code>
 </div>
                 </td>
             </tr>
@@ -2091,7 +2094,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:476</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:489</a></code>
 </div>
                 </td>
             </tr>
@@ -2269,7 +2272,7 @@ without affecting the base configuration.</p>
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/enumeration-field/models/enumeration-field.ts:41</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/enumeration-field/models/enumeration-field.ts:32</a></div>
                                 </td>
                             </tr>
 
@@ -2280,7 +2283,7 @@ without affecting the base configuration.</p>
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/enumeration-field/models/enumeration-field.ts:37</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/enumeration-field/models/enumeration-field.ts:28</a></div>
                                 </td>
                             </tr>
                     <tr>
@@ -2326,75 +2329,6 @@ without affecting the base configuration.</p>
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="view"></a>
-                        <span class="name"><b>view</b><a href="#view"><span class="icon ion-ios-link"></span></a></span>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="col-md-4">
-                        <span class="accessor"><b>get</b><code>view()</code></span>
-                    </td>
-                </tr>
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/enumeration-field/models/enumeration-field.ts:51</a></div>
-                                </td>
-                            </tr>
-
-                <tr>
-                    <td class="col-md-4">
-                        <span class="accessor"><b>set</b><code>view(view: <a href="../classes/EnumerationField.html" target="_self">EnumerationFieldView</a>)</code></span>
-                    </td>
-                </tr>
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/enumeration-field/models/enumeration-field.ts:46</a></div>
-                                </td>
-                            </tr>
-                    <tr>
-                        <td class="col-md-4">
-
-                                <div class="io-description">
-                                        <b>Parameters :</b>
-                                        <table class="params">
-                                            <thead>
-                                                <tr>
-                                                    <td>Name</td>
-                                                        <td>Type</td>
-                                                    <td>Optional</td>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                    <tr>
-                                                            <td>view</td>
-                                                    
-                                                            <td>
-                                                                            <code><a href="../classes/EnumerationField.html" target="_self" >EnumerationFieldView</a></code>
-                                                            </td>
-                                                    
-                                                        <td>
-                                                                No
-                                                        </td>
-                                                        
-                                                    </tr>
-                                            </tbody>
-                                        </table>
-                                </div>
-                                <div>
-                                </div>
-                                <div class="io-description">
-                                    <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                                </div>
-                        </td>
-                    </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
                         <a name="fieldType"></a>
                         <span class="name"><b>fieldType</b><a href="#fieldType"><span class="icon ion-ios-link"></span></a></span>
                     </td>
@@ -2407,7 +2341,7 @@ without affecting the base configuration.</p>
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/enumeration-field/models/enumeration-field.ts:55</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/enumeration-field/models/enumeration-field.ts:36</a></div>
                                 </td>
                             </tr>
 
@@ -2431,14 +2365,6 @@ export interface EnumerationFieldValue {
     value: string;
 }
 
-/*@deprecated in 4.3.0*/
-export enum EnumerationFieldView {
-    DEFAULT &#x3D; &#x27;default&#x27;,
-    LIST &#x3D; &#x27;list&#x27;,
-    AUTOCOMPLETE &#x3D; &#x27;autocomplete&#x27;,
-    STEPPER &#x3D; &#x27;stepper&#x27;
-}
-
 export enum EnumerationFieldValidation {
     WRONG_VALUE &#x3D; &#x27;wrongValue&#x27;,
     REQUIRED &#x3D; &#x27;required&#x27;
@@ -2448,8 +2374,7 @@ export class EnumerationField extends DataField&lt;string&gt; {
 
     constructor(stringId: string, title: string, value: string,
                 protected _choices: Array&lt;EnumerationFieldValue&gt;, behavior: Behavior, placeholder?: string, description?: string,
-                layout?: Layout, protected _view &#x3D; EnumerationFieldView.DEFAULT,
-                protected readonly _fieldType &#x3D; FieldTypeResource.ENUMERATION,
+                layout?: Layout, protected readonly _fieldType &#x3D; FieldTypeResource.ENUMERATION,
                 validations?: Array&lt;Validation&gt;, component?: Component, parentTaskId?: string) {
         super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId);
     }
@@ -2460,16 +2385,6 @@ export class EnumerationField extends DataField&lt;string&gt; {
 
     get choices(): Array&lt;EnumerationFieldValue&gt; {
         return this._choices;
-    }
-
-    /*@deprecated in 4.3.0*/
-    set view(view: EnumerationFieldView) {
-        this._view &#x3D; view;
-    }
-
-    /*@deprecated in 4.3.0*/
-    get view(): EnumerationFieldView {
-        return this._view;
     }
 
     get fieldType(): FieldTypeResource {
@@ -2492,10 +2407,6 @@ export class EnumerationField extends DataField&lt;string&gt; {
             return null;
         }
         return this._choices.find(choice &#x3D;&gt; choice.key &#x3D;&#x3D;&#x3D; control.value || control.value &#x3D;&#x3D;&#x3D; null) ? null : {wrongValue: true};
-    }
-
-    getType(): string {
-        return !!this.component &amp;&amp; !!this.component.name ? this.component.name : this.view;
     }
 }
 </code></pre>

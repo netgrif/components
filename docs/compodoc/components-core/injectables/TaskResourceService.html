@@ -593,15 +593,15 @@ POST</p>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>deleteFile(taskId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, fieldId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, name?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>deleteFile(taskId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, fieldId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, name?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, param?: <a href="../miscellaneouss/Params.html" target="_self">HttpParams</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="308"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/resources/engine-endpoint/task-resource.service.ts:308</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="312"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/resources/engine-endpoint/task-resource.service.ts:312</a></div>
                 </td>
             </tr>
 
@@ -659,6 +659,18 @@ DELETE</p>
 
 
                                 </tr>
+                                <tr>
+                                    <td>param</td>
+                                    <td>
+                                                <code><a href="../miscellaneous/typealiases.html#Params" target="_self" >HttpParams</a></code>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -697,8 +709,8 @@ DELETE</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="263"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/resources/engine-endpoint/task-resource.service.ts:263</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="267"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/resources/engine-endpoint/task-resource.service.ts:267</a></div>
                 </td>
             </tr>
 
@@ -794,8 +806,8 @@ GET</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="320"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/resources/engine-endpoint/task-resource.service.ts:320</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="324"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/resources/engine-endpoint/task-resource.service.ts:324</a></div>
                 </td>
             </tr>
 
@@ -1572,8 +1584,8 @@ POST</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="251"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/resources/engine-endpoint/task-resource.service.ts:251</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="255"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/resources/engine-endpoint/task-resource.service.ts:255</a></div>
                 </td>
             </tr>
 
@@ -1657,8 +1669,8 @@ POST</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="286"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/resources/engine-endpoint/task-resource.service.ts:286</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="290"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/resources/engine-endpoint/task-resource.service.ts:290</a></div>
                 </td>
             </tr>
 
@@ -2069,7 +2081,7 @@ import {Task} from &#x27;../interface/task&#x27;;
 import {CountService} from &#x27;../abstract-endpoint/count-service&#x27;;
 import {Filter} from &#x27;../../filter/models/filter&#x27;;
 import {FilterType} from &#x27;../../filter/models/filter-type&#x27;;
-import {HttpEventType} from &#x27;@angular/common/http&#x27;;
+import { HttpEventType, HttpParams } from &#x27;@angular/common/http&#x27;;
 import {Page} from &#x27;../interface/page&#x27;;
 import {FieldConverterService} from &#x27;../../task-content/services/field-converter.service&#x27;;
 import {TaskSetDataRequestBody} from &#x27;../interface/task-set-data-request-body&#x27;;
@@ -2263,6 +2275,10 @@ export class TaskResourceService extends AbstractResourceService implements Coun
     public getData(taskId: string): Observable&lt;Array&lt;DataGroup&gt;&gt; {
         return this.rawGetData(taskId).pipe(
             map((responseOutcome: EventOutcomeMessageResource) &#x3D;&gt; {
+                if (responseOutcome.error) {
+                    throw new Error(responseOutcome.error);
+                }
+
                 const dataGroupsArray &#x3D; this.changeType((responseOutcome.outcome as GetDataGroupsEventOutcome).data, &#x27;dataGroups&#x27;);
                 if (!Array.isArray(dataGroupsArray)) {
                     return [];
@@ -2364,9 +2380,9 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      * Delete file from the task
      * DELETE
      */
-    public deleteFile(taskId: string, fieldId: string, name?: string): Observable&lt;MessageResource&gt; {
+    public deleteFile(taskId: string, fieldId: string, name?: string, param?: HttpParams): Observable&lt;MessageResource&gt; {
         const url &#x3D; !!name ? &#x27;task/&#x27; + taskId + &#x27;/file/&#x27; + fieldId + &#x27;/&#x27; + name : &#x27;task/&#x27; + taskId + &#x27;/file/&#x27; + fieldId;
-        return this._resourceProvider.delete$(url, this.SERVER_URL).pipe(
+        return this._resourceProvider.delete$(url, this.SERVER_URL, param).pipe(
             map(r &#x3D;&gt; this.changeType(r, undefined))
         );
     }

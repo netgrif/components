@@ -8,6 +8,7 @@ import {
     OnInit,
     Optional,
     Output,
+    TemplateRef,
     Type
 } from '@angular/core';
 import {MatExpansionPanel} from '@angular/material/expansion';
@@ -44,6 +45,9 @@ import {CurrencyPipe} from '@angular/common';
 import {PermissionService} from '../../authorization/permission/permission.service';
 import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
 import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
+import { TaskPanelContext } from './models/task-panel-context';
+import {OverflowService} from '../../header/services/overflow.service';
+import { FinishPolicyService } from '../../task/services/finish-policy.service';
 
 @Component({
     selector: 'ncc-abstract-legal-notice',
@@ -62,6 +66,32 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
     @Input() public first: boolean;
     @Input() public last: boolean;
     @Input() responsiveBody = true;
+    @Input() preventCollapse = false;
+    @Input() hidePanelHeader = false;
+    @Input() actionButtonTemplates: Array<TemplateRef<any>>;
+    @Input() actionRowJustifyContent: 'space-between' | 'flex-start' | 'flex-end' | 'center' | 'space-around' |
+        'initial' | 'start' | 'end' | 'left' | 'right' | 'revert' | 'inherit' | 'unset'
+
+    thisContext: TaskPanelContext = {
+        canAssign: () => this.canAssign(),
+        assign: () => this.assign(),
+        getAssignTitle: () => this.getAssignTitle(),
+        delegate: () => this.delegate(),
+        getDelegateTitle: () => this.getDelegateTitle(),
+        canReassign: () => this.canReassign(),
+        canCancel: () => this.canCancel(),
+        cancel: () => this.cancel(),
+        getCancelTitle: () => this.getCancelTitle(),
+        canFinish: () => this.canFinish(),
+        finish: () => this.finish(),
+        getFinishTitle: () => this.getFinishTitle(),
+        canCollapse: () => this.canCollapse(),
+        collapse: () => this.collapse(),
+        canDisable: (arg: string) => this.canDisable(arg),
+        canDo: (arg: string) => this.canDo(arg),
+        isLoading: () => this.isLoading
+    };
+
 
     @Input()
     set forceLoadDataOnOpen(force: boolean) {
@@ -96,14 +126,16 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
                           protected _taskState: TaskRequestStateService,
                           protected _taskDataService: TaskDataService,
                           protected _assignPolicyService: AssignPolicyService,
+                          protected _finishPolicyService: FinishPolicyService,
                           protected _callChain: CallChainService,
                           protected _taskOperations: SubjectTaskOperations,
                           @Optional() @Inject(NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS) protected _disableFunctions: DisableButtonFuntions,
                           protected _translate: TranslateService,
                           protected _currencyPipe: CurrencyPipe,
                           protected _changedFieldsService: ChangedFieldsService,
-                          protected _permissionService: PermissionService) {
-        super(_translate, _currencyPipe);
+                          protected _permissionService: PermissionService,
+                          @Optional() overflowService: OverflowService) {
+        super(_translate, _currencyPipe, overflowService);
         this.taskEvent = new EventEmitter<TaskEventNotification>();
         this.panelRefOutput = new EventEmitter<MatExpansionPanel>();
         this._subTaskEvent = _taskEventService.taskEventNotifications$.subscribe(event => {
@@ -229,6 +261,7 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
         this._assignTaskService.assign(this._callChain.create((afterAction => {
             if (afterAction) {
                 this._taskDataService.initializeTaskDataFields();
+                this._finishPolicyService.performFinishPolicy();
             }
         })));
     }

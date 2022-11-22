@@ -24,12 +24,16 @@ import {PetriNetReference} from '../../resources/interface/petri-net-reference';
 import {RouterTestingModule} from '@angular/router/testing';
 import {WorkflowViewService} from '../../view/workflow-view/workflow-view.service';
 import {take} from 'rxjs/operators';
+import {PetriNetResourceService} from '../../resources/engine-endpoint/petri-net-resource.service';
+import { MockPetrinetResourceService } from '../../utility/tests/mocks/mock-petrinet-resource.service';
+import { OverflowService } from '../../header/services/overflow.service';
 
 describe('AbstractWorkflowPanelComponent', () => {
     let component: TestWorkflowPanelComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
     let oldTitle: string;
     let translate: TranslateService;
+    let downloadSpy: jasmine.Spy;
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
@@ -47,7 +51,9 @@ describe('AbstractWorkflowPanelComponent', () => {
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                WorkflowViewService
+                WorkflowViewService,
+                OverflowService,
+                {provide: PetriNetResourceService, useClass: MockPetrinetResourceService},
             ],
             declarations: [TestWorkflowPanelComponent, TestWrapperComponent],
             schemas: [NO_ERRORS_SCHEMA],
@@ -56,6 +62,7 @@ describe('AbstractWorkflowPanelComponent', () => {
         component = fixture.debugElement.children[0].componentInstance;
         fixture.detectChanges();
         translate = TestBed.inject(TranslateService);
+        downloadSpy = spyOn(component, 'downloadViaAnchor');
     }));
 
     it('should create', () => {
@@ -80,6 +87,11 @@ describe('AbstractWorkflowPanelComponent', () => {
         translate.use('sk-SK');
     });
 
+    it('should download', () => {
+        component.downloadViaAnchor(new Blob([]));
+        expect(downloadSpy).toHaveBeenCalled();
+    });
+
     afterEach(() => {
         TestBed.resetTestingModule();
     });
@@ -90,8 +102,13 @@ describe('AbstractWorkflowPanelComponent', () => {
     template: ''
 })
 class TestWorkflowPanelComponent extends AbstractWorkflowPanelComponent {
-    constructor(log: LoggerService, translate: TranslateService, workflowService: WorkflowViewService) {
-        super(log, translate, workflowService);
+
+      constructor(log: LoggerService,
+                  translate: TranslateService,
+                  workflowService: WorkflowViewService,
+                  petriNetResource: PetriNetResourceService,
+                  overflowService: OverflowService) {
+        super(log, translate, workflowService, petriNetResource, overflowService);
     }
 }
 

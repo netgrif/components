@@ -48,6 +48,11 @@
                 "name": "filter",
                 "address": "http://localhost:8080/api/",
                 "format": "json"
+            },
+            {
+                "name": "impersonation",
+                "address": "http://localhost:8080/api/",
+                "format": "json"
             }
         ]
     },
@@ -164,6 +169,17 @@
                 "path": "recover/:token"
             }
         },
+        "demo-impersonation": {
+            "component": {
+                "class": "ImpersonationDemoComponent",
+                "from": "./doc/impersonation-demo/impersonation-demo.component"
+            },
+            "access": "private",
+            "navigation": true,
+            "routing": {
+                "path": "impersonation-view"
+            }
+        },
         "demo-drawer": {
             "component": {
                 "class": "DrawerExampleComponent",
@@ -216,7 +232,9 @@
                         "from": "./doc/workflow-view-example/workflow-view-example.component"
                     },
                     "access": {
-                        "authority": ["ROLE_ADMIN"]
+                        "authority": [
+                            "ROLE_ADMIN"
+                        ]
                     },
                     "navigation": {
                         "title": "Workflow view",
@@ -240,6 +258,17 @@
                     },
                     "routing": {
                         "path": "active-group"
+                    }
+                },
+                "demo-breadcrumbs": {
+                    "component": {
+                        "class": "BreadcrumbsExampleComponent",
+                        "from": "./doc/breadcrumbs-example/breadcrumbs-example.component"
+                    },
+                    "access": "private",
+                    "navigation": true,
+                    "routing": {
+                        "path": "breadcrumbs"
                     }
                 }
             }
@@ -518,13 +547,20 @@
                 "path": "tree-view"
             }
         },
-        "demo-public-view": {
-            "layout": {
-                "name": "publicTaskView",
-                "params": {
-                    "allowedNets": []
-                }
+        "demo-single-public-task": {
+            "component": {
+                "class": "PublicSingleTaskViewComponent",
+                "from": "./doc/public-single-task-view/public-single-task-view.component"
             },
+            "access": "public",
+            "navigation": {
+                "title": "Public view - transition"
+            },
+            "routing": {
+                "path": "process/:petriNetId/:caseId/:transitionId"
+            }
+        },
+        "demo-public-view": {
             "component": {
                 "class": "PublicTaskViewComponent",
                 "from": "./doc/public-task-view/public-task-view.component"
@@ -538,12 +574,6 @@
             }
         },
         "demo-public-view-case": {
-            "layout": {
-                "name": "publicTaskView",
-                "params": {
-                    "allowedNets": []
-                }
-            },
             "component": {
                 "class": "PublicTaskViewComponent",
                 "from": "./doc/public-task-view/public-task-view.component"
@@ -557,12 +587,6 @@
             }
         },
         "demo-public-view-workflow": {
-            "layout": {
-                "name": "publicWorkflowView",
-                "params": {
-                    "allowedNets": []
-                }
-            },
             "component": {
                 "class": "PublicWorkflowViewComponent",
                 "from": "./doc/public-workflow-view/public-workflow-view.component"
@@ -576,12 +600,6 @@
             }
         },
         "demo-public-view-resolver": {
-            "layout": {
-                "name": "publicResolverView",
-                "params": {
-                    "allowedNets": []
-                }
-            },
             "component": {
                 "class": "PublicResolverComponent",
                 "from": "./doc/public-resolver/public-resolver.component"
@@ -980,8 +998,7 @@
                     "tabs": [
                         {
                             "view": {
-                                "name": "caseView",
-                                "componentName": "TabbedCaseView"
+                                "name": "caseView"
                             },
                             "canBeClosed": false,
                             "label": {

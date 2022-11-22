@@ -14,7 +14,10 @@ import {
     HeaderColumn,
     HeaderColumnType,
     MaterialModule,
-    NAE_BASE_FILTER, TestCaseBaseFilterProvider, TestCaseViewAllowedNetsFactory,
+    NAE_BASE_FILTER,
+    OverflowService,
+    TestCaseBaseFilterProvider,
+    TestCaseViewAllowedNetsFactory,
     TranslateLibModule
 } from '@netgrif/components-core';
 import {
@@ -25,6 +28,7 @@ import {
     AuthenticationMethodService,
     MockAuthenticationMethodService
 } from '@netgrif/components-core';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('CasePanelComponent', () => {
     let component: CasePanelComponent;
@@ -40,12 +44,14 @@ describe('CasePanelComponent', () => {
                 DataFieldsComponentModule,
                 TranslateLibModule,
                 HttpClientTestingModule,
-                CurrencyModule
+                CurrencyModule,
+                RouterTestingModule.withRoutes([])
             ],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 CaseViewService,
                 SearchService,
+                OverflowService,
                 {
                     provide: NAE_BASE_FILTER,
                     useFactory: TestCaseBaseFilterProvider

@@ -164,7 +164,7 @@ export abstract class DataField<T> {
         this._placeholder = placeholder;
     }
 
-    get placeholder(): string {
+    get placeholder(): string | undefined {
         return this._placeholder;
     }
 
@@ -273,6 +273,10 @@ export abstract class DataField<T> {
         this._touch.next(set);
     }
 
+    get touch$(): Observable<boolean> {
+        return this._touch.asObservable();
+    }
+
     get component(): Component {
         return this._component;
     }
@@ -323,6 +327,14 @@ export abstract class DataField<T> {
         return this._reverting;
     }
 
+    /**
+     * This function resolve type of component for HTML
+     * @returns type of component in string
+     */
+    public getComponentType(): string {
+        return this.component?.name ?? '';
+    }
+
     public destroy(): void {
         this._value.complete();
         this._previousValue.complete();
@@ -353,6 +365,7 @@ export abstract class DataField<T> {
         ).subscribe(newValue => {
             this._valid = this._determineFormControlValidity(formControl);
             formControl.setValue(newValue);
+            this.update();
         });
 
         this.updateFormControlState(formControl);

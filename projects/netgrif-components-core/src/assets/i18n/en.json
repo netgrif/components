@@ -50,6 +50,9 @@
             "cancel": "Cancel",
             "noData": "This task has no data. Finish to continue.",
             "redirecting": "Redirecting..."
+        },
+        "footer": {
+            "defaultText": "NETGRIF, s.r.o. © 2022"
         }
     },
     "side-menu": {
@@ -84,7 +87,8 @@
             "errThird": "Color is required.",
             "noNets": "No allowed Nets",
             "createCase": "Successful create new case",
-            "defaultCaseName": "with default case name"
+            "defaultCaseName": "with default case name",
+            "createCaseError": "A new case was created, but an error occurred while executing actions"
         },
         "user": {
             "assign": "User Assign",
@@ -98,9 +102,19 @@
             "noUser": "Not found Ldap group",
             "err": "Failed to load Ldap group"
         },
+        "tooltip": {
+            "SelectAll": "Select All",
+            "DeselectAll": "Deselect All"
+        },
         "option-selector": {
             "select": "Select",
             "choose-one-option": "Choose one of the provided options"
+        },
+        "impersonation": {
+            "title": "Impersonate user",
+            "submit": "Impersonate",
+            "cease": "Cancel impersonation",
+            "impersonating": "impersonating"
         }
     },
     "search": {
@@ -267,6 +281,9 @@
         },
         "user": {
             "selectUser": "Select user"
+        },
+        "textarea": {
+            "insertText": "Insert text here..."
         }
     },
     "dialog": {
@@ -280,6 +297,7 @@
         "login": {
             "length": "The login name must have at least 4 letters",
             "login": "Username",
+            "wrongCredentials": "Wrong credentials!",
             "loginButton": "Log in",
             "reset": "Reset password",
             "sign": "Sign Up",
@@ -375,7 +393,9 @@
         },
         "ldapGroup-list": {
             "noLdapGroupsWereFound": "No LDAP group was found",
-            "listTitle": "Ldap Groups"
+            "listTitle": "LDAP groups",
+            "count": "Number of groups"
+
         },
         "process-list": {
             "newestVersion": "Newest version",
@@ -416,6 +436,7 @@
     },
     "workflow": {
         "delete": "delete",
+        "download": "download",
         "dialog": {
             "header": "Are you sure you want to delete the process '{{name}}' with version '{{version}}'?",
             "content": "Doing so will remove all cases created from this process!",
@@ -444,5 +465,16 @@
     },
     "dynamicNavigation": {
         "couldNotResolveView": "An error has occurred during the view resolution process. The view could not be displayed"
+    },
+    "impersonation": {
+        "user": {
+            "successfullyRepresented": "User successfully represented",
+            "currentlyAlreadyRepresented": "User is already being represented by someone else",
+            "currentlyLogged": "User is currently logged in"
+        },
+        "action": {
+            "failed": "Action failed",
+            "deactivated": "Representation was successfully deactivated"
+        }
     }
 }

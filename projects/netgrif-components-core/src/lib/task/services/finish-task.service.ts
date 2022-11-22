@@ -23,6 +23,7 @@ import {AfterAction} from '../../utility/call-chain/after-action';
 import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
 import {EventService} from '../../event/services/event.service';
 import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
+import {TaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/task-event-outcome';
 
 
 /**
@@ -139,7 +140,7 @@ export class FinishTaskService extends TaskHandlingService {
                     this._changedFieldsService.emitChangedFields(changedFieldsMap);
                 }
                 this._taskOperations.reload();
-                this.completeActions(afterAction, nextEvent, true);
+                this.completeActions(afterAction, nextEvent, true, outcomeResource.outcome as FinishTaskEventOutcome);
                 this._taskOperations.close();
                 this._snackBar.openSuccessSnackBar(outcomeResource.outcome.message === undefined
                     ? this._translate.instant('tasks.snackbar.finishTaskSuccess')
@@ -173,8 +174,8 @@ export class FinishTaskService extends TaskHandlingService {
     /**
      * Completes all the action streams and sends the notification, with the provided result
      */
-    protected completeActions(afterAction: AfterAction, nextEvent: AfterAction, result: boolean) {
-        this.sendNotification(result);
+    protected completeActions(afterAction: AfterAction, nextEvent: AfterAction, result: boolean, outcome?: TaskEventOutcome) {
+        this.sendNotification(result, outcome);
         afterAction.resolve(result);
         nextEvent.resolve(result);
     }
@@ -182,9 +183,10 @@ export class FinishTaskService extends TaskHandlingService {
     /**
      * Publishes a finish notification to the {@link TaskEventService}
      * @param success whether the finish operation was successful or not
+     * @param outcome TaskEventOutcome
      */
-    protected sendNotification(success: boolean): void {
-        this._taskEvent.publishTaskEvent(createTaskEventNotification(this._safeTask, TaskEvent.FINISH, success));
+    protected sendNotification(success: boolean, outcome?: TaskEventOutcome): void {
+        this._taskEvent.publishTaskEvent(createTaskEventNotification(this._safeTask, TaskEvent.FINISH, success, outcome));
     }
 
     /**

@@ -385,8 +385,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="92"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/authorization/role/role-guard.service.ts:92</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="114"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/authorization/role/role-guard.service.ts:114</a></div>
                 </td>
             </tr>
 
@@ -448,15 +448,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>parseRoleConstraints(roleConstrains, viewUrl: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>parseRoleConstraints(roleConstrains:  | , viewUrl: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="55"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/authorization/role/role-guard.service.ts:55</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="79"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/authorization/role/role-guard.service.ts:79</a></div>
                 </td>
             </tr>
 
@@ -478,6 +478,7 @@
                                 <tr>
                                     <td>roleConstrains</td>
                                     <td>
+                                            <code> | </code>
                                     </td>
 
                                     <td>
@@ -541,8 +542,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="75"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/authorization/role/role-guard.service.ts:75</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="97"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/authorization/role/role-guard.service.ts:97</a></div>
                 </td>
             </tr>
 
@@ -633,29 +634,51 @@ export class RoleGuardService implements CanActivate {
     }
 
     public canAccessView(view: View, url: string): boolean {
-        if (typeof view.access !&#x3D;&#x3D; &#x27;string&#x27; &amp;&amp; view.access.hasOwnProperty(&#x27;role&#x27;)) {
-            const allowedRoles &#x3D; this.parseRoleConstraints(view.access.role, url);
+        if (typeof view.access !&#x3D;&#x3D; &#x27;string&#x27; &amp;&amp; (view.access.hasOwnProperty(&#x27;role&#x27;) || view.access.hasOwnProperty(&#x27;bannedRole&#x27;))) {
 
-            return allowedRoles.some(constraint &#x3D;&gt; {
-                if (constraint.roleIdentifier) {
-                    return this._userService.hasRoleByIdentifier(constraint.roleIdentifier, constraint.processIdentifier);
-                } else {
-                    return this._userService.hasRoleByName(constraint.roleName, constraint.processIdentifier);
+            if (view.access.hasOwnProperty(&#x27;role&#x27;) &amp;&amp; view.access.hasOwnProperty(&#x27;bannedRole&#x27;)) {
+                const bannedRoles &#x3D; this.parseRoleConstraints(view.access.bannedRole, url);
+                const allowedRoles &#x3D; this.parseRoleConstraints(view.access.role, url);
+
+                if (bannedRoles.some(role &#x3D;&gt; this.decideAccessByRole(role))) {
+                    return false;
                 }
-            });
+
+                if (allowedRoles.length &#x3D;&#x3D;&#x3D; 0) {
+                    this._log.warn(&#x60;View at &#x27;${url}&#x27; defines role access constraint with an empty array!&#x60;
+                        + &#x60; No users will be allowed to enter this view!&#x60;);
+                }
+                return allowedRoles.some(role &#x3D;&gt; this.decideAccessByRole(role)); // user was not denied access by a banned role, they need at least one allowed role
+            }
+
+            if (view.access.hasOwnProperty(&#x27;bannedRole&#x27;)) {
+                const bannedRoles &#x3D; this.parseRoleConstraints(view.access.bannedRole, url);
+                return !bannedRoles.some(constraint &#x3D;&gt; {
+                    return this.decideAccessByRole(constraint);
+                });
+            }
+
+            if (view.access.hasOwnProperty(&#x27;role&#x27;)) {
+                const allowedRoles &#x3D; this.parseRoleConstraints(view.access.role, url);
+                if (allowedRoles.length &#x3D;&#x3D;&#x3D; 0) {
+                    this._log.warn(&#x60;View at &#x27;${url}&#x27; defines role access constraint with an empty array!&#x60;
+                        + &#x60; No users will be allowed to enter this view!&#x60;);
+                }
+                return allowedRoles.some(constraint &#x3D;&gt; {
+                    return this.decideAccessByRole(constraint);
+                });
+            }
         }
         throw new Error(&#x27;Role guard is declared for a view with no role guard configuration!&#x27;
             + &#x60; Add role guard configuration for view at ${url}, or remove the guard.&#x60;);
     }
 
-    protected parseRoleConstraints(roleConstrains: Access[&#x27;role&#x27;], viewUrl: string): Array&lt;RoleConstraint&gt; {
+    protected parseRoleConstraints(roleConstrains: Access[&#x27;role&#x27;] | Access[&#x27;bannedRole&#x27;], viewUrl: string): Array&lt;RoleConstraint&gt; {
         if (typeof roleConstrains &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
             return this.parseStringRoleConstraints(roleConstrains);
         }
         if (Array.isArray(roleConstrains)) {
             if (roleConstrains.length &#x3D;&#x3D;&#x3D; 0) {
-                this._log.warn(&#x60;View at &#x27;${viewUrl}&#x27; defines role access constraint with an empty array!&#x60;
-                    + &#x60; No users will be allowed to enter this view!&#x60;);
                 return [];
             }
             if (typeof roleConstrains[0] &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
@@ -696,6 +719,14 @@ export class RoleGuardService implements CanActivate {
             }
             return {processIdentifier: constraint.processId, roleIdentifier: constraint.roleId};
         });
+    }
+
+    private decideAccessByRole(constraint: RoleConstraint): boolean {
+        if (constraint.roleIdentifier) {
+            return this._userService.hasRoleByIdentifier(constraint.roleIdentifier, constraint.processIdentifier);
+        } else {
+            return this._userService.hasRoleByName(constraint.roleName, constraint.processIdentifier);
+        }
     }
 
 }

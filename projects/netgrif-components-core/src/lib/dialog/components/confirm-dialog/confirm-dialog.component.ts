@@ -1,5 +1,5 @@
 import {Component, Inject} from '@angular/core';
-import {AbstractDialog} from '../../models/abstract-dialog';
+import {AbstractDialogComponent} from '../../models/abstract-dialog.component';
 import {DialogResult} from '../../models/DialogResult';
 import {DialogData} from '../../models/DialogData';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
@@ -7,14 +7,14 @@ import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 
 /**
  * Question modal dialog with its own layout (which asks the user a question with two answers - yes or no)
- * based on a material design that injected data and inherits from an [AbstractDialog]{@link AbstractDialog}.
+ * based on a material design that injected data and inherits from an [AbstractDialog]{@link AbstractDialogComponent}.
  */
 @Component({
     selector: 'ncc-question-dialog',
     templateUrl: './confirm-dialog.component.html',
     styleUrls: ['./confirm-dialog.component.scss']
 })
-export class ConfirmDialogComponent extends AbstractDialog<ConfirmDialogComponent> {
+export class ConfirmDialogComponent extends AbstractDialogComponent<ConfirmDialogComponent> {
 
     public choice: boolean;
     public parsedContent: SafeHtml;

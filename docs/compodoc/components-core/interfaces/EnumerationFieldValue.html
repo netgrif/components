@@ -189,14 +189,6 @@ export interface EnumerationFieldValue {
     value: string;
 }
 
-/*@deprecated in 4.3.0*/
-export enum EnumerationFieldView {
-    DEFAULT &#x3D; &#x27;default&#x27;,
-    LIST &#x3D; &#x27;list&#x27;,
-    AUTOCOMPLETE &#x3D; &#x27;autocomplete&#x27;,
-    STEPPER &#x3D; &#x27;stepper&#x27;
-}
-
 export enum EnumerationFieldValidation {
     WRONG_VALUE &#x3D; &#x27;wrongValue&#x27;,
     REQUIRED &#x3D; &#x27;required&#x27;
@@ -206,8 +198,7 @@ export class EnumerationField extends DataField&lt;string&gt; {
 
     constructor(stringId: string, title: string, value: string,
                 protected _choices: Array&lt;EnumerationFieldValue&gt;, behavior: Behavior, placeholder?: string, description?: string,
-                layout?: Layout, protected _view &#x3D; EnumerationFieldView.DEFAULT,
-                protected readonly _fieldType &#x3D; FieldTypeResource.ENUMERATION,
+                layout?: Layout, protected readonly _fieldType &#x3D; FieldTypeResource.ENUMERATION,
                 validations?: Array&lt;Validation&gt;, component?: Component, parentTaskId?: string) {
         super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId);
     }
@@ -218,16 +209,6 @@ export class EnumerationField extends DataField&lt;string&gt; {
 
     get choices(): Array&lt;EnumerationFieldValue&gt; {
         return this._choices;
-    }
-
-    /*@deprecated in 4.3.0*/
-    set view(view: EnumerationFieldView) {
-        this._view &#x3D; view;
-    }
-
-    /*@deprecated in 4.3.0*/
-    get view(): EnumerationFieldView {
-        return this._view;
     }
 
     get fieldType(): FieldTypeResource {
@@ -250,10 +231,6 @@ export class EnumerationField extends DataField&lt;string&gt; {
             return null;
         }
         return this._choices.find(choice &#x3D;&gt; choice.key &#x3D;&#x3D;&#x3D; control.value || control.value &#x3D;&#x3D;&#x3D; null) ? null : {wrongValue: true};
-    }
-
-    getType(): string {
-        return !!this.component &amp;&amp; !!this.component.name ? this.component.name : this.view;
     }
 }
 </code></pre>

@@ -60,6 +60,7 @@ import {FinishTaskEventOutcome} from '../../event/model/event-outcomes/task-outc
 import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
 import {createMockCase} from '../../utility/tests/utility/create-mock-case';
 import {createMockNet} from '../../utility/tests/utility/create-mock-net';
+import { OverflowService } from '../../header/services/overflow.service';
 
 describe('AbtsractTaskPanelComponent', () => {
     let component: TestTaskPanelComponent;
@@ -68,7 +69,8 @@ describe('AbtsractTaskPanelComponent', () => {
 
     beforeEach(waitForAsync(() => {
         const mockAssignPolicyService = {
-            performAssignPolicy: () => {}
+            performAssignPolicy: () => {
+            }
         };
 
         TestBed.configureTestingModule({
@@ -108,8 +110,13 @@ describe('AbtsractTaskPanelComponent', () => {
                 DataFocusPolicyService,
                 AssignPolicyService,
                 FinishPolicyService,
+                OverflowService,
                 {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
-                {provide: AllowedNetsService, useFactory: TestTaskViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
+                {
+                    provide: AllowedNetsService,
+                    useFactory: TestTaskViewAllowedNetsFactory,
+                    deps: [AllowedNetsServiceFactory]
+                }
             ],
             declarations: [
                 TestTaskPanelComponent,
@@ -195,17 +202,19 @@ class TestTaskPanelComponent extends AbstractTaskPanelComponent implements After
                 protected _taskState: TaskRequestStateService,
                 protected _taskDataService: TaskDataService,
                 protected _assignPolicyService: AssignPolicyService,
+                protected _finishPolicyService: FinishPolicyService,
                 protected _callChain: CallChainService,
                 protected _translate: TranslateService,
                 @Inject(NAE_TASK_OPERATIONS) _taskOperations: SubjectTaskOperations,
                 parentInjector: Injector,
                 protected _currencyPipe: CurrencyPipe,
                 protected _changedFieldsService: ChangedFieldsService,
-                protected _permissionService: PermissionService) {
+                protected _permissionService: PermissionService,
+                protected _overflowService: OverflowService) {
         super(_taskContentService, _log, _taskViewService, _paperView, _taskEventService, _assignTaskService,
             _delegateTaskService, _cancelTaskService, _finishTaskService, _taskState, _taskDataService,
-            _assignPolicyService, _callChain, _taskOperations, undefined, _translate, _currencyPipe, _changedFieldsService,
-            _permissionService);
+            _assignPolicyService, _finishPolicyService, _callChain, _taskOperations, undefined, _translate, _currencyPipe, _changedFieldsService,
+            _permissionService, _overflowService);
     }
 
     ngAfterViewInit() {
@@ -359,9 +368,9 @@ class MyTaskResources {
                 } as FinishTaskEventOutcome
             });
         } else if (stringId === 'false') {
-            return of({error: 'error', changedFields: { changedFields: [] }});
+            return of({error: 'error', changedFields: {changedFields: []}});
         } else if (stringId === 'error') {
-            return of({error: 'error', changedFields: { changedFields: [] }}).pipe(map(res => {
+            return of({error: 'error', changedFields: {changedFields: []}}).pipe(map(res => {
                 throw throwError(res);
             }));
         }

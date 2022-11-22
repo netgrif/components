@@ -36,7 +36,7 @@ const baseFilterFactory = () => {
         CategoryFactory,
         SearchService,
         TaskViewService,
-        ChangedFieldsService
+        ChangedFieldsService,
         {   provide: NAE_BASE_FILTER,
             useFactory: baseFilterFactory},
         {   provide: AllowedNetsService,

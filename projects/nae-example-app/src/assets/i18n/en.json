@@ -13,5 +13,8 @@
     "translateNavTest": "one",
     "translateNav": {
         "Test": "one-one"
+    },
+    "singleTask": {
+        "finishButtonTitle": "Save and finish"
     }
 }

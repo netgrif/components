@@ -10,6 +10,7 @@ import {
     NewCaseCreationConfigurationData
 } from '../../side-menu/content-components/new-case/model/new-case-injection-data';
 import {Component, Inject, Optional, OnDestroy} from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'ncc-abstract-case-view',
@@ -31,8 +32,9 @@ export abstract class AbstractCaseViewComponent extends AbstractViewWithHeadersC
                           @Optional() @Inject(NAE_NEW_CASE_CREATION_CONFIGURATION_DATA) protected _newCaseCreationConfig: NewCaseCreationConfigurationData = {
                               enableCaseTitle: true,
                               isCaseTitleRequired: true
-                          }) {
-        super(_caseViewService);
+                          },
+                          protected _activatedRoute?: ActivatedRoute) {
+        super(_caseViewService, _activatedRoute);
         this._caseViewService.loading$.subscribe(loading => {
             this.loading = loading;
         });
@@ -43,12 +45,8 @@ export abstract class AbstractCaseViewComponent extends AbstractViewWithHeadersC
         this.authorityToCreate = _authority.map(a => a.authority);
     }
 
-    public createNewCase(): Observable<Case> {
-        if (this._newCaseCreationConfig.enableCaseTitle === false && this._caseViewService.getAllowedNetsCount() === 1) {
-            return this._caseViewService.createDefaultNewCase();
-        } else {
-            return this._caseViewService.createNewCase(this._newCaseCreationConfig);
-        }
+    get newCaseCreationConfig(): NewCaseCreationConfigurationData {
+        return this._newCaseCreationConfig;
     }
 
     public abstract handleCaseClick(clickedCase: Case): void;

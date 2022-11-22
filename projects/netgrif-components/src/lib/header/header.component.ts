@@ -24,9 +24,9 @@ import {TranslateService} from '@ngx-translate/core';
 })
 export class HeaderComponent extends AbstractHeaderComponent {
 
-    constructor(protected _injector: Injector,
-                protected _translate: TranslateService,
-                @Optional() protected overflowService: OverflowService) {
-        super(_injector, _translate, overflowService);
+    constructor(injector: Injector,
+                translate: TranslateService,
+                @Optional() overflowService: OverflowService) {
+        super(injector, translate, overflowService);
     }
 }

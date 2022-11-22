@@ -313,13 +313,14 @@ import {SnackBarService} from &#x27;../../snack-bar/services/snack-bar.service&#
 import {TranslateService} from &#x27;@ngx-translate/core&#x27;;
 import {NAE_INFORM_ABOUT_INVALID_DATA} from &#x27;../models/invalid-data-policy-token&#x27;;
 import {DomSanitizer, SafeUrl} from &#x27;@angular/platform-browser&#x27;;
-import { BehaviorSubject, Subscription } from &#x27;rxjs&#x27;;
+import {BehaviorSubject, Subscription} from &#x27;rxjs&#x27;;
 import {ResizedEvent} from &#x27;angular-resize-event&#x27;;
 import {take} from &#x27;rxjs/operators&#x27;;
 import {EventOutcomeMessageResource} from &#x27;../../resources/interface/message-resource&#x27;;
 import {EventService} from &#x27;../../event/services/event.service&#x27;;
 import {ChangedFieldsMap} from &#x27;../../event/services/interfaces/changed-fields-map&#x27;;
 import {FileFieldIdBody} from &#x27;../models/file-field-id-body&#x27;;
+import { HttpParams } from &#x27;@angular/common/http&#x27;;
 
 export interface FileState {
     progress: number;
@@ -331,7 +332,7 @@ export interface FileState {
 
 const preview &#x3D; &#x27;preview&#x27;;
 
-const fieldHeight &#x3D; 105;
+const fieldHeight &#x3D; 75;
 
 const fieldPadding &#x3D; 16;
 
@@ -460,7 +461,8 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 }
             }
         }
-        this.updatedFieldSubscription &#x3D; this.dataField.updated.subscribe( () &#x3D;&gt; {
+        this.updatedFieldSubscription &#x3D; this.dataField.updated.subscribe(() &#x3D;&gt; {
+            this.previewSource &#x3D; undefined;
             if (!!this.filePreview
                 &amp;&amp; !!this.dataField.value
                 &amp;&amp; !!this.dataField.value.name) {
@@ -528,23 +530,36 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 if ((response as ProviderProgress).type &amp;&amp; (response as ProviderProgress).type &#x3D;&#x3D;&#x3D; ProgressType.UPLOAD) {
                     this.state.progress &#x3D; (response as ProviderProgress).progress;
                 } else {
-                    const changedFieldsMap: ChangedFieldsMap &#x3D; this._eventService.parseChangedFieldsFromOutcomeTree(response.outcome);
-                    this.dataField.emitChangedFields(changedFieldsMap);
-                    this._log.debug(
-                        &#x60;File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0).name} was successfully uploaded&#x60;
-                    );
                     this.state.completed &#x3D; true;
-                    this.state.error &#x3D; false;
                     this.state.uploading &#x3D; false;
                     this.state.progress &#x3D; 0;
-                    this.dataField.downloaded &#x3D; false;
-                    this.dataField.value.name &#x3D; fileToUpload.name;
-                    if (this.filePreview) {
-                        this.initializePreviewIfDisplayable();
+
+                    if (response.error) {
+                        this.state.error &#x3D; true;
+                        this._log.error(
+                            &#x60;File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)} uploading has failed!&#x60;, response.error
+                        );
+                        if (response.error) {
+                            this._snackbar.openErrorSnackBar(this._translate.instant(response.error));
+                        } else {
+                            this._snackbar.openErrorSnackBar(this._translate.instant(&#x27;dataField.snackBar.fileUploadFailed&#x27;));
+                        }
+                    } else {
+                        const changedFieldsMap: ChangedFieldsMap &#x3D; this._eventService.parseChangedFieldsFromOutcomeTree(response.outcome);
+                        this.dataField.emitChangedFields(changedFieldsMap);
+                        this._log.debug(
+                            &#x60;File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0).name} was successfully uploaded&#x60;
+                        );
+                        this.state.error &#x3D; false;
+                        this.dataField.downloaded &#x3D; false;
+                        this.dataField.value.name &#x3D; fileToUpload.name;
+                        if (this.filePreview) {
+                            this.initializePreviewIfDisplayable();
+                        }
+                        this.fullSource.next(undefined);
+                        this.fileForDownload &#x3D; undefined;
+                        this.formControl.setValue(this.dataField.value.name);
                     }
-                    this.fullSource.next(undefined);
-                    this.fileForDownload &#x3D; undefined;
-                    this.formControl.setValue(this.dataField.value.name);
                     this.dataField.touch &#x3D; true;
                     this.dataField.update();
                     this.fileUploadEl.nativeElement.value &#x3D; &#x27;&#x27;;
@@ -557,7 +572,11 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 this._log.error(
                     &#x60;File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)} uploading has failed!&#x60;, error
                 );
-                this._snackbar.openErrorSnackBar(this._translate.instant(&#x27;dataField.snackBar.fileUploadFailed&#x27;));
+                if (error?.error?.message) {
+                    this._snackbar.openErrorSnackBar(this._translate.instant(error.error.message));
+                } else {
+                    this._snackbar.openErrorSnackBar(this._translate.instant(&#x27;dataField.snackBar.fileUploadFailed&#x27;));
+                }
                 this.dataField.touch &#x3D; true;
                 this.dataField.update();
                 this.fileUploadEl.nativeElement.value &#x3D; &#x27;&#x27;;
@@ -631,9 +650,11 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             this._log.error(&#x27;File cannot be deleted. No task is set to the field.&#x27;);
             return;
         }
+        let param &#x3D; new HttpParams();
+        param &#x3D; param.set(&quot;parentTaskId&quot;, this.resolveParentTaskId());
 
         this._taskResourceService.deleteFile(this.taskId,
-            this.dataField.stringId).pipe(take(1)).subscribe(response &#x3D;&gt; {
+            this.dataField.stringId, undefined, param).pipe(take(1)).subscribe(response &#x3D;&gt; {
             if (response.success) {
                 const filename &#x3D; this.dataField.value.name;
                 this.dataField.value &#x3D; {};
@@ -725,7 +746,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         if (!this.checkFileBeforeDownload()) {
             return;
         }
-        this._taskResourceService.downloadFile(this.taskId, this.dataField.stringId).subscribe(response &#x3D;&gt; {
+        this._taskResourceService.downloadFile(this.resolveParentTaskId(), this.dataField.stringId).subscribe(response &#x3D;&gt; {
             if (!(response as ProviderProgress).type || (response as ProviderProgress).type !&#x3D;&#x3D; ProgressType.DOWNLOAD) {
                 this._log.debug(&#x60;File [${this.dataField.stringId}] ${this.dataField.value.name} was successfully downloaded&#x60;);
                 this.initDownloadFile(response);

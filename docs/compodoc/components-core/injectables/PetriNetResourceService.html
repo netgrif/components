@@ -239,8 +239,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="169"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/resources/engine-endpoint/petri-net-resource.service.ts:169</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="180"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/resources/engine-endpoint/petri-net-resource.service.ts:180</a></div>
                 </td>
             </tr>
 
@@ -459,7 +459,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getNetFile(netId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, params?: <a href="../miscellaneouss/Params.html" target="_self">Params</a>)</code>
+                    <code>getNetFile(netId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
@@ -502,25 +502,13 @@
 
 
                                 </tr>
-                                <tr>
-                                    <td>params</td>
-                                    <td>
-                                                <code><a href="../miscellaneous/typealiases.html#Params" target="_self" >Params</a></code>
-                                    </td>
-
-                                    <td>
-                                        Yes
-                                    </td>
-
-
-                                </tr>
                             </tbody>
                         </table>
                     </div>
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+                        <b>Returns : </b>        <code><a href="../interfaces/ProviderProgress.html" target="_self" >Observable&lt;ProviderProgress | Blob&gt;</a></code>
 
                     </div>
                     <div class="io-description">
@@ -552,8 +540,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="106"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/resources/engine-endpoint/petri-net-resource.service.ts:106</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="117"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/resources/engine-endpoint/petri-net-resource.service.ts:117</a></div>
                 </td>
             </tr>
 
@@ -650,8 +638,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="118"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/resources/engine-endpoint/petri-net-resource.service.ts:118</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="129"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/resources/engine-endpoint/petri-net-resource.service.ts:129</a></div>
                 </td>
             </tr>
 
@@ -982,8 +970,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="131"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/resources/engine-endpoint/petri-net-resource.service.ts:131</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="142"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/resources/engine-endpoint/petri-net-resource.service.ts:142</a></div>
                 </td>
             </tr>
 
@@ -1068,8 +1056,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="155"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/resources/engine-endpoint/petri-net-resource.service.ts:155</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="166"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/resources/engine-endpoint/petri-net-resource.service.ts:166</a></div>
                 </td>
             </tr>
 
@@ -1538,9 +1526,20 @@ export class PetriNetResourceService extends AbstractResourceService {
      *
      * **Request URL:** {{baseUrl}}/api/petrinet/{netId}/file
      */
-    public getNetFile(netId: string, params?: Params): Observable&lt;any&gt; {  // TODO: response
-        return this._resourceProvider.get$(&#x27;petrinet/&#x27; + netId + &#x27;/file&#x27;, this.SERVER_URL, params)
-            .pipe(map(r &#x3D;&gt; this.changeType(r, undefined)));
+    public getNetFile(netId: string): Observable&lt;ProviderProgress | Blob&gt; {
+        return this._resourceProvider.getBlob$(&#x27;petrinet/&#x27; + netId + &#x27;/file&#x27;, this.SERVER_URL).pipe(
+            map(event &#x3D;&gt; {
+                switch (event.type) {
+                    case HttpEventType.DownloadProgress:
+                        return ResourceProvider.getProgress(event);
+                    case HttpEventType.Response:
+                        return event.body;
+                    default:
+                        return undefined;
+                }
+            }),
+            filter(value &#x3D;&gt; !!value)
+        );
     }
 
     /**
@@ -1551,7 +1550,7 @@ export class PetriNetResourceService extends AbstractResourceService {
      * **Request URL:** {{baseUrl}}/api/petrinet/{identifier}/{version}
      */
     public getOne(identifier: string, version: string, params?: Params): Observable&lt;PetriNetReference&gt; {
-        return this._resourceProvider.get$(&#x27;petrinet/&#x27; + identifier + &#x27;/&#x27; + version, this.SERVER_URL, params)
+        return this._resourceProvider.get$(&#x27;petrinet/&#x27; + btoa(identifier) + &#x27;/&#x27; + version, this.SERVER_URL, params)
             .pipe(map(r &#x3D;&gt; this.changeType(r, &#x27;petriNetReferences&#x27;)));
     }
 

@@ -50,6 +50,9 @@
             "cancel": "Stornieren",
             "noData": "Diese Aufgabe hat keine Dateien. Schließen Sie die Aufgabe ab, um fortzufahren.",
             "redirecting": "Umleiten..."
+        },
+        "footer": {
+            "defaultText": "NETGRIF, s.r.o. © 2022"
         }
     },
     "side-menu": {
@@ -84,23 +87,34 @@
             "errThird": "Sie müssen eine Farbe auswählen.",
             "noNets": "Es gibt keine erlaubte Netze",
             "createCase": "Neuen Fall würde erfolgreich erzeugt",
-            "defaultCaseName": "mit einem Standardfallnamen"
+            "defaultCaseName": "mit einem Standardfallnamen",
+            "createCaseError": "Neuer Fall wurde erstellt, aber beim Ausführen von Aktionen ist ein Fehler aufgetreten"
         },
         "user": {
-            "assign": "Benützer zuweisen",
-            "choose": "Benützer auswählen",
-            "noUser": "Es gibt keine Benützer",
-            "err": "Beim laden der Benützer ist eine Fehler aufgetreten",
-            "showcase": "Benützeransichtmodus ist nicht ausgewählt!"
+            "assign": "Benutzer zuweisen",
+            "choose": "Benutzer auswählen",
+            "noUser": "Es gibt keine Benutzer",
+            "err": "Beim laden der Benutzer ist eine Fehler aufgetreten",
+            "showcase": "Die Benutzeransicht ist nicht gesetzt!"
         },
         "ldapGroup": {
             "choose": "LDAP-Gruppe suchen",
             "noUser": "LDAP-Gruppe nicht gefunden",
             "err": "LDAP-Gruppe konnte nicht geladen werden"
         },
+        "tooltip": {
+            "SelectAll": "Alle auswählen",
+            "DeselectAll": "Alle abwählen"
+        },
         "option-selector": {
             "select": "Auswählen",
             "choose-one-option": "Wählen Sie eine Option aus"
+        },
+        "impersonation": {
+            "title": "Benutzer vertreten",
+            "submit": "Vertreten",
+            "cease": "Vertretung abbrechen",
+            "impersonating": "in Vertretung als"
         }
     },
     "search": {
@@ -267,6 +281,9 @@
         },
         "user": {
             "selectUser": "Benutzer auswählen"
+        },
+        "textarea": {
+            "insertText": "Hier Text eingeben..."
         }
     },
     "dialog": {
@@ -278,8 +295,9 @@
             "enterEmail": "Ihre E-Mail Adresse eingeben"
         },
         "login": {
-            "length": "Das Benützername muss mindestens 4 Zeichen enthalten",
-            "login": "Benützername",
+            "length": "Das Benutzername muss mindestens 4 Zeichen enthalten",
+            "login": "Benutzername",
+            "wrongCredentials": "Falsche Anmeldeinformationen!",
             "loginButton": "Anmelden",
             "reset": "Kennwort wiederherstellen",
             "sign": "Registrieren",
@@ -375,7 +393,8 @@
         },
         "ldapGroup-list": {
             "noLdapGroupsWereFound": "Keine LDAP Gruppe wurde gefunden",
-            "listTitle": "LDAP Gruppen"
+            "listTitle": "LDAP Gruppen",
+            "count": "Anzahl der Gruppen"
         },
         "process-list": {
             "newestVersion": "Neuste Version",
@@ -416,6 +435,7 @@
     },
     "workflow": {
         "delete": "löschen",
+        "download": "herunterladen",
         "dialog": {
             "header": "Sind Sie sicher, dass Sie den Prozess '{{name}}' mit Version '{{version}}' löschen wollen?",
             "content": "Alle Fälle aus diesem Prozess werden gleichzeitig gelöscht!",
@@ -444,5 +464,16 @@
     },
     "dynamicNavigation": {
         "couldNotResolveView": "Ein Fehler ist aufgetreten während des Ansichtauflösungsprocess. Der Ansicht kann nicht angezeigt werden"
+    },
+    "impersonation": {
+        "user": {
+            "successfullyRepresented": "Benutzer wird jetzt vertreten",
+            "currentlyAlreadyRepresented": "Für den Benutzer existiert bereits eine Vertretung",
+            "currentlyLogged": "Benutzer ist bereits angemeldet"
+        },
+        "action": {
+            "failed": "Aktion ist fehlgeschlagen",
+            "deactivated": "Vertretung wurde erfolgreich deaktiviert"
+        }
     }
 }

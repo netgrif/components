@@ -1460,8 +1460,8 @@ will emit <code>true</code> once the last page loads successfully.
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="791"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:791</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="793"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:793</a></div>
                 </td>
             </tr>
 
@@ -1570,8 +1570,8 @@ will emit <code>true</code> once the last page loads successfully.
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="841"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:841</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="843"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:843</a></div>
                 </td>
             </tr>
 
@@ -1680,8 +1680,8 @@ will emit <code>true</code> once the last page loads successfully.
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="827"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:827</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="829"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:829</a></div>
                 </td>
             </tr>
 
@@ -1774,8 +1774,8 @@ will emit <code>true</code> once the last page loads successfully.
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="870"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:870</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="872"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:872</a></div>
                 </td>
             </tr>
 
@@ -3451,9 +3451,11 @@ export class CaseTreeService implements OnDestroy {
                 }
 
                 const body &#x3D; {};
-                body[TreePetriflowIdentifiers.CHILDREN_CASE_REF] &#x3D; {
-                    type: &#x27;caseRef&#x27;,
-                    value: newCaseRefValue
+                body[task.stringId] &#x3D; {
+                    [TreePetriflowIdentifiers.CHILDREN_CASE_REF]: {
+                        type: &#x27;caseRef&#x27;,
+                        value: newCaseRefValue
+                    }
                 };
                 this._taskResourceService.setData(task.stringId, body).subscribe((outcomeResource: EventOutcomeMessageResource) &#x3D;&gt; {
                     const changedFields &#x3D; (outcomeResource.outcome as SetDataEventOutcome).changedFields.changedFields;

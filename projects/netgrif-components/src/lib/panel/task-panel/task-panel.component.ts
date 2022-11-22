@@ -24,7 +24,8 @@ import {
     TaskRequestStateService,
     TaskViewService,
     PermissionService,
-    ChangedFieldsService
+    ChangedFieldsService,
+    OverflowService
 } from '@netgrif/components-core';
 import {TaskContentComponent} from '../../task-content/task-content/task-content.component';
 import {TranslateService} from '@ngx-translate/core';
@@ -64,6 +65,7 @@ export class TaskPanelComponent extends AbstractTaskPanelComponent {
                 protected _taskState: TaskRequestStateService,
                 protected _taskDataService: TaskDataService,
                 protected _assignPolicyService: AssignPolicyService,
+                protected _finishPolicyService: FinishPolicyService,
                 protected _callChain: CallChainService,
                 protected _translate: TranslateService,
                 @Inject(NAE_TASK_OPERATIONS) _taskOperations: SubjectTaskOperations,
@@ -72,11 +74,12 @@ export class TaskPanelComponent extends AbstractTaskPanelComponent {
                 protected _parentInjector: Injector,
                 protected _currencyPipe: CurrencyPipe,
                 protected _changedFieldsService: ChangedFieldsService,
-                protected _permissionService: PermissionService) {
+                protected _permissionService: PermissionService,
+                @Optional() overflowService: OverflowService) {
         super(_taskContentService, _log, _taskViewService, _paperView, _taskEventService, _assignTaskService,
             _delegateTaskService, _cancelTaskService, _finishTaskService, _taskState, _taskDataService,
-            _assignPolicyService, _callChain, _taskOperations, _disableFunctions, _translate, _currencyPipe, _changedFieldsService,
-            _permissionService);
+            _assignPolicyService, _finishPolicyService, _callChain, _taskOperations, _disableFunctions, _translate, _currencyPipe, _changedFieldsService,
+            _permissionService, overflowService);
     }
 
     protected createContentPortal(): void {

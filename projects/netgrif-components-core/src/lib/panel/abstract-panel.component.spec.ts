@@ -8,6 +8,7 @@ import {MaterialModule} from '../material/material.module';
 import {TranslateLibModule} from '../translate/translate-lib.module';
 import {AbstractPanelComponent} from './abstract-panel.component';
 import {CaseListFontColorService} from '../utility/service/case-list-font-color.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('AbstractPanelComponent', () => {
     let component: TestPanelComponent;
@@ -21,7 +22,8 @@ describe('AbstractPanelComponent', () => {
                 FlexModule,
                 NoopAnimationsModule,
                 TranslateLibModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                RouterTestingModule.withRoutes([])
             ],
             declarations: [TestPanelComponent],
             schemas: [NO_ERRORS_SCHEMA]

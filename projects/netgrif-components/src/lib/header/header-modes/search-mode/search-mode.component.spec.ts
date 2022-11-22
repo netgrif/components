@@ -14,8 +14,12 @@ import {
     MaterialModule,
     MockAuthenticationMethodService,
     MockAuthenticationService,
-    MockUserResourceService, NAE_BASE_FILTER,
-    SearchService, TestCaseBaseFilterProvider, TestCaseViewAllowedNetsFactory,
+    MockUserResourceService,
+    NAE_BASE_FILTER,
+    OverflowService,
+    SearchService,
+    TestCaseBaseFilterProvider,
+    TestCaseViewAllowedNetsFactory,
     TestConfigurationService,
     TestViewService,
     TranslateLibModule,
@@ -60,6 +64,7 @@ describe('SearchModeComponent', () => {
                 CaseViewService,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 SearchService,
+                OverflowService,
                 {
                     provide: NAE_BASE_FILTER,
                     useFactory: TestCaseBaseFilterProvider

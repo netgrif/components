@@ -1,0 +1,1057 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Netgrif Components library Documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li
+  >
+  NavigationDoubleDrawerComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>projects/netgrif-components/src/lib/navigation/navigation-double-drawer/navigation-double-drawer.component.ts</code>
+</p>
+
+
+
+    <p class="comment">
+        <h3>Extends</h3>
+    </p>
+    <p class="comment">
+                <code><a href="../components/NavigationDoubleDrawerComponent.html" target="_self" >AbstractNavigationDoubleDrawerComponent</a></code>
+    </p>
+
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>nc-navigation-double-drawer</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./navigation-double-drawer.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./navigation-double-drawer.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#isSectionOpen" >isSectionOpen</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#toggleSection" >toggleSection</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(_router: <a href="https://angular.io/api/router/Router" target="_blank">Router</a>, _activatedRoute: <a href="https://angular.io/api/router/ActivatedRoute" target="_blank">ActivatedRoute</a>, _breakpoint: BreakpointObserver, _languageService: LanguageService, _userService: UserService, _accessService: AccessService, _log: LoggerService, _config: ConfigurationService, _uriService: UriService, _dynamicRouteProviderService: DynamicNavigationRouteProviderService)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">projects/netgrif-components/src/lib/navigation/navigation-double-drawer/navigation-double-drawer.component.ts:51</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>_router</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/router/Router" target="_blank" >Router</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_activatedRoute</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/router/ActivatedRoute" target="_blank" >ActivatedRoute</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_breakpoint</td>
+                                                  
+                                                        <td>
+                                                                    <code>BreakpointObserver</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_languageService</td>
+                                                  
+                                                        <td>
+                                                                    <code>LanguageService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_userService</td>
+                                                  
+                                                        <td>
+                                                                    <code>UserService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_accessService</td>
+                                                  
+                                                        <td>
+                                                                    <code>AccessService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_log</td>
+                                                  
+                                                        <td>
+                                                                    <code>LoggerService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_config</td>
+                                                  
+                                                        <td>
+                                                                    <code>ConfigurationService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_uriService</td>
+                                                  
+                                                        <td>
+                                                                    <code>UriService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_dynamicRouteProviderService</td>
+                                                  
+                                                        <td>
+                                                                    <code>DynamicNavigationRouteProviderService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toggleSection"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>toggleSection</b></span>
+                        <a href="#toggleSection"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>toggleSection(section: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="67"
+                            class="link-to-prism">projects/netgrif-components/src/lib/navigation/navigation-double-drawer/navigation-double-drawer.component.ts:67</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>section</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isSectionOpen"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>isSectionOpen</b></span>
+                        <a href="#isSectionOpen"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+        folders: true,
+        views: true
+    }</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">projects/netgrif-components/src/lib/navigation/navigation-double-drawer/navigation-double-drawer.component.ts:48</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component} from &#x27;@angular/core&#x27;;
+import {ActivatedRoute, Router} from &#x27;@angular/router&#x27;;
+import {BreakpointObserver} from &#x27;@angular/cdk/layout&#x27;;
+import {
+    ConfigurationService,
+    LanguageService,
+    UriService,
+    LoggerService,
+    UserService,
+    AbstractNavigationDoubleDrawerComponent,
+    DynamicNavigationRouteProviderService, AccessService
+} from &#x27;@netgrif/components-core&#x27;;
+import {animate, state, style, transition, trigger} from &quot;@angular/animations&quot;;
+
+@Component({
+    selector: &#x27;nc-navigation-double-drawer&#x27;,
+    templateUrl: &#x27;./navigation-double-drawer.component.html&#x27;,
+    styleUrls: [&#x27;./navigation-double-drawer.component.scss&#x27;],
+    animations: [
+        trigger(&#x27;sectionExpansion&#x27;, [
+            state(&#x27;expanded, void&#x27;, style({
+                height: &#x27;*&#x27;,
+                visibility: &#x27;visible&#x27;
+            })),
+            state(&#x27;collapsed&#x27;, style({
+                height: &#x27;0px&#x27;,
+                visibility: &#x27;hidden&#x27;
+            })),
+            transition(&#x27;expanded &lt;&#x3D;&gt; collapsed, void &#x3D;&gt; expanded&#x27;, [
+                animate(&#x27;225ms cubic-bezier(0.4,0.0,0.2,1)&#x27;)
+            ])
+        ]),
+        trigger(&#x27;indicatorRotate&#x27;, [
+            state(&#x27;expanded, void&#x27;, style({
+                transform: &#x27;rotate(180deg)&#x27;
+            })),
+            state(&#x27;collapsed&#x27;, style({
+                transform: &#x27;rotate(0deg)&#x27;
+            })),
+            transition(&#x27;expanded &lt;&#x3D;&gt; collapsed, void &#x3D;&gt; expanded&#x27;, [
+                animate(&#x27;225ms cubic-bezier(0.4,0.0,0.2,1)&#x27;)
+            ])
+        ])
+    ]
+})
+export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDrawerComponent {
+
+    public isSectionOpen &#x3D; {
+        folders: true,
+        views: true
+    };
+
+    constructor(_router: Router,
+                _activatedRoute: ActivatedRoute,
+                _breakpoint: BreakpointObserver,
+                _languageService: LanguageService,
+                _userService: UserService,
+                _accessService: AccessService,
+                _log: LoggerService,
+                _config: ConfigurationService,
+                _uriService: UriService,
+                _dynamicRouteProviderService: DynamicNavigationRouteProviderService) {
+        super(_router, _activatedRoute, _breakpoint, _languageService, _userService, _accessService, _log, _config, _uriService,
+            _dynamicRouteProviderService)
+    }
+
+    public toggleSection(section: string): void {
+        this.isSectionOpen[section] &#x3D; !this.isSectionOpen[section];
+    }
+
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;drawer-control rail-color&quot; fxLayoutAlign&#x3D;&quot;start center&quot; fxHide.lt-md&gt;
+    &lt;button mat-icon-button (click)&#x3D;&quot;toggleMenu()&quot; class&#x3D;&quot;mat-button mat-typography menu-font-color&quot;&gt;
+        &lt;mat-icon&gt;menu&lt;/mat-icon&gt;
+    &lt;/button&gt;
+&lt;/div&gt;
+&lt;mat-toolbar fxHide.gt-sm class&#x3D;&quot;toolbar&quot;&gt;
+    &lt;mat-toolbar-row fxLayout&#x3D;&quot;row&quot; fxLayoutAlign&#x3D;&quot;space-between stretch&quot;&gt;
+        &lt;div fxFlex fxLayoutAlign&#x3D;&quot;start center&quot;&gt;
+            &lt;button mat-icon-button (click)&#x3D;&quot;toggleMenu()&quot;&gt;
+                &lt;mat-icon&gt;menu&lt;/mat-icon&gt;
+            &lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;logo-tool&quot; fxLayoutAlign&#x3D;&quot;center center&quot; fxFlex&gt;
+            &lt;img #logo [alt]&#x3D;&quot;imageAlt&quot; [src]&#x3D;&quot;image&quot; class&#x3D;&quot;logoimg-tool&quot;
+                 [routerLink]&#x3D;&quot;imageRouterLink !&#x3D;&#x3D; undefined ? imageRouterLink : []&quot;&gt;
+        &lt;/div&gt;
+        &lt;div fxFlex&gt;&lt;/div&gt;
+    &lt;/mat-toolbar-row&gt;
+&lt;/mat-toolbar&gt;
+&lt;mat-spinner *ngIf&#x3D;&quot;!logo&quot;&gt;&lt;/mat-spinner&gt;
+&lt;mat-sidenav-container class&#x3D;&quot;rail-container&quot;&gt;
+    &lt;mat-sidenav mode&#x3D;&quot;side&quot; [(opened)]&#x3D;&quot;configLeftMenu.opened&quot; position&#x3D;&quot;start&quot;
+                 [disableClose]&#x3D;&quot;configLeftMenu.disableClose&quot;
+                 class&#x3D;&quot;rail-content&quot;&gt;
+
+        &lt;div fxLayout&#x3D;&quot;column&quot; class&#x3D;&quot;rail-color&quot; fxFlex&gt;
+
+            &lt;div *ngTemplateOutlet&#x3D;&quot;portalLeftMenu || defaultLeftSide&quot;&gt;&lt;/div&gt;
+
+            &lt;div fxFlex&gt;&lt;/div&gt;
+
+            &lt;mat-menu #userRailMenu&#x3D;&quot;matMenu&quot;&gt;
+                &lt;div mat-menu-item role&#x3D;&quot;menuitem&quot; class&#x3D;&quot;large-menu-item&quot; fxLayout&#x3D;&quot;row&quot; fxFlexAlign&#x3D;&quot;center center&quot;
+                    [routerLink]&#x3D;&quot;profileRouterLink&quot; routerLinkActive&#x3D;&quot;active&quot;&gt;
+                    &lt;mat-icon class&#x3D;&quot;margin-auto&quot; fxFlex&gt;face&lt;/mat-icon&gt;
+                    &lt;div class&#x3D;&quot;large-menu-item&quot; fxLayout&#x3D;&quot;column&quot; fxFlexAlign&#x3D;&quot;start center&quot; fxFlex&gt;
+                        &lt;span class&#x3D;&quot;large-menu-item-text&quot; fxFlex&#x3D;&quot;50&quot;&gt;{{user.fullName}}&lt;/span&gt;
+                        &lt;span class&#x3D;&quot;large-menu-item-text&quot; style&#x3D;&quot;font-size: 12px;&quot; fxFlex&#x3D;&quot;50&quot;&gt;{{user.email}}&lt;/span&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;button mat-menu-item (click)&#x3D;&quot;logout()&quot;&gt;
+                    &lt;mat-icon&gt;exit_to_app&lt;/mat-icon&gt;
+                    &lt;span&gt;{{ &#x27;toolbar.menu.logout&#x27; | translate }}&lt;/span&gt;
+                &lt;/button&gt;
+            &lt;/mat-menu&gt;
+            &lt;button *ngIf&#x3D;&quot;includeUser&quot; mat-icon-button [matMenuTriggerFor]&#x3D;&quot;userRailMenu&quot; class&#x3D;&quot;mat-button mat-typography menu-font-color&quot;
+                    [matTooltip]&#x3D;&quot;user.fullName&quot;
+                    [matTooltipPosition]&#x3D;&quot;&#x27;right&#x27;&quot;&gt;
+                &lt;mat-icon&gt;account_circle&lt;/mat-icon&gt;
+            &lt;/button&gt;
+
+            &lt;div *ngIf&#x3D;&quot;includeLanguage&quot; fxLayout&#x3D;&quot;row&quot; class&#x3D;&quot;icon-container&quot; fxLayoutAlign&#x3D;&quot;center center&quot;&gt;
+                &lt;nc-language-selector fxLayout&#x3D;&quot;row&quot; [language]&#x3D;&quot;getLang()&quot;&gt;&lt;/nc-language-selector&gt;
+            &lt;/div&gt;
+
+            &lt;mat-menu #railMenu&#x3D;&quot;matMenu&quot;&gt;
+                &lt;button *ngFor&#x3D;&#x27;let item of moreMenuItems; trackBy: viewsTrackBy&#x27; mat-menu-item
+                        [routerLink]&#x3D;&#x27;item.routing.path&#x27; routerLinkActive&#x3D;&quot;active&quot;&gt;
+                    &lt;mat-icon&gt;{{item.navigation.icon}}&lt;/mat-icon&gt;
+                    &lt;span&gt;{{item.navigation.title}}&lt;/span&gt;
+                &lt;/button&gt;
+            &lt;/mat-menu&gt;
+            &lt;!--            &lt;div fxLayout&#x3D;&quot;row&quot; class&#x3D;&quot;margin-bottom-x2 icon-container&quot; matTooltip&#x3D;&quot;Otvoriť menu&quot;--&gt;
+            &lt;!--                 matTooltipPosition&#x3D;&quot;right&quot;--&gt;
+            &lt;!--                 fxLayoutAlign&#x3D;&quot;center center&quot;&gt;--&gt;
+            &lt;!--                &lt;button mat-icon-button [matMenuTriggerFor]&#x3D;&quot;railMenu&quot;&gt;--&gt;
+            &lt;!--                    &lt;mat-icon class&#x3D;&quot;icon-large sidemenu-icon&quot;&gt;more_vert&lt;/mat-icon&gt;--&gt;
+            &lt;!--                &lt;/button&gt;--&gt;
+            &lt;!--            &lt;/div&gt;--&gt;
+            &lt;button *ngIf&#x3D;&quot;includeMoreMenu&quot; mat-icon-button [matMenuTriggerFor]&#x3D;&quot;railMenu&quot;
+                    class&#x3D;&quot;mat-button mat-typography menu-font-color margin-bottom-x2&quot;
+                    [matTooltip]&#x3D;&quot;&#x27;toolbar.menu.open&#x27; | translate&quot;
+                    matTooltipPosition&#x3D;&quot;right&quot;&gt;
+                &lt;mat-icon&gt;more_vert&lt;/mat-icon&gt;
+            &lt;/button&gt;
+
+        &lt;/div&gt;
+
+    &lt;/mat-sidenav&gt;
+
+    &lt;mat-sidenav-content&gt;
+        &lt;mat-sidenav-container class&#x3D;&quot;drawer-container&quot;&gt;
+            &lt;mat-sidenav [mode]&#x3D;&quot;configRightMenu.mode&quot; [(opened)]&#x3D;&quot;configRightMenu.opened&quot; position&#x3D;&quot;start&quot;
+                         [disableClose]&#x3D;&quot;configRightMenu.disableClose&quot;
+                         class&#x3D;&quot;drawer-content mat-elevation-z8&quot;
+                         mwlResizable
+                         [style.width.px]&#x3D;&quot;configRightMenu.width&quot;
+                         [resizeCursorPrecision]&#x3D;&quot;20&quot;
+                         [resizeEdges]&#x3D;&quot;{right: true}&quot;
+                         (resizing)&#x3D;&quot;onResizeEvent($event)&quot;&gt;
+
+                &lt;div *ngTemplateOutlet&#x3D;&quot;portalRightMenu || defaultRightSide&quot;&gt;&lt;/div&gt;
+
+            &lt;/mat-sidenav&gt;
+
+            &lt;mat-sidenav-content&gt;
+                &lt;ng-content&gt;&lt;/ng-content&gt;
+            &lt;/mat-sidenav-content&gt;
+        &lt;/mat-sidenav-container&gt;
+    &lt;/mat-sidenav-content&gt;
+&lt;/mat-sidenav-container&gt;
+
+&lt;ng-template #defaultLeftSide&gt;
+    &lt;!--    &lt;div fxLayout&#x3D;&quot;row&quot; class&#x3D;&quot;icon-container&quot; fxLayoutAlign&#x3D;&quot;center center&quot;--&gt;
+    &lt;!--         (click)&#x3D;&#x27;onHomeClick()&#x27;&gt;--&gt;
+    &lt;!--        &lt;mat-icon class&#x3D;&quot;icon-large&quot; [matTooltip]&#x3D;&quot;&#x27;Home&#x27;&quot; [matTooltipPosition]&#x3D;&quot;&#x27;right&#x27;&quot;&gt;home&lt;/mat-icon&gt;--&gt;
+    &lt;!--    &lt;/div&gt;--&gt;
+    &lt;button mat-icon-button (click)&#x3D;&quot;onHomeClick()&quot; class&#x3D;&quot;mat-button mat-typography menu-font-color&quot;
+            [matTooltip]&#x3D;&quot;&#x27;toolbar.menu.home&#x27; | translate&quot;
+            matTooltipPosition&#x3D;&quot;right&quot;&gt;
+        &lt;mat-icon&gt;home&lt;/mat-icon&gt;
+    &lt;/button&gt;
+
+    &lt;!--    &lt;div *ngIf&#x3D;&#x27;!isOnZeroLevel()&#x27; fxLayout&#x3D;&quot;row&quot; class&#x3D;&quot;icon-container&quot; fxLayoutAlign&#x3D;&quot;center center&quot;--&gt;
+    &lt;!--         (click)&#x3D;&#x27;onBackClick()&#x27;&gt;--&gt;
+    &lt;!--        &lt;mat-icon class&#x3D;&quot;icon-large&quot; [matTooltip]&#x3D;&quot;&#x27;Back&#x27;&quot; [matTooltipPosition]&#x3D;&quot;&#x27;right&#x27;&quot;&gt;arrow_back&lt;/mat-icon&gt;--&gt;
+    &lt;!--    &lt;/div&gt;--&gt;
+    &lt;button *ngIf&#x3D;&#x27;!isOnZeroLevel() &amp;&amp; (canGoBackLoading$ | async) &#x3D;&#x3D;&#x3D; false&#x27; mat-icon-button (click)&#x3D;&quot;onBackClick()&quot;
+            class&#x3D;&quot;mat-button mat-typography menu-font-color&quot; [matTooltip]&#x3D;&quot;&#x27;toolbar.menu.back&#x27; | translate&quot;
+            matTooltipPosition&#x3D;&quot;right&quot;&gt;
+        &lt;mat-icon&gt;arrow_back&lt;/mat-icon&gt;
+    &lt;/button&gt;
+    &lt;div *ngIf&#x3D;&quot;(canGoBackLoading$ | async)&quot; fxLayout&#x3D;&quot;column&quot; fxLayoutAlign&#x3D;&quot;center center&quot; class&#x3D;&quot;margin-top-default&quot;&gt;
+        &lt;mat-spinner color&#x3D;&quot;primary&quot; diameter&#x3D;&quot;30&quot; mode&#x3D;&quot;indeterminate&quot;&gt;&lt;/mat-spinner&gt;
+    &lt;/div&gt;
+
+    &lt;div class&#x3D;&quot;margin-top-x2&quot;&gt;&lt;/div&gt;
+    &lt;!--    &lt;div *ngFor&#x3D;&#x27;let node of leftNodes; trackBy: uriNodeTrackBy&#x27; fxLayout&#x3D;&quot;row&quot; class&#x3D;&quot;icon-container&quot;--&gt;
+    &lt;!--         fxLayoutAlign&#x3D;&quot;center center&quot;--&gt;
+    &lt;!--         (click)&#x3D;&#x27;onLeftSideClick(node)&#x27;&gt;--&gt;
+    &lt;!--        &lt;mat-icon class&#x3D;&quot;icon-large&quot; [matTooltip]&#x3D;&quot;node.name&quot;--&gt;
+    &lt;!--                  [matTooltipPosition]&#x3D;&quot;&#x27;right&#x27;&quot;&gt;{{node.id &#x3D;&#x3D;&#x3D; currentNode.id ? &#x27;folder_open&#x27; : &#x27;folder&#x27;}}&lt;/mat-icon&gt;--&gt;
+    &lt;!--    &lt;/div&gt;--&gt;
+    &lt;button *ngFor&#x3D;&#x27;let node of leftNodes; trackBy: uriNodeTrackBy&#x27; mat-icon-button (click)&#x3D;&quot;onNodeClick(node)&quot;
+            class&#x3D;&quot;mat-button mat-typography menu-font-color&quot; [matTooltip]&#x3D;&quot;node.name&quot; [matTooltipPosition]&#x3D;&quot;&#x27;right&#x27;&quot;
+            [ngClass]&#x3D;&quot;node.id &#x3D;&#x3D;&#x3D; currentNode.id ? &#x27;rail-selected-color&#x27; : &#x27;&#x27;&quot;&gt;
+        &lt;mat-icon&gt;{{node.id &#x3D;&#x3D;&#x3D; currentNode.id ? openedFolderIcon : folderIcon}}&lt;/mat-icon&gt;
+    &lt;/button&gt;
+
+    &lt;div *ngIf&#x3D;&quot;(leftLoading$ | async)&quot; fxLayout&#x3D;&quot;column&quot; fxLayoutAlign&#x3D;&quot;center center&quot; class&#x3D;&quot;margin-top-default&quot;&gt;
+        &lt;mat-spinner color&#x3D;&quot;primary&quot; diameter&#x3D;&quot;30&quot; mode&#x3D;&quot;indeterminate&quot;&gt;&lt;/mat-spinner&gt;
+    &lt;/div&gt;
+&lt;/ng-template&gt;
+
+&lt;ng-template #defaultRightSide&gt;
+    &lt;div class&#x3D;&quot;logo&quot; fxLayoutAlign&#x3D;&quot;center center&quot; fxHide.lt-md&gt;
+        &lt;img *ngIf&#x3D;&quot;image !&#x3D;&#x3D; undefined&quot; [alt]&#x3D;&quot;imageAlt&quot; [src]&#x3D;&quot;image&quot; class&#x3D;&quot;logoimg&quot;
+             [routerLink]&#x3D;&quot;imageRouterLink !&#x3D;&#x3D; undefined ? imageRouterLink : []&quot;&gt;
+    &lt;/div&gt;
+    &lt;div *ngIf&#x3D;&quot;(rightLoading$ | async) &#x3D;&#x3D;&#x3D; false&quot; ngClass.gt-sm&#x3D;&quot;padding-top-8&quot;&gt;
+        &lt;div class&#x3D;&quot;margin-auto cursor-pointer&quot; *ngIf&#x3D;&#x27;!isRightNodesEmpty()&#x27; (click)&#x3D;&quot;toggleSection(&#x27;folders&#x27;)&quot;
+             fxLayout&#x3D;&quot;row&quot; fxFlexAlign&#x3D;&quot;start center&quot;&gt;
+            &lt;span class&#x3D;&quot;headline-text mat-typography&quot;&gt;{{foldersCategoryName | translate}}&lt;/span&gt;
+            &lt;div fxFlex&gt;&lt;/div&gt;
+            &lt;span *ngIf&#x3D;&quot;isSectionOpen&quot; [@indicatorRotate]&#x3D;&quot;isSectionOpen.folders ? &#x27;expanded&#x27; : &#x27;collapsed&#x27;&quot;
+                  class&#x3D;&quot;expansion-indicator mat-typography&quot;&gt;&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;div [@sectionExpansion]&#x3D;&quot;isSectionOpen.folders ? &#x27;expanded&#x27; : &#x27;collapsed&#x27;&quot; class&#x3D;&quot;box-container&quot;&gt;
+            &lt;div *ngFor&#x3D;&#x27;let node of rightNodes; trackBy: uriNodeTrackBy&#x27; (click)&#x3D;&quot;onNodeClick(node)&quot;
+                 class&#x3D;&quot;tree-node mat-typography mat-body-2&quot; fxLayoutAlign&#x3D;&quot;start center&quot; routerLinkActive&#x3D;&quot;active&quot;&gt;
+                &lt;mat-icon class&#x3D;&quot;tree-node-icon&quot;&gt;folder&lt;/mat-icon&gt;
+                &lt;span&gt;{{node.name}}&lt;/span&gt;
+                &lt;span class&#x3D;&quot;menu-item-focus-overlay&quot;&gt;&lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class&#x3D;&quot;margin-auto&quot; *ngIf&#x3D;&#x27;!isViewsEmpty()&#x27; fxLayout&#x3D;&quot;column&quot; fxFlexAlign&#x3D;&quot;center start&quot;&gt;
+            &lt;div *ngIf&#x3D;&quot;!isRightNodesEmpty()&quot; class&#x3D;&quot;line margin-bottom-x2&quot;&gt;
+                &lt;mat-divider&gt;&lt;/mat-divider&gt;
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;cursor-pointer&quot; (click)&#x3D;&quot;toggleSection(&#x27;views&#x27;)&quot; fxLayout&#x3D;&quot;row&quot; fxFlexAlign&#x3D;&quot;start center&quot;
+                 fxFlex&gt;
+                &lt;span class&#x3D;&quot;headline-text mat-typography&quot;&gt;{{viewsCategoryName | translate}}&lt;/span&gt;
+                &lt;div fxFlex&gt;&lt;/div&gt;
+                &lt;span *ngIf&#x3D;&quot;isSectionOpen&quot; [@indicatorRotate]&#x3D;&quot;isSectionOpen.views ? &#x27;expanded&#x27; : &#x27;collapsed&#x27;&quot;
+                      class&#x3D;&quot;expansion-indicator mat-typography&quot;&gt;&lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div [@sectionExpansion]&#x3D;&quot;isSectionOpen.views ? &#x27;expanded&#x27; : &#x27;collapsed&#x27;&quot; class&#x3D;&quot;box-container&quot;&gt;
+            &lt;div *ngFor&#x3D;&#x27;let view of views; trackBy: viewsTrackBy&#x27; class&#x3D;&quot;tree-node mat-typography&quot;
+                 fxLayoutAlign&#x3D;&quot;start center&quot; [routerLink]&#x3D;&#x27;view.routing.path&#x27; routerLinkActive&#x3D;&quot;active&quot;&gt;
+                &lt;mat-icon class&#x3D;&quot;tree-node-icon&quot;&gt;{{view.navigation.icon}}&lt;/mat-icon&gt;
+                &lt;span&gt;{{view.navigation.title}}&lt;/span&gt;
+                &lt;span class&#x3D;&quot;menu-item-focus-overlay&quot;&gt;&lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div *ngIf&#x3D;&quot;(rightLoading$ | async)&quot; fxLayout&#x3D;&quot;column&quot; fxLayoutAlign&#x3D;&quot;center center&quot; class&#x3D;&quot;margin-top-default&quot;&gt;
+        &lt;mat-spinner color&#x3D;&quot;primary&quot; diameter&#x3D;&quot;40&quot; mode&#x3D;&quot;indeterminate&quot;&gt;&lt;/mat-spinner&gt;
+    &lt;/div&gt;
+&lt;/ng-template&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>./navigation-double-drawer.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.rail-container {
+    height: 100%;
+}
+
+.rail-content {
+    width: 60px;
+    min-width: 60px;
+    top: 48px;
+    border-right: none !important;
+}
+
+.drawer-container {
+    height: 100%;
+}
+
+.mat-button {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.drawer-content {
+    width: 300px;
+    min-width: 300px;
+}
+
+.drawer-control {
+    width: 60px !important;
+    height: 48px;
+    position: absolute;
+    z-index: 2;
+}
+
+.logo {
+    height: 48px;
+}
+
+.logo-closed {
+    width: 60px !important;
+}
+
+.logoimg {
+    margin-left: auto;
+    margin-right: auto;
+    height: 46px;
+    outline: none !important;
+    cursor: pointer;
+}
+
+.icon-large {
+    height: 40px;
+    width: 40px;
+    font-size: 40px;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.icon-container {
+    outline: none !important;
+    height: 40px;
+}
+
+.icon-large:hover {
+    cursor: pointer;
+}
+
+.menu-font-color {
+    color: rgba(0, 0, 0, 0.7) !important;
+}
+
+.margin-top-65 {
+    margin-top: 49px;
+}
+
+.margin-auto {
+    margin: auto;
+}
+
+.padding-top-65 {
+    padding-top: 49px;
+}
+
+.padding-top-8 {
+    padding-top: 8px;
+}
+
+.margin-bottom-x2 {
+    margin-bottom: 16px;
+}
+
+.tree-node {
+    outline: none !important;
+    cursor: pointer;
+    padding: 8px;
+    color: rgba(0, 0, 0, 0.7);
+    line-height: 24px;
+    position: relative;
+    border-radius: 18px;
+
+    mat-icon.tree-node-icon {
+        height: 24px;
+        width: 24px;
+        font-size: 24px;
+        margin-right: 4px;
+    }
+
+    .tree-node-label {
+        height: 24px;
+        font-size: 16px;
+    }
+
+    .margin-component {
+        width: 8px;
+        margin-right: 4px;
+    }
+
+    .menu-item-focus-overlay {
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        pointer-events: none;
+        border-radius: inherit;
+        background: black;
+        transition: opacity 200ms cubic-bezier(0.35, 0, 0.25, 1), background-color 200ms cubic-bezier(0.35, 0, 0.25, 1);
+    }
+}
+
+.tree-node:hover {
+    .menu-item-focus-overlay {
+        opacity: 0.04;
+    }
+}
+
+.margin-top-default {
+    margin-top: 8px;
+}
+
+.margin-top-x2 {
+    margin-top: 16px;
+}
+
+.logo-tool {
+    height: 48px;
+}
+
+.logoimg-tool {
+    height: 46px;
+    outline: none !important;
+    cursor: pointer;
+    background: #fafafa;
+}
+
+.toolbar {
+    min-height: 48px !important;
+    height: 48px;
+    border-bottom: 1px solid #ddd;
+}
+
+@media screen and (max-width: 959.99px) {
+    .rail-container {
+        height: calc(100% - 49px);
+    }
+
+    .rail-content {
+        width: 60px;
+        min-width: 60px;
+        top: 0px;
+        border-right: none !important;
+    }
+
+    .margin-top-65 {
+        margin-top: 16px;
+    }
+
+    .padding-top-65 {
+        padding-top: 16px;
+    }
+}
+
+.profile-tooltip {
+    font-size: 20px;
+}
+
+.sidemenu-icon {
+    line-height: unset !important;
+}
+
+.line {
+    width: calc(100% - 16px);
+    padding-left: 8px;
+    padding-right: 8px;
+    flex: 1;
+}
+
+.headline-text {
+    color: rgba(0, 0, 0, 0.7);
+    padding-left: 8px;
+    padding-right: 10px;
+    margin-bottom: 8px;
+}
+
+.large-menu-item {
+    height: 64px;
+    line-height: 64px;
+}
+
+.large-menu-item-text {
+    line-height: 32px;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.box-container {
+    box-sizing: content-box;
+    display: block;
+    overflow: hidden;
+}
+
+.expansion-indicator {
+    color: rgba(0, 0, 0, 0.5);
+    margin-right: 10px;
+}
+
+.expansion-indicator::after {
+    border-style: solid;
+    border-width: 0 2px 2px 0;
+    content: &quot;&quot;;
+    display: inline-block;
+    padding: 3px;
+    vertical-align: middle;
+    transform: rotate(45deg);
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="drawer-control rail-color" fxLayoutAlign="start center" fxHide.lt-md>    <button mat-icon-button (click)="toggleMenu()" class="mat-button mat-typography menu-font-color">        <mat-icon>menu</mat-icon>    </button></div><mat-toolbar fxHide.gt-sm class="toolbar">    <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between stretch">        <div fxFlex fxLayoutAlign="start center">            <button mat-icon-button (click)="toggleMenu()">                <mat-icon>menu</mat-icon>            </button>        </div>        <div class="logo-tool" fxLayoutAlign="center center" fxFlex>            <img #logo [alt]="imageAlt" [src]="image" class="logoimg-tool"                 [routerLink]="imageRouterLink !== undefined ? imageRouterLink : []">        </div>        <div fxFlex></div>    </mat-toolbar-row></mat-toolbar><mat-spinner *ngIf="!logo"></mat-spinner><mat-sidenav-container class="rail-container">    <mat-sidenav mode="side" [(opened)]="configLeftMenu.opened" position="start"                 [disableClose]="configLeftMenu.disableClose"                 class="rail-content">        <div fxLayout="column" class="rail-color" fxFlex>            <div *ngTemplateOutlet="portalLeftMenu || defaultLeftSide"></div>            <div fxFlex></div>            <mat-menu #userRailMenu="matMenu">                <div mat-menu-item role="menuitem" class="large-menu-item" fxLayout="row" fxFlexAlign="center center"                    [routerLink]="profileRouterLink" routerLinkActive="active">                    <mat-icon class="margin-auto" fxFlex>face</mat-icon>                    <div class="large-menu-item" fxLayout="column" fxFlexAlign="start center" fxFlex>                        <span class="large-menu-item-text" fxFlex="50">{{user.fullName}}</span>                        <span class="large-menu-item-text" style="font-size: 12px;" fxFlex="50">{{user.email}}</span>                    </div>                </div>                <button mat-menu-item (click)="logout()">                    <mat-icon>exit_to_app</mat-icon>                    <span>{{ \'toolbar.menu.logout\' | translate }}</span>                </button>            </mat-menu>            <button *ngIf="includeUser" mat-icon-button [matMenuTriggerFor]="userRailMenu" class="mat-button mat-typography menu-font-color"                    [matTooltip]="user.fullName"                    [matTooltipPosition]="\'right\'">                <mat-icon>account_circle</mat-icon>            </button>            <div *ngIf="includeLanguage" fxLayout="row" class="icon-container" fxLayoutAlign="center center">                <nc-language-selector fxLayout="row" [language]="getLang()"></nc-language-selector>            </div>            <mat-menu #railMenu="matMenu">                <button *ngFor=\'let item of moreMenuItems; trackBy: viewsTrackBy\' mat-menu-item                        [routerLink]=\'item.routing.path\' routerLinkActive="active">                    <mat-icon>{{item.navigation.icon}}</mat-icon>                    <span>{{item.navigation.title}}</span>                </button>            </mat-menu>            <!--            <div fxLayout="row" class="margin-bottom-x2 icon-container" matTooltip="Otvoriť menu"-->            <!--                 matTooltipPosition="right"-->            <!--                 fxLayoutAlign="center center">-->            <!--                <button mat-icon-button [matMenuTriggerFor]="railMenu">-->            <!--                    <mat-icon class="icon-large sidemenu-icon">more_vert</mat-icon>-->            <!--                </button>-->            <!--            </div>-->            <button *ngIf="includeMoreMenu" mat-icon-button [matMenuTriggerFor]="railMenu"                    class="mat-button mat-typography menu-font-color margin-bottom-x2"                    [matTooltip]="\'toolbar.menu.open\' | translate"                    matTooltipPosition="right">                <mat-icon>more_vert</mat-icon>            </button>        </div>    </mat-sidenav>    <mat-sidenav-content>        <mat-sidenav-container class="drawer-container">            <mat-sidenav [mode]="configRightMenu.mode" [(opened)]="configRightMenu.opened" position="start"                         [disableClose]="configRightMenu.disableClose"                         class="drawer-content mat-elevation-z8"                         mwlResizable                         [style.width.px]="configRightMenu.width"                         [resizeCursorPrecision]="20"                         [resizeEdges]="{right: true}"                         (resizing)="onResizeEvent($event)">                <div *ngTemplateOutlet="portalRightMenu || defaultRightSide"></div>            </mat-sidenav>            <mat-sidenav-content>                <ng-content></ng-content>            </mat-sidenav-content>        </mat-sidenav-container>    </mat-sidenav-content></mat-sidenav-container><ng-template #defaultLeftSide>    <!--    <div fxLayout="row" class="icon-container" fxLayoutAlign="center center"-->    <!--         (click)=\'onHomeClick()\'>-->    <!--        <mat-icon class="icon-large" [matTooltip]="\'Home\'" [matTooltipPosition]="\'right\'">home</mat-icon>-->    <!--    </div>-->    <button mat-icon-button (click)="onHomeClick()" class="mat-button mat-typography menu-font-color"            [matTooltip]="\'toolbar.menu.home\' | translate"            matTooltipPosition="right">        <mat-icon>home</mat-icon>    </button>    <!--    <div *ngIf=\'!isOnZeroLevel()\' fxLayout="row" class="icon-container" fxLayoutAlign="center center"-->    <!--         (click)=\'onBackClick()\'>-->    <!--        <mat-icon class="icon-large" [matTooltip]="\'Back\'" [matTooltipPosition]="\'right\'">arrow_back</mat-icon>-->    <!--    </div>-->    <button *ngIf=\'!isOnZeroLevel() && (canGoBackLoading$ | async) === false\' mat-icon-button (click)="onBackClick()"            class="mat-button mat-typography menu-font-color" [matTooltip]="\'toolbar.menu.back\' | translate"            matTooltipPosition="right">        <mat-icon>arrow_back</mat-icon>    </button>    <div *ngIf="(canGoBackLoading$ | async)" fxLayout="column" fxLayoutAlign="center center" class="margin-top-default">        <mat-spinner color="primary" diameter="30" mode="indeterminate"></mat-spinner>    </div>    <div class="margin-top-x2"></div>    <!--    <div *ngFor=\'let node of leftNodes; trackBy: uriNodeTrackBy\' fxLayout="row" class="icon-container"-->    <!--         fxLayoutAlign="center center"-->    <!--         (click)=\'onLeftSideClick(node)\'>-->    <!--        <mat-icon class="icon-large" [matTooltip]="node.name"-->    <!--                  [matTooltipPosition]="\'right\'">{{node.id === currentNode.id ? \'folder_open\' : \'folder\'}}</mat-icon>-->    <!--    </div>-->    <button *ngFor=\'let node of leftNodes; trackBy: uriNodeTrackBy\' mat-icon-button (click)="onNodeClick(node)"            class="mat-button mat-typography menu-font-color" [matTooltip]="node.name" [matTooltipPosition]="\'right\'"            [ngClass]="node.id === currentNode.id ? \'rail-selected-color\' : \'\'">        <mat-icon>{{node.id === currentNode.id ? openedFolderIcon : folderIcon}}</mat-icon>    </button>    <div *ngIf="(leftLoading$ | async)" fxLayout="column" fxLayoutAlign="center center" class="margin-top-default">        <mat-spinner color="primary" diameter="30" mode="indeterminate"></mat-spinner>    </div></ng-template><ng-template #defaultRightSide>    <div class="logo" fxLayoutAlign="center center" fxHide.lt-md>        <img *ngIf="image !== undefined" [alt]="imageAlt" [src]="image" class="logoimg"             [routerLink]="imageRouterLink !== undefined ? imageRouterLink : []">    </div>    <div *ngIf="(rightLoading$ | async) === false" ngClass.gt-sm="padding-top-8">        <div class="margin-auto cursor-pointer" *ngIf=\'!isRightNodesEmpty()\' (click)="toggleSection(\'folders\')"             fxLayout="row" fxFlexAlign="start center">            <span class="headline-text mat-typography">{{foldersCategoryName | translate}}</span>            <div fxFlex></div>            <span *ngIf="isSectionOpen" [@indicatorRotate]="isSectionOpen.folders ? \'expanded\' : \'collapsed\'"                  class="expansion-indicator mat-typography"></span>        </div>        <div [@sectionExpansion]="isSectionOpen.folders ? \'expanded\' : \'collapsed\'" class="box-container">            <div *ngFor=\'let node of rightNodes; trackBy: uriNodeTrackBy\' (click)="onNodeClick(node)"                 class="tree-node mat-typography mat-body-2" fxLayoutAlign="start center" routerLinkActive="active">                <mat-icon class="tree-node-icon">folder</mat-icon>                <span>{{node.name}}</span>                <span class="menu-item-focus-overlay"></span>            </div>        </div>        <div class="margin-auto" *ngIf=\'!isViewsEmpty()\' fxLayout="column" fxFlexAlign="center start">            <div *ngIf="!isRightNodesEmpty()" class="line margin-bottom-x2">                <mat-divider></mat-divider>            </div>            <div class="cursor-pointer" (click)="toggleSection(\'views\')" fxLayout="row" fxFlexAlign="start center"                 fxFlex>                <span class="headline-text mat-typography">{{viewsCategoryName | translate}}</span>                <div fxFlex></div>                <span *ngIf="isSectionOpen" [@indicatorRotate]="isSectionOpen.views ? \'expanded\' : \'collapsed\'"                      class="expansion-indicator mat-typography"></span>            </div>        </div>        <div [@sectionExpansion]="isSectionOpen.views ? \'expanded\' : \'collapsed\'" class="box-container">            <div *ngFor=\'let view of views; trackBy: viewsTrackBy\' class="tree-node mat-typography"                 fxLayoutAlign="start center" [routerLink]=\'view.routing.path\' routerLinkActive="active">                <mat-icon class="tree-node-icon">{{view.navigation.icon}}</mat-icon>                <span>{{view.navigation.title}}</span>                <span class="menu-item-focus-overlay"></span>            </div>        </div>    </div>    <div *ngIf="(rightLoading$ | async)" fxLayout="column" fxLayoutAlign="center center" class="margin-top-default">        <mat-spinner color="primary" diameter="40" mode="indeterminate"></mat-spinner>    </div></ng-template></div>'
+    var COMPONENTS = [{'name': 'AddChildNodeComponent', 'selector': 'nc-add-child-node'},{'name': 'AdvancedSearchComponent', 'selector': 'nc-advanced-search'},{'name': 'AuthenticationOverlayComponent', 'selector': 'nc-authentication-overlay'},{'name': 'BarchartCardComponent', 'selector': 'nc-barchart-card'},{'name': 'BooleanFieldComponent', 'selector': 'nc-boolean-field'},{'name': 'BreadcrumbsComponent', 'selector': 'nc-breadcrumbs'},{'name': 'ButtonFieldComponent', 'selector': 'nc-button-field'},{'name': 'CaseListComponent', 'selector': 'nc-case-list'},{'name': 'CaseListPaginatorComponent', 'selector': 'nc-case-list-paginator'},{'name': 'CasePanelComponent', 'selector': 'nc-case-panel'},{'name': 'CaseSearchComponent', 'selector': 'nc-case-search'},{'name': 'CountCardComponent', 'selector': 'nc-count-card'},{'name': 'CreateCaseButtonComponent', 'selector': 'nc-create-case-button'},{'name': 'DashboardContentComponent', 'selector': 'nc-dashboard-content'},{'name': 'DataFieldTemplateComponent', 'selector': 'nc-data-field-template'},{'name': 'DateFieldComponent', 'selector': 'nc-date-field'},{'name': 'DateTimeFieldComponent', 'selector': 'nc-date-time-field'},{'name': 'DefaultSimpleTaskViewComponent', 'selector': 'nc-default-simple-task-view'},{'name': 'DefaultTabbedCaseViewComponent', 'selector': 'nc-default-tabbed-case-view'},{'name': 'DefaultTabbedTaskViewComponent', 'selector': 'nc-default-tabbed-task-view'},{'name': 'DefaultTabViewComponent', 'selector': 'nc-default-tab-view'},{'name': 'EasymdeWrapperComponent', 'selector': 'nc-easymde-wrapper'},{'name': 'EditModeComponent', 'selector': 'nc-edit-mode'},{'name': 'EmailSubmissionFormComponent', 'selector': 'nc-email-submission-form'},{'name': 'EnumerationAutocompleteDynamicFieldComponent', 'selector': 'nc-enumeration-autocomplete-dynamic-field'},{'name': 'EnumerationAutocompleteSelectFieldComponent', 'selector': 'nc-enumeration-autocomplete-select-field'},{'name': 'EnumerationFieldComponent', 'selector': 'nc-enumeration-field'},{'name': 'EnumerationIconFieldComponent', 'selector': 'nc-enumeration-icon-field'},{'name': 'EnumerationListFieldComponent', 'selector': 'nc-enumeration-list-field'},{'name': 'EnumerationSelectFieldComponent', 'selector': 'nc-enumeration-select-field'},{'name': 'EnumerationStepperFieldComponent', 'selector': 'nc-enumeration-stepper-field'},{'name': 'FieldComponentResolverComponent', 'selector': 'nc-field-component-resolver'},{'name': 'FileFieldComponent', 'selector': 'nc-file-field'},{'name': 'FileListFieldComponent', 'selector': 'nc-file-list-field'},{'name': 'FilterFieldComponent', 'selector': 'nc-filter-field'},{'name': 'FilterFieldContentComponent', 'selector': 'nc-filter-field-content'},{'name': 'FilterSelectorComponent', 'selector': 'nc-filter-selector'},{'name': 'ForgottenPasswordFormComponent', 'selector': 'nc-forgotten-password-form'},{'name': 'FulltextSearchComponent', 'selector': 'nc-fulltext-search'},{'name': 'GroupNavigationComponentResolverComponent', 'selector': 'nc-group-navigation-component-resolver'},{'name': 'HeaderComponent', 'selector': 'nc-header'},{'name': 'HtmlTextareaFieldComponent', 'selector': 'nc-html-textarea-field'},{'name': 'I18nDividerFieldComponent', 'selector': 'nc-i18n-divider-field'},{'name': 'I18nFieldComponent', 'selector': 'nc-i18n-field'},{'name': 'I18nTextFieldComponent', 'selector': 'nc-i18n-text-field'},{'name': 'IframeCardComponent', 'selector': 'nc-iframe-card'},{'name': 'ImmediateFilterTextComponent', 'selector': 'nc-immediate-filter-text'},{'name': 'ImmediateFilterTextContentComponent', 'selector': 'nc-immediate-filter-text-content'},{'name': 'ImportNetComponent', 'selector': 'nc-import-net'},{'name': 'InternalLinkComponent', 'selector': 'nc-internal-link'},{'name': 'LanguageSelectorComponent', 'selector': 'nc-language-selector'},{'name': 'LdapGroupRoleAssignmentComponent', 'selector': 'nc-ldap-group-role-assignment'},{'name': 'LegalNoticeComponent', 'selector': 'nc-legal-notice'},{'name': 'LinearGaugeCardComponent', 'selector': 'nc-linear-gauge-card'},{'name': 'LineChartCardComponent', 'selector': 'nc-line-chart-card'},{'name': 'LoadFilterComponent', 'selector': 'nc-load-filter'},{'name': 'LoadingModeComponent', 'selector': 'nc-loading-mode'},{'name': 'LoginFormComponent', 'selector': 'nc-login-form'},{'name': 'LogoutShortcutComponent', 'selector': 'nc-logout-shortcut'},{'name': 'MultichoiceAutocompleteFieldComponent', 'selector': 'nc-multichoice-autocomplete-field'},{'name': 'MultichoiceFieldComponent', 'selector': 'nc-multichoice-field'},{'name': 'MultichoiceListFieldComponent', 'selector': 'nc-multichoice-list-field'},{'name': 'MultichoiceSelectFieldComponent', 'selector': 'nc-multichoice-select-field'},{'name': 'NavigationDoubleDrawerComponent', 'selector': 'nc-navigation-double-drawer'},{'name': 'NavigationDrawerComponent', 'selector': 'nc-navigation-drawer'},{'name': 'NavigationRailComponent', 'selector': 'nc-navigation-rail'},{'name': 'NavigationTreeComponent', 'selector': 'nc-navigation-tree'},{'name': 'NewCaseComponent', 'selector': 'nc-new-case'},{'name': 'NumberCurrencyFieldComponent', 'selector': 'nc-number-currency-field'},{'name': 'NumberDefaultFieldComponent', 'selector': 'nc-number-default-field'},{'name': 'NumberFieldComponent', 'selector': 'nc-number-field'},{'name': 'OptionSelectorComponent', 'selector': 'nc-option-selector'},{'name': 'PanelComponent', 'selector': 'nc-app-panel'},{'name': 'PanelItemComponent', 'selector': 'nc-panel-item'},{'name': 'PasswordTextFieldComponent', 'selector': 'nc-password-text-field'},{'name': 'PieChartCardComponent', 'selector': 'nc-pie-chart-card'},{'name': 'PortalCardComponent', 'selector': 'nc-portal-card'},{'name': 'PreviewDialogComponent', 'selector': 'nc-preview-dialog'},{'name': 'ProfileComponent', 'selector': 'nc-user-profile'},{'name': 'PublicWorkflowPanelComponent', 'selector': 'nc-public-workflow-panel'},{'name': 'QuickPanelComponent', 'selector': 'nc-quick-panel'},{'name': 'RedirectComponent', 'selector': 'nc-redirect'},{'name': 'RegistrationFormComponent', 'selector': 'nc-registration-form'},{'name': 'RemoveNodeComponent', 'selector': 'nc-remove-node'},{'name': 'RequiredLabelComponent', 'selector': 'nc-required-label'},{'name': 'RichTextareaFieldComponent', 'selector': 'nc-rich-textarea-field'},{'name': 'RoleAssignmentComponent', 'selector': 'nc-role-assignment'},{'name': 'SaveFilterComponent', 'selector': 'nc-save-filter'},{'name': 'SearchClauseComponent', 'selector': 'nc-search-clause'},{'name': 'SearchComponent', 'selector': 'nc-search'},{'name': 'SearchConfigurationInputComponent', 'selector': 'nc-search-configuration-input'},{'name': 'SearchModeComponent', 'selector': 'nc-search-mode'},{'name': 'SearchOperandInputComponent', 'selector': 'nc-search-operand-input'},{'name': 'SearchPredicateComponent', 'selector': 'nc-search-predicate'},{'name': 'SideMenuContainerComponent', 'selector': 'nc-side-menu-container'},{'name': 'SimpleTextFieldComponent', 'selector': 'nc-simple-text-field'},{'name': 'SingleTaskComponent', 'selector': 'nc-single-task'},{'name': 'SortModeComponent', 'selector': 'nc-sort-mode'},{'name': 'TabViewComponent', 'selector': 'nc-tab-view'},{'name': 'TaskContentComponent', 'selector': 'nc-task-content'},{'name': 'TaskListComponent', 'selector': 'nc-task-list'},{'name': 'TaskListPaginationComponent', 'selector': 'nc-task-list-pagination'},{'name': 'TaskPanelComponent', 'selector': 'nc-task-panel'},{'name': 'TaskSearchComponent', 'selector': 'nc-task-search'},{'name': 'TextareaFieldComponent', 'selector': 'nc-textarea-field'},{'name': 'TextFieldComponent', 'selector': 'nc-text-field'},{'name': 'ToolbarComponent', 'selector': 'nc-toolbar'},{'name': 'TreeComponent', 'selector': 'nc-tree-component'},{'name': 'TreeTaskContentComponent', 'selector': 'nc-tree-task-content'},{'name': 'UserAssignComponent', 'selector': 'nc-user-assign'},{'name': 'UserAssignItemComponent', 'selector': 'nc-user-assign-item'},{'name': 'UserAssignListComponent', 'selector': 'nc-user-assign-list'},{'name': 'UserCardComponent', 'selector': 'nc-user-card'},{'name': 'UserFieldComponent', 'selector': 'nc-user-field'},{'name': 'UserInviteComponent', 'selector': 'nc-user-invite'},{'name': 'UserListFieldComponent', 'selector': 'nc-user-list-field'},{'name': 'WorkflowPanelComponent', 'selector': 'nc-workflow-panel'},{'name': 'WorkflowViewComponent', 'selector': 'nc-workflow-view'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'NavigationDoubleDrawerComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'NavigationDoubleDrawerComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

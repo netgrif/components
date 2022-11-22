@@ -50,6 +50,9 @@
             "cancel": "Zrušiť",
             "noData": "Táto úloha nemá žiadne údaje. Stlačte dokončiť pre pokračovanie.",
             "redirecting": "Presmerovanie..."
+        },
+        "footer": {
+            "defaultText": "NETGRIF, s.r.o. © 2022"
         }
     },
     "side-menu": {
@@ -84,7 +87,8 @@
             "errThird": "Farba je povinné pole.",
             "noNets": "Žiadne povolené siete",
             "createCase": "Úspešne vytvorený nový prípad",
-            "defaultCaseName": "s prednastaveným názvom prípadu"
+            "defaultCaseName": "s prednastaveným názvom prípadu",
+            "createCaseError": "Nový prípad vytvorený, nastala však chyba pri vykonávaní akcií"
         },
         "user": {
             "assign": "Priradiť používateľa",
@@ -98,9 +102,19 @@
             "noUser": "Neexistuje žiadna Ldap skupina",
             "err": "Nepodarilo sa načítať Ldap skupiny"
         },
+        "tooltip": {
+            "SelectAll": "Označiť všetko",
+            "DeselectAll": "Odznačit všetko"
+        },
         "option-selector": {
             "select": "Zvoliť",
             "choose-one-option": "Vyberte jednu z možností"
+        },
+        "impersonation": {
+            "title": "Zastúpenie používateľa",
+            "submit": "Zastúpiť",
+            "cease": "Zrušiť zastúpenie",
+            "impersonating": "v zastúpení"
         }
     },
     "search": {
@@ -267,6 +281,9 @@
         },
         "user": {
             "selectUser": "Vyberte používateľa"
+        },
+        "textarea": {
+            "insertText": "Sem zadajte text..."
         }
     },
     "dialog": {
@@ -280,6 +297,7 @@
         "login": {
             "length": "Prihlasovacie meno musí mať aspoň 4 písmená",
             "login": "Prihlasovacie meno",
+            "wrongCredentials": "Nesprávne prihlasovacie údaje!",
             "loginButton": "Prihlásiť",
             "reset": "Obnova hesla",
             "sign": "Registrovať",
@@ -375,7 +393,8 @@
         },
         "ldapGroup-list": {
             "noLdapGroupsWereFound": "Žiadna LDAP skupina nebola najdená",
-            "listTitle": "Ldap Skupiny"
+            "listTitle": "LDAP Skupiny",
+            "count": "Počet skupín"
         },
         "process-list": {
             "newestVersion": "Najnovšia verzia",
@@ -416,6 +435,7 @@
     },
     "workflow": {
         "delete": "zmazať",
+        "download": "stiahnuť",
         "dialog": {
             "header": "Ste si istý, že chcete vymazať proces '{{name}}' verzia '{{version}}'?",
             "content": "Spolu s procesom budú vymazané aj všetky prípady z neho vytvorené!",
@@ -444,5 +464,16 @@
     },
     "dynamicNavigation": {
         "couldNotResolveView": "Počas načítania zobrazenia sa vyskytla chyba. Zobrazenie nie je možné zobraziť"
+    },
+    "impersonation": {
+        "user": {
+            "successfullyRepresented": "Používateľ bol úspešne zastúpený",
+            "currentlyAlreadyRepresented": "Používateľ je momentálne zastupovaný",
+            "currentlyLogged": "Používateľ je momentálne prihlásený"
+        },
+        "action": {
+            "failed": "Akciu sa nepodarilo vykonať",
+            "deactivated": "Zastupovanie bolo úspešne deaktivované"
+        }
     }
 }
