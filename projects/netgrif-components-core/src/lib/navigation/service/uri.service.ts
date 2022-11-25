@@ -1,4 +1,5 @@
-import {Injectable, OnDestroy} from '@angular/core';
+import {HttpParams} from '@angular/common/http';
+import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {CaseSearchRequestBody, PetriNetSearchRequest} from '../../filter/models/case-search-request-body';
@@ -7,7 +8,10 @@ import {ActiveGroupService} from '../../groups/services/active-group.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {CaseResourceService} from '../../resources/engine-endpoint/case-resource.service';
 import {Case} from '../../resources/interface/case';
+import {Page} from '../../resources/interface/page';
 import {LoadingEmitter} from '../../utility/loading-emitter';
+import {PaginationParams} from '../../utility/pagination/pagination-params';
+import {NAE_URI_NODE_CASES_PAGE_SIZE} from '../model/size-menu-injection-token';
 import {UriNodeResource} from '../model/uri-resource';
 import {UriResourceService} from './uri-resource.service';
 
@@ -28,7 +32,8 @@ export class UriService implements OnDestroy {
     constructor(protected _logger: LoggerService,
                 protected _resourceService: UriResourceService,
                 protected _caseResourceService: CaseResourceService,
-                protected _activeGroupService: ActiveGroupService) {
+                protected _activeGroupService: ActiveGroupService,
+                @Optional() @Inject(NAE_URI_NODE_CASES_PAGE_SIZE) protected pageSize: string = '20') {
         this._rootLoading$ = new LoadingEmitter();
         this._parentLoading$ = new LoadingEmitter();
         this._activeNode$ = new BehaviorSubject<UriNodeResource>(undefined);
@@ -137,8 +142,10 @@ export class UriService implements OnDestroy {
      * Get cases under uri node
      * @param node parent node of cases
      * @param processIdentifiers optional search filter for process identifier to get only cases from the process
+     * @param pageNumber optional parameter for load page on the index. Default value is 0 (the first page).
+     * @param pageSize optional parameter for loaded page size. Defaults to value of injection token URI_NODE_CASES_PAGE_SIZE or to value "20".
      */
-    public getCasesOfNode(node?: UriNodeResource, processIdentifiers?: Array<string>): Observable<Array<Case>> {
+    public getCasesOfNode(node?: UriNodeResource, processIdentifiers?: Array<string>, pageNumber: number = 0, pageSize: string | number = this.pageSize): Observable<Page<Case>> {
         if (!node) node = this.activeNode;
         const searchBody: CaseSearchRequestBody = {
             uriNodeId: node.id,
@@ -151,9 +158,10 @@ export class UriService implements OnDestroy {
         //     searchBody.data = {};
         //     searchBody.data['parentId'] = this._activeGroupService.activeGroup.stringId;
         // }
-        return this._caseResourceService.searchCases(SimpleFilter.fromCaseQuery(searchBody)).pipe(
-            map(page => page.content),
-        );
+        let httpParams = new HttpParams()
+            .set(PaginationParams.PAGE_SIZE, pageSize)
+            .set(PaginationParams.PAGE_NUMBER, pageNumber);
+        return this._caseResourceService.searchCases(SimpleFilter.fromCaseQuery(searchBody), httpParams);
     }
 
     /**

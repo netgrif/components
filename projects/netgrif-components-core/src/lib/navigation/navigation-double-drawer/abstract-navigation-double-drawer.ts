@@ -4,6 +4,7 @@ import {MatDrawerMode} from '@angular/material/sidenav';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ResizeEvent} from 'angular-resizable-element';
 import {forkJoin, Observable, Subscription} from 'rxjs';
+import {map} from 'rxjs/operators';
 import {RoleAccess, View} from '../../../commons/schema';
 import {AccessService} from '../../authorization/permission/access.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
@@ -363,19 +364,29 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
 
     protected loadRightSide() {
         this.rightLoading$.on();
-        forkJoin({
-            folders: this._uriService.getChildNodes(this._currentNode),
-            filters: this._uriService.getCasesOfNode(this._currentNode, FILTER_IDENTIFIERS),
-        }).subscribe(result => {
-            this.rightNodes = result.folders instanceof Array ? result.folders : [];
-            this.rightNodes.sort((a, b) => this.compareStrings(a.name, b.name));
-            this.views = (result.filters instanceof Array ? result.filters : []).map(f => this.resolveFilterCaseToViewNavigationItem(f)).filter(i => !!i);
-            if (!!this._childCustomViews[this._currentNode.uriPath]) {
-                this.views.push(...Object.values(this._childCustomViews[this._currentNode.uriPath]));
-            }
-            // @ts-ignore
-            this.views.sort((a, b) => this.compareStrings(a?.navigation?.title, b?.navigation?.title));
-            this.rightLoading$.off();
+        this._uriService.getCasesOfNode(this.currentNode, FILTER_IDENTIFIERS, 0, 1).subscribe(page => {
+            this._log.debug('Number of filters for uri ' + this._currentNode.uriPath + ': ' + page?.pagination?.totalElements);
+            forkJoin({
+                folders: this._uriService.getChildNodes(this._currentNode),
+                filters: page?.pagination?.totalElements === 0 ? of([]) : this._uriService.getCasesOfNode(this._currentNode, FILTER_IDENTIFIERS, 0, page.pagination.totalElements).pipe(
+                    map(p => p.content),
+                ),
+            }).subscribe(result => {
+                this.rightNodes = result.folders instanceof Array ? result.folders : [];
+                this.rightNodes.sort((a, b) => this.compareStrings(a.name, b.name));
+                this.views = (result.filters instanceof Array ? result.filters : []).map(f => this.resolveFilterCaseToViewNavigationItem(f)).filter(i => !!i);
+                if (!!this._childCustomViews[this._currentNode.uriPath]) {
+                    this.views.push(...Object.values(this._childCustomViews[this._currentNode.uriPath]));
+                }
+                // @ts-ignore
+                this.views.sort((a, b) => this.compareStrings(a?.navigation?.title, b?.navigation?.title));
+                this.rightLoading$.off();
+            }, error => {
+                this._log.error(error);
+                this.rightNodes = [];
+                this.views = [];
+                this.rightLoading$.off();
+            });
         }, error => {
             this._log.error(error);
             this.rightNodes = [];
