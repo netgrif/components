@@ -3,7 +3,7 @@ import {Component, Input, OnDestroy, OnInit, TemplateRef} from '@angular/core';
 import {MatDrawerMode} from '@angular/material/sidenav';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ResizeEvent} from 'angular-resizable-element';
-import {forkJoin, Observable, Subscription} from 'rxjs';
+import {forkJoin, Observable, of, Subscription} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {RoleAccess, View} from '../../../commons/schema';
 import {AccessService} from '../../authorization/permission/access.service';
