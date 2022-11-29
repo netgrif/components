@@ -108,13 +108,13 @@ describe('UriService', () => {
         });
     });
 
-    /*it('should get parts of path', done => {
+    it('should get parts of path', done => {
         service.getNodeByPath(MockUriResourceService.TEST1_PATH).subscribe(node => {
             const path = service.splitNodePath(node);
             expect(path.length).toEqual(1);
             expect(path[0]).toEqual(MockUriResourceService.TEST1_ID);
             done();
         });
-    });*/
+    });
 
 });
