@@ -161,7 +161,7 @@
              [routerLink]="imageRouterLink !== undefined ? imageRouterLink : []">
     </div>
     <div *ngIf="(rightLoading$ | async) === false" ngClass.gt-sm="padding-top-8">
-        <div class="margin-auto cursor-pointer" *ngIf='!isRightNodesEmpty()' (click)="toggleSection('folders')"
+        <div class="margin-auto cursor-pointer" *ngIf='!(rightNodes | isEmpty)' (click)="toggleSection('folders')"
              fxLayout="row" fxFlexAlign="start center">
             <span class="headline-text mat-typography">{{foldersCategoryName | translate}}</span>
             <div fxFlex></div>
@@ -177,8 +177,8 @@
             </div>
         </div>
 
-        <div class="margin-auto" *ngIf='!isViewsEmpty()' fxLayout="column" fxFlexAlign="center start">
-            <div *ngIf="!isRightNodesEmpty()" class="line margin-bottom-x2">
+        <div class="margin-auto" *ngIf='!(views | isEmpty)' fxLayout="column" fxFlexAlign="center start">
+            <div *ngIf="!(rightNodes | isEmpty)" class="line margin-bottom-x2">
                 <mat-divider></mat-divider>
             </div>
             <div class="cursor-pointer" (click)="toggleSection('views')" fxLayout="row" fxFlexAlign="start center"
