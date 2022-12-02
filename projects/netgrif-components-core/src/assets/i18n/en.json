@@ -232,6 +232,8 @@
             "phone": "Entered text must be in telephone number format",
             "email": "Entered text must be in email format",
             "dateRange": "Entered date must be between {{left}} and {{right}}",
+            "datePast": "Entered date must be within {{right}}",
+            "dateFuture": "Entered date must be from {{left}}",
             "weekend": "Entered date must be weekend day",
             "workday": "Entered date must be week day",
             "enumeration": "One of the options must be selected",
