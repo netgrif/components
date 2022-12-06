@@ -82,6 +82,8 @@ export * from './filter-field/models/filter-field-injection-token';
 /* Enums */
 export * from './models/template-appearance';
 export * from './models/material-appearance';
+export * from './enumeration-field/enumeration-autocomplete-select-field/enumeration-autocomplete-filter-property'
+export * from './multichoice-field/multichoice-autocomplete-field/multichoice-autocomplete-filter-property'
 
 /* Services */
 export * from './i18n-field/language-icons.service';

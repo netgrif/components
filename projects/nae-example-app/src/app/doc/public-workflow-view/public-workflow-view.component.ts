@@ -66,6 +66,6 @@ export class PublicWorkflowViewComponent extends AbstractWorkflowViewComponent {
     }
 
     handleClick(workflow: Net) {
-        this._router.navigate([this._route.snapshot.url.join('/') + '/' + workflow.identifier]);
+        this._router.navigate([this._route.snapshot.url.join('/') + '/' + btoa(workflow.identifier)]);
     }
 }

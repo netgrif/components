@@ -5,6 +5,7 @@ import {map, startWith} from 'rxjs/operators';
 import {EnumerationField, EnumerationFieldValidation, EnumerationFieldValue} from '../models/enumeration-field';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {TranslateService} from '@ngx-translate/core';
+import {EnumerationAutocompleteFilterProperty} from "./enumeration-autocomplete-filter-property";
 
 @Component({
     selector: 'ncc-abstract-enumeration-autocomplete-field',
@@ -33,12 +34,44 @@ export abstract class AbstractEnumerationAutocompleteSelectFieldComponent implem
         this.filteredOptions = undefined;
     }
 
+    protected checkPropertyInComponent(property: string): boolean {
+        return !!this.enumerationField.component && !!this.enumerationField.component.properties && property in this.enumerationField.component.properties;
+    }
+
+    protected filterType(): string | undefined {
+        if (this.checkPropertyInComponent('filter')) {
+            return this.enumerationField.component.properties.filter;
+        }
+    }
+
+    protected _filter(value: string): Array<EnumerationFieldValue> {
+        let filterType = this.filterType()?.toLowerCase()
+        switch (filterType) {
+            case EnumerationAutocompleteFilterProperty.SUBSTRING:
+                return this._filterInclude(value);
+            case EnumerationAutocompleteFilterProperty.PREFIX:
+                return this._filterIndexOf(value);
+            default:
+                return this._filterIndexOf(value);
+        }
+    }
+
+    protected _filterInclude(value: string): Array<EnumerationFieldValue> {
+        const filterValue = value?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        return this.enumerationField.choices.filter(option =>
+            option.value.toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .includes(filterValue));
+    }
+
+
     /**
      * Function to filter out matchless options without accent and case-sensitive differences
      * @param  value to compare matching options
      * @return  return matched options
      */
-    private _filter(value: string): Array<EnumerationFieldValue> {
+    protected _filterIndexOf(value: string): Array<EnumerationFieldValue> {
         const filterValue = value?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
         return this.enumerationField.choices.filter(option => option.value.toLowerCase().normalize('NFD')
