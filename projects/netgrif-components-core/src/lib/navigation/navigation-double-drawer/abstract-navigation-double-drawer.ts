@@ -39,6 +39,8 @@ export const FILTER_IDENTIFIERS = [
 ];
 export const FILTER_VIEW_TASK_TRANSITION_ID = 'view';
 
+export const FILTER_DEFAULT_HEADERS_ID = 'default_headers';
+
 const LEFT_DRAWER_DEFAULT_WIDTH = 60;
 const RIGHT_DRAWER_DEFAULT_WIDTH = 240;
 const RIGHT_DRAWER_DEFAULT_MIN_WIDTH = 180;
@@ -366,6 +368,8 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             id: filter.stringId,
             resource: filter
         };
+        const defaultHeaders = this.resolveDefaultHeaders(filter);
+        console.log(defaultHeaders);
         const resolvedRoles = this.resolveAccessRoles(filter, 'allowed_roles');
         const resolvedBannedRoles = this.resolveAccessRoles(filter, 'banned_roles');
         if(!!resolvedRoles) item.access['role'] = resolvedRoles;
@@ -386,6 +390,12 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             });
         });
         return roles;
+    }
+
+    protected resolveDefaultHeaders(filter: Case): Array<String> | undefined {
+        const defaultHeadersResponse = filter.immediateData.find(f => f.stringId === FILTER_DEFAULT_HEADERS_ID)?.value;
+        if (!defaultHeadersResponse || Object.keys(defaultHeadersResponse).length === 0) return undefined;
+        return defaultHeadersResponse.split(",")
     }
 
     protected getFilterRoutingPath(filterCase: Case) {
