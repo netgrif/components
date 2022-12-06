@@ -5,13 +5,39 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres
 to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-Full Changelog: [https://github.com/netgrif/components/commits/v6.2.3](https://github.com/netgrif/components/commits/v6.2.3)
+Full Changelog: [https://github.com/netgrif/components/commits/v6.2.5](https://github.com/netgrif/components/commits/v6.2.5)
+
+## [6.2.5](https://github.com/netgrif/components/releases/tag/v6.2.5) (2022-12-05)
+
+### Fixed
+
+- [NAE-1752] MatPrefix for currency field overrides prefix for dateField
+- [NAE-1754] Currency field not displaying symbol
+- [NAE-1758] Task on single task view is not rendering
+- [NAE-1760] Enumeration autocomplete constantly sending value
+- [NAE-1763] FileField value is not promoted to the frontend after "set data event"
+- [NAE-1766] Options on multichoice autocomplete do not refresh in a specific situation
 
 ## [6.3.0](https://github.com/netgrif/components/releases/tag/v6.3.0) (2022-10-01)
+
+### Fixed
+
+- [NAE-1762] Public view URL encoding
 
 ### Added
 
 - [NAE-1678] User impersonation
+
+## [6.2.4](https://github.com/netgrif/components/releases/tag/v6.2.4) (2022-10-12)
+
+### Fixed
+
+- [NAE-1744] Public view does not work delete file
+- [NAE-1745] Enumeration autocomplete constantly sending value
+
+### Added
+
+- [NAE-1751] Autocomplete new filter "include"
 
 ## [6.2.3](https://github.com/netgrif/components/releases/tag/v6.2.3) (2022-10-06)
 
@@ -30,8 +56,7 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.2.3](https://g
 - [NAE-1740] Disable "create case" button, while case is creating
 - [NAE-1741] 'Undefined' error on frontend when checking i18n translation equality
 - [NAE-1742] I18nField throws error on frontend when its value is null
-- [NAE-1743] File preview  change to null  object
-
+- [NAE-1743] File preview change to null object
 
 ## [6.2.2](https://github.com/netgrif/components/releases/tag/v6.2.2) (2022-09-28)
 

@@ -183,6 +183,8 @@ import {AbstractControl, ValidationErrors, ValidatorFn, Validators} from &#x27;@
 import {FieldTypeResource} from &#x27;../../../task-content/model/field-type-resource&#x27;;
 import {Component} from &#x27;../../models/component&#x27;;
 import {Validation} from &#x27;../../models/validation&#x27;;
+import {Observable} from &quot;rxjs&quot;;
+import {debounceTime} from &quot;rxjs/operators&quot;;
 
 export interface EnumerationFieldValue {
     key: string;
@@ -195,6 +197,7 @@ export enum EnumerationFieldValidation {
 }
 
 export class EnumerationField extends DataField&lt;string&gt; {
+    protected REQUEST_DEBOUNCE_TIME &#x3D; 600;
 
     constructor(stringId: string, title: string, value: string,
                 protected _choices: Array&lt;EnumerationFieldValue&gt;, behavior: Behavior, placeholder?: string, description?: string,
@@ -204,7 +207,7 @@ export class EnumerationField extends DataField&lt;string&gt; {
     }
 
     set choices(choices: Array&lt;EnumerationFieldValue&gt;) {
-         this._choices &#x3D; choices;
+        this._choices &#x3D; choices;
     }
 
     get choices(): Array&lt;EnumerationFieldValue&gt; {
@@ -213,6 +216,10 @@ export class EnumerationField extends DataField&lt;string&gt; {
 
     get fieldType(): FieldTypeResource {
         return this._fieldType;
+    }
+
+    public valueChanges(): Observable&lt;string&gt; {
+        return this._value.pipe(debounceTime(this.REQUEST_DEBOUNCE_TIME));
     }
 
     protected resolveFormControlValidators(): Array&lt;ValidatorFn&gt; {

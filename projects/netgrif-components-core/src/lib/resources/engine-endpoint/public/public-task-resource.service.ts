@@ -14,7 +14,7 @@ import {TaskReference} from '../../interface/task-reference';
 import {DataGroup} from '../../interface/data-groups';
 import {DataField} from '../../../data-fields/models/abstract-data-field';
 import {Task} from '../../interface/task';
-import {HttpEventType} from '@angular/common/http';
+import {HttpEventType, HttpParams} from '@angular/common/http';
 import {EventOutcomeMessageResource, MessageResource} from '../../interface/message-resource';
 import {GetDataGroupsEventOutcome} from '../../../event/model/event-outcomes/data-outcomes/get-data-groups-event-outcome';
 
@@ -169,9 +169,9 @@ export class PublicTaskResourceService extends TaskResourceService {
      * Delete file from the task
      * DELETE
      */
-    public deleteFile(taskId: string, fieldId: string, name?: string): Observable<MessageResource> {
+    public deleteFile(taskId: string, fieldId: string, name?: string, param?: HttpParams): Observable<MessageResource> {
         const url = !!name ? `public/task/${taskId}/file/${fieldId}/${name}` : `public/task/${taskId}/file/${fieldId}`;
-        return this._resourceProvider.delete$(url, this.SERVER_URL).pipe(
+        return this._resourceProvider.delete$(url, this.SERVER_URL, param).pipe(
             map(r => this.changeType(r, undefined))
         );
     }
