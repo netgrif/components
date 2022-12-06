@@ -23,7 +23,7 @@ export abstract class AbstractCurrencyNumberFieldComponent extends AbstractNumbe
         this.fieldType = this.TEXT_TYPE;
         this.transformedValue = this.transformCurrency(this.numberField.value?.toString());
         this.numberField.valueChanges().subscribe(value => {
-            if (value !== undefined) {
+            if (value !== undefined && value !== null) {
                 if (this.fieldType === this.TEXT_TYPE) {
                     this.transformedValue = this.transformCurrency(value.toString()) + this.WHITESPACE;
                 }
