@@ -7,11 +7,12 @@
             <span class='font-size-20'>{{ 'tasks.view.noTasksSatisfyingThisFilter' | translate }}</span>
         </div>
 
-        <div class='full-width full-heigh task-tab-background' fxFlex='100'>
+        <cdk-virtual-scroll-viewport itemSize="1" class="task-panel-scroll-container full-width full-height">
             <div *ngTemplateOutlet='pageHeader ?? defaultPageHeader'></div>
             <nc-task-panel
                 [textEllipsis]='textEllipsis'
-                [taskPanelData]='task' [selectedHeaders$]='selectedHeaders$'
+                [taskPanelData]='task'
+                [selectedHeaders$]='selectedHeaders$'
                 [forceLoadDataOnOpen]='forceLoadDataOnOpen'
                 [responsiveBody]='responsiveBody'
                 (taskEvent)='emitTaskEvent($event)'
@@ -27,7 +28,7 @@
                 <mat-spinner color='primary' diameter='52'></mat-spinner>
             </div>
             <div *ngTemplateOutlet='pageFooter ?? defaultPageFooter'></div>
-        </div>
+        </cdk-virtual-scroll-viewport>
 
         <ng-template #defaultPageHeader>
             <mat-card class="top-card">
@@ -36,7 +37,7 @@
         </ng-template>
 
         <ng-template #defaultPageFooter>
-            <mat-card class='bootom-card footer'>
+            <mat-card class='bottom-card footer'>
                 <span class="bottom-card-title footer-font"><strong>{{footerText ?? 'tasks.footer.defaultText' | translate}}</strong></span>
             </mat-card>
         </ng-template>
