@@ -14,7 +14,7 @@ export const getNetAndCreateCase = (router: Router,
                                     snackBarService: SnackBarService,
                                     translate: TranslateService,
                                     publicTaskLoadingService: PublicTaskLoadingService) => {
-    process.getNet(route.snapshot.paramMap.get('petriNetId')).pipe(mergeMap(net => {
+    process.getNet(atob(route.snapshot.paramMap.get('petriNetId'))).pipe(mergeMap(net => {
         if (net) {
             publicTaskLoadingService.setLoading$(true);
             const newCase = {

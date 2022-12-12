@@ -43,10 +43,11 @@
                        [disabled]="!editable"
                        (keydown.enter)="searchDatepicker.close()"
                        (focus)="editInput(); searchDatepicker.open()"
-                       (blur)="confirmInput()"
                        #operandInput>
                 <mat-datepicker-toggle matPrefix [for]="searchDatepicker"></mat-datepicker-toggle>
-                <mat-datepicker #searchDatepicker></mat-datepicker>
+                <mat-datepicker
+                    #searchDatepicker
+                    (closed)="confirmInput()"></mat-datepicker>
             </mat-form-field>
         </ng-template>
 
