@@ -4,7 +4,7 @@ import {
     AbstractSimpleDateTimeFieldComponent,
     DATE_TIME_FORMAT,
     NAE_INFORM_ABOUT_INVALID_DATA
-} from 'netgrif-components-core';
+} from '@netgrif/components-core';
 import { NGX_MAT_DATE_FORMATS } from '@angular-material-components/datetime-picker';
 
 @Component({
