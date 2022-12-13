@@ -173,7 +173,7 @@ export abstract class AbstractSingleTaskViewComponent extends AbstractViewWithHe
     public loading$: Observable&lt;boolean&gt;;
     private transitionId: string;
     private subRoute: Subscription | undefined;
-    protected subPanelData: Subscription;
+    protected subPanelData: Subscription | undefined;
 
     protected constructor(protected taskViewService: TaskViewService,
                           activatedRoute: ActivatedRoute) {
@@ -182,7 +182,6 @@ export abstract class AbstractSingleTaskViewComponent extends AbstractViewWithHe
         this.subRoute &#x3D; this._activatedRoute.paramMap.subscribe(paramMap &#x3D;&gt; {
             if (!!(paramMap?.[&#x27;params&#x27;]?.[TaskConst.TRANSITION_ID])) {
                 this.transitionId &#x3D; paramMap[&#x27;params&#x27;][TaskConst.TRANSITION_ID];
-                this.subPanelData.unsubscribe();
                 this.subPanelData &#x3D; this.taskViewService.tasks$.subscribe(tasks &#x3D;&gt;  {
                     if (!!tasks &amp;&amp; tasks.length &gt; 0) {
                         this.taskPanelData.next(this.resolveTransitionTask(tasks));
@@ -195,7 +194,9 @@ export abstract class AbstractSingleTaskViewComponent extends AbstractViewWithHe
 
     ngOnDestroy() {
         super.ngOnDestroy();
-        this.subRoute.unsubscribe();
+        if (!!this.subRoute) {
+            this.subRoute.unsubscribe();
+        }
         if (!!this.subPanelData) {
             this.subPanelData.unsubscribe();
         }
