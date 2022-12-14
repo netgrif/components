@@ -342,20 +342,20 @@ export abstract class TaskContentService implements OnDestroy {
     private isFieldInTaskRef(changedField: string): boolean {
         return !!this.taskFieldsIndex &&
             Object.keys(this.taskFieldsIndex)
-            .some(taskId => taskId !== this.task.stringId && this.taskFieldsIndex[taskId].fields[changedField]);
+                .some(taskId => taskId !== this.task.stringId && this.taskFieldsIndex[taskId].fields[changedField]);
     }
 
     private getReferencedTransitionId(changedField: string): string {
         if (!!this.taskFieldsIndex) {
-           const taskFieldsIndexId = this.getReferencedFieldTask(changedField);
-           return this.taskFieldsIndex[taskFieldsIndexId].transitionId;
+            const taskFieldsIndexId = this.getReferencedFieldTask(changedField);
+            return this.taskFieldsIndex[taskFieldsIndexId].transitionId;
         }
         return undefined;
     }
 
     private getReferencedTaskId(changedField: string): string {
         if (!!this.taskFieldsIndex) {
-            return  Object.keys(this.taskFieldsIndex).find(taskId =>
+            return Object.keys(this.taskFieldsIndex).find(taskId =>
                 Object.keys(this.taskFieldsIndex[taskId].fields).includes(changedField));
         }
         return undefined;
