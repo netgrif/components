@@ -33,7 +33,13 @@ export class UriService implements OnDestroy {
                 protected _resourceService: UriResourceService,
                 protected _caseResourceService: CaseResourceService,
                 protected _activeGroupService: ActiveGroupService,
-                @Optional() @Inject(NAE_URI_NODE_CASES_PAGE_SIZE) protected pageSize: string = '20') {
+                @Optional() @Inject(NAE_URI_NODE_CASES_PAGE_SIZE) protected pageSize: string | number) {
+        if (!pageSize) {
+            this.pageSize = 20;
+        }
+        if (typeof this.pageSize === 'string') {
+            this.pageSize = parseInt(this.pageSize);
+        }
         this._rootLoading$ = new LoadingEmitter();
         this._parentLoading$ = new LoadingEmitter();
         this._activeNode$ = new BehaviorSubject<UriNodeResource>(undefined);
