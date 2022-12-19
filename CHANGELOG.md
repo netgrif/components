@@ -7,6 +7,12 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Full Changelog: [https://github.com/netgrif/components/commits/v6.2.6](https://github.com/netgrif/components/commits/v6.2.6)
 
+## [6.2.7](https://github.com/netgrif/components/releases/tag/v6.2.7) (2022-12-19)
+
+### Fixed
+
+- [NAE-1803] UserListComponent validations bug
+
 ## [6.2.6](https://github.com/netgrif/components/releases/tag/v6.2.6) (2022-12-12)
 
 ### Fixed
