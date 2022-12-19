@@ -25,8 +25,7 @@
                 {{user.fullName}}
                 <mat-icon (click)='deleteUser(user)' color='warn' *ngIf='!formControl.disabled'>close</mat-icon>
             </button>
-            <mat-error *ngIf='dataField.isInvalid(formControl)'>{{'dataField.validations.required' | translate}}</mat-error>
         </span>
     </span>
-
+    <mat-error *ngIf='dataField.isInvalid(formControl)'>{{'dataField.validations.required' | translate}}</mat-error>
 </ng-template>
