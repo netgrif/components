@@ -1,21 +1,25 @@
-import {Injectable, OnDestroy} from '@angular/core';
-import {LoggerService} from '../../logger/services/logger.service';
-import {UriResourceService} from './uri-resource.service';
+import {HttpParams} from '@angular/common/http';
+import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
 import {BehaviorSubject, Observable, of} from 'rxjs';
-import {UriNodeResource} from '../model/uri-resource';
-import {Case} from '../../resources/interface/case';
-import {CaseResourceService} from '../../resources/engine-endpoint/case-resource.service';
-import {SimpleFilter} from '../../filter/models/simple-filter';
+import {map} from 'rxjs/operators';
 import {CaseSearchRequestBody, PetriNetSearchRequest} from '../../filter/models/case-search-request-body';
+import {SimpleFilter} from '../../filter/models/simple-filter';
 import {ActiveGroupService} from '../../groups/services/active-group.service';
-import {map} from "rxjs/operators";
-import {LoadingEmitter} from "../../utility/loading-emitter";
+import {LoggerService} from '../../logger/services/logger.service';
+import {CaseResourceService} from '../../resources/engine-endpoint/case-resource.service';
+import {Case} from '../../resources/interface/case';
+import {Page} from '../../resources/interface/page';
+import {LoadingEmitter} from '../../utility/loading-emitter';
+import {PaginationParams} from '../../utility/pagination/pagination-params';
+import {NAE_URI_NODE_CASES_PAGE_SIZE} from '../model/size-menu-injection-token';
+import {UriNodeResource} from '../model/uri-resource';
+import {UriResourceService} from './uri-resource.service';
 
 /**
  * Service for managing URIs
  * */
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class UriService implements OnDestroy {
 
@@ -23,12 +27,19 @@ export class UriService implements OnDestroy {
     private _rootNode: UriNodeResource;
     private readonly _rootLoading$: LoadingEmitter;
     private readonly _parentLoading$: LoadingEmitter;
-    private readonly _activeNode$: BehaviorSubject<UriNodeResource>
+    private readonly _activeNode$: BehaviorSubject<UriNodeResource>;
 
     constructor(protected _logger: LoggerService,
                 protected _resourceService: UriResourceService,
                 protected _caseResourceService: CaseResourceService,
-                protected _activeGroupService: ActiveGroupService) {
+                protected _activeGroupService: ActiveGroupService,
+                @Optional() @Inject(NAE_URI_NODE_CASES_PAGE_SIZE) protected pageSize: string | number) {
+        if (!pageSize) {
+            this.pageSize = 20;
+        }
+        if (typeof this.pageSize === 'string') {
+            this.pageSize = parseInt(this.pageSize);
+        }
         this._rootLoading$ = new LoadingEmitter();
         this._parentLoading$ = new LoadingEmitter();
         this._activeNode$ = new BehaviorSubject<UriNodeResource>(undefined);
@@ -115,7 +126,7 @@ export class UriService implements OnDestroy {
      */
     public getNodeByPath(path: string): Observable<UriNodeResource> {
         return this._resourceService.getNodeByUri(path).pipe(
-            map(n => this.capitalizeName(n))
+            map(n => this.capitalizeName(n)),
         );
     }
 
@@ -129,7 +140,7 @@ export class UriService implements OnDestroy {
             map(nodes => {
                 this.capitalizeNames(nodes);
                 return nodes;
-            })
+            }),
         );
     }
 
@@ -137,11 +148,13 @@ export class UriService implements OnDestroy {
      * Get cases under uri node
      * @param node parent node of cases
      * @param processIdentifiers optional search filter for process identifier to get only cases from the process
+     * @param pageNumber optional parameter for load page on the index. Default value is 0 (the first page).
+     * @param pageSize optional parameter for loaded page size. Defaults to value of injection token URI_NODE_CASES_PAGE_SIZE or to value "20".
      */
-    public getCasesOfNode(node?: UriNodeResource, processIdentifiers?: Array<string>): Observable<Array<Case>> {
+    public getCasesOfNode(node?: UriNodeResource, processIdentifiers?: Array<string>, pageNumber: number = 0, pageSize: string | number = this.pageSize): Observable<Page<Case>> {
         if (!node) node = this.activeNode;
         const searchBody: CaseSearchRequestBody = {
-            uriNodeId: node.id
+            uriNodeId: node.id,
         };
         if (!!processIdentifiers) {
             searchBody.process = processIdentifiers.map(id => ({identifier: id} as PetriNetSearchRequest));
@@ -151,9 +164,10 @@ export class UriService implements OnDestroy {
         //     searchBody.data = {};
         //     searchBody.data['parentId'] = this._activeGroupService.activeGroup.stringId;
         // }
-        return this._caseResourceService.searchCases(SimpleFilter.fromCaseQuery(searchBody)).pipe(
-            map(page => page.content)
-        );
+        let httpParams = new HttpParams()
+            .set(PaginationParams.PAGE_SIZE, pageSize)
+            .set(PaginationParams.PAGE_NUMBER, pageNumber);
+        return this._caseResourceService.searchCases(SimpleFilter.fromCaseQuery(searchBody), httpParams);
     }
 
     /**
@@ -166,7 +180,7 @@ export class UriService implements OnDestroy {
             map(nodes => {
                 this.capitalizeNames(nodes);
                 return nodes;
-            })
+            }),
         );
     }
 
@@ -182,7 +196,7 @@ export class UriService implements OnDestroy {
                 const ns = !!parent?.id ? nodes.filter(n => n.parentId === parent.id) : nodes;
                 this.capitalizeNames(ns);
                 return ns;
-            })
+            }),
         );
     }
 
@@ -193,8 +207,8 @@ export class UriService implements OnDestroy {
         return node.uriPath.substring(0, lastDelimiter);
     }
 
-    public getSplittedPath(): Array<string> {
-        return this.activeNode?.uriPath.split('/').filter(s => s !== UriService.ROOT);
+    public splitNodePath(node: UriNodeResource): Array<string> {
+        return node?.uriPath.split('/').filter(s => s !== UriService.ROOT);
     }
 
     private capitalizeNames(nodes: Array<UriNodeResource>) {
