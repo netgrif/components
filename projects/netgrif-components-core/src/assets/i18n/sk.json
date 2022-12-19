@@ -240,7 +240,8 @@
             "min": "Zadané číslo musí byť väčšie ako {{length}}",
             "translationRequired": "Musí byť vyplnený preklad pre jazyky: <{{translation}}>",
             "translationOnly": "Je povolený iba preklad pre jazyky: <{{translation}}>",
-            "requiredI18n": "Aspoň jedna hodnota musí byť vyplnená"
+            "requiredI18n": "Aspoň jedna hodnota musí byť vyplnená",
+            "requiredUserList": "Aspoň jedna hodnota musí byť vyplnená"
         },
         "snackBar": {
             "downloadFail": " sťahovanie zlyhalo",
