@@ -13,13 +13,13 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.3.0](https://g
 
 - [NAE-1674] Uri node cases pagination
 - [NAE-1759] Update documentation of public views, PDF generator and user list
-- [NAE-1762] Public view URL encoding
 - [NAE-1790] Validation message on the date field is not displaying correctly
 - [NAE-1797] I18N field at asynchronous rendering
 
 ### Added
 
 - [NAE-1678] User impersonation
+- [NAE-1762] Public view URL encoding
 
 ## [6.2.7](https://github.com/netgrif/components/releases/tag/v6.2.7) (2022-12-19)
 
