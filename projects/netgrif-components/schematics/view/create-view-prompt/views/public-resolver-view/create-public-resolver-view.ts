@@ -1,6 +1,6 @@
 import {chain, Rule, Tree} from '@angular-devkit/schematics';
 import {strings} from '@angular-devkit/core';
-import {createFilesFromTemplates, getProjectInfo} from '../../../../_utility/utility-functions';
+import { createFilesFromTemplates, createRelativePath, getProjectInfo } from '../../../../_utility/utility-functions';
 import {updateAppModule} from '../../../_utility/view-utility-functions';
 import {addViewToViewService} from '../../../_utility/view-service-functions';
 import {TabbedView} from '../../models/tabbed-view';
@@ -21,7 +21,10 @@ export function createPublicResolverView(tree: Tree, args: CreateTaskViewArgumen
         prefix: projectInfo.projectPrefixDasherized,
         className: view.nameWithoutComponent,
         dasherize: strings.dasherize,
-        classify: strings.classify
+        classify: strings.classify,
+        configName: projectInfo.projectNameClassified,
+        configImportPath: createRelativePath(view.fileImportPath, `./${projectInfo.projectNameDasherized}-configuration.service`),
+        isDefaultTabbedTaskView: !!args.isDefaultTabbedTaskView
     };
 
     const commonPathPrefix = './views/public-resolver-view/files/';
