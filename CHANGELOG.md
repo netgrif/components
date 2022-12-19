@@ -24,6 +24,7 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.3.0](https://g
 ### Added
 
 - [NAE-1678] User impersonation
+- [NAE-1703] Dashboard
 
 ## [6.2.7](https://github.com/netgrif/components/releases/tag/v6.2.7) (2022-12-19)
 
