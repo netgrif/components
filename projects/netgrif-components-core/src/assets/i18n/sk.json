@@ -232,6 +232,8 @@
             "phone": "Zadaný text musí byť tel. číslo",
             "email": "Zadaný text musí byť email",
             "dateRange": "Zadaný dátum musí byť v rozsahu {{left}} a {{right}}",
+            "datePast": "Zadaný dátum musí byť pred {{right}}",
+            "dateFuture": "Zadaný dátum musí byť po {{left}}",
             "weekend": "Zadaný dátum musí byť víkendový deň",
             "workday": "Zadaný dátum musí byť pracovný deň",
             "enumeration": "Musí byť vybraná jedna z možností",
