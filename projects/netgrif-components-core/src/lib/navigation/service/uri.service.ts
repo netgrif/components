@@ -207,8 +207,8 @@ export class UriService implements OnDestroy {
         return node.uriPath.substring(0, lastDelimiter);
     }
 
-    public getSplittedPath(): Array<string> {
-        return this.activeNode?.uriPath.split('/').filter(s => s !== UriService.ROOT);
+    public splitNodePath(node: UriNodeResource): Array<string> {
+        return node?.uriPath.split('/').filter(s => s !== UriService.ROOT);
     }
 
     private capitalizeNames(nodes: Array<UriNodeResource>) {

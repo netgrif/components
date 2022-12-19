@@ -31,11 +31,13 @@
 
             <mat-menu #userRailMenu="matMenu">
                 <div mat-menu-item role="menuitem" class="large-menu-item" fxLayout="row" fxFlexAlign="center center"
-                    [routerLink]="profileRouterLink" routerLinkActive="active">
+                     [routerLink]="profileRouterLink" routerLinkActive="active">
                     <mat-icon class="margin-auto" fxFlex>face</mat-icon>
                     <div class="large-menu-item" fxLayout="column" fxFlexAlign="start center" fxFlex>
-                        <span *ngIf="!user.isImpersonating()"  class="large-menu-item-text" fxFlex="50">{{user.fullName}}</span>
-                        <span *ngIf="user.isImpersonating()" class="large-menu-item-text" fxFlex="50">{{user.fullName}} ({{user.getSelfOrImpersonated().fullName}})</span>
+                        <span *ngIf="!user.isImpersonating()" class="large-menu-item-text"
+                              fxFlex="50">{{user.fullName}}</span>
+                        <span *ngIf="user.isImpersonating()" class="large-menu-item-text" fxFlex="50">{{user.fullName}}
+                            ({{user.getSelfOrImpersonated().fullName}})</span>
                         <span class="large-menu-item-text" style="font-size: 12px;" fxFlex="50">{{user.email}}</span>
                     </div>
                 </div>
@@ -43,7 +45,8 @@
                     <mat-icon>supervisor_account</mat-icon>
                     <span>{{'side-menu.impersonation.submit' | translate}}</span>
                 </button>
-                <button *ngIf="includeImpersonation && user.isImpersonating()" mat-menu-item (click)="stopImpersonating()">
+                <button *ngIf="includeImpersonation && user.isImpersonating()" mat-menu-item
+                        (click)="stopImpersonating()">
                     <mat-icon>clear</mat-icon>
                     <span>{{'side-menu.impersonation.cease' | translate }}</span>
                 </button>
@@ -52,7 +55,8 @@
                     <span>{{ 'toolbar.menu.logout' | translate }}</span>
                 </button>
             </mat-menu>
-            <button *ngIf="includeUser" mat-icon-button [matMenuTriggerFor]="userRailMenu" class="mat-button mat-typography menu-font-color"
+            <button *ngIf="includeUser" mat-icon-button [matMenuTriggerFor]="userRailMenu"
+                    class="mat-button mat-typography menu-font-color"
                     [matTooltip]="user.fullName"
                     [matTooltipPosition]="'right'">
                 <mat-icon>account_circle</mat-icon>
@@ -187,7 +191,8 @@
         </div>
         <div [@sectionExpansion]="isSectionOpen.views ? 'expanded' : 'collapsed'" class="box-container">
             <div *ngFor='let view of views; trackBy: viewsTrackBy' class="tree-node mat-typography"
-                 fxLayoutAlign="start center" [routerLink]='view.routing.path' routerLinkActive="active">
+                 fxLayoutAlign="start center" [routerLink]='view.routing.path' routerLinkActive="active"
+                 (click)="onViewClick(view)">
                 <mat-icon class="tree-node-icon">{{view.navigation.icon}}</mat-icon>
                 <span>{{view.navigation.title}}</span>
                 <span class="menu-item-focus-overlay"></span>

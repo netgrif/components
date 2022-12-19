@@ -96,10 +96,11 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
      * Currently display uri
      * Siblings of the node are on the left, children are on the right
      */
-    currentNode: UriNodeResource;
+    private _currentNode: UriNodeResource;
 
     leftLoading$: LoadingEmitter;
     rightLoading$: LoadingEmitter;
+    nodeLoading$: LoadingEmitter;
 
     protected _configLeftMenu: ConfigDoubleMenu = {
         mode: 'side',
@@ -133,6 +134,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         this.views = new Array<ViewNavigationItem>();
         this.leftLoading$ = new LoadingEmitter();
         this.rightLoading$ = new LoadingEmitter();
+        this.nodeLoading$ = new LoadingEmitter();
         this._childCustomViews = {};
         this.moreMenuItems = new Array<ViewNavigationItem>();
     }
@@ -145,26 +147,12 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                 this.resolveLayout(true);
             }
         });
-        if (!this.currentNode) {
+        if (!this._currentNode) {
             this.leftLoading$.on();
             this.rightLoading$.on();
         }
         this._currentNodeSubscription = this._uriService.activeNode$.subscribe(node => {
             this.currentNode = node;
-            if (!node) return;
-            if (this.leftLoading$.isActive || this.rightLoading$.isActive) {
-                this.leftLoading$.off();
-                this.rightLoading$.off();
-            }
-            if (this._uriService.isRoot(node)) {
-                this.leftNodes = [];
-                this.loadRightSide();
-                return;
-            }
-            if (!this.leftNodes.find(n => n.id === node.id)) {
-                this.loadLeftSide();
-            }
-            this.loadRightSide();
         });
 
         const viewConfigurationPath = this._activatedRoute.snapshot.data[NAE_ROUTING_CONFIGURATION_PATH];
@@ -175,6 +163,44 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                 this.resolveHiddenMenuItemFromChildViews(viewConfigurationPath + '/' + key, childView);
             });
         }
+    }
+
+    get currentNode(): UriNodeResource {
+        return this._currentNode;
+    }
+
+    set currentNode(node: UriNodeResource) {
+        if (node === this._currentNode) return;
+        this._currentNode = node;
+        if (!node) return;
+        if (node.parentId && !node.parent) {
+            if (node.parentId === this._uriService.root.id) {
+                node.parent = this._uriService.root;
+            } else {
+                this.nodeLoading$.on();
+                this._uriService.getNodeByPath(this._uriService.resolveParentPath(node)).subscribe(n => {
+                    node.parent = !n ? this._uriService.root : n;
+                    this.nodeLoading$.off();
+                }, error => {
+                    this._log.error(error);
+                    this.nodeLoading$.off();
+                });
+            }
+        }
+
+        if (this.leftLoading$.isActive || this.rightLoading$.isActive) {
+            this.leftLoading$.off();
+            this.rightLoading$.off();
+        }
+        if (this._uriService.isRoot(node)) {
+            this.leftNodes = [];
+            this.loadRightSide();
+            return;
+        }
+        if (!this.leftNodes.find(n => n.id === node.id)) {
+            this.loadLeftSide();
+        }
+        this.loadRightSide();
     }
 
     protected resolveUriForChildViews(configPath: string, childView: View): void {
@@ -210,6 +236,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         this._currentNodeSubscription?.unsubscribe();
         this.leftLoading$.complete();
         this.rightLoading$.complete();
+        this.nodeLoading$.complete();
     }
 
     get configLeftMenu() {
@@ -288,7 +315,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     }
 
     get canGoBackLoading$(): Observable<boolean> {
-        return this._uriService.parentNodeLoading$;
+        return this.nodeLoading$;
     }
 
     /**
@@ -296,7 +323,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
      * set to root node.
      * */
     onHomeClick(): void {
-        this._uriService.reset();
+        this.currentNode = this._uriService.root;
     }
 
     /**
@@ -306,21 +333,25 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
      * Current level is set to a lower number in order to set the left side menu.
      * */
     onBackClick(): void {
-        if (this._uriService.isRoot(this.currentNode)) return;
-        this._uriService.activeNode = this.currentNode.parent;
+        if (this._uriService.isRoot(this._currentNode)) return;
+        this.currentNode = this._currentNode.parent;
     }
 
     onNodeClick(node: UriNodeResource): void {
-        this._uriService.activeNode = node;
+        this.currentNode = node;
+    }
+
+    onViewClick(view: ViewNavigationItem): void {
+        this._uriService.activeNode = this._currentNode;
     }
 
     protected loadLeftSide() {
-        if (this._uriService.isRoot(this.currentNode)) {
+        if (this._uriService.isRoot(this._currentNode)) {
             this.leftNodes = [];
             return;
         }
         this.leftLoading$.on();
-        this._leftNodesSubscription = this._uriService.getSiblingsOfNode(this.currentNode).subscribe(nodes => {
+        this._leftNodesSubscription = this._uriService.getSiblingsOfNode(this._currentNode).subscribe(nodes => {
             this.leftNodes = nodes instanceof Array ? nodes : [];
             this.leftNodes.sort((a, b) => this.compareStrings(a.name, b.name));
             this.leftLoading$.off();
@@ -334,18 +365,18 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     protected loadRightSide() {
         this.rightLoading$.on();
         this._uriService.getCasesOfNode(this.currentNode, FILTER_IDENTIFIERS, 0, 1).subscribe(page => {
-            this._log.debug('Number of filters for uri ' + this.currentNode.uriPath + ': ' + page?.pagination?.totalElements);
+            this._log.debug('Number of filters for uri ' + this._currentNode.uriPath + ': ' + page?.pagination?.totalElements);
             forkJoin({
-                folders: this._uriService.getChildNodes(this.currentNode),
-                filters: page?.pagination?.totalElements === 0 ? of([]) : this._uriService.getCasesOfNode(this.currentNode, FILTER_IDENTIFIERS, 0, page.pagination.totalElements).pipe(
+                folders: this._uriService.getChildNodes(this._currentNode),
+                filters: page?.pagination?.totalElements === 0 ? of([]) : this._uriService.getCasesOfNode(this._currentNode, FILTER_IDENTIFIERS, 0, page.pagination.totalElements).pipe(
                     map(p => p.content),
                 ),
             }).subscribe(result => {
                 this.rightNodes = result.folders instanceof Array ? result.folders : [];
                 this.rightNodes.sort((a, b) => this.compareStrings(a.name, b.name));
                 this.views = (result.filters instanceof Array ? result.filters : []).map(f => this.resolveFilterCaseToViewNavigationItem(f)).filter(i => !!i);
-                if (!!this._childCustomViews[this.currentNode.uriPath]) {
-                    this.views.push(...Object.values(this._childCustomViews[this.currentNode.uriPath]));
+                if (!!this._childCustomViews[this._currentNode.uriPath]) {
+                    this.views.push(...Object.values(this._childCustomViews[this._currentNode.uriPath]));
                 }
                 // @ts-ignore
                 this.views.sort((a, b) => this.compareStrings(a?.navigation?.title, b?.navigation?.title));
@@ -416,7 +447,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
      * @returns boolean if the back button should be displayed
      * */
     isOnZeroLevel(): boolean {
-        return !!this.currentNode?.level ? this.currentNode.level == 0 : true;
+        return !!this._currentNode?.level ? this._currentNode.level == 0 : true;
     }
 
     isLeftNodesEmpty(): boolean {
