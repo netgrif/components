@@ -5,17 +5,49 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres
 to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-Full Changelog: [https://github.com/netgrif/components/commits/v6.2.4](https://github.com/netgrif/components/commits/v6.2.4)
+Full Changelog: [https://github.com/netgrif/components/commits/v6.3.0](https://github.com/netgrif/components/commits/v6.3.0)
 
-## [6.3.0](https://github.com/netgrif/components/releases/tag/v6.3.0) (2022-10-01)
+## [6.3.0](https://github.com/netgrif/components/releases/tag/v6.3.0) (2022-10-19)
 
 ### Fixed
 
+- [NAE-1790] Validation message on the date field is not displaying correctly
+- [NAE-1795] Breadcrumbs based on the menu, not on the currently displayed view
+- [NAE-1797] I18N field at asynchronous rendering
+
+### Changed
+
+- [NAE-1674] Uri node cases pagination
+- [NAE-1759] Update documentation of public views, PDF generator and user list
 - [NAE-1762] Public view URL encoding
 
 ### Added
 
 - [NAE-1678] User impersonation
+
+## [6.2.7](https://github.com/netgrif/components/releases/tag/v6.2.7) (2022-12-19)
+
+### Fixed
+
+- [NAE-1803] UserListComponent validations bug
+
+## [6.2.6](https://github.com/netgrif/components/releases/tag/v6.2.6) (2022-12-12)
+
+### Fixed
+
+- [NAE-1799] Multilevel process identifier handling in 6.2.x for public view
+- [NAE-1800] Operations on date fields in advanced search are not rendered correctly
+
+## [6.2.5](https://github.com/netgrif/components/releases/tag/v6.2.5) (2022-12-05)
+
+### Fixed
+
+- [NAE-1752] MatPrefix for currency field overrides prefix for dateField
+- [NAE-1754] Currency field not displaying symbol
+- [NAE-1758] Task on single task view is not rendering
+- [NAE-1760] Enumeration autocomplete constantly sending value
+- [NAE-1763] FileField value is not promoted to the frontend after "set data event"
+- [NAE-1766] Options on multichoice autocomplete do not refresh in a specific situation
 
 ## [6.2.4](https://github.com/netgrif/components/releases/tag/v6.2.4) (2022-10-12)
 

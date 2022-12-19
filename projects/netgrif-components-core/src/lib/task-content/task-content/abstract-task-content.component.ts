@@ -613,7 +613,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
      */
     protected computeGridLayout(dataGroup: DataGroup, subgrid: Subgrid) {
         const localGrid: Array<Array<string>> = [];
-
+        dataGroup.fields = [...dataGroup.fields].sort((f1 , f2) => f1.layout.y === f2.layout.y ? f1.layout.x - f2.layout.x : f1.layout.y - f2.layout.y)
         dataGroup.fields.forEach(dataField => {
             if (!dataField.localLayout
                 || dataField.localLayout.x === undefined

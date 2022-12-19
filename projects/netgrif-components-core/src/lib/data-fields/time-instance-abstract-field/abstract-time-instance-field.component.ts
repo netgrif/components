@@ -29,6 +29,14 @@ export abstract class AbstractTimeInstanceFieldComponent extends AbstractDataFie
             let right = AbstractTimeInstanceField.parseDate(parts[1]);
             left = moment.isMoment(left) ? (left as Moment).format('DD.MM.YYYY HH:mm:ss') : left;
             right = moment.isMoment(right) ? (right as Moment).format('DD.MM.YYYY HH:mm:ss') : right;
+            if (left === 'past') {
+                return this.resolveErrorMessage(dataField, AbstractTimeInstanceFieldValidation.BETWEEN,
+                    this._translate.instant('dataField.validations.datePast', {right}));
+            }
+            if (right === 'future') {
+                return this.resolveErrorMessage(dataField, AbstractTimeInstanceFieldValidation.BETWEEN,
+                    this._translate.instant('dataField.validations.dateFuture', {left}));
+            }
             return this.resolveErrorMessage(dataField, AbstractTimeInstanceFieldValidation.BETWEEN,
                 this._translate.instant('dataField.validations.dateRange', {left, right}));
         }
