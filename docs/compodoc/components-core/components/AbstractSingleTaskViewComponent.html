@@ -367,7 +367,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../components/AbstractViewWithHeadersComponent.html#source" target="_self" >AbstractViewWithHeadersComponent:44</a></code>
+                        <div class="io-line">Defined in         <code><a href="../components/AbstractViewWithHeadersComponent.html#source" target="_self" >AbstractViewWithHeadersComponent:43</a></code>
 </div>
                 </td>
             </tr>
@@ -630,7 +630,7 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>    <code>Subscription</code>
+                        <i>Type : </i>    <code>Subscription | undefined</code>
 
                     </td>
                 </tr>
@@ -760,7 +760,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">projects/netgrif-components-core/src/lib/view/task-view/abstract-single-task-view.component.ts:52</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">projects/netgrif-components-core/src/lib/view/task-view/abstract-single-task-view.component.ts:53</a></div>
                                 </td>
                             </tr>
 
@@ -794,7 +794,7 @@ export abstract class AbstractSingleTaskViewComponent extends AbstractViewWithHe
     public loading$: Observable&lt;boolean&gt;;
     private transitionId: string;
     private subRoute: Subscription | undefined;
-    protected subPanelData: Subscription;
+    protected subPanelData: Subscription | undefined;
 
     protected constructor(protected taskViewService: TaskViewService,
                           activatedRoute: ActivatedRoute) {
@@ -803,7 +803,6 @@ export abstract class AbstractSingleTaskViewComponent extends AbstractViewWithHe
         this.subRoute &#x3D; this._activatedRoute.paramMap.subscribe(paramMap &#x3D;&gt; {
             if (!!(paramMap?.[&#x27;params&#x27;]?.[TaskConst.TRANSITION_ID])) {
                 this.transitionId &#x3D; paramMap[&#x27;params&#x27;][TaskConst.TRANSITION_ID];
-                this.subPanelData.unsubscribe();
                 this.subPanelData &#x3D; this.taskViewService.tasks$.subscribe(tasks &#x3D;&gt;  {
                     if (!!tasks &amp;&amp; tasks.length &gt; 0) {
                         this.taskPanelData.next(this.resolveTransitionTask(tasks));
@@ -816,7 +815,9 @@ export abstract class AbstractSingleTaskViewComponent extends AbstractViewWithHe
 
     ngOnDestroy() {
         super.ngOnDestroy();
-        this.subRoute.unsubscribe();
+        if (!!this.subRoute) {
+            this.subRoute.unsubscribe();
+        }
         if (!!this.subPanelData) {
             this.subPanelData.unsubscribe();
         }

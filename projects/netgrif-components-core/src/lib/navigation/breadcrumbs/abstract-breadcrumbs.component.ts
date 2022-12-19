@@ -14,11 +14,11 @@ export abstract class AbstractBreadcrumbsComponent {
     private static DELIMETER: string = '/';
     private _showPaths: boolean = false;
 
-    constructor(protected _uriService: UriService) {
+    protected constructor(protected _uriService: UriService) {
     }
 
     public getPath(): Array<string> {
-        const tmp = this._uriService.getSplittedPath();
+        const tmp = this._uriService.splitNodePath(this._uriService.activeNode);
         if (tmp?.length > this.partsAfterDots + 1 && this._uriService.activeNode?.uriPath.length > this.lengthOfPath && !this._showPaths) {
             const newPath = [tmp[0], AbstractBreadcrumbsComponent.DOTS];
             for (let i = tmp.length - this.partsAfterDots; i < tmp.length; i++) {
@@ -39,7 +39,7 @@ export abstract class AbstractBreadcrumbsComponent {
             return;
         }
         let fullPath: string = '';
-        const tmp = this._uriService.getSplittedPath();
+        const tmp = this._uriService.splitNodePath(this._uriService.activeNode);
         if (tmp === undefined) return;
         const control = this.resultCounter(count, tmp);
         for (let i = 0; i <= control; i++) {
