@@ -232,7 +232,8 @@
             "min": "Entered number must be greater than {{length}}",
             "translationRequired": "Translation for languages: <{{translation}}> must be entered",
             "translationOnly": "Only translation for languages: <{{translation}}> is allowed",
-            "requiredI18n": "At least one value must be entered"
+            "requiredI18n": "At least one value must be entered",
+            "requiredUserList": "At least one value must be entered"
         },
         "snackBar": {
             "downloadFail": " failed to download",
