@@ -4,12 +4,7 @@ import { Layout } from '../../models/layout';
 import { Validation } from '../../models/validation';
 import { Component } from '../../models/component';
 import { UserListValue } from './user-list-value';
-import {AbstractControl, FormControl, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
-
-export enum UserListFieldValidation {
-    REQUIRED = 'required'
-}
-
+import {AbstractControl, FormControl, ValidatorFn} from "@angular/forms";
 
 export class UserListField extends DataField<UserListValue> {
 
