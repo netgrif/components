@@ -16,7 +16,7 @@ export class UserListField extends DataField<UserListValue> {
 
     protected valueEquality(a: UserListValue, b: UserListValue): boolean {
         return (!a && !b) ||
-            (!!a && !!b && a.userValues.length === b.userValues.length);
+            (!!a && !!b && a.userValues.size=== b.userValues.size);
     }
 
     protected calculateValidity(forValidRequired: boolean, formControl: FormControl): boolean {

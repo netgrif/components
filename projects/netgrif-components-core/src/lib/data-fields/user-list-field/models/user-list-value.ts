@@ -7,40 +7,37 @@ import { UserValue } from '../../user-field/models/user-value';
 
 export class UserListValue {
 
-    private _userValues: Array<UserValue>;
+    private _userValues: Map<string, UserValue>;
 
-    constructor(userValues: Array<UserValue>) {
+    constructor(userValues: Map<string, UserValue>) {
         this._userValues = userValues;
     }
 
-    get userValues(): Array<UserValue> {
+    get userValues(): Map<string, UserValue> {
         return this._userValues;
     }
 
-    set userValues(value: Array<UserValue>) {
+    set userValues(value: Map<string, UserValue>) {
         this._userValues = value;
     }
 
     public addUserValue(value: UserValue): void {
-        this._userValues.push(value);
+        this._userValues.set(value.id, value);
     }
 
-    public addUserValues(value: UserValue[]): void {
-        this._userValues.push(...value);
+    public addUserValues(value: Map<string, UserValue>): void {
+        value.forEach((v, k) => this._userValues.set(k, v))
     }
 
     public getLast(): UserValue {
-        if (this._userValues.length == 0) {
+        if (this._userValues.size == 0) {
             return new UserValue('', '', '', '');
         }
-        return this._userValues[this._userValues.length - 1];
+        return this._userValues[this._userValues.size - 1];
     }
 
-    public removeUserValue(value: UserValue): void {
-        const index = this._userValues.findIndex(user => user.id === value.id);
-        if (index > -1) {
-            this._userValues.splice(index, 1);
-        }
+    public removeUserValue(userId: string): void {
+        this._userValues.delete(userId);
     }
 
 
