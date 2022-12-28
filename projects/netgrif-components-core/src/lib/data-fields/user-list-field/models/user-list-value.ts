@@ -33,7 +33,7 @@ export class UserListValue {
         if (this._userValues.size == 0) {
             return new UserValue('', '', '', '');
         }
-        return this._userValues[this._userValues.size - 1];
+        return Array.from(this._userValues.values()).pop();
     }
 
     public removeUserValue(userId: string): void {
