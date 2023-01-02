@@ -142,6 +142,14 @@
                         <ul class="index-list">
                             <li>
                                     <span class="modifier">Protected</span>
+                                <a href="#calculateValidity" >calculateValidity</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#resolveFormControlValidators" >resolveFormControlValidators</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
                                 <a href="#valueEquality" >valueEquality</a>
                             </li>
                             <li>
@@ -151,10 +159,6 @@
                             <li>
                                     <span class="modifier">Public</span>
                                 <a href="#applyChange" >applyChange</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Protected</span>
-                                <a href="#calculateValidity" >calculateValidity</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
@@ -191,10 +195,6 @@
                             <li>
                                     <span class="modifier">Public</span>
                                 <a href="#resolveAppearance" >resolveAppearance</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Protected</span>
-                                <a href="#resolveFormControlValidators" >resolveFormControlValidators</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
@@ -251,7 +251,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="8" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/user-list-field/models/user-list-field.ts:8</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="9" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/user-list-field/models/user-list-field.ts:9</a></div>
                             </td>
                         </tr>
 
@@ -780,6 +780,139 @@ without affecting the base configuration.</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="calculateValidity"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>calculateValidity</b></span>
+                        <a href="#calculateValidity"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>calculateValidity(forValidRequired: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>, formControl: <a href="../interfaces/Form.html" target="_self">FormControl</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classess/DataField.html" target="_self" >DataField</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:22</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>forValidRequired</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>formControl</td>
+                                    <td>
+                                                <code><a href="../interfaces/Form.html" target="_self" >FormControl</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resolveFormControlValidators"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>resolveFormControlValidators</b></span>
+                        <a href="#resolveFormControlValidators"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resolveFormControlValidators()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classess/DataField.html" target="_self" >DataField</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:40</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Array&lt;ValidatorFn&gt;</code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="valueEquality"></a>
                     <span class="name">
                         <span class="modifier">Protected</span>
@@ -804,7 +937,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:16</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:17</a></code>
 </div>
                 </td>
             </tr>
@@ -1025,94 +1158,6 @@ without affecting the base configuration.</p>
                     </div>
                     <div class="io-description">
                         <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="calculateValidity"></a>
-                    <span class="name">
-                        <span class="modifier">Protected</span>
-                        <span ><b>calculateValidity</b></span>
-                        <a href="#calculateValidity"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>calculateValidity(forValidRequired: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>, formControl: <a href="../interfaces/Form.html" target="_self">FormControl</a>)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Inherited from         <code><a href="../classess/DataField.html" target="_self" >DataField</a></code>
-</div>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:542</a></code>
-</div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>forValidRequired</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>formControl</td>
-                                    <td>
-                                                <code><a href="../interfaces/Form.html" target="_self" >FormControl</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
 
                     </div>
                     <div class="io-description">
@@ -1665,58 +1710,6 @@ without affecting the base configuration.</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="resolveFormControlValidators"></a>
-                    <span class="name">
-                        <span class="modifier">Protected</span>
-                        <span ><b>resolveFormControlValidators</b></span>
-                        <a href="#resolveFormControlValidators"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>resolveFormControlValidators()</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Inherited from         <code><a href="../classess/DataField.html" target="_self" >DataField</a></code>
-</div>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:450</a></code>
-</div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>Creates Validator objects based on field <code>behavior</code>. Only the <code>required</code> behavior is resolved by default.
-Required is resolved as <code>Validators.required</code>.
-If you need to resolve additional Validators or need a different resolution for the <code>required</code> Validator override this method.</p>
-<p>See <a href="../interfaces/Behavior.html">Behavior</a> for information about data field behavior.</p>
-<p>See <a href="ValidatorFn">ValidatorFn</a> and <a href="Validators">Validators</a> for information about Validators.</p>
-<p>Alternatively see <a href="https://angular.io/guide/form-validation#reactive-form-validation">Form Validation guide</a> from Angular.</p>
-</div>
-
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>Array&lt;ValidatorFn&gt;</code>
-
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
                     <a name="resolvePrevValue"></a>
                     <span class="name">
                         <span class="modifier">Public</span>
@@ -2213,6 +2206,7 @@ import { Layout } from &#x27;../../models/layout&#x27;;
 import { Validation } from &#x27;../../models/validation&#x27;;
 import { Component } from &#x27;../../models/component&#x27;;
 import { UserListValue } from &#x27;./user-list-value&#x27;;
+import {AbstractControl, FormControl, ValidatorFn} from &quot;@angular/forms&quot;;
 
 export class UserListField extends DataField&lt;UserListValue&gt; {
 
@@ -2226,6 +2220,48 @@ export class UserListField extends DataField&lt;UserListValue&gt; {
         return (!a &amp;&amp; !b) ||
             (!!a &amp;&amp; !!b &amp;&amp; a.userValues.length &#x3D;&#x3D;&#x3D; b.userValues.length);
     }
+
+    protected calculateValidity(forValidRequired: boolean, formControl: FormControl): boolean {
+        const isDisabled &#x3D; formControl.disabled;
+        if (forValidRequired) {
+            formControl.enable();
+        }
+        formControl.clearValidators();
+        if (forValidRequired) {
+            formControl.setValidators(this.behavior.required ? [this.requiredTrue] : []);
+        } else {
+            formControl.setValidators(this.resolveFormControlValidators());
+        }
+        formControl.updateValueAndValidity();
+        const validity &#x3D; this._determineFormControlValidity(formControl);
+        isDisabled ? formControl.disable() : formControl.enable();
+        return validity;
+    }
+
+
+    protected resolveFormControlValidators(): Array&lt;ValidatorFn&gt; {
+        const result &#x3D; [];
+
+        if (this.behavior.required) {
+            result.push(this.requiredTrue);
+        }
+
+        if (this.validations) {
+            if (this._validators) {
+                result.push(...this._validators);
+            } else {
+                this._validators &#x3D; this.resolveValidations();
+                result.push(...this._validators);
+            }
+        }
+
+        return result;
+    }
+
+    private requiredTrue(control: AbstractControl): { [k: string]: boolean } {
+        return !!control.value &amp;&amp; !!control.value._userValues &amp;&amp; control.value._userValues.length &gt; 0 ? null : {requiredUserList: true};
+    }
+
 }
 </code></pre>
     </div>

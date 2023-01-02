@@ -232,13 +232,16 @@
             "phone": "Der eingegebene Text muss ein Telefonnummer sein",
             "email": "Der eingegebene Text muss ein E-Mail sein",
             "dateRange": "Das eingegebene Datum muss zwischen {{left}} und {{right}} liegen",
+            "datePast": "Das eingegebene Datum muss bis {{right}} sein",
+            "dateFuture": "Das eingegebene Datum muss ab {{left}} sein",
             "weekend": "Das eingegebene Datum muss das Wochenende sein",
             "workday": "Das eingegebene Datum muss ein Wochentag sein",
             "enumeration": "Eine von der angebotenen Optionen muss ausgewählt sein",
             "min": "Die eingegebene Nummer muss größer als {{length}} sein",
             "translationRequired": "Übersetzung für Sprachen: <{{translation}}> muss eingegeben werden",
             "translationOnly": "Nur die Übersetzung für Sprachen: <{{translation}}> ist erlaubt",
-            "requiredI18n": "Es muss mindestens ein Wert eingegeben werden"
+            "requiredI18n": "Es muss mindestens ein Wert eingegeben werden",
+            "requiredUserList": "Es muss mindestens ein Wert eingegeben werden"
         },
         "snackBar": {
             "downloadFail": " könnte nicht heruntergeladen werden",
