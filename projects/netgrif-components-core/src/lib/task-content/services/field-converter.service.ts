@@ -161,7 +161,7 @@ export class FieldConverterService {
             return value.id;
         }
         if (this.resolveType(field) === FieldTypeResource.USER_LIST) {
-            return value.userValues.map((v, k) => k);
+            return [...value.userValues.keys()];
         }
         if (this.resolveType(field) === FieldTypeResource.DATE_TIME) {
             if (moment.isMoment(value)) {
@@ -263,9 +263,6 @@ export class FieldConverterService {
         }
         if (value === undefined) {
             return;
-        }
-        if (this.resolveType(field) === FieldTypeResource.TEXT && value === null) {
-            return null;
         }
         if (this.resolveType(field) === FieldTypeResource.TEXT && field.component && field.component.name === 'password') {
             return atob(value);
