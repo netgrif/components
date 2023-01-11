@@ -69,6 +69,14 @@ export abstract class AbstractMultiUserAssignListComponent implements OnInit, On
         this._selectedUsers$.complete();
     }
 
+    public get selectedUsers$(): Observable<Array<string>> {
+        return this._selectedUsers$.asObservable();
+    }
+
+    public get currentlySelectedUsers(): string[] {
+        return this._currentlySelectedUsers;
+    }
+
     public trackBy(index: number, item: UserValue): any {
         return item.id;
     }
@@ -94,9 +102,5 @@ export abstract class AbstractMultiUserAssignListComponent implements OnInit, On
             return;
         }
         this._userListService.nextPage(this.viewport.getRenderedRange().end, this.viewport.getDataLength());
-    }
-
-    public get selectedUsers$(): Observable<Array<string>> {
-        return this._selectedUsers$.asObservable();
     }
 }

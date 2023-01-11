@@ -4,7 +4,7 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {AbstractMultiUserAssignListComponent} from './abstract-multi-user-assign-list.component';
-import {UserListService} from '../../../../user/services/user-list.service';
+import {UserListItem, UserListService} from '../../../../user/services/user-list.service';
 import {UserValue} from '../../../../data-fields/user-field/models/user-value';
 import {UserListInjectedData} from '../model/user-list-injected-data';
 import {ConfigurationService} from '../../../../configuration/configuration.service';
@@ -44,6 +44,15 @@ describe('AbstractMultiUserAssignListComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
+    });
+
+    it('should select', () => {
+        component.select({id: '0'} as UserListItem)
+        expect(component.currentlySelectedUsers.includes('0')).toBeTruthy();
+    });
+
+    it('should get loading', () => {
+        expect(component.loading).toBeFalse();
     });
 
     afterEach(() => {

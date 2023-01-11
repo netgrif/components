@@ -38,6 +38,10 @@ export abstract class AbstractMultiUserAssignComponent {
         return this.injectedData ? this.injectedData.negativeRoles : [];
     }
 
+    public get currentUsers(): Array<UserValue> {
+        return this._currentUsers;
+    }
+
     public userWasUnselected(user: UserValue): void {
         const index = this._currentUsers.findIndex(v => v.id === user.id);
         if (index > -1) {

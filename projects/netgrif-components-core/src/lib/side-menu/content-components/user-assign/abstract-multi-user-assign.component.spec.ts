@@ -12,6 +12,8 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from '../../../material/material.module';
 import {Component, Inject} from '@angular/core';
 import {AbstractMultiUserAssignComponent} from "./abstract-multi-user-assign.component";
+import {UserValue} from "../../../data-fields/user-field/models/user-value";
+import {expect} from "@angular/flex-layout/_private-utils/testing";
 
 describe('AbstractMultiUserAssignComponent', () => {
     let component: TestUserComponent;
@@ -46,6 +48,20 @@ describe('AbstractMultiUserAssignComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
+    });
+
+    it('should select', () => {
+        component.userWasSelected(new UserValue('0', '', '', ''));
+        expect(component.currentUsers).toBeTruthy();
+        expect(component.currentUsers.find(u => u.id === '0')).toBeTruthy()
+    });
+
+    it('should unselect', () => {
+        component.userWasSelected(new UserValue('0', '', '', ''));
+        expect(component.currentUsers).toBeTruthy();
+        expect(component.currentUsers.find(u => u.id === '0')).toBeTruthy()
+        component.userWasUnselected(new UserValue('0', '', '', ''));
+        expect(component.currentUsers.length === 0).toBeTruthy();
     });
 
     afterEach(() => {
