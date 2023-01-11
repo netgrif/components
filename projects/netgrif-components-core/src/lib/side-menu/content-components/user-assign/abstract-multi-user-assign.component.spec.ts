@@ -64,6 +64,13 @@ describe('AbstractMultiUserAssignComponent', () => {
         expect(component.currentUsers.length === 0).toBeTruthy();
     });
 
+    it('should getter', () => {
+        expect(component.currentUsers).toBeTruthy();
+        expect(component.initiallySelectedUsers).toBeTruthy();
+        expect(component.roles).toBeTruthy();
+        expect(component.negativeRoles).toBeTruthy();
+    });
+
     afterEach(() => {
         TestBed.resetTestingModule();
     });
