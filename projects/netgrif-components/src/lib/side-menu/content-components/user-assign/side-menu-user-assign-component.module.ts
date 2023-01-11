@@ -5,15 +5,27 @@ import {UserAssignItemComponent} from './user-assign-list/user-assign-item/user-
 import {UserAssignListComponent} from './user-assign-list/user-assign-list.component';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {FormsModule} from '@angular/forms';
-import {CovalentModule, MaterialModule, NAE_USER_ASSIGN_COMPONENT, TranslateLibModule} from '@netgrif/components-core';
+import {
+    CovalentModule,
+    MaterialModule,
+    NAE_USER_ASSIGN_COMPONENT,
+    TranslateLibModule,
+    UtilityModule
+} from '@netgrif/components-core';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { MultiUserAssignComponent } from './multi-user-assign.component';
+import { MultiUserAssignListComponent } from './multi-user-assign-list/multi-user-assign-list.component';
+import { MultiUserAssignItemComponent } from './multi-user-assign-list/multi-user-assign-item/multi-user-assign-item.component';
 
 
 @NgModule({
     declarations: [
         UserAssignComponent,
         UserAssignItemComponent,
-        UserAssignListComponent
+        UserAssignListComponent,
+        MultiUserAssignComponent,
+        MultiUserAssignListComponent,
+        MultiUserAssignItemComponent
     ],
     imports: [
         CommonModule,
@@ -23,7 +35,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
         FlexModule,
         FormsModule,
         TranslateLibModule,
-        MatFormFieldModule
+        MatFormFieldModule,
+        UtilityModule
     ],
     exports: [UserAssignComponent],
     providers: [

@@ -288,7 +288,7 @@ export class FieldConverterService {
             return array;
         }
         if (this.resolveType(field) === FieldTypeResource.USER_LIST && !!value) {
-            return new Map(value.map(v => [v.id, v]))
+            return new UserListValue(new Map(value.userValues.map(v => [v.id, v])));
         }
         return value;
     }

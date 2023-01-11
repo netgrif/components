@@ -283,7 +283,8 @@
             "reset": "Reset"
         },
         "user": {
-            "selectUser": "Select user"
+            "selectUser": "Select user",
+            "save": "Save"
         },
         "textarea": {
             "insertText": "Insert text here..."

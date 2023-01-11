@@ -283,7 +283,8 @@
             "reset": "Rücksetzen"
         },
         "user": {
-            "selectUser": "Benutzer auswählen"
+            "selectUser": "Benutzer auswählen",
+            "save": "Speichern"
         },
         "textarea": {
             "insertText": "Hier Text eingeben..."

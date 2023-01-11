@@ -283,7 +283,8 @@
             "reset": "Resetovať"
         },
         "user": {
-            "selectUser": "Vyberte používateľa"
+            "selectUser": "Vyberte používateľa",
+            "save": "Uložiť"
         },
         "textarea": {
             "insertText": "Sem zadajte text..."

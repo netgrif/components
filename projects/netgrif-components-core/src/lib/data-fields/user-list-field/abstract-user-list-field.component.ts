@@ -1,14 +1,14 @@
-import { Component, Inject, Input, OnInit, Optional } from '@angular/core';
-import { AbstractDataFieldComponent } from '../models/abstract-data-field-component';
-import { SideMenuService } from '../../side-menu/services/side-menu.service';
-import { SnackBarService } from '../../snack-bar/services/snack-bar.service';
-import { TranslateService } from '@ngx-translate/core';
-import { NAE_INFORM_ABOUT_INVALID_DATA } from '../models/invalid-data-policy-token';
-import { SideMenuSize } from '../../side-menu/models/side-menu-size';
-import { UserListInjectedData } from '../../side-menu/content-components/user-assign/model/user-list-injected-data';
-import { UserValue } from '../user-field/models/user-value';
-import { UserListField } from './models/user-list-field';
-import { UserListValue } from './models/user-list-value';
+import {Component, Inject, Input, OnInit, Optional} from '@angular/core';
+import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
+import {SideMenuService} from '../../side-menu/services/side-menu.service';
+import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
+import {TranslateService} from '@ngx-translate/core';
+import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
+import {SideMenuSize} from '../../side-menu/models/side-menu-size';
+import {UserListInjectedData} from '../../side-menu/content-components/user-assign/model/user-list-injected-data';
+import {UserValue} from '../user-field/models/user-value';
+import {UserListField} from './models/user-list-field';
+import {UserListValue} from './models/user-list-value';
 
 @Component({
   selector: 'ncc-abstract-user-list-field',
@@ -51,12 +51,7 @@ export abstract class AbstractUserListFieldComponent  extends AbstractDataFieldC
         this._sideMenuService.open(component, SideMenuSize.MEDIUM,
             {value: this.dataField.value} as UserListInjectedData).onClose.subscribe($event => {
             if ($event.data) {
-                const existingValue = new UserListValue(new Map<string, UserValue>());
-                if (!!this.dataField.value) {
-                    existingValue.addUserValues(this.dataField.value.userValues)
-                }
-                existingValue.addUserValue($event.data as UserValue);
-                this.dataField.value = existingValue;
+                this.dataField.value = new UserListValue(new Map<string, UserValue>(($event.data as Array<UserValue>).map(v => [v.id, v])));
                 this._snackbar.openGenericSnackBar(
                     this._translate.instant('dataField.snackBar.userAssigned',
                     {userName: this.dataField.value.getLast().fullName}),
