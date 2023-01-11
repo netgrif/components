@@ -13,19 +13,12 @@ import {
     UtilityModule
 } from '@netgrif/components-core';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import { MultiUserAssignComponent } from './multi-user-assign.component';
-import { MultiUserAssignListComponent } from './multi-user-assign-list/multi-user-assign-list.component';
-import { MultiUserAssignItemComponent } from './multi-user-assign-list/multi-user-assign-item/multi-user-assign-item.component';
-
 
 @NgModule({
     declarations: [
         UserAssignComponent,
         UserAssignItemComponent,
         UserAssignListComponent,
-        MultiUserAssignComponent,
-        MultiUserAssignListComponent,
-        MultiUserAssignItemComponent
     ],
     imports: [
         CommonModule,

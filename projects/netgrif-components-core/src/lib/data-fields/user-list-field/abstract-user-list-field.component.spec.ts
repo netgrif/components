@@ -64,7 +64,7 @@ describe('AbstractUserListFieldComponent', () => {
     it('should open and close', (done) => {
         component.selectAbstractUser(TestAssignUserComponent);
         service.close({opened: true, message: 'Test',
-            data: new UserValue('test', 'name', 'surname', 'test@email.com')});
+            data: [new UserValue('test', 'name', 'surname', 'test@email.com')]});
         expect(component.dataField.value.userValues.get('test').id === 'test').toBeTruthy();
         done();
     });

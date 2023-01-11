@@ -6,7 +6,7 @@ import {
     SideMenuService,
     SnackBarService
 } from '@netgrif/components-core';
-import {MultiUserAssignComponent} from "../../side-menu/content-components/user-assign/multi-user-assign.component";
+import {MultiUserAssignComponent} from "../../side-menu/content-components/multi-user-assign/multi-user-assign.component";
 
 @Component({
   selector: 'nc-user-list-field',
