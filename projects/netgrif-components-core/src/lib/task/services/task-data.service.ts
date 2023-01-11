@@ -204,8 +204,10 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
                         if (this.wasFieldUpdated(field)) {
                             if (field instanceof DynamicEnumerationField) {
                                 field.loading = true;
+                                field.block = true;
                                 this.updateTaskDataFields(this._afterActionFactory.create(bool => {
                                     field.loading = false;
+                                    field.block = false;
                                 }));
                             } else {
                                 this.updateTaskDataFields();
