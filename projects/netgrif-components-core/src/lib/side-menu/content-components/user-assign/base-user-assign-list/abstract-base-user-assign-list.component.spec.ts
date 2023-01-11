@@ -4,7 +4,7 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {FormControl} from '@angular/forms';
-import {UserListService} from '../../../../user/services/user-list.service';
+import {UserListItem, UserListService} from '../../../../user/services/user-list.service';
 import {ErrorSnackBarComponent} from '../../../../snack-bar/components/error-snack-bar/error-snack-bar.component';
 import {UserValue} from '../../../../data-fields/user-field/models/user-value';
 import {UserListInjectedData} from '../model/user-list-injected-data';
@@ -14,6 +14,7 @@ import {TranslateLibModule} from '../../../../translate/translate-lib.module';
 import {MaterialModule} from '../../../../material/material.module';
 import {SnackBarModule} from '../../../../snack-bar/snack-bar.module';
 import {AbstractBaseUserAssignListComponent} from "./abstract-base-user-assign-list.component";
+import {noop} from "rxjs";
 
 describe('AbstractBaseUserAssignListComponent', () => {
     let component: TestUserComponent;
@@ -70,6 +71,14 @@ describe('AbstractBaseUserAssignListComponent', () => {
 class TestUserComponent extends AbstractBaseUserAssignListComponent {
     constructor(protected _userListService: UserListService) {
         super(_userListService);
+    }
+
+    ngOnDestroy() {
+        noop()
+    }
+
+    select(selectedUser: UserListItem) {
+        noop()
     }
 }
 
