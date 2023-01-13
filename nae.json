@@ -233,7 +233,7 @@
                     },
                     "access": {
                         "authority": [
-                            "ROLE_ADMIN"
+                            "PROCESS_*"
                         ]
                     },
                     "navigation": {
@@ -412,7 +412,11 @@
                 "class": "WorkflowViewExampleComponent",
                 "from": "./doc/workflow-view-example/workflow-view-example.component"
             },
-            "access": "private",
+            "access": {
+                "authority": [
+                    "PROCESS_*"
+                ]
+            },
             "navigation": true,
             "routing": {
                 "path": "workflow-view"
@@ -528,7 +532,7 @@
                 ],
                 "group": [],
                 "authority": [
-                    "ROLE_ADMIN"
+                    "USER_*"
                 ]
             },
             "navigation": false,
@@ -769,7 +773,7 @@
                         "from": "./doc/navigation-example/buttons-nav/buttons-nav.component"
                     },
                     "access": {
-                        "authority": "ROLE_ADMIN"
+                        "authority": "AUTHORITY_VIEW"
                     },
                     "navigation": {
                         "title": "authority check",

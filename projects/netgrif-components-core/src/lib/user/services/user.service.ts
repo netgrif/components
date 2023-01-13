@@ -13,6 +13,8 @@ import {SessionService} from '../../authentication/session/services/session.serv
 import {UserResource} from '../../resources/interface/user-resource';
 import {AnonymousService} from '../../authentication/anonymous/anonymous.service';
 
+export var SCOPE_SUFFIX = "*";
+
 @Injectable({
     providedIn: 'root'
 })
@@ -87,9 +89,19 @@ export class UserService implements OnDestroy {
             return false;
         }
         if (authority instanceof Array) {
-            return authority.some(a => user.authorities.some(u => u === a));
+            return authority.some(a => user.authorities.some(u => u === a || this.hasAuthorityFromScope(a, u)));
         } else {
-            return user.authorities.some(a => a === authority);
+            return user.authorities.some(a => a === authority || this.hasAuthorityFromScope(authority, a));
+        }
+    }
+
+    public hasAuthorityFromScope(authorityScope: string, authorityToCheck: string): boolean {
+        if (authorityScope.includes(SCOPE_SUFFIX) && authorityScope.indexOf(SCOPE_SUFFIX) != authorityScope.length - 1) {
+            this._log.error('The authority name or scope is not valid.')
+        return false;
+        }
+        else {
+            return authorityToCheck.startsWith(authorityScope.replace(SCOPE_SUFFIX, ''));
         }
     }
 
