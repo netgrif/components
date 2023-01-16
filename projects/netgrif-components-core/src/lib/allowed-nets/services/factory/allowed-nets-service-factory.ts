@@ -16,6 +16,7 @@ import {DataGroup} from '../../../resources/public-api';
 import {getFieldFromDataGroups} from '../../../utility/get-field';
 import {FilterField} from '../../../data-fields/filter-field/models/filter-field';
 import {BaseAllowedNetsService} from '../base-allowed-nets.service';
+import {MultichoiceField} from "../../../data-fields/multichoice-field/models/multichoice-field";
 
 
 /**
@@ -36,6 +37,7 @@ export function navigationItemTaskAllowedNetsServiceFactory(factory: AllowedNets
                                                             baseAllowedNets: BaseAllowedNetsService,
                                                             navigationItemTaskData: Array<DataGroup>): AllowedNetsService {
     const filterField = getFieldFromDataGroups(navigationItemTaskData, UserFilterConstants.FILTER_FIELD_ID) as FilterField;
+    const allowedNetsField = getFieldFromDataGroups(navigationItemTaskData, UserFilterConstants.ALLOWED_NETS_FIELD_ID) as MultichoiceField;
 
     if (filterField === undefined) {
         throw new Error(`Provided navigation item task data does not contain a filter field with ID '${UserFilterConstants.FILTER_FIELD_ID
@@ -49,6 +51,18 @@ export function navigationItemTaskAllowedNetsServiceFactory(factory: AllowedNets
             nets.next(Array.from(netSet));
         });
     }
+
+    if (!!allowedNetsField) {
+        if (!!allowedNetsField.value) {
+            nets.next([...allowedNetsField.value]);
+        }
+        allowedNetsField.valueChanges().subscribe(allowedNets => {
+            if (!!allowedNets && allowedNets.length > 0) {
+                nets.next([...allowedNets]);
+            }
+        });
+    }
+
     return factory.createFromObservable(nets.asObservable());
 }
 
