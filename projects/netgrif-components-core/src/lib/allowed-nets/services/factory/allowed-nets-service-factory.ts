@@ -44,14 +44,12 @@ export function navigationItemTaskAllowedNetsServiceFactory(factory: AllowedNets
         }'! Allowed nets cannot be generated from it!`);
     }
     const nets = new BehaviorSubject<Array<string>>(Array.from(new Set<string>([...filterField.allowedNets])));
-
     if (filterField.filterMetadata.inheritAllowedNets) {
         baseAllowedNets.allowedNets$.subscribe(allowedNets => {
             const netSet = new Set<string>(allowedNets);
             nets.next(Array.from(netSet));
         });
     }
-
     if (!!allowedNetsField) {
         if (!!allowedNetsField.value) {
             nets.next([...allowedNetsField.value]);
@@ -62,7 +60,6 @@ export function navigationItemTaskAllowedNetsServiceFactory(factory: AllowedNets
             }
         });
     }
-
     return factory.createFromObservable(nets.asObservable());
 }
 
