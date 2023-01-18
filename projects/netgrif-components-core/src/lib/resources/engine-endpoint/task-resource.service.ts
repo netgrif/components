@@ -265,6 +265,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
     // {{baseUrl}}/api/task/:id/file/:field         - for file field
     // {{baseUrl}}/api/task/:id/file/:field/:name   - for file list field
     public downloadFile(taskId: string, fieldId: string, name?: string): Observable<ProviderProgress | Blob> {
+        fieldId = btoa(fieldId)
         const url = !!name ? 'task/' + taskId + '/file/' + fieldId + '/' + name : 'task/' + taskId + '/file/' + fieldId;
         return this._resourceProvider.getBlob$(url, this.SERVER_URL).pipe(
             map(event => {
@@ -289,6 +290,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
     // {{baseUrl}}/api/task/:id/files/:field    - for file list field
     public uploadFile(taskId: string, fieldId: string, body: object, multipleFiles: boolean):
         Observable<ProviderProgress | EventOutcomeMessageResource> {
+        fieldId = btoa(fieldId);
         const url = !multipleFiles ? 'task/' + taskId + '/file/' + fieldId : 'task/' + taskId + '/files/' + fieldId;
         return this._resourceProvider.postWithEvent$<EventOutcomeMessageResource>(url, this.SERVER_URL, body).pipe(
             map(event => {
@@ -310,6 +312,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      * DELETE
      */
     public deleteFile(taskId: string, fieldId: string, name?: string, param?: HttpParams): Observable<MessageResource> {
+        fieldId = btoa(fieldId)
         const url = !!name ? 'task/' + taskId + '/file/' + fieldId + '/' + name : 'task/' + taskId + '/file/' + fieldId;
         return this._resourceProvider.delete$(url, this.SERVER_URL, param).pipe(
             map(r => this.changeType(r, undefined))
@@ -322,6 +325,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      */
     // {{baseUrl}}/api/task/:id/file_preview/:field
     public downloadFilePreview(taskId: string, fieldId: string): Observable<ProviderProgress | Blob> {
+        fieldId = btoa(fieldId)
         const url = 'task/' + taskId + '/file_preview/' + fieldId;
         return this._resourceProvider.getBlob$(url, this.SERVER_URL).pipe(
             map(event => {
