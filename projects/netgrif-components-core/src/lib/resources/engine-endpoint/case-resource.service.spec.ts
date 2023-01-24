@@ -99,7 +99,7 @@ describe('CaseResourceService', () => {
                         done();
                     });
 
-                    const reqLog = httpMock.expectOne('http://localhost:8080/api/workflow/case/id/file/id');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/workflow/case/id/file');
                     expect(reqLog.request.method).toEqual('GET');
 
                     reqLog.flush({description: 'string', filename: 'name', open: false, readable: false});
