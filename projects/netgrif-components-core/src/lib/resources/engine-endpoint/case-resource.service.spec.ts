@@ -7,6 +7,7 @@ import {SimpleFilter} from '../../filter/models/simple-filter';
 import {FilterType} from '../../filter/models/filter-type';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {CreateCaseEventOutcome} from '../../event/model/event-outcomes/case-outcomes/create-case-event-outcome';
+import {HttpParams} from "@angular/common/http";
 
 describe('CaseResourceService', () => {
     let service: CaseResourceService;
@@ -90,7 +91,7 @@ describe('CaseResourceService', () => {
     it('should getCaseFile', (done) => {
         inject([HttpTestingController],
                 (httpMock: HttpTestingController) => {
-                    service.getCaseFile('id', 'id').subscribe(res => {
+                    service.getCaseFile('id', new HttpParams()).subscribe(res => {
                         expect(res.description).toEqual('string');
                         expect(res.filename).toEqual('name');
                         expect(res.open).toBeFalse();
