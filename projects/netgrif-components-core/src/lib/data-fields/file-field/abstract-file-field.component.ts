@@ -24,8 +24,8 @@ import {take} from 'rxjs/operators';
 import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
 import {EventService} from '../../event/services/event.service';
 import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
-import {FileFieldIdBody} from '../models/file-field-id-body';
 import { HttpParams } from '@angular/common/http';
+import {FileFieldRequest} from "../../resources/interface/file-field-request-body";
 
 export interface FileState {
     progress: number;
@@ -228,11 +228,14 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         this.state.uploading = true;
         const fileFormData = new FormData();
         const fileToUpload = this.fileUploadEl.nativeElement.files.item(0) as File;
-        const data: FileFieldIdBody = {};
-        data[this.resolveParentTaskId()] = this.dataField.stringId;
+        const requestBody: FileFieldRequest = {
+            parentTaskId: this.resolveParentTaskId(),
+            fieldId: this.dataField.stringId,
+        }
         fileFormData.append('file', fileToUpload);
-        fileFormData.append('data', new Blob([JSON.stringify(data)], {type: 'application/json'}));
-        this._taskResourceService.uploadFile(this.taskId, this.dataField.stringId, fileFormData, false)
+        fileFormData.append('data', new Blob([JSON.stringify(requestBody)], {type: 'application/json'}));
+
+        this._taskResourceService.uploadFile(this.taskId, fileFormData, false)
             .subscribe((response: EventOutcomeMessageResource) => {
                 if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.UPLOAD) {
                     this.state.progress = (response as ProviderProgress).progress;
@@ -300,8 +303,12 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         }
         this.state = this.defaultState;
         this.state.downloading = true;
+
+        let params = new HttpParams();
+        params = params.set("fieldId", this.dataField.stringId);
+
         this._taskResourceService.downloadFile(this.resolveParentTaskId(),
-            this.dataField.stringId).subscribe(response => {
+            params).subscribe(response => {
             if (!(response as ProviderProgress).type || (response as ProviderProgress).type !== ProgressType.DOWNLOAD) {
                 this._log.debug(`File [${this.dataField.stringId}] ${this.dataField.value.name} was successfully downloaded`);
                 this.downloadViaAnchor(response as Blob);
@@ -357,11 +364,12 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             this._log.error('File cannot be deleted. No task is set to the field.');
             return;
         }
-        let param = new HttpParams();
-        param = param.set("parentTaskId", this.resolveParentTaskId());
+        const requestBody: FileFieldRequest = {
+            parentTaskId: this.resolveParentTaskId(),
+            fieldId: this.dataField.stringId
+        }
 
-        this._taskResourceService.deleteFile(this.taskId,
-            this.dataField.stringId, undefined, param).pipe(take(1)).subscribe(response => {
+        this._taskResourceService.deleteFile(this.taskId, requestBody).pipe(take(1)).subscribe(response => {
             if (response.success) {
                 const filename = this.dataField.value.name;
                 this.dataField.value = {};
@@ -419,7 +427,9 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             return;
         }
         this.state.downloading = true;
-        this._taskResourceService.downloadFilePreview(this.resolveParentTaskId(), this.dataField.stringId).subscribe(response => {
+        let params = new HttpParams()
+        params = params.set("fieldId", this.dataField.stringId);
+        this._taskResourceService.downloadFilePreview(this.resolveParentTaskId(), params).subscribe(response => {
             if (response instanceof Blob) {
                 this._log.debug(`Preview of file [${this.dataField.stringId}] ${this.dataField.value.name} was successfully downloaded`);
                 this.fileForPreview = new Blob([response], {type: 'application/octet-stream'});
@@ -453,7 +463,11 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         if (!this.checkFileBeforeDownload()) {
             return;
         }
-        this._taskResourceService.downloadFile(this.resolveParentTaskId(), this.dataField.stringId).subscribe(response => {
+
+        let params = new HttpParams();
+        params = params.set("fieldId", this.dataField.stringId);
+
+        this._taskResourceService.downloadFile(this.resolveParentTaskId(), params).subscribe(response => {
             if (!(response as ProviderProgress).type || (response as ProviderProgress).type !== ProgressType.DOWNLOAD) {
                 this._log.debug(`File [${this.dataField.stringId}] ${this.dataField.value.name} was successfully downloaded`);
                 this.initDownloadFile(response);

@@ -184,12 +184,13 @@ export abstract class AbstractResourceProvider {
     }
 
     public delete$<T>(endpoint?: string, url?: string, params ?: Params, headers ?: Headers,
-                      responseType ?: ResponseType): Observable<T> {
+                      responseType ?: ResponseType, body?: object,): Observable<T> {
         return this.httpClient.delete<T>(AbstractResourceProvider.sanitizeUrl(endpoint, url), {
             headers,
             params,
             responseType: 'json',
-            observe: 'body'
+            observe: 'body',
+            body
         });
     }
 }
