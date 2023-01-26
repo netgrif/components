@@ -2,7 +2,7 @@
     <div fxLayout="column" fxLayoutAlign="start stretch" class="content-margin full-height" >
         <nc-header [hidden]='hidden' #header type="task" class="task-panel-padding-mini"></nc-header>
         <nc-single-task [task$]="task$" [loading$]="loading$" [selectedHeaders$]="selectedHeaders$" (taskEvent)="logEvent($event)"
-                        [pageHeader]='pageHeader' [pageFooter]='pageFooter' [actionButtonTemplates]='[finishButton]'
+                        [noTaskSection]="noTaskSection" [pageHeader]='pageHeader' [pageFooter]='pageFooter' [actionButtonTemplates]='[finishButton]'
                         [actionRowJustifyContent]='"center"' fxFlex></nc-single-task>
     </div>
 </div>
@@ -30,4 +30,13 @@
     <mat-toolbar color="primary" class="footer-custom">
         <!-- TODO -->
     </mat-toolbar>
+</ng-template>
+
+<ng-template #noTaskSection>
+    <mat-icon color='accent'>check_box</mat-icon>
+    <span class='font-size-20'>{{ 'tasks.view.noTasksSatisfyingThisFilter' | translate }}</span>
+    <button mat-raised-button color="primary" class="public-button"
+            (click)="newCase();">
+        <span>Create new case</span>
+    </button>
 </ng-template>

@@ -157,4 +157,8 @@ export class PublicSingleTaskViewComponent extends AbstractSingleTaskViewCompone
         console.log(event);
     }
 
+    newCase() {
+        this._router.navigate(['process', btoa('nae_1823')])
+    }
+
 }

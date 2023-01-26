@@ -7,7 +7,13 @@ import {CasePanelComponent} from './case-panel/case-panel.component';
 import {TaskListComponent} from './task-panel-list/task-list.component';
 import {WorkflowPanelComponent} from './workflow-panel/workflow-panel.component';
 import {DataFieldsComponentModule} from '../data-fields/data-fields.module';
-import {MaterialModule, SnackBarModule, TranslateLibModule, CurrencyModule} from '@netgrif/components-core';
+import {
+    MaterialModule,
+    SnackBarModule,
+    TranslateLibModule,
+    CurrencyModule,
+    UtilityModule
+} from '@netgrif/components-core';
 import {TaskContentComponentModule} from '../task-content/task-content.module';
 import {PublicWorkflowPanelComponent} from './public-workflow-panel/public-workflow-panel.component';
 import {SideMenuUserAssignComponentModule} from '../side-menu/content-components/user-assign/side-menu-user-assign-component.module';
@@ -40,7 +46,8 @@ import { SingleTaskComponent } from './task-panel-single/single-task.component';
         SnackBarModule,
         TaskContentComponentModule,
         SideMenuUserAssignComponentModule,
-        CurrencyModule
+        CurrencyModule,
+        UtilityModule
     ],
     exports: [
         PanelComponent,
