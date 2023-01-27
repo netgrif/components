@@ -232,13 +232,16 @@
             "phone": "Entered text must be in telephone number format",
             "email": "Entered text must be in email format",
             "dateRange": "Entered date must be between {{left}} and {{right}}",
+            "datePast": "Entered date must be earlier than {{right}}",
+            "dateFuture": "Entered date must be later than {{left}}",
             "weekend": "Entered date must be weekend day",
             "workday": "Entered date must be week day",
             "enumeration": "One of the options must be selected",
             "min": "Entered number must be greater than {{length}}",
             "translationRequired": "Translation for languages: <{{translation}}> must be entered",
             "translationOnly": "Only translation for languages: <{{translation}}> is allowed",
-            "requiredI18n": "At least one value must be entered"
+            "requiredI18n": "At least one value must be entered",
+            "requiredUserList": "At least one value must be entered"
         },
         "snackBar": {
             "downloadFail": " failed to download",
