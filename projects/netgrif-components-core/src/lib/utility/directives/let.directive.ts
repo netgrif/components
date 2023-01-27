@@ -11,19 +11,23 @@ export class LetContext<T> {
 export class LetDirective<T = unknown> {
 
     private readonly context: LetContext<T>;
-    private hasView: boolean;
+    private _hasView: boolean;
 
     constructor(private templateRef?: TemplateRef<any>,
                 private viewContainer?: ViewContainerRef) {
         this.context = new LetContext<T>();
-        this.hasView = false;
+        this._hasView = false;
     }
     @Input()
     set nccLet(obj: T) {
         this.context.$implicit = this.context.nccLet = obj;
-        if (!this.hasView) {
+        if (!this._hasView && !!this.templateRef && !!this.viewContainer && !!this.context) {
             this.viewContainer.createEmbeddedView(this.templateRef, this.context);
-            this.hasView = true;
+            this._hasView = true;
         }
+    }
+
+    get hasView(): boolean {
+        return this._hasView;
     }
 }

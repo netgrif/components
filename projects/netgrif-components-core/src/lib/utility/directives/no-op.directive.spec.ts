@@ -17,7 +17,9 @@ describe('NoOpDirective', () => {
     });
 
     it('should set', () => {
-        expect(component).toBeTruthy();
+        const directive = new LetDirective();
+        directive.nccLet = 'test';
+        expect(directive.hasView).toBeFalsy();
     });
 });
 
