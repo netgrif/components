@@ -4,7 +4,7 @@ on:
         types: [ opened, synchronize, reopened ]
 jobs:
     matrix-test:
-        name: Build matrix
+        name: Matrix Test
         runs-on: ubuntu-latest
         strategy:
             matrix:
@@ -31,7 +31,7 @@ jobs:
             -   name: Build examples
                 run: npm run example:build
     test:
-        name: Test
+        name: Test with SonarCloud
         runs-on: ubuntu-latest
         steps:
             -   uses: actions/checkout@v2
