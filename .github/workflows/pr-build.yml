@@ -3,6 +3,33 @@ on:
     pull_request:
         types: [ opened, synchronize, reopened ]
 jobs:
+    matrix-test:
+        name: Build matrix
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                node-version: [ 12, 14, 16, 18 ]
+        steps:
+            -   uses: actions/checkout@v2
+                with:
+                    fetch-depth: 0
+            -   uses: actions/setup-node@v2
+                name: Full Test on Node.js version ${{ matrix.node-version }}
+                with:
+                    node-version: ${{ matrix.node-version }}
+            -   run: npm i
+            -   name: Build & test components-core
+                run: |
+                    npm run ncc:build
+                    npm run ncc:full-test
+                    npm i ./dist/netgrif-components-core --save-optional
+            -   name: Build & test components
+                run: |
+                    npm run nc:build
+                    npm run nc:full-test
+                    npm i ./dist/netgrif-components --save-optional
+            -   name: Build examples
+                run: npm run example:build
     test:
         name: Test
         runs-on: ubuntu-latest
