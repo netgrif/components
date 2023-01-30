@@ -18,10 +18,10 @@ const DRAWER_MAX_WIDTH = 450;
 export abstract class AbstractNavigationDrawerComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
-    @Input('showUser') public showUser: boolean;
-    @Input('user') public user: User;
-    @Input('showQuickPanel') public showQuickPanel: boolean;
-    @Input('quickPanelItems') public quickPanelItems: Array<any>; // QuickPanelItem
+    @Input() public showUser: boolean;
+    @Input() public user: User;
+    @Input() public showQuickPanel: boolean;
+    @Input() public quickPanelItems: Array<any>; // QuickPanelItem
     @Input() public navigation: boolean;
 
     @Output() public openedChange: EventEmitter<boolean>;
@@ -92,7 +92,7 @@ export abstract class AbstractNavigationDrawerComponent implements OnInit, After
         return this._fixed;
     }
 
-    @Input('fixed')
+    @Input()
     set fixed(value: boolean) {
         this._fixed = value;
         this.resolveLayout(this._fixed);
