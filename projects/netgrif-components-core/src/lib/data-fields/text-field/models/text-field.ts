@@ -17,7 +17,7 @@ export enum TextFieldView {
  */
 export enum TextFieldComponent {
     PASSWORD = 'password',
-    TEXT_AREA = 'text_area',
+    TEXT_AREA = 'textarea',
     RICH_TEXT_AREA = 'richtextarea',
     HTML_TEXT_AREA = 'htmltextarea',
     DASHBOARD_LINE_CHART = 'dashboard_line_chart',
@@ -94,7 +94,7 @@ export class TextField extends DataField<string> {
         if (!(new RegExp(/^(?:\+?(\d{1,3}))?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4})(?:[-.x ]*(\d+))?)$/).test(fc.value))) {
             return ({validTelNumber: true});
         } else {
-            return (null);
+            return null;
         }
     }
 }
