@@ -51,7 +51,7 @@ export abstract class AbstractUserListFieldComponent  extends AbstractDataFieldC
         this._sideMenuService.open(component, SideMenuSize.MEDIUM,
             {value: this.dataField.value} as UserListInjectedData).onClose.subscribe($event => {
             if ($event.data) {
-                const existingValue = new UserListValue([]);
+                const existingValue = new UserListValue(new Map<string, UserValue>());
                 if (!!this.dataField.value) {
                     existingValue.addUserValues(this.dataField.value.userValues)
                 }
@@ -69,9 +69,9 @@ export abstract class AbstractUserListFieldComponent  extends AbstractDataFieldC
         });
     }
 
-    public removeAbstractUser(user: UserValue) {
-        const existingUsers = new UserListValue([...this.dataField.value.userValues]);
-        existingUsers.removeUserValue(user);
+    public removeAbstractUser(userId: string) {
+        const existingUsers = new UserListValue(new Map<string, UserValue>(this.dataField.value.userValues));
+        existingUsers.removeUserValue(userId);
         this.dataField.value = existingUsers;
     }
 
