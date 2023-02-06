@@ -44,7 +44,7 @@
                     </div>
                     <div *ngIf="headerService.headerState.mode === headerModeEnum.EDIT">
                         <button mat-menu-item (click)="confirmEditMode()">
-                            <mat-icon color="primary">done</mat-icon>
+                            <mat-icon color="primary">done_all</mat-icon>
                             {{ 'dialog.submit' | translate}}
                         </button>
                         <button mat-menu-item (click)="headerService.revertEditMode()">
@@ -60,6 +60,9 @@
                                 <input matInput type="number"  [formControl]="columnWidthControl">
                                 <mat-error *ngIf="!columnWidthControl.valid">{{getErrorMessageWidth()}}</mat-error>
                             </mat-form-field>
+                            <button mat-icon-button  [disabled]="!this.enableColumnWidthApply" (click)="confirmColumnWidth()">
+                                <mat-icon [color]="this.enableColumnWidthApply ? 'primary' : 'grey'">done</mat-icon>
+                            </button>
                         </div>
                         <div class="mat-menu-item-look mat-menu-item-height" (click)="clickStop($event)" *ngIf="canOverflow && overflowControl.value">
                             <mat-form-field appearance="outline">
@@ -67,6 +70,9 @@
                                 <input matInput type="number" [formControl]="columnCountControl">
                                 <mat-error *ngIf="!columnCountControl.valid">{{getErrorMessageCount()}}</mat-error>
                             </mat-form-field>
+                            <button mat-icon-button [disabled]="!this.enableColumnCountApply" (click)="confirmColumnCount()">
+                                <mat-icon [color]="this.enableColumnCountApply ? 'primary' : 'grey'">done</mat-icon>
+                            </button>
                         </div>
                     </div>
                 </mat-menu>

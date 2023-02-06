@@ -34,7 +34,8 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
     public subOverflowControl: Subscription;
     public subColumnCountControl: Subscription;
     public subColumnWidthControl: Subscription;
-
+    public enableColumnCountApply: boolean;
+    public enableColumnWidthApply: boolean;
     protected _initHeaderCount: number = undefined;
     protected _initResponsiveHeaders: boolean = undefined;
 
@@ -44,6 +45,8 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
         (this._overflowService !== null) ?
             this.initializeFormControls(true) :
             this.initializeFormControls(false);
+        this.enableColumnCountApply = false;
+        this.enableColumnWidthApply = false;
     }
 
     @Input()
@@ -146,6 +149,28 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
         return '';
     }
 
+    confirmColumnCount(): void {
+        if (this.columnCountControl.valid) {
+            this._overflowService.columnCount = this.columnCountControl.value;
+            this.enableColumnCountApply = false;
+            if (this.headerService && this.type === HeaderType.CASE) {
+                this.headerService.headerColumnCount = this.columnCountControl.value;
+
+                (this.headerService as CaseHeaderService).updateColumnCount();
+            }
+        }
+    }
+
+    confirmColumnWidth(): void {
+        if (this.columnWidthControl.valid) {
+            this._overflowService.columnWidth = this.columnWidthControl.value;
+            this.enableColumnWidthApply = false;
+            if (this.headerService && this.type === HeaderType.CASE) {
+                (this.headerService as CaseHeaderService).updateColumnCount();
+            }
+        }
+    }
+
     protected initializeFormControls(exist: boolean) {
         this.canOverflow = exist;
         this.overflowControl = new FormControl(exist ? this._overflowService.overflowMode : false);
@@ -167,19 +192,12 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
         });
         this.subColumnCountControl = this.columnCountControl.valueChanges.subscribe(value => {
             if (this.columnCountControl.valid) {
-                this._overflowService.columnCount = value;
-                if (this.headerService && this.type === HeaderType.CASE) {
-                    this.headerService.headerColumnCount = value;
-                    (this.headerService as CaseHeaderService).updateColumnCount();
-                }
+                this.enableColumnCountApply = value !== this._overflowService.columnCount;
             }
         });
         this.subColumnWidthControl = this.columnWidthControl.valueChanges.subscribe(value => {
             if (this.columnWidthControl.valid) {
-                this._overflowService.columnWidth = value;
-                if (this.headerService && this.type === HeaderType.CASE) {
-                    (this.headerService as CaseHeaderService).updateColumnCount();
-                }
+                this.enableColumnWidthApply = value !== this._overflowService.columnWidth;
             }
         });
     }
