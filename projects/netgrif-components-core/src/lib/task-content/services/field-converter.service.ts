@@ -21,9 +21,10 @@ import {TaskRefField} from '../../data-fields/task-ref-field/model/task-ref-fiel
 import {DynamicEnumerationField} from '../../data-fields/enumeration-field/models/dynamic-enumeration-field';
 import {FilterField} from '../../data-fields/filter-field/models/filter-field';
 import {I18nField} from '../../data-fields/i18n-field/models/i18n-field';
-import { UserListField } from '../../data-fields/user-list-field/models/user-list-field';
-import { UserListValue } from '../../data-fields/user-list-field/models/user-list-value';
+import {UserListField} from '../../data-fields/user-list-field/models/user-list-field';
+import {UserListValue} from '../../data-fields/user-list-field/models/user-list-value';
 import * as Buffer from 'buffer';
+
 
 @Injectable({
     providedIn: 'root'
@@ -82,7 +83,7 @@ export class FieldConverterService {
                 return new UserField(item.stringId, item.name, item.behavior, user,
                     item.roles, item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.USER_LIST:
-                let userListValue = new UserListValue([]);
+                let userListValue = new UserListValue(new Map<string, UserValue>());
                 if (item.value) {
                     item.value.userValues.forEach(u => userListValue.addUserValue(new UserValue(u.id, u.name, u.surname, u.email)));
                 }
@@ -162,7 +163,7 @@ export class FieldConverterService {
             return value.id;
         }
         if (this.resolveType(field) === FieldTypeResource.USER_LIST) {
-            return value.userValues.map(u => u.id);
+            return [...value.userValues.keys()];
         }
         if (this.resolveType(field) === FieldTypeResource.DATE_TIME) {
             if (moment.isMoment(value)) {
@@ -265,9 +266,6 @@ export class FieldConverterService {
         if (value === undefined) {
             return;
         }
-        if (this.resolveType(field) === FieldTypeResource.TEXT && value === null) {
-            return null;
-        }
         if (this.resolveType(field) === FieldTypeResource.TEXT && field.component && field.component.name === 'password') {
             return this.decodeBase64(value);
         }
@@ -290,6 +288,9 @@ export class FieldConverterService {
                 }
             });
             return array;
+        }
+        if (this.resolveType(field) === FieldTypeResource.USER_LIST && !!value) {
+            return new Map(value.map(v => [v.id, v]))
         }
         return value;
     }
