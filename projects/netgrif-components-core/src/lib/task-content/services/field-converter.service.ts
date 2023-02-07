@@ -23,6 +23,8 @@ import {FilterField} from '../../data-fields/filter-field/models/filter-field';
 import {I18nField} from '../../data-fields/i18n-field/models/i18n-field';
 import {UserListField} from '../../data-fields/user-list-field/models/user-list-field';
 import {UserListValue} from '../../data-fields/user-list-field/models/user-list-value';
+import * as Buffer from 'buffer';
+
 
 @Injectable({
     providedIn: 'root'
@@ -147,7 +149,7 @@ export class FieldConverterService {
             return null;
         }
         if (this.resolveType(field) === FieldTypeResource.TEXT && field.component && field.component.name === 'password') {
-            return btoa(value);
+            return this.encodeBase64(value);
         }
         if (value === undefined || value === null) {
             return;
@@ -265,7 +267,7 @@ export class FieldConverterService {
             return;
         }
         if (this.resolveType(field) === FieldTypeResource.TEXT && field.component && field.component.name === 'password') {
-            return atob(value);
+            return this.decodeBase64(value);
         }
         if (this.resolveType(field) === FieldTypeResource.DATE) {
             return moment(new Date(value[0], value[1] - 1, value[2]));
@@ -295,8 +297,16 @@ export class FieldConverterService {
 
     protected resolveTextValue(field: DataFieldResource, value: string): string {
         if (field.component !== undefined && field.component.name === 'password' && value !== '' && value !== undefined) {
-            return atob(value);
+            return this.decodeBase64(value);
         }
         return value;
+    }
+
+    protected encodeBase64(text: string): string {
+        return Buffer.Buffer.from(text).toString('base64');
+    }
+
+    protected decodeBase64(encoded: string): string {
+        return Buffer.Buffer.from(encoded, 'base64').toString('utf-8');
     }
 }
