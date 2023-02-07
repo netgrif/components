@@ -27,7 +27,7 @@ export class UserListFieldComponent extends AbstractUserListFieldComponent {
         this.selectAbstractUser(UserAssignComponent);
     }
 
-    public deleteUser(user: UserValue) {
-        this.removeAbstractUser(user);
+    public deleteUser(userId: string) {
+        this.removeAbstractUser(userId);
     }
 }
