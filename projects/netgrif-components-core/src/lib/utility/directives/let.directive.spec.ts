@@ -2,7 +2,7 @@ import {LetDirective} from './let.directive';
 import {Component} from "@angular/core";
 import {ComponentFixture, TestBed} from "@angular/core/testing";
 
-describe('NoOpDirective', () => {
+describe('LetDirective', () => {
     let component: TestComponent;
     let fixture: ComponentFixture<TestComponent>;
 
