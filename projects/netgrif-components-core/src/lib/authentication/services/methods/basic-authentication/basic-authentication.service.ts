@@ -6,7 +6,7 @@ import {Credentials} from '../../../models/credentials';
 import {ConfigurationService} from '../../../../configuration/configuration.service';
 import {UserResource} from '../../../../resources/interface/user-resource';
 import * as Buffer from 'buffer';
-import en from '@angular/common/locales/en';
+
 
 @Injectable()
 export class BasicAuthenticationService extends AuthenticationMethodService {
