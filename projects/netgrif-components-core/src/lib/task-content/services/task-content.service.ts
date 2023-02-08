@@ -223,16 +223,12 @@ export abstract class TaskContentService implements OnDestroy {
         }
         // todo actions owner zbytočný?
         const frontendActions = chFields.taskId === this.task.stringId && chFields[TaskContentService.FRONTEND_ACTIONS_KEY];
-
         Object.keys(chFields).forEach(changedField => {
-            if (!!this.taskFieldsIndex[chFields.taskId] && !!this.taskFieldsIndex[chFields.taskId].fields
-                && !!this.taskFieldsIndex[chFields.taskId].fields[changedField]) {
+            let referencedTaskId: string;
+            if (this.isFieldInTask(chFields.taskId, changedField)) {
                 this.updateField(chFields, this.taskFieldsIndex[chFields.taskId].fields[changedField], frontendActions);
-            } else if (this.isFieldInTaskRef(changedField)) {
-                const taskId = this.getReferencedTaskId(changedField);
-                if (!!taskId && !!this.taskFieldsIndex[taskId] && !!this.taskFieldsIndex[taskId].fields
-                    && !!this.taskFieldsIndex[taskId].fields[changedField])
-                    this.updateReferencedField(chFields, this.taskFieldsIndex[taskId].fields[changedField], frontendActions);
+            } else if (!!(referencedTaskId = this.getReferencedTaskId(changedField))) {
+                this.updateReferencedField(chFields, this.taskFieldsIndex[referencedTaskId].fields[changedField], frontendActions);
             }
         });
 
@@ -335,28 +331,22 @@ export abstract class TaskContentService implements OnDestroy {
         }
     }
 
-    public getReferencedFieldTask(field): string {
-        return Object.keys(this.taskFieldsIndex).find(taskId => Object.keys(this.taskFieldsIndex[taskId].fields).includes(field));
+    private isFieldInTask(taskId: string, changedField: string): boolean {
+        return !!taskId
+            && !!this.taskFieldsIndex[taskId]
+            && !!this.taskFieldsIndex[taskId].fields
+            && !!this.taskFieldsIndex[taskId].fields[changedField]
     }
 
-    private isFieldInTaskRef(changedField: string): boolean {
-        return !!this.taskFieldsIndex &&
-            Object.keys(this.taskFieldsIndex)
-                .some(taskId => taskId !== this.task.stringId && this.taskFieldsIndex[taskId].fields[changedField]);
+    private getReferencedTaskId(changedField: string): string {
+        return !!this.taskFieldsIndex ?
+            Object.keys(this.taskFieldsIndex).find(taskId => taskId !== this.task.stringId && Object.keys(this.taskFieldsIndex[taskId].fields).includes(changedField)) : undefined;
     }
 
     private getReferencedTransitionId(changedField: string): string {
         if (!!this.taskFieldsIndex) {
-            const taskFieldsIndexId = this.getReferencedFieldTask(changedField);
+            const taskFieldsIndexId = this.getReferencedTaskId(changedField);
             return this.taskFieldsIndex[taskFieldsIndexId].transitionId;
-        }
-        return undefined;
-    }
-
-    private getReferencedTaskId(changedField: string): string {
-        if (!!this.taskFieldsIndex) {
-            return Object.keys(this.taskFieldsIndex).find(taskId =>
-                Object.keys(this.taskFieldsIndex[taskId].fields).includes(changedField));
         }
         return undefined;
     }
