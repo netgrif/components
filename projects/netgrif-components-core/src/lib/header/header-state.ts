@@ -25,6 +25,7 @@ export class HeaderState implements HeaderStateInterface {
     private _lastSelectedHeaders: Array<HeaderColumn>;
 
     constructor(initialHeaders: Array<HeaderColumn>) {
+        this._lastSelectedHeaders = new Array<HeaderColumn>();
         this._selectedHeaders$ = new BehaviorSubject<Array<HeaderColumn>>(initialHeaders);
     }
 
