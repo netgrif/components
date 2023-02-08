@@ -16,7 +16,6 @@ import {ImmediateFilterTextContentComponent} from './immediate/immediate-filter-
 import { PanelItemComponent } from './panel-item/panel-item.component';
 import {TaskListPaginationComponent} from './task-panel-list-pagination/task-list-pagination.component';
 import { SingleTaskComponent } from './task-panel-single/single-task.component';
-import { ScrollingModule } from '@angular/cdk-experimental/scrolling';
 
 @NgModule({
     declarations: [
@@ -42,7 +41,6 @@ import { ScrollingModule } from '@angular/cdk-experimental/scrolling';
         TaskContentComponentModule,
         SideMenuUserAssignComponentModule,
         CurrencyModule,
-        ScrollingModule
     ],
     exports: [
         PanelComponent,
