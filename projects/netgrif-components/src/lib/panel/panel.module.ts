@@ -40,7 +40,7 @@ import { SingleTaskComponent } from './task-panel-single/single-task.component';
         SnackBarModule,
         TaskContentComponentModule,
         SideMenuUserAssignComponentModule,
-        CurrencyModule
+        CurrencyModule,
     ],
     exports: [
         PanelComponent,
