@@ -7,6 +7,7 @@ export interface HeaderStateInterface {
     mode: HeaderMode;
     readonly selectedHeaders$: Observable<Array<HeaderColumn>>;
     readonly selectedHeaders: Array<HeaderColumn>;
+    readonly lastSelectedHeaders: Array<HeaderColumn>;
     saveState: () => void;
     restoreLastState: () => void;
     restoreLastMode: () => void;
@@ -35,6 +36,9 @@ export class HeaderState implements HeaderStateInterface {
         return this._selectedHeaders$.getValue();
     }
 
+    get lastSelectedHeaders(): Array<HeaderColumn> {
+        return this._lastSelectedHeaders;
+    }
     public saveState(): void {
         this._lastMode = this.mode;
         this._lastSelectedHeaders = this._selectedHeaders$.getValue();
@@ -49,6 +53,10 @@ export class HeaderState implements HeaderStateInterface {
         this._selectedHeaders$.next(this._lastSelectedHeaders);
     }
 
+    public restoreLastHeadersToIndex(count: number): void {
+        this._selectedHeaders$.next(this._lastSelectedHeaders.slice(0, count))
+    }
+
     public updateSelectedHeaders(newSelectedHeaders: Array<HeaderColumn>): void {
         this._selectedHeaders$.next(newSelectedHeaders);
     }
@@ -58,6 +66,7 @@ export class HeaderState implements HeaderStateInterface {
             mode: this.mode,
             selectedHeaders$: this.selectedHeaders$,
             selectedHeaders: this.selectedHeaders,
+            lastSelectedHeaders: this.lastSelectedHeaders,
             saveState: this.saveState,
             restoreLastState: this.restoreLastState,
             restoreLastMode: this.restoreLastMode
