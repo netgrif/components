@@ -346,7 +346,9 @@ export abstract class TaskContentService implements OnDestroy {
     private getReferencedTransitionId(changedField: string): string {
         if (!!this.taskFieldsIndex) {
             const taskFieldsIndexId = this.getReferencedTaskId(changedField);
-            return this.taskFieldsIndex[taskFieldsIndexId].transitionId;
+            if (!!this.taskFieldsIndex[taskFieldsIndexId]) {
+                return this.taskFieldsIndex[taskFieldsIndexId].transitionId;
+            }
         }
         return undefined;
     }
