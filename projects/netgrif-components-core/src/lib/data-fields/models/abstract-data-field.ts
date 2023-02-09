@@ -7,6 +7,7 @@ import {Layout} from './layout';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {Component} from './component';
 import {Validation} from './validation';
+import {ElementRef} from "@angular/core";
 
 /**
  * Holds the logic common to all data field Model objects.
@@ -116,6 +117,11 @@ export abstract class DataField<T> {
      * Listens for layout changes
      */
     protected layoutSubject: BehaviorSubject<Layout>;
+
+    /**
+     * Reference to rendered element
+     * */
+    private _input: ElementRef;
 
     /**
      * @param _stringId - ID of the data field from backend
@@ -325,6 +331,20 @@ export abstract class DataField<T> {
 
     get reverting(): boolean {
         return this._reverting;
+    }
+
+    public focus(): void {
+        if (!!this._input) {
+            this._input.nativeElement.focus();
+        }
+    }
+
+    get input(): ElementRef {
+        return this._input;
+    }
+
+    set input(value: ElementRef) {
+        this._input = value;
     }
 
     /**
