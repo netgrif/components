@@ -200,7 +200,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
                 group.fields.forEach(field => {
                     this._taskContentService.taskFieldsIndex[parentTaskId].transitionId = parentTransitionId;
                     this._taskContentService.taskFieldsIndex[parentTaskId].fields[field.stringId] = field;
-                    field.valueChanges().subscribe(v => {
+                    field.valueChanges().subscribe(() => {
                         if (this.wasFieldUpdated(field)) {
                             if (field instanceof DynamicEnumerationField) {
                                 field.loading = true;
