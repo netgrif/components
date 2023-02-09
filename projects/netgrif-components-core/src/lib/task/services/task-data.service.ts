@@ -200,15 +200,13 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
                 group.fields.forEach(field => {
                     this._taskContentService.taskFieldsIndex[parentTaskId].transitionId = parentTransitionId;
                     this._taskContentService.taskFieldsIndex[parentTaskId].fields[field.stringId] = field;
-                    field.valueChanges().subscribe(() => {
+                    field.valueChanges().subscribe(v => {
+                        console.log(v)
                         if (this.wasFieldUpdated(field)) {
                             if (field instanceof DynamicEnumerationField) {
                                 field.loading = true;
-                                field.block = true;
                                 this.updateTaskDataFields(this._afterActionFactory.create(bool => {
                                     field.loading = false;
-                                    field.block = false;
-                                    field.focus();
                                 }));
                             } else {
                                 this.updateTaskDataFields();
@@ -323,9 +321,10 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
             body: {},
             previousValues: {}
         };
-        context.body[this._task.stringId] = {};
+
         this._safeTask.dataGroups.filter(dataGroup => dataGroup.parentTaskId === undefined).forEach(dataGroup => {
             dataGroup.fields.filter(field => this.wasFieldUpdated(field)).forEach(field => {
+                context.body[this._task.stringId] = {};
                 this.addFieldToSetDataRequestBody(context, this._task.stringId, field);
             });
         });
