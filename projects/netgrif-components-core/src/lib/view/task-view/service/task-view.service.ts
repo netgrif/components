@@ -301,9 +301,10 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
         }
     }
 
-    public nextPagePagination(length: number, pageIndex: number, requestContext?: PageLoadRequestContext): void {
+    public nextPagePagination(length: number, pageIndex: number, requestContext?: PageLoadRequestContext,
+                              clearLoaded?: boolean, reloadCurrentTaskPage?: boolean): void {
         if (requestContext === undefined) {
-            requestContext = new PageLoadRequestContext(this.activeFilter, this._pagination);
+            requestContext = new PageLoadRequestContext(this.activeFilter, this._pagination, clearLoaded, reloadCurrentTaskPage);
             requestContext.pagination.size = length;
             requestContext.pagination.number = pageIndex;
         }
@@ -341,7 +342,7 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
 
         this._endOfData = false;
         const requestContext = new PageLoadRequestContext(this.activeFilter, this._pagination, false, true, force);
-        requestContext.pagination.number = 0; // TODO [BUG] - Reloading only first page
+        requestContext.pagination.number = this._pagination.number; // TODO [BUG] - Reloading only first page
         const range = {
             start: -1,
             end: 0

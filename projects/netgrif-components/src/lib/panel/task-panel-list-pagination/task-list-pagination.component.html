@@ -11,7 +11,7 @@
 
                 <nc-task-panel
                     [textEllipsis]="textEllipsis"
-                    *ngFor="let task of tasks | slice: (pageIndex) * pageSize : (pageIndex + 1) * pageSize;
+                    *ngFor="let task of tasks;
                                     let i = index;
                                     let first = first;
                                     let last = last;

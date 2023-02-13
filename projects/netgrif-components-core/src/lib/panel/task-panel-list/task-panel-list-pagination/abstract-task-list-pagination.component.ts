@@ -8,6 +8,7 @@ import {TaskViewService} from '../../../view/task-view/service/task-view.service
 import {LoggerService} from '../../../logger/services/logger.service';
 import {NAE_TAB_DATA} from '../../../tabs/tab-data-injection-token/tab-data-injection-token';
 import {InjectedTabData} from '../../../tabs/interfaces';
+import {PageLoadRequestContext} from "../../../view/abstract/page-load-request-context";
 
 @Component({
     selector: 'ncc-abstract-task-list-pagination-component',
@@ -37,11 +38,12 @@ export abstract class AbstractTaskListPaginationComponent extends AbstractDefaul
                 @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData,
                 protected route?: ActivatedRoute) {
         super(_taskViewService, _log, injectedTabData, route);
+        this._taskViewService.nextPagePagination(this.pageSize, this.pageIndex, undefined, true, false);
     }
 
     public onPageChanged(e) {
         this.pageIndex = e.pageIndex;
         this.pageSize = e.pageSize;
-        this._taskViewService.nextPagePagination(this.pageSize, this.pageIndex);
+        this._taskViewService.nextPagePagination(this.pageSize, this.pageIndex, undefined, true, false);
     }
 }
