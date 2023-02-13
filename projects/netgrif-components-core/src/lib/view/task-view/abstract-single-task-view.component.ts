@@ -60,7 +60,7 @@ export abstract class AbstractSingleTaskViewComponent extends AbstractViewWithHe
             this.subPanelData.unsubscribe();
         }
         if (!!this.taskPanelData) {
-            this.taskPanelData.unsubscribe();
+            this.taskPanelData.complete();
         }
     }
 
