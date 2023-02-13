@@ -15,6 +15,7 @@
         "Test": "jeden-jeden"
     },
     "singleTask": {
-        "finishButtonTitle": "Uložiť a dokončiť"
+        "finishButtonTitle": "Uložiť a dokončiť",
+        "createNewCaseButtonTitle": "Vytvoriť nový prípad"
     }
 }
