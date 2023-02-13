@@ -22,6 +22,7 @@ import { of } from 'rxjs';
 import { SearchService } from '../../search/search-service/search.service';
 import { NAE_BASE_FILTER } from '../../search/models/base-filter-injection-token';
 import { SimpleFilter } from '../../filter/models/simple-filter';
+import {AsyncPipe} from "@angular/common";
 
 describe('AbstractSingleTaskViewComponent', () => {
     let component: TestAbstractSingleTaskViewComponent;
@@ -47,7 +48,8 @@ describe('AbstractSingleTaskViewComponent', () => {
                 TaskViewService,
                 {provide: AllowedNetsService, useFactory: TestTaskViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
                 SearchService,
-                {provide: NAE_BASE_FILTER, useValue: {filter: SimpleFilter.emptyTaskFilter()}}
+                {provide: NAE_BASE_FILTER, useValue: {filter: SimpleFilter.emptyTaskFilter()}},
+                AsyncPipe
             ],
             declarations: [
                 TestAbstractSingleTaskViewComponent,
@@ -76,7 +78,8 @@ describe('AbstractSingleTaskViewComponent', () => {
 })
 class TestAbstractSingleTaskViewComponent extends AbstractSingleTaskViewComponent {
     constructor(taskViewService: TaskViewService,
-                activatedRoute: ActivatedRoute) {
-        super(taskViewService, activatedRoute);
+                activatedRoute: ActivatedRoute,
+                async: AsyncPipe) {
+        super(taskViewService, activatedRoute, async);
     }
 }
