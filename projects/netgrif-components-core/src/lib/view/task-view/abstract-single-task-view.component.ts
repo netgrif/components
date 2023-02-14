@@ -48,7 +48,6 @@ export abstract class AbstractSingleTaskViewComponent extends AbstractViewWithHe
         if (!!this.subPanelData) {
             this.subPanelData.unsubscribe();
         }
-        this.taskPanelData.complete()
     }
 
     get task$(): Observable<TaskPanelData> {
