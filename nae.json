@@ -9,6 +9,7 @@
                 "login": "auth/login",
                 "logout": "auth/logout",
                 "signup": "auth/signup",
+                "changePassword": "auth/changePassword",
                 "verification": "auth/verify",
                 "verify": "auth/token/verify",
                 "invite": "auth/invite",
@@ -167,6 +168,19 @@
             "navigation": true,
             "routing": {
                 "path": "recover/:token"
+            }
+        },
+        "demo-change-password": {
+            "component": {
+                "class": "ChangePasswordComponent",
+                "from": "./doc/forms/change-password/change-password.component"
+            },
+            "access": "private",
+            "navigation": {
+                "title": "Change Password"
+            },
+            "routing": {
+                "path": "changePassword"
             }
         },
         "demo-impersonation": {
