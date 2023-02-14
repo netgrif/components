@@ -11,6 +11,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {OverflowService} from './services/overflow.service';
 import {stopPropagation} from '../utility/stop-propagation';
 import {Subscription} from 'rxjs';
+import {debounceTime} from "rxjs/operators";
 
 @Component({
     selector: 'ncc-abstract-header',
@@ -20,7 +21,7 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
 
     protected readonly DEFAULT_COLUMN_COUNT = 6;
     protected readonly DEFAULT_COLUMN_WIDTH = 220;
-
+    protected readonly INPUT_DEBOUNCE_TIME = 600;
     @Input() type: HeaderType = HeaderType.CASE;
     @Input() hideEditMode = false;
     public headerService: AbstractHeaderService;
@@ -165,7 +166,7 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
         this.subOverflowControl = this.overflowControl.valueChanges.subscribe(value => {
             this._overflowService.overflowMode = value;
         });
-        this.subColumnCountControl = this.columnCountControl.valueChanges.subscribe(value => {
+        this.subColumnCountControl = this.columnCountControl.valueChanges.pipe(debounceTime(this.INPUT_DEBOUNCE_TIME)).subscribe(value => {
             if (this.columnCountControl.valid) {
                 this._overflowService.columnCount = value;
                 if (this.headerService && this.type === HeaderType.CASE) {
@@ -174,7 +175,7 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
                 }
             }
         });
-        this.subColumnWidthControl = this.columnWidthControl.valueChanges.subscribe(value => {
+        this.subColumnWidthControl = this.columnWidthControl.valueChanges.pipe(debounceTime(this.INPUT_DEBOUNCE_TIME)).subscribe(value => {
             if (this.columnWidthControl.valid) {
                 this._overflowService.columnWidth = value;
                 if (this.headerService && this.type === HeaderType.CASE) {
