@@ -23,6 +23,7 @@ export * from './navigation-item-task-search-categories-factory';
 export * from './is-empty.pipe';
 export * from './is-non-empty.pipe';
 export * from './utility.module';
+export * from './directives/let.directive'
 
 /* TESTS */
 export * from './tests/mocks/mock-authentication.service';
