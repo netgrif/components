@@ -11,9 +11,6 @@ export class MockProfileService {
 
     public changePasswordResponse: Observable<MessageResource> = of({success: 'success'});
 
-    constructor() {
-    }
-
     public changePassword(change: UserChangePasswordRequest): Observable<MessageResource> {
         return this.changePasswordResponse;
     }
