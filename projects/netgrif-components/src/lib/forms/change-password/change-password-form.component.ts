@@ -19,13 +19,13 @@ export class ChangePasswordFormComponent extends AbstractChangePasswordComponent
 
     public streamChangePassword: Subscription;
 
-    constructor(profileService: ProfileService,
+    constructor(formBuilder: FormBuilder,
+                profileService: ProfileService,
                 user: UserService,
-                formBuilder: FormBuilder,
                 log: LoggerService,
                 translate: TranslateService,
                 protected _snackbar: SnackBarService,) {
-        super(profileService, user, formBuilder, log, translate);
+        super(formBuilder, profileService, user, log, translate);
         this.streamChangePassword = this.changePassword.subscribe(message => {
             if (message.success) {
                 this._snackbar.openSuccessSnackBar(message.success);

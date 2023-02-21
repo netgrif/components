@@ -10,7 +10,7 @@ import {take} from "rxjs/operators";
 import {UserChangePasswordRequest} from "../../authentication/profile/models/user-change-password-request";
 import {ProfileService} from "../../authentication/profile/services/profile.service";
 import {UserService} from "../../user/services/user.service";
-import * as Buffer from 'buffer';
+import { encodeBase64 } from '../../utility/base64';
 
 @Component({
     selector: 'ncc-abstract-forgotten-password',
@@ -31,9 +31,9 @@ export abstract class AbstractChangePasswordComponent implements HasForm, OnDest
 
     public loadingSubmit: LoadingEmitter;
 
-    protected constructor(protected profileService: ProfileService,
+    protected constructor(protected formBuilder: FormBuilder,
+                          protected profileService: ProfileService,
                           protected user: UserService,
-                          protected formBuilder: FormBuilder,
                           protected _log: LoggerService,
                           protected _translate: TranslateService) {
         this.hidePassword = true;
@@ -58,8 +58,8 @@ export abstract class AbstractChangePasswordComponent implements HasForm, OnDest
     protected createRequestBody(): UserChangePasswordRequest {
         return {
             login: this.user.user.email,
-            password: this.encodeBase64(this.rootFormGroup.controls['oldPassword'].value),
-            newPassword: this.encodeBase64(this.rootFormGroup.controls['password'].value)
+            password: encodeBase64(this.rootFormGroup.controls['oldPassword'].value),
+            newPassword: encodeBase64(this.rootFormGroup.controls['password'].value)
         };
     }
 
@@ -100,10 +100,6 @@ export abstract class AbstractChangePasswordComponent implements HasForm, OnDest
             this.changePassword.emit({error: error});
             this.loadingSubmit.off();
         });
-    }
-
-    protected encodeBase64(text: string): string {
-        return Buffer.Buffer.from(text).toString('base64');
     }
 
 }
