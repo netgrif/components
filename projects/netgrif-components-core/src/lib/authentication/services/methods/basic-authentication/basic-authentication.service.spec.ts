@@ -10,6 +10,8 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {MockAuthenticationMethodService} from '../../../../utility/tests/mocks/mock-authentication-method-service';
 import {AuthenticationService} from '../../authentication/authentication.service';
 import {MockAuthenticationService} from '../../../../utility/tests/mocks/mock-authentication.service';
+import {decodeBase64, encodeBase64} from "../../../../utility/base64";
+
 
 describe('BasicAuthenticationService', () => {
     let service: BasicAuthenticationService;
@@ -70,9 +72,10 @@ describe('BasicAuthenticationService', () => {
     });
 
     it('should decode non-latin characters', (done) => {
-        const encoded = service.encodeBase64('ššščččôôôžžťťť');
-        const decoded = service.decodeBase64(encoded);
-        expect(decoded).toEqual('ššščččôôôžžťťť');
+        const nonLatin = 'ššščččôôôžžťťť';
+        const encoded = encodeBase64(nonLatin);
+        const decoded = decodeBase64(encoded);
+        expect(decoded).toEqual(nonLatin);
         done();
     });
 
