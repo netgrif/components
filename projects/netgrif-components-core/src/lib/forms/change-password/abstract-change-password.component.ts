@@ -10,7 +10,7 @@ import {take} from "rxjs/operators";
 import {UserChangePasswordRequest} from "../../authentication/profile/models/user-change-password-request";
 import {ProfileService} from "../../authentication/profile/services/profile.service";
 import {UserService} from "../../user/services/user.service";
-import { encodeBase64 } from '../../utility/base64';
+import {encodeBase64} from '../../utility/base64';
 
 @Component({
     selector: 'ncc-abstract-forgotten-password',
@@ -49,10 +49,9 @@ export abstract class AbstractChangePasswordComponent implements HasForm, OnDest
         }, {validator: passwordValidator});
     }
 
-    ngOnDestroy(): void {
-        this.formSubmit.complete();
-        this.changePassword.complete();
-        this.loadingSubmit.complete();
+
+    public isFieldValid(formControlName: string): boolean {
+        return this.rootFormGroup.get(formControlName).valid;
     }
 
     protected createRequestBody(): UserChangePasswordRequest {
@@ -63,21 +62,18 @@ export abstract class AbstractChangePasswordComponent implements HasForm, OnDest
         };
     }
 
-    public isFieldValid(formControlName: string): boolean {
-        return this.rootFormGroup.get(formControlName).valid;
-    }
-
     public getErrorMessage(formControlName: string): string {
         const errors = this.rootFormGroup.get(formControlName).errors;
-        if (errors === null)
+        if (errors === null) {
             return;
+        }
         switch (Object.keys(errors)[0]) {
-            case 'required':
-                return this._translate.instant('dataField.validations.required');
-            case 'minlength':
-                return this._translate.instant('dataField.validations.minLength', {length: this.MIN_PASSWORD_LENGTH});
             case 'mismatchedPassword':
                 return this._translate.instant('forms.register.passwordsMustMatch');
+            case 'minlength':
+                return this._translate.instant('dataField.validations.minLength', {length: this.MIN_PASSWORD_LENGTH});
+            case 'required':
+                return this._translate.instant('dataField.validations.required');
         }
     }
 
@@ -100,6 +96,12 @@ export abstract class AbstractChangePasswordComponent implements HasForm, OnDest
             this.changePassword.emit({error: error});
             this.loadingSubmit.off();
         });
+    }
+
+    ngOnDestroy(): void {
+        this.formSubmit.complete();
+        this.changePassword.complete();
+        this.loadingSubmit.complete();
     }
 
 }
