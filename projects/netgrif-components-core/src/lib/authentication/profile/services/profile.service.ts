@@ -9,7 +9,7 @@ import {processMessageResponse} from "../../../utility/process-message-response"
 import {UserChangePasswordRequest} from "../models/user-change-password-request";
 
 @Injectable({
-  providedIn: 'root'   ///TODO: zistit si
+  providedIn: 'root'
 })
 export class ProfileService {
 
@@ -33,6 +33,7 @@ export class ProfileService {
         );
     }
 
+//TODO: Change Profile photo
 
     /**
      * @param endpointKey the attribute name of the endpoint address in `nae.json`
