@@ -1,7 +1,5 @@
-import {UserRegistrationRequest} from '../../../authentication/sign-up/models/user-registration-request';
 import {Observable, of} from 'rxjs';
 import {MessageResource} from '../../../resources/interface/message-resource';
-import {UserInvitationRequest} from '../../../authentication/sign-up/models/user-invitation-request';
 import {UserChangePasswordRequest} from "../../../authentication/profile/models/user-change-password-request";
 
 /**
