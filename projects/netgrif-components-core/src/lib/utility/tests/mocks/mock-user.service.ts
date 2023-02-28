@@ -41,4 +41,8 @@ export class MockUserService {
     hasAuthority(): boolean {
         return true;
     }
+
+    public isUserEmpty(user: User): boolean {
+        return !user || (!user.id && user.roles.length === 0);
+    }
 }

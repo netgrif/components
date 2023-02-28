@@ -51,19 +51,27 @@ export class AssignPolicyService extends TaskHandlingService {
      * @param afterAction the action that should be performed when the assign policy (and all following policies) finishes
      */
     public performAssignPolicy(taskOpened: boolean, afterAction: AfterAction = new AfterAction()): void {
-        race([
-            this._userService.anonymousUser$,
-            this._userService.user$
-        ]).subscribe(user => {
-            if (!!user && !!user.id && user.id.length > 0) {
-                if (this._safeTask.assignPolicy === AssignPolicy.auto
-                    && this._permissionService.hasTaskPermission(this._safeTask, PermissionType.ASSIGN)) {
-                    this.autoAssignPolicy(taskOpened, afterAction);
-                } else {
-                    this.manualAssignPolicy(taskOpened, afterAction);
+        if (!this._userService.isUserEmpty(this._userService.user)) {
+            this.performAssign(taskOpened, afterAction);
+        } else {
+            race([
+                this._userService.anonymousUser$,
+                this._userService.user$
+            ]).subscribe(user => {
+                if (!this._userService.isUserEmpty(user)) {
+                    this.performAssign(taskOpened, afterAction);
                 }
-            }
-        });
+            });
+        }
+    }
+
+    private performAssign(taskOpened: boolean, afterAction: AfterAction = new AfterAction()): void {
+        if (this._safeTask.assignPolicy === AssignPolicy.auto
+            && this._permissionService.hasTaskPermission(this._safeTask, PermissionType.ASSIGN)) {
+            this.autoAssignPolicy(taskOpened, afterAction);
+        } else {
+            this.manualAssignPolicy(taskOpened, afterAction);
+        }
     }
 
     /**
