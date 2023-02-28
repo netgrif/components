@@ -7,7 +7,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Full Changelog: [https://github.com/netgrif/components/commits/v6.3.0](https://github.com/netgrif/components/commits/v6.3.0)
 
-## [6.3.0](https://github.com/netgrif/components/releases/tag/v6.3.0) (2023-02-09)
+## [6.3.0](https://github.com/netgrif/components/releases/tag/v6.3.0) (2023-02-14)
 
 ### Fixed
 
@@ -15,9 +15,10 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.3.0](https://g
 - [NAE-1795] Breadcrumbs based on the menu, not on the currently displayed view
 - [NAE-1797] I18N field at asynchronous rendering
 - [NAE-1804] In UserList field can choose one user multiple times
+- [NAE-1823] Error when searching for non-existing tasks
 - [NAE-1825] Fix the upstream dependency conflict
-- [NAE-1830] Changing columns in overflow Service deletes all set columns
 - [NAE-1827] Dynamic enumeration looses focus after querying for data
+- [NAE-1830] Changing columns in overflow Service deletes all set columns
 
 ### Changed
 
