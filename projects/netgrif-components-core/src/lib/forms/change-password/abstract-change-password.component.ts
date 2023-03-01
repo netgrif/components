@@ -3,7 +3,7 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MessageResource} from '../../resources/interface/message-resource';
 import {TranslateService} from '@ngx-translate/core';
-import {Component, EventEmitter, OnDestroy, Output} from '@angular/core';
+import {Component, EventEmitter, Inject, OnDestroy, Optional, Output} from '@angular/core';
 import {FormSubmitEvent, HasForm} from "../has-form";
 import {LoadingEmitter} from "../../utility/loading-emitter";
 import {take} from "rxjs/operators";
@@ -11,14 +11,13 @@ import {UserChangePasswordRequest} from "../../authentication/profile/models/use
 import {ProfileService} from "../../authentication/profile/services/profile.service";
 import {UserService} from "../../user/services/user.service";
 import {encodeBase64} from '../../utility/base64';
+import {NAE_MIN_PASSWORD_LENGTH} from "../min-password-length-token";
 
 @Component({
-    selector: 'ncc-abstract-forgotten-password',
+    selector: 'ncc-abstract-change-password',
     template: ''
 })
 export abstract class AbstractChangePasswordComponent implements HasForm, OnDestroy {
-
-    protected readonly MIN_PASSWORD_LENGTH = 8;
 
     public rootFormGroup: FormGroup;
     public hideOldPassword: boolean;
@@ -35,7 +34,11 @@ export abstract class AbstractChangePasswordComponent implements HasForm, OnDest
                           protected profileService: ProfileService,
                           protected user: UserService,
                           protected _log: LoggerService,
-                          protected _translate: TranslateService) {
+                          protected _translate: TranslateService,
+                          @Optional() @Inject(NAE_MIN_PASSWORD_LENGTH) protected minPasswordLength: number | null) {
+        if(!minPasswordLength){
+            this.minPasswordLength = 8;
+        }
         this.hidePassword = true;
         this.hideOldPassword = true;
         this.hideRepeatPassword = true;
@@ -44,8 +47,8 @@ export abstract class AbstractChangePasswordComponent implements HasForm, OnDest
         this.loadingSubmit = new LoadingEmitter(false);
         this.rootFormGroup = formBuilder.group({
             oldPassword: ['', [Validators.required, Validators.minLength(1)]],
-            password: ['', [Validators.required, Validators.minLength(this.MIN_PASSWORD_LENGTH)]],
-            confirmPassword: ['', [Validators.required, Validators.minLength(this.MIN_PASSWORD_LENGTH)]]
+            password: ['', [Validators.required, Validators.minLength(this.minPasswordLength)]],
+            confirmPassword: ['', [Validators.required, Validators.minLength(this.minPasswordLength)]]
         }, {validator: passwordValidator});
     }
 
@@ -71,7 +74,7 @@ export abstract class AbstractChangePasswordComponent implements HasForm, OnDest
             case 'mismatchedPassword':
                 return this._translate.instant('forms.register.passwordsMustMatch');
             case 'minlength':
-                return this._translate.instant('dataField.validations.minLength', {length: this.MIN_PASSWORD_LENGTH});
+                return this._translate.instant('dataField.validations.minLength', {length: this.minPasswordLength});
             case 'required':
                 return this._translate.instant('dataField.validations.required');
         }
@@ -93,7 +96,7 @@ export abstract class AbstractChangePasswordComponent implements HasForm, OnDest
             }
             this.loadingSubmit.off();
         }, error => {
-            this.changePassword.emit({error: error});
+            this.changePassword.emit({error});
             this.loadingSubmit.off();
         });
     }

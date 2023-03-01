@@ -1,10 +1,11 @@
-import {Component, OnDestroy} from "@angular/core";
+import {Component, Inject, OnDestroy, Optional} from "@angular/core";
 import {
     AbstractChangePasswordComponent,
     ProfileService,
     UserService,
     LoggerService,
     SnackBarService,
+    NAE_MIN_PASSWORD_LENGTH
 } from "netgrif-components-core";
 import {FormBuilder} from "@angular/forms";
 import {TranslateService} from "@ngx-translate/core";
@@ -24,8 +25,9 @@ export class ChangePasswordFormComponent extends AbstractChangePasswordComponent
                 user: UserService,
                 log: LoggerService,
                 translate: TranslateService,
-                protected _snackbar: SnackBarService,) {
-        super(formBuilder, profileService, user, log, translate);
+                @Optional() @Inject(NAE_MIN_PASSWORD_LENGTH) minPasswordLength,
+                protected _snackbar: SnackBarService) {
+        super(formBuilder, profileService, user, log, translate, minPasswordLength);
         this.streamChangePassword = this.changePassword.subscribe(message => {
             if (message.success) {
                 this._snackbar.openSuccessSnackBar(message.success);
