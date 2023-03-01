@@ -7,6 +7,8 @@ import {LoggerService} from '../../../logger/services/logger.service';
 import {catchError, map, take, tap} from 'rxjs/operators';
 import {MessageResource} from '../../../resources/interface/message-resource';
 import {LoadingEmitter} from '../../../utility/loading-emitter';
+import {SessionIdleTimerService} from "./session-idle-timer.service";
+
 
 @Injectable({
     providedIn: 'root'
@@ -23,13 +25,16 @@ export class SessionService implements OnDestroy {
     private _verifying: LoadingEmitter;
     private _initialized: LoadingEmitter;
 
-    constructor(private _config: ConfigurationService, private _log: LoggerService, private _http: HttpClient) {
-        // const sessionConfig = this._config.get().providers.auth.session;
+    constructor(private _config: ConfigurationService,
+                private _log: LoggerService,
+                private _http: HttpClient,
+                private idleTimerService: SessionIdleTimerService) {
         this._storage = this.resolveStorage(this._config.get().providers.auth['sessionStore']);
         this._sessionHeader = this._config.get().providers.auth.sessionBearer ?
             this._config.get().providers.auth.sessionBearer : SessionService.SESSION_BEARER_HEADER_DEFAULT;
         this._session$ = new BehaviorSubject<string>(null);
         this._verified = false;
+        this.idleTimerService.stopTimer()
         this._verifying = new LoadingEmitter();
         this._initialized = new LoadingEmitter(false);
         setTimeout(() => {
@@ -82,11 +87,13 @@ export class SessionService implements OnDestroy {
 
     public setVerifiedToken(sessionToken: string) {
         this._log.warn('Session token without explicit verification was set');
+        this.idleTimerService.resetTimer()
         this._verified = true;
         this.sessionToken = sessionToken;
     }
 
     public clear(): void {
+        this.idleTimerService.stopTimer()
         this._verified = false;
         this.sessionToken = '';
         this._storage.removeItem(SessionService.SESSION_TOKEN_STORAGE_KEY);
@@ -104,6 +111,7 @@ export class SessionService implements OnDestroy {
             this.clear();
             this._verifying.off();
             this._initialized.on();
+            this.idleTimerService.stopTimer()
             return throwError(new Error('Cannot verify session token. ' +
                 'Login URL is not defined in the config [nae.providers.auth.endpoints.login].'));
         } else {
@@ -117,12 +125,14 @@ export class SessionService implements OnDestroy {
                         this.clear();
                     }
                     this._verifying.off();
+                    this.idleTimerService.stopTimer()
                     this._initialized.on();
                     return throwError(error);
                 }),
                 map(response => {
                     this._log.debug(response.body.success);
                     this._verified = true;
+                    this.idleTimerService.resetTimer()
                     this._initialized.on();
                     this.sessionToken = token;
                     return true;
@@ -135,6 +145,7 @@ export class SessionService implements OnDestroy {
     protected load(): string {
         let token = this._storage.getItem(SessionService.SESSION_TOKEN_STORAGE_KEY);
         this._verified = false;
+        this.idleTimerService.stopTimer()
         if (token) {
             token = this.resolveToken(token);
             this.sessionToken = token;

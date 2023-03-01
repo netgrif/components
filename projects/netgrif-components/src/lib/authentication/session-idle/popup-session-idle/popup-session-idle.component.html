@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Session konci vole...</h1>
+<div mat-dialog-content>
+    konci ti session o {{ getTime() | async }} chces ostat?
+</div>
+<div mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="true">logout</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>zostat</button>
+</div>
