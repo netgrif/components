@@ -11,7 +11,7 @@ import {AuthenticationMethodService} from '../../authentication/services/authent
 import {
     NullAuthenticationService
 } from '../../authentication/services/methods/null-authentication/null-authentication.service';
-import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
+import {Component, Inject, NO_ERRORS_SCHEMA, Optional} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
 import {LoggerService} from '../../logger/services/logger.service';
 import {TranslateService} from '@ngx-translate/core';
@@ -19,6 +19,7 @@ import {ProfileService} from "../../authentication/profile/services/profile.serv
 import {UserService} from "../../user/services/user.service";
 import {encodeBase64} from "../../utility/base64";
 import {MockProfileService} from "../../utility/tests/mocks/mock-profile.service";
+import {NAE_MIN_PASSWORD_LENGTH} from "../min-password-length-token";
 
 describe('AbstractChangePasswordComponent', () => {
     let component: TestRegFormComponent;
@@ -85,7 +86,7 @@ describe('AbstractChangePasswordComponent', () => {
     template: ''
 })
 class TestRegFormComponent extends AbstractChangePasswordComponent {
-    constructor(formBuilder: FormBuilder, profileService: ProfileService, user: UserService, log: LoggerService, translate: TranslateService) {
-        super(formBuilder, profileService, user, log, translate);
+    constructor(formBuilder: FormBuilder, profileService: ProfileService, user: UserService, log: LoggerService, translate: TranslateService, @Optional() @Inject(NAE_MIN_PASSWORD_LENGTH)  minPasswordLength) {
+        super(formBuilder, profileService, user, log, translate, minPasswordLength);
     }
 }
