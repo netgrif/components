@@ -1,6 +1,5 @@
-import {Component, ElementRef, HostListener, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from "@angular/core";
+import {Component, Input, OnDestroy, OnInit} from "@angular/core";
 import {Subscription} from "rxjs";
-import {MatDialog} from "@angular/material/dialog";
 import {Router} from "@angular/router";
 import {SessionIdleTimerService} from "../session/services/session-idle-timer.service";
 import {UserService} from "../../user/services/user.service";
