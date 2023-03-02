@@ -29,7 +29,6 @@ export abstract class AbstractSessionIdleComponent implements OnInit, OnDestroy 
         }
     }
 
-
     protected trackSessionTime() {
         this.sessionTimer.startTimer();
         this.sessionTimerSubscription = this.sessionTimer.remainSeconds$.subscribe(

@@ -482,7 +482,7 @@
     },
     "session": {
         "expireTitle": "Your Session is About to Expire",
-        "expireDetail": "Your session is about to expire.\nRedirecting in '{{time}}' seconds.",
+        "expireDetail": "Your session is about to expire.\nRedirecting to Login page in '{{time}}' seconds.",
         "exitButton": "Logout",
         "refreshButton": "Stay Connected"
     }
