@@ -209,6 +209,10 @@ export class UserService implements OnDestroy {
         return !user || (!user.id && user.roles.length === 0);
     }
 
+    public isCurrentUserEmpty(): boolean {
+        return this.isUserEmpty(this.user)
+    }
+
     protected publishUserChange(): void {
         this._userChange$.next(this.user);
     }

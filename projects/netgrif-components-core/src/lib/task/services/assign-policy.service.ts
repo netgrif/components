@@ -15,6 +15,7 @@ import {AfterAction} from '../../utility/call-chain/after-action';
 import {PermissionService} from '../../authorization/permission/permission.service';
 import {PermissionType} from '../../process/permissions';
 import {UserService} from "../../user/services/user.service";
+import {take} from "rxjs/operators";
 
 /**
  * Handles the sequence of actions that are performed when a task is being assigned, based on the task's configuration.
@@ -51,17 +52,18 @@ export class AssignPolicyService extends TaskHandlingService {
      * @param afterAction the action that should be performed when the assign policy (and all following policies) finishes
      */
     public performAssignPolicy(taskOpened: boolean, afterAction: AfterAction = new AfterAction()): void {
-        if (!this._userService.isUserEmpty(this._userService.user)) {
+        if (!this._userService.isCurrentUserEmpty()) {
             this.performAssign(taskOpened, afterAction);
         } else {
             race([
                 this._userService.anonymousUser$,
                 this._userService.user$
-            ]).subscribe(user => {
-                if (!this._userService.isUserEmpty(user)) {
-                    this.performAssign(taskOpened, afterAction);
-                }
-            });
+            ]).pipe(take(1))
+                .subscribe(user => {
+                    if (!this._userService.isUserEmpty(user)) {
+                        this.performAssign(taskOpened, afterAction);
+                    }
+                });
         }
     }
 
