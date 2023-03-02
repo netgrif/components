@@ -1,4 +1,4 @@
-import {Auth, NetgrifApplicationEngine, Services, View, Views} from '../../commons/schema';
+import {NetgrifApplicationEngine, Services, View, Views} from '../../commons/schema';
 import {Observable, of} from 'rxjs';
 
 export abstract class ConfigurationService {
