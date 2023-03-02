@@ -60,14 +60,12 @@ describe('ProfileService', () => {
                     {provide: ConfigurationService, useClass: MissingEndpointsConfigurationService}
                 ]
             });
-            service = TestBed.inject(ProfileService);
         });
 
         it('should not resolve undefined endpoints', () => {
-            expect(service).toBeTruthy();
             expect(() => {
-                service.changePassword(body);
-            }).toThrowError('Verify URL is not set in authentication provider endpoints!');
+                service = TestBed.inject(ProfileService);
+            }).toThrowError("Authentication provider address is not set!");
         });
 
         afterEach(() => {
