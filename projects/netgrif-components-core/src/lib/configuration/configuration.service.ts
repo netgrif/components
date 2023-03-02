@@ -201,17 +201,14 @@ export abstract class ConfigurationService {
      * @param endpointKey the attribute name of the endpoint address in `nae.json`
      * @returns the endpoint address or `undefined` if such endpoint is not defined in `nae.json`
      */
-    public resolveProvidersEndpoint(endpointKey: string): string | undefined {
-        const config = this.get();
+    public resolveProvidersEndpoint(endpointKey: string): string {
+        const config = this.configuration;
         if (!config
             || !config.providers
             || !config.providers.auth
+            || !config.providers.auth.address
             || !config.providers.auth.endpoints
             || !config.providers.auth.endpoints[endpointKey]) {
-            return undefined;
-        }
-        const authAddress = config.providers.auth.address;
-        if (!authAddress) {
             throw new Error('Authentication provider address is not set!');
         }
         return config.providers.auth.address + config.providers.auth.endpoints[endpointKey];
