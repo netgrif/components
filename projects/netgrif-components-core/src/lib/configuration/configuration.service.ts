@@ -210,7 +210,7 @@ export abstract class ConfigurationService {
             || !config.providers.auth.endpoints[endpointKey]) {
             return undefined;
         }
-        const authAddress = config.get().providers.auth.address;
+        const authAddress = config.providers.auth.address;
         if (!authAddress) {
             throw new Error('Authentication provider address is not set!');
         }
