@@ -478,5 +478,11 @@
             "failed": "Akciu sa nepodarilo vykonať",
             "deactivated": "Zastupovanie bolo úspešne deaktivované"
         }
+    },
+    "session": {
+        "expireTitle": "Platnosť Vašej relácie čoskoro vyprší",
+        "expireDetail": "Vaša relácia čoskoro vyprší.\nPresmerovanie za '{{time}}' sekúnd.",
+        "exitButton": "Odhlásiť sa",
+        "refreshButton": "Zostaň pripojený"
     }
 }
