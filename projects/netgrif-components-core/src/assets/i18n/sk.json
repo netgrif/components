@@ -481,7 +481,7 @@
     },
     "session": {
         "expireTitle": "Platnosť Vašej relácie čoskoro vyprší",
-        "expireDetail": "Vaša relácia čoskoro vyprší.\nOdhlásenie bude za '{{time}}' sekúnd.",
+        "expireDetail": "Vaša relácia čoskoro vyprší.\n\nOdhlásenie bude za {{time}} sekúnd.",
         "exitButton": "Odhlásiť sa",
         "refreshButton": "Zostaň pripojený"
     }

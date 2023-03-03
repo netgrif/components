@@ -1,8 +1,8 @@
 <h1 mat-dialog-title>{{ 'session.expireTitle' | translate}}</h1>
-<div mat-dialog-content>
+<div mat-dialog-content class="white-space">
     {{ 'session.expireDetail' |translate: {time: getTime() | async} }}
 </div>
-<div mat-dialog-actions>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between stretch">
     <button mat-button [mat-dialog-close]="true">{{ 'session.exitButton' | translate}}</button>
     <button mat-raised-button color="primary" [mat-dialog-close]="false"
             cdkFocusInitial>{{ 'session.refreshButton' | translate}}</button>

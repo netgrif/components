@@ -481,7 +481,7 @@
     },
     "session": {
         "expireTitle": "Ihre Sitzung läuft bald ab",
-        "expireDetail": "Ihre Sitzung läuft bald ab.\nSie werden in '{{time}}' Sekunden weitergeleitet",
+        "expireDetail": "Ihre Sitzung läuft bald ab.\n\nSie werden in {{time}} Sekunden weitergeleitet",
         "exitButton": "Abmelden",
         "refreshButton": "Angemeldet bleiben"
     }

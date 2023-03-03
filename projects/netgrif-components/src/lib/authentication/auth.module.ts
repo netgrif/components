@@ -6,6 +6,7 @@ import {PopupSessionIdleComponent} from './session-idle/popup-session-idle/popup
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
 import {TranslateLibModule} from "netgrif-components-core";
+import {FlexModule} from "@angular/flex-layout";
 
 @NgModule({
     declarations: [AuthenticationOverlayComponent, SessionIdleComponent, PopupSessionIdleComponent],
@@ -14,7 +15,8 @@ import {TranslateLibModule} from "netgrif-components-core";
         CommonModule,
         MatDialogModule,
         MatButtonModule,
-        TranslateLibModule
+        TranslateLibModule,
+        FlexModule
     ]
 })
 export class AuthenticationComponentModule {
