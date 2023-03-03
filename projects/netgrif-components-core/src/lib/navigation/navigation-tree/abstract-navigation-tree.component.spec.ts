@@ -31,7 +31,7 @@ import {
 } from '../../routing/dynamic-navigation-route-provider/dynamic-navigation-route-provider.service';
 import {AccessService} from "../../authorization/permission/access.service";
 
-xdescribe('AbstractNavigationTreeComponent', () => {
+describe('AbstractNavigationTreeComponent', () => {
     let component: TestTreeComponent;
     let fixture: ComponentFixture<TestTreeComponent>;
     let configService: ConfigurableTestConfigurationService;
@@ -375,7 +375,6 @@ class TestTreeComponent extends AbstractNavigationTreeComponent {
     }
 }
 
-@Injectable()
 class ConfigurableTestConfigurationService extends TestConfigurationService {
 
     constructor() {
@@ -389,7 +388,9 @@ class ConfigurableTestConfigurationService extends TestConfigurationService {
 
 }
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 class TestUserService extends UserService {
 
     constructor(authService: AuthenticationService,
