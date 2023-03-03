@@ -50,6 +50,9 @@
                 },
                 "sessionBearer": {
                     "type": "string"
+                },
+                "sessionTimeout": {
+                    "type": "number"
                 }
             },
             "type": "object"
