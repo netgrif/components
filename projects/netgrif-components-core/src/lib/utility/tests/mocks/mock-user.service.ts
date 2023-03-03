@@ -45,4 +45,9 @@ export class MockUserService {
     public isUserEmpty(user: User): boolean {
         return !user || (!user.id && user.roles.length === 0);
     }
+
+    public isCurrentUserEmpty(): boolean {
+        return this.isUserEmpty(this.user)
+    }
+
 }
