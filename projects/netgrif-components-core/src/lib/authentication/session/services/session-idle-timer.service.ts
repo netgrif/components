@@ -19,7 +19,7 @@ export class SessionIdleTimerService implements OnDestroy {
 
     constructor(private _config: ConfigurationService,) {
         this._timeoutSeconds = this._config.get().providers.auth.sessionTimeout ?
-            this._config.get().providers.auth.sessionTimeout : SessionIdleTimerService.SESSION_TIMEOUTTIME;
+            this._config.get().providers.auth.sessionTimeout : SessionIdleTimerService.SESSION_TIMEOUTTIME;  //TODO: merge with change password and fix deep-copy
     }
 
     startTimer() {
