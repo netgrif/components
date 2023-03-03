@@ -13,7 +13,7 @@ import {PopupSessionIdleComponent} from "./popup-session-idle/popup-session-idle
 @Component({
     selector: 'nc-session-idle',
     templateUrl: './session-idle.component.html',
-    styleUrls: ['./session-idle.component.scss']
+    styleUrls: []
 })
 export class SessionIdleComponent extends AbstractSessionIdleComponent {
 
