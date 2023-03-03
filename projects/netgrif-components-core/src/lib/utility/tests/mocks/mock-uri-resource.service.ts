@@ -5,7 +5,9 @@ import {UriContentType, UriNodeResource} from '../../../navigation/model/uri-res
 import {UriResourceService} from '../../../navigation/service/uri-resource.service';
 import {ResourceProvider} from '../../../resources/resource-provider.service';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class MockUriResourceService extends UriResourceService {
 
     static TEST1_ID = 'test1';
