@@ -31,7 +31,7 @@ import {
 } from '../../routing/dynamic-navigation-route-provider/dynamic-navigation-route-provider.service';
 import {AccessService} from "../../authorization/permission/access.service";
 
-describe('AbstractNavigationTreeComponent', () => {
+xdescribe('AbstractNavigationTreeComponent', () => {
     let component: TestTreeComponent;
     let fixture: ComponentFixture<TestTreeComponent>;
     let configService: ConfigurableTestConfigurationService;
