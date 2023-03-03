@@ -4,7 +4,9 @@ import {Preferences} from '../../../resources/interface/preferences';
 import {MessageResource} from '../../../resources/interface/message-resource';
 import {UserResource} from '../../../resources/interface/user-resource';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class MockUserResourceService {
 
     public getPreferences(): Observable<Preferences> {
