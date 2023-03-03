@@ -13,8 +13,6 @@ import {AbstractNavigationTreeComponent} from './abstract-navigation-tree.compon
 import {Router} from '@angular/router';
 import {LoggerService} from '../../logger/services/logger.service';
 import {UserService} from '../../user/services/user.service';
-import {RoleGuardService} from '../../authorization/role/role-guard.service';
-import {AuthorityGuardService} from '../../authorization/authority/authority-guard.service';
 import {AuthenticationModule} from '../../authentication/authentication.module';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
@@ -25,7 +23,6 @@ import {UserTransformer} from '../../authentication/models/user.transformer';
 import {SessionService} from '../../authentication/session/services/session.service';
 import {User} from '../../user/models/user';
 import {AnonymousService} from '../../authentication/anonymous/anonymous.service';
-import {GroupGuardService} from '../../authorization/group/group-guard.service';
 import {ActiveGroupService} from '../../groups/services/active-group.service';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {LanguageService} from '../../translate/language.service';
