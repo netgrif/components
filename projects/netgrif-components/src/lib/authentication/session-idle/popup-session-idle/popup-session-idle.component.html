@@ -1,8 +1,9 @@
-<h1 mat-dialog-title>Session konci vole...</h1>
+<h1 mat-dialog-title>{{ 'session.expireTitle' | translate}}</h1>
 <div mat-dialog-content>
-    konci ti session o {{ getTime() | async }} chces ostat?
+    {{ 'session.expireDetail' |translate: {time: getTime() | async} }}
 </div>
 <div mat-dialog-actions>
-    <button mat-button [mat-dialog-close]="true">logout</button>
-    <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>zostat</button>
+    <button mat-button [mat-dialog-close]="true">{{ 'session.exitButton' | translate}}</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="false"
+            cdkFocusInitial>{{ 'session.refreshButton' | translate}}</button>
 </div>
