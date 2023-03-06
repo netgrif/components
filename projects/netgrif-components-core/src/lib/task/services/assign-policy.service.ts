@@ -15,7 +15,7 @@ import {AfterAction} from '../../utility/call-chain/after-action';
 import {PermissionService} from '../../authorization/permission/permission.service';
 import {PermissionType} from '../../process/permissions';
 import {UserService} from "../../user/services/user.service";
-import {take} from "rxjs/operators";
+import {filter, take} from "rxjs/operators";
 
 /**
  * Handles the sequence of actions that are performed when a task is being assigned, based on the task's configuration.
@@ -58,12 +58,10 @@ export class AssignPolicyService extends TaskHandlingService {
             race([
                 this._userService.anonymousUser$,
                 this._userService.user$
-            ]).pipe(take(1))
-                .subscribe(user => {
-                    if (!this._userService.isUserEmpty(user)) {
-                        this.performAssign(taskOpened, afterAction);
-                    }
-                });
+            ])
+                .pipe(filter(user => !this._userService.isUserEmpty(user)))
+                .pipe(take(1))
+                .subscribe(user => this.performAssign(taskOpened, afterAction));
         }
     }
 
