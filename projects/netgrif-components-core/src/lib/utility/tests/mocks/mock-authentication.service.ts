@@ -4,9 +4,7 @@ import {Observable, of} from 'rxjs';
 import {User} from '../../../user/models/user';
 import {Injectable} from '@angular/core';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class MockAuthenticationService extends AuthenticationService {
     login(credentials: Credentials): Observable<User> {
         return of(new User('id', 'mail', 'name', 'surname', ['ADMIN'], [{stringId: 'id', name: 'id', importId: 'id'}]));

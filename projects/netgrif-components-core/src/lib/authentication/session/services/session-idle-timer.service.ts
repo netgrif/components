@@ -7,7 +7,7 @@ import {ConfigurationService} from "../../../configuration/configuration.service
 })
 export class SessionIdleTimerService implements OnDestroy {
 
-    public static readonly SESSION_TIMEOUTTIME = 900;
+    public static readonly DEFAULT_SESSION_TIMEOUTTIME = 900;
 
     private readonly _timeoutSeconds: number;
     private _count: number = 0;
@@ -19,7 +19,7 @@ export class SessionIdleTimerService implements OnDestroy {
 
     constructor(private _config: ConfigurationService,) {
         this._timeoutSeconds = this._config.get().providers.auth.sessionTimeout ?
-            this._config.get().providers.auth.sessionTimeout : SessionIdleTimerService.SESSION_TIMEOUTTIME;  //TODO: merge with change password and fix deep-copy
+            this._config.get().providers.auth.sessionTimeout : SessionIdleTimerService.DEFAULT_SESSION_TIMEOUTTIME;  //TODO: merge with change password and fix deep-copy
     }
 
     startTimer() {
@@ -48,6 +48,7 @@ export class SessionIdleTimerService implements OnDestroy {
 
     ngOnDestroy(): void {
         this.timerSubscription.unsubscribe();
+        this._remainSeconds.unsubscribe();
     }
 
 }

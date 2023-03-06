@@ -111,7 +111,6 @@ export class SessionService implements OnDestroy {
             this.clear();
             this._verifying.off();
             this._initialized.on();
-            this.idleTimerService.stopTimer()
             return throwError(new Error('Cannot verify session token. ' +
                 'Login URL is not defined in the config [nae.providers.auth.endpoints.login].'));
         } else {

@@ -388,9 +388,7 @@ class ConfigurableTestConfigurationService extends TestConfigurationService {
 
 }
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 class TestUserService extends UserService {
 
     constructor(authService: AuthenticationService,
