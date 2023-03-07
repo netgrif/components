@@ -40,7 +40,7 @@ export abstract class AbstractRegistrationComponent implements HasForm, OnDestro
     protected constructor(protected _signupService: SignUpService,
                           protected _log: LoggerService,
                           protected _translate: TranslateService,
-                          @Optional() @Inject(NAE_MIN_PASSWORD_LENGTH) protected minPasswordLength: number | null) {
+                          @Optional() @Inject(NAE_MIN_PASSWORD_LENGTH) protected minPasswordLength: number | undefined) {
         this.minPasswordLength = minPasswordLength ?? NAE_DEFAULT_MIN_PASSWORD_LENGTH;
         this.hidePassword = true;
         this.hideRepeatPassword = true;
