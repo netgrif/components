@@ -23,7 +23,8 @@ export * from './navigation-item-task-search-categories-factory';
 export * from './is-empty.pipe';
 export * from './is-non-empty.pipe';
 export * from './utility.module';
-export * from './directives/let.directive'
+export * from './directives/let.directive';
+export * from './base64';
 
 /* TESTS */
 export * from './tests/mocks/mock-authentication.service';
@@ -51,3 +52,4 @@ export * from './tests/test-factory-methods';
 export * from './tests/test-view-service';
 export * from './tests/mocks/mock-endpoint';
 export * from './tests/test-mock-dependencies.module';
+export * from './tests/mocks/mock-profile.service';

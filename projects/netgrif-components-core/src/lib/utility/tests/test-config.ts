@@ -12,6 +12,7 @@ export class TestConfigurationService extends ConfigurationService {
                         login: 'auth/login',
                         logout: 'auth/logout',
                         signup: 'auth/signup',
+                        changePassword: 'auth/changePassword',
                         verification: 'auth/verify',
                         verify: 'auth/token/verify',
                         invite: 'auth/invite',
