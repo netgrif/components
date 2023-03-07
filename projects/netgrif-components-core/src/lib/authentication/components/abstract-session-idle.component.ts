@@ -57,8 +57,8 @@ export abstract class AbstractSessionIdleComponent implements OnInit, OnDestroy 
         this.cleanUp()
         this._user.logout().subscribe(() => {
             this._log.debug('User is logged out');
-            if (this._config.get().services && this._config.get().services.auth && this._config.get().services.auth.logoutRedirect) {
-                const redirectPath = this._config.get().services.auth.logoutRedirect;
+            if (this._config.getConfigurationSubtreeByPath('services.auth.logoutRedirect')) {
+                const redirectPath = this._config.getConfigurationSubtreeByPath('services.auth.logoutRedirect');
                 this._router.navigate([redirectPath]);
             }
         });
