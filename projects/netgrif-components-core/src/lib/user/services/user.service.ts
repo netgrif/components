@@ -64,6 +64,10 @@ export class UserService implements OnDestroy {
         return this._userChange$.asObservable();
     }
 
+    get anonymousUser(): User {
+        return this.anonymousUser;
+    }
+
     get anonymousUser$(): Observable<User> {
         return this._anonymousUserChange$.asObservable();
     }
@@ -199,6 +203,14 @@ export class UserService implements OnDestroy {
 
     public clearUser() {
         this._user = this.emptyUser();
+    }
+
+    public isUserEmpty(user: User): boolean {
+        return !user || (!user.id && user.roles.length === 0);
+    }
+
+    public isCurrentUserEmpty(): boolean {
+        return this.isUserEmpty(this.user)
     }
 
     protected publishUserChange(): void {
