@@ -15,7 +15,8 @@ import {
     SnackBarHorizontalPosition,
     SnackBarModule,
     SnackBarVerticalPosition,
-    ViewService
+    ViewService,
+    ProfileModule
 } from '@netgrif/components-core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -75,6 +76,7 @@ import {
     SideMenuComponentModule,
     SideMenuContentComponentModule,
     TabsComponentModule,
+    ChangePasswordFormComponentModule,
     ToolbarComponentModule,
     TreeCaseViewComponentModule,
     WorkflowViewComponentModule
@@ -100,10 +102,6 @@ import { PublicSingleTaskViewComponent } from './doc/public-single-task-view/pub
 import { BreadcrumbsExampleComponent } from './doc/breadcrumbs-example/breadcrumbs-example.component';
 import {ImpersonationDemoComponent} from './doc/impersonation-demo/impersonation-demo.component';
 import { ChangePasswordComponent } from './doc/forms/change-password/change-password.component';
-import {ProfileModule} from "../../../netgrif-components-core/src/lib/authentication/profile/profile.module";
-import {
-    ChangePasswordFormComponentModule
-} from "../../../netgrif-components/src/lib/forms/change-password/change-password-form.component.module";
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);

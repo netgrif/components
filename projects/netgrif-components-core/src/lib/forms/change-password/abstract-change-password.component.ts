@@ -13,6 +13,10 @@ import {UserService} from "../../user/services/user.service";
 import {encodeBase64} from '../../utility/base64';
 import {NAE_DEFAULT_MIN_PASSWORD_LENGTH, NAE_MIN_PASSWORD_LENGTH} from "../min-password-length-token";
 
+export const OLD_PASSWORD = 'oldPassword';
+export const PASSWORD = 'password';
+export const CONFIRM_PASSWORD = 'confirmPassword';
+
 @Component({
     selector: 'ncc-abstract-change-password',
     template: ''
@@ -35,7 +39,7 @@ export abstract class AbstractChangePasswordComponent implements HasForm, OnDest
                           protected user: UserService,
                           protected _log: LoggerService,
                           protected _translate: TranslateService,
-                          @Optional() @Inject(NAE_MIN_PASSWORD_LENGTH) protected minPasswordLength: number | null) {
+                          @Optional() @Inject(NAE_MIN_PASSWORD_LENGTH) protected minPasswordLength: number | undefined) {
         this.minPasswordLength = minPasswordLength ?? NAE_DEFAULT_MIN_PASSWORD_LENGTH;
         this.hidePassword = true;
         this.hideOldPassword = true;
@@ -58,8 +62,8 @@ export abstract class AbstractChangePasswordComponent implements HasForm, OnDest
     protected createRequestBody(): UserChangePasswordRequest {
         return {
             login: this.user.user.email,
-            password: encodeBase64(this.rootFormGroup.controls['oldPassword'].value),
-            newPassword: encodeBase64(this.rootFormGroup.controls['password'].value)
+            password: encodeBase64(this.rootFormGroup.controls[OLD_PASSWORD].value),
+            newPassword: encodeBase64(this.rootFormGroup.controls[PASSWORD].value)
         };
     }
 
