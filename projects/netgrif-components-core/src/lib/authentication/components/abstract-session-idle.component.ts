@@ -5,7 +5,7 @@ import {SessionIdleTimerService} from "../session/services/session-idle-timer.se
 import {UserService} from "../../user/services/user.service";
 import {LoggerService} from "../../logger/services/logger.service";
 import {ConfigurationService} from "../../configuration/configuration.service";
-import {filter} from "rxjs/operators";
+
 
 @Component({
     selector: 'ncc-abstract-session-idle',
