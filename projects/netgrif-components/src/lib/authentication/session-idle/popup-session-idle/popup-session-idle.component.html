@@ -1,6 +1,8 @@
-<h1 mat-dialog-title>{{ 'session.expireTitle' | translate}}</h1>
-<div mat-dialog-content class="white-space">
-    {{ 'session.expireDetail' |translate: {time: getTime() | async} }}
+<div mat-dialog-title>{{ 'session.expireTitle' | translate}}</div>
+<div mat-dialog-content>
+    <p class="white-space">
+        {{ 'session.expireDetail' | translate: {time: getTime() | async} }}
+    </p>
 </div>
 <div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between stretch">
     <button mat-button [mat-dialog-close]="true">{{ 'session.exitButton' | translate}}</button>

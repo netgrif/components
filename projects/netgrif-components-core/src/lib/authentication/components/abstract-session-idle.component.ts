@@ -24,8 +24,7 @@ export abstract class AbstractSessionIdleComponent implements OnInit, OnDestroy 
                 protected _log: LoggerService,
                 protected _config: ConfigurationService,
                 protected _router: Router) {
-        this._enableIdle = this._config.get().providers.auth.sessionTimeoutEnabled ?
-            this._config.get().providers.auth.sessionTimeoutEnabled : false;  //TODO: merge with change password and fix deep-copy
+        this._enableIdle = this._config.getConfigurationSubtreeByPath('providers.auth.sessionTimeoutEnabled') ?? false;
     }
 
     ngOnInit() {

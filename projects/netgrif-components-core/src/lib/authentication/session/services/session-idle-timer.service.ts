@@ -19,14 +19,12 @@ export class SessionIdleTimerService implements OnDestroy {
     public remainSeconds$ = this._remainSeconds.asObservable();
 
     constructor(private _config: ConfigurationService,) {
-        this._enableService = this._config.get().providers.auth.sessionTimeoutEnabled ?
-            this._config.get().providers.auth.sessionTimeoutEnabled : false;  //TODO: merge with change password and fix deep-copy
-        this._timeoutSeconds = this._config.get().providers.auth.sessionTimeout ?
-            this._config.get().providers.auth.sessionTimeout : SessionIdleTimerService.DEFAULT_SESSION_TIMEOUTTIME;  //TODO: merge with change password and fix deep-copy
+        this._enableService = this._config.getConfigurationSubtreeByPath('providers.auth.sessionTimeoutEnabled') ?? false;
+        this._timeoutSeconds = this._config.getConfigurationSubtreeByPath('providers.auth.sessionTimeout') ?? SessionIdleTimerService.DEFAULT_SESSION_TIMEOUTTIME;
     }
 
     startTimer() {
-        if(this._enableService){
+        if (this._enableService) {
             this.stopTimer();
             this._count = this._timeoutSeconds;
             this.timerSubscription = this.timer.subscribe(n => {
