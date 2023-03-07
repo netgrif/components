@@ -306,6 +306,12 @@
             "sign": "Sign Up",
             "enterPass": "Enter your password"
         },
+        "changePassword": {
+            "oldPassword": "Enter your old password",
+            "enterNewPass": "Enter your new password",
+            "repeatNewPass": "Repeat your new password",
+            "changePass": "Change password"
+        },
         "register": {
             "email": "Your email",
             "name": "Name",

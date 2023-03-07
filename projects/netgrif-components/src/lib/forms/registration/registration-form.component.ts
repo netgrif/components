@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, Inject, Optional} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
-import {AbstractRegistrationFormComponent, LoggerService, SignUpService} from '@netgrif/components-core';
+import {AbstractRegistrationFormComponent, LoggerService, SignUpService, NAE_MIN_PASSWORD_LENGTH} from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
@@ -12,7 +12,8 @@ export class RegistrationFormComponent extends AbstractRegistrationFormComponent
     constructor(formBuilder: FormBuilder,
                 signupService: SignUpService,
                 log: LoggerService,
-                translate: TranslateService) {
-        super(formBuilder, signupService, log, translate);
+                translate: TranslateService,
+                @Optional() @Inject(NAE_MIN_PASSWORD_LENGTH) minPasswordLength) {
+        super(formBuilder, signupService, log, translate, minPasswordLength);
     }
 }

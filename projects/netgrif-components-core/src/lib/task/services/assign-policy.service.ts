@@ -9,11 +9,13 @@ import {FinishPolicyService} from './finish-policy.service';
 import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {TaskOperations} from '../interfaces/task-operations';
 import {CallChainService} from '../../utility/call-chain/call-chain.service';
-import {Subject} from 'rxjs';
+import {race, Subject} from 'rxjs';
 import {UserComparatorService} from '../../user/services/user-comparator.service';
 import {AfterAction} from '../../utility/call-chain/after-action';
 import {PermissionService} from '../../authorization/permission/permission.service';
 import {PermissionType} from '../../process/permissions';
+import {UserService} from "../../user/services/user.service";
+import {filter, take} from "rxjs/operators";
 
 /**
  * Handles the sequence of actions that are performed when a task is being assigned, based on the task's configuration.
@@ -31,7 +33,8 @@ export class AssignPolicyService extends TaskHandlingService {
                 protected _userComparatorService: UserComparatorService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
                 taskContentService: TaskContentService,
-                protected _permissionService: PermissionService) {
+                protected _permissionService: PermissionService,
+                protected _userService: UserService) {
         super(taskContentService);
     }
 
@@ -49,6 +52,20 @@ export class AssignPolicyService extends TaskHandlingService {
      * @param afterAction the action that should be performed when the assign policy (and all following policies) finishes
      */
     public performAssignPolicy(taskOpened: boolean, afterAction: AfterAction = new AfterAction()): void {
+        if (!this._userService.isCurrentUserEmpty()) {
+            this.performAssign(taskOpened, afterAction);
+        } else {
+            race([
+                this._userService.anonymousUser$,
+                this._userService.user$
+            ])
+                .pipe(filter(user => !this._userService.isUserEmpty(user)))
+                .pipe(take(1))
+                .subscribe(user => this.performAssign(taskOpened, afterAction));
+        }
+    }
+
+    private performAssign(taskOpened: boolean, afterAction: AfterAction = new AfterAction()): void {
         if (this._safeTask.assignPolicy === AssignPolicy.auto
             && this._permissionService.hasTaskPermission(this._safeTask, PermissionType.ASSIGN)) {
             this.autoAssignPolicy(taskOpened, afterAction);

@@ -197,6 +197,23 @@ export abstract class ConfigurationService {
         return paths;
     }
 
+    /**
+     * @param endpointKey the attribute name of the endpoint address in `nae.json`
+     * @returns the endpoint address or `undefined` if such endpoint is not defined in `nae.json`
+     */
+    public resolveProvidersEndpoint(endpointKey: string): string {
+        const config = this.configuration;
+        if (!config
+            || !config.providers
+            || !config.providers.auth
+            || !config.providers.auth.address
+            || !config.providers.auth.endpoints
+            || !config.providers.auth.endpoints[endpointKey]) {
+            throw new Error('Authentication provider address is not set!');
+        }
+        return config.providers.auth.address + config.providers.auth.endpoints[endpointKey];
+    }
+
     private createConfigurationCopy(): any {
         return this.deepCopy(this.configuration);
     }
