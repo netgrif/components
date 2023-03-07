@@ -19,6 +19,7 @@ export class TestConfigurationService extends ConfigurationService {
                         recover: '/auth/recover'
                     },
                     sessionBearer: 'X-Auth-Token',
+                    sessionTimeoutEnabled: false,
                     sessionTimeout: 900
                 },
                 resources: [

@@ -9,6 +9,7 @@ import {
 import {MatDialog} from "@angular/material/dialog";
 import {Router} from "@angular/router";
 import {PopupSessionIdleComponent} from "./popup-session-idle/popup-session-idle.component";
+import {take} from "rxjs/operators";
 
 @Component({
     selector: 'nc-session-idle',
@@ -17,8 +18,7 @@ import {PopupSessionIdleComponent} from "./popup-session-idle/popup-session-idle
 })
 export class SessionIdleComponent extends AbstractSessionIdleComponent {
 
-    @Input() alertAt? = 45;
-
+    @Input() alertAtSeconds? = 30;
 
     constructor(protected dialog: MatDialog,
                 sessionTimer: SessionIdleTimerService,
@@ -39,7 +39,7 @@ export class SessionIdleComponent extends AbstractSessionIdleComponent {
 
     openDialog(): void {
         const dialogRef = this.dialog.open(PopupSessionIdleComponent);
-        dialogRef.afterClosed().subscribe(result => {
+        dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
             if (result) {
                 this.logout();
             }

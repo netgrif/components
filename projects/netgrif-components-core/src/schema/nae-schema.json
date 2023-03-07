@@ -51,8 +51,13 @@
                 "sessionBearer": {
                     "type": "string"
                 },
+                "sessionTimeoutEnabled": {
+                    "type": "boolean",
+                    "default": false
+                },
                 "sessionTimeout": {
-                    "type": "number"
+                    "type": "number",
+                    "default": 900
                 }
             },
             "type": "object"

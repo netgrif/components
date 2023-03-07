@@ -16,6 +16,7 @@
                 "recover": "/auth/recover"
             },
             "sessionBearer": "X-Auth-Token",
+            "sessionTimeoutEnabled": false,
             "sessionTimeout": 900,
             "jwtBearer": "X-Jwt-Token"
         },

@@ -6,7 +6,7 @@
         <div class="full-height grey-color" fxLayout="column" fxLayoutAlign="center stretch">
             <div fxLayout="row" fxLayoutAlign="center stretch" [ngClass]="{'component-container': !isDoubleDrawer()} " fxFlex="100">
                 <div fxFlex="100" class="full-height grey-color">
-                    <nc-session-idle></nc-session-idle>
+                    <nc-session-idle [alertAtSeconds]="45"></nc-session-idle>
                     <router-outlet></router-outlet>
                 </div>
             </div>
