@@ -38,7 +38,7 @@
         "ncc:build-schematics": "node projects/netgrif-components-core/src/scripts/build-schematics.js",
         "ncc:lint": "ng lint netgrif-components-core",
         "ncc:spell": "cspell \"{projects/netgrif-components-core/**/*.md,projects/netgrif-components-core/src/**/*.ts}\"",
-        "ncc:test": "node --trace-warnings ./node_modules/@angular/cli/bin/ng test netgrif-components-core",
+        "ncc:test": "ng test netgrif-components-core",
         "ncc:full-test": "npm run ncc:lint && npm run ncc:test",
         "ncc:normalize-coverage-summary": "node scripts/normalize-file-paths.js coverage/netgrif-components-core/coverage-summary.json",
         "ncc:typedoc": "typedoc --tsconfig projects/netgrif-components-core/tsconfig.lib.json  projects/netgrif-components-core/src/public-api.ts",
