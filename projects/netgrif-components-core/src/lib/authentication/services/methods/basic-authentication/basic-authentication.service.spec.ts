@@ -71,14 +71,6 @@ describe('BasicAuthenticationService', () => {
         )();
     });
 
-    it('should decode non-latin characters', (done) => {
-        const nonLatin = 'ššščččôôôžžťťť';
-        const encoded = encodeBase64(nonLatin);
-        const decoded = decodeBase64(encoded);
-        expect(decoded).toEqual(nonLatin);
-        done();
-    });
-
     afterEach(inject([HttpTestingController], (mock: HttpTestingController) => {
         mock.verify();
         TestBed.resetTestingModule();

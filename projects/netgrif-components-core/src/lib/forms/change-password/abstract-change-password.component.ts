@@ -11,7 +11,7 @@ import {UserChangePasswordRequest} from "../../authentication/profile/models/use
 import {ProfileService} from "../../authentication/profile/services/profile.service";
 import {UserService} from "../../user/services/user.service";
 import {encodeBase64} from '../../utility/base64';
-import {NAE_MIN_PASSWORD_LENGTH} from "../min-password-length-token";
+import {NAE_DEFAULT_MIN_PASSWORD_LENGTH, NAE_MIN_PASSWORD_LENGTH} from "../min-password-length-token";
 
 @Component({
     selector: 'ncc-abstract-change-password',
@@ -36,9 +36,7 @@ export abstract class AbstractChangePasswordComponent implements HasForm, OnDest
                           protected _log: LoggerService,
                           protected _translate: TranslateService,
                           @Optional() @Inject(NAE_MIN_PASSWORD_LENGTH) protected minPasswordLength: number | null) {
-        if(!minPasswordLength){
-            this.minPasswordLength = 8;
-        }
+        this.minPasswordLength = minPasswordLength ?? NAE_DEFAULT_MIN_PASSWORD_LENGTH;
         this.hidePassword = true;
         this.hideOldPassword = true;
         this.hideRepeatPassword = true;

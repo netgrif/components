@@ -9,7 +9,7 @@ import {UserRegistrationRequest} from '../../authentication/sign-up/models/user-
 import {Observable} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
 import {take} from 'rxjs/operators';
-import {NAE_MIN_PASSWORD_LENGTH} from "../min-password-length-token";
+import {NAE_DEFAULT_MIN_PASSWORD_LENGTH, NAE_MIN_PASSWORD_LENGTH} from "../min-password-length-token";
 
 /**
  * Holds the logic that is shared between `RegistrationFormComponent` and `ForgottenPasswordFormComponent`.
@@ -41,9 +41,7 @@ export abstract class AbstractRegistrationComponent implements HasForm, OnDestro
                           protected _log: LoggerService,
                           protected _translate: TranslateService,
                           @Optional() @Inject(NAE_MIN_PASSWORD_LENGTH) protected minPasswordLength: number | null) {
-        if (!minPasswordLength) {
-            this.minPasswordLength = 8;
-        }
+        this.minPasswordLength = minPasswordLength ?? NAE_DEFAULT_MIN_PASSWORD_LENGTH;
         this.hidePassword = true;
         this.hideRepeatPassword = true;
         this.formSubmit = new EventEmitter<FormSubmitEvent>();
