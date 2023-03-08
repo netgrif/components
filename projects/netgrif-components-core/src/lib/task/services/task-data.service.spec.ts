@@ -31,6 +31,7 @@ import {EventOutcomeMessageResource} from '../../resources/interface/message-res
 import {SetDataEventOutcome} from '../../event/model/event-outcomes/data-outcomes/set-data-event-outcome';
 import {createMockCase} from '../../utility/tests/utility/create-mock-case';
 import {createMockNet} from '../../utility/tests/utility/create-mock-net';
+import {Injectable} from "@angular/core";
 
 describe('TaskDataService', () => {
     let service: TaskDataService;
@@ -260,6 +261,7 @@ class MockTaskResourceService {
     }
 }
 
+@Injectable()
 class TestTaskRequestStateService extends TaskRequestStateService {
     public get loading$(): Observable<boolean> {
         return this._loading.asObservable();

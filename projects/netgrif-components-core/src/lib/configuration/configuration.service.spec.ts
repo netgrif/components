@@ -45,7 +45,9 @@ describe('ConfigurationService', () => {
                         reset: 'auth/reset',
                         recover: '/auth/recover'
                     },
-                    sessionBearer: 'X-Auth-Token'
+                    sessionBearer: 'X-Auth-Token',
+                    sessionTimeoutEnabled: false,
+                    sessionTimeout: 900
                 },
                 resources: [
                     {

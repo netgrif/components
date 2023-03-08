@@ -484,5 +484,11 @@
             "failed": "Aktion ist fehlgeschlagen",
             "deactivated": "Vertretung wurde erfolgreich deaktiviert"
         }
+    },
+    "session": {
+        "expireTitle": "Ihre Sitzung läuft bald ab",
+        "expireDetail": "Ihre Sitzung läuft bald ab.\n\nSie werden in {{time}} Sekunden weitergeleitet",
+        "exitButton": "Abmelden",
+        "refreshButton": "Angemeldet bleiben"
     }
 }

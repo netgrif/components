@@ -99,6 +99,10 @@ export abstract class ConfigurationService {
         return result;
     }
 
+    public getConfigurationSubtreeByPath(path: string) : any | undefined {
+        return this.getConfigurationSubtree(path.split('.'));
+    }
+
     /**
      * @param pathSegments the keys specifying the path trough the configuration that should be accessed
      * @returns a deep copy of a specified subsection of the configuration object, or `undefined` if such subsection doesn't exist.

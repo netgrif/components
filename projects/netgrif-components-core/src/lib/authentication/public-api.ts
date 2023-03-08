@@ -18,3 +18,4 @@ export * from './services/authentication-interceptor'
 
 /* COMPONENTS */
 export * from './components/abstract-authentication-overlay';
+export * from './components/abstract-session-idle.component'
