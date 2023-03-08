@@ -6,7 +6,7 @@ import {
     LoggerService,
     SnackBarService,
     NAE_MIN_PASSWORD_LENGTH
-} from "netgrif-components-core";
+} from '@netgrif/components-core';
 import {FormBuilder} from "@angular/forms";
 import {TranslateService} from "@ngx-translate/core";
 import {Subscription} from "rxjs";
