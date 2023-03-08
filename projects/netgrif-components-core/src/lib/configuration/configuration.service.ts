@@ -101,6 +101,10 @@ export abstract class ConfigurationService {
         return result;
     }
 
+    public getConfigurationSubtreeByPath(path: string) : any | undefined {
+        return this.getConfigurationSubtree(path.split('.'));
+    }
+
     /**
      * @param pathSegments the keys specifying the path trough the configuration that should be accessed
      * @returns a deep copy of a specified subsection of the configuration object, or `undefined` if such subsection doesn't exist.
@@ -223,6 +227,23 @@ export abstract class ConfigurationService {
             });
         }
         return paths;
+    }
+
+    /**
+     * @param endpointKey the attribute name of the endpoint address in `nae.json`
+     * @returns the endpoint address or `undefined` if such endpoint is not defined in `nae.json`
+     */
+    public resolveProvidersEndpoint(endpointKey: string): string {
+        const config = this.configuration;
+        if (!config
+            || !config.providers
+            || !config.providers.auth
+            || !config.providers.auth.address
+            || !config.providers.auth.endpoints
+            || !config.providers.auth.endpoints[endpointKey]) {
+            throw new Error('Authentication provider address is not set!');
+        }
+        return config.providers.auth.address + config.providers.auth.endpoints[endpointKey];
     }
 
     private createConfigurationCopy(): any {

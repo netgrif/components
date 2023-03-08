@@ -1,6 +1,6 @@
 {
     "name": "@netgrif/components-core",
-    "version": "6.3.0-rc.3",
+    "version": "6.3.0-rc.5",
     "description": "Netgrif Application engine frontend core Angular library",
     "homepage": "https://components.netgrif.com",
     "license": "SEE LICENSE IN LICENSE",
@@ -57,7 +57,7 @@
         "hammerjs": "~2.0.8",
         "json-schema-to-typescript": "~8.1.0",
         "jszip": "~3.2.2",
-        "moment": "~2.24.0",
+        "moment": "~2.29.4",
         "natural-orderby": "~2.0.3",
         "rxjs": "~6.6.0",
         "zone.js": "~0.11.4"

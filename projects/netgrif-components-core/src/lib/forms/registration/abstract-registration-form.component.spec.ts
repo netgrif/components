@@ -2,7 +2,7 @@ import {waitForAsync, ComponentFixture, TestBed, inject} from '@angular/core/tes
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
+import {Component, Inject, NO_ERRORS_SCHEMA, Optional} from '@angular/core';
 import {MaterialModule} from '../../material/material.module';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {SignUpService} from '../../authentication/sign-up/services/sign-up.service';
@@ -15,6 +15,7 @@ import {AuthenticationMethodService} from '../../authentication/services/authent
 import {NullAuthenticationService} from '../../authentication/services/methods/null-authentication/null-authentication.service';
 import {MockSignUpService} from '../../utility/tests/mocks/mock-sign-up.service';
 import {TranslateService} from '@ngx-translate/core';
+import {NAE_MIN_PASSWORD_LENGTH} from "../min-password-length-token";
 
 describe('AbstractRegistrationPanelComponent', () => {
     let component: TestRegFormComponent;
@@ -83,7 +84,7 @@ describe('AbstractRegistrationPanelComponent', () => {
     template: ''
 })
 class TestRegFormComponent extends AbstractRegistrationFormComponent {
-    constructor(formBuilder: FormBuilder, signupService: SignUpService, log: LoggerService, translate: TranslateService) {
-        super(formBuilder, signupService, log, translate);
+    constructor(formBuilder: FormBuilder, signupService: SignUpService, log: LoggerService, translate: TranslateService, @Optional() @Inject(NAE_MIN_PASSWORD_LENGTH)  minPasswordLength) {
+        super(formBuilder, signupService, log, translate, minPasswordLength);
     }
 }
