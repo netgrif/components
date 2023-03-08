@@ -173,10 +173,19 @@
             "properties": {
                 "auth": {
                     "properties": {
+                        "logoutRedirect": {
+                            "type": "string"
+                        },
                         "loginRedirect": {
                             "type": "string"
                         },
-                        "logoutRedirect": {
+                        "onLogoutRedirect": {
+                            "type": "string"
+                        },
+                        "toLoginRedirect": {
+                            "type": "string"
+                        },
+                        "onLoginRedirect": {
                             "type": "string"
                         }
                     },

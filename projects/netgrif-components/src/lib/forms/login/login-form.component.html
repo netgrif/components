@@ -34,7 +34,8 @@
             <button color="primary" type="submit" mat-raised-button fxLayout="row" fxLayoutAlign="center center">
                 <mat-spinner *ngIf="loading | async"
                              mode="indeterminate"
-                             diameter="36"
+                             class = "margin-4px-0"
+                             diameter="28"
                              color="accent"
                              fxFlex></mat-spinner>
                 <span *ngIf="(loading | async) === false" fxFlex>{{ 'forms.login.loginButton' | translate}}</span>
