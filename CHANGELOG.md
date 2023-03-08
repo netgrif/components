@@ -19,7 +19,7 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.3.0](https://g
 - [NAE-1825] Fix the upstream dependency conflict
 - [NAE-1827] Dynamic enumeration looses focus after querying for data
 - [NAE-1830] Changing columns in overflow Service deletes all set columns
-- [NAE-1839] Public view - fields after auto assign are still only visible
+- [NAE-1832] Security upgrade moment from 2.24.0 to 2.29.4
 - [NAE-1839] Public view - fields after auto assign are still only visible
 
 
