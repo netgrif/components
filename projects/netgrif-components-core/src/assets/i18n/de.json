@@ -307,6 +307,12 @@
             "sign": "Registrieren",
             "enterPass": "Ihre Kennwort eingeben"
         },
+        "changePassword": {
+            "oldPassword": "Geben Sie Ihr altes Kennwort ein",
+            "enterNewPass": "Geben Sie Ihr neues Kennwort ein",
+            "repeatNewPass": "Wiederholen Sie Ihr neues Kennwort",
+            "changePass": "Kennwort ändern"
+        },
         "register": {
             "email": "Ihre E-Mail Adresse",
             "name": "Vorname",
@@ -479,5 +485,11 @@
             "failed": "Aktion ist fehlgeschlagen",
             "deactivated": "Vertretung wurde erfolgreich deaktiviert"
         }
+    },
+    "session": {
+        "expireTitle": "Ihre Sitzung läuft bald ab",
+        "expireDetail": "Ihre Sitzung läuft bald ab.\n\nSie werden in {{time}} Sekunden weitergeleitet",
+        "exitButton": "Abmelden",
+        "refreshButton": "Angemeldet bleiben"
     }
 }

@@ -307,6 +307,12 @@
             "sign": "Registrovať",
             "enterPass": "Zadajte svoje heslo"
         },
+        "changePassword": {
+            "oldPassword": "Zadajte staré heslo",
+            "enterNewPass": "Zadajte nové heslo",
+            "repeatNewPass": "Zopakujte nové heslo",
+            "changePass": "Zmeniť heslo"
+        },
         "register": {
             "email": "Váš email",
             "name": "Meno",
@@ -479,5 +485,11 @@
             "failed": "Akciu sa nepodarilo vykonať",
             "deactivated": "Zastupovanie bolo úspešne deaktivované"
         }
+    },
+    "session": {
+        "expireTitle": "Platnosť Vašej relácie čoskoro vyprší",
+        "expireDetail": "Vaša relácia čoskoro vyprší.\n\nBudete odhlásený za {{time}} sekúnd.",
+        "exitButton": "Odhlásiť sa",
+        "refreshButton": "Zostaň pripojený"
     }
 }

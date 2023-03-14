@@ -3,12 +3,14 @@ import {NgModule} from '@angular/core';
 import {IsEmptyPipe} from './is-empty.pipe';
 import { IsNonEmptyPipe } from './is-non-empty.pipe';
 import {ContainsPipe} from "./contains.pipe";
+import {LetDirective} from "./directives/let.directive";
 
 @NgModule({
     declarations: [
         IsEmptyPipe,
         IsNonEmptyPipe,
-        ContainsPipe
+        ContainsPipe,
+        LetDirective
     ],
     imports: [
         CommonModule,
@@ -16,7 +18,8 @@ import {ContainsPipe} from "./contains.pipe";
     exports: [
         IsEmptyPipe,
         IsNonEmptyPipe,
-        ContainsPipe
+        ContainsPipe,
+        LetDirective
     ],
 })
 export class UtilityModule {

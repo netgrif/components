@@ -15,7 +15,8 @@ import {
     SnackBarHorizontalPosition,
     SnackBarModule,
     SnackBarVerticalPosition,
-    ViewService
+    ViewService,
+    ProfileModule
 } from '@netgrif/components-core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -75,6 +76,7 @@ import {
     SideMenuComponentModule,
     SideMenuContentComponentModule,
     TabsComponentModule,
+    ChangePasswordFormComponentModule,
     ToolbarComponentModule,
     TreeCaseViewComponentModule,
     WorkflowViewComponentModule
@@ -99,6 +101,7 @@ import {DoubleDrawerExampleComponent} from './doc/double-drawer-example/double-d
 import { PublicSingleTaskViewComponent } from './doc/public-single-task-view/public-single-task-view.component';
 import { BreadcrumbsExampleComponent } from './doc/breadcrumbs-example/breadcrumbs-example.component';
 import {ImpersonationDemoComponent} from './doc/impersonation-demo/impersonation-demo.component';
+import { ChangePasswordComponent } from './doc/forms/change-password/change-password.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -154,7 +157,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         WrapperEmptyViewComponent,
         DoubleDrawerExampleComponent,
         PublicSingleTaskViewComponent,
-        BreadcrumbsExampleComponent
+        BreadcrumbsExampleComponent,
+        ChangePasswordComponent
     ],
     imports: [
         BrowserModule,
@@ -165,6 +169,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         MaterialModule,
         CovalentModule,
         SignUpModule,
+        ProfileModule,
         HttpClientModule,
         MatIconModule,
         DialogModule,
@@ -178,6 +183,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         MatCardModule,
         LoginFormComponentModule,
         ForgottenPasswordFormComponentModule,
+        ChangePasswordFormComponentModule,
         RegistrationFormComponentModule,
         SnackBarModule,
         MatButtonModule,

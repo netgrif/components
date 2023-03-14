@@ -1,9 +1,10 @@
-import { Component, Input, OnDestroy } from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 import { AbstractViewWithHeadersComponent } from '../abstract/view-with-headers';
 import { Observable, ReplaySubject, Subscription } from 'rxjs';
 import { TaskPanelData } from '../../panel/task-panel-list/task-panel-data/task-panel-data';
 import { TaskViewService } from './service/task-view.service';
 import { ActivatedRoute } from '@angular/router';
+import {AsyncPipe} from "@angular/common";
 
 export class TaskConst {
     public static readonly TRANSITION_ID = 'transitionId';
@@ -17,15 +18,19 @@ export abstract class AbstractSingleTaskViewComponent extends AbstractViewWithHe
 
     @Input() initiallyExpanded: boolean = true;
     @Input() preventCollapse: boolean = true;
+
+    @Output() noTaskPresent: EventEmitter<void>;
     public taskPanelData: ReplaySubject<TaskPanelData>;
     public loading$: Observable<boolean>;
     private transitionId: string;
     private subRoute: Subscription | undefined;
     protected subPanelData: Subscription | undefined;
+    protected subLoading: Subscription | undefined;
 
     protected constructor(protected taskViewService: TaskViewService,
-                          activatedRoute: ActivatedRoute) {
+                          activatedRoute: ActivatedRoute, async: AsyncPipe) {
         super(taskViewService, activatedRoute);
+        this.noTaskPresent = new EventEmitter<void>();
         this.taskPanelData = new ReplaySubject<TaskPanelData>(1);
         this.subRoute = this._activatedRoute.paramMap.subscribe(paramMap => {
             if (!!(paramMap?.['params']?.[TaskConst.TRANSITION_ID])) {
@@ -33,6 +38,12 @@ export abstract class AbstractSingleTaskViewComponent extends AbstractViewWithHe
                 this.subPanelData = this.taskViewService.tasks$.subscribe(tasks =>  {
                     if (!!tasks && tasks.length > 0) {
                         this.taskPanelData.next(this.resolveTransitionTask(tasks));
+                    } else {
+                        const isLoading = async.transform(this.loading$);
+                        if (!isLoading) {
+                            this.taskPanelData.next(undefined);
+                            this.noTaskPresent.next();
+                        }
                     }
                 });
             }
@@ -47,6 +58,9 @@ export abstract class AbstractSingleTaskViewComponent extends AbstractViewWithHe
         }
         if (!!this.subPanelData) {
             this.subPanelData.unsubscribe();
+        }
+        if (!!this.taskPanelData) {
+            this.taskPanelData.complete();
         }
     }
 
