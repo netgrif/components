@@ -46,19 +46,19 @@ export abstract class AbstractMultiUserAssignComponent {
         const index = this._currentUsers.findIndex(v => v.id === user.id);
         if (index > -1) {
             this._currentUsers.splice(index, 1);
+            this._sideMenuControl.publish({
+                opened: true,
+                message: 'User was unselected',
+                data: this._currentUsers
+            });
         }
-        this._sideMenuControl.publish({
-            opened: true,
-            message: 'New selected user',
-            data: this._currentUsers
-        });
     }
 
     public userWasSelected(user: UserValue): void {
         this._currentUsers.push(user);
         this._sideMenuControl.publish({
             opened: true,
-            message: 'User was unselected',
+            message: 'User was selected',
             data: this._currentUsers
         });
     }
@@ -70,7 +70,7 @@ export abstract class AbstractMultiUserAssignComponent {
         if (this._currentUsers !== undefined) {
             this._sideMenuControl.close({
                 opened: false,
-                message: 'Selected user was confirmed',
+                message: 'Selected users were confirmed',
                 data: this._currentUsers
             });
         }

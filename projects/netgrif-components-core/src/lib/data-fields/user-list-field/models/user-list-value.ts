@@ -36,6 +36,11 @@ export class UserListValue {
         return Array.from(this._userValues.values()).pop();
     }
 
+    public toString(): string {
+        const userNames = Array.from(this._userValues.values()).reduce((acc, curr) => acc + curr.fullName + ',', '')
+        return userNames.slice(0, userNames.lastIndexOf(','))
+    }
+
     public removeUserValue(userId: string): void {
         this._userValues.delete(userId);
     }

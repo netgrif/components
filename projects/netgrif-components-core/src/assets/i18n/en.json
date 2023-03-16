@@ -255,7 +255,8 @@
             "maxFilesExceeded": "Maximum number of uploadable files exceeded: ",
             "maxFilesSizeExceeded": "The maximum size of uploaded files is exceeded: ",
             "notSelectedUser": "No user has been selected",
-            "userAssigned": "User {{userName}} was assigned"
+            "userAssigned": "User {{userName}} was assigned",
+            "userListAssigned": "Selected users {{userNames}} were assigned"
         },
         "values": {
             "boolean": {

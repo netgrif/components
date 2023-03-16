@@ -53,8 +53,8 @@ export abstract class AbstractUserListFieldComponent  extends AbstractDataFieldC
             if ($event.data) {
                 this.dataField.value = new UserListValue(new Map<string, UserValue>(($event.data as Array<UserValue>).map(v => [v.id, v])));
                 this._snackbar.openGenericSnackBar(
-                    this._translate.instant('dataField.snackBar.userAssigned',
-                    {userName: this.dataField.value.getLast().fullName}),
+                    this._translate.instant('dataField.snackBar.userListAssigned',
+                    {userNames: this.dataField.value.toString()}),
                     'how_to_reg'
                 );
                 valueReturned = true;
