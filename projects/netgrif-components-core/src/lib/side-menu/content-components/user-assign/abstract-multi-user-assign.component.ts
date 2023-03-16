@@ -64,7 +64,7 @@ export abstract class AbstractMultiUserAssignComponent {
     }
 
     /**
-     * On assign button close side menu with selected user as data and message about confirm.
+     * On save button close side menu with selected user as data and message about confirm.
      */
     public save(): void {
         if (this._currentUsers !== undefined) {
