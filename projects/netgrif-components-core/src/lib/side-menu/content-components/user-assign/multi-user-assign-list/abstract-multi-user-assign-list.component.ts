@@ -56,7 +56,7 @@ export abstract class AbstractMultiUserAssignListComponent extends AbstractBaseU
     }
 
     public select(selectedUser: UserListItem): void {
-        const index = this._currentlySelectedUsers.indexOf(selectedUser.id, 0);
+        const index = this._currentlySelectedUsers.indexOf(selectedUser.id);
         if (index > -1) {
             this._currentlySelectedUsers.splice(index, 1);
             this.userUnselected.emit(new UserValue(selectedUser.id, selectedUser.name, selectedUser.surname, selectedUser.email));
