@@ -1,7 +1,7 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
+import {Component, NO_ERRORS_SCHEMA, OnDestroy} from '@angular/core';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {FormControl} from '@angular/forms';
 import {UserListItem, UserListService} from '../../../../user/services/user-list.service';
@@ -68,7 +68,7 @@ describe('AbstractBaseUserAssignListComponent', () => {
     selector: 'ncc-test-user',
     template: ''
 })
-class TestUserComponent extends AbstractBaseUserAssignListComponent {
+class TestUserComponent extends AbstractBaseUserAssignListComponent implements OnDestroy {
     constructor(protected _userListService: UserListService) {
         super(_userListService);
     }
