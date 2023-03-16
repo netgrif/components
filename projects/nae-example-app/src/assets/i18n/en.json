@@ -15,6 +15,7 @@
         "Test": "one-one"
     },
     "singleTask": {
-        "finishButtonTitle": "Save and finish"
+        "finishButtonTitle": "Save and finish",
+        "createNewCaseButtonTitle": "Create new case"
     }
 }

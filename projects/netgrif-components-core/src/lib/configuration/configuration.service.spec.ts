@@ -38,13 +38,16 @@ describe('ConfigurationService', () => {
                         login: 'auth/login',
                         logout: 'auth/logout',
                         signup: 'auth/signup',
+                        changePassword: 'auth/changePassword',
                         verification: 'auth/verify',
                         verify: 'auth/token/verify',
                         invite: 'auth/invite',
                         reset: 'auth/reset',
                         recover: '/auth/recover'
                     },
-                    sessionBearer: 'X-Auth-Token'
+                    sessionBearer: 'X-Auth-Token',
+                    sessionTimeoutEnabled: false,
+                    sessionTimeout: 900
                 },
                 resources: [
                     {

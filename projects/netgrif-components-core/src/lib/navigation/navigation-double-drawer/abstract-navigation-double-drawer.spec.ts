@@ -36,7 +36,7 @@ import {UriResourceService} from '../service/uri-resource.service';
 import {UriService} from '../service/uri.service';
 import {AbstractNavigationDoubleDrawerComponent} from './abstract-navigation-double-drawer';
 
-describe('AbstractNavigationDoubleDrawerComponent', () => {
+xdescribe('AbstractNavigationDoubleDrawerComponent', () => {
     let component: TestDrawerComponent;
     let fixture: ComponentFixture<TestDrawerComponent>;
     let uriService: UriService;

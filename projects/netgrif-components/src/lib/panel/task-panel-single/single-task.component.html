@@ -1,13 +1,12 @@
 <div fxLayout='column' fxLayoutAlign='start center' fxFlex>
-    <ng-container *ngIf='task$ | async as task'>
+    <ng-container *nccLet="(task$ | async) as task">
 
         <div *ngIf='(loading$ | async) === false && !task' fxLayout='column' fxLayoutAlign='center center'
              fxFlex>
-            <mat-icon color='accent'>check_box</mat-icon>
-            <span class='font-size-20'>{{ 'tasks.view.noTasksSatisfyingThisFilter' | translate }}</span>
+            <div *ngTemplateOutlet ="noTaskSection ?? defaultNoTaskSection"></div>
         </div>
 
-        <cdk-virtual-scroll-viewport itemSize="1" class="task-panel-scroll-container full-width full-height">
+        <cdk-virtual-scroll-viewport *ngIf="task" itemSize="1" class="task-panel-scroll-container full-width full-height">
             <div *ngTemplateOutlet='pageHeader ?? defaultPageHeader'></div>
             <nc-task-panel
                 [textEllipsis]='textEllipsis'
@@ -29,6 +28,11 @@
             </div>
             <div *ngTemplateOutlet='pageFooter ?? defaultPageFooter'></div>
         </cdk-virtual-scroll-viewport>
+
+        <ng-template #defaultNoTaskSection>
+            <mat-icon color='accent'>check_box</mat-icon>
+            <span class='font-size-20'>{{ 'tasks.view.noTasksSatisfyingThisFilter' | translate }}</span>
+        </ng-template>
 
         <ng-template #defaultPageHeader>
             <mat-card class="top-card">
