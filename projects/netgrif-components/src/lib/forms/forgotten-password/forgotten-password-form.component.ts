@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {AbstractForgottenPasswordComponent, LoggerService, SignUpService} from '@netgrif/components-core';
+import {Component, Inject, Optional} from '@angular/core';
+import {AbstractForgottenPasswordComponent, LoggerService, SignUpService, NAE_MIN_PASSWORD_LENGTH} from '@netgrif/components-core';
 import {FormBuilder} from '@angular/forms';
 import {TranslateService} from '@ngx-translate/core';
 
@@ -12,7 +12,8 @@ export class ForgottenPasswordFormComponent extends AbstractForgottenPasswordCom
     constructor(formBuilder: FormBuilder,
                 signupService: SignUpService,
                 log: LoggerService,
-                translate: TranslateService) {
-        super(formBuilder, signupService, log, translate);
+                translate: TranslateService,
+                @Optional() @Inject(NAE_MIN_PASSWORD_LENGTH) minPasswordLength) {
+        super(formBuilder, signupService, log, translate, minPasswordLength);
     }
 }
