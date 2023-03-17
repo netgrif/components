@@ -28,6 +28,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {combineLatest} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {HeaderComponent} from '@netgrif/components';
+import {AsyncPipe} from "@angular/common";
 
 const localAllowedNetsServiceFactory = (factory: AllowedNetsServiceFactory, route: ActivatedRoute) => {
     const array = [];
@@ -66,6 +67,7 @@ const localAllowedNetsServiceFactory = (factory: AllowedNetsServiceFactory, rout
         TaskEventService,
         {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
         {provide: AllowedNetsServiceFactory, useClass: AllowedNetsServiceFactory},
+        AsyncPipe
     ]
 })
 export class PublicSingleTaskViewComponent extends AbstractSingleTaskViewComponent implements OnInit, AfterViewInit {
@@ -75,8 +77,8 @@ export class PublicSingleTaskViewComponent extends AbstractSingleTaskViewCompone
     hidden: boolean;
 
     constructor(taskViewService: TaskViewService, publicTaskLoadingService: PublicTaskLoadingService,
-                activatedRoute: ActivatedRoute, protected _router: Router) {
-        super(taskViewService, activatedRoute);
+                activatedRoute: ActivatedRoute, protected _router: Router, async: AsyncPipe) {
+        super(taskViewService, activatedRoute, async);
         this.hidden = false;
         this.loading$ = combineLatest(taskViewService.loading$, publicTaskLoadingService.loading$).pipe(
             map(sources => {
@@ -91,10 +93,15 @@ export class PublicSingleTaskViewComponent extends AbstractSingleTaskViewCompone
 
     ngAfterViewInit(): void {
         this.initializeHeader(this.taskHeaderComponent);
+        this.noTaskPresent.subscribe(() => this._router.navigate(['process', btoa('nae_1823')]))
     }
 
     logEvent(event: TaskEventNotification) {
         console.log(event);
+    }
+
+    newCase() {
+        this._router.navigate(['process', btoa('nae_1823')])
     }
 
 }

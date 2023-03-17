@@ -26,6 +26,7 @@ export abstract class AbstractSingleTaskComponent implements OnDestroy {
     @Input() textEllipsis = false;
     @Input() preventCollapse = true;
     @Input() hidePanelHeader = true;
+    @Input() noTaskSection: TemplateRef<any>;
     @Input() pageHeader: TemplateRef<any>;
     @Input() pageFooter: TemplateRef<any>;
     @Input() headerTitle: string;

@@ -1,5 +1,5 @@
 import {AbstractRegistrationComponent} from './abstract-registration.component';
-import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
+import {Component, Inject, NO_ERRORS_SCHEMA, Optional} from '@angular/core';
 import {SignUpService} from '../../authentication/sign-up/services/sign-up.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {UserRegistrationRequest} from '../../authentication/sign-up/models/user-registration-request';
@@ -17,6 +17,7 @@ import {TestConfigurationService} from '../../utility/tests/test-config';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {NullAuthenticationService} from '../../authentication/services/methods/null-authentication/null-authentication.service';
 import {TranslateService} from '@ngx-translate/core';
+import {NAE_MIN_PASSWORD_LENGTH} from "../min-password-length-token";
 
 describe('AbstractRegistrationComponent', () => {
     let component: TestRegFormComponent;
@@ -75,8 +76,8 @@ describe('AbstractRegistrationComponent', () => {
     template: ''
 })
 class TestRegFormComponent extends AbstractRegistrationComponent {
-    constructor(signupService: SignUpService, log: LoggerService, translate: TranslateService) {
-        super(signupService, log, translate);
+    constructor(signupService: SignUpService, log: LoggerService, translate: TranslateService,  @Optional() @Inject(NAE_MIN_PASSWORD_LENGTH)  minPasswordLength) {
+        super(signupService, log, translate, minPasswordLength);
     }
 
     protected createRequestBody(): UserRegistrationRequest {

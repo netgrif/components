@@ -11,10 +11,11 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {NullAuthenticationService} from '../../authentication/services/methods/null-authentication/null-authentication.service';
-import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
+import {Component, Inject, NO_ERRORS_SCHEMA, Optional} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
 import {LoggerService} from '../../logger/services/logger.service';
 import {TranslateService} from '@ngx-translate/core';
+import {NAE_MIN_PASSWORD_LENGTH} from "../min-password-length-token";
 
 describe('AbstractForgottenPasswordComponent', () => {
     let component: TestRegFormComponent;
@@ -81,7 +82,7 @@ describe('AbstractForgottenPasswordComponent', () => {
     template: ''
 })
 class TestRegFormComponent extends AbstractForgottenPasswordComponent {
-    constructor(formBuilder: FormBuilder, signupService: SignUpService, log: LoggerService, translate: TranslateService) {
-        super(formBuilder, signupService, log, translate);
+    constructor(formBuilder: FormBuilder, signupService: SignUpService, log: LoggerService, translate: TranslateService, @Optional() @Inject(NAE_MIN_PASSWORD_LENGTH)  minPasswordLength) {
+        super(formBuilder, signupService, log, translate, minPasswordLength);
     }
 }
