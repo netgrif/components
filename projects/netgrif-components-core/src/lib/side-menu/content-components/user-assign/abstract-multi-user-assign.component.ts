@@ -19,7 +19,7 @@ export abstract class AbstractMultiUserAssignComponent {
     protected _currentUsers: Array<UserValue>;
 
     protected constructor(protected _sideMenuControl: SideMenuControl) {
-        this._currentUsers = new Array<UserValue>();
+        this._currentUsers = [];
         if (this._sideMenuControl.data) {
             this.injectedData = this._sideMenuControl.data as UserListInjectedData;
             this._currentUsers.push(...(this.injectedData.value as UserListValue).userValues.values());
