@@ -14,13 +14,13 @@
 <title>cluster_SideMenuFilterSelectorComponentModule</title>
 <polygon fill="none" stroke="black" stroke-dasharray="1,5" points="8,-32.8 8,-230.8 282,-230.8 282,-32.8 8,-32.8"/>
 </g>
-<g id="clust2" class="cluster">
-<title>cluster_SideMenuFilterSelectorComponentModule_declarations</title>
-<polygon fill="none" stroke="black" points="58,-40.8 58,-92.8 232,-92.8 232,-40.8 58,-40.8"/>
-</g>
 <g id="clust5" class="cluster">
 <title>cluster_SideMenuFilterSelectorComponentModule_exports</title>
 <polygon fill="none" stroke="black" points="56,-170.8 56,-222.8 234,-222.8 234,-170.8 56,-170.8"/>
+</g>
+<g id="clust2" class="cluster">
+<title>cluster_SideMenuFilterSelectorComponentModule_declarations</title>
+<polygon fill="none" stroke="black" points="58,-40.8 58,-92.8 232,-92.8 232,-40.8 58,-40.8"/>
 </g>
 <!-- FilterSelectorComponent -->
 <g id="node1" class="node">
