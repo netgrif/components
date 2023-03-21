@@ -7,6 +7,12 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Full Changelog: [https://github.com/netgrif/components/commits/v6.2.7](https://github.com/netgrif/components/commits/v6.2.7)
 
+## [6.2.8](https://github.com/netgrif/components/releases/tag/v6.2.7) (2022-03-22)
+
+### Added
+
+- [NAE-1851] Save selected headers in filter
+
 ## [6.2.7](https://github.com/netgrif/components/releases/tag/v6.2.7) (2022-12-19)
 
 ### Fixed
