@@ -14,13 +14,13 @@
 <title>cluster_QuickPanelComponentModule</title>
 <polygon fill="none" stroke="black" stroke-dasharray="1,5" points="8,-32.8 8,-230.8 756,-230.8 756,-32.8 8,-32.8"/>
 </g>
-<g id="clust2" class="cluster">
-<title>cluster_QuickPanelComponentModule_declarations</title>
-<polygon fill="none" stroke="black" points="23,-40.8 23,-92.8 743,-92.8 743,-40.8 23,-40.8"/>
-</g>
 <g id="clust8" class="cluster">
 <title>cluster_QuickPanelComponentModule_exports</title>
 <polygon fill="none" stroke="black" points="16,-170.8 16,-222.8 748,-222.8 748,-170.8 16,-170.8"/>
+</g>
+<g id="clust2" class="cluster">
+<title>cluster_QuickPanelComponentModule_declarations</title>
+<polygon fill="none" stroke="black" points="23,-40.8 23,-92.8 743,-92.8 743,-40.8 23,-40.8"/>
 </g>
 <!-- InternalLinkComponent -->
 <g id="node1" class="node">

@@ -262,7 +262,7 @@ export class TabView implements TabViewInterface {
             ];
             providers.push({
                 provide: NAE_VIEW_ID_SEGMENT,
-                useValue: tab.initial ? tab.uniqueId : TabView.DYNAMIC_TAB_VIEW_ID_SEGMENT
+                useValue: tab.initial ? tab.uniqueId : ((tab.injectedObject as InjectedTabData)?.loadFilter?.id ?? TabView.DYNAMIC_TAB_VIEW_ID_SEGMENT)
             });
 
             const injector = Injector.create({providers, parent: this._parentInjector});
