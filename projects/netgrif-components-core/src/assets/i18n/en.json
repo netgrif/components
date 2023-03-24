@@ -285,7 +285,7 @@
         },
         "user": {
             "selectUser": "Select user",
-            "save": "Save"
+            "save": "Assign"
         },
         "textarea": {
             "insertText": "Insert text here..."

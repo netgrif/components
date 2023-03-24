@@ -285,7 +285,7 @@
         },
         "user": {
             "selectUser": "Benutzer auswählen",
-            "save": "Speichern"
+            "save": "Zuweisen"
         },
         "textarea": {
             "insertText": "Hier Text eingeben..."

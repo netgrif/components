@@ -285,7 +285,7 @@
         },
         "user": {
             "selectUser": "Vyberte používateľa",
-            "save": "Uložiť"
+            "save": "Priradiť"
         },
         "textarea": {
             "insertText": "Sem zadajte text..."
