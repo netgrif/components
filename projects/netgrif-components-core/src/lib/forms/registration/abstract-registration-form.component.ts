@@ -7,7 +7,8 @@ import {UserRegistrationRequest} from '../../authentication/sign-up/models/user-
 import {Observable} from 'rxjs';
 import {MessageResource} from '../../resources/interface/message-resource';
 import {TranslateService} from '@ngx-translate/core';
-import {Component, Input, OnDestroy} from '@angular/core';
+import {Component, Inject, Input, OnDestroy, Optional} from '@angular/core';
+import {NAE_MIN_PASSWORD_LENGTH} from "../min-password-length-token";
 
 /**
  * Holds the logic of the `RegistrationFormComponent`.
@@ -23,13 +24,14 @@ export abstract class AbstractRegistrationFormComponent extends AbstractRegistra
     protected constructor(formBuilder: FormBuilder,
                           signupService: SignUpService,
                           log: LoggerService,
-                          translate: TranslateService) {
-        super(signupService, log, translate);
+                          translate: TranslateService,
+                          @Optional() @Inject(NAE_MIN_PASSWORD_LENGTH) minPasswordLength) {
+        super(signupService, log, translate, minPasswordLength);
         this.rootFormGroup = formBuilder.group({
             name: ['', Validators.required],
             surname: ['', Validators.required],
-            password: ['', [Validators.required, Validators.minLength(this.MIN_PASSWORD_LENGTH)]],
-            confirmPassword: ['', [Validators.required, Validators.minLength(this.MIN_PASSWORD_LENGTH)]]
+            password: ['', [Validators.required, Validators.minLength(this.minPasswordLength)]],
+            confirmPassword: ['', [Validators.required, Validators.minLength(this.minPasswordLength)]]
         }, {validator: passwordValidator});
     }
 

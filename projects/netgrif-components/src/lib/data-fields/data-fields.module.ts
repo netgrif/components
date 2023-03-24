@@ -65,6 +65,9 @@ import {
     MultichoiceAutocompleteFieldComponent
 } from './multichoice-field/multichoice-autocomplete-field/multichoice-autocomplete-field.component';
 import { UserListFieldComponent } from './user-list-field/user-list-field.component';
+import {
+    SideMenuMultiUserAssignComponentModule
+} from "../side-menu/content-components/multi-user-assign/side-menu-multi-user-assign-component.module";
 
 @NgModule({
     declarations: [
@@ -136,6 +139,7 @@ import { UserListFieldComponent } from './user-list-field/user-list-field.compon
         NgxMatMomentModule,
         TranslateLibModule,
         SideMenuUserAssignComponentModule,
+        SideMenuMultiUserAssignComponentModule,
         QuillModule.forRoot(),
         MatDialogModule,
         AdvancedSearchComponentModule,

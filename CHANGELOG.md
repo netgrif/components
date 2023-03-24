@@ -7,16 +7,25 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Full Changelog: [https://github.com/netgrif/components/commits/v6.3.0](https://github.com/netgrif/components/commits/v6.3.0)
 
-## [6.3.0](https://github.com/netgrif/components/releases/tag/v6.3.0) (2022-10-20)
+## [6.3.0](https://github.com/netgrif/components/releases/tag/v6.3.0) (2023-03-24)
 
 ### Fixed
 
 - [NAE-1790] Validation message on the date field is not displaying correctly
 - [NAE-1795] Breadcrumbs based on the menu, not on the currently displayed view
 - [NAE-1797] I18N field at asynchronous rendering
+- [NAE-1804] In UserList field can choose one user multiple times
+- [NAE-1823] Error when searching for non-existing tasks
+- [NAE-1825] Fix the upstream dependency conflict
+- [NAE-1827] Dynamic enumeration looses focus after querying for data
+- [NAE-1830] Changing columns in overflow Service deletes all set columns
+- [NAE-1832] Security upgrade moment from 2.24.0 to 2.29.4
+- [NAE-1839] Public view - fields after auto assign are still only visible
+
 
 ### Changed
 
+- [NAE-1431] Login view redirect configuration
 - [NAE-1674] Uri node cases pagination
 - [NAE-1759] Update documentation of public views, PDF generator and user list
 - [NAE-1762] Public view URL encoding
@@ -24,6 +33,16 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.3.0](https://g
 ### Added
 
 - [NAE-1678] User impersonation
+- [NAE-1809] UserList field show selected users
+- [NAE-1835] Change password component
+- [NAE-1841] Idle timer component
+
+
+## [6.2.8](https://github.com/netgrif/components/releases/tag/v6.2.8) (2023-03-22)
+
+### Added
+
+- [NAE-1851] Save selected headers in filter
 
 ## [6.2.7](https://github.com/netgrif/components/releases/tag/v6.2.7) (2022-12-19)
 

@@ -1,9 +1,10 @@
 <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="8px">
     <form [formGroup]="rootFormGroup" (ngSubmit)="onSubmit()" class="full-width netgrif-input netgrif-input-fix">
-        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
+        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px" class="margin-bottom-default">
             <mat-icon color="primary">account_circle</mat-icon>
             <mat-form-field fxFlex="100" appearance="outline">
-                <input matInput placeholder="{{ 'forms.login.login' | translate}}" formControlName="login" minlength="4"
+                <mat-label>{{ 'forms.login.login' | translate}}</mat-label>
+                <input matInput formControlName="login" minlength="4"
                        required autocomplete="username">
                 <mat-error *ngIf="rootFormGroup.controls['login'].hasError('minlength')">
                     {{ 'forms.login.length' | translate}}
@@ -13,7 +14,8 @@
         <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
             <mat-icon color="primary">vpn_key</mat-icon>
             <mat-form-field fxFlex="100" appearance="outline">
-                <input matInput placeholder="{{ 'forms.login.enterPass' | translate}}"
+                <mat-label>{{ 'forms.login.enterPass' | translate}}</mat-label>
+                <input matInput
                        [type]="hidePassword ? 'password' : 'text'"
                        formControlName="password" required autocomplete="current-password">
                 <button mat-icon-button matSuffix type="button"
@@ -32,7 +34,8 @@
             <button color="primary" type="submit" mat-raised-button fxLayout="row" fxLayoutAlign="center center">
                 <mat-spinner *ngIf="loading | async"
                              mode="indeterminate"
-                             diameter="36"
+                             class = "margin-4px-0"
+                             diameter="28"
                              color="accent"
                              fxFlex></mat-spinner>
                 <span *ngIf="(loading | async) === false" fxFlex>{{ 'forms.login.loginButton' | translate}}</span>
