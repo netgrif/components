@@ -23,7 +23,6 @@ import {Subject} from 'rxjs';
 
 interface ExampleInjectedData extends InjectedTabbedCaseViewData {
     exampleUseCache: boolean;
-    loadFilter?: Filter;
 }
 
 const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {

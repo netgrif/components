@@ -255,7 +255,8 @@
             "maxFilesExceeded": "Die maximale Anzahl hochladbarer Dateien ist überschritten: ",
             "maxFilesSizeExceeded": "Die maximale Größe der hochgeladenen Dateien wird überschritten: ",
             "notSelectedUser": "Es wurde kein Benutzer ausgewählt",
-            "userAssigned": "Benutzer {{userName}} wurde zugewiesen"
+            "userAssigned": "Benutzer {{userName}} wurde zugewiesen",
+            "userListAssigned": "Ausgewählte Benutzer {{userNames}} wurden zugewiesen"
         },
         "values": {
             "boolean": {
@@ -283,7 +284,8 @@
             "reset": "Rücksetzen"
         },
         "user": {
-            "selectUser": "Benutzer auswählen"
+            "selectUser": "Benutzer auswählen",
+            "save": "Speichern"
         },
         "textarea": {
             "insertText": "Hier Text eingeben..."

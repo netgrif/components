@@ -22,6 +22,9 @@ import {ImmediateFilterTextContentComponent} from './immediate/immediate-filter-
 import {PanelItemComponent} from './panel-item/panel-item.component';
 import {TaskListPaginationComponent} from './task-panel-list-pagination/task-list-pagination.component';
 import { SingleTaskComponent } from './task-panel-single/single-task.component';
+import {
+    SideMenuMultiUserAssignComponentModule
+} from "../side-menu/content-components/multi-user-assign/side-menu-multi-user-assign-component.module";
 
 @NgModule({
     declarations: [
@@ -46,6 +49,7 @@ import { SingleTaskComponent } from './task-panel-single/single-task.component';
         SnackBarModule,
         TaskContentComponentModule,
         SideMenuUserAssignComponentModule,
+        SideMenuMultiUserAssignComponentModule,
         CurrencyModule,
         UtilityModule
     ],

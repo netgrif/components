@@ -22,6 +22,7 @@ export * from './navigation-item-task-filter-factory';
 export * from './navigation-item-task-search-categories-factory';
 export * from './is-empty.pipe';
 export * from './is-non-empty.pipe';
+export * from './contains.pipe';
 export * from './utility.module';
 export * from './directives/let.directive';
 export * from './base64';
