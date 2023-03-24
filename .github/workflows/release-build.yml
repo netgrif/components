@@ -11,6 +11,7 @@ jobs:
                 with:
                     node-version: 16
             -   run: |
+                    npm cache clean --force
                     npm i --legacy-peer-deps
                     npm run ncc:build
                     npm run ncc:full-test
@@ -59,7 +60,9 @@ jobs:
                 with:
                     node-version: 16
                     registry-url: https://npm.pkg.github.com
-            -   run: npm i --legacy-peer-deps
+            -   run: |
+                    npm cache clean --force
+                    npm i
             -   name: Publish components-core
                 run: |
                     npm run ncc:build

@@ -16,7 +16,9 @@ jobs:
                 uses: actions/setup-node@v3
                 with:
                     node-version: 16
-            -   run: npm i --legacy-peer-deps
+            -   run: |
+                    npm cache clean --force
+                    npm i
             -   name: Build & test components-core
                 run: |
                     npm run ncc:build
