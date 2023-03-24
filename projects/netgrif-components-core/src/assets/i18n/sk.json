@@ -255,7 +255,8 @@
             "maxFilesExceeded": "Je presiahnutý maximálny počet nahratých súborov: ",
             "maxFilesSizeExceeded": "Je presiahnutá maximálna veľkosť nahrávaných súborov: ",
             "notSelectedUser": "Nebol vybraný žiadny používateľ",
-            "userAssigned": "Používateľ {{userName}} bol pridelený"
+            "userAssigned": "Používateľ {{userName}} bol pridelený",
+            "userListAssigned": "Vybraní používatelia {{userNames}} boli pridelení"
         },
         "values": {
             "boolean": {
@@ -283,7 +284,8 @@
             "reset": "Resetovať"
         },
         "user": {
-            "selectUser": "Vyberte používateľa"
+            "selectUser": "Vyberte používateľa",
+            "save": "Uložiť"
         },
         "textarea": {
             "insertText": "Sem zadajte text..."
@@ -305,6 +307,12 @@
             "reset": "Obnova hesla",
             "sign": "Registrovať",
             "enterPass": "Zadajte svoje heslo"
+        },
+        "changePassword": {
+            "oldPassword": "Zadajte staré heslo",
+            "enterNewPass": "Zadajte nové heslo",
+            "repeatNewPass": "Zopakujte nové heslo",
+            "changePass": "Zmeniť heslo"
         },
         "register": {
             "email": "Váš email",
@@ -478,5 +486,11 @@
             "failed": "Akciu sa nepodarilo vykonať",
             "deactivated": "Zastupovanie bolo úspešne deaktivované"
         }
+    },
+    "session": {
+        "expireTitle": "Platnosť Vašej relácie čoskoro vyprší",
+        "expireDetail": "Vaša relácia čoskoro vyprší.\n\nBudete odhlásený za {{time}} sekúnd.",
+        "exitButton": "Odhlásiť sa",
+        "refreshButton": "Zostaň pripojený"
     }
 }

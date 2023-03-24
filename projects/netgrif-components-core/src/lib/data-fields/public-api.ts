@@ -61,6 +61,7 @@ export * from './enumeration-field/models/dynamic-enumeration-field';
 export * from './filter-field/models/filter-field';
 export * from './i18n-field/models/i18n-field';
 export * from './user-list-field/models/user-list-field';
+export * from './user-list-field/models/user-list-value';
 
 /* Interfaces */
 export * from './models/changed-fields';
