@@ -37,6 +37,12 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.3.0](https://g
 - [NAE-1841] Idle timer component
 
 
+## [6.2.8](https://github.com/netgrif/components/releases/tag/v6.2.8) (2023-03-22)
+
+### Added
+
+- [NAE-1851] Save selected headers in filter
+
 ## [6.2.7](https://github.com/netgrif/components/releases/tag/v6.2.7) (2022-12-19)
 
 ### Fixed
