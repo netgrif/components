@@ -9,14 +9,11 @@ import {filter, map} from 'rxjs/operators';
 import {FilterType} from '../../../filter/models/filter-type';
 import {Filter} from '../../../filter/models/filter';
 import {Page} from '../../interface/page';
-import {TaskSetDataRequestBody} from '../../interface/task-set-data-request-body';
+import {TaskDataSets} from '../../interface/task-data-sets';
 import {TaskReference} from '../../interface/task-reference';
-import {DataGroup} from '../../interface/data-groups';
-import {DataField} from '../../../data-fields/models/abstract-data-field';
 import {Task} from '../../interface/task';
 import {HttpEventType, HttpParams} from '@angular/common/http';
 import {EventOutcomeMessageResource, MessageResource} from '../../interface/message-resource';
-import {GetDataGroupsEventOutcome} from '../../../event/model/event-outcomes/data-outcomes/get-data-groups-event-outcome';
 
 @Injectable({
     providedIn: 'root'
@@ -90,7 +87,7 @@ export class PublicTaskResourceService extends TaskResourceService {
      * POST
      */
     // {{baseUrl}}/api/public/task/:id/data
-    public setData(taskId: string, body: TaskSetDataRequestBody): Observable<EventOutcomeMessageResource> {
+    public setData(taskId: string, body: TaskDataSets): Observable<EventOutcomeMessageResource> {
         return this._provider.post$('public/task/' + taskId + '/data', this.SERVER_URL, body)
             .pipe(map(r => this.changeType(r, undefined)));
     }

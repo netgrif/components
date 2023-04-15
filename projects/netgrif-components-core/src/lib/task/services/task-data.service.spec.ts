@@ -23,7 +23,7 @@ import {DataGroup} from '../../resources/interface/data-groups';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import {delay, take} from 'rxjs/operators';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
-import {TaskSetDataRequestBody} from '../../resources/interface/task-set-data-request-body';
+import {TaskDataSets} from '../../resources/interface/task-data-sets';
 import {FormControl} from '@angular/forms';
 import {SnackBarModule} from '../../snack-bar/snack-bar.module';
 import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
@@ -32,6 +32,7 @@ import {SetDataEventOutcome} from '../../event/model/event-outcomes/data-outcome
 import {createMockCase} from '../../utility/tests/utility/create-mock-case';
 import {createMockNet} from '../../utility/tests/utility/create-mock-net';
 import {Injectable} from "@angular/core";
+import {DataFieldResource} from "../../task-content/model/resource-interfaces";
 
 describe('TaskDataService', () => {
     let service: TaskDataService;
@@ -225,36 +226,36 @@ class MockTaskResourceService {
         return of(this._response).pipe(delay(this._delay));
     }
 
-    public setData(taskId: string, body: TaskSetDataRequestBody): Observable<EventOutcomeMessageResource> {
+    public setData(taskId: string, body: TaskDataSets): Observable<EventOutcomeMessageResource> {
         const response: EventOutcomeMessageResource = {
             success: 'success',
             outcome: {
                 task: createMockTask(),
-                aCase: createMockCase('string'),
+                case: createMockCase('string'),
                 outcomes: [
                     {
                         task: createMockTask(),
-                        aCase: createMockCase('string'),
+                        case: createMockCase('string'),
                         outcomes: [
                             {}
                         ],
                         message: '',
                         net: createMockNet(),
                         changedFields: {
-                            changedFields: {}
+                            fields: {}
                         }
                     } as SetDataEventOutcome
                 ],
                 message: '',
                 net: createMockNet(),
                 changedFields: {
-                    changedFields: {}
+                    fields: {}
                 }
             } as SetDataEventOutcome
         };
-        Object.keys(body[taskId]).forEach(key => {
+        Object.keys(body.tasks[taskId].fields).forEach(key => {
             if (this._changedFieldsMap.has(key)) {
-                (response.outcome.outcomes[0] as SetDataEventOutcome).changedFields.changedFields[this._changedFieldsMap.get(key)] = {};
+                (response.outcome.outcomes[0] as SetDataEventOutcome).changedFields.fields[this._changedFieldsMap.get(key)] = {} as DataFieldResource;
             }
         });
         return of(response).pipe(delay(this._delay));
