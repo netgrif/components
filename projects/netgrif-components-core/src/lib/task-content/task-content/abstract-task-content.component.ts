@@ -441,9 +441,6 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
     protected initializeLocalFieldLayout(dataGroups: Array<DataGroup>): void {
         for (const g of dataGroups) {
             for (const f of g.fields) {
-                if (f.behavior.hidden || f.behavior.forbidden) {
-                    continue;
-                }
                 f.resetLocalLayout();
             }
         }
