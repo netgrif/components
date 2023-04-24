@@ -11,7 +11,7 @@ export interface TaskDataSets {
     /**
      * ID of task, on which changes occurred
      */
-    tasks: {
+    body: {
         [taskId: string]: DataSet
     };
 }

@@ -318,19 +318,19 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
      */
     protected createUpdateRequestContext(): TaskSetDataRequestContext {
         const context: TaskSetDataRequestContext = {
-            body: { tasks: {} } as TaskDataSets,
+            body: { body: {} } as TaskDataSets,
             previousValues: {}
         };
 
         this._safeTask.dataGroups.filter(dataGroup => dataGroup.parentTaskId === undefined).forEach(dataGroup => {
             dataGroup.fields.filter(field => this.wasFieldUpdated(field)).forEach(field => {
-                context.body.tasks[this._task.stringId] = { fields: {} } as DataSet;
+                context.body.body[this._task.stringId] = { fields: {} } as DataSet;
                 this.addFieldToSetDataRequestBody(context, this._task.stringId, field);
             });
         });
         this._safeTask.dataGroups.filter(dataGroup => dataGroup.parentTaskId !== undefined).forEach(dataGroup => {
             if (dataGroup.fields.some(field => this.wasFieldUpdated(field))) {
-                context.body.tasks[dataGroup.parentTaskId] = { fields: {} } as DataSet;
+                context.body.body[dataGroup.parentTaskId] = { fields: {} } as DataSet;
             } else {
                 return;
             }
@@ -342,7 +342,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
     }
 
     protected addFieldToSetDataRequestBody(context: TaskSetDataRequestContext, taskId: string, field: DataField<any>): void {
-        context.body.tasks[taskId].fields[field.stringId] = {
+        context.body.body[taskId].fields[field.stringId] = {
             type: this._fieldConverterService.resolveType(field),
             value: {
                 value: this._fieldConverterService.formatValueForBackend(field, field.value)
@@ -378,13 +378,13 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         if (!this._userComparator.compareUsers(this._safeTask.user)) {
             return false;
         }
-        const taskIdsInRequest: Array<string> = Object.keys(request.tasks);
+        const taskIdsInRequest: Array<string> = Object.keys(request.body);
         for (const taskId of taskIdsInRequest) {
             if (!Object.keys(this._taskContentService.taskFieldsIndex).includes(taskId)) {
                 this._log.error(`Task id ${taskId} is not present in task fields index`);
                 return false;
             }
-            const fieldIdsOfRequest = Object.keys(request.tasks[taskId].fields);
+            const fieldIdsOfRequest = Object.keys(request.body[taskId].fields);
             for (const fieldId of fieldIdsOfRequest) {
                 const field = this._taskContentService.taskFieldsIndex[taskId].fields[fieldId];
                 if (field === undefined) {
@@ -394,7 +394,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
                 }
                 if (!field.behavior.editable) {
                     this._log.debug(`Field ${fieldId}, was meant to be set to
-                    ${JSON.stringify(request.tasks[taskId][fieldId])
+                    ${JSON.stringify(request.body[taskId][fieldId])
                     }, but is no loner editable.`);
                     return false;
                 }
@@ -411,7 +411,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
      * @param nextEvent indicates to the event queue that the next event can be processed
      */
     protected performSetDataRequest(setTaskId: string, body: TaskDataSets, afterAction: AfterAction, nextEvent: AfterAction) {
-        if (Object.keys(body.tasks).length === 0) {
+        if (Object.keys(body.body).length === 0) {
             this.sendNotification(TaskEvent.SET_DATA, true);
             afterAction.resolve(true);
             nextEvent.resolve(true);
@@ -537,18 +537,18 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
      */
     protected revertSetDataRequest(context: TaskSetDataRequestContext) {
         // this iteration could be improved if we had a map of all the data fields in a task
-        const totalCount = Object.keys(context.body.tasks[this._safeTask.stringId]).length;
+        const totalCount = Object.keys(context.body.body[this._safeTask.stringId]).length;
         let foundCount = 0;
 
         for (const datagroup of this._safeTask.dataGroups) {
             for (const field of datagroup.fields) {
-                if (!context.body.tasks[this._safeTask.stringId][field.stringId]) {
+                if (!context.body.body[this._safeTask.stringId][field.stringId]) {
                     continue;
                 }
 
                 if (this.compareBackendFormattedFieldValues(
                     this._fieldConverterService.formatValueForBackend(field, field.value),
-                    context.body.tasks[this._safeTask.stringId][field.stringId].value)
+                    context.body.body[this._safeTask.stringId][field.stringId].value)
                 ) {
                     field.valueWithoutChange(context.previousValues[field.stringId]);
                 }
@@ -626,8 +626,8 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
     }
 
     private clearWaitingForResponseFlag(body: TaskDataSets) {
-        Object.keys(body.tasks).forEach(taskId => {
-            Object.keys(body.tasks[taskId].fields).forEach(fieldId => {
+        Object.keys(body.body).forEach(taskId => {
+            Object.keys(body.body[taskId].fields).forEach(fieldId => {
                 this._taskContentService.taskFieldsIndex[taskId].fields[fieldId].waitingForResponse = false;
             });
         });

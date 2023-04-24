@@ -317,7 +317,7 @@ export class UserFiltersService implements OnDestroy {
                     }
 
                     this.assignSetDataFinish(initTask, {
-                        tasks: {
+                        body: {
                                 [initTask.stringId]: {
                                     ...requestBody,
                                     ...additionalData

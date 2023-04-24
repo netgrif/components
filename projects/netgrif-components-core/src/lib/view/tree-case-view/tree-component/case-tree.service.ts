@@ -706,10 +706,10 @@ export class CaseTreeService implements OnDestroy {
                     this._logger.error('Case ref accessor task could not be assigned', assignResponse.error);
                 }
 
-                const body = { tasks: {}} as TaskDataSets;
-                body.tasks[task.stringId] = {fields: {}} as DataSet;
-                body.tasks[task.stringId].fields[TreePetriflowIdentifiers.CHILDREN_CASE_REF] = {} as DataFieldResource
-                body.tasks[task.stringId].fields[TreePetriflowIdentifiers.CHILDREN_CASE_REF] =  {
+                const body = { body: {}} as TaskDataSets;
+                body.body[task.stringId] = {fields: {}} as DataSet;
+                body.body[task.stringId].fields[TreePetriflowIdentifiers.CHILDREN_CASE_REF] = {} as DataFieldResource
+                body.body[task.stringId].fields[TreePetriflowIdentifiers.CHILDREN_CASE_REF] =  {
                     type: FieldTypeResource.CASE_REF,
                     value: {
                         value: newCaseRefValue

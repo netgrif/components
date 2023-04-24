@@ -253,7 +253,7 @@ class MockTaskResourceService {
                 }
             } as SetDataEventOutcome
         };
-        Object.keys(body.tasks[taskId].fields).forEach(key => {
+        Object.keys(body.body[taskId].fields).forEach(key => {
             if (this._changedFieldsMap.has(key)) {
                 (response.outcome.outcomes[0] as SetDataEventOutcome).changedFields.fields[this._changedFieldsMap.get(key)] = {} as DataFieldResource;
             }
