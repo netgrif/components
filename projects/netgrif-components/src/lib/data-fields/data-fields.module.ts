@@ -68,6 +68,7 @@ import { UserListFieldComponent } from './user-list-field/user-list-field.compon
 import {
     SideMenuMultiUserAssignComponentModule
 } from "../side-menu/content-components/multi-user-assign/side-menu-multi-user-assign-component.module";
+import { NumberDecimalFieldComponent } from './number-field/number-decimal-field/number-decimal-field.component';
 
 @NgModule({
     declarations: [
@@ -109,6 +110,7 @@ import {
         I18nTextFieldComponent,
         EasymdeWrapperComponent,
         UserListFieldComponent,
+        NumberDecimalFieldComponent,
     ],
 	exports: [
 		BooleanFieldComponent,

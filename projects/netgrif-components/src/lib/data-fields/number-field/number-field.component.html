@@ -12,6 +12,11 @@
                                  [formControlRef]="formControl"
                                  [showLargeLayout] = showLargeLayout>
         </nc-number-currency-field>
+        <nc-number-decimal-field *ngSwitchCase="'decimal'"
+                                  [numberField]="dataField"
+                                  [formControlRef]="formControl"
+                                  [showLargeLayout] = showLargeLayout>
+        </nc-number-decimal-field>
         <nc-number-default-field *ngSwitchDefault
                                  [numberField]="dataField"
                                  [formControlRef]="formControl"
