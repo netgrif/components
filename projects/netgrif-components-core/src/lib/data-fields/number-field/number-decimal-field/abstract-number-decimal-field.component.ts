@@ -50,9 +50,12 @@ export abstract class AbstractNumberDecimalFieldComponent extends AbstractNumber
 
     private transformDecimal(value: string | undefined): string {
         value = !!value ? value : '0';
-        return this._decimalPipe.transform(
-            parseFloat(value),
-            this.numberField.component.properties['digitInfo'],
-            this.numberField.component.properties['locale']);
+        if (!!this.numberField.component) {
+            return this._decimalPipe.transform(
+                parseFloat(value),
+                this.numberField.component.properties['digitsInfo'],
+                this.numberField.component.properties['locale']);
+        }
+        return value;
     }
 }

@@ -21,6 +21,7 @@ import {
     TranslateLibModule,
     UserResourceService, WrappedBoolean
 } from '@netgrif/components-core';
+import {DecimalPipe} from "@angular/common";
 
 describe('NumberDecimalFieldComponent', () => {
     let component: NumberDecimalFieldComponent;
@@ -39,7 +40,8 @@ describe('NumberDecimalFieldComponent', () => {
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
-                {provide: ConfigurationService, useClass: TestConfigurationService}
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                DecimalPipe
             ],
             declarations: [
                 NumberDecimalFieldComponent,
