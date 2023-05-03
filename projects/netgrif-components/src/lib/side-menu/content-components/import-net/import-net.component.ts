@@ -6,7 +6,8 @@ import {
     NAE_SIDE_MENU_CONTROL,
     PetriNetResourceService,
     SideMenuControl,
-    SnackBarService
+    SnackBarService,
+    UriService
 } from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 
@@ -29,7 +30,8 @@ export class ImportNetComponent extends AbstractImportNetComponent {
                 protected _petriNetResource: PetriNetResourceService,
                 protected _log: LoggerService,
                 protected _snackbar: SnackBarService,
+                protected _uriService: UriService,
                 protected _translate: TranslateService) {
-        super(_sideMenuControl, _petriNetResource, _log, _snackbar, _translate);
+        super(_sideMenuControl, _petriNetResource, _uriService, _log, _snackbar, _translate);
     }
 }
