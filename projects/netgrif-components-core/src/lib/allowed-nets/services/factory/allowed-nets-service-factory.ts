@@ -18,6 +18,11 @@ import {FilterField} from '../../../data-fields/filter-field/models/filter-field
 import {BaseAllowedNetsService} from '../base-allowed-nets.service';
 import {MultichoiceField} from "../../../data-fields/multichoice-field/models/multichoice-field";
 
+function addAllowedNets(allowedNets, existingAllowedNets) {
+    if (!!allowedNets && allowedNets.length > 0) {
+        existingAllowedNets.next([...allowedNets]);
+    }
+}
 
 /**
  * Convenience method that can be used as an allowed nets factory for tabbed task views.
@@ -51,13 +56,9 @@ export function navigationItemTaskAllowedNetsServiceFactory(factory: AllowedNets
         });
     }
     if (!!allowedNetsField) {
-        if (!!allowedNetsField.value) {
-            nets.next([...allowedNetsField.value]);
-        }
+        addAllowedNets(allowedNetsField.value, nets);
         allowedNetsField.valueChanges().subscribe(allowedNets => {
-            if (!!allowedNets && allowedNets.length > 0) {
-                nets.next([...allowedNets]);
-            }
+            addAllowedNets(allowedNetsField.value, nets);
         });
     }
     return factory.createFromObservable(nets.asObservable());
