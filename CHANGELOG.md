@@ -7,7 +7,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Full Changelog: [https://github.com/netgrif/components/commits/v6.2.9](https://github.com/netgrif/components/commits/v6.2.9)
 
-## [6.2.9](https://github.com/netgrif/components/releases/tag/v6.2.9) (2023-04-26)
+## [6.2.9](https://github.com/netgrif/components/releases/tag/v6.2.9) (2023-05-04)
 
 ### Fixed
 
