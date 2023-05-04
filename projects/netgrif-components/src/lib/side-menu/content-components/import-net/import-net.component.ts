@@ -28,9 +28,9 @@ export class ImportNetComponent extends AbstractImportNetComponent {
 
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) protected _sideMenuControl: SideMenuControl,
                 protected _petriNetResource: PetriNetResourceService,
+                protected _uriService: UriService,
                 protected _log: LoggerService,
                 protected _snackbar: SnackBarService,
-                protected _uriService: UriService,
                 protected _translate: TranslateService) {
         super(_sideMenuControl, _petriNetResource, _uriService, _log, _snackbar, _translate);
     }
