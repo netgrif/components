@@ -12,7 +12,7 @@
                 <div *ngFor="let item of subgrid.content; trackBy: trackByFn"
                      [gdArea]="item.gridAreaId"
                      class="border" fxLayout="row" [fxLayoutAlign]="getItemAlignment(item)">
-                    <nc-field-component-resolver [id]="item?.item?.stringId" [gridElement]="item" fxFlex></nc-field-component-resolver>
+                    <nc-field-component-resolver [id]="item?.item?.stringId" [gridElement]="item" [taskContentComponentClassReference]="taskContentComponentClass" fxFlex></nc-field-component-resolver>
                 </div>
             </div>
         </div>

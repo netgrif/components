@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {NAE_VIEW_ID_SEGMENT, TabContent, ViewIdService} from '@netgrif/components-core';
+import {NAE_TASK_FORCE_OPEN, NAE_VIEW_ID_SEGMENT, TabContent, ViewIdService} from '@netgrif/components-core';
 import {TabbedCaseViewComponent} from './tabbed-case-view/tabbed-case-view.component';
 import {TabbedTaskViewComponent} from './tabbed-task-view/tabbed-task-view.component';
 import {ReplaySubject} from 'rxjs';
@@ -10,6 +10,7 @@ import {ReplaySubject} from 'rxjs';
     styleUrls: ['./tabbed-views-example.component.scss'],
     providers: [
         {provide: NAE_VIEW_ID_SEGMENT, useValue: 'all-cases'},
+        {provide: NAE_TASK_FORCE_OPEN, useValue: false},
         ViewIdService
     ]
 })
