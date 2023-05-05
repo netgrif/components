@@ -255,7 +255,8 @@
             "maxFilesExceeded": "Die maximale Anzahl hochladbarer Dateien ist überschritten: ",
             "maxFilesSizeExceeded": "Die maximale Größe der hochgeladenen Dateien wird überschritten: ",
             "notSelectedUser": "Es wurde kein Benutzer ausgewählt",
-            "userAssigned": "Benutzer {{userName}} wurde zugewiesen"
+            "userAssigned": "Benutzer {{userName}} wurde zugewiesen",
+            "userListAssigned": "Ausgewählte Benutzer {{userNames}} wurden zugewiesen"
         },
         "values": {
             "boolean": {
@@ -283,7 +284,8 @@
             "reset": "Rücksetzen"
         },
         "user": {
-            "selectUser": "Benutzer auswählen"
+            "selectUser": "Benutzer auswählen",
+            "save": "Zuweisen"
         },
         "textarea": {
             "insertText": "Hier Text eingeben..."
@@ -305,6 +307,12 @@
             "reset": "Kennwort wiederherstellen",
             "sign": "Registrieren",
             "enterPass": "Ihre Kennwort eingeben"
+        },
+        "changePassword": {
+            "oldPassword": "Geben Sie Ihr altes Kennwort ein",
+            "enterNewPass": "Geben Sie Ihr neues Kennwort ein",
+            "repeatNewPass": "Wiederholen Sie Ihr neues Kennwort",
+            "changePass": "Kennwort ändern"
         },
         "register": {
             "email": "Ihre E-Mail Adresse",
@@ -478,5 +486,11 @@
             "failed": "Aktion ist fehlgeschlagen",
             "deactivated": "Vertretung wurde erfolgreich deaktiviert"
         }
+    },
+    "session": {
+        "expireTitle": "Ihre Sitzung läuft bald ab",
+        "expireDetail": "Ihre Sitzung läuft bald ab.\n\nSie werden in {{time}} Sekunden weitergeleitet",
+        "exitButton": "Abmelden",
+        "refreshButton": "Angemeldet bleiben"
     }
 }

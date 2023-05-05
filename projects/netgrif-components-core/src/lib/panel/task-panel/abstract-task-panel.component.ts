@@ -215,7 +215,7 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
         });
         this.panelRef.afterExpand.subscribe(() => {
             this._taskContentService.$shouldCreate.pipe(take(1)).subscribe(() => {
-                this._taskContentService.blockFields(!this.canFinish());
+                this._taskContentService.blockFields(this.hasNoFinishPermission());
                 this._taskPanelData.initiallyExpanded = true;
             });
             this._taskContentService.expansionFinished();
@@ -323,6 +323,10 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
 
     public canFinish(): boolean {
         return this._permissionService.canFinish(this.taskPanelData.task) && this.getFinishTitle() !== '';
+    }
+
+    private hasNoFinishPermission(): boolean {
+        return !this._permissionService.canFinish(this.taskPanelData.task)
     }
 
     public canCollapse(): boolean {

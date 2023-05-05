@@ -41,6 +41,7 @@ import {PublicSingleTaskViewComponent} from './doc/public-single-task-view/publi
 import {BreadcrumbsExampleComponent} from './doc/breadcrumbs-example/breadcrumbs-example.component';
 import {DashboardCaseExampleComponent} from './doc/dashboard-case-example/dashboard-case-example.component';
 import {ImpersonationDemoComponent} from './doc/impersonation-demo/impersonation-demo.component';
+import {ChangePasswordComponent} from "./doc/forms/change-password/change-password.component";
 
 @Injectable({
     providedIn: 'root'
@@ -61,6 +62,7 @@ export class NaeExampleAppViewService extends ViewService {
             {id: 'UserInviteComponent', class: UserInviteComponent},
             {id: 'TreeViewExampleComponent', class: TreeViewExampleComponent},
             {id: 'ButtonsNavComponent', class: ButtonsNavComponent},
+            {id: 'ChangePasswordComponent', class: ChangePasswordComponent},
             {id: 'NavigationExampleComponent', class: NavigationExampleComponent},
             {id: 'ProfileComponent', class: ProfileComponent},
             {id: 'FilterRepositoryExampleComponent', class: FilterRepositoryExampleComponent},

@@ -93,6 +93,13 @@ Should there be a key conflict in the objects, then values from this interface t
                         <td class="col-md-4">
                             <ul class="index-list">
                                 <li>
+                                            <span class="modifier">Optional</span>
+                                        <a href="#loadFilter" 
+>
+                                            loadFilter
+                                        </a>
+                                </li>
+                                <li>
                                         <a href="#tabClosed$" 
 >
                                             tabClosed$
@@ -127,6 +134,44 @@ Should there be a key conflict in the objects, then values from this interface t
 
             <section>
                 <h3 id="inputs">Properties</h3>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="loadFilter"></a>
+                                        <span class="name "><b>loadFilter</b>
+                                            <a href="#loadFilter">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>loadFilter:         <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
+
+
+
+
+                        </tbody>
+                    </table>
                     <table class="table table-sm table-bordered">
                         <tbody>
                                 <tr>
@@ -291,6 +336,7 @@ Should there be a key conflict in the objects, then values from this interface t
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Type} from &#x27;@angular/core&#x27;;
 import {Observable, ReplaySubject} from &#x27;rxjs&#x27;;
+import {Filter} from &quot;../filter/models/filter&quot;;
 
 /**
  * Stores information about content of one opened tab in tab view.
@@ -398,6 +444,8 @@ export interface InjectedTabData {
      * stream emits when the tab is closed by any means except for the destruction of the parent component
      */
     tabClosed$: Observable&lt;void&gt;;
+
+    loadFilter?: Filter;
 }
 
 

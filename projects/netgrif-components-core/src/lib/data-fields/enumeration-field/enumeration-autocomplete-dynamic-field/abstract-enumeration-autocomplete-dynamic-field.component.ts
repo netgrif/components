@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Observable, of} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
@@ -11,7 +11,7 @@ import {EnumerationFieldValidation, EnumerationFieldValue} from '../models/enume
     selector: 'ncc-abstract-enumeration-autocomplete-dynamic-field',
     template: ''
 })
-export abstract class AbstractEnumerationAutocompleteDynamicFieldComponent implements OnInit, OnDestroy {
+export abstract class AbstractEnumerationAutocompleteDynamicFieldComponent implements OnInit, OnDestroy, AfterViewInit {
 
     @Input() enumerationField: DynamicEnumerationField;
     @Input() formControlRef: FormControl;
@@ -32,6 +32,10 @@ export abstract class AbstractEnumerationAutocompleteDynamicFieldComponent imple
         this.enumerationField.choicesChange$.subscribe(() => {
             this.filteredOptions = of(this.enumerationField.choices);
         });
+    }
+
+    ngAfterViewInit(): void {
+        this.enumerationField.input = this.text;
     }
 
     ngOnDestroy(): void {

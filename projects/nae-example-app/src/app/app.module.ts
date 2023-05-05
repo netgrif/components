@@ -16,7 +16,8 @@ import {
     SnackBarHorizontalPosition,
     SnackBarModule,
     SnackBarVerticalPosition,
-    ViewService
+    ViewService,
+    ProfileModule
 } from '@netgrif/components-core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -80,6 +81,7 @@ import {
     SideMenuComponentModule,
     SideMenuContentComponentModule,
     TabsComponentModule,
+    ChangePasswordFormComponentModule,
     ToolbarComponentModule,
     TreeCaseViewComponentModule,
     WorkflowViewComponentModule,
@@ -121,6 +123,7 @@ import {
     SingleTabbedTaskViewComponent
 } from './doc/single-tabbed-view/single-tabbed-task-view/single-tabbed-task-view.component';
 import {ImpersonationDemoComponent} from './doc/impersonation-demo/impersonation-demo.component';
+import { ChangePasswordComponent } from './doc/forms/change-password/change-password.component';
 import {
     Dashboard
 } from '../../../netgrif-components-core/src/lib/data-fields/text-field/dashboard-portal-text-field/dashboard-view-constants';
@@ -182,7 +185,9 @@ export function HttpLoaderFactory(http: HttpClient) {
         BreadcrumbsExampleComponent,
         DashboardCaseExampleComponent,
         SingleTabbedCaseViewComponent,
-        SingleTabbedTaskViewComponent
+        SingleTabbedTaskViewComponent,
+        BreadcrumbsExampleComponent,
+        ChangePasswordComponent
     ],
     imports: [
         BrowserModule,
@@ -193,6 +198,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         MaterialModule,
         CovalentModule,
         SignUpModule,
+        ProfileModule,
         HttpClientModule,
         MatIconModule,
         DialogModule,
@@ -206,6 +212,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         MatCardModule,
         LoginFormComponentModule,
         ForgottenPasswordFormComponentModule,
+        ChangePasswordFormComponentModule,
         RegistrationFormComponentModule,
         SnackBarModule,
         MatButtonModule,

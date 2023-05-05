@@ -78,7 +78,10 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
     MultichoiceAutocompleteFieldComponent
 } from './multichoice-field/multichoice-autocomplete-field/multichoice-autocomplete-field.component';
-import {UserListFieldComponent} from './user-list-field/user-list-field.component';
+import { UserListFieldComponent } from './user-list-field/user-list-field.component';
+import {
+    SideMenuMultiUserAssignComponentModule
+} from "../side-menu/content-components/multi-user-assign/side-menu-multi-user-assign-component.module";
 import {TaskRefFieldComponent} from './task-ref-field/task-ref-field.component';
 import {
     TaskRefDashboardTileComponent
@@ -181,6 +184,7 @@ import { FilterFieldTabViewContentComponent } from './filter-field/tab-view-filt
         NgxMatMomentModule,
         TranslateLibModule,
         SideMenuUserAssignComponentModule,
+        SideMenuMultiUserAssignComponentModule,
         QuillModule.forRoot(),
         MatDialogModule,
         AdvancedSearchComponentModule,

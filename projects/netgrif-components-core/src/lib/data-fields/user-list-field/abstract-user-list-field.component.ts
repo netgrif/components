@@ -1,20 +1,20 @@
-import { Component, Inject, Input, OnInit, Optional } from '@angular/core';
-import { AbstractDataFieldComponent } from '../models/abstract-data-field-component';
-import { SideMenuService } from '../../side-menu/services/side-menu.service';
-import { SnackBarService } from '../../snack-bar/services/snack-bar.service';
-import { TranslateService } from '@ngx-translate/core';
-import { NAE_INFORM_ABOUT_INVALID_DATA } from '../models/invalid-data-policy-token';
-import { SideMenuSize } from '../../side-menu/models/side-menu-size';
-import { UserListInjectedData } from '../../side-menu/content-components/user-assign/model/user-list-injected-data';
-import { UserValue } from '../user-field/models/user-value';
-import { UserListField } from './models/user-list-field';
-import { UserListValue } from './models/user-list-value';
+import {Component, Inject, Input, OnInit, Optional} from '@angular/core';
+import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
+import {SideMenuService} from '../../side-menu/services/side-menu.service';
+import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
+import {TranslateService} from '@ngx-translate/core';
+import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
+import {SideMenuSize} from '../../side-menu/models/side-menu-size';
+import {UserListInjectedData} from '../../side-menu/content-components/user-assign/model/user-list-injected-data';
+import {UserValue} from '../user-field/models/user-value';
+import {UserListField} from './models/user-list-field';
+import {UserListValue} from './models/user-list-value';
 
 @Component({
   selector: 'ncc-abstract-user-list-field',
   template: '',
 })
-export abstract class AbstractUserListFieldComponent  extends AbstractDataFieldComponent implements OnInit {
+export abstract class AbstractUserListFieldComponent extends AbstractDataFieldComponent implements OnInit {
     /**
      * Represents info about user from backend.
      */
@@ -49,17 +49,12 @@ export abstract class AbstractUserListFieldComponent  extends AbstractDataFieldC
     public selectAbstractUser(component) {
         let valueReturned = false;
         this._sideMenuService.open(component, SideMenuSize.MEDIUM,
-            {value: this.dataField.value} as UserListInjectedData).onClose.subscribe($event => {
+            {roles: this.dataField.roles, value: this.dataField.value} as UserListInjectedData).onClose.subscribe($event => {
             if ($event.data) {
-                const existingValue = new UserListValue([]);
-                if (!!this.dataField.value) {
-                    existingValue.addUserValues(this.dataField.value.userValues)
-                }
-                existingValue.addUserValue($event.data as UserValue);
-                this.dataField.value = existingValue;
+                this.dataField.value = new UserListValue(new Map<string, UserValue>(($event.data as Array<UserValue>).map(v => [v.id, v])));
                 this._snackbar.openGenericSnackBar(
-                    this._translate.instant('dataField.snackBar.userAssigned',
-                    {userName: this.dataField.value.getLast().fullName}),
+                    this._translate.instant('dataField.snackBar.userListAssigned',
+                    {userNames: this.dataField.value.toString()}),
                     'how_to_reg'
                 );
                 valueReturned = true;
@@ -69,9 +64,9 @@ export abstract class AbstractUserListFieldComponent  extends AbstractDataFieldC
         });
     }
 
-    public removeAbstractUser(user: UserValue) {
-        const existingUsers = new UserListValue([...this.dataField.value.userValues]);
-        existingUsers.removeUserValue(user);
+    public removeAbstractUser(userId: string) {
+        const existingUsers = new UserListValue(new Map<string, UserValue>(this.dataField.value.userValues));
+        existingUsers.removeUserValue(userId);
         this.dataField.value = existingUsers;
     }
 

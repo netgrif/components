@@ -263,6 +263,7 @@
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Type} from &#x27;@angular/core&#x27;;
 import {Observable, ReplaySubject} from &#x27;rxjs&#x27;;
+import {Filter} from &quot;../filter/models/filter&quot;;
 
 /**
  * Stores information about content of one opened tab in tab view.
@@ -370,6 +371,8 @@ export interface InjectedTabData {
      * stream emits when the tab is closed by any means except for the destruction of the parent component
      */
     tabClosed$: Observable&lt;void&gt;;
+
+    loadFilter?: Filter;
 }
 
 

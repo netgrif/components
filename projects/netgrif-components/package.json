@@ -1,6 +1,6 @@
 {
     "name": "@netgrif/components",
-    "version": "6.3.0-beta.4",
+    "version": "6.3.0-rc.9",
     "description": "Netgrif Application Engine frontend Angular components",
     "homepage": "https://components.netgrif.com",
     "license": "SEE LICENSE IN LICENSE",
@@ -29,7 +29,7 @@
         "nae frontend"
     ],
     "peerDependencies": {
-        "@netgrif/components-core": "6.3.0-beta.4",
+        "@netgrif/components-core": "6.3.0-rc.9",
         "@angular-material-components/datetime-picker": "~7.0.1",
         "@angular-material-components/moment-adapter": "~7.0.0",
         "@angular/animations": "~13.3.1",
@@ -53,7 +53,7 @@
         "hammerjs": "~2.0.8",
         "json-schema-to-typescript": "~8.1.0",
         "jszip": "~3.2.2",
-        "moment": "~2.24.0",
+        "moment": "~2.29.4",
         "natural-orderby": "~2.0.3",
         "rxjs": "~6.6.0",
         "zone.js": "~0.11.4"
