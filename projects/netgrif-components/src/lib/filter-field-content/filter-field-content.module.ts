@@ -19,7 +19,8 @@ import {PanelComponentModule} from "../panel/panel.module";
     ],
     exports: [
         FilterFieldTabViewComponent,
-        FilterFieldTabbedCaseViewComponent
+        FilterFieldTabbedCaseViewComponent,
+        FilterFieldTabbedTaskViewComponent
     ],
     imports: [
         CommonModule,

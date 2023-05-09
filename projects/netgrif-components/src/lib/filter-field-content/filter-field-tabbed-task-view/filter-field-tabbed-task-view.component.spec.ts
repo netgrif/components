@@ -5,6 +5,7 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
 import {FilterFieldTabbedTaskViewComponent} from "./filter-field-tabbed-task-view.component";
 import {NavigationComponentModule} from "../../navigation/navigation.module";
+import {HeaderComponent} from "../../header/header.component";
 
 describe('FilterFieldTabbedTaskViewComponent', () => {
     let component: FilterFieldTabbedTaskViewComponent;
@@ -12,6 +13,7 @@ describe('FilterFieldTabbedTaskViewComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
+            declarations: [ FilterFieldTabbedTaskViewComponent, HeaderComponent],
             imports: [
                 NavigationComponentModule,
                 TestMockDependenciesModule,

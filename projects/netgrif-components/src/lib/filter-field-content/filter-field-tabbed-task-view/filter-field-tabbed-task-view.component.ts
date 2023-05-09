@@ -1,19 +1,21 @@
 import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
-import {HeaderComponent} from "../../header/header.component";
 import {
+    NAE_TAB_DATA,
+    TaskViewService,
     AbstractTabbedTaskViewComponent,
+    InjectedTabbedTaskViewData,
+    CategoryFactory,
+    SearchService,
+    NAE_BASE_FILTER,
     AllowedNetsService,
     AllowedNetsServiceFactory,
-    CategoryFactory,
+    ViewIdService,
+    NAE_TASK_VIEW_CONFIGURATION,
     ChangedFieldsService,
-    InjectedTabbedTaskViewData,
-    NAE_BASE_FILTER,
-    NAE_TAB_DATA, NAE_TASK_VIEW_CONFIGURATION,
-    SearchService,
-    tabbedAllowedNetsServiceFactory, tabbedTaskViewConfigurationFactory,
-    TaskViewService,
-    ViewIdService
-} from "@netgrif/components-core";
+    tabbedTaskViewConfigurationFactory,
+    tabbedAllowedNetsServiceFactory
+} from '@netgrif/components-core';
+import {HeaderComponent} from "../../header/header.component";
 
 function baseFilterFactory(injectedTabData: InjectedTabbedTaskViewData) {
     return {
@@ -30,7 +32,7 @@ function baseFilterFactory(injectedTabData: InjectedTabbedTaskViewData) {
         TaskViewService,
         SearchService,
         ChangedFieldsService,
-        {provide: ViewIdService, useValue: null},
+        {   provide: ViewIdService, useValue: null},
         {
             provide: NAE_BASE_FILTER,
             useFactory: baseFilterFactory,
