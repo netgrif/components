@@ -922,7 +922,7 @@ export class Substring extends Operator&lt;string&gt; {
         // TODO IMPROVEMENT 27.4.2020 - we could use regular expressions to search for substrings which would solve the unintuitive
         //  behavior that occurs when we search for strings that contain spaces. We need to escape the input string in a special way
         //  if we choose to do this
-        const escapedValue &#x3D; Operator.escapeInput(args[0]).value.replace(&#x27; &#x27;, &#x27;\\ &#x27;);
+        const escapedValue &#x3D; Operator.escapeInput(args[0]).value.replace(/ /g, &#x27;\\ &#x27;);
         return Operator.forEachKeyword(elasticKeywords, keyword &#x3D;&gt; new Query(&#x60;(${keyword}:*${escapedValue}*)&#x60;));
     }
 
