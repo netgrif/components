@@ -1,4 +1,4 @@
-import { Component, Inject, Type } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import {
     DashboardPortalComponentRegistryService,
     AbstractFilterFieldTabViewComponent,
@@ -6,11 +6,11 @@ import {
     FilterField
 } from '@netgrif/components-core';
 import {
-    DefaultTabbedTaskViewComponent
-} from '../../navigation/group-navigation-component-resolver/default-components/default-tabbed-task-view/default-tabbed-task-view.component';
-import {
     FilterFieldTabbedCaseViewComponent
 } from '../filter-field-tabbed-case-view/filter-field-tabbed-case-view.component';
+import {
+    FilterFieldTabbedTaskViewComponent
+} from "../filter-field-tabbed-task-view/filter-field-tabbed-task-view.component";
 
 @Component({
   selector: 'nc-filter-field-tab-view',
@@ -21,6 +21,6 @@ export class FilterFieldTabViewComponent extends AbstractFilterFieldTabViewCompo
 
     constructor(registry: DashboardPortalComponentRegistryService,
                 @Inject(NAE_FILTER_FIELD) filterField: FilterField) {
-        super(registry, filterField, FilterFieldTabbedCaseViewComponent, DefaultTabbedTaskViewComponent);
+        super(registry, filterField, FilterFieldTabbedCaseViewComponent, FilterFieldTabbedTaskViewComponent);
     }
 }

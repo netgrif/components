@@ -8,15 +8,19 @@ import { MaterialModule } from '@netgrif/components-core';
 import { SearchComponentModule } from '../search/search.module';
 import { CaseViewComponentModule } from '../view/case-view/case-view.module';
 import { HeaderComponentModule } from '../header/header.module';
+import { FilterFieldTabbedTaskViewComponent } from './filter-field-tabbed-task-view/filter-field-tabbed-task-view.component';
+import {PanelComponentModule} from "../panel/panel.module";
 
 @NgModule({
     declarations: [
         FilterFieldTabViewComponent,
-        FilterFieldTabbedCaseViewComponent
+        FilterFieldTabbedCaseViewComponent,
+        FilterFieldTabbedTaskViewComponent
     ],
     exports: [
         FilterFieldTabViewComponent,
-        FilterFieldTabbedCaseViewComponent
+        FilterFieldTabbedCaseViewComponent,
+        FilterFieldTabbedTaskViewComponent
     ],
     imports: [
         CommonModule,
@@ -25,7 +29,8 @@ import { HeaderComponentModule } from '../header/header.module';
         FlexModule,
         SearchComponentModule,
         CaseViewComponentModule,
-        HeaderComponentModule
+        HeaderComponentModule,
+        PanelComponentModule
     ]
 })
 export class FilterFieldContentModule { }
