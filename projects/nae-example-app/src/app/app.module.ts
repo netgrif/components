@@ -17,7 +17,8 @@ import {
     SnackBarModule,
     SnackBarVerticalPosition,
     ViewService,
-    ProfileModule
+    ProfileModule,
+    Dashboard
 } from '@netgrif/components-core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -85,7 +86,9 @@ import {
     ToolbarComponentModule,
     TreeCaseViewComponentModule,
     WorkflowViewComponentModule,
-    FilterFieldTabViewComponent, FilterFieldTabbedCaseViewComponent, DefaultTabbedTaskViewComponent
+    FilterFieldTabViewComponent,
+    FilterFieldTabbedCaseViewComponent,
+    FilterFieldTabbedTaskViewComponent
 } from '@netgrif/components';
 import {UserInviteComponent} from './doc/user-invite/user-invite.component';
 import {ExamplePortalCardComponent} from './doc/dashboard-example/piechart-card/example-portal-card.component';
@@ -124,9 +127,6 @@ import {
 } from './doc/single-tabbed-view/single-tabbed-task-view/single-tabbed-task-view.component';
 import {ImpersonationDemoComponent} from './doc/impersonation-demo/impersonation-demo.component';
 import { ChangePasswordComponent } from './doc/forms/change-password/change-password.component';
-import {
-    Dashboard
-} from '../../../netgrif-components-core/src/lib/data-fields/text-field/dashboard-portal-text-field/dashboard-view-constants';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -264,6 +264,6 @@ export class AppModule {
         registry.register('tab-view', (injector: Injector) => new ComponentPortal(TabbedViewsExampleComponent, null, injector));
         registry.register(Dashboard.FILTER_TAB_VIEW_ID, (injector: Injector) => new ComponentPortal(FilterFieldTabViewComponent, null, injector));
         registry.registerType(Dashboard.FILTER_CASE_VIEW_ID, FilterFieldTabbedCaseViewComponent);
-        registry.registerType(Dashboard.FILTER_TASK_VIEW_ID, DefaultTabbedTaskViewComponent);
+        registry.registerType(Dashboard.FILTER_TASK_VIEW_ID, FilterFieldTabbedTaskViewComponent);
     }
 }
