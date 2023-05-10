@@ -39,7 +39,7 @@ export const MENU_IDENTIFIERS = [
     'preference_item',
 ];
 export const VIEW_TRANSITION_ID = 'view_settings';
-export const FOLDER_TRANSITION_ID = 'view_settings';
+export const FOLDER_TRANSITION_ID = 'folder_settings';
 export const VIEW_DEFAULT_HEADERS_ID = 'default_headers';
 
 const LEFT_DRAWER_DEFAULT_WIDTH = 60;
