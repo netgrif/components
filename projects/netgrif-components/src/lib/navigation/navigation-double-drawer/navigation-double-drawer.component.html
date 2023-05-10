@@ -67,7 +67,7 @@
             </div>
 
             <mat-menu #railMenu="matMenu">
-                <button *ngFor='let item of moreMenuItems; trackBy: viewsTrackBy' mat-menu-item
+                <button *ngFor='let item of moreMenuItems; trackBy: itemsTrackBy' mat-menu-item
                         [routerLink]='item.routing.path' routerLinkActive="active">
                     <mat-icon>{{item.navigation.icon}}</mat-icon>
                     <span>{{item.navigation.title}}</span>
@@ -161,7 +161,7 @@
              [routerLink]="imageRouterLink !== undefined ? imageRouterLink : []">
     </div>
     <div *ngIf="(rightLoading$ | async) === false" ngClass.gt-sm="padding-top-8">
-        <div class="margin-auto cursor-pointer" *ngIf='rightNodes | isNonEmpty' (click)="toggleSection('folders')"
+        <div class="margin-auto cursor-pointer" *ngIf='folders | isNonEmpty' (click)="toggleSection('folders')"
              fxLayout="row" fxFlexAlign="start center">
             <span class="headline-text mat-typography">{{foldersCategoryName | translate}}</span>
             <div fxFlex></div>
@@ -169,16 +169,16 @@
                   class="expansion-indicator mat-typography"></span>
         </div>
         <div [@sectionExpansion]="isSectionOpen.folders ? 'expanded' : 'collapsed'" class="box-container">
-            <div *ngFor='let node of rightNodes; trackBy: uriNodeTrackBy' (click)="onNodeClick(node)"
+            <div *ngFor='let folder of folders; trackBy: itemsTrackBy' (click)="onNodeClick(folder)"
                  class="tree-node mat-typography mat-body-2" fxLayoutAlign="start center" routerLinkActive="active">
                 <mat-icon class="tree-node-icon">folder</mat-icon>
-                <span>{{node.name}}</span>
+                <span>{{folder.name}} xxx</span>
                 <span class="menu-item-focus-overlay"></span>
             </div>
         </div>
 
         <div class="margin-auto" *ngIf='views | isNonEmpty' fxLayout="column" fxFlexAlign="center start">
-            <div *ngIf="rightNodes | isNonEmpty" class="line margin-bottom-x2">
+            <div *ngIf="folders | isNonEmpty" class="line margin-bottom-x2">
                 <mat-divider></mat-divider>
             </div>
             <div class="cursor-pointer" (click)="toggleSection('views')" fxLayout="row" fxFlexAlign="start center"
@@ -190,7 +190,7 @@
             </div>
         </div>
         <div [@sectionExpansion]="isSectionOpen.views ? 'expanded' : 'collapsed'" class="box-container">
-            <div *ngFor='let view of views; trackBy: viewsTrackBy' class="tree-node mat-typography"
+            <div *ngFor='let view of views; trackBy: itemsTrackBy' class="tree-node mat-typography"
                  fxLayoutAlign="start center" [routerLink]='view.routing.path' routerLinkActive="active"
                  (click)="onViewClick(view)">
                 <mat-icon class="tree-node-icon">{{view.navigation.icon}}</mat-icon>

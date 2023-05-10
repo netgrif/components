@@ -30,17 +30,17 @@ export interface ConfigDoubleMenu {
     width: number;
 }
 
-export interface ViewNavigationItem extends View {
+export interface NavigationItem extends View {
     id: string;
     resource?: Case;
 }
 
-export const FILTER_IDENTIFIERS = [
-    'preference_filter_item',
+export const MENU_IDENTIFIERS = [
+    'preference_item',
 ];
-export const FILTER_VIEW_TASK_TRANSITION_ID = 'view';
-
-export const FILTER_DEFAULT_HEADERS_ID = 'default_headers';
+export const VIEW_TRANSITION_ID = 'view_settings';
+export const FOLDER_TRANSITION_ID = 'view_settings';
+export const VIEW_DEFAULT_HEADERS_ID = 'default_headers';
 
 const LEFT_DRAWER_DEFAULT_WIDTH = 60;
 const RIGHT_DRAWER_DEFAULT_WIDTH = 240;
@@ -80,12 +80,14 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
      * */
     rightNodes: Array<UriNodeResource>;
 
+    folders: Array<NavigationItem>
+
     /**
      * Processes that can be displayed under folders on right side menu
      * */
-    views: Array<ViewNavigationItem>;
+    views: Array<NavigationItem>;
 
-    moreMenuItems: Array<ViewNavigationItem>;
+    moreMenuItems: Array<NavigationItem>;
 
     protected _leftNodesSubscription: Subscription;
     protected _rightNodesSubscription: Subscription;
@@ -117,7 +119,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         width: RIGHT_DRAWER_DEFAULT_WIDTH,
     };
 
-    protected _childCustomViews: { [uri: string]: { [key: string]: ViewNavigationItem } };
+    protected _childCustomViews: { [uri: string]: { [key: string]: NavigationItem } };
 
     protected constructor(protected _router: Router,
                           protected _activatedRoute: ActivatedRoute,
@@ -133,12 +135,12 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                           protected _dynamicRoutingService: DynamicNavigationRouteProviderService) {
         this.leftNodes = new Array<UriNodeResource>();
         this.rightNodes = new Array<UriNodeResource>();
-        this.views = new Array<ViewNavigationItem>();
+        this.views = new Array<NavigationItem>();
         this.leftLoading$ = new LoadingEmitter();
         this.rightLoading$ = new LoadingEmitter();
         this.nodeLoading$ = new LoadingEmitter();
         this._childCustomViews = {};
-        this.moreMenuItems = new Array<ViewNavigationItem>();
+        this.moreMenuItems = new Array<NavigationItem>();
     }
 
     ngOnInit(): void {
@@ -343,7 +345,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         this.currentNode = node;
     }
 
-    onViewClick(view: ViewNavigationItem): void {
+    onViewClick(view: NavigationItem): void {
         this._uriService.activeNode = this._currentNode;
     }
 
@@ -366,21 +368,18 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
 
     protected loadRightSide() {
         this.rightLoading$.on();
-        this._uriService.getCasesOfNode(this.currentNode, FILTER_IDENTIFIERS, 0, 1).subscribe(page => {
-            this._log.debug('Number of filters for uri ' + this._currentNode.uriPath + ': ' + page?.pagination?.totalElements);
-            forkJoin({
-                folders: this._uriService.getChildNodes(this._currentNode),
-                filters: page?.pagination?.totalElements === 0 ? of([]) : this._uriService.getCasesOfNode(this._currentNode, FILTER_IDENTIFIERS, 0, page.pagination.totalElements).pipe(
-                    map(p => p.content),
-                ),
-            }).subscribe(result => {
-                this.rightNodes = result.folders instanceof Array ? result.folders : [];
-                this.rightNodes.sort((a, b) => this.compareStrings(a.name, b.name));
-                this.views = (result.filters instanceof Array ? result.filters : []).map(f => this.resolveFilterCaseToViewNavigationItem(f)).filter(i => !!i);
+        this._uriService.getCasesOfNode(this.currentNode, MENU_IDENTIFIERS, 0, 1).subscribe(page => {
+            this._log.debug('Number of items for uri ' + this._currentNode.uriPath + ': ' + page?.pagination?.totalElements);
+            page?.pagination?.totalElements === 0 ? of([]) : this._uriService.getCasesOfNode(this._currentNode, MENU_IDENTIFIERS, 0, page.pagination.totalElements).pipe(
+                map(p => p.content),
+            ).subscribe(result => {
+                this.folders = result.filter(folder => folder.immediateData.find(f => f.stringId === 'type')?.value == "folder").map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i);
+                this.views = result.filter(folder => folder.immediateData.find(f => f.stringId === 'type')?.value == "view").map(view => this.resolveItemCaseToNavigationItem(view)).filter(i => !!i);
                 if (!!this._childCustomViews[this._currentNode.uriPath]) {
                     this.views.push(...Object.values(this._childCustomViews[this._currentNode.uriPath]));
                 }
                 // @ts-ignore
+                // this.folders.sort((a, b) => this.compareStrings(a?.navigation?.title, b?.navigation?.title));
                 this.views.sort((a, b) => this.compareStrings(a?.navigation?.title, b?.navigation?.title));
                 this.rightLoading$.off();
             }, error => {
@@ -397,21 +396,21 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         });
     }
 
-    protected resolveFilterCaseToViewNavigationItem(filter: Case): ViewNavigationItem | undefined {
-        const item: ViewNavigationItem = {
+    protected resolveItemCaseToNavigationItem(itemCase: Case): NavigationItem | undefined {
+        const item: NavigationItem = {
             access: {},
             navigation: {
-                icon: filter.immediateData.find(f => f.stringId === 'icon_name')?.value || this.filterIcon,
-                title: filter.immediateData.find(f => f.stringId === 'entry_name')?.value?.defaultValue || filter.title,
+                icon: itemCase.immediateData.find(f => f.stringId === 'icon')?.value || this.filterIcon,
+                title: itemCase.immediateData.find(f => f.stringId === 'name')?.value?.defaultValue || itemCase.title,
             },
             routing: {
-                path: this.getFilterRoutingPath(filter),
+                path: this.getItemRoutingPath(itemCase),
             },
-            id: filter.stringId,
-            resource: filter,
+            id: itemCase.stringId,
+            resource: itemCase,
         };
-        const resolvedRoles = this.resolveAccessRoles(filter, 'allowed_roles');
-        const resolvedBannedRoles = this.resolveAccessRoles(filter, 'banned_roles');
+        const resolvedRoles = this.resolveAccessRoles(itemCase, 'allowed_roles');
+        const resolvedBannedRoles = this.resolveAccessRoles(itemCase, 'banned_roles');
         if (!!resolvedRoles) item.access['role'] = resolvedRoles;
         if (!!resolvedBannedRoles) item.access['bannedRole'] = resolvedBannedRoles;
         if (!this._accessService.canAccessView(item, item.routingPath)) return;
@@ -432,10 +431,11 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         return roles;
     }
 
-    protected getFilterRoutingPath(filterCase: Case) {
-        const viewTaskId = filterCase.tasks.find(taskPair => taskPair.transition === FILTER_VIEW_TASK_TRANSITION_ID).task;
+    protected getItemRoutingPath(itemCase: Case) {
+        const transId = itemCase.immediateData.find(f => f.stringId === 'type').value == "folder" ? FOLDER_TRANSITION_ID : VIEW_TRANSITION_ID;
+        const taskId = itemCase.tasks.find(taskPair => taskPair.transition === transId).task;
         const url = this._dynamicRoutingService.route;
-        return `/${url}/${viewTaskId}`;
+        return `/${url}/${taskId}`;
     }
 
     protected compareStrings(a: string, b: string): number {
@@ -468,8 +468,8 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         return node.id;
     }
 
-    viewsTrackBy(index: number, view: ViewNavigationItem) {
-        return view.id;
+    itemsTrackBy(index: number, item: NavigationItem) {
+        return item.id;
     }
 
     onResizeEvent(event: ResizeEvent): void {
