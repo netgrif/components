@@ -114,20 +114,12 @@
 </mat-sidenav-container>
 
 <ng-template #defaultLeftSide>
-    <!--    <div fxLayout="row" class="icon-container" fxLayoutAlign="center center"-->
-    <!--         (click)='onHomeClick()'>-->
-    <!--        <mat-icon class="icon-large" [matTooltip]="'Home'" [matTooltipPosition]="'right'">home</mat-icon>-->
-    <!--    </div>-->
     <button mat-icon-button (click)="onHomeClick()" class="mat-button mat-typography menu-font-color"
             [matTooltip]="'toolbar.menu.home' | translate"
             matTooltipPosition="right">
         <mat-icon>home</mat-icon>
     </button>
 
-    <!--    <div *ngIf='!isOnZeroLevel()' fxLayout="row" class="icon-container" fxLayoutAlign="center center"-->
-    <!--         (click)='onBackClick()'>-->
-    <!--        <mat-icon class="icon-large" [matTooltip]="'Back'" [matTooltipPosition]="'right'">arrow_back</mat-icon>-->
-    <!--    </div>-->
     <button *ngIf='!isOnZeroLevel() && (canGoBackLoading$ | async) === false' mat-icon-button (click)="onBackClick()"
             class="mat-button mat-typography menu-font-color" [matTooltip]="'toolbar.menu.back' | translate"
             matTooltipPosition="right">
@@ -138,16 +130,11 @@
     </div>
 
     <div class="margin-top-x2"></div>
-    <!--    <div *ngFor='let node of leftNodes; trackBy: uriNodeTrackBy' fxLayout="row" class="icon-container"-->
-    <!--         fxLayoutAlign="center center"-->
-    <!--         (click)='onLeftSideClick(node)'>-->
-    <!--        <mat-icon class="icon-large" [matTooltip]="node.name"-->
-    <!--                  [matTooltipPosition]="'right'">{{node.id === currentNode.id ? 'folder_open' : 'folder'}}</mat-icon>-->
-    <!--    </div>-->
-    <button *ngFor='let node of leftNodes; trackBy: uriNodeTrackBy' mat-icon-button (click)="onNodeClick(node)"
-            class="mat-button mat-typography menu-font-color" [matTooltip]="node.name" [matTooltipPosition]="'right'"
-            [ngClass]="node.id === currentNode.id ? 'rail-selected-color' : ''">
-        <mat-icon>{{node.id === currentNode.id ? openedFolderIcon : folderIcon}}</mat-icon>
+
+    <button *ngFor='let folder of leftFolders; trackBy: itemsTrackBy' mat-icon-button (click)="onFolderClick(folder)"
+            class="mat-button mat-typography menu-font-color" [matTooltip]="folder.navigation.title" [matTooltipPosition]="'right'"
+            [ngClass]="isItemAndNodeEqual(folder, currentNode) ? 'rail-selected-color' : ''">
+        <mat-icon>{{isItemAndNodeEqual(folder, currentNode) ? openedFolderIcon : folderIcon}}</mat-icon>
     </button>
 
     <div *ngIf="(leftLoading$ | async)" fxLayout="column" fxLayoutAlign="center center" class="margin-top-default">
@@ -161,7 +148,7 @@
              [routerLink]="imageRouterLink !== undefined ? imageRouterLink : []">
     </div>
     <div *ngIf="(rightLoading$ | async) === false" ngClass.gt-sm="padding-top-8">
-        <div class="margin-auto cursor-pointer" *ngIf='folders | isNonEmpty' (click)="toggleSection('folders')"
+        <div class="margin-auto cursor-pointer" *ngIf='rightFolders | isNonEmpty' (click)="toggleSection('folders')"
              fxLayout="row" fxFlexAlign="start center">
             <span class="headline-text mat-typography">{{foldersCategoryName | translate}}</span>
             <div fxFlex></div>
@@ -169,16 +156,16 @@
                   class="expansion-indicator mat-typography"></span>
         </div>
         <div [@sectionExpansion]="isSectionOpen.folders ? 'expanded' : 'collapsed'" class="box-container">
-            <div *ngFor='let folder of folders; trackBy: itemsTrackBy' (click)="onNodeClick(folder)"
+            <div *ngFor='let folder of rightFolders; trackBy: itemsTrackBy' (click)="onFolderClick(folder)"
                  class="tree-node mat-typography mat-body-2" fxLayoutAlign="start center" routerLinkActive="active">
                 <mat-icon class="tree-node-icon">folder</mat-icon>
-                <span>{{folder.name}} xxx</span>
+                <span>{{folder.navigation.title}}</span>
                 <span class="menu-item-focus-overlay"></span>
             </div>
         </div>
 
         <div class="margin-auto" *ngIf='views | isNonEmpty' fxLayout="column" fxFlexAlign="center start">
-            <div *ngIf="folders | isNonEmpty" class="line margin-bottom-x2">
+            <div *ngIf="rightFolders | isNonEmpty" class="line margin-bottom-x2">
                 <mat-divider></mat-divider>
             </div>
             <div class="cursor-pointer" (click)="toggleSection('views')" fxLayout="row" fxFlexAlign="start center"

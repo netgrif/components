@@ -22,9 +22,9 @@ export function extractIconAndTitle(dataSection: Array<DataGroup>): GroupNavigat
     const nameField = getFieldFromDataGroups(dataSection, GroupNavigationConstants.NAVIGATION_ENTRY_TITLE_FIELD_ID_SUFFIX);
 
     if (nameField === undefined) {
-        throw new Error('Navigation entry name could not be resolved');
+        throw new Error('Navigation name could not be resolved');
     }
-    result.name = nameField.value;
+    result.name = nameField.value.defaultValue;
 
     const useIcon = getFieldFromDataGroups(dataSection, GroupNavigationConstants.NAVIGATION_ENTRY_ICON_ENABLED_FIELD_ID_SUFFIX);
     if (useIcon !== undefined && useIcon.value) {

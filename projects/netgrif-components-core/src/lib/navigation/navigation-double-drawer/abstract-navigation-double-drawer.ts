@@ -3,7 +3,7 @@ import {Component, Input, OnDestroy, OnInit, TemplateRef} from '@angular/core';
 import {MatDrawerMode} from '@angular/material/sidenav';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ResizeEvent} from 'angular-resizable-element';
-import {forkJoin, Observable, of, Subscription} from 'rxjs';
+import {Observable, of, Subscription} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {RoleAccess, View} from '../../../commons/schema';
 import {AccessService} from '../../authorization/permission/access.service';
@@ -71,16 +71,14 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     @Input() viewsCategoryName: string = 'toolbar.menu.views';
 
     /**
-     * Array of folder nodes on left side
+     * List of folders displayed on the left side of menu
      * */
-    leftNodes: Array<UriNodeResource>;
+    leftFolders: Array<NavigationItem>
 
     /**
-     * Array of folder nodes on right side
+     * List of folders displayed on the right side of menu
      * */
-    rightNodes: Array<UriNodeResource>;
-
-    folders: Array<NavigationItem>
+    rightFolders: Array<NavigationItem>
 
     /**
      * Processes that can be displayed under folders on right side menu
@@ -89,11 +87,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
 
     moreMenuItems: Array<NavigationItem>;
 
-    protected _leftNodesSubscription: Subscription;
-    protected _rightNodesSubscription: Subscription;
-    protected _filtersSubscription: Subscription;
     protected _breakpointSubscription: Subscription;
-    protected _rootSubscription: Subscription;
     protected _currentNodeSubscription: Subscription;
 
     /**
@@ -133,8 +127,8 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                           protected _impersonationUserSelect: ImpersonationUserSelectService,
                           protected _impersonation: ImpersonationService,
                           protected _dynamicRoutingService: DynamicNavigationRouteProviderService) {
-        this.leftNodes = new Array<UriNodeResource>();
-        this.rightNodes = new Array<UriNodeResource>();
+        this.leftFolders = new Array<NavigationItem>();
+        this.rightFolders = new Array<NavigationItem>();
         this.views = new Array<NavigationItem>();
         this.leftLoading$ = new LoadingEmitter();
         this.rightLoading$ = new LoadingEmitter();
@@ -197,11 +191,11 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             this.rightLoading$.off();
         }
         if (this._uriService.isRoot(node)) {
-            this.leftNodes = [];
+            this.leftFolders = [];
             this.loadRightSide();
             return;
         }
-        if (!this.leftNodes.find(n => n.id === node.id)) {
+        if (!this.leftFolders.find(item => item.resource.immediateData.find(f => f.stringId === 'nodePath')?.value === node.uriPath)) {
             this.loadLeftSide();
         }
         this.loadRightSide();
@@ -233,10 +227,6 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
 
     ngOnDestroy(): void {
         this._breakpointSubscription?.unsubscribe();
-        this._leftNodesSubscription?.unsubscribe();
-        this._rightNodesSubscription?.unsubscribe();
-        this._filtersSubscription?.unsubscribe();
-        this._rootSubscription?.unsubscribe();
         this._currentNodeSubscription?.unsubscribe();
         this.leftLoading$.complete();
         this.rightLoading$.complete();
@@ -341,27 +331,43 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         this.currentNode = this._currentNode.parent;
     }
 
-    onNodeClick(node: UriNodeResource): void {
-        this.currentNode = node;
+    onFolderClick(folder: NavigationItem): void {
+        const path = folder.resource.immediateData.find(f => f.stringId === 'nodePath')?.value
+        this._uriService.getNodeByPath(path).subscribe(node => {
+            this.currentNode = node
+        }, error => {
+            this._log.error(error);
+        });
     }
 
     onViewClick(view: NavigationItem): void {
         this._uriService.activeNode = this._currentNode;
     }
 
+    isItemAndNodeEqual(item: NavigationItem, node: UriNodeResource): boolean {
+        return item.resource.immediateData.find(f => f.stringId === 'nodePath')?.value === node.uriPath
+    }
+
     protected loadLeftSide() {
         if (this._uriService.isRoot(this._currentNode)) {
-            this.leftNodes = [];
+            this.leftFolders = [];
             return;
         }
         this.leftLoading$.on();
-        this._leftNodesSubscription = this._uriService.getSiblingsOfNode(this._currentNode).subscribe(nodes => {
-            this.leftNodes = nodes instanceof Array ? nodes : [];
-            this.leftNodes.sort((a, b) => this.compareStrings(a.name, b.name));
-            this.leftLoading$.off();
+        this._uriService.getCasesOfNode(this.currentNode.parent, MENU_IDENTIFIERS, 0, 1).subscribe(page => {
+            page?.pagination?.totalElements === 0 ? of([]) : this._uriService.getCasesOfNode(this.currentNode.parent, MENU_IDENTIFIERS, 0, page.pagination.totalElements).pipe(
+                map(p => p.content),
+            ).subscribe(result => {
+                this.leftFolders = result.filter(folder => folder.immediateData.find(f => f.stringId === 'type')?.value == "folder").map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i);
+                this.leftLoading$.off();
+            }, error => {
+                this._log.error(error);
+                this.leftFolders = [];
+                this.leftLoading$.off();
+            });
         }, error => {
             this._log.error(error);
-            this.leftNodes = [];
+            this.leftFolders = [];
             this.leftLoading$.off();
         });
     }
@@ -373,24 +379,24 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             page?.pagination?.totalElements === 0 ? of([]) : this._uriService.getCasesOfNode(this._currentNode, MENU_IDENTIFIERS, 0, page.pagination.totalElements).pipe(
                 map(p => p.content),
             ).subscribe(result => {
-                this.folders = result.filter(folder => folder.immediateData.find(f => f.stringId === 'type')?.value == "folder").map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i);
+                this.rightFolders = result.filter(folder => folder.immediateData.find(f => f.stringId === 'type')?.value == "folder").map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i);
                 this.views = result.filter(folder => folder.immediateData.find(f => f.stringId === 'type')?.value == "view").map(view => this.resolveItemCaseToNavigationItem(view)).filter(i => !!i);
                 if (!!this._childCustomViews[this._currentNode.uriPath]) {
                     this.views.push(...Object.values(this._childCustomViews[this._currentNode.uriPath]));
                 }
                 // @ts-ignore
-                // this.folders.sort((a, b) => this.compareStrings(a?.navigation?.title, b?.navigation?.title));
+                // this.rightFolders.sort((a, b) => this.compareStrings(a?.navigation?.title, b?.navigation?.title));
                 this.views.sort((a, b) => this.compareStrings(a?.navigation?.title, b?.navigation?.title));
                 this.rightLoading$.off();
             }, error => {
                 this._log.error(error);
-                this.rightNodes = [];
+                this.rightFolders = [];
                 this.views = [];
                 this.rightLoading$.off();
             });
         }, error => {
             this._log.error(error);
-            this.rightNodes = [];
+            this.rightFolders = [];
             this.views = [];
             this.rightLoading$.off();
         });
@@ -452,12 +458,12 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         return !!this._currentNode?.level ? this._currentNode.level == 0 : true;
     }
 
-    isLeftNodesEmpty(): boolean {
-        return this.leftNodes === undefined || this.leftNodes.length === 0;
+    isLeftFoldersEmpty(): boolean {
+        return this.leftFolders === undefined || this.leftFolders.length === 0;
     }
 
-    isRightNodesEmpty(): boolean {
-        return this.rightNodes === undefined || this.rightNodes.length === 0;
+    isRightFoldersEmpty(): boolean {
+        return this.rightFolders === undefined || this.rightFolders.length === 0;
     }
 
     isViewsEmpty(): boolean {

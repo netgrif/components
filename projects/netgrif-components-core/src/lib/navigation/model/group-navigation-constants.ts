@@ -8,18 +8,15 @@ export enum GroupNavigationConstants {
      */
     GROUP_NAVIGATION_ROUTER_PARAM = 'filterCaseId',
     /**
-     * Suffix of the field id that contains the name of the navigation entry.
-     * Since the field itself is inserted via task ref the actual id is prefixed by the task id.
+     * Field id, that contains the name of the navigation item.
      */
-    NAVIGATION_ENTRY_TITLE_FIELD_ID_SUFFIX = 'entry_name',
+    NAVIGATION_ENTRY_TITLE_FIELD_ID_SUFFIX = 'name',
     /**
-     * Suffix of the boolean field id that determines if the navigation entry defines an icon.
-     * Since the field itself is inserted via task ref the actual id is prefixed by the task id.
+     * Boolean field id, that determines if the navigation defines an icon.
      */
     NAVIGATION_ENTRY_ICON_ENABLED_FIELD_ID_SUFFIX = 'use_icon',
     /**
-     * Suffix of the text field id that contains the id of the used material icon.
-     * Since the field itself is inserted via task ref the actual id is prefixed by the task id.
+     * Text field id, that contains the id of the used material icon.
      */
     NAVIGATION_ENTRY_ICON_FIELD_ID_SUFFIX = 'icon',
 }
