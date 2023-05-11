@@ -244,9 +244,9 @@ class MyTaskResources {
             users: {},
             startDate: undefined,
             finishDate: undefined,
-            assignPolicy: AssignPolicy.manual,
-            dataFocusPolicy: DataFocusPolicy.manual,
-            finishPolicy: FinishPolicy.manual,
+            assignPolicy: AssignPolicy.MANUAL,
+            dataFocusPolicy: DataFocusPolicy.MANUAL,
+            finishPolicy: FinishPolicy.MANUAL,
             stringId: 'string',
             layout: {
                 cols: undefined,

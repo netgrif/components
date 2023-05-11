@@ -112,7 +112,7 @@ class MyResources {
             startDate: undefined,
             finishDate: undefined,
             assignPolicy: AssignPolicy.MANUAL,
-            dataFocusPolicy: DataFocusPolicy.manual,
+            dataFocusPolicy: DataFocusPolicy.MANUAL,
             finishPolicy: FinishPolicy.MANUAL,
             stringId: 'string',
             cols: undefined,

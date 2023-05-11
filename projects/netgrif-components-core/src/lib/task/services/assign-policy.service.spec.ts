@@ -80,7 +80,7 @@ describe('AssignPolicyService', () => {
             startDate: undefined,
             finishDate: undefined,
             assignPolicy: AssignPolicy.AUTO,
-            dataFocusPolicy: DataFocusPolicy.manual,
+            dataFocusPolicy: DataFocusPolicy.MANUAL,
             finishPolicy: FinishPolicy.MANUAL,
             stringId: 'string',
             layout: {

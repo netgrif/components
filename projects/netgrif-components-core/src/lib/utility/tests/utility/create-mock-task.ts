@@ -24,7 +24,7 @@ export function createMockTask(stringId = 'stringId',
         startDate: undefined,
         finishDate: undefined,
         assignPolicy: AssignPolicy.MANUAL,
-        dataFocusPolicy: DataFocusPolicy.manual,
+        dataFocusPolicy: DataFocusPolicy.MANUAL,
         finishPolicy: FinishPolicy.MANUAL,
         stringId,
         layout: {

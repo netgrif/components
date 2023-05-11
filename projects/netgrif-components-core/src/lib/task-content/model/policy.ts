@@ -24,6 +24,6 @@ export enum FinishPolicy {
  * value: MANUAL | AUTO_EMPTY_REQUIRED
  */
 export enum DataFocusPolicy {
-    manual = 'MANUAL',
-    autoRequired = 'AUTO_EMPTY_REQUIRED'
+    MANUAL,
+    AUTO_EMPTY_REQUIRED
 }
