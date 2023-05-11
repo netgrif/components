@@ -61,12 +61,12 @@ export class AssignPolicyService extends TaskHandlingService {
             ])
                 .pipe(filter(user => !this._userService.isUserEmpty(user)))
                 .pipe(take(1))
-                .subscribe(user => this.performAssign(taskOpened, afterAction));
+                .subscribe(() => this.performAssign(taskOpened, afterAction));
         }
     }
 
     private performAssign(taskOpened: boolean, afterAction: AfterAction = new AfterAction()): void {
-        if (this._safeTask.assignPolicy === AssignPolicy.auto
+        if (this._safeTask.assignPolicy === AssignPolicy.AUTO
             && this._permissionService.hasTaskPermission(this._safeTask, PermissionType.ASSIGN)) {
             this.autoAssignPolicy(taskOpened, afterAction);
         } else {
@@ -75,7 +75,7 @@ export class AssignPolicyService extends TaskHandlingService {
     }
 
     /**
-     * Performs the actions that correspond to the [Auto Assign Policy]{@link AssignPolicy#auto}.
+     * Performs the actions that correspond to the [Auto Assign Policy]{@link AssignPolicy#AUTO}.
      * @param taskOpened whether the Task was 'opened' (eg. task panel is expanding) or 'closed' (eg. task panel is collapsing)
      * @param afterAction the action that should be performed when the assign policy (and all following policies) finishes
      */
@@ -88,7 +88,7 @@ export class AssignPolicyService extends TaskHandlingService {
     }
 
     /**
-     * Performs the actions that correspond to the [Auto Assign Policy]{@link AssignPolicy#auto}
+     * Performs the actions that correspond to the [Auto Assign Policy]{@link AssignPolicy#AUTO}
      * when a task is 'opening' (eg. task panel is expanding).
      *
      * Assigns the task, reloads the current task page, loads task data and performs the finish policy.
@@ -150,7 +150,7 @@ export class AssignPolicyService extends TaskHandlingService {
     }
 
     /**
-     * Performs the actions that correspond to the [Manual Assign Policy]{@link AssignPolicy#manual}.
+     * Performs the actions that correspond to the [Manual Assign Policy]{@link AssignPolicy#MANUAL}.
      * @param taskOpened whether the Task was 'opened' (eg. task panel is expanding) or 'closed' (eg. task panel is collapsing)
      * @param afterAction the action that should be performed when the assign policy (and all following policies) finishes
      */
@@ -163,7 +163,7 @@ export class AssignPolicyService extends TaskHandlingService {
     }
 
     /**
-     * Performs the actions that correspond to the [Manual Assign Policy]{@link AssignPolicy#manual}
+     * Performs the actions that correspond to the [Manual Assign Policy]{@link AssignPolicy#MANUAL}
      * when a task is 'opening' (eg. task panel is expanding).
      *
      * Loads task data and performs the [finish policy]{@link FinishPolicyService#performFinishPolicy}.

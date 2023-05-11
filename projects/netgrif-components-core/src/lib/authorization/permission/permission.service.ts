@@ -60,7 +60,7 @@ export class PermissionService {
         return !!task
             && (
                 (
-                    task.assignPolicy === AssignPolicy.manual
+                    task.assignPolicy === AssignPolicy.MANUAL
                     && !task.user
                     && this.hasTaskPermission(task, PermissionType.ASSIGN)
                 )
@@ -90,7 +90,7 @@ export class PermissionService {
 
     public canCollapse(task: Task | undefined): boolean {
         return !!task
-            && task.assignPolicy === AssignPolicy.manual;
+            && task.assignPolicy === AssignPolicy.MANUAL;
     }
 
     public checkRolePerms(roles: Permissions, permission: PermissionType): boolean | undefined {

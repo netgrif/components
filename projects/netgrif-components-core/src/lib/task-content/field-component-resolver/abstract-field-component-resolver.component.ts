@@ -51,7 +51,7 @@ export abstract class AbstractFieldComponentResolverComponent {
 
     isCustomHeight(): boolean {
         const component = !!this.gridElement.item?.component ? this.gridElement.item.component : null;
-        return this.gridElement.type === FieldTypeResource.I18N && !!component
+        return this.gridElement.type === FieldTypeResource.I_18_N && !!component
             && (component.name === 'divider'
                 || (!!component.properties && 'plainText' in component.properties && component.properties.plaintText === 'true')
             );

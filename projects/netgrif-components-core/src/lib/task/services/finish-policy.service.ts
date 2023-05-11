@@ -27,7 +27,7 @@ export class FinishPolicyService extends TaskHandlingService {
      * @param afterAction the action that should be performed when the finish policy finishes
      */
     public performFinishPolicy(afterAction: AfterAction = new AfterAction()): void {
-        if (this._safeTask.finishPolicy === FinishPolicy.autoNoData && !!this._safeTask.user) {
+        if (this._safeTask.finishPolicy === FinishPolicy.AUTO_NO_DATA && !!this._safeTask.user) {
             this.autoNoDataFinishPolicy(afterAction);
         } else {
             this.manualFinishPolicy(afterAction);
@@ -35,7 +35,7 @@ export class FinishPolicyService extends TaskHandlingService {
     }
 
     /**
-     * Performs the actions that correspond to the [Auto Finish Policy]{@link FinishPolicy#autoNoData}.
+     * Performs the actions that correspond to the [Auto Finish Policy]{@link FinishPolicy#AUTO_NO_DATA}.
      *
      * If the task has no data performs finish and [closes]{@link TaskOperations#close} the task.
      * Otherwise [opens]{@link TaskOperations#open} it and performs the [data focus policy]{@link DataFocusPolicyService}.
@@ -53,7 +53,7 @@ export class FinishPolicyService extends TaskHandlingService {
     }
 
     /**
-     * Performs the actions that correspond to the [Manual Finish Policy]{@link FinishPolicy#manual}.
+     * Performs the actions that correspond to the [Manual Finish Policy]{@link FinishPolicy#MANUAL}.
      *
      * [Opens]{@link TaskOperations#open} the task and performs the [data focus policy]{@link DataFocusPolicyService}.
      *

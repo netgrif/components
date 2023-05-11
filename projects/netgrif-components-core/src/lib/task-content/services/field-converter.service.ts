@@ -106,7 +106,7 @@ export class FieldConverterService {
             case FieldTypeResource.FILTER:
                 return new FilterField(item.fieldId, item.field.name, item.field.value.value ?? '', item.field.filterMetadata, item.field.allowedNets,
                     item.behavior, item.field.placeholder, item.field.description, item.layout, item.field.validations, item.component, item.parentTaskId);
-            case FieldTypeResource.I18N:
+            case FieldTypeResource.I_18_N:
                 return new I18nField(item.fieldId, item.field.name, item.field.value.value ?? {defaultValue: ''}, item.behavior, item.field.placeholder,
                     item.field.description, item.layout, item.field.validations, item.component);
         }
@@ -140,7 +140,7 @@ export class FieldConverterService {
         } else if (item instanceof FilterField) {
             return FieldTypeResource.FILTER;
         } else if (item instanceof I18nField) {
-            return FieldTypeResource.I18N;
+            return FieldTypeResource.I_18_N;
         }
     }
 
