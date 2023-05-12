@@ -376,9 +376,9 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         this.rightLoading$.on();
         this._uriService.getCasesOfNode(this.currentNode, MENU_IDENTIFIERS, 0, 1).subscribe(page => {
             this._log.debug('Number of items for uri ' + this._currentNode.uriPath + ': ' + page?.pagination?.totalElements);
-            page?.pagination?.totalElements === 0 ? of([]) : this._uriService.getCasesOfNode(this._currentNode, MENU_IDENTIFIERS, 0, page.pagination.totalElements).pipe(
+            (page?.pagination?.totalElements === 0 ? of([]) : this._uriService.getCasesOfNode(this._currentNode, MENU_IDENTIFIERS, 0, page.pagination.totalElements).pipe(
                 map(p => p.content),
-            ).subscribe(result => {
+            )).subscribe(result => {
                 this.rightFolders = result.filter(folder => folder.immediateData.find(f => f.stringId === 'type')?.value == "folder").map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i);
                 this.views = result.filter(folder => folder.immediateData.find(f => f.stringId === 'type')?.value == "view").map(view => this.resolveItemCaseToNavigationItem(view)).filter(i => !!i);
                 if (!!this._childCustomViews[this._currentNode.uriPath]) {
