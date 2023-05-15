@@ -88,7 +88,7 @@ export class FieldConverterService {
                     item.field.value.value.userValues.forEach(u => userListValue.addUserValue(new UserValue(u.id, u.name, u.surname, u.email)));
                 }
                 return new UserListField(item.fieldId, item.field.name, item.behavior, userListValue,
-                    item.field.placeholder, item.field.description, item.layout, item.field.validations, item.component, item.parentTaskId);
+                    item.field.roles, item.field.placeholder, item.field.description, item.layout, item.field.validations, item.component, item.parentTaskId);
             case FieldTypeResource.BUTTON:
                 return new ButtonField(item.fieldId, item.field.name, item.behavior, item.field.value.value as number,
                     item.field.placeholder, item.field.description, item.layout, item.field.validations, item.component, item.parentTaskId);
@@ -291,7 +291,7 @@ export class FieldConverterService {
             return array;
         }
         if (this.resolveType(field) === FieldTypeResource.USER_LIST && !!value) {
-            return new Map(value.map(v => [v.id, v]))
+            return new UserListValue(new Map(value.userValues.map(v => [v.id, v])));
         }
         return value;
     }

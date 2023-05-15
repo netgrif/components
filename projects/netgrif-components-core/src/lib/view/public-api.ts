@@ -34,6 +34,7 @@ export * from './task-view/models/injection-token-task-endpoint';
 export * from './task-view/models/task-view-configuration-injection-token';
 export * from './workflow-view/models/injection-token-workflow-service';
 export * from './tree-case-view/tree-component/model/tree-configuration-injection-token';
+export * from './task-view/models/injection-token-task-force-open';
 
 /* SERVICES */
 export * from './case-view/service/case-view-service';
