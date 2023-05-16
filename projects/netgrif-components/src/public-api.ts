@@ -19,3 +19,4 @@ export * from './lib/user/public-api';
 export * from './lib/view/public-api';
 export * from './lib/legal/public-api';
 export * from './lib/routing/public-api';
+export * from './lib/filter-field-content/public-api';

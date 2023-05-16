@@ -13,7 +13,7 @@ import {FilterType} from '../../filter/models/filter-type';
 import { HttpEventType, HttpParams } from '@angular/common/http';
 import {Page} from '../interface/page';
 import {FieldConverterService} from '../../task-content/services/field-converter.service';
-import {TaskSetDataRequestBody} from '../interface/task-set-data-request-body';
+import {TaskDataSets} from '../interface/task-data-sets';
 import {LoggerService} from '../../logger/services/logger.service';
 import {AbstractResourceService} from '../abstract-endpoint/abstract-resource.service';
 import {DataGroup} from '../interface/data-groups';
@@ -215,14 +215,14 @@ export class TaskResourceService extends AbstractResourceService implements Coun
                 const result = [];
                 dataGroupsArray.forEach(dataGroupResource => {
                     const dataFields: Array<DataField<any>> = [];
-                    if (!dataGroupResource.fields._embedded) {
-                        return; // continue
-                    }
+                    // if (!dataGroupResource.fields._embedded) {
+                    //     return; // continue
+                    // }
                     const fields = [];
-                    Object.keys(dataGroupResource.fields._embedded).forEach(localizedFields => {
-                        fields.push(...dataGroupResource.fields._embedded[localizedFields]);
+                    Object.keys(dataGroupResource.dataRefs).forEach(fieldId => {
+                        fields.push(dataGroupResource.dataRefs[fieldId]);
                     });
-                    fields.sort((a, b) => a.order - b.order);
+                    //fields.sort((a, b) => a.order - b.order);
                     dataFields.push(...fields.map(dataFieldResource => this._fieldConverter.toClass(dataFieldResource)));
                     const dataGroupObject: DataGroup = {
                         fields: dataFields,
@@ -252,7 +252,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      * POST
      */
     // {{baseUrl}}/api/task/:id/data
-    public setData(taskId: string, body: TaskSetDataRequestBody): Observable<EventOutcomeMessageResource> {
+    public setData(taskId: string, body: TaskDataSets): Observable<EventOutcomeMessageResource> {
         return this._resourceProvider.post$('task/' + taskId + '/data', this.SERVER_URL, body)
             .pipe(map(r => this.changeType(r, undefined)));
     }

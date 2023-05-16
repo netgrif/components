@@ -1,7 +1,7 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {CommonModule, CurrencyPipe} from '@angular/common';
-import {AfterViewInit, Component, Inject, Injector, NO_ERRORS_SCHEMA, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, Injector, NO_ERRORS_SCHEMA, Optional, ViewChild} from '@angular/core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {Observable, of, Subject, throwError} from 'rxjs';
 import {map} from 'rxjs/operators';
@@ -61,6 +61,7 @@ import {ChangedFieldsService} from '../../changed-fields/services/changed-fields
 import {createMockCase} from '../../utility/tests/utility/create-mock-case';
 import {createMockNet} from '../../utility/tests/utility/create-mock-net';
 import { OverflowService } from '../../header/services/overflow.service';
+import {NAE_TASK_FORCE_OPEN} from '../../view/task-view/models/injection-token-task-force-open';
 
 describe('AbtsractTaskPanelComponent', () => {
     let component: TestTaskPanelComponent;
@@ -210,11 +211,12 @@ class TestTaskPanelComponent extends AbstractTaskPanelComponent implements After
                 protected _currencyPipe: CurrencyPipe,
                 protected _changedFieldsService: ChangedFieldsService,
                 protected _permissionService: PermissionService,
-                protected _overflowService: OverflowService) {
+                @Optional() overflowService: OverflowService,
+                @Optional() @Inject(NAE_TASK_FORCE_OPEN) protected _taskForceOpen: boolean) {
         super(_taskContentService, _log, _taskViewService, _paperView, _taskEventService, _assignTaskService,
             _delegateTaskService, _cancelTaskService, _finishTaskService, _taskState, _taskDataService,
-            _assignPolicyService, _finishPolicyService, _callChain, _taskOperations, undefined, _translate, _currencyPipe, _changedFieldsService,
-            _permissionService, _overflowService);
+            _assignPolicyService, _finishPolicyService, _callChain, _taskOperations, undefined, _translate,
+            _currencyPipe, _changedFieldsService, _permissionService, overflowService, _taskForceOpen);
     }
 
     ngAfterViewInit() {
@@ -246,9 +248,9 @@ class TestWrapperComponent {
             roles: {},
             startDate: undefined,
             finishDate: undefined,
-            assignPolicy: AssignPolicy.manual,
-            dataFocusPolicy: DataFocusPolicy.manual,
-            finishPolicy: FinishPolicy.manual,
+            assignPolicy: AssignPolicy.MANUAL,
+            dataFocusPolicy: DataFocusPolicy.MANUAL,
+            finishPolicy: FinishPolicy.MANUAL,
             stringId: 'string',
             layout: {
                 offset: 0,
@@ -297,9 +299,9 @@ class MyTaskResources {
                         roles: {},
                         startDate: undefined,
                         finishDate: undefined,
-                        assignPolicy: AssignPolicy.manual,
-                        dataFocusPolicy: DataFocusPolicy.manual,
-                        finishPolicy: FinishPolicy.manual,
+                        assignPolicy: AssignPolicy.MANUAL,
+                        dataFocusPolicy: DataFocusPolicy.MANUAL,
+                        finishPolicy: FinishPolicy.MANUAL,
                         stringId: 'string',
                         layout: {
                             offset: 0,
@@ -311,7 +313,7 @@ class MyTaskResources {
                         users: {},
                         userRefs: {}
                     },
-                    aCase: createMockCase(),
+                    case: createMockCase(),
                     net: createMockNet(),
                     outcomes: []
                 } as AssignTaskEventOutcome
@@ -348,9 +350,9 @@ class MyTaskResources {
                         roles: {},
                         startDate: undefined,
                         finishDate: undefined,
-                        assignPolicy: AssignPolicy.manual,
-                        dataFocusPolicy: DataFocusPolicy.manual,
-                        finishPolicy: FinishPolicy.manual,
+                        assignPolicy: AssignPolicy.MANUAL,
+                        dataFocusPolicy: DataFocusPolicy.MANUAL,
+                        finishPolicy: FinishPolicy.MANUAL,
                         stringId: 'string',
                         layout: {
                             offset: 0,
@@ -362,7 +364,7 @@ class MyTaskResources {
                         users: {},
                         userRefs: {}
                     },
-                    aCase: createMockCase(),
+                    case: createMockCase(),
                     net: createMockNet(),
                     outcomes: []
                 } as FinishTaskEventOutcome
@@ -387,9 +389,9 @@ class MyTaskResources {
             roles: {},
             startDate: undefined,
             finishDate: undefined,
-            assignPolicy: AssignPolicy.manual,
-            dataFocusPolicy: DataFocusPolicy.manual,
-            finishPolicy: FinishPolicy.manual,
+            assignPolicy: AssignPolicy.MANUAL,
+            dataFocusPolicy: DataFocusPolicy.MANUAL,
+            finishPolicy: FinishPolicy.MANUAL,
             stringId: 'string',
             layout: {
                 cols: undefined,

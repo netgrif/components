@@ -6,6 +6,7 @@ import {SimpleFilter} from '../../filter/models/simple-filter';
 import {FilterType} from '../../filter/models/filter-type';
 import {TaskResourceService} from './task-resource.service';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {TaskDataSets} from "../interface/task-data-sets";
 
 describe('TaskResourceService', () => {
     let service: TaskResourceService;
@@ -242,7 +243,7 @@ describe('TaskResourceService', () => {
     it('should setData', (done) => {
             inject([HttpTestingController],
                 (httpMock: HttpTestingController) => {
-                    service.setData('id', {}).subscribe(res => {
+                    service.setData('id', {} as TaskDataSets).subscribe(res => {
                         expect(res.outcome).toBeTruthy();
                         done();
                     });

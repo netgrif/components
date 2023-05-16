@@ -151,6 +151,7 @@ export abstract class DataField<T> {
         this._touch = new Subject<boolean>();
         this._validRequired = true;
         this.layoutSubject = new BehaviorSubject<Layout>(_layout);
+        this.resolveBehavior();
         this.resetLocalLayout();
     }
 
@@ -545,7 +546,7 @@ export abstract class DataField<T> {
         this.materialAppearance = appearance;
 
         /* Listen for changes of layout in future */
-        this.layoutSubject.subscribe(layout => {
+        this.layoutSubject.subscribe(() => {
             if (this.layout && this.layout.appearance) {
                 this.materialAppearance = this.layout.appearance;
             }
@@ -588,6 +589,15 @@ export abstract class DataField<T> {
             this._localLayout = {...this._layout};
         } else {
             this._localLayout = undefined;
+        }
+    }
+
+    public resolveBehavior(): void {
+        if (!this._behavior) {
+            this._behavior = {
+                optional: true,
+                editable: true
+            }
         }
     }
 }

@@ -14,7 +14,7 @@ import {SavedFilterMetadata} from '../models/persistance/saved-filter-metadata';
 import {ViewIdService} from '../../user/services/view-id.service';
 import {NAE_FILTERS_FILTER} from '../../filter/models/filters-filter-injection-token';
 import {Filter} from '../../filter/models/filter';
-import {TaskSetDataRequestFields} from '../../resources/interface/task-set-data-request-body';
+import {DataSet} from '../../resources/interface/task-data-sets';
 import {NAE_NAVIGATION_ITEM_TASK_DATA} from '../../navigation/model/filter-case-injection-token';
 import {DataGroup} from '../../resources/interface/data-groups';
 
@@ -50,7 +50,7 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
      * Set data request body, that is sent to the filter in addition to the default body.
      * The default body is applied first and can be overridden by this argument.
      */
-    @Input() additionalFilterData: TaskSetDataRequestFields = {};
+    @Input() additionalFilterData: DataSet = { fields: {} } as DataSet;
 
     /**
      * The emitted data contains the filter case object

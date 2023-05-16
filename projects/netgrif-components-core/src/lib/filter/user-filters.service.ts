@@ -10,7 +10,7 @@ import {SimpleFilter} from './models/simple-filter';
 import {hasContent} from '../utility/pagination/page-has-content';
 import {Task} from '../resources/interface/task';
 import {CallChainService} from '../utility/call-chain/call-chain.service';
-import {TaskSetDataRequestBody, TaskSetDataRequestFields} from '../resources/interface/task-set-data-request-body';
+import {TaskDataSets, DataSet} from '../resources/interface/task-data-sets';
 import {FieldTypeResource} from '../task-content/model/field-type-resource';
 import {Category} from '../search/models/category/category';
 import {Net} from '../process/net';
@@ -31,6 +31,7 @@ import {CategoryResolverService} from '../search/category-factory/category-resol
 import {DataGroup} from '../resources/interface/data-groups';
 import {getFieldFromDataGroups} from '../utility/get-field';
 import {EventOutcomeMessageResource} from '../resources/interface/message-resource';
+import {DataFieldResource, DataFieldValue} from "../task-content/model/resource-interfaces";
 
 /**
  * Service that manages filters created by users of the application.
@@ -167,7 +168,7 @@ export class UserFiltersService implements OnDestroy {
                 allowedNets: ReadonlyArray<string>,
                 searchCategories: ReadonlyArray<Type<Category<any>>>,
                 viewId?: string,
-                additionalData: TaskSetDataRequestFields = {},
+                additionalData: DataSet = { fields: {} } as DataSet,
                 withDefaultCategories = true,
                 inheritAllowedNets = true,
                 navigationItemTaskData: Array<DataGroup> = null): Observable<SavedFilterMetadata> {
@@ -243,7 +244,7 @@ export class UserFiltersService implements OnDestroy {
                                       allowedNets: ReadonlyArray<string>,
                                       searchCategories: ReadonlyArray<Type<Category<any>>>,
                                       viewId?: string,
-                                      additionalData: TaskSetDataRequestFields = {},
+                                      additionalData: DataSet = { fields: {}} as DataSet,
                                       withDefaultCategories = true,
                                       inheritAllowedNets = true,
                                       navigationItemTaskData: Array<DataGroup> = null): Observable<string> {
@@ -255,7 +256,7 @@ export class UserFiltersService implements OnDestroy {
             }).subscribe(filterCase => {
                 this._taskService.getTasks(SimpleFilter.fromTaskQuery({
                     case: {
-                        id: (filterCase.outcome as CreateCaseEventOutcome).aCase.stringId
+                        id: (filterCase.outcome as CreateCaseEventOutcome).case.stringId
                     }
                 })).subscribe(page => {
                     if (!hasContent(page)) {
@@ -269,22 +270,29 @@ export class UserFiltersService implements OnDestroy {
                     }
 
                     const requestBody = {
-                        [UserFilterConstants.FILTER_TYPE_FIELD_ID]: {
-                            type: FieldTypeResource.ENUMERATION_MAP,
-                            value: searchService.filterType
-                        },
-                        [UserFilterConstants.FILTER_FIELD_ID]: {
-                            type: FieldTypeResource.FILTER,
-                            value: searchService.rootPredicate.query.value,
-                            allowedNets,
-                            filterMetadata: this.filterMetadataFromSearchService(
-                                searchService,
-                                searchCategories,
-                                withDefaultCategories,
-                                inheritAllowedNets
-                            )
-                        },
-                    };
+                        fields: {
+                            [UserFilterConstants.FILTER_TYPE_FIELD_ID]: {
+                                stringId: UserFilterConstants.FILTER_TYPE_FIELD_ID,
+                                type: FieldTypeResource.ENUMERATION_MAP,
+                                value: {
+                                    value: searchService.filterType
+                                } as DataFieldValue
+                            } as DataFieldResource,
+                            [UserFilterConstants.FILTER_FIELD_ID]: {
+                                type: FieldTypeResource.FILTER,
+                                value: {
+                                    value: searchService.rootPredicate.query.value
+                                } as DataFieldValue,
+                                allowedNets,
+                                filterMetadata: this.filterMetadataFromSearchService(
+                                    searchService,
+                                    searchCategories,
+                                    withDefaultCategories,
+                                    inheritAllowedNets
+                                )
+                            } as DataFieldResource,
+                        }
+                    } as DataSet;
 
                     let parentFilterCaseIdField;
                     if (navigationItemTaskData !== null && navigationItemTaskData !== undefined) {
@@ -295,26 +303,32 @@ export class UserFiltersService implements OnDestroy {
                     if (parentFilterCaseIdField !== undefined) {
                         requestBody[UserFilterConstants.PARENT_FILTER_CASE_ID_FIELD_ID] = {
                             type: FieldTypeResource.TEXT,
-                            value: parentFilterCaseIdField.value
-                        };
+                            value: {
+                                value: parentFilterCaseIdField.value
+                            } as DataFieldValue
+                        } as DataFieldResource;
                     } else if (viewId !== undefined || viewId !== '') {
                         requestBody[UserFilterConstants.ORIGIN_VIEW_ID_FIELD_ID] = {
                             type: FieldTypeResource.TEXT,
-                            value: viewId
-                        };
+                            value: {
+                                value: viewId
+                            } as DataFieldValue
+                        } as DataFieldResource;
                     }
 
                     this.assignSetDataFinish(initTask, {
-                        [initTask.stringId]: {
-                            ...requestBody,
-                            ...additionalData
-                        }
-                    }, this._callChainService.create(success => {
+                        body: {
+                                [initTask.stringId]: {
+                                    ...requestBody,
+                                    ...additionalData
+                                } as DataSet
+                            }
+                        } as TaskDataSets, this._callChainService.create(success => {
                         if (!success) {
                             throw new Error('Filter instance could not be initialized');
                         }
 
-                        result.next((filterCase.outcome as CreateCaseEventOutcome).aCase.stringId);
+                        result.next((filterCase.outcome as CreateCaseEventOutcome).case.stringId);
                         result.complete();
                     }));
                 });
@@ -336,11 +350,12 @@ export class UserFiltersService implements OnDestroy {
     }
 
     // TODO 6.4.2021 IMPROVEMENT - extract similar method into some utility service
-    protected assignSetDataFinish(task: Task, data: TaskSetDataRequestBody, callChain: Subject<boolean>): void {
+    protected assignSetDataFinish(task: Task, data: TaskDataSets, callChain: Subject<boolean>): void {
         this._taskService.assignTask(task.stringId).subscribe(assignOutcome => {
             if (assignOutcome.error) {
                 this._log.error(`Could not assign task '${task.title}'`, task, assignOutcome.error);
                 callChain.next(false);
+                return;
             }
 
             this._taskService.setData(task.stringId, data).subscribe(() => {
@@ -348,6 +363,7 @@ export class UserFiltersService implements OnDestroy {
                     if (finishOutcome.error) {
                         this._log.error(`Could not finish task '${task.title}'`, task, finishOutcome.error);
                         callChain.next(false);
+                        return;
                     }
 
                     callChain.next(true);

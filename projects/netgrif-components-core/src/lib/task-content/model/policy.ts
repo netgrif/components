@@ -4,8 +4,9 @@
  * value: MANUAL | AUTO
  */
 export enum AssignPolicy {
-    manual = 'MANUAL',
-    auto = 'AUTO'
+    AUTO,
+    MANUAL
+
 }
 /**
  * Enum FinishPolicy
@@ -13,8 +14,9 @@ export enum AssignPolicy {
  * value: MANUAL | AUTO_NO_DATA
  */
 export enum FinishPolicy {
-    manual = 'MANUAL',
-    autoNoData = 'AUTO_NO_DATA'
+
+    AUTO_NO_DATA,
+    MANUAL
 }
 /**
  * Enum DataFocusPolicy
@@ -22,6 +24,6 @@ export enum FinishPolicy {
  * value: MANUAL | AUTO_EMPTY_REQUIRED
  */
 export enum DataFocusPolicy {
-    manual = 'MANUAL',
-    autoRequired = 'AUTO_EMPTY_REQUIRED'
+    MANUAL,
+    AUTO_EMPTY_REQUIRED
 }

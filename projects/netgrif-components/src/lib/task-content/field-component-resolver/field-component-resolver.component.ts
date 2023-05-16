@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input, Type} from '@angular/core';
 import {AbstractFieldComponentResolverComponent, TaskContentService} from '@netgrif/components-core';
 
 @Component({
@@ -7,6 +7,8 @@ import {AbstractFieldComponentResolverComponent, TaskContentService} from '@netg
     styleUrls: ['./field-component-resolver.component.scss']
 })
 export class FieldComponentResolverComponent extends AbstractFieldComponentResolverComponent {
+
+    @Input() taskContentComponentClassReference: Type<any>;
 
     constructor(taskContentService: TaskContentService) {
         super(taskContentService);

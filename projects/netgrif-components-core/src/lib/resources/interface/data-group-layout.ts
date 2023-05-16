@@ -15,15 +15,15 @@ export enum DataGroupLayoutType {
     /**
      * A grid based on x, y co-ordinates and width and height of each field
      */
-    GRID = 'grid',
+    GRID = 'GRID',
     /**
      * Evenly sized fields that fill all columns
      */
-    FLOW = 'flow',
+    FLOW = 'FLOW',
     /**
      * Layouting algorithm used in NAE versions < 4.0.0
      */
-    LEGACY = 'legacy'
+    LEGACY = 'LEGACY'
 }
 
 /**

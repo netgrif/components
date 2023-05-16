@@ -113,7 +113,7 @@ describe('CaseResourceService', () => {
                         title: '',
                         netId: ''
                     }).subscribe(res => {
-                        expect((res.outcome as CreateCaseEventOutcome).aCase.stringId).toEqual('string');
+                        expect((res.outcome as CreateCaseEventOutcome).case.stringId).toEqual('string');
                         done();
                     });
 
@@ -122,7 +122,7 @@ describe('CaseResourceService', () => {
 
                     reqLog.flush({
                         outcome: {
-                            aCase: {
+                            case: {
                                 stringId: 'string'
                             }
                         }

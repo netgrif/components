@@ -98,9 +98,9 @@ describe('CancelTaskService', () => {
             },
             startDate: [1],
             finishDate: [1],
-            assignPolicy: AssignPolicy.manual,
-            dataFocusPolicy: DataFocusPolicy.manual,
-            finishPolicy: FinishPolicy.manual,
+            assignPolicy: AssignPolicy.MANUAL,
+            dataFocusPolicy: DataFocusPolicy.MANUAL,
+            finishPolicy: FinishPolicy.MANUAL,
             stringId: 'taskId',
             layout: {rows: 1, cols: 1, offset: 0},
             dataGroups: [],
@@ -145,9 +145,9 @@ describe('CancelTaskService', () => {
                     },
                     startDate: null,
                     finishDate: null,
-                    assignPolicy: AssignPolicy.manual,
-                    dataFocusPolicy: DataFocusPolicy.manual,
-                    finishPolicy: FinishPolicy.manual,
+                    assignPolicy: AssignPolicy.MANUAL,
+                    dataFocusPolicy: DataFocusPolicy.MANUAL,
+                    finishPolicy: FinishPolicy.MANUAL,
                     stringId: 'taskId',
                     layout: {rows: 1, cols: 1, offset: 0},
                     dataGroups: [],
@@ -155,7 +155,7 @@ describe('CancelTaskService', () => {
                     users: {},
                     userRefs: {}
                 },
-                aCase: createMockCase(),
+                case: createMockCase(),
                 net: createMockNet()
             } as TaskEventOutcome
         };

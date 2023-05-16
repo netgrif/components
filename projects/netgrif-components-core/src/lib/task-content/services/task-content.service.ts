@@ -15,6 +15,7 @@ import {Validation} from '../../data-fields/models/validation';
 import {TaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/task-event-outcome';
 import {DataField} from '../../data-fields/models/abstract-data-field';
 import {TaskFields} from '../model/task-fields';
+import {TaskRefField} from "../../data-fields/task-ref-field/model/task-ref-field";
 
 /**
  * Acts as a communication interface between the Component that renders Task content and it's parent Component.
@@ -248,7 +249,7 @@ export abstract class TaskContentService implements OnDestroy {
                     // type is just an information, not an update. A field cannot change its type
                     return; // continue - the field does not need updating, since nothing changed
                 case 'value':
-                    field.valueWithoutChange(this._fieldConverterService.formatValueFromBackend(field, updatedField[key]));
+                    field.valueWithoutChange(this._fieldConverterService.formatValueFromBackend(field, updatedField[key][key]));
                     break;
                 case 'behavior':
                     if (updatedField.behavior[this._task.transitionId]) {
@@ -304,9 +305,11 @@ export abstract class TaskContentService implements OnDestroy {
         Object.keys(updatedField).forEach(key => {
             switch (key) {
                 case 'behavior':
-                    const transitionId = this.getReferencedTransitionId(field.stringId);
+                    const taskId = this.getReferencedTaskId(field.stringId);
+                    const taskRef = Object.values(this.taskFieldsIndex[this._task.stringId].fields).find(f => f instanceof TaskRefField && f.value.includes(taskId));
+                    const transitionId = this.taskFieldsIndex[taskId].transitionId;
                     if (!!transitionId && transitionId !== '' && updatedField.behavior[transitionId])
-                        field.behavior = updatedField.behavior[transitionId];
+                        field.behavior = taskRef.behavior.editable ? updatedField.behavior[transitionId] : taskRef.behavior;
                     break;
                 default:
                     field[key] = updatedField[key];

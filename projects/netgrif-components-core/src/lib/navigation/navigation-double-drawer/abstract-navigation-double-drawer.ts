@@ -40,6 +40,8 @@ export const FILTER_IDENTIFIERS = [
 ];
 export const FILTER_VIEW_TASK_TRANSITION_ID = 'view';
 
+export const FILTER_DEFAULT_HEADERS_ID = 'default_headers';
+
 const LEFT_DRAWER_DEFAULT_WIDTH = 60;
 const RIGHT_DRAWER_DEFAULT_WIDTH = 240;
 const RIGHT_DRAWER_DEFAULT_MIN_WIDTH = 180;

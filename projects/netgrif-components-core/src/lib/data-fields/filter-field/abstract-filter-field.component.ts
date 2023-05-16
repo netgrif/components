@@ -36,5 +36,9 @@ export abstract class AbstractFilterFieldComponent extends AbstractDataFieldComp
         this.initialized = true;
     }
 
+    public get editable(): boolean {
+        return !!this.dataField.behavior.editable;
+    }
+
     protected abstract getFilterContentComponent(): ComponentType<AbstractFilterFieldContentComponent>;
 }

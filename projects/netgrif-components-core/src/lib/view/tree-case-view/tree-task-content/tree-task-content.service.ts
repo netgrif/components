@@ -213,7 +213,7 @@ export class TreeTaskContentService implements OnDestroy {
             return;
         }
 
-        task.assignPolicy = AssignPolicy.auto;
+        task.assignPolicy = AssignPolicy.AUTO;
         this._taskContentService.task = task;
         this._taskContentService.blockFields(true);
         this._assignPolicy.performAssignPolicy(true, this._callchain.create(() => {

@@ -14,10 +14,10 @@ export class DataFocusPolicyService extends TaskHandlingService {
     }
 
     /**
-     * Performs the selection of some data fields if the policy is set to [Auto Required]{@link DataFocusPolicy#autoRequired}.
+     * Performs the selection of some data fields if the policy is set to [Auto Required]{@link DataFocusPolicy#AUTO_EMPTY_REQUIRED}.
      */
     public performDataFocusPolicy(): void {
-        if (this._safeTask.dataFocusPolicy === DataFocusPolicy.autoRequired) {
+        if (this._safeTask.dataFocusPolicy === DataFocusPolicy.AUTO_EMPTY_REQUIRED) {
             this.autoRequiredDataFocusPolicy();
         }
     }
