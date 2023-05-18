@@ -22,6 +22,8 @@ import {UserService} from '../../user/services/user.service';
 import {LoadingEmitter} from '../../utility/loading-emitter';
 import {UriNodeResource} from '../model/uri-resource';
 import {UriService} from '../service/uri.service';
+import {I18nFieldValue} from "../../data-fields/i18n-field/models/i18n-field-value";
+import {TranslateService} from "@ngx-translate/core";
 
 export interface ConfigDoubleMenu {
     mode: MatDrawerMode;
@@ -119,6 +121,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                           protected _activatedRoute: ActivatedRoute,
                           protected _breakpoint: BreakpointObserver,
                           protected _languageService: LanguageService,
+                          protected _translateService: TranslateService,
                           protected _userService: UserService,
                           protected _accessService: AccessService,
                           protected _log: LoggerService,
@@ -407,7 +410,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             access: {},
             navigation: {
                 icon: itemCase.immediateData.find(f => f.stringId === 'icon')?.value || this.filterIcon,
-                title: itemCase.immediateData.find(f => f.stringId === 'name')?.value?.defaultValue || itemCase.title,
+                title: this.getTranslation(itemCase.immediateData.find(f => f.stringId === 'name')?.value) || itemCase.title,
             },
             routing: {
                 path: this.getItemRoutingPath(itemCase),
@@ -421,6 +424,11 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         if (!!resolvedBannedRoles) item.access['bannedRole'] = resolvedBannedRoles;
         if (!this._accessService.canAccessView(item, item.routingPath)) return;
         return item;
+    }
+
+    private getTranslation(value: I18nFieldValue): string {
+        const locale = this._translateService.currentLang.split('-')[0];
+        return locale in value.translations ? value.translations[locale] : value.defaultValue;
     }
 
     protected resolveAccessRoles(filter: Case, roleType: string): Array<RoleAccess> | undefined {
