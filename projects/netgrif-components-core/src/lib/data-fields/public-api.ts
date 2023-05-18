@@ -87,6 +87,7 @@ export * from './task-ref-field/model/task-ref-dashboard-tile';
 /* Tokens */
 export * from './models/boolean-label-enabled-token';
 export * from './models/invalid-data-policy-token';
+export * from './models/data-field-portal-data-injection-token';
 export * from './filter-field/models/filter-field-injection-token';
 
 /* Enums */
@@ -101,4 +102,3 @@ export * from './text-field/dashboard-portal-text-field/dashboard-view-constants
 
 /* Services */
 export * from './i18n-field/language-icons.service';
-export * from './text-field/dashboard-portal-text-field/dashboard-portal-component-registry.service';

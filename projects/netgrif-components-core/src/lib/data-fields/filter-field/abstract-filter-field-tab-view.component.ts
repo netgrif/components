@@ -1,10 +1,9 @@
 import { Component, Type } from '@angular/core';
 import { TabContent } from '../../tabs/interfaces';
-import {
-    DashboardPortalComponentRegistryService
-} from '../text-field/dashboard-portal-text-field/dashboard-portal-component-registry.service';
+
 import { Dashboard } from '../text-field/dashboard-portal-text-field/dashboard-view-constants';
 import { FilterField } from './models/filter-field';
+import {ComponentRegistryService} from "../../registry/component-registry.service";
 
 @Component({
     selector: 'ncc-abstract-filter-field-tab-view',
@@ -14,7 +13,7 @@ export abstract class AbstractFilterFieldTabViewComponent {
 
     public tabs: Array<TabContent>;
 
-    constructor(protected _registry: DashboardPortalComponentRegistryService,
+    constructor(protected _registry: ComponentRegistryService,
                 protected _filterField: FilterField,
                 protected _tabContentComponent?: Type<any>,
                 protected _tabViewComponent?: Type<any>) {

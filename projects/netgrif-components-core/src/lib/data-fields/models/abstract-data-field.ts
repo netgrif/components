@@ -124,6 +124,11 @@ export abstract class DataField<T> {
     private _input: ElementRef;
 
     /**
+     * Reference to form control
+     * */
+    private _formControlRef: FormControl;
+
+    /**
      * @param _stringId - ID of the data field from backend
      * @param _title - displayed title of the data field from backend
      * @param initialValue - initial value of the data field
@@ -347,6 +352,10 @@ export abstract class DataField<T> {
         this._input = value;
     }
 
+    get formControlRef(): FormControl {
+        return this._formControlRef;
+    }
+
     /**
      * This function resolve type of component for HTML
      * @returns type of component in string
@@ -371,6 +380,7 @@ export abstract class DataField<T> {
                 + ' Disconnect the previous form control before initializing the data field again!');
         }
 
+        this._formControlRef = formControl;
         formControl.setValidators(this.resolveFormControlValidators());
 
         this._formControlValueSubscription = formControl.valueChanges.pipe(

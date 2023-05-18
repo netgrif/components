@@ -1,9 +1,13 @@
-import {Component, ElementRef, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, Injector, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {WrappedBoolean} from './models/wrapped-boolean';
 import {DataField} from '../models/abstract-data-field';
 import {TemplateAppearance} from '../models/template-appearance';
 import {PaperViewService} from '../../navigation/quick-panel/components/paper-view.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
+import {FormControl} from "@angular/forms";
+import {ComponentPortal} from "@angular/cdk/portal";
+import {ComponentRegistryService} from "../../registry/component-registry.service";
+import {DATA_FIELD_PORTAL_DATA} from "../models/data-field-portal-data-injection-token";
 
 /**
  * Provides a responsive layout to data fields where their appearance can change based on the width of space they have available.
@@ -41,10 +45,10 @@ export abstract class AbstractDataFieldTemplateComponent implements OnInit {
      */
     @Input() public offset = 0;
     @ViewChild('dataFieldContainer') container: ElementRef;
-
     protected _dataField: DataField<any>;
     protected _isConfiguredNetgrifTemplate = true;
     protected _isNetgrifTemplate = true;
+    protected _componentPortal: ComponentPortal<any>;
 
     /**
      * @ignore
@@ -52,7 +56,9 @@ export abstract class AbstractDataFieldTemplateComponent implements OnInit {
      */
     protected _showLargeLayout: WrappedBoolean = new WrappedBoolean();
 
-    protected constructor(protected _paperView: PaperViewService, protected _config: ConfigurationService) {
+    protected constructor(protected _paperView: PaperViewService,
+                          protected _config: ConfigurationService,
+                          protected _componentRegistry: ComponentRegistryService) {
         const configuredTemplate = this._config.getDatafieldConfiguration();
         this._isConfiguredNetgrifTemplate = configuredTemplate
             && configuredTemplate.template
@@ -81,10 +87,15 @@ export abstract class AbstractDataFieldTemplateComponent implements OnInit {
         } else {
             this._isNetgrifTemplate = this._isConfiguredNetgrifTemplate;
         }
+        this._componentPortal = this.resolveComponentPortal(this.dataField, this.showLargeLayout, this.dataField.formControlRef)
     }
 
     get dataField(): DataField<any> {
         return this._dataField;
+    }
+
+    get componentPortal(): ComponentPortal<any> {
+        return this._componentPortal;
     }
 
     /**
@@ -98,6 +109,27 @@ export abstract class AbstractDataFieldTemplateComponent implements OnInit {
                 this.container.nativeElement.offsetWidth  >= this.layoutChangeWidthBreakpoint && this.evaluateTemplate() :
             this._showLargeLayout.value = this.evaluateTemplate();
         return this._showLargeLayout.value;
+    }
+
+
+    public hasComponent(): boolean {
+        return !!this.dataField.component?.name && this._componentRegistry.contains(this.dataField.component.name);
+    }
+
+    public resolveComponentPortal(dataField: DataField<any>, showLargeLayout: WrappedBoolean, formControlRef: FormControl): ComponentPortal<any> {
+        if (this.hasComponent()) {
+            return this._componentRegistry.get(this.dataField.component.name, Injector.create({providers: [
+                    {
+                        provide: DATA_FIELD_PORTAL_DATA,
+                        useValue: {
+                            dataField: dataField,
+                            showLargeLayout: showLargeLayout,
+                            formControlRef: dataField.formControlRef
+                        }
+                    }
+                ]}));
+        }
+        return undefined;
     }
 
     /**

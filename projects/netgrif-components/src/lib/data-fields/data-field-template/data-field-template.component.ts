@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AbstractDataFieldTemplateComponent, PaperViewService, ConfigurationService} from '@netgrif/components-core';
+import {AbstractDataFieldTemplateComponent, PaperViewService, ConfigurationService, ComponentRegistryService} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-data-field-template',
@@ -8,7 +8,9 @@ import {AbstractDataFieldTemplateComponent, PaperViewService, ConfigurationServi
 })
 export class DataFieldTemplateComponent extends AbstractDataFieldTemplateComponent {
 
-    constructor(protected _paperView: PaperViewService, protected _config: ConfigurationService) {
-        super(_paperView, _config);
+    constructor(protected _paperView: PaperViewService,
+                protected _config: ConfigurationService,
+                componentRegistry: ComponentRegistryService) {
+        super(_paperView, _config, componentRegistry);
     }
 }

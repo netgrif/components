@@ -1,6 +1,6 @@
 import { Component, Inject, Injector } from '@angular/core';
 import {
-    DashboardPortalComponentRegistryService,
+    ComponentRegistryService,
     NAE_FILTER_FIELD,
     FilterField,
     SearchService,
@@ -29,7 +29,7 @@ import {
 })
 export class FilterFieldTabViewContentComponent extends AbstractFilterFieldTabViewContentComponent{
 
-    constructor(registry: DashboardPortalComponentRegistryService,
+    constructor(registry: ComponentRegistryService,
                 injector: Injector,
                 @Inject(NAE_FILTER_FIELD) filterField: FilterField,
                 searchService: SearchService) {

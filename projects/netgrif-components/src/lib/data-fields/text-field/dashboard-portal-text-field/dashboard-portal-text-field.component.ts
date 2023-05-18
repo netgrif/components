@@ -2,7 +2,7 @@ import {Component, Injector, OnDestroy, OnInit} from '@angular/core';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {
     AbstractDashboardPortalTextFieldComponent,
-    DashboardPortalComponentRegistryService
+    ComponentRegistryService
 } from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 import {Subscription} from 'rxjs';
@@ -16,7 +16,7 @@ export class DashboardPortalTextFieldComponent extends AbstractDashboardPortalTe
     private sub: Subscription;
     componentPortal: ComponentPortal<any>;
 
-    constructor(translate: TranslateService, private registry: DashboardPortalComponentRegistryService, private injector: Injector) {
+    constructor(translate: TranslateService, private registry: ComponentRegistryService, private injector: Injector) {
         super(translate);
     }
 
