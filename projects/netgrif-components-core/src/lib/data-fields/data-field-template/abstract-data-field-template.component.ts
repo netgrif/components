@@ -124,7 +124,7 @@ export abstract class AbstractDataFieldTemplateComponent implements OnInit {
                         useValue: {
                             dataField: dataField,
                             showLargeLayout: showLargeLayout,
-                            formControlRef: dataField.formControlRef
+                            formControlRef: formControlRef
                         }
                     }
                 ]}));
