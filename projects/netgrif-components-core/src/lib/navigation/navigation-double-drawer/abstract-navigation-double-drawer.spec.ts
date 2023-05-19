@@ -88,10 +88,10 @@ xdescribe('AbstractNavigationDoubleDrawerComponent', () => {
         component.currentNode = uriService.root;
         timer(1).subscribe(() => {
             expect(component.currentNode).toEqual(uriService.root);
-            expect(component.leftFolders).toBeDefined();
-            expect(component.leftFolders.length).toEqual(0);
-            expect(component.rightFolders).toBeDefined();
-            expect(component.rightFolders.length).toEqual(0);
+            expect(component.leftItems).toBeDefined();
+            expect(component.leftItems.length).toEqual(0);
+            expect(component.rightItems).toBeDefined();
+            expect(component.rightItems.length).toEqual(0);
             done();
         });
     });
@@ -124,9 +124,8 @@ xdescribe('AbstractNavigationDoubleDrawerComponent', () => {
 
     it('should check the menu state', () => {
         expect(component.isOnZeroLevel()).toBeTruthy();
-        expect(component.isLeftFoldersEmpty).toBeTruthy();
-        expect(component.isRightFoldersEmpty).toBeTruthy();
-        expect(component.isViewsEmpty).toBeTruthy();
+        expect(component.isLeftItemsEmpty).toBeTruthy();
+        expect(component.isRightItemsEmpty).toBeTruthy();
     });
 
 });

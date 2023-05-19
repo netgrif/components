@@ -40,9 +40,8 @@ export interface NavigationItem extends View {
 export const MENU_IDENTIFIERS = [
     'preference_item',
 ];
-export const VIEW_TRANSITION_ID = 'view_settings';
-export const FOLDER_TRANSITION_ID = 'folder_settings';
-export const VIEW_DEFAULT_HEADERS_ID = 'default_headers';
+export const SETTINGS_TRANSITION_ID = 'item_settings';
+export const FIELD_ID_DEFAULT_HEADERS = 'default_headers';
 
 const LEFT_DRAWER_DEFAULT_WIDTH = 60;
 const RIGHT_DRAWER_DEFAULT_WIDTH = 240;
@@ -75,17 +74,12 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     /**
      * List of folders displayed on the left side of menu
      * */
-    leftFolders: Array<NavigationItem>
+    leftItems: Array<NavigationItem>
 
     /**
      * List of folders displayed on the right side of menu
      * */
-    rightFolders: Array<NavigationItem>
-
-    /**
-     * Processes that can be displayed under folders on right side menu
-     * */
-    views: Array<NavigationItem>;
+    rightItems: Array<NavigationItem>
 
     moreMenuItems: Array<NavigationItem>;
 
@@ -115,8 +109,6 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         width: RIGHT_DRAWER_DEFAULT_WIDTH,
     };
 
-    protected _childCustomViews: { [uri: string]: { [key: string]: NavigationItem } };
-
     protected constructor(protected _router: Router,
                           protected _activatedRoute: ActivatedRoute,
                           protected _breakpoint: BreakpointObserver,
@@ -130,14 +122,11 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                           protected _impersonationUserSelect: ImpersonationUserSelectService,
                           protected _impersonation: ImpersonationService,
                           protected _dynamicRoutingService: DynamicNavigationRouteProviderService) {
-        this.leftFolders = new Array<NavigationItem>();
-        this.rightFolders = new Array<NavigationItem>();
-        this.views = new Array<NavigationItem>();
+        this.leftItems = new Array<NavigationItem>();
+        this.rightItems = new Array<NavigationItem>();
         this.leftLoading$ = new LoadingEmitter();
         this.rightLoading$ = new LoadingEmitter();
         this.nodeLoading$ = new LoadingEmitter();
-        this._childCustomViews = {};
-        this.moreMenuItems = new Array<NavigationItem>();
     }
 
     ngOnInit(): void {
@@ -160,8 +149,6 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         if (!!viewConfigurationPath) {
             const viewConfiguration = this._config.getViewByPath(viewConfigurationPath);
             Object.entries(viewConfiguration.children).forEach(([key, childView]) => {
-                this.resolveUriForChildViews(viewConfigurationPath + '/' + key, childView);
-                this.resolveHiddenMenuItemFromChildViews(viewConfigurationPath + '/' + key, childView);
             });
         }
     }
@@ -194,38 +181,14 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             this.rightLoading$.off();
         }
         if (this._uriService.isRoot(node)) {
-            this.leftFolders = [];
+            this.leftItems = [];
             this.loadRightSide();
             return;
         }
-        if (!this.leftFolders.find(item => item.resource.immediateData.find(f => f.stringId === 'nodePath')?.value === node.uriPath)) {
+        if (!this.leftItems.find(item => item.resource.immediateData.find(f => f.stringId === 'nodePath')?.value === node.uriPath)) {
             this.loadLeftSide();
         }
         this.loadRightSide();
-    }
-
-    protected resolveUriForChildViews(configPath: string, childView: View): void {
-        if (!childView.processUri) return;
-        if (!this._accessService.canAccessView(childView, configPath)) return;
-        if (!this._childCustomViews[childView.processUri]) {
-            this._childCustomViews[childView.processUri] = {};
-        }
-        this._childCustomViews[childView.processUri][configPath] = {
-            id: configPath,
-            ...childView,
-        };
-    }
-
-    protected resolveHiddenMenuItemFromChildViews(configPath: string, childView: View): void {
-        if (!childView.navigation) return;
-        if (!this._accessService.canAccessView(childView, configPath)) return;
-        // @ts-ignore
-        if (!!(childView?.navigation?.hidden)) {
-            this.moreMenuItems.push({
-                id: configPath,
-                ...childView,
-            });
-        }
     }
 
     ngOnDestroy(): void {
@@ -334,17 +297,20 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         this.currentNode = this._currentNode.parent;
     }
 
-    onFolderClick(folder: NavigationItem): void {
-        const path = folder.resource.immediateData.find(f => f.stringId === 'nodePath')?.value
-        this._uriService.getNodeByPath(path).subscribe(node => {
-            this.currentNode = node
-        }, error => {
-            this._log.error(error);
-        });
+    onItemClick(item: NavigationItem): void {
+        this._uriService.activeNode = this._currentNode;
+        if (this.hasItemChildren(item)) {
+            const path = item.resource.immediateData.find(f => f.stringId === 'nodePath')?.value
+            this._uriService.getNodeByPath(path).subscribe(node => {
+                this.currentNode = node
+            }, error => {
+                this._log.error(error);
+            });
+        }
     }
 
-    onViewClick(view: NavigationItem): void {
-        this._uriService.activeNode = this._currentNode;
+    hasItemChildren(item: NavigationItem): boolean {
+        return item.resource.immediateData.find(f => f.stringId === 'hasChildren')?.value
     }
 
     isItemAndNodeEqual(item: NavigationItem, node: UriNodeResource): boolean {
@@ -353,7 +319,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
 
     protected loadLeftSide() {
         if (this._uriService.isRoot(this._currentNode)) {
-            this.leftFolders = [];
+            this.leftItems = [];
             return;
         }
         this.leftLoading$.on();
@@ -361,16 +327,17 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             page?.pagination?.totalElements === 0 ? of([]) : this._uriService.getCasesOfNode(this.currentNode.parent, MENU_IDENTIFIERS, 0, page.pagination.totalElements).pipe(
                 map(p => p.content),
             ).subscribe(result => {
-                this.leftFolders = result.filter(folder => folder.immediateData.find(f => f.stringId === 'type')?.value == "folder").map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i);
+                this.leftItems = result.filter(folder => folder.immediateData.find(f => f.stringId === 'hasChildren')?.value === true).map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i);
+                // this.leftItems.sort((a, b) => this.compareStrings(a?.navigation.title, b?.navigation?.title));
                 this.leftLoading$.off();
             }, error => {
                 this._log.error(error);
-                this.leftFolders = [];
+                this.leftItems = [];
                 this.leftLoading$.off();
             });
         }, error => {
             this._log.error(error);
-            this.leftFolders = [];
+            this.leftItems = [];
             this.leftLoading$.off();
         });
     }
@@ -382,25 +349,18 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             (page?.pagination?.totalElements === 0 ? of([]) : this._uriService.getCasesOfNode(this._currentNode, MENU_IDENTIFIERS, 0, page.pagination.totalElements).pipe(
                 map(p => p.content),
             )).subscribe(result => {
-                this.rightFolders = result.filter(folder => folder.immediateData.find(f => f.stringId === 'type')?.value == "folder").map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i);
-                this.views = result.filter(folder => folder.immediateData.find(f => f.stringId === 'type')?.value == "view").map(view => this.resolveItemCaseToNavigationItem(view)).filter(i => !!i);
-                if (!!this._childCustomViews[this._currentNode.uriPath]) {
-                    this.views.push(...Object.values(this._childCustomViews[this._currentNode.uriPath]));
-                }
+                this.rightItems = result.map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i);
                 // @ts-ignore
-                // this.rightFolders.sort((a, b) => this.compareStrings(a?.navigation?.title, b?.navigation?.title));
-                this.views.sort((a, b) => this.compareStrings(a?.navigation?.title, b?.navigation?.title));
+                this.rightItems.sort((a, b) => this.compareStrings(a?.navigation?.title, b?.navigation?.title));
                 this.rightLoading$.off();
             }, error => {
                 this._log.error(error);
-                this.rightFolders = [];
-                this.views = [];
+                this.rightItems = [];
                 this.rightLoading$.off();
             });
         }, error => {
             this._log.error(error);
-            this.rightFolders = [];
-            this.views = [];
+            this.rightItems = [];
             this.rightLoading$.off();
         });
     }
@@ -446,7 +406,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     }
 
     protected getItemRoutingPath(itemCase: Case) {
-        const transId = itemCase.immediateData.find(f => f.stringId === 'type').value == "folder" ? FOLDER_TRANSITION_ID : VIEW_TRANSITION_ID;
+        const transId = SETTINGS_TRANSITION_ID;
         const taskId = itemCase.tasks.find(taskPair => taskPair.transition === transId).task;
         const url = this._dynamicRoutingService.route;
         return `/${url}/${taskId}`;
@@ -466,16 +426,12 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         return !!this._currentNode?.level ? this._currentNode.level == 0 : true;
     }
 
-    isLeftFoldersEmpty(): boolean {
-        return this.leftFolders === undefined || this.leftFolders.length === 0;
+    isLeftItemsEmpty(): boolean {
+        return this.leftItems === undefined || this.leftItems.length === 0;
     }
 
-    isRightFoldersEmpty(): boolean {
-        return this.rightFolders === undefined || this.rightFolders.length === 0;
-    }
-
-    isViewsEmpty(): boolean {
-        return this.views === undefined || this.views.length === 0;
+    isRightItemsEmpty(): boolean {
+        return this.rightItems === undefined || this.rightItems.length === 0;
     }
 
     uriNodeTrackBy(index: number, node: UriNodeResource) {

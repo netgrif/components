@@ -6,7 +6,7 @@ import {TaskResourceService} from '../../resources/engine-endpoint/task-resource
 import {LoggerService} from '../../logger/services/logger.service';
 import {DataGroup} from '../../resources/interface/data-groups';
 import {HttpErrorResponse} from '@angular/common/http';
-import {VIEW_DEFAULT_HEADERS_ID} from "../navigation-double-drawer/abstract-navigation-double-drawer";
+import {FIELD_ID_DEFAULT_HEADERS} from "../navigation-double-drawer/abstract-navigation-double-drawer";
 import {NAE_DEFAULT_HEADERS} from "../../header/models/default-headers-token";
 
 export abstract class GroupNavigationComponentResolverService {
@@ -44,7 +44,7 @@ export abstract class GroupNavigationComponentResolverService {
     }
 
     protected resolveDefaultHeaders(caze: Array<DataGroup>): Array<string> | undefined {
-        const defaultHeadersResponse = [].concat(...caze.map(dataGroup => dataGroup.fields)).find(field => field.stringId === VIEW_DEFAULT_HEADERS_ID)?.value;  //ES2019
+        const defaultHeadersResponse = [].concat(...caze.map(dataGroup => dataGroup.fields)).find(field => field.stringId === FIELD_ID_DEFAULT_HEADERS)?.value;  //ES2019
         if (!defaultHeadersResponse || Object.keys(defaultHeadersResponse).length === 0) return undefined;
         return defaultHeadersResponse.split(",")
     }
