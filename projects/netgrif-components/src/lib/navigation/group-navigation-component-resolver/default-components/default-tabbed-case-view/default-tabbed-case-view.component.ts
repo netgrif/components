@@ -1,25 +1,28 @@
 import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
 import {
-    CategoryFactory,
-    SearchService,
-    NAE_BASE_FILTER,
-    AllowedNetsService,
-    NAE_SEARCH_CATEGORIES,
-    CaseViewService,
-    AllowedNetsServiceFactory,
     AbstractTabbedCaseViewComponent,
-    NAE_TAB_DATA,
-    LoggerService,
-    SavedFilterMetadata,
-    ViewIdService,
+    AllowedNetsService,
+    AllowedNetsServiceFactory,
+    BaseAllowedNetsService, Case,
+    CaseViewService,
+    CategoryFactory,
     CategoryResolverService,
+    FilterExtractionService, FilterType,
+    LoggerService,
+    NAE_BASE_FILTER,
     NAE_DEFAULT_CASE_SEARCH_CATEGORIES,
     NAE_DEFAULT_TASK_SEARCH_CATEGORIES,
-    BaseAllowedNetsService,
-    FilterExtractionService
+    NAE_SEARCH_CATEGORIES,
+    NAE_TAB_DATA,
+    SavedFilterMetadata,
+    SearchMode,
+    SearchService, SimpleFilter,
+    ViewIdService
 } from '@netgrif/components-core';
 import {HeaderComponent} from '../../../../header/header.component';
-import {InjectedTabbedCaseViewDataWithNavigationItemTaskData} from '../model/injected-tabbed-case-view-data-with-navigation-item-task-data';
+import {
+    InjectedTabbedCaseViewDataWithNavigationItemTaskData
+} from '../model/injected-tabbed-case-view-data-with-navigation-item-task-data';
 import {
     filterCaseTabbedDataAllowedNetsServiceFactory,
     filterCaseTabbedDataFilterFactory,
@@ -56,10 +59,18 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
 
     @ViewChild('header') public caseHeaderComponent: HeaderComponent;
 
+    initialSearchMode: SearchMode;
+    showToggleButton: boolean;
+    enableSearch: boolean;
+
     constructor(caseViewService: CaseViewService,
                 loggerService: LoggerService,
-                @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedCaseViewDataWithNavigationItemTaskData) {
-        super(caseViewService, loggerService, injectedTabData, undefined, undefined, undefined, injectedTabData.newCaseButtonConfiguration);
+                @Inject(NAE_TAB_DATA) protected _injectedTabData: InjectedTabbedCaseViewDataWithNavigationItemTaskData) {
+        super(caseViewService, loggerService, _injectedTabData, undefined, undefined, undefined, _injectedTabData.newCaseButtonConfiguration);
+
+        this.initialSearchMode = _injectedTabData.caseViewSearchTypeConfiguration.initialSearchMode;
+        this.showToggleButton = _injectedTabData.caseViewSearchTypeConfiguration.showSearchToggleButton;
+        this.enableSearch = !(_injectedTabData.caseViewSearchTypeConfiguration.initialSearchMode === undefined);
     }
 
     ngAfterViewInit(): void {
@@ -74,6 +85,25 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
             canBeClosed: true,
             tabContentComponent: DefaultTabbedCaseViewComponent,
             injectedObject: {...this._injectedTabData, filterCase: filterData.filterCase},
+            order: this._injectedTabData.tabViewOrder,
+            parentUniqueId: this._injectedTabData.tabUniqueId
+        }, this._autoswitchToTaskTab, this._openExistingTab);
+    }
+
+    protected openTab(openCase: Case) {
+        this._injectedTabData.tabViewRef.openTab({
+            label: {
+                text: openCase.title,
+                icon: openCase.icon ? openCase.icon : 'check_box'
+            },
+            canBeClosed: true,
+            tabContentComponent: this._injectedTabData.tabViewComponent,
+            injectedObject: {
+                baseFilter: new SimpleFilter('', FilterType.TASK, {case: {id: `${openCase.stringId}`}}),
+                allowedNets: [openCase.processIdentifier],
+                navigationItemTaskData: this._injectedTabData.navigationItemTaskData,
+                taskViewSearchTypeConfiguration: this._injectedTabData.taskViewSearchTypeConfiguration
+            },
             order: this._injectedTabData.tabViewOrder,
             parentUniqueId: this._injectedTabData.tabUniqueId
         }, this._autoswitchToTaskTab, this._openExistingTab);

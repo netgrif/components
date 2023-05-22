@@ -11,6 +11,7 @@ import {MergeOperator} from '../../filter/models/merge-operator';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {FilterField} from '../../data-fields/filter-field/models/filter-field';
 import {DataField} from '../../data-fields/models/abstract-data-field';
+import {FilterType} from "../../filter/models/filter-type";
 
 /**
  * This service is able to load the full saved filter including all of its ancestor filters.
@@ -46,7 +47,7 @@ export class FilterExtractionService {
 
         const parentFilter = this.extractCompleteFilterFromData(dataSection.slice(filterIndex.dataGroupIndex + 1));
 
-        if (parentFilter !== undefined) {
+        if (parentFilter !== undefined && parentFilter.type !== FilterType.CASE) {
             return filterSegment.merge(parentFilter, MergeOperator.AND);
         }
 

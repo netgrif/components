@@ -3,9 +3,11 @@
     <mat-card class="case-view-search-container">
         <div fxLayout="row" fxLayoutAlign="space-between">
             <div fxLayoutAlign="start center" fxFlex>
-                <nc-search class="search-width" (filterLoaded)="loadFilter($event)"></nc-search>
+                <nc-search class="search-width" *ngIf="(enableSearch)" [showSearchToggleButton]="showToggleButton"
+                           [initialSearchMode]="initialSearchMode" (filterLoaded)="loadFilter($event)"></nc-search>
             </div>
-            <nc-create-case-button [newCaseCreationConfig]="newCaseCreationConfig" (caseCreatedEvent)="handleCaseClick($event)"></nc-create-case-button>
+            <nc-create-case-button [newCaseCreationConfig]="newCaseCreationConfig"
+                                   (caseCreatedEvent)="handleCaseClick($event)"></nc-create-case-button>
         </div>
     </mat-card>
 

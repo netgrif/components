@@ -3,7 +3,6 @@ import {
     NAE_TAB_DATA,
     TaskViewService,
     AbstractTabbedTaskViewComponent,
-    InjectedTabbedTaskViewData,
     CategoryFactory,
     SearchService,
     NAE_BASE_FILTER,
@@ -13,11 +12,14 @@ import {
     NAE_TASK_VIEW_CONFIGURATION,
     ChangedFieldsService,
     tabbedTaskViewConfigurationFactory,
-    tabbedAllowedNetsServiceFactory
+    tabbedAllowedNetsServiceFactory, SearchMode
 } from '@netgrif/components-core';
 import {HeaderComponent} from '../../../../header/header.component';
+import {
+    InjectedTabbedTaskViewDataWithNavigationItemTaskData
+} from "../model/injected-tabbed-task-view-data-with-navigation-item-task-data";
 
-export function baseFilterFactory(injectedTabData: InjectedTabbedTaskViewData) {
+export function baseFilterFactory(injectedTabData: InjectedTabbedTaskViewDataWithNavigationItemTaskData) {
     return {
         filter: injectedTabData.baseFilter
     };
@@ -31,8 +33,8 @@ export function baseFilterFactory(injectedTabData: InjectedTabbedTaskViewData) {
         CategoryFactory,
         TaskViewService,
         SearchService,
+        ViewIdService,
         ChangedFieldsService,
-        {   provide: ViewIdService, useValue: null},
         {
             provide: NAE_BASE_FILTER,
             useFactory: baseFilterFactory,
@@ -54,8 +56,16 @@ export class DefaultTabbedTaskViewComponent extends AbstractTabbedTaskViewCompon
 
     @ViewChild('header') public taskHeaderComponent: HeaderComponent;
 
-    constructor(taskViewService: TaskViewService, @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedTaskViewData) {
+    initialSearchMode: SearchMode;
+    showToggleButton: boolean;
+    enableSearch: boolean;
+
+    constructor(taskViewService: TaskViewService, @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedTaskViewDataWithNavigationItemTaskData) {
         super(taskViewService, injectedTabData);
+
+        this.initialSearchMode = injectedTabData.taskViewSearchTypeConfiguration.initialSearchMode;
+        this.showToggleButton = injectedTabData.taskViewSearchTypeConfiguration.showSearchToggleButton;
+        this.enableSearch = !(injectedTabData.taskViewSearchTypeConfiguration.initialSearchMode === undefined);
     }
 
     ngAfterViewInit(): void {

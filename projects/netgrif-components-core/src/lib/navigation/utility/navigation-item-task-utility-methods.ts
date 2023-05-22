@@ -7,6 +7,7 @@ import {UserFilterConstants} from '../../filter/models/user-filter-constants';
 import {FilterField} from '../../data-fields/filter-field/models/filter-field';
 import {SimpleFilter} from '../../filter/models/simple-filter';
 import {MultichoiceField} from '../../data-fields/multichoice-field/models/multichoice-field';
+import {SearchMode} from "../../search/models/component-configuration/search-mode";
 
 /**
  * Extracts the item name and item icon (if any) rom a section of the navigation item task data.
@@ -91,4 +92,25 @@ export function extractFilterFromFilterField(filterField: FilterField): Filter {
         throw new Error('Filter could not be resolved');
     }
     return SimpleFilter.fromQuery({query: filterField.value}, filterField.filterMetadata.filterType);
+}
+
+/**
+ * Extracts the selected search type from enumeration field of the navigation item task data.
+ * @returns a {@link SearchMode} containing {@link SearchMode.ADVANCED} or {@link SearchMode.FULLTEXT} or {@link undefined}
+ * if unexpected value is found
+ * */
+export function extractSearchTypeFromData(dataSection: Array<DataGroup>, typeFieldId: string): SearchMode {
+    const typeField = getFieldFromDataGroups(dataSection, typeFieldId);
+    if (typeField === undefined) {
+        throw new Error('Navigation entry search type field could not be resolved');
+    }
+
+    switch (typeField.value) {
+        case 'fulltext':
+            return SearchMode.FULLTEXT;
+        case 'fulltext_advanced':
+            return SearchMode.ADVANCED;
+        default:
+            return undefined
+    }
 }

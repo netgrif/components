@@ -23,9 +23,8 @@ export class DefaultGroupNavigationComponentResolverService extends GroupNavigat
 
         switch (filter.type) {
             case FilterType.CASE:
-                return DefaultTabViewComponent;
             case FilterType.TASK:
-                return DefaultSimpleTaskViewComponent;
+                return DefaultTabViewComponent;
             default:
                 throw new Error(`Cannot resolve group navigation component from '${filter.type}' filter type`);
         }

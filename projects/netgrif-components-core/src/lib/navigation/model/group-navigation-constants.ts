@@ -19,4 +19,24 @@ export enum GroupNavigationConstants {
      * Text field id, that contains the id of the used material icon.
      */
     NAVIGATION_ENTRY_ICON_FIELD_ID_SUFFIX = 'icon',
+
+    /**
+     * Text field id, that contains title of create case button
+     * */
+    ITEM_FIELD_ID_CREATE_CASE_BUTTON_TITLE = 'create_case_button_title',
+
+    /**
+     * Text field id, that contains icon name of create case button
+     * */
+    ITEM_FIELD_ID_CREATE_CASE_BUTTON_ICON = 'create_case_button_icon',
+
+    /**
+     * EnumerationMap field, that contains selected search type for case view
+     * */
+    ITEM_FIELD_ID_CASE_VIEW_SEARCH_TYPE = 'case_view_search_type',
+
+    /**
+     * EnumerationMap field, that contains selected search type for task view
+     * */
+    ITEM_FIELD_ID_TASK_VIEW_SEARCH_TYPE = 'task_view_search_type',
 }
