@@ -3,12 +3,15 @@ import {
     AbstractTabbedCaseViewComponent,
     AllowedNetsService,
     AllowedNetsServiceFactory,
-    BaseAllowedNetsService, Case,
+    BaseAllowedNetsService,
+    Case,
     CaseViewService,
     CategoryFactory,
     CategoryResolverService,
-    FilterExtractionService, FilterType,
+    FilterExtractionService,
+    FilterType,
     LoggerService,
+    MergeOperator,
     NAE_BASE_FILTER,
     NAE_DEFAULT_CASE_SEARCH_CATEGORIES,
     NAE_DEFAULT_TASK_SEARCH_CATEGORIES,
@@ -16,7 +19,8 @@ import {
     NAE_TAB_DATA,
     SavedFilterMetadata,
     SearchMode,
-    SearchService, SimpleFilter,
+    SearchService,
+    SimpleFilter,
     ViewIdService
 } from '@netgrif/components-core';
 import {HeaderComponent} from '../../../../header/header.component';
@@ -91,6 +95,20 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
     }
 
     protected openTab(openCase: Case) {
+        const additionalFilter = this._injectedTabData.taskViewAdditionalFilter;
+        const mergeFilters = this._injectedTabData.taskViewMergeWithBaseFilter
+        const baseFilter = new SimpleFilter('', FilterType.TASK, {case: {id: `${openCase.stringId}`}});
+        let filter;
+        if (additionalFilter === undefined) {
+            filter = baseFilter;
+        } else {
+            if (mergeFilters) {
+                filter = additionalFilter.merge(baseFilter, MergeOperator.AND)
+            } else {
+                filter = additionalFilter
+            }
+        }
+
         this._injectedTabData.tabViewRef.openTab({
             label: {
                 text: openCase.title,
@@ -99,8 +117,8 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
             canBeClosed: true,
             tabContentComponent: this._injectedTabData.tabViewComponent,
             injectedObject: {
-                baseFilter: new SimpleFilter('', FilterType.TASK, {case: {id: `${openCase.stringId}`}}),
-                allowedNets: [openCase.processIdentifier],
+                baseFilter: filter,
+                allowedNets: mergeFilters ? [openCase.processIdentifier, ...this._injectedTabData.taskViewAdditionalAllowedNets] : [],
                 navigationItemTaskData: this._injectedTabData.navigationItemTaskData,
                 taskViewSearchTypeConfiguration: this._injectedTabData.taskViewSearchTypeConfiguration
             },

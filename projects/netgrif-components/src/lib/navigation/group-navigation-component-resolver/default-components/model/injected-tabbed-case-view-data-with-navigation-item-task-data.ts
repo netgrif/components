@@ -2,7 +2,8 @@ import {
     InjectedTabbedCaseViewData,
     DataGroup,
     NewCaseCreationConfigurationData,
-    SearchComponentConfiguration
+    SearchComponentConfiguration,
+    SimpleFilter
 } from '@netgrif/components-core';
 
 /**
@@ -15,4 +16,7 @@ export interface InjectedTabbedCaseViewDataWithNavigationItemTaskData extends In
     newCaseButtonConfiguration: NewCaseCreationConfigurationData;
     caseViewSearchTypeConfiguration: SearchComponentConfiguration;
     taskViewSearchTypeConfiguration: SearchComponentConfiguration;
+    taskViewMergeWithBaseFilter: boolean;
+    taskViewAdditionalFilter: SimpleFilter;
+    taskViewAdditionalAllowedNets: string[];
 }

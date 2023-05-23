@@ -4,6 +4,9 @@ import {
     extractFilterFromData,
     extractIconAndTitle,
     extractSearchTypeFromData,
+    extractCreateCaseButtonTitle,
+    extractCreateCaseButtonIcon,
+    extractIsMergeFromData,
     FilterType,
     groupNavigationViewIdSegmentFactory,
     NAE_NAVIGATION_ITEM_TASK_DATA,
@@ -52,10 +55,8 @@ export class DefaultTabViewComponent {
 
     private getCaseTabs(): TabContent[] {
         const labelData = extractIconAndTitle(this._navigationItemTaskData);
-        const createCaseButtonTitle: string = this._navigationItemTaskData[1]?.fields
-            .find(field => field.stringId === GroupNavigationConstants.ITEM_FIELD_ID_CREATE_CASE_BUTTON_TITLE)?.value;
-        const createCaseButtonIcon: string = this._navigationItemTaskData[1].fields
-            .find(field => field.stringId === GroupNavigationConstants.ITEM_FIELD_ID_CREATE_CASE_BUTTON_ICON)?.value;
+        const createCaseButtonTitle: string = extractCreateCaseButtonTitle(this._navigationItemTaskData)
+        const createCaseButtonIcon: string = extractCreateCaseButtonIcon(this._navigationItemTaskData)
         const newCaseButtonConfig: NewCaseCreationConfigurationData = {
             enableCaseTitle: true,
             isCaseTitleRequired: true,
@@ -76,6 +77,8 @@ export class DefaultTabViewComponent {
             showSearchToggleButton: taskSearchType === SearchMode.ADVANCED,
             initialSearchMode: (taskSearchType === undefined) ? undefined : SearchMode.FULLTEXT,
         }
+        const taskViewAdditionalFilter = this.extractionService.extractCompleteAdditionalFilterFromData(this._navigationItemTaskData);
+        const mergeWithBaseFilter = extractIsMergeFromData(this._navigationItemTaskData)
         return [
             {
                 label: {text: labelData.name, icon: labelData.icon},
@@ -87,7 +90,11 @@ export class DefaultTabViewComponent {
                     navigationItemTaskData: this._navigationItemTaskData,
                     newCaseButtonConfiguration: newCaseButtonConfig,
                     caseViewSearchTypeConfiguration: caseSearchTypeConfig,
-                    taskViewSearchTypeConfiguration: taskSearchTypeConfig
+                    taskViewSearchTypeConfiguration: taskSearchTypeConfig,
+                    taskViewMergeWithBaseFilter: mergeWithBaseFilter,
+                    taskViewAdditionalFilter: taskViewAdditionalFilter,
+                    // todo
+                    // taskViewAdditionalAllowedNets: additionalAllowedNets
                 }
             }
         ];

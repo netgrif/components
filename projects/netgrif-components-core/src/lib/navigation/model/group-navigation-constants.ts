@@ -39,4 +39,15 @@ export enum GroupNavigationConstants {
      * EnumerationMap field, that contains selected search type for task view
      * */
     ITEM_FIELD_ID_TASK_VIEW_SEARCH_TYPE = 'task_view_search_type',
+
+    /**
+     * Boolean field, that is true if user wants to merge base filter and custom filter
+     * */
+    ITEM_FIELD_ID_MERGE_FILTERS = 'merge_filters',
+
+    /**
+     * TaskRef field, that contains taskId of custom filter
+     * */
+    ITEM_FIELD_ID_ADDITIONAL_FILTER_TASKREF= 'current_additional_filter_preview',
+
 }

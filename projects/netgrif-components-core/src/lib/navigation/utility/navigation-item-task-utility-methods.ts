@@ -114,3 +114,42 @@ export function extractSearchTypeFromData(dataSection: Array<DataGroup>, typeFie
             return undefined
     }
 }
+
+/**
+ * Extracts boolean value of merge_filters field
+ * @returns value of extracted field
+ * @throws error if no field is found
+ * */
+export function extractIsMergeFromData(dataSection: Array<DataGroup>): boolean {
+    const mergeField = getFieldFromDataGroups(dataSection, GroupNavigationConstants.ITEM_FIELD_ID_MERGE_FILTERS);
+    if (mergeField === undefined) {
+        throw new Error(`Field ${GroupNavigationConstants.ITEM_FIELD_ID_MERGE_FILTERS} could not be resolved`);
+    }
+    return mergeField.value
+}
+
+/**
+ * Extracts create case button icon from a field.
+ * @returns value of extracted field.
+ * @throws Error if no field is found
+ * */
+export function extractCreateCaseButtonIcon(dataSection: Array<DataGroup>): string {
+    const iconField = getFieldFromDataGroups(dataSection, GroupNavigationConstants.ITEM_FIELD_ID_CREATE_CASE_BUTTON_ICON);
+    if (iconField === undefined) {
+        throw new Error('Navigation entry create case button icon field could not be resolved');
+    }
+    return iconField.value;
+}
+
+/**
+ * Extracts create case button title from a field.
+ * @returns value of extracted field.
+ * @throws Error if no field is found
+ * */
+export function extractCreateCaseButtonTitle(dataSection: Array<DataGroup>): string {
+    const titleField = getFieldFromDataGroups(dataSection, GroupNavigationConstants.ITEM_FIELD_ID_CREATE_CASE_BUTTON_TITLE);
+    if (titleField === undefined) {
+        throw new Error('Navigation entry create case button title field could not be resolved');
+    }
+    return titleField.value;
+}

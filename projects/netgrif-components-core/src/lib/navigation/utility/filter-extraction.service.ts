@@ -11,7 +11,7 @@ import {MergeOperator} from '../../filter/models/merge-operator';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {FilterField} from '../../data-fields/filter-field/models/filter-field';
 import {DataField} from '../../data-fields/models/abstract-data-field';
-import {FilterType} from "../../filter/models/filter-type";
+import {GroupNavigationConstants} from "../model/group-navigation-constants";
 
 /**
  * This service is able to load the full saved filter including all of its ancestor filters.
@@ -21,7 +21,7 @@ import {FilterType} from "../../filter/models/filter-type";
 })
 export class FilterExtractionService {
 
-    // the same regexs is used in a backend filter process action. Please keep them in sync
+    // the same regex is used in a backend filter process action. Please keep them in sync
     protected static readonly UNTABBED_VIEW_ID_EXTRACTOR = '^.*?(-\\d+)?$';
 
     constructor(protected _filterRepository: FilterRepository,
@@ -29,8 +29,17 @@ export class FilterExtractionService {
                 protected _log: LoggerService) {
     }
 
-    public extractCompleteFilterFromData(dataSection: Array<DataGroup>): Filter | undefined {
-        const filterIndex = getFieldIndexFromDataGroups(dataSection, UserFilterConstants.FILTER_FIELD_ID);
+    public extractCompleteAdditionalFilterFromData(dataSection: Array<DataGroup>): Filter | undefined {
+        const taskRefIndex = getFieldIndexFromDataGroups(dataSection, GroupNavigationConstants.ITEM_FIELD_ID_ADDITIONAL_FILTER_TASKREF);
+        if (taskRefIndex === undefined) {
+            return undefined;
+        }
+
+        return this.extractCompleteFilterFromData(dataSection.slice(taskRefIndex.dataGroupIndex + 1));
+    }
+
+    public extractCompleteFilterFromData(dataSection: Array<DataGroup>, fieldId: string = UserFilterConstants.FILTER_FIELD_ID): Filter | undefined {
+        const filterIndex = getFieldIndexFromDataGroups(dataSection, fieldId);
 
         if (filterIndex === undefined) {
             return undefined;
@@ -47,7 +56,7 @@ export class FilterExtractionService {
 
         const parentFilter = this.extractCompleteFilterFromData(dataSection.slice(filterIndex.dataGroupIndex + 1));
 
-        if (parentFilter !== undefined && parentFilter.type !== FilterType.CASE) {
+        if (parentFilter !== undefined && parentFilter.type === filterSegment.type) {
             return filterSegment.merge(parentFilter, MergeOperator.AND);
         }
 
