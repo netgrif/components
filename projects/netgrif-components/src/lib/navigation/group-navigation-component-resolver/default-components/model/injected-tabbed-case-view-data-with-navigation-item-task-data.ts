@@ -15,6 +15,7 @@ export interface InjectedTabbedCaseViewDataWithNavigationItemTaskData extends In
     navigationItemTaskData: Array<DataGroup>;
     newCaseButtonConfiguration: NewCaseCreationConfigurationData;
     caseViewSearchTypeConfiguration: SearchComponentConfiguration;
+    caseViewShowDeleteMenu: boolean,
     taskViewSearchTypeConfiguration: SearchComponentConfiguration;
     taskViewMergeWithBaseFilter: boolean;
     taskViewAdditionalFilter: SimpleFilter;

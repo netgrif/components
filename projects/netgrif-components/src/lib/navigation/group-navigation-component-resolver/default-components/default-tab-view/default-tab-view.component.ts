@@ -7,6 +7,7 @@ import {
     extractCreateCaseButtonTitle,
     extractCreateCaseButtonIcon,
     extractIsMergeFromData,
+    extractShowDeleteMenuFromData,
     FilterType,
     groupNavigationViewIdSegmentFactory,
     NAE_NAVIGATION_ITEM_TASK_DATA,
@@ -84,6 +85,8 @@ export class DefaultTabViewComponent {
 
         const additionalAllowedNets = this.extractionService.extractAdditionalFilterAllowedNets(this._navigationItemTaskData)?.allowedNetsIdentifiers;
 
+        const showDeleteMenu = extractShowDeleteMenuFromData(this._navigationItemTaskData)
+
         return [
             {
                 label: {text: labelData.name, icon: labelData.icon},
@@ -95,6 +98,7 @@ export class DefaultTabViewComponent {
                     navigationItemTaskData: this._navigationItemTaskData,
                     newCaseButtonConfiguration: newCaseButtonConfig,
                     caseViewSearchTypeConfiguration: caseSearchTypeConfig,
+                    caseViewShowDeleteMenu: showDeleteMenu,
                     taskViewSearchTypeConfiguration: taskSearchTypeConfig,
                     taskViewMergeWithBaseFilter: mergeWithBaseFilter,
                     taskViewAdditionalFilter: taskViewAdditionalFilter,

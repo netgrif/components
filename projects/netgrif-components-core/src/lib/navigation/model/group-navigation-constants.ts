@@ -50,4 +50,9 @@ export enum GroupNavigationConstants {
      * */
     ITEM_FIELD_ID_ADDITIONAL_FILTER_TASKREF= 'current_additional_filter_preview',
 
+    /**
+     * Boolean field, that is true if the user wants to see delete menu in case view
+     * */
+    ITEM_FIELD_ID_SHOW_DELETE_MENU= 'show_delete_menu',
+
 }

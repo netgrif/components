@@ -157,3 +157,14 @@ export function extractCreateCaseButtonTitle(dataSection: Array<DataGroup>): str
     }
     return titleField.value;
 }
+
+/**
+ * Extracts show delete menu value from a field
+ * */
+export function extractShowDeleteMenuFromData(dataSection: Array<DataGroup>): boolean {
+    const showField = getFieldFromDataGroups(dataSection, GroupNavigationConstants.ITEM_FIELD_ID_SHOW_DELETE_MENU);
+    if (showField === undefined) {
+        throw new Error(`Field ${GroupNavigationConstants.ITEM_FIELD_ID_SHOW_DELETE_MENU} could not be resolved`);
+    }
+    return showField.value;
+}
