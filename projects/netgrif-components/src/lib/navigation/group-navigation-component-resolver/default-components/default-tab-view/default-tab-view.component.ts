@@ -78,7 +78,10 @@ export class DefaultTabViewComponent {
             initialSearchMode: (taskSearchType === undefined) ? undefined : SearchMode.FULLTEXT,
         }
         const taskViewAdditionalFilter = this.extractionService.extractCompleteAdditionalFilterFromData(this._navigationItemTaskData);
-        const mergeWithBaseFilter = extractIsMergeFromData(this._navigationItemTaskData)
+        const mergeWithBaseFilter = extractIsMergeFromData(this._navigationItemTaskData);
+
+        const additionalAllowedNets = this.extractionService.extractAdditionalFilterAllowedNets(this._navigationItemTaskData)?.allowedNetsIdentifiers;
+
         return [
             {
                 label: {text: labelData.name, icon: labelData.icon},
@@ -93,8 +96,7 @@ export class DefaultTabViewComponent {
                     taskViewSearchTypeConfiguration: taskSearchTypeConfig,
                     taskViewMergeWithBaseFilter: mergeWithBaseFilter,
                     taskViewAdditionalFilter: taskViewAdditionalFilter,
-                    // todo
-                    // taskViewAdditionalAllowedNets: additionalAllowedNets
+                    taskViewAdditionalAllowedNets: additionalAllowedNets
                 }
             }
         ];

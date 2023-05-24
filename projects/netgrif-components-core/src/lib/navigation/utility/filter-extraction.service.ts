@@ -12,6 +12,12 @@ import {TaskResourceService} from '../../resources/engine-endpoint/task-resource
 import {FilterField} from '../../data-fields/filter-field/models/filter-field';
 import {DataField} from '../../data-fields/models/abstract-data-field';
 import {GroupNavigationConstants} from "../model/group-navigation-constants";
+import {AllowedNetsService} from "../../allowed-nets/services/allowed-nets.service";
+import {
+    AllowedNetsServiceFactory,
+    navigationItemTaskAllowedNetsServiceFactory
+} from "../../allowed-nets/services/factory/allowed-nets-service-factory";
+import {BaseAllowedNetsService} from "../../allowed-nets/services/base-allowed-nets.service";
 
 /**
  * This service is able to load the full saved filter including all of its ancestor filters.
@@ -26,7 +32,21 @@ export class FilterExtractionService {
 
     constructor(protected _filterRepository: FilterRepository,
                 protected _taskResourceService: TaskResourceService,
+                protected _factory: AllowedNetsServiceFactory,
+                protected baseAllowedNets: BaseAllowedNetsService,
                 protected _log: LoggerService) {
+    }
+
+    public extractAdditionalFilterAllowedNets(dataSection: Array<DataGroup>): AllowedNetsService {
+        const taskRefIndex = getFieldIndexFromDataGroups(dataSection, GroupNavigationConstants.ITEM_FIELD_ID_ADDITIONAL_FILTER_TASKREF);
+        if (taskRefIndex === undefined) {
+            return undefined;
+        }
+        const sliced = dataSection.slice(taskRefIndex.dataGroupIndex + 1)
+        if (sliced.length == 0) {
+            return undefined
+        }
+        return navigationItemTaskAllowedNetsServiceFactory(this._factory, this.baseAllowedNets, sliced)
     }
 
     public extractCompleteAdditionalFilterFromData(dataSection: Array<DataGroup>): Filter | undefined {

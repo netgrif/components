@@ -46,7 +46,7 @@ export enum GroupNavigationConstants {
     ITEM_FIELD_ID_MERGE_FILTERS = 'merge_filters',
 
     /**
-     * TaskRef field, that contains taskId of custom filter
+     * TaskRef field, that contains taskId of custom filter for task view
      * */
     ITEM_FIELD_ID_ADDITIONAL_FILTER_TASKREF= 'current_additional_filter_preview',
 

@@ -21,7 +21,8 @@ import {
     SearchMode,
     SearchService,
     SimpleFilter,
-    ViewIdService
+    ViewIdService,
+    Filter
 } from '@netgrif/components-core';
 import {HeaderComponent} from '../../../../header/header.component';
 import {
@@ -95,20 +96,6 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
     }
 
     protected openTab(openCase: Case) {
-        const additionalFilter = this._injectedTabData.taskViewAdditionalFilter;
-        const mergeFilters = this._injectedTabData.taskViewMergeWithBaseFilter
-        const baseFilter = new SimpleFilter('', FilterType.TASK, {case: {id: `${openCase.stringId}`}});
-        let filter;
-        if (additionalFilter === undefined) {
-            filter = baseFilter;
-        } else {
-            if (mergeFilters) {
-                filter = additionalFilter.merge(baseFilter, MergeOperator.AND)
-            } else {
-                filter = additionalFilter
-            }
-        }
-
         this._injectedTabData.tabViewRef.openTab({
             label: {
                 text: openCase.title,
@@ -117,14 +104,45 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
             canBeClosed: true,
             tabContentComponent: this._injectedTabData.tabViewComponent,
             injectedObject: {
-                baseFilter: filter,
-                allowedNets: mergeFilters ? [openCase.processIdentifier, ...this._injectedTabData.taskViewAdditionalAllowedNets] : [],
+                baseFilter: this.resolveFilter(openCase),
+                allowedNets: this.resolveAllowedNets(openCase),
                 navigationItemTaskData: this._injectedTabData.navigationItemTaskData,
                 taskViewSearchTypeConfiguration: this._injectedTabData.taskViewSearchTypeConfiguration
             },
             order: this._injectedTabData.tabViewOrder,
             parentUniqueId: this._injectedTabData.tabUniqueId
         }, this._autoswitchToTaskTab, this._openExistingTab);
+    }
+
+    private resolveFilter(openCase: Case): Filter {
+        const additionalFilter = this._injectedTabData.taskViewAdditionalFilter;
+        const mergeFilters = this._injectedTabData.taskViewMergeWithBaseFilter;
+        const baseFilter = new SimpleFilter('', FilterType.TASK, {case: {id: `${openCase.stringId}`}});
+
+        let filter;
+        if (additionalFilter === undefined) {
+            filter = baseFilter;
+        } else {
+            if (mergeFilters) {
+                filter = additionalFilter.merge(baseFilter, MergeOperator.AND);
+            } else {
+                filter = additionalFilter;
+            }
+        }
+
+        return filter;
+    }
+
+    private resolveAllowedNets(openCase: Case): string[] {
+        const additionalFilter = this._injectedTabData.taskViewAdditionalFilter;
+        if (additionalFilter == undefined) {
+            return [openCase.processIdentifier];
+        }
+
+        const mergeFilters = this._injectedTabData.taskViewMergeWithBaseFilter;
+        const additionalAllowedNets = this._injectedTabData.taskViewAdditionalAllowedNets ? this._injectedTabData.taskViewAdditionalAllowedNets : [];
+
+        return mergeFilters ? [openCase.processIdentifier, ...additionalAllowedNets] : additionalAllowedNets
     }
 
 }
