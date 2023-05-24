@@ -369,8 +369,8 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         const item: NavigationItem = {
             access: {},
             navigation: {
-                icon: itemCase.immediateData.find(f => f.stringId === 'icon')?.value || this.filterIcon,
-                title: this.getTranslation(itemCase.immediateData.find(f => f.stringId === 'name')?.value) || itemCase.title,
+                icon: itemCase.immediateData.find(f => f.stringId === 'menu_icon')?.value || this.filterIcon,
+                title: this.getTranslation(itemCase.immediateData.find(f => f.stringId === 'menu_name')?.value) || itemCase.title,
             },
             routing: {
                 path: this.getItemRoutingPath(itemCase),

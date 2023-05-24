@@ -22,6 +22,7 @@ import {
 import {DefaultTabbedCaseViewComponent} from '../default-tabbed-case-view/default-tabbed-case-view.component';
 import {DefaultTabbedTaskViewComponent} from '../default-tabbed-task-view/default-tabbed-task-view.component';
 import {ActivatedRoute} from '@angular/router';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'nc-default-tab-view',
@@ -37,6 +38,7 @@ export class DefaultTabViewComponent {
     tabs: Array<TabContent>;
 
     constructor(@Inject(NAE_NAVIGATION_ITEM_TASK_DATA) protected _navigationItemTaskData: Array<DataGroup>,
+                protected translationService: TranslateService,
                 protected extractionService: FilterExtractionService) {
         const filter = extractFilterFromData(this._navigationItemTaskData);
         this.tabs = this.getTabs(filter.type);
@@ -54,7 +56,7 @@ export class DefaultTabViewComponent {
     }
 
     private getCaseTabs(): TabContent[] {
-        const labelData = extractIconAndTitle(this._navigationItemTaskData);
+        const labelData = extractIconAndTitle(this._navigationItemTaskData, this.translationService);
         const createCaseButtonTitle: string = extractCreateCaseButtonTitle(this._navigationItemTaskData)
         const createCaseButtonIcon: string = extractCreateCaseButtonIcon(this._navigationItemTaskData)
         const newCaseButtonConfig: NewCaseCreationConfigurationData = {
@@ -103,7 +105,7 @@ export class DefaultTabViewComponent {
     }
 
     private getTaskTabs(): TabContent[] {
-        const labelData = extractIconAndTitle(this._navigationItemTaskData);
+        const labelData = extractIconAndTitle(this._navigationItemTaskData, this.translationService);
         const taskSearchType = extractSearchTypeFromData(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_TASK_VIEW_SEARCH_TYPE);
         const showToggleButton = taskSearchType === SearchMode.ADVANCED
         const searchTypeConfig: SearchComponentConfiguration = {

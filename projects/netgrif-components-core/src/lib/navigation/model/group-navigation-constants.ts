@@ -8,17 +8,17 @@ export enum GroupNavigationConstants {
      */
     GROUP_NAVIGATION_ROUTER_PARAM = 'filterCaseId',
     /**
-     * Field id, that contains the name of the navigation item.
+     * Field id, that contains the tab name of the navigation item.
      */
-    NAVIGATION_ENTRY_TITLE_FIELD_ID_SUFFIX = 'name',
+    NAVIGATION_ENTRY_TITLE_FIELD_ID_SUFFIX = 'tab_name',
     /**
-     * Boolean field id, that determines if the navigation defines an icon.
+     * Boolean field id, that determines if the navigation defines an tab icon.
      */
-    NAVIGATION_ENTRY_ICON_ENABLED_FIELD_ID_SUFFIX = 'use_icon',
+    NAVIGATION_ENTRY_ICON_ENABLED_FIELD_ID_SUFFIX = 'use_tab_icon',
     /**
      * Text field id, that contains the id of the used material icon.
      */
-    NAVIGATION_ENTRY_ICON_FIELD_ID_SUFFIX = 'icon',
+    NAVIGATION_ENTRY_ICON_FIELD_ID_SUFFIX = 'tab_icon',
 
     /**
      * Text field id, that contains title of create case button
