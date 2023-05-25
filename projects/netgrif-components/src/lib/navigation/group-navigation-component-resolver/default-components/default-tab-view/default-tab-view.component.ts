@@ -4,10 +4,7 @@ import {
     extractFilterFromData,
     extractIconAndTitle,
     extractSearchTypeFromData,
-    extractCreateCaseButtonTitle,
-    extractCreateCaseButtonIcon,
-    extractIsMergeFromData,
-    extractShowDeleteMenuFromData,
+    extractFieldValueFromData,
     FilterType,
     groupNavigationViewIdSegmentFactory,
     NAE_NAVIGATION_ITEM_TASK_DATA,
@@ -58,8 +55,9 @@ export class DefaultTabViewComponent {
 
     private getCaseTabs(): TabContent[] {
         const labelData = extractIconAndTitle(this._navigationItemTaskData, this.translationService);
-        const createCaseButtonTitle: string = extractCreateCaseButtonTitle(this._navigationItemTaskData)
-        const createCaseButtonIcon: string = extractCreateCaseButtonIcon(this._navigationItemTaskData)
+
+        const createCaseButtonTitle: string = extractFieldValueFromData<string>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CREATE_CASE_BUTTON_TITLE);
+        const createCaseButtonIcon: string = extractFieldValueFromData(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CREATE_CASE_BUTTON_ICON);
         const newCaseButtonConfig: NewCaseCreationConfigurationData = {
             enableCaseTitle: true,
             isCaseTitleRequired: true,
@@ -74,6 +72,8 @@ export class DefaultTabViewComponent {
             showSearchToggleButton: caseSearchType === SearchMode.ADVANCED,
             initialSearchMode: (caseSearchType === undefined) ? undefined : SearchMode.FULLTEXT,
         }
+        const showDeleteMenu = extractFieldValueFromData<boolean>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_SHOW_DELETE_MENU);
+
         const taskSearchType = extractSearchTypeFromData(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_TASK_VIEW_SEARCH_TYPE);
         const taskSearchTypeConfig: SearchComponentConfiguration = {
             showSearchIcon: true,
@@ -81,11 +81,8 @@ export class DefaultTabViewComponent {
             initialSearchMode: (taskSearchType === undefined) ? undefined : SearchMode.FULLTEXT,
         }
         const taskViewAdditionalFilter = this.extractionService.extractCompleteAdditionalFilterFromData(this._navigationItemTaskData);
-        const mergeWithBaseFilter = extractIsMergeFromData(this._navigationItemTaskData);
-
+        const mergeWithBaseFilter = extractFieldValueFromData<boolean>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_MERGE_FILTERS);
         const additionalAllowedNets = this.extractionService.extractAdditionalFilterAllowedNets(this._navigationItemTaskData)?.allowedNetsIdentifiers;
-
-        const showDeleteMenu = extractShowDeleteMenuFromData(this._navigationItemTaskData)
 
         return [
             {
