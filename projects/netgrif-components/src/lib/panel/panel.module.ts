@@ -16,12 +16,20 @@ import {
 } from '@netgrif/components-core';
 import {TaskContentComponentModule} from '../task-content/task-content.module';
 import {PublicWorkflowPanelComponent} from './public-workflow-panel/public-workflow-panel.component';
-import {SideMenuUserAssignComponentModule} from '../side-menu/content-components/user-assign/side-menu-user-assign-component.module';
+import {
+    SideMenuUserAssignComponentModule
+} from '../side-menu/content-components/user-assign/side-menu-user-assign-component.module';
 import {ImmediateFilterTextComponent} from './immediate/immediate-filter-text/immediate-filter-text.component';
-import {ImmediateFilterTextContentComponent} from './immediate/immediate-filter-text-content/immediate-filter-text-content.component';
+import {
+    ImmediateFilterTextContentComponent
+} from './immediate/immediate-filter-text-content/immediate-filter-text-content.component';
 import {PanelItemComponent} from './panel-item/panel-item.component';
 import {TaskListPaginationComponent} from './task-panel-list-pagination/task-list-pagination.component';
 import { SingleTaskComponent } from './task-panel-single/single-task.component';
+import {
+    SideMenuMultiUserAssignComponentModule
+} from "../side-menu/content-components/multi-user-assign/side-menu-multi-user-assign-component.module";
+import {MatExpansionModule} from '@angular/material/expansion';
 
 @NgModule({
     declarations: [
@@ -47,6 +55,8 @@ import { SingleTaskComponent } from './task-panel-single/single-task.component';
         TaskContentComponentModule,
         SideMenuUserAssignComponentModule,
         CurrencyModule,
+        MatExpansionModule,
+        SideMenuMultiUserAssignComponentModule,
         UtilityModule
     ],
     exports: [
