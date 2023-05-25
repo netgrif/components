@@ -1,13 +1,13 @@
-<mat-form-field [appearance]="multichoiceField.materialAppearance" class="full-width" color="primary">
-    <mat-label *ngIf="!showLargeLayout.value">{{multichoiceField.title}}</mat-label>
-    <mat-select [placeholder]="multichoiceField.placeholder"
+<mat-form-field [appearance]="dataField.materialAppearance" class="full-width" color="primary">
+    <mat-label *ngIf="!showLargeLayout.value">{{dataField.title}}</mat-label>
+    <mat-select [placeholder]="dataField.placeholder"
                 [formControl]="formControlRef"
-                [required]="multichoiceField.behavior.required"
+                [required]="dataField.behavior.required"
                 multiple>
-        <mat-option *ngFor="let option of multichoiceField.choices" [value]="option.key">
+        <mat-option *ngFor="let option of dataField.choices" [value]="option.key">
             {{option.value}}
         </mat-option>
     </mat-select>
-    <mat-hint>{{multichoiceField.description}}</mat-hint>
-    <mat-error *ngIf="multichoiceField.isInvalid(formControlRef)">{{'dataField.validations.required' | translate}}</mat-error>
+    <mat-hint>{{dataField.description}}</mat-hint>
+    <mat-error *ngIf="dataField.isInvalid(formControlRef)">{{'dataField.validations.required' | translate}}</mat-error>
 </mat-form-field>

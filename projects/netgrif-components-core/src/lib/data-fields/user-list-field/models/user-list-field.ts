@@ -2,7 +2,7 @@ import { DataField } from '../../models/abstract-data-field';
 import { Behavior } from '../../models/behavior';
 import { Layout } from '../../models/layout';
 import { Validation } from '../../models/validation';
-import { Component } from '../../models/component';
+import {Component, ComponentPrefixes} from '../../models/component';
 import { UserListValue } from './user-list-value';
 import {AbstractControl, FormControl, ValidatorFn} from "@angular/forms";
 import {ProcessRole} from "../../../resources/interface/process-role";
@@ -17,6 +17,10 @@ export class UserListField extends DataField<UserListValue> {
 
     get roles(): Array<ProcessRole> {
         return this._roles;
+    }
+
+    public getTypedComponentType(): string {
+        return ComponentPrefixes.USER_LIST + this.getComponentType();
     }
 
     protected valueEquality(a: UserListValue, b: UserListValue): boolean {

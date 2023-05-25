@@ -2,7 +2,7 @@ import {Behavior} from '../../models/behavior';
 import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {Layout} from '../../models/layout';
 import {Validation} from '../../models/validation';
-import {Component} from '../../models/component';
+import {Component, ComponentPrefixes} from '../../models/component';
 import {DataField} from '../../models/abstract-data-field';
 
 export enum TextFieldView {
@@ -54,6 +54,9 @@ export class TextField extends DataField<string> {
         super(stringId, title, value, behavior, placeholder, description, layout, validations, _component, parentTaskId);
     }
 
+    public getTypedComponentType(): string {
+        return ComponentPrefixes.TEXT + this.getComponentType();
+    }
     protected resolveValidations(): Array<ValidatorFn> {
         const result = [];
 

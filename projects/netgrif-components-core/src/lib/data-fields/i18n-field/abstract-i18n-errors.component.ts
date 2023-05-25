@@ -1,23 +1,22 @@
 import {TranslateService} from '@ngx-translate/core';
-import {FormControl} from '@angular/forms';
 import {I18nField, I18nFieldValidation} from './models/i18n-field';
-import {Component, Input} from '@angular/core';
-import {WrappedBoolean} from '../data-field-template/models/wrapped-boolean';
+import {Component, Inject, Input, Optional} from '@angular/core';
 import {LanguageIconsService} from './language-icons.service';
+import {AbstractBaseDataFieldComponent} from "../base-component/abstract-base-data-field.component";
+import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../models/data-field-portal-data-injection-token";
 
 
 @Component({
     selector: 'ncc-abstract-i18n-errors',
     template: ''
 })
-export abstract class AbstractI18nErrorsComponent {
+export abstract class AbstractI18nErrorsComponent extends AbstractBaseDataFieldComponent<I18nField> {
 
-    @Input() showLargeLayout: WrappedBoolean;
-    @Input() formControlRef: FormControl;
-    @Input() textI18nField: I18nField;
 
     protected constructor(protected languageIconsService: LanguageIconsService,
-                          protected _translate: TranslateService) {
+                          protected _translate: TranslateService,
+                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<I18nField>) {
+        super(dataFieldPortalData);
     }
 
     getErrorMessage() {
@@ -25,7 +24,7 @@ export abstract class AbstractI18nErrorsComponent {
             return this._translate.instant('dataField.validations.requiredI18n');
         }
         if (this.formControlRef.hasError(I18nFieldValidation.TRANSLATION_REQUIRED)) {
-            const tmp = this.textI18nField.validations.find(value =>
+            const tmp = this.dataField.validations.find(value =>
                 value.validationRule.includes(I18nFieldValidation.TRANSLATION_REQUIRED)
             ).validationRule.split(' ');
             const missingLanguages = tmp[1]
@@ -43,7 +42,7 @@ export abstract class AbstractI18nErrorsComponent {
             );
         }
         if (this.formControlRef.hasError(I18nFieldValidation.TRANSLATION_ONLY)) {
-            const tmp = this.textI18nField.validations.find(value =>
+            const tmp = this.dataField.validations.find(value =>
                 value.validationRule.includes(I18nFieldValidation.TRANSLATION_ONLY)
             ).validationRule.split(' ');
             const onlyLanguages = tmp[1]
@@ -63,7 +62,7 @@ export abstract class AbstractI18nErrorsComponent {
     }
 
     protected resolveErrorMessage(search: string, generalMessage: string) {
-        const validation = this.textI18nField.validations.find(value => value.validationRule.includes(search));
+        const validation = this.dataField.validations.find(value => value.validationRule.includes(search));
         if (validation.validationMessage && validation.validationMessage !== '') {
             return validation.validationMessage;
         }

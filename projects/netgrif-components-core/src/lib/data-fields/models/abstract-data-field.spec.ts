@@ -24,4 +24,8 @@ class TestAbstractDataField extends DataField<any> {
     public checkValues<T>(a: any, b: any): boolean {
         return this.valueEquality(a, b);
     }
+
+    getTypedComponentType(): string {
+        return "default";
+    }
 }

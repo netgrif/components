@@ -61,7 +61,7 @@ describe('DashboardLineChartTextFieldComponent', () => {
     selector: 'nc-test-wrapper',
     template: `
         <nc-dashboard-line-chart-text-field [showLargeLayout]="label"
-                                            [textField]="field"
+                                            [dataField]="field"
                                             [formControlRef]="formControl">
         </nc-dashboard-line-chart-text-field>`
 })

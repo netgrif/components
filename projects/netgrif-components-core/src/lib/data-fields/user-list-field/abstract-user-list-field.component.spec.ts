@@ -61,24 +61,6 @@ describe('AbstractUserListFieldComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should open and close', (done) => {
-        component.selectAbstractUser(TestAssignUserComponent);
-        service.close({opened: true, message: 'Test',
-            data: [new UserValue('test', 'name', 'surname', 'test@email.com')]});
-        expect(component.dataField.value.userValues.get('test').id === 'test').toBeTruthy();
-        done();
-    });
-
-    it('should remove', (done) => {
-        component.selectAbstractUser(TestAssignUserComponent);
-        service.close({opened: true, message: 'Test',
-            data: [new UserValue('test', 'name', 'surname', 'test@email.com')]});
-        expect(component.dataField.value.userValues.get('test').id === 'test').toBeTruthy();
-        component.removeAbstractUser('test');
-        expect(component.dataField.value.userValues.size === 0).toBeTruthy();
-        done();
-    });
-
     afterEach(() => {
         TestBed.resetTestingModule();
     });
@@ -89,11 +71,8 @@ describe('AbstractUserListFieldComponent', () => {
     template: ''
 })
 class TestUserListFieldComponent extends AbstractUserListFieldComponent {
-    constructor(sideMenuService: SideMenuService,
-                snackbar: SnackBarService,
-                translate: TranslateService,
-                @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
-        super(sideMenuService, snackbar, translate, informAboutInvalidData);
+    constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+        super(informAboutInvalidData);
         this.dataField = new UserListField('', '', {
             required: true,
             optional: true,

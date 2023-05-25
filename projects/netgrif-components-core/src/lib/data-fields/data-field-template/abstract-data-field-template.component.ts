@@ -7,7 +7,7 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {FormControl} from "@angular/forms";
 import {ComponentPortal} from "@angular/cdk/portal";
 import {ComponentRegistryService} from "../../registry/component-registry.service";
-import {DATA_FIELD_PORTAL_DATA} from "../models/data-field-portal-data-injection-token";
+import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../models/data-field-portal-data-injection-token";
 
 /**
  * Provides a responsive layout to data fields where their appearance can change based on the width of space they have available.
@@ -44,6 +44,9 @@ export abstract class AbstractDataFieldTemplateComponent implements OnInit {
      * Field offset defined by task
      */
     @Input() public offset = 0;
+
+    @Input() private _additionalFieldProperties: { [ k: number ]: string | number };
+
     @ViewChild('dataFieldContainer') container: ElementRef;
     protected _dataField: DataField<any>;
     protected _isConfiguredNetgrifTemplate = true;
@@ -58,7 +61,8 @@ export abstract class AbstractDataFieldTemplateComponent implements OnInit {
 
     protected constructor(protected _paperView: PaperViewService,
                           protected _config: ConfigurationService,
-                          protected _componentRegistry: ComponentRegistryService) {
+                          protected _componentRegistry: ComponentRegistryService,
+                          protected injector: Injector) {
         const configuredTemplate = this._config.getDatafieldConfiguration();
         this._isConfiguredNetgrifTemplate = configuredTemplate
             && configuredTemplate.template
@@ -87,7 +91,7 @@ export abstract class AbstractDataFieldTemplateComponent implements OnInit {
         } else {
             this._isNetgrifTemplate = this._isConfiguredNetgrifTemplate;
         }
-        this._componentPortal = this.resolveComponentPortal(this.dataField, this.showLargeLayout, this.dataField.formControlRef)
+        this._componentPortal = this.resolveComponentPortal(this.dataField, this.showLargeLayout, this.dataField.formControlRef, this.additionalFieldProperties)
     }
 
     get dataField(): DataField<any> {
@@ -96,6 +100,16 @@ export abstract class AbstractDataFieldTemplateComponent implements OnInit {
 
     get componentPortal(): ComponentPortal<any> {
         return this._componentPortal;
+    }
+
+
+    get additionalFieldProperties(): {[k:number]: string | number} {
+        return this._additionalFieldProperties;
+    }
+
+    @Input()
+    set additionalFieldProperties(value: {[k:number]: string | number}) {
+        this._additionalFieldProperties = value;
     }
 
     /**
@@ -113,21 +127,25 @@ export abstract class AbstractDataFieldTemplateComponent implements OnInit {
 
 
     public hasComponent(): boolean {
-        return !!this.dataField.component?.name && this._componentRegistry.contains(this.dataField.component.name);
+        return this._componentRegistry.contains(this.dataField.getTypedComponentType());
     }
 
-    public resolveComponentPortal(dataField: DataField<any>, showLargeLayout: WrappedBoolean, formControlRef: FormControl): ComponentPortal<any> {
+    public resolveComponentPortal(dataField: DataField<any>, showLargeLayout: WrappedBoolean, formControlRef: FormControl, additionalFieldProperties?: {[k:string]: string | number}): ComponentPortal<any> {
         if (this.hasComponent()) {
-            return this._componentRegistry.get(this.dataField.component.name, Injector.create({providers: [
+            const portalInjector = Injector.create({
+                providers: [
                     {
                         provide: DATA_FIELD_PORTAL_DATA,
                         useValue: {
                             dataField: dataField,
                             showLargeLayout: showLargeLayout,
-                            formControlRef: formControlRef
-                        }
-                    }
-                ]}));
+                            formControlRef: formControlRef,
+                            additionalFieldProperties
+                        } as DataFieldPortalData<any>
+                    }],
+                parent: this.injector
+            });
+            return this._componentRegistry.get(this.dataField.getTypedComponentType(), portalInjector);
         }
         return undefined;
     }

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Injector} from '@angular/core';
 import {AbstractDataFieldTemplateComponent, PaperViewService, ConfigurationService, ComponentRegistryService} from '@netgrif/components-core';
 
 @Component({
@@ -10,7 +10,8 @@ export class DataFieldTemplateComponent extends AbstractDataFieldTemplateCompone
 
     constructor(protected _paperView: PaperViewService,
                 protected _config: ConfigurationService,
-                componentRegistry: ComponentRegistryService) {
-        super(_paperView, _config, componentRegistry);
+                componentRegistry: ComponentRegistryService,
+                injector: Injector) {
+        super(_paperView, _config, componentRegistry, injector);
     }
 }

@@ -8,7 +8,7 @@ export * from './date-field/date-field.component';
 export * from './date-time-field/date-time-field.component';
 export * from './enumeration-field/enumeration-field.component';
 export * from './file-field/file-field.component';
-export * from './file-field-list/file-list-field.component';
+export * from './file-list-field/file-list-field.component';
 export * from './multichoice-field/multichoice-field.component';
 export * from './number-field/number-field.component';
 export * from './text-field/public-api';

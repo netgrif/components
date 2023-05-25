@@ -7,6 +7,9 @@ export interface DataFieldPortalData<T extends DataField<unknown>> {
     dataField: T;
     showLargeLayout: WrappedBoolean;
     formControlRef: FormControl;
+    additionalFieldProperties?: {
+      [k:string]: string | number;
+    };
 }
 
-export const DATA_FIELD_PORTAL_DATA = new InjectionToken<DataFieldPortalData<DataField<unknown>>>('NaeData');
+export const DATA_FIELD_PORTAL_DATA = new InjectionToken<DataFieldPortalData<DataField<unknown>>>('DataFieldPortalData');
