@@ -1,7 +1,7 @@
 import {DataField} from '../../models/abstract-data-field';
 import {Behavior} from '../../models/behavior';
 import {Layout} from '../../models/layout';
-import {Component, ComponentPrefixes} from '../../models/component';
+import {Component, ComponentPrefixes, DEFAULT} from '../../models/component';
 import {Validation} from '../../models/validation';
 
 export enum ButtonFieldValidation {
@@ -18,6 +18,6 @@ export class ButtonField extends DataField<number> {
     }
 
     public getTypedComponentType(): string {
-        return ComponentPrefixes.BUTTON + this.getComponentType();
+        return ComponentPrefixes.BUTTON + DEFAULT;
     }
 }

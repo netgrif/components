@@ -1,6 +1,7 @@
 export * from './data-fields.module';
 
 /* Components */
+export * from './base-component/abstract-base-data-field.component';
 export * from './boolean-field/abstract-boolean-field.component';
 export * from './boolean-field/boolean-default-field/abstract-boolean-default-field.component';
 export * from './button-field/abstract-button-field.component';
