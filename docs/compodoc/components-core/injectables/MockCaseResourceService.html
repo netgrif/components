@@ -121,8 +121,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="9"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/utility/tests/mocks/mock-case-resource.service.ts:9</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="12"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/utility/tests/mocks/mock-case-resource.service.ts:12</a></div>
                 </td>
             </tr>
 
@@ -171,7 +171,7 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>    <code>Observable&lt;undefined&gt;</code>
+                        <b>Returns : </b>    <code>Observable&lt;Page&lt;Case&gt;&gt;</code>
 
                     </div>
                     <div class="io-description">
@@ -187,15 +187,53 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Filter} from &#x27;../../../filter/models/filter&#x27;;
-import {Params} from &#x27;../../../resources/resource-provider.service&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Injectable} from &#x27;@angular/core&#x27;;
 import {Observable, of} from &#x27;rxjs&#x27;;
-import {Injectable} from &#x27;@angular/core&#x27;;
+import {CaseSearchRequestBody} from &#x27;../../../filter/models/case-search-request-body&#x27;;
+import {Filter} from &#x27;../../../filter/models/filter&#x27;;
+import {Case} from &#x27;../../../resources/interface/case&#x27;;
+import {Page} from &#x27;../../../resources/interface/page&#x27;;
+import {Params} from &#x27;../../../resources/resource-provider.service&#x27;;
 
 @Injectable()
 export class MockCaseResourceService {
 
-    public searchCases(filter: Filter, params?: Params): Observable&lt;undefined&gt; {
+    public searchCases(filter: Filter, params?: Params): Observable&lt;Page&lt;Case&gt;&gt; {
+        if ((filter.getRequestBody() as CaseSearchRequestBody).uriNodeId) {
+            return of({
+                content: [
+                    {
+                        lastModified: [2022, 11, 28],
+                        visualId: &#x27;TST-123548&#x27;,
+                        petriNetObjectId: undefined,
+                        processIdentifier: &#x27;test-process&#x27;,
+                        title: &#x27;test case&#x27;,
+                        color: &#x27;black&#x27;,
+                        creationDate: [2022, 11, 28],
+                        immediateData: [{
+                            stringId: &#x27;objectid&#x27;,
+                            type: &#x27;text&#x27;,
+                        }],
+                        author: {
+                            email: &#x27;test@example.com&#x27;,
+                            fullName: &#x27;Test&#x27;,
+                        },
+                        resetArcTokens: {},
+                        stringId: &#x27;objectid&#x27;,
+                        petriNetId: &#x27;objectid&#x27;,
+                        permissions: {
+                            &#x27;objectid&#x27;: {},
+                        },
+                    },
+                ],
+                pagination: {
+                    totalElements: 1,
+                    number: 0,
+                    size: 1,
+                    totalPages: 1,
+                },
+            });
+        }
         return of(undefined);
     }
 }

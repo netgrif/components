@@ -89,6 +89,7 @@
                         <td class="col-md-4">
                             <ul class="index-list">
                                 <li>
+                                            <span class="modifier">Optional</span>
                                         <a href="#portalComponent" 
 >
                                             portalComponent
@@ -138,6 +139,11 @@
                                         </td>
                                     </tr>
 
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
 
 
 
@@ -189,7 +195,7 @@ import {ComponentPortal} from &#x27;@angular/cdk/portal&#x27;;
 
 export interface DashboardCard extends GridElement {
     type: DashboardCardTypes;
-    portalComponent: ComponentPortal&lt;any&gt;;
+    portalComponent?: ComponentPortal&lt;any&gt;;
 }
 </code></pre>
     </div>
