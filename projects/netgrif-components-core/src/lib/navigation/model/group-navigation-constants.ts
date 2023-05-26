@@ -85,4 +85,24 @@ export enum GroupNavigationConstants {
      * */
     ITEM_FIELD_ID_TASK_HEADERS_CHANGEABLE= 'task_is_header_mode_changeable',
 
+    /**
+     * Boolean field, that is true to use default headers configuration for case view
+     * */
+    ITEM_FIELD_ID_USE_CASE_DEFAULT_HEADERS= 'use_case_default_headers',
+
+    /**
+     * Text field, that contains default header metadata separated by comma for case view as a value
+     * */
+    ITEM_FIELD_ID_CASE_DEFAULT_HEADERS= 'case_default_headers',
+
+    /**
+     * Boolean field, that is true to use default headers configuration for task view
+     * */
+    ITEM_FIELD_ID_USE_TASK_DEFAULT_HEADERS= 'use_task_default_headers',
+
+    /**
+     * Text field, that contains default header metadata separated by comma for task view as a value
+     * */
+    ITEM_FIELD_ID_TASK_DEFAULT_HEADERS= 'task_default_headers',
+
 }

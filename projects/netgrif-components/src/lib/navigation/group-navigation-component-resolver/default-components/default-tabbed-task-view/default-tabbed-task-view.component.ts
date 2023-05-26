@@ -11,8 +11,13 @@ import {
     ViewIdService,
     NAE_TASK_VIEW_CONFIGURATION,
     ChangedFieldsService,
+    navigationItemTaskViewDefaultHeadersFactory,
     tabbedTaskViewConfigurationFactory,
-    tabbedAllowedNetsServiceFactory, SearchMode, HeaderMode
+    tabbedAllowedNetsServiceFactory,
+    SearchMode,
+    HeaderMode,
+    NAE_DEFAULT_HEADERS,
+    NAE_NAVIGATION_ITEM_TASK_DATA,
 } from '@netgrif/components-core';
 import {HeaderComponent} from '../../../../header/header.component';
 import {
@@ -49,6 +54,11 @@ export function baseFilterFactory(injectedTabData: InjectedTabbedTaskViewDataWit
             provide: NAE_TASK_VIEW_CONFIGURATION,
             useFactory: tabbedTaskViewConfigurationFactory,
             deps: [NAE_TAB_DATA]
+        },
+        {
+            provide: NAE_DEFAULT_HEADERS,
+            useFactory: navigationItemTaskViewDefaultHeadersFactory,
+            deps: [NAE_NAVIGATION_ITEM_TASK_DATA]
         }
     ]
 })

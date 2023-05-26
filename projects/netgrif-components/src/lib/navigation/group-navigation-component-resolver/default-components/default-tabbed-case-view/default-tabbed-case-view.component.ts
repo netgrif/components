@@ -16,6 +16,7 @@ import {
     MergeOperator,
     NAE_BASE_FILTER,
     NAE_DEFAULT_CASE_SEARCH_CATEGORIES,
+    NAE_DEFAULT_HEADERS,
     NAE_DEFAULT_TASK_SEARCH_CATEGORIES,
     NAE_SEARCH_CATEGORIES,
     NAE_TAB_DATA,
@@ -23,7 +24,9 @@ import {
     SearchMode,
     SearchService,
     SimpleFilter,
-    ViewIdService
+    ViewIdService,
+    navigationItemCaseViewDefaultHeadersFactory,
+    NAE_NAVIGATION_ITEM_TASK_DATA,
 } from '@netgrif/components-core';
 import {HeaderComponent} from '../../../../header/header.component';
 import {
@@ -59,6 +62,11 @@ import {
             useFactory: filterCaseTabbedDataSearchCategoriesFactory,
             deps: [CategoryResolverService, NAE_TAB_DATA, NAE_DEFAULT_CASE_SEARCH_CATEGORIES, NAE_DEFAULT_TASK_SEARCH_CATEGORIES]
         },
+        {
+            provide: NAE_DEFAULT_HEADERS,
+            useFactory: navigationItemCaseViewDefaultHeadersFactory,
+            deps: [NAE_NAVIGATION_ITEM_TASK_DATA]
+        }
     ]
 })
 export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewComponent implements AfterViewInit {

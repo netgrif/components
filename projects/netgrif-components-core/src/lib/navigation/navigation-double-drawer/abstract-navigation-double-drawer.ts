@@ -41,7 +41,6 @@ export const MENU_IDENTIFIERS = [
     'preference_item',
 ];
 export const SETTINGS_TRANSITION_ID = 'item_settings';
-export const FIELD_ID_DEFAULT_HEADERS = 'default_headers';
 
 const LEFT_DRAWER_DEFAULT_WIDTH = 60;
 const RIGHT_DRAWER_DEFAULT_WIDTH = 240;
