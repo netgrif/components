@@ -1,0 +1,24 @@
+.user-item {
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+.user-item:hover {
+    background-color: rgba(0, 0, 0, .14);
+    border-radius: 2.5px;
+}
+
+.icon {
+    margin-right: 16px;
+    height: 40px;
+    width: 40px;
+    font-size: 40px;
+}
+
+.email-selected {
+    font-size: 0.9em;
+}
+
+.email-unselected {
+    font-size: 0.9em;
+}

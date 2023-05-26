@@ -6,6 +6,7 @@
 @import "src/lib/navigation/navigation.theme";
 @import "src/lib/admin/role-assignment/role-assignment.component.theme";
 @import "src/lib/side-menu/content-components/user-assign/user-assign-list/user-assign-item/theme/user-assign-item.component.theme";
+@import "src/lib/side-menu/content-components/admin-impersonate/admin-impersonate-list/admin-impersonate-item/theme/admin-impersonate-item.component.theme";
 @import 'src/lib/view/view.theme';
 @import 'src/lib/tabs/tabs.theme';
 @import "src/lib/search/advanced-search/search-predicate-component/search-predicate.component.theme";
@@ -21,6 +22,7 @@
     @include header-component($app-theme);
     @include roles-assignment-theme($app-theme);
     @include user-assign-item-component-theme($app-theme);
+    @include admin-impersonate-item-component-theme($app-theme);
     @include view-theme($app-theme);
     @include tabs-theme($app-theme);
     @include search-predicate-theme($app-theme);
@@ -38,7 +40,7 @@
     margin-bottom: 16px !important;
 }
 
-.mat-form-field .mat-form-field-prefix {
+nc-number-currency-field .mat-form-field .mat-form-field-prefix {
     position: initial !important;
     padding-right: 4px !important;
 }

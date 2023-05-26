@@ -16,17 +16,16 @@
         <mat-icon>person_add</mat-icon>
         {{'dataField.user.selectUser' | translate}}
     </button>
-    <span *ngIf='dataField?.value?.userValues?.length > 0'>
-        <span *ngFor='let user of dataField.value.userValues' class='user-list-item-margin'>
+    <span *ngIf='dataField?.value?.userValues?.size > 0'>
+        <span *ngFor='let user of dataField.value.userValues | keyvalue' class='user-list-item-margin'>
             <button mat-stroked-button
                     [disabled]='formControl.disabled'
                     color='primary'>
                 <mat-icon>how_to_reg</mat-icon>
-                {{user.fullName}}
-                <mat-icon (click)='deleteUser(user)' color='warn' *ngIf='!formControl.disabled'>close</mat-icon>
+                {{user.value.fullName}}
+                <mat-icon (click)='deleteUser(user.key)' color='warn' *ngIf='!formControl.disabled'>close</mat-icon>
             </button>
-            <mat-error *ngIf='dataField.isInvalid(formControl)'>{{'dataField.validations.required' | translate}}</mat-error>
         </span>
     </span>
-
+    <mat-error *ngIf='dataField.isInvalid(formControl)'>{{'dataField.validations.required' | translate}}</mat-error>
 </ng-template>

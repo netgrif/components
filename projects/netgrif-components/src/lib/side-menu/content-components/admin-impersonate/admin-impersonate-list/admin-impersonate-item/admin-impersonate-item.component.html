@@ -1,0 +1,9 @@
+<div fxLayout="row" fxLayoutAlign="start center" class="user-item" [ngClass]="{
+            'admin-impersonate-item-selected': (selectedId$ | async) === user.id
+        }">
+    <mat-icon class="icon">account_circle</mat-icon>
+    <div fxLayout="column">
+        <span>{{user.fullName}}</span>
+        <span>{{user.email}}</span>
+    </div>
+</div>

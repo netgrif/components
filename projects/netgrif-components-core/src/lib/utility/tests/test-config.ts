@@ -12,13 +12,16 @@ export class TestConfigurationService extends ConfigurationService {
                         login: 'auth/login',
                         logout: 'auth/logout',
                         signup: 'auth/signup',
+                        changePassword: 'auth/changePassword',
                         verification: 'auth/verify',
                         verify: 'auth/token/verify',
                         invite: 'auth/invite',
                         reset: 'auth/reset',
                         recover: '/auth/recover'
                     },
-                    sessionBearer: 'X-Auth-Token'
+                    sessionBearer: 'X-Auth-Token',
+                    sessionTimeoutEnabled: false,
+                    sessionTimeout: 900
                 },
                 resources: [
                     {
@@ -44,6 +47,11 @@ export class TestConfigurationService extends ConfigurationService {
                     },
                     {
                         name: 'dashboard',
+                        address: 'http://localhost:8080/api/',
+                        format: 'json'
+                    },
+                    {
+                        name: 'impersonation',
                         address: 'http://localhost:8080/api/',
                         format: 'json'
                     }

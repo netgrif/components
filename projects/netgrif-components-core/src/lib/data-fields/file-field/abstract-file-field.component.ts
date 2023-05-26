@@ -171,6 +171,8 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             if (!!this.filePreview
                 && !!this.dataField.value
                 && !!this.dataField.value.name) {
+                this.fileForDownload = undefined;
+                this.fileForPreview = undefined;
                 this.initializePreviewIfDisplayable();
             }
         })

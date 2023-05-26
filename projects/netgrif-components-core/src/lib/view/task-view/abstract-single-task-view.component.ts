@@ -1,10 +1,10 @@
-import { Component, Input, OnDestroy } from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 import { AbstractViewWithHeadersComponent } from '../abstract/view-with-headers';
-import { Observable, Subject, Subscription } from 'rxjs';
+import { Observable, ReplaySubject, Subscription } from 'rxjs';
 import { TaskPanelData } from '../../panel/task-panel-list/task-panel-data/task-panel-data';
 import { TaskViewService } from './service/task-view.service';
-import { map, takeUntil } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
+import {AsyncPipe} from "@angular/common";
 
 export class TaskConst {
     public static readonly TRANSITION_ID = 'transitionId';
@@ -18,22 +18,34 @@ export abstract class AbstractSingleTaskViewComponent extends AbstractViewWithHe
 
     @Input() initiallyExpanded: boolean = true;
     @Input() preventCollapse: boolean = true;
-    public task$: Observable<TaskPanelData>;
+
+    @Output() noTaskPresent: EventEmitter<void>;
+    public taskPanelData: ReplaySubject<TaskPanelData>;
     public loading$: Observable<boolean>;
     private transitionId: string;
-    private subRoute: Subscription;
-    protected unsubscribe$: Subject<void>;
+    private subRoute: Subscription | undefined;
+    protected subPanelData: Subscription | undefined;
+    protected subLoading: Subscription | undefined;
 
     protected constructor(protected taskViewService: TaskViewService,
-                          activatedRoute: ActivatedRoute) {
+                          activatedRoute: ActivatedRoute, async: AsyncPipe) {
         super(taskViewService, activatedRoute);
-        this.unsubscribe$ = new Subject<void>();
+        this.noTaskPresent = new EventEmitter<void>();
+        this.taskPanelData = new ReplaySubject<TaskPanelData>(1);
         this.subRoute = this._activatedRoute.paramMap.subscribe(paramMap => {
             if (!!(paramMap?.['params']?.[TaskConst.TRANSITION_ID])) {
                 this.transitionId = paramMap['params'][TaskConst.TRANSITION_ID];
-                this.task$ = this.taskViewService.tasks$.pipe(map<Array<TaskPanelData>, TaskPanelData>(tasks => {
-                    return this.resolveTransitionTask(tasks);
-                }), takeUntil(this.unsubscribe$));
+                this.subPanelData = this.taskViewService.tasks$.subscribe(tasks =>  {
+                    if (!!tasks && tasks.length > 0) {
+                        this.taskPanelData.next(this.resolveTransitionTask(tasks));
+                    } else {
+                        const isLoading = async.transform(this.loading$);
+                        if (!isLoading) {
+                            this.taskPanelData.next(undefined);
+                            this.noTaskPresent.next();
+                        }
+                    }
+                });
             }
         });
         this.loading$ = this.taskViewService.loading$;
@@ -41,9 +53,19 @@ export abstract class AbstractSingleTaskViewComponent extends AbstractViewWithHe
 
     ngOnDestroy() {
         super.ngOnDestroy();
-        this.subRoute.unsubscribe();
-        this.unsubscribe$.next();
-        this.unsubscribe$.complete();
+        if (!!this.subRoute) {
+            this.subRoute.unsubscribe();
+        }
+        if (!!this.subPanelData) {
+            this.subPanelData.unsubscribe();
+        }
+        if (!!this.taskPanelData) {
+            this.taskPanelData.complete();
+        }
+    }
+
+    get task$(): Observable<TaskPanelData> {
+        return this.taskPanelData.asObservable();
     }
 
     private resolveTransitionTask(tasks: Array<TaskPanelData>): TaskPanelData {

@@ -152,8 +152,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="161"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/tabs/interfaces.ts:161</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="164"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/tabs/interfaces.ts:164</a></div>
                 </td>
             </tr>
 
@@ -189,8 +189,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="163"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/tabs/interfaces.ts:163</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="166"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/tabs/interfaces.ts:166</a></div>
                 </td>
             </tr>
 
@@ -226,8 +226,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="157"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/tabs/interfaces.ts:157</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="160"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/tabs/interfaces.ts:160</a></div>
                 </td>
             </tr>
 
@@ -294,8 +294,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="159"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/tabs/interfaces.ts:159</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="162"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/tabs/interfaces.ts:162</a></div>
                 </td>
             </tr>
 
@@ -350,6 +350,7 @@
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Type} from &#x27;@angular/core&#x27;;
 import {Observable, ReplaySubject} from &#x27;rxjs&#x27;;
+import {Filter} from &quot;../filter/models/filter&quot;;
 
 /**
  * Stores information about content of one opened tab in tab view.
@@ -457,6 +458,8 @@ export interface InjectedTabData {
      * stream emits when the tab is closed by any means except for the destruction of the parent component
      */
     tabClosed$: Observable&lt;void&gt;;
+
+    loadFilter?: Filter;
 }
 
 

@@ -998,7 +998,7 @@
                                     snackBarService: SnackBarService,
                                     translate: TranslateService,
                                     publicTaskLoadingService: PublicTaskLoadingService) &#x3D;&gt; {
-    process.getNet(route.snapshot.paramMap.get(&#x27;petriNetId&#x27;)).pipe(mergeMap(net &#x3D;&gt; {
+    process.getNet(atob(route.snapshot.paramMap.get(&#x27;petriNetId&#x27;))).pipe(mergeMap(net &#x3D;&gt; {
         if (net) {
             publicTaskLoadingService.setLoading$(true);
             const newCase &#x3D; {
