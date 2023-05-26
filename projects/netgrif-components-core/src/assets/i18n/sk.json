@@ -109,6 +109,12 @@
         "option-selector": {
             "select": "Zvoliť",
             "choose-one-option": "Vyberte jednu z možností"
+        },
+        "impersonation": {
+            "title": "Zastúpenie používateľa",
+            "submit": "Zastúpiť",
+            "cease": "Zrušiť zastúpenie",
+            "impersonating": "v zastúpení"
         }
     },
     "search": {
@@ -226,6 +232,8 @@
             "phone": "Zadaný text musí byť tel. číslo",
             "email": "Zadaný text musí byť email",
             "dateRange": "Zadaný dátum musí byť v rozsahu {{left}} a {{right}}",
+            "datePast": "Zadaný dátum musí byť pred {{right}}",
+            "dateFuture": "Zadaný dátum musí byť po {{left}}",
             "weekend": "Zadaný dátum musí byť víkendový deň",
             "workday": "Zadaný dátum musí byť pracovný deň",
             "enumeration": "Musí byť vybraná jedna z možností",
@@ -247,7 +255,8 @@
             "maxFilesExceeded": "Je presiahnutý maximálny počet nahratých súborov: ",
             "maxFilesSizeExceeded": "Je presiahnutá maximálna veľkosť nahrávaných súborov: ",
             "notSelectedUser": "Nebol vybraný žiadny používateľ",
-            "userAssigned": "Používateľ {{userName}} bol pridelený"
+            "userAssigned": "Používateľ {{userName}} bol pridelený",
+            "userListAssigned": "Vybraní používatelia {{userNames}} boli pridelení"
         },
         "values": {
             "boolean": {
@@ -275,7 +284,8 @@
             "reset": "Resetovať"
         },
         "user": {
-            "selectUser": "Vyberte používateľa"
+            "selectUser": "Vyberte používateľa",
+            "save": "Priradiť"
         },
         "textarea": {
             "insertText": "Sem zadajte text..."
@@ -297,6 +307,12 @@
             "reset": "Obnova hesla",
             "sign": "Registrovať",
             "enterPass": "Zadajte svoje heslo"
+        },
+        "changePassword": {
+            "oldPassword": "Zadajte staré heslo",
+            "enterNewPass": "Zadajte nové heslo",
+            "repeatNewPass": "Zopakujte nové heslo",
+            "changePass": "Zmeniť heslo"
         },
         "register": {
             "email": "Váš email",
@@ -459,5 +475,22 @@
     },
     "dynamicNavigation": {
         "couldNotResolveView": "Počas načítania zobrazenia sa vyskytla chyba. Zobrazenie nie je možné zobraziť"
+    },
+    "impersonation": {
+        "user": {
+            "successfullyRepresented": "Používateľ bol úspešne zastúpený",
+            "currentlyAlreadyRepresented": "Používateľ je momentálne zastupovaný",
+            "currentlyLogged": "Používateľ je momentálne prihlásený"
+        },
+        "action": {
+            "failed": "Akciu sa nepodarilo vykonať",
+            "deactivated": "Zastupovanie bolo úspešne deaktivované"
+        }
+    },
+    "session": {
+        "expireTitle": "Platnosť Vašej relácie čoskoro vyprší",
+        "expireDetail": "Vaša relácia čoskoro vyprší.\n\nBudete odhlásený za {{time}} sekúnd.",
+        "exitButton": "Odhlásiť sa",
+        "refreshButton": "Zostaň pripojený"
     }
 }

@@ -180,7 +180,11 @@ export abstract class AbstractHeaderService implements OnDestroy {
     protected updateHeaderColumnCount(): void {
         let headers = this._headerState.selectedHeaders;
         if (headers.length < this.headerColumnCount) {
-            while (headers.length !== this.headerColumnCount) {
+            const lastSelectedHeaders = this._headerState.lastSelectedHeaders;
+            if (headers.length < this.headerColumnCount && !!lastSelectedHeaders && headers.length < lastSelectedHeaders.length) {
+                headers.push(...lastSelectedHeaders.slice(headers.length, this.headerColumnCount));
+            }
+            while (headers.length <= this.headerColumnCount) {
                 headers.push(null);
             }
         } else if (headers.length > this.headerColumnCount) {

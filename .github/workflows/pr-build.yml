@@ -3,14 +3,41 @@ on:
     pull_request:
         types: [ opened, synchronize, reopened ]
 jobs:
-    test:
-        name: Test
+    matrix-test:
+        name: Matrix Test
         runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                node-version: [ 14, 16, 18 ]
         steps:
-            -   uses: actions/checkout@v2
+            -   uses: actions/checkout@v3
                 with:
                     fetch-depth: 0
-            -   uses: actions/setup-node@v2
+            -   uses: actions/setup-node@v3
+                name: Full Test on Node.js version ${{ matrix.node-version }}
+                with:
+                    node-version: ${{ matrix.node-version }}
+            -   run: npm i
+            -   name: Build & test components-core
+                run: |
+                    npm run ncc:build
+                    npm run ncc:full-test
+                    npm i ./dist/netgrif-components-core --save-optional
+            -   name: Build & test components
+                run: |
+                    npm run nc:build
+                    npm run nc:full-test
+                    npm i ./dist/netgrif-components --save-optional
+            -   name: Build examples
+                run: npm run example:build
+    test:
+        name: Test with SonarCloud
+        runs-on: ubuntu-latest
+        steps:
+            -   uses: actions/checkout@v3
+                with:
+                    fetch-depth: 0
+            -   uses: actions/setup-node@v3
                 name: Full Test
                 with:
                     node-version: 16
