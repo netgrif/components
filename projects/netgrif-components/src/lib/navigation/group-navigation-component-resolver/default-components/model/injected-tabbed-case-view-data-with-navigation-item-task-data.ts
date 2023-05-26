@@ -13,11 +13,19 @@ import {
  */
 export interface InjectedTabbedCaseViewDataWithNavigationItemTaskData extends InjectedTabbedCaseViewData {
     navigationItemTaskData: Array<DataGroup>;
+
     newCaseButtonConfiguration: NewCaseCreationConfigurationData;
     caseViewSearchTypeConfiguration: SearchComponentConfiguration;
-    caseViewShowDeleteMenu: boolean,
+    caseViewShowDeleteMenu: boolean;
+    caseViewHeadersChangeable: boolean;
+    caseViewHeadersMode: string[];
+    caseViewDefaultHeadersMode: string;
+
     taskViewSearchTypeConfiguration: SearchComponentConfiguration;
     taskViewMergeWithBaseFilter: boolean;
     taskViewAdditionalFilter: SimpleFilter;
     taskViewAdditionalAllowedNets: string[];
+    taskViewHeadersChangeable: boolean;
+    taskViewHeadersMode: string[];
+    taskViewDefaultHeadersMode: string;
 }

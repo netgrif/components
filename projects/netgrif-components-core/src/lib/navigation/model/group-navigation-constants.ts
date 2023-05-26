@@ -55,4 +55,34 @@ export enum GroupNavigationConstants {
      * */
     ITEM_FIELD_ID_SHOW_DELETE_MENU= 'show_delete_menu',
 
+    /**
+     * MultichoiceMap field, that contains selected header modes for case view as a value
+     * */
+    ITEM_FIELD_ID_CASE_HEADERS_MODE= 'case_headers_mode',
+
+    /**
+     * EnumerationMap field, that contains selected default header mode for case view as a value
+     * */
+    ITEM_FIELD_ID_CASE_DEFAULT_HEADERS_MODE= 'case_headers_default_mode',
+
+    /**
+     * Boolean field, that is true to make mode menu in case view visible
+     * */
+    ITEM_FIELD_ID_CASE_HEADERS_CHANGEABLE= 'case_is_header_mode_changeable',
+
+    /**
+     * MultichoiceMap field, that contains selected header modes for task view as a value
+     * */
+    ITEM_FIELD_ID_TASK_HEADERS_MODE= 'task_headers_mode',
+
+    /**
+     * EnumerationMap field, that contains selected default header mode for task view as a value
+     * */
+    ITEM_FIELD_ID_TASK_DEFAULT_HEADERS_MODE= 'task_headers_default_mode',
+
+    /**
+     * Boolean field, that is true to make mode menu in task view visible
+     * */
+    ITEM_FIELD_ID_TASK_HEADERS_CHANGEABLE= 'task_is_header_mode_changeable',
+
 }

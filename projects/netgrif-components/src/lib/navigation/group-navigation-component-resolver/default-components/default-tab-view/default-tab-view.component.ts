@@ -73,6 +73,9 @@ export class DefaultTabViewComponent {
             initialSearchMode: (caseSearchType === undefined) ? undefined : SearchMode.FULLTEXT,
         }
         const showDeleteMenu = extractFieldValueFromData<boolean>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_SHOW_DELETE_MENU);
+        const caseViewHeadersChangeable = extractFieldValueFromData<boolean>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_HEADERS_CHANGEABLE);
+        const caseViewHeadersMode = extractFieldValueFromData<string[]>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_HEADERS_MODE);
+        const caseViewDefaultHeadersMode = extractFieldValueFromData<string[]>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_DEFAULT_HEADERS_MODE);
 
         const taskSearchType = extractSearchTypeFromData(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_TASK_VIEW_SEARCH_TYPE);
         const taskSearchTypeConfig: SearchComponentConfiguration = {
@@ -80,6 +83,9 @@ export class DefaultTabViewComponent {
             showSearchToggleButton: taskSearchType === SearchMode.ADVANCED,
             initialSearchMode: (taskSearchType === undefined) ? undefined : SearchMode.FULLTEXT,
         }
+        const taskViewHeadersChangeable = extractFieldValueFromData<boolean>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_TASK_HEADERS_CHANGEABLE);
+        const taskViewHeadersMode = extractFieldValueFromData<string[]>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_TASK_HEADERS_MODE);
+        const taskViewDefaultHeadersMode = extractFieldValueFromData<string[]>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_TASK_DEFAULT_HEADERS_MODE);
         const taskViewAdditionalFilter = this.extractionService.extractCompleteAdditionalFilterFromData(this._navigationItemTaskData);
         const mergeWithBaseFilter = extractFieldValueFromData<boolean>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_MERGE_FILTERS);
         const additionalAllowedNets = this.extractionService.extractAdditionalFilterAllowedNets(this._navigationItemTaskData)?.allowedNetsIdentifiers;
@@ -93,10 +99,18 @@ export class DefaultTabViewComponent {
                     tabViewComponent: DefaultTabbedTaskViewComponent,
                     tabViewOrder: 0,
                     navigationItemTaskData: this._navigationItemTaskData,
+
                     newCaseButtonConfiguration: newCaseButtonConfig,
                     caseViewSearchTypeConfiguration: caseSearchTypeConfig,
                     caseViewShowDeleteMenu: showDeleteMenu,
+                    caseViewHeadersChangeable: caseViewHeadersChangeable,
+                    caseViewHeadersMode: caseViewHeadersMode,
+                    caseViewDefaultHeadersMode: caseViewDefaultHeadersMode,
+
                     taskViewSearchTypeConfiguration: taskSearchTypeConfig,
+                    taskViewHeadersChangeable: taskViewHeadersChangeable,
+                    taskViewHeadersMode: taskViewHeadersMode,
+                    taskViewDefaultHeadersMode: taskViewDefaultHeadersMode,
                     taskViewMergeWithBaseFilter: mergeWithBaseFilter,
                     taskViewAdditionalFilter: taskViewAdditionalFilter,
                     taskViewAdditionalAllowedNets: additionalAllowedNets
@@ -108,6 +122,9 @@ export class DefaultTabViewComponent {
     private getTaskTabs(): TabContent[] {
         const labelData = extractIconAndTitle(this._navigationItemTaskData, this.translationService);
         const taskSearchType = extractSearchTypeFromData(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_TASK_VIEW_SEARCH_TYPE);
+        const headersChangeable = extractFieldValueFromData<boolean>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_TASK_HEADERS_CHANGEABLE);
+        const headersMode = extractFieldValueFromData<string[]>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_TASK_HEADERS_MODE);
+        const defaultHeadersMode = extractFieldValueFromData<string[]>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_TASK_DEFAULT_HEADERS_MODE);
         const showToggleButton = taskSearchType === SearchMode.ADVANCED
         const searchTypeConfig: SearchComponentConfiguration = {
             showSearchIcon: true,
@@ -123,7 +140,10 @@ export class DefaultTabViewComponent {
                 injectedObject: {
                     navigationItemTaskData: this._navigationItemTaskData,
                     baseFilter: filter,
-                    taskViewSearchTypeConfiguration: searchTypeConfig
+                    searchTypeConfiguration: searchTypeConfig,
+                    headersChangeable: headersChangeable,
+                    headersMode: headersMode,
+                    defaultHeadersMode: defaultHeadersMode
                 }
             }
         ];

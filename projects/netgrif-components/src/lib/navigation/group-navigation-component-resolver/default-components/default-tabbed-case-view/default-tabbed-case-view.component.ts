@@ -8,8 +8,10 @@ import {
     CaseViewService,
     CategoryFactory,
     CategoryResolverService,
+    Filter,
     FilterExtractionService,
     FilterType,
+    HeaderMode,
     LoggerService,
     MergeOperator,
     NAE_BASE_FILTER,
@@ -21,8 +23,7 @@ import {
     SearchMode,
     SearchService,
     SimpleFilter,
-    ViewIdService,
-    Filter
+    ViewIdService
 } from '@netgrif/components-core';
 import {HeaderComponent} from '../../../../header/header.component';
 import {
@@ -68,6 +69,9 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
     showToggleButton: boolean;
     enableSearch: boolean;
     showDeleteMenu: boolean;
+    headersChangeable: boolean;
+    headersMode: string[];
+    defaultHeadersMode: HeaderMode;
 
     constructor(caseViewService: CaseViewService,
                 loggerService: LoggerService,
@@ -78,10 +82,14 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
         this.showToggleButton = _injectedTabData.caseViewSearchTypeConfiguration.showSearchToggleButton;
         this.enableSearch = !(_injectedTabData.caseViewSearchTypeConfiguration.initialSearchMode === undefined);
         this.showDeleteMenu = _injectedTabData.caseViewShowDeleteMenu;
+        this.headersChangeable = _injectedTabData.caseViewHeadersChangeable;
+        this.headersMode = _injectedTabData.caseViewHeadersMode ? _injectedTabData.caseViewHeadersMode : [];
+        this.defaultHeadersMode = this.resolveHeaderMode(_injectedTabData.caseViewDefaultHeadersMode);
     }
 
     ngAfterViewInit(): void {
         super.initializeHeader(this.caseHeaderComponent);
+        this.caseHeaderComponent.changeHeadersMode(this.defaultHeadersMode, false);
     }
 
     loadFilter(filterData: SavedFilterMetadata) {
@@ -109,7 +117,10 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
                 baseFilter: this.resolveFilter(openCase),
                 allowedNets: this.resolveAllowedNets(openCase),
                 navigationItemTaskData: this._injectedTabData.navigationItemTaskData,
-                taskViewSearchTypeConfiguration: this._injectedTabData.taskViewSearchTypeConfiguration
+                searchTypeConfiguration: this._injectedTabData.taskViewSearchTypeConfiguration,
+                headersChangeable: this._injectedTabData.taskViewHeadersChangeable,
+                headersMode: this._injectedTabData.taskViewHeadersMode,
+                defaultHeadersMode: this._injectedTabData.taskViewDefaultHeadersMode
             },
             order: this._injectedTabData.tabViewOrder,
             parentUniqueId: this._injectedTabData.tabUniqueId
@@ -147,4 +158,20 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
         return mergeFilters ? [openCase.processIdentifier, ...additionalAllowedNets] : additionalAllowedNets
     }
 
+    isMenuOptionEnabled(option: string): boolean {
+        return this.headersMode.some(e => e === option);
+    }
+
+    private resolveHeaderMode(mode: string): HeaderMode {
+        switch (mode) {
+            case 'sort':
+                return HeaderMode.SORT;
+            case 'edit':
+                return HeaderMode.EDIT;
+            case 'search':
+                return HeaderMode.SEARCH;
+            default:
+                return undefined;
+        }
+    }
 }

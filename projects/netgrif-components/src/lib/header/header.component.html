@@ -19,25 +19,25 @@
             </div>
         </div>
         <div fxLayout="row" fxLayoutAlign="end center" fxFlex="5" class="flex-5">
-            <div *ngIf="!hideEditMode">
+            <div *ngIf="!hideHeaderMenu">
                 <button mat-icon-button [matMenuTriggerFor]="headerMenu">
                     <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #headerMenu="matMenu">
-                    <div *ngIf="headerService.headerState.mode !== headerModeEnum.EDIT">
+                    <div *ngIf="headerService.headerState.mode !== headerModeEnum.EDIT && showSortButton">
                         <button mat-menu-item
                                 [ngClass]="{'active-header-item': headerService.headerState.mode === headerModeEnum.SORT}"
                                 (click)="headerService.changeMode(headerModeEnum.SORT, false)">
                             <mat-icon>sort</mat-icon>
                             {{ 'headers.orderMode' | translate}}
                         </button>
-                        <button *ngIf="type === headerTypeEnum.CASE" mat-menu-item
+                        <button *ngIf="type === headerTypeEnum.CASE && showSearchButton" mat-menu-item
                                 [ngClass]="{'active-header-item': headerService.headerState.mode === headerModeEnum.SEARCH}"
                                 (click)="headerService.changeMode(headerModeEnum.SEARCH, false)">
                             <mat-icon>search</mat-icon>
                             {{ 'headers.searchMode' | translate}}
                         </button>
-                        <button mat-menu-item (click)="headerService.changeMode(headerModeEnum.EDIT)">
+                        <button *ngIf="showEditButton" mat-menu-item (click)="headerService.changeMode(headerModeEnum.EDIT)">
                             <mat-icon>edit</mat-icon>
                             {{ 'headers.editMode' | translate}}
                         </button>

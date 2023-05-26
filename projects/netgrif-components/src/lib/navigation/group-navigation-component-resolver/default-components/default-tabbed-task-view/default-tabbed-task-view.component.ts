@@ -12,7 +12,7 @@ import {
     NAE_TASK_VIEW_CONFIGURATION,
     ChangedFieldsService,
     tabbedTaskViewConfigurationFactory,
-    tabbedAllowedNetsServiceFactory, SearchMode
+    tabbedAllowedNetsServiceFactory, SearchMode, HeaderMode
 } from '@netgrif/components-core';
 import {HeaderComponent} from '../../../../header/header.component';
 import {
@@ -59,16 +59,38 @@ export class DefaultTabbedTaskViewComponent extends AbstractTabbedTaskViewCompon
     initialSearchMode: SearchMode;
     showToggleButton: boolean;
     enableSearch: boolean;
+    headersChangeable: boolean;
+    headersMode: string[];
+    defaultHeadersMode: HeaderMode;
 
     constructor(taskViewService: TaskViewService, @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedTaskViewDataWithNavigationItemTaskData) {
         super(taskViewService, injectedTabData);
 
-        this.initialSearchMode = injectedTabData.taskViewSearchTypeConfiguration.initialSearchMode;
-        this.showToggleButton = injectedTabData.taskViewSearchTypeConfiguration.showSearchToggleButton;
-        this.enableSearch = !(injectedTabData.taskViewSearchTypeConfiguration.initialSearchMode === undefined);
+        this.initialSearchMode = injectedTabData.searchTypeConfiguration.initialSearchMode;
+        this.showToggleButton = injectedTabData.searchTypeConfiguration.showSearchToggleButton;
+        this.enableSearch = !(injectedTabData.searchTypeConfiguration.initialSearchMode === undefined);
+        this.headersChangeable = injectedTabData.headersChangeable;
+        this.headersMode = injectedTabData.headersMode ? injectedTabData.headersMode : [];
+        this.defaultHeadersMode = this.resolveHeaderMode(injectedTabData.defaultHeadersMode);
     }
 
     ngAfterViewInit(): void {
         this.initializeHeader(this.taskHeaderComponent);
+        this.taskHeaderComponent.changeHeadersMode(this.defaultHeadersMode, false);
+    }
+
+    isMenuOptionEnabled(option: string): boolean {
+        return this.headersMode.some(e => e === option);
+    }
+
+    private resolveHeaderMode(mode: string): HeaderMode {
+        switch (mode) {
+            case 'sort':
+                return HeaderMode.SORT;
+            case 'edit':
+                return HeaderMode.EDIT;
+            default:
+                return undefined;
+        }
     }
 }

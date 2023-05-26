@@ -23,7 +23,11 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
     protected readonly DEFAULT_COLUMN_WIDTH = 220;
     protected readonly INPUT_DEBOUNCE_TIME = 600;
     @Input() type: HeaderType = HeaderType.CASE;
-    @Input() hideEditMode = false;
+    @Input() hideHeaderMenu = false;
+    @Input() showEditButton = true;
+    @Input() showSortButton = true;
+    @Input() showSearchButton = true;
+
     public headerService: AbstractHeaderService;
     protected _headerSearch: HeaderSearchService;
     public readonly headerModeEnum = HeaderMode;
@@ -65,6 +69,12 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
             this.headerService.responsiveHeaders = responsive;
         } else {
             this._initResponsiveHeaders = responsive;
+        }
+    }
+
+    public changeHeadersMode(mode: HeaderMode, saveLastMode: boolean = true) {
+        if (this.headerService) {
+            this.headerService.changeMode(mode, saveLastMode)
         }
     }
 
