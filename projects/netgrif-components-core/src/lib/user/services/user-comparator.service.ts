@@ -9,8 +9,9 @@ export class UserComparatorService {
 
   constructor(private _userService: UserService) { }
 
-  public compareUsers(user: IUser): boolean {
-      return user.email === this._userService.user.email ||
+  public compareUsers(user: IUser, acceptImpersonator: boolean = true): boolean {
+      const loggedUser = acceptImpersonator ? this._userService.user.getSelfOrImpersonated() : this._userService.user;
+      return user.email === loggedUser.email ||
           user.email.includes('anonymous') && this._userService.user.email.includes('anonymous');
   }
 }

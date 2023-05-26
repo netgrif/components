@@ -15,6 +15,8 @@ export abstract class ConfigurationService {
     }
 
     /**
+     * Calls to this method should be avoided as creating a deep copy of the configuration has a large overhead
+     *
      * @returns a deep copy of the entire configuration object
      */
     public get(): NetgrifApplicationEngine {
@@ -97,6 +99,10 @@ export abstract class ConfigurationService {
         });
 
         return result;
+    }
+
+    public getConfigurationSubtreeByPath(path: string) : any | undefined {
+        return this.getConfigurationSubtree(path.split('.'));
     }
 
     /**
@@ -184,6 +190,32 @@ export abstract class ConfigurationService {
         return subtree !== undefined ? this.deepCopy(subtree) as Services : undefined;
     }
 
+    /**
+     * @returns the value stored in the [onLogoutRedirect]{@link Services#auth.onLogoutRedirect} attribute if defined.
+     * If not and the deprecated attribute [logoutRedirect]{@link Services#auth.logoutRedirect} is defined then its value is returned.
+     * Otherwise, `undefined` is returned.
+     */
+    public getOnLogoutPath(): string | undefined {
+        return this.configuration?.services?.auth?.onLogoutRedirect ?? this.configuration?.services?.auth?.logoutRedirect;
+    }
+
+    /**
+     * @returns the value stored in the [toLoginRedirect]{@link Services#auth.toLoginRedirect} attribute if defined.
+     * If not and the deprecated attribute [loginRedirect]{@link Services#auth.loginRedirect} is defined then its value is returned.
+     * Otherwise, `undefined` is returned.
+     */
+    public getToLoginPath(): string | undefined {
+        return this.configuration?.services?.auth?.toLoginRedirect ?? this.configuration?.services?.auth?.loginRedirect;
+    }
+
+    /**
+     * @returns the value stored in the [onLoginRedirect]{@link Services#auth.onLoginRedirect} attribute if defined.
+     * Otherwise, `undefined` is returned.
+     */
+    public getOnLoginPath(): string | undefined {
+        return this.configuration?.services?.auth?.onLoginRedirect;
+    }
+
     private getView(searched: string, view: View): Array<string> {
         const paths = [];
         if (!!view.layout && view.layout.name === searched) {
@@ -195,6 +227,23 @@ export abstract class ConfigurationService {
             });
         }
         return paths;
+    }
+
+    /**
+     * @param endpointKey the attribute name of the endpoint address in `nae.json`
+     * @returns the endpoint address or `undefined` if such endpoint is not defined in `nae.json`
+     */
+    public resolveProvidersEndpoint(endpointKey: string): string {
+        const config = this.configuration;
+        if (!config
+            || !config.providers
+            || !config.providers.auth
+            || !config.providers.auth.address
+            || !config.providers.auth.endpoints
+            || !config.providers.auth.endpoints[endpointKey]) {
+            throw new Error('Authentication provider address is not set!');
+        }
+        return config.providers.auth.address + config.providers.auth.endpoints[endpointKey];
     }
 
     private createConfigurationCopy(): any {

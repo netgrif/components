@@ -9,7 +9,8 @@
 
         <mat-accordion multi="true" class="full-width" fxFlex="100">
             <cdk-virtual-scroll-viewport itemSize="50" (scrolledIndexChange)="loadNextPage()"
-                                         class="full-height scroll-container" [ngStyle]="{'width': width ? width : '100%' }">
+                                         class="full-height scroll-container dashboard-case-list"
+                                         [ngStyle]="{'width': width ? width : '100%' }">
 
                 <nc-case-panel [responsiveBody]="responsiveBody"
                                [textEllipsis]="textEllipsis"

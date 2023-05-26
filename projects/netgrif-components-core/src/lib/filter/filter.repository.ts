@@ -138,4 +138,11 @@ export class FilterRepository {
         });
         return result;
     }
+
+    /**
+     * Removes all stored filters from the repository
+     */
+    public removeAllFilters(): void {
+        this._filters = new Map<string, Filter>();
+    }
 }

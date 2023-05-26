@@ -109,6 +109,12 @@
         "option-selector": {
             "select": "Select",
             "choose-one-option": "Choose one of the provided options"
+        },
+        "impersonation": {
+            "title": "Impersonate user",
+            "submit": "Impersonate",
+            "cease": "Cancel impersonation",
+            "impersonating": "impersonating"
         }
     },
     "search": {
@@ -226,6 +232,8 @@
             "phone": "Entered text must be in telephone number format",
             "email": "Entered text must be in email format",
             "dateRange": "Entered date must be between {{left}} and {{right}}",
+            "datePast": "Entered date must be earlier than {{right}}",
+            "dateFuture": "Entered date must be later than {{left}}",
             "weekend": "Entered date must be weekend day",
             "workday": "Entered date must be week day",
             "enumeration": "One of the options must be selected",
@@ -247,7 +255,8 @@
             "maxFilesExceeded": "Maximum number of uploadable files exceeded: ",
             "maxFilesSizeExceeded": "The maximum size of uploaded files is exceeded: ",
             "notSelectedUser": "No user has been selected",
-            "userAssigned": "User {{userName}} was assigned"
+            "userAssigned": "User {{userName}} was assigned",
+            "userListAssigned": "Selected users {{userNames}} were assigned"
         },
         "values": {
             "boolean": {
@@ -275,7 +284,8 @@
             "reset": "Reset"
         },
         "user": {
-            "selectUser": "Select user"
+            "selectUser": "Select user",
+            "save": "Assign"
         },
         "textarea": {
             "insertText": "Insert text here..."
@@ -297,6 +307,12 @@
             "reset": "Reset password",
             "sign": "Sign Up",
             "enterPass": "Enter your password"
+        },
+        "changePassword": {
+            "oldPassword": "Enter your old password",
+            "enterNewPass": "Enter your new password",
+            "repeatNewPass": "Repeat your new password",
+            "changePass": "Change password"
         },
         "register": {
             "email": "Your email",
@@ -460,5 +476,22 @@
     },
     "dynamicNavigation": {
         "couldNotResolveView": "An error has occurred during the view resolution process. The view could not be displayed"
+    },
+    "impersonation": {
+        "user": {
+            "successfullyRepresented": "User successfully represented",
+            "currentlyAlreadyRepresented": "User is already being represented by someone else",
+            "currentlyLogged": "User is currently logged in"
+        },
+        "action": {
+            "failed": "Action failed",
+            "deactivated": "Representation was successfully deactivated"
+        }
+    },
+    "session": {
+        "expireTitle": "Your Session is about to expire",
+        "expireDetail": "Your session is about to expire.\n\nRedirecting to Login page in {{time}} seconds.",
+        "exitButton": "Logout",
+        "refreshButton": "Stay Connected"
     }
 }

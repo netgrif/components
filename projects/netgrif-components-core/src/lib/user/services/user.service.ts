@@ -64,6 +64,10 @@ export class UserService implements OnDestroy {
         return this._userChange$.asObservable();
     }
 
+    get anonymousUser(): User {
+        return this.anonymousUser;
+    }
+
     get anonymousUser$(): Observable<User> {
         return this._anonymousUserChange$.asObservable();
     }
@@ -82,21 +86,23 @@ export class UserService implements OnDestroy {
      *                    If calculated intersection isn't empty returns true, otherwise false.
      */
     public hasAuthority(authority: Array<string> | string): boolean {
-        if (!authority || !this._user.authorities) {
+        const user = this._user.getSelfOrImpersonated();
+        if (!authority || !user.authorities) {
             return false;
         }
         if (authority instanceof Array) {
-            return authority.some(a => this._user.authorities.some(u => u === a));
+            return authority.some(a => user.authorities.some(u => u === a));
         } else {
-            return this._user.authorities.some(a => a === authority);
+            return user.authorities.some(a => a === authority);
         }
     }
 
     public hasRole(role: ProcessRole): boolean {
-        if (!role || !this._user.roles) {
+        const user = this._user.getSelfOrImpersonated();
+        if (!role || !user.roles) {
             return false;
         }
-        return this._user.roles.some(r => r === role);
+        return user.roles.some(r => r === role);
     }
 
     /**
@@ -104,10 +110,11 @@ export class UserService implements OnDestroy {
      * @param roleStringId ID of the role we want to check
      */
     public hasRoleById(roleStringId: string): boolean {
-        if (!roleStringId || !this._user.roles) {
+        const user = this._user.getSelfOrImpersonated();
+        if (!roleStringId || !user.roles) {
             return false;
         }
-        return this._user.roles.some(r => r.stringId === roleStringId);
+        return user.roles.some(r => r.stringId === roleStringId);
     }
 
     /**
@@ -116,10 +123,11 @@ export class UserService implements OnDestroy {
      * @param netIdentifier identifier (import ID) of the process the role is defined in
      */
     public hasRoleByIdentifier(roleIdentifier: string, netIdentifier: string): boolean {
-        if (!roleIdentifier || !netIdentifier || !this._user.roles) {
+        const user = this._user.getSelfOrImpersonated();
+        if (!roleIdentifier || !netIdentifier || !user.roles) {
             return false;
         }
-        return this._user.roles.some(r => r.netImportId === netIdentifier && r.importId === roleIdentifier);
+        return user.roles.some(r => r.netImportId === netIdentifier && r.importId === roleIdentifier);
     }
 
     /**
@@ -128,10 +136,11 @@ export class UserService implements OnDestroy {
      * @param netIdentifier identifier (import ID) of the process the role is defined in
      */
     public hasRoleByName(roleName: string, netIdentifier: string): boolean {
-        if (!roleName || !netIdentifier || !this._user.roles) {
+        const user = this._user.getSelfOrImpersonated();
+        if (!roleName || !netIdentifier || !user.roles) {
             return false;
         }
-        return this._user.roles.some(r => r.netImportId === netIdentifier && r.name === roleName);
+        return user.roles.some(r => r.netImportId === netIdentifier && r.name === roleName);
     }
 
     public login(credentials: Credentials): Observable<User> {
@@ -194,6 +203,14 @@ export class UserService implements OnDestroy {
 
     public clearUser() {
         this._user = this.emptyUser();
+    }
+
+    public isUserEmpty(user: User): boolean {
+        return !user || (!user.id && user.roles.length === 0);
+    }
+
+    public isCurrentUserEmpty(): boolean {
+        return this.isUserEmpty(this.user)
     }
 
     protected publishUserChange(): void {

@@ -196,7 +196,7 @@
             }
 
             .mat-form-field-outline-thick {
-                color: mat.get-contrast-color-from-palette($primary ,500);
+                color: mat.get-contrast-color-from-palette($primary, 500);
             }
 
             &.mat-focused {
@@ -231,6 +231,13 @@
 
     .form-input-error {
         border-color: mat.get-color-from-palette($warn) !important;
+    }
+
+    .new-dashboard-tile {
+        border-color: mat.get-color-from-palette($primary);
+        border-style: dashed;
+        border-radius: 16px;
+        border-width: thin;
     }
 }
 

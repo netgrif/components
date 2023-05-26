@@ -45,8 +45,10 @@ import {CurrencyPipe} from '@angular/common';
 import {PermissionService} from '../../authorization/permission/permission.service';
 import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
 import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
-import { TaskPanelContext } from './models/task-panel-context';
+import {TaskPanelContext} from './models/task-panel-context';
 import {OverflowService} from '../../header/services/overflow.service';
+import {NAE_TASK_FORCE_OPEN} from '../../view/task-view/models/injection-token-task-force-open';
+import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import { FinishPolicyService } from '../../task/services/finish-policy.service';
 
 @Component({
@@ -61,6 +63,7 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
      */
     protected _taskPanelData: TaskPanelData;
     protected _forceLoadDataOnOpen = false;
+    @Input() taskListVirtualScroll: CdkVirtualScrollViewport;
     @Input() panelContentComponent: Type<any>;
     @Input() public selectedHeaders$: Observable<Array<HeaderColumn>>;
     @Input() public first: boolean;
@@ -134,7 +137,8 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
                           protected _currencyPipe: CurrencyPipe,
                           protected _changedFieldsService: ChangedFieldsService,
                           protected _permissionService: PermissionService,
-                          @Optional() overflowService: OverflowService) {
+                          @Optional() overflowService: OverflowService,
+                          @Optional() @Inject(NAE_TASK_FORCE_OPEN) protected _taskForceOpen: boolean) {
         super(_translate, _currencyPipe, overflowService);
         this.taskEvent = new EventEmitter<TaskEventNotification>();
         this.panelRefOutput = new EventEmitter<MatExpansionPanel>();
@@ -151,14 +155,16 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
                 changedFields.push(...this._changedFieldsService.parseChangedFieldsByCaseAndTaskIds(caseId, taskIds, changedFieldsMap));
             });
             changedFields.filter(fields => fields !== undefined).forEach(fields => {
-               this.taskPanelData.changedFields.next(fields);
+                this.taskPanelData.changedFields.next(fields);
             });
         });
         _taskOperations.open$.subscribe(() => {
             this.expand();
         });
         _taskOperations.close$.subscribe(() => {
-            this.collapse();
+            if (!this._taskForceOpen) {
+                this.collapse();
+            }
         });
         _taskOperations.reload$.subscribe(() => {
             this._taskViewService.reloadCurrentPage();
@@ -209,7 +215,7 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
         });
         this.panelRef.afterExpand.subscribe(() => {
             this._taskContentService.$shouldCreate.pipe(take(1)).subscribe(() => {
-                this._taskContentService.blockFields(!this.canFinish());
+                this._taskContentService.blockFields(this.hasNoFinishPermission());
                 this._taskPanelData.initiallyExpanded = true;
             });
             this._taskContentService.expansionFinished();
@@ -218,7 +224,7 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
             this._taskPanelData.initiallyExpanded = false;
         });
 
-        if (this._taskPanelData.initiallyExpanded) {
+        if (this._taskPanelData.initiallyExpanded || this._taskForceOpen) {
             this.panelRef.expanded = true;
         }
     }
@@ -319,8 +325,12 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
         return this._permissionService.canFinish(this.taskPanelData.task) && this.getFinishTitle() !== '';
     }
 
+    private hasNoFinishPermission(): boolean {
+        return !this._permissionService.canFinish(this.taskPanelData.task)
+    }
+
     public canCollapse(): boolean {
-        return this._permissionService.canCollapse(this.taskPanelData.task);
+        return this._taskForceOpen ? false : this._permissionService.canCollapse(this.taskPanelData.task);
     }
 
     public canDo(action): boolean {
@@ -404,5 +414,13 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
         this._taskOperations.destroy();
         this._subPanelUpdate.unsubscribe();
         this.taskEvent.complete();
+    }
+
+    public isForceOpen(): boolean {
+        return this._taskForceOpen && !!this.taskListVirtualScroll?.getElementRef()?.nativeElement;
+    }
+
+    public getContentMinHeight(): string {
+        return this.taskListVirtualScroll.getElementRef().nativeElement.offsetHeight - 32 + 'px';
     }
 }

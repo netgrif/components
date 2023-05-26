@@ -64,8 +64,18 @@ describe('AbstractUserListFieldComponent', () => {
     it('should open and close', (done) => {
         component.selectAbstractUser(TestAssignUserComponent);
         service.close({opened: true, message: 'Test',
-            data: new UserValue('test', 'name', 'surname', 'test@email.com')});
-        expect(component.dataField.value.userValues[0].id === 'test').toBeTruthy();
+            data: [new UserValue('test', 'name', 'surname', 'test@email.com')]});
+        expect(component.dataField.value.userValues.get('test').id === 'test').toBeTruthy();
+        done();
+    });
+
+    it('should remove', (done) => {
+        component.selectAbstractUser(TestAssignUserComponent);
+        service.close({opened: true, message: 'Test',
+            data: [new UserValue('test', 'name', 'surname', 'test@email.com')]});
+        expect(component.dataField.value.userValues.get('test').id === 'test').toBeTruthy();
+        component.removeAbstractUser('test');
+        expect(component.dataField.value.userValues.size === 0).toBeTruthy();
         done();
     });
 
@@ -90,7 +100,8 @@ class TestUserListFieldComponent extends AbstractUserListFieldComponent {
             visible: true,
             editable: true,
             hidden: true
-        }, undefined);
+        }, undefined,
+            undefined);
     }
 }
 

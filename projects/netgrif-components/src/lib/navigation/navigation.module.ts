@@ -9,7 +9,8 @@ import {
     GroupNavigationComponentResolverService,
     MaterialModule,
     TranslateLibModule,
-    NAE_GROUP_NAVIGATION_COMPONENT_RESOLVER_COMPONENT
+    UtilityModule,
+    NAE_GROUP_NAVIGATION_COMPONENT_RESOLVER_COMPONENT,
 } from '@netgrif/components-core';
 import {NavigationRailComponent} from './navigation-rail/navigation-rail.component';
 import {NavigationTreeComponent} from './navigation-tree/navigation-tree.component';
@@ -73,7 +74,8 @@ import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 		PanelComponentModule,
 		TabsComponentModule,
 		CaseViewComponentModule,
-		MatDividerModule
+		MatDividerModule,
+        UtilityModule,
 	],
     exports: [
         NavigationDrawerComponent,

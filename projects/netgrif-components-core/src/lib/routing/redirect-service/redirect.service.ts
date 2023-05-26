@@ -52,16 +52,15 @@ export class RedirectService {
 
     public resolveLoginPath(): string {
         const config = this._config.get();
-        if (!!config.services && !!config.services.auth && !!config.services.auth.loginRedirect) {
-            return config.services.auth.loginRedirect;
+        if (this._config.getToLoginPath()) {
+            return this._config.getToLoginPath();
         }
-        const route = this.resolveLoginPathFromViewConfiguration(
-            this._config.get().views, RedirectService.LOGIN_COMPONENT);
+        const route = this.resolveLoginPathFromViewConfiguration(config.views, RedirectService.LOGIN_COMPONENT);
         if (route !== null) {
             return route;
         }
         throw new Error('No login view found in application. Authentication guard can\'t redirect. Add a view with'
-            + ' layout.name="login" to your application, or set the desired redirect path in \'services.auth.loginRedirect\'');
+            + ' layout.name="login" to your application, or set the desired redirect path in \'services.auth.toLoginRedirect\'');
     }
 
     protected resolveLoginPathFromViewConfiguration(views: Views, searchedLayout: string): string {

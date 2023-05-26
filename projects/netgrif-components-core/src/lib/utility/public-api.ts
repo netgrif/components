@@ -20,11 +20,18 @@ export * from './refresh-tree';
 export * from './destroy-subscription';
 export * from './navigation-item-task-filter-factory';
 export * from './navigation-item-task-search-categories-factory';
+export * from './is-empty.pipe';
+export * from './is-non-empty.pipe';
+export * from './contains.pipe';
+export * from './utility.module';
+export * from './directives/let.directive';
+export * from './base64';
 
 /* TESTS */
 export * from './tests/mocks/mock-authentication.service';
 export * from './tests/mocks/mock-user-preference.service';
 export * from './tests/mocks/mock-user-resource.service';
+export * from './tests/mocks/mock-user.service';
 export * from './tests/mocks/mock-authentication-method-service';
 export * from './tests/mocks/mock-sign-up.service';
 export * from './tests/mocks/mock-user-autocomplete-value';
@@ -47,3 +54,4 @@ export * from './tests/test-factory-methods';
 export * from './tests/test-view-service';
 export * from './tests/mocks/mock-endpoint';
 export * from './tests/test-mock-dependencies.module';
+export * from './tests/mocks/mock-profile.service';

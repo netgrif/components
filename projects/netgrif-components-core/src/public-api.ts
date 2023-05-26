@@ -44,3 +44,4 @@ export * from './lib/allowed-nets/public-api';
 export * from './lib/event-queue/public-api';
 export * from './lib/changed-fields/public-api';
 export * from './lib/event/public-api';
+export * from './lib/impersonation/public-api';

@@ -5,6 +5,7 @@ import {
     SnackBarService,
     LoggerService,
     UserService,
+    ConfigurationService,
     User,
 } from '@netgrif/components-core';
 import {Router} from '@angular/router';
@@ -26,16 +27,17 @@ export class <%= classify(className) %>Component {
                 private _userService: UserService,
                 private _snackbar: SnackBarService,
                 private _translate: TranslateService,
+                private _config: ConfigurationService,
                 private _log: LoggerService) {
         }
 
-      ngOnInit(): void {
+    ngOnInit(): void {
             if (this._userService.user.id.length !== 0) {
                 this.redirectToHome();
             }
-        }
+    }
 
-     onLogin(user: User) {
+    onLogin(user: User) {
             if (user && user.id) {
                 this.redirectToHome();
             } else {
@@ -43,11 +45,13 @@ export class <%= classify(className) %>Component {
             }
     }
 
-     private redirectToHome() {
-         this.router.navigate(['/']).then((value) => {
-              this._log.debug('Routed to ' + value);
-          });
-        }
+    private redirectToHome() {
+         const redirectPath = this._config.getOnLoginPath();
+         if (redirectPath) {
+             this._log.debug('Redirecting to ' + redirectPath);
+             this.router.navigate([redirectPath]);
+         }
+    }
 
 
 }
