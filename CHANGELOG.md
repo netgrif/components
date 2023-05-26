@@ -23,10 +23,12 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.3.0](https://g
 - [NAE-1839] Public view - fields after auto assign are still only visible
 - [NAE-1869] Incorrectly expanded task
 - [NAE-1802] TaskRef-ed fields behavior update unaware of parent task behavior
+- [NAE-1800] Operations on date fields in advanced search are not rendered correctly
 
 ### Changed
 
 - [NAE-1431] Login view redirect configuration
+- [NAE-1725] Login spinner / button spinner
 - [NAE-1674] Uri node cases pagination
 - [NAE-1759] Update documentation of public views, PDF generator and user list
 - [NAE-1762] Public view URL encoding
