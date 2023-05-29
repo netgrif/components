@@ -72,6 +72,7 @@ export class DefaultTabbedTaskViewComponent extends AbstractTabbedTaskViewCompon
     headersChangeable: boolean;
     headersMode: string[];
     defaultHeadersMode: HeaderMode;
+    showMoreMenu: boolean;
 
     constructor(taskViewService: TaskViewService, @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedTaskViewDataWithNavigationItemTaskData) {
         super(taskViewService, injectedTabData);
@@ -82,6 +83,7 @@ export class DefaultTabbedTaskViewComponent extends AbstractTabbedTaskViewCompon
         this.headersChangeable = injectedTabData.headersChangeable;
         this.headersMode = injectedTabData.headersMode ? injectedTabData.headersMode : [];
         this.defaultHeadersMode = this.resolveHeaderMode(injectedTabData.defaultHeadersMode);
+        this.showMoreMenu = injectedTabData.showMoreMenu
     }
 
     ngAfterViewInit(): void {

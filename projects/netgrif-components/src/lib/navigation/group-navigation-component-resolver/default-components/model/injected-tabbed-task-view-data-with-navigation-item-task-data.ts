@@ -12,6 +12,7 @@ import {
 export interface InjectedTabbedTaskViewDataWithNavigationItemTaskData extends InjectedTabbedTaskViewData {
     navigationItemTaskData: Array<DataGroup>;
     searchTypeConfiguration: SearchComponentConfiguration;
+    showMoreMenu: boolean,
     headersChangeable: boolean;
     headersMode: string[];
     defaultHeadersMode: string;

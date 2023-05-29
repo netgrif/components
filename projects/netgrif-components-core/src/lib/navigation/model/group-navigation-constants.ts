@@ -51,9 +51,14 @@ export enum GroupNavigationConstants {
     ITEM_FIELD_ID_ADDITIONAL_FILTER_TASKREF= 'current_additional_filter_preview',
 
     /**
-     * Boolean field, that is true if the user wants to see delete menu in case view
+     * Boolean field, that is true if the user wants to see more menu for case item in case view
      * */
-    ITEM_FIELD_ID_SHOW_DELETE_MENU= 'show_delete_menu',
+    ITEM_FIELD_ID_CASE_SHOW_MORE_MENU= 'case_show_more_menu',
+
+    /**
+     * Boolean field, that is true if the user wants to see more menu for task item in task view
+     * */
+    ITEM_FIELD_ID_TASK_SHOW_MORE_MENU= 'task_show_more_menu',
 
     /**
      * MultichoiceMap field, that contains selected header modes for case view as a value

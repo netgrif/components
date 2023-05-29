@@ -16,12 +16,13 @@ export interface InjectedTabbedCaseViewDataWithNavigationItemTaskData extends In
 
     newCaseButtonConfiguration: NewCaseCreationConfigurationData;
     caseViewSearchTypeConfiguration: SearchComponentConfiguration;
-    caseViewShowDeleteMenu: boolean;
+    caseViewShowMoreMenu: boolean;
     caseViewHeadersChangeable: boolean;
     caseViewHeadersMode: string[];
     caseViewDefaultHeadersMode: string;
 
     taskViewSearchTypeConfiguration: SearchComponentConfiguration;
+    taskViewShowMoreMenu: boolean;
     taskViewMergeWithBaseFilter: boolean;
     taskViewAdditionalFilter: SimpleFilter;
     taskViewAdditionalAllowedNets: string[];

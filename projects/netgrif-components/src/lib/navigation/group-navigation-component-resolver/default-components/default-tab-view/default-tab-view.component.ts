@@ -72,12 +72,13 @@ export class DefaultTabViewComponent {
             showSearchToggleButton: caseSearchType === SearchMode.ADVANCED,
             initialSearchMode: (caseSearchType === undefined) ? undefined : SearchMode.FULLTEXT,
         }
-        const showDeleteMenu = extractFieldValueFromData<boolean>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_SHOW_DELETE_MENU);
+        const caseShowMoreMenu = extractFieldValueFromData<boolean>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_SHOW_MORE_MENU);
         const caseViewHeadersChangeable = extractFieldValueFromData<boolean>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_HEADERS_CHANGEABLE);
         const caseViewHeadersMode = extractFieldValueFromData<string[]>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_HEADERS_MODE);
         const caseViewDefaultHeadersMode = extractFieldValueFromData<string[]>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_DEFAULT_HEADERS_MODE);
 
         const taskSearchType = extractSearchTypeFromData(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_TASK_VIEW_SEARCH_TYPE);
+        const taskShowMoreMenu = extractFieldValueFromData<boolean>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_TASK_SHOW_MORE_MENU);
         const taskSearchTypeConfig: SearchComponentConfiguration = {
             showSearchIcon: true,
             showSearchToggleButton: taskSearchType === SearchMode.ADVANCED,
@@ -102,12 +103,13 @@ export class DefaultTabViewComponent {
 
                     newCaseButtonConfiguration: newCaseButtonConfig,
                     caseViewSearchTypeConfiguration: caseSearchTypeConfig,
-                    caseViewShowDeleteMenu: showDeleteMenu,
+                    caseViewShowMoreMenu: caseShowMoreMenu,
                     caseViewHeadersChangeable: caseViewHeadersChangeable,
                     caseViewHeadersMode: caseViewHeadersMode,
                     caseViewDefaultHeadersMode: caseViewDefaultHeadersMode,
 
                     taskViewSearchTypeConfiguration: taskSearchTypeConfig,
+                    taskViewShowMoreMenu: taskShowMoreMenu,
                     taskViewHeadersChangeable: taskViewHeadersChangeable,
                     taskViewHeadersMode: taskViewHeadersMode,
                     taskViewDefaultHeadersMode: taskViewDefaultHeadersMode,
@@ -131,6 +133,8 @@ export class DefaultTabViewComponent {
             showSearchToggleButton: showToggleButton,
             initialSearchMode: (taskSearchType === undefined) ? undefined : SearchMode.FULLTEXT,
         }
+        const showMoreMenu = extractFieldValueFromData<boolean>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_TASK_SHOW_MORE_MENU);
+
         const filter = this.extractionService.extractCompleteFilterFromData(this._navigationItemTaskData);
         return [
             {
@@ -141,6 +145,7 @@ export class DefaultTabViewComponent {
                     navigationItemTaskData: this._navigationItemTaskData,
                     baseFilter: filter,
                     searchTypeConfiguration: searchTypeConfig,
+                    showMoreMenu: showMoreMenu,
                     headersChangeable: headersChangeable,
                     headersMode: headersMode,
                     defaultHeadersMode: defaultHeadersMode
