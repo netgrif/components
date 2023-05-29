@@ -162,7 +162,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>compareUsers(user: <a href="../interfaces/IUser.html" target="_self">IUser</a>)</code>
+                    <code>compareUsers(user: <a href="../interfaces/IUser.html" target="_self">IUser</a>, acceptImpersonator: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>)</code>
                 </td>
             </tr>
 
@@ -186,6 +186,7 @@
                                     <td>Name</td>
                                     <td>Type</td>
                                     <td>Optional</td>
+                                    <td>Default value</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -199,6 +200,23 @@
                                         No
                                     </td>
 
+                                    <td>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td>acceptImpersonator</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>true</code>
+                                    </td>
 
                                 </tr>
                             </tbody>
@@ -234,8 +252,9 @@ export class UserComparatorService {
 
   constructor(private _userService: UserService) { }
 
-  public compareUsers(user: IUser): boolean {
-      return user.email &#x3D;&#x3D;&#x3D; this._userService.user.email ||
+  public compareUsers(user: IUser, acceptImpersonator: boolean &#x3D; true): boolean {
+      const loggedUser &#x3D; acceptImpersonator ? this._userService.user.getSelfOrImpersonated() : this._userService.user;
+      return user.email &#x3D;&#x3D;&#x3D; loggedUser.email ||
           user.email.includes(&#x27;anonymous&#x27;) &amp;&amp; this._userService.user.email.includes(&#x27;anonymous&#x27;);
   }
 }
