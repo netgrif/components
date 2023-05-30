@@ -48,76 +48,86 @@ export enum GroupNavigationConstants {
     /**
      * TaskRef field, that contains taskId of custom filter for task view
      * */
-    ITEM_FIELD_ID_ADDITIONAL_FILTER_TASKREF= 'current_additional_filter_preview',
+    ITEM_FIELD_ID_ADDITIONAL_FILTER_TASKREF = 'current_additional_filter_preview',
 
     /**
      * Boolean field, that is true if the user wants to see more menu for case item in case view
      * */
-    ITEM_FIELD_ID_CASE_SHOW_MORE_MENU= 'case_show_more_menu',
+    ITEM_FIELD_ID_CASE_SHOW_MORE_MENU = 'case_show_more_menu',
+
+    /**
+     * Boolean field, that is true if no input for title in case creation is shown
+     * */
+    ITEM_FIELD_ID_CASE_TITLE_IN_CREATION = 'case_require_title_in_creation',
+
+    /**
+     * MultichoiceMap field, that contains banned processes in case creation as a value
+     * */
+    ITEM_FIELD_ID_CASE_BANNED_PROCESS_CREATION = 'case_banned_nets_in_creation',
 
     /**
      * Boolean field, that is true if the user wants to see more menu for task item in task view
      * */
-    ITEM_FIELD_ID_TASK_SHOW_MORE_MENU= 'task_show_more_menu',
+    ITEM_FIELD_ID_TASK_SHOW_MORE_MENU = 'task_show_more_menu',
 
     /**
      * MultichoiceMap field, that contains selected header modes for case view as a value
      * */
-    ITEM_FIELD_ID_CASE_HEADERS_MODE= 'case_headers_mode',
+    ITEM_FIELD_ID_CASE_HEADERS_MODE = 'case_headers_mode',
 
     /**
      * Boolean field, that is true if table mode can be applied in case view
      * */
-    ITEM_FIELD_ID_CASE_ALLOW_TABLE_MODE= 'case_allow_header_table_mode',
+    ITEM_FIELD_ID_CASE_ALLOW_TABLE_MODE = 'case_allow_header_table_mode',
 
     /**
      * EnumerationMap field, that contains selected default header mode for case view as a value
      * */
-    ITEM_FIELD_ID_CASE_DEFAULT_HEADERS_MODE= 'case_headers_default_mode',
+    ITEM_FIELD_ID_CASE_DEFAULT_HEADERS_MODE = 'case_headers_default_mode',
 
     /**
      * Boolean field, that is true to make mode menu in case view visible
      * */
-    ITEM_FIELD_ID_CASE_HEADERS_CHANGEABLE= 'case_is_header_mode_changeable',
+    ITEM_FIELD_ID_CASE_HEADERS_CHANGEABLE = 'case_is_header_mode_changeable',
 
     /**
      * MultichoiceMap field, that contains selected header modes for task view as a value
      * */
-    ITEM_FIELD_ID_TASK_HEADERS_MODE= 'task_headers_mode',
+    ITEM_FIELD_ID_TASK_HEADERS_MODE = 'task_headers_mode',
 
     /**
      * Boolean field, that is true if table mode can be applied in task view
      * */
-    ITEM_FIELD_ID_TASK_ALLOW_TABLE_MODE= 'task_allow_header_table_mode',
+    ITEM_FIELD_ID_TASK_ALLOW_TABLE_MODE = 'task_allow_header_table_mode',
 
     /**
      * EnumerationMap field, that contains selected default header mode for task view as a value
      * */
-    ITEM_FIELD_ID_TASK_DEFAULT_HEADERS_MODE= 'task_headers_default_mode',
+    ITEM_FIELD_ID_TASK_DEFAULT_HEADERS_MODE = 'task_headers_default_mode',
 
     /**
      * Boolean field, that is true to make mode menu in task view visible
      * */
-    ITEM_FIELD_ID_TASK_HEADERS_CHANGEABLE= 'task_is_header_mode_changeable',
+    ITEM_FIELD_ID_TASK_HEADERS_CHANGEABLE = 'task_is_header_mode_changeable',
 
     /**
      * Boolean field, that is true to use default headers configuration for case view
      * */
-    ITEM_FIELD_ID_USE_CASE_DEFAULT_HEADERS= 'use_case_default_headers',
+    ITEM_FIELD_ID_USE_CASE_DEFAULT_HEADERS = 'use_case_default_headers',
 
     /**
      * Text field, that contains default header metadata separated by comma for case view as a value
      * */
-    ITEM_FIELD_ID_CASE_DEFAULT_HEADERS= 'case_default_headers',
+    ITEM_FIELD_ID_CASE_DEFAULT_HEADERS = 'case_default_headers',
 
     /**
      * Boolean field, that is true to use default headers configuration for task view
      * */
-    ITEM_FIELD_ID_USE_TASK_DEFAULT_HEADERS= 'use_task_default_headers',
+    ITEM_FIELD_ID_USE_TASK_DEFAULT_HEADERS = 'use_task_default_headers',
 
     /**
      * Text field, that contains default header metadata separated by comma for task view as a value
      * */
-    ITEM_FIELD_ID_TASK_DEFAULT_HEADERS= 'task_default_headers',
+    ITEM_FIELD_ID_TASK_DEFAULT_HEADERS = 'task_default_headers',
 
 }

@@ -215,7 +215,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
     }): Observable<Case> {
         const myCase = new Subject<Case>();
         this._sideMenuService.open(this._newCaseComponent, SideMenuSize.MEDIUM, {
-            allowedNets$: this.getNewCaseAllowedNets(),
+            allowedNets$: this.getNewCaseAllowedNets(newCaseCreationConfiguration.blockNets),
             newCaseCreationConfiguration
         }).onClose.subscribe($event => {
             this._log.debug($event.message, $event.data);
@@ -228,9 +228,12 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
         return myCase.asObservable();
     }
 
-    public createDefaultNewCase(): Observable<Case> {
+    public createDefaultNewCase(newCaseCreationConfiguration: NewCaseCreationConfigurationData = {
+        enableCaseTitle: true,
+        isCaseTitleRequired: true
+    }): Observable<Case> {
         const myCase = new Subject<Case>();
-        this.getNewCaseAllowedNets().subscribe((nets: Array<PetriNetReferenceWithPermissions>) => {
+        this.getNewCaseAllowedNets(newCaseCreationConfiguration.blockNets).subscribe((nets: Array<PetriNetReferenceWithPermissions>) => {
             this._caseResourceService.createCase({
                 title: null,
                 color: 'panel-primary-icon',
@@ -246,15 +249,17 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
         return myCase;
     }
 
-    public getNewCaseAllowedNets(): Observable<Array<PetriNetReferenceWithPermissions>> {
+    public getNewCaseAllowedNets(blockNets: string[] = []): Observable<Array<PetriNetReferenceWithPermissions>> {
         if (this._newCaseConfiguration.useCachedProcesses) {
             return this._allowedNetsService.allowedNets$.pipe(
+                map(net => net.filter(n => blockNets.indexOf(n.identifier) == -1)),
                 map(net => net.filter(n => this._permissionService.hasNetPermission(PermissionType.CREATE, n)))
             );
         } else {
             return this._allowedNetsService.allowedNets$.pipe(
                 switchMap(allowedNets => {
                     return this._processService.getNetReferences(allowedNets.map(net => net.identifier)).pipe(
+                        map(net => net.filter(n => blockNets.indexOf(n.identifier) == -1)),
                         map(net => net.filter(n => this._permissionService.hasNetPermission(PermissionType.CREATE, n)))
                     );
                 })

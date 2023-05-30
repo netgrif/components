@@ -56,15 +56,18 @@ export class DefaultTabViewComponent {
     private getCaseTabs(): TabContent[] {
         const labelData = extractIconAndTitle(this._navigationItemTaskData, this.translationService);
 
+        const blockNets = extractFieldValueFromData<string[]>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_BANNED_PROCESS_CREATION);
         const createCaseButtonTitle: string = extractFieldValueFromData<string>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CREATE_CASE_BUTTON_TITLE);
-        const createCaseButtonIcon: string = extractFieldValueFromData(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CREATE_CASE_BUTTON_ICON);
+        const createCaseButtonIcon: string = extractFieldValueFromData<string>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CREATE_CASE_BUTTON_ICON);
+        const requireTitle: boolean = extractFieldValueFromData<boolean>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_TITLE_IN_CREATION);
         const newCaseButtonConfig: NewCaseCreationConfigurationData = {
-            enableCaseTitle: true,
-            isCaseTitleRequired: true,
+            enableCaseTitle: requireTitle,
+            isCaseTitleRequired: requireTitle,
             newCaseButtonConfig: {
                 createCaseButtonTitle,
                 createCaseButtonIcon
-            }
+            },
+            blockNets: blockNets
         };
         const caseSearchType = extractSearchTypeFromData(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_VIEW_SEARCH_TYPE);
         const caseSearchTypeConfig: SearchComponentConfiguration = {

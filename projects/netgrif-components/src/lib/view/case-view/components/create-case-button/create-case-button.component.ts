@@ -37,7 +37,7 @@ export class CreateCaseButtonComponent implements OnInit {
     public createNewCase(): Observable<Case> {
         let myCase: Observable<Case>;
         if (this.newCaseCreationConfig.enableCaseTitle === false && this._caseViewService.getAllowedNetsCount() === 1) {
-            myCase = this._caseViewService.createDefaultNewCase();
+            myCase = this._caseViewService.createDefaultNewCase(this.newCaseCreationConfig);
         } else {
             myCase = this._caseViewService.createNewCase(this.newCaseCreationConfig);
         }
