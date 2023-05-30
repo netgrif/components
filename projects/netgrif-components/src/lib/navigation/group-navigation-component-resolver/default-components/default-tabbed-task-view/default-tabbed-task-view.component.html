@@ -6,7 +6,7 @@
         </mat-card>
         <nc-header #header type="task" [hideHeaderMenu]="!headersChangeable"
                    [showEditButton]="isMenuOptionEnabled('edit')"
-                   [showSortButton]="isMenuOptionEnabled('sort')" class="task-panel-padding-mini"></nc-header>
+                   [showSortButton]="isMenuOptionEnabled('sort')" [showTableSection]="allowTableMode" class="task-panel-padding-mini"></nc-header>
         <nc-task-list [tasks$]="tasks$" [loading$]="loading$" [allowMultiOpen]="false"
                       [selectedHeaders$]="selectedHeaders$" [textEllipsis]="true" [showMoreMenu]="showMoreMenu"
                       fxFlex></nc-task-list>

@@ -27,6 +27,7 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
     @Input() showEditButton = true;
     @Input() showSortButton = true;
     @Input() showSearchButton = true;
+    @Input() showTableSection = true;
 
     public headerService: AbstractHeaderService;
     protected _headerSearch: HeaderSearchService;
@@ -46,9 +47,7 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
     constructor(protected _injector: Injector,
                 protected _translate: TranslateService,
                 @Optional() protected _overflowService: OverflowService) {
-        (this._overflowService !== null) ?
-            this.initializeFormControls(true) :
-            this.initializeFormControls(false);
+        (this._overflowService !== null) ? this.initializeFormControls(true) : this.initializeFormControls(false);
     }
 
     @Input()

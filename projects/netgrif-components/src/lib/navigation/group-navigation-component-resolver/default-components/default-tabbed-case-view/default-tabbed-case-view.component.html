@@ -13,7 +13,7 @@
 
     <nc-header #header [type]="headerType" [hideHeaderMenu]="!headersChangeable" [showEditButton]="isMenuOptionEnabled('edit')"
                [showSortButton]="isMenuOptionEnabled('sort')" [showSearchButton]="isMenuOptionEnabled('search')"
-               class="case-header-padding"></nc-header>
+               [showTableSection]="allowTableMode" class="case-header-padding"></nc-header>
 
     <nc-case-list [selectedHeaders$]="selectedHeaders$" [textEllipsis]="true" [showDeleteMenu]="showDeleteMenu"
                   (caseClick)="handleCaseClick($event)" fxFlex></nc-case-list>

@@ -15,5 +15,6 @@ export interface InjectedTabbedTaskViewDataWithNavigationItemTaskData extends In
     showMoreMenu: boolean,
     headersChangeable: boolean;
     headersMode: string[];
+    allowTableMode: boolean;
     defaultHeadersMode: string;
 }

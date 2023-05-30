@@ -75,6 +75,7 @@ export class DefaultTabViewComponent {
         const caseShowMoreMenu = extractFieldValueFromData<boolean>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_SHOW_MORE_MENU);
         const caseViewHeadersChangeable = extractFieldValueFromData<boolean>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_HEADERS_CHANGEABLE);
         const caseViewHeadersMode = extractFieldValueFromData<string[]>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_HEADERS_MODE);
+        const caseViewAllowTableMode = extractFieldValueFromData<boolean>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_ALLOW_TABLE_MODE);
         const caseViewDefaultHeadersMode = extractFieldValueFromData<string[]>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_DEFAULT_HEADERS_MODE);
 
         const taskSearchType = extractSearchTypeFromData(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_TASK_VIEW_SEARCH_TYPE);
@@ -86,6 +87,7 @@ export class DefaultTabViewComponent {
         }
         const taskViewHeadersChangeable = extractFieldValueFromData<boolean>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_TASK_HEADERS_CHANGEABLE);
         const taskViewHeadersMode = extractFieldValueFromData<string[]>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_TASK_HEADERS_MODE);
+        const taskViewAllowTableMode = extractFieldValueFromData<boolean>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_TASK_ALLOW_TABLE_MODE);
         const taskViewDefaultHeadersMode = extractFieldValueFromData<string[]>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_TASK_DEFAULT_HEADERS_MODE);
         const taskViewAdditionalFilter = this.extractionService.extractCompleteAdditionalFilterFromData(this._navigationItemTaskData);
         const mergeWithBaseFilter = extractFieldValueFromData<boolean>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_MERGE_FILTERS);
@@ -106,12 +108,14 @@ export class DefaultTabViewComponent {
                     caseViewShowMoreMenu: caseShowMoreMenu,
                     caseViewHeadersChangeable: caseViewHeadersChangeable,
                     caseViewHeadersMode: caseViewHeadersMode,
+                    caseViewAllowTableMode: caseViewAllowTableMode,
                     caseViewDefaultHeadersMode: caseViewDefaultHeadersMode,
 
                     taskViewSearchTypeConfiguration: taskSearchTypeConfig,
                     taskViewShowMoreMenu: taskShowMoreMenu,
                     taskViewHeadersChangeable: taskViewHeadersChangeable,
                     taskViewHeadersMode: taskViewHeadersMode,
+                    taskViewAllowTableMode: taskViewAllowTableMode,
                     taskViewDefaultHeadersMode: taskViewDefaultHeadersMode,
                     taskViewMergeWithBaseFilter: mergeWithBaseFilter,
                     taskViewAdditionalFilter: taskViewAdditionalFilter,
@@ -126,6 +130,7 @@ export class DefaultTabViewComponent {
         const taskSearchType = extractSearchTypeFromData(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_TASK_VIEW_SEARCH_TYPE);
         const headersChangeable = extractFieldValueFromData<boolean>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_TASK_HEADERS_CHANGEABLE);
         const headersMode = extractFieldValueFromData<string[]>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_TASK_HEADERS_MODE);
+        const allowTableMode = extractFieldValueFromData<boolean>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_TASK_ALLOW_TABLE_MODE);
         const defaultHeadersMode = extractFieldValueFromData<string[]>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_TASK_DEFAULT_HEADERS_MODE);
         const showToggleButton = taskSearchType === SearchMode.ADVANCED
         const searchTypeConfig: SearchComponentConfiguration = {
@@ -148,6 +153,7 @@ export class DefaultTabViewComponent {
                     showMoreMenu: showMoreMenu,
                     headersChangeable: headersChangeable,
                     headersMode: headersMode,
+                    allowTableMode: allowTableMode,
                     defaultHeadersMode: defaultHeadersMode
                 }
             }

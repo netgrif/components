@@ -19,6 +19,7 @@ export interface InjectedTabbedCaseViewDataWithNavigationItemTaskData extends In
     caseViewShowMoreMenu: boolean;
     caseViewHeadersChangeable: boolean;
     caseViewHeadersMode: string[];
+    caseViewAllowTableMode: boolean;
     caseViewDefaultHeadersMode: string;
 
     taskViewSearchTypeConfiguration: SearchComponentConfiguration;
@@ -28,5 +29,6 @@ export interface InjectedTabbedCaseViewDataWithNavigationItemTaskData extends In
     taskViewAdditionalAllowedNets: string[];
     taskViewHeadersChangeable: boolean;
     taskViewHeadersMode: string[];
+    taskViewAllowTableMode: boolean;
     taskViewDefaultHeadersMode: string;
 }

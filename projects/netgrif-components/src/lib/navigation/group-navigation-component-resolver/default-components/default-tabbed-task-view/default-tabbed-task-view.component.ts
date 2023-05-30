@@ -18,6 +18,7 @@ import {
     HeaderMode,
     NAE_DEFAULT_HEADERS,
     NAE_NAVIGATION_ITEM_TASK_DATA,
+    OverflowService,
 } from '@netgrif/components-core';
 import {HeaderComponent} from '../../../../header/header.component';
 import {
@@ -40,6 +41,7 @@ export function baseFilterFactory(injectedTabData: InjectedTabbedTaskViewDataWit
         SearchService,
         ViewIdService,
         ChangedFieldsService,
+        OverflowService,
         {
             provide: NAE_BASE_FILTER,
             useFactory: baseFilterFactory,
@@ -71,6 +73,7 @@ export class DefaultTabbedTaskViewComponent extends AbstractTabbedTaskViewCompon
     enableSearch: boolean;
     headersChangeable: boolean;
     headersMode: string[];
+    allowTableMode: boolean;
     defaultHeadersMode: HeaderMode;
     showMoreMenu: boolean;
 
@@ -82,8 +85,9 @@ export class DefaultTabbedTaskViewComponent extends AbstractTabbedTaskViewCompon
         this.enableSearch = !(injectedTabData.searchTypeConfiguration.initialSearchMode === undefined);
         this.headersChangeable = injectedTabData.headersChangeable;
         this.headersMode = injectedTabData.headersMode ? injectedTabData.headersMode : [];
+        this.allowTableMode = injectedTabData.allowTableMode;
         this.defaultHeadersMode = this.resolveHeaderMode(injectedTabData.defaultHeadersMode);
-        this.showMoreMenu = injectedTabData.showMoreMenu
+        this.showMoreMenu = injectedTabData.showMoreMenu;
     }
 
     ngAfterViewInit(): void {

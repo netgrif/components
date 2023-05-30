@@ -66,6 +66,11 @@ export enum GroupNavigationConstants {
     ITEM_FIELD_ID_CASE_HEADERS_MODE= 'case_headers_mode',
 
     /**
+     * Boolean field, that is true if table mode can be applied in case view
+     * */
+    ITEM_FIELD_ID_CASE_ALLOW_TABLE_MODE= 'case_allow_header_table_mode',
+
+    /**
      * EnumerationMap field, that contains selected default header mode for case view as a value
      * */
     ITEM_FIELD_ID_CASE_DEFAULT_HEADERS_MODE= 'case_headers_default_mode',
@@ -79,6 +84,11 @@ export enum GroupNavigationConstants {
      * MultichoiceMap field, that contains selected header modes for task view as a value
      * */
     ITEM_FIELD_ID_TASK_HEADERS_MODE= 'task_headers_mode',
+
+    /**
+     * Boolean field, that is true if table mode can be applied in task view
+     * */
+    ITEM_FIELD_ID_TASK_ALLOW_TABLE_MODE= 'task_allow_header_table_mode',
 
     /**
      * EnumerationMap field, that contains selected default header mode for task view as a value

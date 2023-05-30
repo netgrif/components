@@ -27,6 +27,7 @@ import {
     ViewIdService,
     navigationItemCaseViewDefaultHeadersFactory,
     NAE_NAVIGATION_ITEM_TASK_DATA,
+    OverflowService,
 } from '@netgrif/components-core';
 import {HeaderComponent} from '../../../../header/header.component';
 import {
@@ -47,6 +48,7 @@ import {
         CaseViewService,
         SearchService,
         ViewIdService,
+        OverflowService,
         {
             provide: NAE_BASE_FILTER,
             useFactory: filterCaseTabbedDataFilterFactory,
@@ -79,10 +81,12 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
     showDeleteMenu: boolean;
     headersChangeable: boolean;
     headersMode: string[];
+    allowTableMode: boolean;
     defaultHeadersMode: HeaderMode;
 
     constructor(caseViewService: CaseViewService,
                 loggerService: LoggerService,
+                viewIdService: ViewIdService,
                 @Inject(NAE_TAB_DATA) protected _injectedTabData: InjectedTabbedCaseViewDataWithNavigationItemTaskData) {
         super(caseViewService, loggerService, _injectedTabData, undefined, undefined, undefined, _injectedTabData.newCaseButtonConfiguration);
 
@@ -92,7 +96,13 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
         this.showDeleteMenu = _injectedTabData.caseViewShowMoreMenu;
         this.headersChangeable = _injectedTabData.caseViewHeadersChangeable;
         this.headersMode = _injectedTabData.caseViewHeadersMode ? _injectedTabData.caseViewHeadersMode : [];
+        this.allowTableMode = this._injectedTabData.caseViewAllowTableMode;
         this.defaultHeadersMode = this.resolveHeaderMode(_injectedTabData.caseViewDefaultHeadersMode);
+
+        if (!this.allowTableMode) {
+            const viewId = viewIdService.viewId;
+            localStorage.setItem(viewId + '-overflowMode', 'false');
+        }
     }
 
     ngAfterViewInit(): void {
@@ -129,6 +139,7 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
                 showMoreMenu: this._injectedTabData.taskViewShowMoreMenu,
                 headersChangeable: this._injectedTabData.taskViewHeadersChangeable,
                 headersMode: this._injectedTabData.taskViewHeadersMode,
+                allowTableMode: this._injectedTabData.taskViewAllowTableMode,
                 defaultHeadersMode: this._injectedTabData.taskViewDefaultHeadersMode
             },
             order: this._injectedTabData.tabViewOrder,
