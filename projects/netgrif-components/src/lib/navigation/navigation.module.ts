@@ -43,6 +43,7 @@ import {CaseViewComponentModule} from '../view/case-view/case-view.module';
 import { NavigationDoubleDrawerComponent } from './navigation-double-drawer/navigation-double-drawer.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
+import { DefaultNoFilterProvidedComponent } from './group-navigation-component-resolver/default-components/default-no-filter-provided/default-no-filter-provided.component';
 
 
 @NgModule({
@@ -56,7 +57,8 @@ import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
         DefaultTabbedCaseViewComponent,
         DefaultTabViewComponent,
         NavigationDoubleDrawerComponent,
-        BreadcrumbsComponent
+        BreadcrumbsComponent,
+        DefaultNoFilterProvidedComponent
     ],
 	imports: [
 		CommonModule,

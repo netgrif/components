@@ -21,6 +21,11 @@ export enum GroupNavigationConstants {
     NAVIGATION_ENTRY_ICON_FIELD_ID_SUFFIX = 'tab_icon',
 
     /**
+     * TaskRef field, that contains taskId of filter task
+     * */
+    ITEM_FIELD_ID_FILTER_TASKREF = 'current_filter_preview',
+
+    /**
      * Text field id, that contains title of create case button
      * */
     ITEM_FIELD_ID_CREATE_CASE_BUTTON_TITLE = 'create_case_button_title',

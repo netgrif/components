@@ -9,9 +9,14 @@ import {
     ConfigurationService,
     View,
     ViewService,
-    extractFieldValueFromData, RoutingBuilderService
+    extractFieldValueFromData,
+    RoutingBuilderService,
+    GroupNavigationConstants
 } from '@netgrif/components-core';
 import {DefaultTabViewComponent} from './default-components/default-tab-view/default-tab-view.component';
+import {
+    DefaultNoFilterProvidedComponent
+} from "./default-components/default-no-filter-provided/default-no-filter-provided.component";
 
 @Injectable()
 export class DefaultGroupNavigationComponentResolverService extends GroupNavigationComponentResolverService {
@@ -59,6 +64,11 @@ export class DefaultGroupNavigationComponentResolverService extends GroupNavigat
     }
 
     private resolveDefaultComponent(navItemData: Array<DataGroup>): Type<any> {
+        const filterTaskRefValue = extractFieldValueFromData<string[]>(navItemData, GroupNavigationConstants.ITEM_FIELD_ID_FILTER_TASKREF);
+        if (filterTaskRefValue == undefined || filterTaskRefValue.length == 0) {
+            return DefaultNoFilterProvidedComponent
+        }
+
         const filter = extractFilterFromData(navItemData);
         if (filter === undefined) {
             throw new Error('Provided navigation item task data does not contain a filter field');
