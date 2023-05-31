@@ -61,7 +61,7 @@ export enum GroupNavigationConstants {
     ITEM_FIELD_ID_CASE_TITLE_IN_CREATION = 'case_require_title_in_creation',
 
     /**
-     * MultichoiceMap field, that contains banned processes in case creation as a value
+     * Text field, that contains banned processes in case creation as a value
      * */
     ITEM_FIELD_ID_CASE_BANNED_PROCESS_CREATION = 'case_banned_nets_in_creation',
 

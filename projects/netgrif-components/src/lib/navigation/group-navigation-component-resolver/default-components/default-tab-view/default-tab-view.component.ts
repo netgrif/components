@@ -56,7 +56,8 @@ export class DefaultTabViewComponent {
     private getCaseTabs(): TabContent[] {
         const labelData = extractIconAndTitle(this._navigationItemTaskData, this.translationService);
 
-        const blockNets = extractFieldValueFromData<string[]>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_BANNED_PROCESS_CREATION);
+        const blockNetsString = extractFieldValueFromData<string>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_BANNED_PROCESS_CREATION);
+        const blockNets = blockNetsString === undefined ? [] : blockNetsString.split(',')
         const createCaseButtonTitle: string = extractFieldValueFromData<string>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CREATE_CASE_BUTTON_TITLE);
         const createCaseButtonIcon: string = extractFieldValueFromData<string>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CREATE_CASE_BUTTON_ICON);
         const requireTitle: boolean = extractFieldValueFromData<boolean>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_TITLE_IN_CREATION);
