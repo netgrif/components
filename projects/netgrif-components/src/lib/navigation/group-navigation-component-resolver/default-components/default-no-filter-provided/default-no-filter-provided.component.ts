@@ -5,11 +5,8 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './default-no-filter-provided.component.html',
   styleUrls: ['./default-no-filter-provided.component.scss']
 })
-export class DefaultNoFilterProvidedComponent implements OnInit {
+export class DefaultNoFilterProvidedComponent {
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }
