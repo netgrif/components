@@ -5,6 +5,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {AbstractTextErrorsComponent} from '../abstract-text-errors.component';
 import {TextAreaField} from '../models/text-area-field';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
+import {ValidationRegistryService} from "../../../validation/service/validation-registry.service";
 
 @Component({
     selector: 'ncc-abstract-html-area-field',
@@ -38,8 +39,9 @@ export abstract class AbstractHtmlTextareaFieldComponent extends AbstractTextErr
     @Input() formControlRef: FormControl;
     @Input() showLargeLayout: WrappedBoolean;
 
-    constructor(protected _translate: TranslateService, protected _sanitizer: DomSanitizer) {
-        super(_translate);
+    constructor(protected _translate: TranslateService, protected _sanitizer: DomSanitizer,
+            _validationRegistry: ValidationRegistryService) {
+        super(_translate, _validationRegistry);
     }
 
     ngOnInit(): void {

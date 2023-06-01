@@ -4,6 +4,7 @@ import moment, {Moment} from 'moment';
 import {Layout} from '../../models/layout';
 import {Component} from '../../models/component';
 import {DataField} from '../../models/abstract-data-field';
+import {Validator} from "../../../validation/model/validator";
 
 export enum AbstractTimeInstanceFieldValidation {
     BETWEEN = 'between',
@@ -21,8 +22,10 @@ export abstract class AbstractTimeInstanceField extends DataField<Moment> {
     public max: Moment;
 
     protected constructor(stringId: string, title: string, value: Moment, behavior: Behavior, placeholder?: string,
-                          description?: string, layout?: Layout, validations?: any, component?: Component, parentTaskId?: string) {
-        super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId);
+                          description?: string, layout?: Layout, validations?: any, component?: Component, parentTaskId?: string,
+                          validatorRegister?: Map<string, Validator>) {
+        super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId,
+            undefined, validatorRegister);
     }
 
     public static isEqual(a: Moment, b: Moment, granularity?: moment.unitOfTime.StartOf): boolean {
@@ -65,12 +68,10 @@ export abstract class AbstractTimeInstanceField extends DataField<Moment> {
         const result = [];
 
         this.validations.forEach(item => {
-            if (item.validationRule.includes(AbstractTimeInstanceFieldValidation.BETWEEN)) {
-                const tmp = item.validationRule.split(' ');
-                const ranges = tmp[1].split(',');
+            if (item.name === AbstractTimeInstanceFieldValidation.BETWEEN) {
 
-                const start = AbstractTimeInstanceField.parseDate(ranges[0]);
-                const end = AbstractTimeInstanceField.parseDate(ranges[1]);
+                const start = AbstractTimeInstanceField.parseDate(item.arguments.from.value);
+                const end = AbstractTimeInstanceField.parseDate(item.arguments.to.value);
 
                 if (start && end) {
                     if (start === 'past' && moment(end).isValid()) {
@@ -85,9 +86,9 @@ export abstract class AbstractTimeInstanceField extends DataField<Moment> {
                         this.max = moment(end);
                     }
                 }
-            } else if (item.validationRule.includes(AbstractTimeInstanceFieldValidation.WORKDAY)) {
+            } else if (item.name === AbstractTimeInstanceFieldValidation.WORKDAY) {
                 result.push(this.validWorkday);
-            } else if (item.validationRule.includes(AbstractTimeInstanceFieldValidation.WEEKEND)) {
+            } else if (item.name === AbstractTimeInstanceFieldValidation.WEEKEND) {
                 result.push(this.validWeekend);
             }
         });

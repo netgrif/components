@@ -4,6 +4,8 @@ import {Layout} from '../../models/layout';
 import {Validation} from '../../models/validation';
 import {Component} from '../../models/component';
 import {DataField} from '../../models/abstract-data-field';
+import {Injector} from "@angular/core";
+import {Validator} from "../../../validation/model/validator";
 
 export enum TextFieldView {
     DEFAULT = 'default',
@@ -50,39 +52,40 @@ export class TextField extends DataField<string> {
 
     constructor(stringId: string, title: string, value: string, behavior: Behavior, placeholder?: string,
                 description?: string, layout?: Layout, validations?: Array<Validation>, _component?: Component,
-                parentTaskId?: string) {
-        super(stringId, title, value, behavior, placeholder, description, layout, validations, _component, parentTaskId);
+                parentTaskId?: string, protected validatorRegister?: Map<string, Validator>) {
+        super(stringId, title, value, behavior, placeholder, description, layout, validations, _component, parentTaskId,
+            undefined, validatorRegister);
     }
 
     protected resolveValidations(): Array<ValidatorFn> {
         const result = [];
 
         this.validations.forEach(item => {
-            if (item.validationRule.includes(TextFieldValidation.MIN_LENGTH)) {
-                const tmp = item.validationRule.split(' ');
-                if (tmp[1] !== undefined) {
-                    const length = parseInt(tmp[1], 10);
+            if (this.validatorRegister?.has(item.name)) {
+                const vl: Validator = this.validatorRegister.get(item.name);
+                const mustContainString = vl.attributeNames.map(atr => item.arguments[atr].value)
+                result.push(vl.fn(...mustContainString));
+            } else if (item.name === TextFieldValidation.MIN_LENGTH) {
+                if (!!item.arguments?.min?.value) {
+                    const length = parseInt(item.arguments.min.value, 10);
                     if (!isNaN(length)) {
                         result.push(Validators.minLength(length));
                     }
                 }
-            } else if (item.validationRule.includes(TextFieldValidation.MAX_LENGTH)) {
-                const tmp = item.validationRule.split(' ');
-                if (tmp[1] !== undefined) {
-                    const length = parseInt(tmp[1], 10);
+            } else if (item.name === TextFieldValidation.MAX_LENGTH) {
+                if (!!item.arguments?.max?.value) {
+                    const length = parseInt(item.arguments.max.value, 10);
                     if (!isNaN(length)) {
                         result.push(Validators.maxLength(length));
                     }
                 }
-            } else if (item.validationRule.includes(TextFieldValidation.REGEX)) {
-                if (item.validationRule.startsWith('regex ')) {
-                    result.push(Validators.pattern(new RegExp(item.validationRule.substring(6, item.validationRule.length ))));
-                } else if (item.validationRule.startsWith('regex("')) {
-                    result.push(Validators.pattern(new RegExp(item.validationRule.substring(7, item.validationRule.length - 2))));
+            } else if (item.name === TextFieldValidation.REGEX) {
+                if (!!item.arguments?.expression?.value) {
+                    result.push(Validators.pattern(new RegExp(item.arguments.expression.value)));
                 }
-            } else if (item.validationRule.includes(TextFieldValidation.EMAIL)) {
+            } else if (item.name === TextFieldValidation.EMAIL) {
                 result.push(Validators.email);
-            } else if (item.validationRule.includes(TextFieldValidation.TEL_NUMBER)) {
+            } else if (item.name === TextFieldValidation.TEL_NUMBER) {
                 result.push(this.validTelNumber);
             }
         });

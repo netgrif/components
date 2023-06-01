@@ -4,6 +4,7 @@ import {CustomCard} from '../../../dashboard/cards/model/custom-dashboard-model/
 import {DashboardCardTypes} from '../../../dashboard/cards/model/dashboard-card-types';
 import {FilterType} from '../../../filter/models/filter-type';
 import {AbstractDashboardTextFieldComponent} from '../abstract-dashboard-text-field.component';
+import {ValidationRegistryService} from "../../../validation/service/validation-registry.service";
 
 @Component({
     selector: 'ncc-abstract-dashboard-line-chart-text-field',
@@ -11,8 +12,8 @@ import {AbstractDashboardTextFieldComponent} from '../abstract-dashboard-text-fi
 })
 export abstract class AbstractDashboardLineChartTextFieldComponent extends AbstractDashboardTextFieldComponent {
 
-    protected constructor(translate: TranslateService) {
-        super(translate);
+    protected constructor(translate: TranslateService, _validationRegistry: ValidationRegistryService) {
+        super(translate, _validationRegistry);
     }
 
     protected createCard(textFieldValue: string): CustomCard {

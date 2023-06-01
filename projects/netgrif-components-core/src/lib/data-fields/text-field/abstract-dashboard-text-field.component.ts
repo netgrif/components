@@ -6,6 +6,7 @@ import {WrappedBoolean} from '../data-field-template/models/wrapped-boolean';
 import {CustomCard} from '../../dashboard/cards/model/custom-dashboard-model/custom-card';
 import {Subscription} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
+import {ValidationRegistryService} from "../../validation/service/validation-registry.service";
 
 @Component({
     selector: 'ncc-abstract-dashboard-text-field',
@@ -20,8 +21,8 @@ export abstract class AbstractDashboardTextFieldComponent extends AbstractTextEr
     public initialized: boolean = false;
     private _sub: Subscription;
 
-    protected constructor(translate: TranslateService) {
-        super(translate);
+    protected constructor(translate: TranslateService, _validationRegistry: ValidationRegistryService) {
+        super(translate, _validationRegistry);
     }
 
     ngOnInit(): void {

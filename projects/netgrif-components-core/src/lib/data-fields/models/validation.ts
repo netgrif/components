@@ -12,4 +12,20 @@ export interface Validation {
      * If the message is empty, some default message will be displayed.
      */
     validationMessage: string;
+
+    name: string;
+
+    arguments: {
+        [k:string]: Argument;
+    };
+
+}
+
+export interface Argument {
+
+    value: string;
+    key: string;
+
+    dynamic: boolean;
+
 }

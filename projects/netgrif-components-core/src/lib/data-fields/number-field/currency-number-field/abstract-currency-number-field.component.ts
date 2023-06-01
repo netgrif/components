@@ -2,6 +2,7 @@ import { AfterViewInit, Component} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {CurrencyPipe, getCurrencySymbol} from '@angular/common';
 import {AbstractNumberErrorsComponent} from '../abstract-number-errors.component';
+import {ValidationRegistryService} from "../../../validation/service/validation-registry.service";
 
 @Component({
     selector: 'ncc-abstract-currency-field',
@@ -15,8 +16,9 @@ export abstract class AbstractCurrencyNumberFieldComponent extends AbstractNumbe
     public readonly TEXT_TYPE = 'text';
     public readonly WHITESPACE = ' ';
 
-    protected constructor(protected _currencyPipe: CurrencyPipe, translateService: TranslateService) {
-        super(translateService);
+    protected constructor(protected _currencyPipe: CurrencyPipe, translateService: TranslateService,
+                          _validationRegistry: ValidationRegistryService) {
+        super(translateService, _validationRegistry);
     }
 
     ngAfterViewInit() {

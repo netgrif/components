@@ -6,6 +6,7 @@ import {Component} from '../../models/component';
 import {I18nFieldTranslations, I18nFieldValue} from './i18n-field-value';
 import {Observable} from 'rxjs';
 import {FormControl, ValidatorFn} from '@angular/forms';
+import {Validator} from "../../../validation/model/validator";
 
 export enum I18nFieldValidation {
     TRANSLATION_REQUIRED = 'translationRequired',
@@ -79,11 +80,13 @@ export class I18nField extends DataField<I18nFieldValue> {
     }
 
     constructor(stringId: string, title: string, value: I18nFieldValue | string, behavior: Behavior, placeholder?: string,
-                description?: string, layout?: Layout, validations?: Array<Validation>, _component?: Component) {
+                description?: string, layout?: Layout, validations?: Array<Validation>, _component?: Component,
+                validatorRegister?: Map<string, Validator>) {
         if (typeof value === 'string') {
             value = {defaultValue: value};
         }
-        super(stringId, title, value, behavior, placeholder, description, layout, validations, _component);
+        super(stringId, title, value, behavior, placeholder, description, layout, validations, _component, undefined, undefined,
+            validatorRegister);
     }
 
     protected valueEquality(a: I18nFieldValue, b: I18nFieldValue): boolean {

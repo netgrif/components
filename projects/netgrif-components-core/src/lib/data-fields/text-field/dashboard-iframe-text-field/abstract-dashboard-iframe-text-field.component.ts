@@ -3,6 +3,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {DashboardCardTypes} from '../../../dashboard/cards/model/dashboard-card-types';
 import {CustomIframeCard} from '../../../dashboard/cards/model/custom-dashboard-model/custom-iframe-card';
 import {AbstractDashboardTextFieldComponent} from '../abstract-dashboard-text-field.component';
+import {ValidationRegistryService} from "../../../validation/service/validation-registry.service";
 
 @Component({
     selector: 'ncc-abstract-dashboard-iframe-text-field',
@@ -12,8 +13,8 @@ export abstract class AbstractDashboardIframeTextFieldComponent extends Abstract
 
     public card?: CustomIframeCard;
 
-    protected constructor(translate: TranslateService) {
-        super(translate);
+    protected constructor(translate: TranslateService, _validationRegistry: ValidationRegistryService) {
+        super(translate, _validationRegistry)
     }
 
     protected createCard(textFieldValue: string): CustomIframeCard {

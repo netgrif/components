@@ -24,6 +24,8 @@ import {I18nField} from '../../data-fields/i18n-field/models/i18n-field';
 import {UserListField} from '../../data-fields/user-list-field/models/user-list-field';
 import {UserListValue} from '../../data-fields/user-list-field/models/user-list-value';
 import {decodeBase64, encodeBase64} from "../../utility/base64";
+import {ValidationRegistryService} from "../../validation/service/validation-registry.service";
+import {Validator} from "../../validation/model/validator";
 
 
 @Injectable({
@@ -32,24 +34,28 @@ import {decodeBase64, encodeBase64} from "../../utility/base64";
 export class FieldConverterService {
     private textFieldNames = ['textarea', 'richtextarea', 'htmltextarea', 'editor', 'htmlEditor', 'area']
 
-    constructor() {
+    constructor(protected validationRegistry: ValidationRegistryService) {
     }
 
     public toClass(item: DataFieldResource): DataField<any> {
         switch (item.type) {
             case FieldTypeResource.BOOLEAN:
                 return new BooleanField(item.stringId, item.name, item.value as boolean, item.behavior,
-                    item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
+                    item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId,
+                    this.getValidators(item.type));
             case FieldTypeResource.TEXT:
                 if (this.textFieldNames.includes(item.component?.name)) {
                     return new TextAreaField(item.stringId, item.name, this.resolveTextValue(item, item.value), item.behavior,
-                        item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
+                        item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId,
+                        this.getValidators(item.type));
                 }
                 return new TextField(item.stringId, item.name, this.resolveTextValue(item, item.value), item.behavior, item.placeholder,
-                    item.description, item.layout, item.validations, item.component, item.parentTaskId);
+                    item.description, item.layout, item.validations, item.component, item.parentTaskId,
+                    this.getValidators(item.type));
             case FieldTypeResource.NUMBER:
                 return new NumberField(item.stringId, item.name, item.value as number, item.behavior, item.validations, item.placeholder,
-                    item.description, item.layout, item.formatFilter, this.resolveNumberComponent(item), item.parentTaskId);
+                    item.description, item.layout, item.formatFilter, this.resolveNumberComponent(item), item.parentTaskId,
+                    this.getValidators(item.type));
             case FieldTypeResource.ENUMERATION:
             case FieldTypeResource.ENUMERATION_MAP:
                 return this.resolveEnumField(item);
@@ -67,14 +73,16 @@ export class FieldConverterService {
                     date = moment(new Date(item.value[0], item.value[1] - 1, item.value[2]));
                 }
                 return new DateField(item.stringId, item.name, date, item.behavior, item.placeholder,
-                    item.description, item.layout, item.validations, item.component, item.parentTaskId);
+                    item.description, item.layout, item.validations, item.component, item.parentTaskId,
+                    this.getValidators(item.type));
             case FieldTypeResource.DATE_TIME:
                 let dateTime;
                 if (item.value) {
                     dateTime = moment(new Date(item.value[0], item.value[1] - 1, item.value[2], item.value[3], item.value[4]));
                 }
                 return new DateTimeField(item.stringId, item.name, dateTime, item.behavior,
-                    item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
+                    item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId,
+                    this.getValidators(item.type));
             case FieldTypeResource.USER:
                 let user;
                 if (item.value) {
@@ -108,7 +116,7 @@ export class FieldConverterService {
                     item.behavior, item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.I18N:
                 return new I18nField(item.stringId, item.name, item.value ?? {defaultValue: ''}, item.behavior, item.placeholder,
-                    item.description, item.layout, item.validations, item.component);
+                    item.description, item.layout, item.validations, item.component, this.getValidators(item.type));
         }
     }
 
@@ -300,5 +308,9 @@ export class FieldConverterService {
             return decodeBase64(value);
         }
         return value;
+    }
+
+    protected getValidators(type: FieldTypeResource): Map<string, Validator> {
+        return new Map([...this.validationRegistry.registry.entries()].filter(it => it[1].fieldType === type).map(v => [v[0], v[1]]))
     }
 }

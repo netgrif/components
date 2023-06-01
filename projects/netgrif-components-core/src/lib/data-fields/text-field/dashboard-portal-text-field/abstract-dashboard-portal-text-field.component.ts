@@ -3,6 +3,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {CustomCard} from '../../../dashboard/cards/model/custom-dashboard-model/custom-card';
 import {DashboardCardTypes} from '../../../dashboard/cards/model/dashboard-card-types';
 import {AbstractDashboardTextFieldComponent} from '../abstract-dashboard-text-field.component';
+import {ValidationRegistryService} from "../../../validation/service/validation-registry.service";
 
 @Component({
     selector: 'ncc-abstract-dashboard-pie-chart-text-field',
@@ -10,8 +11,8 @@ import {AbstractDashboardTextFieldComponent} from '../abstract-dashboard-text-fi
 })
 export abstract class AbstractDashboardPortalTextFieldComponent extends AbstractDashboardTextFieldComponent {
 
-    protected constructor(translate: TranslateService) {
-        super(translate);
+    protected constructor(translate: TranslateService, _validationRegistry: ValidationRegistryService) {
+        super(translate, _validationRegistry);
     }
 
     protected createCard(textFieldValue: string): CustomCard {

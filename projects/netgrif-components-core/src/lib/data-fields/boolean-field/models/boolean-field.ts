@@ -4,6 +4,7 @@ import {Layout} from '../../models/layout';
 import {Validation} from '../../models/validation';
 import {Component} from '../../models/component';
 import {DataField} from '../../models/abstract-data-field';
+import {Validator} from "../../../validation/model/validator";
 
 export enum BooleanFieldValidation {
     REQUIRED_TRUE = 'requiredTrue',
@@ -13,8 +14,10 @@ export enum BooleanFieldValidation {
 export class BooleanField extends DataField<boolean> {
 
     constructor(stringId: string, title: string, value: boolean, behavior: Behavior, placeholder?: string,
-                description?: string, layout?: Layout, validations?: Array<Validation>, component?: Component,  parentTaskId?: string) {
-        super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId);
+                description?: string, layout?: Layout, validations?: Array<Validation>, component?: Component, parentTaskId?: string,
+                validatorRegister?: Map<string, Validator>) {
+        super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId,
+            undefined, validatorRegister);
     }
 
     protected resolveValidations(): Array<ValidatorFn> {

@@ -3,6 +3,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {Component, Input} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {WrappedBoolean} from '../data-field-template/models/wrapped-boolean';
+import {ValidationRegistryService} from "../../validation/service/validation-registry.service";
 
 @Component({
     selector: 'ncc-abstract-number-errors-field',
@@ -14,7 +15,8 @@ export abstract class AbstractNumberErrorsComponent {
     @Input() formControlRef: FormControl;
     @Input() numberField: NumberField;
 
-    protected constructor(protected _translate: TranslateService) {
+    protected constructor(protected _translate: TranslateService,
+                          protected _validationRegistry: ValidationRegistryService) {
     }
 
     getErrorMessage() {
@@ -38,17 +40,17 @@ export abstract class AbstractNumberErrorsComponent {
         }
         if (this.formControlRef.hasError(NumberFieldValidation.VALID_IN_RANGE)) {
             const tmp = this.numberField.validations.find(value =>
-                value.validationRule.includes(NumberFieldValidation.IN_RANGE)
-            ).validationRule.split(' ');
+                value.name === NumberFieldValidation.IN_RANGE
+            ).arguments;
             return this.resolveErrorMessage(
-                NumberFieldValidation.IN_RANGE, this._translate.instant('dataField.validations.inrange', {range: tmp[1]})
+                NumberFieldValidation.IN_RANGE, this._translate.instant('dataField.validations.inrange', {range: tmp.from.value + ',' + tmp.to.value})
             );
         }
         return '';
     }
 
     resolveErrorMessage(search: string, generalMessage: string) {
-        const validation = this.numberField.validations.find(value => value.validationRule.includes(search));
+        const validation = this.numberField.validations.find(value => value.name === search);
         if (validation.validationMessage && validation.validationMessage !== '') {
             return validation.validationMessage;
         }

@@ -8,6 +8,7 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {Component} from './component';
 import {Validation} from './validation';
 import {ElementRef} from "@angular/core";
+import {Validator} from "../../validation/model/validator";
 
 /**
  * Holds the logic common to all data field Model objects.
@@ -135,11 +136,13 @@ export abstract class DataField<T> {
      * @param _component - component data of datafield
      * @param _parentTaskId - stringId of parent task, only defined if field is loaded using {@link TaskRefField}
      * @param _parentCaseId - stringId of parent case, only defined if field is loaded using {@link TaskRefField}
+     * @param _validatorRegister - validator description to use when validating fields with dynamic and custom validations.
      */
     protected constructor(private _stringId: string, private _title: string, initialValue: T,
                           private _behavior: Behavior, private _placeholder?: string,
                           private _description?: string, private _layout?: Layout, public validations?: Array<Validation>,
-                          private _component?: Component, private _parentTaskId?: string, private _parentCaseId?: string) {
+                          private _component?: Component, private _parentTaskId?: string, private _parentCaseId?: string,
+                          private _validatorRegister?: Map<string, Validator>) {
         this._value = new BehaviorSubject<T>(initialValue);
         this._previousValue = new BehaviorSubject<T>(initialValue);
         this._initialized$ = new BehaviorSubject<boolean>(false);
