@@ -1,29 +1,27 @@
-import {AfterViewInit, Component, Input} from '@angular/core';
+import {AfterViewInit, Component, Inject, Optional} from '@angular/core';
 import {ElementRef, NgZone, ViewChild} from '@angular/core';
 import {TextAreaHeight, TextField} from '../models/text-field';
-import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
-import {FormControl} from '@angular/forms';
 import {TranslateService} from '@ngx-translate/core';
 import {take} from 'rxjs/operators';
 import {CdkTextareaAutosize} from '@angular/cdk/text-field';
 import {AbstractTextErrorsComponent} from '../abstract-text-errors.component';
 import {ValidationRegistryService} from "../../../validation/service/validation-registry.service";
+import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
+import {TextAreaField} from "../models/text-area-field";
 
 @Component({
     selector: 'ncc-abstract-text-area-field',
     template: ''
 })
-export abstract class AbstractTextareaFieldComponent extends AbstractTextErrorsComponent implements AfterViewInit {
+export abstract class AbstractTextareaFieldComponent extends AbstractTextErrorsComponent<TextField> implements AfterViewInit {
 
-    @Input() textAreaField: TextField;
-    @Input() formControlRef: FormControl;
-    @Input() showLargeLayout: WrappedBoolean;
     @ViewChild('dynamicTextArea') dynamicTextArea: CdkTextareaAutosize;
     @ViewChild('textArea') textArea: ElementRef<HTMLTextAreaElement>;
 
     constructor(protected _translate: TranslateService, protected _ngZone: NgZone,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextAreaField>,
                 _validationRegistry: ValidationRegistryService) {
-        super(_translate, _validationRegistry);
+        super(_translate, dataFieldPortalData, _validationRegistry);
     }
 
     ngAfterViewInit() {
@@ -35,10 +33,10 @@ export abstract class AbstractTextareaFieldComponent extends AbstractTextErrorsC
     }
 
     public getHeight() {
-        const oneHeight = this.textAreaField.layout && this.textAreaField.layout.appearance === 'outline' ?
+        const oneHeight = this.dataField.layout && this.dataField.layout.appearance === 'outline' ?
             TextAreaHeight.OUTLINE : TextAreaHeight.FILL_STANDARD;
-        return this.textAreaField.layout && this.textAreaField.layout.rows && this.textAreaField.layout.rows !== 1 ?
-            (this.textAreaField.layout.rows - 1) * TextField.FIELD_HEIGHT + oneHeight : oneHeight;
+        return this.dataField.layout && this.dataField.layout.rows && this.dataField.layout.rows !== 1 ?
+            (this.dataField.layout.rows - 1) * TextField.FIELD_HEIGHT + oneHeight : oneHeight;
     }
 
     triggerResize() {
@@ -47,6 +45,6 @@ export abstract class AbstractTextareaFieldComponent extends AbstractTextErrorsC
     }
 
     public getErrorMessage() {
-        return this.buildErrorMessage(this.textAreaField, this.formControlRef);
+        return this.buildErrorMessage(this.dataField, this.formControlRef);
     }
 }

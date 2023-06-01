@@ -1,22 +1,20 @@
 import {NumberField, NumberFieldValidation} from './models/number-field';
 import {TranslateService} from '@ngx-translate/core';
-import {Component, Input} from '@angular/core';
-import {FormControl} from '@angular/forms';
-import {WrappedBoolean} from '../data-field-template/models/wrapped-boolean';
+import {Component, Inject, Optional} from '@angular/core';
+import {AbstractBaseDataFieldComponent} from "../base-component/abstract-base-data-field.component";
+import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../models/data-field-portal-data-injection-token";
 import {ValidationRegistryService} from "../../validation/service/validation-registry.service";
 
 @Component({
     selector: 'ncc-abstract-number-errors-field',
     template: ''
 })
-export abstract class AbstractNumberErrorsComponent {
-
-    @Input() showLargeLayout: WrappedBoolean;
-    @Input() formControlRef: FormControl;
-    @Input() numberField: NumberField;
+export abstract class AbstractNumberErrorsComponent extends AbstractBaseDataFieldComponent<NumberField>{
 
     protected constructor(protected _translate: TranslateService,
-                          protected _validationRegistry: ValidationRegistryService) {
+                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<NumberField>,
+                          _validationRegistry: ValidationRegistryService) {
+        super(dataFieldPortalData, _validationRegistry);
     }
 
     getErrorMessage() {
@@ -39,7 +37,7 @@ export abstract class AbstractNumberErrorsComponent {
             return this.resolveErrorMessage(NumberFieldValidation.DECIMAL, this._translate.instant('dataField.validations.decimal'));
         }
         if (this.formControlRef.hasError(NumberFieldValidation.VALID_IN_RANGE)) {
-            const tmp = this.numberField.validations.find(value =>
+            const tmp = this.dataField.validations.find(value =>
                 value.name === NumberFieldValidation.IN_RANGE
             ).arguments;
             return this.resolveErrorMessage(
@@ -50,7 +48,7 @@ export abstract class AbstractNumberErrorsComponent {
     }
 
     resolveErrorMessage(search: string, generalMessage: string) {
-        const validation = this.numberField.validations.find(value => value.name === search);
+        const validation = this.dataField.validations.find(value => value.name === search);
         if (validation.validationMessage && validation.validationMessage !== '') {
             return validation.validationMessage;
         }

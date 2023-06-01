@@ -1,26 +1,27 @@
-import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 import {AbstractTimeInstanceField, AbstractTimeInstanceFieldValidation} from './models/abstract-time-instance-field';
 import {TranslateService} from '@ngx-translate/core';
 import moment, {Moment} from 'moment';
 import {Component, Inject, Optional} from '@angular/core';
-import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
+import {AbstractBaseDataFieldComponent} from "../base-component/abstract-base-data-field.component";
+import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../models/data-field-portal-data-injection-token";
 
 @Component({
     selector: 'ncc-abstract-time-instance-field',
     template: ''
 })
-export abstract class AbstractTimeInstanceFieldComponent extends AbstractDataFieldComponent {
+export abstract class AbstractTimeInstanceFieldComponent<T extends AbstractTimeInstanceField> extends AbstractBaseDataFieldComponent<T> {
 
     protected constructor(protected _translate: TranslateService,
-                          @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
-        super(informAboutInvalidData);
+                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<T>,
+                          _validationRegistry: ValidationRegistryService) {
+        super(dataFieldPortalData, _validationRegistry)
     }
 
     public buildErrorMessage(dataField: AbstractTimeInstanceField) {
-        if (this.formControl.hasError(AbstractTimeInstanceFieldValidation.REQUIRED)) {
+        if (this.formControlRef.hasError(AbstractTimeInstanceFieldValidation.REQUIRED)) {
             return this._translate.instant('dataField.validations.required');
         }
-        if (this.formControl.hasError(AbstractTimeInstanceFieldValidation.VALID_BETWEEN)) {
+        if (this.formControlRef.hasError(AbstractTimeInstanceFieldValidation.VALID_BETWEEN)) {
             const args = dataField.validations.find(value =>
                 value.name === AbstractTimeInstanceFieldValidation.BETWEEN).arguments;
             let left = AbstractTimeInstanceField.parseDate(args.from.value);
@@ -38,12 +39,12 @@ export abstract class AbstractTimeInstanceFieldComponent extends AbstractDataFie
             return this.resolveErrorMessage(dataField, AbstractTimeInstanceFieldValidation.BETWEEN,
                 this._translate.instant('dataField.validations.dateRange', {left, right}));
         }
-        if (this.formControl.hasError(AbstractTimeInstanceFieldValidation.VALID_WORKDAY)) {
+        if (this.formControlRef.hasError(AbstractTimeInstanceFieldValidation.VALID_WORKDAY)) {
             return this.resolveErrorMessage(
                 dataField, AbstractTimeInstanceFieldValidation.WORKDAY, this._translate.instant('dataField.validations.workday')
             );
         }
-        if (this.formControl.hasError(AbstractTimeInstanceFieldValidation.VALID_WEEKEND)) {
+        if (this.formControlRef.hasError(AbstractTimeInstanceFieldValidation.VALID_WEEKEND)) {
             return this.resolveErrorMessage(
                 dataField, AbstractTimeInstanceFieldValidation.WEEKEND, this._translate.instant('dataField.validations.weekend')
             );

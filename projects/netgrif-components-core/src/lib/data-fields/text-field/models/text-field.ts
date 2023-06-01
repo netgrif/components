@@ -2,7 +2,7 @@ import {Behavior} from '../../models/behavior';
 import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {Layout} from '../../models/layout';
 import {Validation} from '../../models/validation';
-import {Component} from '../../models/component';
+import {Component, ComponentPrefixes} from '../../models/component';
 import {DataField} from '../../models/abstract-data-field';
 import {Injector} from "@angular/core";
 import {Validator} from "../../../validation/model/validator";
@@ -57,6 +57,9 @@ export class TextField extends DataField<string> {
             undefined, validatorRegister);
     }
 
+    public getTypedComponentType(): string {
+        return ComponentPrefixes.TEXT + this.getComponentType();
+    }
     protected resolveValidations(): Array<ValidatorFn> {
         const result = [];
 

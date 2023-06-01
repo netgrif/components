@@ -2,7 +2,7 @@ import {Behavior} from '../../models/behavior';
 import {AbstractControl, ValidationErrors, ValidatorFn} from '@angular/forms';
 import {Layout} from '../../models/layout';
 import {Validation} from '../../models/validation';
-import {Component} from '../../models/component';
+import {Component, ComponentPrefixes} from '../../models/component';
 import {DataField} from '../../models/abstract-data-field';
 import {Validator} from "../../../validation/model/validator";
 
@@ -18,6 +18,10 @@ export class BooleanField extends DataField<boolean> {
                 validatorRegister?: Map<string, Validator>) {
         super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId,
             undefined, validatorRegister);
+    }
+
+    public getTypedComponentType(): string {
+        return ComponentPrefixes.BOOLEAN + this.getComponentType();
     }
 
     protected resolveValidations(): Array<ValidatorFn> {

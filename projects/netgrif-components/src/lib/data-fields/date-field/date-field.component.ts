@@ -1,7 +1,6 @@
 import {Component, Inject, Optional} from '@angular/core';
 import {MAT_DATE_FORMATS} from '@angular/material/core';
 import {AbstractDateFieldComponent, DATE_FORMAT, NAE_INFORM_ABOUT_INVALID_DATA} from '@netgrif/components-core';
-import {TranslateService} from '@ngx-translate/core';
 
 
 @Component({
@@ -13,8 +12,7 @@ import {TranslateService} from '@ngx-translate/core';
     ]
 })
 export class DateFieldComponent extends AbstractDateFieldComponent {
-    constructor(translate: TranslateService,
-                @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
-        super(translate, informAboutInvalidData);
+    constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+        super(informAboutInvalidData);
     }
 }

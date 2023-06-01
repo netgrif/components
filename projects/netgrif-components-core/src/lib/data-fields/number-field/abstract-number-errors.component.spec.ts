@@ -1,4 +1,4 @@
-import {Component, CUSTOM_ELEMENTS_SCHEMA, OnDestroy} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, OnDestroy, Optional} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {AbstractNumberErrorsComponent} from './abstract-number-errors.component';
 import {NumberField} from './models/number-field';
@@ -18,7 +18,8 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {LanguageService} from '../../translate/language.service';
 import {FormControl} from '@angular/forms';
-
+import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../models/data-field-portal-data-injection-token";
+import {WrappedBoolean} from "../data-field-template/models/wrapped-boolean";
 
 describe('AbstractNumberErrorsComponent', () => {
     let component: TestNumErrorComponent;
@@ -37,7 +38,27 @@ describe('AbstractNumberErrorsComponent', () => {
                 {provide: AuthenticationMethodService, useCLass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
-                {provide: ConfigurationService, useClass: TestConfigurationService}
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: DATA_FIELD_PORTAL_DATA, useValue: {
+                        dataField: new NumberField('', '', 4, {
+                            optional: true,
+                            visible: true,
+                            editable: true,
+                            hidden: true
+                        }, [
+                            {validationRule: 'odd', validationMessage: 'This is custom odd message!'},
+                            {validationRule: 'even', validationMessage: ''},
+                            {validationRule: 'positive', validationMessage: 'This is custom message!'},
+                            {validationRule: 'negative', validationMessage: 'This is custom message!'},
+                            {validationRule: 'decimal', validationMessage: 'This is custom message!'},
+                            {validationRule: 'inrange inf,0', validationMessage: 'This is custom message!'},
+                            {validationRule: 'inrange 0,inf', validationMessage: 'This is custom message!'},
+                            {validationRule: 'inrange -5,0', validationMessage: 'This is custom message!'},
+                        ]),
+                        formControlRef: new FormControl(),
+                        showLargeLayout: new WrappedBoolean()
+                    } as DataFieldPortalData<NumberField>
+                }
             ],
             declarations: [
                 TestNumErrorComponent,
@@ -48,7 +69,7 @@ describe('AbstractNumberErrorsComponent', () => {
             .compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
-        const initializeLang = TestBed.inject(LanguageService);
+        TestBed.inject(LanguageService);
         fixture.detectChanges();
     }));
 
@@ -59,7 +80,7 @@ describe('AbstractNumberErrorsComponent', () => {
     it('should get error message', () => {
         expect(component.getErrorMessage()).toEqual('This is custom odd message!');
 
-        component.numberField.value = 5;
+        component.dataField.value = 5;
         expect(component.getErrorMessage()).toEqual('Entered number must be even');
     });
 
@@ -73,40 +94,15 @@ describe('AbstractNumberErrorsComponent', () => {
     template: ''
 })
 class TestNumErrorComponent extends AbstractNumberErrorsComponent {
-    constructor(translate: TranslateService) {
-        super(translate);
+    constructor(translate: TranslateService, @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<NumberField>) {
+        super(translate, dataFieldPortalData);
     }
 }
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-num-err [numberField]="field" [formControlRef]="fc"></ncc-test-num-err>'
+    template: '<ncc-test-num-err></ncc-test-num-err>'
 })
-class TestWrapperComponent implements OnDestroy {
-    field = new NumberField('', '', 4, {
-        optional: true,
-        visible: true,
-        editable: true,
-        hidden: true
-    }, [
-        {validationRule: 'odd', validationMessage: 'This is custom odd message!'},
-        {validationRule: 'even', validationMessage: ''},
-        {validationRule: 'positive', validationMessage: 'This is custom message!'},
-        {validationRule: 'negative', validationMessage: 'This is custom message!'},
-        {validationRule: 'decimal', validationMessage: 'This is custom message!'},
-        {validationRule: 'inrange inf,0', validationMessage: 'This is custom message!'},
-        {validationRule: 'inrange 0,inf', validationMessage: 'This is custom message!'},
-        {validationRule: 'inrange -5,0', validationMessage: 'This is custom message!'},
-    ]);
-
-    fc = new FormControl();
-
-    constructor() {
-        this.field.registerFormControl(this.fc);
-    }
-
-    ngOnDestroy(): void {
-        this.field.disconnectFormControl();
-    }
+class TestWrapperComponent  {
 
 }

@@ -3,7 +3,7 @@ import {FormControl, ValidatorFn} from '@angular/forms';
 import {Layout} from '../../models/layout';
 import {Validation} from '../../models/validation';
 import {FormatFilter} from '../../models/format-filter';
-import {Component} from '../../models/component';
+import {Component, ComponentPrefixes} from '../../models/component';
 import {DataField} from '../../models/abstract-data-field';
 import {noop} from "rxjs";
 import {Validator} from "../../../validation/model/validator";
@@ -35,6 +35,9 @@ export class NumberField extends DataField<number> {
         this._formatFilter = format;
     }
 
+    public getTypedComponentType(): string {
+        return ComponentPrefixes.NUMBER + this.getComponentType();
+    }
     protected resolveValidations(): Array<ValidatorFn> {
         const result = [];
 

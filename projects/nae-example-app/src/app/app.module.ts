@@ -6,7 +6,7 @@ import {
     AuthenticationModule,
     ConfigurationService,
     CovalentModule,
-    DashboardPortalComponentRegistryService,
+    ComponentRegistryService,
     DialogModule,
     MaterialModule,
     NAE_SNACKBAR_HORIZONTAL_POSITION,
@@ -260,7 +260,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 })
 export class AppModule {
 
-    constructor(registry: DashboardPortalComponentRegistryService,
+    constructor(registry: ComponentRegistryService,
                 validationRegistry: ValidationRegistryService) {
         registry.register('email', (injector: Injector) => new ComponentPortal(EmailSubmissionFormComponent, null, injector));
         registry.register('workflow-view', (injector: Injector) => new ComponentPortal(WorkflowViewExampleComponent, null, injector));

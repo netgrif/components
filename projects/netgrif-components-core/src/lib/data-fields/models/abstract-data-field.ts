@@ -5,7 +5,7 @@ import {Change} from './changed-fields';
 import {distinctUntilChanged, filter, take} from 'rxjs/operators';
 import {Layout} from './layout';
 import {ConfigurationService} from '../../configuration/configuration.service';
-import {Component} from './component';
+import {Component, DEFAULT} from './component';
 import {Validation} from './validation';
 import {ElementRef} from "@angular/core";
 import {Validator} from "../../validation/model/validator";
@@ -123,6 +123,11 @@ export abstract class DataField<T> {
      * Reference to rendered element
      * */
     private _input: ElementRef;
+
+    /**
+     * Reference to form control
+     * */
+    private _formControlRef: FormControl;
 
     /**
      * @param _stringId - ID of the data field from backend
@@ -350,13 +355,23 @@ export abstract class DataField<T> {
         this._input = value;
     }
 
+    get formControlRef(): FormControl {
+        return this._formControlRef;
+    }
+
+    set formControlRef(formControl: FormControl) {
+        this._formControlRef = formControl;
+    }
+
     /**
      * This function resolve type of component for HTML
      * @returns type of component in string
      */
     public getComponentType(): string {
-        return this.component?.name ?? '';
+        return this.component?.name ?? DEFAULT;
     }
+
+    public abstract getTypedComponentType(): string;
 
     public destroy(): void {
         this._value.complete();
@@ -374,6 +389,7 @@ export abstract class DataField<T> {
                 + ' Disconnect the previous form control before initializing the data field again!');
         }
 
+        this.formControlRef = formControl;
         formControl.setValidators(this.resolveFormControlValidators());
 
         this._formControlValueSubscription = formControl.valueChanges.pipe(

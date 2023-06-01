@@ -1,6 +1,5 @@
 import {Component, Inject, Optional} from '@angular/core';
-import {AbstractBooleanFieldComponent, BOOLEAN_VALUE_LABEL_ENABLED, NAE_INFORM_ABOUT_INVALID_DATA} from '@netgrif/components-core';
-import {TranslateService} from '@ngx-translate/core';
+import {AbstractBooleanFieldComponent, NAE_INFORM_ABOUT_INVALID_DATA} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-boolean-field',
@@ -8,12 +7,8 @@ import {TranslateService} from '@ngx-translate/core';
     styleUrls: ['./boolean-field.component.scss']
 })
 export class BooleanFieldComponent extends AbstractBooleanFieldComponent {
-    valueLabelEnabled: boolean;
 
-    constructor(translate: TranslateService,
-                @Optional() @Inject(BOOLEAN_VALUE_LABEL_ENABLED) protected isEnabled: boolean,
-                @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
-        super(translate, informAboutInvalidData);
-        this.valueLabelEnabled = isEnabled;
+    constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+        super(informAboutInvalidData);
     }
 }

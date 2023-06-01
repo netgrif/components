@@ -1,9 +1,11 @@
-import {Component} from '@angular/core';
+import {Component, Inject, Optional} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {CustomCard} from '../../../dashboard/cards/model/custom-dashboard-model/custom-card';
 import {DashboardCardTypes} from '../../../dashboard/cards/model/dashboard-card-types';
 import {FilterType} from '../../../filter/models/filter-type';
 import {AbstractDashboardTextFieldComponent} from '../abstract-dashboard-text-field.component';
+import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
+import {TextField} from "../models/text-field";
 import {ValidationRegistryService} from "../../../validation/service/validation-registry.service";
 
 @Component({
@@ -12,8 +14,10 @@ import {ValidationRegistryService} from "../../../validation/service/validation-
 })
 export abstract class AbstractDashboardPieChartTextFieldComponent extends AbstractDashboardTextFieldComponent {
 
-    protected constructor(translate: TranslateService, _validationRegistry: ValidationRegistryService) {
-        super(translate, _validationRegistry);
+    protected constructor(translate: TranslateService,
+                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextField>,
+                          _validationRegistry: ValidationRegistryService) {
+        super(translate, dataFieldPortalData, _validationRegistry);
     }
 
     protected createCard(textFieldValue: string): CustomCard {

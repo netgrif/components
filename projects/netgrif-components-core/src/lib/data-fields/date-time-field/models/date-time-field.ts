@@ -3,8 +3,8 @@ import {Moment} from 'moment';
 import {AbstractTimeInstanceField} from '../../time-instance-abstract-field/models/abstract-time-instance-field';
 import {Layout} from '../../models/layout';
 import {Validation} from '../../models/validation';
-import {Component} from '../../models/component';
 import {Validator} from "../../../validation/model/validator";
+import {Component, ComponentPrefixes} from '../../models/component';
 
 export class DateTimeField extends AbstractTimeInstanceField {
 
@@ -12,6 +12,10 @@ export class DateTimeField extends AbstractTimeInstanceField {
                 description?: string, layout?: Layout, validations?: Array<Validation>, component?: Component, parentTaskId?: string,
                 validatorRegister?: Map<string, Validator>) {
         super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId, validatorRegister);
+    }
+
+    public getTypedComponentType(): string {
+        return ComponentPrefixes.DATE_TIME + this.getComponentType();
     }
 
     protected valueEquality(a: Moment, b: Moment): boolean {

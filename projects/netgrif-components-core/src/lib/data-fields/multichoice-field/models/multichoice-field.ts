@@ -2,7 +2,7 @@ import {DataField} from '../../models/abstract-data-field';
 import {Behavior} from '../../models/behavior';
 import {Layout} from '../../models/layout';
 import {FieldTypeResource} from '../../../task-content/model/field-type-resource';
-import {Component} from '../../models/component';
+import {Component, ComponentPrefixes} from '../../models/component';
 import {Validation} from '../../models/validation';
 
 export interface MultichoiceFieldValue {
@@ -29,6 +29,10 @@ export class MultichoiceField  extends DataField<Array<string>> {
 
     get fieldType(): FieldTypeResource {
         return this._fieldType;
+    }
+
+    public getTypedComponentType(): string {
+        return ComponentPrefixes.MULTICHOICE + this.getComponentType();
     }
 
     protected valueEquality(a: Array<string>, b: Array<string>): boolean {

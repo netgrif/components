@@ -1,43 +1,52 @@
-import {AfterViewChecked, Component, ElementRef, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {
+    AfterViewChecked,
+    Component,
+    ElementRef,
+    Inject,
+    OnInit,
+    Optional,
+    QueryList,
+    ViewChildren
+} from '@angular/core';
 import {EnumerationField} from '../models/enumeration-field';
-import {FormControl} from '@angular/forms';
-import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
+import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
+import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base-data-field.component";
 
 @Component({
     selector: 'ncc-abstract-enumeration-stepper-field',
     template: ''
 })
-export abstract class AbstractEnumerationStepperFieldComponent implements OnInit, AfterViewChecked {
+export abstract class AbstractEnumerationStepperFieldComponent extends AbstractBaseDataFieldComponent<EnumerationField> implements OnInit, AfterViewChecked {
 
-    @Input() enumerationField: EnumerationField;
-    @Input() formControlRef: FormControl;
-    @Input() showLargeLayout: WrappedBoolean;
     @ViewChildren('oneStep') steps: QueryList<ElementRef>;
     public arrowStepper: boolean;
 
-    constructor(protected ref: ElementRef) {
+    constructor(protected ref: ElementRef,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<EnumerationField>) {
+        super(dataFieldPortalData);
         this.arrowStepper = false;
+
     }
 
     ngOnInit() {
-        if (this.enumerationField && this.enumerationField.component && this.enumerationField.component.properties &&
-            this.enumerationField.component.properties.arrowStepper) {
-            this.arrowStepper = this.enumerationField.component.properties.arrowStepper === 'true';
+        if (this.dataField && this.dataField.component && this.dataField.component.properties &&
+            this.dataField.component.properties.arrowStepper) {
+            this.arrowStepper = this.dataField.component.properties.arrowStepper === 'true';
         }
     }
 
     canShowDoneIcon(index: number): boolean {
-        return index <= this.enumerationField.choices.findIndex(choice => choice.key === this.enumerationField.value);
+        return index <= this.dataField.choices.findIndex(choice => choice.key === this.dataField.value);
     }
 
     isSelected(key: string): boolean {
-        return key === this.enumerationField.value;
+        return key === this.dataField.value;
     }
 
     ngAfterViewChecked() {
         if (!!this.steps && !!this.steps.toArray()) {
             const width = this.ref.nativeElement.parentElement.offsetWidth;
-            const maxWidth = (width + (this.enumerationField.choices.length - 1) * 20) / this.enumerationField.choices.length;
+            const maxWidth = (width + (this.dataField.choices.length - 1) * 20) / this.dataField.choices.length;
             this.steps.toArray().forEach(step => {
                 step.nativeElement.style.maxWidth = maxWidth >= 72 ? maxWidth + 'px' : '72px';
             });
@@ -45,7 +54,7 @@ export abstract class AbstractEnumerationStepperFieldComponent implements OnInit
     }
 
     setStepperValue(key: string) {
-        if (!this.enumerationField.disabled) {
+        if (!this.dataField.disabled) {
             this.formControlRef.setValue(key);
         }
     }

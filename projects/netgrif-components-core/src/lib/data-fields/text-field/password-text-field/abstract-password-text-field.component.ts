@@ -1,26 +1,23 @@
-import {Component, Input} from '@angular/core';
-import {FormControl} from '@angular/forms';
+import {Component, Inject, Optional} from '@angular/core';
 import {TextField} from '../models/text-field';
-import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {TranslateService} from '@ngx-translate/core';
 import {AbstractTextErrorsComponent} from '../abstract-text-errors.component';
 import {ValidationRegistryService} from "../../../validation/service/validation-registry.service";
+import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 
 @Component({
     selector: 'ncc-abstract-password-text-field',
     template: ''
 })
-export abstract class AbstractPasswordTextFieldComponent extends AbstractTextErrorsComponent {
+export abstract class AbstractPasswordTextFieldComponent extends AbstractTextErrorsComponent<TextField> {
 
-    @Input() passwordTextField: TextField;
-    @Input() formControlRef: FormControl;
-    @Input() showLargeLayout: WrappedBoolean;
-
-    constructor(protected _translate: TranslateService, _validationRegistry: ValidationRegistryService) {
-        super(_translate, _validationRegistry);
+    constructor(protected _translate: TranslateService,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextField>,
+                _validationRegistry: ValidationRegistryService) {
+        super(_translate, dataFieldPortalData, _validationRegistry);
     }
 
     public getErrorMessage() {
-        return this.buildErrorMessage(this.passwordTextField, this.formControlRef);
+        return this.buildErrorMessage(this.dataField, this.formControlRef);
     }
 }
