@@ -5,7 +5,7 @@ import {TextField} from './text-field';
 import {Observable} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
 import {Component} from '../../models/component';
-import {Validator} from "../../../validation/model/validator";
+import {Validator} from "../../../registry/model/validator";
 
 export class TextAreaField extends TextField {
     private SEARCH_DEBOUNCE_TIME = 600;

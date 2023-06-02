@@ -5,17 +5,17 @@ export interface Validation {
     /**
      * Value set in the PetriNet model as validation.
      */
-    validationRule: string;
+    validationRule?: string;
     /**
      * Message that should be displayed when the validation fails.
      *
      * If the message is empty, some default message will be displayed.
      */
-    validationMessage: string;
+    validationMessage?: string;
 
     name: string;
 
-    arguments: {
+    arguments?: {
         [k:string]: Argument;
     };
 

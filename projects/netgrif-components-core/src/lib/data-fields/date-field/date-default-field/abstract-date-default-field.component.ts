@@ -5,6 +5,7 @@ import {DateField} from "../models/date-field";
 import {
     AbstractTimeInstanceFieldComponent
 } from "../../time-instance-abstract-field/abstract-time-instance-field.component";
+import {ValidationRegistryService} from "../../../registry/validation-registry.service";
 
 @Component({
     selector: 'ncc-abstract-date-default-field',
@@ -12,12 +13,9 @@ import {
 })
 export abstract class AbstractDateDefaultFieldComponent extends AbstractTimeInstanceFieldComponent<DateField> {
 
-    constructor(protected _translate: TranslateService,
-                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<DateField>) {
-        super(_translate, dataFieldPortalData)
-    }
-
-    getErrorMessage() {
-        return this.buildErrorMessage(this.dataField);
+    constructor(_translate: TranslateService,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<DateField>,
+                _validationRegistry: ValidationRegistryService) {
+        super(_translate, dataFieldPortalData, _validationRegistry)
     }
 }

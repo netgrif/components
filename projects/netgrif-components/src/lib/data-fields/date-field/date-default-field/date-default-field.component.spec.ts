@@ -15,7 +15,10 @@ import {
     TestConfigurationService,
     TranslateLibModule,
     UserResourceService,
-    WrappedBoolean
+    WrappedBoolean,
+    workdayValidation,
+    weekendValidation,
+    Validator
 } from "@netgrif/components-core";
 import {AngularResizeEventModule} from "angular-resize-event";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
@@ -50,10 +53,16 @@ describe('DateDefaultFieldComponent', () => {
                         visible: true,
                         editable: true,
                         hidden: true
-                    }, undefined, undefined, undefined, [
-                        {validationRule: 'weekend', validationMessage: 'This is custom message!'},
-                        {validationRule: 'workday', validationMessage: 'This is custom message!'}
-                    ]),
+                    }, undefined, undefined, undefined,[
+                            {name: 'weekend', validationMessage: 'This is custom message!'},
+                            {name: 'workday', validationMessage: 'This is custom message!'}
+                        ],
+                        undefined,
+                        undefined,
+                        new Map<string, Validator>([
+                            ['weekend', weekendValidation],
+                            ['workday', workdayValidation]
+                        ])),
                     formControlRef: new FormControl(),
                     showLargeLayout: new WrappedBoolean()
                 } as DataFieldPortalData<DateField>

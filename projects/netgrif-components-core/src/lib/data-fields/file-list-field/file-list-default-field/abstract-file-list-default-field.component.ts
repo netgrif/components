@@ -66,10 +66,10 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractBase
     protected constructor(protected _taskResourceService: TaskResourceService,
                           protected _log: LoggerService,
                           protected _snackbar: SnackBarService,
-                          protected _translate: TranslateService,
+                          _translate: TranslateService,
                           protected _eventService: EventService,
                           @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<FileListField>) {
-        super(dataFieldPortalData);
+        super(_translate, dataFieldPortalData);
         this.state = this.defaultState;
         this.uploadedFiles = new Array<string>();
         this.maxFilesNumber = Number.POSITIVE_INFINITY;
@@ -132,7 +132,7 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractBase
         }
         if (this.fileUploadEl.nativeElement.files.length + this.uploadedFiles.length > this.maxFilesNumber) {
             this._snackbar.openErrorSnackBar(this.maxFilesMessage ? this.maxFilesMessage :
-                this._translate.instant('dataField.snackBar.maxFilesExceeded') + this.maxFilesNumber
+                this.translate.instant('dataField.snackBar.maxFilesExceeded') + this.maxFilesNumber
             );
             this.fileUploadEl.nativeElement.value = '';
             return;
@@ -145,7 +145,7 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractBase
             this.dataField.maxUploadSizeInBytes < sum) {
             this._log.error('Files cannot be uploaded. Maximum size of files exceeded.');
             this._snackbar.openErrorSnackBar(
-                this._translate.instant('dataField.snackBar.maxFilesSizeExceeded') + this.dataField.maxUploadSizeInBytes
+                this.translate.instant('dataField.snackBar.maxFilesSizeExceeded') + this.dataField.maxUploadSizeInBytes
             );
             this.fileUploadEl.nativeElement.value = '';
             return;
@@ -157,7 +157,7 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractBase
             });
             if (filesToUpload.length === 0) {
                 this._log.error('User chose the same files that are already uploaded. Uploading skipped');
-                this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.wontUploadSameFiles'));
+                this._snackbar.openErrorSnackBar(this.translate.instant('dataField.snackBar.wontUploadSameFiles'));
                 this.fileUploadEl.nativeElement.value = '';
                 return;
             }
@@ -191,9 +191,9 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractBase
                             `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)} uploading has failed!`, response.error
                         );
                         if (response.error) {
-                            this._snackbar.openErrorSnackBar(this._translate.instant(response.error));
+                            this._snackbar.openErrorSnackBar(this.translate.instant(response.error));
                         } else {
-                            this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.fileUploadFailed'));
+                            this._snackbar.openErrorSnackBar(this.translate.instant('dataField.snackBar.fileUploadFailed'));
                         }
                     } else {
                         const changedFieldsMap: ChangedFieldsMap = this._eventService.parseChangedFieldsFromOutcomeTree(response.outcome);
@@ -217,9 +217,9 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractBase
                 this.state.uploading = false;
                 this.state.progress = 0;
                 if (error?.error?.message) {
-                    this._snackbar.openErrorSnackBar(this._translate.instant(error.error.message));
+                    this._snackbar.openErrorSnackBar(this.translate.instant(error.error.message));
                 } else {
-                    this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.fileUploadFailed'));
+                    this._snackbar.openErrorSnackBar(this.translate.instant('dataField.snackBar.fileUploadFailed'));
                 }
                 this._log.error(
                     `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)} uploading has failed!`, error
@@ -255,7 +255,7 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractBase
             }
         }, error => {
             this._log.error(`Downloading file [${this.dataField.stringId}] ${fileName} has failed!`, error);
-            this._snackbar.openErrorSnackBar(fileName + ' ' + this._translate.instant('dataField.snackBar.downloadFail'));
+            this._snackbar.openErrorSnackBar(fileName + ' ' + this.translate.instant('dataField.snackBar.downloadFail'));
             this.state.downloading = false;
             this.state.progress = 0;
         });
@@ -306,7 +306,7 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractBase
             } else {
                 this._log.error(`Deleting file [${this.dataField.stringId}] ${fileName} has failed!`, response.error);
                 this._snackbar.openErrorSnackBar(
-                    fileName + ' ' + this._translate.instant('dataField.snackBar.fileDeleteFailed')
+                    fileName + ' ' + this.translate.instant('dataField.snackBar.fileDeleteFailed')
                 );
             }
         });
@@ -329,7 +329,7 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractBase
         if (!!this.dataField && !!this.dataField.placeholder) {
             return this.dataField.placeholder;
         }
-        return this._translate.instant('dataField.file.noFile');
+        return this.translate.instant('dataField.file.noFile');
     }
 
     protected parseResponse(): void {

@@ -24,8 +24,8 @@ import {I18nField} from '../../data-fields/i18n-field/models/i18n-field';
 import {UserListField} from '../../data-fields/user-list-field/models/user-list-field';
 import {UserListValue} from '../../data-fields/user-list-field/models/user-list-value';
 import {decodeBase64, encodeBase64} from "../../utility/base64";
-import {ValidationRegistryService} from "../../validation/service/validation-registry.service";
-import {Validator} from "../../validation/model/validator";
+import {ValidationRegistryService} from "../../registry/validation-registry.service";
+import {Validator} from "../../registry/model/validator";
 
 
 @Injectable({
@@ -120,7 +120,7 @@ export class FieldConverterService {
         }
     }
 
-    public resolveType(item: DataField<any>): FieldTypeResource {
+    public static resolveType(item: DataField<any>): FieldTypeResource {
         if (item instanceof BooleanField) {
             return FieldTypeResource.BOOLEAN;
         } else if (item instanceof ButtonField) {
@@ -153,27 +153,27 @@ export class FieldConverterService {
     }
 
     public formatValueForBackend(field: DataField<any>, value: any): any {
-        if (this.resolveType(field) === FieldTypeResource.TEXT && value === null) {
+        if (FieldConverterService.resolveType(field) === FieldTypeResource.TEXT && value === null) {
             return null;
         }
-        if (this.resolveType(field) === FieldTypeResource.TEXT && field.component && field.component.name === 'password') {
+        if (FieldConverterService.resolveType(field) === FieldTypeResource.TEXT && field.component && field.component.name === 'password') {
             return encodeBase64(value);
         }
         if (value === undefined || value === null) {
             return;
         }
-        if (this.resolveType(field) === FieldTypeResource.DATE) {
+        if (FieldConverterService.resolveType(field) === FieldTypeResource.DATE) {
             if (moment.isMoment(value)) {
                 return value.format('YYYY-MM-DD');
             }
         }
-        if (this.resolveType(field) === FieldTypeResource.USER) {
+        if (FieldConverterService.resolveType(field) === FieldTypeResource.USER) {
             return value.id;
         }
-        if (this.resolveType(field) === FieldTypeResource.USER_LIST) {
+        if (FieldConverterService.resolveType(field) === FieldTypeResource.USER_LIST) {
             return [...value.userValues.keys()];
         }
-        if (this.resolveType(field) === FieldTypeResource.DATE_TIME) {
+        if (FieldConverterService.resolveType(field) === FieldTypeResource.DATE_TIME) {
             if (moment.isMoment(value)) {
                 return value.format('DD.MM.YYYY HH:mm:ss');
             }
@@ -274,19 +274,19 @@ export class FieldConverterService {
         if (value === undefined) {
             return;
         }
-        if (this.resolveType(field) === FieldTypeResource.TEXT && field.component && field.component.name === 'password') {
+        if (FieldConverterService.resolveType(field) === FieldTypeResource.TEXT && field.component && field.component.name === 'password') {
             return decodeBase64(value);
         }
-        if (this.resolveType(field) === FieldTypeResource.DATE) {
+        if (FieldConverterService.resolveType(field) === FieldTypeResource.DATE) {
             return moment(new Date(value[0], value[1] - 1, value[2]));
         }
-        if (this.resolveType(field) === FieldTypeResource.USER) {
+        if (FieldConverterService.resolveType(field) === FieldTypeResource.USER) {
             return new UserValue(value.id, value.name, value.surname, value.email);
         }
-        if (this.resolveType(field) === FieldTypeResource.DATE_TIME) {
+        if (FieldConverterService.resolveType(field) === FieldTypeResource.DATE_TIME) {
             return moment(new Date(value[0], value[1] - 1, value[2], value[3], value[4]));
         }
-        if (this.resolveType(field) === FieldTypeResource.MULTICHOICE) {
+        if (FieldConverterService.resolveType(field) === FieldTypeResource.MULTICHOICE) {
             const array = [];
             value.forEach(v => {
                 if (v.defaultValue) {
@@ -297,7 +297,7 @@ export class FieldConverterService {
             });
             return array;
         }
-        if (this.resolveType(field) === FieldTypeResource.USER_LIST && !!value) {
+        if (FieldConverterService.resolveType(field) === FieldTypeResource.USER_LIST && !!value) {
             return new UserListValue(new Map(value.userValues.map(v => [v.id, v])));
         }
         return value;
@@ -311,6 +311,6 @@ export class FieldConverterService {
     }
 
     protected getValidators(type: FieldTypeResource): Map<string, Validator> {
-        return new Map([...this.validationRegistry.registry.entries()].filter(it => it[1].fieldType === type).map(v => [v[0], v[1]]))
+        return this.validationRegistry.getAllForType(type);
     }
 }

@@ -5,7 +5,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {take} from 'rxjs/operators';
 import {CdkTextareaAutosize} from '@angular/cdk/text-field';
 import {AbstractTextErrorsComponent} from '../abstract-text-errors.component';
-import {ValidationRegistryService} from "../../../validation/service/validation-registry.service";
+import {ValidationRegistryService} from "../../../registry/validation-registry.service";
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {TextAreaField} from "../models/text-area-field";
 
@@ -18,7 +18,7 @@ export abstract class AbstractTextareaFieldComponent extends AbstractTextErrorsC
     @ViewChild('dynamicTextArea') dynamicTextArea: CdkTextareaAutosize;
     @ViewChild('textArea') textArea: ElementRef<HTMLTextAreaElement>;
 
-    constructor(protected _translate: TranslateService, protected _ngZone: NgZone,
+    constructor(_translate: TranslateService, protected _ngZone: NgZone,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextAreaField>,
                 _validationRegistry: ValidationRegistryService) {
         super(_translate, dataFieldPortalData, _validationRegistry);
@@ -42,9 +42,5 @@ export abstract class AbstractTextareaFieldComponent extends AbstractTextErrorsC
     triggerResize() {
         this._ngZone.onStable.pipe(take(1))
             .subscribe(() => this.dynamicTextArea.resizeToFitContent(true));
-    }
-
-    public getErrorMessage() {
-        return this.buildErrorMessage(this.dataField, this.formControlRef);
     }
 }

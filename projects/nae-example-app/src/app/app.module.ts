@@ -20,7 +20,6 @@ import {
     ProfileModule,
     Dashboard,
     ValidationRegistryService,
-    Validator
 } from '@netgrif/components-core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -129,7 +128,6 @@ import {
 } from './doc/single-tabbed-view/single-tabbed-task-view/single-tabbed-task-view.component';
 import {ImpersonationDemoComponent} from './doc/impersonation-demo/impersonation-demo.component';
 import { ChangePasswordComponent } from './doc/forms/change-password/change-password.component';
-import {mustContainValidation} from "./lib/validation-functions";
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -270,6 +268,5 @@ export class AppModule {
         registry.register(Dashboard.FILTER_TAB_VIEW_ID, (injector: Injector) => new ComponentPortal(FilterFieldTabViewComponent, null, injector));
         registry.registerType(Dashboard.FILTER_CASE_VIEW_ID, FilterFieldTabbedCaseViewComponent);
         registry.registerType(Dashboard.FILTER_TASK_VIEW_ID, FilterFieldTabbedTaskViewComponent);
-        validationRegistry.register('mustContainTotok', mustContainValidation)
     }
 }

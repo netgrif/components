@@ -1,5 +1,13 @@
 import {NumberField} from './number-field';
 import {TestBed} from '@angular/core/testing';
+import {Validator} from "../../../registry/model/validator";
+import {
+    decimalValidation,
+    evenValidation, inRangeValidation,
+    negativeValidation,
+    oddValidation,
+    positiveValidation
+} from "../../models/validation-functions";
 
 describe('NumberField', () => {
     it('should create an instance', () => {
@@ -10,15 +18,29 @@ describe('NumberField', () => {
             editable: true,
             hidden: true
         }, [
-            {validationRule: 'odd', validationMessage: ''},
-            {validationRule: 'even', validationMessage: ''},
-            {validationRule: 'positive', validationMessage: ''},
-            {validationRule: 'negative', validationMessage: ''},
-            {validationRule: 'decimal', validationMessage: ''},
-            {validationRule: 'inrange inf,0', validationMessage: ''},
-            {validationRule: 'inrange 0,inf', validationMessage: ''},
-            {validationRule: 'inrange -5,0', validationMessage: ''},
-        ])).toBeTruthy();
+                {name: 'odd', validationMessage: 'This is custom message!'},
+                {name: 'even', validationMessage: 'This is custom message!'},
+                {name: 'positive', validationMessage: 'This is custom message!'},
+                {name: 'negative', validationMessage: 'This is custom message!'},
+                {name: 'decimal', validationMessage: 'This is custom message!'},
+                {name: 'inrange', validationMessage: 'This is custom message!', arguments: {'from': {key: 'from', value: 'inf', dynamic: false}, 'to': {key: 'to', value: '0', dynamic: false}}},
+                {name: 'inrange', validationMessage: 'This is custom message!', arguments: {'from': {key: 'from', value: '0', dynamic: false}, 'to': {key: 'to', value: 'inf', dynamic: false}}},
+                {name: 'inrange', validationMessage: 'This is custom message!', arguments: {'from': {key: 'from', value: '-5', dynamic: false}, 'to': {key: 'to', value: '0', dynamic: false}}},
+            ],
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            new Map<string, Validator>([
+                ['odd', oddValidation],
+                ['even', evenValidation],
+                ['positive', positiveValidation],
+                ['negative', negativeValidation],
+                ['decimal', decimalValidation],
+                ['inrange', inRangeValidation]
+            ]))).toBeTruthy();
     });
 
     afterEach(() => {

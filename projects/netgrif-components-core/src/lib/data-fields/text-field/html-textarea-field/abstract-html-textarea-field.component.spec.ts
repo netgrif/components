@@ -22,6 +22,10 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {TextAreaField} from '../models/text-area-field';
 import {QuillModule} from 'ngx-quill';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
+import {Validator} from "../../../registry/model/validator";
+import {minLengthValidation} from "../../models/validation-functions";
+import {ValidationRegistryService} from "../../../registry/validation-registry.service";
+import {DataFieldsModule} from "../../data-fields.module";
 
 describe('AbstractHtmlTextareaFieldComponent', () => {
     let component: TestTextComponent;
@@ -36,7 +40,8 @@ describe('AbstractHtmlTextareaFieldComponent', () => {
                 CovalentModule,
                 TranslateLibModule,
                 HttpClientTestingModule,
-                QuillModule.forRoot()
+                QuillModule.forRoot(),
+                DataFieldsModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
@@ -46,7 +51,10 @@ describe('AbstractHtmlTextareaFieldComponent', () => {
                 {provide: DATA_FIELD_PORTAL_DATA, useValue: {
                         dataField: new TextAreaField('', '', 'text', {
                             editable: true
-                        }, undefined, undefined, undefined, [{validationRule: 'regex 5', validationMessage: 'This is custom message!'}]),
+                        }, undefined, undefined, undefined, [{name: 'minLength', validationMessage: 'This is custom message!', arguments: {'length': {key: 'length', value: '5', dynamic: false}}}],
+                            undefined,
+                            undefined,
+                            new Map<string, Validator>([['minLength', minLengthValidation]])),
                         formControlRef: new FormControl(),
                         showLargeLayout: new WrappedBoolean()
                     } as DataFieldPortalData<TextAreaField>
@@ -79,9 +87,10 @@ describe('AbstractHtmlTextareaFieldComponent', () => {
     template: ''
 })
 class TestTextComponent extends AbstractHtmlTextareaFieldComponent {
-    constructor(protected _translate: TranslateService, protected _sanitizer: DomSanitizer,
-                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextAreaField>) {
-        super(_translate, _sanitizer, dataFieldPortalData);
+    constructor(_translate: TranslateService, protected _sanitizer: DomSanitizer,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextAreaField>,
+                _validationRegistry: ValidationRegistryService) {
+        super(_translate, _sanitizer, dataFieldPortalData, _validationRegistry);
     }
 }
 

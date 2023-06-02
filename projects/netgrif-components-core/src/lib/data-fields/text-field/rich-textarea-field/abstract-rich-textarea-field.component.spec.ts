@@ -20,6 +20,10 @@ import {CovalentModule} from '../../../covalent/covalent.module';
 import {MaterialModule} from '../../../material/material.module';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {TextAreaField} from "../models/text-area-field";
+import {Validator} from "../../../registry/model/validator";
+import {minLengthValidation} from "../../models/validation-functions";
+import {ValidationRegistryService} from "../../../registry/validation-registry.service";
+import {DataFieldsModule} from "../../data-fields.module";
 
 describe('AbstractRichTextareaFieldComponent', () => {
     let component: TestTextComponent;
@@ -33,7 +37,8 @@ describe('AbstractRichTextareaFieldComponent', () => {
                 CovalentModule,
                 NoopAnimationsModule,
                 TranslateLibModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                DataFieldsModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
@@ -43,7 +48,11 @@ describe('AbstractRichTextareaFieldComponent', () => {
                 {provide: DATA_FIELD_PORTAL_DATA, useValue: {
                         dataField: new TextAreaField('', '', 'text', {
                             editable: true
-                        }, undefined, undefined, undefined, [{validationRule: 'regex 5', validationMessage: 'This is custom message!'}]),
+                        }, undefined, undefined, undefined,
+                            [{name: 'minLength', validationMessage: 'This is custom message!', arguments: {'length': {key: 'length', value: '5', dynamic: false}}}],
+                            undefined,
+                            undefined,
+                            new Map<string, Validator>([['minLength', minLengthValidation]])),
                         formControlRef: new FormControl(),
                         showLargeLayout: new WrappedBoolean()
                     } as DataFieldPortalData<TextAreaField>
@@ -76,9 +85,10 @@ describe('AbstractRichTextareaFieldComponent', () => {
     template: ''
 })
 class TestTextComponent extends AbstractRichTextareaFieldComponent {
-    constructor(protected _translate: TranslateService,
-                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextAreaField>) {
-        super(_translate, dataFieldPortalData);
+    constructor(_translate: TranslateService,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextAreaField>,
+                _validationRegistry: ValidationRegistryService) {
+        super(_translate, dataFieldPortalData, _validationRegistry);
     }
 }
 

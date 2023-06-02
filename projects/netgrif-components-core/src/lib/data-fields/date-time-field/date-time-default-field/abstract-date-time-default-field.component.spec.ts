@@ -21,6 +21,10 @@ import {AbstractDateTimeDefaultFieldComponent} from "./abstract-date-time-defaul
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {FormControl} from "@angular/forms";
 import {WrappedBoolean} from "../../data-field-template/models/wrapped-boolean";
+import {Validator} from "../../../registry/model/validator";
+import {betweenValidation} from "../../models/validation-functions";
+import {ValidationRegistryService} from "../../../registry/validation-registry.service";
+import {DataFieldsModule} from "../../data-fields.module";
 
 describe('AbstractDatetimeDefaultFieldComponent', () => {
     let component: TestDateTimeFieldComponent;
@@ -34,7 +38,8 @@ describe('AbstractDatetimeDefaultFieldComponent', () => {
                 NgxMatDatetimePickerModule,
                 TranslateLibModule,
                 HttpClientTestingModule,
-                NoopAnimationsModule
+                NoopAnimationsModule,
+                DataFieldsModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
@@ -49,10 +54,15 @@ describe('AbstractDatetimeDefaultFieldComponent', () => {
                             editable: true,
                             hidden: true
                         }, undefined, undefined, undefined, [
-                            {validationRule: 'between today,future', validationMessage: 'This is custom message!'},
-                            {validationRule: 'between past,today', validationMessage: 'This is custom message!'},
-                            {validationRule: 'between 2020-03-03,today', validationMessage: 'This is custom message!'},
-                        ]),
+                                {name: 'between', validationMessage: 'This is custom message!', arguments: {'from': {key: 'from', value: 'today', dynamic: false}, 'to': {key: 'to', value: 'future', dynamic: false}}},
+                                {name: 'between', validationMessage: 'This is custom message!', arguments: {'from': {key: 'from', value: 'past', dynamic: false}, 'to': {key: 'to', value: 'today', dynamic: false}}},
+                                {name: 'between', validationMessage: 'This is custom message!', arguments: {'from': {key: 'from', value: '2020-03-03', dynamic: false}, 'to': {key: 'to', value: 'today', dynamic: false}}}
+                            ],
+                            undefined,
+                            undefined,
+                            new Map<string, Validator>([
+                                ['between', betweenValidation]
+                            ])),
                         formControlRef: new FormControl(),
                         showLargeLayout: new WrappedBoolean()
                     } as DataFieldPortalData<DateTimeField>
@@ -88,8 +98,9 @@ describe('AbstractDatetimeDefaultFieldComponent', () => {
 })
 class TestDateTimeFieldComponent extends AbstractDateTimeDefaultFieldComponent {
     constructor(translate: TranslateService,
-                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<DateTimeField>) {
-        super(translate, dataFieldPortalData);
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<DateTimeField>,
+                _validationRegistry: ValidationRegistryService) {
+        super(translate, dataFieldPortalData, _validationRegistry);
     }
 }
 

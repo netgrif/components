@@ -17,9 +17,9 @@ export abstract class AbstractUserDefaultFieldComponent extends AbstractBaseData
 
     constructor(protected _sideMenuService: SideMenuService,
                 protected _snackbar: SnackBarService,
-                protected _translate: TranslateService,
+                _translate: TranslateService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<UserField>) {
-        super(dataFieldPortalData);
+        super(_translate, dataFieldPortalData);
     }
 
     public selectAbstractUser(component) {
@@ -29,12 +29,12 @@ export abstract class AbstractUserDefaultFieldComponent extends AbstractBaseData
             if ($event.data) {
                 this.dataField.value = $event.data as UserValue;
                 this._snackbar.openGenericSnackBar(
-                    this._translate.instant('dataField.snackBar.userAssigned', {userName: this.dataField.value.fullName}),
+                    this.translate.instant('dataField.snackBar.userAssigned', {userName: this.dataField.value.fullName}),
                     'how_to_reg'
                 );
                 valueReturned = true;
             } else if (!valueReturned) {
-                this._snackbar.openWarningSnackBar(this._translate.instant('dataField.snackBar.notSelectedUser'));
+                this._snackbar.openWarningSnackBar(this.translate.instant('dataField.snackBar.notSelectedUser'));
             }
         });
     }

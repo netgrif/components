@@ -20,6 +20,10 @@ import {AbstractDateDefaultFieldComponent} from "./abstract-date-default-field.c
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {FormControl} from "@angular/forms";
 import {WrappedBoolean} from "../../data-field-template/models/wrapped-boolean";
+import {ValidationRegistryService} from "../../../registry/validation-registry.service";
+import {Validator} from "../../../registry/model/validator";
+import {weekendValidation, workdayValidation} from "../../models/validation-functions";
+import {DataFieldsModule} from "../../data-fields.module";
 
 describe('AbstractDateDefaultFieldComponent', () => {
     let component: TestDateFieldComponent;
@@ -31,7 +35,9 @@ describe('AbstractDateDefaultFieldComponent', () => {
                 MaterialModule,
                 AngularResizeEventModule,
                 TranslateLibModule,
-                HttpClientTestingModule, NoopAnimationsModule
+                HttpClientTestingModule,
+                NoopAnimationsModule,
+                DataFieldsModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
@@ -46,9 +52,16 @@ describe('AbstractDateDefaultFieldComponent', () => {
                             editable: true,
                             hidden: true
                         }, undefined, undefined, undefined, [
-                            {validationRule: 'weekend', validationMessage: 'This is custom message!'},
-                            {validationRule: 'workday', validationMessage: 'This is custom message!'}
-                        ]),
+                                {name: 'weekend', validationMessage: 'This is custom message!'},
+                                {name: 'workday', validationMessage: 'This is custom message!'}
+                            ],
+                            undefined,
+                            undefined,
+                            new Map<string, Validator>([
+                                ['weekend', weekendValidation],
+                                ['workday', workdayValidation]
+                            ])
+                        ),
                         formControlRef: new FormControl(),
                         showLargeLayout: new WrappedBoolean()
                     } as DataFieldPortalData<DateField>
@@ -85,8 +98,9 @@ describe('AbstractDateDefaultFieldComponent', () => {
 })
 class TestDateFieldComponent extends AbstractDateDefaultFieldComponent {
     constructor(translate: TranslateService,
-                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<DateField>) {
-        super(translate, dataFieldPortalData);
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<DateField>,
+                _validationRegistry: ValidationRegistryService) {
+        super(translate, dataFieldPortalData, _validationRegistry);
     }
 }
 

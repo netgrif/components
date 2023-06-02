@@ -3,7 +3,8 @@ import {
     AbstractDateTimeDefaultFieldComponent,
     DATA_FIELD_PORTAL_DATA,
     DataFieldPortalData,
-    DateTimeField
+    DateTimeField,
+    ValidationRegistryService
 } from '@netgrif/components-core'
 import {TranslateService} from "@ngx-translate/core";
 
@@ -14,9 +15,10 @@ import {TranslateService} from "@ngx-translate/core";
 })
 export class DateTimeDefaultFieldComponent extends AbstractDateTimeDefaultFieldComponent {
 
-  constructor(protected _translate: TranslateService,
-              @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<DateTimeField>) {
-      super(_translate, dataFieldPortalData);
+  constructor(_translate: TranslateService,
+              @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<DateTimeField>,
+              _validationRegistry: ValidationRegistryService) {
+      super(_translate, dataFieldPortalData, _validationRegistry);
   }
 
 }

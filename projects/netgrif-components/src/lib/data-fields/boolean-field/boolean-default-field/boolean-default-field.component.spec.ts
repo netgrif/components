@@ -13,7 +13,10 @@ import {
     MockUserResourceService,
     TestConfigurationService,
     TranslateLibModule,
-    UserResourceService, WrappedBoolean
+    UserResourceService,
+    WrappedBoolean,
+    Validator,
+    requiredTrueValidation
 } from "@netgrif/components-core";
 import {AngularResizeEventModule} from "angular-resize-event";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
@@ -43,7 +46,10 @@ describe('BooleanSimpleFieldComponent', () => {
                         }, undefined,
                         undefined,
                         undefined,
-                        [{validationRule: 'requiredTrue', validationMessage: 'this is custom message'}]),
+                        [{name: 'requiredTrue', validationMessage: 'this is custom message'}],
+                        undefined,
+                        undefined,
+                        new Map<string, Validator>([['requiredTrue', requiredTrueValidation]])),
                     formControlRef: new FormControl(),
                     showLargeLayout: new WrappedBoolean()
                 } as DataFieldPortalData<BooleanField>

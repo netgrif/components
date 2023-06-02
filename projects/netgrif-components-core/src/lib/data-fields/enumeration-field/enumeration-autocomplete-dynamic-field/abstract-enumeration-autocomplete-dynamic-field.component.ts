@@ -25,9 +25,9 @@ export abstract class AbstractEnumerationAutocompleteDynamicFieldComponent exten
     @ViewChild('input') text: ElementRef;
     filteredOptions: Observable<Array<EnumerationFieldValue>>;
 
-    constructor(protected _translate: TranslateService,
+    constructor(_translate: TranslateService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<DynamicEnumerationField>) {
-        super(dataFieldPortalData);
+        super(_translate, dataFieldPortalData);
     }
 
     ngOnInit() {
@@ -66,7 +66,7 @@ export abstract class AbstractEnumerationAutocompleteDynamicFieldComponent exten
 
     public buildErrorMessage() {
         if (this.formControlRef.hasError(EnumerationFieldValidation.REQUIRED)) {
-            return this._translate.instant('dataField.validations.required');
+            return this.translate.instant('dataField.validations.required');
         }
     }
 

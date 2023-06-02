@@ -6,7 +6,7 @@ import {Component, ComponentPrefixes} from '../../models/component';
 import {I18nFieldTranslations, I18nFieldValue} from './i18n-field-value';
 import {Observable} from 'rxjs';
 import {FormControl, ValidatorFn} from '@angular/forms';
-import {Validator} from "../../../validation/model/validator";
+import {Validator} from "../../../registry/model/validator";
 
 export enum I18nFieldValidation {
     TRANSLATION_REQUIRED = 'translationRequired',

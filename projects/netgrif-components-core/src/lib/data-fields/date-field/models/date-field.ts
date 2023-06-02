@@ -4,7 +4,7 @@ import {AbstractTimeInstanceField} from '../../time-instance-abstract-field/mode
 import {Layout} from '../../models/layout';
 import {Validation} from '../../models/validation';
 import {Component, ComponentPrefixes} from '../../models/component';
-import {Validator} from "../../../validation/model/validator";
+import {Validator} from "../../../registry/model/validator";
 
 export class DateField extends AbstractTimeInstanceField {
 

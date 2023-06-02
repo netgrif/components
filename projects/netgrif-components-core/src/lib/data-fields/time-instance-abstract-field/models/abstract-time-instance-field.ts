@@ -4,7 +4,7 @@ import moment, {Moment} from 'moment';
 import {Layout} from '../../models/layout';
 import {Component} from '../../models/component';
 import {DataField} from '../../models/abstract-data-field';
-import {Validator} from "../../../validation/model/validator";
+import {Validator} from "../../../registry/model/validator";
 
 export enum AbstractTimeInstanceFieldValidation {
     BETWEEN = 'between',
@@ -65,56 +65,21 @@ export abstract class AbstractTimeInstanceField extends DataField<Moment> {
     }
 
     protected resolveValidations(): Array<ValidatorFn> {
-        const result = [];
+        const result = super.resolveValidations();
 
         this.validations.forEach(item => {
             if (item.name === AbstractTimeInstanceFieldValidation.BETWEEN) {
-
                 const start = AbstractTimeInstanceField.parseDate(item.arguments.from.value);
                 const end = AbstractTimeInstanceField.parseDate(item.arguments.to.value);
-
-                if (start && end) {
-                    if (start === 'past' && moment(end).isValid()) {
-                        result.push(this.validFromPast(moment(end)));
-                        this.max = moment(end);
-                    } else if (end === 'future' && moment(start).isValid()) {
-                        result.push(this.validToFuture(moment(start)));
-                        this.min = moment(start);
-                    } else if (moment(start).isValid() && moment(end).isValid()) {
-                        result.push(this.validBetween(moment(start), moment(end)));
-                        this.min = moment(start);
-                        this.max = moment(end);
-                    }
+                if (!!end && moment(end).isValid()) {
+                    this.max = moment(end);
                 }
-            } else if (item.name === AbstractTimeInstanceFieldValidation.WORKDAY) {
-                result.push(this.validWorkday);
-            } else if (item.name === AbstractTimeInstanceFieldValidation.WEEKEND) {
-                result.push(this.validWeekend);
+                if (!!start && moment(start).isValid()) {
+                    this.min = moment(start);
+                }
             }
         });
 
         return result;
-    }
-
-    protected validFromPast(range: Moment): ValidatorFn {
-        return (fc: FormControl): { [key: string]: any } | null => fc.value > range ? {validBetween: true} : null;
-    }
-
-    protected validToFuture(range: Moment): ValidatorFn {
-        return (fc: FormControl): { [key: string]: any } | null => fc.value < range ? {validBetween: true} : null;
-    }
-
-    protected validBetween(first: Moment, second: Moment): ValidatorFn {
-        return (fc: FormControl): { [key: string]: any } | null => fc.value < first || fc.value > second ? {validBetween: true} : null;
-    }
-
-    protected validWorkday(fc: FormControl) {
-        const dayOfWeek = !!fc.value ? fc.value.weekday() : null;
-        return dayOfWeek === 6 || dayOfWeek === 0 ? {validWorkday: true} : null;
-    }
-
-    protected validWeekend(fc: FormControl) {
-        const dayOfWeek = !!fc.value ? fc.value.weekday() : null;
-        return dayOfWeek >= 1 && dayOfWeek <= 5 && dayOfWeek !== 0 ? {validWeekend: true} : null;
     }
 }

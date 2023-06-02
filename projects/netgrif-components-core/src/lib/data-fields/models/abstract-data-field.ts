@@ -8,7 +8,7 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {Component, DEFAULT} from './component';
 import {Validation} from './validation';
 import {ElementRef} from "@angular/core";
-import {Validator} from "../../validation/model/validator";
+import {Validator} from "../../registry/model/validator";
 
 /**
  * Holds the logic common to all data field Model objects.
@@ -363,6 +363,10 @@ export abstract class DataField<T> {
         this._formControlRef = formControl;
     }
 
+    get validatorRegister(): Map<string, Validator> {
+        return this._validatorRegister;
+    }
+
     /**
      * This function resolve type of component for HTML
      * @returns type of component in string
@@ -515,7 +519,17 @@ export abstract class DataField<T> {
     }
 
     protected resolveValidations(): Array<ValidatorFn> {
-        return [];
+        const result = [];
+        if (!!this.validations && !!this.validatorRegister) {
+            this.validations.forEach(item => {
+                if (this.validatorRegister?.has(item.name)) {
+                    const validator: Validator = this.validatorRegister.get(item.name);
+                    const attributes = validator.attributeNames.map(atr => item.arguments[atr].value)
+                    result.push(validator.fn(...attributes));
+                }
+            });
+        }
+        return result;
     }
 
     /**

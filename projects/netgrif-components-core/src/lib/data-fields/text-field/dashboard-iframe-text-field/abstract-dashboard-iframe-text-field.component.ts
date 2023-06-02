@@ -5,7 +5,7 @@ import {CustomIframeCard} from '../../../dashboard/cards/model/custom-dashboard-
 import {AbstractDashboardTextFieldComponent} from '../abstract-dashboard-text-field.component';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {TextField} from "../models/text-field";
-import {ValidationRegistryService} from "../../../validation/service/validation-registry.service";
+import {ValidationRegistryService} from "../../../registry/validation-registry.service";
 
 @Component({
     selector: 'ncc-abstract-dashboard-iframe-text-field',

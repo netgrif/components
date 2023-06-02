@@ -3,7 +3,7 @@ import {Moment} from 'moment';
 import {AbstractTimeInstanceField} from '../../time-instance-abstract-field/models/abstract-time-instance-field';
 import {Layout} from '../../models/layout';
 import {Validation} from '../../models/validation';
-import {Validator} from "../../../validation/model/validator";
+import {Validator} from "../../../registry/model/validator";
 import {Component, ComponentPrefixes} from '../../models/component';
 
 export class DateTimeField extends AbstractTimeInstanceField {

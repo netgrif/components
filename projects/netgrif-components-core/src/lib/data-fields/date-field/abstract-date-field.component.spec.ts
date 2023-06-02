@@ -17,6 +17,9 @@ import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-au
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {MaterialModule} from '../../material/material.module';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
+import {Validator} from "../../registry/model/validator";
+import {weekendValidation, workdayValidation} from "../models/validation-functions";
+import {DataFieldsModule} from "../data-fields.module";
 
 describe('AbstractDateFieldComponent', () => {
     let component: TestDateFieldComponent;
@@ -28,7 +31,9 @@ describe('AbstractDateFieldComponent', () => {
                 MaterialModule,
                 AngularResizeEventModule,
                 TranslateLibModule,
-                HttpClientTestingModule, NoopAnimationsModule
+                HttpClientTestingModule,
+                NoopAnimationsModule,
+                DataFieldsModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
@@ -79,7 +84,13 @@ class TestWrapperComponent {
         editable: true,
         hidden: true
     }, undefined, undefined, undefined, [
-        {validationRule: 'weekend', validationMessage: 'This is custom message!'},
-        {validationRule: 'workday', validationMessage: 'This is custom message!'}
-    ]);
+            {name: 'weekend', validationMessage: 'This is custom message!'},
+            {name: 'workday', validationMessage: 'This is custom message!'}
+        ],
+        undefined,
+        undefined,
+        new Map<string, Validator>([
+            ['weekend', weekendValidation],
+            ['workday', workdayValidation]
+        ]));
 }

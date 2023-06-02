@@ -4,7 +4,7 @@ import {Layout} from '../../models/layout';
 import {Validation} from '../../models/validation';
 import {Component, ComponentPrefixes} from '../../models/component';
 import {DataField} from '../../models/abstract-data-field';
-import {Validator} from "../../../validation/model/validator";
+import {Validator} from "../../../registry/model/validator";
 
 export enum BooleanFieldValidation {
     REQUIRED_TRUE = 'requiredTrue',
@@ -22,21 +22,5 @@ export class BooleanField extends DataField<boolean> {
 
     public getTypedComponentType(): string {
         return ComponentPrefixes.BOOLEAN + this.getComponentType();
-    }
-
-    protected resolveValidations(): Array<ValidatorFn> {
-        const result = [];
-
-        this.validations.forEach(item => {
-            if (item.validationRule.includes(BooleanFieldValidation.REQUIRED_TRUE)) {
-                result.push(this.requiredTrue);
-            }
-        });
-
-        return result;
-    }
-
-    private requiredTrue(control: AbstractControl): ValidationErrors | null {
-        return control.value === true ? null : {requiredTrue: true};
     }
 }

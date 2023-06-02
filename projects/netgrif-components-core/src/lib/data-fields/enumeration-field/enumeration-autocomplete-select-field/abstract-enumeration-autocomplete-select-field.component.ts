@@ -16,9 +16,9 @@ export abstract class AbstractEnumerationAutocompleteSelectFieldComponent extend
     @ViewChild('input') text: ElementRef;
     filteredOptions: Observable<Array<EnumerationFieldValue>>;
 
-    constructor(protected _translate: TranslateService,
+    constructor(_translate: TranslateService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<EnumerationField>) {
-        super(dataFieldPortalData);
+        super(_translate, dataFieldPortalData);
     }
 
     ngOnInit() {
@@ -93,10 +93,10 @@ export abstract class AbstractEnumerationAutocompleteSelectFieldComponent extend
 
     public buildErrorMessage() {
         if (this.formControlRef.hasError(EnumerationFieldValidation.REQUIRED)) {
-            return this._translate.instant('dataField.validations.required');
+            return this.translate.instant('dataField.validations.required');
         }
         if (this.formControlRef.hasError(EnumerationFieldValidation.WRONG_VALUE)) {
-            return this._translate.instant('dataField.validations.enumeration');
+            return this.translate.instant('dataField.validations.enumeration');
         }
     }
 }
