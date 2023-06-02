@@ -20,46 +20,4 @@ export abstract class AbstractI18nErrorsComponent extends AbstractBaseDataFieldC
                           _validationRegistry: ValidationRegistryService) {
         super(_translate, dataFieldPortalData, _validationRegistry);
     }
-
-    // getErrorMessage() {
-    //     if (this.formControlRef.hasError(I18nFieldValidation.REQUIRED_I18N)) {
-    //         return this.translate.instant('dataField.validations.requiredI18n');
-    //     }
-    //     if (this.formControlRef.hasError(I18nFieldValidation.TRANSLATION_REQUIRED)) {
-    //         const tmp = this.dataField.validations.find(value =>
-    //             value.validationRule.includes(I18nFieldValidation.TRANSLATION_REQUIRED)
-    //         ).validationRule.split(' ');
-    //         const missingLanguages = tmp[1]
-    //             .replace(' ', '')
-    //             .split(',')
-    //             .filter(lanCode => !Object.keys(this.formControlRef.value.translations).includes(lanCode))
-    //             .map(lanCode => this.languageIconsService.languageIcons[lanCode].languageName)
-    //             .join(', ');
-    //         return this.resolveErrorMessage(
-    //             I18nFieldValidation.TRANSLATION_REQUIRED,
-    //             this.translate.instant(
-    //                 'dataField.validations.translationRequired',
-    //                 {translation: missingLanguages}
-    //             )
-    //         );
-    //     }
-    //     if (this.formControlRef.hasError(I18nFieldValidation.TRANSLATION_ONLY)) {
-    //         const tmp = this.dataField.validations.find(value =>
-    //             value.validationRule.includes(I18nFieldValidation.TRANSLATION_ONLY)
-    //         ).validationRule.split(' ');
-    //         const onlyLanguages = tmp[1]
-    //             .replace(' ', '')
-    //             .split(',')
-    //             .map(lanCode => this.languageIconsService.languageIcons[lanCode].languageName)
-    //             .join(', ');
-    //         return this.resolveErrorMessage(
-    //             I18nFieldValidation.TRANSLATION_ONLY,
-    //             this.translate.instant(
-    //                 'dataField.validations.translationOnly',
-    //                 {translation: onlyLanguages}
-    //             )
-    //         );
-    //     }
-    //     return '';
-    // }
 }

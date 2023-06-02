@@ -239,8 +239,8 @@
             "workday": "Entered date must be week day",
             "enumeration": "One of the options must be selected",
             "min": "Entered number must be greater than {{length}}",
-            "translationRequired": "Translation for languages: <{{translation}}> must be entered",
-            "translationOnly": "Only translation for languages: <{{translation}}> is allowed",
+            "translationRequired": "Translation for languages: <{{languages}}> must be entered",
+            "translationOnly": "Only translation for languages: <{{languages}}> is allowed",
             "requiredI18n": "At least one value must be entered",
             "requiredUserList": "At least one value must be entered"
         },
