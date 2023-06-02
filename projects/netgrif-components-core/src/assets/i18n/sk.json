@@ -475,7 +475,10 @@
     },
     "dynamicNavigation": {
         "couldNotResolveView": "Počas načítania zobrazenia sa vyskytla chyba. Zobrazenie nie je možné zobraziť",
-        "filterNotFound": "Toto zobrazenie neobsahuje filter"
+        "filterNotFound": "Toto zobrazenie neobsahuje filter",
+        "loadMoreItems": "Viac",
+        "ascending": "Vzostupne",
+        "descending": "Zostupne"
     },
     "impersonation": {
         "user": {

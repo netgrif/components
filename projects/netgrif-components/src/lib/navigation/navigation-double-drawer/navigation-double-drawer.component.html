@@ -67,8 +67,8 @@
             </div>
 
             <mat-menu #railMenu="matMenu">
-                <button *ngFor='let item of moreMenuItems; trackBy: itemsTrackBy' mat-menu-item
-                        [routerLink]='item.routing.path' routerLinkActive="active">
+                <button *ngFor='let item of moreItems; trackBy: itemsTrackBy' mat-menu-item
+                        [routerLink]='item.routing.path' routerLinkActive="active" (click)="onItemClick(item)">
                     <mat-icon>{{item.navigation.icon}}</mat-icon>
                     <span>{{item.navigation.title}}</span>
                 </button>
@@ -80,7 +80,7 @@
             <!--                    <mat-icon class="icon-large sidemenu-icon">more_vert</mat-icon>-->
             <!--                </button>-->
             <!--            </div>-->
-            <button *ngIf="includeMoreMenu" mat-icon-button [matMenuTriggerFor]="railMenu"
+            <button *ngIf="true" mat-icon-button [matMenuTriggerFor]="railMenu"
                     class="mat-button mat-typography menu-font-color margin-bottom-x2"
                     [matTooltip]="'toolbar.menu.open' | translate"
                     matTooltipPosition="right">
@@ -149,21 +149,21 @@
              [routerLink]="imageRouterLink !== undefined ? imageRouterLink : []">
     </div>
     <div *ngIf="(rightLoading$ | async) === false" ngClass.gt-sm="padding-top-8">
-        <div class="margin-auto cursor-pointer" *ngIf='rightItems | isNonEmpty' (click)="toggleSection('folders')"
-             fxLayout="row" fxFlexAlign="start center">
-            <span class="headline-text mat-typography">{{foldersCategoryName | translate}}</span>
-            <div fxFlex></div>
-            <span *ngIf="isSectionOpen" [@indicatorRotate]="isSectionOpen.folders ? 'expanded' : 'collapsed'"
-                  class="expansion-indicator mat-typography"></span>
+        <div fxLayout="column" fxLayoutAlign="end end" class="order-icon-wrapper">
+            <button mat-icon-button fxLayout="column" fxLayoutAlign="center center" class="mat-button mat-typography menu-font-color order-icon" (click)="switchOrder()"
+                    [matTooltip]="isAscending() ? ('dynamicNavigation.ascending' | translate) : ('dynamicNavigation.descending' | translate)">
+                <mat-icon>{{isAscending() ? "south" : "north"}}</mat-icon>
+            </button>
         </div>
-        <div [@sectionExpansion]="isSectionOpen.folders ? 'expanded' : 'collapsed'" class="box-container">
-            <div *ngFor='let item of rightItems; trackBy: itemsTrackBy' (click)="onItemClick(item)"
-                 class="tree-node mat-typography mat-body-2" fxLayoutAlign="start center" [routerLink]='item.routing.path'
-                 routerLinkActive="active">
-                <mat-icon class="tree-node-icon">{{hasItemChildren(item) ? "folder" : item.navigation.icon}}</mat-icon>
-                <span>{{item.navigation.title}}</span>
-                <span class="menu-item-focus-overlay"></span>
-            </div>
+        <div *ngFor='let item of rightItems; trackBy: itemsTrackBy' (click)="onItemClick(item)"
+             class="tree-node mat-typography mat-body-2" fxLayoutAlign="start center" [routerLink]='item.routing.path'
+             routerLinkActive="active">
+            <mat-icon class="tree-node-icon">{{hasItemChildren(item) ? "folder" : item.navigation.icon}}</mat-icon>
+            <span>{{item.navigation.title}}</span>
+            <span class="menu-item-focus-overlay"></span>
+        </div>
+        <div *ngIf="moreItems.length > 0">
+            <button mat-button color="primary" (click)="loadMoreItems()">{{'dynamicNavigation.loadMoreItems' | translate}}</button>
         </div>
     </div>
     <div *ngIf="(rightLoading$ | async)" fxLayout="column" fxLayoutAlign="center center" class="margin-top-default">

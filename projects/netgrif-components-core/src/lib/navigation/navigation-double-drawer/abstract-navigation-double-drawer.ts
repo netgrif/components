@@ -46,6 +46,13 @@ const LEFT_DRAWER_DEFAULT_WIDTH = 60;
 const RIGHT_DRAWER_DEFAULT_WIDTH = 240;
 const RIGHT_DRAWER_DEFAULT_MIN_WIDTH = 180;
 const RIGHT_DRAWER_MAX_WIDTH = 460;
+const RIGHT_SIDE_NEW_PAGE_SIZE = 10
+const RIGHT_SIDE_INIT_PAGE_SIZE = 20
+
+enum MenuOrder {
+    Ascending,
+    Descending
+}
 
 @Component({
     selector: 'ncc-abstract-navigation-double-drawer',
@@ -71,16 +78,21 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     @Input() viewsCategoryName: string = 'toolbar.menu.views';
 
     /**
-     * List of folders displayed on the left side of menu
+     * List of displayed items on the left side
      * */
     leftItems: Array<NavigationItem>
 
     /**
-     * List of folders displayed on the right side of menu
+     * List of displayed items on the right side
      * */
     rightItems: Array<NavigationItem>
 
-    moreMenuItems: Array<NavigationItem>;
+    /**
+     * List of hidden items
+     * */
+    moreItems: Array<NavigationItem>;
+
+    itemsOrder: MenuOrder;
 
     protected _breakpointSubscription: Subscription;
     protected _currentNodeSubscription: Subscription;
@@ -126,6 +138,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         this.leftLoading$ = new LoadingEmitter();
         this.rightLoading$ = new LoadingEmitter();
         this.nodeLoading$ = new LoadingEmitter();
+        this.itemsOrder = MenuOrder.Ascending;
     }
 
     ngOnInit(): void {
@@ -327,7 +340,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                 map(p => p.content),
             ).subscribe(result => {
                 this.leftItems = result.filter(folder => folder.immediateData.find(f => f.stringId === 'hasChildren')?.value === true).map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i);
-                // this.leftItems.sort((a, b) => this.compareStrings(a?.navigation.title, b?.navigation?.title));
+                this.leftItems.sort((a, b) => this.compareStrings((a?.navigation as NavigationItem)?.title, (b?.navigation as NavigationItem)?.title));
                 this.leftLoading$.off();
             }, error => {
                 this._log.error(error);
@@ -343,25 +356,54 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
 
     protected loadRightSide() {
         this.rightLoading$.on();
+        this.moreItems = [];
         this._uriService.getCasesOfNode(this.currentNode, MENU_IDENTIFIERS, 0, 1).subscribe(page => {
             this._log.debug('Number of items for uri ' + this._currentNode.uriPath + ': ' + page?.pagination?.totalElements);
             (page?.pagination?.totalElements === 0 ? of([]) : this._uriService.getCasesOfNode(this._currentNode, MENU_IDENTIFIERS, 0, page.pagination.totalElements).pipe(
                 map(p => p.content),
             )).subscribe(result => {
-                this.rightItems = result.map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i);
+                result = (result as Case[]).sort((a, b) => this.compareStrings(a?.title, b?.title));
+                if (result.length > RIGHT_SIDE_INIT_PAGE_SIZE) {
+                    const rawRightItems: Case[] = result.splice(0, RIGHT_SIDE_INIT_PAGE_SIZE);
+                    this.rightItems = rawRightItems.map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i);
+                    this.moreItems = result.map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i);
+                } else {
+                    this.rightItems = result.map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i);
+                }
                 // @ts-ignore
-                this.rightItems.sort((a, b) => this.compareStrings(a?.navigation?.title, b?.navigation?.title));
                 this.rightLoading$.off();
             }, error => {
                 this._log.error(error);
                 this.rightItems = [];
+                this.moreItems = [];
                 this.rightLoading$.off();
             });
         }, error => {
             this._log.error(error);
             this.rightItems = [];
+            this.moreItems = [];
             this.rightLoading$.off();
         });
+    }
+
+    public loadMoreItems() {
+        if (this.moreItems.length > RIGHT_SIDE_NEW_PAGE_SIZE) {
+            this.rightItems.push(...this.moreItems.splice(0, RIGHT_SIDE_NEW_PAGE_SIZE))
+        } else {
+            this.rightItems.push(...this.moreItems)
+            this.moreItems = []
+        }
+    }
+
+    public isAscending() {
+        return this.itemsOrder == MenuOrder.Ascending;
+    }
+
+    public switchOrder() {
+        this.itemsOrder = (this.itemsOrder + 1) % 2;
+        this.rightItems = this.rightItems.sort((a, b) => this.compareStrings((a?.navigation as NavigationItem)?.title, (b?.navigation as NavigationItem)?.title));
+        this.leftItems = this.leftItems.sort((a, b) => this.compareStrings((a?.navigation as NavigationItem)?.title, (b?.navigation as NavigationItem)?.title));
+        this.moreItems = this.moreItems.sort((a, b) => this.compareStrings((a?.navigation as NavigationItem)?.title, (b?.navigation as NavigationItem)?.title));
     }
 
     protected resolveItemCaseToNavigationItem(itemCase: Case): NavigationItem | undefined {
@@ -413,8 +455,13 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
 
     protected compareStrings(a: string, b: string): number {
         if (!a && !b) return 0;
-        if (a < b) return -1;
-        return a > b ? 1 : 0;
+        if (this.itemsOrder == MenuOrder.Ascending) {
+            if (a < b) return -1;
+            return a > b ? 1 : 0;
+        } else {
+            if (a > b) return -1;
+            return a < b ? 1 : 0;
+        }
     }
 
     /**

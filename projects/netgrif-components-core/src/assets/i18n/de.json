@@ -475,7 +475,10 @@
     },
     "dynamicNavigation": {
         "couldNotResolveView": "Ein Fehler ist aufgetreten während des Ansichtauflösungsprocess. Der Ansicht kann nicht angezeigt werden",
-        "filterNotFound": "Diese Ansicht hat keinen Filter"
+        "filterNotFound": "Diese Ansicht hat keinen Filter",
+        "loadMoreItems": "Mehr",
+        "ascending": "Aufsteigend",
+        "descending": "Absteigend"
     },
     "impersonation": {
         "user": {
