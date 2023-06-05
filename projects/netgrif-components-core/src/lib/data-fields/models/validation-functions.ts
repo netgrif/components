@@ -18,7 +18,7 @@ export const requiredValidation: Validator = {
 
 /* Text field validations */
 export const minLengthValidation: Validator = {
-    key: 'minLength',
+    key: 'minlength',
     attributeNames: ['length'],
     fn: (min: string) => {
         const length = parseInt(min, 10);
@@ -29,7 +29,7 @@ export const minLengthValidation: Validator = {
 }
 
 export const maxLengthValidation: Validator = {
-    key: 'maxLength',
+    key: 'maxlength',
     attributeNames: ['length'],
     fn: (max: string) => {
         const length = parseInt(max, 10);
@@ -56,18 +56,18 @@ export const emailValidation: Validator = {
 }
 
 export const telNumberValidation: Validator = {
-    key: 'telNumber',
+    key: 'telnumber',
     attributeNames: [],
     fn: () => {
         return (fc) => {
             if (!(new RegExp(/^(?:\+?(\d{1,3}))?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4})(?:[-.x ]*(\d+))?)$/).test(fc.value))) {
-                return ({telNumber: true});
+                return ({telnumber: true});
             } else {
                 return null;
             }
         };
     },
-    validationErrorKey: 'telNumber',
+    validationErrorKey: 'telnumber',
     defaultErrorMessage: () => 'dataField.validations.phone'
 }
 

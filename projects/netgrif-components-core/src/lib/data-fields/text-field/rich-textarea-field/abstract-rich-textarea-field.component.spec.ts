@@ -49,10 +49,10 @@ describe('AbstractRichTextareaFieldComponent', () => {
                         dataField: new TextAreaField('', '', 'text', {
                             editable: true
                         }, undefined, undefined, undefined,
-                            [{name: 'minLength', validationMessage: 'This is custom message!', arguments: {'length': {key: 'length', value: '5', dynamic: false}}}],
+                            [{name: 'minlength', validationMessage: 'This is custom message!', arguments: {'length': {key: 'length', value: '5', dynamic: false}}}],
                             undefined,
                             undefined,
-                            new Map<string, Validator>([['minLength', minLengthValidation]])),
+                            new Map<string, Validator>([['minlength', minLengthValidation]])),
                         formControlRef: new FormControl(),
                         showLargeLayout: new WrappedBoolean()
                     } as DataFieldPortalData<TextAreaField>
