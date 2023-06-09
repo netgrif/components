@@ -5,14 +5,14 @@
 </nc-data-field-template>
 
 <ng-template #boolean let-showLargeLayout="showLargeLayout">
-    <div>
-        <mat-label class="netgrif-label" *ngIf="!showLargeLayout.value">{{dataField.title}}
+    <div fxLayout="column" class="min-height-62">
+        <mat-label class="netgrif-label" [ngClass]="{'netgrif-label-disabled': formControl.disabled}" *ngIf="!showLargeLayout.value && resolveTitle()">{{dataField.title}}
             <nc-required-label *ngIf="dataField.behavior.required" [isIn]="true"></nc-required-label>
             <br></mat-label>
         <mat-slide-toggle color="primary" [formControl]="formControl">
             {{createValueLabel()}}
         </mat-slide-toggle>
-        <mat-hint>{{dataField.description}}</mat-hint>
+        <mat-hint [ngClass]="{'mat-hint-disabled': formControl.disabled}" *ngIf="!dataField.isInvalid(formControl)">{{dataField.description}}</mat-hint>
         <mat-error *ngIf="dataField.isInvalid(formControl)">{{getErrorMessage()}}</mat-error>
     </div>
 </ng-template>

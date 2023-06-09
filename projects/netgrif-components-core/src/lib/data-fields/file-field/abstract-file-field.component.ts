@@ -37,6 +37,8 @@ export interface FileState {
 
 const preview = 'preview';
 
+const preview_button = 'preview_button';
+
 const fieldHeight = 75;
 
 const fieldPadding = 16;
@@ -118,7 +120,9 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
      * Form control subscription
      */
     private updatedFieldSubscription: Subscription;
-
+    private labelWidth: number;
+    public cutProperty: string;
+    public filePreviewButton = false;
     /**
      * Only inject services.
      * @param _taskResourceService Provides to download a file from the backend
@@ -149,8 +153,8 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
      */
     ngOnInit() {
         super.ngOnInit();
-        this.filePreview = this.dataField && this.dataField.component && this.dataField.component.name
-            && this.dataField.component.name === preview;
+        this.filePreview = this.dataField?.component?.name === preview;
+        this.filePreviewButton = this.dataField?.component?.name === preview_button;
     }
 
     ngAfterViewInit() {
@@ -166,11 +170,19 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 }
             }
         }
+        if (this.filePreviewButton) {
+            if (!this.isEmpty()) {
+                this.initializePreviewIfDisplayable();
+            }
+        }
         this.updatedFieldSubscription = this.dataField.updated.subscribe(() => {
             this.previewSource = undefined;
-            if (!!this.filePreview
-                && !!this.dataField.value
-                && !!this.dataField.value.name) {
+            if (!!this.filePreview && !!this.dataField?.value?.name) {
+                this.fileForDownload = undefined;
+                this.fileForPreview = undefined;
+                this.initializePreviewIfDisplayable();
+            }
+            if (!!this.filePreviewButton && !!this.dataField?.value?.name) {
                 this.fileForDownload = undefined;
                 this.fileForPreview = undefined;
                 this.initializePreviewIfDisplayable();
@@ -438,7 +450,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         });
     }
 
-    private checkFileBeforeDownload() {
+    protected checkFileBeforeDownload() {
         if (this.isEmpty()) {
             return false;
         }
@@ -473,7 +485,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         }
     }
 
-    private initializePreviewIfDisplayable() {
+    protected initializePreviewIfDisplayable() {
         const extension = this.dataField.value.name.split('.').reverse()[0];
         this.isDisplayable = Object.values(FilePreviewType).includes(extension as any);
         if (this.isDisplayable) {
@@ -528,5 +540,22 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
 
     protected resolveParentTaskId(): string {
         return !!this.dataField.parentTaskId ? this.dataField.parentTaskId : this.taskId;
+    }
+
+    public resolveTitle(): boolean {
+        return this.dataField.title !== undefined && this.dataField.title !== '';
+    }
+
+    public resolveHint(): boolean {
+        return this.dataField.description !== undefined && this.dataField.description !== '';
+    }
+
+    public getCutProperty(i18nLabel): string {
+        if (this.labelWidth !== i18nLabel.offsetWidth) {
+            this.labelWidth = i18nLabel.offsetWidth;
+            const calculatedWidth = 'calc(0.5em + ' + i18nLabel.offsetWidth / 4 * 3 + 'px)';
+            this.cutProperty = `polygon(0 0, 0 100%, 100% 100%, 100% 0%, ${calculatedWidth} 0, ${calculatedWidth} 6%, 0.5em 6%, 0.5em 0)`;
+        }
+        return this.cutProperty;
     }
 }

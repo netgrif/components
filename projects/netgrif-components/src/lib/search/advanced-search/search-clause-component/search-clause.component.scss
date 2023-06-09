@@ -1,13 +1,17 @@
-.clause-body {
-    border-radius: 4px;
-    padding: 4px 6px 4px 6px;
-}
-
 .bool-operator-margin {
-    margin-left: 8px;
-    margin-right: 8px;
+    margin: 1.5px 8px 1.5px 4px;
 }
 
 .bool-operator-button {
     margin-left: 4px;
 }
+
+.advanced-search-buttons {
+    min-height: 45px;
+}
+
+.prefix-icon{
+    font-size: 18px;
+    color: #64748B;
+}
+

@@ -1,18 +1,27 @@
 .case-view-container {
-    width: 100%;
-    height: 100%;
-    overflow: auto;
+    margin: 16px 24px;
+    height: calc(100% - 32px);
+    overflow: auto
+}
+
+@media screen and (max-width: 599.99px) {
+    .case-view-container {
+        margin: 12px 12px;
+    }
+
 }
 
 .case-view-search-container {
-    margin-top: 8px;
-    padding: 8px;
-    margin-bottom: 4px;
+    margin-top: 16px;
+    margin-bottom: 2px;
+    padding: 0;
+    max-height: 50%;
 }
 
 .case-header-padding {
-    padding-bottom: 8px;
-    padding-top: 8px;
+    padding-top: 16px;
+    padding-left: 1px;
+    padding-right: 1px;
 }
 
 .font-size-20 {
@@ -21,6 +30,12 @@
 
 .search-width {
     width: 100%;
+}
+
+.search-fix {
+    min-height: calc(100% + 2px);
+    max-height: 100%;
+    overflow-y: auto;
 }
 
 .full-height {
@@ -32,9 +47,9 @@
 }
 
 .transform-div {
-    transform:rotateX(180deg);
-    -ms-transform:rotateX(180deg); /* IE 9 */
-    -webkit-transform:rotateX(180deg);
+    transform: rotateX(180deg);
+    -ms-transform: rotateX(180deg); /* IE 9 */
+    -webkit-transform: rotateX(180deg);
 }
 
 .custom-scrollbar {
@@ -45,6 +60,11 @@
         cursor: pointer;
     }
 }
+
 .max-width-fix {
     max-width: calc(100% - 8px) !important;
+}
+
+.max-height {
+    max-height: 100%
 }

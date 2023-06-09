@@ -5,29 +5,43 @@
 </nc-data-field-template>
 
 <ng-template #dataFieldTemplate let-showLargeLayout="showLargeLayout">
-
-    <div>
-        <mat-label class="netgrif-label" *ngIf="!showLargeLayout.value">{{dataField.title}}
-            <nc-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nc-required-label>
-            <br>
-        </mat-label>
-        <button mat-stroked-button
-                *ngIf="!!dataField.value"
-                [disabled]="formControl.disabled"
-                color="primary"
-                (click)="selectUser()">
-            <mat-icon>how_to_reg</mat-icon>
-            {{dataField.value.fullName}}
-        </button>
-        <button mat-stroked-button
-                *ngIf="!dataField.value"
-                [disabled]="formControl.disabled"
-                color="primary"
-                (click)="selectUser()">
-            <mat-icon>person_add</mat-icon>
-            {{'dataField.user.selectUser' | translate}}
-        </button>
-        <mat-error *ngIf="dataField.isInvalid(formControl)">{{'dataField.validations.required' | translate}}</mat-error>
+    <div fxLayoutAlign="center center" fxLayout="row">
+        <div fxFlex="100" class="netgrif-user-padding">
+            <div #userLabel class="user-field-label" [ngClass]="{'netgrif-label-disabled': formControl.disabled}">
+                {{dataField.title}}
+                <nc-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nc-required-label>
+            </div>
+            <div class="form-input button-icon-input full-width" fxLayout="row" fxLayoutAlign="start center"
+                 [ngClass]="{'form-input-disabled': formControl.disabled, 'form-input-error': dataField.isInvalid(formControl)}"
+                 [ngStyle]="{
+                    '-webkit-clip-path': getCutProperty(userLabel),
+                    'clip-path': getCutProperty(userLabel)
+            }">
+                <button mat-icon-button
+                        *ngIf="!!dataField.value"
+                        [disabled]="formControl.disabled"
+                        color="primary"
+                        (click)="selectUser()"
+                        [matTooltip]="'dataField.file.clickToUpload' | translate"
+                        [class.do-not-click]="formControl.disabled">
+                    <mat-icon>how_to_reg</mat-icon>
+                </button>
+                <button mat-icon-button
+                        *ngIf="!dataField.value"
+                        [disabled]="formControl.disabled"
+                        color="primary"
+                        (click)="selectUser()"
+                        [matTooltip]="'dataField.file.clickToUpload' | translate"
+                        [class.do-not-click]="formControl.disabled">
+                    <mat-icon>person_add</mat-icon>
+                </button>
+                <span fxFlex class="input-name-ellipsis" [ngClass]="{'input-placeholder': !!dataField.value, 'no-cursor': !!dataField.value && formControl.disabled}">
+                    {{!!dataField.value ? dataField.value.fullName : 'dataField.user.selectUser' | translate}}</span>
+            </div>
+            <mat-hint class="user-hint-error" [ngClass]="{'mat-hint-disabled': formControl.disabled}"
+                      *ngIf="!dataField.isInvalid(formControl) && resolveHint()">{{dataField.description}}</mat-hint>
+            <mat-error class="user-hint-error"
+                       *ngIf="dataField.isInvalid(formControl)">{{'dataField.validations.required' | translate}}</mat-error>
+        </div>
     </div>
-
 </ng-template>

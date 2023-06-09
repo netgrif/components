@@ -15,7 +15,7 @@
     </ng-template>
     <ng-template #content>
         <div class="panel-main-content" fxLayout="column">
-            <div class="workflow-panel-body" fxFlex="100">
+            <div class="workflow-panel-body netgrif-input" fxFlex="100">
                 <div fxLayout="row">
                     <div fxFlex="50">
                         <nc-text-field [dataField]="panelContent.netIdentifier">
@@ -44,9 +44,9 @@
                 </div>
             </div>
             <mat-action-row>
-                <button mat-raised-button color="primary"
+                <button mat-stroked-button color="primary"
                         (click)="downloadNetFile()">{{'workflow.download' | translate | uppercase }}</button>
-                <button *ngIf="showDeleteMenu" mat-raised-button color="warn"
+                <button *ngIf="showDeleteMenu" mat-stroked-button color="warn"
                         (click)="deleteWorkflow()">{{'workflow.delete' | translate | uppercase }}</button>
                 <button mat-button color="primary"
                         (click)="panelRef.expanded = false">{{'tasks.view.collapse' | translate | uppercase }}</button>

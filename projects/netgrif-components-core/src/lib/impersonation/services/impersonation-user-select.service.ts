@@ -13,6 +13,7 @@ import {SimpleFilter} from '../../filter/models/simple-filter';
 import {UserImpersonationConstants} from '../models/user-impersonation-constants';
 import moment from 'moment';
 import {UserService} from '../../user/services/user.service';
+import {MatDialog} from '@angular/material/dialog';
 
 @Injectable({
   providedIn: 'root'
@@ -20,10 +21,10 @@ import {UserService} from '../../user/services/user.service';
 export class ImpersonationUserSelectService {
 
     constructor(protected _log: LoggerService,
-                protected _sideMenuService: SideMenuService,
                 protected _snackBar: SnackBarService,
                 protected _impersonation: ImpersonationService,
                 protected _user: UserService,
+                protected _dialog: MatDialog,
                 @Optional() @Inject(NAE_USER_IMPERSONATE_COMPONENT) protected _userImpersonateComponent: any,
                 @Optional() @Inject(NAE_ADMIN_IMPERSONATE_COMPONENT) protected _adminImpersonateComponent: any,
     ) {}
@@ -33,17 +34,25 @@ export class ImpersonationUserSelectService {
      */
     public selectImpersonate(): void {
         if (this.isAdmin()) {
-            this._sideMenuService.open(this._adminImpersonateComponent, SideMenuSize.LARGE, this.injectedData()).onClose.subscribe(event => {
+            const dialogRef = this._dialog.open(this._adminImpersonateComponent, {
+                panelClass: "dialog-responsive",
+                data: this.injectedData(),
+            });
+            dialogRef.afterClosed().subscribe(event => {
                 this._log.debug('Impersonable user select :' + event);
-                if (event.data === undefined) {
+                if (event?.data === undefined) {
                     return;
                 }
                 this._impersonation.impersonateUser(event.data._id);
             });
         } else {
-            this._sideMenuService.open(this._userImpersonateComponent, SideMenuSize.XL, this.injectedData()).onClose.subscribe(event => {
+            const dialogRef = this._dialog.open(this._userImpersonateComponent, {
+                panelClass: "dialog-responsive",
+                data: this.injectedData(),
+            });
+            dialogRef.afterClosed().subscribe(event => {
                 this._log.debug('Impersonable config select :' + event);
-                if (event.data === undefined) {
+                if (event?.data === undefined) {
                     return;
                 }
                 this._impersonation.impersonateByConfig((event.data as UserImpersonateConfigMetadata).stringId);

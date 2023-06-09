@@ -1,7 +1,4 @@
 <div fxLayout="row wrap" fxLayoutAlign="start center">
-    <div class="search-icon" fxLayout="row" fxLayoutAlign="start center" *ngIf="showSearchIcon">
-        <mat-icon [inline]="true">search</mat-icon>
-    </div>
 
     <div *ngIf="advancedSearchDisplayed; then advancedSearch; else fullTextSearch"></div>
 
@@ -13,24 +10,28 @@
         <nc-fulltext-search class="netgrif-input"></nc-fulltext-search>
     </ng-template>
 
-    <button mat-icon-button class="search-buttons-margin" *ngIf="showSearchToggleButton"
+    <button mat-stroked-button class="search-buttons-margin search-buttons-padding" *ngIf="showSearchToggleButton"
             [matTooltip]="(advancedSearchDisplayed ? 'search.tooltip.toFullText' : 'search.tooltip.toAdvanced') | translate"
             (click)="toggleSearchMode()">
-        <mat-icon>youtube_searched_for</mat-icon>
+        <mat-icon class="advanced-search-icon" svgIcon="filter-variant"></mat-icon>
     </button>
 
-    <button mat-icon-button class="search-buttons-margin" *ngIf="advancedSearchDisplayed && showSaveFilterButton"
-            [matTooltip]="'search.tooltip.save' | translate" (click)="saveFilter()">
-        <mat-icon>save</mat-icon>
+    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="menu" *ngIf="advancedSearchDisplayed">
+        <mat-icon class="advanced-search-icon">more_vert</mat-icon>
     </button>
+    <mat-menu #menu="matMenu" class="mat-menu-border-radius mat-menu-padding">
+        <button mat-menu-item *ngIf="showSaveFilterButton" (click)="saveFilter()">
+            <mat-icon class="prefix-icon">save</mat-icon>
+            <span>{{'search.tooltip.save' | translate}}</span>
+        </button>
+        <button mat-menu-item *ngIf="showLoadFilterButton" (click)="loadFilter()">
+            <mat-icon class="prefix-icon">open_in_browser</mat-icon>
+            <span>{{'search.tooltip.load' | translate}}</span>
+        </button>
 
-    <button mat-icon-button class="search-buttons-margin" *ngIf="advancedSearchDisplayed && showLoadFilterButton"
-            [matTooltip]="'search.tooltip.load' | translate" (click)="loadFilter()">
-        <mat-icon>open_in_browser</mat-icon>
-    </button>
-
-    <button mat-icon-button class="search-buttons-margin" *ngIf="advancedSearchDisplayed && showAdvancedSearchHelp"
-            [matTooltip]="'search.tooltip.help' | translate" (click)="showHelp()">
-        <mat-icon>help</mat-icon>
-    </button>
+        <button mat-menu-item *ngIf="showAdvancedSearchHelp" (click)="showHelp()">
+            <mat-icon class="prefix-icon">help</mat-icon>
+            <span>{{'search.tooltip.help' | translate}}</span>
+        </button>
+    </mat-menu>
 </div>

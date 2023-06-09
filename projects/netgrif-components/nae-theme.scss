@@ -12,6 +12,9 @@
 @import "src/lib/search/advanced-search/search-predicate-component/search-predicate.component.theme";
 @import "src/lib/search/advanced-search/search-clause-component/search-clause.component.theme";
 @import "src/lib/search/advanced-search/search-configuration-input-component/search-configuration-input.component.theme";
+@import "src/lib/search/advanced-search/advanced-search-component/advanced-search.component.theme";
+@import "src/lib/search/search-component/search.component-theme.scss";
+@import "src/lib/dialog/dialog.theme";
 
 @mixin nae-lib-theme($app-theme, $app-typography-config) {
     @include nae-typography($app-typography-config);
@@ -29,6 +32,8 @@
     @include search-clause-theme($app-theme);
     @include search-configuration-input-theme($app-theme);
     @include side-menu-theme($app-theme);
+    @include advanced-search-theme($app-theme);
+    @include dialog-theme($app-theme);
 }
 
 .mat-tab-group.nae-tab-fill-height .mat-tab-body-wrapper {
@@ -36,8 +41,8 @@
 }
 
 .panel-expanded-spacing mat-expansion-panel.mat-expanded {
-    margin-top: 16px !important;
-    margin-bottom: 16px !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
 }
 
 nc-number-currency-field .mat-form-field .mat-form-field-prefix {

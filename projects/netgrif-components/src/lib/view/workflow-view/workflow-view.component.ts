@@ -7,6 +7,7 @@ import {
     WorkflowViewService
 } from '@netgrif/components-core';
 import {ImportNetComponent} from '../../side-menu/content-components/import-net/import-net.component';
+import {MatDialog} from '@angular/material/dialog';
 
 
 @Component({
@@ -16,11 +17,11 @@ import {ImportNetComponent} from '../../side-menu/content-components/import-net/
     providers: [WorkflowViewService]
 })
 export class WorkflowViewComponent extends AbstractWorkflowViewComponent {
-    constructor(protected _sideMenuService: SideMenuService,
+    constructor(protected _dialog: MatDialog,
                 protected _workflowViewService: WorkflowViewService,
                 protected _log: LoggerService,
                 protected _processService: ProcessService) {
-        super(_sideMenuService, _workflowViewService, _log, _processService);
+        super(_dialog, _workflowViewService, _log, _processService);
     }
 
     public importNet() {

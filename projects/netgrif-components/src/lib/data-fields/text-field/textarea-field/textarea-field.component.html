@@ -12,7 +12,7 @@
               #dynamicTextArea="cdkTextareaAutosize"
               cdkTextareaAutosize
               cdkAutosizeMinRows="1"></textarea>
-    <mat-hint>{{textAreaField.description}}</mat-hint>
+    <mat-hint [ngClass]="{'mat-hint-disabled': formControlRef.disabled}">{{textAreaField.description}}</mat-hint>
     <mat-error *ngIf="textAreaField.isInvalid(formControlRef)">{{getErrorMessage()}}</mat-error>
 </mat-form-field>
 

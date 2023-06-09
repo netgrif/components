@@ -1,16 +1,25 @@
 <div class="case-view-container" fxLayout="column" fxLayoutAlign="start stretch">
+    <nc-breadcrumbs></nc-breadcrumbs>
 
-    <mat-card class="case-view-search-container">
-        <div fxLayout="row" fxLayoutAlign="space-between">
+    <div class="case-view-search-container">
+        <div fxLayout="row" class="max-height" fxLayoutAlign="space-between">
             <div fxLayoutAlign="start center" fxFlex>
-                <nc-search class="search-width" (filterLoaded)="loadFilter($event)"></nc-search>
+                <nc-search class="search-width search-fix" (filterLoaded)="loadFilter($event)"></nc-search>
             </div>
-            <nc-create-case-button [newCaseCreationConfig]="newCaseCreationConfig" (caseCreatedEvent)="handleCaseClick($event)"></nc-create-case-button>
+            <div fxLayoutAlign="end center">
+                <nc-create-case-button [newCaseCreationConfig]="newCaseCreationConfig" (caseCreatedEvent)="handleCaseClick($event)"></nc-create-case-button>
+            </div>
         </div>
-    </mat-card>
+    </div>
 
-    <nc-header #header [type]="headerType" class="case-header-padding"></nc-header>
+    <div class="full-height transform-div custom-scrollbar"
+         [ngClass]="{'overflow-div': getOverflowStatus()}" fxLayout="column" fxLayoutAlign="start stretch">
+        <div class="full-height transform-div max-width-fix" fxLayout="column" fxLayoutAlign="start stretch">
+            <nc-header #header [type]="headerType" [maxHeaderColumns]="9" [responsiveHeaders]="false" [ngStyle]="{'width': getWidth()}" class="case-header-padding"></nc-header>
 
-    <nc-case-list [selectedHeaders$]="selectedHeaders$" [textEllipsis]="true"
-                  (caseClick)="handleCaseClick($event)" fxFlex></nc-case-list>
+            <nc-case-list [selectedHeaders$]="selectedHeaders$"  [showDeleteMenu]="true" [width]="getWidth()"
+                          (caseClick)="handleCaseClick($event)" [responsiveBody]="true" fxFlex [textEllipsis]="true"></nc-case-list>
+        </div>
+    </div>
 </div>
+

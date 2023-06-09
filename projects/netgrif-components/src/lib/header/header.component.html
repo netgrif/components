@@ -1,4 +1,4 @@
-<mat-card [ngClass]="{'padding-custom': headerService.headerState.mode === headerModeEnum.SORT}" class="header-color">
+<mat-card [ngClass]="{'padding-custom': headerService.headerState.mode === headerModeEnum.SORT}" class="header-color header-card">
     <div fxLayout="row">
         <div fxLayout="row" fxFlex="95" class="header-content-container flex-95" fxLayoutAlign="start center"
              [ngSwitch]="headerService.headerState.mode" *ngIf="!headerService.loading.isActive">
@@ -23,18 +23,18 @@
                 <button mat-icon-button [matMenuTriggerFor]="headerMenu">
                     <mat-icon>more_vert</mat-icon>
                 </button>
-                <mat-menu #headerMenu="matMenu">
+                <mat-menu  #headerMenu="matMenu" class="mat-menu-border-radius mat-menu-padding">
                     <div *ngIf="headerService.headerState.mode !== headerModeEnum.EDIT">
                         <button mat-menu-item
                                 [ngClass]="{'active-header-item': headerService.headerState.mode === headerModeEnum.SORT}"
                                 (click)="headerService.changeMode(headerModeEnum.SORT, false)">
-                            <mat-icon>sort</mat-icon>
+                            <mat-icon [ngClass]="{'active-header-item': headerService.headerState.mode === headerModeEnum.SORT}" >sort</mat-icon>
                             {{ 'headers.orderMode' | translate}}
                         </button>
                         <button *ngIf="type === headerTypeEnum.CASE" mat-menu-item
                                 [ngClass]="{'active-header-item': headerService.headerState.mode === headerModeEnum.SEARCH}"
                                 (click)="headerService.changeMode(headerModeEnum.SEARCH, false)">
-                            <mat-icon>search</mat-icon>
+                            <mat-icon [ngClass]="{'active-header-item': headerService.headerState.mode === headerModeEnum.SEARCH}" >search</mat-icon>
                             {{ 'headers.searchMode' | translate}}
                         </button>
                         <button mat-menu-item (click)="headerService.changeMode(headerModeEnum.EDIT)">

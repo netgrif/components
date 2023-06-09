@@ -45,8 +45,16 @@ export abstract class AbstractEnumerationStepperFieldComponent implements OnInit
     }
 
     setStepperValue(key: string) {
-        if (!this.enumerationField.disabled) {
+        if (!this.formControlRef.disabled) {
             this.formControlRef.setValue(key);
         }
+    }
+
+    public resolveTitle(): boolean {
+        return this.enumerationField.title !== undefined && this.enumerationField.title !== '';
+    }
+
+    public resolveValue(key: string): string {
+        return this.enumerationField.choices.find(k => k.key === key)?.value;
     }
 }

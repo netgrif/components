@@ -6,15 +6,22 @@
 
 <ng-template #dataFieldTemplate let-showLargeLayout="showLargeLayout">
     <div fxLayoutAlign="center center" fxLayout="row">
-        <div fxFlex="{{!filePreview ? '100' : '75'}}">
-            <mat-label *ngIf="!showLargeLayout.value" class="netgrif-label">
+        <div fxFlex="{{!filePreview ? '100' : '75'}}" class="netgrif-file-padding">
+            <div #fileLabel class="file-field-label" [ngClass]="{'netgrif-label-disabled': formControl.disabled}">
                 {{dataField.title}}
                 <nc-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nc-required-label>
-                <br>
-            </mat-label>
-            <div class="form-input button-icon-input full-width input-margin" fxLayout="row" fxLayoutAlign="start center" [ngClass]="{'form-input-disabled': formControl.disabled, 'form-input-error': dataField.isInvalid(formControl)}">
-                <button mat-icon-button color="accent" (click)="chooseFile()"
-                        [matTooltip]="'dataField.file.clickToUpload' | translate" *ngIf="!formControl.disabled"
+            </div>
+            <div class="form-input button-icon-input full-width" fxLayout="row" fxLayoutAlign="start center"
+                 [ngClass]="{'form-input-disabled': formControl.disabled, 'form-input-error': dataField.isInvalid(formControl)}"
+                 [ngStyle]="{
+                    '-webkit-clip-path': getCutProperty(fileLabel),
+                    'clip-path': getCutProperty(fileLabel)
+            }">
+                <button mat-icon-button matPrefix
+                        [disabled]="formControl.disabled"
+                        color="primary"
+                        (click)="chooseFile()"
+                        [matTooltip]="'dataField.file.clickToUpload' | translate"
                         [class.do-not-click]="state.uploading">
                     <mat-icon>file_upload</mat-icon>
                 </button>
@@ -22,6 +29,10 @@
                       [matTooltip]="isEmpty() ? '' : ('dataField.file.clickToDownload' | translate : {fileName: constructDisplayName()})"
                       class="input-name-ellipsis"
                       [ngClass]="{'input-placeholder': isEmpty(), 'no-cursor': isEmpty() && formControl.disabled}">{{constructDisplayName()}}</span>
+                <button (click)="showPreviewDialog()" [matTooltip]="'dataField.file.clickToDelete' | translate" mat-icon-button
+                        *ngIf="filePreviewButton && !isEmpty() && isDisplayable">
+                    <mat-icon color="primary">search</mat-icon>
+                </button>
                 <button (click)="deleteFile()" [matTooltip]="'dataField.file.clickToDelete' | translate" mat-icon-button
                         *ngIf="!isEmpty() && !formControl.disabled">
                     <mat-icon color="warn">close</mat-icon>
@@ -33,8 +44,8 @@
             <input type="file" #fileUploadInput name="fileUpload" [multiple]="false"
                    accept="{{dataField.allowTypes}}" class="invisible-input">
             <input type="text" [formControl]="formControl" class="invisible-input">
-            <mat-hint class="file-hint-error"
-                      *ngIf="!dataField.isInvalid(formControl)">{{dataField.description}}</mat-hint>
+            <mat-hint class="file-hint-error" [ngClass]="{'mat-hint-disabled': formControl.disabled}"
+                      *ngIf="!dataField.isInvalid(formControl) && resolveHint()">{{dataField.description}}</mat-hint>
             <mat-error class="file-hint-error"
                        *ngIf="dataField.isInvalid(formControl)">{{'dataField.validations.required' | translate}}</mat-error>
         </div>

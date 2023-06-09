@@ -1,8 +1,6 @@
 .predicate-body {
     border-radius: 4px;
     padding-right: 4px;
-    margin-top: 2px;
-    margin-bottom: 2px;
     min-height: 32px;
 }
 
@@ -30,3 +28,29 @@
     margin: 0;
     padding-bottom: 0;
 }
+
+.mat-form-field-wrapper-search {
+    margin: 0 !important;
+    border-radius: 5px;
+    background: #fafafa;
+    min-width: 250px;
+}
+
+.advanced-search-buttons {
+    min-height: 45px;
+    margin: 1.5px 8px 1.5px 4px;
+    min-width: 45px;
+    padding: 0;
+}
+
+.prefix-icon {
+    font-size: 18px;
+    color: #64748B;
+}
+
+@media only screen and (max-width: 599px) {
+    .mat-form-field-wrapper-search {
+        min-width: unset;
+    }
+}
+

@@ -28,8 +28,8 @@ export enum TextFieldComponent {
 }
 
 export enum TextAreaHeight {
-    OUTLINE = 27,
-    FILL_STANDARD = 34
+    OUTLINE = 20,
+    FILL_STANDARD = 22
 }
 
 export enum TextFieldValidation {
@@ -46,7 +46,7 @@ export enum TextFieldValidation {
 }
 
 export class TextField extends DataField<string> {
-    public static FIELD_HEIGHT = 105;
+    public static FIELD_HEIGHT = 67;
 
     constructor(stringId: string, title: string, value: string, behavior: Behavior, placeholder?: string,
                 description?: string, layout?: Layout, validations?: Array<Validation>, _component?: Component,

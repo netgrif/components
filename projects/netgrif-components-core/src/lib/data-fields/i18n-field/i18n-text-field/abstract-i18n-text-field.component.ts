@@ -125,9 +125,13 @@ export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsC
         if (this.labelWidth !== i18nLabel.offsetWidth) {
             this.labelWidth = i18nLabel.offsetWidth;
             const calculatedWidth = 'calc(0.5em + ' + i18nLabel.offsetWidth / 4 * 3 + 'px)';
-            this.cutProperty = `polygon(0 0, 0 100%, 100% 100%, 100% 0%, ${calculatedWidth} 0, ${calculatedWidth} 5%, 0.5em 5%, 0.5em 0)`;
+            this.cutProperty = `polygon(0 0, 0 100%, 100% 100%, 100% 0%, ${calculatedWidth} 0, ${calculatedWidth} 6%, 0.5em 6%, 0.5em 0)`;
         }
         return this.cutProperty;
+    }
+
+    public resolveHint(): boolean {
+        return this.textI18nField.description !== undefined && this.textI18nField.description !== '';
     }
 
 

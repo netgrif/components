@@ -6,30 +6,8 @@
     margin-bottom: 8px;
 }
 
-.file-field-image {
-    width: 120px;
-}
-
-.file-field-image-wrapper {
-    border-radius: 3px;
-}
-
-.progress-bar-size {
-    height: 8px;
-}
-
-.margin-bottom-half {
-    margin-bottom: 4px;
-}
-
 .do-not-click:hover {
     cursor: not-allowed;
-}
-
-.file-button {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
 }
 
 .input-name-ellipsis {
@@ -40,7 +18,7 @@
 }
 
 .input-placeholder {
-    color: rgba(0, 0, 0, .42);
+    color: #64748B;
 }
 
 .button-icon-input {
@@ -52,44 +30,45 @@
     min-width: 100%;
 }
 
-.input-margin {
-    margin-top: 2px !important;
-}
-
 .form-input {
-    background: transparent;
-    color: #333333;
+    background: #FFFFFF;
+    color: #64748B;
     outline: none;
-    border: 1px solid rgba(0, 0, 0, 0.12);
+    border: 1px solid #64748B;
     text-align: left;
     font-size: 14px;
     line-height: 20px;
     border-radius: 6px;
     min-width: 5px;
-    padding: 10px 15px 10px 15px;
+    padding: 8px 15px 8px 15px;
     box-sizing: border-box;
-    height: 48px;
+    height: 44px;
 }
 
 .form-input:hover {
-    border-color: black;
     border-width: 2px;
+    padding-left: 1px !important;
+    padding-right: 1px !important;
 }
 
 
-.form-input-disabled:hover {
-    border-color: rgba(0, 0, 0, 0.12) !important;
-    border-width: 1px;
+.form-input-disabled, .form-input-disabled:focus-within {
+    background: transparent !important;
+    border-color: #CBD5E1 !important;
+}
+
+.form-input-disabled:hover, .form-input-disabled:focus-within  {
+    border-width: 1px !important;
     padding: 2px !important;
 }
 
-.placeholder {
-    color: rgba(0, 0, 0, .42) !important;
-}
-
 .file-hint-error {
-    padding: 0 1em;
     font-size: 75%;
+    padding: 0 1em;
+    width: unset;
+    position: absolute;
+    margin-top: 0.5em;
+    top: calc(100% - 2em);
 }
 
 .image-preview {
@@ -100,6 +79,7 @@
 
 .no-cursor {
     cursor: default !important;
+    color: #64748B;
 }
 
 .border-LGBTQ {
@@ -133,4 +113,30 @@
     border-width: 1px;
     border-style: solid;
     border-color: black;
+}
+
+@media only screen and (max-width: 959.99px) {
+    .input-name-ellipsis {
+        word-break: break-word;
+        white-space: normal;
+        overflow-y: auto;
+        max-height: 40px;
+    }
+}
+
+.file-field-label {
+    transform: translate(0.4em,-0.45em) scale(.75);
+    transform-origin: left;
+    color: #64748B;
+    background: transparent;
+    width: fit-content;
+    padding: 0 0.5em;
+    z-index: 5;
+    height: 0;
+    position: relative;
+}
+
+.netgrif-file-padding {
+    padding-bottom: 13px;
+    position: relative;
 }

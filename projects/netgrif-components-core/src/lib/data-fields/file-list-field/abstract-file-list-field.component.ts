@@ -40,6 +40,8 @@ export interface FilesState {
 })
 export abstract class AbstractFileListFieldComponent extends AbstractDataFieldComponent implements OnInit, AfterViewInit, OnDestroy {
 
+    private labelWidth: number;
+    public cutProperty: string;
     public uploadedFiles: Array<string>;
     public state: FilesState;
     private valueChange$: Subscription;
@@ -352,5 +354,22 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
 
     private resolveParentTaskId(): string {
         return !!this.dataField.parentTaskId ? this.dataField.parentTaskId : this.taskId;
+    }
+
+    public resolveTitle(): boolean {
+        return this.dataField.title !== undefined && this.dataField.title !== '';
+    }
+
+    public resolveHint(): boolean {
+        return this.dataField.description !== undefined && this.dataField.description !== '';
+    }
+
+    public getCutProperty(i18nLabel): string {
+        if (this.labelWidth !== i18nLabel.offsetWidth) {
+            this.labelWidth = i18nLabel.offsetWidth;
+            const calculatedWidth = 'calc(0.5em + ' + i18nLabel.offsetWidth / 4 * 3 + 'px)';
+            this.cutProperty = `polygon(0 0, 0 100%, 100% 100%, 100% 0%, ${calculatedWidth} 0, ${calculatedWidth} 3px, 0.5em 3px, 0.5em 0)`;
+        }
+        return this.cutProperty;
     }
 }

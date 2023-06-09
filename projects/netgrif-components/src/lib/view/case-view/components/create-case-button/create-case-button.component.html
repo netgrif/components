@@ -1,9 +1,11 @@
-<button *ngIf="!resolvedCaseButtonTitle; else titleButton" mat-mini-fab color="primary" (click)="createNewCase()">
-    <mat-icon class="net-upload" aria-hidden="false">{{!!resolvedCaseButtonIcon ? resolvedCaseButtonIcon : 'add'}}</mat-icon>
+<button *ngIf="!resolvedCaseButtonTitle; else titleButton" class="create-case-mat-mini-fab" mat-mini-fab color="primary" (click)="createNewCase()" [class.spinner]="loading$ | async"
+        [disabled]="loading$ | async">
+    <mat-icon *ngIf="(loading$ | async) === false" class="net-upload" aria-hidden="false">{{!!resolvedCaseButtonIcon ? resolvedCaseButtonIcon : 'add'}}</mat-icon>
 </button>
 <ng-template #titleButton>
-    <button  mat-raised-button color="primary" (click)="createNewCase()">
-        <mat-icon *ngIf="!!resolvedCaseButtonIcon" class="button-icon" aria-hidden="false">{{resolvedCaseButtonIcon}}</mat-icon>
-        <span>{{resolvedCaseButtonTitle}}</span>
+    <button  mat-raised-button color="primary" (click)="createNewCase()" [class.spinner]="loading$ | async"
+             [disabled]="loading$ | async">
+        <mat-icon *ngIf="!!resolvedCaseButtonIcon && (loading$ | async) === false" class="button-icon" aria-hidden="false">{{resolvedCaseButtonIcon}}</mat-icon>
+        <span *ngIf="(loading$ | async) === false">{{resolvedCaseButtonTitle}}</span>
     </button>
 </ng-template>

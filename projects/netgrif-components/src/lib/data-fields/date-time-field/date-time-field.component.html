@@ -24,7 +24,7 @@
                                  [color]="'primary'"
                                  [enableMeridian]="false">
         </ngx-mat-datetime-picker>
-        <mat-hint>{{dataField.description}}</mat-hint>
+        <mat-hint [ngClass]="{'mat-hint-disabled': formControl.disabled}">{{dataField.description}}</mat-hint>
         <mat-error *ngIf="dataField.isInvalid(formControl)">{{getErrorMessage()}}</mat-error>
     </mat-form-field>
 </ng-template>

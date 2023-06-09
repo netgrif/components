@@ -1,0 +1,55 @@
+.file-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+}
+
+.file-list-label {
+    display: inline-flex;
+    vertical-align: middle;
+    font-size: 12px;
+    line-height: 18px;
+
+    mat-icon {
+        font-size: 18px;
+        text-align: center;
+    }
+
+    a {
+        cursor: pointer;
+    }
+}
+
+.container {
+    padding: 10%;
+}
+
+.done-icon {
+
+}
+
+.margin-right-default {
+    margin-right: 8px;
+}
+
+.margin-right-half {
+    margin-right: 4px;
+}
+
+.display-none {
+    display: none !important;
+}
+
+.margin-top {
+    margin-top: 8px;
+}
+
+.cell-padding-fix {
+    padding: 4px 0 0;
+}

@@ -4,6 +4,7 @@ import {DataField} from '../models/abstract-data-field';
 import {TemplateAppearance} from '../models/template-appearance';
 import {PaperViewService} from '../../navigation/quick-panel/components/paper-view.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
+import {ButtonField} from '../button-field/models/button-field';
 
 /**
  * Provides a responsive layout to data fields where their appearance can change based on the width of space they have available.
@@ -110,7 +111,11 @@ export abstract class AbstractDataFieldTemplateComponent implements OnInit {
         return this._isNetgrifTemplate;
     }
 
-    public isPaperView() {
+    public isPaperView(): boolean {
         return this._paperView.paperView;
+    }
+
+    public isNotButton(): boolean {
+        return !(this.dataField instanceof ButtonField);
     }
 }

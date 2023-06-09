@@ -1,5 +1,5 @@
 .workflow-container {
-    padding: 16px;
+    padding: 16px 24px;
 }
 
 .workflow-header {
@@ -7,7 +7,7 @@
 }
 
 .workflow-panels-container {
-    margin-top: 16px;
+    //margin-top: 16px;
 }
 
 .upload-petri-net {
@@ -36,4 +36,9 @@
 .block-size-40 {
     width: 40px;
     height: 40px;
+}
+
+.padding-mini {
+    padding-left: 1px;
+    padding-right: 1px;
 }

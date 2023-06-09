@@ -8,6 +8,6 @@
             {{option.value}}
         </mat-option>
     </mat-select>
-    <mat-hint>{{enumerationField.description}}</mat-hint>
-    <mat-error *ngIf="enumerationField.isInvalid(formControlRef)">{{'dataField.validations.required' | translate}}</mat-error>
+    <mat-hint [ngClass]="{'mat-hint-disabled': formControlRef.disabled}">{{enumerationField.description}}</mat-hint>
+    <mat-error>{{'dataField.validations.required' | translate}}</mat-error>
 </mat-form-field>

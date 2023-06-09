@@ -25,7 +25,7 @@
             {{option.value}}
         </mat-option>
     </mat-autocomplete>
-    <mat-hint>{{multichoiceField.description}}</mat-hint>
+    <mat-hint [ngClass]="{'mat-hint-disabled': formControlRef.disabled}">{{multichoiceField.description}}</mat-hint>
     <mat-error
         *ngIf="multichoiceField.isInvalid(formControlRef)">{{'dataField.validations.required' | translate}}</mat-error>
 </mat-form-field>

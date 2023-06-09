@@ -1,4 +1,4 @@
-<div class="height-100">
+<div class="height-100" [ngClass]="{'padding-bottom-custom': !formControlRef.disabled}">
     <nc-easymde-wrapper *ngIf="!formControlRef.disabled" [formControlRef]="formControlRef" [textAreaField]="textAreaField"></nc-easymde-wrapper>
     <mat-error *ngIf="textAreaField.isInvalid(formControlRef)">{{getErrorMessage()}}</mat-error>
 

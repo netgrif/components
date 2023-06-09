@@ -5,8 +5,13 @@
 </nc-data-field-template>
 
 <ng-template #button let-showLargeLayout="showLargeLayout">
-    <div [ngClass]="{'flex-end': align === 'end', 'flex-start': align === 'start', 'flex-center': align === 'center', 'full-button-width': stretch === 'true'}">
-        <mat-label class="netgrif-label" *ngIf="!showLargeLayout.value">
+    <div [ngClass]="{'flex-end': align === 'end',
+                     'flex-start': align === 'start',
+                     'flex-center': align === 'center',
+                     'full-button-width': stretch === 'true',
+                     'padding-bottom': !resolveTitle()}">
+        <mat-label class="netgrif-label" [ngClass]="{'netgrif-label-disabled': formControl.disabled}"
+                   *ngIf="!showLargeLayout.value && resolveTitle()">
             {{dataField.title}}
             <nc-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nc-required-label>
             <br>
@@ -25,7 +30,7 @@
                 [disabled]="formControl.disabled || dataField.waitingForResponse"
                 (click)="resolveValue()">
             <div class="grid-wrapper">
-                <mat-icon *ngIf="dataField.waitingForResponse" class="grid-1-1 margin-auto" >
+                <mat-icon *ngIf="dataField.waitingForResponse" class="grid-1-1 margin-auto">
                     <mat-spinner color="warn" diameter="22"></mat-spinner>
                 </mat-icon>
                 <div [ngClass]="{'label-waiting': dataField.waitingForResponse}" class="grid-1-1">
@@ -36,6 +41,6 @@
             </div>
         </button>
 
-        <mat-error *ngIf="dataField.isInvalid(formControl)">{{getErrorMessage()}}</mat-error>
+        <mat-error *ngIf="dataField.isInvalid(formControl) || resolveTitle()">{{getErrorMessage()}}</mat-error>
     </div>
 </ng-template>

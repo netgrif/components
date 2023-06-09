@@ -6,7 +6,7 @@
          [fxHide.lt-sm]="i >= 1 && this.headerService.responsiveHeaders && !this.headerService.overflowMode">
         <div *ngIf="!!header; then thenBlock else elseBlock" fxFlex></div>
         <ng-template #thenBlock>
-            <span fxFlex
+            <span fxFlex class="header-text"
                   mat-sort-header="{{i}}-{{header.uniqueId}}">
             {{ header.title | translate}}
             </span>

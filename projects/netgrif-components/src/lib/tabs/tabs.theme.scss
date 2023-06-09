@@ -1,4 +1,7 @@
+@use '@angular/material' as mat;
+
 @mixin tabs-theme($theme) {
+    $primary: map-get($theme, primary);
     .center-tabs {
         .mat-tab-labels {
             justify-content: center;
@@ -12,8 +15,19 @@
     }
 
     .mat-tab-label-container {
-        border-radius: 6px;
         background: white;
+    }
+
+    .mat-tab-header {
+        border-bottom: 2px solid #E2E8F0;
+    }
+
+    .icon-tab-color {
+        color: mat.get-color-from-palette($primary);
+    }
+
+    .mat-tab-label {
+        opacity: 1 !important;
     }
 }
 
