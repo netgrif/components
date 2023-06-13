@@ -1,0 +1,23 @@
+<mat-label class='netgrif-label' *ngIf='!showLargeLayout.value'>{{dataField.title}}
+    <nc-required-label *ngIf='dataField.behavior.required' [isIn]='!dataField.disabled'></nc-required-label>
+    <br>
+</mat-label>
+<button *ngIf='!formControlRef.disabled' mat-stroked-button class='user-list-item-margin'
+        [disabled]='formControlRef.disabled'
+        color='primary'
+        (click)='selectUser()'>
+    <mat-icon>person_add</mat-icon>
+    {{'dataField.user.selectUser' | translate}}
+</button>
+<span *ngIf='dataField?.value?.userValues?.size > 0'>
+        <span *ngFor='let user of dataField.value.userValues | keyvalue' class='user-list-item-margin'>
+            <button mat-stroked-button
+                    [disabled]='formControlRef.disabled'
+                    color='primary'>
+                <mat-icon>how_to_reg</mat-icon>
+                {{user.value.fullName}}
+                <mat-icon (click)='deleteUser(user.key)' color='warn' *ngIf='!formControlRef.disabled'>close</mat-icon>
+            </button>
+        </span>
+    </span>
+<mat-error *ngIf='dataField.isInvalid(formControlRef)'>{{'dataField.validations.required' | translate}}</mat-error>

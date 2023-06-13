@@ -5,7 +5,7 @@ import {FileUploadMIMEType} from '../../file-field/models/file-field';
 import {DataField} from '../../models/abstract-data-field';
 import {FileListFieldValue} from './file-list-field-value';
 import {Validation} from '../../models/validation';
-import {Component} from '../../models/component';
+import {Component, ComponentPrefixes} from '../../models/component';
 import {FormControl} from '@angular/forms';
 import {ChangedFieldsMap} from '../../../event/services/interfaces/changed-fields-map';
 import {distinctUntilChanged} from 'rxjs/operators';
@@ -33,6 +33,10 @@ export class FileListField extends DataField<FileListFieldValue> {
 
     get value(): FileListFieldValue {
         return this._value.getValue();
+    }
+
+    public getTypedComponentType(): string {
+        return ComponentPrefixes.FILE_LIST + this.getComponentType();
     }
 
     public valueWithoutChange(value: FileListFieldValue) {
@@ -88,6 +92,7 @@ export class FileListField extends DataField<FileListFieldValue> {
                 + ' Disconnect the previous form control before initializing the data field again!');
         }
 
+        this.formControlRef = formControl;
         formControl.setValidators(this.resolveFormControlValidators());
 
         this._myValueSubscription = this._value.pipe(

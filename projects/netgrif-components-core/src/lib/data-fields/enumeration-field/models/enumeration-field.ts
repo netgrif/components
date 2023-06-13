@@ -3,7 +3,7 @@ import {Behavior} from '../../models/behavior';
 import {Layout} from '../../models/layout';
 import {AbstractControl, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 import {FieldTypeResource} from '../../../task-content/model/field-type-resource';
-import {Component} from '../../models/component';
+import {Component, ComponentPrefixes} from '../../models/component';
 import {Validation} from '../../models/validation';
 import {Observable} from "rxjs";
 import {debounceTime} from "rxjs/operators";
@@ -42,6 +42,10 @@ export class EnumerationField extends DataField<string> {
 
     public valueChanges(): Observable<string> {
         return this._value.pipe(debounceTime(this.REQUEST_DEBOUNCE_TIME));
+    }
+
+    public getTypedComponentType(): string {
+        return ComponentPrefixes.ENUMERATION + this.getComponentType();
     }
 
     protected resolveFormControlValidators(): Array<ValidatorFn> {

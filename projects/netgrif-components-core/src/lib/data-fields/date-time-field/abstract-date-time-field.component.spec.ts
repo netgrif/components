@@ -8,7 +8,6 @@ import moment from 'moment';
 import {BehaviorSubject} from 'rxjs';
 import {DateTimeField} from './models/date-time-field';
 import {ChangedFields} from '../models/changed-fields';
-import {TranslateService} from '@ngx-translate/core';
 import {AbstractDateTimeFieldComponent} from './abstract-date-time-field.component';
 import {MaterialModule} from '../../material/material.module';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
@@ -57,10 +56,6 @@ describe('AbstractDatetimeFieldComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should get error message', () => {
-        expect(component.getErrorMessage()).toEqual('This is custom message!');
-    });
-
     afterEach(() => {
         TestBed.resetTestingModule();
     });
@@ -71,9 +66,8 @@ describe('AbstractDatetimeFieldComponent', () => {
     template: ''
 })
 class TestDateTimeFieldComponent extends AbstractDateTimeFieldComponent {
-    constructor(translate: TranslateService,
-                @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
-        super(translate, informAboutInvalidData);
+    constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+        super(informAboutInvalidData);
     }
 }
 
