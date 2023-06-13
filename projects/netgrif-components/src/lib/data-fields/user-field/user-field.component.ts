@@ -1,8 +1,8 @@
 import {Component, Inject, Optional} from '@angular/core';
-import {AbstractUserFieldComponent, NAE_INFORM_ABOUT_INVALID_DATA, SideMenuService, SnackBarService} from '@netgrif/components-core';
-import {UserAssignComponent} from '../../side-menu/content-components/user-assign/user-assign.component';
+import {AbstractUserFieldComponent, NAE_INFORM_ABOUT_INVALID_DATA, SnackBarService} from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 import {MatDialog} from '@angular/material/dialog';
+import {UserAssignDialogComponent} from '../../dialog/user-assign-dialog/user-assign-dialog.component';
 
 @Component({
     selector: 'nc-user-field',
@@ -19,6 +19,6 @@ export class UserFieldComponent extends AbstractUserFieldComponent {
     }
 
     public selectUser() {
-        this.selectAbstractUser(UserAssignComponent);
+        this.selectAbstractUser(UserAssignDialogComponent);
     }
 }

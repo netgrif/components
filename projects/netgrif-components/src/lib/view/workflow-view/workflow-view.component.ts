@@ -6,8 +6,8 @@ import {
     SideMenuService,
     WorkflowViewService
 } from '@netgrif/components-core';
-import {ImportNetComponent} from '../../side-menu/content-components/import-net/import-net.component';
 import {MatDialog} from '@angular/material/dialog';
+import {ImportNetDialogComponent} from '../../dialog/import-net-dialog/import-net-dialog.component';
 
 
 @Component({
@@ -25,6 +25,6 @@ export class WorkflowViewComponent extends AbstractWorkflowViewComponent {
     }
 
     public importNet() {
-        this.importSidemenuNet(ImportNetComponent);
+        this.importSidemenuNet(ImportNetDialogComponent);
     }
 }

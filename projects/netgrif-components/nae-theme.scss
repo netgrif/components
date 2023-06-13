@@ -33,6 +33,7 @@
     @include search-configuration-input-theme($app-theme);
     @include side-menu-theme($app-theme);
     @include advanced-search-theme($app-theme);
+    @include advanced-search-icon($app-theme);
     @include dialog-theme($app-theme);
 }
 

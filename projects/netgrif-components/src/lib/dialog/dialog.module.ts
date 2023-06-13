@@ -104,5 +104,5 @@ import { MultiUserAssignDialogComponent } from './multi-user-assign-dialog/multi
         {provide: NAE_LOAD_FILTER_DIALOG_COMPONENT, useValue: LoadFilterDialogComponent}
     ]
 })
-export class AgelDialogComponentsModule {
+export class DialogComponentsModule {
 }
