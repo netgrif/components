@@ -115,6 +115,10 @@ import { FileListDefaultFieldComponent } from './file-list-field/file-list-defau
 import { FilterDefaultFieldComponent } from './filter-field/filter-default-field/filter-default-field.component';
 import { UserDefaultFieldComponent } from './user-field/user-default-field/user-default-field.component';
 import { UserListDefaultFieldComponent } from './user-list-field/user-list-default-field/user-list-default-field.component';
+import {
+    TaskRefDashboardFieldComponent
+} from "./task-ref-field/task-ref-dashboard-field/task-ref-dashboard-field.component";
+import { TaskRefListFieldComponent } from './task-ref-field/task-ref-list-field/task-ref-list-field.component';
 
 @NgModule({
     declarations: [
@@ -173,6 +177,8 @@ import { UserListDefaultFieldComponent } from './user-list-field/user-list-defau
         FilterDefaultFieldComponent,
         UserDefaultFieldComponent,
         UserListDefaultFieldComponent,
+        TaskRefDashboardFieldComponent,
+        TaskRefListFieldComponent
     ],
     exports: [
         BooleanFieldComponent,
@@ -253,6 +259,8 @@ export class DataFieldsComponentModule {
         registry.register("text-dashboard_bar_chart", (injector: Injector) => new ComponentPortal<any>(DashboardBarChartTextFieldComponent, null, injector));
         registry.register("text-dashboard_iframe", (injector: Injector) => new ComponentPortal<any>(DashboardIframeTextFieldComponent, null, injector));
         registry.register("text-dashboard_portal", (injector: Injector) => new ComponentPortal<any>(DashboardPortalTextFieldComponent, null, injector));
+        registry.register("task-ref-dashboard", (injector: Injector) => new ComponentPortal<any>(TaskRefDashboardFieldComponent, null, injector));
+        registry.register("task-ref-task-list", (injector: Injector) => new ComponentPortal<any>(TaskRefListFieldComponent, null, injector));
         registry.register("user-default", (injector: Injector) => new ComponentPortal<any>(UserDefaultFieldComponent, null, injector));
         registry.register("user-list-default", (injector: Injector) => new ComponentPortal<any>(UserListDefaultFieldComponent, null, injector));
     }

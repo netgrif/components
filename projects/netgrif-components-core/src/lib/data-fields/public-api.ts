@@ -59,6 +59,8 @@ export * from './user-list-field/abstract-user-list-field.component';
 export * from './user-list-field/user-list-default-field/abstract-user-list-default-field.component';
 export * from './task-ref-field/abstract-task-ref-field.component';
 export * from './task-ref-field/task-ref-dashboard-field/task-ref-dashboard-tile/abstract-task-ref-dashboard-tile.component';
+export * from './task-ref-field/task-ref-dashboard-field/abstract-task-ref-dashboard-field.component';
+export * from './task-ref-field/task-ref-list-field/abstract-task-ref-list-field.component';
 
 /* Class */
 export * from './models/abstract-data-field';
