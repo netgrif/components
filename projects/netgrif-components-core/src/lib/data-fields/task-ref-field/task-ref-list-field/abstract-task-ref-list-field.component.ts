@@ -36,12 +36,8 @@ export abstract class AbstractTaskRefListFieldComponent extends AbstractBaseData
         const portalInjector = Injector.create({
             providers: [
                 {
-                    provide: NAE_FILTER_FIELD,
-                    useValue: this.dataField
-                },
-                {
                     provide: NAE_BASE_FILTER,
-                    useValue: { filter: SimpleFilter.emptyTaskFilter() } as BaseFilter
+                    useValue: { filter: SimpleFilter.fromTaskQuery({stringId: this.dataField.value}) } as BaseFilter
                 },
                 {
                     provide: NAE_VIEW_ID_SEGMENT,

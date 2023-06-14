@@ -6,8 +6,8 @@ import {
     TaskRefField
 } from "@netgrif/components-core";
 import {
-    DefaultTabbedTaskViewComponent
-} from "../../../navigation/group-navigation-component-resolver/default-components/default-tabbed-task-view/default-tabbed-task-view.component";
+    DefaultTaskViewComponent
+} from "../../../navigation/group-navigation-component-resolver/default-components/default-task-view/default-task-view.component";
 
 @Component({
   selector: 'nc-task-ref-list-field',
@@ -18,7 +18,7 @@ export class TaskRefListFieldComponent extends AbstractTaskRefListFieldComponent
 
   constructor(injector: Injector,
               @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TaskRefField>) {
-      super(injector, DefaultTabbedTaskViewComponent, dataFieldPortalData)
+      super(injector, DefaultTaskViewComponent, dataFieldPortalData)
   }
 
 }
