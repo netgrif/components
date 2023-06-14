@@ -98,6 +98,10 @@
                                     <span class="modifier">Public</span>
                                 <a href="#removeUserValue" >removeUserValue</a>
                             </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#toString" >toString</a>
+                            </li>
                         </ul>
                     </td>
                 </tr>
@@ -130,7 +134,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(userValues: Array<UserValue>)</code>
+<code>constructor(userValues: Map<string | UserValue>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -156,7 +160,7 @@
                                                         <td>userValues</td>
                                                   
                                                         <td>
-                                                                    <code>Array&lt;UserValue&gt;</code>
+                                                                    <code>Map&lt;string | UserValue&gt;</code>
                                                         </td>
                                                   
                                                     <td>
@@ -264,7 +268,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>addUserValues(value: UserValue[])</code>
+                    <code>addUserValues(value: Map<string | UserValue>)</code>
                 </td>
             </tr>
 
@@ -294,7 +298,7 @@
                                 <tr>
                                     <td>value</td>
                                     <td>
-                                            <code>UserValue[]</code>
+                                            <code>Map&lt;string | UserValue&gt;</code>
                                     </td>
 
                                     <td>
@@ -373,15 +377,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>removeUserValue(value: <a href="../classes/UserValue.html" target="_self">UserValue</a>)</code>
+                    <code>removeUserValue(userId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="39"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/user-list-field/models/user-list-value.ts:39</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="44"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/user-list-field/models/user-list-value.ts:44</a></div>
                 </td>
             </tr>
 
@@ -401,9 +405,9 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>value</td>
+                                    <td>userId</td>
                                     <td>
-                                                <code><a href="../classes/UserValue.html" target="_self" >UserValue</a></code>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
                                     </td>
 
                                     <td>
@@ -423,6 +427,45 @@
                     </div>
                     <div class="io-description">
                         
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toString"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>toString</b></span>
+                        <a href="#toString"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>toString()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="39"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/user-list-field/models/user-list-value.ts:39</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
                     </div>
                 </td>
             </tr>
@@ -460,7 +503,7 @@
 
                 <tr>
                     <td class="col-md-4">
-                        <span class="accessor"><b>set</b><code>userValues(value: Array<UserValue>)</code></span>
+                        <span class="accessor"><b>set</b><code>userValues(value: Map<string | UserValue>)</code></span>
                     </td>
                 </tr>
                             <tr>
@@ -486,7 +529,7 @@
                                                             <td>value</td>
                                                     
                                                             <td>
-                                                                        <code>Array&lt;UserValue&gt;</code>
+                                                                        <code>Map&lt;string | UserValue&gt;</code>
                                                             </td>
                                                     
                                                         <td>
@@ -516,40 +559,42 @@
 
 export class UserListValue {
 
-    private _userValues: Array&lt;UserValue&gt;;
+    private _userValues: Map&lt;string, UserValue&gt;;
 
-    constructor(userValues: Array&lt;UserValue&gt;) {
+    constructor(userValues: Map&lt;string, UserValue&gt;) {
         this._userValues &#x3D; userValues;
     }
 
-    get userValues(): Array&lt;UserValue&gt; {
+    get userValues(): Map&lt;string, UserValue&gt; {
         return this._userValues;
     }
 
-    set userValues(value: Array&lt;UserValue&gt;) {
+    set userValues(value: Map&lt;string, UserValue&gt;) {
         this._userValues &#x3D; value;
     }
 
     public addUserValue(value: UserValue): void {
-        this._userValues.push(value);
+        this._userValues.set(value.id, value);
     }
 
-    public addUserValues(value: UserValue[]): void {
-        this._userValues.push(...value);
+    public addUserValues(value: Map&lt;string, UserValue&gt;): void {
+        value.forEach((v, k) &#x3D;&gt; this._userValues.set(k, v))
     }
 
     public getLast(): UserValue {
-        if (this._userValues.length &#x3D;&#x3D; 0) {
+        if (this._userValues.size &#x3D;&#x3D; 0) {
             return new UserValue(&#x27;&#x27;, &#x27;&#x27;, &#x27;&#x27;, &#x27;&#x27;);
         }
-        return this._userValues[this._userValues.length - 1];
+        return Array.from(this._userValues.values()).pop();
     }
 
-    public removeUserValue(value: UserValue): void {
-        const index &#x3D; this._userValues.findIndex(user &#x3D;&gt; user.id &#x3D;&#x3D;&#x3D; value.id);
-        if (index &gt; -1) {
-            this._userValues.splice(index, 1);
-        }
+    public toString(): string {
+        const userNames &#x3D; Array.from(this._userValues.values()).reduce((acc, curr) &#x3D;&gt; acc + curr.fullName + &#x27;,&#x27;, &#x27;&#x27;)
+        return userNames.slice(0, userNames.lastIndexOf(&#x27;,&#x27;))
+    }
+
+    public removeUserValue(userId: string): void {
+        this._userValues.delete(userId);
     }
 
 
