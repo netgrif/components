@@ -61,3 +61,8 @@
 .phl-item, .phl-item *, .phl-item::after, .phl-item::before {
     box-sizing: border-box;
 }
+.full-width {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+}

@@ -367,6 +367,10 @@ export abstract class DataField<T> {
         return this._validatorRegister;
     }
 
+    public getUpdateOnStrategy(): 'change' | 'blur' | 'submit' {
+        return 'blur';
+    }
+
     /**
      * This function resolve type of component for HTML
      * @returns type of component in string

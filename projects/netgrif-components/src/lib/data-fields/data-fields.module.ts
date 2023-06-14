@@ -5,7 +5,8 @@ import {
     ComponentRegistryService,
     CovalentModule,
     CurrencyModule,
-    CustomDateAdapter, DataFieldsModule,
+    CustomDateAdapter,
+    DataFieldsModule,
     MaterialModule,
     TranslateLibModule
 } from '@netgrif/components-core';
@@ -242,6 +243,7 @@ export class DataFieldsComponentModule {
         componentRegistry.register('enumeration-stepper', (injector: Injector) => new ComponentPortal<any>(EnumerationStepperFieldComponent, null, injector));
         componentRegistry.register('enumeration-icon', (injector: Injector) => new ComponentPortal<any>(EnumerationIconFieldComponent, null, injector));
         componentRegistry.register('file-default', (injector: Injector) => new ComponentPortal<any>(FileDefaultFieldComponent, null, injector));
+        componentRegistry.register("file-preview", (injector: Injector) => new ComponentPortal<any>(FileDefaultFieldComponent, null, injector));
         componentRegistry.register('file-list-default', (injector: Injector) => new ComponentPortal<any>(FileListDefaultFieldComponent, null, injector));
         componentRegistry.register('filter-default', (injector: Injector) => new ComponentPortal<any>(FilterDefaultFieldComponent, null, injector));
         componentRegistry.register('filter-filter-tab-view', (injector: Injector) => new ComponentPortal<any>(FilterDefaultFieldComponent, null, injector));

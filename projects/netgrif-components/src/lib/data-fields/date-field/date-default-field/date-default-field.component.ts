@@ -4,14 +4,19 @@ import {
     DATA_FIELD_PORTAL_DATA,
     DataFieldPortalData,
     DateField,
-    ValidationRegistryService
+    ValidationRegistryService,
+    DATE_FORMAT
 } from '@netgrif/components-core';
 import {TranslateService} from "@ngx-translate/core";
+import {MAT_DATE_FORMATS} from "@angular/material/core";
 
 @Component({
   selector: 'nc-date-default-field',
   templateUrl: './date-default-field.component.html',
-  styleUrls: ['./date-default-field.component.scss']
+  styleUrls: ['./date-default-field.component.scss'],
+    providers: [
+        {provide: MAT_DATE_FORMATS, useValue: DATE_FORMAT}
+    ]
 })
 export class DateDefaultFieldComponent extends AbstractDateDefaultFieldComponent {
 

@@ -23,4 +23,8 @@ export class BooleanField extends DataField<boolean> {
     public getTypedComponentType(): string {
         return ComponentPrefixes.BOOLEAN + this.getComponentType();
     }
+
+    public getUpdateOnStrategy(): 'change' | 'blur' | 'submit' {
+        return 'change';
+    }
 }

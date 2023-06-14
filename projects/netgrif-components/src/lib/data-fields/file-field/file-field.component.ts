@@ -4,6 +4,9 @@ import {
     NAE_INFORM_ABOUT_INVALID_DATA,
 } from '@netgrif/components-core';
 
+/**
+ * @deprecated
+ * */
 @Component({
     selector: 'nc-file-field',
     templateUrl: './file-field.component.html',
