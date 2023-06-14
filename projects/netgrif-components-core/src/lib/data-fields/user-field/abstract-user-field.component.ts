@@ -4,6 +4,9 @@ import {AbstractDataFieldComponent} from '../models/abstract-data-field-componen
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 
 /**
+ * @deprecated
+ * */
+/**
  * Component that is created in the body of the task panel accord on the Petri Net, which must be bind properties.
  */
 @Component({

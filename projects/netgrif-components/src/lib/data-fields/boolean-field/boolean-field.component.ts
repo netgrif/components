@@ -1,6 +1,9 @@
 import {Component, Inject, Optional} from '@angular/core';
 import {AbstractBooleanFieldComponent, NAE_INFORM_ABOUT_INVALID_DATA} from '@netgrif/components-core';
 
+/**
+ * @deprecated
+ * */
 @Component({
     selector: 'nc-boolean-field',
     templateUrl: './boolean-field.component.html',

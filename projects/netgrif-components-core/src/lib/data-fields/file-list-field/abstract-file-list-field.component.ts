@@ -8,7 +8,9 @@ import {AbstractDataFieldComponent} from '../models/abstract-data-field-componen
 import {FileListField} from './models/file-list-field';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 
-
+/**
+ * @deprecated
+ * */
 @Component({
     selector: 'ncc-abstract-filelist-field',
     template: ''

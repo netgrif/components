@@ -3,6 +3,9 @@ import {AbstractDataFieldComponent} from '../models/abstract-data-field-componen
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 import {UserListField} from './models/user-list-field';
 
+/**
+ * @deprecated
+ * */
 @Component({
   selector: 'ncc-abstract-user-list-field',
   template: '',

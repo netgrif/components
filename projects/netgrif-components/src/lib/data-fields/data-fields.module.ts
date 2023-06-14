@@ -233,6 +233,7 @@ export class DataFieldsComponentModule {
         registry.register("enumeration-stepper", (injector: Injector) => new ComponentPortal<any>(EnumerationStepperFieldComponent, null, injector));
         registry.register("enumeration-icon", (injector: Injector) => new ComponentPortal<any>(EnumerationIconFieldComponent, null, injector));
         registry.register("file-default", (injector: Injector) => new ComponentPortal<any>(FileDefaultFieldComponent, null, injector));
+        registry.register("file-preview", (injector: Injector) => new ComponentPortal<any>(FileDefaultFieldComponent, null, injector));
         registry.register("file-list-default", (injector: Injector) => new ComponentPortal<any>(FileListDefaultFieldComponent, null, injector));
         registry.register("filter-default", (injector: Injector) => new ComponentPortal<any>(FilterDefaultFieldComponent, null, injector));
         registry.register("filter-filter-tab-view", (injector: Injector) => new ComponentPortal<any>(FilterDefaultFieldComponent, null, injector));

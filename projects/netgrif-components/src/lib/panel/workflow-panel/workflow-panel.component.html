@@ -18,28 +18,33 @@
             <div class="workflow-panel-body" fxFlex="100">
                 <div fxLayout="row">
                     <div fxFlex="50">
-                        <nc-text-field [dataField]="panelContent.netIdentifier">
-                        </nc-text-field>
+                        <nc-data-field-template *ngIf="!panelContent.netIdentifier.behavior.hidden"
+                                                [dataField]="panelContent.netIdentifier">
+                        </nc-data-field-template>
                     </div>
                     <div fxFlex="50">
-                        <nc-text-field [dataField]="panelContent.title">
-                        </nc-text-field>
-                    </div>
-                </div>
-                <div fxLayout="row">
-                    <div fxFlex="50">
-                        <nc-text-field [dataField]="panelContent.version">
-                        </nc-text-field>
-                    </div>
-                    <div fxFlex="50">
-                        <nc-text-field [dataField]="panelContent.author">
-                        </nc-text-field>
+                        <nc-data-field-template *ngIf="!panelContent.title.behavior.hidden"
+                                                [dataField]="panelContent.title">
+                        </nc-data-field-template>
                     </div>
                 </div>
                 <div fxLayout="row">
                     <div fxFlex="50">
-                        <nc-date-time-field [dataField]="panelContent.uploaded">
-                        </nc-date-time-field>
+                        <nc-data-field-template *ngIf="!panelContent.version.behavior.hidden"
+                                                [dataField]="panelContent.version">
+                        </nc-data-field-template>
+                    </div>
+                    <div fxFlex="50">
+                        <nc-data-field-template *ngIf="!panelContent.author.behavior.hidden"
+                                                [dataField]="panelContent.author">
+                        </nc-data-field-template>
+                    </div>
+                </div>
+                <div fxLayout="row">
+                    <div fxFlex="50">
+                        <nc-data-field-template *ngIf="!panelContent.uploaded.behavior.hidden"
+                                                [dataField]="panelContent.uploaded">
+                        </nc-data-field-template>
                     </div>
                 </div>
             </div>

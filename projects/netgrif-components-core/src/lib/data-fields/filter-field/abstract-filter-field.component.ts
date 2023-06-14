@@ -3,7 +3,9 @@ import {Component, Inject, Input, OnInit, Optional} from '@angular/core';
 import {FilterField} from './models/filter-field';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 
-
+/**
+ * @deprecated
+ * */
 @Component({
     selector: 'ncc-abstract-filter-field',
     template: ''

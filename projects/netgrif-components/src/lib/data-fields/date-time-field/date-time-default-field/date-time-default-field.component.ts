@@ -4,17 +4,17 @@ import {
     DATA_FIELD_PORTAL_DATA,
     DataFieldPortalData,
     DateTimeField,
-    DATE_FORMAT
+    DATE_TIME_FORMAT
 } from '@netgrif/components-core'
 import {TranslateService} from "@ngx-translate/core";
-import {MAT_DATE_FORMATS} from "@angular/material/core";
+import {NGX_MAT_DATE_FORMATS} from "@angular-material-components/datetime-picker";
 
 @Component({
   selector: 'nc-date-time-default-field',
   templateUrl: './date-time-default-field.component.html',
   styleUrls: ['./date-time-default-field.component.scss'],
     providers: [
-        {provide: MAT_DATE_FORMATS, useValue: DATE_FORMAT}
+        {provide: NGX_MAT_DATE_FORMATS, useValue: DATE_TIME_FORMAT}
     ]
 })
 export class DateTimeDefaultFieldComponent extends AbstractDateTimeDefaultFieldComponent {

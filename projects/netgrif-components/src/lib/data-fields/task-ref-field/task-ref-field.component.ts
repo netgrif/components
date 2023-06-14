@@ -1,6 +1,9 @@
 import {Component, Inject, Input, Optional, Type} from '@angular/core';
 import {AbstractTaskRefFieldComponent, LoggerService, NAE_INFORM_ABOUT_INVALID_DATA, TaskRefDashboardTile} from '@netgrif/components-core';
 
+/**
+ * @deprecated
+ * */
 @Component({
     selector: 'nc-task-ref-field',
     templateUrl: './task-ref-field.component.html',

@@ -3,7 +3,9 @@ import {ButtonField} from './models/button-field';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 
-
+/**
+ * @deprecated
+ * */
 @Component({
     selector: 'ncc-abstract-button-field',
     template: ''
