@@ -73,6 +73,7 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractBase
         this.state = this.defaultState;
         this.uploadedFiles = new Array<string>();
         this.maxFilesNumber = Number.POSITIVE_INFINITY;
+        this.taskId = dataFieldPortalData.additionalFieldProperties.taskId as string;
     }
 
     ngOnInit(): void {

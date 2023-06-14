@@ -21,6 +21,10 @@ export class BooleanField extends DataField<boolean> {
         return ComponentPrefixes.BOOLEAN + this.getComponentType();
     }
 
+    public getUpdateOnStrategy(): 'change' | 'blur' | 'submit' {
+        return 'change';
+    }
+
     protected resolveValidations(): Array<ValidatorFn> {
         const result = [];
 

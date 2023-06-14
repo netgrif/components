@@ -7,6 +7,9 @@ import {TaskRefField} from './model/task-ref-field';
 import {TaskRefDashboardTileConstants} from './model/task-ref-dashboard-tile-constants';
 import {TaskRefDashboardTile} from './model/task-ref-dashboard-tile';
 
+/**
+ * @deprecated
+ * */
 @Component({
     selector: 'ncc-abstract-task-ref-field',
     template: ''

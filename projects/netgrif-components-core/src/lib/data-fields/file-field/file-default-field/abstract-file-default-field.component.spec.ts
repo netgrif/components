@@ -61,7 +61,8 @@ describe('AbstractFileDefaultFieldComponent', () => {
                             hidden: true
                         }),
                         formControlRef: new FormControl(),
-                        showLargeLayout: new WrappedBoolean()
+                        showLargeLayout: new WrappedBoolean(),
+                        additionalFieldProperties: {taskId: '0'}
                     } as DataFieldPortalData<FileField>
                 }
             ],
