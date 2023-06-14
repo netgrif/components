@@ -20,14 +20,6 @@ export abstract class AbstractFieldComponentResolverComponent implements OnInit,
     public fieldTypeEnum = FieldTypeResource;
     public taskElementEnum = TaskElementType;
 
-    public readonly FIELD_TYPES_WITH_BASIC_UPDATE = [
-        FieldTypeResource.BOOLEAN,
-        FieldTypeResource.ENUMERATION,
-        FieldTypeResource.ENUMERATION_MAP,
-        FieldTypeResource.MULTICHOICE,
-        FieldTypeResource.MULTICHOICE_MAP
-    ]
-
     protected constructor(protected taskContentService: TaskContentService,
                           @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) protected _informAboutInvalidData: boolean | null) {
     }

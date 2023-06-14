@@ -17,12 +17,11 @@
 
     <div *ngSwitchCase="taskElementEnum.BLANK"></div>
 
-    <span *ngSwitchDefault>
+    <span *ngSwitchDefault fxFlex>
         <nc-data-field-template *ngIf="!!getDataField()?.behavior && !getDataField().behavior.hidden"
                                 [_additionalFieldProperties]="{taskId: getTaskId(), taskContentComponentClassReference}"
                                 [dataField]="getDataField()"
-                                [offset]="getFieldOffset()"
-                                fxFlex>
+                                [offset]="getFieldOffset()">
         </nc-data-field-template>
     </span>
 </div>
