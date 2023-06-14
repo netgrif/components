@@ -40,6 +40,10 @@ export class EnumerationField extends DataField<string> {
         return this._fieldType;
     }
 
+    public getUpdateOnStrategy(): 'change' | 'blur' | 'submit' {
+        return 'change';
+    }
+
     public valueChanges(): Observable<string> {
         return this._value.pipe(debounceTime(this.REQUEST_DEBOUNCE_TIME));
     }

@@ -360,6 +360,10 @@ export abstract class DataField<T> {
         this._formControlRef = formControl;
     }
 
+    public getUpdateOnStrategy(): 'change' | 'blur' | 'submit' {
+        return 'blur';
+    }
+
     /**
      * This function resolve type of component for HTML
      * @returns type of component in string

@@ -134,6 +134,7 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractBaseData
         super(dataFieldPortalData);
         this.state = this.defaultState;
         this.fullSource = new BehaviorSubject<SafeUrl>(null);
+        this.taskId = dataFieldPortalData.additionalFieldProperties.taskId as string;
     }
 
     /**

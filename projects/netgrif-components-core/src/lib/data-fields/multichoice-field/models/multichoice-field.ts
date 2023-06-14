@@ -31,6 +31,10 @@ export class MultichoiceField  extends DataField<Array<string>> {
         return this._fieldType;
     }
 
+    public getUpdateOnStrategy(): 'change' | 'blur' | 'submit' {
+        return 'change';
+    }
+
     public getTypedComponentType(): string {
         return ComponentPrefixes.MULTICHOICE + this.getComponentType();
     }

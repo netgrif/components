@@ -1,54 +1,60 @@
 <div fxLayout="row" fxLayoutAlign="start center" class="netgrif-input" [ngClass]="{'min-row-height': isField() && !isCustomHeight()}" [ngSwitch]="getElementType()">
-    <nc-boolean-field *ngSwitchCase="fieldTypeEnum.BOOLEAN" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>
-    </nc-boolean-field>
+<!--    <nc-boolean-field *ngSwitchCase="fieldTypeEnum.BOOLEAN" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>-->
+<!--    </nc-boolean-field>-->
 
-    <nc-text-field *ngSwitchCase="fieldTypeEnum.TEXT" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>
-    </nc-text-field>
+<!--    <nc-text-field *ngSwitchCase="fieldTypeEnum.TEXT" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>-->
+<!--    </nc-text-field>-->
 
-    <nc-number-field *ngSwitchCase="fieldTypeEnum.NUMBER" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>
-    </nc-number-field>
+<!--    <nc-number-field *ngSwitchCase="fieldTypeEnum.NUMBER" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>-->
+<!--    </nc-number-field>-->
 
-    <nc-enumeration-field *ngSwitchCase="fieldTypeEnum.ENUMERATION" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>
-    </nc-enumeration-field>
+<!--    <nc-enumeration-field *ngSwitchCase="fieldTypeEnum.ENUMERATION" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>-->
+<!--    </nc-enumeration-field>-->
 
-    <nc-enumeration-field *ngSwitchCase="fieldTypeEnum.ENUMERATION_MAP" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>
-    </nc-enumeration-field>
+<!--    <nc-enumeration-field *ngSwitchCase="fieldTypeEnum.ENUMERATION_MAP" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>-->
+<!--    </nc-enumeration-field>-->
 
-    <nc-multichoice-field *ngSwitchCase="fieldTypeEnum.MULTICHOICE" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>
-    </nc-multichoice-field>
+<!--    <nc-multichoice-field *ngSwitchCase="fieldTypeEnum.MULTICHOICE" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>-->
+<!--    </nc-multichoice-field>-->
 
-    <nc-multichoice-field *ngSwitchCase="fieldTypeEnum.MULTICHOICE_MAP" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>
-    </nc-multichoice-field>
+<!--    <nc-multichoice-field *ngSwitchCase="fieldTypeEnum.MULTICHOICE_MAP" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>-->
+<!--    </nc-multichoice-field>-->
 
-    <nc-date-field *ngSwitchCase="fieldTypeEnum.DATE" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex class="date-field-fix">
-    </nc-date-field>
+<!--    <nc-date-field *ngSwitchCase="fieldTypeEnum.DATE" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex class="date-field-fix">-->
+<!--    </nc-date-field>-->
 
-    <nc-date-time-field *ngSwitchCase="fieldTypeEnum.DATE_TIME" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex class="date-field-fix">
-    </nc-date-time-field>
+<!--    <nc-date-time-field *ngSwitchCase="fieldTypeEnum.DATE_TIME" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex class="date-field-fix">-->
+<!--    </nc-date-time-field>-->
 
-    <nc-file-field *ngSwitchCase="fieldTypeEnum.FILE" [dataField]="getDataField()" [taskId]="getTaskId()" [taskOffset]="getFieldOffset()" fxFlex>
-    </nc-file-field>
+<!--    <nc-file-field *ngSwitchCase="fieldTypeEnum.FILE" [dataField]="getDataField()" [taskId]="getTaskId()" [taskOffset]="getFieldOffset()" fxFlex>-->
+<!--    </nc-file-field>-->
 
-    <nc-file-list-field *ngSwitchCase="fieldTypeEnum.FILE_LIST" [dataField]="getDataField()" [taskId]="getTaskId()" [taskOffset]="getFieldOffset()" fxFlex>
-    </nc-file-list-field>
+<!--    <nc-file-list-field *ngSwitchCase="fieldTypeEnum.FILE_LIST" [dataField]="getDataField()" [taskId]="getTaskId()" [taskOffset]="getFieldOffset()" fxFlex>-->
+<!--    </nc-file-list-field>-->
 
-    <nc-user-field *ngSwitchCase="fieldTypeEnum.USER" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>
-    </nc-user-field>
+<!--    <nc-user-field *ngSwitchCase="fieldTypeEnum.USER" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>-->
+<!--    </nc-user-field>-->
 
-    <nc-user-list-field *ngSwitchCase="fieldTypeEnum.USER_LIST" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>
-    </nc-user-list-field>
+<!--    <nc-user-list-field *ngSwitchCase="fieldTypeEnum.USER_LIST" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>-->
+<!--    </nc-user-list-field>-->
 
-    <nc-button-field *ngSwitchCase="fieldTypeEnum.BUTTON" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>
-    </nc-button-field>
+<!--    <nc-button-field *ngSwitchCase="fieldTypeEnum.BUTTON" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>-->
+<!--    </nc-button-field>-->
 
-    <nc-filter-field *ngSwitchCase="fieldTypeEnum.FILTER" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex="">
-    </nc-filter-field>
+<!--    <nc-filter-field *ngSwitchCase="fieldTypeEnum.FILTER" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex="">-->
+<!--    </nc-filter-field>-->
 
-    <nc-i18n-field *ngSwitchCase="fieldTypeEnum.I18N" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>
-    </nc-i18n-field>
+<!--    <nc-i18n-field *ngSwitchCase="fieldTypeEnum.I18N" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>-->
+<!--    </nc-i18n-field>-->
 
-    <nc-task-ref-field *ngSwitchCase="fieldTypeEnum.TASK_REF" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" [taskContentComponentClassReference]="taskContentComponentClassReference" fxFlex>
-    </nc-task-ref-field>
+<!--    <nc-task-ref-field *ngSwitchCase="fieldTypeEnum.TASK_REF" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" [taskContentComponentClassReference]="taskContentComponentClassReference" fxFlex>-->
+<!--    </nc-task-ref-field>-->
+    <nc-data-field-template *ngIf="!!getDataField()?.behavior && !getDataField().behavior.hidden"
+                            [_additionalFieldProperties]="{taskId: getTaskId(), taskContentComponentClassReference}"
+                            [dataField]="getDataField()"
+                            [offset]="getFieldOffset()"
+                            fxFlex>
+    </nc-data-field-template>
 
     <div *ngSwitchCase="taskElementEnum.DATA_GROUP_TITLE" fxFlex fxLayout="row" fxLayoutAlign="center center">
         <div fxFlex="20" class="line-datagroup"></div>
