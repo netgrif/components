@@ -26,7 +26,7 @@ import {EventService} from '../../event/services/event.service';
 import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
 import {FileFieldIdBody} from '../models/file-field-id-body';
 import { HttpParams } from '@angular/common/http';
-import {PREVIEW, PREVIEW_BUTTON} from './models/file-field-constants';
+import {FILE_FIELD_HEIGHT, FILE_FIELD_PADDING, PREVIEW, PREVIEW_BUTTON} from './models/file-field-constants';
 
 export interface FileState {
     progress: number;
@@ -490,7 +490,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
 
     public getHeight() {
         return this.dataField.layout && this.dataField.layout.rows && this.dataField.layout.rows !== 1 ?
-            (this.dataField.layout.rows) * fieldHeight - fieldPadding : fieldHeight - fieldPadding;
+            (this.dataField.layout.rows) * FILE_FIELD_HEIGHT - FILE_FIELD_PADDING : FILE_FIELD_HEIGHT - FILE_FIELD_PADDING;
     }
 
     public getPreviewBorderWidth(): string {
