@@ -50,7 +50,7 @@ export abstract class AbstractEnumerationStepperFieldComponent implements OnInit
         }
     }
 
-    public resolveTitle(): boolean {
+    public hasTitle(): boolean {
         return this.enumerationField.title !== undefined && this.enumerationField.title !== '';
     }
 

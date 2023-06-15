@@ -47,7 +47,7 @@
                accept="{{dataField.allowTypes}}" class="invisible-input"/>
         <input type="text" [formControl]="formControl" class="invisible-input">
         <mat-hint class="file-hint-error" [ngClass]="{'mat-hint-disabled': formControl.disabled}"
-                  *ngIf="!dataField.isInvalid(formControl) && resolveHint()">{{dataField.description}}</mat-hint>
+                  *ngIf="!dataField.isInvalid(formControl) && hasHint()">{{dataField.description}}</mat-hint>
         <mat-error class="file-hint-error"
                    *ngIf="dataField.isInvalid(formControl)">{{'dataField.validations.required' | translate}}</mat-error>
     </div>

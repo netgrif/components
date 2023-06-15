@@ -1,4 +1,4 @@
-<mat-label class="stepper-label netgrif-label" [ngClass]="{'netgrif-label-disabled': formControlRef.disabled}" *ngIf="!showLargeLayout.value && resolveTitle()"
+<mat-label class="stepper-label netgrif-label" [ngClass]="{'netgrif-label-disabled': formControlRef.disabled}" *ngIf="!showLargeLayout.value && hasTitle()"
            matTooltipClass="stepper-tooltip-text" [matTooltip]="enumerationField.description" matTooltipPosition="right">
     {{enumerationField.title}}
     <nc-required-label *ngIf="enumerationField.behavior.required" [isIn]="!enumerationField.disabled" ></nc-required-label>

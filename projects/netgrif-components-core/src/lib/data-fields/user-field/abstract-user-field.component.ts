@@ -69,7 +69,7 @@ export abstract class AbstractUserFieldComponent extends AbstractDataFieldCompon
         });
     }
 
-    public resolveHint(): boolean {
+    public hasHint(): boolean {
         return this.dataField.description !== undefined && this.dataField.description !== '';
     }
 

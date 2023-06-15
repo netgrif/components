@@ -130,7 +130,7 @@ export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsC
         return this.cutProperty;
     }
 
-    public resolveHint(): boolean {
+    public hasHint(): boolean {
         return this.textI18nField.description !== undefined && this.textI18nField.description !== '';
     }
 

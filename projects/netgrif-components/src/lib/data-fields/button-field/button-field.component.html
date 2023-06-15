@@ -9,9 +9,9 @@
                      'flex-start': align === 'start',
                      'flex-center': align === 'center',
                      'full-button-width': stretch === 'true',
-                     'padding-bottom': !resolveTitle()}">
+                     'padding-bottom': !hasTitle()}">
         <mat-label class="netgrif-label" [ngClass]="{'netgrif-label-disabled': formControl.disabled}"
-                   *ngIf="!showLargeLayout.value && resolveTitle()">
+                   *ngIf="!showLargeLayout.value && hasTitle()">
             {{dataField.title}}
             <nc-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nc-required-label>
             <br>
@@ -41,6 +41,6 @@
             </div>
         </button>
 
-        <mat-error *ngIf="dataField.isInvalid(formControl) || resolveTitle()">{{getErrorMessage()}}</mat-error>
+        <mat-error *ngIf="dataField.isInvalid(formControl) || hasTitle()">{{getErrorMessage()}}</mat-error>
     </div>
 </ng-template>

@@ -26,6 +26,7 @@ import {EventService} from '../../event/services/event.service';
 import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
 import {FileFieldIdBody} from '../models/file-field-id-body';
 import { HttpParams } from '@angular/common/http';
+import {PREVIEW, PREVIEW_BUTTON} from './models/file-field-constants';
 
 export interface FileState {
     progress: number;
@@ -34,14 +35,6 @@ export interface FileState {
     completed: boolean;
     error: boolean;
 }
-
-const preview = 'preview';
-
-const preview_button = 'preview_button';
-
-const fieldHeight = 75;
-
-const fieldPadding = 16;
 
 /**
  * Component that is created in the body of the task panel accord on the Petri Net, which must be bind properties.
@@ -87,7 +80,8 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
     /**
      * If file preview should be displayed
      */
-    public filePreview = false;
+    public isFilePreview = false;
+    public isFilePreviewButton = false;
     /**
      * If file type can be displayed
      */
@@ -122,7 +116,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
     private updatedFieldSubscription: Subscription;
     private labelWidth: number;
     public cutProperty: string;
-    public filePreviewButton = false;
+
     /**
      * Only inject services.
      * @param _taskResourceService Provides to download a file from the backend
@@ -153,8 +147,8 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
      */
     ngOnInit() {
         super.ngOnInit();
-        this.filePreview = this.dataField?.component?.name === preview;
-        this.filePreviewButton = this.dataField?.component?.name === preview_button;
+        this.isFilePreview = this.dataField?.component?.name === PREVIEW;
+        this.isFilePreviewButton = this.dataField?.component?.name === PREVIEW_BUTTON;
     }
 
     ngAfterViewInit() {
@@ -163,26 +157,26 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 this.upload();
             };
         }
-        if (this.filePreview) {
+        if (this.isFilePreview) {
             if (!!this.imageDivEl) {
                 if (!this.isEmpty()) {
                     this.initializePreviewIfDisplayable();
                 }
             }
         }
-        if (this.filePreviewButton) {
+        if (this.isFilePreviewButton) {
             if (!this.isEmpty()) {
                 this.initializePreviewIfDisplayable();
             }
         }
         this.updatedFieldSubscription = this.dataField.updated.subscribe(() => {
             this.previewSource = undefined;
-            if (!!this.filePreview && !!this.dataField?.value?.name) {
+            if (!!this.isFilePreview && !!this.dataField?.value?.name) {
                 this.fileForDownload = undefined;
                 this.fileForPreview = undefined;
                 this.initializePreviewIfDisplayable();
             }
-            if (!!this.filePreviewButton && !!this.dataField?.value?.name) {
+            if (!!this.isFilePreviewButton && !!this.dataField?.value?.name) {
                 this.fileForDownload = undefined;
                 this.fileForPreview = undefined;
                 this.initializePreviewIfDisplayable();
@@ -272,7 +266,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                         this.state.error = false;
                         this.dataField.downloaded = false;
                         this.dataField.value.name = fileToUpload.name;
-                        if (this.filePreview) {
+                        if (this.isFilePreview) {
                             this.initializePreviewIfDisplayable();
                         }
                         this.fullSource.next(undefined);
@@ -317,7 +311,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             if (!(response as ProviderProgress).type || (response as ProviderProgress).type !== ProgressType.DOWNLOAD) {
                 this._log.debug(`File [${this.dataField.stringId}] ${this.dataField.value.name} was successfully downloaded`);
                 this.downloadViaAnchor(response as Blob);
-                if (this.filePreview) {
+                if (this.isFilePreview) {
                     this.initDownloadFile(response);
                 }
                 this.state.downloading = false;
@@ -542,11 +536,11 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         return !!this.dataField.parentTaskId ? this.dataField.parentTaskId : this.taskId;
     }
 
-    public resolveTitle(): boolean {
+    public hasTitle(): boolean {
         return this.dataField.title !== undefined && this.dataField.title !== '';
     }
 
-    public resolveHint(): boolean {
+    public hasHint(): boolean {
         return this.dataField.description !== undefined && this.dataField.description !== '';
     }
 

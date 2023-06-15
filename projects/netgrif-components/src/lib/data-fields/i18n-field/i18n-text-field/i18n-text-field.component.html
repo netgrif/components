@@ -73,7 +73,7 @@
             </div>
         </div>
         <mat-hint class="i18n-hint-error" [ngClass]="{'mat-hint-disabled': formControlRef.disabled}"
-                  *ngIf="!textI18nField.isInvalid(formControlRef) && resolveHint()">{{textI18nField.description}}</mat-hint>
+                  *ngIf="!textI18nField.isInvalid(formControlRef) && hasHint()">{{textI18nField.description}}</mat-hint>
         <mat-error class="i18n-hint-error" *ngIf="textI18nField.isInvalid(formControlRef)">{{getErrorMessage()}}</mat-error>
     </div>
 </ng-template>

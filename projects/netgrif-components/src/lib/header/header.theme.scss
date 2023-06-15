@@ -6,15 +6,6 @@
         background: rgba(mat.get-color-from-palette($primary), 0.3);
     }
 
-    //.header-color {
-    //    background: mat.get-color-from-palette($primary, 500);
-    //    color: mat.get-contrast-color-from-palette($primary, 500);
-    //}
-    //
-    //.header-color-font {
-    //    color: mat.get-contrast-color-from-palette($primary, 500);
-    //}
-
     .netgrif-header-input {
         .mat-input-element {
             caret-color: mat.get-contrast-color-from-palette($primary, 500) !important;

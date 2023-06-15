@@ -92,9 +92,6 @@ export function searchCategoryConverter(categoryResolverService: CategoryResolve
 })
 export class SearchComponent extends AbstractSearchComponent {
 
-    private FILTER_VARIANT =
-        `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6,13H18V11H6M3,6V8H21V6M10,18H14V16H10V18Z" /></svg>`;
-
     constructor(searchService: SearchService,
                 logger: LoggerService,
                 dialogService: DialogService,
@@ -102,14 +99,11 @@ export class SearchComponent extends AbstractSearchComponent {
                 userFilterService: UserFiltersService,
                 allowedNetsService: AllowedNetsService,
                 viewIdService: ViewIdService,
-                iconRegistry: MatIconRegistry,
-                sanitizer: DomSanitizer,
                 @Inject(NAE_SEARCH_CATEGORIES) searchCategories: Array<Type<Category<any>>>,
                 @Optional() @Inject(NAE_SEARCH_COMPONENT_CONFIGURATION) configuration: SearchComponentConfiguration,
                 @Optional() @Inject(NAE_FILTERS_FILTER) filtersFilter: Filter = null,
                 @Optional() @Inject(NAE_NAVIGATION_ITEM_TASK_DATA) navigationItemTaskData: Array<DataGroup> = null) {
         super(searchService, logger, dialogService, translate, userFilterService, allowedNetsService,
             viewIdService, searchCategories, configuration, filtersFilter, navigationItemTaskData);
-        iconRegistry.addSvgIconLiteral('filter-variant', sanitizer.bypassSecurityTrustHtml(this.FILTER_VARIANT));
     }
 }

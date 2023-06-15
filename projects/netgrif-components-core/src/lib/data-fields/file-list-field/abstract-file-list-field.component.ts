@@ -356,11 +356,11 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
         return !!this.dataField.parentTaskId ? this.dataField.parentTaskId : this.taskId;
     }
 
-    public resolveTitle(): boolean {
+    public hasTitle(): boolean {
         return this.dataField.title !== undefined && this.dataField.title !== '';
     }
 
-    public resolveHint(): boolean {
+    public hasHint(): boolean {
         return this.dataField.description !== undefined && this.dataField.description !== '';
     }
 

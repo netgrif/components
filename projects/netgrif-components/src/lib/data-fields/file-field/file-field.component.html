@@ -6,7 +6,7 @@
 
 <ng-template #dataFieldTemplate let-showLargeLayout="showLargeLayout">
     <div fxLayoutAlign="center center" fxLayout="row">
-        <div fxFlex="{{!filePreview ? '100' : '75'}}" class="netgrif-file-padding">
+        <div fxFlex="{{!isFilePreview ? '100' : '75'}}" class="netgrif-file-padding">
             <div #fileLabel class="file-field-label" [ngClass]="{'netgrif-label-disabled': formControl.disabled}">
                 {{dataField.title}}
                 <nc-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nc-required-label>
@@ -30,7 +30,7 @@
                       class="input-name-ellipsis"
                       [ngClass]="{'input-placeholder': isEmpty(), 'no-cursor': isEmpty() && formControl.disabled}">{{constructDisplayName()}}</span>
                 <button (click)="showPreviewDialog()" [matTooltip]="'dataField.file.clickToDelete' | translate" mat-icon-button
-                        *ngIf="filePreviewButton && !isEmpty() && isDisplayable">
+                        *ngIf="isFilePreviewButton && !isEmpty() && isDisplayable">
                     <mat-icon color="primary">search</mat-icon>
                 </button>
                 <button (click)="deleteFile()" [matTooltip]="'dataField.file.clickToDelete' | translate" mat-icon-button
@@ -45,12 +45,12 @@
                    accept="{{dataField.allowTypes}}" class="invisible-input">
             <input type="text" [formControl]="formControl" class="invisible-input">
             <mat-hint class="file-hint-error" [ngClass]="{'mat-hint-disabled': formControl.disabled}"
-                      *ngIf="!dataField.isInvalid(formControl) && resolveHint()">{{dataField.description}}</mat-hint>
+                      *ngIf="!dataField.isInvalid(formControl) && hasHint()">{{dataField.description}}</mat-hint>
             <mat-error class="file-hint-error"
                        *ngIf="dataField.isInvalid(formControl)">{{'dataField.validations.required' | translate}}</mat-error>
         </div>
-        <div *ngIf="filePreview" fxFlex="5"></div>
-        <div *ngIf="filePreview" fxFlex="20" fxLayout="row" fxLayoutAlign="center center" #imageDiv
+        <div *ngIf="isFilePreview" fxFlex="5"></div>
+        <div *ngIf="isFilePreview" fxFlex="20" fxLayout="row" fxLayoutAlign="center center" #imageDiv
              (resized)="changeMaxWidth($event)">
             <img *ngIf="previewSource !== undefined && !state.downloading && isDisplayable" class="image-preview" #imageEl
                  [ngStyle]="!isBorderLGBTQ() && !isBorderDefault() && {

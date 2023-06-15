@@ -49,7 +49,7 @@ export abstract class AbstractDataFieldComponent implements OnInit, OnDestroy {
         return this._formControl;
     }
 
-    public resolveTitle(): boolean {
+    public hasTitle(): boolean {
         return this.dataField.title !== undefined && this.dataField.title !== '';
     }
 }
