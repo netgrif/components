@@ -1,13 +1,12 @@
 import { Component, Inject, Optional } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { UserAssignComponent } from '../../side-menu/content-components/user-assign/user-assign.component';
 import {
     AbstractUserListFieldComponent,
     NAE_INFORM_ABOUT_INVALID_DATA,
     SideMenuService,
-    SnackBarService,
-    UserValue
+    SnackBarService
 } from '@netgrif/components-core';
+import {MultiUserAssignComponent} from "../../side-menu/content-components/multi-user-assign/multi-user-assign.component";
 
 @Component({
   selector: 'nc-user-list-field',
@@ -24,10 +23,10 @@ export class UserListFieldComponent extends AbstractUserListFieldComponent {
     }
 
     public selectUser() {
-        this.selectAbstractUser(UserAssignComponent);
+        this.selectAbstractUser(MultiUserAssignComponent);
     }
 
-    public deleteUser(user: UserValue) {
-        this.removeAbstractUser(user);
+    public deleteUser(userId: string) {
+        this.removeAbstractUser(userId);
     }
 }

@@ -3,7 +3,8 @@
         <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
             <mat-icon color="primary" class="netgrif-icon-fix">email</mat-icon>
             <mat-form-field fxFlex="100" appearance="outline">
-                <input matInput placeholder="{{ 'forms.email.enterEmail' | translate}}" formControlName="email" required
+                <mat-label>{{ 'forms.email.enterEmail' | translate}}</mat-label>
+                <input matInput formControlName="email" required
                        autocomplete="email">
                 <mat-error *ngIf="rootFormGroup.controls['email'].hasError('email')">
                     {{ 'dataField.validations.email' | translate}}

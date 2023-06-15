@@ -509,7 +509,7 @@ describe('AbstractTaskContentComponent', () => {
             expect(component.dataSource[0].content.length).toEqual(1);
             expect(component.dataSource[0].content[0].type).toEqual(FieldTypeResource.BOOLEAN);
 
-            expect(component.dataSource[1].content.length).toEqual(1);
+            expect(component.dataSource[1].content.length).toEqual(9);
             expect(component.dataSource[1].content[0].type).toEqual(FieldTypeResource.BOOLEAN);
         });
 
@@ -538,7 +538,7 @@ describe('AbstractTaskContentComponent', () => {
             expect(component.dataSource[1].content.length).toEqual(1);
             expect(component.dataSource[1].content[0].type).toEqual(FieldTypeResource.BUTTON);
 
-            expect(component.dataSource[2].content.length).toEqual(1);
+            expect(component.dataSource[2].content.length).toEqual(9);
             expect(component.dataSource[2].content[0].type).toEqual(FieldTypeResource.BOOLEAN);
         });
 
@@ -573,13 +573,13 @@ describe('AbstractTaskContentComponent', () => {
             expect(component.dataSource[1].content.length).toEqual(1);
             expect(component.dataSource[1].content[0].type).toEqual(FieldTypeResource.BUTTON);
 
-            expect(component.dataSource[2].content.length).toEqual(1);
+            expect(component.dataSource[2].content.length).toEqual(9);
             expect(component.dataSource[2].content[0].type).toEqual(FieldTypeResource.BOOLEAN);
 
             expect(component.dataSource[3].content.length).toEqual(1);
             expect(component.dataSource[3].content[0].type).toEqual(FieldTypeResource.BUTTON);
 
-            expect(component.dataSource[4].content.length).toEqual(1);
+            expect(component.dataSource[4].content.length).toEqual(17);
             expect(component.dataSource[4].content[0].type).toEqual(FieldTypeResource.BOOLEAN);
         });
 
@@ -617,10 +617,10 @@ describe('AbstractTaskContentComponent', () => {
             expect(component.dataSource[2].content.length).toEqual(1);
             expect(component.dataSource[2].content[0].type).toEqual(FieldTypeResource.BOOLEAN);
 
-            expect(component.dataSource[3].content.length).toEqual(1);
+            expect(component.dataSource[3].content.length).toEqual(11);
             expect(component.dataSource[3].content[0].type).toEqual(FieldTypeResource.BUTTON);
 
-            expect(component.dataSource[4].content.length).toEqual(1);
+            expect(component.dataSource[4].content.length).toEqual(9);
             expect(component.dataSource[4].content[0].type).toEqual(FieldTypeResource.BOOLEAN);
         });
 
@@ -656,7 +656,7 @@ describe('AbstractTaskContentComponent', () => {
             expect(component.dataSource[2].content.length).toEqual(1);
             expect(component.dataSource[2].content[0].type).toEqual(FieldTypeResource.BOOLEAN);
 
-            expect(component.dataSource[3].content.length).toEqual(1);
+            expect(component.dataSource[3].content.length).toEqual(9);
             expect(component.dataSource[3].content[0].type).toEqual(FieldTypeResource.BUTTON);
         });
 
@@ -700,16 +700,16 @@ describe('AbstractTaskContentComponent', () => {
             expect(component.dataSource[2].content.length).toEqual(1);
             expect(component.dataSource[2].content[0].type).toEqual(FieldTypeResource.BOOLEAN);
 
-            expect(component.dataSource[3].content.length).toEqual(1);
+            expect(component.dataSource[3].content.length).toEqual(11);
             expect(component.dataSource[3].content[0].type).toEqual(FieldTypeResource.BUTTON);
 
-            expect(component.dataSource[4].content.length).toEqual(1);
+            expect(component.dataSource[4].content.length).toEqual(9);
             expect(component.dataSource[4].content[0].type).toEqual(FieldTypeResource.BOOLEAN);
 
             expect(component.dataSource[5].content.length).toEqual(1);
             expect(component.dataSource[5].content[0].type).toEqual(FieldTypeResource.BUTTON);
 
-            expect(component.dataSource[6].content.length).toEqual(1);
+            expect(component.dataSource[6].content.length).toEqual(17);
             expect(component.dataSource[6].content[0].type).toEqual(FieldTypeResource.BOOLEAN);
         });
 

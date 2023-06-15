@@ -341,6 +341,7 @@ export class UserFiltersService implements OnDestroy {
             if (assignOutcome.error) {
                 this._log.error(`Could not assign task '${task.title}'`, task, assignOutcome.error);
                 callChain.next(false);
+                return;
             }
 
             this._taskService.setData(task.stringId, data).subscribe(() => {
@@ -348,6 +349,7 @@ export class UserFiltersService implements OnDestroy {
                     if (finishOutcome.error) {
                         this._log.error(`Could not finish task '${task.title}'`, task, finishOutcome.error);
                         callChain.next(false);
+                        return;
                     }
 
                     callChain.next(true);

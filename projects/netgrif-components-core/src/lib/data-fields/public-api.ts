@@ -29,11 +29,19 @@ export * from './text-field/rich-textarea-field/abstract-rich-textarea-field.com
 export * from './text-field/html-textarea-field/abstract-html-textarea-field.component';
 export * from './text-field/password-text-field/abstract-password-text-field.component';
 export * from './text-field/textarea-field/abstract-textarea-field.component';
+export * from './text-field/abstract-dashboard-text-field.component';
+export * from './text-field/dashboard-line-chart-text-field/abstract-dashboard-line-chart-text-field.component';
+export * from './text-field/dashboard-pie-chart-text-field/abstract-dashboard-pie-chart-text-field.component';
+export * from './text-field/dashboard-bar-chart-text-field/abstract-dashboard-bar-chart-text-field.component';
+export * from './text-field/dashboard-iframe-text-field/abstract-dashboard-iframe-text-field.component';
+export * from './text-field/dashboard-portal-text-field/abstract-dashboard-portal-text-field.component';
 export * from './user-field/abstract-user-field.component';
 export * from './enumeration-field/enumeration-icon-field/abstract-enumeration-icon-field.component';
 export * from './enumeration-field/enumeration-autocomplete-dynamic-field/abstract-enumeration-autocomplete-dynamic-field.component';
 export * from './filter-field/abstract-filter-field.component';
 export * from './filter-field/abstract-filter-field-content.component';
+export * from './filter-field/abstract-filter-field-tab-view.component';
+export * from './filter-field/abstract-filter-field-tab-view-content.component';
 export * from './i18n-field/abstract-i18n-field.component';
 export * from './i18n-field/i18n-text-field/abstract-i18n-text-field.component';
 export * from './i18n-field/i18n-divider-field/abstract-i18n-divider-field.component';
@@ -41,6 +49,8 @@ export * from './i18n-field/abstract-i18n-errors.component';
 export * from './user-list-field/abstract-user-list-field.component';
 export * from './date-time-field/simple-date-time-field/abstract-simple-date-time-field.component';
 export * from './date-time-field/zoned-date-time-field/abstract-zoned-date-time-field.component';
+export * from './task-ref-field/abstract-task-ref-field.component';
+export * from './task-ref-field/task-ref-dashboard-field/task-ref-dashboard-tile/abstract-task-ref-dashboard-tile.component';
 
 /* Class */
 export * from './models/abstract-data-field';
@@ -63,6 +73,7 @@ export * from './enumeration-field/models/dynamic-enumeration-field';
 export * from './filter-field/models/filter-field';
 export * from './i18n-field/models/i18n-field';
 export * from './user-list-field/models/user-list-field';
+export * from './user-list-field/models/user-list-value';
 
 /* Interfaces */
 export * from './models/changed-fields';
@@ -73,6 +84,7 @@ export * from './models/component';
 export * from './models/properties';
 export * from './data-field-template/models/wrapped-boolean';
 export * from './i18n-field/models/language-icons';
+export * from './task-ref-field/model/task-ref-dashboard-tile';
 
 /* Tokens */
 export * from './models/boolean-label-enabled-token';
@@ -84,6 +96,11 @@ export * from './models/template-appearance';
 export * from './models/material-appearance';
 export * from './enumeration-field/enumeration-autocomplete-select-field/enumeration-autocomplete-filter-property'
 export * from './multichoice-field/multichoice-autocomplete-field/multichoice-autocomplete-filter-property'
+export * from './task-ref-field/model/task-ref-components';
+export * from './task-ref-field/model/task-ref-dashboard-constants';
+export * from './task-ref-field/model/task-ref-dashboard-tile-constants';
+export * from './text-field/dashboard-portal-text-field/dashboard-view-constants';
 
 /* Services */
 export * from './i18n-field/language-icons.service';
+export * from './text-field/dashboard-portal-text-field/dashboard-portal-component-registry.service';

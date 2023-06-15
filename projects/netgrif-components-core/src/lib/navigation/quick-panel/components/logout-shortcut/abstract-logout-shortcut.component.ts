@@ -19,8 +19,8 @@ export abstract class AbstractLogoutShortcutComponent {
     logout(): void {
         this._user.logout().subscribe(() => {
             this._log.debug('User is logged out');
-            if (this._config.get().services && this._config.get().services.auth && this._config.get().services.auth.logoutRedirect) {
-                const redirectPath = this._config.get().services.auth.logoutRedirect;
+            const redirectPath = this._config.getOnLogoutPath();
+            if (redirectPath) {
                 this._log.info('Redirecting to ' + redirectPath);
                 this._router.navigate([redirectPath]);
             }

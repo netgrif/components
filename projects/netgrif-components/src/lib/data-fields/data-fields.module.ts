@@ -2,11 +2,11 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {
-    MaterialModule,
     CovalentModule,
-    TranslateLibModule,
+    CurrencyModule,
     CustomDateAdapter,
-    CurrencyModule
+    MaterialModule,
+    TranslateLibModule,
 } from '@netgrif/components-core';
 import {AngularResizeEventModule} from 'angular-resize-event';
 import {HttpClientModule} from '@angular/common/http';
@@ -23,13 +23,21 @@ import {EnumerationFieldComponent} from './enumeration-field/enumeration-field.c
 import {
     EnumerationAutocompleteSelectFieldComponent
 } from './enumeration-field/enumeration-autocomplete-select-field/enumeration-autocomplete-select-field.component';
-import {EnumerationSelectFieldComponent} from './enumeration-field/enumeration-select-field/enumeration-select-field.component';
-import {EnumerationListFieldComponent} from './enumeration-field/enumeration-list-field/enumeration-list-field.component';
+import {
+    EnumerationSelectFieldComponent
+} from './enumeration-field/enumeration-select-field/enumeration-select-field.component';
+import {
+    EnumerationListFieldComponent
+} from './enumeration-field/enumeration-list-field/enumeration-list-field.component';
 import {FileFieldComponent} from './file-field/file-field.component';
 import {FileListFieldComponent} from './file-field-list/file-list-field.component';
 import {MultichoiceFieldComponent} from './multichoice-field/multichoice-field.component';
-import {MultichoiceSelectFieldComponent} from './multichoice-field/multichoice-select-field/multichoice-select-field.component';
-import {MultichoiceListFieldComponent} from './multichoice-field/multichoice-list-field/multichoice-list-field.component';
+import {
+    MultichoiceSelectFieldComponent
+} from './multichoice-field/multichoice-select-field/multichoice-select-field.component';
+import {
+    MultichoiceListFieldComponent
+} from './multichoice-field/multichoice-list-field/multichoice-list-field.component';
 import {NumberFieldComponent} from './number-field/number-field.component';
 import {TextFieldComponent} from './text-field/text-field.component';
 import {TextareaFieldComponent} from './text-field/textarea-field/textarea-field.component';
@@ -44,8 +52,12 @@ import {NumberDefaultFieldComponent} from './number-field/number-default-field/n
 import {PasswordTextFieldComponent} from './text-field/password-text-field/password-text-field.component';
 import {PreviewDialogComponent} from './file-field/preview-dialog/preview-dialog.component';
 import {MatDialogModule} from '@angular/material/dialog';
-import {EnumerationStepperFieldComponent} from './enumeration-field/enumeration-stepper-field/enumeration-stepper-field.component';
-import {EnumerationIconFieldComponent} from './enumeration-field/enumeration-icon-field/enumeration-icon-field.component';
+import {
+    EnumerationStepperFieldComponent
+} from './enumeration-field/enumeration-stepper-field/enumeration-stepper-field.component';
+import {
+    EnumerationIconFieldComponent
+} from './enumeration-field/enumeration-icon-field/enumeration-icon-field.component';
 import {
     EnumerationAutocompleteDynamicFieldComponent
 } from './enumeration-field/enumeration-autocomplete-dynamic-field/enumeration-autocomplete-dynamic-field.component';
@@ -54,11 +66,13 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {FilterFieldComponent} from './filter-field/filter-field.component';
 import {FilterFieldContentComponent} from './filter-field/filter-field-content/filter-field-content.component';
 import {AdvancedSearchComponentModule} from '../search/advanced-search/advanced-search.module';
-import {SideMenuUserAssignComponentModule} from '../side-menu/content-components/user-assign/side-menu-user-assign-component.module';
-import { I18nFieldComponent } from './i18n-field/i18n-field.component';
-import { I18nDividerFieldComponent } from './i18n-field/i18n-divider-field/i18n-divider-field.component';
-import { I18nTextFieldComponent } from './i18n-field/i18n-text-field/i18n-text-field.component';
-import { EasymdeWrapperComponent } from './text-field/rich-textarea-field/easymde-wrapper/easymde-wrapper.component';
+import {
+    SideMenuUserAssignComponentModule
+} from '../side-menu/content-components/user-assign/side-menu-user-assign-component.module';
+import {I18nFieldComponent} from './i18n-field/i18n-field.component';
+import {I18nDividerFieldComponent} from './i18n-field/i18n-divider-field/i18n-divider-field.component';
+import {I18nTextFieldComponent} from './i18n-field/i18n-text-field/i18n-text-field.component';
+import {EasymdeWrapperComponent} from './text-field/rich-textarea-field/easymde-wrapper/easymde-wrapper.component';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
@@ -67,6 +81,31 @@ import {
 import { UserListFieldComponent } from './user-list-field/user-list-field.component';
 import { SimpleDateTimeFieldComponent } from './date-time-field/simple-date-time-field/simple-date-time-field.component';
 import { ZonedDateTimeFieldComponent } from './date-time-field/zoned-date-time-field/zoned-date-time-field.component';
+import {
+    SideMenuMultiUserAssignComponentModule
+} from "../side-menu/content-components/multi-user-assign/side-menu-multi-user-assign-component.module";
+import {TaskRefFieldComponent} from './task-ref-field/task-ref-field.component';
+import {
+    TaskRefDashboardTileComponent
+} from './task-ref-field/task-ref-dashboard-field/task-ref-dashboard-tile/task-ref-dashboard-tile.component';
+import {
+    DashboardLineChartTextFieldComponent
+} from './text-field/dashboard-line-chart-text-field/dashboard-line-chart-text-field.component';
+import {DashboardComponentModule} from '../dashboard/dashboard.module';
+import {
+    DashboardPieChartTextFieldComponent
+} from './text-field/dashboard-pie-chart-text-field/dashboard-pie-chart-text-field.component';
+import {
+    DashboardPortalTextFieldComponent
+} from './text-field/dashboard-portal-text-field/dashboard-portal-text-field.component';
+import {
+    DashboardBarChartTextFieldComponent
+} from './text-field/dashboard-bar-chart-text-field/dashboard-bar-chart-text-field.component';
+import {
+    DashboardIframeTextFieldComponent
+} from './text-field/dashboard-iframe-text-field/dashboard-iframe-text-field.component';
+import { RouterModule } from '@angular/router';
+import { FilterFieldTabViewContentComponent } from './filter-field/tab-view-filter-field/filter-field-tab-view-content.component';
 
 @NgModule({
     declarations: [
@@ -108,26 +147,35 @@ import { ZonedDateTimeFieldComponent } from './date-time-field/zoned-date-time-f
         I18nTextFieldComponent,
         EasymdeWrapperComponent,
         UserListFieldComponent,
+        TaskRefFieldComponent,
+        TaskRefDashboardTileComponent,
+        DashboardLineChartTextFieldComponent,
+        DashboardPieChartTextFieldComponent,
+        DashboardPortalTextFieldComponent,
+        DashboardBarChartTextFieldComponent,
+        DashboardIframeTextFieldComponent,
+        FilterFieldTabViewContentComponent,
         SimpleDateTimeFieldComponent,
         ZonedDateTimeFieldComponent
     ],
-	exports: [
-		BooleanFieldComponent,
-		ButtonFieldComponent,
-		DataFieldTemplateComponent,
-		DateFieldComponent,
-		DateTimeFieldComponent,
-		EnumerationFieldComponent,
-		FileFieldComponent,
-		FileListFieldComponent,
-		MultichoiceFieldComponent,
-		NumberFieldComponent,
-		TextFieldComponent,
-		UserFieldComponent,
-		FilterFieldComponent,
-		I18nFieldComponent,
-		UserListFieldComponent
-	],
+    exports: [
+        BooleanFieldComponent,
+        ButtonFieldComponent,
+        DataFieldTemplateComponent,
+        DateFieldComponent,
+        DateTimeFieldComponent,
+        EnumerationFieldComponent,
+        FileFieldComponent,
+        FileListFieldComponent,
+        MultichoiceFieldComponent,
+        NumberFieldComponent,
+        TextFieldComponent,
+        UserFieldComponent,
+        FilterFieldComponent,
+        I18nFieldComponent,
+        UserListFieldComponent,
+        TaskRefFieldComponent
+    ],
     imports: [
         CommonModule,
         FlexLayoutModule,
@@ -140,16 +188,19 @@ import { ZonedDateTimeFieldComponent } from './date-time-field/zoned-date-time-f
         NgxMatMomentModule,
         TranslateLibModule,
         SideMenuUserAssignComponentModule,
+        SideMenuMultiUserAssignComponentModule,
         QuillModule.forRoot(),
         MatDialogModule,
         AdvancedSearchComponentModule,
         MatProgressSpinnerModule,
         CurrencyModule,
         BrowserModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        DashboardComponentModule,
+        RouterModule
     ],
     providers: [
-        { provide: DateAdapter, useClass: CustomDateAdapter }
+        {provide: DateAdapter, useClass: CustomDateAdapter}
     ]
 })
 export class DataFieldsComponentModule {

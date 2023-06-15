@@ -142,6 +142,14 @@
                         <ul class="index-list">
                             <li>
                                     <span class="modifier">Protected</span>
+                                <a href="#calculateValidity" >calculateValidity</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#resolveFormControlValidators" >resolveFormControlValidators</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
                                 <a href="#valueEquality" >valueEquality</a>
                             </li>
                             <li>
@@ -151,10 +159,6 @@
                             <li>
                                     <span class="modifier">Public</span>
                                 <a href="#applyChange" >applyChange</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Protected</span>
-                                <a href="#calculateValidity" >calculateValidity</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
@@ -167,6 +171,10 @@
                             <li>
                                     <span class="modifier">Public</span>
                                 <a href="#disconnectFormControl" >disconnectFormControl</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#focus" >focus</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
@@ -191,10 +199,6 @@
                             <li>
                                     <span class="modifier">Public</span>
                                 <a href="#resolveAppearance" >resolveAppearance</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Protected</span>
-                                <a href="#resolveFormControlValidators" >resolveFormControlValidators</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
@@ -236,6 +240,20 @@
 
 
 
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#roles" >roles</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
         </tbody>
     </table>
 </section>
@@ -246,12 +264,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(stringId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, title: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, behavior: <a href="../interfaces/Behavior.html" target="_self">Behavior</a>, value: <a href="../classes/UserListValue.html" target="_self">UserListValue</a>, placeholder?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, description?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, layout?: <a href="../interfaces/Layout.html" target="_self">Layout</a>, validations?: <a href="../interfaces/Validation.html" target="_self">Array&lt;Validation&gt;</a>, component?: <a href="../interfaces/Component.html" target="_self">Component</a>, parentTaskId?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+<code>constructor(stringId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, title: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, behavior: <a href="../interfaces/Behavior.html" target="_self">Behavior</a>, value: <a href="../classes/UserListValue.html" target="_self">UserListValue</a>, _roles: <a href="../interfaces/ProcessRole.html" target="_self">Array&lt;ProcessRole&gt;</a>, placeholder?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, description?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, layout?: <a href="../interfaces/Layout.html" target="_self">Layout</a>, validations?: <a href="../interfaces/Validation.html" target="_self">Array&lt;Validation&gt;</a>, component?: <a href="../interfaces/Component.html" target="_self">Component</a>, parentTaskId?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="8" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/user-list-field/models/user-list-field.ts:8</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/user-list-field/models/user-list-field.ts:10</a></div>
                             </td>
                         </tr>
 
@@ -309,6 +327,18 @@
                                                   
                                                         <td>
                                                                         <code><a href="../classes/UserListValue.html" target="_self" >UserListValue</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_roles</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../interfaces/ProcessRole.html" target="_self" >Array&lt;ProcessRole&gt;</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -428,7 +458,7 @@
                         </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:69</a></code>
+                                <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:70</a></code>
 </div>
                         </td>
                     </tr>
@@ -462,7 +492,7 @@
                         </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:71</a></code>
+                                <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:72</a></code>
 </div>
                         </td>
                     </tr>
@@ -496,7 +526,7 @@
                         </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:101</a></code>
+                                <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:102</a></code>
 </div>
                         </td>
                     </tr>
@@ -537,7 +567,7 @@ from executing at the same time</p>
                         </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:113</a></code>
+                                <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:114</a></code>
 </div>
                         </td>
                     </tr>
@@ -578,7 +608,7 @@ without affecting the base configuration.</p>
                         </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:72</a></code>
+                                <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:73</a></code>
 </div>
                         </td>
                     </tr>
@@ -612,7 +642,7 @@ without affecting the base configuration.</p>
                         </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:70</a></code>
+                                <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:71</a></code>
 </div>
                         </td>
                     </tr>
@@ -646,7 +676,7 @@ without affecting the base configuration.</p>
                         </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:68</a></code>
+                                <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:69</a></code>
 </div>
                         </td>
                     </tr>
@@ -680,7 +710,7 @@ without affecting the base configuration.</p>
                         </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:95</a></code>
+                                <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:96</a></code>
 </div>
                         </td>
                     </tr>
@@ -720,7 +750,7 @@ without affecting the base configuration.</p>
                         </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:118</a></code>
+                                <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:119</a></code>
 </div>
                         </td>
                     </tr>
@@ -761,7 +791,7 @@ without affecting the base configuration.</p>
                         </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:135</a></code>
+                                <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:141</a></code>
 </div>
                         </td>
                     </tr>
@@ -776,6 +806,139 @@ without affecting the base configuration.</p>
     <h3 id="methods">
         Methods
     </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="calculateValidity"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>calculateValidity</b></span>
+                        <a href="#calculateValidity"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>calculateValidity(forValidRequired: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>, formControl: <a href="../interfaces/Form.html" target="_self">FormControl</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classess/DataField.html" target="_self" >DataField</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:27</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>forValidRequired</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>formControl</td>
+                                    <td>
+                                                <code><a href="../interfaces/Form.html" target="_self" >FormControl</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resolveFormControlValidators"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>resolveFormControlValidators</b></span>
+                        <a href="#resolveFormControlValidators"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resolveFormControlValidators()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classess/DataField.html" target="_self" >DataField</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:45</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Array&lt;ValidatorFn&gt;</code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
     <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -804,7 +967,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:16</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:22</a></code>
 </div>
                 </td>
             </tr>
@@ -892,7 +1055,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:434</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:454</a></code>
 </div>
                 </td>
             </tr>
@@ -975,7 +1138,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:499</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:519</a></code>
 </div>
                 </td>
             </tr>
@@ -1038,94 +1201,6 @@ without affecting the base configuration.</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="calculateValidity"></a>
-                    <span class="name">
-                        <span class="modifier">Protected</span>
-                        <span ><b>calculateValidity</b></span>
-                        <a href="#calculateValidity"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>calculateValidity(forValidRequired: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>, formControl: <a href="../interfaces/Form.html" target="_self">FormControl</a>)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Inherited from         <code><a href="../classess/DataField.html" target="_self" >DataField</a></code>
-</div>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:542</a></code>
-</div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>forValidRequired</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>formControl</td>
-                                    <td>
-                                                <code><a href="../interfaces/Form.html" target="_self" >FormControl</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
                     <a name="clearValidators"></a>
                     <span class="name">
                         <span class="modifier">Public</span>
@@ -1150,7 +1225,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:474</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:494</a></code>
 </div>
                 </td>
             </tr>
@@ -1195,7 +1270,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:338</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:358</a></code>
 </div>
                 </td>
             </tr>
@@ -1240,7 +1315,52 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:377</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:397</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="focus"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>focus</b></span>
+                        <a href="#focus"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>focus()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classess/DataField.html" target="_self" >DataField</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:336</a></code>
 </div>
                 </td>
             </tr>
@@ -1285,7 +1405,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:334</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:354</a></code>
 </div>
                 </td>
             </tr>
@@ -1338,7 +1458,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:559</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:579</a></code>
 </div>
                 </td>
             </tr>
@@ -1414,7 +1534,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:348</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:368</a></code>
 </div>
                 </td>
             </tr>
@@ -1490,7 +1610,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:469</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:489</a></code>
 </div>
                 </td>
             </tr>
@@ -1566,7 +1686,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:566</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:586</a></code>
 </div>
                 </td>
             </tr>
@@ -1613,7 +1733,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:515</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:535</a></code>
 </div>
                 </td>
             </tr>
@@ -1665,58 +1785,6 @@ without affecting the base configuration.</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="resolveFormControlValidators"></a>
-                    <span class="name">
-                        <span class="modifier">Protected</span>
-                        <span ><b>resolveFormControlValidators</b></span>
-                        <a href="#resolveFormControlValidators"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>resolveFormControlValidators()</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Inherited from         <code><a href="../classess/DataField.html" target="_self" >DataField</a></code>
-</div>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:450</a></code>
-</div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>Creates Validator objects based on field <code>behavior</code>. Only the <code>required</code> behavior is resolved by default.
-Required is resolved as <code>Validators.required</code>.
-If you need to resolve additional Validators or need a different resolution for the <code>required</code> Validator override this method.</p>
-<p>See <a href="../interfaces/Behavior.html">Behavior</a> for information about data field behavior.</p>
-<p>See <a href="ValidatorFn">ValidatorFn</a> and <a href="Validators">Validators</a> for information about Validators.</p>
-<p>Alternatively see <a href="https://angular.io/guide/form-validation#reactive-form-validation">Form Validation guide</a> from Angular.</p>
-</div>
-
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>Array&lt;ValidatorFn&gt;</code>
-
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
                     <a name="resolvePrevValue"></a>
                     <span class="name">
                         <span class="modifier">Public</span>
@@ -1741,7 +1809,7 @@ If you need to resolve additional Validators or need a different resolution for 
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:535</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:555</a></code>
 </div>
                 </td>
             </tr>
@@ -1817,7 +1885,7 @@ If you need to resolve additional Validators or need a different resolution for 
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:478</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:498</a></code>
 </div>
                 </td>
             </tr>
@@ -1862,7 +1930,7 @@ If you need to resolve additional Validators or need a different resolution for 
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:284</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:290</a></code>
 </div>
                 </td>
             </tr>
@@ -1907,7 +1975,7 @@ If you need to resolve additional Validators or need a different resolution for 
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:402</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:422</a></code>
 </div>
                 </td>
             </tr>
@@ -1983,7 +2051,7 @@ If you need to resolve additional Validators or need a different resolution for 
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:314</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:320</a></code>
 </div>
                 </td>
             </tr>
@@ -2028,7 +2096,7 @@ If you need to resolve additional Validators or need a different resolution for 
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:396</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:416</a></code>
 </div>
                 </td>
             </tr>
@@ -2104,7 +2172,7 @@ If you need to resolve additional Validators or need a different resolution for 
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:318</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:324</a></code>
 </div>
                 </td>
             </tr>
@@ -2149,7 +2217,7 @@ If you need to resolve additional Validators or need a different resolution for 
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:217</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:223</a></code>
 </div>
                 </td>
             </tr>
@@ -2203,6 +2271,33 @@ If you need to resolve additional Validators or need a different resolution for 
 
 
 
+            <section>
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="roles"></a>
+                        <span class="name"><b>roles</b><a href="#roles"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>roles()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/user-list-field/models/user-list-field.ts:18</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+</section>
     </div>
 
 
@@ -2213,19 +2308,67 @@ import { Layout } from &#x27;../../models/layout&#x27;;
 import { Validation } from &#x27;../../models/validation&#x27;;
 import { Component } from &#x27;../../models/component&#x27;;
 import { UserListValue } from &#x27;./user-list-value&#x27;;
+import {AbstractControl, FormControl, ValidatorFn} from &quot;@angular/forms&quot;;
+import {ProcessRole} from &quot;../../../resources/interface/process-role&quot;;
 
 export class UserListField extends DataField&lt;UserListValue&gt; {
 
-    constructor(stringId: string, title: string, behavior: Behavior, value: UserListValue,
+    constructor(stringId: string, title: string, behavior: Behavior, value: UserListValue, private _roles: Array&lt;ProcessRole&gt;,
                 placeholder?: string, description?: string, layout?: Layout, validations?: Array&lt;Validation&gt;, component?: Component,
                 parentTaskId?: string) {
         super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId);
     }
 
+    get roles(): Array&lt;ProcessRole&gt; {
+        return this._roles;
+    }
+
     protected valueEquality(a: UserListValue, b: UserListValue): boolean {
         return (!a &amp;&amp; !b) ||
-            (!!a &amp;&amp; !!b &amp;&amp; a.userValues.length &#x3D;&#x3D;&#x3D; b.userValues.length);
+            (!!a &amp;&amp; !!b &amp;&amp; a.userValues.size &#x3D;&#x3D;&#x3D; b.userValues.size);
     }
+
+    protected calculateValidity(forValidRequired: boolean, formControl: FormControl): boolean {
+        const isDisabled &#x3D; formControl.disabled;
+        if (forValidRequired) {
+            formControl.enable();
+        }
+        formControl.clearValidators();
+        if (forValidRequired) {
+            formControl.setValidators(this.behavior.required ? [this.requiredTrue] : []);
+        } else {
+            formControl.setValidators(this.resolveFormControlValidators());
+        }
+        formControl.updateValueAndValidity();
+        const validity &#x3D; this._determineFormControlValidity(formControl);
+        isDisabled ? formControl.disable() : formControl.enable();
+        return validity;
+    }
+
+
+    protected resolveFormControlValidators(): Array&lt;ValidatorFn&gt; {
+        const result &#x3D; [];
+
+        if (this.behavior.required) {
+            result.push(this.requiredTrue);
+        }
+
+        if (this.validations) {
+            if (this._validators) {
+                result.push(...this._validators);
+            } else {
+                this._validators &#x3D; this.resolveValidations();
+                result.push(...this._validators);
+            }
+        }
+
+        return result;
+    }
+
+    private requiredTrue(control: AbstractControl): { [k: string]: boolean } {
+        return !!control.value &amp;&amp; !!control.value._userValues &amp;&amp; control.value._userValues.size &gt; 0 ? null : {requiredUserList: true};
+    }
+
 }
 </code></pre>
     </div>

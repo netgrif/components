@@ -1,10 +1,8 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {Observable, ReplaySubject} from 'rxjs';
-import {FormControl} from '@angular/forms';
-import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
-import {debounceTime} from 'rxjs/operators';
-import {RolesObject, UserListItem, UserListService} from '../../../../user/services/user-list.service';
+import {UserListItem, UserListService} from '../../../../user/services/user-list.service';
 import {UserValue} from '../../../../data-fields/user-field/models/user-value';
+import {AbstractBaseUserAssignListComponent} from "../base-user-assign-list/abstract-base-user-assign-list.component";
 
 /**
  * Is responsible for displaying, filtering, loading and selecting users.
@@ -13,12 +11,7 @@ import {UserValue} from '../../../../data-fields/user-field/models/user-value';
     selector: 'ncc-abstract-user-assign-list',
     template: ''
 })
-export abstract class AbstractUserAssignListComponent implements OnInit, OnDestroy {
-
-    /**
-     * The time that must elapse since last keypress in search input before a search request is sent
-     */
-    protected SEARCH_DEBOUNCE_TIME = 600;
+export abstract class AbstractUserAssignListComponent extends AbstractBaseUserAssignListComponent implements OnInit, OnDestroy {
 
     /**
      * The user that is initially selected, or `undefined` if none is
@@ -26,29 +19,9 @@ export abstract class AbstractUserAssignListComponent implements OnInit, OnDestr
     @Input() initiallySelectedUser: UserValue | undefined;
 
     /**
-     * Search user form control from parent component.
-     */
-    @Input() searchUserControl: FormControl;
-
-    /**
-     * Roles for user search
-     */
-    @Input() roles: RolesObject | Array<string>;
-
-    /**
-     * Negative Roles for user search
-     */
-    @Input() negativeRoles: RolesObject | Array<string>;
-
-    /**
      * Emit selected user to parent component.
      */
     @Output() userSelected: EventEmitter<UserValue>;
-
-    /**
-     * Viewport reference to virtual scroll.
-     */
-    @ViewChild(CdkVirtualScrollViewport) public viewport: CdkVirtualScrollViewport;
 
     /**
      * UserValue array stream, that represents users loading from backend.
@@ -63,7 +36,8 @@ export abstract class AbstractUserAssignListComponent implements OnInit, OnDestr
      * Inject and initialize attributes.
      * @param _userListService Service to get paginated loading users from backend.
      */
-    constructor(protected _userListService: UserListService) {
+    constructor(_userListService: UserListService) {
+        super(_userListService);
         this.users$ = this._userListService.users$;
         this.userSelected = new EventEmitter();
         this._selectedUser$ = new ReplaySubject<string>(1);
@@ -74,34 +48,14 @@ export abstract class AbstractUserAssignListComponent implements OnInit, OnDestr
      * Observes search user control stream on value change.
      */
     ngOnInit() {
+        super.ngOnInit();
         if (this.initiallySelectedUser) {
             this._selectedUser$.next(this.initiallySelectedUser.id);
-        }
-        this.searchUserControl.valueChanges.pipe(debounceTime(this.SEARCH_DEBOUNCE_TIME)).subscribe(searchText => {
-            this._userListService.reload(searchText);
-        });
-        if (this.roles instanceof Array) {
-            this._userListService.rolesQuery = this.roles;
-        } else if (this.roles !== undefined && this.roles !== null) {
-            this._userListService.rolesQuery = Object.keys(this.roles);
-        }
-        if (this.negativeRoles instanceof Array) {
-            this._userListService.negativeRolesQuery = this.negativeRoles;
-        } else if (this.negativeRoles !== undefined && this.negativeRoles !== null) {
-            this._userListService.negativeRolesQuery = Object.keys(this.negativeRoles);
         }
     }
 
     ngOnDestroy(): void {
         this._selectedUser$.complete();
-    }
-
-    public trackBy(index: number, item: UserValue): any {
-        return item.id;
-    }
-
-    public get loading(): boolean {
-        return this._userListService.loading;
     }
 
     /**
@@ -122,16 +76,6 @@ export abstract class AbstractUserAssignListComponent implements OnInit, OnDestr
     public select(selectedUser: UserListItem): void {
         this.userSelected.emit(new UserValue(selectedUser.id, selectedUser.name, selectedUser.surname, selectedUser.email));
         this._markSelectedUser(selectedUser);
-    }
-
-    /**
-     * Load next page after scroll at end in cdkVirtualScroll element.
-     */
-    public loadNextPage(): void {
-        if (!this.viewport) {
-            return;
-        }
-        this._userListService.nextPage(this.viewport.getRenderedRange().end, this.viewport.getDataLength());
     }
 
     /**

@@ -1,11 +1,12 @@
 import {Component, Inject, Injector, Optional} from '@angular/core';
 import {
     AbstractFilterFieldComponent,
-    AbstractFilterFieldContentComponent,
+    AbstractFilterFieldContentComponent, Dashboard,
     NAE_INFORM_ABOUT_INVALID_DATA
 } from '@netgrif/components-core';
 import {ComponentType} from '@angular/cdk/portal';
 import {FilterFieldContentComponent} from './filter-field-content/filter-field-content.component';
+import { FilterFieldTabViewContentComponent } from './tab-view-filter-field/filter-field-tab-view-content.component';
 
 @Component({
     selector: 'nc-filter-field',
@@ -20,6 +21,9 @@ export class FilterFieldComponent extends AbstractFilterFieldComponent {
     }
 
     protected getFilterContentComponent(): ComponentType<AbstractFilterFieldContentComponent> {
+        if (this.dataField.component?.name === Dashboard.FILTER_TAB_VIEW_COMPONENT_ID) {
+            return FilterFieldTabViewContentComponent;
+        }
         return FilterFieldContentComponent;
     }
 }

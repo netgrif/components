@@ -9,6 +9,7 @@
                 "login": "auth/login",
                 "logout": "auth/logout",
                 "signup": "auth/signup",
+                "changePassword": "auth/changePassword",
                 "verification": "auth/verify",
                 "verify": "auth/token/verify",
                 "invite": "auth/invite",
@@ -16,6 +17,8 @@
                 "recover": "/auth/recover"
             },
             "sessionBearer": "X-Auth-Token",
+            "sessionTimeoutEnabled": false,
+            "sessionTimeout": 900,
             "jwtBearer": "X-Jwt-Token"
         },
         "resources": [
@@ -167,6 +170,19 @@
             "navigation": true,
             "routing": {
                 "path": "recover/:token"
+            }
+        },
+        "demo-change-password": {
+            "component": {
+                "class": "ChangePasswordComponent",
+                "from": "./doc/forms/change-password/change-password.component"
+            },
+            "access": "private",
+            "navigation": {
+                "title": "Change Password"
+            },
+            "routing": {
+                "path": "changePassword"
             }
         },
         "demo-impersonation": {
@@ -482,6 +498,17 @@
             "navigation": true,
             "routing": {
                 "path": "titleConfig"
+            }
+        },
+        "demo-dashboard-case-view": {
+            "component": {
+                "class": "DashboardCaseExampleComponent",
+                "from": "./doc/dashboard-case-example/dashboard-case-example.component"
+            },
+            "access": "private",
+            "navigation": true,
+            "routing": {
+                "path": "dashboard-cases"
             }
         },
         "demo-dashboard-view": {
@@ -1256,8 +1283,9 @@
             ]
         },
         "auth": {
-            "loginRedirect": "login",
-            "logoutRedirect": "login"
+            "toLoginRedirect": "login",
+            "onLoginRedirect": "tabbed-views",
+            "onLogoutRedirect": "login"
         },
         "routing": {
             "defaultRedirect": "authentication",
