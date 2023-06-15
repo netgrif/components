@@ -7,7 +7,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Full Changelog: [https://github.com/netgrif/components/commits/v6.3.0](https://github.com/netgrif/components/commits/v6.3.0)
 
-## [6.3.0](https://github.com/netgrif/components/releases/tag/v6.3.0) (2023-03-24)
+## [6.3.0](https://github.com/netgrif/components/releases/tag/v6.3.0) (2023-05-26)
 
 ### Fixed
 
@@ -21,11 +21,14 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.3.0](https://g
 - [NAE-1830] Changing columns in overflow Service deletes all set columns
 - [NAE-1832] Security upgrade moment from 2.24.0 to 2.29.4
 - [NAE-1839] Public view - fields after auto assign are still only visible
-
+- [NAE-1869] Incorrectly expanded task
+- [NAE-1802] TaskRef-ed fields behavior update unaware of parent task behavior
+- [NAE-1800] Operations on date fields in advanced search are not rendered correctly
 
 ### Changed
 
 - [NAE-1431] Login view redirect configuration
+- [NAE-1725] Login spinner / button spinner
 - [NAE-1674] Uri node cases pagination
 - [NAE-1759] Update documentation of public views, PDF generator and user list
 - [NAE-1762] Public view URL encoding
@@ -33,10 +36,20 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.3.0](https://g
 ### Added
 
 - [NAE-1678] User impersonation
+- [NAE-1703] Dashboard
 - [NAE-1809] UserList field show selected users
 - [NAE-1835] Change password component
 - [NAE-1841] Idle timer component
+- [NAE-1874] Filtering users based on roles when selecting users for UserListField
+- [NAE-1607] Allowed nets configuration for newly created filter
+- [NAE-1722] Set default view headers with the CreateMenuItem action method
+- [NAE-1711] Dashboard
 
+## [6.2.9](https://github.com/netgrif/components/releases/tag/v6.2.9) (2023-05-04)
+
+### Fixed
+
+- [NAE-1867] Fulltext replaces only first ' '
 
 ## [6.2.8](https://github.com/netgrif/components/releases/tag/v6.2.8) (2023-03-22)
 

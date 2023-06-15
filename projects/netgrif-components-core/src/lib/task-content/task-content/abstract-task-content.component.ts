@@ -6,10 +6,15 @@ import {PaperViewService} from '../../navigation/quick-panel/components/paper-vi
 import {LoggerService} from '../../logger/services/logger.service';
 import {TaskEventNotification} from '../model/task-event-notification';
 import {TaskEventService} from '../services/task-event.service';
-import {DataGroup, DataGroupAlignment} from '../../resources/interface/data-groups';
+import {DataGroup, DataGroupAlignment, ParentDataGroupInformation} from '../../resources/interface/data-groups';
 import {TaskElementType} from '../model/task-content-element-type';
 import {DataField} from '../../data-fields/models/abstract-data-field';
-import {DataGroupCompact, DataGroupHideEmptyRows, DataGroupLayout, DataGroupLayoutType} from '../../resources/interface/data-group-layout';
+import {
+    DataGroupCompact,
+    DataGroupHideEmptyRows,
+    DataGroupLayout,
+    DataGroupLayoutType
+} from '../../resources/interface/data-group-layout';
 import {FieldAlignment} from '../../resources/interface/field-alignment';
 import {FieldTypeResource} from '../model/field-type-resource';
 import {LoadingEmitter} from '../../utility/loading-emitter';
@@ -17,10 +22,14 @@ import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {NAE_ASYNC_RENDERING_CONFIGURATION} from '../model/async-rendering-configuration-injection-token';
 import {AsyncRenderingConfiguration} from '../model/async-rendering-configuration';
+import {TaskRefDashboardConstants} from '../../data-fields/task-ref-field/model/task-ref-dashboard-constants';
 import {TaskRefField} from '../../data-fields/task-ref-field/model/task-ref-field';
+import {TaskRefComponents} from '../../data-fields/task-ref-field/model/task-ref-components';
 import {SplitDataGroup} from '../model/split-data-group';
 import {Subgrid} from '../model/subgrid';
 import {IncrementingCounter} from '../../utility/incrementing-counter';
+import {PreprocessedDataGroups} from '../model/preprocessed-data-groups';
+import {TaskRefDashboardTile} from '../../data-fields/task-ref-field/model/task-ref-dashboard-tile';
 
 @Component({
     selector: 'ncc-abstract-task-content',
@@ -334,12 +343,33 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
     /**
      * Clones the content of the data groups to prevent unintentional memory accesses to source data.
      * Rearranges the data groups to accommodate taskrefs. Filters out hidden and forbidden fields.
+     * Populates dashboard task ref fields with dashboard tile data.
      * @param dataGroups
-     * @returns the preprocesses data groups
+     * @returns the preprocessed data groups
      */
     protected preprocessDataGroups(dataGroups: Array<DataGroup>): Array<DataGroup> {
-        dataGroups = this.cloneAndFilterHidden(dataGroups);
+        const rearrangeResult = this.rearrangeDataGroups(dataGroups);
+        let unfilteredDataGroups = rearrangeResult.dataGroups;
 
+        if (rearrangeResult.containsDashboardTaskRef) {
+            unfilteredDataGroups = this.preprocessDashboardTaskRef(rearrangeResult.dataGroups, dataGroups);
+        }
+
+        return this.cloneAndFilterHidden(unfilteredDataGroups);
+    }
+
+    /**
+     * Clones the content of the data groups to prevent unintentional memory accesses to source data.
+     * Rearranges the data groups to accommodate taskrefs.
+     * Determines if the data groups contain a dashboard task ref field.
+     * @param dataGroups
+     * @returns the preprocessed data groups with metadata
+     */
+    protected rearrangeDataGroups(dataGroups: Array<DataGroup>): PreprocessedDataGroups {
+        dataGroups = this.cloneDataGroups(dataGroups);
+        this.initializeLocalFieldLayout(dataGroups);
+
+        let containsDashboard = false;
         const result = [];
         for (let i = 0; i < dataGroups.length; i++) {
             const group = dataGroups[i];
@@ -350,6 +380,11 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
             const split = this.splitDataGroupOnTaskRef(group);
             if (split.startGroup !== undefined) {
                 result.push(split.startGroup);
+            }
+
+            if (split.taskRef.component?.name === TaskRefComponents.DASHBOARD) {
+                result.push(this.createDashboardTaskRefDataGroup(group, split.taskRef));
+                containsDashboard = true;
             }
 
             if (split.taskRef.value.length === 0 || split.endGroup === undefined) {
@@ -377,7 +412,38 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
             dataGroups.splice(firstNonDescendantIndex, 0, split.endGroup);
         }
 
-        return result;
+        return {
+            dataGroups: result,
+            containsDashboardTaskRef: containsDashboard
+        };
+    }
+
+    /**
+     * Creates a duplicate of the provided data group array.
+     *
+     * Only the data groups are cloned, the fields are only copied as references.
+     * @param dataGroups the data groups that should be cloned
+     * @returns the duplicated data groups
+     */
+    protected cloneDataGroups(dataGroups: Array<DataGroup>): Array<DataGroup> {
+        return dataGroups.map(group => {
+            const g = {...group};
+            g.fields = g.fields.map(field => field);
+            return g;
+        });
+
+    }
+
+    /**
+     * Passes over all the fields in the provided data groups and if they are visible, initializes their local layout attribute.
+     * @param dataGroups the containers of the fields that should have their local layout initialized
+     */
+    protected initializeLocalFieldLayout(dataGroups: Array<DataGroup>): void {
+        for (const g of dataGroups) {
+            for (const f of g.fields) {
+                f.resetLocalLayout();
+            }
+        }
     }
 
     /**
@@ -414,7 +480,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
         dataGroup.fields.sort((a, b) => a.localLayout.y - b.localLayout.y);
         const taskRefPosition = dataGroup.fields.findIndex(f => this.isTaskRef(f));
         const result: SplitDataGroup = {
-            taskRef: dataGroup.fields[taskRefPosition]
+            taskRef: dataGroup.fields[taskRefPosition] as TaskRefField
         };
 
         if (taskRefPosition !== 0) {
@@ -441,6 +507,100 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
         }
 
         return result;
+    }
+
+    /**
+     * Creates a new data group that contains only the passed task ref.
+     * The information about nesting and parent task/case are preserved from the passed original data group.
+     * @param originalDataGroup source of the information about parent task/case
+     * @param taskRef the task ref that will be added to the new data group
+     * @protected
+     */
+    protected createDashboardTaskRefDataGroup(originalDataGroup: DataGroup, taskRef: TaskRefField): DataGroup {
+        return {
+            fields: [taskRef],
+            alignment: undefined,
+            stretch: false,
+            title: undefined,
+            parentTaskId: originalDataGroup.parentTaskId,
+            parentTransitionId: originalDataGroup.parentTransitionId,
+            parentCaseId: originalDataGroup.parentCaseId,
+            parentTaskRefId: originalDataGroup.parentTaskRefId,
+            nestingLevel: originalDataGroup.nestingLevel,
+            layout: originalDataGroup.layout
+        }
+    }
+
+    /**
+     * Identifies data groups that represent dashboard tiles,
+     * removes them from the data group array and passes them onto the task ref field instance.
+     * @param preprocessedDataGroups
+     * @param rawDataGroups
+     * @returns an array of data group objects that does not contain dashboard tiles referenced by the dashboard task ref
+     * @protected
+     */
+    protected preprocessDashboardTaskRef(preprocessedDataGroups: Array<DataGroup>, rawDataGroups: Array<DataGroup>): Array<DataGroup> {
+        // TODO support more than one dashboard task ref in a task
+        let dashboardTaskRefField: TaskRefField;
+        let dashboardParentInformation: ParentDataGroupInformation;
+        for (const dg of preprocessedDataGroups) {
+            for (const field of dg.fields) {
+                if (this.isTaskRef(field) && field.component?.name === TaskRefComponents.DASHBOARD) {
+                    dashboardTaskRefField = field as TaskRefField;
+                    dashboardParentInformation = {
+                        parentTaskId: dg.parentTaskId,
+                        parentTransitionId: dg.parentTransitionId,
+                        parentCaseId: dg.parentCaseId,
+                        parentTaskRefId: dg.parentTaskRefId,
+                        nestingLevel: dg.nestingLevel
+                    }
+                    break;
+                }
+            }
+            if (dashboardTaskRefField !== undefined) {
+                break;
+            }
+        }
+        if (dashboardTaskRefField === undefined) {
+            this._logger.error('preprocessDashboardTaskRef method was called on task content without dashboard task refs!');
+            return preprocessedDataGroups;
+        }
+
+        const tiles = new Map<string, TaskRefDashboardTile>();
+
+        // TODO resolve transitive tile content
+        const nonDashboardDataGroups = [];
+        for (const dg of preprocessedDataGroups) {
+            if (dg.parentTaskRefId !== dashboardTaskRefField.stringId) {
+                nonDashboardDataGroups.push(dg);
+                continue;
+            }
+            if (tiles.has(dg.parentTaskId)) {
+                const tile = tiles.get(dg.parentTaskId);
+                tile.dataGroups.push(dg);
+            } else {
+                tiles.set(dg.parentTaskId, {dataGroups: [dg]});
+            }
+        }
+
+        for (const rdg of rawDataGroups) {
+            if (rdg.parentTaskId === dashboardParentInformation.parentTaskId
+                && rdg.parentTransitionId === dashboardParentInformation.parentTransitionId
+                && rdg.parentCaseId === dashboardParentInformation.parentCaseId
+                && rdg.parentTaskRefId === dashboardParentInformation.parentTaskRefId
+                && rdg.nestingLevel === dashboardParentInformation.nestingLevel) {
+                for (const filed of rdg.fields) {
+                    if (filed.stringId === TaskRefDashboardConstants.DASHBOARD_COLS) {
+                        dashboardTaskRefField.dashboardCols = filed.value;
+                    } else if (filed.stringId === TaskRefDashboardConstants.DASHBOARD_ROWS) {
+                        dashboardTaskRefField.dashboardRows = filed.value;
+                    }
+                }
+            }
+        }
+
+        dashboardTaskRefField.dashboardTiles = Array.from(tiles.values());
+        return nonDashboardDataGroups;
     }
 
     /**

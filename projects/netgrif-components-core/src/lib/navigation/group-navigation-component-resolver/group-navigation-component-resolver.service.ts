@@ -6,6 +6,8 @@ import {TaskResourceService} from '../../resources/engine-endpoint/task-resource
 import {LoggerService} from '../../logger/services/logger.service';
 import {DataGroup} from '../../resources/interface/data-groups';
 import {HttpErrorResponse} from '@angular/common/http';
+import {FILTER_DEFAULT_HEADERS_ID} from "../navigation-double-drawer/abstract-navigation-double-drawer";
+import {NAE_DEFAULT_HEADERS} from "../../header/models/default-headers-token";
 
 export abstract class GroupNavigationComponentResolverService {
 
@@ -23,7 +25,10 @@ export abstract class GroupNavigationComponentResolverService {
                     this.resolveViewComponent(taskData),
                     null,
                     Injector.create({
-                        providers: [{provide: NAE_NAVIGATION_ITEM_TASK_DATA, useValue: taskData}],
+                        providers: [
+                            {provide: NAE_NAVIGATION_ITEM_TASK_DATA, useValue: taskData},
+                            {provide: NAE_DEFAULT_HEADERS, useValue: this.resolveDefaultHeaders(taskData)},
+                        ],
                         parent: parentInjector
                     })
                 ));
@@ -36,6 +41,12 @@ export abstract class GroupNavigationComponentResolverService {
         });
 
         return result.asObservable();
+    }
+
+    protected resolveDefaultHeaders(caze: Array<DataGroup>): Array<string> | undefined {
+        const defaultHeadersResponse = [].concat(...caze.map(dataGroup => dataGroup.fields)).find(field => field.stringId === FILTER_DEFAULT_HEADERS_ID)?.value;  //ES2019
+        if (!defaultHeadersResponse || Object.keys(defaultHeadersResponse).length === 0) return undefined;
+        return defaultHeadersResponse.split(",")
     }
 
     private forwardError(result: Subject<any>, error: Error): void {

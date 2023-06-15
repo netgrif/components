@@ -500,6 +500,17 @@
                 "path": "titleConfig"
             }
         },
+        "demo-dashboard-case-view": {
+            "component": {
+                "class": "DashboardCaseExampleComponent",
+                "from": "./doc/dashboard-case-example/dashboard-case-example.component"
+            },
+            "access": "private",
+            "navigation": true,
+            "routing": {
+                "path": "dashboard-cases"
+            }
+        },
         "demo-dashboard-view": {
             "component": {
                 "class": "DashboardExampleComponent",
