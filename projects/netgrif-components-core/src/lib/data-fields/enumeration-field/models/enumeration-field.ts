@@ -7,6 +7,7 @@ import {Component, ComponentPrefixes} from '../../models/component';
 import {Validation} from '../../models/validation';
 import {Observable} from "rxjs";
 import {debounceTime} from "rxjs/operators";
+import {UpdateOnStrategy, UpdateStrategy} from "../../models/update-strategy";
 
 export interface EnumerationFieldValue {
     key: string;
@@ -40,8 +41,8 @@ export class EnumerationField extends DataField<string> {
         return this._fieldType;
     }
 
-    public getUpdateOnStrategy(): 'change' | 'blur' | 'submit' {
-        return 'change';
+    public getUpdateOnStrategy(): UpdateOnStrategy {
+        return UpdateStrategy.CHANGE;
     }
 
     public valueChanges(): Observable<string> {

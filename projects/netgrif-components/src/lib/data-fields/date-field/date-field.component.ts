@@ -2,7 +2,9 @@ import {Component, Inject, Optional} from '@angular/core';
 import {MAT_DATE_FORMATS} from '@angular/material/core';
 import {AbstractDateFieldComponent, DATE_FORMAT, NAE_INFORM_ABOUT_INVALID_DATA} from '@netgrif/components-core';
 
-
+/**
+ * @deprecated
+ * */
 @Component({
     selector: 'nc-date-field',
     templateUrl: './date-field.component.html',

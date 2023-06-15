@@ -181,22 +181,7 @@ import { TaskRefListFieldComponent } from './task-ref-field/task-ref-list-field/
         TaskRefListFieldComponent
     ],
     exports: [
-        BooleanFieldComponent,
-        ButtonFieldComponent,
-        DataFieldTemplateComponent,
-        DateFieldComponent,
-        DateTimeFieldComponent,
-        EnumerationFieldComponent,
-        FileFieldComponent,
-        FileListFieldComponent,
-        MultichoiceFieldComponent,
-        NumberFieldComponent,
-        TextFieldComponent,
-        UserFieldComponent,
-        FilterFieldComponent,
-        I18nFieldComponent,
-        UserListFieldComponent,
-        TaskRefFieldComponent
+        DataFieldTemplateComponent
     ],
     imports: [
         CommonModule,

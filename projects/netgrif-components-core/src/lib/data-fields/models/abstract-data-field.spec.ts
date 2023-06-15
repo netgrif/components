@@ -1,5 +1,6 @@
 import {DataField} from './abstract-data-field';
 import {Behavior} from './behavior';
+import {DEFAULT} from "./component";
 
 describe('AbstractDataField', () => {
     let testAbstractDataField: TestAbstractDataField;
@@ -26,6 +27,6 @@ class TestAbstractDataField extends DataField<any> {
     }
 
     getTypedComponentType(): string {
-        return "default";
+        return DEFAULT;
     }
 }

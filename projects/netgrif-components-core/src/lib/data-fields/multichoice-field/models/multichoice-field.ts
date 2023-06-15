@@ -4,6 +4,7 @@ import {Layout} from '../../models/layout';
 import {FieldTypeResource} from '../../../task-content/model/field-type-resource';
 import {Component, ComponentPrefixes} from '../../models/component';
 import {Validation} from '../../models/validation';
+import {UpdateOnStrategy, UpdateStrategy} from "../../models/update-strategy";
 
 export interface MultichoiceFieldValue {
     key: string;
@@ -31,8 +32,8 @@ export class MultichoiceField  extends DataField<Array<string>> {
         return this._fieldType;
     }
 
-    public getUpdateOnStrategy(): 'change' | 'blur' | 'submit' {
-        return 'change';
+    public getUpdateOnStrategy(): UpdateOnStrategy {
+        return UpdateStrategy.CHANGE;
     }
 
     public getTypedComponentType(): string {

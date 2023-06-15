@@ -930,21 +930,17 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
         }
     }
 
-    private shouldResolveTaskRefData(dataRef: DataField<any>): boolean {
+    protected shouldResolveTaskRefData(dataRef: DataField<any>): boolean {
         if (!!dataRef.component) {
             return this.hasRequiredComponentProperty(dataRef.component, "resolve_data", "true");
         }
         return true;
     }
 
-    private hasRequiredComponentProperty(component: DataRefComponent, propertyName: string, propertyValue: string): boolean {
+    protected hasRequiredComponentProperty(component: DataRefComponent, propertyName: string, propertyValue: string): boolean {
         return  component != null
         && component.properties != null
         && !!component.properties[propertyName]
         && component.properties[propertyName] === propertyValue;
-    }
-
-    private hasComponent(field: DataField<any>): boolean {
-        return !!field.component?.name && field.component?.name !== TaskRefComponents.DASHBOARD;
     }
 }
