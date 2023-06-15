@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
-import {ViewService, ConfigurationService, LoggerService} from '@netgrif/components-core';
+import {ConfigurationService, LoggerService, ViewService} from '@netgrif/components-core';
 import {AuthenticationComponent} from './doc/authentication/authentication.component';
 import {LoginFormComponent} from './doc/forms/login-form/login-form.component';
 import {PasswordFormComponent} from './doc/forms/email-form/password-form.component';
@@ -39,7 +39,9 @@ import {WrapperEmptyViewComponent} from './views/wrapper/wrapper-empty-view.comp
 import {DoubleDrawerExampleComponent} from './doc/double-drawer-example/double-drawer-example.component';
 import {PublicSingleTaskViewComponent} from './doc/public-single-task-view/public-single-task-view.component';
 import {BreadcrumbsExampleComponent} from './doc/breadcrumbs-example/breadcrumbs-example.component';
+import {DashboardCaseExampleComponent} from './doc/dashboard-case-example/dashboard-case-example.component';
 import {ImpersonationDemoComponent} from './doc/impersonation-demo/impersonation-demo.component';
+import {ChangePasswordComponent} from "./doc/forms/change-password/change-password.component";
 
 @Injectable({
     providedIn: 'root'
@@ -60,10 +62,12 @@ export class NaeExampleAppViewService extends ViewService {
             {id: 'UserInviteComponent', class: UserInviteComponent},
             {id: 'TreeViewExampleComponent', class: TreeViewExampleComponent},
             {id: 'ButtonsNavComponent', class: ButtonsNavComponent},
+            {id: 'ChangePasswordComponent', class: ChangePasswordComponent},
             {id: 'NavigationExampleComponent', class: NavigationExampleComponent},
             {id: 'ProfileComponent', class: ProfileComponent},
             {id: 'FilterRepositoryExampleComponent', class: FilterRepositoryExampleComponent},
             {id: 'DashboardExampleComponent', class: DashboardExampleComponent},
+            {id: 'DashboardCaseExampleComponent', class: DashboardCaseExampleComponent},
             {id: 'WorkflowViewExampleComponent', class: WorkflowViewExampleComponent},
             {id: 'TabbedViewsExampleComponent', class: TabbedViewsExampleComponent},
             {id: 'CaseViewComponent', class: CaseViewComponent},

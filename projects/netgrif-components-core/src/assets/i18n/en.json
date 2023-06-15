@@ -255,7 +255,8 @@
             "maxFilesExceeded": "Maximum number of uploadable files exceeded: ",
             "maxFilesSizeExceeded": "The maximum size of uploaded files is exceeded: ",
             "notSelectedUser": "No user has been selected",
-            "userAssigned": "User {{userName}} was assigned"
+            "userAssigned": "User {{userName}} was assigned",
+            "userListAssigned": "Selected users {{userNames}} were assigned"
         },
         "values": {
             "boolean": {
@@ -283,7 +284,8 @@
             "reset": "Reset"
         },
         "user": {
-            "selectUser": "Select user"
+            "selectUser": "Select user",
+            "save": "Assign"
         },
         "textarea": {
             "insertText": "Insert text here..."
@@ -305,6 +307,12 @@
             "reset": "Reset password",
             "sign": "Sign Up",
             "enterPass": "Enter your password"
+        },
+        "changePassword": {
+            "oldPassword": "Enter your old password",
+            "enterNewPass": "Enter your new password",
+            "repeatNewPass": "Repeat your new password",
+            "changePass": "Change password"
         },
         "register": {
             "email": "Your email",
@@ -479,5 +487,11 @@
             "failed": "Action failed",
             "deactivated": "Representation was successfully deactivated"
         }
+    },
+    "session": {
+        "expireTitle": "Your Session is about to expire",
+        "expireDetail": "Your session is about to expire.\n\nRedirecting to Login page in {{time}} seconds.",
+        "exitButton": "Logout",
+        "refreshButton": "Stay Connected"
     }
 }
