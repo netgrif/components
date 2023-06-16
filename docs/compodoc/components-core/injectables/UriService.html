@@ -106,10 +106,6 @@
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#getSplittedPath" >getSplittedPath</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Public</span>
                                 <a href="#isRoot" >isRoot</a>
                             </li>
                             <li>
@@ -123,6 +119,10 @@
                             <li>
                                     <span class="modifier">Public</span>
                                 <a href="#resolveParentPath" >resolveParentPath</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#splitNodePath" >splitNodePath</a>
                             </li>
                         </ul>
                     </td>
@@ -168,12 +168,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(_logger: <a href="../injectables/LoggerService.html" target="_self">LoggerService</a>, _resourceService: <a href="../injectables/UriResourceService.html" target="_self">UriResourceService</a>, _caseResourceService: <a href="../injectables/CaseResourceService.html" target="_self">CaseResourceService</a>, _activeGroupService: <a href="../injectables/ActiveGroupService.html" target="_self">ActiveGroupService</a>)</code>
+<code>constructor(_logger: <a href="../injectables/LoggerService.html" target="_self">LoggerService</a>, _resourceService: <a href="../injectables/UriResourceService.html" target="_self">UriResourceService</a>, _caseResourceService: <a href="../injectables/CaseResourceService.html" target="_self">CaseResourceService</a>, _activeGroupService: <a href="../injectables/ActiveGroupService.html" target="_self">ActiveGroupService</a>, pageSize: string | number)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/service/uri.service.ts:26</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/service/uri.service.ts:30</a></div>
                             </td>
                         </tr>
 
@@ -238,6 +238,18 @@
                                                     </td>
                                                     
                                                 </tr>
+                                                <tr>
+                                                        <td>pageSize</td>
+                                                  
+                                                        <td>
+                                                                    <code>string | number</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -267,15 +279,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getCasesOfNode(node?: <a href="../interfaces/UriNodeResource.html" target="_self">UriNodeResource</a>, processIdentifiers?: Array<string>)</code>
+                    <code>getCasesOfNode(node?: <a href="../interfaces/UriNodeResource.html" target="_self">UriNodeResource</a>, processIdentifiers?: Array<string>, pageNumber: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, pageSize: string | number)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="141"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/service/uri.service.ts:141</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="154"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/service/uri.service.ts:154</a></div>
                 </td>
             </tr>
 
@@ -293,6 +305,7 @@
                                     <td>Name</td>
                                     <td>Type</td>
                                     <td>Optional</td>
+                                    <td>Default value</td>
                                     <td>Description</td>
                                 </tr>
                             </thead>
@@ -307,6 +320,8 @@
                                         Yes
                                     </td>
 
+                                    <td>
+                                    </td>
 
                                     <td>
                                         <p>parent node of cases</p>
@@ -323,9 +338,49 @@
                                         Yes
                                     </td>
 
+                                    <td>
+                                    </td>
 
                                     <td>
                                         <p>optional search filter for process identifier to get only cases from the process</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>pageNumber</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>0</code>
+                                    </td>
+
+                                    <td>
+                                        <p>optional parameter for load page on the index. Default value is 0 (the first page).</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>pageSize</td>
+                                    <td>
+                                            <code>string | number</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>this.pageSize</code>
+                                    </td>
+
+                                    <td>
+                                        <p>optional parameter for loaded page size. Defaults to value of injection token URI_NODE_CASES_PAGE_SIZE or to value &quot;20&quot;.</p>
 
                                     </td>
                                 </tr>
@@ -335,7 +390,7 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../interfaces/Case.html" target="_self" >Observable&lt;Array&lt;Case&gt;&gt;</a></code>
+                        <b>Returns : </b>    <code>Observable&lt;Page&lt;Case&gt;&gt;</code>
 
                     </div>
                     <div class="io-description">
@@ -367,8 +422,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="126"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/service/uri.service.ts:126</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="137"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/service/uri.service.ts:137</a></div>
                 </td>
             </tr>
 
@@ -444,8 +499,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="116"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/service/uri.service.ts:116</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="127"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/service/uri.service.ts:127</a></div>
                 </td>
             </tr>
 
@@ -516,8 +571,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="178"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/service/uri.service.ts:178</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="192"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/service/uri.service.ts:192</a></div>
                 </td>
             </tr>
 
@@ -607,8 +662,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="163"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/service/uri.service.ts:163</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="177"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/service/uri.service.ts:177</a></div>
                 </td>
             </tr>
 
@@ -666,45 +721,6 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="getSplittedPath"></a>
-                    <span class="name">
-                        <span class="modifier">Public</span>
-                        <span ><b>getSplittedPath</b></span>
-                        <a href="#getSplittedPath"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getSplittedPath()</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="196"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/service/uri.service.ts:196</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>Array&lt;string&gt;</code>
-
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
                     <a name="isRoot"></a>
                     <span class="name">
                         <span class="modifier">Public</span>
@@ -723,8 +739,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="52"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/service/uri.service.ts:52</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="63"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/service/uri.service.ts:63</a></div>
                 </td>
             </tr>
 
@@ -793,8 +809,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="38"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/service/uri.service.ts:38</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="49"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/service/uri.service.ts:49</a></div>
                 </td>
             </tr>
 
@@ -832,8 +848,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="107"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/service/uri.service.ts:107</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="118"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/service/uri.service.ts:118</a></div>
                 </td>
             </tr>
 
@@ -871,8 +887,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="189"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/service/uri.service.ts:189</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="203"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/service/uri.service.ts:203</a></div>
                 </td>
             </tr>
 
@@ -919,6 +935,76 @@
             </tr>
         </tbody>
     </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="splitNodePath"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>splitNodePath</b></span>
+                        <a href="#splitNodePath"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>splitNodePath(node: <a href="../interfaces/UriNodeResource.html" target="_self">UriNodeResource</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="210"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/service/uri.service.ts:210</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>node</td>
+                                    <td>
+                                                <code><a href="../interfaces/UriNodeResource.html" target="_self" >UriNodeResource</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Array&lt;string&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </section>
 
             <section>
@@ -941,7 +1027,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/service/uri.service.ts:44</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/service/uri.service.ts:55</a></div>
                                 </td>
                             </tr>
 
@@ -963,7 +1049,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/service/uri.service.ts:48</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/service/uri.service.ts:59</a></div>
                                 </td>
                             </tr>
 
@@ -985,7 +1071,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/service/uri.service.ts:56</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="67" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/service/uri.service.ts:67</a></div>
                                 </td>
                             </tr>
 
@@ -996,7 +1082,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/service/uri.service.ts:60</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="71" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/service/uri.service.ts:71</a></div>
                                 </td>
                             </tr>
                     <tr>
@@ -1054,7 +1140,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="78" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/service/uri.service.ts:78</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="89" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/service/uri.service.ts:89</a></div>
                                 </td>
                             </tr>
 
@@ -1076,7 +1162,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="82" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/service/uri.service.ts:82</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="93" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/service/uri.service.ts:93</a></div>
                                 </td>
                             </tr>
 
@@ -1087,24 +1173,28 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Injectable, OnDestroy} from &#x27;@angular/core&#x27;;
-import {LoggerService} from &#x27;../../logger/services/logger.service&#x27;;
-import {UriResourceService} from &#x27;./uri-resource.service&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {HttpParams} from &#x27;@angular/common/http&#x27;;
+import {Inject, Injectable, OnDestroy, Optional} from &#x27;@angular/core&#x27;;
 import {BehaviorSubject, Observable, of} from &#x27;rxjs&#x27;;
-import {UriNodeResource} from &#x27;../model/uri-resource&#x27;;
-import {Case} from &#x27;../../resources/interface/case&#x27;;
-import {CaseResourceService} from &#x27;../../resources/engine-endpoint/case-resource.service&#x27;;
-import {SimpleFilter} from &#x27;../../filter/models/simple-filter&#x27;;
+import {map} from &#x27;rxjs/operators&#x27;;
 import {CaseSearchRequestBody, PetriNetSearchRequest} from &#x27;../../filter/models/case-search-request-body&#x27;;
+import {SimpleFilter} from &#x27;../../filter/models/simple-filter&#x27;;
 import {ActiveGroupService} from &#x27;../../groups/services/active-group.service&#x27;;
-import {map} from &quot;rxjs/operators&quot;;
-import {LoadingEmitter} from &quot;../../utility/loading-emitter&quot;;
+import {LoggerService} from &#x27;../../logger/services/logger.service&#x27;;
+import {CaseResourceService} from &#x27;../../resources/engine-endpoint/case-resource.service&#x27;;
+import {Case} from &#x27;../../resources/interface/case&#x27;;
+import {Page} from &#x27;../../resources/interface/page&#x27;;
+import {LoadingEmitter} from &#x27;../../utility/loading-emitter&#x27;;
+import {PaginationParams} from &#x27;../../utility/pagination/pagination-params&#x27;;
+import {NAE_URI_NODE_CASES_PAGE_SIZE} from &#x27;../model/size-menu-injection-token&#x27;;
+import {UriNodeResource} from &#x27;../model/uri-resource&#x27;;
+import {UriResourceService} from &#x27;./uri-resource.service&#x27;;
 
 /**
  * Service for managing URIs
  * */
 @Injectable({
-    providedIn: &#x27;root&#x27;
+    providedIn: &#x27;root&#x27;,
 })
 export class UriService implements OnDestroy {
 
@@ -1112,12 +1202,19 @@ export class UriService implements OnDestroy {
     private _rootNode: UriNodeResource;
     private readonly _rootLoading$: LoadingEmitter;
     private readonly _parentLoading$: LoadingEmitter;
-    private readonly _activeNode$: BehaviorSubject&lt;UriNodeResource&gt;
+    private readonly _activeNode$: BehaviorSubject&lt;UriNodeResource&gt;;
 
     constructor(protected _logger: LoggerService,
                 protected _resourceService: UriResourceService,
                 protected _caseResourceService: CaseResourceService,
-                protected _activeGroupService: ActiveGroupService) {
+                protected _activeGroupService: ActiveGroupService,
+                @Optional() @Inject(NAE_URI_NODE_CASES_PAGE_SIZE) protected pageSize: string | number) {
+        if (!pageSize) {
+            this.pageSize &#x3D; 20;
+        }
+        if (typeof this.pageSize &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
+            this.pageSize &#x3D; parseInt(this.pageSize);
+        }
         this._rootLoading$ &#x3D; new LoadingEmitter();
         this._parentLoading$ &#x3D; new LoadingEmitter();
         this._activeNode$ &#x3D; new BehaviorSubject&lt;UriNodeResource&gt;(undefined);
@@ -1204,7 +1301,7 @@ export class UriService implements OnDestroy {
      */
     public getNodeByPath(path: string): Observable&lt;UriNodeResource&gt; {
         return this._resourceService.getNodeByUri(path).pipe(
-            map(n &#x3D;&gt; this.capitalizeName(n))
+            map(n &#x3D;&gt; this.capitalizeName(n)),
         );
     }
 
@@ -1218,7 +1315,7 @@ export class UriService implements OnDestroy {
             map(nodes &#x3D;&gt; {
                 this.capitalizeNames(nodes);
                 return nodes;
-            })
+            }),
         );
     }
 
@@ -1226,11 +1323,13 @@ export class UriService implements OnDestroy {
      * Get cases under uri node
      * @param node parent node of cases
      * @param processIdentifiers optional search filter for process identifier to get only cases from the process
+     * @param pageNumber optional parameter for load page on the index. Default value is 0 (the first page).
+     * @param pageSize optional parameter for loaded page size. Defaults to value of injection token URI_NODE_CASES_PAGE_SIZE or to value &quot;20&quot;.
      */
-    public getCasesOfNode(node?: UriNodeResource, processIdentifiers?: Array&lt;string&gt;): Observable&lt;Array&lt;Case&gt;&gt; {
+    public getCasesOfNode(node?: UriNodeResource, processIdentifiers?: Array&lt;string&gt;, pageNumber: number &#x3D; 0, pageSize: string | number &#x3D; this.pageSize): Observable&lt;Page&lt;Case&gt;&gt; {
         if (!node) node &#x3D; this.activeNode;
         const searchBody: CaseSearchRequestBody &#x3D; {
-            uriNodeId: node.id
+            uriNodeId: node.id,
         };
         if (!!processIdentifiers) {
             searchBody.process &#x3D; processIdentifiers.map(id &#x3D;&gt; ({identifier: id} as PetriNetSearchRequest));
@@ -1240,9 +1339,10 @@ export class UriService implements OnDestroy {
         //     searchBody.data &#x3D; {};
         //     searchBody.data[&#x27;parentId&#x27;] &#x3D; this._activeGroupService.activeGroup.stringId;
         // }
-        return this._caseResourceService.searchCases(SimpleFilter.fromCaseQuery(searchBody)).pipe(
-            map(page &#x3D;&gt; page.content)
-        );
+        let httpParams &#x3D; new HttpParams()
+            .set(PaginationParams.PAGE_SIZE, pageSize)
+            .set(PaginationParams.PAGE_NUMBER, pageNumber);
+        return this._caseResourceService.searchCases(SimpleFilter.fromCaseQuery(searchBody), httpParams);
     }
 
     /**
@@ -1255,7 +1355,7 @@ export class UriService implements OnDestroy {
             map(nodes &#x3D;&gt; {
                 this.capitalizeNames(nodes);
                 return nodes;
-            })
+            }),
         );
     }
 
@@ -1271,7 +1371,7 @@ export class UriService implements OnDestroy {
                 const ns &#x3D; !!parent?.id ? nodes.filter(n &#x3D;&gt; n.parentId &#x3D;&#x3D;&#x3D; parent.id) : nodes;
                 this.capitalizeNames(ns);
                 return ns;
-            })
+            }),
         );
     }
 
@@ -1282,8 +1382,8 @@ export class UriService implements OnDestroy {
         return node.uriPath.substring(0, lastDelimiter);
     }
 
-    public getSplittedPath(): Array&lt;string&gt; {
-        return this.activeNode?.uriPath.split(&#x27;/&#x27;).filter(s &#x3D;&gt; s !&#x3D;&#x3D; UriService.ROOT);
+    public splitNodePath(node: UriNodeResource): Array&lt;string&gt; {
+        return node?.uriPath.split(&#x27;/&#x27;).filter(s &#x3D;&gt; s !&#x3D;&#x3D; UriService.ROOT);
     }
 
     private capitalizeNames(nodes: Array&lt;UriNodeResource&gt;) {

@@ -174,6 +174,10 @@
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
+                                <a href="#focus" >focus</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#getComponentType" >getComponentType</a>
                             </li>
                             <li>
@@ -236,6 +240,20 @@
 
 
 
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#roles" >roles</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
         </tbody>
     </table>
 </section>
@@ -246,12 +264,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(stringId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, title: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, behavior: <a href="../interfaces/Behavior.html" target="_self">Behavior</a>, value: <a href="../classes/UserListValue.html" target="_self">UserListValue</a>, placeholder?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, description?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, layout?: <a href="../interfaces/Layout.html" target="_self">Layout</a>, validations?: <a href="../interfaces/Validation.html" target="_self">Array&lt;Validation&gt;</a>, component?: <a href="../interfaces/Component.html" target="_self">Component</a>, parentTaskId?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+<code>constructor(stringId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, title: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, behavior: <a href="../interfaces/Behavior.html" target="_self">Behavior</a>, value: <a href="../classes/UserListValue.html" target="_self">UserListValue</a>, _roles: <a href="../interfaces/ProcessRole.html" target="_self">Array&lt;ProcessRole&gt;</a>, placeholder?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, description?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, layout?: <a href="../interfaces/Layout.html" target="_self">Layout</a>, validations?: <a href="../interfaces/Validation.html" target="_self">Array&lt;Validation&gt;</a>, component?: <a href="../interfaces/Component.html" target="_self">Component</a>, parentTaskId?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="9" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/user-list-field/models/user-list-field.ts:9</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/user-list-field/models/user-list-field.ts:10</a></div>
                             </td>
                         </tr>
 
@@ -309,6 +327,18 @@
                                                   
                                                         <td>
                                                                         <code><a href="../classes/UserListValue.html" target="_self" >UserListValue</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_roles</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../interfaces/ProcessRole.html" target="_self" >Array&lt;ProcessRole&gt;</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -428,7 +458,7 @@
                         </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:69</a></code>
+                                <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:70</a></code>
 </div>
                         </td>
                     </tr>
@@ -462,7 +492,7 @@
                         </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:71</a></code>
+                                <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:72</a></code>
 </div>
                         </td>
                     </tr>
@@ -496,7 +526,7 @@
                         </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:101</a></code>
+                                <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:102</a></code>
 </div>
                         </td>
                     </tr>
@@ -537,7 +567,7 @@ from executing at the same time</p>
                         </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:113</a></code>
+                                <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:114</a></code>
 </div>
                         </td>
                     </tr>
@@ -578,7 +608,7 @@ without affecting the base configuration.</p>
                         </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:72</a></code>
+                                <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:73</a></code>
 </div>
                         </td>
                     </tr>
@@ -612,7 +642,7 @@ without affecting the base configuration.</p>
                         </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:70</a></code>
+                                <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:71</a></code>
 </div>
                         </td>
                     </tr>
@@ -646,7 +676,7 @@ without affecting the base configuration.</p>
                         </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:68</a></code>
+                                <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:69</a></code>
 </div>
                         </td>
                     </tr>
@@ -680,7 +710,7 @@ without affecting the base configuration.</p>
                         </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:95</a></code>
+                                <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:96</a></code>
 </div>
                         </td>
                     </tr>
@@ -720,7 +750,7 @@ without affecting the base configuration.</p>
                         </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:118</a></code>
+                                <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:119</a></code>
 </div>
                         </td>
                     </tr>
@@ -761,7 +791,7 @@ without affecting the base configuration.</p>
                         </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:135</a></code>
+                                <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:141</a></code>
 </div>
                         </td>
                     </tr>
@@ -804,7 +834,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:22</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:27</a></code>
 </div>
                 </td>
             </tr>
@@ -892,7 +922,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:40</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:45</a></code>
 </div>
                 </td>
             </tr>
@@ -937,7 +967,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:17</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:22</a></code>
 </div>
                 </td>
             </tr>
@@ -1025,7 +1055,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:434</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:454</a></code>
 </div>
                 </td>
             </tr>
@@ -1108,7 +1138,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:499</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:519</a></code>
 </div>
                 </td>
             </tr>
@@ -1195,7 +1225,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:474</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:494</a></code>
 </div>
                 </td>
             </tr>
@@ -1240,7 +1270,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:338</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:358</a></code>
 </div>
                 </td>
             </tr>
@@ -1285,7 +1315,52 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:377</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:397</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="focus"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>focus</b></span>
+                        <a href="#focus"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>focus()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classess/DataField.html" target="_self" >DataField</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:336</a></code>
 </div>
                 </td>
             </tr>
@@ -1330,7 +1405,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:334</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:354</a></code>
 </div>
                 </td>
             </tr>
@@ -1383,7 +1458,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:559</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:579</a></code>
 </div>
                 </td>
             </tr>
@@ -1459,7 +1534,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:348</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:368</a></code>
 </div>
                 </td>
             </tr>
@@ -1535,7 +1610,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:469</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:489</a></code>
 </div>
                 </td>
             </tr>
@@ -1611,7 +1686,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:566</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:586</a></code>
 </div>
                 </td>
             </tr>
@@ -1658,7 +1733,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:515</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:535</a></code>
 </div>
                 </td>
             </tr>
@@ -1734,7 +1809,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:535</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:555</a></code>
 </div>
                 </td>
             </tr>
@@ -1810,7 +1885,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:478</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:498</a></code>
 </div>
                 </td>
             </tr>
@@ -1855,7 +1930,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:284</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:290</a></code>
 </div>
                 </td>
             </tr>
@@ -1900,7 +1975,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:402</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:422</a></code>
 </div>
                 </td>
             </tr>
@@ -1976,7 +2051,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:314</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:320</a></code>
 </div>
                 </td>
             </tr>
@@ -2021,7 +2096,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:396</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:416</a></code>
 </div>
                 </td>
             </tr>
@@ -2097,7 +2172,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:318</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:324</a></code>
 </div>
                 </td>
             </tr>
@@ -2142,7 +2217,7 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:217</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:223</a></code>
 </div>
                 </td>
             </tr>
@@ -2196,6 +2271,33 @@ without affecting the base configuration.</p>
 
 
 
+            <section>
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="roles"></a>
+                        <span class="name"><b>roles</b><a href="#roles"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>roles()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/user-list-field/models/user-list-field.ts:18</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+</section>
     </div>
 
 
@@ -2207,18 +2309,23 @@ import { Validation } from &#x27;../../models/validation&#x27;;
 import { Component } from &#x27;../../models/component&#x27;;
 import { UserListValue } from &#x27;./user-list-value&#x27;;
 import {AbstractControl, FormControl, ValidatorFn} from &quot;@angular/forms&quot;;
+import {ProcessRole} from &quot;../../../resources/interface/process-role&quot;;
 
 export class UserListField extends DataField&lt;UserListValue&gt; {
 
-    constructor(stringId: string, title: string, behavior: Behavior, value: UserListValue,
+    constructor(stringId: string, title: string, behavior: Behavior, value: UserListValue, private _roles: Array&lt;ProcessRole&gt;,
                 placeholder?: string, description?: string, layout?: Layout, validations?: Array&lt;Validation&gt;, component?: Component,
                 parentTaskId?: string) {
         super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId);
     }
 
+    get roles(): Array&lt;ProcessRole&gt; {
+        return this._roles;
+    }
+
     protected valueEquality(a: UserListValue, b: UserListValue): boolean {
         return (!a &amp;&amp; !b) ||
-            (!!a &amp;&amp; !!b &amp;&amp; a.userValues.length &#x3D;&#x3D;&#x3D; b.userValues.length);
+            (!!a &amp;&amp; !!b &amp;&amp; a.userValues.size &#x3D;&#x3D;&#x3D; b.userValues.size);
     }
 
     protected calculateValidity(forValidRequired: boolean, formControl: FormControl): boolean {
@@ -2259,7 +2366,7 @@ export class UserListField extends DataField&lt;UserListValue&gt; {
     }
 
     private requiredTrue(control: AbstractControl): { [k: string]: boolean } {
-        return !!control.value &amp;&amp; !!control.value._userValues &amp;&amp; control.value._userValues.length &gt; 0 ? null : {requiredUserList: true};
+        return !!control.value &amp;&amp; !!control.value._userValues &amp;&amp; control.value._userValues.size &gt; 0 ? null : {requiredUserList: true};
     }
 
 }
