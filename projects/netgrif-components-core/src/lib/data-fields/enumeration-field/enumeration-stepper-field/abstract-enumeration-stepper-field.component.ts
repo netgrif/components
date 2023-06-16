@@ -29,10 +29,7 @@ export abstract class AbstractEnumerationStepperFieldComponent extends AbstractB
     }
 
     ngOnInit() {
-        if (this.dataField && this.dataField.component && this.dataField.component.properties &&
-            this.dataField.component.properties.arrowStepper) {
-            this.arrowStepper = this.dataField.component.properties.arrowStepper === 'true';
-        }
+            this.arrowStepper = this.dataField.component?.properties?.arrowStepper === 'true';
     }
 
     canShowDoneIcon(index: number): boolean {

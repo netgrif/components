@@ -19,10 +19,8 @@ export abstract class AbstractBaseDataFieldComponent<T extends DataField<unknown
             this.dataField = dataFieldPortalData.dataField;
             this.formControlRef = dataFieldPortalData.formControlRef;
             this.showLargeLayout = dataFieldPortalData.showLargeLayout;
-            if (!this.formControlRef) {
-                this.formControlRef = new FormControl('', {updateOn: this.dataField.getUpdateOnStrategy()});
-            }
             if (!this.dataField.initialized) {
+                this.formControlRef = new FormControl('', {updateOn: this.dataField.getUpdateOnStrategy()});
                 this.dataField.registerFormControl(this.formControlRef)
             }
         }
@@ -30,5 +28,10 @@ export abstract class AbstractBaseDataFieldComponent<T extends DataField<unknown
 
     ngOnDestroy(): void {
         this.dataField.disconnectFormControl();
+    }
+
+    public checkPropertyInComponent(property: string): boolean {
+        return !!this.dataField?.component?.properties
+            && property in this.dataField.component.properties;
     }
 }

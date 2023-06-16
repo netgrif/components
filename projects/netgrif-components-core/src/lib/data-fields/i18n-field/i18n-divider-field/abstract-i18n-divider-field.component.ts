@@ -15,26 +15,21 @@ export abstract class AbstractI18nDividerFieldComponent extends AbstractBaseData
     }
 
     public getDividerColor(): string {
-        if (this.dividerPropertyEnabled('dividerColor')) {
+        if (this.checkPropertyInComponent('dividerColor')) {
             return this.dataField.component.properties.dividerColor;
         }
     }
 
     public isDividerLGBTQ(): boolean {
-        if (this.dividerPropertyEnabled('dividerLGBTQ')) {
+        if (this.checkPropertyInComponent('dividerLGBTQ')) {
             return this.dataField.component.properties.dividerLGBTQ === 'true';
         }
         return false;
     }
 
     public getDividerFontSize(): string {
-        if (this.dividerPropertyEnabled('fontSize')) {
+        if (this.checkPropertyInComponent('fontSize')) {
             return this.dataField.component.properties.fontSize + 'px';
         }
-    }
-
-    public dividerPropertyEnabled(property: string): boolean {
-        return !!this.dataField?.component?.properties
-            && property in this.dataField.component.properties;
     }
 }

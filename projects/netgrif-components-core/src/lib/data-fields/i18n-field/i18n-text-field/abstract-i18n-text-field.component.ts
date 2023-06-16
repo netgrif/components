@@ -135,25 +135,20 @@ export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsC
     }
 
     public isPlainText(): boolean {
-        if (this.textPropertyEnabled('plainText')) {
+        if (this.checkPropertyInComponent('plainText')) {
             return this.dataField.component.properties.plainText === 'true';
         }
     }
 
     public getTextColor(): string {
-        if (this.textPropertyEnabled('textColor')) {
+        if (this.checkPropertyInComponent('textColor')) {
             return this.dataField.component.properties.textColor;
         }
     }
 
     public getTextFontSize(): string {
-        if (this.textPropertyEnabled('fontSize')) {
+        if (this.checkPropertyInComponent('fontSize')) {
             return this.dataField.component.properties.fontSize + 'px';
         }
-    }
-
-    public textPropertyEnabled(property: string): boolean {
-        return !!this.dataField?.component?.properties
-            && property in this.dataField.component.properties;
     }
 }
