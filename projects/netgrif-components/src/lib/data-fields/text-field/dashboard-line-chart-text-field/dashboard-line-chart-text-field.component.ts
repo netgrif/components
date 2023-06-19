@@ -1,5 +1,10 @@
-import {Component} from '@angular/core';
-import {AbstractDashboardLineChartTextFieldComponent} from '@netgrif/components-core';
+import {Component, Inject, Optional} from '@angular/core';
+import {
+    AbstractDashboardLineChartTextFieldComponent,
+    DATA_FIELD_PORTAL_DATA,
+    DataFieldPortalData,
+    TextField
+} from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
@@ -9,8 +14,9 @@ import {TranslateService} from '@ngx-translate/core';
 })
 export class DashboardLineChartTextFieldComponent extends AbstractDashboardLineChartTextFieldComponent {
 
-    constructor(translate: TranslateService) {
-        super(translate);
+    constructor(translate: TranslateService,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextField>) {
+        super(translate, dataFieldPortalData);
     }
 
 }

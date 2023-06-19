@@ -1,0 +1,136 @@
+.invisible-input {
+    display: none;
+}
+
+.margin-bottom-default {
+    margin-bottom: 8px;
+}
+
+.file-field-image {
+    width: 120px;
+}
+
+.file-field-image-wrapper {
+    border-radius: 3px;
+}
+
+.progress-bar-size {
+    height: 8px;
+}
+
+.margin-bottom-half {
+    margin-bottom: 4px;
+}
+
+.do-not-click:hover {
+    cursor: not-allowed;
+}
+
+.file-button {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.input-name-ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+.input-placeholder {
+    color: rgba(0, 0, 0, .42);
+}
+
+.button-icon-input {
+    padding: 2px !important;
+}
+
+.full-width {
+    width: 100%;
+    min-width: 100%;
+}
+
+.input-margin {
+    margin-top: 2px !important;
+}
+
+.form-input {
+    background: transparent;
+    color: #333333;
+    outline: none;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    text-align: left;
+    font-size: 14px;
+    line-height: 20px;
+    border-radius: 6px;
+    min-width: 5px;
+    padding: 10px 15px 10px 15px;
+    box-sizing: border-box;
+    height: 48px;
+}
+
+.form-input:hover {
+    border-color: black;
+    border-width: 2px;
+}
+
+
+.form-input-disabled:hover {
+    border-color: rgba(0, 0, 0, 0.12) !important;
+    border-width: 1px;
+    padding: 2px !important;
+}
+
+.placeholder {
+    color: rgba(0, 0, 0, .42) !important;
+}
+
+.file-hint-error {
+    padding: 0 1em;
+    font-size: 75%;
+}
+
+.image-preview {
+    width: auto;
+    height: auto;
+    cursor: pointer;
+}
+
+.no-cursor {
+    cursor: default !important;
+}
+
+.border-LGBTQ {
+    border: 5px solid transparent;
+    border-image: linear-gradient(to bottom right, #B827FC 0%, #2C90FC 25%, #B8FD33 50%, #FEC837 75%, #FD1892 100%);
+    border-image-slice: 1;
+    animation: rainbow 10s infinite;
+}
+@keyframes rainbow {
+    0% {  border-image: linear-gradient(to bottom right, #B827FC 0%, #2C90FC 25%, #B8FD33 50%, #FEC837 75%, #FD1892 100%);
+        border-image-slice: 1;
+    }
+    20% {  border-image: linear-gradient(to bottom right, #2C90FC 0%, #B8FD33 25%, #FEC837 50%, #FD1892 75%, #B827FC 100%);
+        border-image-slice: 1;
+    }
+    40% {  border-image: linear-gradient(to bottom right, #B8FD33 0%, #FEC837 25%, #FD1892 50%, #B827FC 75%, #2C90FC 100%);
+        border-image-slice: 1;
+    }
+    60% {  border-image: linear-gradient(to bottom right, #FEC837 0%, #FD1892 25%, #B827FC 50%, #2C90FC 75%, #B8FD33 100%);
+        border-image-slice: 1;
+    }
+    80% { border-image: linear-gradient(to bottom right,  #FD1892 0%, #B827FC 25%, #2C90FC 50%, #B8FD33 75%, #FEC837 100%);
+        border-image-slice: 1;
+    }
+    100% {  border-image: linear-gradient(to bottom right, #B827FC 0%, #2C90FC 25%, #B8FD33 50%, #FEC837 75%, #FD1892 100%);
+        border-image-slice: 1;
+    }
+}
+
+.border-default {
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+}

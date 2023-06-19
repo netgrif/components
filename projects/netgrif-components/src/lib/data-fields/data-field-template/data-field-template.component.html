@@ -9,7 +9,7 @@
             </div>
             <div fxFlex="5"></div>
             <div fxFlex="{{47.5 - offset}}" class="cell-padding">
-                <ng-container *ngTemplateOutlet="dataFieldTemplate; context: {'showLargeLayout':showLargeLayout}"></ng-container>
+                <ng-container [cdkPortalHost]="this.componentPortal"></ng-container>
             </div>
             <div fxFlex="{{offset}}"></div>
         </div>
@@ -20,9 +20,10 @@
         <div fxLayout="row" fxLayoutAlign="start center" class="fill-all-space" [ngClass]="{'padding-8px': isNotButton()}">
             <div fxFlex="{{offset}}"></div>
             <div fxFlex="{{100 -  (2 * offset)}}" class="cell-padding">
-                <ng-container *ngTemplateOutlet="dataFieldTemplate; context: {'showLargeLayout':showLargeLayout}"></ng-container>
+                <ng-container [cdkPortalHost]="this.componentPortal"></ng-container>
             </div>
             <div fxFlex="{{offset}}"></div>
         </div>
     </ng-template>
 </div>
+

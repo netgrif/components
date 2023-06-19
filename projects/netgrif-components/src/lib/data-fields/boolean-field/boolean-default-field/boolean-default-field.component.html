@@ -1,0 +1,10 @@
+<div>
+    <mat-label class="netgrif-label" *ngIf="!showLargeLayout.value">{{dataField.title}}
+        <nc-required-label *ngIf="dataField.behavior.required" [isIn]="true"></nc-required-label>
+        <br></mat-label>
+    <mat-slide-toggle color="primary" [formControl]="formControlRef">
+        {{createValueLabel()}}
+    </mat-slide-toggle>
+    <mat-hint>{{dataField.description}}</mat-hint>
+    <mat-error *ngIf="dataField.isInvalid(formControlRef)">{{getErrorMessage()}}</mat-error>
+</div>

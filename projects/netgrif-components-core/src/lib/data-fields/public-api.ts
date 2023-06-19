@@ -1,19 +1,26 @@
 export * from './data-fields.module';
 
 /* Components */
+export * from './base-component/abstract-base-data-field.component';
 export * from './boolean-field/abstract-boolean-field.component';
+export * from './boolean-field/boolean-default-field/abstract-boolean-default-field.component';
 export * from './button-field/abstract-button-field.component';
+export * from './button-field/button-default-field/abstract-button-default-field.component';
 export * from './data-field-template/abstract-data-field-template.component';
 export * from './date-field/abstract-date-field.component';
+export * from './date-field/date-default-field/abstract-date-default-field.component';
 export * from './date-time-field/abstract-date-time-field.component';
+export * from './date-time-field/date-time-default-field/abstract-date-time-default-field.component';
 export * from './enumeration-field/abstract-enumeration-field.component';
 export * from './enumeration-field/enumeration-select-field/abstract-enumeration-select-field.component';
 export * from './enumeration-field/enumeration-list-field/abstract-enumeration-list-field.component';
 export * from './enumeration-field/enumeration-autocomplete-select-field/abstract-enumeration-autocomplete-select-field.component';
 export * from './enumeration-field/enumeration-stepper-field/abstract-enumeration-stepper-field.component';
 export * from './file-field/abstract-file-field.component';
+export * from './file-field/file-default-field/abstract-file-default-field.component';
 export * from './file-field/abstract-preview-dialog/preview-dialog-data';
 export * from './file-list-field/abstract-file-list-field.component';
+export * from './file-list-field/file-list-default-field/abstract-file-list-default-field.component';
 export * from './multichoice-field/abstract-multichoice-field.component';
 export * from './multichoice-field/multichoice-autocomplete-field/abstract-multichoice-autocomplete-field-component.component';
 export * from './multichoice-field/multichoice-list-field/abstract-multichoice-list-field.component';
@@ -36,19 +43,24 @@ export * from './text-field/dashboard-bar-chart-text-field/abstract-dashboard-ba
 export * from './text-field/dashboard-iframe-text-field/abstract-dashboard-iframe-text-field.component';
 export * from './text-field/dashboard-portal-text-field/abstract-dashboard-portal-text-field.component';
 export * from './user-field/abstract-user-field.component';
+export * from './user-field/user-default-field/abstract-user-default-field.component';
 export * from './enumeration-field/enumeration-icon-field/abstract-enumeration-icon-field.component';
 export * from './enumeration-field/enumeration-autocomplete-dynamic-field/abstract-enumeration-autocomplete-dynamic-field.component';
 export * from './filter-field/abstract-filter-field.component';
 export * from './filter-field/abstract-filter-field-content.component';
 export * from './filter-field/abstract-filter-field-tab-view.component';
 export * from './filter-field/abstract-filter-field-tab-view-content.component';
+export * from './filter-field/filter-default-field/abstract-filter-default-field.component';
 export * from './i18n-field/abstract-i18n-field.component';
 export * from './i18n-field/i18n-text-field/abstract-i18n-text-field.component';
 export * from './i18n-field/i18n-divider-field/abstract-i18n-divider-field.component';
 export * from './i18n-field/abstract-i18n-errors.component';
 export * from './user-list-field/abstract-user-list-field.component';
+export * from './user-list-field/user-list-default-field/abstract-user-list-default-field.component';
 export * from './task-ref-field/abstract-task-ref-field.component';
 export * from './task-ref-field/task-ref-dashboard-field/task-ref-dashboard-tile/abstract-task-ref-dashboard-tile.component';
+export * from './task-ref-field/task-ref-dashboard-field/abstract-task-ref-dashboard-field.component';
+export * from './task-ref-field/task-ref-list-field/abstract-task-ref-list-field.component';
 
 /* Class */
 export * from './models/abstract-data-field';
@@ -87,6 +99,7 @@ export * from './task-ref-field/model/task-ref-dashboard-tile';
 /* Tokens */
 export * from './models/boolean-label-enabled-token';
 export * from './models/invalid-data-policy-token';
+export * from './models/data-field-portal-data-injection-token';
 export * from './filter-field/models/filter-field-injection-token';
 
 /* Enums */
@@ -101,4 +114,3 @@ export * from './text-field/dashboard-portal-text-field/dashboard-view-constants
 
 /* Services */
 export * from './i18n-field/language-icons.service';
-export * from './text-field/dashboard-portal-text-field/dashboard-portal-component-registry.service';

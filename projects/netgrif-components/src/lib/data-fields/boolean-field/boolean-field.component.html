@@ -1,18 +1,4 @@
 <nc-data-field-template *ngIf="!dataField.behavior.hidden"
                         [dataField]="dataField"
-                        [dataFieldTemplate]="boolean"
                         [offset]="taskOffset">
 </nc-data-field-template>
-
-<ng-template #boolean let-showLargeLayout="showLargeLayout">
-    <div fxLayout="column" class="min-height-62">
-        <mat-label class="netgrif-label" [ngClass]="{'netgrif-label-disabled': formControl.disabled}" *ngIf="!showLargeLayout.value && hasTitle()">{{dataField.title}}
-            <nc-required-label *ngIf="dataField.behavior.required" [isIn]="true"></nc-required-label>
-            <br></mat-label>
-        <mat-slide-toggle color="primary" [formControl]="formControl">
-            {{createValueLabel()}}
-        </mat-slide-toggle>
-        <mat-hint [ngClass]="{'mat-hint-disabled': formControl.disabled}" *ngIf="!dataField.isInvalid(formControl)">{{dataField.description}}</mat-hint>
-        <mat-error *ngIf="dataField.isInvalid(formControl)">{{getErrorMessage()}}</mat-error>
-    </div>
-</ng-template>

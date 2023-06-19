@@ -1,18 +1,18 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, Inject, Optional} from '@angular/core';
 import {EnumerationField} from '../models/enumeration-field';
-import {FormControl} from '@angular/forms';
-import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
+import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
+import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base-data-field.component";
 
 @Component({
     selector: 'ncc-abstract-enumerataion-icon-field',
     template: ''
 })
-export abstract class AbstractEnumerationIconFieldComponent implements OnInit {
-
-    @Input() enumerationField: EnumerationField;
-    @Input() formControlRef: FormControl;
-    @Input() showLargeLayout: WrappedBoolean;
+export abstract class AbstractEnumerationIconFieldComponent extends AbstractBaseDataFieldComponent<EnumerationField> implements OnInit{
     public horizontal: boolean;
+
+    constructor(@Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<EnumerationField>) {
+        super(dataFieldPortalData);
+    }
 
     ngOnInit(): void {
         if (this.enumerationField.component?.properties?.horizontal) {
@@ -21,19 +21,19 @@ export abstract class AbstractEnumerationIconFieldComponent implements OnInit {
     }
 
     resolveIconValue(key: string) {
-        return this.enumerationField.component?.optionIcons.find(icon => icon.key === key)?.value;
+        return this.dataField.component?.optionIcons.find(icon => icon.key === key)?.value;
     }
 
     resolveIconType(key: string) {
-        return this.enumerationField.component?.optionIcons.find(icon => icon.key === key)?.type;
+        return this.dataField.component?.optionIcons.find(icon => icon.key === key)?.type;
     }
 
     resolveArrow(key: string) {
-        return this.enumerationField.component?.properties.arrow === 'true';
+        return this.dataField.component?.properties.arrow === 'true';
     }
 
     resolveDivider(key: string) {
-        return this.enumerationField.component?.properties.divider === 'true';
+        return this.dataField.component?.properties.divider === 'true';
     }
 
     setEnumValue(key: string) {
@@ -43,6 +43,6 @@ export abstract class AbstractEnumerationIconFieldComponent implements OnInit {
     }
 
     isSelected(key: string): boolean {
-        return key === this.enumerationField.value;
+        return key === this.dataField.value;
     }
 }

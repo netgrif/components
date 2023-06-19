@@ -1,0 +1,36 @@
+.label-waiting{
+    opacity: 0;
+}
+
+.grid-wrapper {
+    display: grid;
+    place-items: center;
+}
+
+.grid-1-1{
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.margin-auto{
+    margin: 0 auto;
+}
+
+.flex-end {
+    display: flex;
+    place-content: flex-end;
+}
+
+.flex-start {
+    display: flex;
+    place-content: flex-start;
+}
+
+.flex-center {
+    display: flex;
+    place-content: center;
+}
+
+.full-button-width {
+    width: 100%;
+}
