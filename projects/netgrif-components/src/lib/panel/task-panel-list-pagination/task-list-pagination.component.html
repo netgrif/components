@@ -8,7 +8,7 @@
         </div>
 
         <mat-accordion [multi]="allowMultiOpen" class="full-width" >
-
+            <div class="fix-padding">
                 <nc-task-panel
                     [textEllipsis]="textEllipsis"
                     *ngFor="let task of tasks | slice: (pageIndex) * pageSize : (pageIndex + 1) * pageSize;
@@ -27,7 +27,7 @@
                 <div *ngIf="loading$ | async" fxLayout="column" fxLayoutAlign="center center">
                     <mat-spinner color="primary" diameter="52"></mat-spinner>
                 </div>
-
+            </div>
         </mat-accordion>
         <mat-paginator [length]="length" [pageSize]="pageSize" [pageIndex]="pageIndex" color="primary"
                        [pageSizeOptions]="pageSizeOptions" (page)="onPageChanged($event)" showFirstLastButtons>

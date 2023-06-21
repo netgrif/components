@@ -34,4 +34,12 @@ export abstract class AbstractBaseDataFieldComponent<T extends DataField<unknown
         return !!this.dataField?.component?.properties
             && property in this.dataField.component.properties;
     }
+
+    public hasTitle(): boolean {
+        return this.dataField.title !== undefined && this.dataField.title !== '';
+    }
+
+    public hasHint(): boolean {
+        return this.dataField.description !== undefined && this.dataField.description !== '';
+    }
 }

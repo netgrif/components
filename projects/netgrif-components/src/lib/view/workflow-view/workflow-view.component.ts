@@ -3,7 +3,6 @@ import {
     AbstractWorkflowViewComponent,
     LoggerService,
     ProcessService,
-    SideMenuService,
     WorkflowViewService
 } from '@netgrif/components-core';
 import {MatDialog} from '@angular/material/dialog';

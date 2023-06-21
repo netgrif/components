@@ -43,11 +43,9 @@
         .header-min-height {
             border-bottom: unset !important;
         }
-
-
     }
 
-    .mat-accordion .mat-expansion-panel:last-of-type {
+    .mat-accordion .mat-expansion-panel:last-of-type:not([class*=panel-last]) {
         border-bottom-left-radius: 0 !important;
         border-bottom-right-radius: 0 !important;
     }
@@ -55,11 +53,6 @@
     .mat-accordion .mat-expansion-panel:first-of-type {
         border-top-left-radius: 0 !important;
         border-top-right-radius: 0 !important;
-    }
-
-    .mat-accordion .mat-expansion-panel:last-of-type .panel-last {
-        border-bottom-left-radius: 8px !important;
-        border-bottom-right-radius: 8px !important;
     }
 
     .panel-list-content {

@@ -15,8 +15,8 @@ export abstract class AbstractEnumerationIconFieldComponent extends AbstractBase
     }
 
     ngOnInit(): void {
-        if (this.enumerationField.component?.properties?.horizontal) {
-            this.horizontal = this.enumerationField.component.properties.horizontal === "true";
+        if (this.dataField.component?.properties?.horizontal) {
+            this.horizontal = this.dataField.component.properties.horizontal === "true";
         }
     }
 

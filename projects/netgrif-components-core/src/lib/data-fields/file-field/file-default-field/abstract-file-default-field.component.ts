@@ -26,6 +26,7 @@ import {take} from "rxjs/operators";
 import {ResizedEvent} from "angular-resize-event";
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base-data-field.component";
+import {FILE_FIELD_HEIGHT, FILE_FIELD_PADDING, PREVIEW, PREVIEW_BUTTON} from '../models/file-field-constants';
 
 export interface FileState {
     progress: number;
@@ -34,12 +35,6 @@ export interface FileState {
     completed: boolean;
     error: boolean;
 }
-
-const preview = 'preview';
-
-const fieldHeight = 75;
-
-const fieldPadding = 16;
 
 @Component({
     selector: 'ncc-abstract-file-default-fied',
@@ -76,10 +71,6 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractBaseData
 
     @ViewChild('imageDiv') public imageDivEl: ElementRef;
     /**
-     * If file preview should be displayed
-     */
-    public filePreview = false;
-    /**
      * If file type can be displayed
      */
     public isDisplayable = false;
@@ -112,6 +103,11 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractBaseData
      */
     private updatedFieldSubscription: Subscription;
 
+    public isFilePreview = false;
+    public isFilePreviewButton = false;
+    private labelWidth: number;
+    public cutProperty: string;
+
     /**
      * Only inject services.
      * @param _taskResourceService Provides to download a file from the backend
@@ -119,7 +115,6 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractBaseData
      * @param _snackbar Snackbar service to notify user
      * @param _translate Translate service for I18N
      * @param _eventService used for parsing of backend response
-     * @param informAboutInvalidData whether the backend should be notified about invalid values.
      * Option injected trough `NAE_INFORM_ABOUT_INVALID_DATA` InjectionToken
      * @param _sanitizer Sanitize url of image preview
      * @param dataFieldPortalData Field and form control data if field is provided with portal
@@ -143,8 +138,8 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractBaseData
      *  - Display name
      */
     ngOnInit() {
-        this.filePreview = this.dataField && this.dataField.component && this.dataField.component.name
-            && this.dataField.component.name === preview;
+        this.isFilePreview = this.dataField?.component?.name === PREVIEW;
+        this.isFilePreviewButton = this.dataField?.component?.name === PREVIEW_BUTTON;
     }
 
     ngAfterViewInit() {
@@ -153,18 +148,26 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractBaseData
                 this.upload();
             };
         }
-        if (this.filePreview) {
+        if (this.isFilePreview) {
             if (!!this.imageDivEl) {
                 if (!this.isEmpty()) {
                     this.initializePreviewIfDisplayable();
                 }
             }
         }
+        if (this.isFilePreviewButton) {
+            if (!this.isEmpty()) {
+                this.initializePreviewIfDisplayable();
+            }
+        }
         this.updatedFieldSubscription = this.dataField.updated.subscribe(() => {
             this.previewSource = undefined;
-            if (!!this.filePreview
-                && !!this.dataField.value
-                && !!this.dataField.value.name) {
+            if (!!this.isFilePreview && !!this.dataField?.value?.name) {
+                this.fileForDownload = undefined;
+                this.fileForPreview = undefined;
+                this.initializePreviewIfDisplayable();
+            }
+            if (!!this.isFilePreviewButton && !!this.dataField?.value?.name) {
                 this.fileForDownload = undefined;
                 this.fileForPreview = undefined;
                 this.initializePreviewIfDisplayable();
@@ -173,6 +176,7 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractBaseData
     }
 
     ngOnDestroy(): void {
+        super.ngOnDestroy();
         this.fullSource.complete();
         this.updatedFieldSubscription.unsubscribe();
     }
@@ -253,7 +257,7 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractBaseData
                         this.state.error = false;
                         this.dataField.downloaded = false;
                         this.dataField.value.name = fileToUpload.name;
-                        if (this.filePreview) {
+                        if (this.isFilePreview) {
                             this.initializePreviewIfDisplayable();
                         }
                         this.fullSource.next(undefined);
@@ -298,7 +302,7 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractBaseData
             if (!(response as ProviderProgress).type || (response as ProviderProgress).type !== ProgressType.DOWNLOAD) {
                 this._log.debug(`File [${this.dataField.stringId}] ${this.dataField.value.name} was successfully downloaded`);
                 this.downloadViaAnchor(response as Blob);
-                if (this.filePreview) {
+                if (this.isFilePreview) {
                     this.initDownloadFile(response);
                 }
                 this.state.downloading = false;
@@ -431,7 +435,7 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractBaseData
         });
     }
 
-    private checkFileBeforeDownload() {
+    protected checkFileBeforeDownload() {
         if (this.isEmpty()) {
             return false;
         }
@@ -466,7 +470,7 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractBaseData
         }
     }
 
-    private initializePreviewIfDisplayable() {
+    protected initializePreviewIfDisplayable() {
         const extension = this.dataField.value.name.split('.').reverse()[0];
         this.isDisplayable = Object.values(FilePreviewType).includes(extension as any);
         if (this.isDisplayable) {
@@ -477,7 +481,7 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractBaseData
 
     public getHeight() {
         return this.dataField.layout && this.dataField.layout.rows && this.dataField.layout.rows !== 1 ?
-            (this.dataField.layout.rows) * fieldHeight - fieldPadding : fieldHeight - fieldPadding;
+            (this.dataField.layout.rows) * FILE_FIELD_HEIGHT - FILE_FIELD_PADDING : FILE_FIELD_HEIGHT - FILE_FIELD_PADDING;
     }
 
     public getPreviewBorderWidth(): string {
@@ -521,5 +525,22 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractBaseData
 
     protected resolveParentTaskId(): string {
         return !!this.dataField.parentTaskId ? this.dataField.parentTaskId : this.taskId;
+    }
+
+    public hasTitle(): boolean {
+        return this.dataField.title !== undefined && this.dataField.title !== '';
+    }
+
+    public hasHint(): boolean {
+        return this.dataField.description !== undefined && this.dataField.description !== '';
+    }
+
+    public getCutProperty(i18nLabel): string {
+        if (this.labelWidth !== i18nLabel.offsetWidth) {
+            this.labelWidth = i18nLabel.offsetWidth;
+            const calculatedWidth = 'calc(0.5em + ' + i18nLabel.offsetWidth / 4 * 3 + 'px)';
+            this.cutProperty = `polygon(0 0, 0 100%, 100% 100%, 100% 0%, ${calculatedWidth} 0, ${calculatedWidth} 6%, 0.5em 6%, 0.5em 0)`;
+        }
+        return this.cutProperty;
     }
 }

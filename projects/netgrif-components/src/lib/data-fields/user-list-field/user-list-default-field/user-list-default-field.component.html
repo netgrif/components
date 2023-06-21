@@ -1,23 +1,29 @@
-<mat-label class='netgrif-label' *ngIf='!showLargeLayout.value'>{{dataField.title}}
-    <nc-required-label *ngIf='dataField.behavior.required' [isIn]='!dataField.disabled'></nc-required-label>
-    <br>
-</mat-label>
-<button *ngIf='!formControlRef.disabled' mat-stroked-button class='user-list-item-margin'
-        [disabled]='formControlRef.disabled'
-        color='primary'
-        (click)='selectUser()'>
-    <mat-icon>person_add</mat-icon>
-    {{'dataField.user.selectUser' | translate}}
-</button>
-<span *ngIf='dataField?.value?.userValues?.size > 0'>
-        <span *ngFor='let user of dataField.value.userValues | keyvalue' class='user-list-item-margin'>
-            <button mat-stroked-button
-                    [disabled]='formControlRef.disabled'
-                    color='primary'>
-                <mat-icon>how_to_reg</mat-icon>
-                {{user.value.fullName}}
-                <mat-icon (click)='deleteUser(user.key)' color='warn' *ngIf='!formControlRef.disabled'>close</mat-icon>
+<mat-form-field [appearance]="dataField.materialAppearance" class="full-width" [ngClass]="{'netgrif-chip-fix' : dataField.value?.userValues?.size > 0}" color="primary">
+    <mat-label class="netgrif-label" [ngClass]="{'netgrif-label-disabled': formControlRef.disabled}" *ngIf="!showLargeLayout.value">{{dataField.title}}</mat-label>
+    <button mat-icon-button matPrefix
+            [disabled]="formControlRef.disabled"
+            color="primary"
+            (click)="selectUser()"
+            [matTooltip]="'dataField.user.selectUser' | translate"
+            [class.do-not-click]="formControlRef.disabled">
+        <mat-icon>how_to_reg</mat-icon>
+    </button>
+    <mat-chip-list #chipList aria-label="Autocomplete" [formControl]="formControlRef">
+        <mat-chip
+            *ngFor='let user of dataField.value.userValues | keyvalue' (removed)="deleteUser(user.key)">
+            {{user.value.fullName}}
+            <button *ngIf="!formControlRef.disabled" matChipRemove>
+                <mat-icon>cancel</mat-icon>
             </button>
-        </span>
-    </span>
-<mat-error *ngIf='dataField.isInvalid(formControlRef)'>{{'dataField.validations.required' | translate}}</mat-error>
+        </mat-chip>
+        <input
+            aria-label="Autocomplete"
+            matInput
+            #input
+            [placeholder]="dataField.placeholder"
+            [required]="dataField.behavior.required"
+            [matChipInputFor]="chipList">
+    </mat-chip-list>
+    <mat-hint [ngClass]="{'mat-hint-disabled': formControlRef.disabled}">{{dataField.description}}</mat-hint>
+    <mat-error *ngIf='dataField.isInvalid(formControlRef)'>{{'dataField.validations.required' | translate}}</mat-error>
+</mat-form-field>

@@ -32,4 +32,9 @@ export abstract class AbstractI18nDividerFieldComponent extends AbstractBaseData
             return this.dataField.component.properties.fontSize + 'px';
         }
     }
+
+    public dividerPropertyEnabled(property: string): boolean {
+        return !!this.dataField?.component?.properties
+            && property in this.dataField.component.properties;
+    }
 }

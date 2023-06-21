@@ -127,7 +127,7 @@ export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsC
     }
 
     public hasHint(): boolean {
-        return this.textI18nField.description !== undefined && this.textI18nField.description !== '';
+        return this.dataField.description !== undefined && this.dataField.description !== '';
     }
 
 
@@ -154,5 +154,10 @@ export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsC
         if (this.checkPropertyInComponent('fontSize')) {
             return this.dataField.component.properties.fontSize + 'px';
         }
+    }
+
+    public textPropertyEnabled(property: string): boolean {
+        return !!this.dataField?.component?.properties
+            && property in this.dataField.component.properties;
     }
 }

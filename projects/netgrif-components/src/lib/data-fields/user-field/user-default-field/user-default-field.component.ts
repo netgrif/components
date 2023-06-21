@@ -2,13 +2,13 @@ import {Component, Inject, Optional} from '@angular/core';
 import {TranslateService} from "@ngx-translate/core";
 import {
     DATA_FIELD_PORTAL_DATA,
-    SideMenuService,
     SnackBarService,
     DataFieldPortalData,
     UserField,
     AbstractUserDefaultFieldComponent
 } from '@netgrif/components-core';
-import {UserAssignComponent} from "../../../side-menu/content-components/user-assign/user-assign.component";
+import {UserAssignDialogComponent} from '../../../dialog/user-assign-dialog/user-assign-dialog.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'nc-user-default-field',
@@ -17,15 +17,15 @@ import {UserAssignComponent} from "../../../side-menu/content-components/user-as
 })
 export class UserDefaultFieldComponent extends AbstractUserDefaultFieldComponent {
 
-    constructor(sideMenuService: SideMenuService,
+    constructor(dialog: MatDialog,
                 snackbar: SnackBarService,
                 translate: TranslateService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<UserField>) {
-        super(sideMenuService, snackbar, translate, dataFieldPortalData);
+        super(dialog, snackbar, translate, dataFieldPortalData);
     }
 
     public selectUser() {
-        super.selectAbstractUser(UserAssignComponent);
+        super.selectAbstractUser(UserAssignDialogComponent);
     }
 
 }

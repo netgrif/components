@@ -57,10 +57,10 @@ export abstract class AbstractEnumerationStepperFieldComponent extends AbstractB
     }
 
     public hasTitle(): boolean {
-        return this.enumerationField.title !== undefined && this.enumerationField.title !== '';
+        return this.dataField.title !== undefined && this.dataField.title !== '';
     }
 
     public resolveValue(key: string): string {
-        return this.enumerationField.choices.find(k => k.key === key)?.value;
+        return this.dataField.choices.find(k => k.key === key)?.value;
     }
 }

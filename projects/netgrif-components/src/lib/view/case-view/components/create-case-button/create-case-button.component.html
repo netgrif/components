@@ -3,7 +3,7 @@
     <mat-icon *ngIf="(loading$ | async) === false" class="net-upload" aria-hidden="false">{{!!resolvedCaseButtonIcon ? resolvedCaseButtonIcon : 'add'}}</mat-icon>
 </button>
 <ng-template #titleButton>
-    <button  mat-raised-button color="primary" (click)="createNewCase()" [class.spinner]="loading$ | async"
+    <button  mat-flat-button class="height-44" color="primary" (click)="createNewCase()" [class.spinner]="loading$ | async"
              [disabled]="loading$ | async">
         <mat-icon *ngIf="!!resolvedCaseButtonIcon && (loading$ | async) === false" class="button-icon" aria-hidden="false">{{resolvedCaseButtonIcon}}</mat-icon>
         <span *ngIf="(loading$ | async) === false">{{resolvedCaseButtonTitle}}</span>

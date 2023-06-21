@@ -41,6 +41,8 @@ export interface FilesState {
 })
 export abstract class AbstractFileListDefaultFieldComponent extends AbstractBaseDataFieldComponent<FileListField> implements OnInit, AfterViewInit, OnDestroy {
 
+    private labelWidth: number;
+    public cutProperty: string;
     public uploadedFiles: Array<string>;
     public state: FilesState;
     private valueChange$: Subscription;
@@ -105,6 +107,7 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractBase
     }
 
     ngOnDestroy(): void {
+        super.ngOnDestroy();
         this.valueChange$.unsubscribe();
     }
 
@@ -349,5 +352,14 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractBase
 
     private resolveParentTaskId(): string {
         return !!this.dataField.parentTaskId ? this.dataField.parentTaskId : this.taskId;
+    }
+
+    public getCutProperty(i18nLabel): string {
+        if (this.labelWidth !== i18nLabel.offsetWidth) {
+            this.labelWidth = i18nLabel.offsetWidth;
+            const calculatedWidth = 'calc(0.5em + ' + i18nLabel.offsetWidth / 4 * 3 + 'px)';
+            this.cutProperty = `polygon(0 0, 0 100%, 100% 100%, 100% 0%, ${calculatedWidth} 0, ${calculatedWidth} 3px, 0.5em 3px, 0.5em 0)`;
+        }
+        return this.cutProperty;
     }
 }
