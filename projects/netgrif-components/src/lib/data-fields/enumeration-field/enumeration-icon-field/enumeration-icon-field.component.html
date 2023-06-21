@@ -1,4 +1,4 @@
-<div *ngIf="!horizontal">
+<div *ngIf="!horizontal; else horizont">
     <mat-label class="netgrif-label" [ngClass]="{'netgrif-label-disabled': formControlRef.disabled}" *ngIf="!showLargeLayout.value">{{dataField.title}}
         <nc-required-label *ngIf="dataField.behavior.required" [isIn]="!formControlRef.disabled"></nc-required-label>
         <br></mat-label>
@@ -13,7 +13,7 @@
         <mat-divider class="enum-icon-divider" *ngIf="i !== dataField.choices.length - 1 && resolveDivider(option.key)"></mat-divider>
     </div>
 </div>
-<div *ngIf="horizontal">
+<ng-template #horizont>
     <mat-label class="netgrif-label" [ngClass]="{'netgrif-label-disabled': formControlRef.disabled}" *ngIf="!showLargeLayout.value">{{dataField.title}}
         <nc-required-label *ngIf="dataField.behavior.required" [isIn]="!formControlRef.disabled"></nc-required-label>
         <br></mat-label>
@@ -30,5 +30,4 @@
             <mat-divider [vertical]="true" *ngIf="i !== dataField.choices.length - 1 && resolveDivider(option.key)"></mat-divider>
         </div>
     </div>
-
-</div>
+</ng-template>
