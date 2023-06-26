@@ -4,7 +4,7 @@ import {
     DATA_FIELD_PORTAL_DATA,
     DataFieldPortalData,
     TaskRefField
-} from 'netgrif-components-core';
+} from '@netgrif/components-core';
 import {
     DefaultCaseRefListViewComponent
 } from '../../../navigation/group-navigation-component-resolver/default-components/default-case-ref-list-view/default-case-ref-list-view.component';

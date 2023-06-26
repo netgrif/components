@@ -1,5 +1,5 @@
 import {Component, Inject} from '@angular/core';
-import {ProcessRole, UserListInjectedData, UserListService, UserListValue, UserValue} from 'netgrif-components-core';
+import {ProcessRole, UserListInjectedData, UserListService, UserListValue, UserValue} from '@netgrif/components-core';
 import {FormControl} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
