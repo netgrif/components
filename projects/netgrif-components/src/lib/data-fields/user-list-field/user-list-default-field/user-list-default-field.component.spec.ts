@@ -7,7 +7,8 @@ import {
     SideMenuService,
     TranslateLibModule,
     UserListField,
-    WrappedBoolean
+    WrappedBoolean,
+    UserListValue
 } from "@netgrif/components-core";
 import {AngularResizeEventModule} from "angular-resize-event";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
@@ -34,7 +35,7 @@ describe('UserListDefaultFieldComponent', () => {
                             visible: true,
                             editable: true,
                             hidden: true
-                        }, undefined,
+                        }, new UserListValue(new Map()),
                         undefined),
                     formControlRef: new FormControl(),
                     showLargeLayout: new WrappedBoolean()
