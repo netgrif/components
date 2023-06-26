@@ -7,14 +7,16 @@ import {
     NAE_TAB_DATA,
     NAE_VIEW_ID_SEGMENT,
     OverflowService,
-    TestMockDependenciesModule, UserFilterConstants
-} from 'netgrif-components-core';
+    TestMockDependenciesModule, UserFilterConstants,
+    NAE_BASE_FILTER,
+    SimpleFilter
+} from '@netgrif/components-core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
 import {of} from 'rxjs';
 import {DefaultTabbedTaskViewComponent} from '../default-tabbed-task-view/default-tabbed-task-view.component';
 
-describe('DefaultCaseViewComponent', () => {
+describe('DefaultCaseRefListViewComponent', () => {
   let component: DefaultCaseRefListViewComponent;
   let fixture: ComponentFixture<DefaultCaseRefListViewComponent>;
 
@@ -27,6 +29,10 @@ describe('DefaultCaseViewComponent', () => {
             RouterTestingModule.withRoutes([]),
         ],
         providers: [
+            {
+                provide: NAE_BASE_FILTER,
+                useValue: { filter: SimpleFilter.emptyCaseFilter() }
+            },
             {   provide: NAE_VIEW_ID_SEGMENT, useValue: 'id'},
             OverflowService,
             {

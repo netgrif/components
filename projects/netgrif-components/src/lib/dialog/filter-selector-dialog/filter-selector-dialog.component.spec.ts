@@ -12,9 +12,14 @@ import {
     MockAuthenticationMethodService,
     MockAuthenticationService,
     MockUserResourceService,TestConfigurationService,
-    UserResourceService
-} from 'netgrif-components-core';
-import {MatDialogModule} from '@angular/material/dialog';
+    UserResourceService,
+    MaterialModule,
+    TranslateLibModule
+} from '@netgrif/components-core';
+import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
+import {RouterTestingModule} from "@angular/router/testing";
+import {NO_ERRORS_SCHEMA} from "@angular/core";
+import {PanelComponentModule} from "../../panel/panel.module";
 
 describe('FilterSelectorDialogComponent', () => {
     let component: FilterSelectorDialogComponent;
@@ -22,18 +27,26 @@ describe('FilterSelectorDialogComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
+            declarations: [FilterSelectorDialogComponent],
             imports: [
-                SideMenuFilterSelectorComponentModule,
+                MaterialModule,
                 HttpClientTestingModule,
                 NoopAnimationsModule,
-                MatDialogModule
+                PanelComponentModule,
+                TranslateLibModule,
+                RouterTestingModule.withRoutes([]),
+                MatDialogModule,
+                SideMenuFilterSelectorComponentModule
             ],
             providers: [
-                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-                {provide: AuthenticationService, useClass: MockAuthenticationService},
-                {provide: UserResourceService, useClass: MockUserResourceService},
-                {provide: ConfigurationService, useClass: TestConfigurationService}
-            ]
+                { provide: MAT_DIALOG_DATA, useValue: {} },
+                { provide: MatDialogRef, useValue: {} },
+                { provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService },
+                { provide: ConfigurationService, useClass: TestConfigurationService },
+                { provide: AuthenticationService, useClass: MockAuthenticationService },
+                { provide: UserResourceService, useClass: MockUserResourceService }
+            ],
+            schemas: [NO_ERRORS_SCHEMA]
         })
             .compileComponents();
     });

@@ -8,8 +8,9 @@ import {
     NAE_TAB_DATA,
     NAE_VIEW_ID_SEGMENT,
     OverflowService,
-    TestMockDependenciesModule, UserFilterConstants
-} from 'netgrif-components-core';
+    TestMockDependenciesModule,
+    UserFilterConstants
+} from '@netgrif/components-core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
 import {of} from 'rxjs';
@@ -20,7 +21,7 @@ import {Component} from '@angular/core';
 
 describe('CaseRefDefaultComponent', () => {
   let component: CaseRefDefaultComponent;
-  let fixture: ComponentFixture<CaseRefDefaultComponent>;
+  let fixture: ComponentFixture<TestWrapperComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -68,8 +69,8 @@ describe('CaseRefDefaultComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CaseRefDefaultComponent);
-    component = fixture.componentInstance;
+      fixture = TestBed.createComponent(TestWrapperComponent);
+      component = fixture.debugElement.children[0].componentInstance;
     fixture.detectChanges();
   });
 

@@ -5,13 +5,23 @@ import {
     ConfigurationService, ErrorSnackBarComponent,
     MaterialModule,
     SnackBarModule, SuccessSnackBarComponent, TestConfigurationService,
-    TranslateLibModule
-} from 'netgrif-components-core';
+    TranslateLibModule,
+    AuthenticationMethodService,
+    MockAuthenticationMethodService,
+    AuthenticationService,
+    MockAuthenticationService,
+    UserResourceService,
+    MockUserResourceService,
+    NewCaseInjectionData,
+    PetriNetReference
+} from '@netgrif/components-core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {HotkeyModule, HotkeysService} from 'angular2-hotkeys';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
-import {MatDialogModule} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
+import {NO_ERRORS_SCHEMA} from "@angular/core";
+import {Observable} from "rxjs";
 
 describe('NewCaseDialogComponent', () => {
   let component: NewCaseDialogComponent;
@@ -19,6 +29,7 @@ describe('NewCaseDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+        schemas: [NO_ERRORS_SCHEMA],
         imports: [
             CommonModule,
             MaterialModule,
@@ -31,7 +42,14 @@ describe('NewCaseDialogComponent', () => {
         ],
         providers: [
             HotkeysService,
-            {provide: ConfigurationService, useClass: TestConfigurationService}
+            {provide: ConfigurationService, useClass: TestConfigurationService},
+            {
+                provide: MAT_DIALOG_DATA, useValue: {allowedNets$: new Observable<Array<PetriNetReference>>()} as NewCaseInjectionData
+            },
+            { provide: MatDialogRef, useValue: {} },
+            { provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService },
+            { provide: AuthenticationService, useClass: MockAuthenticationService },
+            { provide: UserResourceService, useClass: MockUserResourceService }
         ],
         declarations: [
             NewCaseDialogComponent,

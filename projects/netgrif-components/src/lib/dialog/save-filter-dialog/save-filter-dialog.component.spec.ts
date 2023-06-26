@@ -4,15 +4,23 @@ import {SaveFilterDialogComponent} from './save-filter-dialog.component';
 import {
     AuthenticationMethodService,
     ConfigurationService,
-    MaterialModule, MockAuthenticationMethodService, TestConfigurationService,
-    TranslateLibModule
-} from 'netgrif-components-core';
+    MaterialModule,
+    MockAuthenticationMethodService,
+    TestConfigurationService,
+    TranslateLibModule,
+    DialogModule,
+    AuthenticationService,
+    MockAuthenticationService,
+    UserResourceService,
+    MockUserResourceService
+} from '@netgrif/components-core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {PanelComponentModule} from '../../panel/panel.module';
 import {RouterTestingModule} from '@angular/router/testing';
 import {SaveFilterComponent} from '../../side-menu/content-components/save-filter/save-filter.component';
-import {MatDialogModule} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
+import {NO_ERRORS_SCHEMA} from "@angular/core";
 
 describe('SaveFilterDialogComponent', () => {
     let component: SaveFilterDialogComponent;
@@ -20,6 +28,7 @@ describe('SaveFilterDialogComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
+            declarations: [SaveFilterDialogComponent],
             imports: [
                 MaterialModule,
                 HttpClientTestingModule,
@@ -29,11 +38,15 @@ describe('SaveFilterDialogComponent', () => {
                 RouterTestingModule.withRoutes([]),
                 MatDialogModule
             ],
-            declarations: [SaveFilterComponent],
             providers: [
-                {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-            ]
+                { provide: MAT_DIALOG_DATA, useValue: {} },
+                { provide: MatDialogRef, useValue: {} },
+                { provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService },
+                { provide: ConfigurationService, useClass: TestConfigurationService },
+                { provide: AuthenticationService, useClass: MockAuthenticationService },
+                { provide: UserResourceService, useClass: MockUserResourceService }
+            ],
+            schemas: [NO_ERRORS_SCHEMA]
         })
             .compileComponents();
     });

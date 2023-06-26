@@ -6,10 +6,17 @@ import {
     MaterialModule,
     SnackBarModule, TestConfigurationService,
     TranslateLibModule,
-    UserListService
-} from 'netgrif-components-core';
+    UserListService,
+    AuthenticationMethodService,
+    MockAuthenticationMethodService,
+    AuthenticationService,
+    MockAuthenticationService,
+    MockUserResourceService,
+    UserResourceService
+} from '@netgrif/components-core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 
 describe('UserAssignDialogComponent', () => {
     let component: UserAssignDialogComponent;
@@ -25,6 +32,11 @@ describe('UserAssignDialogComponent', () => {
                 SnackBarModule
             ],
             providers: [
+                { provide: MAT_DIALOG_DATA, useValue: {} },
+                { provide: MatDialogRef, useValue: {} },
+                { provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService },
+                { provide: AuthenticationService, useClass: MockAuthenticationService },
+                { provide: UserResourceService, useClass: MockUserResourceService },
                 UserListService,
                 {provide: ConfigurationService, useClass: TestConfigurationService}
             ],

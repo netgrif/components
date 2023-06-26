@@ -5,21 +5,24 @@ import {
     ConfigurationService,
     MaterialModule, TestConfigurationService,
     TranslateLibModule,
-    UserListService
-} from 'netgrif-components-core';
+    UserListService,
+    AuthenticationMethodService,
+    MockAuthenticationMethodService,
+    AuthenticationService,
+    MockAuthenticationService,
+    UserResourceService,
+    MockUserResourceService,
+    UserListInjectedData,
+    UserListValue,
+    UserValue
+} from '@netgrif/components-core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {UserAssignComponent} from '../../side-menu/content-components/user-assign/user-assign.component';
-import {
-    UserAssignListComponent
-} from '../../side-menu/content-components/user-assign/user-assign-list/user-assign-list.component';
-import {
-    UserAssignItemComponent
-} from '../../side-menu/content-components/user-assign/user-assign-list/user-assign-item/user-assign-item.component';
-import {MatDialogModule} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {
     SideMenuMultiUserAssignComponentModule
 } from '../../side-menu/content-components/multi-user-assign/side-menu-multi-user-assign-component.module';
+import {NO_ERRORS_SCHEMA} from "@angular/core";
 
 describe('MultiUserAssignDialogComponent', () => {
     let component: MultiUserAssignDialogComponent;
@@ -37,8 +40,16 @@ describe('MultiUserAssignDialogComponent', () => {
             ],
             providers: [
                 UserListService,
-                {provide: ConfigurationService, useClass: TestConfigurationService}
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                {
+                    provide: MAT_DIALOG_DATA, useValue: {roles: [], value: { userValues: new Map()} as UserListValue} as UserListInjectedData
+                },
+                { provide: MatDialogRef, useValue: {} },
+                { provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService },
+                { provide: AuthenticationService, useClass: MockAuthenticationService },
+                { provide: UserResourceService, useClass: MockUserResourceService }
             ],
+            schemas: [NO_ERRORS_SCHEMA],
             declarations: [
                 MultiUserAssignDialogComponent
             ]
