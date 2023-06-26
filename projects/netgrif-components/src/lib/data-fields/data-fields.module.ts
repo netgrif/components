@@ -119,6 +119,7 @@ import {
     TaskRefDashboardFieldComponent
 } from "./task-ref-field/task-ref-dashboard-field/task-ref-dashboard-field.component";
 import { TaskRefListFieldComponent } from './task-ref-field/task-ref-list-field/task-ref-list-field.component';
+import { CaseRefDefaultComponent } from './case-ref-field/case-ref-default/case-ref-default.component';
 
 @NgModule({
     declarations: [
@@ -178,7 +179,8 @@ import { TaskRefListFieldComponent } from './task-ref-field/task-ref-list-field/
         UserDefaultFieldComponent,
         UserListDefaultFieldComponent,
         TaskRefDashboardFieldComponent,
-        TaskRefListFieldComponent
+        TaskRefListFieldComponent,
+        CaseRefDefaultComponent
     ],
     exports: [
         DataFieldTemplateComponent
@@ -247,6 +249,7 @@ export class DataFieldsComponentModule {
         registry.register("text-dashboard_portal", (injector: Injector) => new ComponentPortal<any>(DashboardPortalTextFieldComponent, null, injector));
         registry.register("task-ref-dashboard", (injector: Injector) => new ComponentPortal<any>(TaskRefDashboardFieldComponent, null, injector));
         registry.register("task-ref-task-list", (injector: Injector) => new ComponentPortal<any>(TaskRefListFieldComponent, null, injector));
+        registry.register("case-ref-default", (injector: Injector) => new ComponentPortal<any>(CaseRefDefaultComponent, null, injector));
         registry.register("user-default", (injector: Injector) => new ComponentPortal<any>(UserDefaultFieldComponent, null, injector));
         registry.register("user-list-default", (injector: Injector) => new ComponentPortal<any>(UserListDefaultFieldComponent, null, injector));
     }

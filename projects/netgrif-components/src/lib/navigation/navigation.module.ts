@@ -44,6 +44,7 @@ import { NavigationDoubleDrawerComponent } from './navigation-double-drawer/navi
 import { MatDividerModule } from '@angular/material/divider';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { DefaultTaskViewComponent } from './group-navigation-component-resolver/default-components/default-task-view/default-task-view.component';
+import { DefaultCaseRefListViewComponent } from './group-navigation-component-resolver/default-components/default-case-ref-list-view/default-case-ref-list-view.component';
 
 
 @NgModule({
@@ -58,7 +59,8 @@ import { DefaultTaskViewComponent } from './group-navigation-component-resolver/
         DefaultTabViewComponent,
         NavigationDoubleDrawerComponent,
         BreadcrumbsComponent,
-        DefaultTaskViewComponent
+        DefaultTaskViewComponent,
+        DefaultCaseRefListViewComponent
     ],
 	imports: [
 		CommonModule,

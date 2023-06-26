@@ -24,13 +24,11 @@ import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-fie
 import {AbstractUserListDefaultFieldComponent} from "./abstract-user-list-default-field.component";
 import {FormControl} from "@angular/forms";
 import {WrappedBoolean} from "../../data-field-template/models/wrapped-boolean";
+import {MatDialog} from '@angular/material/dialog';
 
-describe('AbstractUserListFieldComponent', () => {
+describe('AbstractUserListDefaultFieldComponent', () => {
     let component: TestUserListFieldComponent;
     let fixture: ComponentFixture<TestUserListFieldComponent>;
-    let sideMenuComponent: TestSideMenuComponent;
-    let sideMenuFixture: ComponentFixture<TestSideMenuComponent>;
-    let service: SideMenuService;
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
@@ -41,7 +39,7 @@ describe('AbstractUserListFieldComponent', () => {
                 TranslateLibModule,
                 HttpClientTestingModule
             ],
-            declarations: [TestUserListFieldComponent, TestSideMenuComponent],
+            declarations: [TestUserListFieldComponent],
             providers: [
                 TranslateService,
                 {provide: DATA_FIELD_PORTAL_DATA, useValue: {
@@ -64,34 +62,12 @@ describe('AbstractUserListFieldComponent', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(TestUserListFieldComponent);
-        sideMenuFixture = TestBed.createComponent(TestSideMenuComponent);
-        service = TestBed.inject(SideMenuService);
         component = fixture.componentInstance;
-        sideMenuComponent = sideMenuFixture.componentInstance;
         fixture.detectChanges();
-        sideMenuFixture.detectChanges();
     });
 
     it('should create', () => {
         expect(component).toBeTruthy();
-    });
-
-    it('should open and close', (done) => {
-        component.selectAbstractUser(TestAssignUserComponent);
-        service.close({opened: true, message: 'Test',
-            data: [new UserValue('test', 'name', 'surname', 'test@email.com')]});
-        expect(component.dataField.value.userValues.get('test').id === 'test').toBeTruthy();
-        done();
-    });
-
-    it('should remove', (done) => {
-        component.selectAbstractUser(TestAssignUserComponent);
-        service.close({opened: true, message: 'Test',
-            data: [new UserValue('test', 'name', 'surname', 'test@email.com')]});
-        expect(component.dataField.value.userValues.get('test').id === 'test').toBeTruthy();
-        component.removeAbstractUser('test');
-        expect(component.dataField.value.userValues.size === 0).toBeTruthy();
-        done();
     });
 
     afterEach(() => {
@@ -104,38 +80,10 @@ describe('AbstractUserListFieldComponent', () => {
     template: ''
 })
 class TestUserListFieldComponent extends AbstractUserListDefaultFieldComponent {
-    constructor(sideMenuService: SideMenuService,
+    constructor(matDialog: MatDialog,
                 snackbar: SnackBarService,
                 translate: TranslateService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<UserListField>) {
-        super(sideMenuService, snackbar, translate, dataFieldPortalData);
-    }
-}
-
-@Component({
-    selector: 'ncc-test-import',
-    template: '<input type="file" id="sidemenu-fileUpload" name="fileUpload" multiple="multiple" accept="text/xml"/>'
-})
-class TestAssignUserComponent extends AbstractUserAssignComponent {
-    constructor(@Inject(NAE_SIDE_MENU_CONTROL) protected _sideMenuControl: SideMenuControl) {
-        super(_sideMenuControl);
-    }
-}
-
-@Component({
-    selector: 'ncc-test-sidemenu',
-    template: '<mat-sidenav-container class="side-menu-container">\n' +
-        '    <mat-sidenav #rightSideMenu mode="over" position="end" class="side-menu" ngClass.lt-sm="side-menu-size-mobile"' +
-        ' [ngClass.gt-xs]="portalWrapper.size">\n' +
-        '        <ng-template [cdkPortalOutlet]="portalWrapper.portal"></ng-template>\n' +
-        '    </mat-sidenav>\n' +
-        '    <mat-sidenav-content>\n' +
-        '        <ng-content></ng-content>\n' +
-        '    </mat-sidenav-content>\n' +
-        '</mat-sidenav-container>'
-})
-class TestSideMenuComponent extends AbstractSideMenuContainerComponent {
-    constructor(protected _sideMenuService: SideMenuService) {
-        super(_sideMenuService);
+        super(matDialog, snackbar, translate, dataFieldPortalData);
     }
 }

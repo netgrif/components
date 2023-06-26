@@ -61,6 +61,8 @@ export * from './task-ref-field/abstract-task-ref-field.component';
 export * from './task-ref-field/task-ref-dashboard-field/task-ref-dashboard-tile/abstract-task-ref-dashboard-tile.component';
 export * from './task-ref-field/task-ref-dashboard-field/abstract-task-ref-dashboard-field.component';
 export * from './task-ref-field/task-ref-list-field/abstract-task-ref-list-field.component';
+export * from './case-ref-field/case-ref-default/case-ref-default.component';
+export * from './case-ref-field/model/case-ref-injection-tokens';
 
 /* Class */
 export * from './models/abstract-data-field';
@@ -84,6 +86,7 @@ export * from './filter-field/models/filter-field';
 export * from './i18n-field/models/i18n-field';
 export * from './user-list-field/models/user-list-field';
 export * from './user-list-field/models/user-list-value';
+export * from './case-ref-field/model/case-ref-field';
 
 /* Interfaces */
 export * from './models/changed-fields';

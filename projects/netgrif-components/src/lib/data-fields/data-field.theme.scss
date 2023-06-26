@@ -79,6 +79,10 @@
     }
 
     .netgrif-input {
+
+        .mat-paginator-page-size-select .mat-form-field-infix {
+            min-width: unset !important;
+        }
         .mat-form-field-infix {
             padding: 5px 0 11px 0 !important;
             font-weight: 400 !important;
