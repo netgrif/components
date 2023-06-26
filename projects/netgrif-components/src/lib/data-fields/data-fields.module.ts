@@ -229,6 +229,7 @@ export class DataFieldsComponentModule {
         registry.register("filter-default", (injector: Injector) => new ComponentPortal<any>(FilterDefaultFieldComponent, null, injector));
         registry.register("filter-filter-tab-view", (injector: Injector) => new ComponentPortal<any>(FilterDefaultFieldComponent, null, injector));
         registry.register("i18n-divider", (injector: Injector) => new ComponentPortal<any>(I18nDividerFieldComponent, null, injector));
+        registry.register("i18n-text", (injector: Injector) => new ComponentPortal<any>(I18nTextFieldComponent, null, injector));
         registry.register("i18n-default", (injector: Injector) => new ComponentPortal<any>(I18nTextFieldComponent, null, injector));
         registry.register("multichoice-default", (injector: Injector) => new ComponentPortal<any>(MultichoiceSelectFieldComponent, null, injector));
         registry.register("multichoice-list", (injector: Injector) => new ComponentPortal<any>(MultichoiceListFieldComponent, null, injector));

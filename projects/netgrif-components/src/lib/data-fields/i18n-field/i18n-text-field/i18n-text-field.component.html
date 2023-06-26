@@ -12,8 +12,8 @@
     </ng-template>
     <ng-template [ngIf]="isPlainText()">
         <div class="full-width"
-             [ngStyle]="textPropertyEnabled('fontSize') && {'font-size': getTextFontSize()}">
-            <span [ngStyle]="textPropertyEnabled('textColor') && {'color': getTextColor()}">
+             [ngStyle]="checkPropertyInComponent('fontSize') && {'font-size': getTextFontSize()}">
+            <span [ngStyle]="checkPropertyInComponent('textColor') && {'color': getTextColor()}">
                 {{currentValue[selectedLanguage]}}
             </span>
         </div>
