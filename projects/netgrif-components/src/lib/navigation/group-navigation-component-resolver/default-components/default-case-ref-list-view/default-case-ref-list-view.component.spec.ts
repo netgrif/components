@@ -1,6 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DefaultCaseRefListViewComponent } from './default-case-ref-list-view.component';
+import {NavigationComponentModule} from '../../../navigation.module';
+import {
+    FilterField, FilterType,
+    NAE_TAB_DATA,
+    NAE_VIEW_ID_SEGMENT,
+    OverflowService,
+    TestMockDependenciesModule, UserFilterConstants
+} from 'netgrif-components-core';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {RouterTestingModule} from '@angular/router/testing';
+import {of} from 'rxjs';
+import {DefaultTabbedTaskViewComponent} from '../default-tabbed-task-view/default-tabbed-task-view.component';
 
 describe('DefaultCaseViewComponent', () => {
   let component: DefaultCaseRefListViewComponent;
@@ -8,7 +20,45 @@ describe('DefaultCaseViewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DefaultCaseRefListViewComponent ]
+        imports: [
+            NavigationComponentModule,
+            TestMockDependenciesModule,
+            NoopAnimationsModule,
+            RouterTestingModule.withRoutes([]),
+        ],
+        providers: [
+            {   provide: NAE_VIEW_ID_SEGMENT, useValue: 'id'},
+            OverflowService,
+            {
+                provide: NAE_TAB_DATA,
+                useValue: {
+                    allowedNets: [],
+                    tabUniqueId: '1',
+                    tabSelected$: of(true),
+                    tabClosed$: of(),
+                    tabViewOrder: 1,
+                    tabViewComponent: DefaultTabbedTaskViewComponent,
+                    navigationItemTaskData: [{fields: []}, {
+                        fields: [
+                            new FilterField(
+                                `${UserFilterConstants.FILTER_FIELD_ID}`,
+                                '',
+                                '',
+                                {
+                                    filterType: FilterType.CASE,
+                                    predicateMetadata: [],
+                                    searchCategories: []
+                                },
+                                [],
+                                {visible: true},
+                                '',
+                                ''
+                            )
+                        ]
+                    }]
+                }
+            }
+        ]
     })
     .compileComponents();
   });
