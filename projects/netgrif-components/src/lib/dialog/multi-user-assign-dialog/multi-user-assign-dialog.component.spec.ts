@@ -28,6 +28,8 @@ describe('MultiUserAssignDialogComponent', () => {
     let component: MultiUserAssignDialogComponent;
     let fixture: ComponentFixture<MultiUserAssignDialogComponent>;
 
+    const userMap = new Map<string, UserValue>();
+
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             imports: [
@@ -42,7 +44,7 @@ describe('MultiUserAssignDialogComponent', () => {
                 UserListService,
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {
-                    provide: MAT_DIALOG_DATA, useValue: {roles: [], value: { userValues: new Map()} as UserListValue} as UserListInjectedData
+                    provide: MAT_DIALOG_DATA, useValue: {roles: [], value: { userValues: userMap} as UserListValue} as UserListInjectedData
                 },
                 { provide: MatDialogRef, useValue: {} },
                 { provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService },
