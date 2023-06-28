@@ -138,8 +138,18 @@ export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsC
             : this.textI18nField.value.defaultValue;
     }
 
+    public getDefaultLanguageCode(): string {
+        return DEFAULT_LANGUAGE_CODE;
+    }
+
     public isPlainText(): boolean {
         if (this.textPropertyEnabled('plainText')) {
+            return this.textI18nField.component.properties.plainText === 'true';
+        }
+    }
+
+    public isBoldText(): boolean {
+        if (this.textPropertyEnabled('boldText')) {
             return this.textI18nField.component.properties.plainText === 'true';
         }
     }

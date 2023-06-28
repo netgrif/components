@@ -4,7 +4,8 @@
             <mat-label *ngIf="!showLargeLayout.value">{{textI18nField.title}}</mat-label>
             <input matInput
                    [disabled]="true"
-                   [ngModel]="currentValue[selectedLanguage]"
+                   [ngModel]="!!currentValue[selectedLanguage] && currentValue[selectedLanguage] !== ''
+                                ? currentValue[selectedLanguage] : currentValue[getDefaultLanguageCode()]"
                    [placeholder]="textI18nField.placeholder ? textI18nField.placeholder : ''"
                    [required]="textI18nField.behavior.required">
             <mat-hint>{{textI18nField.description}}</mat-hint>
@@ -13,8 +14,10 @@
     <ng-template [ngIf]="isPlainText()">
         <div class="full-width"
              [ngStyle]="textPropertyEnabled('fontSize') && {'font-size': getTextFontSize()}">
-            <span [ngStyle]="textPropertyEnabled('textColor') && {'color': getTextColor()}">
-                {{currentValue[selectedLanguage]}}
+            <span [ngStyle]="textPropertyEnabled('textColor') && {'color': getTextColor()}"
+                  [ngClass]="{'i18n-bold-text': isBoldText()}">
+                {{!!currentValue[selectedLanguage] && currentValue[selectedLanguage] !== ''
+                    ? currentValue[selectedLanguage] : currentValue[getDefaultLanguageCode()]}}
             </span>
         </div>
     </ng-template>
