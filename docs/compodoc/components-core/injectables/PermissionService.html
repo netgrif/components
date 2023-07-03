@@ -1156,7 +1156,7 @@ export class PermissionService {
     public checkUserPerms(users: UserPermissions, permission): boolean | undefined {
         let userPermValue: boolean;
         if (!!users) {
-            const loggedUserId &#x3D; this._userService.user.id;
+            const loggedUserId &#x3D; this._userService.user.getSelfOrImpersonated().id;
             Object.keys(users).forEach(user &#x3D;&gt; {
                 if (user &#x3D;&#x3D;&#x3D; loggedUserId &amp;&amp; users[user][permission] !&#x3D;&#x3D; undefined) {
                     userPermValue &#x3D; userPermValue &#x3D;&#x3D;&#x3D; undefined ?
