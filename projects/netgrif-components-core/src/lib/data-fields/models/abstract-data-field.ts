@@ -123,6 +123,8 @@ export abstract class DataField<T> {
      * */
     private _input: ElementRef;
 
+    private _focused = false;
+
     /**
      * @param _stringId - ID of the data field from backend
      * @param _title - displayed title of the data field from backend
@@ -345,6 +347,18 @@ export abstract class DataField<T> {
 
     set input(value: ElementRef) {
         this._input = value;
+    }
+
+    public setFocus() {
+        this._focused = true;
+    }
+
+    public unsetFocus() {
+        this._focused = false;
+    }
+
+    public isFocused() {
+        return this._focused;
     }
 
     /**
