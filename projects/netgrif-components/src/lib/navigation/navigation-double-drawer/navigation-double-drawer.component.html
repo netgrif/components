@@ -135,7 +135,7 @@
             class="mat-button mat-typography menu-font-color" [matTooltip]="folder.navigation.title" [matTooltipPosition]="'right'"
             [ngClass]="isItemAndNodeEqual(folder, currentNode) ? 'rail-selected-color' : ''" [routerLink]='folder.routing.path'
             routerLinkActive="active">
-        <mat-icon>{{isItemAndNodeEqual(folder, currentNode) ? openedFolderIcon : folderIcon}}</mat-icon>
+        <mat-icon>{{folder.navigation.icon}}</mat-icon>
     </button>
 
     <div *ngIf="(leftLoading$ | async)" fxLayout="column" fxLayoutAlign="center center" class="margin-top-default">
@@ -158,7 +158,7 @@
         <div *ngFor='let item of rightItems; trackBy: itemsTrackBy' (click)="onItemClick(item)"
              class="tree-node mat-typography mat-body-2" fxLayoutAlign="start center" [routerLink]='item.routing.path'
              routerLinkActive="active">
-            <mat-icon class="tree-node-icon">{{hasItemChildren(item) ? "folder" : item.navigation.icon}}</mat-icon>
+            <mat-icon class="tree-node-icon">{{item.navigation.icon}}</mat-icon>
             <span>{{item.navigation.title}}</span>
             <span class="menu-item-focus-overlay"></span>
         </div>
