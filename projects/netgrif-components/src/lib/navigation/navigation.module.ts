@@ -61,7 +61,7 @@ import { DefaultNoFilterProvidedComponent } from './group-navigation-component-r
         NavigationDoubleDrawerComponent,
         BreadcrumbsComponent,
         DefaultTaskViewComponent,
-        DefaultCaseRefListViewComponent
+        DefaultCaseRefListViewComponent,
         BreadcrumbsComponent,
         DefaultNoFilterProvidedComponent
     ],
