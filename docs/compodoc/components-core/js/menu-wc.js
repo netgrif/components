@@ -124,6 +124,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/MaterialModule.html" data-type="entity-link" >MaterialModule</a>
                             </li>
                             <li class="link">
+                                <a href="modules/ProfileModule.html" data-type="entity-link" >ProfileModule</a>
+                            </li>
+                            <li class="link">
                                 <a href="modules/PromptDialogModule.html" data-type="entity-link" >PromptDialogModule</a>
                                     <li class="chapter inner">
                                         <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
@@ -189,6 +192,43 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                     </ul>
                                 </li>
                             </li>
+                            <li class="link">
+                                <a href="modules/UtilityModule.html" data-type="entity-link" >UtilityModule</a>
+                                <li class="chapter inner">
+                                    <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
+                                        'data-target="#directives-links-module-UtilityModule-71b7821c6d1a72e2b84e1d35bb5253ed"' : 'data-target="#xs-directives-links-module-UtilityModule-71b7821c6d1a72e2b84e1d35bb5253ed"' }>
+                                        <span class="icon ion-md-code-working"></span>
+                                        <span>Directives</span>
+                                        <span class="icon ion-ios-arrow-down"></span>
+                                    </div>
+                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-UtilityModule-71b7821c6d1a72e2b84e1d35bb5253ed"' :
+                                        'id="xs-directives-links-module-UtilityModule-71b7821c6d1a72e2b84e1d35bb5253ed"' }>
+                                        <li class="link">
+                                            <a href="directives/LetDirective.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules" >LetDirective</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                    <li class="chapter inner">
+                                        <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
+                                            'data-target="#pipes-links-module-UtilityModule-71b7821c6d1a72e2b84e1d35bb5253ed"' : 'data-target="#xs-pipes-links-module-UtilityModule-71b7821c6d1a72e2b84e1d35bb5253ed"' }>
+                                            <span class="icon ion-md-add"></span>
+                                            <span>Pipes</span>
+                                            <span class="icon ion-ios-arrow-down"></span>
+                                        </div>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="pipes-links-module-UtilityModule-71b7821c6d1a72e2b84e1d35bb5253ed"' :
+                                            'id="xs-pipes-links-module-UtilityModule-71b7821c6d1a72e2b84e1d35bb5253ed"' }>
+                                            <li class="link">
+                                                <a href="pipes/ContainsPipe.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules" >ContainsPipe</a>
+                                            </li>
+                                            <li class="link">
+                                                <a href="pipes/IsEmptyPipe.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules" >IsEmptyPipe</a>
+                                            </li>
+                                            <li class="link">
+                                                <a href="pipes/IsNonEmptyPipe.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules" >IsNonEmptyPipe</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                            </li>
                 </ul>
                 </li>
                     <li class="chapter">
@@ -207,6 +247,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="link">
                                 <a href="components/AbstractAuthenticationOverlayComponent.html" data-type="entity-link" >AbstractAuthenticationOverlayComponent</a>
+                            </li>
+                            <li class="link">
+                                <a href="components/AbstractBaseUserAssignListComponent.html" data-type="entity-link" >AbstractBaseUserAssignListComponent</a>
                             </li>
                             <li class="link">
                                 <a href="components/AbstractBooleanFieldComponent.html" data-type="entity-link" >AbstractBooleanFieldComponent</a>
@@ -230,6 +273,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="components/AbstractCaseViewComponent.html" data-type="entity-link" >AbstractCaseViewComponent</a>
                             </li>
                             <li class="link">
+                                <a href="components/AbstractChangePasswordComponent.html" data-type="entity-link" >AbstractChangePasswordComponent</a>
+                            </li>
+                            <li class="link">
                                 <a href="components/AbstractCountCardComponent.html" data-type="entity-link" >AbstractCountCardComponent</a>
                             </li>
                             <li class="link">
@@ -239,7 +285,25 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="components/AbstractCustomCardComponent.html" data-type="entity-link" >AbstractCustomCardComponent</a>
                             </li>
                             <li class="link">
+                                <a href="components/AbstractDashboardBarChartTextFieldComponent.html" data-type="entity-link" >AbstractDashboardBarChartTextFieldComponent</a>
+                            </li>
+                            <li class="link">
                                 <a href="components/AbstractDashboardContentComponent.html" data-type="entity-link" >AbstractDashboardContentComponent</a>
+                            </li>
+                            <li class="link">
+                                <a href="components/AbstractDashboardIframeTextFieldComponent.html" data-type="entity-link" >AbstractDashboardIframeTextFieldComponent</a>
+                            </li>
+                            <li class="link">
+                                <a href="components/AbstractDashboardLineChartTextFieldComponent.html" data-type="entity-link" >AbstractDashboardLineChartTextFieldComponent</a>
+                            </li>
+                            <li class="link">
+                                <a href="components/AbstractDashboardPieChartTextFieldComponent.html" data-type="entity-link" >AbstractDashboardPieChartTextFieldComponent</a>
+                            </li>
+                            <li class="link">
+                                <a href="components/AbstractDashboardPortalTextFieldComponent.html" data-type="entity-link" >AbstractDashboardPortalTextFieldComponent</a>
+                            </li>
+                            <li class="link">
+                                <a href="components/AbstractDashboardTextFieldComponent.html" data-type="entity-link" >AbstractDashboardTextFieldComponent</a>
                             </li>
                             <li class="link">
                                 <a href="components/AbstractDataFieldComponent.html" data-type="entity-link" >AbstractDataFieldComponent</a>
@@ -306,6 +370,12 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="link">
                                 <a href="components/AbstractFilterFieldContentComponent.html" data-type="entity-link" >AbstractFilterFieldContentComponent</a>
+                            </li>
+                            <li class="link">
+                                <a href="components/AbstractFilterFieldTabViewComponent.html" data-type="entity-link" >AbstractFilterFieldTabViewComponent</a>
+                            </li>
+                            <li class="link">
+                                <a href="components/AbstractFilterFieldTabViewContentComponent.html" data-type="entity-link" >AbstractFilterFieldTabViewContentComponent</a>
                             </li>
                             <li class="link">
                                 <a href="components/AbstractFilterSelectorComponent.html" data-type="entity-link" >AbstractFilterSelectorComponent</a>
@@ -387,6 +457,15 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="link">
                                 <a href="components/AbstractMultichoiceSelectFieldComponent.html" data-type="entity-link" >AbstractMultichoiceSelectFieldComponent</a>
+                            </li>
+                            <li class="link">
+                                <a href="components/AbstractMultiUserAssignComponent.html" data-type="entity-link" >AbstractMultiUserAssignComponent</a>
+                            </li>
+                            <li class="link">
+                                <a href="components/AbstractMultiUserAssignItemComponent.html" data-type="entity-link" >AbstractMultiUserAssignItemComponent</a>
+                            </li>
+                            <li class="link">
+                                <a href="components/AbstractMultiUserAssignListComponent.html" data-type="entity-link" >AbstractMultiUserAssignListComponent</a>
                             </li>
                             <li class="link">
                                 <a href="components/AbstractNavigationDoubleDrawerComponent.html" data-type="entity-link" >AbstractNavigationDoubleDrawerComponent</a>
@@ -473,6 +552,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="components/AbstractSearchPredicateComponent.html" data-type="entity-link" >AbstractSearchPredicateComponent</a>
                             </li>
                             <li class="link">
+                                <a href="components/AbstractSessionIdleComponent.html" data-type="entity-link" >AbstractSessionIdleComponent</a>
+                            </li>
+                            <li class="link">
                                 <a href="components/AbstractSideMenuContainerComponent.html" data-type="entity-link" >AbstractSideMenuContainerComponent</a>
                             </li>
                             <li class="link">
@@ -512,6 +594,12 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="components/AbstractTaskPanelComponent.html" data-type="entity-link" >AbstractTaskPanelComponent</a>
                             </li>
                             <li class="link">
+                                <a href="components/AbstractTaskRefDashboardTileComponent.html" data-type="entity-link" >AbstractTaskRefDashboardTileComponent</a>
+                            </li>
+                            <li class="link">
+                                <a href="components/AbstractTaskRefFieldComponent.html" data-type="entity-link" >AbstractTaskRefFieldComponent</a>
+                            </li>
+                            <li class="link">
                                 <a href="components/AbstractTaskViewComponent.html" data-type="entity-link" >AbstractTaskViewComponent</a>
                             </li>
                             <li class="link">
@@ -546,6 +634,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="link">
                                 <a href="components/AbstractUserFieldComponent.html" data-type="entity-link" >AbstractUserFieldComponent</a>
+                            </li>
+                            <li class="link">
+                                <a href="components/AbstractUserImpersonateComponent.html" data-type="entity-link" >AbstractUserImpersonateComponent</a>
                             </li>
                             <li class="link">
                                 <a href="components/AbstractUserInviteComponent.html" data-type="entity-link" >AbstractUserInviteComponent</a>
@@ -786,6 +877,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="classes/LessThanEqualDateTime.html" data-type="entity-link" >LessThanEqualDateTime</a>
                             </li>
                             <li class="link">
+                                <a href="classes/LetContext.html" data-type="entity-link" >LetContext</a>
+                            </li>
+                            <li class="link">
                                 <a href="classes/Like.html" data-type="entity-link" >Like</a>
                             </li>
                             <li class="link">
@@ -811,6 +905,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="link">
                                 <a href="classes/MockEndpoint.html" data-type="entity-link" >MockEndpoint</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/MockProfileService.html" data-type="entity-link" >MockProfileService</a>
                             </li>
                             <li class="link">
                                 <a href="classes/MockSignUpService.html" data-type="entity-link" >MockSignUpService</a>
@@ -1075,6 +1172,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                     <a href="injectables/CustomDateAdapter.html" data-type="entity-link" >CustomDateAdapter</a>
                                 </li>
                                 <li class="link">
+                                    <a href="injectables/DashboardPortalComponentRegistryService.html" data-type="entity-link" >DashboardPortalComponentRegistryService</a>
+                                </li>
+                                <li class="link">
                                     <a href="injectables/DashboardResourceService.html" data-type="entity-link" >DashboardResourceService</a>
                                 </li>
                                 <li class="link">
@@ -1112,6 +1212,18 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 </li>
                                 <li class="link">
                                     <a href="injectables/HeaderSearchService.html" data-type="entity-link" >HeaderSearchService</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/ImpersonationService.html" data-type="entity-link" >ImpersonationService</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/ImpersonationUserListService.html" data-type="entity-link" >ImpersonationUserListService</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/ImpersonationUserResourceService.html" data-type="entity-link" >ImpersonationUserResourceService</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/ImpersonationUserSelectService.html" data-type="entity-link" >ImpersonationUserSelectService</a>
                                 </li>
                                 <li class="link">
                                     <a href="injectables/LanguageIconsService.html" data-type="entity-link" >LanguageIconsService</a>
@@ -1180,6 +1292,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                     <a href="injectables/ProcessService.html" data-type="entity-link" >ProcessService</a>
                                 </li>
                                 <li class="link">
+                                    <a href="injectables/ProfileService.html" data-type="entity-link" >ProfileService</a>
+                                </li>
+                                <li class="link">
                                     <a href="injectables/PublicCaseResourceService.html" data-type="entity-link" >PublicCaseResourceService</a>
                                 </li>
                                 <li class="link">
@@ -1220,6 +1335,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 </li>
                                 <li class="link">
                                     <a href="injectables/SelectedCaseService.html" data-type="entity-link" >SelectedCaseService</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/SessionIdleTimerService.html" data-type="entity-link" >SessionIdleTimerService</a>
                                 </li>
                                 <li class="link">
                                     <a href="injectables/SessionService.html" data-type="entity-link" >SessionService</a>
@@ -1499,6 +1617,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="link">
                                 <a href="interfaces/CustomCard.html" data-type="entity-link" >CustomCard</a>
+                            </li>
+                            <li class="link">
+                                <a href="interfaces/CustomIframeCard.html" data-type="entity-link" >CustomIframeCard</a>
                             </li>
                             <li class="link">
                                 <a href="interfaces/DashboardCard.html" data-type="entity-link" >DashboardCard</a>
@@ -1825,6 +1946,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="interfaces/Pagination.html" data-type="entity-link" >Pagination</a>
                             </li>
                             <li class="link">
+                                <a href="interfaces/ParentDataGroupInformation.html" data-type="entity-link" >ParentDataGroupInformation</a>
+                            </li>
+                            <li class="link">
                                 <a href="interfaces/Permission.html" data-type="entity-link" >Permission</a>
                             </li>
                             <li class="link">
@@ -1862,6 +1986,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="link">
                                 <a href="interfaces/Preferences.html" data-type="entity-link" >Preferences</a>
+                            </li>
+                            <li class="link">
+                                <a href="interfaces/PreprocessedDataGroups.html" data-type="entity-link" >PreprocessedDataGroups</a>
                             </li>
                             <li class="link">
                                 <a href="interfaces/PreviewDialogData.html" data-type="entity-link" >PreviewDialogData</a>
@@ -1987,6 +2114,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="interfaces/TaskPanelData.html" data-type="entity-link" >TaskPanelData</a>
                             </li>
                             <li class="link">
+                                <a href="interfaces/TaskRefDashboardTile.html" data-type="entity-link" >TaskRefDashboardTile</a>
+                            </li>
+                            <li class="link">
                                 <a href="interfaces/TaskSearchCaseQuery.html" data-type="entity-link" >TaskSearchCaseQuery</a>
                             </li>
                             <li class="link">
@@ -2027,6 +2157,15 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="link">
                                 <a href="interfaces/UriNodeResource.html" data-type="entity-link" >UriNodeResource</a>
+                            </li>
+                            <li class="link">
+                                <a href="interfaces/UserChangePasswordRequest.html" data-type="entity-link" >UserChangePasswordRequest</a>
+                            </li>
+                            <li class="link">
+                                <a href="interfaces/UserImpersonateConfigMetadata.html" data-type="entity-link" >UserImpersonateConfigMetadata</a>
+                            </li>
+                            <li class="link">
+                                <a href="interfaces/UserImpersonateInjectionData.html" data-type="entity-link" >UserImpersonateInjectionData</a>
                             </li>
                             <li class="link">
                                 <a href="interfaces/UserInvitationRequest.html" data-type="entity-link" >UserInvitationRequest</a>
