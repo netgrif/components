@@ -18,10 +18,10 @@
     </mat-toolbar-row>
 </mat-toolbar>
 <mat-spinner *ngIf="!logo"></mat-spinner>
-<mat-sidenav-container class="rail-container">
+<mat-sidenav-container class="rail-container deny-select">
     <mat-sidenav mode="side" [(opened)]="configLeftMenu.opened" position="start"
                  [disableClose]="configLeftMenu.disableClose"
-                 class="rail-content deny-select">
+                 class="rail-content">
 
         <div fxLayout="column" class="rail-color" fxFlex>
 

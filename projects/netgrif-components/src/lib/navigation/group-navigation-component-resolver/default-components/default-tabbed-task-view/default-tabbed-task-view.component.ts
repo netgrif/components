@@ -82,7 +82,7 @@ export class DefaultTabbedTaskViewComponent extends AbstractTabbedTaskViewCompon
 
         this.initialSearchMode = injectedTabData.searchTypeConfiguration.initialSearchMode;
         this.showToggleButton = injectedTabData.searchTypeConfiguration.showSearchToggleButton;
-        this.enableSearch = !(injectedTabData.searchTypeConfiguration.initialSearchMode === undefined);
+        this.enableSearch = injectedTabData.searchTypeConfiguration.initialSearchMode !== undefined;
         this.headersChangeable = injectedTabData.headersChangeable;
         this.headersMode = injectedTabData.headersMode ? injectedTabData.headersMode : [];
         this.allowTableMode = injectedTabData.allowTableMode;

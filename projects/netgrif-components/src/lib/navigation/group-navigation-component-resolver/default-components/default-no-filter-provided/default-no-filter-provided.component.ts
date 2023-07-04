@@ -5,8 +5,4 @@ import { Component } from '@angular/core';
   templateUrl: './default-no-filter-provided.component.html',
   styleUrls: ['./default-no-filter-provided.component.scss']
 })
-export class DefaultNoFilterProvidedComponent {
-
-  constructor() { }
-
-}
+export class DefaultNoFilterProvidedComponent {}
