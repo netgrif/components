@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import {
     AbstractWorkflowViewComponent,
-    SideMenuService,
     WorkflowViewService,
     LoggerService,
     ProcessService,
@@ -18,6 +17,7 @@ import {
     publicFactoryResolver, RedirectService
 } from '@netgrif/components-core';
 import {ActivatedRoute, Router} from '@angular/router';
+import {MatDialog} from '@angular/material/dialog';
 
 const processServiceFactory = (userService: UserService, sessionService: SessionService, authService: AuthenticationService,
                                router: Router, publicResolverService: PublicUrlResolverService, petriNetResource: PetriNetResourceService,
@@ -56,13 +56,13 @@ const petriNetResourceFactory = (userService: UserService, sessionService: Sessi
     ]
 })
 export class PublicWorkflowViewComponent extends AbstractWorkflowViewComponent {
-    constructor(protected _sideMenuService: SideMenuService,
+    constructor(protected _dialog: MatDialog,
                 protected _workflowViewService: WorkflowViewService,
                 protected _log: LoggerService,
                 protected _processService: ProcessService,
                 protected _router: Router,
                 protected _route: ActivatedRoute) {
-        super(_sideMenuService, _workflowViewService, _log, _processService);
+        super(_dialog, _workflowViewService, _log, _processService);
     }
 
     handleClick(workflow: Net) {

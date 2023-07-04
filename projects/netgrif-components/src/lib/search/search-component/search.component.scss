@@ -3,18 +3,15 @@
     margin-right: 8px;
 }
 
-.clause-margin {
-    margin-top: 4px;
-    margin-bottom: 4px;
-}
-
 .disable-error-margin .mat-form-field-wrapper {
-    margin: 0;
+    margin: 0 !important;
     padding-bottom: 0;
 }
 
 .search-buttons-margin {
     margin-left: 8px;
+    margin-top: 1.5px;
+    margin-bottom: 1.5px;
 }
 
 .search-icon {
@@ -36,5 +33,15 @@
 
 .search-input-sm {
     width: 100%;
+}
+
+.search-buttons-padding {
+    height: 44px !important;
+    min-width: 44px;
+    padding: 0;
+}
+
+.prefix-icon {
+    color: #64748B !important;
 }
 

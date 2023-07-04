@@ -6,6 +6,44 @@
     }
 }
 
-.dialog-content-margin {
-    margin-bottom: 16px;
+@mixin dialog-theme($theme) {
+    .dialog-content-margin {
+        margin-bottom: 16px;
+    }
+
+    .dialog-responsive {
+        width: 40% !important;
+        height: 80% !important;
+        min-height: 300px !important;
+        min-width: 300px !important;
+    }
+
+    @media only screen and (max-width: 599px) {
+        .dialog-responsive {
+            width: 100% !important;
+            height: 80% !important;
+            min-height: unset !important;
+            min-width: unset !important;
+        }
+    }
+
+    .mat-dialog-title {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 24px;
+        letter-spacing: 0.15px;
+        color: #1E293B;
+    }
+
+    .mat-dialog-container {
+        border-radius: 6px !important;
+    }
+
+    .dialog-field-fix  {
+        .netgrif-input .mat-form-field-appearance-outline .mat-form-field-suffix {
+            top: unset;
+        }
+    }
 }
+

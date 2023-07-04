@@ -7,9 +7,9 @@
             <span class="font-size-20">{{ 'tasks.view.noTasksSatisfyingThisFilter' | translate }}</span>
         </div>
 
-        <mat-accordion [multi]="allowMultiOpen" class="full-width" fxFlex="100">
+        <mat-accordion [multi]="allowMultiOpen" class="full-width panel-list-content" fxFlex="100">
             <cdk-virtual-scroll-viewport itemSize="52" (scrolledIndexChange)="loadNextPage()" #taskListVirtualScroll
-                                         class="task-panel-scroll-container full-width full-height dashboard-task-list">
+                                         [ngClass]="{'task-panel-scroll-container': (loading$ | async) === false && tasks.length > 0}" class="full-width full-height dashboard-task-list">
                 <nc-task-panel
                     [textEllipsis]="textEllipsis"
                     *cdkVirtualFor="let task of tasks;
@@ -36,4 +36,8 @@
         </mat-accordion>
 
     </ng-container>
+</div>
+
+<div *ngIf="!showVirtualScroll" fxLayout="column" fxLayoutAlign="center center">
+    <mat-spinner color="primary" diameter="52"></mat-spinner>
 </div>

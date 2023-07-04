@@ -1,14 +1,8 @@
-<div class="predicate-body" fxLayout="row" fxLayoutAlign="start center"
-     [ngClass]="!!selectedCategory && selectedCategory.providesPredicate ? 'predicate-body-color' : 'white-background'">
-    <div *ngIf="editable" fxLayout="row" fxLayoutAlign="center center">
-        <button mat-icon-button color="warn" (click)="remove()" class="smaller-button">
-            <mat-icon>clear</mat-icon>
-        </button>
-    </div>
-
+<div class="predicate-body netgrif-input-search-fix netgrif-input-primary-search-fix" fxLayout="row" fxLayoutAlign="start center">
     <div *ngIf="!selectedCategory; then categorySelection else categoryDisplay"></div>
     <ng-template #categorySelection>
-        <mat-form-field class="text-margin" appearance="outline">
+        <mat-form-field class="mat-form-field-wrapper-search" appearance="outline">
+            <mat-icon matPrefix class="prefix-icon">search</mat-icon>
             <mat-label>{{'search.category.select' | translate}}</mat-label>
             <mat-select (selectionChange)="categoryChanged($event.value)" #categoryInput [disabled]="!editable">
                 <mat-option *ngFor="let category of searchCategories"
@@ -29,5 +23,10 @@
             <nc-search-configuration-input [configuration]="configurationInput" [selectedCategory]="selectedCategory"
                                            [editable]="editable"></nc-search-configuration-input>
         </ng-template>
+    </div>
+    <div *ngIf="editable" fxLayout="row" fxLayoutAlign="center center">
+        <button mat-stroked-button color="warn" (click)="remove()" class="advanced-search-buttons">
+            <mat-icon>clear</mat-icon>
+        </button>
     </div>
 </div>

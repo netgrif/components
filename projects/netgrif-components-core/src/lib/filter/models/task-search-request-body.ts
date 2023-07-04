@@ -66,6 +66,13 @@ export interface TaskSearchRequestBody {
      * If more than one group ID is specified, the returned tasks are from cases of one of the groups.
      */
     group?: string | Array<string>;
+
+    /**
+     * Returned tasks must have the specified string ID.
+     *
+     * If more than one string ID is specified, the returned tasks must have one of them.
+     */
+    stringId?: string | Array<string>;
 }
 
 /**

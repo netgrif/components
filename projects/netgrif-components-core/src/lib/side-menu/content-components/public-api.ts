@@ -16,6 +16,7 @@ export * from './user-impersonate/abstract-user-impersonate.component';
 
 /* MODELS */
 export * from './filter-selector/model/filter-selector-injection-data';
+export * from './filter-selector/model/filtered-array';
 export * from './option-selector/model/option-selector-injection-data';
 export * from './user-assign/model/user-list-injected-data';
 export * from './save-filter/model/save-filter-injection-data';

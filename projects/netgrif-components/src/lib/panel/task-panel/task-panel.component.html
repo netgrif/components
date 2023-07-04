@@ -70,31 +70,31 @@
 </nc-app-panel>
 
 <ng-template #assignButton>
-    <button *ngIf="canAssign()" (click)="assign()" mat-button [disabled]="canDisable('assign')">
+    <button *ngIf="canAssign() && getAssignTitle()?.length > 0" (click)="assign()" mat-stroked-button color="primary" [disabled]="canDisable('assign')">
         {{ getAssignTitle() | translate | uppercase }}</button>
 </ng-template>
 
 <ng-template #delegateButton>
-    <button *ngIf="canDo('delegate')" (click)="delegate()" mat-button [disabled]="canDisable('delegate')">
+    <button *ngIf="canDo('delegate') && getDelegateTitle()?.length > 0" (click)="delegate()" mat-stroked-button color="primary" [disabled]="canDisable('delegate')">
         {{ getDelegateTitle() | translate | uppercase }}</button>
 </ng-template>
 
 <ng-template #reassignButton>
-    <button *ngIf="canReassign()" (click)="delegate()" mat-button [disabled]="canDisable('reassign')">
+    <button *ngIf="canReassign()" (click)="delegate()" mat-stroked-button color="primary" [disabled]="canDisable('reassign')">
         {{ 'tasks.view.reassign' | translate | uppercase }}</button>
 </ng-template>
 
 <ng-template #cancelButton>
-    <button *ngIf="canCancel()" (click)="cancel()" mat-button [disabled]="canDisable('cancel')">
+    <button *ngIf="canCancel() && getCancelTitle()?.length > 0" (click)="cancel()" mat-stroked-button color="primary" [disabled]="canDisable('cancel')">
         {{ getCancelTitle() | translate | uppercase }}</button>
 </ng-template>
 
 <ng-template #finishButton>
-    <button *ngIf="canFinish()" (click)="finish()" mat-button [disabled]="canDisable('finish')">
+    <button *ngIf="canFinish() && getFinishTitle()?.length > 0" (click)="finish()" mat-stroked-button color="primary" [disabled]="canDisable('finish')">
         {{ getFinishTitle() | translate | uppercase }}</button>
 </ng-template>
 
 <ng-template #collapseButton>
-    <button *ngIf="canCollapse()" color="primary" (click)="collapse()" mat-button>
+    <button *ngIf="canCollapse()" color="primary" (click)="collapse()" mat-stroked-button color="primary">
         {{ 'tasks.view.collapse' | translate | uppercase }}</button>
 </ng-template>

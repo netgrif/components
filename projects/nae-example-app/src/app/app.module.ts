@@ -6,7 +6,7 @@ import {
     AuthenticationModule,
     ConfigurationService,
     CovalentModule,
-    DashboardPortalComponentRegistryService,
+    ComponentRegistryService,
     DialogModule,
     MaterialModule,
     NAE_SNACKBAR_HORIZONTAL_POSITION,
@@ -88,7 +88,8 @@ import {
     WorkflowViewComponentModule,
     FilterFieldTabViewComponent,
     FilterFieldTabbedCaseViewComponent,
-    FilterFieldTabbedTaskViewComponent
+    FilterFieldTabbedTaskViewComponent,
+    DialogComponentsModule
 } from '@netgrif/components';
 import {UserInviteComponent} from './doc/user-invite/user-invite.component';
 import {ExamplePortalCardComponent} from './doc/dashboard-example/piechart-card/example-portal-card.component';
@@ -238,7 +239,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         NgxChartsModule,
         EmailSubmissionFormComponentModule,
         RedirectComponentModule,
-        FilterFieldContentModule
+        FilterFieldContentModule,
+        DialogComponentsModule
     ],
     providers: [{
         provide: ConfigurationService,
@@ -256,7 +258,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 })
 export class AppModule {
 
-    constructor(registry: DashboardPortalComponentRegistryService) {
+    constructor(registry: ComponentRegistryService) {
         registry.register('email', (injector: Injector) => new ComponentPortal(EmailSubmissionFormComponent, null, injector));
         registry.register('workflow-view', (injector: Injector) => new ComponentPortal(WorkflowViewExampleComponent, null, injector));
         registry.register('task-view', (injector: Injector) => new ComponentPortal(TaskViewComponent, null, injector));

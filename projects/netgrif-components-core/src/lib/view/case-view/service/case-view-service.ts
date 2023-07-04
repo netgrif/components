@@ -7,12 +7,10 @@ import {Case} from '../../../resources/interface/case';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {SearchService} from '../../../search/search-service/search.service';
-import {SideMenuSize} from '../../../side-menu/models/side-menu-size';
 import {TranslateService} from '@ngx-translate/core';
 import {catchError, concatMap, filter, map, mergeMap, scan, switchMap, tap} from 'rxjs/operators';
 import {Pagination} from '../../../resources/interface/pagination';
 import {CaseMetaField} from '../../../header/case-header/case-menta-enum';
-import {NAE_NEW_CASE_COMPONENT} from '../../../side-menu/content-components/injection-tokens';
 import {PageLoadRequestContext} from '../../abstract/page-load-request-context';
 import {Filter} from '../../../filter/models/filter';
 import {ListRange} from '@angular/cdk/collections';
@@ -34,6 +32,8 @@ import {EventOutcomeMessageResource} from '../../../resources/interface/message-
 import {CreateCaseEventOutcome} from '../../../event/model/event-outcomes/case-outcomes/create-case-event-outcome';
 import {PaginationParams} from '../../../utility/pagination/pagination-params';
 import {createSortParam, PaginationSort} from '../../../utility/pagination/pagination-sort';
+import {MatDialog} from '@angular/material/dialog';
+import {NAE_NEW_CASE_DIALOG_COMPONENT} from '../../../dialog/injection-tokens';
 
 @Injectable()
 export class CaseViewService extends AbstractSortableViewComponent implements OnDestroy {
@@ -50,7 +50,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
     protected _newCaseConfiguration: NewCaseConfiguration;
 
     constructor(protected _allowedNetsService: AllowedNetsService,
-                protected _sideMenuService: SideMenuService,
+                protected _dialog: MatDialog,
                 protected _caseResourceService: CaseResourceService,
                 protected _log: LoggerService,
                 protected _snackBarService: SnackBarService,
@@ -59,7 +59,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
                 protected _user: UserService,
                 protected _processService: ProcessService,
                 resolver: SearchIndexResolverService,
-                @Optional() @Inject(NAE_NEW_CASE_COMPONENT) protected _newCaseComponent: any,
+                @Optional() @Inject(NAE_NEW_CASE_DIALOG_COMPONENT) protected _newCaseComponent: any,
                 @Optional() @Inject(NAE_NEW_CASE_CONFIGURATION) newCaseConfig: NewCaseConfiguration,
                 protected _permissionService: PermissionService) {
         super(resolver);
@@ -214,12 +214,18 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
         isCaseTitleRequired: true
     }): Observable<Case> {
         const myCase = new Subject<Case>();
-        this._sideMenuService.open(this._newCaseComponent, SideMenuSize.MEDIUM, {
-            allowedNets$: this.getNewCaseAllowedNets(newCaseCreationConfiguration.blockNets),
-            newCaseCreationConfiguration
-        }).onClose.subscribe($event => {
-            this._log.debug($event.message, $event.data);
-            if ($event.data) {
+        const dialogRef = this._dialog.open(this._newCaseComponent, {
+            width: '40%',
+            minWidth: '300px',
+            panelClass: "dialog-responsive",
+            data: {
+                allowedNets$: this.getNewCaseAllowedNets(newCaseCreationConfiguration.blockNets),
+                newCaseCreationConfiguration
+            },
+        });
+        dialogRef.afterClosed().subscribe($event => {
+            if ($event?.data) {
+                this._log.debug($event.message, $event.data);
                 this.reload();
                 myCase.next($event.data);
             }
