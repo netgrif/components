@@ -18,6 +18,7 @@ import {Observable, of} from 'rxjs';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {NO_ERRORS_SCHEMA} from "@angular/core";
+import {AuthenticationModule} from "@netgrif/components-core";
 
 describe('ImportNetDialogComponent', () => {
     let component: ImportNetDialogComponent;
@@ -33,6 +34,7 @@ describe('ImportNetDialogComponent', () => {
             imports: [
                 SideMenuImportNetComponentModule,
                 HttpClientTestingModule,
+                AuthenticationModule,
                 NoopAnimationsModule,
                 TranslateLibModule,
                 MatIconModule,
@@ -43,7 +45,7 @@ describe('ImportNetDialogComponent', () => {
                 {provide: MAT_DIALOG_DATA, useValue: {}},
                 {provide: MatDialogRef, useValue: dialogMock},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: PetriNetResourceService, useClass: MyPetriNetResource}
+                {provide: PetriNetResourceService, useClass: MyPetriNetResource},
             ],
             schemas: [NO_ERRORS_SCHEMA]
         }).overrideModule(BrowserDynamicTestingModule, {
