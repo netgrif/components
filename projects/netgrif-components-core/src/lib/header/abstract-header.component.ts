@@ -47,7 +47,7 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
     constructor(protected _injector: Injector,
                 protected _translate: TranslateService,
                 @Optional() protected _overflowService: OverflowService) {
-        (this._overflowService !== null) ? this.initializeFormControls(true) : this.initializeFormControls(false);
+        this.initializeFormControls(this._overflowService !== null);
     }
 
     @Input()

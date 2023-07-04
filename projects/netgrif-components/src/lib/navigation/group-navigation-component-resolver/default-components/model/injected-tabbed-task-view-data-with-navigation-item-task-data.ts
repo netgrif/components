@@ -2,7 +2,7 @@ import {
     DataGroup,
     InjectedTabbedTaskViewData,
     SearchComponentConfiguration
-} from "netgrif-components-core";
+} from '@netgrif/components-core';
 
 /**
  * A variation of {@link InjectedTabbedCaseViewData} that contain the task data of a navigation item task.

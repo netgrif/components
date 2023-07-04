@@ -245,3 +245,9 @@
 .order-icon-wrapper {
     margin-bottom: 0;
 }
+
+.deny-select {
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}

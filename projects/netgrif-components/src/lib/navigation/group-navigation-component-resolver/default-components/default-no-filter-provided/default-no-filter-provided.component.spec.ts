@@ -1,7 +1,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {DefaultNoFilterProvidedComponent} from './default-no-filter-provided.component';
-import {TranslateLibModule} from "netgrif-components-core";
+import {TranslateLibModule} from '@netgrif/components-core';
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {MatIconModule} from "@angular/material/icon";
 

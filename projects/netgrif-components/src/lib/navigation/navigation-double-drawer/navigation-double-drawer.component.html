@@ -21,7 +21,7 @@
 <mat-sidenav-container class="rail-container">
     <mat-sidenav mode="side" [(opened)]="configLeftMenu.opened" position="start"
                  [disableClose]="configLeftMenu.disableClose"
-                 class="rail-content">
+                 class="rail-content deny-select">
 
         <div fxLayout="column" class="rail-color" fxFlex>
 
@@ -80,7 +80,7 @@
             <!--                    <mat-icon class="icon-large sidemenu-icon">more_vert</mat-icon>-->
             <!--                </button>-->
             <!--            </div>-->
-            <button *ngIf="true" mat-icon-button [matMenuTriggerFor]="railMenu"
+            <button mat-icon-button [matMenuTriggerFor]="railMenu"
                     class="mat-button mat-typography menu-font-color margin-bottom-x2"
                     [matTooltip]="'toolbar.menu.open' | translate"
                     matTooltipPosition="right">
@@ -88,7 +88,6 @@
             </button>
 
         </div>
-
     </mat-sidenav>
 
     <mat-sidenav-content>

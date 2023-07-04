@@ -12,7 +12,7 @@ export enum GroupNavigationConstants {
      */
     NAVIGATION_ENTRY_TITLE_FIELD_ID_SUFFIX = 'tab_name',
     /**
-     * Boolean field id, that determines if the navigation defines an tab icon.
+     * Boolean field id, that determines if the navigation defines a tab icon.
      */
     NAVIGATION_ENTRY_ICON_ENABLED_FIELD_ID_SUFFIX = 'use_tab_icon',
     /**
@@ -134,5 +134,35 @@ export enum GroupNavigationConstants {
      * Text field, that contains default header metadata separated by comma for task view as a value
      * */
     ITEM_FIELD_ID_TASK_DEFAULT_HEADERS = 'task_default_headers',
+
+    /**
+     * MultichoiceMap field, that contains allowed roles as value
+     * */
+    ITEM_FIELD_ID_ALLOWED_ROLES = 'allowed_roles',
+
+    /**
+     * MultichoiceMap field, that contains banned roles as value
+     * */
+    ITEM_FIELD_ID_BANNED_ROLES = 'banned_roles',
+
+    /**
+     * Text field, that contains icon identifier
+     * */
+    ITEM_FIELD_ID_MENU_ICON = 'menu_icon',
+
+    /**
+     * I18n field, that contains labels of menu item
+     * */
+    ITEM_FIELD_ID_MENU_NAME = 'menu_name',
+
+    /**
+     * Text field, that contains URI
+     * */
+    ITEM_FIELD_ID_NODE_PATH = 'nodePath',
+
+    /**
+     * Boolean field, that is true if item contains child items
+     * */
+    ITEM_FIELD_ID_HAS_CHILDREN = 'hasChildren',
 
 }

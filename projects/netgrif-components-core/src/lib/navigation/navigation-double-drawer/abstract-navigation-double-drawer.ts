@@ -24,6 +24,7 @@ import {UriNodeResource} from '../model/uri-resource';
 import {UriService} from '../service/uri.service';
 import {I18nFieldValue} from "../../data-fields/i18n-field/models/i18n-field-value";
 import {TranslateService} from "@ngx-translate/core";
+import {GroupNavigationConstants} from "../model/group-navigation-constants";
 
 export interface ConfigDoubleMenu {
     mode: MatDrawerMode;
@@ -156,13 +157,6 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         this._currentNodeSubscription = this._uriService.activeNode$.subscribe(node => {
             this.currentNode = node;
         });
-
-        const viewConfigurationPath = this._activatedRoute.snapshot.data[NAE_ROUTING_CONFIGURATION_PATH];
-        if (!!viewConfigurationPath) {
-            const viewConfiguration = this._config.getViewByPath(viewConfigurationPath);
-            Object.entries(viewConfiguration.children).forEach(([key, childView]) => {
-            });
-        }
     }
 
     get currentNode(): UriNodeResource {
@@ -197,7 +191,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             this.loadRightSide();
             return;
         }
-        if (!this.leftItems.find(item => item.resource.immediateData.find(f => f.stringId === 'nodePath')?.value === node.uriPath)) {
+        if (!this.leftItems.find(item => item.resource.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)?.value === node.uriPath)) {
             this.loadLeftSide();
         }
         this.loadRightSide();
@@ -312,7 +306,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     onItemClick(item: NavigationItem): void {
         this._uriService.activeNode = this._currentNode;
         if (this.hasItemChildren(item)) {
-            const path = item.resource.immediateData.find(f => f.stringId === 'nodePath')?.value
+            const path = item.resource.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)?.value
             this._uriService.getNodeByPath(path).subscribe(node => {
                 this.currentNode = node
             }, error => {
@@ -322,11 +316,11 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     }
 
     hasItemChildren(item: NavigationItem): boolean {
-        return item.resource.immediateData.find(f => f.stringId === 'hasChildren')?.value
+        return item.resource.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_HAS_CHILDREN)?.value
     }
 
     isItemAndNodeEqual(item: NavigationItem, node: UriNodeResource): boolean {
-        return item.resource.immediateData.find(f => f.stringId === 'nodePath')?.value === node.uriPath
+        return item.resource.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)?.value === node.uriPath
     }
 
     protected loadLeftSide() {
@@ -339,8 +333,8 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             page?.pagination?.totalElements === 0 ? of([]) : this._uriService.getCasesOfNode(this.currentNode.parent, MENU_IDENTIFIERS, 0, page.pagination.totalElements).pipe(
                 map(p => p.content),
             ).subscribe(result => {
-                this.leftItems = result.filter(folder => folder.immediateData.find(f => f.stringId === 'hasChildren')?.value === true).map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i);
-                this.leftItems.sort((a, b) => this.compareStrings((a?.navigation as NavigationItem)?.title, (b?.navigation as NavigationItem)?.title));
+                this.leftItems = result.filter(folder => folder.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_HAS_CHILDREN)?.value === true).map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i);
+                this.leftItems.sort((a, b) => (a?.navigation as NavigationItem)?.title.localeCompare((b?.navigation as NavigationItem)?.title));
                 this.leftLoading$.off();
             }, error => {
                 this._log.error(error);
@@ -362,7 +356,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             (page?.pagination?.totalElements === 0 ? of([]) : this._uriService.getCasesOfNode(this._currentNode, MENU_IDENTIFIERS, 0, page.pagination.totalElements).pipe(
                 map(p => p.content),
             )).subscribe(result => {
-                result = (result as Case[]).sort((a, b) => this.compareStrings(a?.title, b?.title));
+                result = (result as Case[]).sort((a, b) => a?.title.localeCompare(b?.title));
                 if (result.length > RIGHT_SIDE_INIT_PAGE_SIZE) {
                     const rawRightItems: Case[] = result.splice(0, RIGHT_SIDE_INIT_PAGE_SIZE);
                     this.rightItems = rawRightItems.map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i);
@@ -370,7 +364,6 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                 } else {
                     this.rightItems = result.map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i);
                 }
-                // @ts-ignore
                 this.rightLoading$.off();
             }, error => {
                 this._log.error(error);
@@ -396,22 +389,26 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     }
 
     public isAscending() {
-        return this.itemsOrder == MenuOrder.Ascending;
+        return this.itemsOrder === MenuOrder.Ascending;
     }
 
     public switchOrder() {
         this.itemsOrder = (this.itemsOrder + 1) % 2;
-        this.rightItems = this.rightItems.sort((a, b) => this.compareStrings((a?.navigation as NavigationItem)?.title, (b?.navigation as NavigationItem)?.title));
-        this.leftItems = this.leftItems.sort((a, b) => this.compareStrings((a?.navigation as NavigationItem)?.title, (b?.navigation as NavigationItem)?.title));
-        this.moreItems = this.moreItems.sort((a, b) => this.compareStrings((a?.navigation as NavigationItem)?.title, (b?.navigation as NavigationItem)?.title));
+        let multiplier = 1
+        if (this.itemsOrder === MenuOrder.Descending) {
+            multiplier = -1
+        }
+        this.rightItems = this.rightItems.sort((a, b) => multiplier * (a?.navigation as NavigationItem)?.title.localeCompare((b?.navigation as NavigationItem)?.title));
+        this.leftItems = this.leftItems.sort((a, b) => multiplier * (a?.navigation as NavigationItem)?.title.localeCompare((b?.navigation as NavigationItem)?.title));
+        this.moreItems = this.moreItems.sort((a, b) => multiplier * (a?.navigation as NavigationItem)?.title.localeCompare((b?.navigation as NavigationItem)?.title));
     }
 
     protected resolveItemCaseToNavigationItem(itemCase: Case): NavigationItem | undefined {
         const item: NavigationItem = {
             access: {},
             navigation: {
-                icon: itemCase.immediateData.find(f => f.stringId === 'menu_icon')?.value || this.filterIcon,
-                title: this.getTranslation(itemCase.immediateData.find(f => f.stringId === 'menu_name')?.value) || itemCase.title,
+                icon: itemCase.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_MENU_ICON)?.value || this.filterIcon,
+                title: this.getTranslation(itemCase.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_MENU_NAME)?.value) || itemCase.title,
             },
             routing: {
                 path: this.getItemRoutingPath(itemCase),
@@ -419,8 +416,8 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             id: itemCase.stringId,
             resource: itemCase,
         };
-        const resolvedRoles = this.resolveAccessRoles(itemCase, 'allowed_roles');
-        const resolvedBannedRoles = this.resolveAccessRoles(itemCase, 'banned_roles');
+        const resolvedRoles = this.resolveAccessRoles(itemCase, GroupNavigationConstants.ITEM_FIELD_ID_ALLOWED_ROLES);
+        const resolvedBannedRoles = this.resolveAccessRoles(itemCase, GroupNavigationConstants.ITEM_FIELD_ID_BANNED_ROLES);
         if (!!resolvedRoles) item.access['role'] = resolvedRoles;
         if (!!resolvedBannedRoles) item.access['bannedRole'] = resolvedBannedRoles;
         if (!this._accessService.canAccessView(item, item.routingPath)) return;
@@ -451,17 +448,6 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         const taskId = itemCase.tasks.find(taskPair => taskPair.transition === transId).task;
         const url = this._dynamicRoutingService.route;
         return `/${url}/${taskId}`;
-    }
-
-    protected compareStrings(a: string, b: string): number {
-        if (!a && !b) return 0;
-        if (this.itemsOrder == MenuOrder.Ascending) {
-            if (a < b) return -1;
-            return a > b ? 1 : 0;
-        } else {
-            if (a > b) return -1;
-            return a < b ? 1 : 0;
-        }
     }
 
     /**
