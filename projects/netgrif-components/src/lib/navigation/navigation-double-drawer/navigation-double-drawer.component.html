@@ -68,7 +68,7 @@
 
             <mat-menu #railMenu="matMenu">
                 <button *ngFor='let item of hiddenCustomItems; trackBy: itemsTrackBy' mat-menu-item
-                        [routerLink]='item.routing.path' routerLinkActive="active" (click)="onItemClick(item)">
+                        [routerLink]='item.routing.path' routerLinkActive="active">
                     <mat-icon>{{item.navigation.icon}}</mat-icon>
                     <span>{{item.navigation.title}}</span>
                 </button>
