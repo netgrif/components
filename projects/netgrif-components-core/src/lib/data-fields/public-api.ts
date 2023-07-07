@@ -88,6 +88,7 @@ export * from './task-ref-field/model/task-ref-dashboard-tile';
 export * from './models/boolean-label-enabled-token';
 export * from './models/invalid-data-policy-token';
 export * from './filter-field/models/filter-field-injection-token';
+export * from './models/save-data-inform-token';
 
 /* Enums */
 export * from './models/template-appearance';

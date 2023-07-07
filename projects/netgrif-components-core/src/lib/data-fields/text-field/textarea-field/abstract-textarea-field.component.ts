@@ -7,6 +7,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {take} from 'rxjs/operators';
 import {CdkTextareaAutosize} from '@angular/cdk/text-field';
 import {AbstractTextErrorsComponent} from '../abstract-text-errors.component';
+import {TextAreaField} from '../models/text-area-field';
 
 @Component({
     selector: 'ncc-abstract-text-area-field',
@@ -14,7 +15,7 @@ import {AbstractTextErrorsComponent} from '../abstract-text-errors.component';
 })
 export abstract class AbstractTextareaFieldComponent extends AbstractTextErrorsComponent implements AfterViewInit {
 
-    @Input() textAreaField: TextField;
+    @Input() textAreaField: TextAreaField;
     @Input() formControlRef: FormControl;
     @Input() showLargeLayout: WrappedBoolean;
     @ViewChild('dynamicTextArea') dynamicTextArea: CdkTextareaAutosize;

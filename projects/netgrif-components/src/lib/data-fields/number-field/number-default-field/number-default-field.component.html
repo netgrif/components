@@ -4,7 +4,9 @@
            type="number"
            [formControl]="formControlRef"
            [placeholder]="numberField.placeholder"
-           [required]="numberField.behavior.required">
+           [required]="numberField.behavior.required"
+           (focusout)="numberField.unsetFocus()"
+           (focusin)="numberField.setFocus()">
     <mat-hint>{{numberField.description}}</mat-hint>
     <mat-error *ngIf="numberField.isInvalid(formControlRef)">{{getErrorMessage()}}</mat-error>
 </mat-form-field>
