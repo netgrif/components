@@ -93,6 +93,11 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
      * */
     moreItems: Array<NavigationItem>;
 
+    /**
+     * List of custom items in more menu
+     * */
+    hiddenCustomItems: Array<NavigationItem>;
+
     itemsOrder: MenuOrder;
 
     protected _breakpointSubscription: Subscription;
@@ -121,6 +126,8 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         width: RIGHT_DRAWER_DEFAULT_WIDTH,
     };
 
+    protected _childCustomViews: { [uri: string]: { [key: string]: NavigationItem } };
+
     protected constructor(protected _router: Router,
                           protected _activatedRoute: ActivatedRoute,
                           protected _breakpoint: BreakpointObserver,
@@ -140,6 +147,8 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         this.rightLoading$ = new LoadingEmitter();
         this.nodeLoading$ = new LoadingEmitter();
         this.itemsOrder = MenuOrder.Ascending;
+        this.hiddenCustomItems = [];
+        this._childCustomViews = {};
     }
 
     ngOnInit(): void {
@@ -157,6 +166,15 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         this._currentNodeSubscription = this._uriService.activeNode$.subscribe(node => {
             this.currentNode = node;
         });
+
+        const viewConfigurationPath = this._activatedRoute.snapshot.data[NAE_ROUTING_CONFIGURATION_PATH];
+        if (!!viewConfigurationPath) {
+            const viewConfiguration = this._config.getViewByPath(viewConfigurationPath);
+            Object.entries(viewConfiguration.children).forEach(([key, childView]) => {
+                this.resolveUriForChildViews(viewConfigurationPath + '/' + key, childView);
+                this.resolveHiddenMenuItemFromChildViews(viewConfigurationPath + '/' + key, childView);
+            });
+        }
     }
 
     get currentNode(): UriNodeResource {
@@ -364,17 +382,20 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                 } else {
                     this.rightItems = result.map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i);
                 }
+                this.resolveCustomViewsInRightSide()
                 this.rightLoading$.off();
             }, error => {
                 this._log.error(error);
                 this.rightItems = [];
                 this.moreItems = [];
+                this.resolveCustomViewsInRightSide()
                 this.rightLoading$.off();
             });
         }, error => {
             this._log.error(error);
             this.rightItems = [];
             this.moreItems = [];
+            this.resolveCustomViewsInRightSide()
             this.rightLoading$.off();
         });
     }
@@ -401,6 +422,12 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         this.rightItems = this.rightItems.sort((a, b) => multiplier * (a?.navigation as NavigationItem)?.title.localeCompare((b?.navigation as NavigationItem)?.title));
         this.leftItems = this.leftItems.sort((a, b) => multiplier * (a?.navigation as NavigationItem)?.title.localeCompare((b?.navigation as NavigationItem)?.title));
         this.moreItems = this.moreItems.sort((a, b) => multiplier * (a?.navigation as NavigationItem)?.title.localeCompare((b?.navigation as NavigationItem)?.title));
+    }
+
+    protected resolveCustomViewsInRightSide() {
+        if (!!this._childCustomViews[this._currentNode.uriPath]) {
+            this.rightItems.push(...Object.values(this._childCustomViews[this._currentNode.uriPath]));
+        }
     }
 
     protected resolveItemCaseToNavigationItem(itemCase: Case): NavigationItem | undefined {
@@ -485,6 +512,29 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         // TODO implement saving drawer width to user preferences
         // this.userPreferenceService._drawerWidthChanged$.next(this.width);
         // this.contentWidth.next(this.width);
+    }
+
+    protected resolveUriForChildViews(configPath: string, childView: View): void {
+        if (!childView.processUri) return;
+        if (!this._accessService.canAccessView(childView, configPath)) return;
+        if (!this._childCustomViews[childView.processUri]) {
+            this._childCustomViews[childView.processUri] = {};
+        }
+        this._childCustomViews[childView.processUri][configPath] = {
+            id: configPath,
+            ...childView,
+        };
+    }
+
+    protected resolveHiddenMenuItemFromChildViews(configPath: string, childView: View): void {
+        if (!childView.navigation) return;
+        if (!this._accessService.canAccessView(childView, configPath)) return;
+        if (!!((childView?.navigation as any)?.hidden)) {
+            this.hiddenCustomItems.push({
+                id: configPath,
+                ...childView,
+            });
+        }
     }
 
 }
