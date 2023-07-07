@@ -7,13 +7,13 @@
               #textArea
               [placeholder]="textAreaField.placeholder"
               [required]="textAreaField.behavior.required"
-              [formControl]="formControlRef"
+              [(ngModel)]="textAreaField.value"
               [ngStyle]="{'min-height': getHeight()+'px', 'height': getHeight()+'px'}"
               #dynamicTextArea="cdkTextareaAutosize"
               cdkTextareaAutosize
               cdkAutosizeMinRows="1"
-              (focus)="textAreaField.setFocus()"
-              (blur)="textAreaField.unsetFocus()"></textarea>
+              (focusin)="textAreaField.setFocus()"
+              (focusout)="textAreaField.unsetFocus()"></textarea>
     <input type="hidden" [formControl]="formControlRef">
     <mat-hint>{{textAreaField.description}}</mat-hint>
     <mat-error *ngIf="textAreaField.isInvalid(formControlRef)">{{getErrorMessage()}}</mat-error>

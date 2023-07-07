@@ -18,7 +18,8 @@ import {
     SnackBarVerticalPosition,
     ViewService,
     ProfileModule,
-    Dashboard
+    Dashboard,
+    NAE_SAVE_DATA_INFORM
 } from '@netgrif/components-core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -246,6 +247,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     },
         {provide: NAE_SNACKBAR_VERTICAL_POSITION, useValue: SnackBarVerticalPosition.TOP},
         {provide: NAE_SNACKBAR_HORIZONTAL_POSITION, useValue: SnackBarHorizontalPosition.LEFT},
+        {provide: NAE_SAVE_DATA_INFORM, useValue: true},
         ResourceProvider,
         TranslateService,
         TranslatePipe,

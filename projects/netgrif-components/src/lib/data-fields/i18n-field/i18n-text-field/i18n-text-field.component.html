@@ -50,7 +50,8 @@
                    [placeholder]="textI18nField.placeholder ? textI18nField.placeholder : ''"
                    [required]="textI18nField.behavior.required"
                    [(ngModel)]="currentValue[selectedLanguage]"
-                   (blur)="setSelectedValue()">
+                   (focusout)="setSelectedValue(); textI18nField.unsetFocus()"
+                   (focusin)="textI18nField.setFocus()">
             <button mat-icon-button (click)="toggleFilled()"
                     [matTooltip]="(filledShown ? 'dataField.i18n.hideTranslations' : 'dataField.i18n.showTranslations') | translate">
                 <mat-icon color="warn">{{filledShown ? 'arrow_drop_up' : 'arrow_drop_down'}}</mat-icon>

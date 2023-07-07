@@ -1,7 +1,8 @@
 import {DataField} from './abstract-data-field';
 import {FormControl} from '@angular/forms';
-import {Component, Inject, Input, OnDestroy, OnInit, Optional} from '@angular/core';
+import {Component, HostListener, Inject, Input, OnDestroy, OnInit, Optional} from '@angular/core';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from './invalid-data-policy-token';
+import {NAE_SAVE_DATA_INFORM} from './save-data-inform-token';
 
 /**
  * Holds the common functionality for all DataFieldComponents.
@@ -24,8 +25,19 @@ export abstract class AbstractDataFieldComponent implements OnInit, OnDestroy {
      */
     protected _formControl: FormControl;
 
-    protected constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) protected _informAboutInvalidData: boolean | null) {
-        this._formControl = new FormControl('', { updateOn: 'blur' });
+    @HostListener('window:beforeunload', ['$event'])
+    beforeUnloadEventHandler(event) {
+        if (this._saveDataInform && this.dataField.isFocused()) {
+            this.dataField.unsetFocus();
+            (document.activeElement as HTMLElement).blur();
+            return false;
+        }
+        return true;
+    }
+
+    protected constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) protected _informAboutInvalidData: boolean | null,
+                          @Optional() @Inject(NAE_SAVE_DATA_INFORM) protected _saveDataInform: boolean | null = false) {
+        this._formControl = new FormControl('', {updateOn: 'blur'});
     }
 
     /**

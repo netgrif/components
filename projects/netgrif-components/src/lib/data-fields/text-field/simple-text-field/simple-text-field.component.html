@@ -3,7 +3,9 @@
     <input matInput
            [placeholder]="textField.placeholder"
            [required]="textField.behavior.required"
-           [formControl]="formControlRef">
+           [formControl]="formControlRef"
+           (focusin)="textField.setFocus()"
+           (focusout)="textField.unsetFocus()">
     <mat-hint>{{textField.description}}</mat-hint>
     <mat-error *ngIf="textField.isInvalid(formControlRef)">{{getErrorMessage()}}</mat-error>
 </mat-form-field>
