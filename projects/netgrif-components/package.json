@@ -1,6 +1,6 @@
 {
     "name": "@netgrif/components",
-    "version": "6.4.0-beta.3",
+    "version": "6.4.0-beta.4",
     "description": "Netgrif Application Engine frontend Angular components",
     "homepage": "https://components.netgrif.com",
     "license": "SEE LICENSE IN LICENSE",
@@ -29,7 +29,7 @@
         "nae frontend"
     ],
     "peerDependencies": {
-        "@netgrif/components-core": "6.4.0-beta.3",
+        "@netgrif/components-core": "6.4.0-beta.4",
         "@angular-material-components/datetime-picker": "~7.0.1",
         "@angular-material-components/moment-adapter": "~7.0.0",
         "@angular/animations": "~13.3.1",
