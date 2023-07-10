@@ -4,7 +4,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {
     CovalentModule,
     CurrencyModule,
-    CustomDateAdapter,
+    CustomDateAdapter, DataFieldsModule,
     MaterialModule,
     TranslateLibModule,
 } from '@netgrif/components-core';
@@ -193,7 +193,8 @@ import { FilterFieldTabViewContentComponent } from './filter-field/tab-view-filt
         BrowserModule,
         BrowserAnimationsModule,
         DashboardComponentModule,
-        RouterModule
+        RouterModule,
+        DataFieldsModule
     ],
     providers: [
         {provide: DateAdapter, useClass: CustomDateAdapter}

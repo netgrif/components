@@ -33,7 +33,7 @@ describe('LogPublisherService', () => {
         expect(service).toBeTruthy();
     });
 
-    it('should register a publisher', () => {
+    it('should registry a publisher', () => {
         const publisher = new class extends LogPublisher {
             clear(): void {
             }

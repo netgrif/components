@@ -29,7 +29,7 @@ export class SideMenuService {
     }
 
     /**
-     * register SideMenuContainerComponent
+     * registry SideMenuContainerComponent
      *
      * params menu is SideMenuContainerComponent
      */

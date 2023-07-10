@@ -83,6 +83,8 @@ export * from './models/properties';
 export * from './data-field-template/models/wrapped-boolean';
 export * from './i18n-field/models/language-icons';
 export * from './task-ref-field/model/task-ref-dashboard-tile';
+export * from './models/front-action-definition';
+export * from './models/front-action-definitions';
 
 /* Tokens */
 export * from './models/boolean-label-enabled-token';

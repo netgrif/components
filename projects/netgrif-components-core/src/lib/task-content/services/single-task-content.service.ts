@@ -1,4 +1,4 @@
-import {Injectable, OnDestroy} from '@angular/core';
+import {Injectable, Injector, OnDestroy} from '@angular/core';
 import {TaskContentService} from './task-content.service';
 import {FieldConverterService} from './field-converter.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
@@ -6,6 +6,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {LoggerService} from '../../logger/services/logger.service';
 import {Observable, ReplaySubject} from 'rxjs';
 import {Task} from '../../resources/interface/task';
+import {FrontActionsRegistryService} from "../../registry/front-actions-registry.service";
 
 /**
  * Provides an implementation of the {@link TaskContentService} abstract class that allows only a
@@ -26,8 +27,10 @@ export class SingleTaskContentService extends TaskContentService implements OnDe
     constructor(_fieldConverterService: FieldConverterService,
                 _snackBarService: SnackBarService,
                 _translate: TranslateService,
-                _logger: LoggerService) {
-        super(_fieldConverterService, _snackBarService, _translate, _logger);
+                _logger: LoggerService,
+                _frontActionsRegistry: FrontActionsRegistryService,
+                _injector: Injector) {
+        super(_fieldConverterService, _snackBarService, _translate, _logger, _frontActionsRegistry, _injector);
         this._task$ = new ReplaySubject<Task>(1);
     }
 

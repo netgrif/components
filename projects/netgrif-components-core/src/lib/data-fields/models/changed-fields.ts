@@ -41,6 +41,15 @@ export interface Change {
     };
 
     [key: string]: any;
+
+    action?: FrontAction
+}
+
+export interface FrontAction {
+    id: string;
+    args: {
+        [k: string]: object;
+    }
 }
 
 /**

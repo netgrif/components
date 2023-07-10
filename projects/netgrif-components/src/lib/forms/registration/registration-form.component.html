@@ -3,7 +3,7 @@
         <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px" class="netgrif-input">
             <mat-icon color="primary" class="netgrif-icon-fix">email</mat-icon>
             <mat-form-field fxFlex="100" appearance="outline">
-                <mat-label>{{ 'forms.register.email' | translate}}</mat-label>
+                <mat-label>{{ 'forms.registry.email' | translate}}</mat-label>
                 <input matInput disabled [value]="userEmail"
                        autocomplete="username">
             </mat-form-field>
@@ -11,7 +11,7 @@
         <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px" class="netgrif-input " >
             <mat-icon color="primary" class="netgrif-icon-fix">account_circle</mat-icon>
             <mat-form-field fxFlex="100" appearance="outline">
-                <mat-label>{{ 'forms.register.name' | translate }}</mat-label>
+                <mat-label>{{ 'forms.registry.name' | translate }}</mat-label>
                 <input matInput formControlName="name" required
                        autocomplete="given-name">
                 <mat-error *ngIf="!isFieldValid('name')">{{getErrorMessage('name')}}</mat-error>
@@ -20,7 +20,7 @@
         <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px" class="netgrif-input" >
             <mat-icon color="primary" class="netgrif-icon-fix">account_circle_outline</mat-icon>
             <mat-form-field fxFlex="100" appearance="outline">
-                <mat-label>{{ 'forms.register.surname' | translate }}</mat-label>
+                <mat-label>{{ 'forms.registry.surname' | translate }}</mat-label>
                 <input matInput formControlName="surname"
                        required autocomplete="family-name">
                 <mat-error *ngIf="!isFieldValid('surname')">{{getErrorMessage('surname')}}</mat-error>
@@ -47,7 +47,7 @@
         <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px" class="netgrif-input">
             <mat-icon color="primary" class="netgrif-icon-fix">vpn_key</mat-icon>
             <mat-form-field fxFlex="100" appearance="outline">
-                <mat-label>{{ 'forms.register.repeatPass' | translate }}</mat-label>
+                <mat-label>{{ 'forms.registry.repeatPass' | translate }}</mat-label>
                 <input matInput
                        [type]="hideRepeatPassword ? 'password' : 'text'"
                        formControlName="confirmPassword" required autocomplete="new-password">
@@ -62,7 +62,7 @@
                 <mat-error *ngIf="!isFieldValid('confirmPassword')">{{getErrorMessage('confirmPassword')}}</mat-error>
             </mat-form-field>
         </div>
-        <nc-legal-notice *ngIf="displayLegalNotice" [buttonName]="'forms.register.register'"></nc-legal-notice>
+        <nc-legal-notice *ngIf="displayLegalNotice" [buttonName]="'forms.registry.registry'"></nc-legal-notice>
         <div fxLayout="row" fxLayoutAlign="end" fxLayoutAlign.xs="center" class="margin-top-4">
             <button fxFlexOffset="8px" fxFlexOffset.xs="0" mat-raised-button class="register-button" color="primary">
                 <mat-spinner *ngIf="loadingSubmit | async"
@@ -71,7 +71,7 @@
                              color="accent"
                              fxFlex></mat-spinner>
                 <span *ngIf="(loadingSubmit | async) === false"
-                      fxFlex>{{ 'forms.register.register' | translate }}</span>
+                      fxFlex>{{ 'forms.registry.registry' | translate }}</span>
             </button>
         </div>
     </form>
@@ -79,7 +79,7 @@
 
 <div *ngIf="!tokenVerified && (loadingToken | async) === false" fxLayout="column" fxLayoutAlign="center center" fxFlex>
     <mat-icon color="accent">unpublished</mat-icon>
-    <span class="font-size-20">{{ 'forms.register.notVerified' | translate}}</span>
+    <span class="font-size-20">{{ 'forms.registry.notVerified' | translate}}</span>
 </div>
 
 <div *ngIf="loadingToken | async">

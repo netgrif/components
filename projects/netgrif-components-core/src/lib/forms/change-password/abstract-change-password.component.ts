@@ -74,7 +74,7 @@ export abstract class AbstractChangePasswordComponent implements HasForm, OnDest
         }
         switch (Object.keys(errors)[0]) {
             case 'mismatchedPassword':
-                return this._translate.instant('forms.register.passwordsMustMatch');
+                return this._translate.instant('forms.registry.passwordsMustMatch');
             case 'minlength':
                 return this._translate.instant('dataField.validations.minLength', {length: this.minPasswordLength});
             case 'required':

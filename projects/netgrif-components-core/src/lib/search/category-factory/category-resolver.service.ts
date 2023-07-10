@@ -124,7 +124,7 @@ export class CategoryResolverService {
      * @param category the serialized string provided by your [Category.serialize()]{@link Category#serializeClass} implementation
      * @returns `undefined`
      *
-     * @deprecated in 5.6.0 - use the [registerPair]{@link CategoryResolverService#registerPair} method to register
+     * @deprecated in 5.6.0 - use the [registerPair]{@link CategoryResolverService#registerPair} method to registry
      * both transformations instead.
      */
     protected toCustomClass(category: string): Type<Category<any>> | undefined {
