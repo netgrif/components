@@ -7,7 +7,7 @@ import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
 import {EnumerationField, EnumerationFieldValue} from '../../data-fields/enumeration-field/models/enumeration-field';
 import {MultichoiceField} from '../../data-fields/multichoice-field/models/multichoice-field';
-import {Change, ChangedFields, FrontendActions} from '../../data-fields/models/changed-fields';
+import {Change, ChangedFields} from '../../data-fields/models/changed-fields';
 import {FieldConverterService} from './field-converter.service';
 import {FieldTypeResource} from '../model/field-type-resource';
 import {DynamicEnumerationField} from '../../data-fields/enumeration-field/models/dynamic-enumeration-field';
@@ -29,13 +29,13 @@ import {FrontActionsRegistryService} from "../../registry/front-actions-registry
 @Injectable()
 export abstract class TaskContentService implements OnDestroy {
 
-    private static readonly FRONTEND_ACTIONS_KEY = '_frontend_actions';
-    private static readonly VALIDATE_FRONTEND_ACTION = 'validate';
+    public static readonly FRONTEND_ACTIONS_KEY = '_frontend_actions';
+    public static readonly ACTION = 'action';
 
     $shouldCreate: ReplaySubject<Array<DataGroup>>;
     $shouldCreateCounter: BehaviorSubject<number>;
     protected _task: Task;
-    protected _taskDataReloadRequest$: Subject<FrontendActions>;
+    protected _taskDataReloadRequest$: Subject<Change>;
     protected _isExpanding$: BehaviorSubject<boolean>;
     private _taskFieldsIndex: {
         [taskId: string]: TaskFields
@@ -52,7 +52,7 @@ export abstract class TaskContentService implements OnDestroy {
         this.$shouldCreateCounter = new BehaviorSubject<number>(0);
         this._isExpanding$ = new BehaviorSubject<boolean>(false);
         this._task = undefined;
-        this._taskDataReloadRequest$ = new Subject<FrontendActions>();
+        this._taskDataReloadRequest$ = new Subject<Change>();
     }
 
     ngOnDestroy(): void {
@@ -84,7 +84,7 @@ export abstract class TaskContentService implements OnDestroy {
     /**
      * Stream that emits every time a data reload is requested.
      */
-    public get taskDataReloadRequest$(): Observable<FrontendActions> {
+    public get taskDataReloadRequest$(): Observable<Change> {
         return this._taskDataReloadRequest$.asObservable();
     }
 
@@ -135,12 +135,12 @@ export abstract class TaskContentService implements OnDestroy {
      * A snackbar will also be displayed to the user, informing them of the fact that the fields are invalid.
      * @returns whether the task is valid or not
      */
-    public validateTaskData(): boolean {
+    public validateTaskData(taskId?: string): boolean {
         if (!this._task || !this._task.dataGroups) {
             return false;
         }
-        const valid = !this._task.dataGroups.some(group => group.fields.some(field => !field.valid && !field.disabled));
-        const validDisabled = !this._task.dataGroups.some(group => group.fields.some(field => !field.validRequired && field.disabled));
+        const valid = !this._task.dataGroups.filter(group => !!group.parentTaskId && !!taskId ? group.parentTaskId === taskId : true).some(group => group.fields.some(field => !field.valid && !field.disabled));
+        const validDisabled = !this._task.dataGroups.filter(group => !!group.parentTaskId && !!taskId ? group.parentTaskId === taskId : true).some(group => group.fields.some(field => !field.validRequired && field.disabled));
         if (!valid) {
             this._snackBarService.openErrorSnackBar(this._translate.instant('tasks.snackbar.invalidData'));
             this._task.dataGroups.forEach(group => group.fields.forEach(field => field.touch = true));
@@ -291,10 +291,6 @@ export abstract class TaskContentService implements OnDestroy {
                 case 'validations':
                     field.replaceValidations(updatedField.validations.map(it => (it as Validation)));
                     break;
-                case 'action':
-                    const fn = this._frontActionsRegistry.get(updatedField.action.id)
-                    fn.fn(this._injector, updatedField.action)
-                    break;
                 default:
                     field[key] = updatedField[key];
 
@@ -334,9 +330,12 @@ export abstract class TaskContentService implements OnDestroy {
      *
      * @param frontendAction the action that should be performed.
      */
-    public performFrontendAction(frontendAction: FrontendActions): void {
-        if (frontendAction && frontendAction.type === TaskContentService.VALIDATE_FRONTEND_ACTION) {
-            timer().subscribe(() => this.validateTaskData());
+    public performFrontendAction(frontendAction: Change): void {
+        if (!!frontendAction?.action && frontendAction.action.length > 0) {
+            frontendAction.action.forEach(action => {
+                const fn = this._frontActionsRegistry.get(action.id)
+                fn.fn(this._injector, action)
+            })
         }
     }
 

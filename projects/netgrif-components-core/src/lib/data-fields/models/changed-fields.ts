@@ -42,19 +42,12 @@ export interface Change {
 
     [key: string]: any;
 
-    action?: FrontAction
+    action?: FrontAction[]
 }
 
 export interface FrontAction {
     id: string;
     args: {
-        [k: string]: object;
+        [k: string]: any;
     }
 }
-
-/**
- * A prototype implementation of frontend actions.
- *
- * The specifics are subject to change.
- */
-export type FrontendActions = Change;

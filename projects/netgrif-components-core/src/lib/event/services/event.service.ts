@@ -4,6 +4,7 @@ import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {SetDataEventOutcome} from '../model/event-outcomes/data-outcomes/set-data-event-outcome';
 import {ChangedFieldsMap} from './interfaces/changed-fields-map';
 import {EventConstants} from '../model/event-constants';
+import {TaskContentService} from "../../task-content/services/task-content.service";
 
 @Injectable({
     providedIn: 'root'
@@ -41,7 +42,11 @@ export class EventService {
                 Object.keys(outcomeChangedFields).forEach(fieldId => {
                     if (Object.keys(changedFieldsMap[caseId][taskId]).includes(fieldId)) {
                         Object.keys(outcomeChangedFields[fieldId]).forEach(attribute => {
-                            changedFieldsMap[caseId][taskId][fieldId][attribute] = outcomeChangedFields[fieldId][attribute];
+                            if (fieldId === TaskContentService.FRONTEND_ACTIONS_KEY) {
+                                changedFieldsMap[caseId][taskId][fieldId][TaskContentService.ACTION] = changedFieldsMap[caseId][taskId][fieldId][TaskContentService.ACTION].concat(outcomeChangedFields[fieldId][TaskContentService.ACTION]);
+                            } else {
+                                changedFieldsMap[caseId][taskId][fieldId][attribute] = outcomeChangedFields[fieldId][attribute];
+                            }
                         });
                     } else {
                         changedFieldsMap[caseId][taskId][fieldId] = setDataOutcome.changedFields.changedFields[fieldId];

@@ -12,7 +12,7 @@ import {NgxMatMomentModule} from '@angular-material-components/moment-adapter';
 import {TranslateLibModule} from '../translate/translate-lib.module';
 import {DateAdapter} from '@angular/material/core';
 import {FrontActionsRegistryService} from "../registry/front-actions-registry.service";
-import {clickFunction} from "./models/front-action-definitions";
+import {alertFunction, clickFunction, validateTask} from "./models/front-action-definitions";
 
 @NgModule({
     imports: [
@@ -35,5 +35,7 @@ export class DataFieldsModule {
 
     constructor(frontActionsRegistry: FrontActionsRegistryService) {
         frontActionsRegistry.register('redirect', clickFunction)
+        frontActionsRegistry.register('validate', validateTask)
+        frontActionsRegistry.register('alert', alertFunction)
     }
 }
