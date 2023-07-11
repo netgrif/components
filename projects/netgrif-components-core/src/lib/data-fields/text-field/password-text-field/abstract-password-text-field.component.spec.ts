@@ -2,7 +2,7 @@ import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {AngularResizeEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {MaterialModule} from '../../../material/material.module';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
@@ -18,6 +18,7 @@ import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {TextField} from '../models/text-field';
 import {TranslateService} from '@ngx-translate/core';
 import {AbstractPasswordTextFieldComponent} from './abstract-password-text-field.component';
+import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 
 describe('AbstractPasswordTextFieldComponent', () => {
     let component: TestPasswordTextComponent;
@@ -36,7 +37,19 @@ describe('AbstractPasswordTextFieldComponent', () => {
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
-                {provide: UserResourceService, useClass: MockUserResourceService}
+                {provide: UserResourceService, useClass: MockUserResourceService},
+                {provide: DATA_FIELD_PORTAL_DATA, useValue: {
+                        dataField: new TextField('', '', 'text', {
+                            required: true,
+                            optional: true,
+                            visible: true,
+                            editable: true,
+                            hidden: true
+                        }, undefined, undefined, undefined, [{validationRule: 'minLength 5', validationMessage: 'This is custom message!'}]),
+                        formControlRef: new FormControl(),
+                        showLargeLayout: new WrappedBoolean()
+                    } as DataFieldPortalData<TextField>
+                }
             ],
             declarations: [TestPasswordTextComponent, TestWrapperComponent],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -65,30 +78,16 @@ describe('AbstractPasswordTextFieldComponent', () => {
     template: ''
 })
 class TestPasswordTextComponent extends AbstractPasswordTextFieldComponent {
-    constructor(protected _translate: TranslateService) {
-        super(_translate);
+    constructor(protected _translate: TranslateService,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextField>) {
+        super(_translate, dataFieldPortalData);
     }
 }
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: `<ncc-test-password [showLargeLayout]="label"
-                                      [passwordTextField]="field"
-                                      [formControlRef]="formControl">
-                </ncc-test-password>`
+    template: '<ncc-test-password></ncc-test-password>'
 })
 class TestWrapperComponent {
-    label = new WrappedBoolean();
-    field = new TextField('', '', 'text', {
-        required: true,
-        optional: true,
-        visible: true,
-        editable: true,
-        hidden: true
-    }, undefined, undefined, undefined, [{validationRule: 'minLength 5', validationMessage: 'This is custom message!'}]);
-    formControl = new FormControl();
 
-    constructor() {
-        this.field.registerFormControl(this.formControl);
-    }
 }

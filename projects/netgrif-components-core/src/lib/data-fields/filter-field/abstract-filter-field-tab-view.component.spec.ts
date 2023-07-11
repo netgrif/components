@@ -7,10 +7,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NAE_FILTER_FIELD } from './models/filter-field-injection-token';
 import { Component, Inject } from '@angular/core';
-import {
-    DashboardPortalComponentRegistryService
-} from '../text-field/dashboard-portal-text-field/dashboard-portal-component-registry.service';
-
+import {ComponentRegistryService} from "../../registry/component-registry.service";
 describe('AbstractFilterFieldTabViewComponent', () => {
     let component: TestFilterFieldTabViewComponent;
     let fixture: ComponentFixture<TestFilterFieldTabViewComponent>;
@@ -54,7 +51,7 @@ describe('AbstractFilterFieldTabViewComponent', () => {
     template: ''
 })
 class TestFilterFieldTabViewComponent extends AbstractFilterFieldTabViewComponent {
-    constructor(registry: DashboardPortalComponentRegistryService,
+    constructor(registry: ComponentRegistryService,
                 @Inject(NAE_FILTER_FIELD) filterField: FilterField) {
         super(registry, filterField, TestCaseViewComponent, TestTaskViewComponent);
     }

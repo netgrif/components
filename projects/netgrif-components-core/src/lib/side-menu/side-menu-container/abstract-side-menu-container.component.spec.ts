@@ -14,6 +14,7 @@ import {PetriNetResourceService} from '../../resources/engine-endpoint/petri-net
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
+import {UriService} from "../../navigation/service/uri.service";
 
 describe('AbstractSideMenuContainerComponent', () => {
     let component: TestSideMenuComponent;
@@ -86,9 +87,10 @@ class TestSideMenuComponent extends AbstractSideMenuContainerComponent {
 class TestImportComponent extends AbstractImportNetComponent {
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) protected _sideMenuControl: SideMenuControl,
                 protected _petriNetResource: PetriNetResourceService,
+                protected _uriService: UriService,
                 protected _log: LoggerService,
                 protected _snackbar: SnackBarService,
                 protected _translate: TranslateService) {
-        super(_sideMenuControl, _petriNetResource,  _log, _snackbar, _translate);
+        super(_sideMenuControl, _petriNetResource, _uriService, _log, _snackbar, _translate);
     }
 }

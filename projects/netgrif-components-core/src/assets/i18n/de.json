@@ -269,6 +269,7 @@
             "noFile": "keine Datei",
             "clickToUpload": "Klicken Sie, um eine Datei hochzuladen",
             "clickToDownload": "Klicken Sie, um {{fileName}} herunterzuladen",
+            "clickToOpen": "Klicken Sie hier, um den Dateiinhalt anzuzeigen",
             "clickToDelete": "Klicken Sie, um die Datei zu löschen"
         },
         "i18n": {
@@ -474,7 +475,11 @@
         "errorCreate": "Fehler beim Erstellen des Falles "
     },
     "dynamicNavigation": {
-        "couldNotResolveView": "Ein Fehler ist aufgetreten während des Ansichtauflösungsprocess. Der Ansicht kann nicht angezeigt werden"
+        "couldNotResolveView": "Ein Fehler ist aufgetreten während des Ansichtauflösungsprocess. Der Ansicht kann nicht angezeigt werden",
+        "filterNotFound": "Diese Ansicht hat keinen Filter",
+        "loadMoreItems": "Mehr",
+        "ascending": "Aufsteigend",
+        "descending": "Absteigend"
     },
     "impersonation": {
         "user": {

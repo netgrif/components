@@ -8,7 +8,7 @@
         </div>
 
         <mat-accordion multi="true" class="full-width" >
-            <div [ngStyle]="{'width': width ? width : '100%' }">
+            <div [ngStyle]="{'width': width ? width : '100%' }" class="fix-padding">
                 <nc-case-panel [responsiveBody]="responsiveBody"
                                [textEllipsis]="textEllipsis"
                                *ngFor="let case_ of cases | slice: (pageIndex) * pageSize : (pageIndex + 1) * pageSize;

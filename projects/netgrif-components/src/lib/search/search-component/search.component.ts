@@ -23,6 +23,8 @@ import {
     NAE_DEFAULT_TASK_SEARCH_CATEGORIES, NAE_NAVIGATION_ITEM_TASK_DATA, DataGroup
 } from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
+import {MatIconRegistry} from '@angular/material/icon';
+import {DomSanitizer} from '@angular/platform-browser';
 
 /**
  * Converts search categories provided by the {@link NAE_SEARCH_CATEGORIES}

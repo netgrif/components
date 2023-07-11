@@ -21,6 +21,10 @@ import {TranslateService} from '@ngx-translate/core';
 import {EventOutcomeMessageResource} from '../../../resources/interface/message-resource';
 import {ImportPetriNetEventOutcome} from '../../../event/model/event-outcomes/petrinet-outcomes/import-petri-net-event-outcome';
 import {createMockNet} from '../../../utility/tests/utility/create-mock-net';
+import {UriService} from "../../../navigation/service/uri.service";
+import {AuthenticationModule} from "../../../authentication/authentication.module";
+import {UriResourceService} from "../../../navigation/service/uri-resource.service";
+import {MockUriResourceService} from "../../../utility/tests/mocks/mock-uri-resource.service";
 
 describe('AbstractImportNetComponent', () => {
     let component: TestImportComponent;
@@ -33,6 +37,7 @@ describe('AbstractImportNetComponent', () => {
             imports: [
                 HttpClientTestingModule,
                 NoopAnimationsModule,
+                AuthenticationModule,
                 TranslateLibModule,
                 MatIconModule,
                 SnackBarModule
@@ -42,7 +47,9 @@ describe('AbstractImportNetComponent', () => {
                 useValue: new SideMenuControl(() => {}, new Observable<boolean>(), null)
                 },
                 {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: UriResourceService, useClass: MockUriResourceService},
                 {provide: PetriNetResourceService, useClass: MyPetriNetResource},
+                UriService,
                 TranslateService
             ],
             declarations: [TestImportComponent],
@@ -109,9 +116,10 @@ class MyPetriNetResource {
 class TestImportComponent extends AbstractImportNetComponent {
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) protected _sideMenuControl: SideMenuControl,
                 protected _petriNetResource: PetriNetResourceService,
+                protected _uriService: UriService,
                 protected _log: LoggerService,
                 protected _snackbar: SnackBarService,
                 protected _translate: TranslateService) {
-        super(_sideMenuControl, _petriNetResource,  _log, _snackbar, _translate);
+        super(_sideMenuControl, _petriNetResource,  _uriService, _log, _snackbar, _translate);
     }
 }

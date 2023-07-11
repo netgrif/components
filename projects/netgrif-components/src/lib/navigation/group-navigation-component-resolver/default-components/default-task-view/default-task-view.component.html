@@ -1,0 +1,7 @@
+<div class="task-tab-background full-height">
+    <div fxLayout="column" fxLayoutAlign="start stretch" class="content-margin full-height" >
+        <nc-header #header type="task" [responsiveHeaders]="true" class="task-panel-padding-mini"></nc-header>
+        <nc-task-list-pagination [allowMultiOpen]="false" [tasks$]="tasks$" [loading$]="loading$" [textEllipsis]="true" [forceLoadDataOnOpen]="true" [responsiveBody]="true"
+                                 [selectedHeaders$]="selectedHeaders$" (taskEvent)="logEvent($event)" fxFlex></nc-task-list-pagination>
+    </div>
+</div>

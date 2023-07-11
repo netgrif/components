@@ -1,7 +1,7 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {AngularResizeEventModule} from 'angular-resize-event';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, Injector} from '@angular/core';
 import {AbstractDataFieldTemplateComponent} from './abstract-data-field-template.component';
 import {TextField} from '../text-field/models/text-field';
 import {ViewService} from '../../routing/view-service/view.service';
@@ -10,6 +10,7 @@ import {TestConfigurationService} from '../../utility/tests/test-config';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {MaterialModule} from '../../material/material.module';
 import {PaperViewService} from '../../navigation/quick-panel/components/paper-view.service';
+import {ComponentRegistryService} from "../../registry/component-registry.service";
 
 describe('AbstractDataFieldTemplateComponent', () => {
     let component: TestDatafieldTemplateComponent;
@@ -21,7 +22,9 @@ describe('AbstractDataFieldTemplateComponent', () => {
             declarations: [TestDatafieldTemplateComponent, TestWrapperComponent],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: ViewService, useClass: TestViewService}
+                {provide: ViewService, useClass: TestViewService},
+                ComponentRegistryService,
+                Injector
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         }).compileComponents();
@@ -45,8 +48,11 @@ describe('AbstractDataFieldTemplateComponent', () => {
     template: ''
 })
 class TestDatafieldTemplateComponent extends AbstractDataFieldTemplateComponent {
-    constructor(protected _paperView: PaperViewService, protected _config: ConfigurationService) {
-        super(_paperView, _config);
+    constructor(protected _paperView: PaperViewService,
+                protected _config: ConfigurationService,
+                protected _componentRegistry: ComponentRegistryService,
+                protected injector: Injector) {
+        super(_paperView, _config, _componentRegistry, injector);
     }
 }
 

@@ -4,10 +4,10 @@ import {ComponentPortal} from '@angular/cdk/portal';
 @Injectable({
     providedIn: 'root'
 })
-export class DashboardPortalComponentRegistryService {
+export class ComponentRegistryService {
 
-    private registry: Map<string, (injector: Injector) => ComponentPortal<any>>;
-    private typeRegistry: Map<string, Type<any>>;
+    protected registry: Map<string, (injector: Injector) => ComponentPortal<any>>;
+    protected typeRegistry: Map<string, Type<any>>;
 
     constructor() {
         this.registry = new Map<string, (injector: Injector) => ComponentPortal<any>>();
@@ -20,6 +20,10 @@ export class DashboardPortalComponentRegistryService {
 
     public registerType(key: string, type: Type<any>): void {
         this.typeRegistry.set(key, type);
+    }
+
+    public contains(component: string): boolean {
+        return this.registry.has(component);
     }
 
     public get(component: string, injector?: Injector): ComponentPortal<any> {
