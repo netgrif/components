@@ -15,11 +15,6 @@ export class TaskConst {
     public static readonly TRANSITION_ID = 'transitionId';
 }
 
-export enum SingleTaskMode {
-    ACTIVATED_ROUTE,
-    TASK_ID
-}
-
 @Component({
     selector: 'ncc-abstract-single-task-view',
     template: ''
