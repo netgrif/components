@@ -11,8 +11,6 @@ import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-
 import {NgxMatMomentModule} from '@angular-material-components/moment-adapter';
 import {TranslateLibModule} from '../translate/translate-lib.module';
 import {DateAdapter} from '@angular/material/core';
-import {FrontActionsRegistryService} from "../registry/front-actions-registry.service";
-import {alertFunction, clickFunction, validateTask} from "./models/front-action-definitions";
 
 @NgModule({
     imports: [
@@ -33,9 +31,4 @@ import {alertFunction, clickFunction, validateTask} from "./models/front-action-
 })
 export class DataFieldsModule {
 
-    constructor(frontActionsRegistry: FrontActionsRegistryService) {
-        frontActionsRegistry.register('redirect', clickFunction)
-        frontActionsRegistry.register('validate', validateTask)
-        frontActionsRegistry.register('alert', alertFunction)
-    }
 }

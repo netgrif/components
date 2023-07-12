@@ -11,7 +11,9 @@ import {
     NAE_NEW_CASE_DIALOG_COMPONENT,
     NAE_USER_IMPERSONATE_DIALOG_COMPONENT,
     NAE_SAVE_FILTER_DIALOG_COMPONENT,
-    NAE_LOAD_FILTER_DIALOG_COMPONENT
+    NAE_LOAD_FILTER_DIALOG_COMPONENT,
+    FrontActionsRegistryService,
+    NAE_TASK_VIEW_COMPONENT
 } from '@netgrif/components-core';
 import {A11yModule} from '@angular/cdk/a11y';
 import {
@@ -47,6 +49,8 @@ import {
     SideMenuMultiUserAssignComponentModule
 } from '../side-menu/content-components/multi-user-assign/side-menu-multi-user-assign-component.module';
 import { MultiUserAssignDialogComponent } from './multi-user-assign-dialog/multi-user-assign-dialog.component';
+import { TaskViewDialogComponent } from './task-view-dialog/task-view-dialog.component';
+import {openDialog} from "./model/dialog-actions";
 
 @NgModule({
     declarations: [
@@ -58,7 +62,8 @@ import { MultiUserAssignDialogComponent } from './multi-user-assign-dialog/multi
         FilterSelectorDialogComponent,
         LoadFilterDialogComponent,
         SaveFilterDialogComponent,
-        MultiUserAssignDialogComponent
+        MultiUserAssignDialogComponent,
+        TaskViewDialogComponent
     ],
     exports: [
         NewCaseDialogComponent,
@@ -69,7 +74,8 @@ import { MultiUserAssignDialogComponent } from './multi-user-assign-dialog/multi
         FilterSelectorDialogComponent,
         LoadFilterDialogComponent,
         SaveFilterDialogComponent,
-        MultiUserAssignDialogComponent
+        MultiUserAssignDialogComponent,
+        TaskViewDialogComponent
     ],
     imports: [
         BrowserAnimationsModule,
@@ -101,8 +107,14 @@ import { MultiUserAssignDialogComponent } from './multi-user-assign-dialog/multi
         {provide: NAE_USER_IMPERSONATE_DIALOG_COMPONENT, useValue: UserImpersonateDialogComponent},
         {provide: NAE_NEW_CASE_DIALOG_COMPONENT, useValue: NewCaseDialogComponent},
         {provide: NAE_SAVE_FILTER_DIALOG_COMPONENT, useValue: SaveFilterDialogComponent},
-        {provide: NAE_LOAD_FILTER_DIALOG_COMPONENT, useValue: LoadFilterDialogComponent}
+        {provide: NAE_LOAD_FILTER_DIALOG_COMPONENT, useValue: LoadFilterDialogComponent},
+        {provide: NAE_TASK_VIEW_COMPONENT, useValue: TaskViewDialogComponent}
     ]
 })
 export class DialogComponentsModule {
+
+    constructor(frontActionsRegistry: FrontActionsRegistryService) {
+        frontActionsRegistry.register('openDialog', openDialog)
+
+    }
 }

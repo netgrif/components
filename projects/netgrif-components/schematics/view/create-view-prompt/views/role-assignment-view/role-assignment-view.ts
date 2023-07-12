@@ -25,7 +25,7 @@ export function createRoleAssignmentView(tree: Tree, args: CreateViewArguments, 
         classify: strings.classify,
         configName: projectInfo.projectNameClassified,
         configImportPath: createRelativePath(view.fileImportPath, `./${projectInfo.projectNameDasherized}-configuration.service`),
-        modulePath: createRelativePath(view.fileImportPath, './app.module'),
+        modulePath: createRelativePath(view.fileImportPath, './app.model'),
     };
 
     rules.push(createFilesFromTemplates('./views/role-assignment-view/files', destinationPath, templateParams));

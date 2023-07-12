@@ -10,8 +10,8 @@
 //     SideMenuControl,
 //     SimpleFilter
 // } from '@netgrif/components-core';
-// import {HeaderComponentModule} from '../../../header/header.module';
-// import {CaseViewComponentModule} from '../../../view/case-view/case-view.module';
+// import {HeaderComponentModule} from '../../../header/header.model';
+// import {CaseViewComponentModule} from '../../../view/case-view/case-view.model';
 // import {of} from 'rxjs';
 // import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 //

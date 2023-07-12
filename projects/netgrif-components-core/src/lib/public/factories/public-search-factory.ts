@@ -13,6 +13,10 @@ export const publicBaseFilterFactory = (router: Router, route: ActivatedRoute, p
                                         translate: TranslateService, publicTaskLoadingService: PublicTaskLoadingService) => {
     if (route.snapshot.paramMap.get('caseId') === null && route.snapshot.paramMap.get('petriNetId') !== null) {
         getNetAndCreateCase(router, route, process, caseResourceService, snackBarService, translate, publicTaskLoadingService);
+    } else if (route.snapshot.paramMap.get('caseId') !== null && route.snapshot.paramMap.get('transitionId') !== null) {
+        return {
+            filter: new SimpleFilter('', FilterType.TASK, {case: {id: route.snapshot.paramMap.get('caseId')}, transitionId: route.snapshot.paramMap.get('transitionId')})
+        };
     } else if (route.snapshot.paramMap.get('caseId') !== null) {
         return {
             filter: new SimpleFilter('', FilterType.TASK, {case: {id: route.snapshot.paramMap.get('caseId')}})

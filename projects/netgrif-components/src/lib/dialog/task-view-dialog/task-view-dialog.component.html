@@ -1,0 +1,16 @@
+<div class="task-tab-background full-height">
+    <div fxLayout="column" fxLayoutAlign="start stretch" class="content-margin full-height" >
+        <nc-header [hidden]='true' #header type="task" class="task-panel-padding-mini"></nc-header>
+        <nc-single-task [task$]="task$"
+                        [loading$]="loading$"
+                        [selectedHeaders$]="selectedHeaders$"
+                        (taskEvent)="processTaskEvents($event)"
+                        [actionRowJustifyContent]='"center"'
+                        [preventCollapse]="preventCollapse"
+                        [showPageHeader]="false"
+                        [showPageFooter]="false"
+                        fxFlex>
+
+        </nc-single-task>
+    </div>
+</div>

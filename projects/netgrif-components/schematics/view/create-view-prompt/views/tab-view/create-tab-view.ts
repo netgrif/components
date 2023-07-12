@@ -76,7 +76,7 @@ export function createTabView(
         imports: tabViews.tabViewImports,
         dasherize: strings.dasherize,
         classify: strings.classify,
-        modulePath: createRelativePath(view.fileImportPath, './app.module'),
+        modulePath: createRelativePath(view.fileImportPath, './app.model'),
         viewIdSegment: getViewIdSegmentFromPath(args.path)
     }));
 

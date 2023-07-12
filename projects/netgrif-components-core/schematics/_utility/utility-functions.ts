@@ -76,7 +76,7 @@ export function createChangesRecorder(tree: Tree, file: FileEntry, changes: Arra
 }
 
 export function getAppModule(tree: Tree, projectPath: string): FileData {
-    return getFileData(tree, projectPath, 'app.module.ts');
+    return getFileData(tree, projectPath, 'app.model.ts');
 }
 
 export function getFileData(tree: Tree, projectRootPath: string, relativeFilePath: string): FileData {

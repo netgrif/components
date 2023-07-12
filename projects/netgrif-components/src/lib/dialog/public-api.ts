@@ -8,3 +8,4 @@ export * from './user-impersonate-dialog/user-impersonate-dialog.component';
 export * from './filter-selector-dialog/filter-selector-dialog.component';
 export * from './load-filter-dialog/load-filter-dialog.component';
 export * from './save-filter-dialog/save-filter-dialog.component';
+export * from './task-view-dialog/task-view-dialog.component';

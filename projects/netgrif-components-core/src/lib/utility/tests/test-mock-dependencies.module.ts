@@ -7,7 +7,7 @@ import {TestConfigurationService} from './test-config';
 
 
 /**
- * A module that provides the most common test dependencies, so that they don't have to be provided in each test.
+ * A model that provides the most common test dependencies, so that they don't have to be provided in each test.
  *
  * Provides the following:
  * - {@link AuthenticationMethodService} replaced with {@link MockAuthenticationMethodService}

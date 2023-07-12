@@ -16,7 +16,6 @@ import { ActivatedRoute } from '@angular/router';
 })
 export abstract class AbstractSingleTaskComponent implements OnDestroy {
 
-    protected _unsubscribe$: Subject<void>;
     protected _taskPanelRef: MatExpansionPanel;
     @Input() task$: Observable<TaskPanelData>;
     @Input() loading$: Observable<boolean>;
@@ -29,6 +28,8 @@ export abstract class AbstractSingleTaskComponent implements OnDestroy {
     @Input() noTaskSection: TemplateRef<any>;
     @Input() pageHeader: TemplateRef<any>;
     @Input() pageFooter: TemplateRef<any>;
+    @Input() showPageHeader: boolean = true;
+    @Input() showPageFooter: TemplateRef<any>;
     @Input() headerTitle: string;
     @Input() footerText: string;
     @Input() actionButtonTemplates: Array<TemplateRef<any>>;
@@ -40,12 +41,10 @@ export abstract class AbstractSingleTaskComponent implements OnDestroy {
                 protected _route: ActivatedRoute,
                 @Optional() @Inject(NAE_TAB_DATA) _injectedTabData: InjectedTabData) {
         this.taskEvent = new EventEmitter<TaskEventNotification>();
-        this._unsubscribe$ = new Subject<void>();
     }
 
     ngOnDestroy(): void {
         this.taskEvent.complete();
-        this._unsubscribe$.complete();
     }
 
     public setPanelRef(panelRef: MatExpansionPanel) {

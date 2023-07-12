@@ -35,13 +35,13 @@
         </ng-template>
 
         <ng-template #defaultPageHeader>
-            <mat-card class="top-card">
+            <mat-card class="top-card" *ngIf="showPageHeader">
                 <span class="top-card-title"><strong>{{headerTitle ?? (!!task && !!task.task ? task.task.title : '')}}</strong></span>
             </mat-card>
         </ng-template>
 
         <ng-template #defaultPageFooter>
-            <mat-card class='bottom-card footer'>
+            <mat-card class='bottom-card footer' *ngIf="showPageFooter">
                 <span class="bottom-card-title footer-font"><strong>{{footerText ?? 'tasks.footer.defaultText' | translate}}</strong></span>
             </mat-card>
         </ng-template>

@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function foundLazyModuleWithPath(path) {
-        //path is like app/customers/customers.module#CustomersModule
+        //path is like app/customers/customers.model#CustomersModule
         var split = path.split('#'),
             lazyModulePath = split[0],
             lazyModuleName = split[1];
@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .attr("text-anchor", function(d) {
                 return "start";
             }).html(function(d) {
-                // if kind === module name + module
+                // if kind === model name + model
                 // if kind === component component + path
                 var _name = '';
                 if (d.kind === 'module') {
