@@ -1,6 +1,9 @@
+<div class="mat-dialog-title" fxLayout="column" fxLayoutAlign="center none" *nccLet="(task$ | async) as taskPanelData">
+    {{!!taskPanelData?.task?.title ? taskPanelData?.task?.title : taskPanelData?.task?.transitionId}}
+</div>
 <div mat-dialog-content class="task-view-container side-menu-root">
         <nc-header [hidden]='true' #header type="task" class="task-panel-padding-mini"></nc-header>
-        <nc-single-task class="virtual-scroll-list-padding" [task$]="task$"
+        <nc-single-task class="virtual-scroll-padding" [task$]="task$"
                         [loading$]="loading$"
                         [selectedHeaders$]="selectedHeaders$"
                         (taskEvent)="processTaskEvents($event)"

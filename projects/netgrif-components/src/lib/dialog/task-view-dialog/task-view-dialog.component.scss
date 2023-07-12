@@ -66,13 +66,13 @@
     border-radius: 4px;
     margin-bottom: 10px;
 }
-.task-view-container  {
-    height: calc(100% - 64px);
-    padding-left: 8px;
-    padding-right: 8px;
+.task-view-container {
+    height: calc(100% - 64px) !important;
+    padding-left: 8px !important;
+    padding-right: 8px !important;
     margin: 0;
 }
-.virtual-scroll-list-padding {
+.virtual-scroll-padding {
     padding-right: 4px;
 }
 
