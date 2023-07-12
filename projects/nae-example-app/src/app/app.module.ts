@@ -19,7 +19,7 @@ import {
     ViewService,
     ProfileModule,
     Dashboard,
-    FrontActionsRegistryService
+    FrontActionModule
 } from '@netgrif/components-core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -241,7 +241,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         EmailSubmissionFormComponentModule,
         RedirectComponentModule,
         FilterFieldContentModule,
-        DialogComponentsModule
+        DialogComponentsModule,
+        FrontActionModule
     ],
     providers: [{
         provide: ConfigurationService,
@@ -259,8 +260,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 })
 export class AppModule {
 
-    constructor(registry: ComponentRegistryService,
-                frontActionsRegistry: FrontActionsRegistryService) {
+    constructor(registry: ComponentRegistryService) {
         registry.register('email', (injector: Injector) => new ComponentPortal(EmailSubmissionFormComponent, null, injector));
         registry.register('workflow-view', (injector: Injector) => new ComponentPortal(WorkflowViewExampleComponent, null, injector));
         registry.register('task-view', (injector: Injector) => new ComponentPortal(TaskViewComponent, null, injector));

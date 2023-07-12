@@ -2,12 +2,12 @@ import {Injector} from "@angular/core";
 import {
     FrontActionDefinition,
     FrontAction,
-    NAE_TASK_VIEW_COMPONENT, SaveFilterInjectionData,
-    TaskViewInjectionData, NAE_SAVE_FILTER_DIALOG_COMPONENT
+    NAE_TASK_VIEW_COMPONENT,
+    TaskViewInjectionData, reloadTaskAction
 } from '@netgrif/components-core';
 import {MatDialog} from "@angular/material/dialog";
 
-export const openDialog: FrontActionDefinition = {
+export const openTaskDialog: FrontActionDefinition = {
     fn: (injector: Injector, frontAction: FrontAction) => {
         const dialogComponent = injector.get(NAE_TASK_VIEW_COMPONENT);
         const dialog = injector.get(MatDialog);
@@ -18,7 +18,7 @@ export const openDialog: FrontActionDefinition = {
             } as TaskViewInjectionData,
         });
         ref.afterClosed().subscribe(event => {
-            alert("dialog closed")
+            reloadTaskAction.fn(injector, frontAction)
         });
     }
 }

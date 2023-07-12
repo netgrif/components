@@ -12,7 +12,7 @@ import {
     TaskViewInjectionData,
     UserFiltersService,
     AbstractSingleTaskViewComponent,
-    SingleTaskMode, TaskEvent
+    TaskEvent
 } from '@netgrif/components-core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {localAllowedNetsFactory} from "../../side-menu/content-components/save-filter/save-filter.component";

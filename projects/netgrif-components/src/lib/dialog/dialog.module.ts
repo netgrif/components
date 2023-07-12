@@ -50,7 +50,7 @@ import {
 } from '../side-menu/content-components/multi-user-assign/side-menu-multi-user-assign-component.module';
 import { MultiUserAssignDialogComponent } from './multi-user-assign-dialog/multi-user-assign-dialog.component';
 import { TaskViewDialogComponent } from './task-view-dialog/task-view-dialog.component';
-import {openDialog} from "./model/dialog-actions";
+import {openTaskDialog} from "./model/dialog-actions";
 
 @NgModule({
     declarations: [
@@ -114,7 +114,6 @@ import {openDialog} from "./model/dialog-actions";
 export class DialogComponentsModule {
 
     constructor(frontActionsRegistry: FrontActionsRegistryService) {
-        frontActionsRegistry.register('openDialog', openDialog)
-
+        frontActionsRegistry.register('openDialog', openTaskDialog);
     }
 }
