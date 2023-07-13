@@ -15,15 +15,18 @@ export const TRANSITION_ID = "transitionId"
 export const publicBaseFilterFactory = (router: Router, route: ActivatedRoute, process: ProcessService,
                                         caseResourceService: CaseResourceService, snackBarService: SnackBarService,
                                         translate: TranslateService, publicTaskLoadingService: PublicTaskLoadingService) => {
-    if (route.snapshot.paramMap.get(CASE_ID) === null && route.snapshot.paramMap.get(PETRI_NET_ID) !== null) {
+    const caseId = route.snapshot.paramMap.get(CASE_ID)
+    const petriNetId = route.snapshot.paramMap.get(PETRI_NET_ID)
+    const transId = route.snapshot.paramMap.get(TRANSITION_ID)
+    if (caseId === null && petriNetId !== null) {
         getNetAndCreateCase(router, route, process, caseResourceService, snackBarService, translate, publicTaskLoadingService);
-    } else if (route.snapshot.paramMap.get(CASE_ID) !== null && route.snapshot.paramMap.get(TRANSITION_ID) !== null) {
+    } else if (caseId !== null && transId !== null) {
         return {
-            filter: new SimpleFilter('', FilterType.TASK, {case: {id: route.snapshot.paramMap.get(CASE_ID)}, transitionId: route.snapshot.paramMap.get(TRANSITION_ID)})
+            filter: new SimpleFilter('', FilterType.TASK, {case: {id: caseId}, transitionId: transId})
         };
-    } else if (route.snapshot.paramMap.get(CASE_ID) !== null) {
+    } else if (caseId !== null) {
         return {
-            filter: new SimpleFilter('', FilterType.TASK, {case: {id: route.snapshot.paramMap.get(CASE_ID)}})
+            filter: new SimpleFilter('', FilterType.TASK, {case: {id: caseId}})
         };
     }
     return {
