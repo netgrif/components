@@ -4,7 +4,6 @@ import {Observable, Subscription} from 'rxjs';
 import {TaskPanelData} from '../../panel/task-panel-list/task-panel-data/task-panel-data';
 import {TaskViewService} from './service/task-view.service';
 import {ActivatedRoute} from '@angular/router';
-import {AsyncPipe} from "@angular/common";
 import {BaseFilter} from "../../search/models/base-filter";
 import {SimpleFilter} from "../../filter/models/simple-filter";
 import {TaskSearchRequestBody} from "../../filter/models/task-search-request-body";
@@ -33,7 +32,6 @@ export abstract class AbstractSingleTaskViewComponent extends AbstractViewWithHe
 
     protected constructor(protected taskViewService: TaskViewService,
                           activatedRoute: ActivatedRoute,
-                          protected async: AsyncPipe,
                           @Inject(NAE_BASE_FILTER) protected baseFilter: BaseFilter) {
         super(taskViewService, activatedRoute);
         this.noTaskPresent = new EventEmitter<void>();

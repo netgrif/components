@@ -1,4 +1,4 @@
-import {Component, Inject, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
 import {
     AllowedNetsService,
     AllowedNetsServiceFactory,
@@ -17,7 +17,6 @@ import {
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {localAllowedNetsFactory} from "../../side-menu/content-components/save-filter/save-filter.component";
 import {ActivatedRoute} from "@angular/router";
-import {AsyncPipe} from "@angular/common";
 import {HeaderComponent} from "../../header/header.component";
 
 export function taskViewFilterFactory(dialogControl: TaskViewInjectionData): BaseFilter {
@@ -40,7 +39,6 @@ export function taskViewFilterFactory(dialogControl: TaskViewInjectionData): Bas
     providers: [
         TaskViewService,
         SearchService,
-        AsyncPipe,
         {
             provide: NAE_BASE_FILTER,
             useFactory: taskViewFilterFactory,
@@ -53,7 +51,7 @@ export function taskViewFilterFactory(dialogControl: TaskViewInjectionData): Bas
         }
     ]
 })
-export class TaskViewDialogComponent extends AbstractSingleTaskViewComponent {
+export class TaskViewDialogComponent extends AbstractSingleTaskViewComponent implements AfterViewInit {
 
     @ViewChild('header') public taskHeaderComponent: HeaderComponent;
     protected _injectedData: TaskViewInjectionData;
@@ -63,10 +61,9 @@ export class TaskViewDialogComponent extends AbstractSingleTaskViewComponent {
                 protected _userFilterService: UserFiltersService,
                 protected _log: LoggerService,
                 taskViewService: TaskViewService,
-                async: AsyncPipe,
                 @Inject(NAE_BASE_FILTER) baseFilter: BaseFilter,
                 _activatedRoute?: ActivatedRoute) {
-        super(taskViewService, _activatedRoute, async, baseFilter);
+        super(taskViewService, _activatedRoute, baseFilter);
         if (this._data) {
             this._injectedData = this._data as TaskViewInjectionData;
         }

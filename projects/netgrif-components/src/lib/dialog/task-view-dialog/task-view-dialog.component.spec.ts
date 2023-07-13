@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TaskViewDialogComponent } from './task-view-dialog.component';
-import {SaveFilterDialogComponent} from "../save-filter-dialog/save-filter-dialog.component";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {NoopAnimationsModule} from "@angular/platform-browser/animations";
 import {PanelComponentModule} from "../../panel/panel.module";
@@ -19,6 +18,7 @@ import {
     UserResourceService,
     MockUserResourceService
 } from '@netgrif/components-core';
+import {HeaderComponentModule} from "../../header/header.module";
 
 describe('TaskViewDialogComponent', () => {
     let component: TaskViewDialogComponent;
@@ -26,7 +26,7 @@ describe('TaskViewDialogComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [SaveFilterDialogComponent],
+            declarations: [TaskViewDialogComponent],
             imports: [
                 MaterialModule,
                 HttpClientTestingModule,
@@ -34,6 +34,7 @@ describe('TaskViewDialogComponent', () => {
                 PanelComponentModule,
                 TranslateLibModule,
                 RouterTestingModule.withRoutes([]),
+                HeaderComponentModule,
                 MatDialogModule
             ],
             providers: [
