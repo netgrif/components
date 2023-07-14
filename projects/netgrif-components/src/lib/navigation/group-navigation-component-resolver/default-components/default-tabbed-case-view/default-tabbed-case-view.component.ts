@@ -87,8 +87,9 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
     constructor(caseViewService: CaseViewService,
                 loggerService: LoggerService,
                 viewIdService: ViewIdService,
+                overflowService: OverflowService,
                 @Inject(NAE_TAB_DATA) protected _injectedTabData: InjectedTabbedCaseViewDataWithNavigationItemTaskData) {
-        super(caseViewService, loggerService, _injectedTabData, undefined, undefined, undefined, _injectedTabData.newCaseButtonConfiguration);
+        super(caseViewService, loggerService, _injectedTabData, overflowService, undefined, undefined, _injectedTabData.newCaseButtonConfiguration);
 
         this.initialSearchMode = _injectedTabData.caseViewSearchTypeConfiguration.initialSearchMode;
         this.showToggleButton = _injectedTabData.caseViewSearchTypeConfiguration.showSearchToggleButton;
