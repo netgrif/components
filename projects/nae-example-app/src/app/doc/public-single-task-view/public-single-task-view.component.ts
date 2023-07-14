@@ -141,9 +141,8 @@ export class PublicSingleTaskViewComponent extends AbstractSingleTaskViewCompone
                 publicTaskLoadingService: PublicTaskLoadingService,
                 activatedRoute: ActivatedRoute,
                 protected _router: Router,
-                async: AsyncPipe,
                 @Inject(NAE_BASE_FILTER) baseFilter: BaseFilter) {
-        super(taskViewService, activatedRoute, async, baseFilter);
+        super(taskViewService, activatedRoute, baseFilter);
         this.hidden = false;
         this.loading$ = combineLatest(taskViewService.loading$, publicTaskLoadingService.loading$).pipe(
             map(sources => {
