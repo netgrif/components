@@ -456,6 +456,7 @@
         "snackBar": {
             "deleteCanceled": "Process delete canceled",
             "deleteSuccess": "Process successfully deleted",
+            "deleteInProgress": "The process has been marked for deletion, the deletion is now underway.",
             "deleteError": "Process could not be deleted",
             "uploadFailed": "Process file could not be uploaded.",
             "uploadSuccess": "Process file uploaded successfully"

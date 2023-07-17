@@ -13,7 +13,10 @@ import {Page} from '../../resources/interface/page';
 import {ListRange} from '@angular/cdk/collections';
 import {hasContent} from '../../utility/pagination/page-has-content';
 import {PetriNetRequestBody} from '../../resources/interface/petri-net-request-body';
-import {NAE_WORKFLOW_SERVICE_CONFIRM_DELETE, NAE_WORKFLOW_SERVICE_FILTER} from './models/injection-token-workflow-service';
+import {
+    NAE_WORKFLOW_SERVICE_CONFIRM_DELETE,
+    NAE_WORKFLOW_SERVICE_FILTER
+} from './models/injection-token-workflow-service';
 import {DialogService} from '../../dialog/services/dialog.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
@@ -210,7 +213,7 @@ export class WorkflowViewService extends AbstractSortableViewComponent implement
      */
     protected _deleteWorkflow(workflow: Net): void {
         this._petriNetResource.deletePetriNet(workflow.stringId).subscribe(response => {
-                this._snackBarService.openSuccessSnackBar(this._translate.instant('workflow.snackBar.deleteSuccess'));
+                this._snackBarService.openSuccessSnackBar(this._translate.instant('workflow.snackBar.deleteInProgress'), durationInSeconds: 5000);
                 this._log.info('Process delete success. Server response: ' + response.success);
                 this.reload();
             },
