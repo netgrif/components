@@ -87,7 +87,7 @@ export class FilterExtractionService {
         }
 
         const rootViewFilter = this.extractViewFilter(rootViewIdField);
-        if (rootViewFilter !== undefined) {
+        if (rootViewFilter !== undefined && rootViewFilter.type === filterSegment.type) {
             return filterSegment.merge(rootViewFilter, MergeOperator.AND);
         }
         return filterSegment;
