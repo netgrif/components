@@ -12,14 +12,18 @@ export function navigationItemTaskViewDefaultHeadersFactory(navigationItemTaskDa
 }
 
 function navigationItemDefaultHeadersFactory(navigationItemTaskData: DataGroup[], useFieldId: string, defaultHeadersFieldId: string): Array<string> | undefined {
-    const isUse = extractFieldValueFromData<boolean>(navigationItemTaskData, useFieldId);
-    if (isUse) {
-        const defaultHeaders = extractFieldValueFromData<string>(navigationItemTaskData, defaultHeadersFieldId);
-        if (defaultHeaders === undefined || defaultHeaders === "") {
+    try {
+        const isUse = extractFieldValueFromData<boolean>(navigationItemTaskData, useFieldId);
+        if (isUse) {
+            const defaultHeaders = extractFieldValueFromData<string>(navigationItemTaskData, defaultHeadersFieldId);
+            if (defaultHeaders === undefined || defaultHeaders === "") {
+                return undefined;
+            }
+            return defaultHeaders.split(',');
+        } else {
             return undefined;
         }
-        return defaultHeaders.split(',');
-    } else {
+    } catch (e) {
         return undefined;
     }
 }
