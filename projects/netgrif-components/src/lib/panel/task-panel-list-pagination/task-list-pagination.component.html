@@ -21,6 +21,7 @@
                     [responsiveBody]="responsiveBody"
                     (taskEvent)="emitTaskEvent($event)"
                     (panelRefOutput)="addToPanelRefs(task, $event)"
+                    [showMoreMenu]="showMoreMenu"
                     class="panel-expanded-spacing">
                 </nc-task-panel>
 
