@@ -213,7 +213,7 @@ export class WorkflowViewService extends AbstractSortableViewComponent implement
      */
     protected _deleteWorkflow(workflow: Net): void {
         this._petriNetResource.deletePetriNet(workflow.stringId).subscribe(response => {
-                this._snackBarService.openSuccessSnackBar(this._translate.instant('workflow.snackBar.deleteInProgress'), durationInSeconds: 5000);
+                this._snackBarService.openSuccessSnackBar(this._translate.instant('workflow.snackBar.deleteInProgress'));
                 this._log.info('Process delete success. Server response: ' + response.success);
                 this.reload();
             },
