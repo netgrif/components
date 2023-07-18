@@ -24,6 +24,10 @@
 <title>cluster_ConfirmDialogModule</title>
 <polygon fill="none" stroke="black" stroke-dasharray="1,5" points="84,-70 84,-268 412,-268 412,-70 84,-70"/>
 </g>
+<g id="clust5" class="cluster">
+<title>cluster_ConfirmDialogModule_exports</title>
+<polygon fill="none" stroke="black" points="155,-208 155,-260 341,-260 341,-208 155,-208"/>
+</g>
 <g id="clust4" class="cluster">
 <title>cluster_ConfirmDialogModule_imports</title>
 <polygon fill="none" stroke="black" points="282,-78 282,-130 404,-130 404,-78 282,-78"/>
@@ -31,10 +35,6 @@
 <g id="clust2" class="cluster">
 <title>cluster_ConfirmDialogModule_declarations</title>
 <polygon fill="none" stroke="black" points="92,-78 92,-130 274,-130 274,-78 92,-78"/>
-</g>
-<g id="clust5" class="cluster">
-<title>cluster_ConfirmDialogModule_exports</title>
-<polygon fill="none" stroke="black" points="155,-208 155,-260 341,-260 341,-208 155,-208"/>
 </g>
 <!-- ConfirmDialogComponent -->
 <g id="node1" class="node">
