@@ -22,7 +22,7 @@ export function createLdapRoleAssignmentView(tree: Tree, args: CreateViewArgumen
         classify: strings.classify,
         configName: projectInfo.projectNameClassified,
         configImportPath: createRelativePath(view.fileImportPath, `./${projectInfo.projectNameDasherized}-configuration.service`),
-        modulePath: createRelativePath(view.fileImportPath, './app.model'),
+        modulePath: createRelativePath(view.fileImportPath, './app.module'),
     };
 
     const rules = [];

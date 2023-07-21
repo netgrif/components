@@ -6,7 +6,7 @@ import {ImportToAdd} from '../../_commons/import-to-add';
 import {Change} from '@schematics/angular/utility/change';
 
 /**
- * Adds the view to the ViewService array and into model's EntryComponents as the dynamic routing doesn't work otherwise
+ * Adds the view to the ViewService array and into module's EntryComponents as the dynamic routing doesn't work otherwise
  * @param tree schematic Tree object
  * @param view the view that should be imported
  */

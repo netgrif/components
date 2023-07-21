@@ -106,7 +106,7 @@ export function addSymbolToDecoratorMetadata(
 
     if (!node) {
         // eslint-disable-next-line no-console
-        console.error('No app model found. Please add your new class to your component.');
+        console.error('No app module found. Please add your new class to your component.');
 
         return [];
     }

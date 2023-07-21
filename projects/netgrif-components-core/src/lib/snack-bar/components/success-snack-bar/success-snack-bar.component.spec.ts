@@ -1,7 +1,7 @@
 // import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 //
 // import {SuccessSnackBarComponent} from './success-snack-bar.component';
-// import {MaterialModule} from '../../../material/material.model';
+// import {MaterialModule} from '../../../material/material.module';
 //
 // describe('SuccessSnackBarComponent', () => {
 //     // let component: SuccessSnackBarComponent;

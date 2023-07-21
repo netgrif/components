@@ -25,7 +25,7 @@ export function createWorkflowView(tree: Tree, args: CreateViewArguments, addVie
         classify: strings.classify,
         configName: projectInfo.projectNameClassified,
         configImportPath: createRelativePath(view.fileImportPath, `./${projectInfo.projectNameDasherized}-configuration.service`),
-        modulePath: createRelativePath(view.fileImportPath, './app.model'),
+        modulePath: createRelativePath(view.fileImportPath, './app.module'),
         showDeleteMenu: args.showDeleteMenu,
         confirmWorkflowDeletion: args.confirmWorkflowDeletion
     };

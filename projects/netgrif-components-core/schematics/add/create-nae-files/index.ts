@@ -47,7 +47,7 @@ function createRoutesModule(): Rule {
         const appRouting = tree.get(`${projectInfo.path}/app-routing.module`);
         if (appRouting) {
             commitChangesToFile(tree, appModule.fileEntry,
-                addImportToModule(appModule.sourceFile, appModule.fileEntry.path, 'AppRoutingModule', './app-routing.model')
+                addImportToModule(appModule.sourceFile, appModule.fileEntry.path, 'AppRoutingModule', './app-routing.module')
             );
             return createFilesFromTemplates('./files', projectInfo.path);
         } else {
