@@ -4,7 +4,7 @@ import {FrontActionDefinition} from "../actions/model/front-action-definition";
 @Injectable({
     providedIn: 'root'
 })
-export class FrontActionsRegistryService {
+export class FrontActionRegistryService {
 
     private _registry: Map<string, FrontActionDefinition>;
 

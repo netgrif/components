@@ -16,7 +16,6 @@ import {TaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/t
 import {DataField} from '../../data-fields/models/abstract-data-field';
 import {TaskFields} from '../model/task-fields';
 import {TaskRefField} from "../../data-fields/task-ref-field/model/task-ref-field";
-import {FrontActionsRegistryService} from "../../registry/front-actions-registry.service";
 
 /**
  * Acts as a communication interface between the Component that renders Task content and it's parent Component.
@@ -45,9 +44,7 @@ export abstract class TaskContentService implements OnDestroy {
     protected constructor(protected _fieldConverterService: FieldConverterService,
                           protected _snackBarService: SnackBarService,
                           protected _translate: TranslateService,
-                          protected _logger: LoggerService,
-                          protected _frontActionsRegistry: FrontActionsRegistryService,
-                          protected _injector: Injector) {
+                          protected _logger: LoggerService) {
         this.$shouldCreate = new ReplaySubject<Array<DataGroup>>(1);
         this.$shouldCreateCounter = new BehaviorSubject<number>(0);
         this._isExpanding$ = new BehaviorSubject<boolean>(false);
@@ -236,7 +233,7 @@ export abstract class TaskContentService implements OnDestroy {
         });
 
         this.$shouldCreate.next(this._task.dataGroups);
-        this.performFrontendAction(frontendActions);
+        //this.performFrontendAction(frontendActions);
     }
 
     private updateField(chFields: ChangedFields, field: DataField<any>, frontendActions: Change): void {
@@ -319,24 +316,6 @@ export abstract class TaskContentService implements OnDestroy {
             }
             field.update();
         });
-    }
-
-    /**
-     * Performs the specific frontend action.
-     *
-     * A prototype implementation of frontend actions.
-     *
-     * The specifics are subject to change. It is very likely that this method will be moved to a different service.
-     *
-     * @param frontendAction the action that should be performed.
-     */
-    public performFrontendAction(frontendAction: Change): void {
-        if (!!frontendAction?.action && frontendAction.action.length > 0) {
-            frontendAction.action.forEach(action => {
-                const fn = this._frontActionsRegistry.get(action.id)
-                fn.fn(this._injector, action)
-            })
-        }
     }
 
     private isFieldInTask(taskId: string, changedField: string): boolean {

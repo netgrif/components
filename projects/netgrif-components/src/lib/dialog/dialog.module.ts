@@ -12,7 +12,7 @@ import {
     NAE_USER_IMPERSONATE_DIALOG_COMPONENT,
     NAE_SAVE_FILTER_DIALOG_COMPONENT,
     NAE_LOAD_FILTER_DIALOG_COMPONENT,
-    FrontActionsRegistryService,
+    FrontActionRegistryService,
     NAE_TASK_VIEW_COMPONENT, UtilityModule
 } from '@netgrif/components-core';
 import {A11yModule} from '@angular/cdk/a11y';
@@ -114,7 +114,7 @@ import {openTaskDialog} from "./model/dialog-actions";
 })
 export class DialogComponentsModule {
 
-    constructor(frontActionsRegistry: FrontActionsRegistryService) {
-        frontActionsRegistry.register('openDialog', openTaskDialog);
+    constructor(frontActionRegistry: FrontActionRegistryService) {
+        frontActionRegistry.register('openDialog', openTaskDialog);
     }
 }

@@ -6,7 +6,7 @@ import {FieldConverterService} from './field-converter.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
 import {LoggerService} from '../../logger/services/logger.service';
-import {FrontActionsRegistryService} from "../../registry/front-actions-registry.service";
+import {FrontActionRegistryService} from "../../registry/front-action-registry.service";
 
 /**
  * Provides an implementation of the {@link TaskContentService} abstract class that allows
@@ -28,9 +28,8 @@ export class UnlimitedTaskContentService extends TaskContentService implements O
                 _snackBarService: SnackBarService,
                 _translate: TranslateService,
                 _logger: LoggerService,
-                _frontActionsRegistry: FrontActionsRegistryService,
                 _injector: Injector) {
-        super(_fieldConverterService, _snackBarService, _translate, _logger, _frontActionsRegistry, _injector);
+        super(_fieldConverterService, _snackBarService, _translate, _logger);
         this._task$ = new ReplaySubject<Task>(1);
     }
 

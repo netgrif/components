@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { FrontActionsRegistryService } from './front-actions-registry.service';
+import { FrontActionRegistryService } from './front-action-registry.service';
 
 describe('FrontActionsRegistryService', () => {
-  let service: FrontActionsRegistryService;
+  let service: FrontActionRegistryService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(FrontActionsRegistryService);
+    service = TestBed.inject(FrontActionRegistryService);
   });
 
   it('should be created', () => {

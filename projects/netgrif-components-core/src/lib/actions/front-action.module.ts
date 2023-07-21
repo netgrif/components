@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {FrontActionsRegistryService} from "../registry/front-actions-registry.service";
+import {FrontActionRegistryService} from "../registry/front-action-registry.service";
 import {redirectAction, reloadTaskAction, validateTaskAction} from "./model/front-action-definitions";
 
 @NgModule({
@@ -11,7 +11,7 @@ import {redirectAction, reloadTaskAction, validateTaskAction} from "./model/fron
 })
 export class FrontActionModule {
 
-    constructor(frontActionsRegistry: FrontActionsRegistryService) {
+    constructor(frontActionsRegistry: FrontActionRegistryService) {
         frontActionsRegistry.register('redirect', redirectAction);
         frontActionsRegistry.register('validate', validateTaskAction);
         frontActionsRegistry.register('reloadTask', reloadTaskAction);
