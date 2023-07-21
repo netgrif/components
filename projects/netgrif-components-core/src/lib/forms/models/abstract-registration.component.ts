@@ -127,7 +127,7 @@ export abstract class AbstractRegistrationComponent implements HasForm, OnDestro
             case 'minlength':
                 return this._translate.instant('dataField.validations.minLength', {length: this.minPasswordLength});
             case 'mismatchedPassword':
-                return this._translate.instant('forms.registry.passwordsMustMatch');
+                return this._translate.instant('forms.register.passwordsMustMatch');
         }
     }
 

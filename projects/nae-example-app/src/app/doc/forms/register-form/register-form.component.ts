@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {LoggerService, MessageResource, SnackBarService} from '@netgrif/components-core';
 
 @Component({
-    selector: 'nae-app-registry-card',
+    selector: 'nae-app-register-card',
     templateUrl: './register-form.component.html',
     styleUrls: ['./register-form.component.scss']
 })
