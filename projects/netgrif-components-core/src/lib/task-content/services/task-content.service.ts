@@ -233,7 +233,6 @@ export abstract class TaskContentService implements OnDestroy {
         });
 
         this.$shouldCreate.next(this._task.dataGroups);
-        //this.performFrontendAction(frontendActions);
     }
 
     private updateField(chFields: ChangedFields, field: DataField<any>, frontendActions: Change): void {

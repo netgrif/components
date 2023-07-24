@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {FrontActionRegistryService} from "../registry/front-action-registry.service";
-import {redirectAction, reloadTaskAction, validateTaskAction} from "./model/front-action-definitions";
+import {redirectAction} from "./model/router-action-definitions";
+import {reloadTaskAction, validateTaskAction} from "./model/task-action-definitions";
 
 @NgModule({
   declarations: [],

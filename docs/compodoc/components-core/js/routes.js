@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function foundLazyModuleWithPath(path) {
-        //path is like app/customers/customers.model#CustomersModule
+        //path is like app/customers/customers.module#CustomersModule
         var split = path.split('#'),
             lazyModulePath = split[0],
             lazyModuleName = split[1];
