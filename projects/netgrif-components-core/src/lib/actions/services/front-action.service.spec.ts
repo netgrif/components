@@ -6,7 +6,9 @@ describe('FrontActionService', () => {
   let service: FrontActionService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+        providers: [FrontActionService]
+    });
     service = TestBed.inject(FrontActionService);
   });
 
