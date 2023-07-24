@@ -66,7 +66,7 @@ export class EventService {
                                                       frontActions: Array<FrontAction>): Array<FrontAction> {
         outcomes.forEach(childOutcome => {
             if (EventConstants.FRONT_ACTIONS in childOutcome) {
-                const childFrontActions: Array<FrontAction> = (childOutcome as SetDataEventOutcome).frontActions;
+                const childFrontActions: Array<FrontAction> = (childOutcome as EventOutcome).frontActions;
 
                 if (!!childFrontActions) {
                     frontActions.push(...childFrontActions)
