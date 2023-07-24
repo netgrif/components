@@ -66,8 +66,8 @@ export class DefaultCaseRefListViewComponent extends AbstractCaseViewComponent i
             enableCaseTitle: true,
             isCaseTitleRequired: true
         });
-        this.search = !!_caseRefCreateCase;
-        this.createCase = !!_caseRefSearch;
+        this.search = !!_caseRefSearch;
+        this.createCase = !!_caseRefCreateCase;
     }
 
     ngAfterViewInit(): void {
