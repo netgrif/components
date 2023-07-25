@@ -29,7 +29,7 @@ import {decodeBase64, encodeBase64} from "../../utility/base64";
     providedIn: 'root'
 })
 export class FieldConverterService {
-    private textFieldNames = ['richtextarea', 'htmltextarea', 'editor', 'htmlEditor']
+    private textFieldNames = [ 'richtextarea', 'htmltextarea', 'editor', 'htmlEditor' ]
 
     constructor() {
     }
