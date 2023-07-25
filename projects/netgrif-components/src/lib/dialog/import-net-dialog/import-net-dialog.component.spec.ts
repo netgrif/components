@@ -12,7 +12,7 @@ import {
     SideMenuControl,
     SnackBarModule, SuccessSnackBarComponent, TestConfigurationService,
     TranslateLibModule
-} from 'netgrif-components-core';
+} from '@netgrif/components-core';
 import {MatIconModule} from '@angular/material/icon';
 import {Observable, of} from 'rxjs';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
