@@ -8,7 +8,7 @@ import {
 import {MatDialog} from "@angular/material/dialog";
 
 export const openTaskDialog: FrontActionDefinition = {
-    fn: (injector: Injector, frontAction: FrontAction) => {
+    call: (injector: Injector, frontAction: FrontAction) => {
         const dialogComponent = injector.get(NAE_TASK_VIEW_COMPONENT);
         const dialog = injector.get(MatDialog);
         const ref = dialog.open(dialogComponent, {
@@ -18,7 +18,7 @@ export const openTaskDialog: FrontActionDefinition = {
             } as TaskViewInjectionData,
         });
         ref.afterClosed().subscribe(event => {
-            reloadTaskAction.fn(injector, frontAction)
+            reloadTaskAction.call(injector, frontAction)
         });
     }
 }
