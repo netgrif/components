@@ -5,7 +5,7 @@ import {
     ComponentRegistryService,
     CovalentModule,
     CurrencyModule,
-    CustomDateAdapter,
+    CustomDateAdapter, FrontActionModule,
     MaterialModule,
     TranslateLibModule,
 } from '@netgrif/components-core';
@@ -206,7 +206,8 @@ import { CaseRefDefaultComponent } from './case-ref-field/case-ref-default/case-
         BrowserModule,
         BrowserAnimationsModule,
         DashboardComponentModule,
-        RouterModule
+        RouterModule,
+        FrontActionModule
     ],
     providers: [
         {provide: DateAdapter, useClass: CustomDateAdapter}

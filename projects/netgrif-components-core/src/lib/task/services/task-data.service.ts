@@ -1,6 +1,6 @@
 import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
 import {Observable, Subject, Subscription} from 'rxjs';
-import {ChangedFields} from '../../data-fields/models/changed-fields';
+import {ChangedFields, FrontAction} from '../../data-fields/models/changed-fields';
 import {TaskContentService} from '../../task-content/services/task-content.service';
 import {TaskRequestStateService} from './task-request-state.service';
 import {TranslateService} from '@ngx-translate/core';
@@ -35,6 +35,7 @@ import {ChangedFieldsService} from '../../changed-fields/services/changed-fields
 import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
 import {TaskFields} from '../../task-content/model/task-fields';
 import {EnumerationField} from "../../data-fields/enumeration-field/models/enumeration-field";
+import {FrontActionService} from "../../actions/services/front-action.service";
 
 /**
  * Handles the loading and updating of data fields and behaviour of
@@ -60,15 +61,12 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
                 protected _eventQueue: EventQueueService,
                 protected _userComparator: UserComparatorService,
                 protected _eventService: EventService,
-                protected _changedFieldsService: ChangedFieldsService) {
+                protected _changedFieldsService: ChangedFieldsService,
+                protected _frontActionService: FrontActionService) {
         super(_taskContentService, _selectedCaseService);
         this._updateSuccess$ = new Subject<boolean>();
         this._dataReloadSubscription = this._taskContentService.taskDataReloadRequest$.subscribe(queuedFrontendAction => {
-            this.initializeTaskDataFields(this._afterActionFactory.create(success => {
-                if (success && queuedFrontendAction) {
-                    this._taskContentService.performFrontendAction(queuedFrontendAction);
-                }
-            }), true);
+            this.initializeTaskDataFields(new AfterAction(), true);
         });
     }
 
@@ -486,9 +484,13 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
                                               body: TaskSetDataRequestBody) {
         const outcome = response.outcome;
         const changedFieldsMap: ChangedFieldsMap = this._eventService.parseChangedFieldsFromOutcomeTree(outcome);
+        const frontActions: Array<FrontAction> = this._eventService.parseFrontActionsFromOutcomeTree(outcome);
 
         if (Object.keys(changedFieldsMap).length > 0) {
             this._changedFieldsService.emitChangedFields(changedFieldsMap);
+        }
+        if (!!frontActions && frontActions.length > 0) {
+            this._frontActionService.runAll(frontActions);
         }
         this.clearWaitingForResponseFlag(body);
         this._snackBar.openSuccessSnackBar(!!outcome.message ? outcome.message : this._translate.instant('tasks.snackbar.dataSaved'));

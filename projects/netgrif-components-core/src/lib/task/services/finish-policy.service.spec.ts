@@ -19,6 +19,7 @@ import {TaskEventService} from '../../task-content/services/task-event.service';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
+import {FrontActionService} from "../../actions/services/front-action.service";
 
 describe('FinishPolicyService', () => {
     let service: FinishPolicyService;
@@ -40,6 +41,7 @@ describe('FinishPolicyService', () => {
                 TaskDataService,
                 TaskEventService,
                 ChangedFieldsService,
+                FrontActionService,
                 {provide: TaskContentService, useClass: UnlimitedTaskContentService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: NAE_TASK_OPERATIONS, useClass: NullTaskOperations},

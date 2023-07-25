@@ -9,3 +9,4 @@ export const NAE_SAVE_FILTER_COMPONENT = new InjectionToken<ComponentType<unknow
 export const NAE_LOAD_FILTER_COMPONENT = new InjectionToken<ComponentType<unknown>>('NaeLoadFilterComponent');
 export const NAE_USER_IMPERSONATE_COMPONENT = new InjectionToken<ComponentType<unknown>>('NaeUserImpersonateComponent');
 export const NAE_ADMIN_IMPERSONATE_COMPONENT = new InjectionToken<ComponentType<unknown>>('NaeAdminImpersonateComponent');
+export const NAE_TASK_VIEW_COMPONENT = new InjectionToken<ComponentType<unknown>>('NaeTaskViewComponent');
