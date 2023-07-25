@@ -25,7 +25,6 @@ import {UserListField} from '../../data-fields/user-list-field/models/user-list-
 import {UserListValue} from '../../data-fields/user-list-field/models/user-list-value';
 import {decodeBase64, encodeBase64} from "../../utility/base64";
 
-
 @Injectable({
     providedIn: 'root'
 })
