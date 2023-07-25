@@ -227,7 +227,7 @@ export abstract class AbstractEditModeComponent extends AbstractHeaderModeCompon
         while (this.formControls.length &lt; newCount) {
             const i &#x3D; this.formControls.length;
             const formControl &#x3D; new FormControl();
-            formControl.setValue(this.headerService.headerState.selectedHeaders[i]);
+            formControl.setValue(this.headerService.headerState.selectedHeaders[i] ?? this.headerService.headerState.lastSelectedHeaders[i] ?? null);
             this.formControls.push(formControl);
             this.filterOptions.push(formControl.valueChanges.pipe(
                 startWith(&#x27;&#x27;),
