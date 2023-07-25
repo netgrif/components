@@ -238,7 +238,7 @@ import semver from &#x27;semver&#x27;;
 import {CreateCaseEventOutcome} from &#x27;../../../event/model/event-outcomes/case-outcomes/create-case-event-outcome&#x27;;
 import {EventOutcomeMessageResource} from &#x27;../../../resources/interface/message-resource&#x27;;
 import {MatOption} from &#x27;@angular/material/core&#x27;;
-import { LoadingEmitter } from &#x27;../../../utility/loading-emitter&#x27;;
+import {LoadingEmitter} from &#x27;../../../utility/loading-emitter&#x27;;
 
 interface Form {
     value: string;
@@ -365,9 +365,14 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
     }
 
     public createNewCase(): void {
-        if(this.loadingSubmit.value){
-           return
+        if (this.loadingSubmit.value) {
+            return
         }
+
+        if (!this._sideMenuControl.isOpened()) {
+            return
+        }
+
         if (this.titleFormControl.valid || !this.isCaseTitleRequired()) {
             const newCase &#x3D; {
                 title: this.titleFormControl.value &#x3D;&#x3D;&#x3D; &#x27;&#x27; ? null : this.titleFormControl.value,
@@ -400,6 +405,8 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
                                     : response.error
                             });
                         }
+                        this.titleFormControl.markAsUntouched();
+                        this.titleFormControl.setValue(null);
                     },
                     error &#x3D;&gt; {
                         this.loadingSubmit.off();
