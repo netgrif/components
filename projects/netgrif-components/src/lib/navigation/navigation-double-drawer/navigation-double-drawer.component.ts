@@ -8,7 +8,11 @@ import {
     LoggerService,
     UserService,
     AbstractNavigationDoubleDrawerComponent,
-    DynamicNavigationRouteProviderService, AccessService, ImpersonationUserSelectService, ImpersonationService
+    DynamicNavigationRouteProviderService,
+    AccessService,
+    ImpersonationUserSelectService,
+    ImpersonationService,
+    CaseResourceService
 } from '@netgrif/components-core';
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {TranslateService} from "@ngx-translate/core";
@@ -61,11 +65,12 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
                 _log: LoggerService,
                 _config: ConfigurationService,
                 _uriService: UriService,
+                _caseResourceService: CaseResourceService,
                 _impersonationUserSelect: ImpersonationUserSelectService,
                 _impersonation: ImpersonationService,
                 _dynamicRouteProviderService: DynamicNavigationRouteProviderService) {
-        super(_router, _activatedRoute, _breakpoint, _languageService, _translateService, _userService, _accessService, _log, _config, _uriService,
-            _impersonationUserSelect, _impersonation, _dynamicRouteProviderService)
+        super(_router, _activatedRoute, _breakpoint, _languageService, _translateService, _userService, _accessService,
+            _log, _config, _uriService, _caseResourceService, _impersonationUserSelect, _impersonation, _dynamicRouteProviderService)
     }
 
     public toggleSection(section: string): void {

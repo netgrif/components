@@ -25,6 +25,12 @@ import {UriService} from '../service/uri.service';
 import {I18nFieldValue} from "../../data-fields/i18n-field/models/i18n-field-value";
 import {TranslateService} from "@ngx-translate/core";
 import {GroupNavigationConstants} from "../model/group-navigation-constants";
+import {CaseResourceService} from "../../resources/engine-endpoint/case-resource.service";
+import {Page} from "../../resources/interface/page";
+import {CaseSearchRequestBody, PetriNetSearchRequest} from "../../filter/models/case-search-request-body";
+import {HttpParams} from "@angular/common/http";
+import {PaginationParams} from "../../utility/pagination/pagination-params";
+import {SimpleFilter} from "../../filter/models/simple-filter";
 
 export interface ConfigDoubleMenu {
     mode: MatDrawerMode;
@@ -128,6 +134,8 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
 
     protected _childCustomViews: { [uri: string]: { [key: string]: NavigationItem } };
 
+    private currentItemIds: string[]
+
     protected constructor(protected _router: Router,
                           protected _activatedRoute: ActivatedRoute,
                           protected _breakpoint: BreakpointObserver,
@@ -138,6 +146,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                           protected _log: LoggerService,
                           protected _config: ConfigurationService,
                           protected _uriService: UriService,
+                          protected _caseResourceService: CaseResourceService,
                           protected _impersonationUserSelect: ImpersonationUserSelectService,
                           protected _impersonation: ImpersonationService,
                           protected _dynamicRoutingService: DynamicNavigationRouteProviderService) {
@@ -347,12 +356,12 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             return;
         }
         this.leftLoading$.on();
-        this._uriService.getCasesOfNode(this.currentNode.parent, MENU_IDENTIFIERS, 0, 1).subscribe(page => {
-            page?.pagination?.totalElements === 0 ? of([]) : this._uriService.getCasesOfNode(this.currentNode.parent, MENU_IDENTIFIERS, 0, page.pagination.totalElements).pipe(
+        this._uriService.getItemCaseByNodePath(this.currentNode.parent).subscribe(page => {
+            page?.pagination?.totalElements === 0 ? of([]) : this.getItemCasesByIdsAndSaveOrder(this.extractChildCaseIds(page.content[0])).pipe(
                 map(p => p.content),
             ).subscribe(result => {
                 this.leftItems = result.filter(folder => folder.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_HAS_CHILDREN)?.value === true).map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i);
-                this.leftItems.sort((a, b) => (a?.navigation as NavigationItem)?.title.localeCompare((b?.navigation as NavigationItem)?.title));
+                this.leftItems.sort((a, b) => this.currentItemIds.indexOf(a.resource.stringId) - this.currentItemIds.indexOf(b.resource.stringId));
                 this.leftLoading$.off();
             }, error => {
                 this._log.error(error);
@@ -369,12 +378,11 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     protected loadRightSide() {
         this.rightLoading$.on();
         this.moreItems = [];
-        this._uriService.getCasesOfNode(this.currentNode, MENU_IDENTIFIERS, 0, 1).subscribe(page => {
-            this._log.debug('Number of items for uri ' + this._currentNode.uriPath + ': ' + page?.pagination?.totalElements);
-            (page?.pagination?.totalElements === 0 ? of([]) : this._uriService.getCasesOfNode(this._currentNode, MENU_IDENTIFIERS, 0, page.pagination.totalElements).pipe(
+        this._uriService.getItemCaseByNodePath(this.currentNode).subscribe(page => {
+            (page?.pagination?.totalElements === 0 ? of([]) : this.getItemCasesByIdsAndSaveOrder(this.extractChildCaseIds(page.content[0])).pipe(
                 map(p => p.content),
             )).subscribe(result => {
-                result = (result as Case[]).sort((a, b) => a?.title.localeCompare(b?.title));
+                result = (result as Case[]).sort((a, b) => this.currentItemIds.indexOf(a.stringId) - this.currentItemIds.indexOf(b.stringId));
                 if (result.length > RIGHT_SIDE_INIT_PAGE_SIZE) {
                     const rawRightItems: Case[] = result.splice(0, RIGHT_SIDE_INIT_PAGE_SIZE);
                     this.rightItems = rawRightItems.map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i);
@@ -400,6 +408,27 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         });
     }
 
+    private extractChildCaseIds(item: Case): string[] {
+        return item.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_CHILD_ITEM_IDS)?.value
+    }
+
+    private getItemCasesByIdsAndSaveOrder(caseIds: string[]): Observable<Page<Case>>  {
+        this.currentItemIds = caseIds
+        return this.getItemCasesByIds(caseIds, 0, caseIds.length)
+    }
+
+    private getItemCasesByIds(caseIds: string[], pageNumber: number, pageSize: string | number): Observable<Page<Case>> {
+        const searchBody: CaseSearchRequestBody = {
+            stringId: caseIds,
+            process: MENU_IDENTIFIERS.map(id => ({identifier: id} as PetriNetSearchRequest))
+        };
+
+        let httpParams = new HttpParams()
+            .set(PaginationParams.PAGE_SIZE, pageSize)
+            .set(PaginationParams.PAGE_NUMBER, pageNumber);
+        return this._caseResourceService.searchCases(SimpleFilter.fromCaseQuery(searchBody), httpParams);
+    }
+
     public loadMoreItems() {
         if (this.moreItems.length > RIGHT_SIDE_NEW_PAGE_SIZE) {
             this.rightItems.push(...this.moreItems.splice(0, RIGHT_SIDE_NEW_PAGE_SIZE))
@@ -421,7 +450,6 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         }
         this.rightItems = this.rightItems.sort((a, b) => multiplier * (a?.navigation as NavigationItem)?.title.localeCompare((b?.navigation as NavigationItem)?.title));
         this.leftItems = this.leftItems.sort((a, b) => multiplier * (a?.navigation as NavigationItem)?.title.localeCompare((b?.navigation as NavigationItem)?.title));
-        this.moreItems = this.moreItems.sort((a, b) => multiplier * (a?.navigation as NavigationItem)?.title.localeCompare((b?.navigation as NavigationItem)?.title));
     }
 
     protected resolveCustomViewsInRightSide() {
@@ -431,6 +459,9 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     }
 
     protected resolveItemCaseToNavigationItem(itemCase: Case): NavigationItem | undefined {
+        if (this.representsRootNode(itemCase)) {
+            return
+        }
         const item: NavigationItem = {
             access: {},
             navigation: {
@@ -449,6 +480,10 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         if (!!resolvedBannedRoles) item.access['bannedRole'] = resolvedBannedRoles;
         if (!this._accessService.canAccessView(item, item.routingPath)) return;
         return item;
+    }
+
+    private representsRootNode(item: Case): boolean {
+        return item.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH).value === "/"
     }
 
     private getTranslation(value: I18nFieldValue): string {
