@@ -20,7 +20,7 @@
         </div>
         <div fxLayout="row" fxLayoutAlign="end center" fxFlex="5">
             <button mat-icon-button (click)="preventPanelOpen($event)"
-                    *ngIf="!isLoading && (canAssign() || canDo('delegate') || canReassign() || canCancel() || canFinish())"
+                    *ngIf="!isLoading && showMoreMenu && (canAssign() || canDo('delegate') || canReassign() || canCancel() || canFinish())"
                     [matMenuTriggerFor]="menu">
                 <mat-icon>more_vert</mat-icon>
             </button>
@@ -56,7 +56,7 @@
             <div class="task-panel-body" [ngClass]="{'paper-view': isPaperView()}" fxFlex="100">
                 <ng-template [cdkPortalOutlet]="portal"></ng-template>
             </div>
-            <mat-action-row fxLayout.lt-sm="column" [ngStyle]="{'justify-content': actionRowJustifyContent ?? 'flex-end' }">
+            <mat-action-row *ngIf="!hideActionRow" fxLayout.lt-sm="column" [ngStyle]="{'justify-content': actionRowJustifyContent ?? 'flex-end' }">
                 <mat-spinner class='action-row-spinner' *ngIf="isLoading && hidePanelHeader"
                              [diameter]="20"></mat-spinner>
                 <div fxLayoutAlign.lt-sm="center stretch" ngClass.lt-sm="width-100"

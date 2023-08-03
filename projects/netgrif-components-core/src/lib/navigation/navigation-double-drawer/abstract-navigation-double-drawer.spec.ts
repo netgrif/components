@@ -35,6 +35,7 @@ import {TestLoggingConfigurationService} from '../../utility/tests/test-logging-
 import {UriResourceService} from '../service/uri-resource.service';
 import {UriService} from '../service/uri.service';
 import {AbstractNavigationDoubleDrawerComponent} from './abstract-navigation-double-drawer';
+import {TranslateService} from "@ngx-translate/core";
 
 xdescribe('AbstractNavigationDoubleDrawerComponent', () => {
     let component: TestDrawerComponent;
@@ -87,10 +88,10 @@ xdescribe('AbstractNavigationDoubleDrawerComponent', () => {
         component.currentNode = uriService.root;
         timer(1).subscribe(() => {
             expect(component.currentNode).toEqual(uriService.root);
-            expect(component.leftNodes).toBeDefined();
-            expect(component.leftNodes.length).toEqual(0);
-            expect(component.rightNodes).toBeDefined();
-            expect(component.rightNodes.length).toEqual(0);
+            expect(component.leftItems).toBeDefined();
+            expect(component.leftItems.length).toEqual(0);
+            expect(component.rightItems).toBeDefined();
+            expect(component.rightItems.length).toEqual(0);
             done();
         });
     });
@@ -123,9 +124,8 @@ xdescribe('AbstractNavigationDoubleDrawerComponent', () => {
 
     it('should check the menu state', () => {
         expect(component.isOnZeroLevel()).toBeTruthy();
-        expect(component.isLeftNodesEmpty).toBeTruthy();
-        expect(component.isRightNodesEmpty).toBeTruthy();
-        expect(component.isViewsEmpty).toBeTruthy();
+        expect(component.isLeftItemsEmpty).toBeTruthy();
+        expect(component.isRightItemsEmpty).toBeTruthy();
     });
 
 });
@@ -139,6 +139,7 @@ class TestDrawerComponent extends AbstractNavigationDoubleDrawerComponent {
                 _activatedRoute: ActivatedRoute,
                 _breakpoint: BreakpointObserver,
                 _languageService: LanguageService,
+                _translateService: TranslateService,
                 _userService: UserService,
                 _accessService: AccessService,
                 _log: LoggerService,
@@ -147,7 +148,7 @@ class TestDrawerComponent extends AbstractNavigationDoubleDrawerComponent {
                 _impersonationUserSelect: ImpersonationUserSelectService,
                 _impersonation: ImpersonationService,
                 _dynamicRouteProviderService: DynamicNavigationRouteProviderService) {
-        super(_router, _activatedRoute, _breakpoint, _languageService, _userService, _accessService, _log, _config, _uriService,
+        super(_router, _activatedRoute, _breakpoint, _languageService, _translateService, _userService, _accessService, _log, _config, _uriService,
             _impersonationUserSelect, _impersonation, _dynamicRouteProviderService);
     }
 }

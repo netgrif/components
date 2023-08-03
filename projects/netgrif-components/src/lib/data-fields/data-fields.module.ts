@@ -5,7 +5,7 @@ import {
     ComponentRegistryService,
     CovalentModule,
     CurrencyModule,
-    CustomDateAdapter,
+    CustomDateAdapter, FrontActionModule,
     MaterialModule,
     TranslateLibModule,
 } from '@netgrif/components-core';
@@ -208,7 +208,8 @@ import { MultichoiceCaserefFieldComponent } from './multichoice-field/multichoic
         BrowserModule,
         BrowserAnimationsModule,
         DashboardComponentModule,
-        RouterModule
+        RouterModule,
+        FrontActionModule
     ],
     providers: [
         {provide: DateAdapter, useClass: CustomDateAdapter}

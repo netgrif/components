@@ -71,9 +71,11 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
     @Input() responsiveBody = true;
     @Input() preventCollapse = false;
     @Input() hidePanelHeader = false;
+    @Input() hideActionRow = false;
     @Input() actionButtonTemplates: Array<TemplateRef<any>>;
     @Input() actionRowJustifyContent: 'space-between' | 'flex-start' | 'flex-end' | 'center' | 'space-around' |
         'initial' | 'start' | 'end' | 'left' | 'right' | 'revert' | 'inherit' | 'unset'
+    @Input() showMoreMenu: boolean = true;
 
     thisContext: TaskPanelContext = {
         canAssign: () => this.canAssign(),

@@ -5,7 +5,7 @@ import {
     FileUploadModel, LoggerService,
     PetriNetEventOutcome,
     PetriNetResourceService, ProgressType, ProviderProgress,
-    SnackBarService
+    SnackBarService, UriService
 } from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 import {MatDialogRef} from '@angular/material/dialog';
@@ -41,6 +41,7 @@ export class ImportNetDialogComponent implements AfterViewInit {
                 protected _petriNetResource: PetriNetResourceService,
                 protected _log: LoggerService,
                 protected _snackbar: SnackBarService,
+                protected _uriService: UriService,
                 protected _translate: TranslateService) {
         this._dialogRef.backdropClick().subscribe(event => {
             this.close();
@@ -125,6 +126,7 @@ export class ImportNetDialogComponent implements AfterViewInit {
     protected uploadFile(file: FileUploadModel) {
         const fileFormData = new FormData();
         fileFormData.append('file', file.data as File);
+        fileFormData.append('uriNodeId', this._uriService.activeNode.id);
         fileFormData.append('meta', this.releaseTypeControl.value.toString().toUpperCase());
 
         file.inProgress = true;

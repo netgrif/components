@@ -3,7 +3,6 @@ import {
     NAE_TAB_DATA,
     TaskViewService,
     AbstractTabbedTaskViewComponent,
-    InjectedTabbedTaskViewData,
     CategoryFactory,
     SearchService,
     NAE_BASE_FILTER,
@@ -12,12 +11,21 @@ import {
     ViewIdService,
     NAE_TASK_VIEW_CONFIGURATION,
     ChangedFieldsService,
+    navigationItemTaskViewDefaultHeadersFactory,
     tabbedTaskViewConfigurationFactory,
-    tabbedAllowedNetsServiceFactory
+    tabbedAllowedNetsServiceFactory,
+    SearchMode,
+    HeaderMode,
+    NAE_DEFAULT_HEADERS,
+    NAE_NAVIGATION_ITEM_TASK_DATA,
+    OverflowService,
 } from '@netgrif/components-core';
 import {HeaderComponent} from '../../../../header/header.component';
+import {
+    InjectedTabbedTaskViewDataWithNavigationItemTaskData
+} from "../model/injected-tabbed-task-view-data-with-navigation-item-task-data";
 
-export function baseFilterFactory(injectedTabData: InjectedTabbedTaskViewData) {
+export function baseFilterFactory(injectedTabData: InjectedTabbedTaskViewDataWithNavigationItemTaskData) {
     return {
         filter: injectedTabData.baseFilter
     };
@@ -31,8 +39,9 @@ export function baseFilterFactory(injectedTabData: InjectedTabbedTaskViewData) {
         CategoryFactory,
         TaskViewService,
         SearchService,
+        ViewIdService,
         ChangedFieldsService,
-        {   provide: ViewIdService, useValue: null},
+        OverflowService,
         {
             provide: NAE_BASE_FILTER,
             useFactory: baseFilterFactory,
@@ -47,6 +56,11 @@ export function baseFilterFactory(injectedTabData: InjectedTabbedTaskViewData) {
             provide: NAE_TASK_VIEW_CONFIGURATION,
             useFactory: tabbedTaskViewConfigurationFactory,
             deps: [NAE_TAB_DATA]
+        },
+        {
+            provide: NAE_DEFAULT_HEADERS,
+            useFactory: navigationItemTaskViewDefaultHeadersFactory,
+            deps: [NAE_NAVIGATION_ITEM_TASK_DATA]
         }
     ]
 })
@@ -54,11 +68,45 @@ export class DefaultTabbedTaskViewComponent extends AbstractTabbedTaskViewCompon
 
     @ViewChild('header') public taskHeaderComponent: HeaderComponent;
 
-    constructor(taskViewService: TaskViewService, @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedTaskViewData) {
+    initialSearchMode: SearchMode;
+    showToggleButton: boolean;
+    enableSearch: boolean;
+    headersChangeable: boolean;
+    headersMode: string[];
+    allowTableMode: boolean;
+    defaultHeadersMode: HeaderMode;
+    showMoreMenu: boolean;
+
+    constructor(taskViewService: TaskViewService, @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedTaskViewDataWithNavigationItemTaskData) {
         super(taskViewService, injectedTabData);
+
+        this.initialSearchMode = injectedTabData.searchTypeConfiguration.initialSearchMode;
+        this.showToggleButton = injectedTabData.searchTypeConfiguration.showSearchToggleButton;
+        this.enableSearch = injectedTabData.searchTypeConfiguration.initialSearchMode !== undefined;
+        this.headersChangeable = injectedTabData.headersChangeable;
+        this.headersMode = injectedTabData.headersMode ? injectedTabData.headersMode : [];
+        this.allowTableMode = injectedTabData.allowTableMode;
+        this.defaultHeadersMode = this.resolveHeaderMode(injectedTabData.defaultHeadersMode);
+        this.showMoreMenu = injectedTabData.showMoreMenu;
     }
 
     ngAfterViewInit(): void {
         this.initializeHeader(this.taskHeaderComponent);
+        this.taskHeaderComponent.changeHeadersMode(this.defaultHeadersMode, false);
+    }
+
+    isMenuOptionEnabled(option: string): boolean {
+        return this.headersMode.some(e => e === option);
+    }
+
+    private resolveHeaderMode(mode: string): HeaderMode {
+        switch (mode) {
+            case 'sort':
+                return HeaderMode.SORT;
+            case 'edit':
+                return HeaderMode.EDIT;
+            default:
+                return undefined;
+        }
     }
 }

@@ -18,7 +18,8 @@ import {
     SnackBarVerticalPosition,
     ViewService,
     ProfileModule,
-    Dashboard
+    Dashboard,
+    FrontActionModule
 } from '@netgrif/components-core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -240,7 +241,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         EmailSubmissionFormComponentModule,
         RedirectComponentModule,
         FilterFieldContentModule,
-        DialogComponentsModule
+        DialogComponentsModule,
+        FrontActionModule
     ],
     providers: [{
         provide: ConfigurationService,

@@ -203,7 +203,7 @@ export class UriService implements OnDestroy {
     public resolveParentPath(node?: UriNodeResource): string {
         if (!node) node = this.activeNode;
         const lastDelimiter = node.uriPath.lastIndexOf('/');
-        if (lastDelimiter === -1) return 'root';
+        if (lastDelimiter === 0) return '/';
         return node.uriPath.substring(0, lastDelimiter);
     }
 

@@ -7,12 +7,15 @@ import {UserFilterConstants} from '../../filter/models/user-filter-constants';
 import {FilterField} from '../../data-fields/filter-field/models/filter-field';
 import {SimpleFilter} from '../../filter/models/simple-filter';
 import {MultichoiceField} from '../../data-fields/multichoice-field/models/multichoice-field';
+import {SearchMode} from "../../search/models/component-configuration/search-mode";
+import {TranslateService} from "@ngx-translate/core";
 
 /**
  * Extracts the item name and item icon (if any) rom a section of the navigation item task data.
  * @param dataSection an array containing the data groups that correspond to a single navigation entry
+ * @param translateService is a service to translate label name
  */
-export function extractIconAndTitle(dataSection: Array<DataGroup>): GroupNavigationItemLabel {
+export function extractIconAndTitle(dataSection: Array<DataGroup>, translateService: TranslateService): GroupNavigationItemLabel {
     const result: GroupNavigationItemLabel = {name: ''};
 
     if (dataSection.length === 0) {
@@ -22,9 +25,11 @@ export function extractIconAndTitle(dataSection: Array<DataGroup>): GroupNavigat
     const nameField = getFieldFromDataGroups(dataSection, GroupNavigationConstants.NAVIGATION_ENTRY_TITLE_FIELD_ID_SUFFIX);
 
     if (nameField === undefined) {
-        throw new Error('Navigation entry name could not be resolved');
+        throw new Error('Navigation name could not be resolved');
     }
-    result.name = nameField.value;
+
+    const locale = translateService.currentLang.split('-')[0];
+    result.name = locale in nameField.value.translations ? nameField.value.translations[locale] : nameField.value.defaultValue;
 
     const useIcon = getFieldFromDataGroups(dataSection, GroupNavigationConstants.NAVIGATION_ENTRY_ICON_ENABLED_FIELD_ID_SUFFIX);
     if (useIcon !== undefined && useIcon.value) {
@@ -91,4 +96,38 @@ export function extractFilterFromFilterField(filterField: FilterField): Filter {
         throw new Error('Filter could not be resolved');
     }
     return SimpleFilter.fromQuery({query: filterField.value}, filterField.filterMetadata.filterType);
+}
+
+/**
+ * Extracts the selected search type from enumeration field of the navigation item task data.
+ * @returns a {@link SearchMode} containing {@link SearchMode.ADVANCED} or {@link SearchMode.FULLTEXT} or {@link undefined}
+ * if unexpected value is found
+ * */
+export function extractSearchTypeFromData(dataSection: Array<DataGroup>, typeFieldId: string): SearchMode {
+    const typeField = getFieldFromDataGroups(dataSection, typeFieldId);
+    if (typeField === undefined) {
+        throw new Error('Navigation entry search type field could not be resolved');
+    }
+
+    switch (typeField.value) {
+        case 'fulltext':
+            return SearchMode.FULLTEXT;
+        case 'fulltext_advanced':
+            return SearchMode.ADVANCED;
+        default:
+            return undefined
+    }
+}
+
+/**
+ * Extracts field value from data
+ * @returns value of extracted field
+ * @throws Error if no field is found
+ * */
+export function extractFieldValueFromData<T>(dataSection: Array<DataGroup>, fieldId: string): T {
+    const field = getFieldFromDataGroups(dataSection, fieldId);
+    if (field === undefined) {
+        throw new Error(`Field ${fieldId} could not be resolved`);
+    }
+    return field.value;
 }
