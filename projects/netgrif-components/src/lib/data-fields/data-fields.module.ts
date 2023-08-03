@@ -120,6 +120,7 @@ import {
 } from "./task-ref-field/task-ref-dashboard-field/task-ref-dashboard-field.component";
 import { TaskRefListFieldComponent } from './task-ref-field/task-ref-list-field/task-ref-list-field.component';
 import { CaseRefDefaultComponent } from './case-ref-field/case-ref-default/case-ref-default.component';
+import { MultichoiceCaserefFieldComponent } from './multichoice-field/multichoice-caseref-field/multichoice-caseref-field.component';
 
 @NgModule({
     declarations: [
@@ -180,7 +181,8 @@ import { CaseRefDefaultComponent } from './case-ref-field/case-ref-default/case-
         UserListDefaultFieldComponent,
         TaskRefDashboardFieldComponent,
         TaskRefListFieldComponent,
-        CaseRefDefaultComponent
+        CaseRefDefaultComponent,
+        MultichoiceCaserefFieldComponent
     ],
     exports: [
         DataFieldTemplateComponent

@@ -6,7 +6,7 @@
                 <nc-search class="search-width" [additionalFilterData]="additionalFilterData"></nc-search>
             </div>
             <div fxLayoutAlign="end center" *ngIf="createCase">
-                <nc-create-case-button [newCaseCreationConfig]="newCaseCreationConfig" (caseCreatedEvent)="handleCaseClick($event)"></nc-create-case-button>
+                <nc-create-case-button [newCaseCreationConfig]="newCaseCreationConfig" (caseCreatedEvent)="createdCase($event)"></nc-create-case-button>
             </div>
         </div>
     </div>

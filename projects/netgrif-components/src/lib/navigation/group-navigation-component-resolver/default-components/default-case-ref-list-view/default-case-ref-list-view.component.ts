@@ -11,6 +11,8 @@ import {
     InjectedTabbedCaseViewData,
     NAE_CASE_REF_CREATE_CASE,
     NAE_CASE_REF_SEARCH,
+    NAE_CASE_REF_DATAFIELD,
+    CaseRefField,
     NAE_SEARCH_CATEGORIES,
     NAE_TAB_DATA,
     NAE_VIEW_ID_SEGMENT,
@@ -57,14 +59,15 @@ export class DefaultCaseRefListViewComponent extends AbstractCaseViewComponent i
     constructor(caseViewService: CaseViewService,
                 @Optional() overflowService: OverflowService,
                 @Optional() @Inject(NAE_TAB_DATA) protected _injectedTabData: InjectedTabbedCaseViewData,
+                @Optional() @Inject(NAE_CASE_REF_DATAFIELD) protected _injectedDataField: CaseRefField,
                 @Optional() @Inject(NAE_CASE_REF_CREATE_CASE) protected _caseRefCreateCase: boolean = false,
                 @Optional() @Inject(NAE_CASE_REF_SEARCH) protected _caseRefSearch: boolean = false) {
         super(caseViewService, overflowService, undefined, {
             enableCaseTitle: true,
             isCaseTitleRequired: true
         });
-        this.search = !!_caseRefCreateCase;
-        this.createCase = !!_caseRefSearch;
+        this.search = !!_caseRefSearch;
+        this.createCase = !!_caseRefCreateCase;
     }
 
     ngAfterViewInit(): void {
@@ -92,5 +95,13 @@ export class DefaultCaseRefListViewComponent extends AbstractCaseViewComponent i
             order: this._injectedTabData.tabViewOrder,
             parentUniqueId: this._injectedTabData.tabUniqueId
         }, true, true);
+    }
+
+    createdCase(caze: Case) {
+        this.handleCaseClick(caze);
+        if (this._injectedDataField !== null) {
+
+            this._injectedDataField.value = [...this._injectedDataField.value, caze.stringId];
+        }
     }
 }
