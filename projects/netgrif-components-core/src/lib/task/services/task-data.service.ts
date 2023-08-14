@@ -346,7 +346,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
             value: this._fieldConverterService.formatValueForBackend(field, field.value)
         };
         context.previousValues[field.stringId] = field.previousValue;
-        field.changed = false;
+        field.changed = true;
     }
 
     protected isAutocompleteEnumException(field: DataField<unknown>): boolean{
