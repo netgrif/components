@@ -305,7 +305,7 @@ export abstract class TaskContentService implements OnDestroy {
             switch (key) {
                 case 'behavior':
                     const taskId = this.getReferencedTaskId(field.stringId);
-                    const taskRef = Object.values(this.taskFieldsIndex[this._task.stringId].fields).find(f => f instanceof TaskRefField && f.value.includes(taskId));
+                    const taskRef = this.findTaskRefId(taskId, this.taskFieldsIndex[this._task.stringId].fields);
                     const transitionId = this.taskFieldsIndex[taskId].transitionId;
                     if (!!transitionId && transitionId !== '' && updatedField.behavior[transitionId])
                         field.behavior = taskRef.behavior.editable ? updatedField.behavior[transitionId] : taskRef.behavior;
@@ -337,5 +337,19 @@ export abstract class TaskContentService implements OnDestroy {
             }
         }
         return undefined;
+    }
+
+    private findTaskRefId(taskId: string, fields: { [fieldId: string]: DataField<any>}): DataField<any> {
+        let taskRefId = Object.values(fields).find(f => f instanceof TaskRefField && f.value.includes(taskId));
+        if (!taskRefId) {
+            const referencedTaskIds = Object.values(fields).filter(f => f instanceof TaskRefField).map(tr => tr.value);
+            referencedTaskIds.forEach(id => {
+                taskRefId = this.findTaskRefId(taskId, this.taskFieldsIndex[id].fields);
+                if (!!taskRefId) {
+                    return taskRefId;
+                }
+            });
+        }
+        return taskRefId
     }
 }
