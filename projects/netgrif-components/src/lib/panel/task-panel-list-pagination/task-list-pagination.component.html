@@ -29,7 +29,7 @@
                 </div>
             </div>
         </mat-accordion>
-        <mat-paginator [length]="length" [pageSize]="pageSize" [pageIndex]="pageIndex" color="primary"
+        <mat-paginator [length]="length" [pageSize]="pageSize" [pageIndex]="pageIndex" color="primary" [disabled]="disabled"
                        [pageSizeOptions]="pageSizeOptions" (page)="onPageChanged($event)" showFirstLastButtons>
         </mat-paginator>
     </ng-container>

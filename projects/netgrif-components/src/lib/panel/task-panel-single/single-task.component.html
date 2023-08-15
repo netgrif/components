@@ -6,7 +6,7 @@
             <div *ngTemplateOutlet ="noTaskSection ?? defaultNoTaskSection"></div>
         </div>
 
-        <cdk-virtual-scroll-viewport *ngIf="task" itemSize="1" class="task-panel-scroll-container full-width full-height">
+        <div *ngIf="task" class="task-panel-scroll-container full-width full-height">
             <div *ngTemplateOutlet='pageHeader ?? defaultPageHeader'></div>
             <nc-task-panel
                 [textEllipsis]='textEllipsis'
@@ -23,14 +23,14 @@
                 [first]='true'
                 [last]='true'
                 [hideActionRow]="hideActionRow"
-                class='panel-expanded-spacing'>
+                class='panel-expanded-spacing single-task-fix'>
             </nc-task-panel>
 
             <div *ngIf='loading$ | async' fxLayout='column' fxLayoutAlign='center center'>
                 <mat-spinner color='primary' diameter='52'></mat-spinner>
             </div>
             <div *ngTemplateOutlet='pageFooter ?? defaultPageFooter'></div>
-        </cdk-virtual-scroll-viewport>
+        </div>
 
         <ng-template #defaultNoTaskSection>
             <mat-icon color='accent'>check_box</mat-icon>

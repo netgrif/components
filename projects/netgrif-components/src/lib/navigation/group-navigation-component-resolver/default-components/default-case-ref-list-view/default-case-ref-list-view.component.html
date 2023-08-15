@@ -3,19 +3,19 @@
     <div class="case-view-search-container">
         <div fxLayout="row" fxLayoutAlign="space-between">
             <div fxLayoutAlign="start center" fxFlex *ngIf="search">
-                <nc-search class="search-width" [additionalFilterData]="additionalFilterData"></nc-search>
+                <nc-search class="search-width" [disabled]="disabled()" [additionalFilterData]="additionalFilterData"></nc-search>
             </div>
             <div fxLayoutAlign="end center" *ngIf="createCase">
-                <nc-create-case-button [newCaseCreationConfig]="newCaseCreationConfig" (caseCreatedEvent)="createdCase($event)"></nc-create-case-button>
+                <nc-create-case-button [disabled]="disabled()" [newCaseCreationConfig]="newCaseCreationConfig" (caseCreatedEvent)="createdCase($event)"></nc-create-case-button>
             </div>
         </div>
     </div>
 
     <div class="full-height transform-div custom-scrollbar" [ngClass]="{'overflow-div': getOverflowStatus()}" fxLayout="column" fxLayoutAlign="start stretch">
         <div class="full-height transform-div max-width-fix" fxLayout="column" fxLayoutAlign="start stretch">
-            <nc-header #header [type]="headerType" [responsiveHeaders]="true" class="case-header-padding" [ngStyle]="{'width': getWidth()}"></nc-header>
+            <nc-header #header [type]="headerType" [responsiveHeaders]="true" class="case-header-padding" [ngStyle]="{'width': getWidth()}" [approval]="isApproval()"></nc-header>
 
-            <nc-case-list-paginator [selectedHeaders$]="selectedHeaders$" [showDeleteMenu]="true" [width]="getWidth()"
+            <nc-case-list-paginator [selectedHeaders$]="selectedHeaders$" [showDeleteMenu]="true" [width]="getWidth()" [approval]="isApproval()" [disabled]="disabled()"
                                     (caseClick)="handleCaseClick($event)" [responsiveBody]="true" fxFlex [textEllipsis]="true"></nc-case-list-paginator>
         </div>
     </div>

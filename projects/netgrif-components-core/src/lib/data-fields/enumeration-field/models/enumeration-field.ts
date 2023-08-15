@@ -5,7 +5,7 @@ import {AbstractControl, ValidationErrors, ValidatorFn, Validators} from '@angul
 import {FieldTypeResource} from '../../../task-content/model/field-type-resource';
 import {Component, ComponentPrefixes} from '../../models/component';
 import {Validation} from '../../models/validation';
-import {Observable} from "rxjs";
+import {Observable, Subject} from "rxjs";
 import {debounceTime} from "rxjs/operators";
 import {UpdateOnStrategy, UpdateStrategy} from "../../models/update-strategy";
 
@@ -21,12 +21,14 @@ export enum EnumerationFieldValidation {
 
 export class EnumerationField extends DataField<string> {
     protected REQUEST_DEBOUNCE_TIME = 600;
+    protected _updatedChoices: Subject<void>;
 
     constructor(stringId: string, title: string, value: string,
                 protected _choices: Array<EnumerationFieldValue>, behavior: Behavior, placeholder?: string, description?: string,
                 layout?: Layout, protected readonly _fieldType = FieldTypeResource.ENUMERATION,
                 validations?: Array<Validation>, component?: Component, parentTaskId?: string) {
         super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId);
+        this._updatedChoices = new Subject<void>();
     }
 
     set choices(choices: Array<EnumerationFieldValue>) {
@@ -51,6 +53,14 @@ export class EnumerationField extends DataField<string> {
 
     public getTypedComponentType(): string {
         return ComponentPrefixes.ENUMERATION + this.getComponentType();
+    }
+
+    get updatedChoices(): Observable<void> {
+        return this._updatedChoices.asObservable();
+    }
+
+    public updateChoice(): void {
+        this._updatedChoices.next();
     }
 
     protected resolveFormControlValidators(): Array<ValidatorFn> {

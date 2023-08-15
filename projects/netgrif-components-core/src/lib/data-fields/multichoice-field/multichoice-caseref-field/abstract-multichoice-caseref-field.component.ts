@@ -27,7 +27,7 @@ export abstract class AbstractMultichoiceCaseRefComponent extends AbstractBaseDa
 
     ngAfterViewInit(): void {
         this.createFilter();
-        this.dataField.valueChanges().subscribe(() => {
+        this.dataField.updatedChoices.subscribe(() => {
             this.createFilter();
         });
     }
