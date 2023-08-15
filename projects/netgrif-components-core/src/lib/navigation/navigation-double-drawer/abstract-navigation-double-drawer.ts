@@ -155,6 +155,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         this.nodeLoading$ = new LoadingEmitter();
         this.itemsOrder = MenuOrder.Ascending;
         this.hiddenCustomItems = [];
+        this.moreItems = new Array<NavigationItem>();
         this._childCustomViews = {};
     }
 
@@ -213,7 +214,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             this.leftItems = [];
             this.loadRightSide();
         } else {
-            if (!this.leftItems.find(item => item.resource.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)?.value === node.uriPath)) {
+            if (!this.leftItems.find(item => item.resource?.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)?.value === node.uriPath)) {
                 this.loadLeftSide();
             }
             this.loadRightSide();
@@ -345,11 +346,11 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     }
 
     hasItemChildren(item: NavigationItem): boolean {
-        return item.resource.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_HAS_CHILDREN)?.value
+        return item.resource?.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_HAS_CHILDREN)?.value
     }
 
     isItemAndNodeEqual(item: NavigationItem, node: UriNodeResource): boolean {
-        return item.resource.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)?.value === node.uriPath
+        return item.resource?.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)?.value === node.uriPath
     }
 
     protected loadLeftSide() {
@@ -374,19 +375,20 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             }
 
             childCases$.subscribe(result => {
-                result = result.filter(folder => folder.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_HAS_CHILDREN)?.value === true)
-                    .map(folder => this.resolveItemCaseToNavigationItem(folder))
-                    .filter(i => !!i);
+                result = result.map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i);
                 this.leftItems = result.sort((a, b) => orderedChildCaseIds.indexOf(a.resource.stringId) - orderedChildCaseIds.indexOf(b.resource.stringId));
+                this.resolveCustomViewsInLeftSide()
                 this.leftLoading$.off();
             }, error => {
                 this._log.error(error);
                 this.leftItems = [];
+                this.resolveCustomViewsInLeftSide()
                 this.leftLoading$.off();
             });
         }, error => {
             this._log.error(error);
             this.leftItems = [];
+            this.resolveCustomViewsInLeftSide()
             this.leftLoading$.off();
         });
     }
@@ -482,6 +484,12 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     protected resolveCustomViewsInRightSide() {
         if (!!this._childCustomViews[this._currentNode.uriPath]) {
             this.rightItems.push(...Object.values(this._childCustomViews[this._currentNode.uriPath]));
+        }
+    }
+
+    protected resolveCustomViewsInLeftSide() {
+        if (!!this._childCustomViews[this._currentNode.parent.uriPath]) {
+            this.leftItems.push(...Object.values(this._childCustomViews[this._currentNode.parent.uriPath]));
         }
     }
 
