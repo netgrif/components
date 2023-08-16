@@ -165,4 +165,9 @@ export enum GroupNavigationConstants {
      * */
     ITEM_FIELD_ID_HAS_CHILDREN = 'hasChildren',
 
+    /**
+     * CaseField containing stringIds of child instances of process preference_item
+     * */
+    ITEM_FIELD_ID_CHILD_ITEM_IDS = 'childItemIds',
+
 }

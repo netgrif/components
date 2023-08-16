@@ -8,7 +8,6 @@ import {
     CategoryFactory,
     defaultCaseSearchCategoriesFactory,
     FilterType,
-    InjectedTabbedCaseViewData,
     NAE_CASE_REF_CREATE_CASE,
     NAE_CASE_REF_SEARCH,
     CaseRefField,
@@ -16,6 +15,7 @@ import {
     NAE_TAB_DATA,
     NAE_VIEW_ID_SEGMENT,
     OverflowService,
+    SearchMode,
     SearchService,
     SimpleFilter,
     TaskSetDataRequestFields,
@@ -23,6 +23,9 @@ import {
 } from '@netgrif/components-core';
 import {HeaderComponent} from '../../../../header/header.component'
 import {DefaultTabbedTaskViewComponent} from '../default-tabbed-task-view/default-tabbed-task-view.component';
+import {
+    InjectedTabbedTaskViewDataWithNavigationItemTaskData
+} from "../model/injected-tabbed-task-view-data-with-navigation-item-task-data";
 
 const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
     return factory.createWithAllNets();
@@ -57,7 +60,7 @@ export class DefaultCaseRefListViewComponent extends AbstractCaseViewComponent i
 
     constructor(caseViewService: CaseViewService,
                 @Optional() overflowService: OverflowService,
-                @Optional() @Inject(NAE_TAB_DATA) protected _injectedTabData: InjectedTabbedCaseViewData,
+                @Optional() @Inject(NAE_TAB_DATA) protected _injectedTabData: InjectedTabbedTaskViewDataWithNavigationItemTaskData,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) protected _dataFieldPortalData: DataFieldPortalData<MultichoiceField | CaseRefField | EnumerationField>,
                 @Optional() @Inject(NAE_CASE_REF_CREATE_CASE) protected _caseRefCreateCase: boolean = false,
                 @Optional() @Inject(NAE_CASE_REF_SEARCH) protected _caseRefSearch: boolean = false) {
@@ -97,9 +100,19 @@ export class DefaultCaseRefListViewComponent extends AbstractCaseViewComponent i
             tabContentComponent: DefaultTabbedTaskViewComponent,
             injectedObject: {
                 baseFilter: new SimpleFilter('', FilterType.TASK, {case: {id: `${openCase.stringId}`}}),
-                allowedNets: [openCase.processIdentifier]
+                allowedNets: [openCase.processIdentifier],
+                navigationItemTaskData: this._injectedTabData.navigationItemTaskData,
+                searchTypeConfiguration: {
+                    initialSearchMode: SearchMode.FULLTEXT,
+                    showSearchToggleButton: true
+                },
+                showMoreMenu: true,
+                headersChangeable: true,
+                headersMode: ['sort', 'edit'],
+                allowTableMode: true,
+                defaultHeadersMode: 'sort'
             },
-            order: this._injectedTabData.tabViewOrder,
+            order: this._injectedTabData['tabViewOrder'],
             parentUniqueId: this._injectedTabData.tabUniqueId
         }, true, true);
     }

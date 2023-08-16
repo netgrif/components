@@ -154,7 +154,7 @@
         <div fxLayout="column" fxLayoutAlign="end end" class="order-icon-wrapper">
             <button mat-icon-button fxLayout="column" fxLayoutAlign="center center" class="mat-button mat-typography menu-font-color order-icon" (click)="switchOrder()"
                     [matTooltip]="isAscending() ? ('dynamicNavigation.ascending' | translate) : ('dynamicNavigation.descending' | translate)">
-                <mat-icon>{{isAscending() ? "south" : "north"}}</mat-icon>
+                <mat-icon>{{isAscending() ? "expand_more" : "expand_less"}}</mat-icon>
             </button>
         </div>
         <div *ngFor='let item of rightItems; trackBy: itemsTrackBy' (click)="onItemClick(item)"
