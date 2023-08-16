@@ -3,20 +3,20 @@
     <div *ngIf="advancedSearchDisplayed; then advancedSearch; else fullTextSearch"></div>
 
     <ng-template #advancedSearch>
-        <nc-advanced-search></nc-advanced-search>
+        <nc-advanced-search [editable]="!disabled"></nc-advanced-search>
     </ng-template>
 
     <ng-template #fullTextSearch>
-        <nc-fulltext-search class="netgrif-input"></nc-fulltext-search>
+        <nc-fulltext-search [disabled]="disabled" class="netgrif-input"></nc-fulltext-search>
     </ng-template>
 
-    <button mat-stroked-button class="search-buttons-margin search-buttons-padding" *ngIf="showSearchToggleButton"
+    <button mat-stroked-button class="search-buttons-margin search-buttons-padding" *ngIf="showSearchToggleButton" [disabled]="disabled"
             [matTooltip]="(advancedSearchDisplayed ? 'search.tooltip.toFullText' : 'search.tooltip.toAdvanced') | translate"
             (click)="toggleSearchMode()">
         <mat-icon class="advanced-search-icon" svgIcon="filter-variant"></mat-icon>
     </button>
 
-    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="menu" *ngIf="advancedSearchDisplayed">
+    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="menu" *ngIf="advancedSearchDisplayed" [disabled]="disabled">
         <mat-icon class="advanced-search-icon">more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu" class="mat-menu-border-radius mat-menu-padding">

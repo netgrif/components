@@ -16,6 +16,7 @@ export * from './enumeration-field/enumeration-select-field/abstract-enumeration
 export * from './enumeration-field/enumeration-list-field/abstract-enumeration-list-field.component';
 export * from './enumeration-field/enumeration-autocomplete-select-field/abstract-enumeration-autocomplete-select-field.component';
 export * from './enumeration-field/enumeration-stepper-field/abstract-enumeration-stepper-field.component';
+export * from './enumeration-field/enumeration-caseref-field/abstract-enumeration-caseref-field.component';
 export * from './file-field/abstract-file-field.component';
 export * from './file-field/file-default-field/abstract-file-default-field.component';
 export * from './file-field/abstract-preview-dialog/preview-dialog-data';
@@ -24,6 +25,7 @@ export * from './file-list-field/file-list-default-field/abstract-file-list-defa
 export * from './multichoice-field/abstract-multichoice-field.component';
 export * from './multichoice-field/multichoice-autocomplete-field/abstract-multichoice-autocomplete-field-component.component';
 export * from './multichoice-field/multichoice-list-field/abstract-multichoice-list-field.component';
+export * from './multichoice-field/multichoice-caseref-field/abstract-multichoice-caseref-field.component';
 export * from './multichoice-field/multichoice-select-field/abstract-multichoice-select-field.component';
 export * from './number-field/abstract-number-field.component';
 export * from './number-field/currency-number-field/abstract-currency-number-field.component';

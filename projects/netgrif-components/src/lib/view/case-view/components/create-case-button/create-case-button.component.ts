@@ -17,6 +17,7 @@ export class CreateCaseButtonComponent implements OnInit {
 
     @Output() public caseCreatedEvent = new EventEmitter<Case>();
     @Input() public newCaseCreationConfig: NewCaseCreationConfigurationData;
+    @Input() public disabled: boolean;
 
     protected _resolvedCaseButtonTitle: string;
     protected _resolvedCaseButtonIcon: string;

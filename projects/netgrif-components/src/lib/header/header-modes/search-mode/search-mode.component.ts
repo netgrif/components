@@ -22,4 +22,8 @@ export class SearchModeComponent extends AbstractSearchModeComponent {
     public selectUser(column: number): void {
         this.selectAbstractUser(column, UserAssignComponent);
     }
+
+    public setValue() {
+        this.approvalFormControl.setValue(true);
+    }
 }

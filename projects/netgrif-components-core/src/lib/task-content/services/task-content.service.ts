@@ -276,6 +276,7 @@ export abstract class TaskContentService implements OnDestroy {
                         });
                     }
                     (field as EnumerationField | MultichoiceField).choices = newChoices;
+                    (field as EnumerationField | MultichoiceField).updateChoice();
                     break;
                 case 'options':
                     const newOptions = [];
@@ -283,6 +284,7 @@ export abstract class TaskContentService implements OnDestroy {
                         newOptions.push({key: optionKey, value: updatedField.options[optionKey]});
                     });
                     (field as EnumerationField | MultichoiceField).choices = newOptions;
+                    (field as EnumerationField | MultichoiceField).updateChoice();
                     break;
                 case 'validations':
                     field.replaceValidations(updatedField.validations.map(it => (it as Validation)));

@@ -5,6 +5,7 @@ import {FieldTypeResource} from '../../../task-content/model/field-type-resource
 import {Component, ComponentPrefixes} from '../../models/component';
 import {Validation} from '../../models/validation';
 import {UpdateOnStrategy, UpdateStrategy} from "../../models/update-strategy";
+import {Observable, Subject} from 'rxjs';
 
 export interface MultichoiceFieldValue {
     key: string;
@@ -13,11 +14,14 @@ export interface MultichoiceFieldValue {
 
 export class MultichoiceField  extends DataField<Array<string>> {
 
+    protected _updatedChoices: Subject<void>;
+
     constructor(stringId: string, title: string, values: Array<string>, private _choices: Array<MultichoiceFieldValue>,
                 behavior: Behavior, placeholder?: string, description?: string, layout?: Layout,
                 private readonly _fieldType = FieldTypeResource.MULTICHOICE, validations?: Array<Validation>,
                 component?: Component, parentTaskId?: string) {
         super(stringId, title, values, behavior, placeholder, description, layout, validations, component, parentTaskId);
+        this._updatedChoices = new Subject<void>();
     }
 
     set choices(choices: Array<MultichoiceFieldValue>) {
@@ -30,6 +34,14 @@ export class MultichoiceField  extends DataField<Array<string>> {
 
     get fieldType(): FieldTypeResource {
         return this._fieldType;
+    }
+
+    get updatedChoices(): Observable<void> {
+        return this._updatedChoices.asObservable();
+    }
+
+    public updateChoice(): void {
+        this._updatedChoices.next();
     }
 
     public getUpdateOnStrategy(): UpdateOnStrategy {

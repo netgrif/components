@@ -18,8 +18,22 @@
         min-width: 300px !important;
     }
 
+    .dialog-task-responsive {
+        width: 40% !important;
+        height: auto !important;
+        min-height: 300px !important;
+        min-width: 300px !important;
+    }
+
     @media only screen and (max-width: 599px) {
         .dialog-responsive {
+            width: 100% !important;
+            height: 80% !important;
+            min-height: unset !important;
+            min-width: unset !important;
+        }
+
+        .dialog-task-responsive {
             width: 100% !important;
             height: 80% !important;
             min-height: unset !important;

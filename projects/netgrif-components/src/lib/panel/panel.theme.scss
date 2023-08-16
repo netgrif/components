@@ -76,6 +76,12 @@
             background-color: #F8FAFC;
         }
     }
+
+    .single-task-fix {
+        .mat-expansion-panel-content {
+            height: 100% !important;
+        }
+    }
 }
 
 @media only screen and (max-width: 599.99px) {

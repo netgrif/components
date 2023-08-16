@@ -120,6 +120,10 @@ import {
 } from "./task-ref-field/task-ref-dashboard-field/task-ref-dashboard-field.component";
 import { TaskRefListFieldComponent } from './task-ref-field/task-ref-list-field/task-ref-list-field.component';
 import { CaseRefDefaultComponent } from './case-ref-field/case-ref-default/case-ref-default.component';
+import { MultichoiceCaserefFieldComponent } from './multichoice-field/multichoice-caseref-field/multichoice-caseref-field.component';
+import {
+    EnumerationCaserefFieldComponent
+} from './enumeration-field/enumeration-caseref-field/enumeration-caseref-field.component';
 
 @NgModule({
     declarations: [
@@ -180,7 +184,9 @@ import { CaseRefDefaultComponent } from './case-ref-field/case-ref-default/case-
         UserListDefaultFieldComponent,
         TaskRefDashboardFieldComponent,
         TaskRefListFieldComponent,
-        CaseRefDefaultComponent
+        CaseRefDefaultComponent,
+        MultichoiceCaserefFieldComponent,
+        EnumerationCaserefFieldComponent
     ],
     exports: [
         DataFieldTemplateComponent
@@ -226,6 +232,7 @@ export class DataFieldsComponentModule {
         registry.register("enumeration-list", (injector: Injector) => new ComponentPortal<any>(EnumerationListFieldComponent, null, injector));
         registry.register("enumeration-stepper", (injector: Injector) => new ComponentPortal<any>(EnumerationStepperFieldComponent, null, injector));
         registry.register("enumeration-icon", (injector: Injector) => new ComponentPortal<any>(EnumerationIconFieldComponent, null, injector));
+        registry.register("enumeration-caseref", (injector: Injector) => new ComponentPortal<any>(EnumerationCaserefFieldComponent, null, injector));
         registry.register("file-default", (injector: Injector) => new ComponentPortal<any>(FileDefaultFieldComponent, null, injector));
         registry.register("file-preview", (injector: Injector) => new ComponentPortal<any>(FileDefaultFieldComponent, null, injector));
         registry.register("file-list-default", (injector: Injector) => new ComponentPortal<any>(FileListDefaultFieldComponent, null, injector));
@@ -236,6 +243,7 @@ export class DataFieldsComponentModule {
         registry.register("i18n-default", (injector: Injector) => new ComponentPortal<any>(I18nTextFieldComponent, null, injector));
         registry.register("multichoice-default", (injector: Injector) => new ComponentPortal<any>(MultichoiceSelectFieldComponent, null, injector));
         registry.register("multichoice-list", (injector: Injector) => new ComponentPortal<any>(MultichoiceListFieldComponent, null, injector));
+        registry.register("multichoice-caseref", (injector: Injector) => new ComponentPortal<any>(MultichoiceCaserefFieldComponent, null, injector));
         registry.register("multichoice-autocomplete", (injector: Injector) => new ComponentPortal<any>(MultichoiceAutocompleteFieldComponent, null, injector));
         registry.register("number-default", (injector: Injector) => new ComponentPortal<any>(NumberDefaultFieldComponent, null, injector));
         registry.register("number-currency", (injector: Injector) => new ComponentPortal<any>(NumberCurrencyFieldComponent, null, injector));

@@ -12,7 +12,7 @@ export const openTaskDialog: FrontActionDefinition = {
         const dialogComponent = injector.get(NAE_TASK_VIEW_COMPONENT);
         const dialog = injector.get(MatDialog);
         const ref = dialog.open(dialogComponent, {
-            panelClass: "dialog-responsive",
+            panelClass: "dialog-task-responsive",
             data: {
                 taskIds: frontAction.args[0]
             } as TaskViewInjectionData,
