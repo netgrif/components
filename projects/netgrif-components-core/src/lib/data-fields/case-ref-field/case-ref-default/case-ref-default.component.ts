@@ -9,7 +9,11 @@ import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-fie
 import {ComponentPortal} from "@angular/cdk/portal";
 import {CaseRefField} from '../model/case-ref-field';
 import {NAE_DEFAULT_HEADERS} from '../../../header/models/default-headers-token';
-import {NAE_CASE_REF_CREATE_CASE, NAE_CASE_REF_SEARCH} from '../model/case-ref-injection-tokens';
+import {
+    NAE_CASE_REF_CREATE_CASE,
+    NAE_CASE_REF_DATAFIELD,
+    NAE_CASE_REF_SEARCH
+} from '../model/case-ref-injection-tokens';
 
 @Component({
     selector: 'ncc-abstract-case-ref-default',
@@ -53,6 +57,10 @@ export abstract class AbstractCaseRefDefaultComponent extends AbstractBaseDataFi
                 {
                     provide: NAE_VIEW_ID_SEGMENT,
                     useValue: this.dataField.parentCaseId + '_' + this.dataField.parentTaskId + '_' + this.dataField.stringId
+                },
+                {
+                    provide: NAE_CASE_REF_DATAFIELD,
+                    useValue: this.dataField
                 },
                 { provide: ViewIdService, useClass: ViewIdService }],
             parent: this.injector

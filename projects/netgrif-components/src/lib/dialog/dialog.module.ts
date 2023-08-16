@@ -11,7 +11,9 @@ import {
     NAE_NEW_CASE_DIALOG_COMPONENT,
     NAE_USER_IMPERSONATE_DIALOG_COMPONENT,
     NAE_SAVE_FILTER_DIALOG_COMPONENT,
-    NAE_LOAD_FILTER_DIALOG_COMPONENT
+    NAE_LOAD_FILTER_DIALOG_COMPONENT,
+    FrontActionRegistryService,
+    NAE_TASK_VIEW_COMPONENT, UtilityModule
 } from '@netgrif/components-core';
 import {A11yModule} from '@angular/cdk/a11y';
 import {
@@ -47,6 +49,8 @@ import {
     SideMenuMultiUserAssignComponentModule
 } from '../side-menu/content-components/multi-user-assign/side-menu-multi-user-assign-component.module';
 import { MultiUserAssignDialogComponent } from './multi-user-assign-dialog/multi-user-assign-dialog.component';
+import { TaskViewDialogComponent } from './task-view-dialog/task-view-dialog.component';
+import {openTaskDialog} from "./model/dialog-actions";
 
 @NgModule({
     declarations: [
@@ -58,7 +62,8 @@ import { MultiUserAssignDialogComponent } from './multi-user-assign-dialog/multi
         FilterSelectorDialogComponent,
         LoadFilterDialogComponent,
         SaveFilterDialogComponent,
-        MultiUserAssignDialogComponent
+        MultiUserAssignDialogComponent,
+        TaskViewDialogComponent
     ],
     exports: [
         NewCaseDialogComponent,
@@ -69,7 +74,8 @@ import { MultiUserAssignDialogComponent } from './multi-user-assign-dialog/multi
         FilterSelectorDialogComponent,
         LoadFilterDialogComponent,
         SaveFilterDialogComponent,
-        MultiUserAssignDialogComponent
+        MultiUserAssignDialogComponent,
+        TaskViewDialogComponent
     ],
     imports: [
         BrowserAnimationsModule,
@@ -93,7 +99,8 @@ import { MultiUserAssignDialogComponent } from './multi-user-assign-dialog/multi
         CaseViewComponentModule,
         HeaderComponentModule,
         PanelComponentModule,
-        HotkeyModule.forRoot()
+        HotkeyModule.forRoot(),
+        UtilityModule
     ],
     providers: [
         {provide: NAE_USER_ASSIGN_DIALOG_COMPONENT, useValue: UserAssignDialogComponent},
@@ -101,8 +108,13 @@ import { MultiUserAssignDialogComponent } from './multi-user-assign-dialog/multi
         {provide: NAE_USER_IMPERSONATE_DIALOG_COMPONENT, useValue: UserImpersonateDialogComponent},
         {provide: NAE_NEW_CASE_DIALOG_COMPONENT, useValue: NewCaseDialogComponent},
         {provide: NAE_SAVE_FILTER_DIALOG_COMPONENT, useValue: SaveFilterDialogComponent},
-        {provide: NAE_LOAD_FILTER_DIALOG_COMPONENT, useValue: LoadFilterDialogComponent}
+        {provide: NAE_LOAD_FILTER_DIALOG_COMPONENT, useValue: LoadFilterDialogComponent},
+        {provide: NAE_TASK_VIEW_COMPONENT, useValue: TaskViewDialogComponent}
     ]
 })
 export class DialogComponentsModule {
+
+    constructor(frontActionRegistry: FrontActionRegistryService) {
+        frontActionRegistry.register('openDialog', openTaskDialog);
+    }
 }

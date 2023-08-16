@@ -497,5 +497,14 @@
         "expireDetail": "Vaša relácia čoskoro vyprší.\n\nBudete odhlásený za {{time}} sekúnd.",
         "exitButton": "Odhlásiť sa",
         "refreshButton": "Zostaň pripojený"
+    },
+    "paginator": {
+        "firstPage": "Prvá strana",
+        "itemsPage": "Položky na stranu:",
+        "lastPage": "Posledná strana",
+        "nextPage": "Ďalšia strana",
+        "previousPage": "Predchádzajúca strana",
+        "pageOne": "Strana 1 z 1",
+        "pageAmount": "Strana {{page}} z {{amountPages}}"
     }
 }

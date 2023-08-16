@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {
     AbstractSingleTaskViewComponent,
     AllowedNetsService,
@@ -37,7 +37,8 @@ import {
     TaskResourceService,
     TaskViewService,
     UserService,
-    ViewIdService
+    ViewIdService,
+    BaseFilter
 } from '@netgrif/components-core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
@@ -136,9 +137,12 @@ export class PublicSingleTaskViewComponent extends AbstractSingleTaskViewCompone
 
     hidden: boolean;
 
-    constructor(taskViewService: TaskViewService, publicTaskLoadingService: PublicTaskLoadingService,
-                activatedRoute: ActivatedRoute, protected _router: Router, async: AsyncPipe) {
-        super(taskViewService, activatedRoute, async);
+    constructor(taskViewService: TaskViewService,
+                publicTaskLoadingService: PublicTaskLoadingService,
+                activatedRoute: ActivatedRoute,
+                protected _router: Router,
+                @Inject(NAE_BASE_FILTER) baseFilter: BaseFilter) {
+        super(taskViewService, activatedRoute, baseFilter);
         this.hidden = false;
         this.loading$ = combineLatest(taskViewService.loading$, publicTaskLoadingService.loading$).pipe(
             map(sources => {

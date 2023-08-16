@@ -62,6 +62,7 @@ import {createMockCase} from '../../utility/tests/utility/create-mock-case';
 import {createMockNet} from '../../utility/tests/utility/create-mock-net';
 import { OverflowService } from '../../header/services/overflow.service';
 import {NAE_TASK_FORCE_OPEN} from '../../view/task-view/models/injection-token-task-force-open';
+import {FrontActionService} from "../../actions/services/front-action.service";
 
 describe('AbtsractTaskPanelComponent', () => {
     let component: TestTaskPanelComponent;
@@ -112,6 +113,7 @@ describe('AbtsractTaskPanelComponent', () => {
                 AssignPolicyService,
                 FinishPolicyService,
                 OverflowService,
+                FrontActionService,
                 {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
                 {
                     provide: AllowedNetsService,

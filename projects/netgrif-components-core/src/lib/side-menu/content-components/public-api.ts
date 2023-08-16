@@ -24,3 +24,4 @@ export * from './load-filter/model/load-filter-injection-data';
 export * from './injection-tokens';
 export * from './new-case/model/new-case-injection-data';
 export * from './user-impersonate/model/user-impersonate-injection-data';
+export * from './task-view/model/task-view-injection-data';

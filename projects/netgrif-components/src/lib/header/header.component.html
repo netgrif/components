@@ -4,15 +4,30 @@
              [ngSwitch]="headerService.headerState.mode" *ngIf="!headerService.loading.isActive">
             <div *ngSwitchCase="headerModeEnum.SORT" fxFlex="100" fxLayout="row">
                 <nc-sort-mode fxFlex="100" [headerService]="headerService"
-                              [overflowWidth]="getMinWidth()"></nc-sort-mode>
+                              [overflowWidth]="getMinWidth()"
+                              [approvalFormControl]="approvalFormControl"
+                              [indeterminate]="indeterminate()"
+                              [approval]="approval"
+                              [typeApproval]="typeApproval()"
+                ></nc-sort-mode>
             </div>
             <div *ngSwitchCase="headerModeEnum.SEARCH" fxFlex="100" fxLayout="row">
                 <nc-search-mode fxFlex="100" [headerService]="headerService"
-                                [overflowWidth]="getMinWidth()"></nc-search-mode>
+                                [overflowWidth]="getMinWidth()"
+                                [approvalFormControl]="approvalFormControl"
+                                [indeterminate]="indeterminate()"
+                                [approval]="approval"
+                                [typeApproval]="typeApproval()"
+                ></nc-search-mode>
             </div>
             <div *ngSwitchCase="headerModeEnum.EDIT" fxFlex="100" fxLayout="row">
                 <nc-edit-mode fxFlex="100" [headerService]="headerService"
-                              [overflowWidth]="getMinWidth()"></nc-edit-mode>
+                              [overflowWidth]="getMinWidth()"
+                              [approvalFormControl]="approvalFormControl"
+                              [indeterminate]="indeterminate()"
+                              [approval]="approval"
+                              [typeApproval]="typeApproval()"
+                ></nc-edit-mode>
             </div>
         </div>
         <div fxLayout="row" fxFlex="95" class="header-content-container" fxLayoutAlign="start center"

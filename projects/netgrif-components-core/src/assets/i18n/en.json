@@ -498,5 +498,14 @@
         "expireDetail": "Your session is about to expire.\n\nRedirecting to Login page in {{time}} seconds.",
         "exitButton": "Logout",
         "refreshButton": "Stay Connected"
+    },
+    "paginator": {
+        "firstPage": "First page",
+        "itemsPage": "Items per page:",
+        "lastPage": "Last page",
+        "nextPage": "Next page",
+        "previousPage": "Previous page",
+        "pageOne": "Page 1 of 1",
+        "pageAmount": "Page {{page}} of {{amountPages}}"
     }
 }

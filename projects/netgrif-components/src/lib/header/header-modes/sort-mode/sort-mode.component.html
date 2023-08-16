@@ -1,4 +1,7 @@
 <div matSort (matSortChange)="sortHeaderChanged($event)" fxFlex="100" fxLayout="row" fxLayoutAlign=" center">
+    <mat-checkbox *ngIf="approval && typeApproval === 'multichoice'" [formControl]="approvalFormControl" [indeterminate]="indeterminate"
+                  (click)="$event.stopPropagation();" color='primary' class="checkbox-padding"></mat-checkbox>
+    <mat-icon *ngIf="approval && typeApproval === 'enumeration'" color="warn" (click)="setValue();$event.stopPropagation();" class="checkbox-padding cursor-fix">close</mat-icon>
     <div [ngStyle]="{'min-width': getMinWidth()}" *ngFor="let header of headerService.headerState.selectedHeaders$ | async; let i = index" fxFlex
          [fxHide.lt-xl]="i >= 4 && this.headerService.responsiveHeaders && !this.headerService.overflowMode"
          [fxHide.lt-lg]="i >= 3 && this.headerService.responsiveHeaders && !this.headerService.overflowMode"

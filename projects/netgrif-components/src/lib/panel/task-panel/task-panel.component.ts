@@ -26,7 +26,8 @@ import {
     TaskDataService,
     TaskEventService,
     TaskRequestStateService,
-    TaskViewService
+    TaskViewService,
+    FrontActionService
 } from '@netgrif/components-core';
 import {TaskContentComponent} from '../../task-content/task-content/task-content.component';
 import {TranslateService} from '@ngx-translate/core';
@@ -39,6 +40,7 @@ import {CurrencyPipe} from '@angular/common';
     providers: [
         {provide: TaskContentService, useClass: SingleTaskContentService},
         TaskDataService,
+        FrontActionService,
         TaskEventService,
         AssignTaskService,
         DelegateTaskService,
