@@ -191,7 +191,9 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             return;
         }
         this._currentNode = node;
-        if (!node) return;
+        if (!node) {
+            return;
+        }
         if (node.parentId && !node.parent) {
             if (node.parentId === this._uriService.root.id) {
                 node.parent = this._uriService.root;
@@ -206,7 +208,13 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                 });
             }
         }
-        this.resolveMenuItems(node);
+        if (this.nodeLoading$.isActive) {
+            this.nodeLoading$.subscribe(() => {
+                this.resolveMenuItems(node)
+            });
+        } else {
+            this.resolveMenuItems(node);
+        }
     }
 
     private resolveMenuItems(node: UriNodeResource) {
@@ -333,15 +341,26 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     }
 
     onItemClick(item: NavigationItem): void {
-        if (this.hasItemChildren(item) && !this.leftLoading$.isActive && !this.rightLoading$.isActive) {
-            const path = item.resource.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)?.value
-            this._uriService.getNodeByPath(path).subscribe(node => {
-                this._uriService.activeNode = node
-            }, error => {
-                this._log.error(error);
-            });
+        if (item.resource === undefined) {
+            // custom view represented only in nae.json
+            if (item.processUri === this.currentNode.uriPath) {
+                this._uriService.activeNode = this._currentNode;
+            } else {
+                this._uriService.activeNode = this._currentNode.parent;
+            }
         } else {
-            this._uriService.activeNode = this._currentNode;
+            const path = item.resource.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)?.value
+            if (this.hasItemChildren(item) && !this.leftLoading$.isActive && !this.rightLoading$.isActive) {
+                this._uriService.getNodeByPath(path).subscribe(node => {
+                    this._uriService.activeNode = node
+                }, error => {
+                    this._log.error(error);
+                });
+            } else if (!path.includes(this.currentNode.uriPath)){
+                this._uriService.activeNode = this._currentNode.parent;
+            } else {
+                this._uriService.activeNode = this._currentNode;
+            }
         }
     }
 
