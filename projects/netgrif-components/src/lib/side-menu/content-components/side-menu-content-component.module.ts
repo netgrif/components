@@ -13,7 +13,7 @@ import {
     NAE_SAVE_FILTER_COMPONENT,
     NAE_USER_ASSIGN_COMPONENT,
     NAE_LOAD_FILTER_COMPONENT,
-    NAE_MULTI_USER_ASSIGN_COMPONENT,
+    NAE_MULTI_USER_ASSIGN_COMPONENT, NAE_IMPORT_NET_COMPONENT,
     NAE_USER_IMPERSONATE_COMPONENT, NAE_ADMIN_IMPERSONATE_COMPONENT
 } from '@netgrif/components-core';
 import {UserAssignComponent} from './user-assign/user-assign.component';
@@ -29,6 +29,7 @@ import {UserImpersonateComponent} from './user-impersonate/user-impersonate.comp
 import {SideMenuUserImpersonateComponentModule} from './user-impersonate/side-menu-user-impersonate-component.module';
 import {SideMenuMultiUserAssignComponentModule} from "./multi-user-assign/side-menu-multi-user-assign-component.module";
 import {MultiUserAssignComponent} from './multi-user-assign/multi-user-assign.component';
+import {ImportNetComponent} from './import-net/import-net.component';
 
 
 @NgModule({
@@ -59,6 +60,7 @@ import {MultiUserAssignComponent} from './multi-user-assign/multi-user-assign.co
     ],
     providers: [
         {provide: NAE_USER_ASSIGN_COMPONENT, useValue: UserAssignComponent},
+        {provide: NAE_IMPORT_NET_COMPONENT, useValue: ImportNetComponent },
         {provide: NAE_MULTI_USER_ASSIGN_COMPONENT, useValue: MultiUserAssignComponent},
         {provide: NAE_ADMIN_IMPERSONATE_COMPONENT, useValue: AdminImpersonateComponent},
         {provide: NAE_USER_IMPERSONATE_COMPONENT, useValue: UserImpersonateComponent},
