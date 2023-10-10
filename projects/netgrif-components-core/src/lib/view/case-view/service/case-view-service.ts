@@ -1,5 +1,4 @@
 import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
-import {SideMenuService} from '../../../side-menu/services/side-menu.service';
 import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
 import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
 import {HttpParams} from '@angular/common/http';
