@@ -4,6 +4,8 @@ import {TranslateService} from '@ngx-translate/core';
 import moment, {Moment} from 'moment';
 import {Component, Inject, Optional} from '@angular/core';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
+import {DateAdapter, MAT_DATE_LOCALE} from '@angular/material/core';
+import {LanguageService} from '../../translate/language.service';
 
 @Component({
     selector: 'ncc-abstract-time-instance-field',
@@ -12,8 +14,24 @@ import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token
 export abstract class AbstractTimeInstanceFieldComponent extends AbstractDataFieldComponent {
 
     protected constructor(protected _translate: TranslateService,
+                          protected _adapter: DateAdapter<any>,
+                          @Inject(MAT_DATE_LOCALE) protected _locale: string,
+                          protected _languageService: LanguageService,
                           @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
         super(informAboutInvalidData);
+        if (this._locale !== this._languageService.getLanguage()) {
+            this.setLangToAdapter(this._languageService.getLanguage());
+        }
+        this._languageService.getLangChange$().subscribe(lang => {
+            if (this._locale !== lang) {
+                this.setLangToAdapter(lang);
+            }
+        });
+    }
+
+    protected setLangToAdapter(lang: string) {
+        this._locale = lang
+        this._adapter.setLocale(this._locale);
     }
 
     public buildErrorMessage(dataField: AbstractTimeInstanceField) {
