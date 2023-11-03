@@ -1,0 +1,8 @@
+<div class="canvas-div" #canvasDiv>
+    <canvas (mousedown)="onMouseDown($event)" (mousemove)="onMouseMove($event)" (touchmove)="onMouseMove($event)"
+        (touchstart)="onMouseDown($event)" #signPad width="{{canvasWidth}}" height="{{canvasHeight}}" class="canvas">
+    </canvas>
+</div>
+<button (click)="clearSignature()">Clear</button>
+<button (click)="saveSignature()">Save</button>
+

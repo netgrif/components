@@ -124,6 +124,7 @@ import { MultichoiceCaserefFieldComponent } from './multichoice-field/multichoic
 import {
     EnumerationCaserefFieldComponent
 } from './enumeration-field/enumeration-caseref-field/enumeration-caseref-field.component';
+import {SignaturePadFieldComponent} from './text-field/signature-pad-field/signature-pad-field.component';
 
 @NgModule({
     declarations: [
@@ -186,7 +187,8 @@ import {
         TaskRefListFieldComponent,
         CaseRefDefaultComponent,
         MultichoiceCaserefFieldComponent,
-        EnumerationCaserefFieldComponent
+        EnumerationCaserefFieldComponent,
+        SignaturePadFieldComponent
     ],
     exports: [
         DataFieldTemplateComponent
@@ -252,6 +254,7 @@ export class DataFieldsComponentModule {
         registry.register("text-textarea", (injector: Injector) => new ComponentPortal<any>(TextareaFieldComponent, null, injector));
         registry.register("text-richtextarea", (injector: Injector) => new ComponentPortal<any>(RichTextareaFieldComponent, null, injector));
         registry.register("text-htmltextarea", (injector: Injector) => new ComponentPortal<any>(HtmlTextareaFieldComponent, null, injector));
+        registry.register("text-signature", (injector: Injector) => new ComponentPortal<any>(SignaturePadFieldComponent, null, injector));
         registry.register("text-dashboard_line_chart", (injector: Injector) => new ComponentPortal<any>(DashboardLineChartTextFieldComponent, null, injector));
         registry.register("text-dashboard_pie_chart", (injector: Injector) => new ComponentPortal<any>(DashboardPieChartTextFieldComponent, null, injector));
         registry.register("text-dashboard_bar_chart", (injector: Injector) => new ComponentPortal<any>(DashboardBarChartTextFieldComponent, null, injector));
