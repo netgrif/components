@@ -65,4 +65,7 @@ export abstract class AbstractUserFieldComponent extends AbstractDataFieldCompon
         });
     }
 
+    public deleteUser() {
+        this.dataField.value = undefined;
+    }
 }
