@@ -12,7 +12,8 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.3.2](https://g
 ### Fixed
 
 - [NAE-1911] Autosave on text area in cooperation with button
-
+- [NAE-1914] revertToPreviousValue - change is always false
+- [NAE-1923] DateTime doesn't have locale and rework validation to isoWeekday
 
 ## [6.3.1](https://github.com/netgrif/components/releases/tag/v6.3.1) (2023-07-18)
 
