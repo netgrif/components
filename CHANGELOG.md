@@ -7,11 +7,13 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Full Changelog: [https://github.com/netgrif/components/commits/v6.4.0](https://github.com/netgrif/components/commits/v6.4.0)
 
-## [6.4.0](https://github.com/netgrif/components/releases/tag/v6.4.0) (2023-10-10)
+## [6.4.0](https://github.com/netgrif/components/releases/tag/v6.4.0) (2023-11-08)
 
 ### Fixed
 - [NAE-1915] TaskRef behaviour handling for multiple level
 - [NAE-1908] NAE-1906 Improvements
+- [NAE-1925] Panel is not opening
+- [NAE-1924] Neziadane volanie setData z FE
 
 ### Added
 - [NAE-1890] Data field component register
