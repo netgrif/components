@@ -24,13 +24,13 @@
 <title>cluster_SideMenuSaveFilterComponentModule</title>
 <polygon fill="none" stroke="black" stroke-dasharray="1,5" points="8,-70 8,-333 2117,-333 2117,-70 8,-70"/>
 </g>
-<g id="clust5" class="cluster">
-<title>cluster_SideMenuSaveFilterComponentModule_exports</title>
-<polygon fill="none" stroke="black" points="1520,-273 1520,-325 1678,-325 1678,-273 1520,-273"/>
-</g>
 <g id="clust2" class="cluster">
 <title>cluster_SideMenuSaveFilterComponentModule_declarations</title>
 <polygon fill="none" stroke="black" points="1522,-143 1522,-195 1676,-195 1676,-143 1522,-143"/>
+</g>
+<g id="clust5" class="cluster">
+<title>cluster_SideMenuSaveFilterComponentModule_exports</title>
+<polygon fill="none" stroke="black" points="1520,-273 1520,-325 1678,-325 1678,-273 1520,-273"/>
 </g>
 <g id="clust3" class="cluster">
 <title>cluster_SideMenuSaveFilterComponentModule_SaveFilterComponent_providers</title>

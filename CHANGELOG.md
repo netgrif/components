@@ -5,7 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres
 to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-Full Changelog: [https://github.com/netgrif/components/commits/v6.3.1](https://github.com/netgrif/components/commits/v6.3.1)
+Full Changelog: [https://github.com/netgrif/components/commits/v6.3.2](https://github.com/netgrif/components/commits/v6.3.2)
+
+## [6.3.2](https://github.com/netgrif/components/releases/tag/v6.3.2) (2023-07-25)
+
+### Fixed
+
+- [NAE-1911] Autosave on text area in cooperation with button
+- [NAE-1914] revertToPreviousValue - change is always false
+- [NAE-1923] DateTime doesn't have locale and rework validation to isoWeekday
 
 ## [6.3.1](https://github.com/netgrif/components/releases/tag/v6.3.1) (2023-07-18)
 
@@ -55,6 +63,12 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.3.1](https://g
 - [NAE-1607] Allowed nets configuration for newly created filter
 - [NAE-1722] Set default view headers with the CreateMenuItem action method
 - [NAE-1711] Dashboard
+
+## [6.2.10](https://github.com/netgrif/components/releases/tag/v6.2.10) (2023-11-07)
+
+### Fixed
+
+- [NAE-1921] User field value cannot be cleared
 
 ## [6.2.9](https://github.com/netgrif/components/releases/tag/v6.2.9) (2023-05-04)
 

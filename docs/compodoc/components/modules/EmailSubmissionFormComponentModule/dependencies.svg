@@ -24,23 +24,23 @@
 <title>cluster_EmailSubmissionFormComponentModule</title>
 <polygon fill="none" stroke="black" stroke-dasharray="1,5" points="51,-70 51,-268 445,-268 445,-70 51,-70"/>
 </g>
+<g id="clust4" class="cluster">
+<title>cluster_EmailSubmissionFormComponentModule_imports</title>
+<polygon fill="none" stroke="black" points="293,-78 293,-130 437,-130 437,-78 293,-78"/>
+</g>
 <g id="clust2" class="cluster">
 <title>cluster_EmailSubmissionFormComponentModule_declarations</title>
-<polygon fill="none" stroke="black" points="211,-78 211,-130 437,-130 437,-78 211,-78"/>
+<polygon fill="none" stroke="black" points="59,-78 59,-130 285,-130 285,-78 59,-78"/>
 </g>
 <g id="clust5" class="cluster">
 <title>cluster_EmailSubmissionFormComponentModule_exports</title>
 <polygon fill="none" stroke="black" points="133,-208 133,-260 363,-260 363,-208 133,-208"/>
 </g>
-<g id="clust4" class="cluster">
-<title>cluster_EmailSubmissionFormComponentModule_imports</title>
-<polygon fill="none" stroke="black" points="59,-78 59,-130 203,-130 203,-78 59,-78"/>
-</g>
 <!-- EmailSubmissionFormComponent -->
 <g id="node1" class="node">
 <title>EmailSubmissionFormComponent</title>
-<polygon fill="#ffffb3" stroke="black" points="429.45,-122 218.55,-122 218.55,-86 429.45,-86 429.45,-122"/>
-<text text-anchor="middle" x="324" y="-99.8" font-family="Times,serif" font-size="14.00">EmailSubmissionFormComponent</text>
+<polygon fill="#ffffb3" stroke="black" points="277.45,-122 66.55,-122 66.55,-86 277.45,-86 277.45,-122"/>
+<text text-anchor="middle" x="172" y="-99.8" font-family="Times,serif" font-size="14.00">EmailSubmissionFormComponent</text>
 </g>
 <!-- EmailSubmissionFormComponentModule -->
 <g id="node2" class="node">
@@ -51,8 +51,8 @@
 <!-- EmailSubmissionFormComponent&#45;&gt;EmailSubmissionFormComponentModule -->
 <g id="edge1" class="edge">
 <title>EmailSubmissionFormComponent&#45;&gt;EmailSubmissionFormComponentModule</title>
-<path fill="none" stroke="black" d="M296.89,-122.11C296.89,-122.11 296.89,-140.99 296.89,-140.99"/>
-<polygon fill="black" stroke="black" points="293.39,-140.99 296.89,-150.99 300.39,-140.99 293.39,-140.99"/>
+<path fill="none" stroke="black" d="M199.11,-122.11C199.11,-122.11 199.11,-140.99 199.11,-140.99"/>
+<polygon fill="black" stroke="black" points="195.61,-140.99 199.11,-150.99 202.61,-140.99 195.61,-140.99"/>
 </g>
 <!-- EmailSubmissionFormComponent  -->
 <g id="node4" class="node">
@@ -69,14 +69,14 @@
 <!-- LegalNoticeModule -->
 <g id="node3" class="node">
 <title>LegalNoticeModule</title>
-<polygon fill="#8dd3c7" stroke="black" points="195.24,-122 192.24,-126 171.24,-126 168.24,-122 66.76,-122 66.76,-86 195.24,-86 195.24,-122"/>
-<text text-anchor="middle" x="131" y="-99.8" font-family="Times,serif" font-size="14.00">LegalNoticeModule</text>
+<polygon fill="#8dd3c7" stroke="black" points="429.24,-122 426.24,-126 405.24,-126 402.24,-122 300.76,-122 300.76,-86 429.24,-86 429.24,-122"/>
+<text text-anchor="middle" x="365" y="-99.8" font-family="Times,serif" font-size="14.00">LegalNoticeModule</text>
 </g>
 <!-- LegalNoticeModule&#45;&gt;EmailSubmissionFormComponentModule -->
 <g id="edge2" class="edge">
 <title>LegalNoticeModule&#45;&gt;EmailSubmissionFormComponentModule</title>
-<path fill="none" stroke="black" d="M158.19,-122.11C158.19,-122.11 158.19,-140.99 158.19,-140.99"/>
-<polygon fill="black" stroke="black" points="154.69,-140.99 158.19,-150.99 161.69,-140.99 154.69,-140.99"/>
+<path fill="none" stroke="black" d="M337.81,-122.11C337.81,-122.11 337.81,-140.99 337.81,-140.99"/>
+<polygon fill="black" stroke="black" points="334.31,-140.99 337.81,-150.99 341.31,-140.99 334.31,-140.99"/>
 </g>
 </g>
 </svg>
