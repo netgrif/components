@@ -312,6 +312,9 @@ export abstract class TaskContentService implements OnDestroy {
                     if (!!transitionId && transitionId !== '' && updatedField.behavior[transitionId])
                         field.behavior = taskRef.behavior.editable ? updatedField.behavior[transitionId] : taskRef.behavior;
                     break;
+                case 'value':
+                    field.valueWithoutChange(this._fieldConverterService.formatValueFromBackend(field, updatedField[key]));
+                    break;
                 default:
                     field[key] = updatedField[key];
             }
