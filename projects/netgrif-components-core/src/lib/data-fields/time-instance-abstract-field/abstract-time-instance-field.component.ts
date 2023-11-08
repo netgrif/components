@@ -2,17 +2,18 @@ import {AbstractDataFieldComponent} from '../models/abstract-data-field-componen
 import {AbstractTimeInstanceField, AbstractTimeInstanceFieldValidation} from './models/abstract-time-instance-field';
 import {TranslateService} from '@ngx-translate/core';
 import moment, {Moment} from 'moment';
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, OnDestroy, Optional} from '@angular/core';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 import {DateAdapter, MAT_DATE_LOCALE} from '@angular/material/core';
 import {LanguageService} from '../../translate/language.service';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'ncc-abstract-time-instance-field',
     template: ''
 })
-export abstract class AbstractTimeInstanceFieldComponent extends AbstractDataFieldComponent {
-
+export abstract class AbstractTimeInstanceFieldComponent extends AbstractDataFieldComponent implements OnDestroy {
+    protected _subLang: Subscription;
     protected constructor(protected _translate: TranslateService,
                           protected _adapter: DateAdapter<any>,
                           @Inject(MAT_DATE_LOCALE) protected _locale: string,
@@ -22,11 +23,16 @@ export abstract class AbstractTimeInstanceFieldComponent extends AbstractDataFie
         if (this._locale !== this._languageService.getLanguage()) {
             this.setLangToAdapter(this._languageService.getLanguage());
         }
-        this._languageService.getLangChange$().subscribe(lang => {
+        this._subLang = this._languageService.getLangChange$().subscribe(lang => {
             if (this._locale !== lang) {
                 this.setLangToAdapter(lang);
             }
         });
+    }
+
+    ngOnDestroy() {
+        super.ngOnDestroy();
+        this._subLang.unsubscribe();
     }
 
     protected setLangToAdapter(lang: string) {
