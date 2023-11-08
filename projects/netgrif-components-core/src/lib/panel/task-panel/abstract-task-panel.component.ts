@@ -425,4 +425,8 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
     public getContentMinHeight(): string {
         return this.taskListVirtualScroll.getElementRef().nativeElement.offsetHeight - 32 + 'px';
     }
+
+    public isExpanded() {
+        return this.panelRef?.expanded && !this._taskContentService?.isExpanding;
+    }
 }
