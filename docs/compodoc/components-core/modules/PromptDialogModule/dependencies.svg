@@ -28,13 +28,13 @@
 <title>cluster_PromptDialogModule_declarations</title>
 <polygon fill="none" stroke="black" points="300,-78 300,-130 476,-130 476,-78 300,-78"/>
 </g>
-<g id="clust4" class="cluster">
-<title>cluster_PromptDialogModule_imports</title>
-<polygon fill="none" stroke="black" points="20,-78 20,-130 292,-130 292,-78 20,-78"/>
-</g>
 <g id="clust5" class="cluster">
 <title>cluster_PromptDialogModule_exports</title>
 <polygon fill="none" stroke="black" points="141,-208 141,-260 321,-260 321,-208 141,-208"/>
+</g>
+<g id="clust4" class="cluster">
+<title>cluster_PromptDialogModule_imports</title>
+<polygon fill="none" stroke="black" points="20,-78 20,-130 292,-130 292,-78 20,-78"/>
 </g>
 <!-- PromptDialogComponent -->
 <g id="node1" class="node">
