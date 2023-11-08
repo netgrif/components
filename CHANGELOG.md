@@ -63,6 +63,12 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.3.2](https://g
 - [NAE-1722] Set default view headers with the CreateMenuItem action method
 - [NAE-1711] Dashboard
 
+## [6.2.10](https://github.com/netgrif/components/releases/tag/v6.2.10) (2023-11-07)
+
+### Fixed
+
+- [NAE-1921] User field value cannot be cleared
+
 ## [6.2.9](https://github.com/netgrif/components/releases/tag/v6.2.9) (2023-05-04)
 
 ### Fixed
