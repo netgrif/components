@@ -13,7 +13,7 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.4.0](https://g
 - [NAE-1915] TaskRef behaviour handling for multiple level
 - [NAE-1908] NAE-1906 Improvements
 - [NAE-1925] Panel is not opening
-- [NAE-1924] Neziadane volanie setData z FE
+- [NAE-1924] Unnecessary call for setData from FE
 
 ### Added
 - [NAE-1890] Data field component register
