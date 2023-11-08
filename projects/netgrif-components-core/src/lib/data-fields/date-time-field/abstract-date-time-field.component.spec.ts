@@ -23,8 +23,8 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 import {DateAdapter, MAT_DATE_LOCALE} from '@angular/material/core';
 import {LanguageService} from '../../translate/language.service';
-import {CustomDateAdapter} from 'netgrif-components-core';
 import {NgxMatMomentModule} from '@angular-material-components/moment-adapter';
+import {CustomDateAdapter} from '../date-field/models/custom-date-adapter';
 
 describe('AbstractDatetimeFieldComponent', () => {
     let component: TestDateTimeFieldComponent;
