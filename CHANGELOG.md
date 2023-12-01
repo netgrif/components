@@ -14,15 +14,17 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.4.0](https://g
 - [NAE-1908] NAE-1906 Improvements
 - [NAE-1925] Panel is not opening
 - [NAE-1924] Unnecessary call for setData from FE
+- [NAE-1901] Taskref rendering update
 
 ### Added
 - [NAE-1890] Data field component register
 - [NAE-1901] Taskref rendering update
 - [NAE-1904] CaseRef list component
 - [NAE-1497] Frontend Actions
-- [NAE-1497] Frontend Actions
-- [NAE-1904] Case ref as multichoice and enumeration
 - [NAE-1918] Tags on process resources
+- [NAE-1876] Process URI v2
+- [NAE-1882] Filter folder process
+- [NAE-1900] New component design
 
 ## [6.3.0](https://github.com/netgrif/components/releases/tag/v6.3.0) (2023-05-26)
 
