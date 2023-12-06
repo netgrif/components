@@ -25,8 +25,8 @@ export abstract class AbstractSingleTaskViewComponent extends AbstractViewWithHe
     @Output() noTaskPresent: EventEmitter<void>;
     public taskPanelData: Observable<TaskPanelData>;
     public loading$: Observable<boolean>;
-    private transitionId: string;
-    private subRoute: Subscription | undefined;
+    protected transitionId: string;
+    protected subRoute: Subscription | undefined;
     protected subPanelData: Subscription | undefined;
     protected subLoading: Subscription | undefined;
 
@@ -62,7 +62,7 @@ export abstract class AbstractSingleTaskViewComponent extends AbstractViewWithHe
         return this.taskPanelData;
     }
 
-    private isTaskMatchingFilter(panelData: TaskPanelData, taskSearchRequestBody: TaskSearchRequestBody): boolean {
+    protected isTaskMatchingFilter(panelData: TaskPanelData, taskSearchRequestBody: TaskSearchRequestBody): boolean {
         return panelData.task.stringId === taskSearchRequestBody.stringId || panelData.task.transitionId === taskSearchRequestBody.transitionId;
     }
 }

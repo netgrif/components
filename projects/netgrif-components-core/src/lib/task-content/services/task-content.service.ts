@@ -36,10 +36,10 @@ export abstract class TaskContentService implements OnDestroy {
     protected _task: Task;
     protected _taskDataReloadRequest$: Subject<Change>;
     protected _isExpanding$: BehaviorSubject<boolean>;
-    private _taskFieldsIndex: {
+    protected _taskFieldsIndex: {
         [taskId: string]: TaskFields
     } = {};
-    private _referencedTaskAndCaseIds: { [caseId: string]: Array<string> } = {};
+    protected _referencedTaskAndCaseIds: { [caseId: string]: Array<string> } = {};
 
     protected constructor(protected _fieldConverterService: FieldConverterService,
                           protected _snackBarService: SnackBarService,
@@ -235,7 +235,7 @@ export abstract class TaskContentService implements OnDestroy {
         this.$shouldCreate.next(this._task.dataGroups);
     }
 
-    private updateField(chFields: ChangedFields, field: DataField<any>, frontendActions: Change): void {
+    protected updateField(chFields: ChangedFields, field: DataField<any>, frontendActions: Change): void {
         if (this._fieldConverterService.resolveType(field) === FieldTypeResource.TASK_REF) {
             this._taskDataReloadRequest$.next(frontendActions ? frontendActions : undefined);
             return;
@@ -297,7 +297,7 @@ export abstract class TaskContentService implements OnDestroy {
         });
     }
 
-    private updateReferencedField(chFields: ChangedFields, field: DataField<any>, frontendActions: Change): void {
+    protected updateReferencedField(chFields: ChangedFields, field: DataField<any>, frontendActions: Change): void {
         if (this._fieldConverterService.resolveType(field) === FieldTypeResource.TASK_REF) {
             this._taskDataReloadRequest$.next(frontendActions ? frontendActions : undefined);
             return;
@@ -322,19 +322,19 @@ export abstract class TaskContentService implements OnDestroy {
         });
     }
 
-    private isFieldInTask(taskId: string, changedField: string): boolean {
+    protected isFieldInTask(taskId: string, changedField: string): boolean {
         return !!taskId
             && !!this.taskFieldsIndex[taskId]
             && !!this.taskFieldsIndex[taskId].fields
             && !!this.taskFieldsIndex[taskId].fields[changedField]
     }
 
-    private getReferencedTaskId(changedField: string): string {
+    protected getReferencedTaskId(changedField: string): string {
         return !!this.taskFieldsIndex ?
             Object.keys(this.taskFieldsIndex).find(taskId => taskId !== this.task.stringId && Object.keys(this.taskFieldsIndex[taskId].fields).includes(changedField)) : undefined;
     }
 
-    private getReferencedTransitionId(changedField: string): string {
+    protected getReferencedTransitionId(changedField: string): string {
         if (!!this.taskFieldsIndex) {
             const taskFieldsIndexId = this.getReferencedTaskId(changedField);
             if (!!this.taskFieldsIndex[taskFieldsIndexId]) {
@@ -344,7 +344,7 @@ export abstract class TaskContentService implements OnDestroy {
         return undefined;
     }
 
-    private findTaskRefId(taskId: string, fields: { [fieldId: string]: DataField<any>}): DataField<any> {
+    protected findTaskRefId(taskId: string, fields: { [fieldId: string]: DataField<any>}): DataField<any> {
         let taskRefId = Object.values(fields).find(f => f instanceof TaskRefField && f.value.includes(taskId));
         if (!taskRefId) {
             const referencedTaskIds = Object.values(fields).filter(f => f instanceof TaskRefField).map(tr => tr.value);

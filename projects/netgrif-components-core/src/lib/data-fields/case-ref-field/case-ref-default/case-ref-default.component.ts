@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, Injector, Optional, Type} from "@angular/core";
+import {AfterViewInit, Component, Inject, Injector, OnDestroy, Optional, Type} from "@angular/core";
 import {NAE_BASE_FILTER} from "../../../search/models/base-filter-injection-token";
 import {SimpleFilter} from "../../../filter/models/simple-filter";
 import {BaseFilter} from "../../../search/models/base-filter";
@@ -14,14 +14,16 @@ import {
     NAE_CASE_REF_DATAFIELD,
     NAE_CASE_REF_SEARCH
 } from '../model/case-ref-injection-tokens';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'ncc-abstract-case-ref-default',
     template: ''
 })
-export abstract class AbstractCaseRefDefaultComponent extends AbstractBaseDataFieldComponent<CaseRefField> implements AfterViewInit {
+export abstract class AbstractCaseRefDefaultComponent extends AbstractBaseDataFieldComponent<CaseRefField> implements AfterViewInit, OnDestroy {
 
-    componentPortal: ComponentPortal<any>;
+    public componentPortal: ComponentPortal<any>;
+    protected _sub: Subscription;
 
     protected constructor(protected injector: Injector,
                           protected caseViewType: Type<any>,
@@ -31,9 +33,14 @@ export abstract class AbstractCaseRefDefaultComponent extends AbstractBaseDataFi
 
     ngAfterViewInit(): void {
         this.createFilter();
-        this.dataField.valueChanges().subscribe(() => {
+        this._sub = this.dataField.valueChanges().subscribe(() => {
             this.createFilter();
         });
+    }
+
+    ngOnDestroy() {
+        super.ngOnDestroy();
+        this._sub.unsubscribe();
     }
 
     createFilter() {

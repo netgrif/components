@@ -19,7 +19,7 @@ import {ComponentRegistryService} from "../../registry/component-registry.servic
 })
 export abstract class AbstractFilterFieldTabViewContentComponent extends AbstractFilterFieldContentComponent implements AfterViewInit {
 
-    componentPortal: ComponentPortal<any>;
+    public componentPortal: ComponentPortal<any>;
 
     protected constructor(protected registry: ComponentRegistryService,
                           protected injector: Injector,

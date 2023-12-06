@@ -34,7 +34,7 @@ export class DefaultGroupNavigationComponentResolverService extends GroupNavigat
         }
     }
 
-    private resolveCustomComponent(navItemData: Array<DataGroup>): Type<any> {
+    protected resolveCustomComponent(navItemData: Array<DataGroup>): Type<any> {
         const customSelector = extractFieldValueFromData<string>(navItemData, 'custom_view_selector');
         for (const [pathSegment, view] of Object.entries(this._configService.get().views)) {
             if (pathSegment === customSelector) {
@@ -43,7 +43,7 @@ export class DefaultGroupNavigationComponentResolverService extends GroupNavigat
         }
     }
 
-    private resolveComponentClass(view: View, configPath: string): Type<any> | undefined {
+    protected resolveComponentClass(view: View, configPath: string): Type<any> | undefined {
         let result;
         if (!!view.component) {
             result = this._viewService.resolveNameToClass(view.component.class);
@@ -58,12 +58,12 @@ export class DefaultGroupNavigationComponentResolverService extends GroupNavigat
         return result;
     }
 
-    private resolveComponentClassFromLayout(view: View, configPath: string): Type<any> | undefined {
+    protected resolveComponentClassFromLayout(view: View, configPath: string): Type<any> | undefined {
         const className = RoutingBuilderService.parseClassNameFromView(view, configPath);
         return this._viewService.resolveNameToClass(className);
     }
 
-    private resolveDefaultComponent(navItemData: Array<DataGroup>): Type<any> {
+    protected resolveDefaultComponent(navItemData: Array<DataGroup>): Type<any> {
         const filterTaskRefValue = extractFieldValueFromData<string[]>(navItemData, GroupNavigationConstants.ITEM_FIELD_ID_FILTER_TASKREF);
         if (filterTaskRefValue == undefined || filterTaskRefValue.length == 0) {
             return DefaultNoFilterProvidedComponent

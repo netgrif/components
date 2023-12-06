@@ -15,7 +15,7 @@
         <div class="full-height transform-div max-width-fix" fxLayout="column" fxLayoutAlign="start stretch">
             <nc-header #header [type]="headerType" [responsiveHeaders]="true" class="case-header-padding" [ngStyle]="{'width': getWidth()}" [approval]="isApproval()"></nc-header>
 
-            <nc-case-list-paginator [selectedHeaders$]="selectedHeaders$" [showDeleteMenu]="true" [width]="getWidth()" [approval]="isApproval()" [disabled]="disabled()"
+            <nc-case-list-paginator [selectedHeaders$]="selectedHeaders$" [showDeleteMenu]="false" [width]="getWidth()" [approval]="isApproval()" [disabled]="disabled()"
                                     (caseClick)="handleCaseClick($event)" [responsiveBody]="true" fxFlex [textEllipsis]="true"></nc-case-list-paginator>
         </div>
     </div>

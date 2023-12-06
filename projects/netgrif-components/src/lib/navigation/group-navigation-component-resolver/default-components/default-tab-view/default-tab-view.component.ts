@@ -42,7 +42,7 @@ export class DefaultTabViewComponent {
         this.tabs = this.getTabs(filter.type);
     }
 
-    private getTabs(type: FilterType): TabContent[] {
+    protected getTabs(type: FilterType): TabContent[] {
         switch (type) {
             case FilterType.CASE:
                 return this.getCaseTabs();
@@ -53,7 +53,7 @@ export class DefaultTabViewComponent {
         }
     }
 
-    private getCaseTabs(): TabContent[] {
+    protected getCaseTabs(): TabContent[] {
         const labelData = extractIconAndTitle(this._navigationItemTaskData, this.translationService);
 
         const blockNetsString = extractFieldValueFromData<string>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_BANNED_PROCESS_CREATION);

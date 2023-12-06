@@ -63,6 +63,11 @@ export class EnumerationField extends DataField<string> {
         this._updatedChoices.next();
     }
 
+    public destroy(): void {
+        super.destroy();
+        this._updatedChoices.complete();
+    }
+
     protected resolveFormControlValidators(): Array<ValidatorFn> {
         const result = [];
 

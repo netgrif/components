@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, Injector, Optional, Type} from "@angular/core";
+import {AfterViewInit, Component, Inject, Injector, OnDestroy, Optional, Type} from "@angular/core";
 import {NAE_BASE_FILTER} from "../../../search/models/base-filter-injection-token";
 import {SimpleFilter} from "../../../filter/models/simple-filter";
 import {BaseFilter} from "../../../search/models/base-filter";
@@ -10,14 +10,16 @@ import {ComponentPortal} from "@angular/cdk/portal";
 import {NAE_DEFAULT_HEADERS} from '../../../header/models/default-headers-token';
 import {NAE_CASE_REF_CREATE_CASE, NAE_CASE_REF_SEARCH} from '../../case-ref-field/model/case-ref-injection-tokens';
 import {EnumerationField} from '../models/enumeration-field';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'ncc-abstract-case-ref-default',
     template: ''
 })
-export abstract class AbstractEnumerationCaseRefComponent extends AbstractBaseDataFieldComponent<EnumerationField> implements AfterViewInit {
+export abstract class AbstractEnumerationCaseRefComponent extends AbstractBaseDataFieldComponent<EnumerationField> implements AfterViewInit, OnDestroy {
 
-    componentPortal: ComponentPortal<any>;
+    public componentPortal: ComponentPortal<any>;
+    protected _sub: Subscription;
 
     protected constructor(protected injector: Injector,
                           protected caseViewType: Type<any>,
@@ -27,9 +29,14 @@ export abstract class AbstractEnumerationCaseRefComponent extends AbstractBaseDa
 
     ngAfterViewInit(): void {
         this.createFilter();
-        this.dataField.updatedChoices.subscribe(() => {
+        this._sub = this.dataField.updatedChoices.subscribe(() => {
             this.createFilter();
         });
+    }
+
+    ngOnDestroy() {
+        super.ngOnDestroy();
+        this._sub.unsubscribe();
     }
 
     createFilter() {

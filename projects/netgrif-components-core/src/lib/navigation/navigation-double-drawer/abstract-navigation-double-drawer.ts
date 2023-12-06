@@ -31,35 +31,19 @@ import {CaseSearchRequestBody, PetriNetSearchRequest} from "../../filter/models/
 import {HttpParams} from "@angular/common/http";
 import {PaginationParams} from "../../utility/pagination/pagination-params";
 import {SimpleFilter} from "../../filter/models/simple-filter";
+import {
+    ConfigDoubleMenu,
+    LEFT_DRAWER_DEFAULT_WIDTH,
+    MENU_IDENTIFIERS,
+    MenuOrder,
+    NavigationItem, RIGHT_DRAWER_DEFAULT_MIN_WIDTH,
+    RIGHT_DRAWER_DEFAULT_WIDTH,
+    RIGHT_DRAWER_MAX_WIDTH,
+    RIGHT_SIDE_INIT_PAGE_SIZE,
+    RIGHT_SIDE_NEW_PAGE_SIZE,
+    SETTINGS_TRANSITION_ID
+} from '../model/navigation-configs';
 
-export interface ConfigDoubleMenu {
-    mode: MatDrawerMode;
-    opened: boolean;
-    disableClose: boolean;
-    width: number;
-}
-
-export interface NavigationItem extends View {
-    id: string;
-    resource?: Case;
-}
-
-export const MENU_IDENTIFIERS = [
-    'preference_item',
-];
-export const SETTINGS_TRANSITION_ID = 'item_settings';
-
-const LEFT_DRAWER_DEFAULT_WIDTH = 60;
-const RIGHT_DRAWER_DEFAULT_WIDTH = 240;
-const RIGHT_DRAWER_DEFAULT_MIN_WIDTH = 180;
-const RIGHT_DRAWER_MAX_WIDTH = 460;
-const RIGHT_SIDE_NEW_PAGE_SIZE = 10
-const RIGHT_SIDE_INIT_PAGE_SIZE = 20
-
-enum MenuOrder {
-    Ascending,
-    Descending
-}
 
 @Component({
     selector: 'ncc-abstract-navigation-double-drawer',
@@ -113,7 +97,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
      * Currently display uri
      * Siblings of the node are on the left, children are on the right
      */
-    private _currentNode: UriNodeResource;
+    protected _currentNode: UriNodeResource;
 
     leftLoading$: LoadingEmitter;
     rightLoading$: LoadingEmitter;
@@ -217,7 +201,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         }
     }
 
-    private resolveMenuItems(node: UriNodeResource) {
+    protected resolveMenuItems(node: UriNodeResource) {
         if (this._uriService.isRoot(node)) {
             this.leftItems = [];
             this.loadRightSide();
@@ -457,15 +441,15 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         });
     }
 
-    private extractChildCaseIds(item: Case): string[] {
+    protected extractChildCaseIds(item: Case): string[] {
         return item.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_CHILD_ITEM_IDS)?.value
     }
 
-    private getItemCasesByIdsInOnePage(caseIds: string[]): Observable<Page<Case>>  {
+    protected getItemCasesByIdsInOnePage(caseIds: string[]): Observable<Page<Case>>  {
         return this.getItemCasesByIds(caseIds, 0, caseIds.length)
     }
 
-    private getItemCasesByIds(caseIds: string[], pageNumber: number, pageSize: string | number): Observable<Page<Case>> {
+    protected getItemCasesByIds(caseIds: string[], pageNumber: number, pageSize: string | number): Observable<Page<Case>> {
         const searchBody: CaseSearchRequestBody = {
             stringId: caseIds,
             process: MENU_IDENTIFIERS.map(id => ({identifier: id} as PetriNetSearchRequest))
@@ -536,11 +520,11 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         return item;
     }
 
-    private representsRootNode(item: Case): boolean {
+    protected representsRootNode(item: Case): boolean {
         return item.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH).value === "/"
     }
 
-    private getTranslation(value: I18nFieldValue): string {
+    protected getTranslation(value: I18nFieldValue): string {
         const locale = this._translateService.currentLang.split('-')[0];
         return locale in value.translations ? value.translations[locale] : value.defaultValue;
     }

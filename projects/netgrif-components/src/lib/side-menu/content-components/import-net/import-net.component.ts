@@ -11,6 +11,9 @@ import {
 } from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 
+/**
+ * @deprecated
+ * */
 @Component({
     selector: 'nc-import-net',
     templateUrl: './import-net.component.html',
