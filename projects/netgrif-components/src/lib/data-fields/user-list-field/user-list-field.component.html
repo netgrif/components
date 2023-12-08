@@ -27,5 +27,12 @@
             </button>
         </span>
     </span>
+    <button *ngIf='!formControl.disabled && dataField?.value?.userValues?.size > 0' mat-stroked-button class='user-list-item-margin'
+            [disabled]='formControl.disabled'
+            color='warn'
+            (click)='deleteAll()'
+            [matTooltip]="'dataField.user.deleteAll' | translate">
+        <mat-icon>delete_outline</mat-icon>
+    </button>
     <mat-error *ngIf='dataField.isInvalid(formControl)'>{{'dataField.validations.required' | translate}}</mat-error>
 </ng-template>

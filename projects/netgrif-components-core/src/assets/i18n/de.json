@@ -285,7 +285,8 @@
         },
         "user": {
             "selectUser": "Benutzer auswählen",
-            "save": "Zuweisen"
+            "save": "Zuweisen",
+            "deleteAll": "Leere Benutzerliste"
         },
         "textarea": {
             "insertText": "Hier Text eingeben..."

@@ -285,7 +285,8 @@
         },
         "user": {
             "selectUser": "Vyberte používateľa",
-            "save": "Priradiť"
+            "save": "Priradiť",
+            "deleteAll": "Vymazať zoznam používateľov"
         },
         "textarea": {
             "insertText": "Sem zadajte text..."
