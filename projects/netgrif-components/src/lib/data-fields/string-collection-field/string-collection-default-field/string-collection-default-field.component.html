@@ -1,0 +1,23 @@
+<mat-form-field [appearance]="dataField.materialAppearance" class="full-width" color="primary">
+    <mat-label *ngIf="!showLargeLayout.value">{{dataField.title}}</mat-label>
+    <mat-chip-list #chipList aria-label="Autocomplete" [formControl]="formControlRef">
+        <mat-chip
+            *ngFor="let option of dataField.value" (removed)="remove(option)">
+            {{option}}
+            <button *ngIf="!formControlRef.disabled" matChipRemove>
+                <mat-icon>cancel</mat-icon>
+            </button>
+        </mat-chip>
+        <input
+            matInput
+            #input
+            [placeholder]="dataField.placeholder"
+            [required]="dataField.behavior.required"
+            [matChipInputFor]="chipList"
+            (matChipInputTokenEnd)="add($event)"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
+    </mat-chip-list>
+    <mat-hint [ngClass]="{'mat-hint-disabled': formControlRef.disabled}">{{dataField.description}}</mat-hint>
+    <mat-error
+        *ngIf="dataField.isInvalid(formControlRef)">{{'dataField.validations.required' | translate}}</mat-error>
+</mat-form-field>
