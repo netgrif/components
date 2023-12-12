@@ -80,6 +80,11 @@
 
     .netgrif-input {
 
+        .mat-standard-chip {
+            height: unset;
+            min-height: 1px;
+        }
+
         .mat-paginator-page-size-select .mat-form-field-infix {
             min-width: unset !important;
         }

@@ -1,16 +1,16 @@
-import {Component, ElementRef, Inject, Optional, ViewChild} from '@angular/core';
+import {Component, ElementRef, Inject, OnInit, Optional, ViewChild} from '@angular/core';
 import {AbstractBaseDataFieldComponent} from '../../base-component/abstract-base-data-field.component';
 import {TranslateService} from '@ngx-translate/core';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from '../../models/data-field-portal-data-injection-token';
 import {StringCollectionField} from '../models/string-collection-field';
-import {ENTER} from '@angular/cdk/keycodes';
+import {ENTER, COMMA, SEMICOLON} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
 
 @Component({
     selector: 'ncc-abstract-string-collection-default-field',
     template: '',
 })
-export abstract class AbstractStringCollectionDefaultFieldComponent extends AbstractBaseDataFieldComponent<StringCollectionField>{
+export abstract class AbstractStringCollectionDefaultFieldComponent extends AbstractBaseDataFieldComponent<StringCollectionField> implements OnInit {
 
     @ViewChild('input') input: ElementRef;
     public separatorKeysCodes: number[] = [ENTER];
@@ -18,6 +18,15 @@ export abstract class AbstractStringCollectionDefaultFieldComponent extends Abst
     protected constructor(protected _translate: TranslateService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<StringCollectionField>) {
         super(dataFieldPortalData);
+    }
+
+    ngOnInit() {
+        if (this.dataField?.component?.properties?.semicolon === 'true') {
+            this.separatorKeysCodes.push(SEMICOLON);
+        }
+        if (this.dataField?.component?.properties?.comma === 'true') {
+            this.separatorKeysCodes.push(COMMA);
+        }
     }
 
     remove(value: string): void {
