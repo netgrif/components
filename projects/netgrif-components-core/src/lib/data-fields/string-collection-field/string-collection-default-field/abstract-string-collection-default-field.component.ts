@@ -3,7 +3,7 @@ import {AbstractBaseDataFieldComponent} from '../../base-component/abstract-base
 import {TranslateService} from '@ngx-translate/core';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from '../../models/data-field-portal-data-injection-token';
 import {StringCollectionField} from '../models/string-collection-field';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import {ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
 
 @Component({
@@ -13,7 +13,7 @@ import {MatChipInputEvent} from '@angular/material/chips';
 export abstract class AbstractStringCollectionDefaultFieldComponent extends AbstractBaseDataFieldComponent<StringCollectionField>{
 
     @ViewChild('input') input: ElementRef;
-    public separatorKeysCodes: number[] = [ENTER, COMMA];
+    public separatorKeysCodes: number[] = [ENTER];
 
     protected constructor(protected _translate: TranslateService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<StringCollectionField>) {
