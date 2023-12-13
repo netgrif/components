@@ -15,6 +15,7 @@
             [required]="dataField.behavior.required"
             [matChipInputFor]="chipList"
             (matChipInputTokenEnd)="add($event)"
+            (blur)="add($event)"
             [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
     </mat-chip-list>
     <mat-hint [ngClass]="{'mat-hint-disabled': formControlRef.disabled}">{{dataField.description}}</mat-hint>

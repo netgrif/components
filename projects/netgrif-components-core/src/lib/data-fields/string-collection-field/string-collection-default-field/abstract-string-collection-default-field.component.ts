@@ -39,10 +39,10 @@ export abstract class AbstractStringCollectionDefaultFieldComponent extends Abst
         }
     }
 
-    add(event: MatChipInputEvent): void {
-        const value = event['value'] ?? '';
+    add(event: MatChipInputEvent | FocusEvent): void {
+        const value = event['value'] ?? (event['target']?.['value'] ?? '');
 
-        if (value) {
+        if (value && value.trim()) {
             this.dataField.value = (this.dataField.value === null || this.dataField.value === undefined) ? [] : this.dataField.value
             const choiceArray = [...this.dataField.value];
             choiceArray.push(value);
