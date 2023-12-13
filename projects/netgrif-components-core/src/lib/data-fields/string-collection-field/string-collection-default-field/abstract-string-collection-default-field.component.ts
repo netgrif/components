@@ -43,7 +43,7 @@ export abstract class AbstractStringCollectionDefaultFieldComponent extends Abst
         const value = event['value'] ?? '';
 
         if (value) {
-            this.dataField.value = this.dataField.value === null ? [] : this.dataField.value
+            this.dataField.value = (this.dataField.value === null || this.dataField.value === undefined) ? [] : this.dataField.value
             const choiceArray = [...this.dataField.value];
             choiceArray.push(value);
             this.dataField.value = choiceArray;
