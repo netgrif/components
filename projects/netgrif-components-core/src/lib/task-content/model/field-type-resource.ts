@@ -19,5 +19,6 @@ export enum FieldTypeResource {
     TASK_REF = 'taskRef',
     CASE_REF = 'caseRef',
     FILTER = 'filter',
-    I18N = 'i18n'
+    I18N = 'i18n',
+    STRING_COLLECTION = 'stringCollection'
 }
