@@ -27,7 +27,9 @@ import {
     TaskEventService,
     TaskRequestStateService,
     TaskViewService,
-    FrontActionService, NAE_TAB_DATA, InjectedTabData
+    FrontActionService,
+    NAE_TAB_DATA,
+    InjectedTabData
 } from '@netgrif/components-core';
 import {TaskContentComponent} from '../../task-content/task-content/task-content.component';
 import {TranslateService} from '@ngx-translate/core';
