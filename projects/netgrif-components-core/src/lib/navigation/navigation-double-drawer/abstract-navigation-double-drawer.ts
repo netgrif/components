@@ -480,8 +480,8 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         if (this.itemsOrder === MenuOrder.Descending) {
             multiplier = -1
         }
-        this.rightItems = this.rightItems.sort((a, b) => multiplier * (a?.navigation as NavigationItem)?.title.localeCompare((b?.navigation as NavigationItem)?.title));
-        this.leftItems = this.leftItems.sort((a, b) => multiplier * (a?.navigation as NavigationItem)?.title.localeCompare((b?.navigation as NavigationItem)?.title));
+        this.rightItems.sort((a, b) => multiplier * (a?.navigation as NavigationItem)?.title.localeCompare((b?.navigation as NavigationItem)?.title));
+        this.leftItems.sort((a, b) => multiplier * (a?.navigation as NavigationItem)?.title.localeCompare((b?.navigation as NavigationItem)?.title));
     }
 
     protected resolveCustomViewsInRightSide() {

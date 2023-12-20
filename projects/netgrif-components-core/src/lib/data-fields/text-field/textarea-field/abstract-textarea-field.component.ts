@@ -33,7 +33,7 @@ export abstract class AbstractTextareaFieldComponent extends AbstractTextErrorsC
     public getHeight() {
         const oneHeight = this.dataField.layout && this.dataField.layout.appearance === 'outline' ?
             TextAreaHeight.OUTLINE : TextAreaHeight.FILL_STANDARD;
-        return this.dataField.layout && this.dataField.layout.rows && this.dataField.layout.rows !== 1 ?
+        return this.dataField.layout?.rows && this.dataField.layout?.rows !== 1 ?
             (this.dataField.layout.rows - 1) * TextField.FIELD_HEIGHT + oneHeight : oneHeight;
     }
 

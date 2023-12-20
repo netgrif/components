@@ -27,7 +27,7 @@ export class MultiUserAssignDialogComponent {
     }
 
     public get initiallySelectedUsers(): Array<UserValue> | undefined {
-        return this.injectedData && this.injectedData.value ? [...(this.injectedData.value as UserListValue).userValues.values()] : undefined;
+        return this.injectedData?.value ? [...(this.injectedData.value as UserListValue).userValues.values()] : undefined;
     }
 
     public get roles(): Array<string> | Array<ProcessRole> {

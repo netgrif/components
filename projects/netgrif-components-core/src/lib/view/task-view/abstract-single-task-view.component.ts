@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Inject, Input, OnDestroy, Optional, Output} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnDestroy, Output} from '@angular/core';
 import {AbstractViewWithHeadersComponent} from '../abstract/view-with-headers';
 import {Observable, Subscription} from 'rxjs';
 import {TaskPanelData} from '../../panel/task-panel-list/task-panel-data/task-panel-data';

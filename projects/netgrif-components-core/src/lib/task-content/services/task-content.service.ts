@@ -1,4 +1,4 @@
-import {Injectable, Injector, OnDestroy} from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {DataGroup} from '../../resources/interface/data-groups';
 import {BehaviorSubject, Observable, ReplaySubject, Subject, timer} from 'rxjs';
 import {Task} from '../../resources/interface/task';
@@ -305,13 +305,14 @@ export abstract class TaskContentService implements OnDestroy {
         const updatedField = chFields[field.stringId];
         Object.keys(updatedField).forEach(key => {
             switch (key) {
-                case 'behavior':
+                case 'behavior': {
                     const taskId = this.getReferencedTaskId(field.stringId);
                     const taskRef = this.findTaskRefId(taskId, this.taskFieldsIndex[this._task.stringId].fields);
                     const transitionId = this.taskFieldsIndex[taskId].transitionId;
                     if (!!transitionId && transitionId !== '' && updatedField.behavior[transitionId])
                         field.behavior = taskRef.behavior.editable ? updatedField.behavior[transitionId] : taskRef.behavior;
                     break;
+                }
                 case 'value':
                     field.valueWithoutChange(this._fieldConverterService.formatValueFromBackend(field, updatedField[key]));
                     break;

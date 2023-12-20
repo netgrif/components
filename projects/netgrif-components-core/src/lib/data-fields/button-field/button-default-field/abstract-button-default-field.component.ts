@@ -42,7 +42,7 @@ export abstract class AbstractButtonDefaultFieldComponent extends AbstractBaseDa
                 this.dataField.component.properties.dialogText, this._translate.instant('dialog.close'),
                 this._translate.instant('dialog.submit'));
             dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
-                if (result && result.confirmed) {
+                if (result?.confirmed) {
                     this.formControlRef.setValue(this.formControlRef.value + 1);
                 }
             });

@@ -83,7 +83,7 @@ export class FilterSelectorDialogComponent implements OnDestroy {
 
         let caseFilters = [];
         let taskFilters = [];
-        if (filterConstraints && filterConstraints.filterIdsConstraint) {
+        if (filterConstraints?.filterIdsConstraint) {
             const filters = this._filterRepository.getFilters(filterConstraints.filterIdsConstraint);
             filters.forEach(filter => {
                 if (filter.type === FilterType.CASE &&
@@ -95,9 +95,8 @@ export class FilterSelectorDialogComponent implements OnDestroy {
                 }
             });
         } else {
-            if (!filterConstraints ||
-                !filterConstraints.filterTypeConstraint ||
-                filterConstraints.filterTypeConstraint === FilterType.CASE) {
+            if (!filterConstraints?.filterTypeConstraint ||
+                filterConstraints?.filterTypeConstraint === FilterType.CASE) {
                 caseFilters = this._filterRepository.getFilters(this._filterRepository.getCaseFilterList());
             }
             if (!filterConstraints ||

@@ -156,12 +156,10 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
         let filter;
         if (additionalFilter === undefined) {
             filter = baseFilter;
+        } else if (mergeFilters) {
+            filter = additionalFilter.merge(baseFilter, MergeOperator.AND);
         } else {
-            if (mergeFilters) {
-                filter = additionalFilter.merge(baseFilter, MergeOperator.AND);
-            } else {
-                filter = additionalFilter;
-            }
+            filter = additionalFilter;
         }
 
         return filter;

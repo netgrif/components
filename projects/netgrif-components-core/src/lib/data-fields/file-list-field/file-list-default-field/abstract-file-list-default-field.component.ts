@@ -155,7 +155,7 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractBase
             return;
         }
 
-        if (this.dataField.value && this.dataField.value.namesPaths && this.dataField.value.namesPaths.length !== 0) {
+        if (this.dataField.value?.namesPaths && this.dataField.value?.namesPaths.length !== 0) {
             this.dataField.value.namesPaths.forEach(namePath => {
                 filesToUpload = filesToUpload.filter(fileToUpload => fileToUpload.name !== namePath.name);
             });
@@ -235,8 +235,7 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractBase
     }
 
     public download(fileName: string) {
-        if (!this.dataField.value || !this.dataField.value.namesPaths ||
-            !this.dataField.value.namesPaths.find(namePath => namePath.name === fileName)) {
+        if (!this.dataField.value?.namesPaths?.find(namePath => namePath.name === fileName)) {
             return;
         }
         if (!this.taskId) {

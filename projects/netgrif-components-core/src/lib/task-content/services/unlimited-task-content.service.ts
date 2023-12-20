@@ -6,7 +6,6 @@ import {FieldConverterService} from './field-converter.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
 import {LoggerService} from '../../logger/services/logger.service';
-import {FrontActionRegistryService} from "../../registry/front-action-registry.service";
 
 /**
  * Provides an implementation of the {@link TaskContentService} abstract class that allows

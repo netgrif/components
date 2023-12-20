@@ -2,10 +2,9 @@ import {FormControl} from '@angular/forms';
 import {TextField, TextFieldValidation} from './models/text-field';
 import {TranslateService} from '@ngx-translate/core';
 import {TextAreaField} from './models/text-area-field';
-import {Component, Inject, Input, Optional} from "@angular/core";
+import {Component, Inject, Optional} from "@angular/core";
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../models/data-field-portal-data-injection-token";
 import {AbstractBaseDataFieldComponent} from "../base-component/abstract-base-data-field.component";
-import {WrappedBoolean} from "../data-field-template/models/wrapped-boolean";
 
 @Component({
     selector: 'ncc-text-errors',

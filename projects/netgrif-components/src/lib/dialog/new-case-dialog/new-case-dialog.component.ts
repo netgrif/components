@@ -137,7 +137,7 @@ export class NewCaseDialogComponent implements OnDestroy {
     }
 
     displayFn(process: Form): string {
-        return process && process.viewValue ? process.viewValue : '';
+        return process?.viewValue ? process?.viewValue : '';
     }
 
     public createNewCase(): void {
@@ -255,7 +255,7 @@ export class NewCaseDialogComponent implements OnDestroy {
     }
 
     showVersion(option: MatOption): void {
-        if (option !== undefined && option.value !== undefined && option.value.version !== undefined)
+        if (option?.value?.version !== undefined)
             this.netVersion = option.value.version;
     }
 
@@ -267,7 +267,7 @@ export class NewCaseDialogComponent implements OnDestroy {
     }
 
     toNextStep(viewValue: any): void {
-        if (viewValue !== null && viewValue.value !== undefined) {
+        if (viewValue !== null && viewValue?.value !== undefined) {
             this.stepper1.next();
         }
     }
