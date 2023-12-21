@@ -99,8 +99,7 @@ export class FilterSelectorDialogComponent implements OnDestroy {
                 filterConstraints?.filterTypeConstraint === FilterType.CASE) {
                 caseFilters = this._filterRepository.getFilters(this._filterRepository.getCaseFilterList());
             }
-            if (!filterConstraints ||
-                !filterConstraints.filterTypeConstraint ||
+            if (!filterConstraints?.filterTypeConstraint ||
                 filterConstraints.filterTypeConstraint === FilterType.TASK) {
                 taskFilters = this._filterRepository.getFilters(this._filterRepository.getTaskFilterList());
             }

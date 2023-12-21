@@ -278,8 +278,7 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractBase
     }
 
     public deleteFile(fileName: string) {
-        if (!this.dataField.value || !this.dataField.value.namesPaths ||
-            !this.dataField.value.namesPaths.find(namePath => namePath.name === fileName)) {
+        if (!this.dataField.value?.namesPaths?.find(namePath => namePath.name === fileName)) {
             return;
         }
         if (!this.taskId) {
