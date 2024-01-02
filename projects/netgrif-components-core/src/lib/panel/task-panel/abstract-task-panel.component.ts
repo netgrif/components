@@ -50,6 +50,9 @@ import {OverflowService} from '../../header/services/overflow.service';
 import {NAE_TASK_FORCE_OPEN} from '../../view/task-view/models/injection-token-task-force-open';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import { FinishPolicyService } from '../../task/services/finish-policy.service';
+import {NAE_TAB_DATA} from '../../tabs/tab-data-injection-token/tab-data-injection-token';
+import {InjectedTabData} from '../../tabs/interfaces';
+import {AfterAction} from '../../utility/call-chain/after-action';
 
 @Component({
     selector: 'ncc-abstract-legal-notice',
@@ -118,6 +121,8 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
     protected _subTaskData: Subscription;
     protected _subPanelUpdate: Subscription;
     protected _taskDisableButtonFunctions: DisableButtonFuntions;
+    protected _unsub: Subscription;
+    protected _canReload: boolean;
 
     protected constructor(protected _taskContentService: TaskContentService,
                           protected _log: LoggerService,
@@ -140,7 +145,8 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
                           protected _changedFieldsService: ChangedFieldsService,
                           protected _permissionService: PermissionService,
                           @Optional() overflowService: OverflowService,
-                          @Optional() @Inject(NAE_TASK_FORCE_OPEN) protected _taskForceOpen: boolean) {
+                          @Optional() @Inject(NAE_TASK_FORCE_OPEN) protected _taskForceOpen: boolean,
+                          @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData) {
         super(_translate, _currencyPipe, overflowService);
         this.taskEvent = new EventEmitter<TaskEventNotification>();
         this.panelRefOutput = new EventEmitter<MatExpansionPanel>();
@@ -183,6 +189,17 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
         };
         if (_disableFunctions) {
             Object.assign(this._taskDisableButtonFunctions, _disableFunctions);
+        }
+        if (injectedTabData !== null) {
+            this._unsub = injectedTabData.tabSelected$.pipe(
+                filter(bool => bool && this.isExpanded())
+            ).subscribe( () => {
+                if (this._canReload) {
+                    this._taskDataService.initializeTaskDataFields(new AfterAction(), true)
+                } else {
+                    this._canReload = true;
+                }
+            });
         }
     }
 
@@ -416,6 +433,9 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
         this._taskOperations.destroy();
         this._subPanelUpdate.unsubscribe();
         this.taskEvent.complete();
+        if (this._unsub) {
+            this._unsub.unsubscribe();
+        }
     }
 
     public isForceOpen(): boolean {
@@ -424,5 +444,9 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
 
     public getContentMinHeight(): string {
         return this.taskListVirtualScroll.getElementRef().nativeElement.offsetHeight - 32 + 'px';
+    }
+
+    public isExpanded() {
+        return this.panelRef?.expanded && !this._taskContentService?.isExpanding;
     }
 }

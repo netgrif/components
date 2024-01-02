@@ -1,4 +1,4 @@
-import {Component, Inject, Input, Optional} from "@angular/core";
+import {Component, Inject, Optional} from "@angular/core";
 import {
     AbstractTimeInstanceFieldComponent
 } from "../../time-instance-abstract-field/abstract-time-instance-field.component";

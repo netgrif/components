@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, Optional} from '@angular/core';
+import {Component, Inject, Optional} from '@angular/core';
 import {
     AbstractBooleanDefaultFieldComponent, BooleanField, DATA_FIELD_PORTAL_DATA, DataFieldPortalData,
 } from '@netgrif/components-core';

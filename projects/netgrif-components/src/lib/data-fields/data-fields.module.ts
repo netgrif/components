@@ -125,6 +125,7 @@ import {
     EnumerationCaserefFieldComponent
 } from './enumeration-field/enumeration-caseref-field/enumeration-caseref-field.component';
 import {SignaturePadFieldComponent} from './text-field/signature-pad-field/signature-pad-field.component';
+import { StringCollectionDefaultFieldComponent } from './string-collection-field/string-collection-default-field/string-collection-default-field.component';
 
 @NgModule({
     declarations: [
@@ -188,6 +189,7 @@ import {SignaturePadFieldComponent} from './text-field/signature-pad-field/signa
         CaseRefDefaultComponent,
         MultichoiceCaserefFieldComponent,
         EnumerationCaserefFieldComponent,
+        StringCollectionDefaultFieldComponent,
         SignaturePadFieldComponent
     ],
     exports: [
@@ -265,5 +267,6 @@ export class DataFieldsComponentModule {
         registry.register("case-ref-default", (injector: Injector) => new ComponentPortal<any>(CaseRefDefaultComponent, null, injector));
         registry.register("user-default", (injector: Injector) => new ComponentPortal<any>(UserDefaultFieldComponent, null, injector));
         registry.register("user-list-default", (injector: Injector) => new ComponentPortal<any>(UserListDefaultFieldComponent, null, injector));
+        registry.register("string-collection-default", (injector: Injector) => new ComponentPortal<any>(StringCollectionDefaultFieldComponent, null, injector));
     }
 }

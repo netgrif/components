@@ -15,7 +15,7 @@
 }
 
 @function nae-typography-config(
-    $font-family: 'Roboto',
+    $font-family: 'Roboto, sans-serif',
     $headline: nae-typography-level(32px, 48px, 700)
 ) {
     @return (

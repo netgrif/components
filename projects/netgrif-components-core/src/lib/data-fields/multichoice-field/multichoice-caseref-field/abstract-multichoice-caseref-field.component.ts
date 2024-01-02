@@ -17,7 +17,7 @@ import {NAE_CASE_REF_CREATE_CASE, NAE_CASE_REF_SEARCH} from '../../case-ref-fiel
 })
 export abstract class AbstractMultichoiceCaseRefComponent extends AbstractBaseDataFieldComponent<MultichoiceField> implements AfterViewInit {
 
-    componentPortal: ComponentPortal<any>;
+    public componentPortal: ComponentPortal<any>;
 
     protected constructor(protected injector: Injector,
                           protected caseViewType: Type<any>,

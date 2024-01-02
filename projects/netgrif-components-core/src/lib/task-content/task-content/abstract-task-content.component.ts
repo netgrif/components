@@ -938,9 +938,8 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
     }
 
     protected hasRequiredComponentProperty(component: DataRefComponent, propertyName: string, propertyValue: string): boolean {
-        return  component != null
-        && component.properties != null
-        && !!component.properties[propertyName]
-        && component.properties[propertyName] === propertyValue;
+        return  component?.properties != null
+        && !!component?.properties[propertyName]
+        && component?.properties[propertyName] === propertyValue;
     }
 }

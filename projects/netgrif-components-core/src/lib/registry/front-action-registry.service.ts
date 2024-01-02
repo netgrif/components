@@ -6,7 +6,7 @@ import {FrontActionDefinition} from "../actions/model/front-action-definition";
 })
 export class FrontActionRegistryService {
 
-    private _registry: Map<string, FrontActionDefinition>;
+    protected _registry: Map<string, FrontActionDefinition>;
 
     constructor() {
         this._registry = new Map<string, FrontActionDefinition>();

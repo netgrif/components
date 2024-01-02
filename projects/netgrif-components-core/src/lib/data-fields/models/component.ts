@@ -20,6 +20,7 @@ export enum ComponentPrefixes {
     TEXT = 'text-',
     USER = 'user-',
     USER_LIST = 'user-list-',
+    STRING_COLLECTION = 'string-collection-',
 }
 
 export interface Component {
