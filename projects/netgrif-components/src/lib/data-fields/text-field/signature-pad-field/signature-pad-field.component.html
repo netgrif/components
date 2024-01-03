@@ -1,8 +1,9 @@
-<div class="canvas-div" #canvasDiv>
+<div class="canvas-div" #canvasDiv [ngClass]="{'canvas-disabled': formControlRef.disabled}" (blur)="mouseUp($event)">
     <canvas (mousedown)="onMouseDown($event)" (mousemove)="onMouseMove($event)" (touchmove)="onMouseMove($event)"
-        (touchstart)="onMouseDown($event)" #signPad width="{{canvasWidth}}" height="{{canvasHeight}}" class="canvas">
+            (touchstart)="onMouseDown($event)" #signPad width="{{canvasWidth}}" (blur)="mouseUp($event)" height="{{canvasHeight}}"
+            class="canvas" [ngClass]="{'canvas-background-disabled': formControlRef.disabled}">
     </canvas>
 </div>
-<button (click)="clearSignature()">Clear</button>
-<button (click)="saveSignature()">Save</button>
+<button mat-stroked-button color="primary" *ngIf="!formControlRef.disabled" (click)="clearSignature()">{{'dataField.clear' | translate }}</button>
+<button mat-stroked-button *ngIf="!formControlRef.disabled" (click)="saveSignature()">{{'dataField.save' | translate }}</button>
 

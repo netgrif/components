@@ -2,11 +2,10 @@ import {
     AfterViewInit,
     Component,
     ElementRef,
-    EventEmitter, HostListener,
+    HostListener,
     Inject,
     NgZone,
     Optional,
-    Output,
     ViewChild
 } from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
@@ -16,6 +15,7 @@ import {
     TextAreaField,
     AbstractSimpleTextFieldComponent
 } from '@netgrif/components-core';
+import {filter} from 'rxjs/operators';
 
 @Component({
     selector: 'nc-signature-pad-field',
@@ -26,26 +26,34 @@ export class SignaturePadFieldComponent extends AbstractSimpleTextFieldComponent
 
     @ViewChild('signPad', {static: false}) signPad!: ElementRef<HTMLCanvasElement>;
     @ViewChild('canvasDiv') canvasDiv!: ElementRef<HTMLCanvasElement>;
-    @Output() signatureSaved = new EventEmitter();
     protected signatureImg?: string;
     protected signPadElement: any;
     protected context: any;
     protected isDrawing!: boolean;
     public canvasWidth: number;
     public canvasHeight: number;
+    public aspectRatio = 0.2;
 
     constructor(protected _translate: TranslateService, protected _ngZone: NgZone,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextAreaField>) {
         super(_translate, dataFieldPortalData);
-        this.canvasWidth = 500;
-        this.canvasHeight = 150;
     }
 
     public ngAfterViewInit(): void {
         this.signPadElement = this.signPad.nativeElement;
         this.context = this.signPadElement.getContext('2d');
         this.canvasWidth = this.canvasDiv.nativeElement.clientWidth - 2;
-        this.context.strokeStyle = '#000';
+        this.canvasHeight = this.canvasWidth * this.aspectRatio;
+        this.formControlRef.valueChanges.pipe(
+                filter(value => value !== this.signatureImg)
+            ).subscribe(value => {
+                this.signatureImg = value;
+                const img = new Image();
+                img.onload = () => {
+                    this.context.drawImage(img, 0, 0,  this.canvasWidth, this.canvasHeight);
+                };
+                img.src = this.signatureImg;
+            });
     }
 
     onMouseDown(e: any): void {
@@ -60,8 +68,9 @@ export class SignaturePadFieldComponent extends AbstractSimpleTextFieldComponent
     }
 
     @HostListener('document:blur', ['$event'])
-    onMouseUp(e: any): void {
+    mouseUp(e: any): void {
         this.isDrawing = false;
+        this.saveSignature();
     }
 
     onMouseMove(e: any): void {
@@ -76,11 +85,12 @@ export class SignaturePadFieldComponent extends AbstractSimpleTextFieldComponent
         this.signatureImg = undefined;
         this.context.clearRect(0, 0, this.signPadElement.width, this.signPadElement.height);
         this.context.beginPath();
+        this.formControlRef.setValue(undefined);
     }
 
     saveSignature(): void {
         this.signatureImg = this.signPadElement.toDataURL('image/png');
-        this.signatureSaved.emit(this.signatureImg);
+        this.formControlRef.setValue(this.signatureImg);
     }
 
     protected relativeCoords(event: any): { x: number, y: number } {
