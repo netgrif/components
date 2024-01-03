@@ -78,6 +78,7 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
     initialSearchMode: SearchMode;
     showToggleButton: boolean;
     enableSearch: boolean;
+    showCreateCaseButton: boolean;
     showDeleteMenu: boolean;
     headersChangeable: boolean;
     headersMode: string[];
@@ -94,6 +95,7 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
         this.initialSearchMode = _injectedTabData.caseViewSearchTypeConfiguration.initialSearchMode;
         this.showToggleButton = _injectedTabData.caseViewSearchTypeConfiguration.showSearchToggleButton;
         this.enableSearch = _injectedTabData.caseViewSearchTypeConfiguration.initialSearchMode !== undefined;
+        this.showCreateCaseButton = _injectedTabData.newCaseButtonConfiguration.newCaseButtonConfig.showCreateCaseButton;
         this.showDeleteMenu = _injectedTabData.caseViewShowMoreMenu;
         this.headersChangeable = _injectedTabData.caseViewHeadersChangeable;
         this.headersMode = _injectedTabData.caseViewHeadersMode ? _injectedTabData.caseViewHeadersMode : [];
