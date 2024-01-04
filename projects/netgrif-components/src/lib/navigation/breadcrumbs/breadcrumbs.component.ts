@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {
     UriService,
-    AbstractBreadcrumbsComponent
+    AbstractBreadcrumbsComponent, CaseResourceService
 } from '@netgrif/components-core';
 
 @Component({
@@ -11,7 +11,8 @@ import {
 })
 export class BreadcrumbsComponent extends AbstractBreadcrumbsComponent {
 
-    constructor(protected _uriService: UriService) {
-        super(_uriService);
+    constructor(protected _uriService: UriService,
+                _caseResourceService: CaseResourceService) {
+        super(_uriService, _caseResourceService);
     }
 }

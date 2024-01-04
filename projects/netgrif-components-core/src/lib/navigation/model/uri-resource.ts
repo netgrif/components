@@ -3,6 +3,7 @@ export interface UriNodeResource {
     id: string;
     uriPath: string;
     name: string;
+    displayName: string;
     parentId: string;
     parent: UriNodeResource;
     childrenId: Set<string>;
