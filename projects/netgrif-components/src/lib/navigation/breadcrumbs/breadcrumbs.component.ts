@@ -3,6 +3,7 @@ import {
     UriService,
     AbstractBreadcrumbsComponent, CaseResourceService
 } from '@netgrif/components-core';
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
     selector: 'nc-breadcrumbs',
@@ -12,7 +13,8 @@ import {
 export class BreadcrumbsComponent extends AbstractBreadcrumbsComponent {
 
     constructor(protected _uriService: UriService,
-                _caseResourceService: CaseResourceService) {
-        super(_uriService, _caseResourceService);
+                _caseResourceService: CaseResourceService,
+                _activatedRoute: ActivatedRoute) {
+        super(_uriService, _caseResourceService, _activatedRoute);
     }
 }

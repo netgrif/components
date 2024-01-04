@@ -7,6 +7,7 @@ import {PaginationParams} from "../../utility/pagination/pagination-params";
 import {SimpleFilter} from "../../filter/models/simple-filter";
 import {take} from "rxjs/operators";
 import {BehaviorSubject, Subscription} from "rxjs";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
     selector: 'ncc-breadcrumbs-component',
@@ -15,8 +16,10 @@ import {BehaviorSubject, Subscription} from "rxjs";
 export abstract class AbstractBreadcrumbsComponent implements OnDestroy {
 
     @Input() showHome: boolean = true;
+    @Input() showFilter: boolean = true;
     @Input() lengthOfPath: number = 30;
     @Input() partsAfterDots: number = 2;
+    filterName: string;
     paths: Array<string>;
     private static DOTS: string = '...';
     private static DELIMETER: string = '/';
@@ -25,11 +28,11 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy {
     private nicePathSubscription: Subscription;
 
     protected constructor(protected _uriService: UriService,
-                          protected _caseResourceService: CaseResourceService) {
+                          protected _caseResourceService: CaseResourceService,
+                          protected _activatedRoute: ActivatedRoute) {
         this.nicePath = new BehaviorSubject<string>(undefined);
         this.paths = [];
         this.initNicePath();
-        this.getMenuCase();
     }
 
     ngOnDestroy(): void {
@@ -38,7 +41,10 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy {
         }
     }
 
-    public getMenuCase() {
+    public noop() {
+    }
+
+    public resolveMenuCase() {
         const searchBody: CaseSearchRequestBody = {
             query: 'processIdentifier:preference_item AND dataSet.nodePath.textValue.keyword:\"' + this._uriService.activeNode.uriPath + '\"'
         };
@@ -48,6 +54,21 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy {
         this._caseResourceService.searchCases(SimpleFilter.fromCaseQuery(searchBody), httpParams).pipe(take(1)).subscribe(result => {
             this.nicePath.next(result.content[0].immediateData.find(s => s.stringId === 'nicePath').value);
         });
+    }
+
+    public resolveFilterCase() {
+        const filterId = this._activatedRoute.snapshot.params.filterCaseId
+        if (!!filterId) {
+            const searchBody: CaseSearchRequestBody = {
+                query: 'taskMongoIds:\"' + this._activatedRoute.snapshot.params.filterCaseId + '\"'
+            };
+            let httpParams = new HttpParams()
+                .set(PaginationParams.PAGE_SIZE, 2)
+                .set(PaginationParams.PAGE_NUMBER, 0);
+            this._caseResourceService.searchCases(SimpleFilter.fromCaseQuery(searchBody), httpParams).pipe(take(1)).subscribe(result => {
+                this.filterName = result.content[0].title;
+            });
+        }
     }
 
     public initNicePath() {
@@ -65,6 +86,8 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy {
                 this.paths = tmp === undefined ? [] : tmp;
             }
         })
+        this.resolveMenuCase();
+        this.resolveFilterCase();
     }
 
     public reset(): void {
@@ -74,6 +97,7 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy {
     public changePath(path: string, count: number) {
         if (path === AbstractBreadcrumbsComponent.DOTS && count === 1) {
             this._showPaths = true;
+            this.nicePath.next(this.nicePath.value);
             return;
         }
         let fullPath: string = '';
@@ -86,7 +110,8 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy {
         }
         this._uriService.getNodeByPath(fullPath).subscribe(node => {
             this._uriService.activeNode = node;
-            this.getMenuCase();
+            this.showFilter = false;
+            this.resolveMenuCase();
         })
     }
 

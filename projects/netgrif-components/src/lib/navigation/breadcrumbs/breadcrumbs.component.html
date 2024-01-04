@@ -4,6 +4,9 @@
     </div>
     <div *ngFor="let path of paths;let i = index;let last = last;">
         <span class="breadcrumbs-span" (click)="changePath(path, i)">{{path | titlecase}}</span>
-        <span class="delimeter" *ngIf="!last">/</span>
+        <span class="delimeter" *ngIf="!last || showFilter">/</span>
+    </div>
+    <div *ngIf="showFilter">
+        <span class="breadcrumbs-span" (click)="noop()">{{filterName}}</span>
     </div>
 </div>
