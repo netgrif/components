@@ -41,9 +41,6 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy {
         }
     }
 
-    public noop() {
-    }
-
     public resolveMenuCase() {
         const searchBody: CaseSearchRequestBody = {
             query: 'processIdentifier:preference_item AND dataSet.nodePath.textValue.keyword:\"' + this._uriService.activeNode.uriPath + '\"'
