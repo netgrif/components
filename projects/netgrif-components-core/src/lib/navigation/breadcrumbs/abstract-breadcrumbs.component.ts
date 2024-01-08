@@ -22,17 +22,18 @@ import {TranslateService} from "@ngx-translate/core";
 export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterViewInit {
 
     @Input() showHome: boolean = true;
-    @Input() showLast: boolean = true;
-    @Input() redirectOnClick: boolean = true;
+    @Input() showFilter: boolean = true;
+    @Input() redirectOnClick: boolean = false;
     @Input() lengthOfPath: number = 30;
     @Input() partsAfterDots: number = 2;
+    filterName: string;
     breadcrumbsParts: Array<string>;
     private static DOTS: string = '...';
     private static DELIMETER: string = '/';
     private static NODE_PATH: string = 'nodePath';
     private static ITEM_SETTINGS: string = 'item_settings';
     private _showPaths: boolean = false;
-    private nicePath: BehaviorSubject<Array<string>>;
+    private nicePath: BehaviorSubject<string>;
     private redirectUrls: Map<string, Array<string>>;
     private nicePathSubscription: Subscription;
 
@@ -42,13 +43,13 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
                           protected _router: Router,
                           protected _dynamicRoutingService: DynamicNavigationRouteProviderService,
                           protected _translateService: TranslateService) {
-        this.nicePath = new BehaviorSubject<Array<string>>(undefined);
+        this.nicePath = new BehaviorSubject<string>(undefined);
         this.redirectUrls = new Map<string, Array<string>>();
         this.initNicePath();
     }
 
     ngAfterViewInit() {
-        this.initFilterCase();
+        this.resolveBreadcrumbs();
     }
 
     ngOnDestroy(): void {
@@ -57,7 +58,7 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
         }
     }
 
-    public initFilterCase() {
+    public resolveBreadcrumbs() {
         const filterId = this._activatedRoute.snapshot.params.filterCaseId
         if (!!filterId) {
             const splitPath = this._uriService.splitNodePath(this._uriService.activeNode);
@@ -74,11 +75,16 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
 
             this._caseResourceService.searchCases(SimpleFilter.fromCaseQuery(searchBody), httpParams).pipe(take(1)).subscribe(result => {
                 const cases = result.content;
-                const filterCase = cases.find(c => c.tasks.some(t => t.task === filterId));
-                fullPath.push(this.immediateValue(filterCase, AbstractBreadcrumbsComponent.NODE_PATH));
+                const filterCaseIndex = cases.findIndex(c => c.tasks.some(t => t.task === filterId) && !fullPath.includes(this.immediateValue(c, AbstractBreadcrumbsComponent.NODE_PATH)));
+                if (filterCaseIndex >= 0) {
+                    const filterCase = cases.splice(cases.findIndex(c => c.tasks.some(t => t.task === filterId) && !fullPath.includes(this.immediateValue(c, AbstractBreadcrumbsComponent.NODE_PATH))), 1)[0];
+                    this.filterName = this.getTranslation(this.immediateValue(filterCase, 'menu_name'));
+                }
                 cases.sort((a, b) => fullPath.indexOf(this.immediateValue(a, AbstractBreadcrumbsComponent.NODE_PATH)) - fullPath.indexOf(this.immediateValue(b, AbstractBreadcrumbsComponent.NODE_PATH)));
-                cases.forEach(c => this.redirectUrls.set(this.immediateValue(c, AbstractBreadcrumbsComponent.NODE_PATH), [this._dynamicRoutingService.route, c.tasks.find(t => t.transition === AbstractBreadcrumbsComponent.ITEM_SETTINGS).task]))
-                this.nicePath.next(cases.map(c => this.getTranslation(this.immediateValue(c, 'menu_name'))));
+                if (this.redirectOnClick) {
+                    cases.forEach(c => this.redirectUrls.set(this.immediateValue(c, AbstractBreadcrumbsComponent.NODE_PATH), [this._dynamicRoutingService.route, c.tasks.find(t => t.transition === AbstractBreadcrumbsComponent.ITEM_SETTINGS).task]))
+                }
+                this.nicePath.next(AbstractBreadcrumbsComponent.DELIMETER + cases.map(c => this.getTranslation(this.immediateValue(c, 'menu_name'))).join(AbstractBreadcrumbsComponent.DELIMETER));
             });
         }
     }
@@ -86,16 +92,16 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
     public initNicePath() {
         this.nicePathSubscription = this.nicePath.subscribe(np => {
             if (!!np) {
-                np = np.filter(s => s !== UriService.ROOT);
-                if (np?.length > this.partsAfterDots + 1 && this._uriService.activeNode?.uriPath.length > this.lengthOfPath && !this._showPaths) {
-                    const newPath = [np[0], AbstractBreadcrumbsComponent.DOTS];
-                    for (let i = np.length - this.partsAfterDots; i < np.length; i++) {
-                        newPath.push(np[i]);
+                const path = this._uriService.splitNicePath(np);
+                if (path?.length > this.partsAfterDots + 1 && this._uriService.activeNode?.uriPath.length > this.lengthOfPath && !this._showPaths) {
+                    const newPath = [path[0], AbstractBreadcrumbsComponent.DOTS];
+                    for (let i = path.length - this.partsAfterDots; i < path.length; i++) {
+                        newPath.push(path[i]);
                     }
                     this.breadcrumbsParts = newPath;
                     return;
                 }
-                this.breadcrumbsParts = np;
+                this.breadcrumbsParts = path === undefined ? [] : path;
             }
         });
     }
@@ -108,7 +114,9 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
     }
 
     public reset(): void {
+        this.filterName = undefined;
         this._uriService.reset();
+        this.nicePath.next("/")
     }
 
     public changePath(path: string, count: number) {
@@ -127,8 +135,8 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
         }
         this._uriService.getNodeByPath(fullPath).subscribe(node => {
             this._uriService.activeNode = node;
-            this.showLast = false;
-            this.nicePath.next(this.nicePath.value.slice(0, control + 1))
+            this.filterName = undefined;
+            this.nicePath.next(this.nicePath.value.split(AbstractBreadcrumbsComponent.DELIMETER).slice(0, control + 1).join(AbstractBreadcrumbsComponent.DELIMETER))
             this.redirect();
         })
     }

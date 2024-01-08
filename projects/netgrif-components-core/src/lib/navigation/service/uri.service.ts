@@ -234,6 +234,10 @@ export class UriService implements OnDestroy {
         return node?.uriPath.split('/').filter(s => s !== UriService.ROOT);
     }
 
+    public splitNicePath(uriPath: string): Array<string> {
+        return uriPath.split('/').filter(s => s !== UriService.ROOT);
+    }
+
     private capitalizeNames(nodes: Array<UriNodeResource>) {
         if (!(nodes instanceof Array)) return;
         nodes.forEach(n => this.capitalizeName(n));
