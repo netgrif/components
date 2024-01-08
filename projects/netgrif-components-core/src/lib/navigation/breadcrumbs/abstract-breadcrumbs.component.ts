@@ -23,7 +23,7 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
 
     @Input() showHome: boolean = true;
     @Input() showFilter: boolean = true;
-    @Input() redirectOnClick: boolean = false;
+    @Input() redirectOnClick: boolean = true;
     @Input() lengthOfPath: number = 30;
     @Input() partsAfterDots: number = 2;
     filterName: string;
@@ -33,7 +33,7 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
     private static NODE_PATH: string = 'nodePath';
     private static ITEM_SETTINGS: string = 'item_settings';
     private _showPaths: boolean = false;
-    private nicePath: BehaviorSubject<string>;
+    private nicePath: BehaviorSubject<Array<string>>;
     private redirectUrls: Map<string, Array<string>>;
     private nicePathSubscription: Subscription;
 
@@ -43,7 +43,7 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
                           protected _router: Router,
                           protected _dynamicRoutingService: DynamicNavigationRouteProviderService,
                           protected _translateService: TranslateService) {
-        this.nicePath = new BehaviorSubject<string>(undefined);
+        this.nicePath = new BehaviorSubject<Array<string>>(undefined);
         this.redirectUrls = new Map<string, Array<string>>();
         this.initNicePath();
     }
@@ -84,7 +84,7 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
                 if (this.redirectOnClick) {
                     cases.forEach(c => this.redirectUrls.set(this.immediateValue(c, AbstractBreadcrumbsComponent.NODE_PATH), [this._dynamicRoutingService.route, c.tasks.find(t => t.transition === AbstractBreadcrumbsComponent.ITEM_SETTINGS).task]))
                 }
-                this.nicePath.next(AbstractBreadcrumbsComponent.DELIMETER + cases.map(c => this.getTranslation(this.immediateValue(c, 'menu_name'))).join(AbstractBreadcrumbsComponent.DELIMETER));
+                this.nicePath.next(["", ...cases.map(c => this.getTranslation(this.immediateValue(c, 'menu_name')))]);
             });
         }
     }
@@ -92,7 +92,7 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
     public initNicePath() {
         this.nicePathSubscription = this.nicePath.subscribe(np => {
             if (!!np) {
-                const path = this._uriService.splitNicePath(np);
+                const path = np;
                 if (path?.length > this.partsAfterDots + 1 && this._uriService.activeNode?.uriPath.length > this.lengthOfPath && !this._showPaths) {
                     const newPath = [path[0], AbstractBreadcrumbsComponent.DOTS];
                     for (let i = path.length - this.partsAfterDots; i < path.length; i++) {
@@ -116,7 +116,7 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
     public reset(): void {
         this.filterName = undefined;
         this._uriService.reset();
-        this.nicePath.next("/")
+        this.nicePath.next([""])
     }
 
     public changePath(path: string, count: number) {
@@ -136,7 +136,7 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
         this._uriService.getNodeByPath(fullPath).subscribe(node => {
             this._uriService.activeNode = node;
             this.filterName = undefined;
-            this.nicePath.next(this.nicePath.value.split(AbstractBreadcrumbsComponent.DELIMETER).slice(0, control + 1).join(AbstractBreadcrumbsComponent.DELIMETER))
+            this.nicePath.next(this.nicePath.value.slice(0, control + 1))
             this.redirect();
         })
     }
