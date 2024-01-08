@@ -24,7 +24,7 @@ import {GroupNavigationConstants} from "../model/group-navigation-constants";
 })
 export class UriService implements OnDestroy {
 
-    private static ROOT: string = 'root';
+    public static ROOT: string = 'root';
     private _rootNode: UriNodeResource;
     private readonly _rootLoading$: LoadingEmitter;
     private readonly _parentLoading$: LoadingEmitter;
@@ -232,10 +232,6 @@ export class UriService implements OnDestroy {
 
     public splitNodePath(node: UriNodeResource): Array<string> {
         return node?.uriPath.split('/').filter(s => s !== UriService.ROOT);
-    }
-
-    public splitNodePathString(uriPath: string): Array<string> {
-        return uriPath.split('/').filter(s => s !== UriService.ROOT);
     }
 
     private capitalizeNames(nodes: Array<UriNodeResource>) {
