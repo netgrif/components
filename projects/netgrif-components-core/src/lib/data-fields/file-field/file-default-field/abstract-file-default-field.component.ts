@@ -204,9 +204,8 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractBaseData
             this._log.error('File cannot be uploaded. No task is set to the field.');
             return;
         }
-        if (this.dataField.value &&
-            this.dataField.value.name &&
-            this.fileUploadEl.nativeElement.files.item(0).name === this.dataField.value.name) {
+        if (this.dataField.value?.name &&
+            this.fileUploadEl.nativeElement.files.item(0).name === this.dataField.value?.name) {
             this._log.error('User chose the same file. Uploading skipped');
             this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.wontUploadSameFile'));
             this.fileUploadEl.nativeElement.value = '';
@@ -347,7 +346,7 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractBaseData
     }
 
     public deleteFile() {
-        if (!this.dataField.value || !this.dataField.value.name) {
+        if (!this.dataField.value?.name) {
             return;
         }
         if (!this.taskId) {
@@ -381,7 +380,7 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractBaseData
     }
 
     isEmpty(): boolean {
-        return !this.dataField.value || !this.dataField.value.name;
+        return !this.dataField.value?.name;
     }
 
     protected get defaultState(): FileState {
@@ -480,7 +479,7 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractBaseData
     }
 
     public getHeight() {
-        return this.dataField.layout && this.dataField.layout.rows && this.dataField.layout.rows !== 1 ?
+        return this.dataField.layout?.rows && this.dataField.layout?.rows !== 1 ?
             (this.dataField.layout.rows) * FILE_FIELD_HEIGHT - FILE_FIELD_PADDING : FILE_FIELD_HEIGHT - FILE_FIELD_PADDING;
     }
 

@@ -9,7 +9,7 @@
 
         <mat-accordion [multi]="allowMultiOpen" class="full-width" >
             <div class="fix-padding">
-                <nc-task-panel
+                <nc-task-panel #panel
                     [textEllipsis]="textEllipsis"
                     *ngFor="let task of tasks | slice: (pageIndex) * pageSize : (pageIndex + 1) * pageSize;
                                     let i = index;
@@ -22,7 +22,7 @@
                     (taskEvent)="emitTaskEvent($event)"
                     (panelRefOutput)="addToPanelRefs(task, $event)"
                     [showMoreMenu]="showMoreMenu"
-                    class="panel-expanded-spacing">
+                    class="panel-expanded-spacing" [ngClass]="{'single-task-fix': tasks.length === 1 && panel.isExpanded()}">
                 </nc-task-panel>
 
                 <div *ngIf="loading$ | async" fxLayout="column" fxLayoutAlign="center center">

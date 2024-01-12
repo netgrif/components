@@ -222,7 +222,8 @@ export class TabView implements TabViewInterface {
         if (!force && !this.openedTabs[index].canBeClosed) {
             throw new Error(error);
         }
-        if (index === this.selectedIndex.value && this.openedTabs[index].parentUniqueId) {
+        if (index === this.selectedIndex.value && this.openedTabs[index].parentUniqueId &&
+            this.openedTabs.findIndex(tab => tab.uniqueId === this.openedTabs[index].parentUniqueId) !== -1) {
             this.switchToTabUniqueId(this.openedTabs[index].parentUniqueId);
         }
         if (index === this.selectedIndex.value && this.selectedIndex.value + 1 < this.openedTabs.length) {

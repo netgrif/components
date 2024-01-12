@@ -73,6 +73,10 @@ export interface TaskSearchRequestBody {
      * If more than one string ID is specified, the returned tasks must have one of them.
      */
     stringId?: string | Array<string>;
+
+    tags?: {
+        [key: string]: string
+    };
 }
 
 /**

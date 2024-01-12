@@ -119,8 +119,5 @@ export class DefaultCaseRefListViewComponent extends AbstractCaseViewComponent i
 
     createdCase(caze: Case) {
         this.handleCaseClick(caze);
-        // if (this._dataFieldPortalData !== null && this._dataFieldPortalData.dataField instanceof MultichoiceField) {
-        //     this._dataFieldPortalData.dataField.choices = [...this._dataFieldPortalData.dataField.choices, {key: caze.stringId, value: ''}];
-        // }
     }
 }

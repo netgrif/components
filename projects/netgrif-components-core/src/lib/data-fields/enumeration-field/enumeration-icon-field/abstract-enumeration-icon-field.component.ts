@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, Inject, Optional} from '@angular/core';
+import {Component, OnInit, Inject, Optional} from '@angular/core';
 import {EnumerationField} from '../models/enumeration-field';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base-data-field.component";

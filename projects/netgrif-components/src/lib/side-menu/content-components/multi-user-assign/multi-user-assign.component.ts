@@ -1,6 +1,9 @@
 import {Component, Inject} from '@angular/core';
 import {AbstractMultiUserAssignComponent, NAE_SIDE_MENU_CONTROL, SideMenuControl, UserListService} from '@netgrif/components-core';
 
+/**
+ * @deprecated
+ * */
 @Component({
     selector: 'nc-multi-user-assign',
     templateUrl: './multi-user-assign.component.html',

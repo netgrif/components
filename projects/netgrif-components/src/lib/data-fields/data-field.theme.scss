@@ -80,6 +80,12 @@
 
     .netgrif-input {
 
+        .mat-standard-chip {
+            height: unset;
+            min-height: 1px;
+            word-break: break-word;
+        }
+
         .mat-paginator-page-size-select .mat-form-field-infix {
             min-width: unset !important;
         }
@@ -139,6 +145,7 @@
 
         .ql-toolbar.ql-snow {
             border-radius: 6px 6px 0 0;
+            border: 1px solid $color-outline-enabled;
         }
 
         .ql-container.ql-snow {
@@ -278,10 +285,6 @@
 
         .ql-editor.ql-blank {
             background-color: #FFFFFF;
-        }
-
-        .ql-toolbar.ql-snow {
-            border: 1px solid $color-outline-enabled;
         }
 
         .mat-form-field-appearance-outline .mat-form-field-outline-start {

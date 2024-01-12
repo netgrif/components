@@ -148,7 +148,7 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
         }, this._autoswitchToTaskTab, this._openExistingTab);
     }
 
-    private resolveFilter(openCase: Case): Filter {
+    protected resolveFilter(openCase: Case): Filter {
         const additionalFilter = this._injectedTabData.taskViewAdditionalFilter;
         const mergeFilters = this._injectedTabData.taskViewMergeWithBaseFilter;
         const baseFilter = new SimpleFilter('', FilterType.TASK, {case: {id: `${openCase.stringId}`}});
@@ -156,18 +156,16 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
         let filter;
         if (additionalFilter === undefined) {
             filter = baseFilter;
+        } else if (mergeFilters) {
+            filter = additionalFilter.merge(baseFilter, MergeOperator.AND);
         } else {
-            if (mergeFilters) {
-                filter = additionalFilter.merge(baseFilter, MergeOperator.AND);
-            } else {
-                filter = additionalFilter;
-            }
+            filter = additionalFilter;
         }
 
         return filter;
     }
 
-    private resolveAllowedNets(openCase: Case): string[] {
+    protected resolveAllowedNets(openCase: Case): string[] {
         const additionalFilter = this._injectedTabData.taskViewAdditionalFilter;
         if (additionalFilter == undefined) {
             return [openCase.processIdentifier];
@@ -183,7 +181,7 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
         return this.headersMode.some(e => e === option);
     }
 
-    private resolveHeaderMode(mode: string): HeaderMode {
+    protected resolveHeaderMode(mode: string): HeaderMode {
         switch (mode) {
             case 'sort':
                 return HeaderMode.SORT;

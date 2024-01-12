@@ -2,7 +2,7 @@
 @import 'node_modules/@netgrif/components/nae-theme';
 
 $typography: mat.define-typography-config(
-    $font-family: 'Roboto',
+    $font-family: 'Roboto, sans-serif',
     $headline: mat.define-typography-level(32px, 48px, 700)
 );
 

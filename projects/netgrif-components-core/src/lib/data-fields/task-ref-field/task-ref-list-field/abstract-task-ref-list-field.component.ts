@@ -15,7 +15,7 @@ import {ComponentPortal} from "@angular/cdk/portal";
 })
 export abstract class AbstractTaskRefListFieldComponent extends AbstractBaseDataFieldComponent<TaskRefField> implements AfterViewInit {
 
-    componentPortal: ComponentPortal<any>;
+    public componentPortal: ComponentPortal<any>;
 
     protected constructor(protected injector: Injector,
                           protected taskViewType: Type<any>,
