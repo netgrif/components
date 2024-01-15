@@ -12,7 +12,7 @@ import {
 } from "@netgrif/components-core";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
-import {Component, NO_ERRORS_SCHEMA} from "@angular/core";
+import {Component, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from "@angular/core";
 import {FormControl} from "@angular/forms";
 import {MultiUserAssignItemComponent} from "./multi-user-assign-item/multi-user-assign-item.component";
 import {BrowserDynamicTestingModule} from "@angular/platform-browser-dynamic/testing";
@@ -39,7 +39,7 @@ describe('MultiUserAssignListComponent', () => {
                 ErrorSnackBarComponent,
                 TestWrapperComponent
             ],
-            schemas: [NO_ERRORS_SCHEMA]
+            schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]
         })
             .overrideModule(BrowserDynamicTestingModule, {
                 set: {
