@@ -104,10 +104,8 @@
                          [disableClose]="configRightMenu.disableClose"
                          class="drawer-content"
                          mwlResizable
-                         [style.width.px]="configRightMenu.width"
-                         [resizeCursorPrecision]="20"
-                         [resizeEdges]="{right: true}"
-                         (resizing)="onResizeEvent($event)">
+                         (resizing)="onResizeEvent($event)"
+                         [style.width.px]="configRightMenu.width">
 
                 <div *ngTemplateOutlet="portalRightMenu || defaultRightSide"></div>
 

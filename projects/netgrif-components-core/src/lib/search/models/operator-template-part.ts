@@ -8,7 +8,7 @@ import {FormControl} from '@angular/forms';
  */
 export class OperatorTemplatePart {
     protected _type: OperatorTemplatePartType;
-    protected _content: string | FormControl;
+    protected _content: string | FormControl<any>;
 
     /**
      * The
@@ -29,7 +29,7 @@ export class OperatorTemplatePart {
         return this._type;
     }
 
-    public get content(): string | FormControl {
+    public get content(): string | FormControl<any> {
         return this._content;
     }
 }
