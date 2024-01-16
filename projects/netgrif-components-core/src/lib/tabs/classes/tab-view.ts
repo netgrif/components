@@ -30,7 +30,7 @@ export class TabView implements TabViewInterface {
      *
      * Selected index initializes to `0`.
      */
-    public selectedIndex: FormControl;
+    public selectedIndex: FormControl<number>;
 
     private uniqueIdCounter = new IncrementingCounter();
     /**
