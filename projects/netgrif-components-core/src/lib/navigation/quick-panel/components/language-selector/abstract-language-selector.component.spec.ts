@@ -66,8 +66,7 @@ class TestLangComponent extends AbstractLanguageSelectorComponent {
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<nae-test-lang language="sk"></nae-test-lang>'
+    template: '<ncc-test-lang></ncc-test-lang>'
 })
 class TestWrapperComponent {
-    lang = 'sk';
 }

@@ -409,8 +409,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="69"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/workflow-view/abstract-workflow-view.component.ts:69</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="66"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/workflow-view/abstract-workflow-view.component.ts:66</a></div>
                 </td>
             </tr>
 
@@ -545,8 +545,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="62"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/workflow-view/abstract-workflow-view.component.ts:62</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="59"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/workflow-view/abstract-workflow-view.component.ts:59</a></div>
                 </td>
             </tr>
 
@@ -621,8 +621,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="58"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/workflow-view/abstract-workflow-view.component.ts:58</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="55"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/workflow-view/abstract-workflow-view.component.ts:55</a></div>
                 </td>
             </tr>
 
@@ -1176,13 +1176,10 @@ export abstract class AbstractWorkflowViewComponent extends AbstractViewWithHead
 
     public importSidemenuNet(component) {
         this._sideMenuService.open(component).onClose.subscribe(event &#x3D;&gt; {
-            if (event.data?.net !&#x3D;&#x3D; undefined) {
-                this._workflowViewService.reload();
-                if (event.data?.net) {
-                    this._processService.updateNet(new Net(event.data.net));
-                }
-            } else {
-                this._log.debug(&#x27;&#x27;);
+            // TODO reloads every time side panel is closed, but should only if event contains some net
+            this._workflowViewService.reload();
+            if (event.data?.net) {
+                this._processService.updateNet(new Net(event.data.net));
             }
         });
     }

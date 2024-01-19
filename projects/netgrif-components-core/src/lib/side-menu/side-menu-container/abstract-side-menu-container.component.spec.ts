@@ -5,7 +5,7 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {SideMenuService} from '../services/side-menu.service';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {MaterialModule} from '../../material/material.module';
-import {Component, Inject} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject} from '@angular/core';
 import {AbstractSideMenuContainerComponent} from './abstract-side-menu-container.component';
 import {AbstractImportNetComponent} from '../content-components/import-net/abstract-import-net.component';
 import {NAE_SIDE_MENU_CONTROL} from '../side-menu-injection-token';
@@ -32,7 +32,8 @@ describe('AbstractSideMenuContainerComponent', () => {
             declarations: [TestSideMenuComponent],
             providers: [
                 TranslateService
-            ]
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
         })
             .compileComponents();
     }));
@@ -89,6 +90,6 @@ class TestImportComponent extends AbstractImportNetComponent {
                 protected _log: LoggerService,
                 protected _snackbar: SnackBarService,
                 protected _translate: TranslateService) {
-        super(_sideMenuControl, _petriNetResource,  _log, _snackbar, _translate);
+        super(_sideMenuControl, _petriNetResource, _log, _snackbar, _translate);
     }
 }
