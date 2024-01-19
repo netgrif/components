@@ -24,6 +24,10 @@
 <title>cluster_SideMenuMultiUserAssignComponentModule</title>
 <polygon fill="none" stroke="black" stroke-dasharray="1,5" points="8,-70 8,-333 657,-333 657,-70 8,-70"/>
 </g>
+<g id="clust7" class="cluster">
+<title>cluster_SideMenuMultiUserAssignComponentModule_exports</title>
+<polygon fill="none" stroke="black" points="244,-273 244,-325 442,-325 442,-273 244,-273"/>
+</g>
 <g id="clust2" class="cluster">
 <title>cluster_SideMenuMultiUserAssignComponentModule_declarations</title>
 <polygon fill="none" stroke="black" points="16,-143 16,-195 649,-195 649,-143 16,-143"/>
@@ -31,10 +35,6 @@
 <g id="clust3" class="cluster">
 <title>cluster_SideMenuMultiUserAssignComponentModule_MultiUserAssignComponent_providers</title>
 <polygon fill="none" stroke="black" points="471,-78 471,-130 633,-130 633,-78 471,-78"/>
-</g>
-<g id="clust7" class="cluster">
-<title>cluster_SideMenuMultiUserAssignComponentModule_exports</title>
-<polygon fill="none" stroke="black" points="244,-273 244,-325 442,-325 442,-273 244,-273"/>
 </g>
 <!-- MultiUserAssignComponent -->
 <g id="node1" class="node">

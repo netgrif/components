@@ -24,13 +24,13 @@
 <title>cluster_LoginFormComponentModule</title>
 <polygon fill="none" stroke="black" stroke-dasharray="1,5" points="146,-70 146,-268 350,-268 350,-70 146,-70"/>
 </g>
-<g id="clust5" class="cluster">
-<title>cluster_LoginFormComponentModule_exports</title>
-<polygon fill="none" stroke="black" points="166,-208 166,-260 330,-260 330,-208 166,-208"/>
-</g>
 <g id="clust2" class="cluster">
 <title>cluster_LoginFormComponentModule_declarations</title>
 <polygon fill="none" stroke="black" points="167,-78 167,-130 329,-130 329,-78 167,-78"/>
+</g>
+<g id="clust5" class="cluster">
+<title>cluster_LoginFormComponentModule_exports</title>
+<polygon fill="none" stroke="black" points="166,-208 166,-260 330,-260 330,-208 166,-208"/>
 </g>
 <!-- LoginFormComponent -->
 <g id="node1" class="node">
