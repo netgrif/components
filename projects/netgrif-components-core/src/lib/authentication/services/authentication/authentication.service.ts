@@ -14,7 +14,7 @@ import {UserResource} from '../../../resources/interface/user-resource';
 })
 export class AuthenticationService implements OnDestroy {
 
-    private static readonly IDENTIFICATION_ATTRIBUTE = 'id';
+    protected static readonly IDENTIFICATION_ATTRIBUTE = 'id';
 
     protected _authenticated$: BehaviorSubject<boolean>;
     protected subSession: Subscription;

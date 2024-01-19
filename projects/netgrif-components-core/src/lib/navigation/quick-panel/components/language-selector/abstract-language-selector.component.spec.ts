@@ -69,5 +69,4 @@ class TestLangComponent extends AbstractLanguageSelectorComponent {
     template: '<ncc-test-lang></ncc-test-lang>'
 })
 class TestWrapperComponent {
-    lang = 'sk';
 }
