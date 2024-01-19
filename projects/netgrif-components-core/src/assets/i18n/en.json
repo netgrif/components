@@ -285,7 +285,8 @@
         },
         "user": {
             "selectUser": "Select user",
-            "save": "Assign"
+            "save": "Assign",
+            "deleteAll": "Empty user list"
         },
         "textarea": {
             "insertText": "Insert text here..."

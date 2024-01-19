@@ -70,4 +70,8 @@ export abstract class AbstractUserListFieldComponent extends AbstractDataFieldCo
         this.dataField.value = existingUsers;
     }
 
+    public removeAll() {
+        this.dataField.value = new UserListValue(new Map<string, UserValue>())
+    }
+
 }
