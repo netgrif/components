@@ -3,9 +3,19 @@ import {Credentials} from '../../../authentication/models/credentials';
 import {Observable, of} from 'rxjs';
 import {User} from '../../../user/models/user';
 import {Injectable} from '@angular/core';
+import {AuthenticationMethodService} from "../../../authentication/services/authentication-method.service";
+import {ConfigurationService} from "../../../configuration/configuration.service";
+import {UserTransformer} from "../../../authentication/models/user.transformer";
+import {SessionService} from "../../../authentication/session/services/session.service";
 
 @Injectable()
 export class MockAuthenticationService extends AuthenticationService {
+    constructor(_auth: AuthenticationMethodService,
+                _config: ConfigurationService,
+                _sessionService: SessionService,
+                _userTransformer: UserTransformer) {
+        super(_auth, _config, _sessionService, _userTransformer);
+    }
     login(credentials: Credentials): Observable<User> {
         return of(new User('id', 'mail', 'name', 'surname', ['ADMIN'], [{stringId: 'id', name: 'id', importId: 'id'}]));
     }
