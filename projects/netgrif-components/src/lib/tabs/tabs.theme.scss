@@ -3,22 +3,22 @@
 @mixin tabs-theme($theme) {
     $primary: map-get($theme, primary);
     .center-tabs {
-        .mat-tab-labels {
+        .mat-mdc-tab-labels {
             justify-content: center;
         }
     }
 
     .end-tabs {
-        .mat-tab-labels {
+        .mat-mdc-tab-labels {
             justify-content: flex-end;
         }
     }
 
-    .mat-tab-label-container {
+    .mat-mdc-tab-label-container {
         background: white;
     }
 
-    .mat-tab-header {
+    .mat-mdc-tab-header {
         border-bottom: 2px solid #E2E8F0;
     }
 
@@ -26,7 +26,7 @@
         color: mat.get-color-from-palette($primary);
     }
 
-    .mat-tab-label {
+    .mat-mdc-tab-label {
         opacity: 1 !important;
     }
 }

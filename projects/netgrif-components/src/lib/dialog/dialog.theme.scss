@@ -41,7 +41,7 @@
         }
     }
 
-    .mat-dialog-title {
+    .mat-mdc-dialog-title {
         font-style: normal;
         font-weight: 500;
         font-size: 20px;
@@ -50,12 +50,12 @@
         color: #1E293B;
     }
 
-    .mat-dialog-container {
+    .mat-mdc-dialog-container {
         border-radius: 6px !important;
     }
 
     .dialog-field-fix  {
-        .netgrif-input .mat-form-field-appearance-outline .mat-form-field-suffix {
+        .netgrif-input .mat-mdc-form-field-appearance-outline .mat-mdc-form-field-suffix {
             top: unset;
         }
     }
