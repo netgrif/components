@@ -2,7 +2,7 @@
 @import "quill/dist/quill.snow.css";
 @import "quill/dist/quill.bubble.css";
 @import "quill/dist/quill.core.css";
-@import '~node_modules/@covalent/markdown/markdown-theme';
+@import 'node_modules/@covalent/markdown/markdown-theme';
 
 @mixin data-field-component($theme) {
     $primary: map-get($theme, primary);
@@ -23,7 +23,7 @@
         border-bottom: 1px solid #eee;
     }
 
-    .mat-option {
+    .mat-mdc-option {
         height: auto !important;
         min-height: 48px;
         white-space: normal !important;
@@ -80,66 +80,82 @@
 
     .netgrif-input {
 
-        .mat-standard-chip {
+        .mat-mdc-standard-chip {
             height: unset;
             min-height: 1px;
             word-break: break-word;
         }
 
-        .mat-paginator-page-size-select .mat-form-field-infix {
+        .mat-mdc-paginator-page-size-select .mat-mdc-form-field-infix {
             min-width: unset !important;
         }
-        .mat-form-field-infix {
-            padding: 5px 0 11px 0 !important;
+        .mat-mdc-form-field-infix {
+            padding: 11px 0 11px 0 !important;
             font-weight: 400 !important;
             font-size: 14px !important;
             line-height: 20px !important;
             min-width: 130px !important;
             width: unset;
+            height: unset;
+            min-height: 43px;
         }
 
-        .mat-form-field-appearance-outline .mat-form-field-prefix, .mat-form-field-appearance-outline .mat-form-field-suffix {
+        .mat-mdc-text-field-wrapper.mdc-text-field--outlined .mdc-notched-outline--upgraded .mdc-floating-label--float-above {
+            transform: translateY(-26px) scale(0.75);
+        }
+        .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-floating-label {
+            top: 20px;
+            font-size: 14px;
+        }
+
+        .mat-mdc-form-field-icon-suffix .mat-mdc-icon-button.mat-mdc-button-base,  .mat-mdc-form-field-icon-prefix .mat-mdc-icon-button.mat-mdc-button-base {
+            height: 42px;
+            width: 42px;
+            padding: 9px;
+        }
+
+        .mat-mdc-form-field-appearance-outline .mat-mdc-form-field-prefix, .mat-mdc-form-field-appearance-outline .mat-mdc-form-field-suffix {
             top: 0.33em;
         }
 
-        .mat-form-field-appearance-outline .mat-form-field-prefix {
+        .mat-mdc-form-field-appearance-outline .mat-mdc-form-field-prefix {
             left: -0.33em;
         }
 
-        .mat-form-field-label-wrapper {
+        .mat-mdc-form-field-label-wrapper {
             top: -1.2em !important;
             font-weight: 400 !important;
             font-size: 14px !important;
             line-height: 20px !important;
         }
 
-        .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+        .mat-mdc-form-field-appearance-outline.mat-mdc-form-field-can-float.mat-mdc-form-field-should-float .mat-mdc-form-field-label {
             transform: translateY(-1.4em) scale(0.75);
             width: 133.3333333333%;
         }
 
-        .mat-select-arrow-wrapper {
+        .mat-mdc-select-arrow-wrapper {
             transform: translateY(0) !important;
         }
 
-        .mat-select-disabled .mat-select-trigger {
+        .mat-mdc-select-disabled .mat-mdc-select-trigger {
             user-select: all !important;
         }
 
-        .mat-error {
+        .mat-mdc-error {
             font-size: 10px !important;
             line-height: 18px !important;
             width: 100%;
         }
 
-        .mat-hint {
+        .mat-mdc-hint {
             font-size: 10px !important;
             line-height: 18px !important;
             width: 100%;
             color: $color-text-enabled;
         }
 
-        .mat-hint-disabled {
+        .mat-mdc-hint-disabled {
             color: $color-text-disabled !important;
         }
 
@@ -153,13 +169,13 @@
             border: 1px solid $color-outline-enabled;
         }
 
-        .mat-radio-label {
+        .mat-mdc-radio-label {
             min-height: 36px !important;
             white-space: unset;
         }
 
         @media only screen and (max-width: 959.99px) {
-            .mat-radio-label {
+            .mat-mdc-radio-label {
                 align-items: flex-start;
             }
         }
@@ -174,7 +190,7 @@
             cursor: alias;
         }
 
-        .mat-list-option {
+        .mat-mdc-list-option {
             height: auto !important;
             min-height: 36px;
             padding: 0 !important;
@@ -185,90 +201,90 @@
             flex-direction: column;
         }
 
-        .mat-list-option:focus {
+        .mat-mdc-list-option:focus {
             outline: none;
         }
 
-        .mat-list-base .mat-list-item .mat-list-item-content, .mat-list-base .mat-list-option .mat-list-item-content {
+        .mat-mdc-list-base .mat-mdc-list-item .mat-mdc-list-item-content, .mat-mdc-list-base .mat-mdc-list-option .mat-mdc-list-item-content {
             min-height: 36px;
             padding: 0 2px !important;
         }
 
-        .mat-list-base .mat-list-option.mat-list-option .mat-list-item-content .mat-list-text {
+        .mat-mdc-list-base .mat-mdc-list-option.mat-mdc-list-option .mat-mdc-list-item-content .mat-mdc-list-text {
             padding-top: 8px;
             padding-bottom: 8px;
             padding-left: 10px;
         }
 
-        .mat-list-base {
+        .mat-mdc-list-base {
             padding-top: 4px !important;
         }
 
-        .mat-form-field-subscript-wrapper {
+        .mat-mdc-form-field-subscript-wrapper {
             //position: static;
             margin-top: 0.5em;
             top: calc(100% - 2em);
         }
 
-        .mat-form-field-wrapper {
+        .mat-mdc-form-field-wrapper {
             padding-bottom: 1em !important;
         }
 
-        .mat-form-field-appearance-outline .mat-form-field-wrapper {
+        .mat-mdc-form-field-appearance-outline .mat-mdc-form-field-wrapper {
             margin: 0.25px 0 0;
         }
 
         // DISABLED
 
-        .mat-form-field-appearance-outline.mat-form-field-disabled .mat-form-field-outline {
+        .mat-mdc-form-field-appearance-outline.mat-mdc-form-field-disabled .mat-mdc-form-field-outline {
             color: $color-outline-disabled;
             background-color: transparent;
             border-radius: 6px;
         }
 
-        .mat-form-field-appearance-outline.mat-form-field-disabled .mat-form-field-label {
+        .mat-mdc-form-field-appearance-outline.mat-mdc-form-field-disabled .mat-mdc-form-field-label {
             color: $color-text-disabled;
         }
 
-        .mat-input-element:disabled, .mat-form-field-type-mat-native-select.mat-form-field-disabled .mat-form-field-infix::after {
+        .mat-mdc-input-element:disabled, .mat-mdc-form-field-type-mat-native-select.mat-mdc-form-field-disabled .mat-mdc-form-field-infix::after {
             color: $color-text-disabled;
         }
 
-        .mat-form-field-prefix .mat-icon-button.mat-button-disabled.mat-button-disabled {
+        .mat-mdc-form-field-prefix .mat-mdc-icon-button.mat-mdc-button-disabled.mat-mdc-button-disabled {
             color: $color-text-disabled;
         }
 
-        .mat-radio-button.mat-radio-disabled .mat-radio-label-content {
+        .mat-mdc-radio-button.mat-mdc-radio-disabled .mat-mdc-radio-label-content {
             color: $color-text-disabled !important;
         }
 
-        .mat-list-base .mat-list-item-disabled {
+        .mat-mdc-list-base .mat-mdc-list-item-disabled {
             color: $color-text-disabled !important;
             background-color: transparent;
         }
 
-        .mat-select-disabled .mat-select-value {
+        .mat-mdc-select-disabled .mat-mdc-select-value {
             color: $color-text-disabled;
         }
 
-        .mat-button.mat-primary.mat-button-disabled,
-        .mat-button.mat-accent.mat-button-disabled,
-        .mat-button.mat-warn.mat-button-disabled,
-        .mat-button.mat-button-disabled.mat-button-disabled,
-        .mat-icon-button.mat-primary.mat-button-disabled,
-        .mat-icon-button.mat-accent.mat-button-disabled,
-        .mat-icon-button.mat-warn.mat-button-disabled,
-        .mat-icon-button.mat-button-disabled.mat-button-disabled,
-        .mat-stroked-button.mat-primary.mat-button-disabled,
-        .mat-stroked-button.mat-accent.mat-button-disabled,
-        .mat-stroked-button.mat-warn.mat-button-disabled,
-        .mat-stroked-button.mat-button-disabled.mat-button-disabled {
+        .mat-mdc-button.mat-mdc-primary.mat-mdc-button-disabled,
+        .mat-mdc-button.mat-mdc-accent.mat-mdc-button-disabled,
+        .mat-mdc-button.mat-mdc-warn.mat-mdc-button-disabled,
+        .mat-mdc-button.mat-mdc-button-disabled.mat-mdc-button-disabled,
+        .mat-mdc-icon-button.mat-mdc-primary.mat-mdc-button-disabled,
+        .mat-mdc-icon-button.mat-mdc-accent.mat-mdc-button-disabled,
+        .mat-mdc-icon-button.mat-mdc-warn.mat-mdc-button-disabled,
+        .mat-mdc-icon-button.mat-mdc-button-disabled.mat-mdc-button-disabled,
+        .mat-mdc-stroked-button.mat-mdc-primary.mat-mdc-button-disabled,
+        .mat-mdc-stroked-button.mat-mdc-accent.mat-mdc-button-disabled,
+        .mat-mdc-stroked-button.mat-mdc-warn.mat-mdc-button-disabled,
+        .mat-mdc-stroked-button.mat-mdc-button-disabled.mat-mdc-button-disabled {
             color: $color-text-disabled;
         }
 
         // ENABLED
 
-        .mat-form-field-appearance-outline .mat-form-field-outline {
+        .mat-mdc-form-field-appearance-outline .mat-mdc-form-field-outline {
             color: $color-outline-enabled;
             background-color: #FFFFFF;
             border-radius: 6px;
@@ -287,49 +303,49 @@
             background-color: #FFFFFF;
         }
 
-        .mat-form-field-appearance-outline .mat-form-field-outline-start {
+        .mat-mdc-form-field-appearance-outline .mat-mdc-form-field-outline-start {
             border-radius: 6px 0 0 6px;
         }
 
-        .mat-form-field-appearance-outline .mat-form-field-outline-end {
+        .mat-mdc-form-field-appearance-outline .mat-mdc-form-field-outline-end {
             border-radius: 0 6px 6px 0;
         }
 
-        .mat-list-base .mat-list-option {
+        .mat-mdc-list-base .mat-mdc-list-option {
             color: $color-text-enabled !important;
         }
 
-        .mat-radio-label-content{
+        .mat-mdc-radio-label-content{
             color: $color-text-enabled !important;
         }
 
-        .mat-stroked-button:not(.mat-button-disabled) {
+        .mat-mdc-stroked-button:not(.mat-mdc-button-disabled) {
             border-color: $color-outline-enabled;
         }
 
-        .mat-slide-toggle-content {
+        .mat-mdc-slide-toggle-content {
             color: $color-text-enabled !important;
         }
 
         .netgrif-chip-fix {
-            .mat-chip-list-wrapper {
+            .mat-mdc-chip-list-wrapper {
                 margin: -10px !important;
             }
         }
 
-        .mat-select-trigger {
+        .mat-mdc-select-trigger {
             height: unset;
             min-height: 1.125em;
         }
 
-        .mat-select-value-text {
+        .mat-mdc-select-value-text {
             white-space: break-spaces;
         }
 
     }
 
     .netgrif-zero-field-wrapper {
-        .mat-form-field-wrapper {
+        .mat-mdc-form-field-wrapper {
             padding-bottom: 0 !important;
         }
     }
@@ -344,27 +360,27 @@
     }
 
     .netgrif-input-search-fix {
-        .mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix .mat-icon-button {
+        .mat-mdc-form-field:not(.mat-mdc-form-field-appearance-legacy) .mat-mdc-form-field-suffix .mat-mdc-icon-button {
             width: unset !important;
             height: unset !important;
             top: 3px !important;
         }
 
-        .mat-form-field-wrapper {
+        .mat-mdc-form-field-wrapper {
             padding-bottom: 0 !important;
         }
     }
 
     .netgrif-input-primary-search-fix {
-        .mat-form-field-appearance-outline .mat-form-field-prefix, .mat-form-field-appearance-outline .mat-form-field-suffix {
+        .mat-mdc-form-field-appearance-outline .mat-mdc-form-field-prefix, .mat-mdc-form-field-appearance-outline .mat-mdc-form-field-suffix {
             top: 0.25em !important;
         }
 
-        .mat-form-field-appearance-outline .mat-form-field-prefix {
+        .mat-mdc-form-field-appearance-outline .mat-mdc-form-field-prefix {
             left: 0 !important;
         }
 
-        .mat-form-field-wrapper {
+        .mat-mdc-form-field-wrapper {
             padding-bottom: 0 !important;
         }
     }
@@ -374,31 +390,31 @@
     }
 
     .netgrif-input-primary-fix {
-        .mat-form-field-appearance-outline {
-            .mat-form-field-outline {
+        .mat-mdc-form-field-appearance-outline {
+            .mat-mdc-form-field-outline {
                 color: mat.get-contrast-color-from-palette($primary, 500);
             }
 
-            .mat-form-field-outline-thick {
+            .mat-mdc-form-field-outline-thick {
                 color: mat.get-contrast-color-from-palette($primary ,500);
             }
 
-            &.mat-focused {
-                .mat-form-field-outline-thick {
+            &.mat-mdc-focused {
+                .mat-mdc-form-field-outline-thick {
                     color: mat.get-contrast-color-from-palette($primary, 500);
                 }
             }
         }
 
-        .mat-form-field-label {
+        .mat-mdc-form-field-label {
             color: mat.get-contrast-color-from-palette($primary, 500);
         }
 
-        .mat-form-field.mat-focused .mat-form-field-label {
+        .mat-mdc-form-field.mat-mdc-focused .mat-mdc-form-field-label {
             color: mat.get-contrast-color-from-palette($primary, 500);
         }
 
-        .mat-datepicker-toggle {
+        .mat-mdc-datepicker-toggle {
             color: mat.get-contrast-color-from-palette($primary, 500) !important;
         }
 
@@ -408,7 +424,7 @@
     }
 
     .date-field-fix {
-        .mat-form-field-appearance-outline .mat-form-field-flex {
+        .mat-mdc-form-field-appearance-outline .mat-mdc-form-field-flex {
             padding: 0 0.75em 0 0.5em !important;
         }
     }
@@ -432,12 +448,12 @@
     }
 }
 
-.mat-calendar-arrow {
+.mat-mdc-calendar-arrow {
     border: none !important;
     width: 10px !important;
     height: 5px !important;
 }
-ngx-mat-calendar-header .mat-calendar-arrow {
+ngx-mat-calendar-header .mat-mdc-calendar-arrow {
     border-left: 5px solid transparent !important;
     border-right: 5px solid transparent !important;
     border-top-width: 5px !important;
@@ -447,30 +463,30 @@ ngx-mat-calendar-header .mat-calendar-arrow {
 }
 
 ngx-mat-calendar {
-    .mat-calendar-body-cell {
+    .mat-mdc-calendar-body-cell {
         position: relative !important;
     }
 }
 
 mat-calendar {
-    .mat-calendar-arrow {
+    .mat-mdc-calendar-arrow {
         width: 0;
         height: 0;
     }
 
-    .mat-calendar-body-cell {
+    .mat-mdc-calendar-body-cell {
         position: absolute !important;
         height: 100%;
     }
 }
 
 ngx-mat-datetime-content {
-    .mat-calendar-arrow {
+    .mat-mdc-calendar-arrow {
         width: 0;
     }
 }
 
-ac-number-currency-field .mat-form-field .mat-form-field-prefix {
+ac-number-currency-field .mat-mdc-form-field .mat-mdc-form-field-prefix {
     top: 0 !important;
     padding-right: 4px !important;
 }

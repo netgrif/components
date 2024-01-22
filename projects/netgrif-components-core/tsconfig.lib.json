@@ -19,8 +19,7 @@
         "skipTemplateCodegen": true,
         "strictMetadataEmit": true,
         "enableResourceInlining": true,
-        "fullTemplateTypeCheck": true,
-        "enableIvy": true
+        "fullTemplateTypeCheck": true
     },
     "exclude": [
         "src/test.ts",

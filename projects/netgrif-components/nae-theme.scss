@@ -37,16 +37,16 @@
     @include dialog-theme($app-theme);
 }
 
-.mat-tab-group.nae-tab-fill-height .mat-tab-body-wrapper {
+.mat-mdc-tab-group.nae-tab-fill-height .mat-mdc-tab-body-wrapper {
     flex: 1 1 100%;
 }
 
-.panel-expanded-spacing mat-expansion-panel.mat-expanded {
+.panel-expanded-spacing mat-expansion-panel.mat-mdc-expanded {
     margin-top: 0 !important;
     margin-bottom: 0 !important;
 }
 
-nc-number-currency-field .mat-form-field .mat-form-field-prefix {
+nc-number-currency-field .mat-mdc-form-field .mat-mdc-form-field-prefix {
     position: initial !important;
     padding-right: 4px !important;
 }
