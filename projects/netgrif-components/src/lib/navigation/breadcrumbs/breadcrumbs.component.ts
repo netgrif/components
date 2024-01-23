@@ -1,8 +1,10 @@
 import {Component} from '@angular/core';
 import {
     UriService,
-    AbstractBreadcrumbsComponent
+    AbstractBreadcrumbsComponent, CaseResourceService, DynamicNavigationRouteProviderService
 } from '@netgrif/components-core';
+import {ActivatedRoute, Router} from "@angular/router";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'nc-breadcrumbs',
@@ -11,7 +13,12 @@ import {
 })
 export class BreadcrumbsComponent extends AbstractBreadcrumbsComponent {
 
-    constructor(protected _uriService: UriService) {
-        super(_uriService);
+    constructor(protected _uriService: UriService,
+                _caseResourceService: CaseResourceService,
+                _activatedRoute: ActivatedRoute,
+                _router: Router,
+                _dynamicRoutingService: DynamicNavigationRouteProviderService,
+                _translateService: TranslateService) {
+        super(_uriService, _caseResourceService, _activatedRoute, _router, _dynamicRoutingService, _translateService);
     }
 }
