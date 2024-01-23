@@ -135,6 +135,10 @@ describe('DefaultTabViewComponent', () => {
                                     GroupNavigationConstants.ITEM_FIELD_ID_ADDITIONAL_FILTER_TASKREF,
                                     '',[],{visible: true}
                                 ),
+                                new BooleanField(
+                                    GroupNavigationConstants.ITEM_FIELD_ID_SHOW_CREATE_CASE_BUTTON,
+                                    '',true,{visible: true}
+                                ),
                             ]
                         },
                         {
