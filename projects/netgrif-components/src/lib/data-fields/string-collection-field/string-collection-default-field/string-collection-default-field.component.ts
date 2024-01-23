@@ -4,7 +4,7 @@ import {
     DATA_FIELD_PORTAL_DATA,
     DataFieldPortalData,
     TaskRefField
-} from 'netgrif-components-core';
+} from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
