@@ -17,7 +17,7 @@ import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token
 })
 export abstract class AbstractFileListFieldComponent extends AbstractDataFieldComponent {
 
-    @Input() public dataField: FileListField;
+    @Input() declare public dataField: FileListField;
 
     @Input() taskId: string;
 

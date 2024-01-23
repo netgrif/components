@@ -7,6 +7,7 @@ import {LanguageIcons} from './models/language-icons';
 })
 export class LanguageIconsService {
 
+    constructor(private _domSanitizer: DomSanitizer) {}
     /* eslint-disable */
     /* tslint:disable */
     private _languageIcons = {
@@ -241,8 +242,6 @@ export class LanguageIconsService {
     };
     /* tslint:enable */
     /* eslint-enable */
-
-    constructor(private _domSanitizer: DomSanitizer) {}
 
     get languageIcons(): LanguageIcons {
         return this._languageIcons;
