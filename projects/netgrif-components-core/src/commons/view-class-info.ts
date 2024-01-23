@@ -14,11 +14,11 @@ export class ViewClassInfo extends ImportToAdd {
     /**
      * for `caseView` located at route `cases/all/` this is equal to `CasesAllCaseViewComponent`
      */
-    public className: string;
+    declare public className: string;
     /**
      * for `caseView` located at route `cases/all/` this is equal to `./views/cases/all/cases-all-case-view.component`
      */
-    public fileImportPath: string;
+    declare public fileImportPath: string;
 
     constructor(path: string, viewType: string, customComponentName?: string) {
         super('', '');

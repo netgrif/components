@@ -8,7 +8,7 @@ import {EditablePredicateWithGenerator} from './editable-predicate-with-generato
 
 export class EditableClausePredicateWithGenerators extends EditableClausePredicate {
 
-    protected _predicates: Map<number, PredicateWithGenerator>;
+    declare protected _predicates: Map<number, PredicateWithGenerator>;
 
     constructor(operator: BooleanOperator, parentNotifier?: Subject<void>, initiallyVisible = true, bracketSubPredicateText = false) {
         super(operator, parentNotifier, initiallyVisible, bracketSubPredicateText);

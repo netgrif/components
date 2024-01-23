@@ -18,6 +18,10 @@ import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token
 })
 export abstract class AbstractFileFieldComponent extends AbstractDataFieldComponent  {
 
+
+    @Input() declare dataField: FileField;
+
+
     @Input() taskId: string;
 
     protected constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {

@@ -31,7 +31,6 @@ export abstract class AbstractCasePanelComponent extends AbstractPanelWithImmedi
 
     @Input() public case_: Case;
     @Input() public approval: boolean;
-    @Input() public selectedHeaders$: Observable<Array<HeaderColumn>>;
     @Input() responsiveBody = true;
     @Input() first: boolean;
     @Input() last: boolean;
