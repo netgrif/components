@@ -10,12 +10,14 @@ import {SessionService} from "../../../authentication/session/services/session.s
 
 @Injectable()
 export class MockAuthenticationService extends AuthenticationService {
-    constructor(_auth: AuthenticationMethodService,
-                _config: ConfigurationService,
-                _sessionService: SessionService,
-                _userTransformer: UserTransformer) {
+
+    constructor(protected _auth: AuthenticationMethodService,
+                protected _config: ConfigurationService,
+                protected _sessionService: SessionService,
+                protected _userTransformer: UserTransformer) {
         super(_auth, _config, _sessionService, _userTransformer);
     }
+
     login(credentials: Credentials): Observable<User> {
         return of(new User('id', 'mail', 'name', 'surname', ['ADMIN'], [{stringId: 'id', name: 'id', importId: 'id'}]));
     }
