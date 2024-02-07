@@ -30,4 +30,6 @@ export interface NewCaseButtonConfiguration {
 
     createCaseButtonIcon?: string;
 
+    showCreateCaseButton?: boolean;
+
 }

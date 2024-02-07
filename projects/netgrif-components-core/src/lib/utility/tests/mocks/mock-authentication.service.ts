@@ -3,10 +3,10 @@ import {Credentials} from '../../../authentication/models/credentials';
 import {Observable, of} from 'rxjs';
 import {User} from '../../../user/models/user';
 import {Injectable} from '@angular/core';
-import {AuthenticationMethodService} from '../../../authentication/services/authentication-method.service';
-import {ConfigurationService} from '../../../configuration/configuration.service';
-import {SessionService} from '../../../authentication/session/services/session.service';
-import {UserTransformer} from '../../../authentication/models/user.transformer';
+import {AuthenticationMethodService} from "../../../authentication/services/authentication-method.service";
+import {ConfigurationService} from "../../../configuration/configuration.service";
+import {UserTransformer} from "../../../authentication/models/user.transformer";
+import {SessionService} from "../../../authentication/session/services/session.service";
 
 @Injectable()
 export class MockAuthenticationService extends AuthenticationService {

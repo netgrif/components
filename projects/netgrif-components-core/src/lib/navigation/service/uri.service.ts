@@ -24,7 +24,7 @@ import {GroupNavigationConstants} from "../model/group-navigation-constants";
 })
 export class UriService implements OnDestroy {
 
-    private static ROOT: string = 'root';
+    public static ROOT: string = 'root';
     private _rootNode: UriNodeResource;
     private readonly _rootLoading$: LoadingEmitter;
     private readonly _parentLoading$: LoadingEmitter;

@@ -7,7 +7,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Full Changelog: [https://github.com/netgrif/components/commits/v6.4.0](https://github.com/netgrif/components/commits/v6.4.0)
 
-## [6.4.0](https://github.com/netgrif/components/releases/tag/v6.4.0) (2023-12-13)
+## [6.4.0](https://github.com/netgrif/components/releases/tag/v6.4.0) (2024-01-23)
 
 ### Fixed
 - [NAE-1915] TaskRef behaviour handling for multiple level
@@ -16,6 +16,7 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.4.0](https://g
 - [NAE-1924] Unnecessary call for setData from FE
 - [NAE-1901] Taskref rendering update
 - [NAE-1926] Can't close Tab in Tab view
+- [NAE-1939] Problem with Tests
 
 ### Added
 - [NAE-1890] Data field component register
@@ -28,6 +29,8 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.4.0](https://g
 - [NAE-1900] New component design
 - [NAE-1928] Refresh tabs on change
 - [NAE-1929] Data field type list of strings
+- [NAE-1936] Disable create case button using menu items
+- [NAE-1935] Improved breadcrumbs from menu items
 
 ## [6.3.0](https://github.com/netgrif/components/releases/tag/v6.3.0) (2023-05-26)
 
