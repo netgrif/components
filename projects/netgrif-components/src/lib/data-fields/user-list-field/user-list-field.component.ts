@@ -29,4 +29,8 @@ export class UserListFieldComponent extends AbstractUserListFieldComponent {
     public deleteUser(userId: string) {
         this.removeAbstractUser(userId);
     }
+
+    public deleteAll() {
+        this.removeAll();
+    }
 }

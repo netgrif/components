@@ -25,12 +25,11 @@ import {UserListField} from '../../data-fields/user-list-field/models/user-list-
 import {UserListValue} from '../../data-fields/user-list-field/models/user-list-value';
 import {decodeBase64, encodeBase64} from "../../utility/base64";
 
-
 @Injectable({
     providedIn: 'root'
 })
 export class FieldConverterService {
-    private textFieldNames = ['textarea', 'richtextarea', 'htmltextarea', 'editor', 'htmlEditor', 'area']
+    private textFieldNames = [ 'richtextarea', 'htmltextarea', 'editor', 'htmlEditor' ]
 
     constructor() {
     }
@@ -88,7 +87,7 @@ export class FieldConverterService {
                     item.value.userValues.forEach(u => userListValue.addUserValue(new UserValue(u.id, u.name, u.surname, u.email)));
                 }
                 return new UserListField(item.stringId, item.name, item.behavior, userListValue,
-                    item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
+                    item.roles, item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.BUTTON:
                 return new ButtonField(item.stringId, item.name, item.behavior, item.value as number,
                     item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);

@@ -239,6 +239,10 @@
                             </li>
                             <li>
                                     <span class="modifier">Protected</span>
+                                <a href="#cloneDataGroups" >cloneDataGroups</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
                                 <a href="#collapseGridEmptySpace" >collapseGridEmptySpace</a>
                             </li>
                             <li>
@@ -267,6 +271,10 @@
                             </li>
                             <li>
                                     <span class="modifier">Protected</span>
+                                <a href="#createDashboardTaskRefDataGroup" >createDashboardTaskRefDataGroup</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
                                 <a href="#createSubgridId" >createSubgridId</a>
                             </li>
                             <li>
@@ -284,6 +292,10 @@
                             <li>
                                     <span class="modifier">Public</span>
                                 <a href="#getNumberOfFormColumns" >getNumberOfFormColumns</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#initializeLocalFieldLayout" >initializeLocalFieldLayout</a>
                             </li>
                             <li>
                                     <span class="modifier">Protected</span>
@@ -314,7 +326,15 @@
                             </li>
                             <li>
                                     <span class="modifier">Protected</span>
+                                <a href="#preprocessDashboardTaskRef" >preprocessDashboardTaskRef</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
                                 <a href="#preprocessDataGroups" >preprocessDataGroups</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#rearrangeDataGroups" >rearrangeDataGroups</a>
                             </li>
                             <li>
                                     <span class="modifier">Protected</span>
@@ -423,7 +443,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="98" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:98</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="107" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:107</a></div>
                             </td>
                         </tr>
 
@@ -544,7 +564,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="73" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:73</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="82" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:82</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -572,7 +592,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="67" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:67</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="76" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:76</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -600,7 +620,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:61</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="70" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:70</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -631,7 +651,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="77" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:77</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="86" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:86</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -672,8 +692,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="389"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:389</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="455"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:455</a></div>
                 </td>
             </tr>
 
@@ -733,6 +753,85 @@ Because of the duplication the filtering doesn&#39;t affect the original instanc
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="cloneDataGroups"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>cloneDataGroups</b></span>
+                        <a href="#cloneDataGroups"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>cloneDataGroups(dataGroups: Array<DataGroup>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="428"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:428</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Creates a duplicate of the provided data group array.</p>
+<p>Only the data groups are cloned, the fields are only copied as references.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>dataGroups</td>
+                                    <td>
+                                            <code>Array&lt;DataGroup&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the data groups that should be cloned</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Array&lt;DataGroup&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>the duplicated data groups</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="collapseGridEmptySpace"></a>
                     <span class="name">
                         <span class="modifier">Protected</span>
@@ -751,8 +850,8 @@ Because of the duplication the filtering doesn&#39;t affect the original instanc
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="486"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:486</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="646"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:646</a></div>
                 </td>
             </tr>
 
@@ -861,8 +960,8 @@ Because of the duplication the filtering doesn&#39;t affect the original instanc
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="509"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:509</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="669"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:669</a></div>
                 </td>
             </tr>
 
@@ -972,8 +1071,8 @@ Resulting trailing empty rows are removed.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="230"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:230</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="239"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:239</a></div>
                 </td>
             </tr>
 
@@ -1021,8 +1120,8 @@ If te task specifies no default value the [global default]{</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="619"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:619</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="779"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:779</a></div>
                 </td>
             </tr>
 
@@ -1114,8 +1213,8 @@ If te task specifies no default value the [global default]{</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="451"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:451</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="611"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:611</a></div>
                 </td>
             </tr>
 
@@ -1207,8 +1306,8 @@ If te task specifies no default value the [global default]{</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="242"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:242</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="251"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:251</a></div>
                 </td>
             </tr>
 
@@ -1285,8 +1384,8 @@ of this class that are then bound to HTML.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="630"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:630</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="790"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:790</a></div>
                 </td>
             </tr>
 
@@ -1361,6 +1460,100 @@ of this class that are then bound to HTML.</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="createDashboardTaskRefDataGroup"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>createDashboardTaskRefDataGroup</b></span>
+                        <a href="#createDashboardTaskRefDataGroup"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createDashboardTaskRefDataGroup(originalDataGroup: <a href="../interfaces/DataGroup.html" target="_self">DataGroup</a>, taskRef: <a href="../interfaces/Task.html" target="_self">TaskRefField</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="519"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:519</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Creates a new data group that contains only the passed task ref.
+The information about nesting and parent task/case are preserved from the passed original data group.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>originalDataGroup</td>
+                                    <td>
+                                                <code><a href="../interfaces/DataGroup.html" target="_self" >DataGroup</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>source of the information about parent task/case</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>taskRef</td>
+                                    <td>
+                                                <code><a href="../interfaces/Task.html" target="_self" >TaskRefField</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the task ref that will be added to the new data group</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/DataGroup.html" target="_self" >DataGroup</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="createSubgridId"></a>
                     <span class="name">
                         <span class="modifier">Protected</span>
@@ -1379,8 +1572,8 @@ of this class that are then bound to HTML.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="739"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:739</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="899"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:899</a></div>
                 </td>
             </tr>
 
@@ -1449,8 +1642,8 @@ of this class that are then bound to HTML.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="650"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:650</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="810"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:810</a></div>
                 </td>
             </tr>
 
@@ -1561,8 +1754,8 @@ If the last row cannot be aligned to the exact center it is offset one grid tile
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="582"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:582</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="742"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:742</a></div>
                 </td>
             </tr>
 
@@ -1687,8 +1880,8 @@ If the last row cannot be aligned to the exact center it is offset one grid tile
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="180"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:180</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="189"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:189</a></div>
                 </td>
             </tr>
 
@@ -1766,8 +1959,8 @@ the layout configuration specified by the process</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="161"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:161</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="170"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:170</a></div>
                 </td>
             </tr>
 
@@ -1784,6 +1977,83 @@ the layout configuration specified by the process</p>
                     <div class="io-description">
                         <p>the number of columns as specified by the tasks layout property, or 4 if no value is specified.</p>
 
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="initializeLocalFieldLayout"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>initializeLocalFieldLayout</b></span>
+                        <a href="#initializeLocalFieldLayout"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>initializeLocalFieldLayout(dataGroups: Array<DataGroup>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="441"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:441</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Passes over all the fields in the provided data groups and if they are visible, initializes their local layout attribute.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>dataGroups</td>
+                                    <td>
+                                            <code>Array&lt;DataGroup&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the containers of the fields that should have their local layout initialized</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
                     </div>
                 </td>
             </tr>
@@ -1811,8 +2081,8 @@ the layout configuration specified by the process</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="603"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:603</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="763"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:763</a></div>
                 </td>
             </tr>
 
@@ -1952,8 +2222,8 @@ the layout configuration specified by the process</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="726"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:726</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="886"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:886</a></div>
                 </td>
             </tr>
 
@@ -2063,8 +2333,8 @@ Note that if the last row contains enough elements to be completely filled this 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="171"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:171</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="180"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:180</a></div>
                 </td>
             </tr>
 
@@ -2102,8 +2372,8 @@ Note that if the last row contains enough elements to be completely filled this 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="402"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:402</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="468"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:468</a></div>
                 </td>
             </tr>
 
@@ -2172,8 +2442,8 @@ Note that if the last row contains enough elements to be completely filled this 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="689"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:689</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="849"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:849</a></div>
                 </td>
             </tr>
 
@@ -2267,8 +2537,8 @@ Note that if the last row contains enough elements to be completely filled this 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="135"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:135</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="144"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:144</a></div>
                 </td>
             </tr>
 
@@ -2306,8 +2576,8 @@ Note that if the last row contains enough elements to be completely filled this 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="706"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:706</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="866"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:866</a></div>
                 </td>
             </tr>
 
@@ -2480,6 +2750,92 @@ If a check is performed an error will be thrown if elements are found.</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="preprocessDashboardTaskRef"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>preprocessDashboardTaskRef</b></span>
+                        <a href="#preprocessDashboardTaskRef"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>preprocessDashboardTaskRef(preprocessedDataGroups: Array<DataGroup>, rawDataGroups: Array<DataGroup>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="542"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:542</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Identifies data groups that represent dashboard tiles,
+removes them from the data group array and passes them onto the task ref field instance.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>preprocessedDataGroups</td>
+                                    <td>
+                                            <code>Array&lt;DataGroup&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>rawDataGroups</td>
+                                    <td>
+                                            <code>Array&lt;DataGroup&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Array&lt;DataGroup&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>an array of data group objects that does not contain dashboard tiles referenced by the dashboard task ref</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="preprocessDataGroups"></a>
                     <span class="name">
                         <span class="modifier">Protected</span>
@@ -2498,8 +2854,8 @@ If a check is performed an error will be thrown if elements are found.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="340"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:340</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="350"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:350</a></div>
                 </td>
             </tr>
 
@@ -2507,7 +2863,8 @@ If a check is performed an error will be thrown if elements are found.</p>
             <tr>
                 <td class="col-md-4">
                     <div class="io-description"><p>Clones the content of the data groups to prevent unintentional memory accesses to source data.
-Rearranges the data groups to accommodate taskrefs. Filters out hidden and forbidden fields.</p>
+Rearranges the data groups to accommodate taskrefs. Filters out hidden and forbidden fields.
+Populates dashboard task ref fields with dashboard tile data.</p>
 </div>
 
                     <div class="io-description">
@@ -2543,7 +2900,82 @@ Rearranges the data groups to accommodate taskrefs. Filters out hidden and forbi
 
                     </div>
                     <div class="io-description">
-                        <p>the preprocesses data groups</p>
+                        <p>the preprocessed data groups</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="rearrangeDataGroups"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>rearrangeDataGroups</b></span>
+                        <a href="#rearrangeDataGroups"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>rearrangeDataGroups(dataGroups: Array<DataGroup>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="368"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:368</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Clones the content of the data groups to prevent unintentional memory accesses to source data.
+Rearranges the data groups to accommodate taskrefs.
+Determines if the data groups contain a dashboard task ref field.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>dataGroups</td>
+                                    <td>
+                                            <code>Array&lt;DataGroup&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/PreprocessedDataGroups.html" target="_self" >PreprocessedDataGroups</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>the preprocessed data groups with metadata</p>
 
                     </div>
                 </td>
@@ -2572,8 +3004,8 @@ Rearranges the data groups to accommodate taskrefs. Filters out hidden and forbi
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="563"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:563</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="723"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:723</a></div>
                 </td>
             </tr>
 
@@ -2695,8 +3127,8 @@ Rearranges the data groups to accommodate taskrefs. Filters out hidden and forbi
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="734"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:734</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="894"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:894</a></div>
                 </td>
             </tr>
 
@@ -2776,8 +3208,8 @@ Rearranges the data groups to accommodate taskrefs. Filters out hidden and forbi
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="299"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:299</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="308"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:308</a></div>
                 </td>
             </tr>
 
@@ -2846,8 +3278,8 @@ Rearranges the data groups to accommodate taskrefs. Filters out hidden and forbi
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="207"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:207</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="216"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:216</a></div>
                 </td>
             </tr>
 
@@ -2887,8 +3319,8 @@ Rearranges the data groups to accommodate taskrefs. Filters out hidden and forbi
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="218"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:218</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="227"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:227</a></div>
                 </td>
             </tr>
 
@@ -2928,8 +3360,8 @@ Rearranges the data groups to accommodate taskrefs. Filters out hidden and forbi
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="413"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:413</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="479"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:479</a></div>
                 </td>
             </tr>
 
@@ -3002,8 +3434,8 @@ If some fields appear after the first task ref they are extracted into a new <a 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="323"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:323</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="332"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:332</a></div>
                 </td>
             </tr>
 
@@ -3090,8 +3522,8 @@ If some fields appear after the first task ref they are extracted into a new <a 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="758"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:758</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="918"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:918</a></div>
                 </td>
             </tr>
 
@@ -3176,7 +3608,7 @@ If some fields appear after the first task ref they are extracted into a new <a 
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="84" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:84</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="93" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:93</a></div>
                         </td>
                     </tr>
 
@@ -3203,7 +3635,7 @@ If some fields appear after the first task ref they are extracted into a new <a 
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="85" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:85</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="94" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:94</a></div>
                         </td>
                     </tr>
 
@@ -3230,7 +3662,7 @@ If some fields appear after the first task ref they are extracted into a new <a 
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="81" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:81</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="90" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:90</a></div>
                         </td>
                     </tr>
 
@@ -3263,7 +3695,7 @@ If some fields appear after the first task ref they are extracted into a new <a 
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="87" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:87</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="96" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:96</a></div>
                         </td>
                     </tr>
 
@@ -3290,7 +3722,7 @@ If some fields appear after the first task ref they are extracted into a new <a 
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="88" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:88</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="97" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:97</a></div>
                         </td>
                     </tr>
 
@@ -3317,7 +3749,7 @@ If some fields appear after the first task ref they are extracted into a new <a 
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="89" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:89</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="98" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:98</a></div>
                         </td>
                     </tr>
 
@@ -3344,7 +3776,7 @@ If some fields appear after the first task ref they are extracted into a new <a 
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="90" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:90</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="99" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:99</a></div>
                         </td>
                     </tr>
 
@@ -3371,7 +3803,7 @@ If some fields appear after the first task ref they are extracted into a new <a 
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="93" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:93</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="102" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:102</a></div>
                         </td>
                     </tr>
 
@@ -3398,7 +3830,7 @@ If some fields appear after the first task ref they are extracted into a new <a 
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="92" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:92</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="101" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:101</a></div>
                         </td>
                     </tr>
 
@@ -3425,7 +3857,7 @@ If some fields appear after the first task ref they are extracted into a new <a 
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="82" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:82</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="91" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:91</a></div>
                         </td>
                     </tr>
 
@@ -3452,7 +3884,7 @@ If some fields appear after the first task ref they are extracted into a new <a 
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="83" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:83</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="92" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:92</a></div>
                         </td>
                     </tr>
 
@@ -3490,7 +3922,7 @@ If some fields appear after the first task ref they are extracted into a new <a 
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:32</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:41</a></div>
                         </td>
                     </tr>
 
@@ -3516,7 +3948,7 @@ If some fields appear after the first task ref they are extracted into a new <a 
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:39</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:48</a></div>
                         </td>
                     </tr>
 
@@ -3542,7 +3974,7 @@ If some fields appear after the first task ref they are extracted into a new <a 
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:31</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:40</a></div>
                         </td>
                     </tr>
 
@@ -3568,7 +4000,7 @@ If some fields appear after the first task ref they are extracted into a new <a 
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:40</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:49</a></div>
                         </td>
                     </tr>
 
@@ -3594,7 +4026,7 @@ If some fields appear after the first task ref they are extracted into a new <a 
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:30</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:39</a></div>
                         </td>
                     </tr>
 
@@ -3628,7 +4060,7 @@ If some fields appear after the first task ref they are extracted into a new <a 
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="73" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:73</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="82" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:82</a></div>
                         </td>
                     </tr>
 
@@ -3661,7 +4093,7 @@ If some fields appear after the first task ref they are extracted into a new <a 
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:54</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:63</a></div>
                         </td>
                     </tr>
 
@@ -3693,7 +4125,7 @@ If some fields appear after the first task ref they are extracted into a new <a 
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:49</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:58</a></div>
                         </td>
                     </tr>
 
@@ -3725,7 +4157,7 @@ If some fields appear after the first task ref they are extracted into a new <a 
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:45</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:54</a></div>
                         </td>
                     </tr>
 
@@ -3766,7 +4198,7 @@ If some fields appear after the first task ref they are extracted into a new <a 
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="67" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:67</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="76" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:76</a></div>
                         </td>
                     </tr>
 
@@ -3808,7 +4240,7 @@ If some fields appear after the first task ref they are extracted into a new <a 
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:61</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="70" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:70</a></div>
                         </td>
                     </tr>
 
@@ -3847,7 +4279,7 @@ If some fields appear after the first task ref they are extracted into a new <a 
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="98" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:98</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="107" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:107</a></div>
                         </td>
                     </tr>
 
@@ -3880,7 +4312,7 @@ If some fields appear after the first task ref they are extracted into a new <a 
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="101" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:101</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="110" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:110</a></div>
                         </td>
                     </tr>
 
@@ -3915,7 +4347,7 @@ If some fields appear after the first task ref they are extracted into a new <a 
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="77" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:77</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="86" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:86</a></div>
                         </td>
                     </tr>
 
@@ -3947,7 +4379,7 @@ If some fields appear after the first task ref they are extracted into a new <a 
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="756" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:756</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="916" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:916</a></div>
                         </td>
                     </tr>
 
@@ -3973,7 +4405,7 @@ If some fields appear after the first task ref they are extracted into a new <a 
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="754" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:754</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="914" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:914</a></div>
                         </td>
                     </tr>
 
@@ -4002,7 +4434,7 @@ If some fields appear after the first task ref they are extracted into a new <a 
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="150" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:150</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="159" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:159</a></div>
                                 </td>
                             </tr>
 
@@ -4024,7 +4456,7 @@ If some fields appear after the first task ref they are extracted into a new <a 
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="154" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:154</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="163" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/task-content/abstract-task-content.component.ts:163</a></div>
                                 </td>
                             </tr>
 
@@ -4043,10 +4475,15 @@ import {PaperViewService} from &#x27;../../navigation/quick-panel/components/pap
 import {LoggerService} from &#x27;../../logger/services/logger.service&#x27;;
 import {TaskEventNotification} from &#x27;../model/task-event-notification&#x27;;
 import {TaskEventService} from &#x27;../services/task-event.service&#x27;;
-import {DataGroup, DataGroupAlignment} from &#x27;../../resources/interface/data-groups&#x27;;
+import {DataGroup, DataGroupAlignment, ParentDataGroupInformation} from &#x27;../../resources/interface/data-groups&#x27;;
 import {TaskElementType} from &#x27;../model/task-content-element-type&#x27;;
 import {DataField} from &#x27;../../data-fields/models/abstract-data-field&#x27;;
-import {DataGroupCompact, DataGroupHideEmptyRows, DataGroupLayout, DataGroupLayoutType} from &#x27;../../resources/interface/data-group-layout&#x27;;
+import {
+    DataGroupCompact,
+    DataGroupHideEmptyRows,
+    DataGroupLayout,
+    DataGroupLayoutType
+} from &#x27;../../resources/interface/data-group-layout&#x27;;
 import {FieldAlignment} from &#x27;../../resources/interface/field-alignment&#x27;;
 import {FieldTypeResource} from &#x27;../model/field-type-resource&#x27;;
 import {LoadingEmitter} from &#x27;../../utility/loading-emitter&#x27;;
@@ -4054,10 +4491,14 @@ import {BehaviorSubject, Observable, Subscription} from &#x27;rxjs&#x27;;
 import {map} from &#x27;rxjs/operators&#x27;;
 import {NAE_ASYNC_RENDERING_CONFIGURATION} from &#x27;../model/async-rendering-configuration-injection-token&#x27;;
 import {AsyncRenderingConfiguration} from &#x27;../model/async-rendering-configuration&#x27;;
+import {TaskRefDashboardConstants} from &#x27;../../data-fields/task-ref-field/model/task-ref-dashboard-constants&#x27;;
 import {TaskRefField} from &#x27;../../data-fields/task-ref-field/model/task-ref-field&#x27;;
+import {TaskRefComponents} from &#x27;../../data-fields/task-ref-field/model/task-ref-components&#x27;;
 import {SplitDataGroup} from &#x27;../model/split-data-group&#x27;;
 import {Subgrid} from &#x27;../model/subgrid&#x27;;
 import {IncrementingCounter} from &#x27;../../utility/incrementing-counter&#x27;;
+import {PreprocessedDataGroups} from &#x27;../model/preprocessed-data-groups&#x27;;
+import {TaskRefDashboardTile} from &#x27;../../data-fields/task-ref-field/model/task-ref-dashboard-tile&#x27;;
 
 @Component({
     selector: &#x27;ncc-abstract-task-content&#x27;,
@@ -4371,12 +4812,33 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
     /**
      * Clones the content of the data groups to prevent unintentional memory accesses to source data.
      * Rearranges the data groups to accommodate taskrefs. Filters out hidden and forbidden fields.
+     * Populates dashboard task ref fields with dashboard tile data.
      * @param dataGroups
-     * @returns the preprocesses data groups
+     * @returns the preprocessed data groups
      */
     protected preprocessDataGroups(dataGroups: Array&lt;DataGroup&gt;): Array&lt;DataGroup&gt; {
-        dataGroups &#x3D; this.cloneAndFilterHidden(dataGroups);
+        const rearrangeResult &#x3D; this.rearrangeDataGroups(dataGroups);
+        let unfilteredDataGroups &#x3D; rearrangeResult.dataGroups;
 
+        if (rearrangeResult.containsDashboardTaskRef) {
+            unfilteredDataGroups &#x3D; this.preprocessDashboardTaskRef(rearrangeResult.dataGroups, dataGroups);
+        }
+
+        return this.cloneAndFilterHidden(unfilteredDataGroups);
+    }
+
+    /**
+     * Clones the content of the data groups to prevent unintentional memory accesses to source data.
+     * Rearranges the data groups to accommodate taskrefs.
+     * Determines if the data groups contain a dashboard task ref field.
+     * @param dataGroups
+     * @returns the preprocessed data groups with metadata
+     */
+    protected rearrangeDataGroups(dataGroups: Array&lt;DataGroup&gt;): PreprocessedDataGroups {
+        dataGroups &#x3D; this.cloneDataGroups(dataGroups);
+        this.initializeLocalFieldLayout(dataGroups);
+
+        let containsDashboard &#x3D; false;
         const result &#x3D; [];
         for (let i &#x3D; 0; i &lt; dataGroups.length; i++) {
             const group &#x3D; dataGroups[i];
@@ -4387,6 +4849,11 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
             const split &#x3D; this.splitDataGroupOnTaskRef(group);
             if (split.startGroup !&#x3D;&#x3D; undefined) {
                 result.push(split.startGroup);
+            }
+
+            if (split.taskRef.component?.name &#x3D;&#x3D;&#x3D; TaskRefComponents.DASHBOARD) {
+                result.push(this.createDashboardTaskRefDataGroup(group, split.taskRef));
+                containsDashboard &#x3D; true;
             }
 
             if (split.taskRef.value.length &#x3D;&#x3D;&#x3D; 0 || split.endGroup &#x3D;&#x3D;&#x3D; undefined) {
@@ -4414,7 +4881,38 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
             dataGroups.splice(firstNonDescendantIndex, 0, split.endGroup);
         }
 
-        return result;
+        return {
+            dataGroups: result,
+            containsDashboardTaskRef: containsDashboard
+        };
+    }
+
+    /**
+     * Creates a duplicate of the provided data group array.
+     *
+     * Only the data groups are cloned, the fields are only copied as references.
+     * @param dataGroups the data groups that should be cloned
+     * @returns the duplicated data groups
+     */
+    protected cloneDataGroups(dataGroups: Array&lt;DataGroup&gt;): Array&lt;DataGroup&gt; {
+        return dataGroups.map(group &#x3D;&gt; {
+            const g &#x3D; {...group};
+            g.fields &#x3D; g.fields.map(field &#x3D;&gt; field);
+            return g;
+        });
+
+    }
+
+    /**
+     * Passes over all the fields in the provided data groups and if they are visible, initializes their local layout attribute.
+     * @param dataGroups the containers of the fields that should have their local layout initialized
+     */
+    protected initializeLocalFieldLayout(dataGroups: Array&lt;DataGroup&gt;): void {
+        for (const g of dataGroups) {
+            for (const f of g.fields) {
+                f.resetLocalLayout();
+            }
+        }
     }
 
     /**
@@ -4451,7 +4949,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
         dataGroup.fields.sort((a, b) &#x3D;&gt; a.localLayout.y - b.localLayout.y);
         const taskRefPosition &#x3D; dataGroup.fields.findIndex(f &#x3D;&gt; this.isTaskRef(f));
         const result: SplitDataGroup &#x3D; {
-            taskRef: dataGroup.fields[taskRefPosition]
+            taskRef: dataGroup.fields[taskRefPosition] as TaskRefField
         };
 
         if (taskRefPosition !&#x3D;&#x3D; 0) {
@@ -4481,13 +4979,107 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
     }
 
     /**
+     * Creates a new data group that contains only the passed task ref.
+     * The information about nesting and parent task/case are preserved from the passed original data group.
+     * @param originalDataGroup source of the information about parent task/case
+     * @param taskRef the task ref that will be added to the new data group
+     * @protected
+     */
+    protected createDashboardTaskRefDataGroup(originalDataGroup: DataGroup, taskRef: TaskRefField): DataGroup {
+        return {
+            fields: [taskRef],
+            alignment: undefined,
+            stretch: false,
+            title: undefined,
+            parentTaskId: originalDataGroup.parentTaskId,
+            parentTransitionId: originalDataGroup.parentTransitionId,
+            parentCaseId: originalDataGroup.parentCaseId,
+            parentTaskRefId: originalDataGroup.parentTaskRefId,
+            nestingLevel: originalDataGroup.nestingLevel,
+            layout: originalDataGroup.layout
+        }
+    }
+
+    /**
+     * Identifies data groups that represent dashboard tiles,
+     * removes them from the data group array and passes them onto the task ref field instance.
+     * @param preprocessedDataGroups
+     * @param rawDataGroups
+     * @returns an array of data group objects that does not contain dashboard tiles referenced by the dashboard task ref
+     * @protected
+     */
+    protected preprocessDashboardTaskRef(preprocessedDataGroups: Array&lt;DataGroup&gt;, rawDataGroups: Array&lt;DataGroup&gt;): Array&lt;DataGroup&gt; {
+        // TODO support more than one dashboard task ref in a task
+        let dashboardTaskRefField: TaskRefField;
+        let dashboardParentInformation: ParentDataGroupInformation;
+        for (const dg of preprocessedDataGroups) {
+            for (const field of dg.fields) {
+                if (this.isTaskRef(field) &amp;&amp; field.component?.name &#x3D;&#x3D;&#x3D; TaskRefComponents.DASHBOARD) {
+                    dashboardTaskRefField &#x3D; field as TaskRefField;
+                    dashboardParentInformation &#x3D; {
+                        parentTaskId: dg.parentTaskId,
+                        parentTransitionId: dg.parentTransitionId,
+                        parentCaseId: dg.parentCaseId,
+                        parentTaskRefId: dg.parentTaskRefId,
+                        nestingLevel: dg.nestingLevel
+                    }
+                    break;
+                }
+            }
+            if (dashboardTaskRefField !&#x3D;&#x3D; undefined) {
+                break;
+            }
+        }
+        if (dashboardTaskRefField &#x3D;&#x3D;&#x3D; undefined) {
+            this._logger.error(&#x27;preprocessDashboardTaskRef method was called on task content without dashboard task refs!&#x27;);
+            return preprocessedDataGroups;
+        }
+
+        const tiles &#x3D; new Map&lt;string, TaskRefDashboardTile&gt;();
+
+        // TODO resolve transitive tile content
+        const nonDashboardDataGroups &#x3D; [];
+        for (const dg of preprocessedDataGroups) {
+            if (dg.parentTaskRefId !&#x3D;&#x3D; dashboardTaskRefField.stringId) {
+                nonDashboardDataGroups.push(dg);
+                continue;
+            }
+            if (tiles.has(dg.parentTaskId)) {
+                const tile &#x3D; tiles.get(dg.parentTaskId);
+                tile.dataGroups.push(dg);
+            } else {
+                tiles.set(dg.parentTaskId, {dataGroups: [dg]});
+            }
+        }
+
+        for (const rdg of rawDataGroups) {
+            if (rdg.parentTaskId &#x3D;&#x3D;&#x3D; dashboardParentInformation.parentTaskId
+                &amp;&amp; rdg.parentTransitionId &#x3D;&#x3D;&#x3D; dashboardParentInformation.parentTransitionId
+                &amp;&amp; rdg.parentCaseId &#x3D;&#x3D;&#x3D; dashboardParentInformation.parentCaseId
+                &amp;&amp; rdg.parentTaskRefId &#x3D;&#x3D;&#x3D; dashboardParentInformation.parentTaskRefId
+                &amp;&amp; rdg.nestingLevel &#x3D;&#x3D;&#x3D; dashboardParentInformation.nestingLevel) {
+                for (const filed of rdg.fields) {
+                    if (filed.stringId &#x3D;&#x3D;&#x3D; TaskRefDashboardConstants.DASHBOARD_COLS) {
+                        dashboardTaskRefField.dashboardCols &#x3D; filed.value;
+                    } else if (filed.stringId &#x3D;&#x3D;&#x3D; TaskRefDashboardConstants.DASHBOARD_ROWS) {
+                        dashboardTaskRefField.dashboardRows &#x3D; filed.value;
+                    }
+                }
+            }
+        }
+
+        dashboardTaskRefField.dashboardTiles &#x3D; Array.from(tiles.values());
+        return nonDashboardDataGroups;
+    }
+
+    /**
      * Computes the layout data for a single data group with grid layout. The resulting layout is saved into the input objects.
      * @param dataGroup the data group that should be laid out into a grid
      * @param subgrid the object that holds the context of the computed layouting unit
      */
     protected computeGridLayout(dataGroup: DataGroup, subgrid: Subgrid) {
         const localGrid: Array&lt;Array&lt;string&gt;&gt; &#x3D; [];
-
+        dataGroup.fields &#x3D; [...dataGroup.fields].sort((f1 , f2) &#x3D;&gt; f1.layout.y &#x3D;&#x3D;&#x3D; f2.layout.y ? f1.layout.x - f2.layout.x : f1.layout.y - f2.layout.y)
         dataGroup.fields.forEach(dataField &#x3D;&gt; {
             if (!dataField.localLayout
                 || dataField.localLayout.x &#x3D;&#x3D;&#x3D; undefined
@@ -4836,8 +5428,8 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
         var COMPONENT_TEMPLATE = '<div></div>'
-    var COMPONENTS = [{'name': 'AbstractAddChildNodeComponent', 'selector': 'ncc-abstract-add-child-node'},{'name': 'AbstractAdvancedSearchComponent', 'selector': 'ncc-abstract-advanced-search'},{'name': 'AbstractAuthenticationOverlayComponent', 'selector': 'ncc-abstract-auth-overlay'},{'name': 'AbstractBooleanFieldComponent', 'selector': 'ncc-abstract-boolean-field'},{'name': 'AbstractBreadcrumbsComponent', 'selector': 'ncc-breadcrumbs-component'},{'name': 'AbstractButtonFieldComponent', 'selector': 'ncc-abstract-button-field'},{'name': 'AbstractCaseListComponent', 'selector': 'ncc-abstract-case-list'},{'name': 'AbstractCaseListPaginatorComponent', 'selector': 'ncc-abstract-case-list-paginator'},{'name': 'AbstractCasePanelComponent', 'selector': 'ncc-abstract-case-panel'},{'name': 'AbstractCaseViewComponent', 'selector': 'ncc-abstract-case-view'},{'name': 'AbstractCountCardComponent', 'selector': 'ncc-abstract-count-card'},{'name': 'AbstractCurrencyNumberFieldComponent', 'selector': 'ncc-abstract-currency-field'},{'name': 'AbstractCustomCardComponent', 'selector': 'ncc-abstract-custom-card'},{'name': 'AbstractDashboardContentComponent', 'selector': 'ncc-abstract-dashboard-content'},{'name': 'AbstractDataFieldComponent', 'selector': 'ncc-abstract-datafield'},{'name': 'AbstractDataFieldTemplateComponent', 'selector': 'ncc-abstract-datafield-template'},{'name': 'AbstractDateFieldComponent', 'selector': 'ncc-abstract-date-field'},{'name': 'AbstractDateTimeFieldComponent', 'selector': 'ncc-abstract-date-time-field'},{'name': 'AbstractDefaultCaseListComponent', 'selector': 'ncc-abstract-default-case-list'},{'name': 'AbstractDefaultNumberFieldComponent', 'selector': 'ncc-abstract-number-default-field'},{'name': 'AbstractDefaultTaskListComponent', 'selector': 'ncc-abstract-default-task-list'},{'name': 'AbstractDialogComponent', 'selector': 'ncc-abstract-dialog'},{'name': 'AbstractEditModeComponent', 'selector': 'ncc-abstract-edit-mode'},{'name': 'AbstractEmailSubmissionFormComponent', 'selector': 'ncc-abstract-email-submission-form'},{'name': 'AbstractEnumerationAutocompleteDynamicFieldComponent', 'selector': 'ncc-abstract-enumeration-autocomplete-dynamic-field'},{'name': 'AbstractEnumerationAutocompleteSelectFieldComponent', 'selector': 'ncc-abstract-enumeration-autocomplete-field'},{'name': 'AbstractEnumerationFieldComponent', 'selector': 'ncc-abstract-enumeration-field'},{'name': 'AbstractEnumerationIconFieldComponent', 'selector': 'ncc-abstract-enumerataion-icon-field'},{'name': 'AbstractEnumerationListFieldComponent', 'selector': 'ncc-abstract-enumeration-list-field'},{'name': 'AbstractEnumerationSelectFieldComponent', 'selector': 'ncc-abstract-enumeration-select-field'},{'name': 'AbstractEnumerationStepperFieldComponent', 'selector': 'ncc-abstract-enumeration-stepper-field'},{'name': 'AbstractFieldComponentResolverComponent', 'selector': 'ncc-abstract-field-component-resolver'},{'name': 'AbstractFileFieldComponent', 'selector': 'ncc-abstract-file-field'},{'name': 'AbstractFileListFieldComponent', 'selector': 'ncc-abstract-filelist-field'},{'name': 'AbstractFilterFieldComponent', 'selector': 'ncc-abstract-filter-field'},{'name': 'AbstractFilterFieldContentComponent', 'selector': 'ncc-abstract-filtercontent-field'},{'name': 'AbstractFilterSelectorComponent', 'selector': 'ncc-abstract-filter-selector'},{'name': 'AbstractForgottenPasswordComponent', 'selector': 'ncc-abstract-forgotten-password'},{'name': 'AbstractFulltextSearchComponent', 'selector': 'ncc-abstract-fulltext-search'},{'name': 'AbstractGroupNavigationComponentResolverComponent', 'selector': 'ncc-abstract-group-nagiation-resolver'},{'name': 'AbstractHeaderComponent', 'selector': 'ncc-abstract-header'},{'name': 'AbstractHeaderModeComponent', 'selector': 'ncc-abstract-header-mode'},{'name': 'AbstractHtmlTextareaFieldComponent', 'selector': 'ncc-abstract-html-area-field'},{'name': 'AbstractI18nDividerFieldComponent', 'selector': 'ncc-abstract-i18n-divider-field'},{'name': 'AbstractI18nErrorsComponent', 'selector': 'ncc-abstract-i18n-errors'},{'name': 'AbstractI18nFieldComponent', 'selector': 'ncc-abstract-i18n-field'},{'name': 'AbstractI18nTextFieldComponent', 'selector': 'ncc-abstract-i18n-text-field'},{'name': 'AbstractIframeCardComponent', 'selector': 'ncc-abstract-iframe-card'},{'name': 'AbstractImmediateFilterTextComponent', 'selector': 'ncc-abstract-immediate-filter-text'},{'name': 'AbstractImmediateFilterTextContentComponent', 'selector': 'ncc-abstract-immediate-filter-text-content'},{'name': 'AbstractImportNetComponent', 'selector': 'ncc-abstract-import-net'},{'name': 'AbstractInternalLinkComponent', 'selector': 'ncc-abstract-internal-link'},{'name': 'AbstractLanguageSelectorComponent', 'selector': 'ncc-abstract-language-selector'},{'name': 'AbstractLdapGroupRoleAssignmentComponent', 'selector': 'ncc-abstract-ldap-group-role-assignment'},{'name': 'AbstractLegalNoticeComponent', 'selector': 'ncc-abstract-legal-notice'},{'name': 'AbstractLoadFilterComponent', 'selector': 'ncc-abstract-load-filter'},{'name': 'AbstractLoadingModeComponent', 'selector': 'ncc-abstract-loading-mode'},{'name': 'AbstractLoginFormComponent', 'selector': 'ncc-abstract-login-field'},{'name': 'AbstractLogoutShortcutComponent', 'selector': 'ncc-abstract-logout-shortcut'},{'name': 'AbstractMultichoiceAutocompleteFieldComponentComponent', 'selector': 'ncc-abstract-multichoice-autocomplete-field'},{'name': 'AbstractMultichoiceFieldComponent', 'selector': 'ncc-abstract-multichoice-field'},{'name': 'AbstractMultichoiceListFieldComponent', 'selector': 'ncc-abstract-multichoice-list-field'},{'name': 'AbstractMultichoiceSelectFieldComponent', 'selector': 'ncc-abstract-multichoice-select-field'},{'name': 'AbstractNavigationDoubleDrawerComponent', 'selector': 'ncc-abstract-navigation-double-drawer'},{'name': 'AbstractNavigationDrawerComponent', 'selector': 'ncc-abstract-navigation-drawer'},{'name': 'AbstractNavigationRailComponent', 'selector': 'ncc-abstract-navigation-rail'},{'name': 'AbstractNavigationResizableDrawerComponent', 'selector': 'ncc-abstract-navigation-resizable-drawer'},{'name': 'AbstractNavigationTreeComponent', 'selector': 'ncc-abstract-navigation-tree'},{'name': 'AbstractNewCaseComponent', 'selector': 'ncc-abstract-new-case'},{'name': 'AbstractNumberErrorsComponent', 'selector': 'ncc-abstract-number-errors-field'},{'name': 'AbstractNumberFieldComponent', 'selector': 'ncc-abstract-number-field'},{'name': 'AbstractOptionSelectorComponent', 'selector': 'ncc-abstract-option-selector'},{'name': 'AbstractPanelComponent', 'selector': 'ncc-abstract-panel'},{'name': 'AbstractPanelItemComponent', 'selector': 'ncc-abstract-panel-item-component'},{'name': 'AbstractPanelWithHeaderBindingComponent', 'selector': 'ncc-abstract-panel-with-header-binding'},{'name': 'AbstractPanelWithImmediateDataComponent', 'selector': 'ncc-abstract-panel-with-immediate'},{'name': 'AbstractPasswordTextFieldComponent', 'selector': 'ncc-abstract-password-text-field'},{'name': 'AbstractProfileComponent', 'selector': 'ncc-abstract-profile'},{'name': 'AbstractQuickPanelComponent', 'selector': 'ncc-abstract-quick-panel'},{'name': 'AbstractRegistrationComponent', 'selector': 'ncc-abstract-registration'},{'name': 'AbstractRegistrationFormComponent', 'selector': 'ncc-abstract-registration-form'},{'name': 'AbstractRemoveNodeComponent', 'selector': 'ncc-abstract-remove-node'},{'name': 'AbstractRichTextareaFieldComponent', 'selector': 'ncc-abstract-rich-text-field'},{'name': 'AbstractRoleAssignmentComponent', 'selector': 'ncc-abstract-role'},{'name': 'AbstractSaveFilterComponent', 'selector': 'ncc-abstract-save-filter'},{'name': 'AbstractSearchClauseComponent', 'selector': 'ncc-abstract-search-clause'},{'name': 'AbstractSearchComponent', 'selector': 'ncc-abstract-search'},{'name': 'AbstractSearchConfigurationInputComponent', 'selector': 'ncc-abstract-search-configuration-input'},{'name': 'AbstractSearchModeComponent', 'selector': 'ncc-abstract-seatch-mode'},{'name': 'AbstractSearchOperandInputComponent', 'selector': 'ncc-abstract-search-operand-input'},{'name': 'AbstractSearchPredicateComponent', 'selector': 'ncc-abstract-search-predicate'},{'name': 'AbstractSideMenuContainerComponent', 'selector': 'ncc-abstract-side-menu-container'},{'name': 'AbstractSimpleTextFieldComponent', 'selector': 'ncc-abstract-simple-text-field'},{'name': 'AbstractSingleTaskComponent', 'selector': 'ncc-abstract-single-task'},{'name': 'AbstractSingleTaskViewComponent', 'selector': 'ncc-abstract-single-task-view'},{'name': 'AbstractSortableViewComponent', 'selector': 'ncc-abstract-sortable-view'},{'name': 'AbstractSortModeComponent', 'selector': 'ncc-abstract-sort-mode'},{'name': 'AbstractTabbedCaseViewComponent', 'selector': 'ncc-abstract-tabbed-case-view'},{'name': 'AbstractTabbedTaskViewComponent', 'selector': 'ncc-abstract-tabbed-task-view'},{'name': 'AbstractTabViewComponent', 'selector': 'ncc-abstract-tab-view'},{'name': 'AbstractTaskContentComponent', 'selector': 'ncc-abstract-task-content'},{'name': 'AbstractTaskListComponent', 'selector': 'ncc-abstract-task-list'},{'name': 'AbstractTaskListPaginationComponent', 'selector': 'ncc-abstract-task-list-pagination-component'},{'name': 'AbstractTaskPanelComponent', 'selector': 'ncc-abstract-legal-notice'},{'name': 'AbstractTaskViewComponent', 'selector': 'ncc-abstract-task-view'},{'name': 'AbstractTextareaFieldComponent', 'selector': 'ncc-abstract-text-area-field'},{'name': 'AbstractTextFieldComponent', 'selector': 'ncc-abstract-text-field'},{'name': 'AbstractTimeInstanceFieldComponent', 'selector': 'ncc-abstract-time-instance-field'},{'name': 'AbstractToolbarComponent', 'selector': 'ncc-abstract-toolbar'},{'name': 'AbstractTreeComponent', 'selector': 'ncc-abstract-tree'},{'name': 'AbstractTreeTaskContentComponent', 'selector': 'ncc-abstract-tree-task-content'},{'name': 'AbstractUserAssignComponent', 'selector': 'ncc-abstract-user-assign'},{'name': 'AbstractUserAssignItemComponent', 'selector': 'ncc-abstract-user-assign-item'},{'name': 'AbstractUserAssignListComponent', 'selector': 'ncc-abstract-user-assign-list'},{'name': 'AbstractUserCardComponent', 'selector': 'ncc-abstract-user-card'},{'name': 'AbstractUserFieldComponent', 'selector': 'ncc-abstract-user-field'},{'name': 'AbstractUserInviteComponent', 'selector': 'ncc-abstract-user-invite'},{'name': 'AbstractUserListFieldComponent', 'selector': 'ncc-abstract-user-list-field'},{'name': 'AbstractViewWithHeadersComponent', 'selector': 'ncc-abstract-view-with-headers'},{'name': 'AbstractWorkflowPanelComponent', 'selector': 'ncc-abstract-workflow-panel'},{'name': 'AbstractWorkflowViewComponent', 'selector': 'ncc-abstract-workflow-view'},{'name': 'AlertDialogComponent', 'selector': 'ncc-simple-dialog'},{'name': 'ConfirmDialogComponent', 'selector': 'ncc-question-dialog'},{'name': 'ErrorSnackBarComponent', 'selector': 'ncc-error-snack-bar'},{'name': 'GenericSnackBarComponent', 'selector': 'ncc-generic-snack-bar'},{'name': 'PromptDialogComponent', 'selector': 'ncc-question-dialog-with-answer'},{'name': 'SnackBarComponent', 'selector': 'ncc-abstract-snackbar'},{'name': 'SuccessSnackBarComponent', 'selector': 'ncc-success-snack-bar'},{'name': 'TabbedVirtualScrollComponent', 'selector': 'ncc-abstract-tabbed-virtual-scroll'},{'name': 'WarningSnackBarComponent', 'selector': 'ncc-warning-snack-bar'}];
-    var DIRECTIVES = [];
+    var COMPONENTS = [{'name': 'AbstractAddChildNodeComponent', 'selector': 'ncc-abstract-add-child-node'},{'name': 'AbstractAdvancedSearchComponent', 'selector': 'ncc-abstract-advanced-search'},{'name': 'AbstractAuthenticationOverlayComponent', 'selector': 'ncc-abstract-auth-overlay'},{'name': 'AbstractBaseUserAssignListComponent', 'selector': 'ncc-base-user-assign-list'},{'name': 'AbstractBooleanFieldComponent', 'selector': 'ncc-abstract-boolean-field'},{'name': 'AbstractBreadcrumbsComponent', 'selector': 'ncc-breadcrumbs-component'},{'name': 'AbstractButtonFieldComponent', 'selector': 'ncc-abstract-button-field'},{'name': 'AbstractCaseListComponent', 'selector': 'ncc-abstract-case-list'},{'name': 'AbstractCaseListPaginatorComponent', 'selector': 'ncc-abstract-case-list-paginator'},{'name': 'AbstractCasePanelComponent', 'selector': 'ncc-abstract-case-panel'},{'name': 'AbstractCaseViewComponent', 'selector': 'ncc-abstract-case-view'},{'name': 'AbstractChangePasswordComponent', 'selector': 'ncc-abstract-change-password'},{'name': 'AbstractCountCardComponent', 'selector': 'ncc-abstract-count-card'},{'name': 'AbstractCurrencyNumberFieldComponent', 'selector': 'ncc-abstract-currency-field'},{'name': 'AbstractCustomCardComponent', 'selector': 'ncc-abstract-custom-card'},{'name': 'AbstractDashboardBarChartTextFieldComponent', 'selector': 'ncc-abstract-dashboard-bar-chart-text-field'},{'name': 'AbstractDashboardContentComponent', 'selector': 'ncc-abstract-dashboard-content'},{'name': 'AbstractDashboardIframeTextFieldComponent', 'selector': 'ncc-abstract-dashboard-iframe-text-field'},{'name': 'AbstractDashboardLineChartTextFieldComponent', 'selector': 'ncc-abstract-dashboard-line-chart-text-field'},{'name': 'AbstractDashboardPieChartTextFieldComponent', 'selector': 'ncc-abstract-dashboard-pie-chart-text-field'},{'name': 'AbstractDashboardPortalTextFieldComponent', 'selector': 'ncc-abstract-dashboard-pie-chart-text-field'},{'name': 'AbstractDashboardTextFieldComponent', 'selector': 'ncc-abstract-dashboard-text-field'},{'name': 'AbstractDataFieldComponent', 'selector': 'ncc-abstract-datafield'},{'name': 'AbstractDataFieldTemplateComponent', 'selector': 'ncc-abstract-datafield-template'},{'name': 'AbstractDateFieldComponent', 'selector': 'ncc-abstract-date-field'},{'name': 'AbstractDateTimeFieldComponent', 'selector': 'ncc-abstract-date-time-field'},{'name': 'AbstractDefaultCaseListComponent', 'selector': 'ncc-abstract-default-case-list'},{'name': 'AbstractDefaultNumberFieldComponent', 'selector': 'ncc-abstract-number-default-field'},{'name': 'AbstractDefaultTaskListComponent', 'selector': 'ncc-abstract-default-task-list'},{'name': 'AbstractDialogComponent', 'selector': 'ncc-abstract-dialog'},{'name': 'AbstractEditModeComponent', 'selector': 'ncc-abstract-edit-mode'},{'name': 'AbstractEmailSubmissionFormComponent', 'selector': 'ncc-abstract-email-submission-form'},{'name': 'AbstractEnumerationAutocompleteDynamicFieldComponent', 'selector': 'ncc-abstract-enumeration-autocomplete-dynamic-field'},{'name': 'AbstractEnumerationAutocompleteSelectFieldComponent', 'selector': 'ncc-abstract-enumeration-autocomplete-field'},{'name': 'AbstractEnumerationFieldComponent', 'selector': 'ncc-abstract-enumeration-field'},{'name': 'AbstractEnumerationIconFieldComponent', 'selector': 'ncc-abstract-enumerataion-icon-field'},{'name': 'AbstractEnumerationListFieldComponent', 'selector': 'ncc-abstract-enumeration-list-field'},{'name': 'AbstractEnumerationSelectFieldComponent', 'selector': 'ncc-abstract-enumeration-select-field'},{'name': 'AbstractEnumerationStepperFieldComponent', 'selector': 'ncc-abstract-enumeration-stepper-field'},{'name': 'AbstractFieldComponentResolverComponent', 'selector': 'ncc-abstract-field-component-resolver'},{'name': 'AbstractFileFieldComponent', 'selector': 'ncc-abstract-file-field'},{'name': 'AbstractFileListFieldComponent', 'selector': 'ncc-abstract-filelist-field'},{'name': 'AbstractFilterFieldComponent', 'selector': 'ncc-abstract-filter-field'},{'name': 'AbstractFilterFieldContentComponent', 'selector': 'ncc-abstract-filtercontent-field'},{'name': 'AbstractFilterFieldTabViewComponent', 'selector': 'ncc-abstract-filter-field-tab-view'},{'name': 'AbstractFilterFieldTabViewContentComponent', 'selector': 'ncc-abstract-filter-field-tab-view-content'},{'name': 'AbstractFilterSelectorComponent', 'selector': 'ncc-abstract-filter-selector'},{'name': 'AbstractForgottenPasswordComponent', 'selector': 'ncc-abstract-forgotten-password'},{'name': 'AbstractFulltextSearchComponent', 'selector': 'ncc-abstract-fulltext-search'},{'name': 'AbstractGroupNavigationComponentResolverComponent', 'selector': 'ncc-abstract-group-nagiation-resolver'},{'name': 'AbstractHeaderComponent', 'selector': 'ncc-abstract-header'},{'name': 'AbstractHeaderModeComponent', 'selector': 'ncc-abstract-header-mode'},{'name': 'AbstractHtmlTextareaFieldComponent', 'selector': 'ncc-abstract-html-area-field'},{'name': 'AbstractI18nDividerFieldComponent', 'selector': 'ncc-abstract-i18n-divider-field'},{'name': 'AbstractI18nErrorsComponent', 'selector': 'ncc-abstract-i18n-errors'},{'name': 'AbstractI18nFieldComponent', 'selector': 'ncc-abstract-i18n-field'},{'name': 'AbstractI18nTextFieldComponent', 'selector': 'ncc-abstract-i18n-text-field'},{'name': 'AbstractIframeCardComponent', 'selector': 'ncc-abstract-iframe-card'},{'name': 'AbstractImmediateFilterTextComponent', 'selector': 'ncc-abstract-immediate-filter-text'},{'name': 'AbstractImmediateFilterTextContentComponent', 'selector': 'ncc-abstract-immediate-filter-text-content'},{'name': 'AbstractImportNetComponent', 'selector': 'ncc-abstract-import-net'},{'name': 'AbstractInternalLinkComponent', 'selector': 'ncc-abstract-internal-link'},{'name': 'AbstractLanguageSelectorComponent', 'selector': 'ncc-abstract-language-selector'},{'name': 'AbstractLdapGroupRoleAssignmentComponent', 'selector': 'ncc-abstract-ldap-group-role-assignment'},{'name': 'AbstractLegalNoticeComponent', 'selector': 'ncc-abstract-legal-notice'},{'name': 'AbstractLoadFilterComponent', 'selector': 'ncc-abstract-load-filter'},{'name': 'AbstractLoadingModeComponent', 'selector': 'ncc-abstract-loading-mode'},{'name': 'AbstractLoginFormComponent', 'selector': 'ncc-abstract-login-field'},{'name': 'AbstractLogoutShortcutComponent', 'selector': 'ncc-abstract-logout-shortcut'},{'name': 'AbstractMultichoiceAutocompleteFieldComponentComponent', 'selector': 'ncc-abstract-multichoice-autocomplete-field'},{'name': 'AbstractMultichoiceFieldComponent', 'selector': 'ncc-abstract-multichoice-field'},{'name': 'AbstractMultichoiceListFieldComponent', 'selector': 'ncc-abstract-multichoice-list-field'},{'name': 'AbstractMultichoiceSelectFieldComponent', 'selector': 'ncc-abstract-multichoice-select-field'},{'name': 'AbstractMultiUserAssignComponent', 'selector': 'ncc-abstract-multi-user-assign'},{'name': 'AbstractMultiUserAssignItemComponent', 'selector': 'ncc-abstract-user-assign-item'},{'name': 'AbstractMultiUserAssignListComponent', 'selector': 'ncc-abstract-multi-user-assign-list'},{'name': 'AbstractNavigationDoubleDrawerComponent', 'selector': 'ncc-abstract-navigation-double-drawer'},{'name': 'AbstractNavigationDrawerComponent', 'selector': 'ncc-abstract-navigation-drawer'},{'name': 'AbstractNavigationRailComponent', 'selector': 'ncc-abstract-navigation-rail'},{'name': 'AbstractNavigationResizableDrawerComponent', 'selector': 'ncc-abstract-navigation-resizable-drawer'},{'name': 'AbstractNavigationTreeComponent', 'selector': 'ncc-abstract-navigation-tree'},{'name': 'AbstractNewCaseComponent', 'selector': 'ncc-abstract-new-case'},{'name': 'AbstractNumberErrorsComponent', 'selector': 'ncc-abstract-number-errors-field'},{'name': 'AbstractNumberFieldComponent', 'selector': 'ncc-abstract-number-field'},{'name': 'AbstractOptionSelectorComponent', 'selector': 'ncc-abstract-option-selector'},{'name': 'AbstractPanelComponent', 'selector': 'ncc-abstract-panel'},{'name': 'AbstractPanelItemComponent', 'selector': 'ncc-abstract-panel-item-component'},{'name': 'AbstractPanelWithHeaderBindingComponent', 'selector': 'ncc-abstract-panel-with-header-binding'},{'name': 'AbstractPanelWithImmediateDataComponent', 'selector': 'ncc-abstract-panel-with-immediate'},{'name': 'AbstractPasswordTextFieldComponent', 'selector': 'ncc-abstract-password-text-field'},{'name': 'AbstractProfileComponent', 'selector': 'ncc-abstract-profile'},{'name': 'AbstractQuickPanelComponent', 'selector': 'ncc-abstract-quick-panel'},{'name': 'AbstractRegistrationComponent', 'selector': 'ncc-abstract-registration'},{'name': 'AbstractRegistrationFormComponent', 'selector': 'ncc-abstract-registration-form'},{'name': 'AbstractRemoveNodeComponent', 'selector': 'ncc-abstract-remove-node'},{'name': 'AbstractRichTextareaFieldComponent', 'selector': 'ncc-abstract-rich-text-field'},{'name': 'AbstractRoleAssignmentComponent', 'selector': 'ncc-abstract-role'},{'name': 'AbstractSaveFilterComponent', 'selector': 'ncc-abstract-save-filter'},{'name': 'AbstractSearchClauseComponent', 'selector': 'ncc-abstract-search-clause'},{'name': 'AbstractSearchComponent', 'selector': 'ncc-abstract-search'},{'name': 'AbstractSearchConfigurationInputComponent', 'selector': 'ncc-abstract-search-configuration-input'},{'name': 'AbstractSearchModeComponent', 'selector': 'ncc-abstract-seatch-mode'},{'name': 'AbstractSearchOperandInputComponent', 'selector': 'ncc-abstract-search-operand-input'},{'name': 'AbstractSearchPredicateComponent', 'selector': 'ncc-abstract-search-predicate'},{'name': 'AbstractSessionIdleComponent', 'selector': 'ncc-abstract-session-idle'},{'name': 'AbstractSideMenuContainerComponent', 'selector': 'ncc-abstract-side-menu-container'},{'name': 'AbstractSimpleTextFieldComponent', 'selector': 'ncc-abstract-simple-text-field'},{'name': 'AbstractSingleTaskComponent', 'selector': 'ncc-abstract-single-task'},{'name': 'AbstractSingleTaskViewComponent', 'selector': 'ncc-abstract-single-task-view'},{'name': 'AbstractSortableViewComponent', 'selector': 'ncc-abstract-sortable-view'},{'name': 'AbstractSortModeComponent', 'selector': 'ncc-abstract-sort-mode'},{'name': 'AbstractTabbedCaseViewComponent', 'selector': 'ncc-abstract-tabbed-case-view'},{'name': 'AbstractTabbedTaskViewComponent', 'selector': 'ncc-abstract-tabbed-task-view'},{'name': 'AbstractTabViewComponent', 'selector': 'ncc-abstract-tab-view'},{'name': 'AbstractTaskContentComponent', 'selector': 'ncc-abstract-task-content'},{'name': 'AbstractTaskListComponent', 'selector': 'ncc-abstract-task-list'},{'name': 'AbstractTaskListPaginationComponent', 'selector': 'ncc-abstract-task-list-pagination-component'},{'name': 'AbstractTaskPanelComponent', 'selector': 'ncc-abstract-legal-notice'},{'name': 'AbstractTaskRefDashboardTileComponent', 'selector': 'ncc-abstract-task-ref-dashboard-tile'},{'name': 'AbstractTaskRefFieldComponent', 'selector': 'ncc-abstract-task-ref-field'},{'name': 'AbstractTaskViewComponent', 'selector': 'ncc-abstract-task-view'},{'name': 'AbstractTextareaFieldComponent', 'selector': 'ncc-abstract-text-area-field'},{'name': 'AbstractTextFieldComponent', 'selector': 'ncc-abstract-text-field'},{'name': 'AbstractTimeInstanceFieldComponent', 'selector': 'ncc-abstract-time-instance-field'},{'name': 'AbstractToolbarComponent', 'selector': 'ncc-abstract-toolbar'},{'name': 'AbstractTreeComponent', 'selector': 'ncc-abstract-tree'},{'name': 'AbstractTreeTaskContentComponent', 'selector': 'ncc-abstract-tree-task-content'},{'name': 'AbstractUserAssignComponent', 'selector': 'ncc-abstract-user-assign'},{'name': 'AbstractUserAssignItemComponent', 'selector': 'ncc-abstract-user-assign-item'},{'name': 'AbstractUserAssignListComponent', 'selector': 'ncc-abstract-user-assign-list'},{'name': 'AbstractUserCardComponent', 'selector': 'ncc-abstract-user-card'},{'name': 'AbstractUserFieldComponent', 'selector': 'ncc-abstract-user-field'},{'name': 'AbstractUserImpersonateComponent', 'selector': 'ncc-abstract-user-impersonate'},{'name': 'AbstractUserInviteComponent', 'selector': 'ncc-abstract-user-invite'},{'name': 'AbstractUserListFieldComponent', 'selector': 'ncc-abstract-user-list-field'},{'name': 'AbstractViewWithHeadersComponent', 'selector': 'ncc-abstract-view-with-headers'},{'name': 'AbstractWorkflowPanelComponent', 'selector': 'ncc-abstract-workflow-panel'},{'name': 'AbstractWorkflowViewComponent', 'selector': 'ncc-abstract-workflow-view'},{'name': 'AlertDialogComponent', 'selector': 'ncc-simple-dialog'},{'name': 'ConfirmDialogComponent', 'selector': 'ncc-question-dialog'},{'name': 'ErrorSnackBarComponent', 'selector': 'ncc-error-snack-bar'},{'name': 'GenericSnackBarComponent', 'selector': 'ncc-generic-snack-bar'},{'name': 'PromptDialogComponent', 'selector': 'ncc-question-dialog-with-answer'},{'name': 'SnackBarComponent', 'selector': 'ncc-abstract-snackbar'},{'name': 'SuccessSnackBarComponent', 'selector': 'ncc-success-snack-bar'},{'name': 'TabbedVirtualScrollComponent', 'selector': 'ncc-abstract-tabbed-virtual-scroll'},{'name': 'WarningSnackBarComponent', 'selector': 'ncc-warning-snack-bar'}];
+    var DIRECTIVES = [{'name': 'LetDirective', 'selector': '[nccLet]'}];
     var ACTUAL_COMPONENT = {'name': 'AbstractTaskContentComponent'};
 </script>
 <script src="../js/tree.js"></script>

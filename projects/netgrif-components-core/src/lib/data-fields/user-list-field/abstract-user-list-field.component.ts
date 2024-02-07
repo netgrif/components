@@ -14,7 +14,7 @@ import {UserListValue} from './models/user-list-value';
   selector: 'ncc-abstract-user-list-field',
   template: '',
 })
-export abstract class AbstractUserListFieldComponent  extends AbstractDataFieldComponent implements OnInit {
+export abstract class AbstractUserListFieldComponent extends AbstractDataFieldComponent implements OnInit {
     /**
      * Represents info about user from backend.
      */
@@ -49,7 +49,7 @@ export abstract class AbstractUserListFieldComponent  extends AbstractDataFieldC
     public selectAbstractUser(component) {
         let valueReturned = false;
         this._sideMenuService.open(component, SideMenuSize.MEDIUM,
-            {value: this.dataField.value} as UserListInjectedData).onClose.subscribe($event => {
+            {roles: this.dataField.roles, value: this.dataField.value} as UserListInjectedData).onClose.subscribe($event => {
             if ($event.data) {
                 this.dataField.value = new UserListValue(new Map<string, UserValue>(($event.data as Array<UserValue>).map(v => [v.id, v])));
                 this._snackbar.openGenericSnackBar(
@@ -68,6 +68,10 @@ export abstract class AbstractUserListFieldComponent  extends AbstractDataFieldC
         const existingUsers = new UserListValue(new Map<string, UserValue>(this.dataField.value.userValues));
         existingUsers.removeUserValue(userId);
         this.dataField.value = existingUsers;
+    }
+
+    public removeAll() {
+        this.dataField.value = new UserListValue(new Map<string, UserValue>())
     }
 
 }
