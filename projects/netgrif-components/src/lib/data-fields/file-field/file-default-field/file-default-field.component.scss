@@ -40,9 +40,8 @@
     line-height: 20px;
     border-radius: 6px;
     min-width: 5px;
-    padding: 8px 15px 8px 15px;
     box-sizing: border-box;
-    height: 44px;
+    height: 43px;
 }
 
 .form-input:hover {
@@ -63,12 +62,8 @@
 }
 
 .file-hint-error {
-    font-size: 75%;
     padding: 0 1em;
     width: unset;
-    position: absolute;
-    margin-top: 0.5em;
-    top: calc(100% - 2em);
 }
 
 .image-preview {
@@ -137,6 +132,6 @@
 }
 
 .netgrif-file-padding {
-    padding-bottom: 13px;
+    padding-bottom: 22px;
     position: relative;
 }

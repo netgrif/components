@@ -18,4 +18,9 @@
     .mat-mdc-menu-item:hover:not([disabled]), .mat-mdc-menu-item.cdk-program-focused:not([disabled]), .mat-mdc-menu-item.cdk-keyboard-focused:not([disabled]), .mat-mdc-menu-item-highlighted:not([disabled]) {
         background: mat.get-color-from-palette($primary, 50) !important;
     }
+
+    .fix-mat-icon {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
 }

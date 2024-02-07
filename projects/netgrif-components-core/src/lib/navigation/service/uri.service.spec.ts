@@ -1,6 +1,6 @@
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {TestBed} from '@angular/core/testing';
-import {expect} from '@angular/flex-layout/_private-utils/testing';
+import {expect} from '@ngbracket/ngx-layout/_private-utils/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
 import {AuthenticationModule} from '../../authentication/authentication.module';

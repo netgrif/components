@@ -46,7 +46,14 @@
     margin-bottom: 0 !important;
 }
 
-nc-number-currency-field .mat-mdc-form-field .mat-mdc-form-field-prefix {
-    position: initial !important;
-    padding-right: 4px !important;
+.mdc-button {
+    letter-spacing: normal;
+}
+
+.mat-mdc-card {
+    padding: 24px;
+}
+
+.cdk-overlay-pane {
+    width: auto !important;
 }

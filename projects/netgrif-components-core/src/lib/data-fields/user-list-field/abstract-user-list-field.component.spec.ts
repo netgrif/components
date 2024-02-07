@@ -10,7 +10,7 @@ import { MaterialModule } from '../../material/material.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateLibModule } from '../../translate/translate-lib.module';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { expect } from '@angular/flex-layout/_private-utils/testing';
+import { expect } from '@ngbracket/ngx-layout/_private-utils/testing';
 import {MatDialogModule} from '@angular/material/dialog';
 
 describe('AbstractUserListFieldComponent', () => {
