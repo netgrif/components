@@ -1,7 +1,7 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {TabViewComponent} from './tab-view.component';
 import {TabCreationDetectorComponent} from '../tab-creation-detector/tab-creation-detector.component';
-import {Component, NgModule} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {
     AuthenticationMethodService,
@@ -46,7 +46,8 @@ describe('TabViewComponent', () => {
                 TabViewComponent,
                 TabCreationDetectorComponent,
                 TestWrapperComponent,
-            ]
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
         })
             .compileComponents();
 

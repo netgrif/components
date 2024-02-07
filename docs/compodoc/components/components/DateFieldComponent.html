@@ -134,7 +134,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(translate: TranslateService, informAboutInvalidData: boolean | null)</code>
+<code>constructor(translate: TranslateService, _adapter: DateAdapter<any>, _locale: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, _languageService: LanguageService, informAboutInvalidData: boolean | null)</code>
                     </td>
                 </tr>
                         <tr>
@@ -161,6 +161,42 @@
                                                   
                                                         <td>
                                                                     <code>TranslateService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_adapter</td>
+                                                  
+                                                        <td>
+                                                                    <code>DateAdapter&lt;any&gt;</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_locale</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_languageService</td>
+                                                  
+                                                        <td>
+                                                                    <code>LanguageService</code>
                                                         </td>
                                                   
                                                     <td>
@@ -200,8 +236,8 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, Inject, Optional} from &#x27;@angular/core&#x27;;
-import {MAT_DATE_FORMATS} from &#x27;@angular/material/core&#x27;;
-import {AbstractDateFieldComponent, DATE_FORMAT, NAE_INFORM_ABOUT_INVALID_DATA} from &#x27;@netgrif/components-core&#x27;;
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from &#x27;@angular/material/core&#x27;;
+import {AbstractDateFieldComponent, DATE_FORMAT, NAE_INFORM_ABOUT_INVALID_DATA, LanguageService} from &#x27;@netgrif/components-core&#x27;;
 import {TranslateService} from &#x27;@ngx-translate/core&#x27;;
 
 
@@ -215,8 +251,11 @@ import {TranslateService} from &#x27;@ngx-translate/core&#x27;;
 })
 export class DateFieldComponent extends AbstractDateFieldComponent {
     constructor(translate: TranslateService,
+                protected _adapter: DateAdapter&lt;any&gt;,
+                @Inject(MAT_DATE_LOCALE) protected _locale: string,
+                protected _languageService: LanguageService,
                 @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
-        super(translate, informAboutInvalidData);
+        super(translate, _adapter, _locale, _languageService, informAboutInvalidData);
     }
 }
 </code></pre>

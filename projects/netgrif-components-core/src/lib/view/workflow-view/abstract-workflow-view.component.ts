@@ -44,13 +44,10 @@ export abstract class AbstractWorkflowViewComponent extends AbstractViewWithHead
 
     public importSidemenuNet(component) {
         this._sideMenuService.open(component).onClose.subscribe(event => {
-            if (event.data?.net !== undefined) {
-                this._workflowViewService.reload();
-                if (event.data?.net) {
-                    this._processService.updateNet(new Net(event.data.net));
-                }
-            } else {
-                this._log.debug('');
+            // TODO reloads every time side panel is closed, but should only if event contains some net
+            this._workflowViewService.reload();
+            if (event.data?.net) {
+                this._processService.updateNet(new Net(event.data.net));
             }
         });
     }

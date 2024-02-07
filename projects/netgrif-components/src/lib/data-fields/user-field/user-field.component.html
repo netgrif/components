@@ -18,6 +18,7 @@
                 (click)="selectUser()">
             <mat-icon>how_to_reg</mat-icon>
             {{dataField.value.fullName}}
+            <mat-icon (click)='deleteUser()' color='warn' *ngIf='!formControl.disabled'>close</mat-icon>
         </button>
         <button mat-stroked-button
                 *ngIf="!dataField.value"
