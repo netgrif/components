@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ProfileComponent} from './profile.component';
 import {MaterialModule, TranslateLibModule} from '@netgrif/components-core';
-import {MatLegacyChipsModule} from '@angular/material/legacy-chips';
 
 
 @NgModule({
@@ -13,8 +12,7 @@ import {MatLegacyChipsModule} from '@angular/material/legacy-chips';
     imports: [
         CommonModule,
         MaterialModule,
-        TranslateLibModule,
-        MatLegacyChipsModule
+        TranslateLibModule
     ]
 })
 export class ProfileComponentModule {

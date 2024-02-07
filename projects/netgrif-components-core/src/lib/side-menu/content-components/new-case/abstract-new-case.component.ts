@@ -225,26 +225,7 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
     }
 
     titleShortening() {
-        let size;
-        if (this.toolbar && this.toolbar._elementRef && this.toolbar._elementRef.nativeElement &&
-            this.toolbar._elementRef.nativeElement.offsetWidth) {
-            switch (this.toolbar._elementRef.nativeElement.offsetWidth) {
-                case 296:
-                    size = 22;
-                    break;
-                case 496:
-                    size = 42;
-                    break;
-                case 246:
-                    size = 18;
-                    break;
-                default:
-                    size = 32;
-                    break;
-            }
-        } else {
-            size = 32;
-        }
+        let size = 32;
 
         const caze = this._translate.instant('side-menu.new-case.case');
         const name = typeof this.processFormControl.value === 'string' || this.processFormControl.value === null ?

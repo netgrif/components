@@ -41,16 +41,17 @@
         }
     }
 
-    .mat-mdc-dialog-title {
+    .mat-dialog-title {
         font-style: normal;
         font-weight: 500;
         font-size: 20px;
         line-height: 24px;
         letter-spacing: 0.15px;
         color: #1E293B;
+        padding: 20px 24px 20px 24px;
     }
 
-    .mat-mdc-dialog-container {
+    .mat-mdc-dialog-container .mdc-dialog__surface {
         border-radius: 6px !important;
     }
 

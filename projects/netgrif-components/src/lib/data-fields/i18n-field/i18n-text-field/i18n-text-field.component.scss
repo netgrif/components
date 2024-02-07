@@ -55,6 +55,10 @@
     line-height: normal;
 }
 
+.language-svg-wrapper>svg {
+    height: 18px;
+}
+
 .language-selector-button {
     width: auto;
     margin-left: 8px;
@@ -97,6 +101,7 @@
 .filled-language-icon {
     margin: 0 10px;
     height: 20px;
+    box-sizing: border-box;
 }
 
 .filled-language-value {

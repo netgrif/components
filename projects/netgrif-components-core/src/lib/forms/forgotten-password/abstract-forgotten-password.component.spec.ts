@@ -2,7 +2,7 @@ import {AbstractForgottenPasswordComponent} from './abstract-forgotten-password.
 import {waitForAsync, ComponentFixture, TestBed, inject} from '@angular/core/testing';
 import {MockSignUpService} from '../../utility/tests/mocks/mock-sign-up.service';
 import {MaterialModule} from '../../material/material.module';
-import {FlexLayoutModule} from '@angular/flex-layout';
+import {FlexLayoutModule} from '@ngbracket/ngx-layout';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {TranslateLibModule} from '../../translate/translate-lib.module';

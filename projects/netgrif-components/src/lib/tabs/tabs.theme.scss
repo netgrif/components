@@ -29,5 +29,16 @@
     .mat-mdc-tab-label {
         opacity: 1 !important;
     }
+
+    .custom-badge>.mat-badge-content {
+        width: fit-content;
+        min-width: 16px;
+        text-align: center;
+        border-radius: 8px;
+        padding-left: 3px;
+        padding-right: 3px;
+        top: 0 !important;
+        right: 0 !important;
+    }
 }
 

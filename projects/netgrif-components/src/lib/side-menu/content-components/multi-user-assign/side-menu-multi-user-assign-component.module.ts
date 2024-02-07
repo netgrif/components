@@ -12,7 +12,7 @@ import {
     TranslateLibModule,
     UtilityModule
 } from "@netgrif/components-core";
-import {FlexLayoutModule, FlexModule} from "@angular/flex-layout";
+import {FlexLayoutModule, FlexModule} from "@ngbracket/ngx-layout";
 import {FormsModule} from "@angular/forms";
 import {MatFormFieldModule} from "@angular/material/form-field";
 

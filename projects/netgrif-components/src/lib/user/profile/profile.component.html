@@ -44,10 +44,10 @@
                         </div>
                         <div fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">
                             <mat-form-field appearance="outline" class="user-chip-list">
-                                <mat-chip-list disabled>
-                                    <mat-chip color="primary"
-                                              *ngFor="let authority of user.authorities">{{authority}}</mat-chip>
-                                </mat-chip-list>
+                                <mat-chip-listbox disabled>
+                                    <mat-chip-option color="primary"
+                                              *ngFor="let authority of user.authorities">{{authority}}</mat-chip-option>
+                                </mat-chip-listbox>
                             </mat-form-field>
                         </div>
                     </div>
@@ -61,9 +61,9 @@
                         </div>
                         <div fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">
                             <mat-form-field appearance="outline" class="user-chip-list">
-                                <mat-chip-list disabled>
-                                    <mat-chip color="primary" *ngFor="let role of user.roles">{{role.name}}</mat-chip>
-                                </mat-chip-list>
+                                <mat-chip-listbox disabled>
+                                    <mat-chip-option color="primary" *ngFor="let role of user.roles">{{role.name}}</mat-chip-option>
+                                </mat-chip-listbox>
                             </mat-form-field>
                         </div>
                     </div>
@@ -75,9 +75,9 @@
                         </div>
                         <div fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">
                             <mat-form-field appearance="outline" class="user-chip-list">
-                                <mat-chip-list disabled>
-                                    <mat-chip color="primary" *ngFor="let group of user.groups">{{group}}</mat-chip>
-                                </mat-chip-list>
+                                <mat-chip-listbox disabled>
+                                    <mat-chip-option color="primary" *ngFor="let group of user.groups">{{group}}</mat-chip-option>
+                                </mat-chip-listbox>
                             </mat-form-field>
                         </div>
                     </div>
