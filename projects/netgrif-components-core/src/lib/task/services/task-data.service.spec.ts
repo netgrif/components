@@ -263,6 +263,11 @@ class MockTaskResourceService {
 
 @Injectable()
 class TestTaskRequestStateService extends TaskRequestStateService {
+
+    constructor(_taskContent: TaskContentService) {
+        super(_taskContent);
+    }
+
     public get loading$(): Observable<boolean> {
         return this._loading.asObservable();
     }
