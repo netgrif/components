@@ -35,7 +35,7 @@ export abstract class AbstractUserDefaultFieldComponent extends AbstractBaseData
     /**
      * Call after click on user field button.
      *
-     * Open [UserAssignDialogComponent]{@link UserAssignDialogComponent} in side menu with data represents preselected user from backend.
+     * Open [UserAssignComponent]{@link AbstractUserAssignComponent} in side menu with data represents preselected user from backend.
      *
      * After close side menu, the snackbar info will be displayed either for the unselected user or the selected one.
      */
@@ -57,6 +57,10 @@ export abstract class AbstractUserDefaultFieldComponent extends AbstractBaseData
                 this._snackbar.openWarningSnackBar(this._translate.instant('dataField.snackBar.notSelectedUser'));
             }
         });
+    }
+
+    public deleteUser() {
+        this.dataField.value = undefined;
     }
 
     public getCutProperty(i18nLabel): string {

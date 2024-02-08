@@ -1,11 +1,9 @@
 import {AbstractTimeInstanceField, AbstractTimeInstanceFieldValidation} from './models/abstract-time-instance-field';
 import {TranslateService} from '@ngx-translate/core';
 import moment, {Moment} from 'moment';
-import {Component, Inject, Optional} from '@angular/core';
 import {AbstractBaseDataFieldComponent} from "../base-component/abstract-base-data-field.component";
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../models/data-field-portal-data-injection-token";
 import {Component, Inject, OnDestroy, Optional} from '@angular/core';
-import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 import {DateAdapter, MAT_DATE_LOCALE} from '@angular/material/core';
 import {LanguageService} from '../../translate/language.service';
 import {Subscription} from 'rxjs';
@@ -21,8 +19,7 @@ export abstract class AbstractTimeInstanceFieldComponent<T extends AbstractTimeI
                           protected _adapter: DateAdapter<any>,
                           @Inject(MAT_DATE_LOCALE) protected _locale: string,
                           protected _languageService: LanguageService,
-                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<T>
-                          @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<T>) {
         super(dataFieldPortalData);
         if (this._locale !== this._languageService.getLanguage()) {
             this.setLangToAdapter(this._languageService.getLanguage());
