@@ -1,6 +1,6 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {AngularResizeEventModule} from 'angular-resize-event';
-import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-picker';
+import {NgxMatDateAdapter, NgxMatDatetimePickerModule} from '@angular-material-components/datetime-picker';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional} from '@angular/core';
@@ -20,6 +20,10 @@ import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resou
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
+import {DateAdapter, MAT_DATE_LOCALE} from '@angular/material/core';
+import {LanguageService} from '../../translate/language.service';
+import {NgxMatMomentModule} from '@angular-material-components/moment-adapter';
+import {CustomDateAdapter} from '../date-field/models/custom-date-adapter';
 
 describe('AbstractDatetimeFieldComponent', () => {
     let component: TestDateTimeFieldComponent;
@@ -31,15 +35,17 @@ describe('AbstractDatetimeFieldComponent', () => {
                 MaterialModule,
                 AngularResizeEventModule,
                 NgxMatDatetimePickerModule,
+                NgxMatMomentModule,
                 TranslateLibModule,
                 HttpClientTestingModule,
-                NoopAnimationsModule
+                NoopAnimationsModule,
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
-                {provide: ConfigurationService, useClass: TestConfigurationService}
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: DateAdapter, useClass: CustomDateAdapter}
             ],
             declarations: [
                 TestDateTimeFieldComponent,
@@ -66,8 +72,11 @@ describe('AbstractDatetimeFieldComponent', () => {
     template: ''
 })
 class TestDateTimeFieldComponent extends AbstractDateTimeFieldComponent {
-    constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
-        super(informAboutInvalidData);
+    constructor(_adapter: NgxMatDateAdapter<any>,
+                @Inject(MAT_DATE_LOCALE) protected _locale: string,
+                _languageService: LanguageService,
+                @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+        super(_adapter, _locale, _languageService, informAboutInvalidData);
     }
 }
 

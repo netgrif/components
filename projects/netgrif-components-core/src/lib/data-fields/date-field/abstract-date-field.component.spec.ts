@@ -17,6 +17,9 @@ import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-au
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {MaterialModule} from '../../material/material.module';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
+import {DateAdapter, MAT_DATE_LOCALE} from '@angular/material/core';
+import {LanguageService} from '../../translate/language.service';
+import {CustomDateAdapter} from './models/custom-date-adapter';
 
 describe('AbstractDateFieldComponent', () => {
     let component: TestDateFieldComponent;
@@ -35,6 +38,7 @@ describe('AbstractDateFieldComponent', () => {
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: DateAdapter, useClass: CustomDateAdapter}
             ],
             declarations: [
                 TestDateFieldComponent,
@@ -62,8 +66,11 @@ describe('AbstractDateFieldComponent', () => {
     template: ''
 })
 class TestDateFieldComponent extends AbstractDateFieldComponent {
-    constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
-        super(informAboutInvalidData);
+    constructor(protected _adapter: DateAdapter<any>,
+                @Inject(MAT_DATE_LOCALE) protected _locale: string,
+                protected _languageService: LanguageService,
+                @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+        super(_adapter, _locale, _languageService, informAboutInvalidData);
     }
 }
 

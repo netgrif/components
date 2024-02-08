@@ -3,3 +3,35 @@
                         [offset]='taskOffset'>
 </nc-data-field-template>
 
+<ng-template #dataFieldTemplate let-showLargeLayout='showLargeLayout'>
+    <mat-label class='netgrif-label' *ngIf='!showLargeLayout.value'>{{dataField.title}}
+        <nc-required-label *ngIf='dataField.behavior.required' [isIn]='!dataField.disabled'></nc-required-label>
+        <br>
+    </mat-label>
+    <button *ngIf='!formControl.disabled' mat-stroked-button class='user-list-item-margin'
+            [disabled]='formControl.disabled'
+            color='primary'
+            (click)='selectUser()'>
+        <mat-icon>person_add</mat-icon>
+        {{'dataField.user.selectUser' | translate}}
+    </button>
+    <button *ngIf='!formControl.disabled && dataField?.value?.userValues?.size > 0' mat-stroked-button class='user-list-item-margin'
+            [disabled]='formControl.disabled'
+            color='warn'
+            (click)='deleteAll()'
+            [matTooltip]="'dataField.user.deleteAll' | translate">
+        <mat-icon>delete_outline</mat-icon>
+    </button>
+    <span *ngIf='dataField?.value?.userValues?.size > 0'>
+        <span *ngFor='let user of dataField.value.userValues | keyvalue' class='user-list-item-margin'>
+            <button mat-stroked-button
+                    [disabled]='formControl.disabled'
+                    color='primary'>
+                <mat-icon>how_to_reg</mat-icon>
+                {{user.value.fullName}}
+                <mat-icon (click)='deleteUser(user.key)' color='warn' *ngIf='!formControl.disabled'>close</mat-icon>
+            </button>
+        </span>
+    </span>
+    <mat-error *ngIf='dataField.isInvalid(formControl)'>{{'dataField.validations.required' | translate}}</mat-error>
+</ng-template>

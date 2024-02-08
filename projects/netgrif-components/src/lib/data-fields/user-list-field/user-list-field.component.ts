@@ -17,4 +17,8 @@ export class UserListFieldComponent extends AbstractUserListFieldComponent {
     constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
         super(informAboutInvalidData);
     }
+
+    public deleteAll() {
+        this.removeAll();
+    }
 }
