@@ -41,7 +41,7 @@ describe('WorkflowViewComponent', () => {
                 HttpClientTestingModule,
                 SideMenuContentComponentModule,
                 TranslateLibModule,
-                RouterModule.forRoot([], { relativeLinkResolution: 'legacy' })
+                RouterModule.forRoot([])
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
             providers: [

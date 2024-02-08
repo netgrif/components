@@ -38,12 +38,6 @@ describe('AbstractBaseUserAssignListComponent', () => {
                 TestWrapperComponent
             ],
             schemas: [NO_ERRORS_SCHEMA]
-        }).overrideModule(BrowserDynamicTestingModule, {
-            set: {
-                entryComponents: [
-                    ErrorSnackBarComponent
-                ]
-            }
         }).compileComponents();
 
         fixture = TestBed.createComponent(TestWrapperComponent);

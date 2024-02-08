@@ -50,13 +50,6 @@ describe('AbstractFileListFieldComponent', () => {
                 TestWrapperComponent,
                 TestFileListComponent
             ],
-        }).overrideModule(BrowserDynamicTestingModule, {
-            set: {
-                entryComponents: [
-                    ErrorSnackBarComponent,
-                    SuccessSnackBarComponent
-                ]
-            }
         }).compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;

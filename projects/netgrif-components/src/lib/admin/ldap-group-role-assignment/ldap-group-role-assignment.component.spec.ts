@@ -45,13 +45,7 @@ describe('LdapGroupRoleAssignmentComponent', () => {
             declarations: [
                 LdapGroupRoleAssignmentComponent
             ],
-        }).overrideModule(BrowserDynamicTestingModule, {
-            set: {
-                entryComponents: [
-                    ErrorSnackBarComponent,
-                    SuccessSnackBarComponent
-                ]
-            }
+
         }).compileComponents();
     }));
 

@@ -16,7 +16,7 @@ describe('DefaultGroupNavigationComponentResolverService', () => {
         TestBed.configureTestingModule({
             imports: [
                 TestMockDependenciesModule,
-                RouterModule.forRoot([], {relativeLinkResolution: 'legacy'})
+                RouterModule.forRoot([])
             ],
             providers: [
                 DefaultGroupNavigationComponentResolverService,
