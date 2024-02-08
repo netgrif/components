@@ -252,14 +252,14 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
     public getNewCaseAllowedNets(blockNets: string[] = []): Observable<Array<PetriNetReferenceWithPermissions>> {
         if (this._newCaseConfiguration.useCachedProcesses) {
             return this._allowedNetsService.allowedNets$.pipe(
-                map(net => net.filter(n => blockNets.indexOf(n.identifier) == -1)),
+                map(net => net.filter(n => blockNets.indexOf(n.identifier) === -1)),
                 map(net => net.filter(n => this._permissionService.hasNetPermission(PermissionType.CREATE, n)))
             );
         } else {
             return this._allowedNetsService.allowedNets$.pipe(
                 switchMap(allowedNets => {
                     return this._processService.getNetReferences(allowedNets.map(net => net.identifier)).pipe(
-                        map(net => net.filter(n => blockNets.indexOf(n.identifier) == -1)),
+                        map(net => net.filter(n => blockNets.indexOf(n.identifier) === -1)),
                         map(net => net.filter(n => this._permissionService.hasNetPermission(PermissionType.CREATE, n)))
                     );
                 })
