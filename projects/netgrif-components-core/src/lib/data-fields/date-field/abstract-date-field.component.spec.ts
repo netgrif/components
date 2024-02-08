@@ -18,6 +18,9 @@ import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {MaterialModule} from '../../material/material.module';
 import {TranslateService} from '@ngx-translate/core';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
+import {DateAdapter, MAT_DATE_LOCALE} from '@angular/material/core';
+import {LanguageService} from '../../translate/language.service';
+import {CustomDateAdapter} from './models/custom-date-adapter';
 
 describe('AbstractDateFieldComponent', () => {
     let component: TestDateFieldComponent;
@@ -36,6 +39,7 @@ describe('AbstractDateFieldComponent', () => {
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: DateAdapter, useClass: CustomDateAdapter}
             ],
             declarations: [
                 TestDateFieldComponent,
@@ -68,8 +72,11 @@ describe('AbstractDateFieldComponent', () => {
 })
 class TestDateFieldComponent extends AbstractDateFieldComponent {
     constructor(translate: TranslateService,
+                protected _adapter: DateAdapter<any>,
+                @Inject(MAT_DATE_LOCALE) protected _locale: string,
+                protected _languageService: LanguageService,
                 @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
-        super(translate, informAboutInvalidData);
+        super(translate, _adapter, _locale, _languageService, informAboutInvalidData);
     }
 }
 
