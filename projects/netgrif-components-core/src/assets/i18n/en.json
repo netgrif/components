@@ -477,7 +477,11 @@
         "errorCreate": "Error while creating case "
     },
     "dynamicNavigation": {
-        "couldNotResolveView": "An error has occurred during the view resolution process. The view could not be displayed"
+        "couldNotResolveView": "An error has occurred during the view resolution process. The view could not be displayed",
+        "filterNotFound": "This view has no filter",
+        "loadMoreItems": "More",
+        "ascending": "Ascending",
+        "descending": "Descending"
     },
     "impersonation": {
         "user": {

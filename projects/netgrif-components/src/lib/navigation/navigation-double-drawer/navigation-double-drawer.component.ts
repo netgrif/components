@@ -11,6 +11,7 @@ import {
     DynamicNavigationRouteProviderService, AccessService, ImpersonationUserSelectService, ImpersonationService
 } from '@netgrif/components-core';
 import {animate, state, style, transition, trigger} from "@angular/animations";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'nc-navigation-double-drawer',
@@ -54,6 +55,7 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
                 _activatedRoute: ActivatedRoute,
                 _breakpoint: BreakpointObserver,
                 _languageService: LanguageService,
+                _translateService: TranslateService,
                 _userService: UserService,
                 _accessService: AccessService,
                 _log: LoggerService,
@@ -62,7 +64,7 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
                 _impersonationUserSelect: ImpersonationUserSelectService,
                 _impersonation: ImpersonationService,
                 _dynamicRouteProviderService: DynamicNavigationRouteProviderService) {
-        super(_router, _activatedRoute, _breakpoint, _languageService, _userService, _accessService, _log, _config, _uriService,
+        super(_router, _activatedRoute, _breakpoint, _languageService, _translateService, _userService, _accessService, _log, _config, _uriService,
             _impersonationUserSelect, _impersonation, _dynamicRouteProviderService)
     }
 
