@@ -58,13 +58,6 @@ describe('TaskHeaderService', () => {
                 {provide: ViewService, useClass: TestViewService},
                 {provide: AllowedNetsService, useFactory: TestTaskViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ]
-        }).overrideModule(BrowserDynamicTestingModule, {
-            set: {
-                entryComponents: [
-                    ErrorSnackBarComponent,
-                    SuccessSnackBarComponent
-                ]
-            }
         });
         service = TestBed.inject(TaskHeaderService);
     });

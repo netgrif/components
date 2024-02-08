@@ -18,6 +18,7 @@ import {of} from 'rxjs';
 import {PanelComponentModule} from '../../../../panel/panel.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
+import {RouterModule} from '@angular/router';
 
 
 describe('CaseListComponent', () => {
@@ -32,6 +33,7 @@ describe('CaseListComponent', () => {
                 TranslateLibModule,
                 PanelComponentModule,
                 NoopAnimationsModule,
+                RouterModule.forRoot([]),
                 RouterTestingModule.withRoutes([])
             ],
             providers: [

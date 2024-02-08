@@ -64,13 +64,6 @@ describe('AbstractHeaderComponent', () => {
                 {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ],
             declarations: [TestHeaderComponent]
-        }).overrideModule(BrowserDynamicTestingModule, {
-            set: {
-                entryComponents: [
-                    ErrorSnackBarComponent,
-                    SuccessSnackBarComponent
-                ]
-            }
         }).compileComponents();
     }));
 

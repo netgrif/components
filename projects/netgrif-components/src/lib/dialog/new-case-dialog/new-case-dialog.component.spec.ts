@@ -54,15 +54,7 @@ describe('NewCaseDialogComponent', () => {
         declarations: [
             NewCaseDialogComponent,
         ],
-    }).overrideModule(BrowserDynamicTestingModule, {
-        set: {
-            entryComponents: [
-                ErrorSnackBarComponent,
-                SuccessSnackBarComponent
-            ]
-        }
-    })
-    .compileComponents();
+    }).compileComponents();
   });
 
   beforeEach(() => {
