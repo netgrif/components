@@ -23,8 +23,8 @@ import {
     TaskResourceServiceProvider,
     TaskViewService,
     ViewIdService,
-    UserService,
-    BaseFilter
+    BaseFilter,
+    NAE_BASE_FILTER
 } from '@netgrif/components-core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {combineLatest} from 'rxjs';
