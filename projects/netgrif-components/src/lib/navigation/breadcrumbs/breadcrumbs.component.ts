@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {
     UriService,
-    AbstractBreadcrumbsComponent, CaseResourceService, DynamicNavigationRouteProviderService
+    AbstractBreadcrumbsComponent, CaseResourceService, DynamicNavigationRouteProviderService, LoggerService
 } from '@netgrif/components-core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {TranslateService} from "@ngx-translate/core";
@@ -18,7 +18,8 @@ export class BreadcrumbsComponent extends AbstractBreadcrumbsComponent {
                 _activatedRoute: ActivatedRoute,
                 _router: Router,
                 _dynamicRoutingService: DynamicNavigationRouteProviderService,
-                _translateService: TranslateService) {
+                _translateService: TranslateService,
+                _log: LoggerService) {
         super(_uriService, _caseResourceService, _activatedRoute, _router, _dynamicRoutingService, _translateService);
     }
 }

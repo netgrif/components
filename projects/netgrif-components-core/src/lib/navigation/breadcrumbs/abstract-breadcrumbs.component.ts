@@ -14,6 +14,7 @@ import {
 import {Case} from "../../resources/interface/case";
 import {I18nFieldValue} from "../../data-fields/i18n-field/models/i18n-field-value";
 import {TranslateService} from "@ngx-translate/core";
+import {LoggerService} from "../../logger/services/logger.service";
 
 @Component({
     selector: 'ncc-breadcrumbs-component',
@@ -42,7 +43,8 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
                           protected _activatedRoute: ActivatedRoute,
                           protected _router: Router,
                           protected _dynamicRoutingService: DynamicNavigationRouteProviderService,
-                          protected _translateService: TranslateService) {
+                          protected _translateService: TranslateService,
+                          protected _log: LoggerService) {
         this.nicePath = new BehaviorSubject<Array<string>>(undefined);
         this.redirectUrls = new Map<string, Array<string>>();
         this.initNicePath();
@@ -60,33 +62,35 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
 
     public resolveBreadcrumbs() {
         const filterId = this._activatedRoute.snapshot.params.filterCaseId
-        if (!!filterId) {
-            const splitPath = this._uriService.splitNodePath(this._uriService.activeNode);
-            const fullPath = this.createFullPath(splitPath);
-            const fullPathQueries = fullPath.map(p => '(processIdentifier:preference_item AND dataSet.nodePath.textValue.keyword:\"' + p + '\")')
-            fullPathQueries.push('(taskMongoIds:\"' + filterId + '\")')
-
-            const searchBody: CaseSearchRequestBody = {
-                query: fullPathQueries.join(" OR ")
-            };
-            let httpParams = new HttpParams()
-                .set(PaginationParams.PAGE_SIZE, 25)
-                .set(PaginationParams.PAGE_NUMBER, 0);
-
-            this._caseResourceService.searchCases(SimpleFilter.fromCaseQuery(searchBody), httpParams).pipe(take(1)).subscribe(result => {
-                const cases = result.content;
-                const filterCaseIndex = cases.findIndex(c => c.tasks.some(t => t.task === filterId) && !fullPath.includes(this.immediateValue(c, AbstractBreadcrumbsComponent.NODE_PATH)));
-                if (filterCaseIndex >= 0) {
-                    const filterCase = cases.splice(cases.findIndex(c => c.tasks.some(t => t.task === filterId) && !fullPath.includes(this.immediateValue(c, AbstractBreadcrumbsComponent.NODE_PATH))), 1)[0];
-                    this.filterName = this.getTranslation(this.immediateValue(filterCase, 'menu_name'));
-                }
-                cases.sort((a, b) => fullPath.indexOf(this.immediateValue(a, AbstractBreadcrumbsComponent.NODE_PATH)) - fullPath.indexOf(this.immediateValue(b, AbstractBreadcrumbsComponent.NODE_PATH)));
-                if (this.redirectOnClick) {
-                    cases.forEach(c => this.redirectUrls.set(this.immediateValue(c, AbstractBreadcrumbsComponent.NODE_PATH), [this._dynamicRoutingService.route, c.tasks.find(t => t.transition === AbstractBreadcrumbsComponent.ITEM_SETTINGS).task]))
-                }
-                this.nicePath.next(["", ...cases.map(c => this.getTranslation(this.immediateValue(c, 'menu_name')))]);
-            });
+        if (!filterId) {
+            this._log.error("Missing required data for resolving breadcrumbs.")
+            return;
         }
+        const splitPath = this._uriService.splitNodePath(this._uriService.activeNode);
+        const fullPath = this.createFullPath(splitPath);
+        const fullPathQueries = fullPath.map(p => '(processIdentifier:preference_item AND dataSet.nodePath.textValue.keyword:\"' + p + '\")')
+        fullPathQueries.push('(taskMongoIds:\"' + filterId + '\")')
+
+        const searchBody: CaseSearchRequestBody = {
+            query: fullPathQueries.join(" OR ")
+        };
+        let httpParams = new HttpParams()
+            .set(PaginationParams.PAGE_SIZE, 25)
+            .set(PaginationParams.PAGE_NUMBER, 0);
+
+        this._caseResourceService.searchCases(SimpleFilter.fromCaseQuery(searchBody), httpParams).pipe(take(1)).subscribe(result => {
+            const cases = result.content;
+            const filterCaseIndex = cases.findIndex(c => c.tasks.some(t => t.task === filterId) && !fullPath.includes(this.immediateValue(c, AbstractBreadcrumbsComponent.NODE_PATH)));
+            if (filterCaseIndex >= 0) {
+                const filterCase = cases.splice(cases.findIndex(c => c.tasks.some(t => t.task === filterId) && !fullPath.includes(this.immediateValue(c, AbstractBreadcrumbsComponent.NODE_PATH))), 1)[0];
+                this.filterName = this.getTranslation(this.immediateValue(filterCase, 'menu_name'));
+            }
+            cases.sort((a, b) => fullPath.indexOf(this.immediateValue(a, AbstractBreadcrumbsComponent.NODE_PATH)) - fullPath.indexOf(this.immediateValue(b, AbstractBreadcrumbsComponent.NODE_PATH)));
+            if (this.redirectOnClick) {
+                cases.forEach(c => this.redirectUrls.set(this.immediateValue(c, AbstractBreadcrumbsComponent.NODE_PATH), [this._dynamicRoutingService.route, c.tasks.find(t => t.transition === AbstractBreadcrumbsComponent.ITEM_SETTINGS).task]))
+            }
+            this.nicePath.next(["", ...cases.map(c => this.getTranslation(this.immediateValue(c, 'menu_name')))]);
+        });
     }
 
     public initNicePath() {
