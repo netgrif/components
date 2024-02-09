@@ -4,7 +4,7 @@ import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token
 import {AbstractDataFieldComponent} from "../models/abstract-data-field-component";
 
 /**
- * @deprecated
+ * @deprecated as of v6.4.0
  * */
 @Component({
     selector: 'ncc-abstract-date-field',

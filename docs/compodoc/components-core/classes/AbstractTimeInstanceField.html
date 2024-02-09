@@ -3013,13 +3013,13 @@ export abstract class AbstractTimeInstanceField extends DataField&lt;Moment&gt; 
     }
 
     protected validWorkday(fc: FormControl) {
-        const dayOfWeek &#x3D; !!fc.value ? fc.value.weekday() : null;
-        return dayOfWeek &#x3D;&#x3D;&#x3D; 6 || dayOfWeek &#x3D;&#x3D;&#x3D; 0 ? {validWorkday: true} : null;
+        const dayOfWeek &#x3D; !!fc.value ? fc.value.isoWeekday() : null;
+        return dayOfWeek &#x3D;&#x3D;&#x3D; 6 || dayOfWeek &#x3D;&#x3D;&#x3D; 7 ? {validWorkday: true} : null;
     }
 
     protected validWeekend(fc: FormControl) {
-        const dayOfWeek &#x3D; !!fc.value ? fc.value.weekday() : null;
-        return dayOfWeek &gt;&#x3D; 1 &amp;&amp; dayOfWeek &lt;&#x3D; 5 &amp;&amp; dayOfWeek !&#x3D;&#x3D; 0 ? {validWeekend: true} : null;
+        const dayOfWeek &#x3D; !!fc.value ? fc.value.isoWeekday() : null;
+        return dayOfWeek &gt;&#x3D; 1 &amp;&amp; dayOfWeek &lt;&#x3D; 5 ? {validWeekend: true} : null;
     }
 }
 </code></pre>

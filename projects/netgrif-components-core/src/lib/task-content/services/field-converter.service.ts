@@ -27,12 +27,11 @@ import {decodeBase64, encodeBase64} from "../../utility/base64";
 import {CaseRefField} from '../../data-fields/case-ref-field/model/case-ref-field';
 import {StringCollectionField} from '../../data-fields/string-collection-field/models/string-collection-field';
 
-
 @Injectable({
     providedIn: 'root'
 })
 export class FieldConverterService {
-    private textFieldNames = ['textarea', 'richtextarea', 'htmltextarea', 'editor', 'htmlEditor', 'area']
+    private textFieldNames = [ 'richtextarea', 'htmltextarea', 'editor', 'htmlEditor' ]
 
     constructor() {
     }

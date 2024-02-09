@@ -50,8 +50,10 @@ export class SessionIdleTimerService implements OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this.timerSubscription.unsubscribe();
-        this._remainSeconds.unsubscribe();
+        if (this._enableService) {
+            this.timerSubscription.unsubscribe();
+            this._remainSeconds.unsubscribe();
+        }
     }
 
 }

@@ -61,6 +61,9 @@ describe('MultiUserAssignListComponent', () => {
     template: '<nc-multi-user-assign-list [searchUserControl]="formControl" [roles]="injectedData.roles"></nc-multi-user-assign-list>'
 })
 class TestWrapperComponent {
-    injectedData = {roles: [], value: new UserListValue(new Map<string, UserValue>([['5', new UserValue('5', 'admin', 'netgrif', 'super@netgrif.com')]]))} as UserListInjectedData;
+    injectedData = {
+        roles: [],
+        value: new UserListValue(new Map<string, UserValue>([['5', new UserValue('5', 'admin', 'netgrif', 'super@netgrif.com')]]))
+    } as UserListInjectedData;
     formControl = new FormControl();
 }

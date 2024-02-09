@@ -1,7 +1,7 @@
 import {ComponentFixture, TestBed, waitForAsync} from "@angular/core/testing";
 import {MaterialModule} from "../../../material/material.module";
 import {AngularResizeEventModule} from "angular-resize-event";
-import {NgxMatDatetimePickerModule} from "@angular-material-components/datetime-picker";
+import {NgxMatDateAdapter, NgxMatDatetimePickerModule} from "@angular-material-components/datetime-picker";
 import {TranslateLibModule} from "../../../translate/translate-lib.module";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {NoopAnimationsModule} from "@angular/platform-browser/animations";
@@ -21,6 +21,10 @@ import {AbstractDateTimeDefaultFieldComponent} from "./abstract-date-time-defaul
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {FormControl} from "@angular/forms";
 import {WrappedBoolean} from "../../data-field-template/models/wrapped-boolean";
+import {DateAdapter, MAT_DATE_LOCALE} from "@angular/material/core";
+import {CustomDateAdapter} from "../../date-field/models/custom-date-adapter";
+import {LanguageService} from "../../../translate/language.service";
+import {NgxMatMomentModule} from "@angular-material-components/moment-adapter";
 
 describe('AbstractDatetimeDefaultFieldComponent', () => {
     let component: TestDateTimeFieldComponent;
@@ -33,6 +37,7 @@ describe('AbstractDatetimeDefaultFieldComponent', () => {
                 AngularResizeEventModule,
                 NgxMatDatetimePickerModule,
                 TranslateLibModule,
+                NgxMatMomentModule,
                 HttpClientTestingModule,
                 NoopAnimationsModule
             ],
@@ -56,7 +61,8 @@ describe('AbstractDatetimeDefaultFieldComponent', () => {
                         formControlRef: new FormControl(),
                         showLargeLayout: new WrappedBoolean()
                     } as DataFieldPortalData<DateTimeField>
-                }
+                },
+                {provide: DateAdapter, useClass: CustomDateAdapter}
             ],
             declarations: [
                 TestDateTimeFieldComponent,
@@ -87,9 +93,12 @@ describe('AbstractDatetimeDefaultFieldComponent', () => {
     template: ''
 })
 class TestDateTimeFieldComponent extends AbstractDateTimeDefaultFieldComponent {
-    constructor(translate: TranslateService,
+    constructor(_translate: TranslateService,
+                _adapter: NgxMatDateAdapter<any>,
+                @Inject(MAT_DATE_LOCALE) _locale: string,
+                _languageService: LanguageService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<DateTimeField>) {
-        super(translate, dataFieldPortalData);
+        super(_translate, _adapter, _locale, _languageService, dataFieldPortalData)
     }
 }
 
