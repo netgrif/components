@@ -16,6 +16,7 @@ export * from './enumeration-field/enumeration-select-field/abstract-enumeration
 export * from './enumeration-field/enumeration-list-field/abstract-enumeration-list-field.component';
 export * from './enumeration-field/enumeration-autocomplete-select-field/abstract-enumeration-autocomplete-select-field.component';
 export * from './enumeration-field/enumeration-stepper-field/abstract-enumeration-stepper-field.component';
+export * from './enumeration-field/enumeration-caseref-field/abstract-enumeration-caseref-field.component';
 export * from './file-field/abstract-file-field.component';
 export * from './file-field/file-default-field/abstract-file-default-field.component';
 export * from './file-field/abstract-preview-dialog/preview-dialog-data';
@@ -24,6 +25,7 @@ export * from './file-list-field/file-list-default-field/abstract-file-list-defa
 export * from './multichoice-field/abstract-multichoice-field.component';
 export * from './multichoice-field/multichoice-autocomplete-field/abstract-multichoice-autocomplete-field-component.component';
 export * from './multichoice-field/multichoice-list-field/abstract-multichoice-list-field.component';
+export * from './multichoice-field/multichoice-caseref-field/abstract-multichoice-caseref-field.component';
 export * from './multichoice-field/multichoice-select-field/abstract-multichoice-select-field.component';
 export * from './number-field/abstract-number-field.component';
 export * from './number-field/currency-number-field/abstract-currency-number-field.component';
@@ -59,6 +61,11 @@ export * from './user-list-field/abstract-user-list-field.component';
 export * from './user-list-field/user-list-default-field/abstract-user-list-default-field.component';
 export * from './task-ref-field/abstract-task-ref-field.component';
 export * from './task-ref-field/task-ref-dashboard-field/task-ref-dashboard-tile/abstract-task-ref-dashboard-tile.component';
+export * from './task-ref-field/task-ref-dashboard-field/abstract-task-ref-dashboard-field.component';
+export * from './task-ref-field/task-ref-list-field/abstract-task-ref-list-field.component';
+export * from './case-ref-field/case-ref-default/case-ref-default.component';
+export * from './case-ref-field/model/case-ref-injection-tokens';
+export * from './string-collection-field/string-collection-default-field/abstract-string-collection-default-field.component';
 
 /* Class */
 export * from './models/abstract-data-field';
@@ -82,6 +89,8 @@ export * from './filter-field/models/filter-field';
 export * from './i18n-field/models/i18n-field';
 export * from './user-list-field/models/user-list-field';
 export * from './user-list-field/models/user-list-value';
+export * from './case-ref-field/model/case-ref-field';
+export * from './string-collection-field/models/string-collection-field';
 
 /* Interfaces */
 export * from './models/changed-fields';

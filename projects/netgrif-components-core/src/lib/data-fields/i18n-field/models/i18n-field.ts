@@ -184,7 +184,7 @@ export class I18nField extends DataField<I18nFieldValue> {
     }
 
     private validRequiredI18n(fc: FormControl): { [k: string]: boolean } {
-        return (fc.value.defaultValue === '' && Object.keys(fc.value.translations).length === 0)
+        return (fc.value.defaultValue === '' && !!fc.value?.translations && Object.keys(fc.value.translations).length === 0)
             ? ({requiredI18n: true}) : null;
     }
 }

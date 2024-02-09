@@ -123,9 +123,13 @@ export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsC
         if (this.labelWidth !== i18nLabel.offsetWidth) {
             this.labelWidth = i18nLabel.offsetWidth;
             const calculatedWidth = 'calc(0.5em + ' + i18nLabel.offsetWidth / 4 * 3 + 'px)';
-            this.cutProperty = `polygon(0 0, 0 100%, 100% 100%, 100% 0%, ${calculatedWidth} 0, ${calculatedWidth} 5%, 0.5em 5%, 0.5em 0)`;
+            this.cutProperty = `polygon(0 0, 0 100%, 100% 100%, 100% 0%, ${calculatedWidth} 0, ${calculatedWidth} 6%, 0.5em 6%, 0.5em 0)`;
         }
         return this.cutProperty;
+    }
+
+    public hasHint(): boolean {
+        return this.dataField.description !== undefined && this.dataField.description !== '';
     }
 
 
@@ -137,19 +141,19 @@ export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsC
     }
 
     public isPlainText(): boolean {
-        if (this.textPropertyEnabled('plainText')) {
+        if (this.checkPropertyInComponent('plainText')) {
             return this.dataField.component.properties.plainText === 'true';
         }
     }
 
     public getTextColor(): string {
-        if (this.textPropertyEnabled('textColor')) {
+        if (this.checkPropertyInComponent('textColor')) {
             return this.dataField.component.properties.textColor;
         }
     }
 
     public getTextFontSize(): string {
-        if (this.textPropertyEnabled('fontSize')) {
+        if (this.checkPropertyInComponent('fontSize')) {
             return this.dataField.component.properties.fontSize + 'px';
         }
     }

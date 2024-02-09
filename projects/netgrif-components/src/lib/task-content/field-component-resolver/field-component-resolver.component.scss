@@ -9,7 +9,7 @@
 }
 
 .min-row-height {
-    min-height: 75px;
+    min-height: 67px;
 }
 
 .phl-row {
@@ -65,4 +65,18 @@
     display: block;
     margin: 0 auto;
     width: 100%;
+}
+
+.width-100 {
+    width: 100%;
+}
+
+.padding-bottom-4px{
+    padding-bottom: 4px;
+}
+
+.div-overflow {
+    overflow-y: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }

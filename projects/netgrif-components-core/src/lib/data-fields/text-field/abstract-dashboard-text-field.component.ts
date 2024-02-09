@@ -14,7 +14,7 @@ import {ValidationRegistryService} from "../../registry/validation-registry.serv
 export abstract class AbstractDashboardTextFieldComponent extends AbstractTextErrorsComponent<TextField> implements OnInit, OnDestroy {
     public card?: CustomCard;
     public initialized: boolean = false;
-    private _sub: Subscription;
+    protected _sub: Subscription;
 
     protected constructor(translate: TranslateService,
                           @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextField>,

@@ -41,6 +41,8 @@ export interface FilesState {
 })
 export abstract class AbstractFileListDefaultFieldComponent extends AbstractBaseDataFieldComponent<FileListField> implements OnInit, AfterViewInit, OnDestroy {
 
+    private labelWidth: number;
+    public cutProperty: string;
     public uploadedFiles: Array<string>;
     public state: FilesState;
     private valueChange$: Subscription;
@@ -105,6 +107,7 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractBase
     }
 
     ngOnDestroy(): void {
+        super.ngOnDestroy();
         this.valueChange$.unsubscribe();
     }
 
@@ -152,7 +155,7 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractBase
             return;
         }
 
-        if (this.dataField.value && this.dataField.value.namesPaths && this.dataField.value.namesPaths.length !== 0) {
+        if (this.dataField.value?.namesPaths && this.dataField.value?.namesPaths.length !== 0) {
             this.dataField.value.namesPaths.forEach(namePath => {
                 filesToUpload = filesToUpload.filter(fileToUpload => fileToUpload.name !== namePath.name);
             });
@@ -232,8 +235,7 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractBase
     }
 
     public download(fileName: string) {
-        if (!this.dataField.value || !this.dataField.value.namesPaths ||
-            !this.dataField.value.namesPaths.find(namePath => namePath.name === fileName)) {
+        if (!this.dataField.value?.namesPaths?.find(namePath => namePath.name === fileName)) {
             return;
         }
         if (!this.taskId) {
@@ -276,8 +278,7 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractBase
     }
 
     public deleteFile(fileName: string) {
-        if (!this.dataField.value || !this.dataField.value.namesPaths ||
-            !this.dataField.value.namesPaths.find(namePath => namePath.name === fileName)) {
+        if (!this.dataField.value?.namesPaths?.find(namePath => namePath.name === fileName)) {
             return;
         }
         if (!this.taskId) {
@@ -349,5 +350,14 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractBase
 
     private resolveParentTaskId(): string {
         return !!this.dataField.parentTaskId ? this.dataField.parentTaskId : this.taskId;
+    }
+
+    public getCutProperty(i18nLabel): string {
+        if (this.labelWidth !== i18nLabel.offsetWidth) {
+            this.labelWidth = i18nLabel.offsetWidth;
+            const calculatedWidth = 'calc(0.5em + ' + i18nLabel.offsetWidth / 4 * 3 + 'px)';
+            this.cutProperty = `polygon(0 0, 0 100%, 100% 100%, 100% 0%, ${calculatedWidth} 0, ${calculatedWidth} 3px, 0.5em 3px, 0.5em 0)`;
+        }
+        return this.cutProperty;
     }
 }

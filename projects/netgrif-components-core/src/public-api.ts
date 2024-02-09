@@ -46,3 +46,5 @@ export * from './lib/changed-fields/public-api';
 export * from './lib/event/public-api';
 export * from './lib/impersonation/public-api';
 export * from './lib/registry/public-api';
+export * from './lib/actions/public-api';
+export * from './lib/providers/public-api';

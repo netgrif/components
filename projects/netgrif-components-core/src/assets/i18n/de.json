@@ -270,6 +270,7 @@
             "noFile": "keine Datei",
             "clickToUpload": "Klicken Sie, um eine Datei hochzuladen",
             "clickToDownload": "Klicken Sie, um {{fileName}} herunterzuladen",
+            "clickToOpen": "Klicken Sie hier, um den Dateiinhalt anzuzeigen",
             "clickToDelete": "Klicken Sie, um die Datei zu löschen"
         },
         "i18n": {
@@ -286,7 +287,8 @@
         },
         "user": {
             "selectUser": "Benutzer auswählen",
-            "save": "Zuweisen"
+            "save": "Zuweisen",
+            "deleteAll": "Leere Benutzerliste"
         },
         "textarea": {
             "insertText": "Hier Text eingeben..."
@@ -456,6 +458,7 @@
         "snackBar": {
             "deleteCanceled": "Prozess löschen abgebrochen",
             "deleteSuccess": "Prozess erfolgreich gelöscht",
+            "deleteInProgress": "Der ausgewählte Prozess wird jetzt gelöscht",
             "deleteError": "Prozess konnte nicht gelöscht werden",
             "uploadFailed": "Prozessdatei konnte nicht hochgeladen werden.",
             "uploadSuccess": "Prozessdatei erfolgreich hochgeladen"
@@ -475,7 +478,11 @@
         "errorCreate": "Fehler beim Erstellen des Falles "
     },
     "dynamicNavigation": {
-        "couldNotResolveView": "Ein Fehler ist aufgetreten während des Ansichtauflösungsprocess. Der Ansicht kann nicht angezeigt werden"
+        "couldNotResolveView": "Ein Fehler ist aufgetreten während des Ansichtauflösungsprocess. Der Ansicht kann nicht angezeigt werden",
+        "filterNotFound": "Diese Ansicht hat keinen Filter",
+        "loadMoreItems": "Mehr",
+        "ascending": "Aufsteigend",
+        "descending": "Absteigend"
     },
     "impersonation": {
         "user": {
@@ -493,5 +500,14 @@
         "expireDetail": "Ihre Sitzung läuft bald ab.\n\nSie werden in {{time}} Sekunden weitergeleitet",
         "exitButton": "Abmelden",
         "refreshButton": "Angemeldet bleiben"
+    },
+    "paginator": {
+        "firstPage": "Vorderseite",
+        "itemsPage": "Elemente pro Seite:",
+        "lastPage": "Letzte Seite",
+        "nextPage": "Nächste Seite",
+        "previousPage": "Vorherige Seite",
+        "pageOne": "Seite 1 von 1",
+        "pageAmount": "Seite {{page}} von {{amountPages}}"
     }
 }

@@ -69,10 +69,6 @@ export abstract class AbstractMultichoiceAutocompleteFieldComponentComponent ext
         }
     }
 
-    protected checkPropertyInComponent(property: string): boolean {
-        return !!this.dataField.component && !!this.dataField.component.properties && property in this.dataField.component.properties;
-    }
-
     protected filterType(): string | undefined {
         if (this.checkPropertyInComponent('filter')) {
             return this.dataField.component.properties.filter;
@@ -111,8 +107,9 @@ export abstract class AbstractMultichoiceAutocompleteFieldComponentComponent ext
 
     public renderSelection = (key) => {
         if (key !== undefined && key !== '' && key !== null) {
-            if (this.dataField.choices.find(choice => choice.key === key)) {
-                return this.dataField.choices.find(choice => choice.key === key).value;
+            const choice = this.dataField.choices.find(c => c.key === key);
+            if (choice) {
+                return choice.value
             }
         }
         return key;

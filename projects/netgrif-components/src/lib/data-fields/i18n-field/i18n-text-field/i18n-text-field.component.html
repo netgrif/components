@@ -12,8 +12,8 @@
     </ng-template>
     <ng-template [ngIf]="isPlainText()">
         <div class="full-width"
-             [ngStyle]="textPropertyEnabled('fontSize') && {'font-size': getTextFontSize()}">
-            <span [ngStyle]="textPropertyEnabled('textColor') && {'color': getTextColor()}">
+             [ngStyle]="checkPropertyInComponent('fontSize') && {'font-size': getTextFontSize()}">
+            <span [ngStyle]="checkPropertyInComponent('textColor') && {'color': getTextColor()}">
                 {{currentValue[selectedLanguage]}}
             </span>
         </div>
@@ -72,9 +72,8 @@
                 </button>
             </div>
         </div>
-        <mat-hint class="i18n-hint-error"
-                  *ngIf="!dataField.isInvalid(formControlRef)">{{dataField.description}}</mat-hint>
-        <mat-error class="i18n-hint-error"
-                   *ngIf="dataField.isInvalid(formControlRef)">{{getErrorMessage()}}</mat-error>
+        <mat-hint class="i18n-hint-error" [ngClass]="{'mat-hint-disabled': formControlRef.disabled}"
+                  *ngIf="!dataField.isInvalid(formControlRef) && hasHint()">{{dataField.description}}</mat-hint>
+        <mat-error class="i18n-hint-error" *ngIf="dataField.isInvalid(formControlRef)">{{getErrorMessage()}}</mat-error>
     </div>
 </ng-template>

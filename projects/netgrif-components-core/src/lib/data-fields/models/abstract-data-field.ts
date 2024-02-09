@@ -9,6 +9,7 @@ import {Component, DEFAULT} from './component';
 import {Validation} from './validation';
 import {ElementRef} from "@angular/core";
 import {Validator} from "../../registry/model/validator";
+import {UpdateOnStrategy, UpdateStrategy} from "./update-strategy";
 
 /**
  * Holds the logic common to all data field Model objects.
@@ -367,8 +368,8 @@ export abstract class DataField<T> {
         return this._validatorRegister;
     }
 
-    public getUpdateOnStrategy(): 'change' | 'blur' | 'submit' {
-        return 'blur';
+    public getUpdateOnStrategy(): UpdateOnStrategy {
+        return UpdateStrategy.BLUR;
     }
 
     /**

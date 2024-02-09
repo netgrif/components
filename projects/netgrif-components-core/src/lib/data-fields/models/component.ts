@@ -16,9 +16,11 @@ export enum ComponentPrefixes {
     MULTICHOICE = 'multichoice-',
     NUMBER = 'number-',
     TASK_REF = 'task-ref-',
+    CASE_REF = 'case-ref-',
     TEXT = 'text-',
     USER = 'user-',
     USER_LIST = 'user-list-',
+    STRING_COLLECTION = 'string-collection-',
 }
 
 export interface Component {

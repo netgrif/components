@@ -23,7 +23,7 @@
             </mat-option>
         </ng-container>
     </mat-autocomplete>
-    <mat-hint>{{dataField.description}}</mat-hint>
+    <mat-hint [ngClass]="{'mat-hint-disabled': formControlRef.disabled}">{{dataField.description}}</mat-hint>
     <mat-error *ngIf="dataField.isInvalid(formControlRef)">{{buildErrorMessage()}}</mat-error>
 </mat-form-field>
 

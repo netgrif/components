@@ -8,6 +8,7 @@ import {FormControl} from "@angular/forms";
 import {ComponentPortal} from "@angular/cdk/portal";
 import {ComponentRegistryService} from "../../registry/component-registry.service";
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../models/data-field-portal-data-injection-token";
+import {ButtonField} from '../button-field/models/button-field';
 
 /**
  * Provides a responsive layout to data fields where their appearance can change based on the width of space they have available.
@@ -160,7 +161,11 @@ export abstract class AbstractDataFieldTemplateComponent implements OnInit {
         return this._isNetgrifTemplate;
     }
 
-    public isPaperView() {
+    public isPaperView(): boolean {
         return this._paperView.paperView;
+    }
+
+    public isNotButton(): boolean {
+        return !(this.dataField instanceof ButtonField);
     }
 }

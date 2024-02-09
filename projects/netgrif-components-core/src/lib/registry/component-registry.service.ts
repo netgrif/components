@@ -6,8 +6,8 @@ import {ComponentPortal} from '@angular/cdk/portal';
 })
 export class ComponentRegistryService {
 
-    private registry: Map<string, (injector: Injector) => ComponentPortal<any>>;
-    private typeRegistry: Map<string, Type<any>>;
+    protected registry: Map<string, (injector: Injector) => ComponentPortal<any>>;
+    protected typeRegistry: Map<string, Type<any>>;
 
     constructor() {
         this.registry = new Map<string, (injector: Injector) => ComponentPortal<any>>();

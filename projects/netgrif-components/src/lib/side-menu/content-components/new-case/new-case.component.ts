@@ -11,6 +11,9 @@ import {
     SnackBarService
 } from '@netgrif/components-core';
 
+/**
+ * @deprecated
+ * */
 @Component({
     selector: 'nc-new-case',
     templateUrl: './new-case.component.html',

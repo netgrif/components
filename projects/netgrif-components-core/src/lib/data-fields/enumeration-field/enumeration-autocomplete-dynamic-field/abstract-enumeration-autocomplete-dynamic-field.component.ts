@@ -8,7 +8,7 @@ import {
     Optional,
     ViewChild
 } from '@angular/core';
-import {Observable, of} from 'rxjs';
+import {Observable, of, Subscription} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
 import {map, startWith} from 'rxjs/operators';
 import {DynamicEnumerationField} from '../models/dynamic-enumeration-field';
@@ -24,6 +24,7 @@ export abstract class AbstractEnumerationAutocompleteDynamicFieldComponent exten
 
     @ViewChild('input') text: ElementRef;
     filteredOptions: Observable<Array<EnumerationFieldValue>>;
+    choiceSubscription: Subscription;
 
     constructor(_translate: TranslateService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<DynamicEnumerationField>) {
@@ -36,7 +37,7 @@ export abstract class AbstractEnumerationAutocompleteDynamicFieldComponent exten
             map(() => this.dataField.choices)
         );
 
-        this.dataField.choicesChange$.subscribe(() => {
+       this.choiceSubscription = this.dataField.choicesChange$.subscribe(() => {
             this.filteredOptions = of(this.dataField.choices);
         });
     }
@@ -47,6 +48,7 @@ export abstract class AbstractEnumerationAutocompleteDynamicFieldComponent exten
 
     ngOnDestroy(): void {
         this.filteredOptions = undefined;
+        this.choiceSubscription.unsubscribe();
     }
 
     change() {

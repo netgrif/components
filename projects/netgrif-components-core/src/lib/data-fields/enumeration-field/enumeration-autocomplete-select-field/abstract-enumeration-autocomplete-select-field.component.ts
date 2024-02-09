@@ -32,10 +32,6 @@ export abstract class AbstractEnumerationAutocompleteSelectFieldComponent extend
         this.filteredOptions = undefined;
     }
 
-    protected checkPropertyInComponent(property: string): boolean {
-        return !!this.dataField.component && !!this.dataField.component.properties && property in this.dataField.component.properties;
-    }
-
     protected filterType(): string | undefined {
         if (this.checkPropertyInComponent('filter')) {
             return this.dataField.component.properties.filter;

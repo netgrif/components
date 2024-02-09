@@ -26,4 +26,5 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
     protected constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
         super(informAboutInvalidData);
     }
+
 }

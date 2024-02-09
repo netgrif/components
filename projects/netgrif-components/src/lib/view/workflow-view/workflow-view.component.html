@@ -5,7 +5,7 @@
         </button>
     </div>
     <div fxLayout="row" fxLayoutAlign="center" class="workflow-header">
-        <nc-header #header fxFlex="100" [type]="headerType"></nc-header>
+        <nc-header class="padding-mini" #header fxFlex="100" [type]="headerType"></nc-header>
     </div>
     <div fxLayout="column" fxLayoutAlign="start center" fxFlex class="workflow-panels-container">
         <ng-container *ngIf="workflows$ | async as workflows">
@@ -17,13 +17,19 @@
                 <span class="font-size-20">{{ 'view-list.noProcessesSatisfyingThisFilter' | translate}}</span>
             </div>
 
-            <mat-accordion [multi]="true" fxFlex="100" class="full-width">
+            <mat-accordion [multi]="true" fxFlex="100" class="full-width panel-list-content">
+
                 <cdk-virtual-scroll-viewport itemSize="50" (scrolledIndexChange)="loadNextPage()"
                                              class="full-height full-width dashboard-workflow-view">
 
                     <nc-workflow-panel
-                        *cdkVirtualFor="let workflow of workflows; let i = index; templateCacheSize: 0; trackBy: trackBy"
-                        [workflow]="workflow"
+                        *cdkVirtualFor="let workflow of workflows;
+                                        let first = first;
+                                        let last = last;
+                                        let i = index;
+                                        templateCacheSize: 0;
+                                        trackBy: trackBy"
+                        [workflow]="workflow" [first]="first" [last]="last"
                         [selectedHeaders$]="selectedHeaders$"
                         [showDeleteMenu]="showDeleteMenu">
                     </nc-workflow-panel>

@@ -1,10 +1,10 @@
 import {Behavior} from '../../models/behavior';
-import {AbstractControl, ValidationErrors, ValidatorFn} from '@angular/forms';
 import {Layout} from '../../models/layout';
 import {Validation} from '../../models/validation';
 import {Component, ComponentPrefixes} from '../../models/component';
 import {DataField} from '../../models/abstract-data-field';
 import {Validator} from "../../../registry/model/validator";
+import {UpdateOnStrategy, UpdateStrategy} from "../../models/update-strategy";
 
 export enum BooleanFieldValidation {
     REQUIRED_TRUE = 'requiredTrue',
@@ -24,7 +24,7 @@ export class BooleanField extends DataField<boolean> {
         return ComponentPrefixes.BOOLEAN + this.getComponentType();
     }
 
-    public getUpdateOnStrategy(): 'change' | 'blur' | 'submit' {
-        return 'change';
+    public getUpdateOnStrategy(): UpdateOnStrategy {
+        return UpdateStrategy.CHANGE;
     }
 }

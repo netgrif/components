@@ -7,6 +7,7 @@ import {
     CurrencyModule,
     CustomDateAdapter,
     DataFieldsModule,
+    FrontActionModule,
     MaterialModule,
     TranslateLibModule
 } from '@netgrif/components-core';
@@ -109,21 +110,25 @@ import {
     FilterFieldTabViewContentComponent
 } from './filter-field/tab-view-filter-field/filter-field-tab-view-content.component';
 import {ComponentPortal} from "@angular/cdk/portal";
-import {BooleanDefaultFieldComponent} from './boolean-field/boolean-default-field/boolean-default-field.component';
-import {ButtonDefaultFieldComponent} from './button-field/button-default-field/button-default-field.component';
-import {DateDefaultFieldComponent} from './date-field/date-default-field/date-default-field.component';
+import { BooleanDefaultFieldComponent } from './boolean-field/boolean-default-field/boolean-default-field.component';
+import { ButtonDefaultFieldComponent } from './button-field/button-default-field/button-default-field.component';
+import { DateDefaultFieldComponent } from './date-field/date-default-field/date-default-field.component';
+import { DateTimeDefaultFieldComponent } from './date-time-field/date-time-default-field/date-time-default-field.component';
+import { FileDefaultFieldComponent } from './file-field/file-default-field/file-default-field.component';
+import { FileListDefaultFieldComponent } from './file-list-field/file-list-default-field/file-list-default-field.component';
+import { FilterDefaultFieldComponent } from './filter-field/filter-default-field/filter-default-field.component';
+import { UserDefaultFieldComponent } from './user-field/user-default-field/user-default-field.component';
+import { UserListDefaultFieldComponent } from './user-list-field/user-list-default-field/user-list-default-field.component';
 import {
-    DateTimeDefaultFieldComponent
-} from './date-time-field/date-time-default-field/date-time-default-field.component';
-import {FileDefaultFieldComponent} from './file-field/file-default-field/file-default-field.component';
+    TaskRefDashboardFieldComponent
+} from "./task-ref-field/task-ref-dashboard-field/task-ref-dashboard-field.component";
+import { TaskRefListFieldComponent } from './task-ref-field/task-ref-list-field/task-ref-list-field.component';
+import { CaseRefDefaultComponent } from './case-ref-field/case-ref-default/case-ref-default.component';
+import { MultichoiceCaserefFieldComponent } from './multichoice-field/multichoice-caseref-field/multichoice-caseref-field.component';
 import {
-    FileListDefaultFieldComponent
-} from './file-list-field/file-list-default-field/file-list-default-field.component';
-import {FilterDefaultFieldComponent} from './filter-field/filter-default-field/filter-default-field.component';
-import {UserDefaultFieldComponent} from './user-field/user-default-field/user-default-field.component';
-import {
-    UserListDefaultFieldComponent
-} from './user-list-field/user-list-default-field/user-list-default-field.component';
+    EnumerationCaserefFieldComponent
+} from './enumeration-field/enumeration-caseref-field/enumeration-caseref-field.component';
+import { StringCollectionDefaultFieldComponent } from './string-collection-field/string-collection-default-field/string-collection-default-field.component';
 
 @NgModule({
     declarations: [
@@ -182,24 +187,15 @@ import {
         FilterDefaultFieldComponent,
         UserDefaultFieldComponent,
         UserListDefaultFieldComponent,
+        TaskRefDashboardFieldComponent,
+        TaskRefListFieldComponent,
+        CaseRefDefaultComponent,
+        MultichoiceCaserefFieldComponent,
+        EnumerationCaserefFieldComponent,
+        StringCollectionDefaultFieldComponent
     ],
     exports: [
-        BooleanFieldComponent,
-        ButtonFieldComponent,
-        DataFieldTemplateComponent,
-        DateFieldComponent,
-        DateTimeFieldComponent,
-        EnumerationFieldComponent,
-        FileFieldComponent,
-        FileListFieldComponent,
-        MultichoiceFieldComponent,
-        NumberFieldComponent,
-        TextFieldComponent,
-        UserFieldComponent,
-        FilterFieldComponent,
-        I18nFieldComponent,
-        UserListFieldComponent,
-        TaskRefFieldComponent
+        DataFieldTemplateComponent
     ],
     imports: [
         CommonModule,
@@ -223,7 +219,8 @@ import {
         BrowserAnimationsModule,
         DashboardComponentModule,
         RouterModule,
-        DataFieldsModule
+        DataFieldsModule,
+        FrontActionModule
     ],
     providers: [
         {provide: DateAdapter, useClass: CustomDateAdapter}
@@ -266,5 +263,12 @@ export class DataFieldsComponentModule {
         componentRegistry.register('text-dashboard_portal', (injector: Injector) => new ComponentPortal<any>(DashboardPortalTextFieldComponent, null, injector));
         componentRegistry.register('user-default', (injector: Injector) => new ComponentPortal<any>(UserDefaultFieldComponent, null, injector));
         componentRegistry.register('user-list-default', (injector: Injector) => new ComponentPortal<any>(UserListDefaultFieldComponent, null, injector));
+        componentRegistry.register("enumeration-caseref", (injector: Injector) => new ComponentPortal<any>(EnumerationCaserefFieldComponent, null, injector));
+        componentRegistry.register("i18n-text", (injector: Injector) => new ComponentPortal<any>(I18nTextFieldComponent, null, injector));
+        componentRegistry.register("multichoice-caseref", (injector: Injector) => new ComponentPortal<any>(MultichoiceCaserefFieldComponent, null, injector));
+        componentRegistry.register("task-ref-dashboard", (injector: Injector) => new ComponentPortal<any>(TaskRefDashboardFieldComponent, null, injector));
+        componentRegistry.register("task-ref-task-list", (injector: Injector) => new ComponentPortal<any>(TaskRefListFieldComponent, null, injector));
+        componentRegistry.register("case-ref-default", (injector: Injector) => new ComponentPortal<any>(CaseRefDefaultComponent, null, injector));
+        componentRegistry.register("string-collection-default", (injector: Injector) => new ComponentPortal<any>(StringCollectionDefaultFieldComponent, null, injector));
     }
 }

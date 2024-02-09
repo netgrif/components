@@ -4,7 +4,7 @@ import { DateTimeDefaultFieldComponent } from './date-time-default-field.compone
 import {
     AuthenticationMethodService,
     AuthenticationService,
-    ConfigurationService,
+    ConfigurationService, CustomDateAdapter,
     DATA_FIELD_PORTAL_DATA,
     DataFieldPortalData,
     DateTimeField,
@@ -27,6 +27,8 @@ import {DataFieldTemplateComponent} from "../../data-field-template/data-field-t
 import {RequiredLabelComponent} from "../../required-label/required-label.component";
 import moment from "moment";
 import {FormControl} from "@angular/forms";
+import {DateAdapter} from "@angular/material/core";
+import {NgxMatMomentModule} from "@angular-material-components/moment-adapter";
 
 describe('DateTimeDefaultFieldComponent', () => {
   let component: DateTimeDefaultFieldComponent;
@@ -41,6 +43,7 @@ describe('DateTimeDefaultFieldComponent', () => {
             HttpClientTestingModule,
             NoopAnimationsModule,
             NgxMatNativeDateModule,
+            NgxMatMomentModule
         ],
         providers: [
             {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
@@ -67,7 +70,8 @@ describe('DateTimeDefaultFieldComponent', () => {
                     formControlRef: new FormControl(),
                     showLargeLayout: new WrappedBoolean()
                 } as DataFieldPortalData<DateTimeField>
-            }
+            },
+            {provide: DateAdapter, useClass: CustomDateAdapter}
         ],
         declarations: [
             DateTimeDefaultFieldComponent,

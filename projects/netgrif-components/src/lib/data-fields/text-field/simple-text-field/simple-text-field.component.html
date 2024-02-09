@@ -4,6 +4,6 @@
            [placeholder]="dataField.placeholder"
            [required]="dataField.behavior.required"
            [formControl]="formControlRef">
-    <mat-hint>{{dataField.description}}</mat-hint>
+    <mat-hint [ngClass]="{'mat-hint-disabled': formControlRef.disabled}">{{dataField.description}}</mat-hint>
     <mat-error *ngIf="dataField.isInvalid(formControlRef)">{{getErrorMessage()}}</mat-error>
 </mat-form-field>

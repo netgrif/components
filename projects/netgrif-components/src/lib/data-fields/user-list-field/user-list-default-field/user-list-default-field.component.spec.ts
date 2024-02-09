@@ -7,12 +7,13 @@ import {
     SideMenuService,
     TranslateLibModule,
     UserListField,
-    WrappedBoolean
+    WrappedBoolean,
+    UserListValue
 } from "@netgrif/components-core";
 import {AngularResizeEventModule} from "angular-resize-event";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
-import {CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
+import {Component, CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
 import {FormControl} from "@angular/forms";
 
 describe('UserListDefaultFieldComponent', () => {
@@ -34,7 +35,7 @@ describe('UserListDefaultFieldComponent', () => {
                             visible: true,
                             editable: true,
                             hidden: true
-                        }, undefined,
+                        }, new UserListValue(new Map()),
                         undefined),
                     formControlRef: new FormControl(),
                     showLargeLayout: new WrappedBoolean()
@@ -55,3 +56,18 @@ describe('UserListDefaultFieldComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
+@Component({
+    selector: 'nc-test-wrapper',
+    template: '<nc-user-list-default-field [dataField]="field"> </nc-user-list-default-field>'
+})
+class TestWrapperComponent {
+    field = new UserListField('', '', {
+            required: true,
+            optional: true,
+            visible: true,
+            editable: true,
+            hidden: true
+        }, undefined,
+        undefined);
+}

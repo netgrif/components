@@ -1,12 +1,8 @@
 .workflow-container {
-    padding: 16px;
+    padding: 16px 24px;
 }
 
 .workflow-header {
-    margin-top: 16px;
-}
-
-.workflow-panels-container {
     margin-top: 16px;
 }
 
@@ -36,4 +32,9 @@
 .block-size-40 {
     width: 40px;
     height: 40px;
+}
+
+.padding-mini {
+    padding-left: 1px;
+    padding-right: 1px;
 }

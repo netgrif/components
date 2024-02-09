@@ -1,13 +1,12 @@
 import {Component, Inject, Optional} from "@angular/core";
-import {SideMenuService} from "../../../side-menu/services/side-menu.service";
 import {SnackBarService} from "../../../snack-bar/services/snack-bar.service";
 import {TranslateService} from "@ngx-translate/core";
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
-import {SideMenuSize} from "../../../side-menu/models/side-menu-size";
 import {UserListInjectedData} from "../../../side-menu/content-components/user-assign/model/user-list-injected-data";
 import {UserValue} from "../models/user-value";
 import {UserField} from "../models/user-field";
 import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base-data-field.component";
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
     selector: 'ncc-abstract-user-default-field',
@@ -15,17 +14,38 @@ import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base
 })
 export abstract class AbstractUserDefaultFieldComponent extends AbstractBaseDataFieldComponent<UserField>{
 
-    constructor(protected _sideMenuService: SideMenuService,
-                protected _snackbar: SnackBarService,
-                _translate: TranslateService,
-                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<UserField>) {
+    private labelWidth: number;
+    public cutProperty: string;
+
+    /**
+     * Inject services.
+     * @param _dialog Service to open and close [UserAssignDialogComponent]{@link UserAssignDialogComponent} with user data.
+     * @param _snackbar Service to displaying information to the user.
+     * @param _translate Service to translate text.
+     * @param informAboutInvalidData whether the backend should be notified about invalid values.
+     * Option injected trough `NAE_INFORM_ABOUT_INVALID_DATA` InjectionToken
+     */
+    protected constructor(protected _dialog: MatDialog,
+                          protected _snackbar: SnackBarService,
+                          protected _translate: TranslateService,
+                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<UserField>) {
         super(_translate, dataFieldPortalData);
     }
 
+    /**
+     * Call after click on user field button.
+     *
+     * Open [UserAssignComponent]{@link AbstractUserAssignComponent} in side menu with data represents preselected user from backend.
+     *
+     * After close side menu, the snackbar info will be displayed either for the unselected user or the selected one.
+     */
     public selectAbstractUser(component) {
         let valueReturned = false;
-        this._sideMenuService.open(component, SideMenuSize.MEDIUM,
-            {roles: this.dataField.roles, value: this.dataField.value} as UserListInjectedData).onClose.subscribe($event => {
+        const dialogRef = this._dialog.open(component, {
+            panelClass: "dialog-responsive",
+            data: {roles: this.dataField.roles, value: this.dataField.value} as UserListInjectedData,
+        });
+        dialogRef.afterClosed().subscribe($event => {
             if ($event.data) {
                 this.dataField.value = $event.data as UserValue;
                 this._snackbar.openGenericSnackBar(
@@ -39,5 +59,17 @@ export abstract class AbstractUserDefaultFieldComponent extends AbstractBaseData
         });
     }
 
+    public deleteUser() {
+        this.dataField.value = undefined;
+    }
+
+    public getCutProperty(i18nLabel): string {
+        if (this.labelWidth !== i18nLabel.offsetWidth) {
+            this.labelWidth = i18nLabel.offsetWidth;
+            const calculatedWidth = 'calc(0.5em + ' + i18nLabel.offsetWidth / 4 * 3 + 'px)';
+            this.cutProperty = `polygon(0 0, 0 100%, 100% 100%, 100% 0%, ${calculatedWidth} 0, ${calculatedWidth} 6%, 0.5em 6%, 0.5em 0)`;
+        }
+        return this.cutProperty;
+    }
 
 }

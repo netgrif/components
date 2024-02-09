@@ -20,6 +20,8 @@ import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token
 import {Validator} from "../../registry/model/validator";
 import {weekendValidation, workdayValidation} from "../models/validation-functions";
 import {DataFieldsModule} from "../data-fields.module";
+import {DateAdapter} from '@angular/material/core';
+import {CustomDateAdapter} from './models/custom-date-adapter';
 
 describe('AbstractDateFieldComponent', () => {
     let component: TestDateFieldComponent;
@@ -40,6 +42,7 @@ describe('AbstractDateFieldComponent', () => {
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: DateAdapter, useClass: CustomDateAdapter}
             ],
             declarations: [
                 TestDateFieldComponent,

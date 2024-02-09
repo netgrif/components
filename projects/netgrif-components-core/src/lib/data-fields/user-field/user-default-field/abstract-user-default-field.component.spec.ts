@@ -14,6 +14,7 @@ import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-fie
 import {AbstractUserDefaultFieldComponent} from "./abstract-user-default-field.component";
 import {FormControl} from "@angular/forms";
 import {WrappedBoolean} from "../../data-field-template/models/wrapped-boolean";
+import {MatDialog} from '@angular/material/dialog';
 
 describe('AbstractUserDefaultFieldComponent', () => {
     let component: TestUserComponent;
@@ -68,11 +69,11 @@ describe('AbstractUserDefaultFieldComponent', () => {
     template: ''
 })
 class TestUserComponent extends AbstractUserDefaultFieldComponent {
-    constructor(sideMenuService: SideMenuService,
+    constructor(matDialog: MatDialog,
                 snackbar: SnackBarService,
                 translate: TranslateService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<UserField>) {
-        super(sideMenuService, snackbar, translate, dataFieldPortalData);
+        super(matDialog, snackbar, translate, dataFieldPortalData);
     }
 }
 

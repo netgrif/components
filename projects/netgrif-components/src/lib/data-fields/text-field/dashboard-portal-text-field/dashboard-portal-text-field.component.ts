@@ -16,8 +16,8 @@ import {Subscription} from 'rxjs';
     styleUrls: ['./dashboard-portal-text-field.component.scss']
 })
 export class DashboardPortalTextFieldComponent extends AbstractDashboardPortalTextFieldComponent implements OnInit, OnDestroy {
-    private sub: Subscription;
-    componentPortal: ComponentPortal<any>;
+    protected _subValue: Subscription;
+    public componentPortal: ComponentPortal<any>;
 
     constructor(translate: TranslateService,
                 private registry: ComponentRegistryService,
@@ -30,7 +30,7 @@ export class DashboardPortalTextFieldComponent extends AbstractDashboardPortalTe
     ngOnInit(): void {
         super.ngOnInit();
         this.initializePortalComponent()
-        this.sub = this.formControlRef.valueChanges.subscribe(newValue => {
+        this._subValue = this.formControlRef.valueChanges.subscribe(newValue => {
             this.initializePortalComponent();
         });
     }
@@ -41,6 +41,6 @@ export class DashboardPortalTextFieldComponent extends AbstractDashboardPortalTe
 
     ngOnDestroy(): void {
         super.ngOnDestroy();
-        this.sub.unsubscribe();
+        this._subValue.unsubscribe();
     }
 }

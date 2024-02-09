@@ -20,6 +20,7 @@ import {
     ProfileModule,
     Dashboard,
     ValidationRegistryService,
+    FrontActionModule
 } from '@netgrif/components-core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -89,7 +90,8 @@ import {
     WorkflowViewComponentModule,
     FilterFieldTabViewComponent,
     FilterFieldTabbedCaseViewComponent,
-    FilterFieldTabbedTaskViewComponent
+    FilterFieldTabbedTaskViewComponent,
+    DialogComponentsModule
 } from '@netgrif/components';
 import {UserInviteComponent} from './doc/user-invite/user-invite.component';
 import {ExamplePortalCardComponent} from './doc/dashboard-example/piechart-card/example-portal-card.component';
@@ -128,7 +130,6 @@ import {
 } from './doc/single-tabbed-view/single-tabbed-task-view/single-tabbed-task-view.component';
 import {ImpersonationDemoComponent} from './doc/impersonation-demo/impersonation-demo.component';
 import { ChangePasswordComponent } from './doc/forms/change-password/change-password.component';
-
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -240,7 +241,9 @@ export function HttpLoaderFactory(http: HttpClient) {
         NgxChartsModule,
         EmailSubmissionFormComponentModule,
         RedirectComponentModule,
-        FilterFieldContentModule
+        FilterFieldContentModule,
+        DialogComponentsModule,
+        FrontActionModule
     ],
     providers: [{
         provide: ConfigurationService,

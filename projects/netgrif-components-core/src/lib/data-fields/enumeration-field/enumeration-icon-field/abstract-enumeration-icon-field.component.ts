@@ -1,4 +1,4 @@
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, OnInit, Inject, Optional} from '@angular/core';
 import {EnumerationField} from '../models/enumeration-field';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base-data-field.component";
@@ -7,11 +7,17 @@ import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base
     selector: 'ncc-abstract-enumerataion-icon-field',
     template: ''
 })
-export abstract class AbstractEnumerationIconFieldComponent extends AbstractBaseDataFieldComponent<EnumerationField>{
-
+export abstract class AbstractEnumerationIconFieldComponent extends AbstractBaseDataFieldComponent<EnumerationField> implements OnInit{
+    public horizontal: boolean;
 
     constructor(@Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<EnumerationField>) {
         super(undefined, dataFieldPortalData);
+    }
+
+    ngOnInit(): void {
+        if (this.dataField.component?.properties?.horizontal) {
+            this.horizontal = this.dataField.component.properties.horizontal === "true";
+        }
     }
 
     resolveIconValue(key: string) {
@@ -31,7 +37,7 @@ export abstract class AbstractEnumerationIconFieldComponent extends AbstractBase
     }
 
     setEnumValue(key: string) {
-        if (!this.dataField.disabled) {
+        if (!this.formControlRef.disabled) {
             this.formControlRef.setValue(key);
         }
     }

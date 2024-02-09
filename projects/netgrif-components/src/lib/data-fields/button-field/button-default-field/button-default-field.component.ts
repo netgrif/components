@@ -24,12 +24,10 @@ export class ButtonDefaultFieldComponent extends AbstractButtonDefaultFieldCompo
     }
 
     ngOnInit() {
-        if (this.dataField.component && this.dataField.component.properties &&
-            this.dataField.component.properties.align) {
+        if (this.dataField.component?.properties?.align) {
             this.align = this.dataField.component.properties.align;
         }
-        if (this.dataField.component && this.dataField.component.properties &&
-            this.dataField.component.properties.stretch) {
+        if (this.dataField.component?.properties?.stretch) {
             this.stretch = this.dataField.component.properties.stretch;
         }
     }

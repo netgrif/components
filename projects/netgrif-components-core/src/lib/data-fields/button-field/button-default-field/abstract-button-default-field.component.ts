@@ -37,13 +37,12 @@ export abstract class AbstractButtonDefaultFieldComponent extends AbstractBaseDa
      * This function depends on type of component, if had dialogText provided in component, then its open a dialog with that text
      */
     public resolveValue(): void {
-        if (this.dataField.component && this.dataField.component.properties &&
-            this.dataField.component.properties.dialogText !== undefined) {
+        if (!!this.dataField.component?.properties?.dialogText && this.dataField.component?.properties?.dialogTitle) {
             const dialogRef = this._dialogService.openConfirmDialog(this.dataField.component.properties.dialogTitle,
                 this.dataField.component.properties.dialogText, this.translate.instant('dialog.close'),
                 this.translate.instant('dialog.submit'));
             dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
-                if (result && result.confirmed) {
+                if (result?.confirmed) {
                     this.formControlRef.setValue(this.formControlRef.value + 1);
                 }
             });

@@ -29,10 +29,7 @@ export abstract class AbstractEnumerationStepperFieldComponent extends AbstractB
     }
 
     ngOnInit() {
-        if (this.dataField && this.dataField.component && this.dataField.component.properties &&
-            this.dataField.component.properties.arrowStepper) {
-            this.arrowStepper = this.dataField.component.properties.arrowStepper === 'true';
-        }
+            this.arrowStepper = this.dataField.component?.properties?.arrowStepper === 'true';
     }
 
     canShowDoneIcon(index: number): boolean {
@@ -54,8 +51,16 @@ export abstract class AbstractEnumerationStepperFieldComponent extends AbstractB
     }
 
     setStepperValue(key: string) {
-        if (!this.dataField.disabled) {
+        if (!this.formControlRef.disabled) {
             this.formControlRef.setValue(key);
         }
+    }
+
+    public hasTitle(): boolean {
+        return this.dataField.title !== undefined && this.dataField.title !== '';
+    }
+
+    public resolveValue(key: string): string {
+        return this.dataField.choices.find(k => k.key === key)?.value;
     }
 }

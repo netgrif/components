@@ -1,4 +1,5 @@
-<mat-label class="stepper-label netgrif-label" *ngIf="!showLargeLayout.value" matTooltipClass="stepper-tooltip-text" [matTooltip]="dataField.description" matTooltipPosition="right">
+<mat-label class="stepper-label netgrif-label" [ngClass]="{'netgrif-label-disabled': formControlRef.disabled}" *ngIf="!showLargeLayout.value && hasTitle()"
+           matTooltipClass="stepper-tooltip-text" [matTooltip]="dataField.description" matTooltipPosition="right">
     {{dataField.title}}
     <nc-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled" ></nc-required-label>
 </mat-label>
@@ -31,12 +32,14 @@
 </div>
 
 <div *ngIf="arrowStepper" class="stepper-min-height" fxLayoutAlign="stretch center" fxLayout="row" fxLayout.lt-sm="column"
-     [matTooltip]="dataField.description" matTooltipPosition="above">
+     [matTooltip]="dataField.description" matTooltipPosition="above" [ngClass]="{'stepper-disabled': formControlRef.disabled}">
     <ng-template ngFor let-option [ngForOf]="dataField.choices" let-i="index">
-        <span class="stepper-arrow-text" [ngClass]="{'stepper-arrow-selected': isSelected(option.key), 'stepper-disabled': dataField.disabled}"
-              (click)="setStepperValue(option.key)" fxFlex fxLayoutAlign="center center">{{option.value}}</span>
-        <span fxFlex *ngIf="i < dataField.choices.length - 1" fxLayoutAlign="center center">
-            <mat-icon>arrow_forward_ios</mat-icon>
-        </span>
+            <span class="stepper-arrow-text" [ngClass]="{'stepper-arrow-selected': isSelected(option.key)}"
+                  (click)="setStepperValue(option.key)" fxFlex fxLayoutAlign="center center" fxHide.lt-sm>{{option.value}}</span>
+        <span fxFlex.gt-sm class="stepper-arrow-text" *ngIf="i < dataField.choices.length - 1" fxLayoutAlign="center center" fxHide.lt-sm>
+                <mat-icon>arrow_forward_ios</mat-icon>
+            </span>
     </ng-template>
+    <span class="stepper-arrow-text stepper-arrow-selected" fxShow.lt-sm fxHide.gt-xs
+          fxFlex fxLayoutAlign="center center">{{resolveValue(dataField.value)}}</span>
 </div>
