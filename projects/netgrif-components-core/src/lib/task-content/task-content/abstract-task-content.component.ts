@@ -30,6 +30,7 @@ import {Subgrid} from '../model/subgrid';
 import {IncrementingCounter} from '../../utility/incrementing-counter';
 import {PreprocessedDataGroups} from '../model/preprocessed-data-groups';
 import {TaskRefDashboardTile} from '../../data-fields/task-ref-field/model/task-ref-dashboard-tile';
+import {Component as DataRefComponent} from '../../data-fields/models/component';
 
 @Component({
     selector: 'ncc-abstract-task-content',
@@ -373,7 +374,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
         const result = [];
         for (let i = 0; i < dataGroups.length; i++) {
             const group = dataGroups[i];
-            if (!group.fields.some(f => this.isTaskRef(f))) {
+            if (!group.fields.some(f => this.isTaskRef(f) && this.shouldResolveTaskRefData(f))) {
                 result.push(group);
                 continue;
             }
@@ -382,9 +383,9 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
                 result.push(split.startGroup);
             }
 
-            if (split.taskRef.component?.name === TaskRefComponents.DASHBOARD) {
-                result.push(this.createDashboardTaskRefDataGroup(group, split.taskRef));
-                containsDashboard = true;
+            if (!!split.taskRef.component?.name) {
+                result.push(this.createComponentTaskRefDataGroup(group, split.taskRef));
+                containsDashboard = split.taskRef.component.name === TaskRefComponents.DASHBOARD;
             }
 
             if (split.taskRef.value.length === 0 || split.endGroup === undefined) {
@@ -514,14 +515,15 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
      * The information about nesting and parent task/case are preserved from the passed original data group.
      * @param originalDataGroup source of the information about parent task/case
      * @param taskRef the task ref that will be added to the new data group
+     * @param title optional title for taskref
      * @protected
      */
-    protected createDashboardTaskRefDataGroup(originalDataGroup: DataGroup, taskRef: TaskRefField): DataGroup {
+    protected createComponentTaskRefDataGroup(originalDataGroup: DataGroup, taskRef: TaskRefField, title?: string): DataGroup {
         return {
             fields: [taskRef],
             alignment: undefined,
             stretch: false,
-            title: undefined,
+            title: title,
             parentTaskId: originalDataGroup.parentTaskId,
             parentTransitionId: originalDataGroup.parentTransitionId,
             parentCaseId: originalDataGroup.parentCaseId,
@@ -926,5 +928,18 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
             default:
                 return element.item.stringId + '-' + this.taskContentService.$shouldCreateCounter.getValue();
         }
+    }
+
+    protected shouldResolveTaskRefData(dataRef: DataField<any>): boolean {
+        if (!!dataRef.component) {
+            return this.hasRequiredComponentProperty(dataRef.component, "resolve_data", "true");
+        }
+        return true;
+    }
+
+    protected hasRequiredComponentProperty(component: DataRefComponent, propertyName: string, propertyValue: string): boolean {
+        return  component?.properties != null
+        && !!component?.properties[propertyName]
+        && component?.properties[propertyName] === propertyValue;
     }
 }

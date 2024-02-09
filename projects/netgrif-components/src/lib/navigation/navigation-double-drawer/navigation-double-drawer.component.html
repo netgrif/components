@@ -1,5 +1,5 @@
-<div class="drawer-control rail-color" fxLayoutAlign="start center" fxHide.lt-md>
-    <button mat-icon-button (click)="toggleMenu()" class="mat-button mat-typography menu-font-color">
+<div class="drawer-control rail-color height-60" [ngClass]="{'index-menu': !configLeftMenu.opened}" fxLayoutAlign="center center" fxHide.lt-md>
+    <button mat-icon-button (click)="toggleMenu()" class="menu-button mat-typography menu-font-color">
         <mat-icon>menu</mat-icon>
     </button>
 </div>
@@ -10,7 +10,7 @@
                 <mat-icon>menu</mat-icon>
             </button>
         </div>
-        <div class="logo-tool" fxLayoutAlign="center center" fxFlex>
+        <div fxLayoutAlign="center center" fxFlex>
             <img #logo [alt]="imageAlt" [src]="image" class="logoimg-tool"
                  [routerLink]="imageRouterLink !== undefined ? imageRouterLink : []">
         </div>
@@ -31,13 +31,11 @@
 
             <mat-menu #userRailMenu="matMenu">
                 <div mat-menu-item role="menuitem" class="large-menu-item" fxLayout="row" fxFlexAlign="center center"
-                     [routerLink]="profileRouterLink" routerLinkActive="active">
+                     [routerLink]="profileRouterLink" routerLinkActive="active-tree-node">
                     <mat-icon class="margin-auto" fxFlex>face</mat-icon>
                     <div class="large-menu-item" fxLayout="column" fxFlexAlign="start center" fxFlex>
-                        <span *ngIf="!user.isImpersonating()" class="large-menu-item-text"
-                              fxFlex="50">{{user.fullName}}</span>
-                        <span *ngIf="user.isImpersonating()" class="large-menu-item-text" fxFlex="50">{{user.fullName}}
-                            ({{user.getSelfOrImpersonated().fullName}})</span>
+                        <span *ngIf="!user.isImpersonating()"  class="large-menu-item-text" fxFlex="50">{{user.fullName}}</span>
+                        <span *ngIf="user.isImpersonating()" class="large-menu-item-text" fxFlex="50">{{user.fullName}} ({{user.getSelfOrImpersonated().fullName}})</span>
                         <span class="large-menu-item-text" style="font-size: 12px;" fxFlex="50">{{user.email}}</span>
                     </div>
                 </div>
@@ -45,8 +43,7 @@
                     <mat-icon>supervisor_account</mat-icon>
                     <span>{{'side-menu.impersonation.submit' | translate}}</span>
                 </button>
-                <button *ngIf="includeImpersonation && user.isImpersonating()" mat-menu-item
-                        (click)="stopImpersonating()">
+                <button *ngIf="includeImpersonation && user.isImpersonating()" mat-menu-item (click)="stopImpersonating()">
                     <mat-icon>clear</mat-icon>
                     <span>{{'side-menu.impersonation.cease' | translate }}</span>
                 </button>
@@ -55,8 +52,7 @@
                     <span>{{ 'toolbar.menu.logout' | translate }}</span>
                 </button>
             </mat-menu>
-            <button *ngIf="includeUser" mat-icon-button [matMenuTriggerFor]="userRailMenu"
-                    class="mat-button mat-typography menu-font-color"
+            <button *ngIf="includeUser" mat-icon-button [matMenuTriggerFor]="userRailMenu" class="menu-button mat-typography menu-font-color"
                     [matTooltip]="user.fullName"
                     [matTooltipPosition]="'right'">
                 <mat-icon>account_circle</mat-icon>
@@ -68,7 +64,7 @@
 
             <mat-menu #railMenu="matMenu">
                 <button *ngFor='let item of hiddenCustomItems; trackBy: itemsTrackBy' mat-menu-item
-                        [routerLink]='item.routing.path' routerLinkActive="active">
+                        [routerLink]='item.routing.path' routerLinkActive="active-tree-node">
                     <mat-icon>{{item.navigation.icon}}</mat-icon>
                     <span>{{item.navigation.title}}</span>
                 </button>
@@ -81,7 +77,7 @@
             <!--                </button>-->
             <!--            </div>-->
             <button mat-icon-button [matMenuTriggerFor]="railMenu"
-                    class="mat-button mat-typography menu-font-color margin-bottom-x2"
+                    class="menu-button mat-typography menu-font-color margin-bottom-x2"
                     [matTooltip]="'toolbar.menu.open' | translate"
                     matTooltipPosition="right">
                 <mat-icon>more_vert</mat-icon>
@@ -90,11 +86,11 @@
         </div>
     </mat-sidenav>
 
-    <mat-sidenav-content>
-        <mat-sidenav-container class="drawer-container">
+    <mat-sidenav-content class="first-content index-menu" >
+        <mat-sidenav-container class="drawer-container" (backdropClick)="toggleLeftMenu()">
             <mat-sidenav [mode]="configRightMenu.mode" [(opened)]="configRightMenu.opened" position="start"
                          [disableClose]="configRightMenu.disableClose"
-                         class="drawer-content mat-elevation-z8"
+                         class="drawer-content"
                          mwlResizable
                          [style.width.px]="configRightMenu.width"
                          [resizeCursorPrecision]="20"
@@ -105,7 +101,7 @@
 
             </mat-sidenav>
 
-            <mat-sidenav-content>
+            <mat-sidenav-content class="content-color">
                 <ng-content></ng-content>
             </mat-sidenav-content>
         </mat-sidenav-container>
@@ -113,14 +109,21 @@
 </mat-sidenav-container>
 
 <ng-template #defaultLeftSide>
-    <button mat-icon-button (click)="onHomeClick()" class="mat-button mat-typography menu-font-color"
+
+    <div class="height-60 border-bottom" fxLayoutAlign="center center" fxHide.lt-md>
+        <button mat-icon-button (click)="toggleRightMenu()" class="menu-button mat-typography menu-font-color">
+            <mat-icon>menu</mat-icon>
+        </button>
+    </div>
+
+    <button mat-icon-button (click)="onHomeClick()" class="menu-button mat-typography menu-font-color margin-top-default"
             [matTooltip]="'toolbar.menu.home' | translate"
             matTooltipPosition="right">
         <mat-icon>home</mat-icon>
     </button>
 
     <button *ngIf='!isOnZeroLevel() && (canGoBackLoading$ | async) === false' mat-icon-button (click)="onBackClick()"
-            class="mat-button mat-typography menu-font-color" [matTooltip]="'toolbar.menu.back' | translate"
+            class="menu-button mat-typography menu-font-color" [matTooltip]="'toolbar.menu.back' | translate"
             matTooltipPosition="right">
         <mat-icon>arrow_back</mat-icon>
     </button>
@@ -131,8 +134,8 @@
     <div class="margin-top-x2"></div>
 
     <button *ngFor='let folder of leftItems; trackBy: itemsTrackBy' mat-icon-button (click)="onItemClick(folder)"
-            class="mat-button mat-typography menu-font-color" [matTooltip]="folder.navigation.title" [matTooltipPosition]="'right'"
-            [ngClass]="isItemAndNodeEqual(folder, currentNode) ? 'rail-selected-color' : ''" [routerLink]='folder.routing.path'
+            class="menu-button mat-typography menu-font-color" [matTooltip]="folder.navigation.title" [matTooltipPosition]="'right'"
+            [ngClass]="isItemAndNodeEqual(folder, currentNode) ? 'rail-selected-color' : 'menu-font-color'" [routerLink]='folder.routing.path'
             routerLinkActive="active">
         <mat-icon>{{folder.navigation.icon}}</mat-icon>
     </button>
@@ -143,20 +146,20 @@
 </ng-template>
 
 <ng-template #defaultRightSide>
-    <div class="logo" fxLayoutAlign="center center" fxHide.lt-md>
+    <div class="logo border-bottom" fxLayoutAlign="center center" fxHide.lt-md>
         <img *ngIf="image !== undefined" [alt]="imageAlt" [src]="image" class="logoimg"
              [routerLink]="imageRouterLink !== undefined ? imageRouterLink : []">
     </div>
-    <div *ngIf="(rightLoading$ | async) === false" ngClass.gt-sm="padding-top-8">
+    <div *ngIf="(rightLoading$ | async) === false">
         <div fxLayout="column" fxLayoutAlign="end end" class="order-icon-wrapper">
             <button mat-icon-button fxLayout="column" fxLayoutAlign="center center" class="mat-button mat-typography menu-font-color order-icon" (click)="switchOrder()"
                     [matTooltip]="isAscending() ? ('dynamicNavigation.ascending' | translate) : ('dynamicNavigation.descending' | translate)">
-                <mat-icon>{{isAscending() ? "south" : "north"}}</mat-icon>
+                <mat-icon>{{isAscending() ? "expand_more" : "expand_less"}}</mat-icon>
             </button>
         </div>
         <div *ngFor='let item of rightItems; trackBy: itemsTrackBy' (click)="onItemClick(item)"
              class="tree-node mat-typography mat-body-2" fxLayoutAlign="start center" [routerLink]='item.routing.path'
-             routerLinkActive="active">
+             routerLinkActive="active-tree-node">
             <mat-icon class="tree-node-icon">{{item.navigation.icon}}</mat-icon>
             <span>{{item.navigation.title}}</span>
             <span class="menu-item-focus-overlay"></span>

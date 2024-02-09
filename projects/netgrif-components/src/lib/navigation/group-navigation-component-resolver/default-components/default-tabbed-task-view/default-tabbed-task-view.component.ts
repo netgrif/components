@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, Optional, ViewChild} from '@angular/core';
 import {
     NAE_TAB_DATA,
     TaskViewService,
@@ -60,7 +60,7 @@ export function baseFilterFactory(injectedTabData: InjectedTabbedTaskViewDataWit
         {
             provide: NAE_DEFAULT_HEADERS,
             useFactory: navigationItemTaskViewDefaultHeadersFactory,
-            deps: [NAE_NAVIGATION_ITEM_TASK_DATA]
+            deps: [[new Optional(), NAE_NAVIGATION_ITEM_TASK_DATA]]
         }
     ]
 })

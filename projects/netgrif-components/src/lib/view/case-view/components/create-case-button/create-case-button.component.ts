@@ -1,6 +1,12 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Observable} from 'rxjs';
-import {Case, CaseViewService, NewCaseCreationConfigurationData, NewCaseButtonConfiguration} from '@netgrif/components-core';
+import {
+    Case,
+    CaseViewService,
+    NewCaseCreationConfigurationData,
+    NewCaseButtonConfiguration,
+    LoadingEmitter
+} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-create-case-button',
@@ -11,11 +17,14 @@ export class CreateCaseButtonComponent implements OnInit {
 
     @Output() public caseCreatedEvent = new EventEmitter<Case>();
     @Input() public newCaseCreationConfig: NewCaseCreationConfigurationData;
+    @Input() public disabled: boolean;
 
     protected _resolvedCaseButtonTitle: string;
     protected _resolvedCaseButtonIcon: string;
+    protected _loading: LoadingEmitter;
 
     constructor(protected _caseViewService: CaseViewService) {
+        this._loading = new LoadingEmitter();
     }
 
     get resolvedCaseButtonTitle(): string {
@@ -24,6 +33,10 @@ export class CreateCaseButtonComponent implements OnInit {
 
     get resolvedCaseButtonIcon(): string {
         return this._resolvedCaseButtonIcon;
+    }
+
+    get loading$(): Observable<boolean> {
+        return this._loading;
     }
 
     ngOnInit(): void {
@@ -36,6 +49,7 @@ export class CreateCaseButtonComponent implements OnInit {
 
     public createNewCase(): Observable<Case> {
         let myCase: Observable<Case>;
+        this._loading.on();
         if (this.newCaseCreationConfig.enableCaseTitle === false && this._caseViewService.getAllowedNetsCount() === 1) {
             myCase = this._caseViewService.createDefaultNewCase(this.newCaseCreationConfig);
         } else {
@@ -45,7 +59,8 @@ export class CreateCaseButtonComponent implements OnInit {
             if (this._caseViewService.viewEnabled(kaze)) {
                 this.caseCreatedEvent.next(kaze);
             }
-        });
+        }, error => {},() => this._loading.off());
+
         return myCase;
     }
 

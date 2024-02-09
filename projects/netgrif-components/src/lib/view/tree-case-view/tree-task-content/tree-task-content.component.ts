@@ -16,7 +16,8 @@ import {
     TaskRequestStateService,
     TreeTaskContentService,
     UnlimitedTaskContentService,
-    PermissionService
+    PermissionService,
+    FrontActionService
 } from '@netgrif/components-core';
 
 @Component({
@@ -24,6 +25,7 @@ import {
     templateUrl: './tree-task-content.component.html',
     styleUrls: ['./tree-task-content.component.scss'],
     providers: [
+        FrontActionService,
         {provide: TaskContentService, useClass: UnlimitedTaskContentService},
         TreeTaskContentService,
         AssignTaskService,

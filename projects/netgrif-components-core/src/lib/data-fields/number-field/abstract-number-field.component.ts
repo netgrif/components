@@ -4,6 +4,9 @@ import {AbstractDataFieldComponent} from '../models/abstract-data-field-componen
 import {TranslateService} from '@ngx-translate/core';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 
+/**
+ * @deprecated
+ * */
 @Component({
     selector: 'ncc-abstract-number-field',
     template: ''

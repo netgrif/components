@@ -78,6 +78,7 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
     initialSearchMode: SearchMode;
     showToggleButton: boolean;
     enableSearch: boolean;
+    showCreateCaseButton: boolean;
     showDeleteMenu: boolean;
     headersChangeable: boolean;
     headersMode: string[];
@@ -87,12 +88,14 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
     constructor(caseViewService: CaseViewService,
                 loggerService: LoggerService,
                 viewIdService: ViewIdService,
+                overflowService: OverflowService,
                 @Inject(NAE_TAB_DATA) protected _injectedTabData: InjectedTabbedCaseViewDataWithNavigationItemTaskData) {
-        super(caseViewService, loggerService, _injectedTabData, undefined, undefined, undefined, _injectedTabData.newCaseButtonConfiguration);
+        super(caseViewService, loggerService, _injectedTabData, overflowService, undefined, undefined, _injectedTabData.newCaseButtonConfiguration);
 
         this.initialSearchMode = _injectedTabData.caseViewSearchTypeConfiguration.initialSearchMode;
         this.showToggleButton = _injectedTabData.caseViewSearchTypeConfiguration.showSearchToggleButton;
         this.enableSearch = _injectedTabData.caseViewSearchTypeConfiguration.initialSearchMode !== undefined;
+        this.showCreateCaseButton = _injectedTabData.newCaseButtonConfiguration?.newCaseButtonConfig?.showCreateCaseButton;
         this.showDeleteMenu = _injectedTabData.caseViewShowMoreMenu;
         this.headersChangeable = _injectedTabData.caseViewHeadersChangeable;
         this.headersMode = _injectedTabData.caseViewHeadersMode ? _injectedTabData.caseViewHeadersMode : [];
@@ -147,7 +150,7 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
         }, this._autoswitchToTaskTab, this._openExistingTab);
     }
 
-    private resolveFilter(openCase: Case): Filter {
+    protected resolveFilter(openCase: Case): Filter {
         const additionalFilter = this._injectedTabData.taskViewAdditionalFilter;
         const mergeFilters = this._injectedTabData.taskViewMergeWithBaseFilter;
         const baseFilter = new SimpleFilter('', FilterType.TASK, {case: {id: `${openCase.stringId}`}});
@@ -155,18 +158,16 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
         let filter;
         if (additionalFilter === undefined) {
             filter = baseFilter;
+        } else if (mergeFilters) {
+            filter = additionalFilter.merge(baseFilter, MergeOperator.AND);
         } else {
-            if (mergeFilters) {
-                filter = additionalFilter.merge(baseFilter, MergeOperator.AND);
-            } else {
-                filter = additionalFilter;
-            }
+            filter = additionalFilter;
         }
 
         return filter;
     }
 
-    private resolveAllowedNets(openCase: Case): string[] {
+    protected resolveAllowedNets(openCase: Case): string[] {
         const additionalFilter = this._injectedTabData.taskViewAdditionalFilter;
         if (additionalFilter == undefined) {
             return [openCase.processIdentifier];
@@ -182,7 +183,7 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
         return this.headersMode.some(e => e === option);
     }
 
-    private resolveHeaderMode(mode: string): HeaderMode {
+    protected resolveHeaderMode(mode: string): HeaderMode {
         switch (mode) {
             case 'sort':
                 return HeaderMode.SORT;

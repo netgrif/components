@@ -269,6 +269,7 @@
             "noFile": "keine Datei",
             "clickToUpload": "Klicken Sie, um eine Datei hochzuladen",
             "clickToDownload": "Klicken Sie, um {{fileName}} herunterzuladen",
+            "clickToOpen": "Klicken Sie hier, um den Dateiinhalt anzuzeigen",
             "clickToDelete": "Klicken Sie, um die Datei zu löschen"
         },
         "i18n": {
@@ -498,5 +499,14 @@
         "expireDetail": "Ihre Sitzung läuft bald ab.\n\nSie werden in {{time}} Sekunden weitergeleitet",
         "exitButton": "Abmelden",
         "refreshButton": "Angemeldet bleiben"
+    },
+    "paginator": {
+        "firstPage": "Vorderseite",
+        "itemsPage": "Elemente pro Seite:",
+        "lastPage": "Letzte Seite",
+        "nextPage": "Nächste Seite",
+        "previousPage": "Vorherige Seite",
+        "pageOne": "Seite 1 von 1",
+        "pageAmount": "Seite {{page}} von {{amountPages}}"
     }
 }

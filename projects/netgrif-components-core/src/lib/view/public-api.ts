@@ -10,6 +10,7 @@ export * from './tree-case-view/tree-component/model/case-tree-node';
 export * from './tree-case-view/tree-component/model/case-tree-path';
 export * from './tree-case-view/tree-component/model/expansion-tree';
 export * from './tree-case-view/tree-component/model/tree-case-view-configuration';
+export * from './abstract/netgrif-paginator-intl';
 
 /* ENUMS */
 export * from './tree-case-view/model/tree-petriflow-identifiers';

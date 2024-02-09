@@ -3,17 +3,17 @@
                [class.end-tabs]="align === 'end'"
                (selectedTabChange)="tabView.tabChange($event)" class="tab-group"
                [class.nae-tab-fill-height]="stretch" fxFlex>
-    <mat-tab *ngFor="let tab of tabView.openedTabs; let i=index">
+    <mat-tab *ngFor="let tab of tabView.openedTabs; let i=index" [ngClass]="{'label-opacity': i === tabView.selectedIndex.value}">
         <ng-template mat-tab-label>
             <div fxLayout="row" fxLayoutAlign="start center">
                 <div fxFlex fxLayout="row" fxLayoutAlign="start center">
-                    <mat-icon class="icon-margin-right"
+                    <mat-icon class="icon-margin-right" [ngClass]="{'icon-tab-color': i === tabView.selectedIndex.value}"
                               *ngIf="tab.getIcon() !== undefined">{{tab.getIcon$()|async}}</mat-icon>
                     <span class="custom-badge" [matBadge]="(badgeCount(tab) | async)"
                           [matBadgeHidden]="(badgeHidden(tab) | async)">{{((tab.getText$() | async) | translate) + ((badgeHidden(tab) | async) ? '' : offset)}}</span>
                 </div>
                 <button mat-icon-button *ngIf="tab.canBeClosed" (click)="tabView.closeTabIndex(i)">
-                    <mat-icon>clear</mat-icon>
+                    <mat-icon [ngClass]="{'icon-tab-color': i === tabView.selectedIndex.value}">clear</mat-icon>
                 </button>
             </div>
         </ng-template>

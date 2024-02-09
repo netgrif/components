@@ -1,20 +1,27 @@
 <div class="case-view-container" fxLayout="column" fxLayoutAlign="start stretch">
+    <nc-breadcrumbs></nc-breadcrumbs>
 
-    <mat-card class="case-view-search-container">
-        <div fxLayout="row" fxLayoutAlign="space-between">
+    <div class="case-view-search-container">
+        <div fxLayout="row" class="max-height" fxLayoutAlign="space-between">
             <div fxLayoutAlign="start center" fxFlex>
-                <nc-search class="search-width" *ngIf="(enableSearch)" [showSearchToggleButton]="showToggleButton"
+                <nc-search class="search-width search-fix" *ngIf="(enableSearch)" [showSearchToggleButton]="showToggleButton"
                            [initialSearchMode]="initialSearchMode" (filterLoaded)="loadFilter($event)"></nc-search>
             </div>
-            <nc-create-case-button [newCaseCreationConfig]="newCaseCreationConfig"
-                                   (caseCreatedEvent)="handleCaseClick($event)"></nc-create-case-button>
+            <div fxLayoutAlign="end center" *ngIf="showCreateCaseButton">
+                <nc-create-case-button [newCaseCreationConfig]="newCaseCreationConfig" (caseCreatedEvent)="handleCaseClick($event)"></nc-create-case-button>
+            </div>
         </div>
-    </mat-card>
+    </div>
 
-    <nc-header #header [type]="headerType" [hideHeaderMenu]="!headersChangeable" [showEditButton]="isMenuOptionEnabled('edit')"
-               [showSortButton]="isMenuOptionEnabled('sort')" [showSearchButton]="isMenuOptionEnabled('search')"
-               [showTableSection]="allowTableMode" class="case-header-padding"></nc-header>
+    <div class="full-height transform-div custom-scrollbar"
+         [ngClass]="{'overflow-div': getOverflowStatus()}" fxLayout="column" fxLayoutAlign="start stretch">
+        <div class="full-height transform-div max-width-fix" fxLayout="column" fxLayoutAlign="start stretch">
+            <nc-header #header [type]="headerType" [maxHeaderColumns]="9" [responsiveHeaders]="false" [ngStyle]="{'width': getWidth()}" [hideHeaderMenu]="!headersChangeable" [showEditButton]="isMenuOptionEnabled('edit')"
+                       [showSortButton]="isMenuOptionEnabled('sort')" [showSearchButton]="isMenuOptionEnabled('search')"
+                       [showTableSection]="allowTableMode" class="case-header-padding"></nc-header>
 
-    <nc-case-list [selectedHeaders$]="selectedHeaders$" [textEllipsis]="true" [showDeleteMenu]="showDeleteMenu"
-                  (caseClick)="handleCaseClick($event)" fxFlex></nc-case-list>
+            <nc-case-list [selectedHeaders$]="selectedHeaders$" [textEllipsis]="true" [showDeleteMenu]="showDeleteMenu" [width]="getWidth()"
+                          (caseClick)="handleCaseClick($event)" [responsiveBody]="true" fxFlex></nc-case-list>
+        </div>
+    </div>
 </div>

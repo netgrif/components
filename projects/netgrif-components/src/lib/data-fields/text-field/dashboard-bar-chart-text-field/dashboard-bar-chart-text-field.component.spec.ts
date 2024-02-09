@@ -62,7 +62,7 @@ describe('DashboardBarChartTextFieldComponent', () => {
     selector: 'nc-test-wrapper',
     template: `
         <nc-dashboard-bar-chart-text-field [showLargeLayout]="label"
-                                           [textField]="field"
+                                           [dataField]="field"
                                            [formControlRef]="formControl">
         </nc-dashboard-bar-chart-text-field>`
 })

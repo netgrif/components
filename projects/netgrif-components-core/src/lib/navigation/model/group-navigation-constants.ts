@@ -36,6 +36,11 @@ export enum GroupNavigationConstants {
     ITEM_FIELD_ID_CREATE_CASE_BUTTON_ICON = 'create_case_button_icon',
 
     /**
+     * Boolean field, that is true if the create case button is shown in case view
+     * */
+    ITEM_FIELD_ID_SHOW_CREATE_CASE_BUTTON = "show_create_case_button",
+
+    /**
      * EnumerationMap field, that contains selected search type for case view
      * */
     ITEM_FIELD_ID_CASE_VIEW_SEARCH_TYPE = 'case_view_search_type',
@@ -164,5 +169,10 @@ export enum GroupNavigationConstants {
      * Boolean field, that is true if item contains child items
      * */
     ITEM_FIELD_ID_HAS_CHILDREN = 'hasChildren',
+
+    /**
+     * CaseField containing stringIds of child instances of process preference_item
+     * */
+    ITEM_FIELD_ID_CHILD_ITEM_IDS = 'childItemIds',
 
 }

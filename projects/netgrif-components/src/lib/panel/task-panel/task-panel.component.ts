@@ -26,7 +26,10 @@ import {
     TaskDataService,
     TaskEventService,
     TaskRequestStateService,
-    TaskViewService
+    TaskViewService,
+    FrontActionService,
+    NAE_TAB_DATA,
+    InjectedTabData
 } from '@netgrif/components-core';
 import {TaskContentComponent} from '../../task-content/task-content/task-content.component';
 import {TranslateService} from '@ngx-translate/core';
@@ -39,6 +42,7 @@ import {CurrencyPipe} from '@angular/common';
     providers: [
         {provide: TaskContentService, useClass: SingleTaskContentService},
         TaskDataService,
+        FrontActionService,
         TaskEventService,
         AssignTaskService,
         DelegateTaskService,
@@ -77,11 +81,12 @@ export class TaskPanelComponent extends AbstractTaskPanelComponent {
                 protected _changedFieldsService: ChangedFieldsService,
                 protected _permissionService: PermissionService,
                 @Optional() overflowService: OverflowService,
-                @Optional() @Inject(NAE_TASK_FORCE_OPEN) protected _taskForceOpen: boolean) {
+                @Optional() @Inject(NAE_TASK_FORCE_OPEN) protected _taskForceOpen: boolean,
+                @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData) {
         super(_taskContentService, _log, _taskViewService, _paperView, _taskEventService, _assignTaskService,
             _delegateTaskService, _cancelTaskService, _finishTaskService, _taskState, _taskDataService,
             _assignPolicyService, _finishPolicyService, _callChain, _taskOperations, _disableFunctions, _translate, _currencyPipe, _changedFieldsService,
-            _permissionService, overflowService, _taskForceOpen);
+            _permissionService, overflowService, _taskForceOpen, injectedTabData);
         if (_taskForceOpen) {
             this.hidePanelHeader = true;
         }

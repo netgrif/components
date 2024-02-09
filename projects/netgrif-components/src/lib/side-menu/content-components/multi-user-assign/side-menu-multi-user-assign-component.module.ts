@@ -33,7 +33,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
         MatFormFieldModule,
         UtilityModule
     ],
-    exports: [MultiUserAssignComponent],
+    exports: [MultiUserAssignComponent, MultiUserAssignListComponent],
     providers: [
         { provide: NAE_USER_ASSIGN_COMPONENT, useValue: MultiUserAssignComponent },
     ]

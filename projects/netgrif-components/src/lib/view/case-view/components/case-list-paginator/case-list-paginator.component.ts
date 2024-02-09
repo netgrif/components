@@ -5,13 +5,16 @@ import {
     InjectedTabData,
     LoggerService,
     NAE_TAB_DATA,
+    NetgrifPaginatorIntl,
     AbstractCaseListPaginatorComponent
 } from '@netgrif/components-core';
+import {MatPaginatorIntl} from '@angular/material/paginator';
 
 @Component({
     selector: 'nc-case-list-paginator',
     templateUrl: './case-list-paginator.component.html',
-    styleUrls: ['./case-list-paginator.component.scss']
+    styleUrls: ['./case-list-paginator.component.scss'],
+    providers: [{provide: MatPaginatorIntl, useClass: NetgrifPaginatorIntl}]
 })
 export class CaseListPaginatorComponent extends AbstractCaseListPaginatorComponent implements OnDestroy {
 

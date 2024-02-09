@@ -36,6 +36,8 @@ import {UriResourceService} from '../service/uri-resource.service';
 import {UriService} from '../service/uri.service';
 import {AbstractNavigationDoubleDrawerComponent} from './abstract-navigation-double-drawer';
 import {TranslateService} from "@ngx-translate/core";
+import {CaseResourceService} from "../../resources/engine-endpoint/case-resource.service";
+import {MockCaseResourceService} from "../../utility/tests/mocks/mock-case-resource.service";
 
 xdescribe('AbstractNavigationDoubleDrawerComponent', () => {
     let component: TestDrawerComponent;
@@ -63,6 +65,7 @@ xdescribe('AbstractNavigationDoubleDrawerComponent', () => {
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: UserPreferenceService, useClass: MockUserPreferenceService},
+                {provide: CaseResourceService, useClass: MockCaseResourceService},
                 {provide: UriResourceService, useClass: MockUriResourceService},
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -145,11 +148,12 @@ class TestDrawerComponent extends AbstractNavigationDoubleDrawerComponent {
                 _log: LoggerService,
                 _config: ConfigurationService,
                 _uriService: UriService,
+                _caseResourceService: CaseResourceService,
                 _impersonationUserSelect: ImpersonationUserSelectService,
                 _impersonation: ImpersonationService,
                 _dynamicRouteProviderService: DynamicNavigationRouteProviderService) {
-        super(_router, _activatedRoute, _breakpoint, _languageService, _translateService, _userService, _accessService, _log, _config, _uriService,
-            _impersonationUserSelect, _impersonation, _dynamicRouteProviderService);
+        super(_router, _activatedRoute, _breakpoint, _languageService, _translateService, _userService, _accessService,
+            _log, _config, _uriService, _caseResourceService, _impersonationUserSelect, _impersonation, _dynamicRouteProviderService);
     }
 }
 

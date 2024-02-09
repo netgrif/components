@@ -20,6 +20,7 @@ import {EventOutcomeMessageResource} from '../../resources/interface/message-res
 import {CurrencyPipe} from '@angular/common';
 import {PermissionService} from '../../authorization/permission/permission.service';
 import {PermissionType} from '../../process/permissions';
+import {FormControl} from '@angular/forms';
 
 @Component({
     selector: 'ncc-abstract-case-panel',
@@ -27,7 +28,9 @@ import {PermissionType} from '../../process/permissions';
 })
 export abstract class AbstractCasePanelComponent extends AbstractPanelWithImmediateDataComponent {
 
+
     @Input() public case_: Case;
+    @Input() public approval: boolean;
     @Input() public selectedHeaders$: Observable<Array<HeaderColumn>>;
     @Input() responsiveBody = true;
     @Input() first: boolean;
@@ -35,6 +38,7 @@ export abstract class AbstractCasePanelComponent extends AbstractPanelWithImmedi
     @Input() showCasePanelIcon = true;
     @Input() showDeleteMenu = false;
     @Input() textEllipsis = false;
+    protected _approvalFormControl: FormControl;
 
     protected constructor(protected _caseResourceService: CaseResourceService,
                           protected _caseViewService: CaseViewService,
@@ -46,6 +50,11 @@ export abstract class AbstractCasePanelComponent extends AbstractPanelWithImmedi
                           protected _permissionService: PermissionService,
                           @Optional() protected _overflowService: OverflowService,) {
         super(_translateService, _currencyPipe, _overflowService);
+        this._approvalFormControl = new FormControl();
+    }
+
+    get approvalFormControl(): FormControl {
+        return this._approvalFormControl;
     }
 
     public show(event: MouseEvent): boolean {

@@ -28,6 +28,7 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
     @Input() showSortButton = true;
     @Input() showSearchButton = true;
     @Input() showTableSection = true;
+    @Input() public approval: boolean;
 
     public headerService: AbstractHeaderService;
     protected _headerSearch: HeaderSearchService;
@@ -43,6 +44,7 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
 
     protected _initHeaderCount: number = undefined;
     protected _initResponsiveHeaders: boolean = undefined;
+    protected _approvalFormControl: FormControl;
 
     constructor(protected _injector: Injector,
                 protected _translate: TranslateService,
@@ -69,6 +71,10 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
         } else {
             this._initResponsiveHeaders = responsive;
         }
+    }
+
+    get approvalFormControl(): FormControl {
+        return this._approvalFormControl;
     }
 
     public changeHeadersMode(mode: HeaderMode, saveLastMode: boolean = true) {
@@ -165,7 +171,7 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
         this.columnWidthControl = new FormControl(exist ? this._overflowService.columnWidth : this.DEFAULT_COLUMN_WIDTH, [
             Validators.required,
             Validators.min(180)]);
-
+        this._approvalFormControl = new FormControl(false);
         if (exist) {
             this.initializeValueChanges();
         }
