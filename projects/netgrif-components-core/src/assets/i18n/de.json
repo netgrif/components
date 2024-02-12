@@ -286,7 +286,8 @@
         },
         "user": {
             "selectUser": "Benutzer auswählen",
-            "save": "Zuweisen"
+            "save": "Zuweisen",
+            "deleteAll": "Leere Benutzerliste"
         },
         "textarea": {
             "insertText": "Hier Text eingeben..."
@@ -456,6 +457,7 @@
         "snackBar": {
             "deleteCanceled": "Prozess löschen abgebrochen",
             "deleteSuccess": "Prozess erfolgreich gelöscht",
+            "deleteInProgress": "Der ausgewählte Prozess wird jetzt gelöscht",
             "deleteError": "Prozess konnte nicht gelöscht werden",
             "uploadFailed": "Prozessdatei konnte nicht hochgeladen werden.",
             "uploadSuccess": "Prozessdatei erfolgreich hochgeladen"

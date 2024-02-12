@@ -17,6 +17,8 @@ import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-au
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {MaterialModule} from '../../material/material.module';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
+import {DateAdapter} from '@angular/material/core';
+import {CustomDateAdapter} from './models/custom-date-adapter';
 
 describe('AbstractDateFieldComponent', () => {
     let component: TestDateFieldComponent;
@@ -35,6 +37,7 @@ describe('AbstractDateFieldComponent', () => {
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: DateAdapter, useClass: CustomDateAdapter}
             ],
             declarations: [
                 TestDateFieldComponent,

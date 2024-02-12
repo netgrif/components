@@ -2,7 +2,7 @@ import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {TaskListComponent} from './task-list.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {CommonModule} from '@angular/common';
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {of} from 'rxjs';
@@ -62,7 +62,7 @@ describe('TaskListComponent', () => {
                 {provide: TaskResourceService, useClass: MyResources},
                 {provide: AllowedNetsService, useFactory: TestTaskViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
         })
             .compileComponents();
 

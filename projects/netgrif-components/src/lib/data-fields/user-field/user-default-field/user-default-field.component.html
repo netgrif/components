@@ -18,6 +18,7 @@
                     [matTooltip]="'dataField.file.clickToUpload' | translate"
                     [class.do-not-click]="formControlRef.disabled">
                 <mat-icon>how_to_reg</mat-icon>
+                <mat-icon (click)='deleteUser()' color='warn' *ngIf='!formControlRef.disabled'>close</mat-icon>
             </button>
             <button mat-icon-button
                     *ngIf="!dataField.value"

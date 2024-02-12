@@ -7,7 +7,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Full Changelog: [https://github.com/netgrif/components/commits/v6.4.0](https://github.com/netgrif/components/commits/v6.4.0)
 
-## [6.4.0](https://github.com/netgrif/components/releases/tag/v6.4.0) (2023-12-13)
+## [6.4.0](https://github.com/netgrif/components/releases/tag/v6.4.0) (2024-01-23)
 
 ### Fixed
 - [NAE-1915] TaskRef behaviour handling for multiple level
@@ -16,6 +16,7 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.4.0](https://g
 - [NAE-1924] Unnecessary call for setData from FE
 - [NAE-1901] Taskref rendering update
 - [NAE-1926] Can't close Tab in Tab view
+- [NAE-1939] Problem with Tests
 
 ### Added
 - [NAE-1890] Data field component register
@@ -28,6 +29,34 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.4.0](https://g
 - [NAE-1900] New component design
 - [NAE-1928] Refresh tabs on change
 - [NAE-1929] Data field type list of strings
+- [NAE-1936] Disable create case button using menu items
+- [NAE-1935] Improved breadcrumbs from menu items
+
+## [6.3.3](https://github.com/netgrif/components/releases/tag/v6.3.3) (2024-01-19)
+
+### Added
+
+- [NAE-1933] UserList deleteAll button
+
+
+## [6.3.2](https://github.com/netgrif/components/releases/tag/v6.3.2) (2023-07-25)
+
+### Fixed
+
+- [NAE-1911] Autosave on text area in cooperation with button
+- [NAE-1914] revertToPreviousValue - change is always false
+- [NAE-1923] DateTime doesn't have locale and rework validation to isoWeekday
+
+## [6.3.1](https://github.com/netgrif/components/releases/tag/v6.3.1) (2023-07-18)
+
+### Fixed
+
+- [NAE-1885] Side panel creates a new case when pressing Enter on date field
+- [NAE-1889] Process list is not refreshed after uploading process file
+
+### Changed
+
+- [NAE-1687] Factory class as providers
 
 ## [6.3.0](https://github.com/netgrif/components/releases/tag/v6.3.0) (2023-05-26)
 
@@ -66,6 +95,12 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.4.0](https://g
 - [NAE-1607] Allowed nets configuration for newly created filter
 - [NAE-1722] Set default view headers with the CreateMenuItem action method
 - [NAE-1711] Dashboard
+
+## [6.2.10](https://github.com/netgrif/components/releases/tag/v6.2.10) (2023-11-07)
+
+### Fixed
+
+- [NAE-1921] User field value cannot be cleared
 
 ## [6.2.9](https://github.com/netgrif/components/releases/tag/v6.2.9) (2023-05-04)
 

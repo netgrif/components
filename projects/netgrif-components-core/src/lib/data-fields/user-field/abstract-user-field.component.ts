@@ -4,7 +4,7 @@ import {AbstractDataFieldComponent} from '../models/abstract-data-field-componen
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 
 /**
- * @deprecated
+ * @deprecated as of v6.4.0
  * */
 /**
  * Component that is created in the body of the task panel accord on the Petri Net, which must be bind properties.
@@ -19,9 +19,5 @@ export abstract class AbstractUserFieldComponent extends AbstractDataFieldCompon
 
     protected constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
         super(informAboutInvalidData);
-    }
-
-    ngOnInit() {
-        super.ngOnInit();
     }
 }
