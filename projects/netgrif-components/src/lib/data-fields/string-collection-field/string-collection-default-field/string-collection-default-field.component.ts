@@ -3,7 +3,8 @@ import {
     AbstractStringCollectionDefaultFieldComponent,
     DATA_FIELD_PORTAL_DATA,
     DataFieldPortalData,
-    TaskRefField
+    TaskRefField,
+    ValidationRegistryService
 } from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 
@@ -14,9 +15,10 @@ import {TranslateService} from '@ngx-translate/core';
 })
 export class StringCollectionDefaultFieldComponent extends AbstractStringCollectionDefaultFieldComponent {
 
-    constructor(protected _translate: TranslateService,
-                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TaskRefField>) {
-        super(_translate, dataFieldPortalData)
+    constructor(_translate: TranslateService,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TaskRefField>,
+                _validationRegistry: ValidationRegistryService) {
+        super(_translate, dataFieldPortalData, _validationRegistry)
     }
 
 }

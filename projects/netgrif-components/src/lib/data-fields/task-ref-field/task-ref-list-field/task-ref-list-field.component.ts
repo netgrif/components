@@ -3,11 +3,13 @@ import {
     AbstractTaskRefListFieldComponent,
     DATA_FIELD_PORTAL_DATA,
     DataFieldPortalData,
-    TaskRefField
+    TaskRefField,
+    ValidationRegistryService
 } from "@netgrif/components-core";
 import {
     DefaultTaskViewComponent
 } from "../../../navigation/group-navigation-component-resolver/default-components/default-task-view/default-task-view.component";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'nc-task-ref-list-field',
@@ -17,8 +19,10 @@ import {
 export class TaskRefListFieldComponent extends AbstractTaskRefListFieldComponent {
 
   constructor(injector: Injector,
-              @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TaskRefField>) {
-      super(injector, DefaultTaskViewComponent, dataFieldPortalData)
+              _translate: TranslateService,
+              @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TaskRefField>,
+              _validationRegistry: ValidationRegistryService) {
+      super(injector, DefaultTaskViewComponent, _translate, dataFieldPortalData, _validationRegistry)
   }
 
 }

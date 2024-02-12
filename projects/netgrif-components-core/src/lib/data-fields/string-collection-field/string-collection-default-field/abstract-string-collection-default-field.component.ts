@@ -5,6 +5,7 @@ import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from '../../models/data-fie
 import {StringCollectionField} from '../models/string-collection-field';
 import {ENTER, COMMA, SEMICOLON} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
+import {ValidationRegistryService} from "../../../registry/validation-registry.service";
 
 @Component({
     selector: 'ncc-abstract-string-collection-default-field',
@@ -15,9 +16,10 @@ export abstract class AbstractStringCollectionDefaultFieldComponent extends Abst
     @ViewChild('input') input: ElementRef;
     public separatorKeysCodes: number[] = [ENTER];
 
-    protected constructor(protected _translate: TranslateService,
-                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<StringCollectionField>) {
-        super(dataFieldPortalData);
+    protected constructor(_translate: TranslateService,
+                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<StringCollectionField>,
+                          _validationRegistry: ValidationRegistryService) {
+        super(_translate, dataFieldPortalData, _validationRegistry);
     }
 
     ngOnInit() {

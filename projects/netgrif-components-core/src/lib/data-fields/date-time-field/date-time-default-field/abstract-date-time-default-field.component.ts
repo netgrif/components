@@ -16,16 +16,12 @@ import {ValidationRegistryService} from "../../../registry/validation-registry.s
 })
 export abstract class AbstractDateTimeDefaultFieldComponent extends AbstractTimeInstanceFieldComponent<DateTimeField> {
 
-    constructor(protected _translate: TranslateService,
-                protected _adapter: NgxMatDateAdapter<any>,
-                @Inject(MAT_DATE_LOCALE) protected _locale: string,
-                protected _languageService: LanguageService,
+    constructor(_translate: TranslateService,
+                _adapter: NgxMatDateAdapter<any>,
+                @Inject(MAT_DATE_LOCALE) _locale: string,
+                _languageService: LanguageService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<DateTimeField>,
                 _validationRegistry: ValidationRegistryService) {
         super(_translate, _adapter, _locale, _languageService, dataFieldPortalData, _validationRegistry);
-    }
-
-    getErrorMessage() {
-        return this.buildErrorMessage(this.dataField);
     }
 }

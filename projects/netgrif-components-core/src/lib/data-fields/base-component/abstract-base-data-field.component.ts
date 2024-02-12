@@ -17,9 +17,9 @@ export abstract class AbstractBaseDataFieldComponent<T extends DataField<unknown
     @Input() public formControlRef: FormControl;
     @Input() public showLargeLayout: WrappedBoolean;
 
-    constructor(private _translate?: TranslateService,
+    constructor(protected _translate?: TranslateService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData?: DataFieldPortalData<T>,
-                private _validationRegistry?: ValidationRegistryService) {
+                protected _validationRegistry?: ValidationRegistryService) {
         if (!!dataFieldPortalData) {
             this.dataField = dataFieldPortalData.dataField;
             this.formControlRef = dataFieldPortalData.formControlRef;

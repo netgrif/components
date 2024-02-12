@@ -11,6 +11,8 @@ import {NAE_DEFAULT_HEADERS} from '../../../header/models/default-headers-token'
 import {NAE_CASE_REF_CREATE_CASE, NAE_CASE_REF_SEARCH} from '../../case-ref-field/model/case-ref-injection-tokens';
 import {EnumerationField} from '../models/enumeration-field';
 import {Subscription} from 'rxjs';
+import {TranslateService} from "@ngx-translate/core";
+import {ValidationRegistryService} from "../../../registry/validation-registry.service";
 
 @Component({
     selector: 'ncc-abstract-case-ref-default',
@@ -23,8 +25,10 @@ export abstract class AbstractEnumerationCaseRefComponent extends AbstractBaseDa
 
     protected constructor(protected injector: Injector,
                           protected caseViewType: Type<any>,
-                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<EnumerationField>) {
-        super(dataFieldPortalData);
+                          _translate: TranslateService,
+                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<EnumerationField>,
+                          _validationRegistryService: ValidationRegistryService) {
+        super(_translate, dataFieldPortalData, _validationRegistryService);
     }
 
     ngAfterViewInit(): void {
