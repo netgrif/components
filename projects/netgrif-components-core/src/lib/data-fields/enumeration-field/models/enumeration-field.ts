@@ -3,8 +3,11 @@ import {Behavior} from '../../models/behavior';
 import {Layout} from '../../models/layout';
 import {AbstractControl, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 import {FieldTypeResource} from '../../../task-content/model/field-type-resource';
-import {Component} from '../../models/component';
+import {Component, ComponentPrefixes} from '../../models/component';
 import {Validation} from '../../models/validation';
+import {Observable, Subject} from "rxjs";
+import {debounceTime} from "rxjs/operators";
+import {UpdateOnStrategy, UpdateStrategy} from "../../models/update-strategy";
 
 export interface EnumerationFieldValue {
     key: string;
@@ -17,16 +20,19 @@ export enum EnumerationFieldValidation {
 }
 
 export class EnumerationField extends DataField<string> {
+    protected REQUEST_DEBOUNCE_TIME = 600;
+    protected _updatedChoices: Subject<void>;
 
     constructor(stringId: string, title: string, value: string,
                 protected _choices: Array<EnumerationFieldValue>, behavior: Behavior, placeholder?: string, description?: string,
                 layout?: Layout, protected readonly _fieldType = FieldTypeResource.ENUMERATION,
                 validations?: Array<Validation>, component?: Component, parentTaskId?: string) {
         super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId);
+        this._updatedChoices = new Subject<void>();
     }
 
     set choices(choices: Array<EnumerationFieldValue>) {
-         this._choices = choices;
+        this._choices = choices;
     }
 
     get choices(): Array<EnumerationFieldValue> {
@@ -35,6 +41,31 @@ export class EnumerationField extends DataField<string> {
 
     get fieldType(): FieldTypeResource {
         return this._fieldType;
+    }
+
+    public getUpdateOnStrategy(): UpdateOnStrategy {
+        return UpdateStrategy.CHANGE;
+    }
+
+    public valueChanges(): Observable<string> {
+        return this._value.pipe(debounceTime(this.REQUEST_DEBOUNCE_TIME));
+    }
+
+    public getTypedComponentType(): string {
+        return ComponentPrefixes.ENUMERATION + this.getComponentType();
+    }
+
+    get updatedChoices(): Observable<void> {
+        return this._updatedChoices.asObservable();
+    }
+
+    public updateChoice(): void {
+        this._updatedChoices.next();
+    }
+
+    public destroy(): void {
+        super.destroy();
+        this._updatedChoices.complete();
     }
 
     protected resolveFormControlValidators(): Array<ValidatorFn> {

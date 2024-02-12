@@ -31,7 +31,23 @@ export class MockUserService {
         return this._user.roles.some(r => r.stringId === roleStringId);
     }
 
+    public hasRoleByName(roleName: string, netIdentifier: string): boolean {
+        if (!roleName || !netIdentifier || !this._user.roles) {
+            return false;
+        }
+        return this._user.roles.some(r => r.stringId === roleName && r.netImportId === netIdentifier);
+    }
+
     hasAuthority(): boolean {
         return true;
     }
+
+    public isUserEmpty(user: User): boolean {
+        return !user || (!user.id && user.roles.length === 0);
+    }
+
+    public isCurrentUserEmpty(): boolean {
+        return this.isUserEmpty(this.user)
+    }
+
 }

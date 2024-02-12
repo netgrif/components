@@ -2,7 +2,7 @@ import {DataField} from '../../models/abstract-data-field';
 import {Behavior} from '../../models/behavior';
 import {Layout} from '../../models/layout';
 import {Validation} from '../../models/validation';
-import {Component} from '../../models/component';
+import {Component, ComponentPrefixes} from '../../models/component';
 import {I18nFieldTranslations, I18nFieldValue} from './i18n-field-value';
 import {Observable} from 'rxjs';
 import {FormControl, ValidatorFn} from '@angular/forms';
@@ -17,6 +17,9 @@ export const DEFAULT_LANGUAGE_CODE = 'xx';
 
 export class I18nField extends DataField<I18nFieldValue> {
 
+    public getTypedComponentType(): string {
+        return ComponentPrefixes.I18N + this.getComponentType();
+    }
     private static defaultValueNonEquality(a: I18nFieldValue, b: I18nFieldValue): boolean {
         return (!(!a.defaultValue && !b.defaultValue)
             && (
@@ -36,8 +39,8 @@ export class I18nField extends DataField<I18nFieldValue> {
     }
 
     private static translationsEquality(a: I18nFieldValue, b: I18nFieldValue): boolean {
-        const aKeys = Object.keys(a.translations).sort();
-        const bKeys = Object.keys(b.translations).sort();
+        const aKeys = !!a.translations ? Object.keys(a.translations).sort() : [];
+        const bKeys = !!b.translations ? Object.keys(b.translations).sort() : [];
         if (aKeys.length !== bKeys.length
             || !aKeys.every((element, index) => {
                 return element === bKeys[index];
@@ -166,19 +169,19 @@ export class I18nField extends DataField<I18nFieldValue> {
     private validTranslationRequired(countries: Array<string>): ValidatorFn {
         return (fc: FormControl): { [key: string]: any } | null => {
             return countries.every(languageCode => languageCode in fc.value.translations)
-                ? (null) : ({translationRequired: true});
+                ? null : ({translationRequired: true});
         };
     }
 
     private validTranslationOnly(countries: Array<string>): ValidatorFn {
         return (fc: FormControl): { [key: string]: any } | null => {
             return Object.keys(fc.value.translations).every(translation => countries.includes(translation))
-                ? (null) : ({translationOnly: true});
+                ? null : ({translationOnly: true});
         };
     }
 
     private validRequiredI18n(fc: FormControl): { [k: string]: boolean } {
-        return (fc.value.defaultValue === '' && Object.keys(fc.value.translations).length === 0)
+        return (fc.value.defaultValue === '' && !!fc.value?.translations && Object.keys(fc.value.translations).length === 0)
             ? ({requiredI18n: true}) : null;
     }
 }

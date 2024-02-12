@@ -32,4 +32,5 @@ import {PetriflowCanvasModule} from '@netgrif/petriflow.svg';
     ]
 })
 export class DataFieldsModule {
+
 }

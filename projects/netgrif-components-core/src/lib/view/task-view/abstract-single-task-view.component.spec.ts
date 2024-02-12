@@ -1,7 +1,7 @@
 import { AbstractSingleTaskViewComponent } from './abstract-single-task-view.component';
 import { SideMenuControl } from '../../side-menu/models/side-menu-control';
 import { NAE_SIDE_MENU_CONTROL } from '../../side-menu/side-menu-injection-token';
-import { Component } from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import { TaskViewService } from './service/task-view.service';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
@@ -22,6 +22,8 @@ import { of } from 'rxjs';
 import { SearchService } from '../../search/search-service/search.service';
 import { NAE_BASE_FILTER } from '../../search/models/base-filter-injection-token';
 import { SimpleFilter } from '../../filter/models/simple-filter';
+import {AsyncPipe} from "@angular/common";
+import {BaseFilter} from "../../search/models/base-filter";
 
 describe('AbstractSingleTaskViewComponent', () => {
     let component: TestAbstractSingleTaskViewComponent;
@@ -47,7 +49,8 @@ describe('AbstractSingleTaskViewComponent', () => {
                 TaskViewService,
                 {provide: AllowedNetsService, useFactory: TestTaskViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
                 SearchService,
-                {provide: NAE_BASE_FILTER, useValue: {filter: SimpleFilter.emptyTaskFilter()}}
+                {provide: NAE_BASE_FILTER, useValue: {filter: SimpleFilter.emptyTaskFilter()}},
+                AsyncPipe
             ],
             declarations: [
                 TestAbstractSingleTaskViewComponent,
@@ -76,7 +79,8 @@ describe('AbstractSingleTaskViewComponent', () => {
 })
 class TestAbstractSingleTaskViewComponent extends AbstractSingleTaskViewComponent {
     constructor(taskViewService: TaskViewService,
-                activatedRoute: ActivatedRoute) {
-        super(taskViewService, activatedRoute);
+                activatedRoute: ActivatedRoute,
+                @Inject(NAE_BASE_FILTER) baseFilter: BaseFilter){
+        super(taskViewService, activatedRoute, baseFilter);
     }
 }

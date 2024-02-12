@@ -46,6 +46,7 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
     private _showLoadFilterButton = true;
     private _initialSearchMode = SearchMode.FULLTEXT;
 
+    @Input() public disabled: boolean;
     /**
      * Set data request body, that is sent to the filter in addition to the default body.
      * The default body is applied first and can be overridden by this argument.

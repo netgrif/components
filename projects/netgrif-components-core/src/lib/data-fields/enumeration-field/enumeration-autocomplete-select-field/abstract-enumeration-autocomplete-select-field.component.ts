@@ -1,25 +1,24 @@
-import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {FormControl} from '@angular/forms';
+import {Component, ElementRef, Inject, OnDestroy, OnInit, Optional, ViewChild} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {EnumerationField, EnumerationFieldValidation, EnumerationFieldValue} from '../models/enumeration-field';
-import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {TranslateService} from '@ngx-translate/core';
+import {EnumerationAutocompleteFilterProperty} from "./enumeration-autocomplete-filter-property";
+import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
+import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base-data-field.component";
 
 @Component({
     selector: 'ncc-abstract-enumeration-autocomplete-field',
     template: ''
 })
-export abstract class AbstractEnumerationAutocompleteSelectFieldComponent implements OnInit, OnDestroy {
+export abstract class AbstractEnumerationAutocompleteSelectFieldComponent extends AbstractBaseDataFieldComponent<EnumerationField> implements OnInit, OnDestroy {
 
-    @Input() enumerationField: EnumerationField;
-    @Input() formControlRef: FormControl;
-    @Input() showLargeLayout: WrappedBoolean;
     @ViewChild('input') text: ElementRef;
-
     filteredOptions: Observable<Array<EnumerationFieldValue>>;
 
-    constructor(protected _translate: TranslateService) {
+    constructor(protected _translate: TranslateService,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<EnumerationField>) {
+        super(dataFieldPortalData);
     }
 
     ngOnInit() {
@@ -33,15 +32,43 @@ export abstract class AbstractEnumerationAutocompleteSelectFieldComponent implem
         this.filteredOptions = undefined;
     }
 
+    protected filterType(): string | undefined {
+        if (this.checkPropertyInComponent('filter')) {
+            return this.dataField.component.properties.filter;
+        }
+    }
+
+    protected _filter(value: string): Array<EnumerationFieldValue> {
+        let filterType = this.filterType()?.toLowerCase()
+        switch (filterType) {
+            case EnumerationAutocompleteFilterProperty.SUBSTRING:
+                return this._filterInclude(value);
+            case EnumerationAutocompleteFilterProperty.PREFIX:
+                return this._filterIndexOf(value);
+            default:
+                return this._filterIndexOf(value);
+        }
+    }
+
+    protected _filterInclude(value: string): Array<EnumerationFieldValue> {
+        const filterValue = value?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        return this.dataField.choices.filter(option =>
+            option.value.toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .includes(filterValue));
+    }
+
+
     /**
      * Function to filter out matchless options without accent and case-sensitive differences
      * @param  value to compare matching options
      * @return  return matched options
      */
-    private _filter(value: string): Array<EnumerationFieldValue> {
+    protected _filterIndexOf(value: string): Array<EnumerationFieldValue> {
         const filterValue = value?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
-        return this.enumerationField.choices.filter(option => option.value.toLowerCase().normalize('NFD')
+        return this.dataField.choices.filter(option => option.value.toLowerCase().normalize('NFD')
             .replace(/[\u0300-\u036f]/g, '').indexOf(filterValue) === 0);
     }
 
@@ -53,8 +80,8 @@ export abstract class AbstractEnumerationAutocompleteSelectFieldComponent implem
 
     public renderSelection = (key) => {
         if (key !== undefined && key !== '' && key !== null) {
-            if (this.enumerationField.choices.find(choice => choice.key === key)) {
-                return this.enumerationField.choices.find(choice => choice.key === key).value;
+            if (this.dataField.choices.find(choice => choice.key === key)) {
+                return this.dataField.choices.find(choice => choice.key === key).value;
             }
         }
         return key;

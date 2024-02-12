@@ -21,7 +21,7 @@
 }
 
 .invited-card-font, .invited-card-font h1, .invited-card-font h2, .invited-card-font h3, .invited-card-font h4, .invited-card-font h5, .invited-card-font h6 {
-    font: 500 20px/32px Roboto, monospace;
+    font: 500 20px/32px Roboto, sans-serif;
     letter-spacing: normal;
     margin: 0;
 }
@@ -58,3 +58,15 @@
     font-size: 20px;
 }
 
+.role-height {
+    height: 100%;
+    min-height: 100%;
+}
+
+@media only screen and (max-width: 599.99px) {
+    .role-height {
+        height: 33%;
+        min-height: 33%;
+        width: 100%;
+    }
+}

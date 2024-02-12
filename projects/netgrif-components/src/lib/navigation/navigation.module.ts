@@ -9,7 +9,8 @@ import {
     GroupNavigationComponentResolverService,
     MaterialModule,
     TranslateLibModule,
-    NAE_GROUP_NAVIGATION_COMPONENT_RESOLVER_COMPONENT
+    UtilityModule,
+    NAE_GROUP_NAVIGATION_COMPONENT_RESOLVER_COMPONENT,
 } from '@netgrif/components-core';
 import {NavigationRailComponent} from './navigation-rail/navigation-rail.component';
 import {NavigationTreeComponent} from './navigation-tree/navigation-tree.component';
@@ -42,6 +43,9 @@ import {CaseViewComponentModule} from '../view/case-view/case-view.module';
 import { NavigationDoubleDrawerComponent } from './navigation-double-drawer/navigation-double-drawer.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
+import { DefaultTaskViewComponent } from './group-navigation-component-resolver/default-components/default-task-view/default-task-view.component';
+import { DefaultCaseRefListViewComponent } from './group-navigation-component-resolver/default-components/default-case-ref-list-view/default-case-ref-list-view.component';
+import { DefaultNoFilterProvidedComponent } from './group-navigation-component-resolver/default-components/default-no-filter-provided/default-no-filter-provided.component';
 
 
 @NgModule({
@@ -55,7 +59,11 @@ import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
         DefaultTabbedCaseViewComponent,
         DefaultTabViewComponent,
         NavigationDoubleDrawerComponent,
-        BreadcrumbsComponent
+        BreadcrumbsComponent,
+        DefaultTaskViewComponent,
+        DefaultCaseRefListViewComponent,
+        BreadcrumbsComponent,
+        DefaultNoFilterProvidedComponent
     ],
 	imports: [
 		CommonModule,
@@ -73,7 +81,8 @@ import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 		PanelComponentModule,
 		TabsComponentModule,
 		CaseViewComponentModule,
-		MatDividerModule
+		MatDividerModule,
+        UtilityModule,
 	],
     exports: [
         NavigationDrawerComponent,

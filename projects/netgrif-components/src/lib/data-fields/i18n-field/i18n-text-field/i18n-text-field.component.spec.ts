@@ -61,7 +61,7 @@ describe('I18nTextFieldComponent', () => {
 
     @Component({
         selector: 'nc-test-wrapper',
-        template: '<nc-i18n-text-field [formControlRef]="fc" [textI18nField]="field" [showLargeLayout]="boolean"></nc-i18n-text-field>'
+        template: '<nc-i18n-text-field [formControlRef]="fc" [dataField]="field" [showLargeLayout]="boolean"></nc-i18n-text-field>'
     })
     class TestWrapperComponent {
         field = new I18nField('', '',

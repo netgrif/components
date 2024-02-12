@@ -1,6 +1,11 @@
-import { AfterViewInit, Component} from '@angular/core';
+import {AfterViewInit, Component, Inject, Optional} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {AbstractCurrencyNumberFieldComponent} from '@netgrif/components-core';
+import {
+    AbstractCurrencyNumberFieldComponent,
+    DATA_FIELD_PORTAL_DATA,
+    DataFieldPortalData,
+    NumberField
+} from '@netgrif/components-core';
 import {CurrencyPipe} from '@angular/common';
 
 @Component({
@@ -10,8 +15,9 @@ import {CurrencyPipe} from '@angular/common';
 })
 export class NumberCurrencyFieldComponent extends AbstractCurrencyNumberFieldComponent implements AfterViewInit {
 
-    constructor(currencyPipe: CurrencyPipe, translate: TranslateService) {
-        super(currencyPipe, translate);
+    constructor(currencyPipe: CurrencyPipe, translate: TranslateService,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<NumberField>) {
+        super(currencyPipe, translate, dataFieldPortalData);
     }
 
     ngAfterViewInit() {

@@ -15,10 +15,8 @@ import {FieldTypeResource} from '../task-content/model/field-type-resource';
 import {Category} from '../search/models/category/category';
 import {Net} from '../process/net';
 import {UserFilterConstants} from './models/user-filter-constants';
-import {SideMenuSize} from '../side-menu/models/side-menu-size';
 import {SaveFilterInjectionData} from '../side-menu/content-components/save-filter/model/save-filter-injection-data';
 import {SideMenuService} from '../side-menu/services/side-menu.service';
-import {NAE_LOAD_FILTER_COMPONENT, NAE_SAVE_FILTER_COMPONENT} from '../side-menu/content-components/injection-tokens';
 import {ComponentType} from '@angular/cdk/portal';
 import {LoadFilterInjectionData} from '../side-menu/content-components/load-filter/model/load-filter-injection-data';
 import {FilterType} from './models/filter-type';
@@ -31,6 +29,8 @@ import {CategoryResolverService} from '../search/category-factory/category-resol
 import {DataGroup} from '../resources/interface/data-groups';
 import {getFieldFromDataGroups} from '../utility/get-field';
 import {EventOutcomeMessageResource} from '../resources/interface/message-resource';
+import {MatDialog} from '@angular/material/dialog';
+import {NAE_LOAD_FILTER_DIALOG_COMPONENT, NAE_SAVE_FILTER_DIALOG_COMPONENT} from '../dialog/injection-tokens';
 
 /**
  * Service that manages filters created by users of the application.
@@ -50,8 +50,9 @@ export class UserFiltersService implements OnDestroy {
                 protected _sideMenuService: SideMenuService,
                 protected _log: LoggerService,
                 protected _categoryResolverService: CategoryResolverService,
-                @Optional() @Inject(NAE_SAVE_FILTER_COMPONENT) protected _saveFilterComponent: ComponentType<unknown>,
-                @Optional() @Inject(NAE_LOAD_FILTER_COMPONENT) protected _loadFilterComponent: ComponentType<unknown>) {
+                protected _dialog: MatDialog,
+                @Optional() @Inject(NAE_SAVE_FILTER_DIALOG_COMPONENT) protected _saveFilterComponent: ComponentType<unknown>,
+                @Optional() @Inject(NAE_LOAD_FILTER_DIALOG_COMPONENT) protected _loadFilterComponent: ComponentType<unknown>) {
         this._initialized$ = new ReplaySubject<boolean>(1);
         this._processService.getNet(UserFilterConstants.FILTER_NET_IDENTIFIER).subscribe(net => {
             this._filterNet = net;
@@ -120,10 +121,13 @@ export class UserFiltersService implements OnDestroy {
         }
 
         const result = new ReplaySubject<any>(1);
-        const ref = this._sideMenuService.open(this._loadFilterComponent, SideMenuSize.LARGE, {
-            filter: filterCasesFilter
-        } as LoadFilterInjectionData);
-        ref.onClose.pipe(filter(e => !e.opened), take(1)).subscribe(event => {
+        const ref = this._dialog.open(this._loadFilterComponent, {
+            panelClass: "dialog-responsive",
+            data: {
+                filter: filterCasesFilter
+            } as LoadFilterInjectionData,
+        });
+        ref.afterClosed().subscribe(event => {
             if (event.message === 'Side menu closed unexpectedly') {
                 result.next();
             } else {
@@ -187,10 +191,13 @@ export class UserFiltersService implements OnDestroy {
             inheritAllowedNets,
             navigationItemTaskData
         ).subscribe(filterCaseId => {
-            const ref = this._sideMenuService.open(this._saveFilterComponent, SideMenuSize.LARGE, {
-                newFilterCaseId: filterCaseId
-            } as SaveFilterInjectionData);
-            ref.onClose.pipe(filter(e => !e.opened), take(1)).subscribe(event => {
+            const ref = this._dialog.open(this._saveFilterComponent, {
+                panelClass: "dialog-responsive",
+                data: {
+                    newFilterCaseId: filterCaseId
+                } as SaveFilterInjectionData,
+            });
+            ref.afterClosed().subscribe(event => {
                 if (event.message === 'Side menu closed unexpectedly') {
                     this.delete(filterCaseId);
                     result.next();
@@ -341,6 +348,7 @@ export class UserFiltersService implements OnDestroy {
             if (assignOutcome.error) {
                 this._log.error(`Could not assign task '${task.title}'`, task, assignOutcome.error);
                 callChain.next(false);
+                return;
             }
 
             this._taskService.setData(task.stringId, data).subscribe(() => {
@@ -348,6 +356,7 @@ export class UserFiltersService implements OnDestroy {
                     if (finishOutcome.error) {
                         this._log.error(`Could not finish task '${task.title}'`, task, finishOutcome.error);
                         callChain.next(false);
+                        return;
                     }
 
                     callChain.next(true);

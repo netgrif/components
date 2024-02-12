@@ -87,14 +87,15 @@
             "errThird": "Sie müssen eine Farbe auswählen.",
             "noNets": "Es gibt keine erlaubte Netze",
             "createCase": "Neuen Fall würde erfolgreich erzeugt",
-            "defaultCaseName": "mit einem Standardfallnamen"
+            "defaultCaseName": "mit einem Standardfallnamen",
+            "createCaseError": "Neuer Fall wurde erstellt, aber beim Ausführen von Aktionen ist ein Fehler aufgetreten"
         },
         "user": {
-            "assign": "Benützer zuweisen",
-            "choose": "Benützer auswählen",
-            "noUser": "Es gibt keine Benützer",
-            "err": "Beim laden der Benützer ist eine Fehler aufgetreten",
-            "showcase": "Benützeransichtmodus ist nicht ausgewählt!"
+            "assign": "Benutzer zuweisen",
+            "choose": "Benutzer auswählen",
+            "noUser": "Es gibt keine Benutzer",
+            "err": "Beim laden der Benutzer ist eine Fehler aufgetreten",
+            "showcase": "Die Benutzeransicht ist nicht gesetzt!"
         },
         "ldapGroup": {
             "choose": "LDAP-Gruppe suchen",
@@ -108,6 +109,12 @@
         "option-selector": {
             "select": "Auswählen",
             "choose-one-option": "Wählen Sie eine Option aus"
+        },
+        "impersonation": {
+            "title": "Benutzer vertreten",
+            "submit": "Vertreten",
+            "cease": "Vertretung abbrechen",
+            "impersonating": "in Vertretung als"
         }
     },
     "search": {
@@ -225,13 +232,16 @@
             "phone": "Der eingegebene Text muss ein Telefonnummer sein",
             "email": "Der eingegebene Text muss ein E-Mail sein",
             "dateRange": "Das eingegebene Datum muss zwischen {{left}} und {{right}} liegen",
+            "datePast": "Das eingegebene Datum muss bis {{right}} sein",
+            "dateFuture": "Das eingegebene Datum muss ab {{left}} sein",
             "weekend": "Das eingegebene Datum muss das Wochenende sein",
             "workday": "Das eingegebene Datum muss ein Wochentag sein",
             "enumeration": "Eine von der angebotenen Optionen muss ausgewählt sein",
             "min": "Die eingegebene Nummer muss größer als {{length}} sein",
             "translationRequired": "Übersetzung für Sprachen: <{{translation}}> muss eingegeben werden",
             "translationOnly": "Nur die Übersetzung für Sprachen: <{{translation}}> ist erlaubt",
-            "requiredI18n": "Es muss mindestens ein Wert eingegeben werden"
+            "requiredI18n": "Es muss mindestens ein Wert eingegeben werden",
+            "requiredUserList": "Es muss mindestens ein Wert eingegeben werden"
         },
         "snackBar": {
             "downloadFail": " könnte nicht heruntergeladen werden",
@@ -246,6 +256,7 @@
             "maxFilesSizeExceeded": "Die maximale Größe der hochgeladenen Dateien wird überschritten: ",
             "notSelectedUser": "Es wurde kein Benutzer ausgewählt",
             "userAssigned": "Benutzer {{userName}} wurde zugewiesen",
+            "userListAssigned": "Ausgewählte Benutzer {{userNames}} wurden zugewiesen",
             "caseNetGetFailed": "Das Abrufen des Fallnetzes ist fehlgeschlagen"
         },
         "values": {
@@ -259,6 +270,7 @@
             "noFile": "keine Datei",
             "clickToUpload": "Klicken Sie, um eine Datei hochzuladen",
             "clickToDownload": "Klicken Sie, um {{fileName}} herunterzuladen",
+            "clickToOpen": "Klicken Sie hier, um den Dateiinhalt anzuzeigen",
             "clickToDelete": "Klicken Sie, um die Datei zu löschen"
         },
         "i18n": {
@@ -274,7 +286,9 @@
             "reset": "Rücksetzen"
         },
         "user": {
-            "selectUser": "Benutzer auswählen"
+            "selectUser": "Benutzer auswählen",
+            "save": "Zuweisen",
+            "deleteAll": "Leere Benutzerliste"
         },
         "textarea": {
             "insertText": "Hier Text eingeben..."
@@ -289,13 +303,19 @@
             "enterEmail": "Ihre E-Mail Adresse eingeben"
         },
         "login": {
-            "length": "Das Benützername muss mindestens 4 Zeichen enthalten",
-            "login": "Benützername",
+            "length": "Das Benutzername muss mindestens 4 Zeichen enthalten",
+            "login": "Benutzername",
             "wrongCredentials": "Falsche Anmeldeinformationen!",
             "loginButton": "Anmelden",
             "reset": "Kennwort wiederherstellen",
             "sign": "Registrieren",
             "enterPass": "Ihre Kennwort eingeben"
+        },
+        "changePassword": {
+            "oldPassword": "Geben Sie Ihr altes Kennwort ein",
+            "enterNewPass": "Geben Sie Ihr neues Kennwort ein",
+            "repeatNewPass": "Wiederholen Sie Ihr neues Kennwort",
+            "changePass": "Kennwort ändern"
         },
         "register": {
             "email": "Ihre E-Mail Adresse",
@@ -387,7 +407,8 @@
         },
         "ldapGroup-list": {
             "noLdapGroupsWereFound": "Keine LDAP Gruppe wurde gefunden",
-            "listTitle": "LDAP Gruppen"
+            "listTitle": "LDAP Gruppen",
+            "count": "Anzahl der Gruppen"
         },
         "process-list": {
             "newestVersion": "Neuste Version",
@@ -437,6 +458,7 @@
         "snackBar": {
             "deleteCanceled": "Prozess löschen abgebrochen",
             "deleteSuccess": "Prozess erfolgreich gelöscht",
+            "deleteInProgress": "Der ausgewählte Prozess wird jetzt gelöscht",
             "deleteError": "Prozess konnte nicht gelöscht werden",
             "uploadFailed": "Prozessdatei konnte nicht hochgeladen werden.",
             "uploadSuccess": "Prozessdatei erfolgreich hochgeladen"
@@ -456,6 +478,36 @@
         "errorCreate": "Fehler beim Erstellen des Falles "
     },
     "dynamicNavigation": {
-        "couldNotResolveView": "Ein Fehler ist aufgetreten während des Ansichtauflösungsprocess. Der Ansicht kann nicht angezeigt werden"
+        "couldNotResolveView": "Ein Fehler ist aufgetreten während des Ansichtauflösungsprocess. Der Ansicht kann nicht angezeigt werden",
+        "filterNotFound": "Diese Ansicht hat keinen Filter",
+        "loadMoreItems": "Mehr",
+        "ascending": "Aufsteigend",
+        "descending": "Absteigend"
+    },
+    "impersonation": {
+        "user": {
+            "successfullyRepresented": "Benutzer wird jetzt vertreten",
+            "currentlyAlreadyRepresented": "Für den Benutzer existiert bereits eine Vertretung",
+            "currentlyLogged": "Benutzer ist bereits angemeldet"
+        },
+        "action": {
+            "failed": "Aktion ist fehlgeschlagen",
+            "deactivated": "Vertretung wurde erfolgreich deaktiviert"
+        }
+    },
+    "session": {
+        "expireTitle": "Ihre Sitzung läuft bald ab",
+        "expireDetail": "Ihre Sitzung läuft bald ab.\n\nSie werden in {{time}} Sekunden weitergeleitet",
+        "exitButton": "Abmelden",
+        "refreshButton": "Angemeldet bleiben"
+    },
+    "paginator": {
+        "firstPage": "Vorderseite",
+        "itemsPage": "Elemente pro Seite:",
+        "lastPage": "Letzte Seite",
+        "nextPage": "Nächste Seite",
+        "previousPage": "Vorherige Seite",
+        "pageOne": "Seite 1 von 1",
+        "pageAmount": "Seite {{page}} von {{amountPages}}"
     }
 }

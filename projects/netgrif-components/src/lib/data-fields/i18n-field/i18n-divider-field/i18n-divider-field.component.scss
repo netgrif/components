@@ -6,3 +6,32 @@
     margin-right: 8px;
     margin-left: 8px;
 }
+
+.divider-line-lgbt {
+    height: 2px;
+    background: linear-gradient(to right,
+     #B827FC 0%,
+     #2C90FC 20%,
+     #B8FD33 40%,
+     #FEC837 60%,
+     #FD1892 80%,
+     #B827FC 100%)
+    -0% 0/150% 100%;
+    animation: move-divider-line-lgbt 10s linear infinite;
+    -webkit-animation: move-divider-line-lgbt 10s linear infinite;
+}
+
+@keyframes move-divider-line-lgbt {
+    to {
+        background-position: -1500% 0%
+    }
+}
+
+@-webkit-keyframes move-divider-line-lgbt {
+    to {
+        background-position: -1500% 0%
+    }
+}
+
+
+

@@ -2,12 +2,34 @@ import {Behavior} from '../../models/behavior';
 import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {Layout} from '../../models/layout';
 import {Validation} from '../../models/validation';
-import {Component} from '../../models/component';
+import {Component, ComponentPrefixes} from '../../models/component';
 import {DataField} from '../../models/abstract-data-field';
 
+export enum TextFieldView {
+    DEFAULT = 'default',
+    TEXTAREA = 'textarea',
+    RICHTEXTAREA = 'richtextarea',
+    HTMLTEXTAREA = 'htmltextarea'
+}
+
+/**
+ * A collection of Text field component names supported by the application engine.
+ */
+export enum TextFieldComponent {
+    PASSWORD = 'password',
+    TEXT_AREA = 'textarea',
+    RICH_TEXT_AREA = 'richtextarea',
+    HTML_TEXT_AREA = 'htmltextarea',
+    DASHBOARD_LINE_CHART = 'dashboard_line_chart',
+    DASHBOARD_PIE_CHART = 'dashboard_pie_chart',
+    DASHBOARD_BAR_CHART = 'dashboard_bar_chart',
+    DASHBOARD_IFRAME = 'dashboard_iframe',
+    DASHBOARD_PORTAL = 'dashboard_portal',
+}
+
 export enum TextAreaHeight {
-    OUTLINE = 27,
-    FILL_STANDARD = 34
+    OUTLINE = 20,
+    FILL_STANDARD = 22
 }
 
 export enum TextFieldValidation {
@@ -24,7 +46,7 @@ export enum TextFieldValidation {
 }
 
 export class TextField extends DataField<string> {
-    public static FIELD_HEIGHT = 105;
+    public static FIELD_HEIGHT = 67;
 
     constructor(stringId: string, title: string, value: string, behavior: Behavior, placeholder?: string,
                 description?: string, layout?: Layout, validations?: Array<Validation>, _component?: Component,
@@ -32,6 +54,9 @@ export class TextField extends DataField<string> {
         super(stringId, title, value, behavior, placeholder, description, layout, validations, _component, parentTaskId);
     }
 
+    public getTypedComponentType(): string {
+        return ComponentPrefixes.TEXT + this.getComponentType();
+    }
     protected resolveValidations(): Array<ValidatorFn> {
         const result = [];
 
@@ -72,7 +97,7 @@ export class TextField extends DataField<string> {
         if (!(new RegExp(/^(?:\+?(\d{1,3}))?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4})(?:[-.x ]*(\d+))?)$/).test(fc.value))) {
             return ({validTelNumber: true});
         } else {
-            return (null);
+            return null;
         }
     }
 }

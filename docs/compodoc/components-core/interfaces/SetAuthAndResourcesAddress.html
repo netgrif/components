@@ -431,6 +431,7 @@ export interface Access {
      *  For &#x60;string&#x60; values the format is: &lt;net import id&gt;.&lt;role name&gt;
      */
     role?: Array&lt;string&gt; | string | RoleAccess | Array&lt;RoleAccess&gt;;
+    bannedRole?: Array&lt;string&gt; | string | RoleAccess | Array&lt;RoleAccess&gt;;
     group?: Array&lt;string&gt; | string;
     authority?: Array&lt;string&gt; | string;
 
@@ -471,8 +472,45 @@ export interface Services {
         [k: string]: any;
     };
     auth?: {
+        /**
+         * @deprecated in 6.3.0 use [onLogoutRedirect]{@link Services#auth.onLogoutRedirect} instead
+         *
+         * Determines the route the application should redirect to when the logout action is performed
+         *
+         * This value should be retrieved by calling the [getOnLogoutPath]{@link ConfigurationService#getOnLogoutPath} method of the
+         * {@link ConfigurationService} as it handles fall backs on deprecated attributes.
+         */
         logoutRedirect?: string;
+        /**
+         * @deprecated in 6.3.0 use [toLoginRedirect]{@link Services#auth.toLoginRedirect} instead
+         *
+         * Determines the route the application should redirect to when a guard prevents entry to some route
+         *
+         * This value should be retrieved by calling the [getToLoginPath]{@link ConfigurationService#getToLoginPath} method of the
+         * {@link ConfigurationService} as it handles fall backs on deprecated attributes.
+         */
         loginRedirect?: string;
+        /**
+         * Determines the route the application should redirect to when the logout action is performed
+         *
+         * This value should be retrieved by calling the [getOnLogoutPath]{@link ConfigurationService#getOnLogoutPath} method of the
+         * {@link ConfigurationService} as it handles fall backs on deprecated attributes.
+         */
+        onLogoutRedirect?: string;
+        /**
+         * Determines the route the application should redirect to when a guard prevents entry to some route
+         *
+         * This value should be retrieved by calling the [getToLoginPath]{@link ConfigurationService#getToLoginPath} method of the
+         * {@link ConfigurationService} as it handles fall backs on deprecated attributes.
+         */
+        toLoginRedirect?: string;
+        /**
+         * Determines the route the application should redirect to when the login action is performed
+         *
+         * This value should be retrieved by calling the [getOnLoginPath]{@link ConfigurationService#getOnLoginPath} method of the
+         * {@link ConfigurationService}
+         */
+        onLoginRedirect?: string;
     };
     routing?: {
         defaultRedirect?: string;

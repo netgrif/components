@@ -96,7 +96,19 @@
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
+                                <a href="#getConfigurationSubtreeByPath" >getConfigurationSubtreeByPath</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#getDatafieldConfiguration" >getDatafieldConfiguration</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#getOnLoginPath" >getOnLoginPath</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#getOnLogoutPath" >getOnLogoutPath</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
@@ -105,6 +117,10 @@
                             <li>
                                     <span class="modifier">Public</span>
                                 <a href="#getServicesConfiguration" >getServicesConfiguration</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#getToLoginPath" >getToLoginPath</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
@@ -117,6 +133,10 @@
                             <li>
                                     <span class="modifier">Protected</span>
                                 <a href="#resolveEndpointURLs" >resolveEndpointURLs</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#resolveProvidersEndpoint" >resolveProvidersEndpoint</a>
                             </li>
                             <li>
                                     <span class="modifier">Protected</span>
@@ -212,14 +232,16 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="20"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:20</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="22"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:22</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                    <div class="io-description"><p>Calls to this method should be avoided as creating a deep copy of the configuration has a large overhead</p>
+</div>
 
                     <div>
                     </div>
@@ -296,8 +318,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="107"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:107</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="113"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:113</a></div>
                 </td>
             </tr>
 
@@ -357,6 +379,76 @@ Calling this method with an empty array as argument is equivalent to calling the
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="getConfigurationSubtreeByPath"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>getConfigurationSubtreeByPath</b></span>
+                        <a href="#getConfigurationSubtreeByPath"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getConfigurationSubtreeByPath(path: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="104"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:104</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>path</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>any | undefined</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="getDatafieldConfiguration"></a>
                     <span class="name">
                         <span class="modifier">Public</span>
@@ -375,8 +467,8 @@ Calling this method with an empty array as argument is equivalent to calling the
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="121"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:121</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="127"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:127</a></div>
                 </td>
             </tr>
 
@@ -392,6 +484,101 @@ Calling this method with an empty array as argument is equivalent to calling the
                     </div>
                     <div class="io-description">
                         <p>the appropriate template configuration for data fields, or <code>undefined</code> if such configuration is not present.</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getOnLoginPath"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>getOnLoginPath</b></span>
+                        <a href="#getOnLoginPath"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getOnLoginPath()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="215"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:215</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Otherwise, <code>undefined</code> is returned.</p>
+</div>
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>string | undefined</code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>the value stored in the [onLoginRedirect]{</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getOnLogoutPath"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>getOnLogoutPath</b></span>
+                        <a href="#getOnLogoutPath"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getOnLogoutPath()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="198"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:198</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>If not and the deprecated attribute <a href="../interfaces/Services.html#auth.logoutRedirect">logoutRedirect</a> is defined then its value is returned.
+Otherwise, <code>undefined</code> is returned.</p>
+</div>
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>string | undefined</code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>the value stored in the [onLogoutRedirect]{</p>
 
                     </div>
                 </td>
@@ -420,8 +607,8 @@ Calling this method with an empty array as argument is equivalent to calling the
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="89"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:89</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="91"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:91</a></div>
                 </td>
             </tr>
 
@@ -498,8 +685,8 @@ Calling this method with an empty array as argument is equivalent to calling the
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="182"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:182</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="188"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:188</a></div>
                 </td>
             </tr>
 
@@ -515,6 +702,54 @@ Calling this method with an empty array as argument is equivalent to calling the
                     </div>
                     <div class="io-description">
                         <p>the services configuration, or <code>undefined</code> if such configuration is not present.</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getToLoginPath"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>getToLoginPath</b></span>
+                        <a href="#getToLoginPath"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getToLoginPath()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="207"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:207</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>If not and the deprecated attribute <a href="../interfaces/Services.html#auth.loginRedirect">loginRedirect</a> is defined then its value is returned.
+Otherwise, <code>undefined</code> is returned.</p>
+</div>
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>string | undefined</code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>the value stored in the [toLoginRedirect]{</p>
 
                     </div>
                 </td>
@@ -543,8 +778,8 @@ Calling this method with an empty array as argument is equivalent to calling the
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="29"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:29</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="31"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:31</a></div>
                 </td>
             </tr>
 
@@ -621,8 +856,8 @@ Calling this method with an empty array as argument is equivalent to calling the
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="46"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:46</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="48"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:48</a></div>
                 </td>
             </tr>
 
@@ -699,8 +934,8 @@ Calling this method with an empty array as argument is equivalent to calling the
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="136"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:136</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="142"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:142</a></div>
                 </td>
             </tr>
 
@@ -715,6 +950,82 @@ as the base path. <code>/api</code> is appended automatically.</p>
 
                     <div class="io-description">
                         <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resolveProvidersEndpoint"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>resolveProvidersEndpoint</b></span>
+                        <a href="#resolveProvidersEndpoint"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resolveProvidersEndpoint(endpointKey: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="236"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:236</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>endpointKey</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the attribute name of the endpoint address in <code>nae.json</code></p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>the endpoint address or <code>undefined</code> if such endpoint is not defined in <code>nae.json</code></p>
 
                     </div>
                 </td>
@@ -743,8 +1054,8 @@ as the base path. <code>/api</code> is appended automatically.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="171"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:171</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="177"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:177</a></div>
                 </td>
             </tr>
 
@@ -829,6 +1140,8 @@ export abstract class ConfigurationService {
     }
 
     /**
+     * Calls to this method should be avoided as creating a deep copy of the configuration has a large overhead
+     *
      * @returns a deep copy of the entire configuration object
      */
     public get(): NetgrifApplicationEngine {
@@ -911,6 +1224,10 @@ export abstract class ConfigurationService {
         });
 
         return result;
+    }
+
+    public getConfigurationSubtreeByPath(path: string) : any | undefined {
+        return this.getConfigurationSubtree(path.split(&#x27;.&#x27;));
     }
 
     /**
@@ -998,6 +1315,32 @@ export abstract class ConfigurationService {
         return subtree !&#x3D;&#x3D; undefined ? this.deepCopy(subtree) as Services : undefined;
     }
 
+    /**
+     * @returns the value stored in the [onLogoutRedirect]{@link Services#auth.onLogoutRedirect} attribute if defined.
+     * If not and the deprecated attribute [logoutRedirect]{@link Services#auth.logoutRedirect} is defined then its value is returned.
+     * Otherwise, &#x60;undefined&#x60; is returned.
+     */
+    public getOnLogoutPath(): string | undefined {
+        return this.configuration?.services?.auth?.onLogoutRedirect ?? this.configuration?.services?.auth?.logoutRedirect;
+    }
+
+    /**
+     * @returns the value stored in the [toLoginRedirect]{@link Services#auth.toLoginRedirect} attribute if defined.
+     * If not and the deprecated attribute [loginRedirect]{@link Services#auth.loginRedirect} is defined then its value is returned.
+     * Otherwise, &#x60;undefined&#x60; is returned.
+     */
+    public getToLoginPath(): string | undefined {
+        return this.configuration?.services?.auth?.toLoginRedirect ?? this.configuration?.services?.auth?.loginRedirect;
+    }
+
+    /**
+     * @returns the value stored in the [onLoginRedirect]{@link Services#auth.onLoginRedirect} attribute if defined.
+     * Otherwise, &#x60;undefined&#x60; is returned.
+     */
+    public getOnLoginPath(): string | undefined {
+        return this.configuration?.services?.auth?.onLoginRedirect;
+    }
+
     private getView(searched: string, view: View): Array&lt;string&gt; {
         const paths &#x3D; [];
         if (!!view.layout &amp;&amp; view.layout.name &#x3D;&#x3D;&#x3D; searched) {
@@ -1009,6 +1352,23 @@ export abstract class ConfigurationService {
             });
         }
         return paths;
+    }
+
+    /**
+     * @param endpointKey the attribute name of the endpoint address in &#x60;nae.json&#x60;
+     * @returns the endpoint address or &#x60;undefined&#x60; if such endpoint is not defined in &#x60;nae.json&#x60;
+     */
+    public resolveProvidersEndpoint(endpointKey: string): string {
+        const config &#x3D; this.configuration;
+        if (!config
+            || !config.providers
+            || !config.providers.auth
+            || !config.providers.auth.address
+            || !config.providers.auth.endpoints
+            || !config.providers.auth.endpoints[endpointKey]) {
+            throw new Error(&#x27;Authentication provider address is not set!&#x27;);
+        }
+        return config.providers.auth.address + config.providers.auth.endpoints[endpointKey];
     }
 
     private createConfigurationCopy(): any {

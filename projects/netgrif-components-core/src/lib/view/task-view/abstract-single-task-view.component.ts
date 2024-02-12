@@ -1,10 +1,14 @@
-import { Component, Input, OnDestroy } from '@angular/core';
-import { AbstractViewWithHeadersComponent } from '../abstract/view-with-headers';
-import { Observable, Subject, Subscription } from 'rxjs';
-import { TaskPanelData } from '../../panel/task-panel-list/task-panel-data/task-panel-data';
-import { TaskViewService } from './service/task-view.service';
-import { map, takeUntil } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
+import {Component, EventEmitter, Inject, Input, OnDestroy, Output} from '@angular/core';
+import {AbstractViewWithHeadersComponent} from '../abstract/view-with-headers';
+import {Observable, Subscription} from 'rxjs';
+import {TaskPanelData} from '../../panel/task-panel-list/task-panel-data/task-panel-data';
+import {TaskViewService} from './service/task-view.service';
+import {ActivatedRoute} from '@angular/router';
+import {BaseFilter} from "../../search/models/base-filter";
+import {SimpleFilter} from "../../filter/models/simple-filter";
+import {TaskSearchRequestBody} from "../../filter/models/task-search-request-body";
+import {NAE_BASE_FILTER} from "../../search/models/base-filter-injection-token";
+import {map, tap} from "rxjs/operators";
 
 export class TaskConst {
     public static readonly TRANSITION_ID = 'transitionId';
@@ -18,39 +22,47 @@ export abstract class AbstractSingleTaskViewComponent extends AbstractViewWithHe
 
     @Input() initiallyExpanded: boolean = true;
     @Input() preventCollapse: boolean = true;
-    public task$: Observable<TaskPanelData>;
+    @Output() noTaskPresent: EventEmitter<void>;
+    public taskPanelData: Observable<TaskPanelData>;
     public loading$: Observable<boolean>;
-    private transitionId: string;
-    private subRoute: Subscription;
-    protected unsubscribe$: Subject<void>;
+    protected transitionId: string;
+    protected subRoute: Subscription | undefined;
+    protected subPanelData: Subscription | undefined;
+    protected subLoading: Subscription | undefined;
 
     protected constructor(protected taskViewService: TaskViewService,
-                          activatedRoute: ActivatedRoute) {
+                          activatedRoute: ActivatedRoute,
+                          @Inject(NAE_BASE_FILTER) protected baseFilter: BaseFilter) {
         super(taskViewService, activatedRoute);
-        this.unsubscribe$ = new Subject<void>();
-        this.subRoute = this._activatedRoute.paramMap.subscribe(paramMap => {
-            if (!!(paramMap?.['params']?.[TaskConst.TRANSITION_ID])) {
-                this.transitionId = paramMap['params'][TaskConst.TRANSITION_ID];
-                this.task$ = this.taskViewService.tasks$.pipe(map<Array<TaskPanelData>, TaskPanelData>(tasks => {
-                    return this.resolveTransitionTask(tasks);
-                }), takeUntil(this.unsubscribe$));
-            }
-        });
+        this.noTaskPresent = new EventEmitter<void>();
+        this.taskPanelData = this.taskViewService.tasks$.pipe(
+            map<TaskPanelData[], TaskPanelData>(tasks => tasks.find(
+                panelData => this.isTaskMatchingFilter(panelData, (baseFilter.filter as SimpleFilter).getRequestBody())))
+        ).pipe(
+            tap(panelData => {
+                if (!!panelData) {
+                    panelData.initiallyExpanded = true
+                }
+            })
+        );
         this.loading$ = this.taskViewService.loading$;
     }
 
     ngOnDestroy() {
         super.ngOnDestroy();
-        this.subRoute.unsubscribe();
-        this.unsubscribe$.next();
-        this.unsubscribe$.complete();
+        if (!!this.subRoute) {
+            this.subRoute.unsubscribe();
+        }
+        if (!!this.subPanelData) {
+            this.subPanelData.unsubscribe();
+        }
     }
 
-    private resolveTransitionTask(tasks: Array<TaskPanelData>): TaskPanelData {
-        const transitionTask = tasks.find(t => t.task.transitionId === this.transitionId);
-        if (!!transitionTask) {
-            transitionTask.initiallyExpanded = transitionTask.task.finishDate === undefined;
-        }
-        return transitionTask;
+    get task$(): Observable<TaskPanelData> {
+        return this.taskPanelData;
+    }
+
+    protected isTaskMatchingFilter(panelData: TaskPanelData, taskSearchRequestBody: TaskSearchRequestBody): boolean {
+        return panelData.task.stringId === taskSearchRequestBody.stringId || panelData.task.transitionId === taskSearchRequestBody.transitionId;
     }
 }

@@ -5,8 +5,10 @@ import {Change} from './changed-fields';
 import {distinctUntilChanged, filter, take} from 'rxjs/operators';
 import {Layout} from './layout';
 import {ConfigurationService} from '../../configuration/configuration.service';
-import {Component} from './component';
+import {Component, DEFAULT} from './component';
 import {Validation} from './validation';
+import {ElementRef} from "@angular/core";
+import {UpdateOnStrategy, UpdateStrategy} from "./update-strategy";
 
 /**
  * Holds the logic common to all data field Model objects.
@@ -118,6 +120,16 @@ export abstract class DataField<T> {
     protected layoutSubject: BehaviorSubject<Layout>;
 
     /**
+     * Reference to rendered element
+     * */
+    private _input: ElementRef;
+
+    /**
+     * Reference to form control
+     * */
+    private _formControlRef: FormControl;
+
+    /**
      * @param _stringId - ID of the data field from backend
      * @param _title - displayed title of the data field from backend
      * @param initialValue - initial value of the data field
@@ -164,7 +176,7 @@ export abstract class DataField<T> {
         this._placeholder = placeholder;
     }
 
-    get placeholder(): string {
+    get placeholder(): string | undefined {
         return this._placeholder;
     }
 
@@ -273,6 +285,10 @@ export abstract class DataField<T> {
         this._touch.next(set);
     }
 
+    get touch$(): Observable<boolean> {
+        return this._touch.asObservable();
+    }
+
     get component(): Component {
         return this._component;
     }
@@ -323,13 +339,41 @@ export abstract class DataField<T> {
         return this._reverting;
     }
 
+    public focus(): void {
+        if (!!this._input) {
+            this._input.nativeElement.focus();
+        }
+    }
+
+    get input(): ElementRef {
+        return this._input;
+    }
+
+    set input(value: ElementRef) {
+        this._input = value;
+    }
+
+    get formControlRef(): FormControl {
+        return this._formControlRef;
+    }
+
+    set formControlRef(formControl: FormControl) {
+        this._formControlRef = formControl;
+    }
+
+    public getUpdateOnStrategy(): UpdateOnStrategy {
+        return UpdateStrategy.BLUR;
+    }
+
     /**
      * This function resolve type of component for HTML
      * @returns type of component in string
      */
     public getComponentType(): string {
-        return this.component?.name ?? '';
+        return this.component?.name ?? DEFAULT;
     }
+
+    public abstract getTypedComponentType(): string;
 
     public destroy(): void {
         this._value.complete();
@@ -347,6 +391,7 @@ export abstract class DataField<T> {
                 + ' Disconnect the previous form control before initializing the data field again!');
         }
 
+        this.formControlRef = formControl;
         formControl.setValidators(this.resolveFormControlValidators());
 
         this._formControlValueSubscription = formControl.valueChanges.pipe(

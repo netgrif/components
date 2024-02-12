@@ -5,10 +5,181 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres
 to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-Full Changelog: [https://github.com/netgrif/components/commits/v6.2.1](https://github.com/netgrif/components/commits/v6.2.1)
+Full Changelog: [https://github.com/netgrif/components/commits/v6.4.0](https://github.com/netgrif/components/commits/v6.4.0)
 
-## [6.3.0](https://github.com/netgrif/components/releases/tag/v6.2.1) (2022-09-21)
+## [6.4.0](https://github.com/netgrif/components/releases/tag/v6.4.0) (2024-01-23)
 
+### Fixed
+- [NAE-1915] TaskRef behaviour handling for multiple level
+- [NAE-1908] NAE-1906 Improvements
+- [NAE-1925] Panel is not opening
+- [NAE-1924] Unnecessary call for setData from FE
+- [NAE-1901] Taskref rendering update
+- [NAE-1926] Can't close Tab in Tab view
+- [NAE-1939] Problem with Tests
+
+### Added
+- [NAE-1890] Data field component register
+- [NAE-1901] Taskref rendering update
+- [NAE-1904] CaseRef list component
+- [NAE-1497] Frontend Actions
+- [NAE-1918] Tags on process resources
+- [NAE-1876] Process URI v2
+- [NAE-1882] Filter folder process
+- [NAE-1900] New component design
+- [NAE-1928] Refresh tabs on change
+- [NAE-1929] Data field type list of strings
+- [NAE-1936] Disable create case button using menu items
+- [NAE-1935] Improved breadcrumbs from menu items
+
+## [6.3.3](https://github.com/netgrif/components/releases/tag/v6.3.3) (2024-01-19)
+
+### Added
+
+- [NAE-1933] UserList deleteAll button
+
+
+## [6.3.2](https://github.com/netgrif/components/releases/tag/v6.3.2) (2023-07-25)
+
+### Fixed
+
+- [NAE-1911] Autosave on text area in cooperation with button
+- [NAE-1914] revertToPreviousValue - change is always false
+- [NAE-1923] DateTime doesn't have locale and rework validation to isoWeekday
+
+## [6.3.1](https://github.com/netgrif/components/releases/tag/v6.3.1) (2023-07-18)
+
+### Fixed
+
+- [NAE-1885] Side panel creates a new case when pressing Enter on date field
+- [NAE-1889] Process list is not refreshed after uploading process file
+
+### Changed
+
+- [NAE-1687] Factory class as providers
+
+## [6.3.0](https://github.com/netgrif/components/releases/tag/v6.3.0) (2023-05-26)
+
+### Fixed
+
+- [NAE-1790] Validation message on the date field is not displaying correctly
+- [NAE-1795] Breadcrumbs based on the menu, not on the currently displayed view
+- [NAE-1797] I18N field at asynchronous rendering
+- [NAE-1804] In UserList field can choose one user multiple times
+- [NAE-1823] Error when searching for non-existing tasks
+- [NAE-1825] Fix the upstream dependency conflict
+- [NAE-1827] Dynamic enumeration looses focus after querying for data
+- [NAE-1830] Changing columns in overflow Service deletes all set columns
+- [NAE-1832] Security upgrade moment from 2.24.0 to 2.29.4
+- [NAE-1839] Public view - fields after auto assign are still only visible
+- [NAE-1869] Incorrectly expanded task
+- [NAE-1802] TaskRef-ed fields behavior update unaware of parent task behavior
+- [NAE-1800] Operations on date fields in advanced search are not rendered correctly
+
+### Changed
+
+- [NAE-1431] Login view redirect configuration
+- [NAE-1725] Login spinner / button spinner
+- [NAE-1674] Uri node cases pagination
+- [NAE-1759] Update documentation of public views, PDF generator and user list
+- [NAE-1762] Public view URL encoding
+
+### Added
+
+- [NAE-1678] User impersonation
+- [NAE-1703] Dashboard
+- [NAE-1809] UserList field show selected users
+- [NAE-1835] Change password component
+- [NAE-1841] Idle timer component
+- [NAE-1874] Filtering users based on roles when selecting users for UserListField
+- [NAE-1607] Allowed nets configuration for newly created filter
+- [NAE-1722] Set default view headers with the CreateMenuItem action method
+- [NAE-1711] Dashboard
+
+## [6.2.10](https://github.com/netgrif/components/releases/tag/v6.2.10) (2023-11-07)
+
+### Fixed
+
+- [NAE-1921] User field value cannot be cleared
+
+## [6.2.9](https://github.com/netgrif/components/releases/tag/v6.2.9) (2023-05-04)
+
+### Fixed
+
+- [NAE-1867] Fulltext replaces only first ' '
+
+## [6.2.8](https://github.com/netgrif/components/releases/tag/v6.2.8) (2023-03-22)
+
+### Added
+
+- [NAE-1851] Save selected headers in filter
+
+## [6.2.7](https://github.com/netgrif/components/releases/tag/v6.2.7) (2022-12-19)
+
+### Fixed
+
+- [NAE-1803] UserListComponent validations bug
+
+## [6.2.6](https://github.com/netgrif/components/releases/tag/v6.2.6) (2022-12-12)
+
+### Fixed
+
+- [NAE-1799] Multilevel process identifier handling in 6.2.x for public view
+- [NAE-1800] Operations on date fields in advanced search are not rendered correctly
+
+## [6.2.5](https://github.com/netgrif/components/releases/tag/v6.2.5) (2022-12-05)
+
+### Fixed
+
+- [NAE-1752] MatPrefix for currency field overrides prefix for dateField
+- [NAE-1754] Currency field not displaying symbol
+- [NAE-1758] Task on single task view is not rendering
+- [NAE-1760] Enumeration autocomplete constantly sending value
+- [NAE-1763] FileField value is not promoted to the frontend after "set data event"
+- [NAE-1766] Options on multichoice autocomplete do not refresh in a specific situation
+
+## [6.2.4](https://github.com/netgrif/components/releases/tag/v6.2.4) (2022-10-12)
+
+### Fixed
+
+- [NAE-1744] Public view does not work delete file
+- [NAE-1745] Enumeration autocomplete constantly sending value
+
+### Added
+
+- [NAE-1751] Autocomplete new filter "include"
+
+## [6.2.3](https://github.com/netgrif/components/releases/tag/v6.2.3) (2022-10-06)
+
+### Fixed
+
+- [NAE-1367] Boolean does not have desc
+- [NAE-1537] It is not possible to copy a value from a visible enumeration
+- [NAE-1729] User field null value on frontend throwing error
+- [NAE-1731] Missing write access to /home/.../node_modules/@netgrif/components
+- [NAE-1732] LDAP group role assignment component tile tooltip
+- [NAE-1734] Overlay on login page
+- [NAE-1736] Rich textarea fix cursor
+- [NAE-1737] Bug i18n field placeholder
+- [NAE-1738] Multichoice map autocomplete init key
+- [NAE-1739] Currency symbol is displayed on new line, when editing currency field
+- [NAE-1740] Disable "create case" button, while case is creating
+- [NAE-1741] 'Undefined' error on frontend when checking i18n translation equality
+- [NAE-1742] I18nField throws error on frontend when its value is null
+- [NAE-1743] File preview change to null object
+
+## [6.2.2](https://github.com/netgrif/components/releases/tag/v6.2.2) (2022-09-28)
+
+### Fixed
+
+- [NAE-1693] TaskController deleteFile endpoint lacks data about tasks
+- [NAE-1712] Advanced search in case of date operators is blinking (very quickly opening and closing)
+- [NAE-1713] Advanced search searching based on case data does not work
+- [NAE-1715] Currency component not working properly
+- [NAE-1716] Autocomplete component not working properly on enumeration_map field
+- [NAE-1717] Banned roles not hiding menu entries
+- [NAE-1721] Create case event bad handling on frontend
+- [NAE-1724] Incorrect german translation
 
 ## [6.2.1](https://github.com/netgrif/components/releases/tag/v6.2.1) (2022-09-15)
 
@@ -64,7 +235,7 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.2.1](https://g
 ### Fixed
 
 - [NAE-1649] File field preview component bug
-- [NAE-1656] Export  nc-panel-item
+- [NAE-1656] Export nc-panel-item
 - [NAE-1653] Create view schematic not functional after angular 13 update
 
 ## [6.1.0](https://github.com/netgrif/components/releases/tag/v6.1.0) (2022-06-01)

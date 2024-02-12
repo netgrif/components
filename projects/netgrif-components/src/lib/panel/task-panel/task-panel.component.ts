@@ -4,18 +4,22 @@ import {
     AbstractTaskPanelComponent,
     AssignPolicyService,
     AssignTaskService,
+    BOOLEAN_VALUE_LABEL_ENABLED,
     CallChainService,
     CancelTaskService,
+    ChangedFieldsService,
     DataFocusPolicyService,
     DelegateTaskService,
     DisableButtonFuntions,
     FinishPolicyService,
     FinishTaskService,
     LoggerService,
+    NAE_TASK_FORCE_OPEN,
     NAE_TASK_OPERATIONS,
     NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS,
-    BOOLEAN_VALUE_LABEL_ENABLED,
+    OverflowService,
     PaperViewService,
+    PermissionService,
     SingleTaskContentService,
     SubjectTaskOperations,
     TaskContentService,
@@ -23,9 +27,9 @@ import {
     TaskEventService,
     TaskRequestStateService,
     TaskViewService,
-    PermissionService,
-    ChangedFieldsService,
-    OverflowService
+    FrontActionService,
+    NAE_TAB_DATA,
+    InjectedTabData
 } from '@netgrif/components-core';
 import {TaskContentComponent} from '../../task-content/task-content/task-content.component';
 import {TranslateService} from '@ngx-translate/core';
@@ -38,6 +42,7 @@ import {CurrencyPipe} from '@angular/common';
     providers: [
         {provide: TaskContentService, useClass: SingleTaskContentService},
         TaskDataService,
+        FrontActionService,
         TaskEventService,
         AssignTaskService,
         DelegateTaskService,
@@ -75,11 +80,16 @@ export class TaskPanelComponent extends AbstractTaskPanelComponent {
                 protected _currencyPipe: CurrencyPipe,
                 protected _changedFieldsService: ChangedFieldsService,
                 protected _permissionService: PermissionService,
-                @Optional() overflowService: OverflowService) {
+                @Optional() overflowService: OverflowService,
+                @Optional() @Inject(NAE_TASK_FORCE_OPEN) protected _taskForceOpen: boolean,
+                @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData) {
         super(_taskContentService, _log, _taskViewService, _paperView, _taskEventService, _assignTaskService,
             _delegateTaskService, _cancelTaskService, _finishTaskService, _taskState, _taskDataService,
             _assignPolicyService, _finishPolicyService, _callChain, _taskOperations, _disableFunctions, _translate, _currencyPipe, _changedFieldsService,
-            _permissionService, overflowService);
+            _permissionService, overflowService, _taskForceOpen, injectedTabData);
+        if (_taskForceOpen) {
+            this.hidePanelHeader = true;
+        }
     }
 
     protected createContentPortal(): void {

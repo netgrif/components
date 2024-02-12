@@ -21,15 +21,17 @@ import {TaskRefField} from '../../data-fields/task-ref-field/model/task-ref-fiel
 import {DynamicEnumerationField} from '../../data-fields/enumeration-field/models/dynamic-enumeration-field';
 import {FilterField} from '../../data-fields/filter-field/models/filter-field';
 import {I18nField} from '../../data-fields/i18n-field/models/i18n-field';
-import {CaseRefField} from '../../data-fields/case-ref-field/models/case-ref-field';
-import { UserListField } from '../../data-fields/user-list-field/models/user-list-field';
-import { UserListValue } from '../../data-fields/user-list-field/models/user-list-value';
+import {UserListField} from '../../data-fields/user-list-field/models/user-list-field';
+import {UserListValue} from '../../data-fields/user-list-field/models/user-list-value';
+import {decodeBase64, encodeBase64} from "../../utility/base64";
+import {CaseRefField} from '../../data-fields/case-ref-field/model/case-ref-field';
+import {StringCollectionField} from '../../data-fields/string-collection-field/models/string-collection-field';
 
 @Injectable({
     providedIn: 'root'
 })
 export class FieldConverterService {
-    private textFieldNames = ['textarea', 'richtextarea', 'htmltextarea', 'editor', 'htmlEditor', 'area']
+    private textFieldNames = [ 'richtextarea', 'htmltextarea', 'editor', 'htmlEditor' ]
 
     constructor() {
     }
@@ -82,12 +84,12 @@ export class FieldConverterService {
                 return new UserField(item.stringId, item.name, item.behavior, user,
                     item.roles, item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.USER_LIST:
-                let userListValue = new UserListValue([]);
+                let userListValue = new UserListValue(new Map<string, UserValue>());
                 if (item.value) {
                     item.value.userValues.forEach(u => userListValue.addUserValue(new UserValue(u.id, u.name, u.surname, u.email)));
                 }
                 return new UserListField(item.stringId, item.name, item.behavior, userListValue,
-                    item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
+                    item.roles, item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.BUTTON:
                 return new ButtonField(item.stringId, item.name, item.behavior, item.value as number,
                     item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
@@ -102,12 +104,18 @@ export class FieldConverterService {
             case FieldTypeResource.TASK_REF:
                 return new TaskRefField(item.stringId, item.name, item.value ? item.value : [], item.behavior,
                     item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
+            case FieldTypeResource.CASE_REF:
+                return new CaseRefField(item.stringId, item.name, item.value ? item.value : [], item.behavior,
+                    item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.FILTER:
                 return new FilterField(item.stringId, item.name, item.value ?? '', item.filterMetadata, item.allowedNets,
                     item.behavior, item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.I18N:
                 return new I18nField(item.stringId, item.name, item.value ?? {defaultValue: ''}, item.behavior, item.placeholder,
                     item.description, item.layout, item.validations, item.component);
+            case FieldTypeResource.STRING_COLLECTION:
+                return new StringCollectionField(item.stringId, item.name, item.value ? item.value : [], item.behavior,
+                    item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.CASE_REF:
                 return new CaseRefField(item.stringId, item.name, item.value ?? [], item.behavior, item.placeholder,
                     item.description, item.layout, item.validations, item.component);
@@ -145,6 +153,10 @@ export class FieldConverterService {
             return FieldTypeResource.FILTER;
         } else if (item instanceof I18nField) {
             return FieldTypeResource.I18N;
+        } else if (item instanceof CaseRefField) {
+            return FieldTypeResource.CASE_REF;
+        } else if (item instanceof StringCollectionField) {
+            return FieldTypeResource.STRING_COLLECTION;
         }
     }
 
@@ -153,7 +165,7 @@ export class FieldConverterService {
             return null;
         }
         if (this.resolveType(field) === FieldTypeResource.TEXT && field.component && field.component.name === 'password') {
-            return btoa(value);
+            return encodeBase64(value);
         }
         if (value === undefined || value === null) {
             return;
@@ -167,7 +179,7 @@ export class FieldConverterService {
             return value.id;
         }
         if (this.resolveType(field) === FieldTypeResource.USER_LIST) {
-            return value.userValues.map(u => u.id);
+            return [...value.userValues.keys()];
         }
         if (this.resolveType(field) === FieldTypeResource.DATE_TIME) {
             if (moment.isMoment(value)) {
@@ -270,11 +282,8 @@ export class FieldConverterService {
         if (value === undefined) {
             return;
         }
-        if (this.resolveType(field) === FieldTypeResource.TEXT && value === null) {
-            return null;
-        }
         if (this.resolveType(field) === FieldTypeResource.TEXT && field.component && field.component.name === 'password') {
-            return atob(value);
+            return decodeBase64(value);
         }
         if (this.resolveType(field) === FieldTypeResource.DATE) {
             return moment(new Date(value[0], value[1] - 1, value[2]));
@@ -296,12 +305,15 @@ export class FieldConverterService {
             });
             return array;
         }
+        if (this.resolveType(field) === FieldTypeResource.USER_LIST && !!value) {
+            return new UserListValue(new Map(value.userValues.map(v => [v.id, v])));
+        }
         return value;
     }
 
     protected resolveTextValue(field: DataFieldResource, value: string): string {
         if (field.component !== undefined && field.component.name === 'password' && value !== '' && value !== undefined) {
-            return atob(value);
+            return decodeBase64(value);
         }
         return value;
     }

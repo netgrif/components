@@ -1,11 +1,11 @@
 .enum-icon-item {
     font-size: 18px;
-    font-family: Asap, sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-weight: 500;
     line-height: 24px;
     letter-spacing: -0.2px;
     text-align: left;
-    color: #333333;
+    color: #64748B;
     text-decoration: none;
     padding: 8px 0;
 }
@@ -26,3 +26,9 @@
 .enum-icon-text {
     padding: 0 16px;
 }
+
+.enum-icon-item-disabled {
+    color: #94A3B8;
+    cursor: default !important;
+}
+

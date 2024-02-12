@@ -222,7 +222,8 @@ export class TabView implements TabViewInterface {
         if (!force && !this.openedTabs[index].canBeClosed) {
             throw new Error(error);
         }
-        if (index === this.selectedIndex.value && this.openedTabs[index].parentUniqueId) {
+        if (index === this.selectedIndex.value && this.openedTabs[index].parentUniqueId &&
+            this.openedTabs.findIndex(tab => tab.uniqueId === this.openedTabs[index].parentUniqueId) !== -1) {
             this.switchToTabUniqueId(this.openedTabs[index].parentUniqueId);
         }
         if (index === this.selectedIndex.value && this.selectedIndex.value + 1 < this.openedTabs.length) {
@@ -262,7 +263,7 @@ export class TabView implements TabViewInterface {
             ];
             providers.push({
                 provide: NAE_VIEW_ID_SEGMENT,
-                useValue: tab.initial ? tab.uniqueId : TabView.DYNAMIC_TAB_VIEW_ID_SEGMENT
+                useValue: tab.initial ? tab.uniqueId : ((tab.injectedObject as InjectedTabData)?.loadFilter?.id ?? TabView.DYNAMIC_TAB_VIEW_ID_SEGMENT)
             });
 
             const injector = Injector.create({providers, parent: this._parentInjector});

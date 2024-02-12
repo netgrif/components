@@ -45,9 +45,14 @@ import {CurrencyPipe} from '@angular/common';
 import {PermissionService} from '../../authorization/permission/permission.service';
 import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
 import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
-import { TaskPanelContext } from './models/task-panel-context';
+import {TaskPanelContext} from './models/task-panel-context';
 import {OverflowService} from '../../header/services/overflow.service';
+import {NAE_TASK_FORCE_OPEN} from '../../view/task-view/models/injection-token-task-force-open';
+import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import { FinishPolicyService } from '../../task/services/finish-policy.service';
+import {NAE_TAB_DATA} from '../../tabs/tab-data-injection-token/tab-data-injection-token';
+import {InjectedTabData} from '../../tabs/interfaces';
+import {AfterAction} from '../../utility/call-chain/after-action';
 
 @Component({
     selector: 'ncc-abstract-legal-notice',
@@ -61,6 +66,7 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
      */
     protected _taskPanelData: TaskPanelData;
     protected _forceLoadDataOnOpen = false;
+    @Input() taskListVirtualScroll: CdkVirtualScrollViewport;
     @Input() panelContentComponent: Type<any>;
     @Input() public selectedHeaders$: Observable<Array<HeaderColumn>>;
     @Input() public first: boolean;
@@ -68,9 +74,11 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
     @Input() responsiveBody = true;
     @Input() preventCollapse = false;
     @Input() hidePanelHeader = false;
+    @Input() hideActionRow = false;
     @Input() actionButtonTemplates: Array<TemplateRef<any>>;
     @Input() actionRowJustifyContent: 'space-between' | 'flex-start' | 'flex-end' | 'center' | 'space-around' |
         'initial' | 'start' | 'end' | 'left' | 'right' | 'revert' | 'inherit' | 'unset'
+    @Input() showMoreMenu: boolean = true;
 
     thisContext: TaskPanelContext = {
         canAssign: () => this.canAssign(),
@@ -113,6 +121,8 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
     protected _subTaskData: Subscription;
     protected _subPanelUpdate: Subscription;
     protected _taskDisableButtonFunctions: DisableButtonFuntions;
+    protected _unsub: Subscription;
+    protected _canReload: boolean;
 
     protected constructor(protected _taskContentService: TaskContentService,
                           protected _log: LoggerService,
@@ -134,7 +144,9 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
                           protected _currencyPipe: CurrencyPipe,
                           protected _changedFieldsService: ChangedFieldsService,
                           protected _permissionService: PermissionService,
-                          @Optional() overflowService: OverflowService) {
+                          @Optional() overflowService: OverflowService,
+                          @Optional() @Inject(NAE_TASK_FORCE_OPEN) protected _taskForceOpen: boolean,
+                          @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData) {
         super(_translate, _currencyPipe, overflowService);
         this.taskEvent = new EventEmitter<TaskEventNotification>();
         this.panelRefOutput = new EventEmitter<MatExpansionPanel>();
@@ -151,14 +163,16 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
                 changedFields.push(...this._changedFieldsService.parseChangedFieldsByCaseAndTaskIds(caseId, taskIds, changedFieldsMap));
             });
             changedFields.filter(fields => fields !== undefined).forEach(fields => {
-               this.taskPanelData.changedFields.next(fields);
+                this.taskPanelData.changedFields.next(fields);
             });
         });
         _taskOperations.open$.subscribe(() => {
             this.expand();
         });
         _taskOperations.close$.subscribe(() => {
-            this.collapse();
+            if (!this._taskForceOpen) {
+                this.collapse();
+            }
         });
         _taskOperations.reload$.subscribe(() => {
             this._taskViewService.reloadCurrentPage();
@@ -175,6 +189,17 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
         };
         if (_disableFunctions) {
             Object.assign(this._taskDisableButtonFunctions, _disableFunctions);
+        }
+        if (injectedTabData !== null) {
+            this._unsub = injectedTabData.tabSelected$.pipe(
+                filter(bool => bool && this.isExpanded())
+            ).subscribe( () => {
+                if (this._canReload) {
+                    this._taskDataService.initializeTaskDataFields(new AfterAction(), true)
+                } else {
+                    this._canReload = true;
+                }
+            });
         }
     }
 
@@ -209,7 +234,7 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
         });
         this.panelRef.afterExpand.subscribe(() => {
             this._taskContentService.$shouldCreate.pipe(take(1)).subscribe(() => {
-                this._taskContentService.blockFields(!this.canFinish());
+                this._taskContentService.blockFields(this.hasNoFinishPermission());
                 this._taskPanelData.initiallyExpanded = true;
             });
             this._taskContentService.expansionFinished();
@@ -218,7 +243,7 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
             this._taskPanelData.initiallyExpanded = false;
         });
 
-        if (this._taskPanelData.initiallyExpanded) {
+        if (this._taskPanelData.initiallyExpanded || this._taskForceOpen) {
             this.panelRef.expanded = true;
         }
     }
@@ -319,8 +344,12 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
         return this._permissionService.canFinish(this.taskPanelData.task) && this.getFinishTitle() !== '';
     }
 
+    private hasNoFinishPermission(): boolean {
+        return !this._permissionService.canFinish(this.taskPanelData.task)
+    }
+
     public canCollapse(): boolean {
-        return this._permissionService.canCollapse(this.taskPanelData.task);
+        return this._taskForceOpen ? false : this._permissionService.canCollapse(this.taskPanelData.task);
     }
 
     public canDo(action): boolean {
@@ -404,5 +433,20 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
         this._taskOperations.destroy();
         this._subPanelUpdate.unsubscribe();
         this.taskEvent.complete();
+        if (this._unsub) {
+            this._unsub.unsubscribe();
+        }
+    }
+
+    public isForceOpen(): boolean {
+        return this._taskForceOpen && !!this.taskListVirtualScroll?.getElementRef()?.nativeElement;
+    }
+
+    public getContentMinHeight(): string {
+        return this.taskListVirtualScroll.getElementRef().nativeElement.offsetHeight - 32 + 'px';
+    }
+
+    public isExpanded() {
+        return this.panelRef?.expanded && !this._taskContentService?.isExpanding;
     }
 }

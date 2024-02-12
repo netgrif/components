@@ -87,7 +87,8 @@
             "errThird": "Farba je povinné pole.",
             "noNets": "Žiadne povolené siete",
             "createCase": "Úspešne vytvorený nový prípad",
-            "defaultCaseName": "s prednastaveným názvom prípadu"
+            "defaultCaseName": "s prednastaveným názvom prípadu",
+            "createCaseError": "Nový prípad vytvorený, nastala však chyba pri vykonávaní akcií"
         },
         "user": {
             "assign": "Priradiť používateľa",
@@ -108,6 +109,12 @@
         "option-selector": {
             "select": "Zvoliť",
             "choose-one-option": "Vyberte jednu z možností"
+        },
+        "impersonation": {
+            "title": "Zastúpenie používateľa",
+            "submit": "Zastúpiť",
+            "cease": "Zrušiť zastúpenie",
+            "impersonating": "v zastúpení"
         }
     },
     "search": {
@@ -225,13 +232,16 @@
             "phone": "Zadaný text musí byť tel. číslo",
             "email": "Zadaný text musí byť email",
             "dateRange": "Zadaný dátum musí byť v rozsahu {{left}} a {{right}}",
+            "datePast": "Zadaný dátum musí byť pred {{right}}",
+            "dateFuture": "Zadaný dátum musí byť po {{left}}",
             "weekend": "Zadaný dátum musí byť víkendový deň",
             "workday": "Zadaný dátum musí byť pracovný deň",
             "enumeration": "Musí byť vybraná jedna z možností",
             "min": "Zadané číslo musí byť väčšie ako {{length}}",
             "translationRequired": "Musí byť vyplnený preklad pre jazyky: <{{translation}}>",
             "translationOnly": "Je povolený iba preklad pre jazyky: <{{translation}}>",
-            "requiredI18n": "Aspoň jedna hodnota musí byť vyplnená"
+            "requiredI18n": "Aspoň jedna hodnota musí byť vyplnená",
+            "requiredUserList": "Aspoň jedna hodnota musí byť vyplnená"
         },
         "snackBar": {
             "downloadFail": " sťahovanie zlyhalo",
@@ -246,6 +256,7 @@
             "maxFilesSizeExceeded": "Je presiahnutá maximálna veľkosť nahrávaných súborov: ",
             "notSelectedUser": "Nebol vybraný žiadny používateľ",
             "userAssigned": "Používateľ {{userName}} bol pridelený",
+            "userListAssigned": "Vybraní používatelia {{userNames}} boli pridelení",
             "caseNetGetFailed": "Načítanie siete podľa prípadu zlyhalo"
         },
         "values": {
@@ -259,6 +270,7 @@
             "noFile": "Žiadny súbor",
             "clickToUpload": "Kliknutím nahrajte súbor",
             "clickToDownload": "Kliknutím stiahnite súbor {{fileName}}",
+            "clickToOpen": "Kliknutím zobrazíte obsah súboru",
             "clickToDelete": "Kliknutím vymažte súbor"
         },
         "i18n": {
@@ -274,7 +286,9 @@
             "reset": "Resetovať"
         },
         "user": {
-            "selectUser": "Vyberte používateľa"
+            "selectUser": "Vyberte používateľa",
+            "save": "Priradiť",
+            "deleteAll": "Vymazať zoznam používateľov"
         },
         "textarea": {
             "insertText": "Sem zadajte text..."
@@ -296,6 +310,12 @@
             "reset": "Obnova hesla",
             "sign": "Registrovať",
             "enterPass": "Zadajte svoje heslo"
+        },
+        "changePassword": {
+            "oldPassword": "Zadajte staré heslo",
+            "enterNewPass": "Zadajte nové heslo",
+            "repeatNewPass": "Zopakujte nové heslo",
+            "changePass": "Zmeniť heslo"
         },
         "register": {
             "email": "Váš email",
@@ -387,7 +407,8 @@
         },
         "ldapGroup-list": {
             "noLdapGroupsWereFound": "Žiadna LDAP skupina nebola najdená",
-            "listTitle": "Ldap Skupiny"
+            "listTitle": "LDAP Skupiny",
+            "count": "Počet skupín"
         },
         "process-list": {
             "newestVersion": "Najnovšia verzia",
@@ -437,6 +458,7 @@
         "snackBar": {
             "deleteCanceled": "Zmazanie procesu zrušené",
             "deleteSuccess": "Proces bol úspešne zmazaný",
+            "deleteInProgress": "Proces bol označený na vymazanie, momentálne prebieha mazanie procesu",
             "deleteError": "Proces sa nepodarilo zmazať",
             "uploadFailed": "Súbor procesu sa nepodarilo nahrať.",
             "uploadSuccess": "Súbor procesu bol úspešne nahraný"
@@ -456,6 +478,36 @@
         "errorCreate": "Chyba pri vytváraní prípadu "
     },
     "dynamicNavigation": {
-        "couldNotResolveView": "Počas načítania zobrazenia sa vyskytla chyba. Zobrazenie nie je možné zobraziť"
+        "couldNotResolveView": "Počas načítania zobrazenia sa vyskytla chyba. Zobrazenie nie je možné zobraziť",
+        "filterNotFound": "Toto zobrazenie neobsahuje filter",
+        "loadMoreItems": "Viac",
+        "ascending": "Vzostupne",
+        "descending": "Zostupne"
+    },
+    "impersonation": {
+        "user": {
+            "successfullyRepresented": "Používateľ bol úspešne zastúpený",
+            "currentlyAlreadyRepresented": "Používateľ je momentálne zastupovaný",
+            "currentlyLogged": "Používateľ je momentálne prihlásený"
+        },
+        "action": {
+            "failed": "Akciu sa nepodarilo vykonať",
+            "deactivated": "Zastupovanie bolo úspešne deaktivované"
+        }
+    },
+    "session": {
+        "expireTitle": "Platnosť Vašej relácie čoskoro vyprší",
+        "expireDetail": "Vaša relácia čoskoro vyprší.\n\nBudete odhlásený za {{time}} sekúnd.",
+        "exitButton": "Odhlásiť sa",
+        "refreshButton": "Zostaň pripojený"
+    },
+    "paginator": {
+        "firstPage": "Prvá strana",
+        "itemsPage": "Položky na stranu:",
+        "lastPage": "Posledná strana",
+        "nextPage": "Ďalšia strana",
+        "previousPage": "Predchádzajúca strana",
+        "pageOne": "Strana 1 z 1",
+        "pageAmount": "Strana {{page}} z {{amountPages}}"
     }
 }

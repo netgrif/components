@@ -150,13 +150,13 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, Input, OnDestroy } from &#x27;@angular/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, EventEmitter, Input, OnDestroy, Output} from &#x27;@angular/core&#x27;;
 import { AbstractViewWithHeadersComponent } from &#x27;../abstract/view-with-headers&#x27;;
-import { Observable, Subject, Subscription } from &#x27;rxjs&#x27;;
+import { Observable, ReplaySubject, Subscription } from &#x27;rxjs&#x27;;
 import { TaskPanelData } from &#x27;../../panel/task-panel-list/task-panel-data/task-panel-data&#x27;;
 import { TaskViewService } from &#x27;./service/task-view.service&#x27;;
-import { map, takeUntil } from &#x27;rxjs/operators&#x27;;
 import { ActivatedRoute } from &#x27;@angular/router&#x27;;
+import {AsyncPipe} from &quot;@angular/common&quot;;
 
 export class TaskConst {
     public static readonly TRANSITION_ID &#x3D; &#x27;transitionId&#x27;;
@@ -170,22 +170,34 @@ export abstract class AbstractSingleTaskViewComponent extends AbstractViewWithHe
 
     @Input() initiallyExpanded: boolean &#x3D; true;
     @Input() preventCollapse: boolean &#x3D; true;
-    public task$: Observable&lt;TaskPanelData&gt;;
+
+    @Output() noTaskPresent: EventEmitter&lt;void&gt;;
+    public taskPanelData: ReplaySubject&lt;TaskPanelData&gt;;
     public loading$: Observable&lt;boolean&gt;;
     private transitionId: string;
-    private subRoute: Subscription;
-    protected unsubscribe$: Subject&lt;void&gt;;
+    private subRoute: Subscription | undefined;
+    protected subPanelData: Subscription | undefined;
+    protected subLoading: Subscription | undefined;
 
     protected constructor(protected taskViewService: TaskViewService,
-                          activatedRoute: ActivatedRoute) {
+                          activatedRoute: ActivatedRoute, async: AsyncPipe) {
         super(taskViewService, activatedRoute);
-        this.unsubscribe$ &#x3D; new Subject&lt;void&gt;();
+        this.noTaskPresent &#x3D; new EventEmitter&lt;void&gt;();
+        this.taskPanelData &#x3D; new ReplaySubject&lt;TaskPanelData&gt;(1);
         this.subRoute &#x3D; this._activatedRoute.paramMap.subscribe(paramMap &#x3D;&gt; {
             if (!!(paramMap?.[&#x27;params&#x27;]?.[TaskConst.TRANSITION_ID])) {
                 this.transitionId &#x3D; paramMap[&#x27;params&#x27;][TaskConst.TRANSITION_ID];
-                this.task$ &#x3D; this.taskViewService.tasks$.pipe(map&lt;Array&lt;TaskPanelData&gt;, TaskPanelData&gt;(tasks &#x3D;&gt; {
-                    return this.resolveTransitionTask(tasks);
-                }), takeUntil(this.unsubscribe$));
+                this.subPanelData &#x3D; this.taskViewService.tasks$.subscribe(tasks &#x3D;&gt;  {
+                    if (!!tasks &amp;&amp; tasks.length &gt; 0) {
+                        this.taskPanelData.next(this.resolveTransitionTask(tasks));
+                    } else {
+                        const isLoading &#x3D; async.transform(this.loading$);
+                        if (!isLoading) {
+                            this.taskPanelData.next(undefined);
+                            this.noTaskPresent.next();
+                        }
+                    }
+                });
             }
         });
         this.loading$ &#x3D; this.taskViewService.loading$;
@@ -193,9 +205,19 @@ export abstract class AbstractSingleTaskViewComponent extends AbstractViewWithHe
 
     ngOnDestroy() {
         super.ngOnDestroy();
-        this.subRoute.unsubscribe();
-        this.unsubscribe$.next();
-        this.unsubscribe$.complete();
+        if (!!this.subRoute) {
+            this.subRoute.unsubscribe();
+        }
+        if (!!this.subPanelData) {
+            this.subPanelData.unsubscribe();
+        }
+        if (!!this.taskPanelData) {
+            this.taskPanelData.complete();
+        }
+    }
+
+    get task$(): Observable&lt;TaskPanelData&gt; {
+        return this.taskPanelData.asObservable();
     }
 
     private resolveTransitionTask(tasks: Array&lt;TaskPanelData&gt;): TaskPanelData {

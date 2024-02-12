@@ -20,10 +20,6 @@ import {ErrorSnackBarComponent} from '../../snack-bar/components/error-snack-bar
 import {SuccessSnackBarComponent} from '../../snack-bar/components/success-snack-bar/success-snack-bar.component';
 import {AbstractFileListFieldComponent} from './abstract-file-list-field.component';
 import {FileListField} from './models/file-list-field';
-import {TranslateService} from '@ngx-translate/core';
-import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
-import {LoggerService} from '../../logger/services/logger.service';
-import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 import {EventService} from '../../event/services/event.service';
 
@@ -81,13 +77,8 @@ describe('AbstractFileListFieldComponent', () => {
     template: ''
 })
 class TestFileListComponent extends AbstractFileListFieldComponent {
-    constructor(taskResourceService: TaskResourceService,
-                log: LoggerService,
-                snackbar: SnackBarService,
-                translate: TranslateService,
-                eventService: EventService,
-                @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
-        super(taskResourceService, log, snackbar, translate, eventService, informAboutInvalidData);
+    constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+        super(informAboutInvalidData);
     }
 }
 

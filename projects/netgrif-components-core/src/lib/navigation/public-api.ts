@@ -19,8 +19,10 @@ export * from './service/uri-resource.service';
 export * from './model/group-navigation-constants';
 export * from './model/group-navigation-component-resolver-component-injection-token';
 export * from './model/filter-case-injection-token';
+export * from './model/size-menu-injection-token'
 export * from './model/group-navigation-item-label';
 export * from './model/uri-resource';
+export * from './model/navigation-configs';
 
 /* UTILITY METHODS */
 export * from './utility/navigation-item-task-utility-methods';

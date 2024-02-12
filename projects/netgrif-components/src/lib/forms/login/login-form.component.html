@@ -1,19 +1,21 @@
 <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="8px">
     <form [formGroup]="rootFormGroup" (ngSubmit)="onSubmit()" class="full-width netgrif-input netgrif-input-fix">
         <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
-            <mat-icon color="primary">account_circle</mat-icon>
+            <mat-icon color="primary" class="padding-bottom-18px">account_circle</mat-icon>
             <mat-form-field fxFlex="100" appearance="outline">
-                <input matInput placeholder="{{ 'forms.login.login' | translate}}" formControlName="login" minlength="4"
+                <mat-label>{{ 'forms.login.login' | translate}}</mat-label>
+                <input matInput formControlName="login" minlength="4"
                        required autocomplete="username">
                 <mat-error *ngIf="rootFormGroup.controls['login'].hasError('minlength')">
                     {{ 'forms.login.length' | translate}}
                 </mat-error>
             </mat-form-field>
         </div>
-        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
-            <mat-icon color="primary">vpn_key</mat-icon>
+        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px" class="padding-top">
+            <mat-icon color="primary" class="padding-bottom-18px">vpn_key</mat-icon>
             <mat-form-field fxFlex="100" appearance="outline">
-                <input matInput placeholder="{{ 'forms.login.enterPass' | translate}}"
+                <mat-label>{{ 'forms.login.enterPass' | translate}}</mat-label>
+                <input matInput
                        [type]="hidePassword ? 'password' : 'text'"
                        formControlName="password" required autocomplete="current-password">
                 <button mat-icon-button matSuffix type="button"

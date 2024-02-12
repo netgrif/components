@@ -11,6 +11,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {OverflowService} from './services/overflow.service';
 import {stopPropagation} from '../utility/stop-propagation';
 import {Subscription} from 'rxjs';
+import {debounceTime} from "rxjs/operators";
 
 @Component({
     selector: 'ncc-abstract-header',
@@ -20,9 +21,15 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
 
     protected readonly DEFAULT_COLUMN_COUNT = 6;
     protected readonly DEFAULT_COLUMN_WIDTH = 220;
-
+    protected readonly INPUT_DEBOUNCE_TIME = 600;
     @Input() type: HeaderType = HeaderType.CASE;
-    @Input() hideEditMode = false;
+    @Input() hideHeaderMenu = false;
+    @Input() showEditButton = true;
+    @Input() showSortButton = true;
+    @Input() showSearchButton = true;
+    @Input() showTableSection = true;
+    @Input() public approval: boolean;
+
     public headerService: AbstractHeaderService;
     protected _headerSearch: HeaderSearchService;
     public readonly headerModeEnum = HeaderMode;
@@ -37,13 +44,12 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
 
     protected _initHeaderCount: number = undefined;
     protected _initResponsiveHeaders: boolean = undefined;
+    protected _approvalFormControl: FormControl;
 
     constructor(protected _injector: Injector,
                 protected _translate: TranslateService,
                 @Optional() protected _overflowService: OverflowService) {
-        (this._overflowService !== null) ?
-            this.initializeFormControls(true) :
-            this.initializeFormControls(false);
+        this.initializeFormControls(this._overflowService !== null);
     }
 
     @Input()
@@ -64,6 +70,16 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
             this.headerService.responsiveHeaders = responsive;
         } else {
             this._initResponsiveHeaders = responsive;
+        }
+    }
+
+    get approvalFormControl(): FormControl {
+        return this._approvalFormControl;
+    }
+
+    public changeHeadersMode(mode: HeaderMode, saveLastMode: boolean = true) {
+        if (this.headerService) {
+            this.headerService.changeMode(mode, saveLastMode)
         }
     }
 
@@ -155,7 +171,7 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
         this.columnWidthControl = new FormControl(exist ? this._overflowService.columnWidth : this.DEFAULT_COLUMN_WIDTH, [
             Validators.required,
             Validators.min(180)]);
-
+        this._approvalFormControl = new FormControl(false);
         if (exist) {
             this.initializeValueChanges();
         }
@@ -165,7 +181,7 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
         this.subOverflowControl = this.overflowControl.valueChanges.subscribe(value => {
             this._overflowService.overflowMode = value;
         });
-        this.subColumnCountControl = this.columnCountControl.valueChanges.subscribe(value => {
+        this.subColumnCountControl = this.columnCountControl.valueChanges.pipe(debounceTime(this.INPUT_DEBOUNCE_TIME)).subscribe(value => {
             if (this.columnCountControl.valid) {
                 this._overflowService.columnCount = value;
                 if (this.headerService && this.type === HeaderType.CASE) {
@@ -174,7 +190,7 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
                 }
             }
         });
-        this.subColumnWidthControl = this.columnWidthControl.valueChanges.subscribe(value => {
+        this.subColumnWidthControl = this.columnWidthControl.valueChanges.pipe(debounceTime(this.INPUT_DEBOUNCE_TIME)).subscribe(value => {
             if (this.columnWidthControl.valid) {
                 this._overflowService.columnWidth = value;
                 if (this.headerService && this.type === HeaderType.CASE) {
