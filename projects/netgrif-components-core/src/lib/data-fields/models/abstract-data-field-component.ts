@@ -4,6 +4,7 @@ import {Component, Inject, Input, OnDestroy, OnInit, Optional} from '@angular/co
 import {NAE_INFORM_ABOUT_INVALID_DATA} from './invalid-data-policy-token';
 
 /**
+ * @deprecated as of v6.4.0
  * Holds the common functionality for all DataFieldComponents.
  */
 @Component({
