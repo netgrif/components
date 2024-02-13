@@ -89,7 +89,7 @@ export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsC
         if (!this.isDefaultValue(this.selectedLanguage) && this.currentValue[this.selectedLanguage] === '') {
             delete this.currentValue[this.selectedLanguage];
         }
-        this.dataField.value = I18nField.fromObject(this.currentValue, this.dataField.value.key);
+        this.dataField.value = I18nField.fromObject(this.currentValue, this.dataField.value?.key ?? DEFAULT_LANGUAGE_CODE);
         this.formControlRef.markAsTouched();
     }
 
@@ -108,7 +108,7 @@ export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsC
 
     public removeTranslation(key: string): void {
         delete this.currentValue[key];
-        this.dataField.value = I18nField.fromObject(this.currentValue, this.dataField.value.key);
+        this.dataField.value = I18nField.fromObject(this.currentValue, this.dataField.value?.key ?? DEFAULT_LANGUAGE_CODE);
         this.formControlRef.markAsTouched();
         this.refreshFilledMap();
     }
