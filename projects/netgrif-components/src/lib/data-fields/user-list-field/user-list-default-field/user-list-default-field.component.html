@@ -9,7 +9,7 @@
         <mat-icon>how_to_reg</mat-icon>
     </button>
     <button mat-icon-button matPrefix
-            [disabled]='formControlRef.disabled || dataField?.value?.userValues?.size === 0'
+            [disabled]='formControlRef.disabled || !dataField.value || dataField?.value?.userValues?.size === 0'
             color='warn'
             (click)='removeAll()'
             [matTooltip]="'dataField.user.deleteAll' | translate">
@@ -17,7 +17,7 @@
     </button>
     <mat-chip-list #chipList aria-label="Autocomplete" [formControl]="formControlRef">
         <mat-chip
-            *ngFor='let user of dataField.value.userValues | keyvalue' (removed)="deleteUser(user.key)">
+            *ngFor='let user of dataField.value?.userValues | keyvalue' (removed)="deleteUser(user.key)">
             {{user.value.fullName}}
             <button *ngIf="!formControlRef.disabled" matChipRemove>
                 <mat-icon>cancel</mat-icon>
