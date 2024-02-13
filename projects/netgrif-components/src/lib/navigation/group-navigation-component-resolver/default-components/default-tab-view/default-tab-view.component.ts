@@ -61,12 +61,14 @@ export class DefaultTabViewComponent {
         const createCaseButtonTitle: string = extractFieldValueFromData<string>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CREATE_CASE_BUTTON_TITLE);
         const createCaseButtonIcon: string = extractFieldValueFromData<string>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CREATE_CASE_BUTTON_ICON);
         const requireTitle: boolean = extractFieldValueFromData<boolean>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_TITLE_IN_CREATION);
+        const showCreateCaseButton: boolean = extractFieldValueFromData<boolean>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_SHOW_CREATE_CASE_BUTTON);
         const newCaseButtonConfig: NewCaseCreationConfigurationData = {
             enableCaseTitle: requireTitle,
             isCaseTitleRequired: requireTitle,
             newCaseButtonConfig: {
                 createCaseButtonTitle,
-                createCaseButtonIcon
+                createCaseButtonIcon,
+                showCreateCaseButton: showCreateCaseButton,
             },
             blockNets: blockNets
         };

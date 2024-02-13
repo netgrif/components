@@ -3,11 +3,11 @@ import {
     AbstractDateDefaultFieldComponent,
     DATA_FIELD_PORTAL_DATA,
     DataFieldPortalData,
-    DateField,
-    DATE_FORMAT
+    DATE_FORMAT, LanguageService, DateField
 } from '@netgrif/components-core';
 import {TranslateService} from "@ngx-translate/core";
-import {MAT_DATE_FORMATS} from "@angular/material/core";
+import {MAT_DATE_FORMATS, MAT_DATE_LOCALE} from "@angular/material/core";
+import {NgxMatDateAdapter} from "@angular-material-components/datetime-picker";
 
 @Component({
   selector: 'nc-date-default-field',
@@ -19,9 +19,13 @@ import {MAT_DATE_FORMATS} from "@angular/material/core";
 })
 export class DateDefaultFieldComponent extends AbstractDateDefaultFieldComponent {
 
-    constructor(protected _translate: TranslateService,
+    constructor(_translate: TranslateService,
+                _adapter: NgxMatDateAdapter<any>,
+                @Inject(MAT_DATE_LOCALE) protected _locale: string,
+                _languageService: LanguageService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<DateField>) {
-        super(_translate, dataFieldPortalData);
+        super(_translate, _adapter, _locale, _languageService, dataFieldPortalData);
+
     }
 
 }

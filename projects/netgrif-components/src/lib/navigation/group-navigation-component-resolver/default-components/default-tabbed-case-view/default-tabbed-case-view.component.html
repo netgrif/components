@@ -7,7 +7,7 @@
                 <nc-search class="search-width search-fix" *ngIf="(enableSearch)" [showSearchToggleButton]="showToggleButton"
                            [initialSearchMode]="initialSearchMode" (filterLoaded)="loadFilter($event)"></nc-search>
             </div>
-            <div fxLayoutAlign="end center">
+            <div fxLayoutAlign="end center" *ngIf="showCreateCaseButton">
                 <nc-create-case-button [newCaseCreationConfig]="newCaseCreationConfig" (caseCreatedEvent)="handleCaseClick($event)"></nc-create-case-button>
             </div>
         </div>

@@ -1,7 +1,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {StringCollectionDefaultFieldComponent} from './string-collection-default-field.component';
 import {Component} from '@angular/core';
-import {StringCollectionField, TranslateLibModule} from 'netgrif-components-core';
+import {StringCollectionField, TranslateLibModule} from '@netgrif/components-core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('StringCollectionDefaultFieldComponent', () => {

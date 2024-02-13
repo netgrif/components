@@ -20,6 +20,10 @@ import {AbstractDateDefaultFieldComponent} from "./abstract-date-default-field.c
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {FormControl} from "@angular/forms";
 import {WrappedBoolean} from "../../data-field-template/models/wrapped-boolean";
+import {DateAdapter, MAT_DATE_LOCALE} from "@angular/material/core";
+import {LanguageService} from "../../../translate/language.service";
+import {CustomDateAdapter} from "../models/custom-date-adapter";
+import {NgxMatDateAdapter} from "@angular-material-components/datetime-picker";
 
 describe('AbstractDateDefaultFieldComponent', () => {
     let component: TestDateFieldComponent;
@@ -52,7 +56,8 @@ describe('AbstractDateDefaultFieldComponent', () => {
                         formControlRef: new FormControl(),
                         showLargeLayout: new WrappedBoolean()
                     } as DataFieldPortalData<DateField>
-                }
+                },
+                {provide: DateAdapter, useClass: CustomDateAdapter}
             ],
             declarations: [
                 TestDateFieldComponent,
@@ -84,9 +89,12 @@ describe('AbstractDateDefaultFieldComponent', () => {
     template: ''
 })
 class TestDateFieldComponent extends AbstractDateDefaultFieldComponent {
-    constructor(translate: TranslateService,
+    constructor(_translate: TranslateService,
+                _adapter: DateAdapter<any>,
+                @Inject(MAT_DATE_LOCALE) _locale: string,
+                _languageService: LanguageService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<DateField>) {
-        super(translate, dataFieldPortalData);
+        super(_translate, _adapter, _locale, _languageService, dataFieldPortalData);
     }
 }
 
