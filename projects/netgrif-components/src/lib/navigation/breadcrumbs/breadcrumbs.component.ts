@@ -20,6 +20,6 @@ export class BreadcrumbsComponent extends AbstractBreadcrumbsComponent {
                 _dynamicRoutingService: DynamicNavigationRouteProviderService,
                 _translateService: TranslateService,
                 _log: LoggerService) {
-        super(_uriService, _caseResourceService, _activatedRoute, _router, _dynamicRoutingService, _translateService);
+        super(_uriService, _caseResourceService, _activatedRoute, _router, _dynamicRoutingService, _translateService, _log);
     }
 }
