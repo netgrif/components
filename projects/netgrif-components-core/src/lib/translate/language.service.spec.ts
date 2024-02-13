@@ -52,7 +52,17 @@ describe('LanguageService', () => {
 
     it('should set lang', () => {
         service.setLanguage('en-US');
-        expect(localStorage.getItem('Language')).toEqual('en-US');
+        expect(localStorage.getItem('Language')).toEqual('en');
+    });
+
+    it('should set slovak lang', () => {
+        service.setLanguage('sk');
+        expect(localStorage.getItem('Language')).toEqual('sk');
+    });
+
+    it('should set german lang', () => {
+        service.setLanguage('de');
+        expect(localStorage.getItem('Language')).toEqual('de');
     });
 
     afterEach(() => {
