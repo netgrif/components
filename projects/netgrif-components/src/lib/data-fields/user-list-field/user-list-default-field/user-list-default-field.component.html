@@ -8,8 +8,8 @@
             [class.do-not-click]="formControlRef.disabled">
         <mat-icon>how_to_reg</mat-icon>
     </button>
-    <button *ngIf='!formControlRef.disabled && dataField?.value?.userValues?.size > 0' mat-stroked-button class='user-list-item-margin'
-            [disabled]='formControlRef.disabled'
+    <button mat-icon-button matPrefix
+            [disabled]='formControlRef.disabled || dataField?.value?.userValues?.size === 0'
             color='warn'
             (click)='removeAll()'
             [matTooltip]="'dataField.user.deleteAll' | translate">
