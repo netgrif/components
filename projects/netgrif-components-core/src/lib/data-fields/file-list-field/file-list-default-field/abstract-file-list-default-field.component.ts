@@ -25,6 +25,7 @@ import {HttpParams} from "@angular/common/http";
 import {take} from "rxjs/operators";
 import {FileFieldValue} from "../../file-field/models/file-field-value";
 import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base-data-field.component";
+import {FileFieldRequest} from "../../../resources/interface/file-field-request-body";
 
 export interface FilesState {
     progress: number;
@@ -174,12 +175,12 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractBase
         filesToUpload.forEach(fileToUpload => {
             fileFormData.append('files', fileToUpload);
         });
-        const data: FileFieldIdBody = {};
-        data[this.resolveParentTaskId()] = this.dataField.stringId;
-        fileFormData.append('data', new Blob([JSON.stringify(data)], {type: 'application/json'}));
-        this._taskResourceService.uploadFile(this.taskId,
-            this.dataField.stringId, fileFormData, true)
-            .subscribe((response: EventOutcomeMessageResource) => {
+        const requestBody: FileFieldRequest = {
+            parentTaskId: this.resolveParentTaskId(),
+            fieldId: this.dataField.stringId,
+        }
+        fileFormData.append('data', new Blob([JSON.stringify(requestBody)], {type: 'application/json'}));
+        this._taskResourceService.uploadFile(this.taskId, fileFormData, true).subscribe((response: EventOutcomeMessageResource) => {
                 if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.UPLOAD) {
                     this.state.progress = (response as ProviderProgress).progress;
                 } else {
@@ -245,8 +246,10 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractBase
 
         this.state = this.defaultState;
         this.state.downloading = true;
-        this._taskResourceService.downloadFile(this.resolveParentTaskId(),
-            this.dataField.stringId, fileName).subscribe(response => {
+        let params = new HttpParams();
+        params = params.set("fieldId", this.dataField.stringId);
+        params = params.set("fileName", fileName);
+        this._taskResourceService.downloadFile(this.resolveParentTaskId(), params).subscribe(response => {
             if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.DOWNLOAD) {
                 this.state.progress = (response as ProviderProgress).progress;
             } else {
@@ -285,11 +288,12 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractBase
             this._log.error('File cannot be deleted. No task is set to the field.');
             return;
         }
-        let param = new HttpParams();
-        param = param.set("parentTaskId", this.resolveParentTaskId());
-
-        this._taskResourceService.deleteFile(this.taskId,
-            this.dataField.stringId, fileName, param).pipe(take(1)).subscribe((response: EventOutcomeMessageResource) => {
+        const requestBody: FileFieldRequest = {
+            parentTaskId: this.resolveParentTaskId(),
+            fieldId: this.dataField.stringId,
+            fileName
+        }
+        this._taskResourceService.deleteFile(this.taskId, requestBody).pipe(take(1)).subscribe((response: EventOutcomeMessageResource) => {
             if (response.success) {
                 const changedFieldsMap: ChangedFieldsMap = this._eventService.parseChangedFieldsFromOutcomeTree(response.outcome);
                 this.dataField.emitChangedFields(changedFieldsMap);
