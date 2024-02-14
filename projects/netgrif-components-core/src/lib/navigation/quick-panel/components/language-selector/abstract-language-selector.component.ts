@@ -1,5 +1,7 @@
-import {Component, Input} from '@angular/core';
+import {Component} from '@angular/core';
 import {LanguageService} from '../../../../translate/language.service';
+import {LanguageIconsService} from '../../../../data-fields/i18n-field/language-icons.service';
+import {SafeHtml} from '@angular/platform-browser';
 
 @Component({
     selector: 'ncc-abstract-language-selector',
@@ -7,53 +9,27 @@ import {LanguageService} from '../../../../translate/language.service';
 })
 export abstract class AbstractLanguageSelectorComponent {
 
-    @Input() public language: string;
-
-    protected _flagOverrides: Map<string, string>;
-
-    /**
-     * ISO 639-1
-     */
-    public langMenuItems = [
-        {
-            key: 'sk-SK',
-            value: 'sk'
-        },
-        {
-            key: 'de-DE',
-            value: 'de'
-        },
-        {
-            key: 'en-US',
-            value: 'en',
-            flag: 'gb'
-        }];
-
-    protected constructor(protected _select: LanguageService) {
-        this._flagOverrides = new Map<string, string>();
-        this.langMenuItems.forEach(option => {
-            if (option.flag !== undefined) {
-                this._flagOverrides.set(option.key, option.flag);
-            }
-        });
+    protected constructor(protected _langService: LanguageService,
+                          protected _languageIconsService: LanguageIconsService) {
     }
 
-    get flagCountryCode(): string {
-        return this.flagCode(this.language);
+    public getLangKeys() {
+        return this._langService.getTranslations().map(trans => trans.key);
     }
 
-    flagCode(languageCode: string): string {
-        if (this._flagOverrides.has(languageCode)) {
-            return this._flagOverrides.get(languageCode);
-        }
-        if (languageCode.includes('-')) {
-            return languageCode.split('-')[1].toLowerCase();
-        }
-        return languageCode.toLowerCase();
+    public getCurrentLang() {
+        return this._langService.getLanguage();
     }
 
-    setLang(lang: string) {
-        this.language = lang;
-        this._select.setLanguage(lang, true);
+    public setLang(lang: string) {
+        this._langService.setLanguage(lang, true);
+    }
+
+    public getLanguageIcons() {
+        return this._languageIconsService.languageIcons;
+    }
+
+    public getLangIcon(lang: string): SafeHtml {
+        return this._languageIconsService.languageIcons[lang].svgIcon;
     }
 }
