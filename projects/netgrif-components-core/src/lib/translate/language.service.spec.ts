@@ -65,6 +65,11 @@ describe('LanguageService', () => {
         expect(localStorage.getItem('Language')).toEqual('de');
     });
 
+    it('should set fake lang', () => {
+        service.setLanguage('fa-ke');
+        expect(localStorage.getItem('Language')).toEqual('en');
+    });
+
     afterEach(() => {
         TestBed.resetTestingModule();
     });
