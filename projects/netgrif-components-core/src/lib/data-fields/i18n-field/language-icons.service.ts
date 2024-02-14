@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {DomSanitizer} from '@angular/platform-browser';
+import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {LanguageIcons} from './models/language-icons';
 
 @Injectable({
@@ -246,5 +246,12 @@ export class LanguageIconsService {
 
     get languageIcons(): LanguageIcons {
         return this._languageIcons;
+    }
+
+    public addLanguageIcon(shortName: string, langName: string, svgIcon: SafeHtml) {
+        this._languageIcons[shortName] = {
+            languageName: langName,
+            svgIcon
+        }
     }
 }
