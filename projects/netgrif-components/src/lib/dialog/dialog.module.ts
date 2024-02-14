@@ -13,7 +13,7 @@ import {
     NAE_SAVE_FILTER_DIALOG_COMPONENT,
     NAE_LOAD_FILTER_DIALOG_COMPONENT,
     FrontActionRegistryService,
-    NAE_TASK_VIEW_COMPONENT, UtilityModule
+    NAE_TASK_VIEW_COMPONENT, UtilityModule, NAE_MULTI_USER_ASSIGN_DIALOG_COMPONENT, NAE_IMPORT_NET_DIALOG_COMPONENT
 } from '@netgrif/components-core';
 import {A11yModule} from '@angular/cdk/a11y';
 import {
@@ -104,6 +104,8 @@ import {openTaskDialog} from "./model/dialog-actions";
     ],
     providers: [
         {provide: NAE_USER_ASSIGN_DIALOG_COMPONENT, useValue: UserAssignDialogComponent},
+        {provide: NAE_IMPORT_NET_DIALOG_COMPONENT, useValue: ImportNetDialogComponent},
+        {provide: NAE_MULTI_USER_ASSIGN_DIALOG_COMPONENT, useValue: MultiUserAssignDialogComponent},
         {provide: NAE_ADMIN_IMPERSONATE_DIALOG_COMPONENT, useValue: AdminImpersonateDialogComponent},
         {provide: NAE_USER_IMPERSONATE_DIALOG_COMPONENT, useValue: UserImpersonateDialogComponent},
         {provide: NAE_NEW_CASE_DIALOG_COMPONENT, useValue: NewCaseDialogComponent},
