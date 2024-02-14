@@ -150,7 +150,7 @@ export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsC
 
     public isBoldText(): boolean {
         if (this.textPropertyEnabled('boldText')) {
-            return this.textI18nField.component.properties.plainText === 'true';
+            return this.dataField.component.properties.boldText === 'true';
         }
     }
 
