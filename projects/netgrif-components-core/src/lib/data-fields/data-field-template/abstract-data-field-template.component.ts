@@ -165,7 +165,7 @@ export abstract class AbstractDataFieldTemplateComponent implements OnInit {
         return this._paperView.paperView;
     }
 
-    public isNotButton(): boolean {
-        return !(this.dataField instanceof ButtonField);
+    public isButton(): boolean {
+        return this.dataField instanceof ButtonField;
     }
 }
