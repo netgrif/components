@@ -10,6 +10,10 @@ export class SortModeComponent extends AbstractSortModeComponent {
     constructor() {
         super();
     }
+
+    public setValue() {
+        this.approvalFormControl.setValue(true);
+    }
 }
 
 

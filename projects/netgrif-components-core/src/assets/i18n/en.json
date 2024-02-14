@@ -269,6 +269,7 @@
             "noFile": "No File",
             "clickToUpload": "Click to upload file",
             "clickToDownload": "Click to download {{fileName}}",
+            "clickToOpen": "Click to view file content",
             "clickToDelete": "Click to delete file"
         },
         "i18n": {
@@ -477,7 +478,11 @@
         "errorCreate": "Error while creating case "
     },
     "dynamicNavigation": {
-        "couldNotResolveView": "An error has occurred during the view resolution process. The view could not be displayed"
+        "couldNotResolveView": "An error has occurred during the view resolution process. The view could not be displayed",
+        "filterNotFound": "This view has no filter",
+        "loadMoreItems": "More",
+        "ascending": "Ascending",
+        "descending": "Descending"
     },
     "impersonation": {
         "user": {
@@ -495,5 +500,14 @@
         "expireDetail": "Your session is about to expire.\n\nRedirecting to Login page in {{time}} seconds.",
         "exitButton": "Logout",
         "refreshButton": "Stay Connected"
+    },
+    "paginator": {
+        "firstPage": "First page",
+        "itemsPage": "Items per page:",
+        "lastPage": "Last page",
+        "nextPage": "Next page",
+        "previousPage": "Previous page",
+        "pageOne": "Page 1 of 1",
+        "pageAmount": "Page {{page}} of {{amountPages}}"
     }
 }

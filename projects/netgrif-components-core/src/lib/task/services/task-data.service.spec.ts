@@ -32,6 +32,7 @@ import {SetDataEventOutcome} from '../../event/model/event-outcomes/data-outcome
 import {createMockCase} from '../../utility/tests/utility/create-mock-case';
 import {createMockNet} from '../../utility/tests/utility/create-mock-net';
 import {Injectable} from "@angular/core";
+import {FrontActionService} from "../../actions/services/front-action.service";
 
 describe('TaskDataService', () => {
     let service: TaskDataService;
@@ -60,6 +61,7 @@ describe('TaskDataService', () => {
                 DataFocusPolicyService,
                 TaskEventService,
                 ChangedFieldsService,
+                FrontActionService,
                 {provide: TaskRequestStateService, useClass: TestTaskRequestStateService},
                 {provide: TaskContentService, useClass: UnlimitedTaskContentService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
@@ -267,7 +269,6 @@ class TestTaskRequestStateService extends TaskRequestStateService {
     constructor(_taskContent: TaskContentService) {
         super(_taskContent);
     }
-
     public get loading$(): Observable<boolean> {
         return this._loading.asObservable();
     }

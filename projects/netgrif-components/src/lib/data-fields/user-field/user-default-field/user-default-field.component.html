@@ -1,0 +1,39 @@
+<div fxLayoutAlign="center center" fxLayout="row">
+    <div fxFlex="100" class="netgrif-user-padding">
+        <div #userLabel class="user-field-label" [ngClass]="{'netgrif-label-disabled': formControlRef.disabled}">
+            {{dataField.title}}
+            <nc-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nc-required-label>
+        </div>
+        <div class="form-input button-icon-input full-width" fxLayout="row" fxLayoutAlign="start center"
+             [ngClass]="{'form-input-disabled': formControlRef.disabled, 'form-input-error': dataField.isInvalid(formControlRef)}"
+             [ngStyle]="{
+                    '-webkit-clip-path': getCutProperty(userLabel),
+                    'clip-path': getCutProperty(userLabel)
+            }">
+            <button mat-icon-button
+                    *ngIf="!!dataField.value"
+                    [disabled]="formControlRef.disabled"
+                    color="primary"
+                    (click)="selectUser()"
+                    [matTooltip]="'dataField.file.clickToUpload' | translate"
+                    [class.do-not-click]="formControlRef.disabled">
+                <mat-icon (click)='deleteUser()' color='warn' *ngIf='!formControlRef.disabled'>close</mat-icon>
+            </button>
+            <button mat-icon-button
+                    *ngIf="!dataField.value"
+                    [disabled]="formControlRef.disabled"
+                    color="primary"
+                    (click)="selectUser()"
+                    [matTooltip]="'dataField.file.clickToUpload' | translate"
+                    [class.do-not-click]="formControlRef.disabled">
+                <mat-icon>person_add</mat-icon>
+            </button>
+            <span fxFlex class="input-name-ellipsis" [ngClass]="{'input-placeholder': !!dataField.value, 'no-cursor': !!dataField.value && formControlRef.disabled}">
+                    {{!!dataField.value ? dataField.value.fullName : 'dataField.user.selectUser' | translate}}</span>
+        </div>
+        <mat-hint class="user-hint-error" [ngClass]="{'mat-hint-disabled': formControlRef.disabled}"
+                  *ngIf="!dataField.isInvalid(formControlRef) && hasHint()">{{dataField.description}}</mat-hint>
+        <mat-error class="user-hint-error"
+                   *ngIf="dataField.isInvalid(formControlRef)">{{'dataField.validations.required' | translate}}</mat-error>
+    </div>
+</div>

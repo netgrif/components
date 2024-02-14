@@ -8,7 +8,6 @@ import moment from 'moment';
 import {BehaviorSubject} from 'rxjs';
 import {DateTimeField} from './models/date-time-field';
 import {ChangedFields} from '../models/changed-fields';
-import {TranslateService} from '@ngx-translate/core';
 import {AbstractDateTimeFieldComponent} from './abstract-date-time-field.component';
 import {MaterialModule} from '../../material/material.module';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
@@ -21,8 +20,7 @@ import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resou
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
-import {DateAdapter, MAT_DATE_LOCALE} from '@angular/material/core';
-import {LanguageService} from '../../translate/language.service';
+import {DateAdapter} from '@angular/material/core';
 import {NgxMatMomentModule} from '@angular-material-components/moment-adapter';
 import {CustomDateAdapter} from '../date-field/models/custom-date-adapter';
 
@@ -63,10 +61,6 @@ describe('AbstractDatetimeFieldComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should get error message', () => {
-        expect(component.getErrorMessage()).toEqual('This is custom message!');
-    });
-
     afterEach(() => {
         TestBed.resetTestingModule();
     });
@@ -77,12 +71,8 @@ describe('AbstractDatetimeFieldComponent', () => {
     template: ''
 })
 class TestDateTimeFieldComponent extends AbstractDateTimeFieldComponent {
-    constructor(translate: TranslateService,
-                _adapter: NgxMatDateAdapter<any>,
-                @Inject(MAT_DATE_LOCALE) protected _locale: string,
-                _languageService: LanguageService,
-                @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
-        super(translate, _adapter, _locale, _languageService, informAboutInvalidData);
+    constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+        super(informAboutInvalidData);
     }
 }
 

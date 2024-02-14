@@ -1,6 +1,6 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {UserAssignItemComponent} from './user-assign-item.component';
-import {Component} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {MaterialModule, TranslateLibModule, UserValue} from '@netgrif/components-core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
@@ -16,7 +16,8 @@ describe('UserAssignItemComponent', () => {
             declarations: [
                 UserAssignItemComponent,
                 TestWrapperComponent
-            ]
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
         })
             .compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);

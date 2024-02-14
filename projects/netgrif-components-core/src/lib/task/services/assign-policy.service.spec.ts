@@ -27,6 +27,7 @@ import {UserService} from '../../user/services/user.service';
 import {MockUserService} from '../../utility/tests/mocks/mock-user.service';
 import {User} from '../../user/models/user';
 import {PermissionService} from '../../authorization/permission/permission.service';
+import {FrontActionService} from "../../actions/services/front-action.service";
 
 describe('AssignPolicyService', () => {
     let service: AssignPolicyService;
@@ -51,6 +52,7 @@ describe('AssignPolicyService', () => {
                 AssignTaskService,
                 CancelTaskService,
                 TaskEventService,
+                FrontActionService,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 FinishPolicyService,
                 FinishTaskService,

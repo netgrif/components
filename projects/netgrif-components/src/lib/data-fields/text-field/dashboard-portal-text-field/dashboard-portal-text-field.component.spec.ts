@@ -61,7 +61,7 @@ describe('DashboardPortalTextFieldComponent', () => {
     selector: 'nc-test-wrapper',
     template: `
         <nc-dashboard-portal-text-field [showLargeLayout]="label"
-                                        [textField]="field"
+                                        [dataField]="field"
                                         [formControlRef]="formControl">
         </nc-dashboard-portal-text-field>`
 })

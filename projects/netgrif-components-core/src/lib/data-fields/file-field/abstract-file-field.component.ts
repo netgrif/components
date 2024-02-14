@@ -1,21 +1,9 @@
 import {
-    AfterViewInit,
     Component,
-    ElementRef,
-    Inject,
-    Input,
-    OnDestroy,
-    OnInit,
+    Inject, Input,
     Optional,
-    ViewChild
 } from '@angular/core';
-import {FileField, FilePreviewType} from './models/file-field';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
-import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
-import {ProgressType, ProviderProgress} from '../../resources/resource-provider.service';
-import {LoggerService} from '../../logger/services/logger.service';
-import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
-import {TranslateService} from '@ngx-translate/core';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 import {BehaviorSubject, Subscription} from 'rxjs';
@@ -39,8 +27,9 @@ const preview = 'preview';
 
 const fieldHeight = 75;
 
-const fieldPadding = 16;
-
+/**
+ * @deprecated
+ * */
 /**
  * Component that is created in the body of the task panel accord on the Petri Net, which must be bind properties.
  */
@@ -48,95 +37,13 @@ const fieldPadding = 16;
     selector: 'ncc-abstract-file-field',
     template: ''
 })
-export abstract class AbstractFileFieldComponent extends AbstractDataFieldComponent implements OnInit, AfterViewInit, OnDestroy {
+export abstract class AbstractFileFieldComponent extends AbstractDataFieldComponent  {
 
-    /**
-     * The width of the default file preview border in pixels. The `px` string is appended in the code.
-     */
-    public static readonly DEFAULT_PREVIEW_BORDER_WIDTH = 0;
-    /**
-     * The CSS style attribute of the default file preview border.
-     */
-    public static readonly DEFAULT_PREVIEW_BORDER_STYLE = 'none';
-    /**
-     * The CSS color string of the default file preview border.
-     */
-    public static readonly DEFAULT_PREVIEW_BORDER_COLOR = 'black';
+    @Input() dataField: FileField;
 
-    public state: FileState;
-    /**
-     * Task mongo string id is binding property from parent component.
-     */
-    @Input() public taskId: string;
-    /**
-     * Binding property as instance from parent component.
-     */
-    @Input() public dataField: FileField;
-    /**
-     * File picker element reference from component template that is initialized after view init.
-     */
-    @ViewChild('fileUploadInput') public fileUploadEl: ElementRef<HTMLInputElement>;
-    /**
-     * Image field view element reference from component template that is initialized after view init.
-     */
-    @ViewChild('imageEl') public imageEl: ElementRef;
+    @Input() taskId: string;
 
-    @ViewChild('imageDiv') public imageDivEl: ElementRef;
-    /**
-     * If file preview should be displayed
-     */
-    public filePreview = false;
-    /**
-     * If file type can be displayed
-     */
-    public isDisplayable = false;
-    /**
-     * Max height of preview
-     */
-    private maxHeight: string;
-    /**
-     * Store file for preview
-     */
-    private fileForPreview: Blob;
-    /**
-     * Url of preview file
-     */
-    public previewSource: SafeUrl;
-    /**
-     * Store file to show/download
-     */
-    private fileForDownload: Blob;
-    /**
-     * Full size file url
-     */
-    public fullSource: BehaviorSubject<SafeUrl>;
-    /**
-     * Extension of file to preview
-     */
-    public previewExtension: FilePreviewType;
-    /**
-     * Form control subscription
-     */
-    private updatedFieldSubscription: Subscription;
-
-    /**
-     * Only inject services.
-     * @param _taskResourceService Provides to download a file from the backend
-     * @param _log Logger service
-     * @param _snackbar Snackbar service to notify user
-     * @param _translate Translate service for I18N
-     * @param _eventService used for parsing of backend response
-     * @param informAboutInvalidData whether the backend should be notified about invalid values.
-     * Option injected trough `NAE_INFORM_ABOUT_INVALID_DATA` InjectionToken
-     * @param _sanitizer Sanitize url of image preview
-     */
-    protected constructor(protected _taskResourceService: TaskResourceService,
-                          protected _log: LoggerService,
-                          protected _snackbar: SnackBarService,
-                          protected _translate: TranslateService,
-                          protected _eventService: EventService,
-                          @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null,
-                          protected _sanitizer: DomSanitizer) {
+    protected constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
         super(informAboutInvalidData);
         this.state = this.defaultState;
         this.fullSource = new BehaviorSubject<SafeUrl>(null);
@@ -515,32 +422,4 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         return AbstractFileFieldComponent.DEFAULT_PREVIEW_BORDER_STYLE;
     }
 
-    public getPreviewBorderColor(): string {
-        if (this.borderPropertyEnabled('borderColor')) {
-            return this.dataField.component.properties.borderColor;
-        }
-        return AbstractFileFieldComponent.DEFAULT_PREVIEW_BORDER_COLOR;
-    }
-
-    public isBorderLGBTQ(): boolean {
-        if (this.borderPropertyEnabled('borderLGBTQ')) {
-            return this.dataField.component.properties.borderLGBTQ === 'true';
-        }
-        return false;
-    }
-
-    public isBorderDefault(): boolean {
-        if (this.borderPropertyEnabled('borderEnabled')) {
-            return this.dataField.component.properties.borderEnabled === 'true';
-        }
-        return false;
-    }
-
-    public borderPropertyEnabled(property: string): boolean {
-        return !!this.dataField.component && !!this.dataField.component.properties && property in this.dataField.component.properties;
-    }
-
-    protected resolveParentTaskId(): string {
-        return !!this.dataField.parentTaskId ? this.dataField.parentTaskId : this.taskId;
-    }
 }

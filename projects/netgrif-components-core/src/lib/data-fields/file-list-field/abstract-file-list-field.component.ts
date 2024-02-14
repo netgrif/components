@@ -1,22 +1,11 @@
 import {
-    AfterViewInit,
     Component,
-    ElementRef,
     Inject,
     Input,
-    OnDestroy,
-    OnInit,
     Optional,
-    ViewChild
 } from '@angular/core';
-import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
-import {LoggerService} from '../../logger/services/logger.service';
-import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
-import {TranslateService} from '@ngx-translate/core';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
-import {ProgressType, ProviderProgress} from '../../resources/resource-provider.service';
-import {FileListField, FileListFieldValidation} from './models/file-list-field';
-import {FileFieldValue} from '../file-field/models/file-field-value';
+import {FileListField} from './models/file-list-field';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 import {take} from 'rxjs/operators';
 import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
@@ -26,51 +15,20 @@ import {Subscription} from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import {FileFieldRequest} from "../../resources/interface/file-field-request-body";
 
-export interface FilesState {
-    progress: number;
-    uploading: boolean;
-    downloading: boolean;
-    completed: boolean;
-    error: boolean;
-}
-
+/**
+ * @deprecated
+ * */
 @Component({
     selector: 'ncc-abstract-filelist-field',
     template: ''
 })
-export abstract class AbstractFileListFieldComponent extends AbstractDataFieldComponent implements OnInit, AfterViewInit, OnDestroy {
+export abstract class AbstractFileListFieldComponent extends AbstractDataFieldComponent {
 
-    public uploadedFiles: Array<string>;
-    public state: FilesState;
-    private valueChange$: Subscription;
-
-    /**
-     * Values from file list field validation (eg. maxFiles 5)
-     * maxFilesNumber - maximum uploadable files
-     * maxFilesMessage - error message if number of files is exceeded
-     */
-    protected maxFilesNumber: number;
-    protected maxFilesMessage: string;
-
-    /**
-     * Task mongo string id is binding property from parent component.
-     */
-    @Input() public taskId: string;
-    /**
-     * Binding property as instance from parent component.
-     */
     @Input() public dataField: FileListField;
-    /**
-     * File picker element reference from component template that is initialized after view init.
-     */
-    @ViewChild('fileUploadInput') public fileUploadEl: ElementRef<HTMLInputElement>;
 
-    protected constructor(protected _taskResourceService: TaskResourceService,
-                          protected _log: LoggerService,
-                          protected _snackbar: SnackBarService,
-                          protected _translate: TranslateService,
-                          protected _eventService: EventService,
-                          @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+    @Input() taskId: string;
+
+    protected constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
         super(informAboutInvalidData);
         this.state = this.defaultState;
         this.uploadedFiles = new Array<string>();

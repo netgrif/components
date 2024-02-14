@@ -62,6 +62,9 @@ import {createMockCase} from '../../utility/tests/utility/create-mock-case';
 import {createMockNet} from '../../utility/tests/utility/create-mock-net';
 import { OverflowService } from '../../header/services/overflow.service';
 import {NAE_TASK_FORCE_OPEN} from '../../view/task-view/models/injection-token-task-force-open';
+import {FrontActionService} from "../../actions/services/front-action.service";
+import {NAE_TAB_DATA} from '../../tabs/tab-data-injection-token/tab-data-injection-token';
+import {InjectedTabData} from '../../tabs/interfaces';
 
 describe('AbtsractTaskPanelComponent', () => {
     let component: TestTaskPanelComponent;
@@ -112,6 +115,7 @@ describe('AbtsractTaskPanelComponent', () => {
                 AssignPolicyService,
                 FinishPolicyService,
                 OverflowService,
+                FrontActionService,
                 {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
                 {
                     provide: AllowedNetsService,
@@ -212,11 +216,12 @@ class TestTaskPanelComponent extends AbstractTaskPanelComponent implements After
                 protected _changedFieldsService: ChangedFieldsService,
                 protected _permissionService: PermissionService,
                 @Optional() overflowService: OverflowService,
-                @Optional() @Inject(NAE_TASK_FORCE_OPEN) protected _taskForceOpen: boolean) {
+                @Optional() @Inject(NAE_TASK_FORCE_OPEN) protected _taskForceOpen: boolean,
+                @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData) {
         super(_taskContentService, _log, _taskViewService, _paperView, _taskEventService, _assignTaskService,
             _delegateTaskService, _cancelTaskService, _finishTaskService, _taskState, _taskDataService,
             _assignPolicyService, _finishPolicyService, _callChain, _taskOperations, undefined, _translate,
-            _currencyPipe, _changedFieldsService, _permissionService, overflowService, _taskForceOpen);
+            _currencyPipe, _changedFieldsService, _permissionService, overflowService, _taskForceOpen, injectedTabData);
     }
 
     ngAfterViewInit() {

@@ -6,4 +6,11 @@
     .predicate-body-color {
         background: mat.get-color-from-palette($primary, 50);
     }
+
+    .mat-form-field-wrapper-search {
+        .mat-form-field-wrapper {
+            margin: 0 !important;
+            padding-bottom: 0;
+        }
+    }
 }
