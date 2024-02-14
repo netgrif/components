@@ -39,7 +39,7 @@ describe('MultiUserAssignListComponent', () => {
                 ErrorSnackBarComponent,
                 TestWrapperComponent
             ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
+            schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]
         })
             .overrideModule(BrowserDynamicTestingModule, {
                 set: {

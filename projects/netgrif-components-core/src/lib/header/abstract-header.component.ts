@@ -23,7 +23,13 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
     protected readonly DEFAULT_COLUMN_WIDTH = 220;
     protected readonly INPUT_DEBOUNCE_TIME = 600;
     @Input() type: HeaderType = HeaderType.CASE;
-    @Input() hideEditMode = false;
+    @Input() hideHeaderMenu = false;
+    @Input() showEditButton = true;
+    @Input() showSortButton = true;
+    @Input() showSearchButton = true;
+    @Input() showTableSection = true;
+    @Input() public approval: boolean;
+
     public headerService: AbstractHeaderService;
     protected _headerSearch: HeaderSearchService;
     public readonly headerModeEnum = HeaderMode;
@@ -38,13 +44,12 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
 
     protected _initHeaderCount: number = undefined;
     protected _initResponsiveHeaders: boolean = undefined;
+    protected _approvalFormControl: FormControl;
 
     constructor(protected _injector: Injector,
                 protected _translate: TranslateService,
                 @Optional() protected _overflowService: OverflowService) {
-        (this._overflowService !== null) ?
-            this.initializeFormControls(true) :
-            this.initializeFormControls(false);
+        this.initializeFormControls(this._overflowService !== null);
     }
 
     @Input()
@@ -65,6 +70,16 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
             this.headerService.responsiveHeaders = responsive;
         } else {
             this._initResponsiveHeaders = responsive;
+        }
+    }
+
+    get approvalFormControl(): FormControl {
+        return this._approvalFormControl;
+    }
+
+    public changeHeadersMode(mode: HeaderMode, saveLastMode: boolean = true) {
+        if (this.headerService) {
+            this.headerService.changeMode(mode, saveLastMode)
         }
     }
 
@@ -156,7 +171,7 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
         this.columnWidthControl = new FormControl(exist ? this._overflowService.columnWidth : this.DEFAULT_COLUMN_WIDTH, [
             Validators.required,
             Validators.min(180)]);
-
+        this._approvalFormControl = new FormControl(false);
         if (exist) {
             this.initializeValueChanges();
         }

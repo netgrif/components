@@ -5,7 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres
 to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-Full Changelog: [https://github.com/netgrif/components/commits/v6.3.3](https://github.com/netgrif/components/commits/v6.3.3)
+Full Changelog: [https://github.com/netgrif/components/commits/v6.4.0](https://github.com/netgrif/components/commits/v6.4.0)
+
+## [6.4.0](https://github.com/netgrif/components/releases/tag/v6.4.0) (2024-01-23)
+
+### Fixed
+- [NAE-1915] TaskRef behaviour handling for multiple level
+- [NAE-1908] NAE-1906 Improvements
+- [NAE-1925] Panel is not opening
+- [NAE-1924] Unnecessary call for setData from FE
+- [NAE-1901] Taskref rendering update
+- [NAE-1926] Can't close Tab in Tab view
+- [NAE-1939] Problem with Tests
+
+### Added
+- [NAE-1890] Data field component register
+- [NAE-1901] Taskref rendering update
+- [NAE-1904] CaseRef list component
+- [NAE-1497] Frontend Actions
+- [NAE-1918] Tags on process resources
+- [NAE-1876] Process URI v2
+- [NAE-1882] Filter folder process
+- [NAE-1900] New component design
+- [NAE-1928] Refresh tabs on change
+- [NAE-1929] Data field type list of strings
+- [NAE-1936] Disable create case button using menu items
+- [NAE-1935] Improved breadcrumbs from menu items
 
 ## [6.3.3](https://github.com/netgrif/components/releases/tag/v6.3.3) (2024-01-19)
 

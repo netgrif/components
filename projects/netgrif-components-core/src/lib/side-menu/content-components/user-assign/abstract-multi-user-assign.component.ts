@@ -22,7 +22,9 @@ export abstract class AbstractMultiUserAssignComponent {
         this._currentUsers = [];
         if (this._sideMenuControl.data) {
             this.injectedData = this._sideMenuControl.data as UserListInjectedData;
-            this._currentUsers.push(...(this.injectedData.value as UserListValue).userValues.values());
+            if (!!this.injectedData.value) {
+                this._currentUsers.push(...(this.injectedData.value as UserListValue).userValues.values());
+            }
         }
     }
 

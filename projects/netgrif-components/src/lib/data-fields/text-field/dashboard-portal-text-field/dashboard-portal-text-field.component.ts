@@ -1,8 +1,10 @@
-import {Component, Injector, OnDestroy, OnInit} from '@angular/core';
+import {Component, Inject, Injector, OnDestroy, OnInit, Optional} from '@angular/core';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {
-    AbstractDashboardPortalTextFieldComponent,
-    DashboardPortalComponentRegistryService
+    AbstractDashboardPortalTextFieldComponent, ComponentRegistryService,
+    DATA_FIELD_PORTAL_DATA,
+    DataFieldPortalData,
+    TextField
 } from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 import {Subscription} from 'rxjs';
@@ -13,17 +15,20 @@ import {Subscription} from 'rxjs';
     styleUrls: ['./dashboard-portal-text-field.component.scss']
 })
 export class DashboardPortalTextFieldComponent extends AbstractDashboardPortalTextFieldComponent implements OnInit, OnDestroy {
-    private sub: Subscription;
-    componentPortal: ComponentPortal<any>;
+    protected _subValue: Subscription;
+    public componentPortal: ComponentPortal<any>;
 
-    constructor(translate: TranslateService, private registry: DashboardPortalComponentRegistryService, private injector: Injector) {
-        super(translate);
+    constructor(translate: TranslateService,
+                private registry: ComponentRegistryService,
+                private injector: Injector,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextField>) {
+        super(translate, dataFieldPortalData);
     }
 
     ngOnInit(): void {
         super.ngOnInit();
         this.initializePortalComponent()
-        this.sub = this.formControlRef.valueChanges.subscribe(newValue => {
+        this._subValue = this.formControlRef.valueChanges.subscribe(newValue => {
             this.initializePortalComponent();
         });
     }
@@ -34,6 +39,6 @@ export class DashboardPortalTextFieldComponent extends AbstractDashboardPortalTe
 
     ngOnDestroy(): void {
         super.ngOnDestroy();
-        this.sub.unsubscribe();
+        this._subValue.unsubscribe();
     }
 }

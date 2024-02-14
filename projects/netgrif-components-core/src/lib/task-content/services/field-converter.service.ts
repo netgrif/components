@@ -24,6 +24,8 @@ import {I18nField} from '../../data-fields/i18n-field/models/i18n-field';
 import {UserListField} from '../../data-fields/user-list-field/models/user-list-field';
 import {UserListValue} from '../../data-fields/user-list-field/models/user-list-value';
 import {decodeBase64, encodeBase64} from "../../utility/base64";
+import {CaseRefField} from '../../data-fields/case-ref-field/model/case-ref-field';
+import {StringCollectionField} from '../../data-fields/string-collection-field/models/string-collection-field';
 
 @Injectable({
     providedIn: 'root'
@@ -102,12 +104,18 @@ export class FieldConverterService {
             case FieldTypeResource.TASK_REF:
                 return new TaskRefField(item.stringId, item.name, item.value ? item.value : [], item.behavior,
                     item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
+            case FieldTypeResource.CASE_REF:
+                return new CaseRefField(item.stringId, item.name, item.value ? item.value : [], item.behavior,
+                    item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.FILTER:
                 return new FilterField(item.stringId, item.name, item.value ?? '', item.filterMetadata, item.allowedNets,
                     item.behavior, item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.I18N:
                 return new I18nField(item.stringId, item.name, item.value ?? {defaultValue: ''}, item.behavior, item.placeholder,
                     item.description, item.layout, item.validations, item.component);
+            case FieldTypeResource.STRING_COLLECTION:
+                return new StringCollectionField(item.stringId, item.name, item.value ? item.value : [], item.behavior,
+                    item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
         }
     }
 
@@ -140,6 +148,10 @@ export class FieldConverterService {
             return FieldTypeResource.FILTER;
         } else if (item instanceof I18nField) {
             return FieldTypeResource.I18N;
+        } else if (item instanceof CaseRefField) {
+            return FieldTypeResource.CASE_REF;
+        } else if (item instanceof StringCollectionField) {
+            return FieldTypeResource.STRING_COLLECTION;
         }
     }
 

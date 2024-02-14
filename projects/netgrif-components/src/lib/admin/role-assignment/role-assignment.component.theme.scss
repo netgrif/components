@@ -7,4 +7,20 @@
     .list-item-selected {
         background-color: mat.get-color-from-palette($primary, 100, 1);
     }
+
+    .advanced-option-list {
+
+        .cdk-virtual-scroll-orientation-vertical .cdk-virtual-scroll-content-wrapper {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .min-height-option:hover {
+            background: mat.get-color-from-palette($primary, 50) !important;
+        }
+
+        .primary-color-line {
+            color: mat.get-color-from-palette($primary, 500) !important;
+        }
+    }
 }

@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import {
     AbstractWorkflowViewComponent,
-    SideMenuService,
     WorkflowViewService,
     LoggerService,
     ProcessService,
@@ -10,6 +9,7 @@ import {
     PetriNetResourceServiceProvider
 } from '@netgrif/components-core';
 import {ActivatedRoute, Router} from '@angular/router';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
     selector: 'nae-app-public-workflow-view',
@@ -22,13 +22,13 @@ import {ActivatedRoute, Router} from '@angular/router';
     ]
 })
 export class PublicWorkflowViewComponent extends AbstractWorkflowViewComponent {
-    constructor(protected _sideMenuService: SideMenuService,
+    constructor(protected _dialog: MatDialog,
                 protected _workflowViewService: WorkflowViewService,
                 protected _log: LoggerService,
                 protected _processService: ProcessService,
                 protected _router: Router,
                 protected _route: ActivatedRoute) {
-        super(_sideMenuService, _workflowViewService, _log, _processService);
+        super(_dialog, _workflowViewService, _log, _processService);
     }
 
     handleClick(workflow: Net) {

@@ -41,7 +41,7 @@ describe('EnumerationAutocompleteDynamicFieldComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-enumeration-autocomplete-dynamic-field [showLargeLayout]="label" [enumerationField]="field" [formControlRef]="form">' +
+    template: '<nc-enumeration-autocomplete-dynamic-field [showLargeLayout]="label" [dataField]="field" [formControlRef]="form">' +
         '</nc-enumeration-autocomplete-dynamic-field>'
 })
 class TestWrapperComponent {

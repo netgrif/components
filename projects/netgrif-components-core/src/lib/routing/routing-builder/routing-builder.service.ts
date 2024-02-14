@@ -154,14 +154,17 @@ export class RoutingBuilderService {
             return this._groupNavigationComponentResolverComponent;
         }
 
-        let className;
+        const className = RoutingBuilderService.parseClassNameFromView(view, configPath);
+        return this._viewService.resolveNameToClass(className);
+    }
+
+    public static parseClassNameFromView(view: View, configPath: string): string {
         if (!!view.layout.componentName) {
-            className = `${classify(view.layout.componentName)}Component`;
+            return `${classify(view.layout.componentName)}Component`;
         } else {
             const classInfo = new ViewClassInfo(configPath, view.layout.name, view.layout.componentName);
-            className = classInfo.className;
+            return classInfo.className;
         }
-        return this._viewService.resolveNameToClass(className);
     }
 
     private defaultRoutesRedirects(): Array<Route> {

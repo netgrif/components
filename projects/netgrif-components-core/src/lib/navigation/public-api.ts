@@ -22,6 +22,7 @@ export * from './model/filter-case-injection-token';
 export * from './model/size-menu-injection-token'
 export * from './model/group-navigation-item-label';
 export * from './model/uri-resource';
+export * from './model/navigation-configs';
 
 /* UTILITY METHODS */
 export * from './utility/navigation-item-task-utility-methods';

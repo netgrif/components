@@ -2,6 +2,8 @@ import {Component, Inject} from '@angular/core';
 import {AbstractFilterSelectorComponent, FilterRepository, NAE_SIDE_MENU_CONTROL, SideMenuControl} from '@netgrif/components-core';
 
 /**
+ *
+ * @deprecated
  * Allows user to choose a {@link Filter} from the {@link FilterRepository}.
  *
  * Publishes events to the {@link SideMenuControl} object when:

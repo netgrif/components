@@ -1,10 +1,10 @@
-<mat-form-field [appearance]="numberField.materialAppearance" class="full-width" color="primary">
-    <mat-label *ngIf="!showLargeLayout.value">{{numberField.title}}</mat-label>
+<mat-form-field [appearance]="dataField.materialAppearance" class="full-width" color="primary">
+    <mat-label *ngIf="!showLargeLayout.value">{{dataField.title}}</mat-label>
     <input matInput
            type="number"
            [formControl]="formControlRef"
-           [placeholder]="numberField.placeholder"
-           [required]="numberField.behavior.required">
-    <mat-hint>{{numberField.description}}</mat-hint>
-    <mat-error *ngIf="numberField.isInvalid(formControlRef)">{{getErrorMessage()}}</mat-error>
+           [placeholder]="dataField.placeholder"
+           [required]="dataField.behavior.required">
+    <mat-hint [ngClass]="{'mat-hint-disabled': formControlRef.disabled}">{{dataField.description}}</mat-hint>
+    <mat-error *ngIf="dataField.isInvalid(formControlRef)">{{getErrorMessage()}}</mat-error>
 </mat-form-field>
