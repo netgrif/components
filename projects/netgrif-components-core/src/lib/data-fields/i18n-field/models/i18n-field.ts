@@ -57,10 +57,12 @@ export class I18nField extends DataField<I18nFieldValue> {
 
     public static toObject(templateValue: I18nFieldValue): I18nFieldTranslations {
         const object = {};
-        object[DEFAULT_LANGUAGE_CODE] = templateValue.defaultValue;
-        for (const k in templateValue.translations) {
-            if (Object.prototype.hasOwnProperty.call(templateValue.translations, k)) {
-                object[k] = templateValue.translations[k];
+        object[DEFAULT_LANGUAGE_CODE] = templateValue?.defaultValue ?? "";
+        if (!!templateValue) {
+            for (const k in templateValue.translations) {
+                if (Object.prototype.hasOwnProperty.call(templateValue.translations, k)) {
+                    object[k] = templateValue.translations[k];
+                }
             }
         }
         return object;
