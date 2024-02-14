@@ -17,7 +17,8 @@
                 'mat-icon-button': dataField.getComponentType() === 'icon',
                 'mat-fab': dataField.getComponentType() === 'fab',
                 'mat-mini-fab': dataField.getComponentType() === 'minifab',
-                'full-button-width': stretch === 'true'}"
+                'full-button-width': stretch === 'true',
+                'no-shadow': dataField.getComponentType() === 'fab' || dataField.getComponentType() === 'minifab'}"
             color="primary"
             [matTooltip]="dataField.description"
             [disabled]="formControlRef.disabled || dataField.waitingForResponse"
