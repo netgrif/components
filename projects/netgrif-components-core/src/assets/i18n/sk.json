@@ -270,7 +270,8 @@
             "clickToUpload": "Kliknutím nahrajte súbor",
             "clickToDownload": "Kliknutím stiahnite súbor {{fileName}}",
             "clickToOpen": "Kliknutím zobrazíte obsah súboru",
-            "clickToDelete": "Kliknutím vymažte súbor"
+            "clickToDelete": "Kliknutím vymažte súbor",
+            "notAllowed": "Súbor {{fileName}} nemôže byť nahraný. Jeho typ nieje povolený."
         },
         "i18n": {
             "languageSelect": "Výber jazyka",

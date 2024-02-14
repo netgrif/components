@@ -25,6 +25,7 @@ import {HttpParams} from "@angular/common/http";
 import {take} from "rxjs/operators";
 import {FileFieldValue} from "../../file-field/models/file-field-value";
 import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base-data-field.component";
+import {FileUploadMIMEType} from '../../file-field/models/file-field';
 
 export interface FilesState {
     progress: number;
@@ -164,6 +165,17 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractBase
                 this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.wontUploadSameFiles'));
                 this.fileUploadEl.nativeElement.value = '';
                 return;
+            }
+        }
+
+        if (this.dataField.allowTypes && this.dataField.allowTypes?.length > 0) {
+            for (let i = 0; i < this.fileUploadEl.nativeElement.files.length; i++) {
+                if (!this.checkTypes(this.fileUploadEl.nativeElement.files.item(i).type)) {
+                    this._log.error('File ' + this.fileUploadEl.nativeElement.files.item(i).name + ' cannot be uploaded. Its type is not allowed');
+                    this._snackbar.openErrorSnackBar(this._translate.instant('dataField.file.notAllowed', {fileName: this.fileUploadEl.nativeElement.files.item(i).name}));
+                    this.fileUploadEl.nativeElement.value = '';
+                    return;
+                }
             }
         }
 
@@ -359,5 +371,26 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractBase
             this.cutProperty = `polygon(0 0, 0 100%, 100% 100%, 100% 0%, ${calculatedWidth} 0, ${calculatedWidth} 3px, 0.5em 3px, 0.5em 0)`;
         }
         return this.cutProperty;
+    }
+
+    protected checkTypes(itemType: string) {
+        if (this.dataField.allowTypes === undefined || this.dataField.allowTypes === null) {
+            this._log.debug(`Types are not provided, returning true`);
+            return true;
+        }
+        const type = itemType.includes("/") ? itemType.split("/")[1] : itemType;
+        if (this.dataField.allowTypes.includes(type)) {
+            return true;
+        }
+        if (this.dataField.allowTypes.includes(FileUploadMIMEType.IMAGE) && itemType.includes("image/")) {
+            return true;
+        }
+        if (this.dataField.allowTypes.includes(FileUploadMIMEType.VIDEO) && itemType.includes("video/")) {
+            return true;
+        }
+        if (this.dataField.allowTypes.includes(FileUploadMIMEType.AUDIO) && itemType.includes("audio/")) {
+            return true;
+        }
+        return false;
     }
 }
