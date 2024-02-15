@@ -44,9 +44,8 @@ describe('AbstractTaskRefFieldComponent', () => {
     template: ''
 })
 class TestTaskRefComponent extends AbstractTaskRefFieldComponent {
-    constructor(protected _logger: LoggerService,
-                @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
-        super(_logger, informAboutInvalidData);
+    constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+        super(informAboutInvalidData);
     }
 }
 

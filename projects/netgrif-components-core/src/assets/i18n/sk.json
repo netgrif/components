@@ -269,6 +269,7 @@
             "noFile": "Žiadny súbor",
             "clickToUpload": "Kliknutím nahrajte súbor",
             "clickToDownload": "Kliknutím stiahnite súbor {{fileName}}",
+            "clickToOpen": "Kliknutím zobrazíte obsah súboru",
             "clickToDelete": "Kliknutím vymažte súbor"
         },
         "i18n": {
@@ -285,7 +286,8 @@
         },
         "user": {
             "selectUser": "Vyberte používateľa",
-            "save": "Priradiť"
+            "save": "Priradiť",
+            "deleteAll": "Vymazať zoznam používateľov"
         },
         "textarea": {
             "insertText": "Sem zadajte text..."
@@ -455,6 +457,7 @@
         "snackBar": {
             "deleteCanceled": "Zmazanie procesu zrušené",
             "deleteSuccess": "Proces bol úspešne zmazaný",
+            "deleteInProgress": "Proces bol označený na vymazanie, momentálne prebieha mazanie procesu",
             "deleteError": "Proces sa nepodarilo zmazať",
             "uploadFailed": "Súbor procesu sa nepodarilo nahrať.",
             "uploadSuccess": "Súbor procesu bol úspešne nahraný"
@@ -474,7 +477,11 @@
         "errorCreate": "Chyba pri vytváraní prípadu "
     },
     "dynamicNavigation": {
-        "couldNotResolveView": "Počas načítania zobrazenia sa vyskytla chyba. Zobrazenie nie je možné zobraziť"
+        "couldNotResolveView": "Počas načítania zobrazenia sa vyskytla chyba. Zobrazenie nie je možné zobraziť",
+        "filterNotFound": "Toto zobrazenie neobsahuje filter",
+        "loadMoreItems": "Viac",
+        "ascending": "Vzostupne",
+        "descending": "Zostupne"
     },
     "impersonation": {
         "user": {
@@ -492,5 +499,14 @@
         "expireDetail": "Vaša relácia čoskoro vyprší.\n\nBudete odhlásený za {{time}} sekúnd.",
         "exitButton": "Odhlásiť sa",
         "refreshButton": "Zostaň pripojený"
+    },
+    "paginator": {
+        "firstPage": "Prvá strana",
+        "itemsPage": "Položky na stranu:",
+        "lastPage": "Posledná strana",
+        "nextPage": "Ďalšia strana",
+        "previousPage": "Predchádzajúca strana",
+        "pageOne": "Strana 1 z 1",
+        "pageAmount": "Strana {{page}} z {{amountPages}}"
     }
 }

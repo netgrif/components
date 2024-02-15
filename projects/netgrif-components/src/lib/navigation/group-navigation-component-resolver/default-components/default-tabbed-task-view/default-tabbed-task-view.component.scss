@@ -5,23 +5,31 @@
     background-color: transparent;
 }
 .search-panel{
-    margin-top: 20px;
+    margin-top: 16px;
+    padding: 8px 0;
 }
 .content-margin{
-    margin: 0 20px;
+    margin: 8px 24px 0;
 }
 .task-panel-padding-mini{
-    padding-bottom: 20px;
-    padding-top: 20px;
+    padding-top: 16px;
+    padding-left: 1px;
+    padding-right: 1px;
 }
 .full-height {
-    height: 100%;
+    height: calc(100% - 8px);
 }
 
 .search-width {
     width: 100%;
 }
+
 .min-height-task-custom {
     min-height: 400px;
-    height: 400px;
+}
+
+@media screen and (max-width: 599.99px) {
+    .content-margin {
+        margin: 8px 12px 0;
+    }
 }

@@ -1,5 +1,5 @@
 .breadcrumbs {
-    margin: 8px;
+    margin: 4px;
     -webkit-box-align: center;
     align-items: center;
     align-self: center;
@@ -9,9 +9,15 @@
     flex-wrap: wrap;
 }
 
+.breadcrumbs-span {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0.4px;
+}
+
 .breadcrumbs-span:hover {
     cursor: pointer;
-    text-decoration: underline;
 }
 
 .delimeter {

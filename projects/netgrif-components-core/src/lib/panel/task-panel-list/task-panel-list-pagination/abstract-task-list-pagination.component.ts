@@ -20,6 +20,7 @@ export abstract class AbstractTaskListPaginationComponent extends AbstractDefaul
     public pageIndex = 0;
     public pageSizeOptions: Array<number> = [10, 20, 50];
 
+    @Input() public disabled: boolean;
     @Input()
     set tasks$(tasks: Observable<Array<TaskPanelData>>) {
         this._tasks$ = tasks.pipe((tap(() => {

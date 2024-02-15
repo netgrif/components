@@ -29,6 +29,9 @@ function localAllowedNetsFactory(factory: AllowedNetsServiceFactory): AllowedNet
     return factory.createFromArray([UserImpersonationConstants.IMPERSONATION_CONFIG_NET_IDENTIFIER]);
 }
 
+/**
+ * @deprecated
+ * */
 @Component({
     selector: 'nc-user-impersonate',
     templateUrl: './user-impersonate.component.html',

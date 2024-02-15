@@ -17,6 +17,8 @@ export enum FieldTypeResource {
     ENUMERATION_MAP = 'enumeration_map',
     MULTICHOICE_MAP = 'multichoice_map',
     TASK_REF = 'taskRef',
+    CASE_REF = 'caseRef',
     FILTER = 'filter',
-    I18N = 'i18n'
+    I18N = 'i18n',
+    STRING_COLLECTION = 'stringCollection'
 }

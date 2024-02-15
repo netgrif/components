@@ -25,6 +25,7 @@ import {UnlimitedTaskContentService} from '../../../task-content/services/unlimi
 import {SelectedCaseService} from '../../../task/services/selected-case.service';
 import {MockAuthenticationMethodService} from '../../../utility/tests/mocks/mock-authentication-method-service';
 import {ChangedFieldsService} from '../../../changed-fields/services/changed-fields.service';
+import {FrontActionService} from "../../../actions/services/front-action.service";
 
 describe('TreeTaskContentService', () => {
     let service: TreeTaskContentService;
@@ -51,6 +52,7 @@ describe('TreeTaskContentService', () => {
                 CancelTaskService,
                 TaskEventService,
                 ChangedFieldsService,
+                FrontActionService,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 SelectedCaseService,
                 {provide: TaskContentService, useClass: UnlimitedTaskContentService},

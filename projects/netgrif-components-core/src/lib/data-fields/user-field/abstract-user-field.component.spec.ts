@@ -7,7 +7,6 @@ import {MaterialModule} from '../../material/material.module';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {SideMenuService} from '../../side-menu/services/side-menu.service';
 import {AbstractUserFieldComponent} from './abstract-user-field.component';
-import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {SnackBarModule} from '../../snack-bar/snack-bar.module';
 import {UserField} from './models/user-field';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
@@ -54,11 +53,8 @@ describe('AbstractUserFieldComponent', () => {
     template: ''
 })
 class TestUserComponent extends AbstractUserFieldComponent {
-    constructor(sideMenuService: SideMenuService,
-                snackbar: SnackBarService,
-                translate: TranslateService,
-                @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
-        super(sideMenuService, snackbar, translate, informAboutInvalidData);
+    constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+        super(informAboutInvalidData);
     }
 }
 
