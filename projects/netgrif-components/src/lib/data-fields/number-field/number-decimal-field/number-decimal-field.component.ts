@@ -1,7 +1,10 @@
-import {Component} from '@angular/core';
+import {Component, Inject, Optional} from '@angular/core';
 import {TranslateService} from "@ngx-translate/core";
 import {
-    AbstractNumberDecimalFieldComponent
+    AbstractNumberDecimalFieldComponent,
+    DATA_FIELD_PORTAL_DATA,
+    DataFieldPortalData,
+    NumberField
 } from "@netgrif/components-core";
 import {DecimalPipe} from "@angular/common";
 
@@ -11,8 +14,11 @@ import {DecimalPipe} from "@angular/common";
   styleUrls: ['./number-decimal-field.component.scss']
 })
 export class NumberDecimalFieldComponent extends AbstractNumberDecimalFieldComponent {
-    constructor(decimalPipe: DecimalPipe, translate: TranslateService) {
-        super(decimalPipe, translate);
+    constructor(decimalPipe: DecimalPipe,
+                translate: TranslateService,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<NumberField>
+                ) {
+        super(decimalPipe, translate, dataFieldPortalData);
     }
 
     onFocusOut(event: Event) {

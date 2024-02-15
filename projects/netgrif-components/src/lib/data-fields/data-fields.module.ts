@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {Injector, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {
@@ -7,6 +7,7 @@ import {
     CustomDateAdapter, FrontActionModule,
     MaterialModule,
     TranslateLibModule,
+    ComponentRegistryService
 } from '@netgrif/components-core';
 import {AngularResizeEventModule} from 'angular-resize-event';
 import {HttpClientModule} from '@angular/common/http';
@@ -124,6 +125,7 @@ import {
     EnumerationCaserefFieldComponent
 } from './enumeration-field/enumeration-caseref-field/enumeration-caseref-field.component';
 import { StringCollectionDefaultFieldComponent } from './string-collection-field/string-collection-default-field/string-collection-default-field.component';
+import {ComponentPortal} from "@angular/cdk/portal";
 
 @NgModule({
     declarations: [
@@ -249,6 +251,7 @@ export class DataFieldsComponentModule {
         registry.register("multichoice-autocomplete", (injector: Injector) => new ComponentPortal<any>(MultichoiceAutocompleteFieldComponent, null, injector));
         registry.register("number-default", (injector: Injector) => new ComponentPortal<any>(NumberDefaultFieldComponent, null, injector));
         registry.register("number-currency", (injector: Injector) => new ComponentPortal<any>(NumberCurrencyFieldComponent, null, injector));
+        registry.register("number-decimal", (injector: Injector) => new ComponentPortal<any>(NumberDecimalFieldComponent, null, injector));
         registry.register("text-default", (injector: Injector) => new ComponentPortal<any>(SimpleTextFieldComponent, null, injector));
         registry.register("text-password", (injector: Injector) => new ComponentPortal<any>(PasswordTextFieldComponent, null, injector));
         registry.register("text-textarea", (injector: Injector) => new ComponentPortal<any>(TextareaFieldComponent, null, injector));

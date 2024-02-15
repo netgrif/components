@@ -1,13 +1,13 @@
-<mat-form-field [appearance]="numberField.materialAppearance" class="full-width" color="primary">
-    <mat-label *ngIf="!showLargeLayout.value">{{numberField.title}}</mat-label>
+<mat-form-field [appearance]="dataField.materialAppearance" class="full-width" color="primary">
+    <mat-label *ngIf="!showLargeLayout.value">{{dataField.title}}</mat-label>
     <input matInput
            [type]="fieldType"
            [value]="transformedValue"
            [formControl]="formControlRef"
-           [placeholder]="numberField.placeholder"
-           [required]="numberField.behavior.required"
+           [placeholder]="dataField.placeholder"
+           [required]="dataField.behavior.required"
            (focusout)="onFocusOut($event)"
            (focusin)="onFocusIn()">
-    <mat-hint>{{numberField.description}}</mat-hint>
-    <mat-error *ngIf="numberField.isInvalid(formControlRef)">{{getErrorMessage()}}</mat-error>
+    <mat-hint>{{dataField.description}}</mat-hint>
+    <mat-error *ngIf="dataField.isInvalid(formControlRef)">{{getErrorMessage()}}</mat-error>
 </mat-form-field>
