@@ -7,35 +7,38 @@ import {Observable, Subject, Subscription} from 'rxjs';
 import {UserPreferenceService} from '../user/services/user-preference.service';
 import {LoggerService} from '../logger/services/logger.service';
 
+export interface Translation {
+    key: string,
+    translation: any
+}
+
 @Injectable({
     providedIn: 'root'
 })
 export class LanguageService implements OnDestroy {
 
-    private _langChange$: Subject<string>;
-
-    private readonly _LANG_MATCHER = /en-US|sk-SK|de-DE/;
-    private readonly _DEFAULT_LANG = 'en-US';
+    protected _translations: Array<Translation>;
+    protected _langChange$: Subject<string>;
     protected subPreference: Subscription;
     protected subTranslate: Subscription;
+    protected _defaultLanguage: string = 'en';
 
-    constructor(private _translate: TranslateService,
-                private _preferenceService: UserPreferenceService,
-                private _logger: LoggerService) {
-        _translate.addLangs(['en-US', 'sk-SK', 'de-DE']);
-        _translate.setTranslation('en-US', en, true);
-        _translate.setTranslation('sk-SK', sk, true);
-        _translate.setTranslation('de-DE', de, true);
-        _translate.setDefaultLang(this._DEFAULT_LANG);
+    constructor(protected _translate: TranslateService,
+                protected _preferenceService: UserPreferenceService,
+                protected _logger: LoggerService) {
+        this._translations = [
+            { key: 'en', translation: en },
+            { key: 'sk', translation: sk },
+            { key: 'de', translation: de }
+        ];
+        this._translate.addLangs(this._translations.map(trans => trans.key));
+        this._translations.forEach(trans => {
+            this._translate.setTranslation(trans.key, trans.translation, true);
+        })
+        this._translate.setDefaultLang(this._defaultLanguage);
         this._langChange$ = new Subject<string>();
 
-        const lang = localStorage.getItem('Language');
-        if (lang === null) {
-            const browserLang = _translate.getBrowserLang();
-            this.setLanguage(browserLang);
-        } else {
-            this.setLanguage(lang);
-        }
+        this.checkLocalStorage();
 
         setTimeout(() => {
             if (this._preferenceService) {
@@ -47,6 +50,7 @@ export class LanguageService implements OnDestroy {
                 });
             }
         });
+
 
         this.subTranslate = _translate.onLangChange.subscribe((event: TranslationChangeEvent) => {
             this._logger.debug('Language changed to ' + event.lang);
@@ -60,20 +64,64 @@ export class LanguageService implements OnDestroy {
         }
     }
 
-    setLanguage(lang: string, saveToPreferences = false) {
-        this._translate.use(lang.match(this._LANG_MATCHER) ? lang : this._DEFAULT_LANG);
+    protected checkLocalStorage() {
+        const lang = localStorage.getItem('Language');
+        if (lang === null) {
+            const browserLang = this._translate.getBrowserLang();
+            this.setLanguage(browserLang);
+        } else {
+            this.setLanguage(lang);
+        }
+    }
+
+    public setDefaultLang(lang: string) {
+        if (this.checkIfLangExists(lang)) {
+            this._defaultLanguage = lang;
+        } else {
+            this._logger.error(lang + " Language doesn't exists!");
+        }
+    }
+
+    public setLanguage(lang: string, saveToPreferences = false) {
+        this._translate.use( this.checkIfLangExists(lang) ? lang : this._defaultLanguage);
         if (saveToPreferences) {
             this._preferenceService.setLocale(lang);
         }
-        localStorage.setItem('Language', lang.match(this._LANG_MATCHER) ? lang : this._DEFAULT_LANG);
-        this._langChange$.next(lang.match(this._LANG_MATCHER) ? lang : this._DEFAULT_LANG);
+        localStorage.setItem('Language', this.checkIfLangExists(lang) ? lang : this._defaultLanguage);
+        this._langChange$.next(this.checkIfLangExists(lang) ? lang : this._defaultLanguage);
+    }
+
+    public addLanguage(lang: string, translation: Object) {
+        this._translate.addLangs([lang]);
+        this._translate.setTranslation(lang, translation, true);
+        this._translations.push({key: lang, translation})
+    }
+
+    public removeLanguage(lang: string) {
+        const index = this._translations.findIndex(value => value.key === lang);
+        if (index !== -1) {
+            if (this._translate.currentLang === lang && this._translate.currentLang !== this._defaultLanguage) {
+                this.setLanguage(this._defaultLanguage);
+            }
+            this._translations.splice(index, 1);
+        }
+    }
+
+    public getTranslations(): Array<Translation> {
+        return this._translations;
     }
 
     getLanguage() {
         return this._translate.currentLang;
     }
 
-    getLangChange$(): Observable<string> {
+    public getLangChange$(): Observable<string> {
         return this._langChange$.asObservable();
     }
+
+    protected checkIfLangExists(lang: string): boolean {
+        return this._translations.some(value => value.key === lang);
+    }
+
+
 }

@@ -51,7 +51,7 @@ describe('I18nDividerFieldComponent', () => {
 
     @Component({
         selector: 'nc-test-wrapper',
-        template: '<nc-i18n-divider-field [formControlRef]="fc" [dividerI18nField]="field" [showLargeLayout]="boolean">' +
+        template: '<nc-i18n-divider-field [formControlRef]="fc" [dataField]="field" [showLargeLayout]="boolean">' +
             '</nc-i18n-divider-field>'
     })
     class TestWrapperComponent {

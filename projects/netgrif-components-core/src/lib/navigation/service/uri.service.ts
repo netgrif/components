@@ -14,6 +14,7 @@ import {PaginationParams} from '../../utility/pagination/pagination-params';
 import {NAE_URI_NODE_CASES_PAGE_SIZE} from '../model/size-menu-injection-token';
 import {UriNodeResource} from '../model/uri-resource';
 import {UriResourceService} from './uri-resource.service';
+import {GroupNavigationConstants} from "../model/group-navigation-constants";
 
 /**
  * Service for managing URIs
@@ -23,7 +24,7 @@ import {UriResourceService} from './uri-resource.service';
 })
 export class UriService implements OnDestroy {
 
-    private static ROOT: string = 'root';
+    public static ROOT: string = 'root';
     private _rootNode: UriNodeResource;
     private readonly _rootLoading$: LoadingEmitter;
     private readonly _parentLoading$: LoadingEmitter;
@@ -171,6 +172,28 @@ export class UriService implements OnDestroy {
     }
 
     /**
+     * Get menu item case by nodePath field value
+     * @param node a node, that is represented by the wanted case
+     * @return page containing 1 case
+     */
+    public getItemCaseByNodePath(node?: UriNodeResource): Observable<Page<Case>> {
+        if (!node) {
+            node = this.activeNode;
+        }
+        const searchBody: CaseSearchRequestBody = {
+            data: {
+                [GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH] : node.uriPath
+            },
+            process: {identifier: "preference_item"}
+        };
+
+        let httpParams = new HttpParams()
+            .set(PaginationParams.PAGE_SIZE, 1)
+            .set(PaginationParams.PAGE_NUMBER, 0);
+        return this._caseResourceService.searchCases(SimpleFilter.fromCaseQuery(searchBody), httpParams);
+    }
+
+    /**
      * Get siblings node of the provided node
      * @param node siblings node
      */
@@ -203,7 +226,7 @@ export class UriService implements OnDestroy {
     public resolveParentPath(node?: UriNodeResource): string {
         if (!node) node = this.activeNode;
         const lastDelimiter = node.uriPath.lastIndexOf('/');
-        if (lastDelimiter === -1) return 'root';
+        if (lastDelimiter === 0) return '/';
         return node.uriPath.substring(0, lastDelimiter);
     }
 

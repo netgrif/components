@@ -14,15 +14,15 @@ import {UserResource} from '../../../resources/interface/user-resource';
 })
 export class AuthenticationService implements OnDestroy {
 
-    private static readonly IDENTIFICATION_ATTRIBUTE = 'id';
+    protected static readonly IDENTIFICATION_ATTRIBUTE = 'id';
 
-    private _authenticated$: BehaviorSubject<boolean>;
+    protected _authenticated$: BehaviorSubject<boolean>;
     protected subSession: Subscription;
 
-    constructor(private _auth: AuthenticationMethodService,
-                private _config: ConfigurationService,
-                private _sessionService: SessionService,
-                private _userTransformer: UserTransformer) {
+    constructor(protected _auth: AuthenticationMethodService,
+                protected _config: ConfigurationService,
+                protected _sessionService: SessionService,
+                protected _userTransformer: UserTransformer) {
         this._authenticated$ = new BehaviorSubject<boolean>(false);
         this.subSession = this._sessionService.session$.subscribe(token => {
             this._authenticated$.next(!!token && token.length !== 0 && this._sessionService.verified);

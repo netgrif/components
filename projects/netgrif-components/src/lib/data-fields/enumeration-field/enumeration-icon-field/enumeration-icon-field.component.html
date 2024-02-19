@@ -1,14 +1,33 @@
-<div>
-    <mat-label class="netgrif-label" *ngIf="!showLargeLayout.value">{{enumerationField.title}}
-        <nc-required-label *ngIf="enumerationField.behavior.required" [isIn]="true"></nc-required-label>
+<div *ngIf="!horizontal; else horizont">
+    <mat-label class="netgrif-label" [ngClass]="{'netgrif-label-disabled': formControlRef.disabled}" *ngIf="!showLargeLayout.value">{{dataField.title}}
+        <nc-required-label *ngIf="dataField.behavior.required" [isIn]="!formControlRef.disabled"></nc-required-label>
         <br></mat-label>
-    <div *ngFor="let option of enumerationField.choices; let i = index">
-        <div class="enum-icon-item enum-icon-item-row" (click)="setEnumValue(option.key)" [ngClass]="{'enum-icon-item-active': isSelected(option.key), 'enum-icon-item-hover': !formControlRef.disabled}">
+    <div *ngFor="let option of dataField.choices; let i = index">
+        <div class="enum-icon-item enum-icon-item-row" (click)="setEnumValue(option.key)"
+             [ngClass]="{'enum-icon-item-active': isSelected(option.key), 'enum-icon-item-hover': !formControlRef.disabled, 'enum-icon-item-disabled': formControlRef.disabled}">
             <mat-icon *ngIf="resolveIconType(option.key) === 'material'">{{resolveIconValue(option.key)}}</mat-icon>
             <mat-icon *ngIf="resolveIconType(option.key) === 'svg'" [svgIcon]="resolveIconValue(option.key)"></mat-icon>
             <span fxFlex class="enum-icon-text">{{option.value}}</span>
             <mat-icon *ngIf="resolveArrow(option.key)">arrow_forward</mat-icon>
         </div>
-        <mat-divider class="enum-icon-divider" *ngIf="i !== enumerationField.choices.length - 1 && resolveDivider(option.key)"></mat-divider>
+        <mat-divider class="enum-icon-divider" *ngIf="i !== dataField.choices.length - 1 && resolveDivider(option.key)"></mat-divider>
     </div>
 </div>
+<ng-template #horizont>
+    <mat-label class="netgrif-label" [ngClass]="{'netgrif-label-disabled': formControlRef.disabled}" *ngIf="!showLargeLayout.value">{{dataField.title}}
+        <nc-required-label *ngIf="dataField.behavior.required" [isIn]="!formControlRef.disabled"></nc-required-label>
+        <br></mat-label>
+    <div fxLayout="row">
+        <div *ngFor="let option of dataField.choices; let i = index" fxLayout="row" fxFlex>
+            <div class="enum-icon-item enum-icon-item-row" (click)="setEnumValue(option.key)"
+                 [ngClass]="{'enum-icon-item-active': isSelected(option.key), 'enum-icon-item-hover': !formControlRef.disabled, 'enum-icon-item-disabled': formControlRef.disabled}">
+                <mat-icon *ngIf="resolveIconType(option.key) === 'material'">{{resolveIconValue(option.key)}}</mat-icon>
+                <mat-icon *ngIf="resolveIconType(option.key) === 'svg'" [svgIcon]="resolveIconValue(option.key)"></mat-icon>
+                <span fxFlex class="enum-icon-text">{{option.value}}</span>
+                <mat-icon *ngIf="resolveArrow(option.key)">arrow_forward</mat-icon>
+            </div>
+            <div fxFlex></div>
+            <mat-divider [vertical]="true" *ngIf="i !== dataField.choices.length - 1 && resolveDivider(option.key)"></mat-divider>
+        </div>
+    </div>
+</ng-template>

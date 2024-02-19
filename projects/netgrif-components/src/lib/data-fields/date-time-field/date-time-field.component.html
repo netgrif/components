@@ -1,14 +1,4 @@
 <nc-data-field-template *ngIf="!dataField.behavior.hidden"
                         [dataField]="dataField"
-                        [dataFieldTemplate]="fieldTemplate"
                         [offset]="taskOffset">
 </nc-data-field-template>
-
-<ng-template #fieldTemplate let-showLargeLayout="showLargeLayout" [ngSwitch]='dataField.getComponentType()'>
-    <nc-zoned-date-time-field *ngSwitchCase='"timeZone"'
-                               [dataField]='dataField'
-                               [showLargeLayout]='showLargeLayout'></nc-zoned-date-time-field>
-    <nc-simple-date-time-field *ngSwitchDefault
-                               [dataField]='dataField'
-                               [showLargeLayout]='showLargeLayout'></nc-simple-date-time-field>
-</ng-template>

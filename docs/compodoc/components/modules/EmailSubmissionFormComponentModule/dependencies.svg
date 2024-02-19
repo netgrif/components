@@ -24,13 +24,13 @@
 <title>cluster_EmailSubmissionFormComponentModule</title>
 <polygon fill="none" stroke="black" stroke-dasharray="1,5" points="51,-70 51,-268 445,-268 445,-70 51,-70"/>
 </g>
-<g id="clust2" class="cluster">
-<title>cluster_EmailSubmissionFormComponentModule_declarations</title>
-<polygon fill="none" stroke="black" points="211,-78 211,-130 437,-130 437,-78 211,-78"/>
-</g>
 <g id="clust5" class="cluster">
 <title>cluster_EmailSubmissionFormComponentModule_exports</title>
 <polygon fill="none" stroke="black" points="133,-208 133,-260 363,-260 363,-208 133,-208"/>
+</g>
+<g id="clust2" class="cluster">
+<title>cluster_EmailSubmissionFormComponentModule_declarations</title>
+<polygon fill="none" stroke="black" points="211,-78 211,-130 437,-130 437,-78 211,-78"/>
 </g>
 <g id="clust4" class="cluster">
 <title>cluster_EmailSubmissionFormComponentModule_imports</title>
