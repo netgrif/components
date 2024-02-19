@@ -25,8 +25,8 @@ export class AppComponent {
                 public routes: Router, private translate: TranslateService,
                 private baseAllowedNets: BaseAllowedNetsService, private allowedNetsFactory: AllowedNetsServiceFactory,
                 private userService: UserService) {
-        translate.setTranslation('en-US', en, true);
-        translate.setTranslation('sk-SK', sk, true);
+        translate.setTranslation('en', en, true);
+        translate.setTranslation('sk', sk, true);
 
         this.userService.user$.pipe(filter(u => !!u && u.id !== ''), take(1)).subscribe(() => {
             const allNets = allowedNetsFactory.createWithAllNets();

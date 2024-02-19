@@ -36,7 +36,7 @@ export abstract class AbstractUserListDefaultFieldComponent extends AbstractBase
             data: {roles: this.dataField.roles, value: this.dataField.value} as UserListInjectedData,
         });
         dialogRef.afterClosed().subscribe($event => {
-            if ($event.data) {
+            if ($event?.data) {
                 this.dataField.value = new UserListValue(new Map<string, UserValue>(($event.data as Array<UserValue>).map(v => [v.id, v])));
                 this._snackbar.openGenericSnackBar(
                     this.translate.instant('dataField.snackBar.userListAssigned',

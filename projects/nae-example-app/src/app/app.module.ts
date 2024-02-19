@@ -19,8 +19,9 @@ import {
     ViewService,
     ProfileModule,
     Dashboard,
-    ValidationRegistryService,
-    FrontActionModule
+    FrontActionModule,
+    NAE_ASYNC_RENDERING_CONFIGURATION,
+    ValidationRegistryService
 } from '@netgrif/components-core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -251,6 +252,13 @@ export function HttpLoaderFactory(http: HttpClient) {
     },
         {provide: NAE_SNACKBAR_VERTICAL_POSITION, useValue: SnackBarVerticalPosition.TOP},
         {provide: NAE_SNACKBAR_HORIZONTAL_POSITION, useValue: SnackBarHorizontalPosition.LEFT},
+        {provide: NAE_ASYNC_RENDERING_CONFIGURATION, useValue: {
+                batchSize: 20,
+                batchDelay: 50,
+                numberOfPlaceholders: 4,
+                enableAsyncRenderingForNewFields: true,
+                enableAsyncRenderingOnTaskExpand: true
+            }},
         ResourceProvider,
         TranslateService,
         TranslatePipe,

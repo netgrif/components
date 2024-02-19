@@ -59,7 +59,7 @@ export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsC
 
     protected refreshCurrentValue(newValue = this.dataField.value): void {
         if (this.dataField.disabled) {
-            this.selectedLanguage = this._translateService.currentLang.split('-')[0];
+            this.selectedLanguage = this._translateService.currentLang;
             this.filledShown = false;
             this.initializedLanguage = false;
             return;
@@ -91,7 +91,7 @@ export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsC
         if (!this.isDefaultValue(this.selectedLanguage) && this.currentValue[this.selectedLanguage] === '') {
             delete this.currentValue[this.selectedLanguage];
         }
-        this.dataField.value = I18nField.fromObject(this.currentValue, this.dataField.value.key);
+        this.dataField.value = I18nField.fromObject(this.currentValue, this.dataField.value?.key ?? DEFAULT_LANGUAGE_CODE);
         this.formControlRef.markAsTouched();
     }
 
@@ -110,7 +110,7 @@ export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsC
 
     public removeTranslation(key: string): void {
         delete this.currentValue[key];
-        this.dataField.value = I18nField.fromObject(this.currentValue, this.dataField.value.key);
+        this.dataField.value = I18nField.fromObject(this.currentValue, this.dataField.value?.key ?? DEFAULT_LANGUAGE_CODE);
         this.formControlRef.markAsTouched();
         this.refreshFilledMap();
     }
@@ -134,7 +134,7 @@ export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsC
 
 
     public getTranslation(): string {
-        const locale = this._translateService.currentLang.split('-')[0];
+        const locale = this._translateService.currentLang;
         return locale in this.dataField.value.translations
             ? this.dataField.value.translations[locale]
             : this.dataField.value.defaultValue;
