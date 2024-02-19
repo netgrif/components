@@ -17,7 +17,7 @@ export abstract class AbstractFilterDefaultFieldComponent extends AbstractBaseDa
 
     constructor(protected _parentInjector: Injector,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<FilterField>) {
-        super(dataFieldPortalData);
+        super(undefined, dataFieldPortalData);
     }
 
     ngOnInit() {

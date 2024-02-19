@@ -18,6 +18,15 @@ import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resou
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {MaterialModule} from '../../material/material.module';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
+import {Validator} from "../../registry/model/validator";
+import {
+    decimalValidation,
+    evenValidation, inRangeValidation,
+    negativeValidation,
+    oddValidation,
+    positiveValidation
+} from "../models/validation-functions";
+import {DataFieldsModule} from "../data-fields.module";
 
 describe('AbstractNumberFieldComponent', () => {
     let component: TestNumComponent;
@@ -30,7 +39,8 @@ describe('AbstractNumberFieldComponent', () => {
                 AngularResizeEventModule,
                 TranslateLibModule,
                 HttpClientTestingModule,
-                NoopAnimationsModule
+                NoopAnimationsModule,
+                DataFieldsModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useCLass: MockAuthenticationMethodService},
@@ -82,13 +92,27 @@ class TestWrapperComponent {
         editable: true,
         hidden: true
     }, [
-        {validationRule: 'odd', validationMessage: 'This is custom odd message!'},
-        {validationRule: 'even', validationMessage: ''},
-        {validationRule: 'positive', validationMessage: 'This is custom message!'},
-        {validationRule: 'negative', validationMessage: 'This is custom message!'},
-        {validationRule: 'decimal', validationMessage: 'This is custom message!'},
-        {validationRule: 'inrange inf,0', validationMessage: 'This is custom message!'},
-        {validationRule: 'inrange 0,inf', validationMessage: 'This is custom message!'},
-        {validationRule: 'inrange -5,0', validationMessage: 'This is custom message!'},
-    ]);
+            {name: 'odd', validationMessage: 'This is custom odd message!'},
+            {name: 'even', validationMessage: ''},
+            {name: 'positive', validationMessage: 'This is custom message!'},
+            {name: 'negative', validationMessage: 'This is custom message!'},
+            {name: 'decimal', validationMessage: 'This is custom message!'},
+            {name: 'inrange', validationMessage: 'This is custom message!', arguments: {'from': {key: 'from', value: 'inf', dynamic: false}, 'to': {key: 'to', value: '0', dynamic: false}}},
+            {name: 'inrange', validationMessage: 'This is custom message!', arguments: {'from': {key: 'from', value: '0', dynamic: false}, 'to': {key: 'to', value: 'inf', dynamic: false}}},
+            {name: 'inrange', validationMessage: 'This is custom message!', arguments: {'from': {key: 'from', value: '-5', dynamic: false}, 'to': {key: 'to', value: '0', dynamic: false}}},
+        ],
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        new Map<string, Validator>([
+            ['odd', oddValidation],
+            ['even', evenValidation],
+            ['positive', positiveValidation],
+            ['negative', negativeValidation],
+            ['decimal', decimalValidation],
+            ['inrange', inRangeValidation]
+        ]));
 }

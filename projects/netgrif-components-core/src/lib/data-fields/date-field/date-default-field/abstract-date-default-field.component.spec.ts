@@ -20,10 +20,13 @@ import {AbstractDateDefaultFieldComponent} from "./abstract-date-default-field.c
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {FormControl} from "@angular/forms";
 import {WrappedBoolean} from "../../data-field-template/models/wrapped-boolean";
+import {ValidationRegistryService} from "../../../registry/validation-registry.service";
+import {Validator} from "../../../registry/model/validator";
+import {weekendValidation, workdayValidation} from "../../models/validation-functions";
+import {DataFieldsModule} from "../../data-fields.module";
 import {DateAdapter, MAT_DATE_LOCALE} from "@angular/material/core";
 import {LanguageService} from "../../../translate/language.service";
 import {CustomDateAdapter} from "../models/custom-date-adapter";
-import {NgxMatDateAdapter} from "@angular-material-components/datetime-picker";
 
 describe('AbstractDateDefaultFieldComponent', () => {
     let component: TestDateFieldComponent;
@@ -35,7 +38,9 @@ describe('AbstractDateDefaultFieldComponent', () => {
                 MaterialModule,
                 AngularResizeEventModule,
                 TranslateLibModule,
-                HttpClientTestingModule, NoopAnimationsModule
+                HttpClientTestingModule,
+                NoopAnimationsModule,
+                DataFieldsModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
@@ -50,9 +55,16 @@ describe('AbstractDateDefaultFieldComponent', () => {
                             editable: true,
                             hidden: true
                         }, undefined, undefined, undefined, [
-                            {validationRule: 'weekend', validationMessage: 'This is custom message!'},
-                            {validationRule: 'workday', validationMessage: 'This is custom message!'}
-                        ]),
+                                {name: 'weekend', validationMessage: 'This is custom message!'},
+                                {name: 'workday', validationMessage: 'This is custom message!'}
+                            ],
+                            undefined,
+                            undefined,
+                            new Map<string, Validator>([
+                                ['weekend', weekendValidation],
+                                ['workday', workdayValidation]
+                            ])
+                        ),
                         formControlRef: new FormControl(),
                         showLargeLayout: new WrappedBoolean()
                     } as DataFieldPortalData<DateField>
@@ -93,8 +105,9 @@ class TestDateFieldComponent extends AbstractDateDefaultFieldComponent {
                 _adapter: DateAdapter<any>,
                 @Inject(MAT_DATE_LOCALE) _locale: string,
                 _languageService: LanguageService,
-                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<DateField>) {
-        super(_translate, _adapter, _locale, _languageService, dataFieldPortalData);
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<DateField>,
+                _validationRegistry: ValidationRegistryService) {
+        super(_translate, _adapter, _locale, _languageService, dataFieldPortalData, _validationRegistry);
     }
 }
 

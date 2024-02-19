@@ -4,7 +4,8 @@ import {
     AbstractDashboardBarChartTextFieldComponent,
     DATA_FIELD_PORTAL_DATA,
     DataFieldPortalData,
-    TextField
+    TextField,
+    ValidationRegistryService
 } from '@netgrif/components-core';
 
 @Component({
@@ -15,8 +16,9 @@ import {
 export class DashboardBarChartTextFieldComponent extends AbstractDashboardBarChartTextFieldComponent {
 
     constructor(translate: TranslateService,
-                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextField>) {
-        super(translate, dataFieldPortalData);
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextField>,
+                _validationRegistry: ValidationRegistryService) {
+        super(translate, dataFieldPortalData, _validationRegistry);
     }
 
 }

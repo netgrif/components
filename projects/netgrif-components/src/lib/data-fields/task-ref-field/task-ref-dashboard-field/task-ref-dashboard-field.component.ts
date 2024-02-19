@@ -5,8 +5,10 @@ import {
     DataFieldPortalData,
     LoggerService,
     TaskRefDashboardTile,
-    TaskRefField
+    TaskRefField,
+    ValidationRegistryService
 } from '@netgrif/components-core';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'nc-task-ref-dashboard-field',
@@ -18,8 +20,10 @@ export class TaskRefDashboardFieldComponent extends AbstractTaskRefDashboardFiel
     @Input() taskContentComponentClassReference: Type<any>;
 
     constructor(logger: LoggerService,
-                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TaskRefField>) {
-        super(logger, dataFieldPortalData);
+                _translate: TranslateService,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TaskRefField>,
+                _validationRegistry: ValidationRegistryService) {
+        super(_translate, logger, dataFieldPortalData, _validationRegistry);
     }
 
     getGridColumns(): string {

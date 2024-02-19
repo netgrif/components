@@ -4,6 +4,8 @@ import {Layout} from '../../models/layout';
 import {Validation} from '../../models/validation';
 import {Component, ComponentPrefixes} from '../../models/component';
 import {DataField} from '../../models/abstract-data-field';
+import {Injector} from "@angular/core";
+import {Validator} from "../../../registry/model/validator";
 
 export enum TextFieldView {
     DEFAULT = 'default',
@@ -50,54 +52,12 @@ export class TextField extends DataField<string> {
 
     constructor(stringId: string, title: string, value: string, behavior: Behavior, placeholder?: string,
                 description?: string, layout?: Layout, validations?: Array<Validation>, _component?: Component,
-                parentTaskId?: string) {
-        super(stringId, title, value, behavior, placeholder, description, layout, validations, _component, parentTaskId);
+                parentTaskId?: string, validatorRegister?: Map<string, Validator>) {
+        super(stringId, title, value, behavior, placeholder, description, layout, validations, _component, parentTaskId,
+            undefined, validatorRegister);
     }
 
     public getTypedComponentType(): string {
         return ComponentPrefixes.TEXT + this.getComponentType();
-    }
-    protected resolveValidations(): Array<ValidatorFn> {
-        const result = [];
-
-        this.validations.forEach(item => {
-            if (item.validationRule.includes(TextFieldValidation.MIN_LENGTH)) {
-                const tmp = item.validationRule.split(' ');
-                if (tmp[1] !== undefined) {
-                    const length = parseInt(tmp[1], 10);
-                    if (!isNaN(length)) {
-                        result.push(Validators.minLength(length));
-                    }
-                }
-            } else if (item.validationRule.includes(TextFieldValidation.MAX_LENGTH)) {
-                const tmp = item.validationRule.split(' ');
-                if (tmp[1] !== undefined) {
-                    const length = parseInt(tmp[1], 10);
-                    if (!isNaN(length)) {
-                        result.push(Validators.maxLength(length));
-                    }
-                }
-            } else if (item.validationRule.includes(TextFieldValidation.REGEX)) {
-                if (item.validationRule.startsWith('regex ')) {
-                    result.push(Validators.pattern(new RegExp(item.validationRule.substring(6, item.validationRule.length ))));
-                } else if (item.validationRule.startsWith('regex("')) {
-                    result.push(Validators.pattern(new RegExp(item.validationRule.substring(7, item.validationRule.length - 2))));
-                }
-            } else if (item.validationRule.includes(TextFieldValidation.EMAIL)) {
-                result.push(Validators.email);
-            } else if (item.validationRule.includes(TextFieldValidation.TEL_NUMBER)) {
-                result.push(this.validTelNumber);
-            }
-        });
-
-        return result;
-    }
-
-    private validTelNumber(fc: FormControl) {
-        if (!(new RegExp(/^(?:\+?(\d{1,3}))?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4})(?:[-.x ]*(\d+))?)$/).test(fc.value))) {
-            return ({validTelNumber: true});
-        } else {
-            return null;
-        }
     }
 }

@@ -19,6 +19,10 @@ import {TextField} from '../models/text-field';
 import {TranslateService} from '@ngx-translate/core';
 import {AbstractSimpleTextFieldComponent} from './abstract-simple-text-field.component';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
+import {Validator} from "../../../registry/model/validator";
+import {minLengthValidation} from "../../models/validation-functions";
+import {ValidationRegistryService} from "../../../registry/validation-registry.service";
+import {DataFieldsModule} from "../../data-fields.module";
 
 describe('AbstractSimpleTextFieldComponent', () => {
     let component: TestTextComponent;
@@ -31,7 +35,8 @@ describe('AbstractSimpleTextFieldComponent', () => {
                 AngularResizeEventModule,
                 NoopAnimationsModule,
                 TranslateLibModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                DataFieldsModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
@@ -45,7 +50,10 @@ describe('AbstractSimpleTextFieldComponent', () => {
                             visible: true,
                             editable: true,
                             hidden: true
-                        }, undefined, undefined, undefined, [{validationRule: 'minLength 5', validationMessage: 'This is custom message!'}]),
+                        }, undefined, undefined, undefined, [{name: 'minlength', validationMessage: 'This is custom message!', arguments: {'length': {key: 'length', value: '5', dynamic: false}}}],
+                            undefined,
+                            undefined,
+                            new Map<string, Validator>([['minlength', minLengthValidation]])),
                         formControlRef: new FormControl(),
                         showLargeLayout: new WrappedBoolean()
                     } as DataFieldPortalData<TextField>
@@ -78,9 +86,10 @@ describe('AbstractSimpleTextFieldComponent', () => {
     template: ''
 })
 class TestTextComponent extends AbstractSimpleTextFieldComponent {
-    constructor(protected _translate: TranslateService,
-                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextField>) {
-        super(_translate, dataFieldPortalData);
+    constructor(_translate: TranslateService,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextField>,
+                _validationRegistry: ValidationRegistryService) {
+        super(_translate, dataFieldPortalData, _validationRegistry);
     }
 }
 

@@ -121,3 +121,6 @@ export * from './text-field/dashboard-portal-text-field/dashboard-view-constants
 
 /* Services */
 export * from './i18n-field/language-icons.service';
+
+/* Functions */
+export * from './models/validation-functions';

@@ -20,6 +20,16 @@ import {LanguageService} from '../../translate/language.service';
 import {FormControl} from '@angular/forms';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../models/data-field-portal-data-injection-token";
 import {WrappedBoolean} from "../data-field-template/models/wrapped-boolean";
+import {Validator} from "../../registry/model/validator";
+import {
+    decimalValidation,
+    evenValidation, inRangeValidation,
+    negativeValidation,
+    oddValidation,
+    positiveValidation
+} from "../models/validation-functions";
+import {ValidationRegistryService} from "../../registry/validation-registry.service";
+import {DataFieldsModule} from "../data-fields.module";
 
 describe('AbstractNumberErrorsComponent', () => {
     let component: TestNumErrorComponent;
@@ -32,7 +42,8 @@ describe('AbstractNumberErrorsComponent', () => {
                 AngularResizeEventModule,
                 TranslateLibModule,
                 HttpClientTestingModule,
-                NoopAnimationsModule
+                NoopAnimationsModule,
+                DataFieldsModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useCLass: MockAuthenticationMethodService},
@@ -45,16 +56,30 @@ describe('AbstractNumberErrorsComponent', () => {
                             visible: true,
                             editable: true,
                             hidden: true
-                        }, [
-                            {validationRule: 'odd', validationMessage: 'This is custom odd message!'},
-                            {validationRule: 'even', validationMessage: ''},
-                            {validationRule: 'positive', validationMessage: 'This is custom message!'},
-                            {validationRule: 'negative', validationMessage: 'This is custom message!'},
-                            {validationRule: 'decimal', validationMessage: 'This is custom message!'},
-                            {validationRule: 'inrange inf,0', validationMessage: 'This is custom message!'},
-                            {validationRule: 'inrange 0,inf', validationMessage: 'This is custom message!'},
-                            {validationRule: 'inrange -5,0', validationMessage: 'This is custom message!'},
-                        ]),
+                        },[
+                                {name: 'odd', validationMessage: 'This is custom odd message!'},
+                                {name: 'even', validationMessage: ''},
+                                {name: 'positive', validationMessage: 'This is custom message!'},
+                                {name: 'negative', validationMessage: 'This is custom message!'},
+                                {name: 'decimal', validationMessage: 'This is custom message!'},
+                                {name: 'inrange', validationMessage: 'This is custom message!', arguments: {'from': {key: 'from', value: 'inf', dynamic: false}, 'to': {key: 'to', value: '0', dynamic: false}}},
+                                {name: 'inrange', validationMessage: 'This is custom message!', arguments: {'from': {key: 'from', value: '0', dynamic: false}, 'to': {key: 'to', value: 'inf', dynamic: false}}},
+                                {name: 'inrange', validationMessage: 'This is custom message!', arguments: {'from': {key: 'from', value: '-5', dynamic: false}, 'to': {key: 'to', value: '0', dynamic: false}}},
+                            ],
+                            undefined,
+                            undefined,
+                            undefined,
+                            undefined,
+                            undefined,
+                            undefined,
+                            new Map<string, Validator>([
+                                ['odd', oddValidation],
+                                ['even', evenValidation],
+                                ['positive', positiveValidation],
+                                ['negative', negativeValidation],
+                                ['decimal', decimalValidation],
+                                ['inrange', inRangeValidation]
+                            ])),
                         formControlRef: new FormControl(),
                         showLargeLayout: new WrappedBoolean()
                     } as DataFieldPortalData<NumberField>
@@ -94,8 +119,9 @@ describe('AbstractNumberErrorsComponent', () => {
     template: ''
 })
 class TestNumErrorComponent extends AbstractNumberErrorsComponent {
-    constructor(translate: TranslateService, @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<NumberField>) {
-        super(translate, dataFieldPortalData);
+    constructor(translate: TranslateService, @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<NumberField>,
+                _validationRegistry: ValidationRegistryService) {
+        super(translate, dataFieldPortalData, _validationRegistry);
     }
 }
 

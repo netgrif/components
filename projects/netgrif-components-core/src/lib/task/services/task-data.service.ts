@@ -340,7 +340,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
 
     protected addFieldToSetDataRequestBody(context: TaskSetDataRequestContext, taskId: string, field: DataField<any>): void {
         context.body[taskId][field.stringId] = {
-            type: this._fieldConverterService.resolveType(field),
+            type: FieldConverterService.resolveType(field),
             value: this._fieldConverterService.formatValueForBackend(field, field.value)
         };
         context.previousValues[field.stringId] = field.previousValue;

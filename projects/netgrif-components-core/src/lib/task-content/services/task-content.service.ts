@@ -236,7 +236,7 @@ export abstract class TaskContentService implements OnDestroy {
     }
 
     protected updateField(chFields: ChangedFields, field: DataField<any>, frontendActions: Change): void {
-        if (this._fieldConverterService.resolveType(field) === FieldTypeResource.TASK_REF) {
+        if (FieldConverterService.resolveType(field) === FieldTypeResource.TASK_REF) {
             this._taskDataReloadRequest$.next(frontendActions ? frontendActions : undefined);
             return;
         }
@@ -298,7 +298,7 @@ export abstract class TaskContentService implements OnDestroy {
     }
 
     protected updateReferencedField(chFields: ChangedFields, field: DataField<any>, frontendActions: Change): void {
-        if (this._fieldConverterService.resolveType(field) === FieldTypeResource.TASK_REF) {
+        if (FieldConverterService.resolveType(field) === FieldTypeResource.TASK_REF) {
             this._taskDataReloadRequest$.next(frontendActions ? frontendActions : undefined);
             return;
         }

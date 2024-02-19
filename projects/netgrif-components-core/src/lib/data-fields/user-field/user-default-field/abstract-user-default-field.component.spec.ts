@@ -15,6 +15,7 @@ import {AbstractUserDefaultFieldComponent} from "./abstract-user-default-field.c
 import {FormControl} from "@angular/forms";
 import {WrappedBoolean} from "../../data-field-template/models/wrapped-boolean";
 import {MatDialog} from '@angular/material/dialog';
+import {ValidationRegistryService} from "../../../registry/validation-registry.service";
 
 describe('AbstractUserDefaultFieldComponent', () => {
     let component: TestUserComponent;
@@ -72,8 +73,9 @@ class TestUserComponent extends AbstractUserDefaultFieldComponent {
     constructor(matDialog: MatDialog,
                 snackbar: SnackBarService,
                 translate: TranslateService,
-                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<UserField>) {
-        super(matDialog, snackbar, translate, dataFieldPortalData);
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<UserField>,
+                _validationRegistry: ValidationRegistryService) {
+        super(matDialog, snackbar, translate, dataFieldPortalData, _validationRegistry);
     }
 }
 

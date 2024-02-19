@@ -11,7 +11,7 @@ export abstract class AbstractI18nDividerFieldComponent extends AbstractBaseData
 
 
     constructor(@Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<I18nField>) {
-        super(dataFieldPortalData);
+        super(undefined, dataFieldPortalData);
     }
 
     public getDividerColor(): string {

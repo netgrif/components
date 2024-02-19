@@ -4,7 +4,8 @@ import {
     AbstractTextareaFieldComponent,
     DATA_FIELD_PORTAL_DATA,
     DataFieldPortalData,
-    TextAreaField
+    TextAreaField,
+    ValidationRegistryService
 } from '@netgrif/components-core';
 
 @Component({
@@ -14,8 +15,9 @@ import {
 })
 export class TextareaFieldComponent extends AbstractTextareaFieldComponent {
 
-    constructor(protected _translate: TranslateService, protected _ngZone: NgZone,
-                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextAreaField>) {
-        super(_translate, _ngZone, dataFieldPortalData);
+    constructor(_translate: TranslateService, protected _ngZone: NgZone,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextAreaField>,
+                _validationRegistry: ValidationRegistryService) {
+        super(_translate, _ngZone, dataFieldPortalData, _validationRegistry);
     }
 }

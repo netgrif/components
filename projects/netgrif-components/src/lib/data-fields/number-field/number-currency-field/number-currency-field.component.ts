@@ -4,7 +4,8 @@ import {
     AbstractCurrencyNumberFieldComponent,
     DATA_FIELD_PORTAL_DATA,
     DataFieldPortalData,
-    NumberField
+    NumberField,
+    ValidationRegistryService
 } from '@netgrif/components-core';
 import {CurrencyPipe} from '@angular/common';
 
@@ -16,8 +17,9 @@ import {CurrencyPipe} from '@angular/common';
 export class NumberCurrencyFieldComponent extends AbstractCurrencyNumberFieldComponent implements AfterViewInit {
 
     constructor(currencyPipe: CurrencyPipe, translate: TranslateService,
-                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<NumberField>) {
-        super(currencyPipe, translate, dataFieldPortalData);
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<NumberField>,
+                _validationRegistry: ValidationRegistryService) {
+        super(currencyPipe, translate, dataFieldPortalData, _validationRegistry);
     }
 
     ngAfterViewInit() {

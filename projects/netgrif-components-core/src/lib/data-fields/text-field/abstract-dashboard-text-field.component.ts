@@ -5,6 +5,7 @@ import {CustomCard} from '../../dashboard/cards/model/custom-dashboard-model/cus
 import {Subscription} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../models/data-field-portal-data-injection-token";
+import {ValidationRegistryService} from "../../registry/validation-registry.service";
 
 @Component({
     selector: 'ncc-abstract-dashboard-text-field',
@@ -16,8 +17,9 @@ export abstract class AbstractDashboardTextFieldComponent extends AbstractTextEr
     protected _sub: Subscription;
 
     protected constructor(translate: TranslateService,
-                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextField>) {
-        super(translate, dataFieldPortalData);
+                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextField>,
+                          _validationRegistry: ValidationRegistryService) {
+        super(translate, dataFieldPortalData, _validationRegistry);
     }
 
     ngOnInit(): void {
@@ -36,8 +38,4 @@ export abstract class AbstractDashboardTextFieldComponent extends AbstractTextEr
     }
 
     protected abstract createCard(textFieldValue: string): CustomCard;
-
-    public getErrorMessage() {
-        return this.buildErrorMessage(this.dataField, this.formControlRef);
-    }
 }

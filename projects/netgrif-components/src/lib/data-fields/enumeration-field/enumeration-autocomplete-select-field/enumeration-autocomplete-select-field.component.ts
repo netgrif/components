@@ -13,7 +13,7 @@ import {
 })
 export class EnumerationAutocompleteSelectFieldComponent extends AbstractEnumerationAutocompleteSelectFieldComponent {
 
-    constructor(protected _translate: TranslateService,
+    constructor(_translate: TranslateService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<EnumerationField>) {
         super(_translate, dataFieldPortalData);
     }

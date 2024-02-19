@@ -17,9 +17,9 @@ export abstract class AbstractUserListDefaultFieldComponent extends AbstractBase
 
     protected constructor(protected _dialog: MatDialog,
                           protected _snackbar: SnackBarService,
-                          protected _translate: TranslateService,
+                          _translate: TranslateService,
                           @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<UserListField>) {
-        super(dataFieldPortalData);
+        super(_translate, dataFieldPortalData);
     }
 
     /**
@@ -39,13 +39,13 @@ export abstract class AbstractUserListDefaultFieldComponent extends AbstractBase
             if ($event?.data) {
                 this.dataField.value = new UserListValue(new Map<string, UserValue>(($event.data as Array<UserValue>).map(v => [v.id, v])));
                 this._snackbar.openGenericSnackBar(
-                    this._translate.instant('dataField.snackBar.userListAssigned',
+                    this.translate.instant('dataField.snackBar.userListAssigned',
                         {userNames: this.dataField.value.toString()}),
                     'how_to_reg'
                 );
                 valueReturned = true;
             } else if (!valueReturned) {
-                this._snackbar.openWarningSnackBar(this._translate.instant('dataField.snackBar.notSelectedUser'));
+                this._snackbar.openWarningSnackBar(this.translate.instant('dataField.snackBar.notSelectedUser'));
             }
         });
     }

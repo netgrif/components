@@ -17,7 +17,10 @@ import {
     MockUserResourceService,
     TestConfigurationService,
     TranslateLibModule,
-    UserResourceService
+    UserResourceService,
+    Validator,
+    weekendValidation,
+    workdayValidation
 } from '@netgrif/components-core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
@@ -74,8 +77,14 @@ class TestWrapperComponent {
         editable: true,
         hidden: true
     }, undefined, undefined, undefined, [
-        {validationRule: 'weekend', validationMessage: 'This is custom message!'},
-        {validationRule: 'workday', validationMessage: 'This is custom message!'}
-    ]);
+            {name: 'weekend', validationMessage: 'This is custom message!'},
+            {name: 'workday', validationMessage: 'This is custom message!'}
+        ],
+        undefined,
+        undefined,
+        new Map<string, Validator>([
+            ['weekend', weekendValidation],
+            ['workday', workdayValidation]
+        ]));
 }
 

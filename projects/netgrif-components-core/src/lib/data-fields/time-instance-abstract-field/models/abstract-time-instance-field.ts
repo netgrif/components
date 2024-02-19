@@ -4,6 +4,7 @@ import moment, {Moment} from 'moment';
 import {Layout} from '../../models/layout';
 import {Component} from '../../models/component';
 import {DataField} from '../../models/abstract-data-field';
+import {Validator} from "../../../registry/model/validator";
 
 export enum AbstractTimeInstanceFieldValidation {
     BETWEEN = 'between',
@@ -21,8 +22,10 @@ export abstract class AbstractTimeInstanceField extends DataField<Moment> {
     public max: Moment;
 
     protected constructor(stringId: string, title: string, value: Moment, behavior: Behavior, placeholder?: string,
-                          description?: string, layout?: Layout, validations?: any, component?: Component, parentTaskId?: string) {
-        super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId);
+                          description?: string, layout?: Layout, validations?: any, component?: Component, parentTaskId?: string,
+                          validatorRegister?: Map<string, Validator>) {
+        super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId,
+            undefined, validatorRegister);
     }
 
     public static isEqual(a: Moment, b: Moment, granularity?: moment.unitOfTime.StartOf): boolean {
@@ -62,58 +65,21 @@ export abstract class AbstractTimeInstanceField extends DataField<Moment> {
     }
 
     protected resolveValidations(): Array<ValidatorFn> {
-        const result = [];
+        const result = super.resolveValidations();
 
         this.validations.forEach(item => {
-            if (item.validationRule.includes(AbstractTimeInstanceFieldValidation.BETWEEN)) {
-                const tmp = item.validationRule.split(' ');
-                const ranges = tmp[1].split(',');
-
-                const start = AbstractTimeInstanceField.parseDate(ranges[0]);
-                const end = AbstractTimeInstanceField.parseDate(ranges[1]);
-
-                if (start && end) {
-                    if (start === 'past' && moment(end).isValid()) {
-                        result.push(this.validFromPast(moment(end)));
-                        this.max = moment(end);
-                    } else if (end === 'future' && moment(start).isValid()) {
-                        result.push(this.validToFuture(moment(start)));
-                        this.min = moment(start);
-                    } else if (moment(start).isValid() && moment(end).isValid()) {
-                        result.push(this.validBetween(moment(start), moment(end)));
-                        this.min = moment(start);
-                        this.max = moment(end);
-                    }
+            if (item.name === AbstractTimeInstanceFieldValidation.BETWEEN) {
+                const start = AbstractTimeInstanceField.parseDate(item.arguments.from.value);
+                const end = AbstractTimeInstanceField.parseDate(item.arguments.to.value);
+                if (!!end && moment(end).isValid()) {
+                    this.max = moment(end);
                 }
-            } else if (item.validationRule.includes(AbstractTimeInstanceFieldValidation.WORKDAY)) {
-                result.push(this.validWorkday);
-            } else if (item.validationRule.includes(AbstractTimeInstanceFieldValidation.WEEKEND)) {
-                result.push(this.validWeekend);
+                if (!!start && moment(start).isValid()) {
+                    this.min = moment(start);
+                }
             }
         });
 
         return result;
-    }
-
-    protected validFromPast(range: Moment): ValidatorFn {
-        return (fc: FormControl): { [key: string]: any } | null => fc.value > range ? {validBetween: true} : null;
-    }
-
-    protected validToFuture(range: Moment): ValidatorFn {
-        return (fc: FormControl): { [key: string]: any } | null => fc.value < range ? {validBetween: true} : null;
-    }
-
-    protected validBetween(first: Moment, second: Moment): ValidatorFn {
-        return (fc: FormControl): { [key: string]: any } | null => fc.value < first || fc.value > second ? {validBetween: true} : null;
-    }
-
-    protected validWorkday(fc: FormControl) {
-        const dayOfWeek = !!fc.value ? fc.value.isoWeekday() : null;
-        return dayOfWeek === 6 || dayOfWeek === 7 ? {validWorkday: true} : null;
-    }
-
-    protected validWeekend(fc: FormControl) {
-        const dayOfWeek = !!fc.value ? fc.value.isoWeekday() : null;
-        return dayOfWeek >= 1 && dayOfWeek <= 5 ? {validWeekend: true} : null;
     }
 }

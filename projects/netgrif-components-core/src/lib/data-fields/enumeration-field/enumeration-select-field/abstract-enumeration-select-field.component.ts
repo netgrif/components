@@ -10,7 +10,7 @@ import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base
 export abstract class AbstractEnumerationSelectFieldComponent extends AbstractBaseDataFieldComponent<EnumerationField>{
 
     constructor(@Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<EnumerationField>) {
-        super(dataFieldPortalData);
+        super(undefined, dataFieldPortalData);
     }
 }
 

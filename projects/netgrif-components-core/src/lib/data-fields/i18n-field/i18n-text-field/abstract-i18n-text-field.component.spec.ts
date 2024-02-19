@@ -22,6 +22,8 @@ import {LanguageIconsService} from '../language-icons.service';
 import {DomSanitizer} from '@angular/platform-browser';
 import {LanguageService} from '../../../translate/language.service';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
+import {ValidationRegistryService} from "../../../registry/validation-registry.service";
+import {DataFieldsModule} from "../../data-fields.module";
 
 describe('AbstractI18nTextFieldComponent', () => {
     let component: TestI18nTextComponent;
@@ -36,7 +38,8 @@ describe('AbstractI18nTextFieldComponent', () => {
                 BrowserAnimationsModule,
                 TranslateLibModule,
                 HttpClientTestingModule,
-                NoopAnimationsModule
+                NoopAnimationsModule,
+                DataFieldsModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
@@ -86,8 +89,9 @@ class TestI18nTextComponent extends AbstractI18nTextFieldComponent {
     constructor(protected languageIconsService: LanguageIconsService,
                 protected _translateService: TranslateService,
                 protected _domSanitizer: DomSanitizer,
-                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<I18nField>) {
-        super(languageIconsService, _translateService, _domSanitizer, dataFieldPortalData);
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<I18nField>,
+                _validationRegistry: ValidationRegistryService) {
+        super(languageIconsService, _translateService, _domSanitizer, dataFieldPortalData, _validationRegistry);
     }
 }
 

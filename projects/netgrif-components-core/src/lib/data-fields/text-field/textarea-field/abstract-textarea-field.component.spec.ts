@@ -20,6 +20,10 @@ import {MaterialModule} from '../../../material/material.module';
 import {TranslateService} from '@ngx-translate/core';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {TextAreaField} from "../models/text-area-field";
+import {Validator} from "../../../registry/model/validator";
+import {minLengthValidation, requiredTrueValidation} from "../../models/validation-functions";
+import {ValidationRegistryService} from "../../../registry/validation-registry.service";
+import {DataFieldsModule} from "../../data-fields.module";
 
 describe('AbstractTextareaFieldComponent', () => {
     let component: TestTextComponent;
@@ -32,7 +36,8 @@ describe('AbstractTextareaFieldComponent', () => {
                 AngularResizeEventModule,
                 NoopAnimationsModule,
                 TranslateLibModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                DataFieldsModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
@@ -46,7 +51,11 @@ describe('AbstractTextareaFieldComponent', () => {
                             visible: true,
                             editable: true,
                             hidden: true
-                        }, undefined, undefined, undefined, [{validationRule: 'minLength 5', validationMessage: 'This is custom message!'}]),
+                        }, undefined, undefined, undefined,
+                            [{name: 'minlength', validationMessage: 'This is custom message!', arguments: {'length': {key: 'length', value: '5', dynamic: false}}}],
+                            undefined,
+                            undefined,
+                            new Map<string, Validator>([['minlength', minLengthValidation]])),
                         formControlRef: new FormControl(),
                         showLargeLayout: new WrappedBoolean()
                     } as DataFieldPortalData<TextField>
@@ -88,9 +97,10 @@ describe('AbstractTextareaFieldComponent', () => {
         '              cdkAutosizeMinRows="1"></textarea>'
 })
 class TestTextComponent extends AbstractTextareaFieldComponent {
-    constructor(protected _translate: TranslateService, protected _ngZone: NgZone,
-                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextAreaField>) {
-        super(_translate, _ngZone, dataFieldPortalData);
+    constructor(_translate: TranslateService, protected _ngZone: NgZone,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextAreaField>,
+                _registryService: ValidationRegistryService) {
+        super(_translate, _ngZone, dataFieldPortalData, _registryService);
     }
 }
 

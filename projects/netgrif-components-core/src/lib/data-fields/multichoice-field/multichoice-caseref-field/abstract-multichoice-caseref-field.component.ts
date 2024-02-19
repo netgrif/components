@@ -10,6 +10,9 @@ import {ComponentPortal} from "@angular/cdk/portal";
 import {NAE_DEFAULT_HEADERS} from '../../../header/models/default-headers-token';
 import {MultichoiceField} from '../models/multichoice-field';
 import {NAE_CASE_REF_CREATE_CASE, NAE_CASE_REF_SEARCH} from '../../case-ref-field/model/case-ref-injection-tokens';
+import {TranslateService} from "@ngx-translate/core";
+import {EnumerationField} from "../../enumeration-field/models/enumeration-field";
+import {ValidationRegistryService} from "../../../registry/validation-registry.service";
 
 @Component({
     selector: 'ncc-abstract-case-ref-default',
@@ -21,8 +24,10 @@ export abstract class AbstractMultichoiceCaseRefComponent extends AbstractBaseDa
 
     protected constructor(protected injector: Injector,
                           protected caseViewType: Type<any>,
-                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<MultichoiceField>) {
-        super(dataFieldPortalData);
+                          _translate: TranslateService,
+                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<MultichoiceField>,
+                          _validationRegistryService: ValidationRegistryService) {
+        super(_translate, dataFieldPortalData, _validationRegistryService);
     }
 
     ngAfterViewInit(): void {

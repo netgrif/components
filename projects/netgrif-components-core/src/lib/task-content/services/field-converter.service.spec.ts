@@ -91,52 +91,52 @@ describe('FieldConvertorService', () => {
             validations: undefined,
             subType: 'area'
         };
-        expect(service.resolveType(service.toClass(dataField))).toEqual('boolean');
+        expect(FieldConverterService.resolveType(service.toClass(dataField))).toEqual('boolean');
 
         dataField.type = FieldTypeResource.TEXT;
         dataField.value = 'string' as any;
-        expect(service.resolveType(service.toClass(dataField))).toEqual('text');
+        expect(FieldConverterService.resolveType(service.toClass(dataField))).toEqual('text');
 
         dataField.type = FieldTypeResource.NUMBER;
         dataField.value = 5 as any;
-        expect(service.resolveType(service.toClass(dataField))).toEqual('number');
+        expect(FieldConverterService.resolveType(service.toClass(dataField))).toEqual('number');
 
         dataField.type = FieldTypeResource.ENUMERATION;
-        expect(service.resolveType(service.toClass(dataField))).toEqual('enumeration');
+        expect(FieldConverterService.resolveType(service.toClass(dataField))).toEqual('enumeration');
 
         dataField.type = FieldTypeResource.MULTICHOICE;
-        expect(service.resolveType(service.toClass(dataField))).toEqual('multichoice');
+        expect(FieldConverterService.resolveType(service.toClass(dataField))).toEqual('multichoice');
 
         dataField.type = FieldTypeResource.ENUMERATION;
         dataField.choices = {abc: 'abc'} as any;
-        expect(service.resolveType(service.toClass(dataField))).toEqual('enumeration');
+        expect(FieldConverterService.resolveType(service.toClass(dataField))).toEqual('enumeration');
 
         dataField.type = FieldTypeResource.MULTICHOICE;
-        expect(service.resolveType(service.toClass(dataField))).toEqual('multichoice');
+        expect(FieldConverterService.resolveType(service.toClass(dataField))).toEqual('multichoice');
 
         dataField.type = FieldTypeResource.DATE;
         dataField.value = [2020, 3, 3] as any;
-        expect(service.resolveType(service.toClass(dataField))).toEqual('date');
+        expect(FieldConverterService.resolveType(service.toClass(dataField))).toEqual('date');
 
         dataField.type = FieldTypeResource.DATE_TIME;
         dataField.value = [2020, 3, 3, 3, 30] as any;
-        expect(service.resolveType(service.toClass(dataField))).toEqual('dateTime');
+        expect(FieldConverterService.resolveType(service.toClass(dataField))).toEqual('dateTime');
 
         dataField.type = FieldTypeResource.USER;
         dataField.value = {id: 5, name: 'name', surname: 'surname', email: 'mail'} as any;
-        expect(service.resolveType(service.toClass(dataField))).toEqual('user');
+        expect(FieldConverterService.resolveType(service.toClass(dataField))).toEqual('user');
 
         dataField.type = FieldTypeResource.BUTTON;
         dataField.value = 0 as any;
-        expect(service.resolveType(service.toClass(dataField))).toEqual('button');
+        expect(FieldConverterService.resolveType(service.toClass(dataField))).toEqual('button');
 
         dataField.type = FieldTypeResource.FILE;
         dataField.value = undefined;
-        expect(service.resolveType(service.toClass(dataField))).toEqual('file');
+        expect(FieldConverterService.resolveType(service.toClass(dataField))).toEqual('file');
 
         dataField.type = FieldTypeResource.FILE_LIST;
         dataField.value = undefined;
-        expect(service.resolveType(service.toClass(dataField))).toEqual('fileList');
+        expect(FieldConverterService.resolveType(service.toClass(dataField))).toEqual('fileList');
     });
 
     afterEach(() => {

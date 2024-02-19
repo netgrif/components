@@ -627,7 +627,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
                 localGrid.push(this.newGridRow(subgrid.cols));
             }
 
-            const fieldElement = subgrid.addField(dataField, this._fieldConverter.resolveType(dataField));
+            const fieldElement = subgrid.addField(dataField, FieldConverterService.resolveType(dataField));
             this.occupySpace(localGrid, dataField.localLayout.y, dataField.localLayout.x,
                 dataField.localLayout.cols, fieldElement.gridAreaId, dataField.localLayout.rows);
         });
@@ -816,7 +816,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
         let xPosition = 0;
         const localGrid: Array<Array<string>> = [];
         dataGroup.fields.forEach((dataField, dataFieldCount) => {
-            const fieldElement = subgrid.addField(dataField, this._fieldConverter.resolveType(dataField));
+            const fieldElement = subgrid.addField(dataField, FieldConverterService.resolveType(dataField));
             if (dataGroup.stretch) {
                 subgrid.addRow(this.newGridRow(subgrid.cols, fieldElement.gridAreaId));
                 return; // continue

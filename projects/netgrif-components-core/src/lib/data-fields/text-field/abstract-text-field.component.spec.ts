@@ -9,6 +9,9 @@ import {MaterialModule} from '../../material/material.module';
 import {CovalentModule} from '../../covalent/covalent.module';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
+import {Validator} from "../../registry/model/validator";
+import {emailValidation} from "../models/validation-functions";
+import {DataFieldsModule} from "../data-fields.module";
 
 describe('AbstractTextFieldComponent', () => {
     let component: TestTextComponent;
@@ -17,7 +20,8 @@ describe('AbstractTextFieldComponent', () => {
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [MaterialModule, AngularResizeEventModule, NoopAnimationsModule,
-                CovalentModule, TranslateLibModule, HttpClientTestingModule],
+                CovalentModule, TranslateLibModule, HttpClientTestingModule,
+                DataFieldsModule],
             declarations: [
                 TestWrapperComponent
             ],
@@ -59,5 +63,9 @@ class TestWrapperComponent {
         visible: true,
         editable: true,
         hidden: true
-    }, undefined, undefined, undefined, [{validationRule: 'email', validationMessage: 'custom message'}]);
+    }, undefined, undefined, undefined,
+        [{name: 'email', validationMessage: 'custom message'}],
+        undefined,
+        undefined,
+        new Map<string, Validator>([['email', emailValidation]]));
 }

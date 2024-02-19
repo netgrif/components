@@ -2,6 +2,7 @@ import {AfterViewInit, Component, Inject, Optional} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {CurrencyPipe, getCurrencySymbol} from '@angular/common';
 import {AbstractNumberErrorsComponent} from '../abstract-number-errors.component';
+import {ValidationRegistryService} from "../../../registry/validation-registry.service";
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {NumberField} from "../models/number-field";
 
@@ -18,8 +19,9 @@ export abstract class AbstractCurrencyNumberFieldComponent extends AbstractNumbe
     public readonly WHITESPACE = ' ';
 
     protected constructor(protected _currencyPipe: CurrencyPipe, translateService: TranslateService,
-                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<NumberField>) {
-        super(translateService, dataFieldPortalData);
+                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<NumberField>,
+                          _validationRegistry: ValidationRegistryService) {
+        super(translateService, dataFieldPortalData, _validationRegistry);
     }
 
     ngAfterViewInit() {

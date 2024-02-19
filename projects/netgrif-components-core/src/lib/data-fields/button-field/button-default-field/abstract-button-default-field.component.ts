@@ -13,15 +13,15 @@ import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base
 })
 export abstract class AbstractButtonDefaultFieldComponent extends AbstractBaseDataFieldComponent<ButtonField> {
 
-    constructor(protected _translate: TranslateService,
+    constructor(_translate: TranslateService,
                 protected _dialogService: DialogService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<ButtonField>) {
-        super(dataFieldPortalData);
+        super(_translate, dataFieldPortalData);
     }
 
     public getErrorMessage() {
         if (this.formControlRef.hasError(ButtonFieldValidation.REQUIRED)) {
-            return this._translate.instant('dataField.validations.required');
+            return this.translate.instant('dataField.validations.required');
         }
     }
 
@@ -39,8 +39,8 @@ export abstract class AbstractButtonDefaultFieldComponent extends AbstractBaseDa
     public resolveValue(): void {
         if (!!this.dataField.component?.properties?.dialogText && this.dataField.component?.properties?.dialogTitle) {
             const dialogRef = this._dialogService.openConfirmDialog(this.dataField.component.properties.dialogTitle,
-                this.dataField.component.properties.dialogText, this._translate.instant('dialog.close'),
-                this._translate.instant('dialog.submit'));
+                this.dataField.component.properties.dialogText, this.translate.instant('dialog.close'),
+                this.translate.instant('dialog.submit'));
             dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
                 if (result?.confirmed) {
                     this.formControlRef.setValue(this.formControlRef.value + 1);

@@ -19,6 +19,10 @@ import {AbstractBooleanDefaultFieldComponent} from "./abstract-boolean-default-f
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {FormControl} from "@angular/forms";
 import {WrappedBoolean} from "../../data-field-template/models/wrapped-boolean";
+import {ValidationRegistryService} from "../../../registry/validation-registry.service";
+import {requiredTrueValidation} from "../../models/validation-functions";
+import {Validator} from "../../../registry/model/validator";
+import {DataFieldsModule} from "../../data-fields.module";
 
 describe('AbstractBooleanDefaultFieldComponent', () => {
     let component: TestBooleanComponent;
@@ -31,7 +35,8 @@ describe('AbstractBooleanDefaultFieldComponent', () => {
                 AngularResizeEventModule,
                 TranslateLibModule,
                 HttpClientTestingModule,
-                NoopAnimationsModule
+                NoopAnimationsModule,
+                DataFieldsModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
@@ -44,7 +49,10 @@ describe('AbstractBooleanDefaultFieldComponent', () => {
                             }, undefined,
                             undefined,
                             undefined,
-                            [{validationRule: 'requiredTrue', validationMessage: 'this is custom message'}]),
+                            [{name: 'requiredTrue', validationMessage: 'this is custom message'}],
+                            undefined,
+                            undefined,
+                            new Map<string, Validator>([['requiredTrue', requiredTrueValidation]])),
                         formControlRef: new FormControl(),
                         showLargeLayout: new WrappedBoolean()
                     } as DataFieldPortalData<BooleanField>
@@ -82,8 +90,9 @@ describe('AbstractBooleanDefaultFieldComponent', () => {
 class TestBooleanComponent extends AbstractBooleanDefaultFieldComponent {
 
     constructor(translate: TranslateService,
-                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<BooleanField>) {
-        super(translate, dataFieldPortalData);
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<BooleanField>,
+                _validationRegistry: ValidationRegistryService) {
+        super(translate, dataFieldPortalData, _validationRegistry);
     }
 }
 

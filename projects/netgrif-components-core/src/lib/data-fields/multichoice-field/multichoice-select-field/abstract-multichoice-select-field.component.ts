@@ -10,7 +10,7 @@ import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base
 export abstract class AbstractMultichoiceSelectFieldComponent extends AbstractBaseDataFieldComponent<MultichoiceField> {
 
     constructor(@Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<MultichoiceField>) {
-        super(dataFieldPortalData);
+        super(undefined, dataFieldPortalData);
     }
 
 }

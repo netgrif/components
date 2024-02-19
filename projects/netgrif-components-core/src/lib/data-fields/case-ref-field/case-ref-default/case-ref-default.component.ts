@@ -15,6 +15,8 @@ import {
     NAE_CASE_REF_SEARCH
 } from '../model/case-ref-injection-tokens';
 import {Subscription} from 'rxjs';
+import {TranslateService} from "@ngx-translate/core";
+import {ValidationRegistryService} from "../../../registry/validation-registry.service";
 
 @Component({
     selector: 'ncc-abstract-case-ref-default',
@@ -27,8 +29,10 @@ export abstract class AbstractCaseRefDefaultComponent extends AbstractBaseDataFi
 
     protected constructor(protected injector: Injector,
                           protected caseViewType: Type<any>,
-                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<CaseRefField>) {
-        super(dataFieldPortalData);
+                          _translate: TranslateService,
+                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<CaseRefField>,
+                          _validationRegistryService: ValidationRegistryService) {
+        super(_translate, dataFieldPortalData, _validationRegistryService);
     }
 
     ngAfterViewInit(): void {
