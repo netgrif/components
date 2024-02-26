@@ -93,13 +93,16 @@ export * from './case-ref-field/model/case-ref-field';
 export * from './string-collection-field/models/string-collection-field';
 
 /* Interfaces */
-export * from './models/changed-fields';
-export * from './models/validation';
-export * from './models/layout';
-export * from './models/format-filter';
+export * from './models/behavior';
 export * from './models/component';
+export * from './models/changed-fields';
+export * from './models/format-filter';
+export * from './models/icon';
+export * from './models/layout';
 export * from './models/properties';
+export * from './models/validation';
 export * from './data-field-template/models/wrapped-boolean';
+export * from './i18n-field/models/i18n-field-value';
 export * from './i18n-field/models/language-icons';
 export * from './task-ref-field/model/task-ref-dashboard-tile';
 
