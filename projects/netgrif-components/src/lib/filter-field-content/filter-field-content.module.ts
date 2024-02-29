@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FilterFieldTabViewComponent } from './filter-field-tab-view/filter-field-tab-view.component';
 import { FilterFieldTabbedCaseViewComponent } from './filter-field-tabbed-case-view/filter-field-tabbed-case-view.component';
 import { TabsComponentModule } from '../tabs/tabs.module';
-import { FlexModule } from '@angular/flex-layout';
+import { FlexModule } from '@ngbracket/ngx-layout';
 import { MaterialModule } from '@netgrif/components-core';
 import { SearchComponentModule } from '../search/search.module';
 import { CaseViewComponentModule } from '../view/case-view/case-view.module';

@@ -32,7 +32,7 @@ import {ChangedFieldsMap} from '../../../event/services/interfaces/changed-field
 export class TreeTaskContentService implements OnDestroy {
 
     private _processingTaskChange: LoadingEmitter;
-    private _displayedTaskText$: Subject<string>;
+    private _displayedTaskText$: ReplaySubject<string>;
     /**
      * a unique identifier consisting of caseId and transition ID
      *
@@ -265,7 +265,7 @@ export class TreeTaskContentService implements OnDestroy {
      * Sets the noData text in the task content to it's default value
      */
     protected setStandardTaskText(): void {
-        this._displayedTaskText$.next();
+        this._displayedTaskText$.next(undefined);
     }
 
     /**

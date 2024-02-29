@@ -40,15 +40,7 @@ describe('AdminImpersonateListComponent', () => {
                 TestWrapperComponent
             ],
             schemas: [NO_ERRORS_SCHEMA]
-        })
-            .overrideModule(BrowserDynamicTestingModule, {
-                set: {
-                    entryComponents: [
-                        ErrorSnackBarComponent
-                    ]
-                }
-            })
-            .compileComponents();
+        }).compileComponents();
 
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;

@@ -12,7 +12,7 @@ import {MultichoiceField} from '../models/multichoice-field';
 import {NAE_CASE_REF_CREATE_CASE, NAE_CASE_REF_SEARCH} from '../../case-ref-field/model/case-ref-injection-tokens';
 
 @Component({
-    selector: 'ncc-abstract-case-ref-default',
+    selector: 'ncc-abstract-multi-case-ref-default',
     template: ''
 })
 export abstract class AbstractMultichoiceCaseRefComponent extends AbstractBaseDataFieldComponent<MultichoiceField> implements AfterViewInit {

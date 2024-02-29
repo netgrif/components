@@ -69,12 +69,6 @@ describe('AssignTaskService', () => {
                 {provide: TaskResourceService, useClass: TestTaskResourceService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
             ]
-        }).overrideModule(BrowserDynamicTestingModule, {
-            set: {
-                entryComponents: [
-                    ErrorSnackBarComponent,
-                ]
-            }
         }).compileComponents();
         service = TestBed.inject(AssignTaskService);
         testTask = {

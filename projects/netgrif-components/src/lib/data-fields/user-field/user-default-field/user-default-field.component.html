@@ -1,5 +1,5 @@
 <div fxLayoutAlign="center center" fxLayout="row">
-    <div fxFlex="100" class="netgrif-user-padding">
+    <div fxFlex="100" [ngClass]="{'netgrif-user-padding': !(!dataField.isInvalid(formControlRef) && hasHint()) && !dataField.isInvalid(formControlRef)}">
         <div #userLabel class="user-field-label" [ngClass]="{'netgrif-label-disabled': formControlRef.disabled}">
             {{dataField.title}}
             <nc-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nc-required-label>

@@ -19,7 +19,7 @@ import {FileField} from "./models/file-field";
 })
 export abstract class AbstractFileFieldComponent extends AbstractDataFieldComponent  {
 
-    @Input() dataField: FileField;
+    @Input() declare dataField: FileField;
 
     @Input() taskId: string;
 

@@ -33,7 +33,7 @@ describe('DefaultTabViewComponent', () => {
             imports: [
                 NavigationComponentModule,
                 TestMockDependenciesModule,
-                RouterModule.forRoot([], { relativeLinkResolution: 'legacy' }),
+                RouterModule.forRoot([]),
                 NoopAnimationsModule,
                 TranslateLibModule,
             ],

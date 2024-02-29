@@ -10,7 +10,7 @@ import {
     MockAuthenticationMethodService,
     AuthenticationModule
 } from '@netgrif/components-core';
-import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
+import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
 import {QuickPanelComponentModule} from '../quick-panel/quick-panel.module';
 import {UserComponentModule} from '../../user/user.module';
 import {RouterTestingModule} from '@angular/router/testing';

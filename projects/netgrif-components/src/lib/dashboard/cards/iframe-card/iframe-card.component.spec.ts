@@ -2,7 +2,7 @@ import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {IframeCardComponent} from './iframe-card.component';
 import {Component} from '@angular/core';
 import {DashboardCardTypes, IframeCard} from '@netgrif/components-core';
-import {FlexLayoutModule} from '@angular/flex-layout';
+import {FlexLayoutModule} from '@ngbracket/ngx-layout';
 import {MatCardModule} from '@angular/material/card';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 

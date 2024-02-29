@@ -3,7 +3,7 @@ import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {PanelComponent} from './panel.component';
 import {MaterialModule, TranslateLibModule} from '@netgrif/components-core';
 import {CommonModule} from '@angular/common';
-import {FlexModule} from '@angular/flex-layout';
+import {FlexModule} from '@ngbracket/ngx-layout';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';

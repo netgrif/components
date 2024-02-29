@@ -14,7 +14,7 @@ export abstract class AbstractUserListFieldComponent extends AbstractDataFieldCo
     /**
      * Represents info about user from backend.
      */
-    @Input() public dataField: UserListField;
+    @Input() declare public dataField: UserListField;
 
     protected constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
         super(informAboutInvalidData);

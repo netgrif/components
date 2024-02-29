@@ -13,7 +13,7 @@ import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token
 })
 export abstract class AbstractEnumerationFieldComponent extends AbstractDataFieldComponent {
 
-    @Input() dataField: EnumerationField;
+    @Input() declare dataField: EnumerationField;
 
     protected constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
         super(informAboutInvalidData);

@@ -1,5 +1,5 @@
 import {ContainsPipe} from "./contains.pipe";
-import {expect} from "@angular/flex-layout/_private-utils/testing";
+import {expect} from "@ngbracket/ngx-layout/_private-utils/testing";
 
 describe('ContainsPipe', () => {
     const pipe = new ContainsPipe();

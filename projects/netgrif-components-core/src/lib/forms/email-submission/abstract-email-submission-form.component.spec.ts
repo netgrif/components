@@ -1,5 +1,5 @@
 import {waitForAsync, ComponentFixture, TestBed, inject} from '@angular/core/testing';
-import {FlexLayoutModule} from '@angular/flex-layout';
+import {FlexLayoutModule} from '@ngbracket/ngx-layout';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {FormBuilder} from '@angular/forms';
