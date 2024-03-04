@@ -68,7 +68,7 @@ describe('NumberDecimalFieldComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-number-decimal-field [numberField]="field" [formControlRef]="formControl" ' +
+    template: '<nc-number-decimal-field [dataField]="field" [formControlRef]="formControl" ' +
         '[showLargeLayout]="label"></nc-number-decimal-field>'
 })
 class TestWrapperComponent {

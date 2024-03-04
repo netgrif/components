@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, Optional} from "@angular/core";
+import {AfterViewInit, ChangeDetectorRef, Component, Inject, Optional} from "@angular/core";
 import {AbstractNumberErrorsComponent} from "../abstract-number-errors.component";
 import {DecimalPipe} from "@angular/common";
 import {TranslateService} from "@ngx-translate/core";
@@ -24,17 +24,19 @@ export abstract class AbstractNumberDecimalFieldComponent extends AbstractNumber
     }
 
     ngAfterViewInit() {
-        this.fieldType = this.TEXT_TYPE;
-        this.transformedValue = this.transformDecimal(this.dataField.value?.toString());
-        this.dataField.valueChanges().subscribe(value => {
-            if (value !== undefined && value !== null) {
-                if (this.fieldType === this.TEXT_TYPE) {
-                    this.transformedValue = this.transformDecimal(value.toString());
+        setTimeout(() => {
+            this.fieldType = this.TEXT_TYPE;
+            this.transformedValue = this.transformDecimal(this.dataField.value?.toString());
+            this.dataField.valueChanges().subscribe(value => {
+                if (value !== undefined && value !== null) {
+                    if (this.fieldType === this.TEXT_TYPE) {
+                        this.transformedValue = this.transformDecimal(value.toString());
+                    }
+                } else {
+                    this.transformedValue = '';
                 }
-            } else {
-                this.transformedValue = '';
-            }
-        });
+            });
+        })
     }
 
     transformToText(event: Event) {
