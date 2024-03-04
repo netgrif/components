@@ -1,0 +1,22 @@
+<mat-form-field [appearance]="dataField.materialAppearance" class="full-width" color="primary">
+    <mat-label *ngIf="!showLargeLayout.value">{{dataField.title}}</mat-label>
+    <input class='left' matInput
+           [ngxMatDatetimePicker]="picker"
+           [required]="dataField.behavior.required"
+           [placeholder]="dataField.placeholder"
+           [formControl]="formControlRef"
+           [min]="dataField.min"
+           [max]="dataField.max"
+           (click)="picker.open()">
+    <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
+    <ngx-mat-datetime-picker #picker
+                             [showSpinners]="true"
+                             [showSeconds]="false"
+                             [stepHour]="1"
+                             [stepMinute]="5"
+                             [color]="'primary'"
+                             [enableMeridian]="false">
+    </ngx-mat-datetime-picker>
+    <mat-hint>Time zone: {{this.timeZone}} {{!!dataField.description ? '-' + dataField.description : ''}}</mat-hint>
+    <mat-error *ngIf="dataField.isInvalid(formControlRef)">{{getErrorMessage()}}</mat-error>
+</mat-form-field>

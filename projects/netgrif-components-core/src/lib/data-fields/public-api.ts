@@ -58,6 +58,7 @@ export * from './i18n-field/i18n-text-field/abstract-i18n-text-field.component';
 export * from './i18n-field/i18n-divider-field/abstract-i18n-divider-field.component';
 export * from './i18n-field/abstract-i18n-errors.component';
 export * from './user-list-field/abstract-user-list-field.component';
+export * from './date-time-field/zoned-date-time-field/abstract-zoned-date-time-field.component';
 export * from './user-list-field/user-list-default-field/abstract-user-list-default-field.component';
 export * from './task-ref-field/abstract-task-ref-field.component';
 export * from './task-ref-field/task-ref-dashboard-field/task-ref-dashboard-tile/abstract-task-ref-dashboard-tile.component';
