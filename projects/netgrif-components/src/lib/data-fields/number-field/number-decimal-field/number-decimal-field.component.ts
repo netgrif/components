@@ -23,6 +23,9 @@ export class NumberDecimalFieldComponent extends AbstractNumberDecimalFieldCompo
     }
 
     getAppearance(): MatFormFieldAppearance {
+        if (!this.dataField?.materialAppearance) {
+            return 'fill';
+        }
         const validAppearances: MatFormFieldAppearance[] = ['legacy', 'standard', 'fill', 'outline'];
         return validAppearances.includes(this.dataField.materialAppearance as MatFormFieldAppearance) ? this.dataField.materialAppearance as MatFormFieldAppearance : 'fill';
     }
