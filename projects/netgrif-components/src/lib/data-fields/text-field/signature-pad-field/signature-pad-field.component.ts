@@ -40,20 +40,22 @@ export class SignaturePadFieldComponent extends AbstractSimpleTextFieldComponent
     }
 
     public ngAfterViewInit(): void {
-        this.signPadElement = this.signPad.nativeElement;
-        this.context = this.signPadElement.getContext('2d');
-        this.canvasWidth = this.canvasDiv.nativeElement.clientWidth - 2;
-        this.canvasHeight = this.canvasWidth * this.aspectRatio;
-        this.formControlRef.valueChanges.pipe(
+        setTimeout(() => {
+            this.signPadElement = this.signPad.nativeElement;
+            this.context = this.signPadElement.getContext('2d');
+            this.canvasWidth = this.canvasDiv.nativeElement.clientWidth - 2;
+            this.canvasHeight = this.canvasWidth * this.aspectRatio;
+            this.formControlRef.valueChanges.pipe(
                 filter(value => value !== this.signatureImg)
             ).subscribe(value => {
                 this.signatureImg = value;
                 const img = new Image();
                 img.onload = () => {
-                    this.context.drawImage(img, 0, 0,  this.canvasWidth, this.canvasHeight);
+                    this.context.drawImage(img, 0, 0, this.canvasWidth, this.canvasHeight);
                 };
                 img.src = this.signatureImg;
             });
+        });
     }
 
     onMouseDown(e: any): void {
