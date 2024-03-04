@@ -1,11 +1,11 @@
-import { Component, Inject, OnInit, Optional } from '@angular/core';
+import { Component, Inject, Optional } from '@angular/core';
 import {
     AbstractZonedDateTimeFieldComponent,
-    NAE_INFORM_ABOUT_INVALID_DATA,
-    DATE_TIME_FORMAT
+    DATE_TIME_FORMAT, LanguageService, DATA_FIELD_PORTAL_DATA, DataFieldPortalData, DateTimeField
 } from '@netgrif/components-core';
-import { NGX_MAT_DATE_FORMATS } from '@angular-material-components/datetime-picker';
+import {NGX_MAT_DATE_FORMATS, NgxMatDateAdapter} from '@angular-material-components/datetime-picker';
 import { TranslateService } from '@ngx-translate/core';
+import {MAT_DATE_LOCALE} from "@angular/material/core";
 
 @Component({
   selector: 'nc-zoned-date-time-field',
@@ -17,9 +17,12 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class ZonedDateTimeFieldComponent extends AbstractZonedDateTimeFieldComponent {
 
-    constructor(translate: TranslateService,
-                @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
-        super(translate, informAboutInvalidData);
+    constructor(_translate: TranslateService,
+                _adapter: NgxMatDateAdapter<any>,
+                @Inject(MAT_DATE_LOCALE) protected _locale: string,
+                _languageService: LanguageService,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<DateTimeField>) {
+        super(_translate, _adapter, _locale, _languageService, dataFieldPortalData);
     }
 
 }

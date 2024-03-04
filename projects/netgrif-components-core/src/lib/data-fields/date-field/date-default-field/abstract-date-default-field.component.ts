@@ -14,10 +14,10 @@ import {LanguageService} from "../../../translate/language.service";
 })
 export abstract class AbstractDateDefaultFieldComponent extends AbstractTimeInstanceFieldComponent<DateField> {
 
-    constructor(protected _translate: TranslateService,
-                protected _adapter: DateAdapter<any>,
-                @Inject(MAT_DATE_LOCALE) protected _locale: string,
-                protected _languageService: LanguageService,
+    constructor(_translate: TranslateService,
+                 _adapter: DateAdapter<any>,
+                @Inject(MAT_DATE_LOCALE) _locale: string,
+                _languageService: LanguageService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<DateField>) {
         super(_translate, _adapter, _locale, _languageService, dataFieldPortalData)
     }

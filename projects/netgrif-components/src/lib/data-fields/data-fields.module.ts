@@ -80,7 +80,6 @@ import {
     MultichoiceAutocompleteFieldComponent
 } from './multichoice-field/multichoice-autocomplete-field/multichoice-autocomplete-field.component';
 import { UserListFieldComponent } from './user-list-field/user-list-field.component';
-import { SimpleDateTimeFieldComponent } from './date-time-field/simple-date-time-field/simple-date-time-field.component';
 import { ZonedDateTimeFieldComponent } from './date-time-field/zoned-date-time-field/zoned-date-time-field.component';
 import {
     SideMenuMultiUserAssignComponentModule
@@ -191,7 +190,6 @@ import { StringCollectionDefaultFieldComponent } from './string-collection-field
         MultichoiceCaserefFieldComponent,
         EnumerationCaserefFieldComponent,
         StringCollectionDefaultFieldComponent,
-        SimpleDateTimeFieldComponent,
         ZonedDateTimeFieldComponent
     ],
     exports: [
@@ -232,6 +230,7 @@ export class DataFieldsComponentModule {
         registry.register("button-default", (injector: Injector) => new ComponentPortal<any>(ButtonDefaultFieldComponent, null, injector));
         registry.register("date-default", (injector: Injector) => new ComponentPortal<any>(DateDefaultFieldComponent, null, injector));
         registry.register("date-time-default", (injector: Injector) => new ComponentPortal<any>(DateTimeDefaultFieldComponent, null, injector));
+        registry.register("date-time-timeZone", (injector: Injector) => new ComponentPortal<any>(DateTimeDefaultFieldComponent, null, injector));
         registry.register("enumeration-default", (injector: Injector) => new ComponentPortal<any>(EnumerationSelectFieldComponent, null, injector));
         registry.register("enumeration-autocomplete_dynamic", (injector: Injector) => new ComponentPortal<any>(EnumerationAutocompleteDynamicFieldComponent, null, injector));
         registry.register("enumeration-autocomplete", (injector: Injector) => new ComponentPortal<any>(EnumerationAutocompleteSelectFieldComponent, null, injector));

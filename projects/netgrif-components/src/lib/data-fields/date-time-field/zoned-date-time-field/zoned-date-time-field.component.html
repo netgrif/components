@@ -4,7 +4,7 @@
            [ngxMatDatetimePicker]="picker"
            [required]="dataField.behavior.required"
            [placeholder]="dataField.placeholder"
-           [formControl]="formControl"
+           [formControl]="formControlRef"
            [min]="dataField.min"
            [max]="dataField.max"
            (click)="picker.open()">
@@ -18,5 +18,5 @@
                              [enableMeridian]="false">
     </ngx-mat-datetime-picker>
     <mat-hint>Time zone: {{this.timeZone}} {{!!dataField.description ? '-' + dataField.description : ''}}</mat-hint>
-    <mat-error *ngIf="dataField.isInvalid(formControl)">{{getErrorMessage()}}</mat-error>
+    <mat-error *ngIf="dataField.isInvalid(formControlRef)">{{getErrorMessage()}}</mat-error>
 </mat-form-field>

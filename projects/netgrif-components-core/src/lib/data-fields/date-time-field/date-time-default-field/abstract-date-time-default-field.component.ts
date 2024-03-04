@@ -15,8 +15,8 @@ import {LanguageService} from "../../../translate/language.service";
 })
 export abstract class AbstractDateTimeDefaultFieldComponent extends AbstractTimeInstanceFieldComponent<DateTimeField> {
 
-    constructor(protected _translate: TranslateService,
-                protected _adapter: NgxMatDateAdapter<any>,
+    constructor(_translate: TranslateService,
+                _adapter: NgxMatDateAdapter<any>,
                 @Inject(MAT_DATE_LOCALE) protected _locale: string,
                 protected _languageService: LanguageService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<DateTimeField>) {
