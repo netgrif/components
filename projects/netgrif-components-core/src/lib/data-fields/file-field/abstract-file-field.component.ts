@@ -7,13 +7,6 @@ import {AbstractDataFieldComponent} from '../models/abstract-data-field-componen
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 import {SafeUrl} from '@angular/platform-browser';
 import {BehaviorSubject} from 'rxjs';
-export interface FileState {
-    progress: number;
-    uploading: boolean;
-    downloading: boolean;
-    completed: boolean;
-    error: boolean;
-}
 
 /**
  * @deprecated
