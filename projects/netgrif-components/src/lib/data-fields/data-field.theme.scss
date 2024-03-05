@@ -315,6 +315,10 @@
             .mat-chip-list-wrapper {
                 margin: -10px !important;
             }
+            &.mat-form-field .mat-form-field-prefix {
+                top: 0.33em !important;
+                padding-right: 4px !important;
+            }
         }
 
         .mat-select-trigger {
@@ -491,11 +495,15 @@ ngx-mat-datetime-content {
     }
 }
 
-ac-number-currency-field .mat-form-field .mat-form-field-prefix {
+nc-number-currency-field .mat-form-field .mat-form-field-prefix {
     top: 0 !important;
     padding-right: 4px !important;
 }
 
+nc-user-list-default-field .mat-form-field .mat-form-field-prefix {
+    top: 0 !important;
+    padding-right: 4px !important;
+}
 :host .editor-toolbar {
     background-color: #FFFFFF !important;
     border-top: 1px solid #FFFFFF !important;

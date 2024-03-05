@@ -8,7 +8,7 @@ import {CommonModule} from "@angular/common";
 import {
     CovalentModule,
     MaterialModule,
-    NAE_USER_ASSIGN_COMPONENT,
+    NAE_MULTI_USER_ASSIGN_COMPONENT,
     TranslateLibModule,
     UtilityModule
 } from "@netgrif/components-core";
@@ -35,7 +35,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
     ],
     exports: [MultiUserAssignComponent, MultiUserAssignListComponent],
     providers: [
-        { provide: NAE_USER_ASSIGN_COMPONENT, useValue: MultiUserAssignComponent },
+        { provide: NAE_MULTI_USER_ASSIGN_COMPONENT, useValue: MultiUserAssignComponent },
     ]
 })
 export class SideMenuMultiUserAssignComponentModule {
