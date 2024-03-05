@@ -5,7 +5,8 @@ import {
     ComponentRegistryService,
     CovalentModule,
     CurrencyModule,
-    CustomDateAdapter, FrontActionModule,
+    CustomDateAdapter,
+    FrontActionModule,
     MaterialModule,
     TranslateLibModule,
 } from '@netgrif/components-core';
@@ -76,6 +77,8 @@ import {I18nTextFieldComponent} from './i18n-field/i18n-text-field/i18n-text-fie
 import {EasymdeWrapperComponent} from './text-field/rich-textarea-field/easymde-wrapper/easymde-wrapper.component';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { CaseRefFieldComponent } from './case-ref-field/case-ref-field.component';
+import {PetriflowCanvasModule} from '@netgrif/petriflow.svg';
 import {
     MultichoiceAutocompleteFieldComponent
 } from './multichoice-field/multichoice-autocomplete-field/multichoice-autocomplete-field.component';
@@ -188,7 +191,8 @@ import { StringCollectionDefaultFieldComponent } from './string-collection-field
         CaseRefDefaultComponent,
         MultichoiceCaserefFieldComponent,
         EnumerationCaserefFieldComponent,
-        StringCollectionDefaultFieldComponent
+        StringCollectionDefaultFieldComponent,
+        CaseRefFieldComponent,
     ],
     exports: [
         DataFieldTemplateComponent
@@ -215,7 +219,8 @@ import { StringCollectionDefaultFieldComponent } from './string-collection-field
         BrowserAnimationsModule,
         DashboardComponentModule,
         RouterModule,
-        FrontActionModule
+        FrontActionModule.
+        PetriflowCanvasModule
     ],
     providers: [
         {provide: DateAdapter, useClass: CustomDateAdapter}

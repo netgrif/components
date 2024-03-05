@@ -1,5 +1,8 @@
 <div fxLayout="row" fxLayoutAlign="start center" class="netgrif-input" [ngClass]="{'min-row-height': isField() && !isCustomHeight()}" [ngSwitch]="getElementType()">
 
+    <nc-case-ref-field *ngSwitchCase="fieldTypeEnum.CASE_REF" [dataField]="getDataField()"  fxFlex>
+    </nc-case-ref-field>
+
     <div *ngSwitchCase="taskElementEnum.DATA_GROUP_TITLE" fxFlex fxLayout="row" fxLayoutAlign="center center">
         <div fxFlex="20" class="line-datagroup"></div>
         <span [ngClass]="{'margin-default': getDataGroupTitle() !== ''}">{{getDataGroupTitle()}}</span>

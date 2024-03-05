@@ -44,7 +44,12 @@ export * from './interface/user-resource';
 export * from './interface/create-case-request-body';
 export * from './interface/ldapGroupResponseBody';
 export * from './interface/task-pair';
-
+export * from './interface/arc-import';
+export * from './interface/place-import';
+export * from './interface/transition-import';
+export * from './interface/position';
+export * from './interface/petri-net-import';
+export * from './interface/arc-type';
 export * from './types/nae-date-type';
 
 /* ABSTRACTIONS */
