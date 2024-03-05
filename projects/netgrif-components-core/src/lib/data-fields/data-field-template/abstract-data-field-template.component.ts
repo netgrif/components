@@ -46,7 +46,7 @@ export abstract class AbstractDataFieldTemplateComponent implements OnInit {
      */
     @Input() public offset = 0;
 
-    @Input() private _additionalFieldProperties: { [ k: number ]: string | number };
+    @Input() private _additionalFieldProperties: { [ k: string ]: string | number };
 
     @ViewChild('dataFieldContainer') container: ElementRef;
     protected _dataField: DataField<any>;
@@ -104,12 +104,12 @@ export abstract class AbstractDataFieldTemplateComponent implements OnInit {
     }
 
 
-    get additionalFieldProperties(): {[k:number]: string | number} {
+    get additionalFieldProperties(): {[k:string]: string | number} {
         return this._additionalFieldProperties;
     }
 
     @Input()
-    set additionalFieldProperties(value: {[k:number]: string | number}) {
+    set additionalFieldProperties(value: {[k:string]: string | number}) {
         this._additionalFieldProperties = value;
     }
 

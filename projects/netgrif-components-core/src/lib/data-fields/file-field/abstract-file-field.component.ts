@@ -1,6 +1,6 @@
 import {
     Component,
-    Inject,
+    Inject, Input,
     Optional,
 } from '@angular/core';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
@@ -20,6 +20,7 @@ import {BehaviorSubject} from 'rxjs';
 })
 export abstract class AbstractFileFieldComponent extends AbstractDataFieldComponent  {
 
+    @Input() taskId: string;
 
     protected constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
         super(informAboutInvalidData);
