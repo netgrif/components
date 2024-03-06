@@ -264,6 +264,8 @@
                 "false": "false"
             }
         },
+        "clear": "Clear",
+        "save": "Save",
         "noFile": "No file",
         "file": {
             "noFile": "No File",
