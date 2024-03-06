@@ -94,17 +94,13 @@ export class FieldConverterService {
                 return new ButtonField(item.stringId, item.name, item.behavior, item.value as number,
                     item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.FILE:
-                const bytesSize = item.component?.properties?.maxSize;
-                const allowTypes: string[] = item.component?.properties?.allowTypes?.split(",");
                 return new FileField(item.stringId, item.name, item.behavior, item.value ? item.value : {},
-                    item.placeholder, item.description, item.layout, bytesSize !== undefined ? bytesSize : null,
-                    allowTypes?.length > 0 ? (allowTypes.length > 1 ? allowTypes as FileUploadMIMEType[] : allowTypes[0]) : null, item.validations, item.component, item.parentTaskId);
+                    item.placeholder, item.description, item.layout, this.resolveByteSize(item.component?.properties?.maxSize),
+                    this.resolveAllowedTypes(item.component?.properties?.allowTypes?.split(",")), item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.FILE_LIST:
-                const bytesSizeList = item.component?.properties?.maxSize;
-                const allowTypesList: string[] = item.component?.properties?.allowTypes?.split(",");
                 return new FileListField(item.stringId, item.name, item.behavior, item.value ? item.value : {},
-                    item.placeholder, item.description, item.layout, item.validations, bytesSizeList !== undefined ? bytesSizeList : null,
-                    allowTypesList?.length > 0 ? (allowTypesList.length > 1 ? allowTypesList as FileUploadMIMEType[] : allowTypesList[0]) : null, item.component,
+                    item.placeholder, item.description, item.layout, item.validations, this.resolveByteSize(item.component?.properties?.maxSize),
+                    this.resolveAllowedTypes(item.component?.properties?.allowTypes?.split(",")), item.component,
                     item.parentTaskId);
             case FieldTypeResource.TASK_REF:
                 return new TaskRefField(item.stringId, item.name, item.value ? item.value : [], item.behavior,
@@ -316,5 +312,13 @@ export class FieldConverterService {
             return decodeBase64(value);
         }
         return value;
+    }
+
+    protected resolveAllowedTypes(allowTypes: string[]) {
+        return allowTypes?.length > 0 ? (allowTypes.length > 1 ? allowTypes as FileUploadMIMEType[] : allowTypes[0]) : null
+    }
+
+    protected resolveByteSize(bytesSize) {
+        return bytesSize !== undefined ? bytesSize : null;
     }
 }
