@@ -264,6 +264,8 @@
                 "false": "nie"
             }
         },
+        "clear": "Vymazať",
+        "save": "Uložiť",
         "noFile": "Žiadny súbor",
         "file": {
             "noFile": "Žiadny súbor",
