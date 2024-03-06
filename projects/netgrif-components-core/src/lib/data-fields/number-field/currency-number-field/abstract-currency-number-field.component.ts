@@ -23,17 +23,19 @@ export abstract class AbstractCurrencyNumberFieldComponent extends AbstractNumbe
     }
 
     ngAfterViewInit() {
-        this.fieldType = this.TEXT_TYPE;
-        this.transformedValue = this.transformCurrency(this.dataField.value?.toString());
-        this.dataField.valueChanges().subscribe(value => {
-            if (value !== undefined && value !== null) {
-                if (this.fieldType === this.TEXT_TYPE) {
-                    this.transformedValue = this.transformCurrency(value.toString()) + this.WHITESPACE;
+        setTimeout(() => {
+            this.fieldType = this.TEXT_TYPE;
+            this.transformedValue = this.transformCurrency(this.dataField.value?.toString());
+            this.dataField.valueChanges().subscribe(value => {
+                if (value !== undefined && value !== null) {
+                    if (this.fieldType === this.TEXT_TYPE) {
+                        this.transformedValue = this.transformCurrency(value.toString()) + this.WHITESPACE;
+                    }
+                } else {
+                    this.transformedValue = '';
                 }
-            } else {
-                this.transformedValue = '';
-            }
-        });
+            });
+        })
     }
 
     transformToText(event: Event) {
