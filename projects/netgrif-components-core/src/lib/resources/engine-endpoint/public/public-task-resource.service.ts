@@ -121,7 +121,6 @@ export class PublicTaskResourceService extends TaskResourceService {
      * GET
      */
     public downloadFile(taskId: string, params: HttpParams): Observable<ProviderProgress | Blob> {
-        // const url = !!params.has("fileName") ? 'task/' + taskId + '/file/named' : 'task/' + taskId + '/file';
         const url = `task/${taskId}/file${params?.has("fileName") ? '/named' : ''}`;
         return this._resourceProvider.getBlob$(url, this.SERVER_URL, params).pipe(
             map(event => {
@@ -144,7 +143,6 @@ export class PublicTaskResourceService extends TaskResourceService {
      */
     public uploadFile(taskId: string, body: object, multipleFiles: boolean):
         Observable<ProviderProgress | EventOutcomeMessageResource> {
-        // const url = !multipleFiles ? 'public/task/' + taskId + "/file" : 'public/task/' + taskId + '/files';
         const url = `public/task/${taskId}/${multipleFiles ? 'files' : 'file'}`;
         return this._resourceProvider.postWithEvent$<EventOutcomeMessageResource>(url, this.SERVER_URL, body).pipe(
             map(event => {
@@ -166,7 +164,6 @@ export class PublicTaskResourceService extends TaskResourceService {
      * DELETE
      */
     public deleteFile(taskId: string, body: FileFieldRequest): Observable<MessageResource> {
-        // const url = !!body.fileName ? 'public/task/' + taskId + '/file/named' : 'public/task/' + taskId + '/file';
         const url = `public/task/${taskId}/file${body.fileName ? '/named' : ''}`;
         return this._resourceProvider.delete$(url, this.SERVER_URL, {}, {}, 'json', body).pipe(
             map(r => this.changeType(r, undefined))
@@ -178,7 +175,6 @@ export class PublicTaskResourceService extends TaskResourceService {
      * GET
      */
     public downloadFilePreview(taskId: string, params: HttpParams): Observable<ProviderProgress | Blob> {
-        // const url = 'public/task/' + taskId + '/file_preview';
         const url = `public/task/${taskId}/file_preview`;
         return this._resourceProvider.getBlob$(url, this.SERVER_URL, params).pipe(
             map(event => {
