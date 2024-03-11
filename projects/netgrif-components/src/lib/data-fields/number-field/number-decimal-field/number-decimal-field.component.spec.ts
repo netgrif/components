@@ -1,14 +1,17 @@
-import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {AngularResizeEventModule} from 'angular-resize-event';
-import {DataFieldTemplateComponent} from '../../data-field-template/data-field-template.component';
-import {RequiredLabelComponent} from '../../required-label/required-label.component';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+
+import { NumberDecimalFieldComponent } from './number-decimal-field.component';
+import {AngularResizeEventModule} from "angular-resize-event";
+import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {NoopAnimationsModule} from "@angular/platform-browser/animations";
+import {DataFieldTemplateComponent} from "../../data-field-template/data-field-template.component";
+import {RequiredLabelComponent} from "../../required-label/required-label.component";
+import {Component, CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
+import {FormControl} from "@angular/forms";
 import {
     AuthenticationMethodService,
     AuthenticationService,
-    ConfigurationService, CurrencyModule,
+    ConfigurationService,
     MaterialModule,
     MockAuthenticationMethodService,
     MockAuthenticationService,
@@ -18,11 +21,10 @@ import {
     TranslateLibModule,
     UserResourceService, WrappedBoolean
 } from '@netgrif/components-core';
-import {NumberCurrencyFieldComponent} from './number-currency-field.component';
-import {FormControl} from '@angular/forms';
+import {DecimalPipe} from "@angular/common";
 
-describe('NumberCurrencyFieldComponent', () => {
-    let component: NumberCurrencyFieldComponent;
+describe('NumberDecimalFieldComponent', () => {
+    let component: NumberDecimalFieldComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
     beforeEach(waitForAsync(() => {
@@ -32,17 +34,17 @@ describe('NumberCurrencyFieldComponent', () => {
                 AngularResizeEventModule,
                 TranslateLibModule,
                 HttpClientTestingModule,
-                NoopAnimationsModule,
-                CurrencyModule
+                NoopAnimationsModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
-                {provide: ConfigurationService, useClass: TestConfigurationService}
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                DecimalPipe
             ],
             declarations: [
-                NumberCurrencyFieldComponent,
+                NumberDecimalFieldComponent,
                 DataFieldTemplateComponent,
                 RequiredLabelComponent,
                 TestWrapperComponent
@@ -66,8 +68,8 @@ describe('NumberCurrencyFieldComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-number-currency-field [dataField]="field" [formControlRef]="formControl"' +
-        ' [showLargeLayout]="label"></nc-number-currency-field>'
+    template: '<nc-number-decimal-field [dataField]="field" [formControlRef]="formControl" ' +
+        '[showLargeLayout]="label"></nc-number-decimal-field>'
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();
@@ -75,12 +77,8 @@ class TestWrapperComponent {
         optional: true,
         visible: true,
         editable: true,
-        hidden: true,
-    }, [], '', '', null, {
-        code: 'EUR',
-        fractionSize: 2,
-        locale: 'sk'
-    });
+        hidden: true
+    }, []);
     formControl = new FormControl();
     constructor() {
         this.field.registerFormControl(this.formControl);

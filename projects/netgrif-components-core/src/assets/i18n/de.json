@@ -264,7 +264,9 @@
                 "false": "nein"
             }
         },
-        "noFile": "No file",
+        "clear": "Klar",
+        "save": "Speichern",
+        "noFile": "keine Datei",
         "file": {
             "noFile": "keine Datei",
             "clickToUpload": "Klicken Sie, um eine Datei hochzuladen",

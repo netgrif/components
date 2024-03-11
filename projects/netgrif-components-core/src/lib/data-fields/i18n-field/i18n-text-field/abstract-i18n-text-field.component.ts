@@ -36,7 +36,7 @@ export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsC
                           protected _domSanitizer: DomSanitizer,
                           @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<I18nField>) {
         super(languageIconsService, _translateService, dataFieldPortalData);
-        this.selectedLanguage = this._translateService.currentLang.split('-')[0];
+        this.selectedLanguage = this._translateService.currentLang;
         this.languageKeys = Object.keys(this.languageIconsService.languageIcons);
     }
 
@@ -57,7 +57,7 @@ export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsC
 
     protected refreshCurrentValue(newValue = this.dataField.value): void {
         if (this.dataField.disabled) {
-            this.selectedLanguage = this._translateService.currentLang.split('-')[0];
+            this.selectedLanguage = this._translateService.currentLang;
             this.filledShown = false;
             this.initializedLanguage = false;
             return;
@@ -132,15 +132,25 @@ export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsC
 
 
     public getTranslation(): string {
-        const locale = this._translateService.currentLang.split('-')[0];
+        const locale = this._translateService.currentLang;
         return locale in this.dataField.value.translations
             ? this.dataField.value.translations[locale]
             : this.dataField.value.defaultValue;
     }
 
+    public getDefaultLanguageCode(): string {
+        return DEFAULT_LANGUAGE_CODE;
+    }
+
     public isPlainText(): boolean {
         if (this.checkPropertyInComponent('plainText')) {
             return this.dataField.component.properties.plainText === 'true';
+        }
+    }
+
+    public isBoldText(): boolean {
+        if (this.textPropertyEnabled('boldText')) {
+            return this.dataField.component.properties.boldText === 'true';
         }
     }
 
