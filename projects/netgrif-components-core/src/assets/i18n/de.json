@@ -273,7 +273,7 @@
             "clickToDownload": "Klicken Sie, um {{fileName}} herunterzuladen",
             "clickToOpen": "Klicken Sie hier, um den Dateiinhalt anzuzeigen",
             "clickToDelete": "Klicken Sie, um die Datei zu löschen",
-            "notAllowed": "Datei {{fileName}} kann nicht hochgeladen werden. Ihr Typ ist nicht zulässig."
+            "notAllowed": "Datei {{fileName}} kann nicht hochgeladen werden. Der Datentyp ist nicht zulässig."
         },
         "i18n": {
             "languageSelect": "Sprache auswählen",

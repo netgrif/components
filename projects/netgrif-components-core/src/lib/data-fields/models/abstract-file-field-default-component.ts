@@ -33,15 +33,18 @@ export abstract class AbstractFileFieldDefaultComponent<T extends FileField | Fi
 
     protected checkAllowedTypes(): boolean {
         const files = this.fileUploadEl?.nativeElement?.files;
+        let bool: boolean = true;
         for (let i = 0; i < files?.length; i++) {
             if (!this.checkTypes(files.item(i).type)) {
                 this._log.error('File ' + files.item(i).name + ' cannot be uploaded. Its type is not allowed');
                 this._snackbar.openErrorSnackBar(this._translate.instant('dataField.file.notAllowed', {fileName: files.item(i).name}));
-                this.fileUploadEl.nativeElement.value = '';
-                return false;
+                bool = false;
             }
         }
-        return true;
+        if (!bool) {
+            this.fileUploadEl.nativeElement.value = '';
+        }
+        return bool;
     }
 
     protected checkTypes(itemType: string) {

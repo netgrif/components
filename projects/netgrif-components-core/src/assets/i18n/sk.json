@@ -273,7 +273,7 @@
             "clickToDownload": "Kliknutím stiahnite súbor {{fileName}}",
             "clickToOpen": "Kliknutím zobrazíte obsah súboru",
             "clickToDelete": "Kliknutím vymažte súbor",
-            "notAllowed": "Súbor {{fileName}} nemôže byť nahraný. Jeho typ nieje povolený."
+            "notAllowed": "Súbor {{fileName}} nie je možné nahrať. Jeho typ nie je povolený."
         },
         "i18n": {
             "languageSelect": "Výber jazyka",

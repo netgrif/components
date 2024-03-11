@@ -17,7 +17,7 @@ export enum FileUploadMIMEType {
     VIDEO = 'video/*',
     AUDIO = 'audio/*',
     PDF = '.pdf',
-    JPEG = '.jpg,.jpeg',
+    JPG_JPEG = '.jpg,.jpeg',
     XML = '.xml',
     DOC_DOCX = '.doc,.docx',
     XLS_XLSX = '.xls,.xlsx'

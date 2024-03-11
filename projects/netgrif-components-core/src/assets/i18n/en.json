@@ -273,7 +273,7 @@
             "clickToDownload": "Click to download {{fileName}}",
             "clickToOpen": "Click to view file content",
             "clickToDelete": "Click to delete file",
-            "notAllowed": "File {{fileName}} can't be uploaded. Its type is not allowed."
+            "notAllowed": "File {{fileName}} can't be uploaded. Its filetype is not allowed."
         },
         "i18n": {
             "languageSelect": "Select language",
