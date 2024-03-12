@@ -9,7 +9,7 @@ import {
     Optional,
     ViewChild
 } from "@angular/core";
-import {FileField, FilePreviewType, FileUploadMIMEType} from "../models/file-field";
+import {FileField, FilePreviewType} from "../models/file-field";
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 import {BehaviorSubject, Subscription} from "rxjs";
 import {TaskResourceService} from "../../../resources/engine-endpoint/task-resource.service";
@@ -25,7 +25,6 @@ import {HttpParams} from "@angular/common/http";
 import {take} from "rxjs/operators";
 import {ResizedEvent} from "angular-resize-event";
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
-import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base-data-field.component";
 import {FILE_FIELD_HEIGHT, FILE_FIELD_PADDING, PREVIEW, PREVIEW_BUTTON} from '../models/file-field-constants';
 import {FileFieldRequest} from "../../../resources/interface/file-field-request-body";
 import {AbstractFileFieldDefaultComponent} from '../../models/abstract-file-field-default-component';
@@ -219,13 +218,8 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractFileFiel
         this.state.uploading = true;
         const fileFormData = new FormData();
         const fileToUpload = this.fileUploadEl.nativeElement.files.item(0) as File;
-        const data: FileFieldIdBody = {};
-        const requestBody: FileFieldRequest = {
-            parentTaskId: this.resolveParentTaskId(),
-            fieldId: this.dataField.stringId,
-        }
         fileFormData.append('file', fileToUpload);
-        fileFormData.append('data', new Blob([JSON.stringify(requestBody)], {type: 'application/json'}));
+        fileFormData.append('data', new Blob([JSON.stringify(this.createRequestBody())], {type: 'application/json'}));
         this._taskResourceService.uploadFile(this.taskId, fileFormData, false)
             .subscribe((response: EventOutcomeMessageResource) => {
                 if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.UPLOAD) {
@@ -352,12 +346,8 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractFileFiel
             this._log.error('File cannot be deleted. No task is set to the field.');
             return;
         }
-        const requestBody: FileFieldRequest = {
-            parentTaskId: this.resolveParentTaskId(),
-            fieldId: this.dataField.stringId
-        }
 
-        this._taskResourceService.deleteFile(this.taskId, requestBody).pipe(take(1)).subscribe(response => {
+        this._taskResourceService.deleteFile(this.taskId, this.createRequestBody()).pipe(take(1)).subscribe(response => {
             if (response.success) {
                 const filename = this.dataField.value.name;
                 this.dataField.value = {};
@@ -381,6 +371,13 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractFileFiel
 
     isEmpty(): boolean {
         return !this.dataField.value?.name;
+    }
+
+    protected createRequestBody(): FileFieldRequest {
+        return {
+            parentTaskId: this.resolveParentTaskId(),
+            fieldId: this.dataField.stringId
+        };
     }
 
     protected get defaultState(): FileState {
