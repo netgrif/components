@@ -14,6 +14,7 @@ import {CaseGetRequestBody} from '../interface/case-get-request-body';
 import {AbstractResourceService} from '../abstract-endpoint/abstract-resource.service';
 import {EventOutcomeMessageResource} from '../interface/message-resource';
 import {CreateCaseRequestBody} from '../interface/create-case-request-body';
+import {HttpParams} from "@angular/common/http";
 
 @Injectable({
     providedIn: 'root'
@@ -81,8 +82,8 @@ export class CaseResourceService extends AbstractResourceService implements Coun
      * GET
      * {{baseUrl}}/api/workflow/case/:id/file/:field
      */
-    public getCaseFile(caseID: string, fieldID: string): Observable<FileResource> {
-        return this._resourceProvider.get$('workflow/case/' + caseID + '/file/' + fieldID, this.SERVER_URL).pipe(
+    public getCaseFile(caseID: string, params: HttpParams): Observable<FileResource> {
+        return this._resourceProvider.get$('workflow/case/' + caseID + '/file', this.SERVER_URL, params).pipe(
             map(r => this.changeType(r, undefined))
         );
     }
