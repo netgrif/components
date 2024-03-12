@@ -9,7 +9,7 @@ import {
     Optional,
     ViewChild
 } from "@angular/core";
-import {FileField, FilePreviewType} from "../models/file-field";
+import {FileField, FilePreviewType, FileUploadMIMEType} from "../models/file-field";
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 import {BehaviorSubject, Subscription} from "rxjs";
 import {TaskResourceService} from "../../../resources/engine-endpoint/task-resource.service";
@@ -28,6 +28,7 @@ import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-fie
 import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base-data-field.component";
 import {FILE_FIELD_HEIGHT, FILE_FIELD_PADDING, PREVIEW, PREVIEW_BUTTON} from '../models/file-field-constants';
 import {FileFieldRequest} from "../../../resources/interface/file-field-request-body";
+import {AbstractFileFieldDefaultComponent} from '../../models/abstract-file-field-default-component';
 
 export interface FileState {
     progress: number;
@@ -41,7 +42,7 @@ export interface FileState {
     selector: 'ncc-abstract-file-default-fied',
     template: ''
 })
-export abstract class AbstractFileDefaultFieldComponent extends AbstractBaseDataFieldComponent<FileField> implements OnInit, AfterViewInit, OnDestroy {
+export abstract class AbstractFileDefaultFieldComponent extends AbstractFileFieldDefaultComponent<FileField> implements OnInit, AfterViewInit, OnDestroy {
     /**
      * The width of the default file preview border in pixels. The `px` string is appended in the code.
      */
@@ -56,15 +57,7 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractBaseData
     public static readonly DEFAULT_PREVIEW_BORDER_COLOR = 'black';
 
     public state: FileState;
-    /**
-     * Task mongo string id is binding property from parent component.
-     */
-    @Input() public taskId: string;
 
-    /**
-     * File picker element reference from component template that is initialized after view init.
-     */
-    @ViewChild('fileUploadInput') public fileUploadEl: ElementRef<HTMLInputElement>;
     /**
      * Image field view element reference from component template that is initialized after view init.
      */
@@ -106,8 +99,6 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractBaseData
 
     public isFilePreview = false;
     public isFilePreviewButton = false;
-    private labelWidth: number;
-    public cutProperty: string;
 
     /**
      * Only inject services.
@@ -127,7 +118,7 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractBaseData
                           protected _eventService: EventService,
                           protected _sanitizer: DomSanitizer,
                           @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<FileField>) {
-        super(dataFieldPortalData);
+        super(_log, _snackbar, _translate, dataFieldPortalData);
         this.state = this.defaultState;
         this.fullSource = new BehaviorSubject<SafeUrl>(null);
         this.taskId = dataFieldPortalData.additionalFieldProperties.taskId as string;
@@ -219,6 +210,9 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractBaseData
                 this._translate.instant('dataField.snackBar.maxFilesSizeExceeded') + this.dataField.maxUploadSizeInBytes
             );
             this.fileUploadEl.nativeElement.value = '';
+            return;
+        }
+        if (!this.checkAllowedTypes()) {
             return;
         }
         this.state = this.defaultState;
@@ -530,24 +524,11 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractBaseData
         return !!this.dataField.component && !!this.dataField.component.properties && property in this.dataField.component.properties;
     }
 
-    protected resolveParentTaskId(): string {
-        return !!this.dataField.parentTaskId ? this.dataField.parentTaskId : this.taskId;
-    }
-
     public hasTitle(): boolean {
         return this.dataField.title !== undefined && this.dataField.title !== '';
     }
 
     public hasHint(): boolean {
         return this.dataField.description !== undefined && this.dataField.description !== '';
-    }
-
-    public getCutProperty(i18nLabel): string {
-        if (this.labelWidth !== i18nLabel.offsetWidth) {
-            this.labelWidth = i18nLabel.offsetWidth;
-            const calculatedWidth = 'calc(0.5em + ' + i18nLabel.offsetWidth / 4 * 3 + 'px)';
-            this.cutProperty = `polygon(0 0, 0 100%, 100% 100%, 100% 0%, ${calculatedWidth} 0, ${calculatedWidth} 6%, 0.5em 6%, 0.5em 0)`;
-        }
-        return this.cutProperty;
     }
 }

@@ -26,6 +26,7 @@ import {take} from "rxjs/operators";
 import {FileFieldValue} from "../../file-field/models/file-field-value";
 import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base-data-field.component";
 import {FileFieldRequest} from "../../../resources/interface/file-field-request-body";
+import {AbstractFileFieldDefaultComponent} from '../../models/abstract-file-field-default-component';
 
 export interface FilesState {
     progress: number;
@@ -40,10 +41,8 @@ export interface FilesState {
     selector: 'ncc-abstract-file-list-default-field',
     template: ''
 })
-export abstract class AbstractFileListDefaultFieldComponent extends AbstractBaseDataFieldComponent<FileListField> implements OnInit, AfterViewInit, OnDestroy {
+export abstract class AbstractFileListDefaultFieldComponent extends AbstractFileFieldDefaultComponent<FileListField> implements OnInit, AfterViewInit, OnDestroy {
 
-    private labelWidth: number;
-    public cutProperty: string;
     public uploadedFiles: Array<string>;
     public state: FilesState;
     private valueChange$: Subscription;
@@ -56,23 +55,13 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractBase
     protected maxFilesNumber: number;
     protected maxFilesMessage: string;
 
-    /**
-     * Task mongo string id is binding property from parent component.
-     */
-    @Input() public taskId: string;
-
-    /**
-     * File picker element reference from component template that is initialized after view init.
-     */
-    @ViewChild('fileUploadInput') public fileUploadEl: ElementRef<HTMLInputElement>;
-
     protected constructor(protected _taskResourceService: TaskResourceService,
                           protected _log: LoggerService,
                           protected _snackbar: SnackBarService,
                           protected _translate: TranslateService,
                           protected _eventService: EventService,
                           @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<FileListField>) {
-        super(dataFieldPortalData);
+        super(_log, _snackbar, _translate, dataFieldPortalData);
         this.state = this.defaultState;
         this.uploadedFiles = new Array<string>();
         this.maxFilesNumber = Number.POSITIVE_INFINITY;
@@ -166,6 +155,10 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractBase
                 this.fileUploadEl.nativeElement.value = '';
                 return;
             }
+        }
+
+        if (!this.checkAllowedTypes()) {
+            return;
         }
 
         this.state = this.defaultState;
@@ -350,18 +343,5 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractBase
             }
             this.uploadedFiles = this.dataField.value.namesPaths.map(namePath => namePath.name);
         }
-    }
-
-    private resolveParentTaskId(): string {
-        return !!this.dataField.parentTaskId ? this.dataField.parentTaskId : this.taskId;
-    }
-
-    public getCutProperty(i18nLabel): string {
-        if (this.labelWidth !== i18nLabel.offsetWidth) {
-            this.labelWidth = i18nLabel.offsetWidth;
-            const calculatedWidth = 'calc(0.5em + ' + i18nLabel.offsetWidth / 4 * 3 + 'px)';
-            this.cutProperty = `polygon(0 0, 0 100%, 100% 100%, 100% 0%, ${calculatedWidth} 0, ${calculatedWidth} 3px, 0.5em 3px, 0.5em 0)`;
-        }
-        return this.cutProperty;
     }
 }

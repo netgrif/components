@@ -138,9 +138,19 @@ export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsC
             : this.dataField.value.defaultValue;
     }
 
+    public getDefaultLanguageCode(): string {
+        return DEFAULT_LANGUAGE_CODE;
+    }
+
     public isPlainText(): boolean {
         if (this.checkPropertyInComponent('plainText')) {
             return this.dataField.component.properties.plainText === 'true';
+        }
+    }
+
+    public isBoldText(): boolean {
+        if (this.textPropertyEnabled('boldText')) {
+            return this.dataField.component.properties.boldText === 'true';
         }
     }
 
