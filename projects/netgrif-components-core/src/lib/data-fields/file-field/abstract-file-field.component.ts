@@ -5,7 +5,6 @@ import {
 } from '@angular/core';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
-import {FileField} from "./models/file-field";
 
 /**
  * @deprecated
@@ -19,12 +18,9 @@ import {FileField} from "./models/file-field";
 })
 export abstract class AbstractFileFieldComponent extends AbstractDataFieldComponent  {
 
-    @Input() dataField: FileField;
-
     @Input() taskId: string;
 
     protected constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
         super(informAboutInvalidData);
     }
-
 }
