@@ -7,7 +7,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Full Changelog: [https://github.com/netgrif/components/commits/v6.4.0](https://github.com/netgrif/components/commits/v6.4.0)
 
-## [6.4.0](https://github.com/netgrif/components/releases/tag/v6.4.0) (2024-01-23)
+## [6.4.0](https://github.com/netgrif/components/releases/tag/v6.4.0) (2024-03-13)
 
 ### Fixed
 - [NAE-1915] TaskRef behaviour handling for multiple level
@@ -31,6 +31,13 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.4.0](https://g
 - [NAE-1929] Data field type list of strings
 - [NAE-1936] Disable create case button using menu items
 - [NAE-1935] Improved breadcrumbs from menu items
+- [NAE-1920] Injection token NAE_USER_ASSIGN_COMPONENT breaks delegate
+- [NAE-1684] Frontend component for data field caseRef
+- [NAE-1949] Allowed Types for Filefield
+- [NAE-1813] Field id as path variable in TaskController
+- [NAE-1905] Add bold on i18n text plainText field
+- [NAE-1873] Seperator for number field
+- [NAE-1922] Signature Pad Field
 
 ## [6.3.3](https://github.com/netgrif/components/releases/tag/v6.3.3) (2024-01-19)
 
