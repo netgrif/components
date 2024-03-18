@@ -10,6 +10,7 @@ import {ComponentPortal} from "@angular/cdk/portal";
 import {NAE_DEFAULT_HEADERS} from '../../../header/models/default-headers-token';
 import {MultichoiceField} from '../models/multichoice-field';
 import {NAE_CASE_REF_CREATE_CASE, NAE_CASE_REF_SEARCH} from '../../case-ref-field/model/case-ref-injection-tokens';
+import {CaseSearchRequestBody} from '../../../filter/models/case-search-request-body';
 
 @Component({
     selector: 'ncc-abstract-case-ref-default',
@@ -35,6 +36,11 @@ export abstract class AbstractMultichoiceCaseRefComponent extends AbstractBaseDa
     createFilter() {
         let portalInjector;
         const filterValue : string | string[] = this.dataField.choices.length > 0 ? this.dataField.choices.map(value => value.key) : '';
+        const filterProperty: boolean = this.dataField?.component?.properties?.filter === 'true';
+        let query: CaseSearchRequestBody;
+        if (filterProperty) {
+            query = JSON.parse(this.dataField?.component?.properties?.filterQuery) as CaseSearchRequestBody;
+        }
         portalInjector = Injector.create({
             providers: [
                 {
@@ -48,7 +54,7 @@ export abstract class AbstractMultichoiceCaseRefComponent extends AbstractBaseDa
                 },
                 {
                     provide: NAE_BASE_FILTER,
-                    useValue: { filter: SimpleFilter.fromCaseQuery({stringId: filterValue}) } as BaseFilter
+                    useValue: { filter: SimpleFilter.fromCaseQuery((filterProperty && query ? query : {stringId: filterValue})) } as BaseFilter
                 },
                 {
                     provide: NAE_VIEW_ID_SEGMENT,
