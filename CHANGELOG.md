@@ -7,7 +7,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Full Changelog: [https://github.com/netgrif/components/commits/v6.4.0](https://github.com/netgrif/components/commits/v6.4.0)
 
-## [6.4.0](https://github.com/netgrif/components/releases/tag/v6.4.0) (2024-03-13)
+## [6.4.0](https://github.com/netgrif/components/releases/tag/v6.4.0) (2024-03-20)
 
 ### Fixed
 - [NAE-1915] TaskRef behaviour handling for multiple level
@@ -38,6 +38,7 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.4.0](https://g
 - [NAE-1905] Add bold on i18n text plainText field
 - [NAE-1873] Seperator for number field
 - [NAE-1922] Signature Pad Field
+- [NAE-1957] Allow filter to caseRef field and variants
 
 ## [6.3.3](https://github.com/netgrif/components/releases/tag/v6.3.3) (2024-01-19)
 
