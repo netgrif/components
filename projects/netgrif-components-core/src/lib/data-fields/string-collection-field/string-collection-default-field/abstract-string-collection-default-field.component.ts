@@ -5,6 +5,7 @@ import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from '../../models/data-fie
 import {StringCollectionField} from '../models/string-collection-field';
 import {ENTER, COMMA, SEMICOLON} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'ncc-abstract-string-collection-default-field',
@@ -14,6 +15,7 @@ export abstract class AbstractStringCollectionDefaultFieldComponent extends Abst
 
     @ViewChild('input') input: ElementRef;
     public separatorKeysCodes: number[] = [ENTER];
+    protected subComp: Subscription;
 
     protected constructor(protected _translate: TranslateService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<StringCollectionField>) {
@@ -21,11 +23,22 @@ export abstract class AbstractStringCollectionDefaultFieldComponent extends Abst
     }
 
     ngOnInit() {
-        if (this.dataField?.component?.properties?.semicolon === 'true') {
-            this.separatorKeysCodes.push(SEMICOLON);
-        }
-        if (this.dataField?.component?.properties?.comma === 'true') {
-            this.separatorKeysCodes.push(COMMA);
+        this.checkProperties();
+        this.subComp = this.dataField.componentChange$().subscribe(() => {
+            this.checkProperties()
+        })
+    }
+
+    checkProperties() {
+        this.checkPropertyForSeparator(this.dataField?.component?.properties?.semicolon === 'true', SEMICOLON)
+        this.checkPropertyForSeparator(this.dataField?.component?.properties?.comma === 'true', COMMA)
+    }
+
+    protected checkPropertyForSeparator(propertyBoolean: boolean, separator: number) {
+        if (propertyBoolean && !this.separatorKeysCodes.includes(separator)) {
+            this.separatorKeysCodes.push(separator);
+        } else if (this.separatorKeysCodes.includes(separator)) {
+            this.separatorKeysCodes = this.separatorKeysCodes.filter(value => value !== separator);
         }
     }
 

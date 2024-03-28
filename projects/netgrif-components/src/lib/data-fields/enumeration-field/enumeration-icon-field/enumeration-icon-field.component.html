@@ -8,9 +8,9 @@
             <mat-icon *ngIf="resolveIconType(option.key) === 'material'">{{resolveIconValue(option.key)}}</mat-icon>
             <mat-icon *ngIf="resolveIconType(option.key) === 'svg'" [svgIcon]="resolveIconValue(option.key)"></mat-icon>
             <span fxFlex class="enum-icon-text">{{option.value}}</span>
-            <mat-icon *ngIf="resolveArrow(option.key)">arrow_forward</mat-icon>
+            <mat-icon *ngIf="resolveArrow()">arrow_forward</mat-icon>
         </div>
-        <mat-divider class="enum-icon-divider" *ngIf="i !== dataField.choices.length - 1 && resolveDivider(option.key)"></mat-divider>
+        <mat-divider class="enum-icon-divider" *ngIf="i !== dataField.choices.length - 1 && resolveDivider()"></mat-divider>
     </div>
 </div>
 <ng-template #horizont>
@@ -24,10 +24,10 @@
                 <mat-icon *ngIf="resolveIconType(option.key) === 'material'">{{resolveIconValue(option.key)}}</mat-icon>
                 <mat-icon *ngIf="resolveIconType(option.key) === 'svg'" [svgIcon]="resolveIconValue(option.key)"></mat-icon>
                 <span fxFlex class="enum-icon-text">{{option.value}}</span>
-                <mat-icon *ngIf="resolveArrow(option.key)">arrow_forward</mat-icon>
+                <mat-icon *ngIf="resolveArrow()">arrow_forward</mat-icon>
             </div>
             <div fxFlex></div>
-            <mat-divider [vertical]="true" *ngIf="i !== dataField.choices.length - 1 && resolveDivider(option.key)"></mat-divider>
+            <mat-divider [vertical]="true" *ngIf="i !== dataField.choices.length - 1 && resolveDivider()"></mat-divider>
         </div>
     </div>
 </ng-template>
