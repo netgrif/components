@@ -20,13 +20,17 @@ export abstract class AbstractEnumerationCaseRefComponent extends AbstractCaseRe
     }
 
     ngAfterViewInit(): void {
-        this.createFilter(this.dataField.choices.length > 0 ? this.dataField.choices.map(value => value.key) : '');
+        this.callCreateFilter();
         this._sub = this.dataField.updatedChoices.subscribe(() => {
-            this.createFilter(this.dataField.choices.length > 0 ? this.dataField.choices.map(value => value.key) : '');
+            this.callCreateFilter();
         });
         this._subComp = this.dataField.componentChange$().subscribe(() => {
-            this.createFilter(this.dataField.choices.length > 0 ? this.dataField.choices.map(value => value.key) : '');
+            this.callCreateFilter();
         });
+    }
+
+    protected callCreateFilter() {
+        this.createFilter(this.dataField.choices.length > 0 ? this.dataField.choices.map(value => value.key) : '');
     }
 
     ngOnDestroy() {

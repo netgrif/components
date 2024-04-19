@@ -26,7 +26,7 @@ export abstract class AbstractEnumerationIconFieldComponent extends AbstractBase
     }
 
     checkProperties() {
-        this.horizontal = this.dataField.component?.properties?.horizontal === "true";
+        this.horizontal = this.dataField.component?.properties?.horizontal === 'true';
         this.arrow = this.dataField.component?.properties?.arrow === 'true';
         this.divider = this.dataField.component?.properties?.divider === 'true';
     }
@@ -39,11 +39,11 @@ export abstract class AbstractEnumerationIconFieldComponent extends AbstractBase
         return this.dataField.component?.optionIcons.find(icon => icon.key === key)?.type;
     }
 
-    resolveArrow() {
+    isArrow() {
         return this.arrow;
     }
 
-    resolveDivider() {
+    isDivider() {
         return this.divider;
     }
 

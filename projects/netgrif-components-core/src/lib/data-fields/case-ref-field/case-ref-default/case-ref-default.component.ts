@@ -20,13 +20,17 @@ export abstract class AbstractCaseRefDefaultComponent extends AbstractCaseRefBas
     }
 
     ngAfterViewInit(): void {
-        this.createFilter(this.dataField.value.length > 0 ? this.dataField.value : '');
+        this.callCreateFilter();
         this._sub = this.dataField.valueChanges().subscribe(() => {
-            this.createFilter(this.dataField.value.length > 0 ? this.dataField.value : '');
+            this.callCreateFilter();
         });
         this._subComp = this.dataField.componentChange$().subscribe(() => {
-            this.createFilter(this.dataField.value.length > 0 ? this.dataField.value : '');
+            this.callCreateFilter();
         });
+    }
+
+    protected callCreateFilter() {
+        this.createFilter(this.dataField.value.length > 0 ? this.dataField.value : '');
     }
 
     ngOnDestroy() {
