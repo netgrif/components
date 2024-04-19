@@ -11,6 +11,7 @@ import {AbstractCaseRefBaseFieldComponent} from '../model/abstract-case-ref-base
 export abstract class AbstractCaseRefDefaultComponent extends AbstractCaseRefBaseFieldComponent<CaseRefField> implements AfterViewInit, OnDestroy {
 
     protected _sub: Subscription;
+    protected _subComp: Subscription;
 
     protected constructor(protected injector: Injector,
                           protected caseViewType: Type<any>,
@@ -19,15 +20,23 @@ export abstract class AbstractCaseRefDefaultComponent extends AbstractCaseRefBas
     }
 
     ngAfterViewInit(): void {
-        this.createFilter(this.dataField.value.length > 0 ? this.dataField.value : '');
+        this.callCreateFilter();
         this._sub = this.dataField.valueChanges().subscribe(() => {
-            this.createFilter(this.dataField.value.length > 0 ? this.dataField.value : '');
+            this.callCreateFilter();
         });
+        this._subComp = this.dataField.componentChange$().subscribe(() => {
+            this.callCreateFilter();
+        });
+    }
+
+    protected callCreateFilter() {
+        this.createFilter(this.dataField.value.length > 0 ? this.dataField.value : '');
     }
 
     ngOnDestroy() {
         super.ngOnDestroy();
         this._sub.unsubscribe();
+        this._subComp.unsubscribe()
     }
 
 }
