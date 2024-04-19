@@ -7,7 +7,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Full Changelog: [https://github.com/netgrif/components/commits/v6.4.0](https://github.com/netgrif/components/commits/v6.4.0)
 
-## [6.4.0](https://github.com/netgrif/components/releases/tag/v6.4.0) (2024-03-20)
+## [6.4.0](https://github.com/netgrif/components/releases/tag/v6.4.0) (2024-04-19)
 
 ### Fixed
 - [NAE-1915] TaskRef behaviour handling for multiple level
@@ -17,6 +17,7 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.4.0](https://g
 - [NAE-1901] Taskref rendering update
 - [NAE-1926] Can't close Tab in Tab view
 - [NAE-1939] Problem with Tests
+- [NAE-1960] Enumeration Map does not propagate changes when selecting
 
 ### Added
 - [NAE-1890] Data field component register
@@ -39,6 +40,8 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.4.0](https://g
 - [NAE-1873] Seperator for number field
 - [NAE-1922] Signature Pad Field
 - [NAE-1957] Allow filter to caseRef field and variants
+- [NAE-1958] Make component properties changeable
+
 
 ## [6.3.3](https://github.com/netgrif/components/releases/tag/v6.3.3) (2024-01-19)
 
