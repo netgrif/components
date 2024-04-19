@@ -348,7 +348,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
     }
 
     protected isAutocompleteEnumException(field: DataField<unknown>): boolean{
-        return (field instanceof EnumerationField) && (field.getComponentType() === 'autocomplete') && !field.valid;
+        return (field instanceof EnumerationField) && (field.getComponentType() === 'autocomplete') && !(field.valid || field.value === null);
     }
 
     /**
