@@ -60,7 +60,7 @@ export abstract class AbstractUserDefaultFieldComponent extends AbstractBaseData
     }
 
     public deleteUser() {
-        this.dataField.value = undefined;
+        this.dataField.value = null;
     }
 
     public getCutProperty(i18nLabel): string {

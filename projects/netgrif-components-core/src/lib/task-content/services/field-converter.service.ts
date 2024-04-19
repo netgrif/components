@@ -163,7 +163,10 @@ export class FieldConverterService {
         if (this.resolveType(field) === FieldTypeResource.TEXT && field.component && field.component.name === 'password') {
             return encodeBase64(value);
         }
-        if (value === undefined || value === null) {
+        if (value === null) {
+            return null;
+        }
+        if (value === undefined) {
             return;
         }
         if (this.resolveType(field) === FieldTypeResource.DATE) {
