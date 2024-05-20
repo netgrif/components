@@ -6,7 +6,7 @@ import {
     AuthenticationModule,
     ConfigurationService,
     CovalentModule,
-    DashboardPortalComponentRegistryService,
+    ComponentRegistryService,
     DialogModule,
     MaterialModule,
     NAE_SNACKBAR_HORIZONTAL_POSITION,
@@ -19,6 +19,8 @@ import {
     ViewService,
     ProfileModule,
     Dashboard,
+    FrontActionModule,
+    NAE_ASYNC_RENDERING_CONFIGURATION,
     NAE_SAVE_DATA_INFORM
 } from '@netgrif/components-core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -89,7 +91,8 @@ import {
     WorkflowViewComponentModule,
     FilterFieldTabViewComponent,
     FilterFieldTabbedCaseViewComponent,
-    FilterFieldTabbedTaskViewComponent
+    FilterFieldTabbedTaskViewComponent,
+    DialogComponentsModule
 } from '@netgrif/components';
 import {UserInviteComponent} from './doc/user-invite/user-invite.component';
 import {ExamplePortalCardComponent} from './doc/dashboard-example/piechart-card/example-portal-card.component';
@@ -239,7 +242,9 @@ export function HttpLoaderFactory(http: HttpClient) {
         NgxChartsModule,
         EmailSubmissionFormComponentModule,
         RedirectComponentModule,
-        FilterFieldContentModule
+        FilterFieldContentModule,
+        DialogComponentsModule,
+        FrontActionModule
     ],
     providers: [{
         provide: ConfigurationService,
@@ -247,6 +252,13 @@ export function HttpLoaderFactory(http: HttpClient) {
     },
         {provide: NAE_SNACKBAR_VERTICAL_POSITION, useValue: SnackBarVerticalPosition.TOP},
         {provide: NAE_SNACKBAR_HORIZONTAL_POSITION, useValue: SnackBarHorizontalPosition.LEFT},
+        {provide: NAE_ASYNC_RENDERING_CONFIGURATION, useValue: {
+                batchSize: 20,
+                batchDelay: 50,
+                numberOfPlaceholders: 4,
+                enableAsyncRenderingForNewFields: true,
+                enableAsyncRenderingOnTaskExpand: true
+            }},
         {provide: NAE_SAVE_DATA_INFORM, useValue: true},
         ResourceProvider,
         TranslateService,
@@ -258,7 +270,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 })
 export class AppModule {
 
-    constructor(registry: DashboardPortalComponentRegistryService) {
+    constructor(registry: ComponentRegistryService) {
         registry.register('email', (injector: Injector) => new ComponentPortal(EmailSubmissionFormComponent, null, injector));
         registry.register('workflow-view', (injector: Injector) => new ComponentPortal(WorkflowViewExampleComponent, null, injector));
         registry.register('task-view', (injector: Injector) => new ComponentPortal(TaskViewComponent, null, injector));

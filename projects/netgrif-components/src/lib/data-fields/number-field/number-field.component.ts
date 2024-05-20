@@ -6,6 +6,9 @@ import {
 } from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 
+/**
+ * @deprecated
+ * */
 @Component({
     selector: 'nc-number-field',
     templateUrl: './number-field.component.html',

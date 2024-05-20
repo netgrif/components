@@ -1,5 +1,5 @@
-<ng-template [ngIf]="!formControlRef.disabled && textField.behavior.editable" [ngIfElse]="visibleChart">
-    <nc-textarea-field [textAreaField]="textField"
+<ng-template [ngIf]="!formControlRef.disabled && dataField.behavior.editable" [ngIfElse]="visibleChart">
+    <nc-textarea-field [dataField]="dataField"
                        [formControlRef]="formControlRef"
                        [showLargeLayout]="showLargeLayout"></nc-textarea-field>
 </ng-template>

@@ -16,6 +16,7 @@ import {ConfigurationService} from '../../../../configuration/configuration.serv
 import {TestConfigurationService} from '../../../../utility/tests/test-config';
 import {MockUserResourceService} from '../../../../utility/tests/mocks/mock-user-resource.service';
 import {MockAuthenticationService} from '../../../../utility/tests/mocks/mock-authentication.service';
+import {LanguageIconsService} from "../../../../data-fields/i18n-field/language-icons.service";
 
 describe('AbstractLanguageSelectorComponent', () => {
     let component: TestLangComponent;
@@ -59,15 +60,15 @@ describe('AbstractLanguageSelectorComponent', () => {
     template: ''
 })
 class TestLangComponent extends AbstractLanguageSelectorComponent {
-    constructor(protected _select: LanguageService) {
-        super(_select);
+    constructor(protected _select: LanguageService,
+                protected _languageIconsService: LanguageIconsService) {
+        super(_select, _languageIconsService);
     }
 }
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<nae-test-lang language="sk"></nae-test-lang>'
+    template: '<ncc-test-lang></ncc-test-lang>'
 })
 class TestWrapperComponent {
-    lang = 'sk';
 }

@@ -5,6 +5,7 @@ import {NAE_INFORM_ABOUT_INVALID_DATA} from './invalid-data-policy-token';
 import {NAE_SAVE_DATA_INFORM} from './save-data-inform-token';
 
 /**
+ * @deprecated as of v6.4.0
  * Holds the common functionality for all DataFieldComponents.
  */
 @Component({
@@ -59,5 +60,9 @@ export abstract class AbstractDataFieldComponent implements OnInit, OnDestroy {
      */
     public get formControl(): FormControl {
         return this._formControl;
+    }
+
+    public hasTitle(): boolean {
+        return this.dataField.title !== undefined && this.dataField.title !== '';
     }
 }

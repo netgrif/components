@@ -61,7 +61,7 @@ describe('DashboardIframeTextFieldComponent', () => {
     selector: 'nc-test-wrapper',
     template: `
         <nc-dashboard-iframe-text-field [showLargeLayout]="label"
-                                        [textField]="field"
+                                        [dataField]="field"
                                         [formControlRef]="formControl">
         </nc-dashboard-iframe-text-field>`
 })

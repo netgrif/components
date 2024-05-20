@@ -12,4 +12,8 @@ export class EditModeComponent extends AbstractEditModeComponent {
                 protected loggerService: LoggerService) {
         super(_translate, loggerService);
     }
+
+    public setValue() {
+        this.approvalFormControl.setValue(true);
+    }
 }

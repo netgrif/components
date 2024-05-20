@@ -3,7 +3,7 @@ import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {MultiUserAssignItemComponent} from './multi-user-assign-item.component';
 import {MaterialModule, TranslateLibModule, UserValue} from "@netgrif/components-core";
 import {NoopAnimationsModule} from "@angular/platform-browser/animations";
-import {Component} from "@angular/core";
+import {Component, CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
 
 describe('MultiUserAssignItemComponent', () => {
     let component: MultiUserAssignItemComponent;
@@ -19,7 +19,8 @@ describe('MultiUserAssignItemComponent', () => {
             declarations: [
                 MultiUserAssignItemComponent,
                 TestWrapperComponent
-            ]
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
         })
             .compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);

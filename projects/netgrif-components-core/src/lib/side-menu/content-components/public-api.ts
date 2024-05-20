@@ -16,6 +16,7 @@ export * from './user-impersonate/abstract-user-impersonate.component';
 
 /* MODELS */
 export * from './filter-selector/model/filter-selector-injection-data';
+export * from './filter-selector/model/filtered-array';
 export * from './option-selector/model/option-selector-injection-data';
 export * from './user-assign/model/user-list-injected-data';
 export * from './save-filter/model/save-filter-injection-data';
@@ -23,3 +24,4 @@ export * from './load-filter/model/load-filter-injection-data';
 export * from './injection-tokens';
 export * from './new-case/model/new-case-injection-data';
 export * from './user-impersonate/model/user-impersonate-injection-data';
+export * from './task-view/model/task-view-injection-data';

@@ -1,0 +1,39 @@
+<div [ngClass]="{'flex-end': align === 'end',
+                     'flex-start': align === 'start',
+                     'flex-center': align === 'center',
+                     'full-button-width': stretch ,
+                     'padding-bottom': !hasTitle()}">
+    <mat-label class="netgrif-label" [ngClass]="{'netgrif-label-disabled': formControlRef.disabled}"
+               *ngIf="!showLargeLayout.value && hasTitle()">
+        {{dataField.title}}
+        <nc-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nc-required-label>
+        <br>
+    </mat-label>
+    <button mat-button
+            [ngClass]="{
+                'mat-raised-button': dataField.getComponentType() === 'raised',
+                'mat-stroked-button': dataField.getComponentType() === 'stroked',
+                'mat-flat-button': dataField.getComponentType() === 'flat',
+                'mat-icon-button': dataField.getComponentType() === 'icon',
+                'mat-fab': dataField.getComponentType() === 'fab',
+                'mat-mini-fab': dataField.getComponentType() === 'minifab',
+                'full-button-width': stretch ,
+                'no-shadow': dataField.getComponentType() === 'fab' || dataField.getComponentType() === 'minifab'}"
+            color="primary"
+            [matTooltip]="dataField.description"
+            [disabled]="formControlRef.disabled || dataField.waitingForResponse"
+            (click)="resolveValue()">
+        <div class="grid-wrapper">
+            <mat-icon *ngIf="dataField.waitingForResponse" class="grid-1-1 margin-auto">
+                <mat-spinner color="warn" diameter="22"></mat-spinner>
+            </mat-icon>
+            <div [ngClass]="{'label-waiting': dataField.waitingForResponse}" class="grid-1-1">
+                {{(dataField.placeholder === undefined || dataField.placeholder === '') ? dataField.title : (isIconTypeButton() ? '' : dataField.placeholder) }}
+            </div>
+            <mat-icon class="grid-1-1"
+                      *ngIf="isIconTypeButton() && !dataField.waitingForResponse">{{dataField.placeholder}}</mat-icon>
+        </div>
+    </button>
+
+    <mat-error *ngIf="dataField.isInvalid(formControlRef) || hasTitle()">{{getErrorMessage()}}</mat-error>
+</div>

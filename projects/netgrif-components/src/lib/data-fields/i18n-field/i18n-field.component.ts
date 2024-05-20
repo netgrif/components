@@ -5,6 +5,9 @@ import {
     NAE_SAVE_DATA_INFORM
 } from '@netgrif/components-core';
 
+/**
+ * @deprecated
+ * */
 @Component({
     selector: 'nc-i18n-field',
     templateUrl: './i18n-field.component.html',

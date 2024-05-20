@@ -153,6 +153,10 @@
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
+                                <a href="#removeAll" >removeAll</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#selectAbstractUser" >selectAbstractUser</a>
                             </li>
                             <li>
@@ -489,6 +493,45 @@ Option injected trough <code>NAE_INFORM_ABOUT_INVALID_DATA</code> InjectionToken
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="removeAll"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>removeAll</b></span>
+                        <a href="#removeAll"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>removeAll()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="73"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/user-list-field/abstract-user-list-field.component.ts:73</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="selectAbstractUser"></a>
                     <span class="name">
                         <span class="modifier">Public</span>
@@ -776,6 +819,10 @@ export abstract class AbstractUserListFieldComponent extends AbstractDataFieldCo
         const existingUsers &#x3D; new UserListValue(new Map&lt;string, UserValue&gt;(this.dataField.value.userValues));
         existingUsers.removeUserValue(userId);
         this.dataField.value &#x3D; existingUsers;
+    }
+
+    public removeAll() {
+        this.dataField.value &#x3D; new UserListValue(new Map&lt;string, UserValue&gt;())
     }
 
 }

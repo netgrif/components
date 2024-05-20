@@ -6,6 +6,9 @@ import {
     TextFieldComponent as TextFieldComponentEnum
 } from '@netgrif/components-core';
 
+/**
+ * @deprecated
+ * */
 @Component({
     selector: 'nc-text-field',
     templateUrl: './text-field.component.html',

@@ -1,32 +1,35 @@
 <ng-template [ngIf]="formControlRef.disabled">
     <ng-template [ngIf]="!isPlainText()">
-        <mat-form-field [appearance]="textI18nField.materialAppearance" class="full-width" color="primary">
-            <mat-label *ngIf="!showLargeLayout.value">{{textI18nField.title}}</mat-label>
+        <mat-form-field [appearance]="dataField.materialAppearance" class="full-width" color="primary">
+            <mat-label *ngIf="!showLargeLayout.value">{{dataField.title}}</mat-label>
             <input matInput
                    [disabled]="true"
-                   [ngModel]="currentValue[selectedLanguage]"
-                   [placeholder]="textI18nField.placeholder ? textI18nField.placeholder : ''"
-                   [required]="textI18nField.behavior.required">
-            <mat-hint>{{textI18nField.description}}</mat-hint>
+                   [ngModel]="!!currentValue[selectedLanguage] && currentValue[selectedLanguage] !== ''
+                                ? currentValue[selectedLanguage] : currentValue[getDefaultLanguageCode()]"
+                   [placeholder]="dataField.placeholder ? dataField.placeholder : ''"
+                   [required]="dataField.behavior.required">
+            <mat-hint>{{dataField.description}}</mat-hint>
         </mat-form-field>
     </ng-template>
     <ng-template [ngIf]="isPlainText()">
         <div class="full-width"
              [ngStyle]="textPropertyEnabled('fontSize') && {'font-size': getTextFontSize()}">
-            <span [ngStyle]="textPropertyEnabled('textColor') && {'color': getTextColor()}">
-                {{currentValue[selectedLanguage]}}
+            <span [ngStyle]="textPropertyEnabled('textColor') && {'color': getTextColor()}"
+                  [ngClass]="{'i18n-bold-text': isBoldText()}">
+                {{!!currentValue[selectedLanguage] && currentValue[selectedLanguage] !== ''
+                    ? currentValue[selectedLanguage] : currentValue[getDefaultLanguageCode()]}}
             </span>
         </div>
     </ng-template>
 </ng-template>
 <ng-template [ngIf]="!formControlRef.disabled">
     <div class="full-width">
-        <div #i18nLabel class="i18n-label" [ngClass]="{'invalid-form-label': textI18nField.isInvalid(formControlRef)}">
-            {{textI18nField.title}}
-            <nc-required-label *ngIf="textI18nField.behavior.required" [isIn]="!textI18nField.disabled"></nc-required-label>
+        <div #i18nLabel class="i18n-label" [ngClass]="{'invalid-form-label': dataField.isInvalid(formControlRef)}">
+            {{dataField.title}}
+            <nc-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nc-required-label>
         </div>
         <div class="form-input-interfield button-icon-input full-width" fxLayout="row" fxLayoutAlign="start center"
-             [ngClass]="{'invalid-form-input': textI18nField.isInvalid(formControlRef), 'form-input-disabled': formControlRef.disabled}"
+             [ngClass]="{'invalid-form-input': dataField.isInvalid(formControlRef), 'form-input-disabled': formControlRef.disabled}"
              [ngStyle]="{
                     '-webkit-clip-path': getCutProperty(i18nLabel),
                     'clip-path': getCutProperty(i18nLabel)
@@ -47,8 +50,8 @@
             </mat-select>
             <input class="selected-language-value"
                    type="text"
-                   [placeholder]="textI18nField.placeholder ? textI18nField.placeholder : ''"
-                   [required]="textI18nField.behavior.required"
+                   [placeholder]="dataField.placeholder ? dataField.placeholder : ''"
+                   [required]="dataField.behavior.required"
                    [(ngModel)]="currentValue[selectedLanguage]"
                    (focusout)="setSelectedValue(); textI18nField.unsetFocus()"
                    (focusin)="textI18nField.setFocus()">
@@ -73,9 +76,8 @@
                 </button>
             </div>
         </div>
-        <mat-hint class="i18n-hint-error"
-                  *ngIf="!textI18nField.isInvalid(formControlRef)">{{textI18nField.description}}</mat-hint>
-        <mat-error class="i18n-hint-error"
-                   *ngIf="textI18nField.isInvalid(formControlRef)">{{getErrorMessage()}}</mat-error>
+        <mat-hint class="i18n-hint-error" [ngClass]="{'mat-hint-disabled': formControlRef.disabled}"
+                  *ngIf="!dataField.isInvalid(formControlRef) && hasHint()">{{dataField.description}}</mat-hint>
+        <mat-error class="i18n-hint-error" *ngIf="dataField.isInvalid(formControlRef)">{{getErrorMessage()}}</mat-error>
     </div>
 </ng-template>

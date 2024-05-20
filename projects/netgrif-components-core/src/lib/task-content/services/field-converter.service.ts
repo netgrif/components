@@ -10,7 +10,7 @@ import {DateField} from '../../data-fields/date-field/models/date-field';
 import {DateTimeField} from '../../data-fields/date-time-field/models/date-time-field';
 import {UserField} from '../../data-fields/user-field/models/user-field';
 import {ButtonField} from '../../data-fields/button-field/models/button-field';
-import {FileField} from '../../data-fields/file-field/models/file-field';
+import {FileField, FileUploadMIMEType} from '../../data-fields/file-field/models/file-field';
 import moment from 'moment';
 import {UserValue} from '../../data-fields/user-field/models/user-value';
 import {FieldTypeResource} from '../model/field-type-resource';
@@ -24,13 +24,14 @@ import {I18nField} from '../../data-fields/i18n-field/models/i18n-field';
 import {UserListField} from '../../data-fields/user-list-field/models/user-list-field';
 import {UserListValue} from '../../data-fields/user-list-field/models/user-list-value';
 import {decodeBase64, encodeBase64} from "../../utility/base64";
-
+import {CaseRefField} from '../../data-fields/case-ref-field/model/case-ref-field';
+import {StringCollectionField} from '../../data-fields/string-collection-field/models/string-collection-field';
 
 @Injectable({
     providedIn: 'root'
 })
 export class FieldConverterService {
-    private textFieldNames = ['textarea', 'richtextarea', 'htmltextarea', 'editor', 'htmlEditor', 'area']
+    private textFieldNames = [ 'richtextarea', 'htmltextarea', 'editor', 'htmlEditor' ]
 
     constructor() {
     }
@@ -94,14 +95,18 @@ export class FieldConverterService {
                     item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.FILE:
                 return new FileField(item.stringId, item.name, item.behavior, item.value ? item.value : {},
-                    item.placeholder, item.description, item.layout, null, null, item.validations, item.component,
-                    item.parentTaskId);
+                    item.placeholder, item.description, item.layout, this.resolveByteSize(item.component?.properties?.maxSize),
+                    this.resolveAllowedTypes(item.component?.properties?.allowTypes?.split(",")), item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.FILE_LIST:
                 return new FileListField(item.stringId, item.name, item.behavior, item.value ? item.value : {},
-                    item.placeholder, item.description, item.layout, item.validations, null, null, item.component,
+                    item.placeholder, item.description, item.layout, item.validations, this.resolveByteSize(item.component?.properties?.maxSize),
+                    this.resolveAllowedTypes(item.component?.properties?.allowTypes?.split(",")), item.component,
                     item.parentTaskId);
             case FieldTypeResource.TASK_REF:
                 return new TaskRefField(item.stringId, item.name, item.value ? item.value : [], item.behavior,
+                    item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
+            case FieldTypeResource.CASE_REF:
+                return new CaseRefField(item.stringId, item.name, item.value ? item.value : [], item.behavior,
                     item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.FILTER:
                 return new FilterField(item.stringId, item.name, item.value ?? '', item.filterMetadata, item.allowedNets,
@@ -109,6 +114,9 @@ export class FieldConverterService {
             case FieldTypeResource.I18N:
                 return new I18nField(item.stringId, item.name, item.value ?? {defaultValue: ''}, item.behavior, item.placeholder,
                     item.description, item.layout, item.validations, item.component);
+            case FieldTypeResource.STRING_COLLECTION:
+                return new StringCollectionField(item.stringId, item.name, item.value ? item.value : [], item.behavior,
+                    item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
         }
     }
 
@@ -141,6 +149,10 @@ export class FieldConverterService {
             return FieldTypeResource.FILTER;
         } else if (item instanceof I18nField) {
             return FieldTypeResource.I18N;
+        } else if (item instanceof CaseRefField) {
+            return FieldTypeResource.CASE_REF;
+        } else if (item instanceof StringCollectionField) {
+            return FieldTypeResource.STRING_COLLECTION;
         }
     }
 
@@ -151,7 +163,10 @@ export class FieldConverterService {
         if (this.resolveType(field) === FieldTypeResource.TEXT && field.component && field.component.name === 'password') {
             return encodeBase64(value);
         }
-        if (value === undefined || value === null) {
+        if (value === null) {
+            return null;
+        }
+        if (value === undefined) {
             return;
         }
         if (this.resolveType(field) === FieldTypeResource.DATE) {
@@ -300,5 +315,13 @@ export class FieldConverterService {
             return decodeBase64(value);
         }
         return value;
+    }
+
+    protected resolveAllowedTypes(allowTypes: string[]) {
+        return allowTypes?.length > 0 ? (allowTypes.length > 1 ? allowTypes as FileUploadMIMEType[] : allowTypes[0]) : null
+    }
+
+    protected resolveByteSize(bytesSize) {
+        return bytesSize !== undefined ? bytesSize : null;
     }
 }

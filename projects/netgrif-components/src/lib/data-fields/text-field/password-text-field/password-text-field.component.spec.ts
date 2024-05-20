@@ -60,7 +60,7 @@ describe('SimpleTextFieldComponent', () => {
 @Component({
     selector: 'nc-test-wrapper',
     template: `<nc-simple-text-field [showLargeLayout]="label"
-                                      [textField]="field"
+                                      [dataField]="field"
                                       [formControlRef]="formControl">
                 </nc-simple-text-field>`
 })

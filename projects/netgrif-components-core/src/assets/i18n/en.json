@@ -264,12 +264,16 @@
                 "false": "false"
             }
         },
+        "clear": "Clear",
+        "save": "Save",
         "noFile": "No file",
         "file": {
             "noFile": "No File",
             "clickToUpload": "Click to upload file",
             "clickToDownload": "Click to download {{fileName}}",
-            "clickToDelete": "Click to delete file"
+            "clickToOpen": "Click to view file content",
+            "clickToDelete": "Click to delete file",
+            "notAllowed": "File {{fileName}} can't be uploaded. Its filetype is not allowed."
         },
         "i18n": {
             "languageSelect": "Select language",
@@ -285,7 +289,8 @@
         },
         "user": {
             "selectUser": "Select user",
-            "save": "Assign"
+            "save": "Assign",
+            "deleteAll": "Empty user list"
         },
         "textarea": {
             "insertText": "Insert text here..."
@@ -456,6 +461,7 @@
         "snackBar": {
             "deleteCanceled": "Process delete canceled",
             "deleteSuccess": "Process successfully deleted",
+            "deleteInProgress": "The process has been marked for deletion, the deletion is now underway",
             "deleteError": "Process could not be deleted",
             "uploadFailed": "Process file could not be uploaded.",
             "uploadSuccess": "Process file uploaded successfully"
@@ -475,7 +481,11 @@
         "errorCreate": "Error while creating case "
     },
     "dynamicNavigation": {
-        "couldNotResolveView": "An error has occurred during the view resolution process. The view could not be displayed"
+        "couldNotResolveView": "An error has occurred during the view resolution process. The view could not be displayed",
+        "filterNotFound": "This view has no filter",
+        "loadMoreItems": "More",
+        "ascending": "Ascending",
+        "descending": "Descending"
     },
     "impersonation": {
         "user": {
@@ -493,5 +503,14 @@
         "expireDetail": "Your session is about to expire.\n\nRedirecting to Login page in {{time}} seconds.",
         "exitButton": "Logout",
         "refreshButton": "Stay Connected"
+    },
+    "paginator": {
+        "firstPage": "First page",
+        "itemsPage": "Items per page:",
+        "lastPage": "Last page",
+        "nextPage": "Next page",
+        "previousPage": "Previous page",
+        "pageOne": "Page 1 of 1",
+        "pageAmount": "Page {{page}} of {{amountPages}}"
     }
 }

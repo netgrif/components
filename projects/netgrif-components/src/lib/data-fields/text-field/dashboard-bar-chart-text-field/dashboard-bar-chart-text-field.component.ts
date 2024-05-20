@@ -1,6 +1,11 @@
-import {Component} from '@angular/core';
+import {Component, Inject, Optional} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {AbstractDashboardBarChartTextFieldComponent} from '@netgrif/components-core';
+import {
+    AbstractDashboardBarChartTextFieldComponent,
+    DATA_FIELD_PORTAL_DATA,
+    DataFieldPortalData,
+    TextField
+} from '@netgrif/components-core';
 
 @Component({
   selector: 'nc-dashboard-bar-chart-text-field',
@@ -9,8 +14,9 @@ import {AbstractDashboardBarChartTextFieldComponent} from '@netgrif/components-c
 })
 export class DashboardBarChartTextFieldComponent extends AbstractDashboardBarChartTextFieldComponent {
 
-    constructor(translate: TranslateService) {
-        super(translate);
+    constructor(translate: TranslateService,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextField>) {
+        super(translate, dataFieldPortalData);
     }
 
 }

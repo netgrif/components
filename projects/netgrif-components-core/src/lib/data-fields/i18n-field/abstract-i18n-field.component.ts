@@ -4,6 +4,9 @@ import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token
 import {I18nField} from './models/i18n-field';
 import {NAE_SAVE_DATA_INFORM} from '../models/save-data-inform-token';
 
+/**
+ * @deprecated
+ * */
 @Component({
     selector: 'ncc-abstract-i18n-field',
     template: ''

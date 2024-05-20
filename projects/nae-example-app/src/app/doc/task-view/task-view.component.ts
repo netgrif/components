@@ -69,7 +69,7 @@ const disableButtonsFactory = () => {
         },
         {
             provide: NAE_DEFAULT_HEADERS, useValue: [
-                'meta-case', 'meta-title', 'meta-priority', 'meta-priority',
+                'meta-caseId', 'meta-title', 'meta-priority', 'meta-priority',
                 'meta-user', 'all_data-number', 'all_data-text'
             ]
         },

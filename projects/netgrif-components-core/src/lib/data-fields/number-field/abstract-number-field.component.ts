@@ -5,6 +5,9 @@ import {TranslateService} from '@ngx-translate/core';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 import {NAE_SAVE_DATA_INFORM} from '../models/save-data-inform-token';
 
+/**
+ * @deprecated
+ * */
 @Component({
     selector: 'ncc-abstract-number-field',
     template: ''
