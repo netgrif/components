@@ -3,7 +3,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {
     AbstractTextareaFieldComponent,
     DATA_FIELD_PORTAL_DATA,
-    DataFieldPortalData,
+    DataFieldPortalData, NAE_SAVE_DATA_INFORM,
     TextAreaField
 } from '@netgrif/components-core';
 
@@ -15,7 +15,8 @@ import {
 export class TextareaFieldComponent extends AbstractTextareaFieldComponent {
 
     constructor(protected _translate: TranslateService, protected _ngZone: NgZone,
-                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextAreaField>) {
-        super(_translate, _ngZone, dataFieldPortalData);
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextAreaField>,
+                @Optional() @Inject(NAE_SAVE_DATA_INFORM) _saveDataInform: boolean | null = false) {
+        super(_translate, _ngZone, dataFieldPortalData, _saveDataInform);
     }
 }

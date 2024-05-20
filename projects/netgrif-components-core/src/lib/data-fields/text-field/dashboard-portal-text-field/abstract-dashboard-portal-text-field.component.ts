@@ -5,6 +5,7 @@ import {DashboardCardTypes} from '../../../dashboard/cards/model/dashboard-card-
 import {AbstractDashboardTextFieldComponent} from '../abstract-dashboard-text-field.component';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {TextField} from "../models/text-field";
+import {NAE_SAVE_DATA_INFORM} from "../../models/save-data-inform-token";
 
 @Component({
     selector: 'ncc-abstract-dashboard-pie-chart-text-field',
@@ -13,8 +14,9 @@ import {TextField} from "../models/text-field";
 export abstract class AbstractDashboardPortalTextFieldComponent extends AbstractDashboardTextFieldComponent {
 
     protected constructor(translate: TranslateService,
-                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextField>) {
-        super(translate, dataFieldPortalData);
+                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextField>,
+                          @Optional() @Inject(NAE_SAVE_DATA_INFORM) _saveDataInform: boolean | null = false) {
+        super(translate, dataFieldPortalData, _saveDataInform);
     }
 
     protected createCard(textFieldValue: string): CustomCard {

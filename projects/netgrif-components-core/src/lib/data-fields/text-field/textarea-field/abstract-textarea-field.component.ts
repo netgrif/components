@@ -7,6 +7,7 @@ import {CdkTextareaAutosize} from '@angular/cdk/text-field';
 import {AbstractTextErrorsComponent} from '../abstract-text-errors.component';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {TextAreaField} from "../models/text-area-field";
+import {NAE_SAVE_DATA_INFORM} from "../../models/save-data-inform-token";
 
 @Component({
     selector: 'ncc-abstract-text-area-field',
@@ -18,8 +19,9 @@ export abstract class AbstractTextareaFieldComponent extends AbstractTextErrorsC
     @ViewChild('textArea') textArea: ElementRef<HTMLTextAreaElement>;
 
     constructor(protected _translate: TranslateService, protected _ngZone: NgZone,
-                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextAreaField>) {
-        super(_translate, dataFieldPortalData);
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextAreaField>,
+                @Optional() @Inject(NAE_SAVE_DATA_INFORM) _saveDataInform: boolean | null = false) {
+        super(_translate, dataFieldPortalData, _saveDataInform);
     }
 
     ngAfterViewInit() {

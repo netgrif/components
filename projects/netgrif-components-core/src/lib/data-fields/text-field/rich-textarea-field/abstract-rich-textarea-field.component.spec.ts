@@ -20,6 +20,7 @@ import {CovalentModule} from '../../../covalent/covalent.module';
 import {MaterialModule} from '../../../material/material.module';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {TextAreaField} from "../models/text-area-field";
+import {NAE_SAVE_DATA_INFORM} from "../../models/save-data-inform-token";
 
 describe('AbstractRichTextareaFieldComponent', () => {
     let component: TestTextComponent;
@@ -77,8 +78,9 @@ describe('AbstractRichTextareaFieldComponent', () => {
 })
 class TestTextComponent extends AbstractRichTextareaFieldComponent {
     constructor(protected _translate: TranslateService,
-                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextAreaField>) {
-        super(_translate, dataFieldPortalData);
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextAreaField>,
+                @Optional() @Inject(NAE_SAVE_DATA_INFORM) _saveDataInform: boolean | null = false) {
+        super(_translate, dataFieldPortalData, _saveDataInform);
     }
 }
 

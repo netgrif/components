@@ -4,6 +4,7 @@ import {Component, Inject, Optional} from '@angular/core';
 import {LanguageIconsService} from './language-icons.service';
 import {AbstractBaseDataFieldComponent} from "../base-component/abstract-base-data-field.component";
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../models/data-field-portal-data-injection-token";
+import {NAE_SAVE_DATA_INFORM} from "../models/save-data-inform-token";
 
 
 @Component({
@@ -15,8 +16,9 @@ export abstract class AbstractI18nErrorsComponent extends AbstractBaseDataFieldC
 
     protected constructor(protected languageIconsService: LanguageIconsService,
                           protected _translate: TranslateService,
-                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<I18nField>) {
-        super(dataFieldPortalData);
+                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<I18nField>,
+                          @Optional() @Inject(NAE_SAVE_DATA_INFORM) _saveDataInform: boolean | null = false) {
+        super(dataFieldPortalData, _saveDataInform);
     }
 
     getErrorMessage() {

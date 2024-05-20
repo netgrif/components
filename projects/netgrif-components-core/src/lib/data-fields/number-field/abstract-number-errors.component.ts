@@ -3,6 +3,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {Component, Inject, Optional} from '@angular/core';
 import {AbstractBaseDataFieldComponent} from "../base-component/abstract-base-data-field.component";
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../models/data-field-portal-data-injection-token";
+import {NAE_SAVE_DATA_INFORM} from "../models/save-data-inform-token";
 
 @Component({
     selector: 'ncc-abstract-number-errors-field',
@@ -11,8 +12,9 @@ import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../models/data-field-
 export abstract class AbstractNumberErrorsComponent extends AbstractBaseDataFieldComponent<NumberField>{
 
     protected constructor(protected _translate: TranslateService,
-                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<NumberField>) {
-        super(dataFieldPortalData);
+                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<NumberField>,
+                          @Optional() @Inject(NAE_SAVE_DATA_INFORM) _saveDataInform: boolean | null = false) {
+        super(dataFieldPortalData, _saveDataInform);
     }
 
     getErrorMessage() {

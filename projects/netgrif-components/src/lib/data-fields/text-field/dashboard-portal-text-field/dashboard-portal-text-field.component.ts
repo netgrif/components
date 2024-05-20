@@ -3,7 +3,7 @@ import {ComponentPortal} from '@angular/cdk/portal';
 import {
     AbstractDashboardPortalTextFieldComponent, ComponentRegistryService,
     DATA_FIELD_PORTAL_DATA,
-    DataFieldPortalData,
+    DataFieldPortalData, NAE_SAVE_DATA_INFORM,
     TextField
 } from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
@@ -21,8 +21,9 @@ export class DashboardPortalTextFieldComponent extends AbstractDashboardPortalTe
     constructor(translate: TranslateService,
                 private registry: ComponentRegistryService,
                 private injector: Injector,
-                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextField>) {
-        super(translate, dataFieldPortalData);
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextField>,
+                @Optional() @Inject(NAE_SAVE_DATA_INFORM) _saveDataInform: boolean | null = false) {
+        super(translate, dataFieldPortalData, _saveDataInform);
     }
 
     ngOnInit(): void {
