@@ -6,6 +6,7 @@ import {
     Case,
     CaseViewService,
     CategoryFactory,
+    DataSet,
     defaultCaseSearchCategoriesFactory,
     FilterType,
     NAE_CASE_REF_CREATE_CASE,
@@ -18,7 +19,6 @@ import {
     SearchMode,
     SearchService,
     SimpleFilter,
-    TaskSetDataRequestFields,
     ViewIdService, DATA_FIELD_PORTAL_DATA, DataFieldPortalData, MultichoiceField, EnumerationField
 } from '@netgrif/components-core';
 import {HeaderComponent} from '../../../../header/header.component'
@@ -50,11 +50,11 @@ const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
         {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
     ],
 })
-export class DefaultCaseRefListViewComponent extends AbstractCaseViewComponent implements AfterViewInit {
+export class DefaultCaseRefListViewComponent extends AbstractCaseViewComponent {
 
     @ViewChild('header') public caseHeaderComponent: HeaderComponent;
 
-    public additionalFilterData: TaskSetDataRequestFields;
+    public additionalFilterData: DataSet;
     public search: boolean;
     public createCase: boolean;
 
@@ -70,10 +70,6 @@ export class DefaultCaseRefListViewComponent extends AbstractCaseViewComponent i
         });
         this.search = !!_caseRefSearch;
         this.createCase = !!_caseRefCreateCase;
-    }
-
-    ngAfterViewInit(): void {
-        this.initializeHeader(this.caseHeaderComponent);
     }
 
     public isApproval() {

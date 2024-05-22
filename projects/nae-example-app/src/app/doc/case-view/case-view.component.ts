@@ -1,19 +1,24 @@
-import {AfterViewInit, Component, Optional, ViewChild} from '@angular/core';
+import {Component, Optional, ViewChild} from '@angular/core';
 import {
     AbstractCaseViewComponent,
+    AllowedNetsService,
+    AllowedNetsServiceFactory,
     Case,
     CaseViewService,
+    CategoryFactory,
+    DataFieldResource,
+    DataFieldValue,
+    DataSet,
+    defaultCaseSearchCategoriesFactory,
+    FieldTypeResource,
+    NAE_BASE_FILTER,
+    NAE_SEARCH_CATEGORIES,
+    NAE_VIEW_ID_SEGMENT,
+    OverflowService,
     SearchService,
     SimpleFilter,
-    OverflowService,
-    NAE_VIEW_ID_SEGMENT,
-    ViewIdService,
-    CategoryFactory,
-    NAE_SEARCH_CATEGORIES,
-    defaultCaseSearchCategoriesFactory,
-    NAE_BASE_FILTER,
-    AllowedNetsServiceFactory,
-    AllowedNetsService, UserFilterConstants, TaskSetDataRequestFields
+    UserFilterConstants,
+    ViewIdService
 } from '@netgrif/components-core';
 import {HeaderComponent} from '@netgrif/components';
 
@@ -46,11 +51,11 @@ const baseFilterFactory = () => {
         {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
     ],
 })
-export class CaseViewComponent extends AbstractCaseViewComponent implements AfterViewInit {
+export class CaseViewComponent extends AbstractCaseViewComponent {
 
     @ViewChild('header') public caseHeaderComponent: HeaderComponent;
 
-    additionalFilterData: TaskSetDataRequestFields;
+    additionalFilterData: DataSet;
 
     constructor(caseViewService: CaseViewService, @Optional() overflowService: OverflowService) {
         super(caseViewService, overflowService, undefined, {
@@ -61,16 +66,16 @@ export class CaseViewComponent extends AbstractCaseViewComponent implements Afte
                 createCaseButtonIcon: 'home'
             }
         });
-        this.additionalFilterData = {
-            [UserFilterConstants.ORIGIN_VIEW_ID_FIELD_ID]: {
-                type: 'text',
-                value: 'override'
-            }
-        };
-    }
-
-    ngAfterViewInit(): void {
-        this.initializeHeader(this.caseHeaderComponent);
+        this.additionalFilterData = { fields :
+                {
+                    [UserFilterConstants.ORIGIN_VIEW_ID_FIELD_ID]: {
+                        type: FieldTypeResource.TEXT,
+                        value: {
+                            value: 'override'
+                        } as DataFieldValue
+                    } as DataFieldResource
+                }
+        } as DataSet;
     }
 
     public handleCaseClick(clickedCase: Case): void {

@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
 import {EventOutcome} from '../../resources/interface/event-outcome';
-import {ChangedFields, FrontAction} from '../../data-fields/models/changed-fields';
+import {FrontAction} from '../../data-fields/models/changed-fields';
 import {SetDataEventOutcome} from '../model/event-outcomes/data-outcomes/set-data-event-outcome';
 import {ChangedFieldsMap} from './interfaces/changed-fields-map';
 import {EventConstants} from '../model/event-constants';
+import {DataSet} from '../../resources/interface/task-data-sets';
 
 @Injectable({
     providedIn: 'root'
@@ -24,11 +25,11 @@ export class EventService {
                                                        changedFieldsMap: ChangedFieldsMap): ChangedFieldsMap {
         outcomes.forEach(childOutcome => {
             if (EventConstants.CHANGED_FIELDS in childOutcome
-                && !!(childOutcome as SetDataEventOutcome).aCase
+                && !!(childOutcome as SetDataEventOutcome).case
                 && !!(childOutcome as SetDataEventOutcome).task) {
                 const setDataOutcome: SetDataEventOutcome = childOutcome as SetDataEventOutcome;
-                const outcomeChangedFields: ChangedFields = (childOutcome as SetDataEventOutcome).changedFields.changedFields;
-                const caseId = setDataOutcome.aCase.stringId;
+                const outcomeChangedFields: DataSet = (childOutcome as SetDataEventOutcome).changedFields;
+                const caseId = setDataOutcome.case.stringId;
                 if (!Object.keys(changedFieldsMap).includes(caseId)) {
                     changedFieldsMap[caseId] = {};
                 }
@@ -38,13 +39,13 @@ export class EventService {
                         taskId
                     };
                 }
-                Object.keys(outcomeChangedFields).forEach(fieldId => {
+                Object.keys(outcomeChangedFields.fields).forEach(fieldId => {
                     if (Object.keys(changedFieldsMap[caseId][taskId]).includes(fieldId)) {
                         Object.keys(outcomeChangedFields[fieldId]).forEach(attribute => {
-                            changedFieldsMap[caseId][taskId][fieldId][attribute] = outcomeChangedFields[fieldId][attribute];
+                            changedFieldsMap[caseId][taskId][fieldId][attribute] = outcomeChangedFields.fields[fieldId][attribute];
                         });
                     } else {
-                        changedFieldsMap[caseId][taskId][fieldId] = setDataOutcome.changedFields.changedFields[fieldId];
+                        changedFieldsMap[caseId][taskId][fieldId] = setDataOutcome.changedFields.fields[fieldId];
                     }
                 });
             }

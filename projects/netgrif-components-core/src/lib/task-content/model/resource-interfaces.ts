@@ -5,6 +5,36 @@ import {FieldTypeResource} from './field-type-resource';
 import {FormatFilter} from '../../data-fields/models/format-filter';
 import {Component} from '../../data-fields/models/component';
 import {FilterMetadata} from '../../search/models/persistance/filter-metadata';
+import {DataGroupLayout} from '../../resources/interface/data-group-layout';
+import {DataGroupAlignment} from '../../resources/interface/data-groups';
+
+export interface DataGroupResource {
+    data: Array<string>;
+    dataRefs: Map<string, DataRefResource>;
+    layout: DataGroupLayout;
+    title: string;
+    alignment: DataGroupAlignment;
+    stretch: boolean;
+    parentTaskId: string;
+    parentTransitionId: string;
+    parentCaseId: string;
+    parentTaskRefId: string;
+    nestingLevel: string;
+}
+
+export interface DataRefResource {
+    fieldId: string;
+    field: DataFieldResource;
+    behavior: Behavior;
+    layout: Layout;
+    component: Component;
+    parentTaskId: string;
+    parentCaseId: string;
+}
+
+export interface DataFieldValue {
+    value: any;
+}
 
 export interface DataFieldResource {
     stringId: string;
@@ -12,11 +42,9 @@ export interface DataFieldResource {
     name: string;
     description?: string;
     placeholder?: string;
-    behavior: Behavior;
-    layout?: Layout;
-    order: number;
-    value?: string | number | Array<string> | boolean | Array<number> | any;
-    defaultValue?: string | number | Array<string> | boolean;
+    behavior?: Behavior;
+    value?: DataFieldValue;
+    defaultValue?: unknown;
     choices?: Array<string>;
     minValue?: number;
     minDate?: string;

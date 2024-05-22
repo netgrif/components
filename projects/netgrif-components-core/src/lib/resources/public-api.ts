@@ -31,7 +31,7 @@ export * from './interface/process-role';
 export * from './interface/changed-field-container';
 export * from './interface/file-resource';
 export * from './interface/task-reference';
-export * from './interface/task-set-data-request-body';
+export * from './interface/task-data-sets';
 export * from './interface/case-get-request-body';
 export * from './interface/field-alignment';
 export * from './interface/event-outcome';

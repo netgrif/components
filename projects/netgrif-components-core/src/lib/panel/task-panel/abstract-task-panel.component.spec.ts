@@ -318,7 +318,7 @@ class MyTaskResources {
                         users: {},
                         userRefs: {}
                     },
-                    aCase: createMockCase(),
+                    case: createMockCase(),
                     net: createMockNet(),
                     outcomes: []
                 } as AssignTaskEventOutcome
@@ -369,7 +369,7 @@ class MyTaskResources {
                         users: {},
                         userRefs: {}
                     },
-                    aCase: createMockCase(),
+                    case: createMockCase(),
                     net: createMockNet(),
                     outcomes: []
                 } as FinishTaskEventOutcome

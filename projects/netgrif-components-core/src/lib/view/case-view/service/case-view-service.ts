@@ -247,7 +247,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
                 this._snackBarService.openSuccessSnackBar(this._translate.instant('side-menu.new-case.createCase')
                     + ' ' + this._translate.instant('side-menu.new-case.defaultCaseName'));
                 this.reload();
-                myCase.next((response.outcome as CreateCaseEventOutcome).aCase);
+                myCase.next((response.outcome as CreateCaseEventOutcome).case);
                 myCase.complete();
             }, error => this._snackBarService.openErrorSnackBar(error.message ? error.message : error));
         });

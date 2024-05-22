@@ -157,7 +157,7 @@ describe('CancelTaskService', () => {
                     users: {},
                     userRefs: {}
                 },
-                aCase: createMockCase(),
+                case: createMockCase(),
                 net: createMockNet()
             } as TaskEventOutcome
         };
