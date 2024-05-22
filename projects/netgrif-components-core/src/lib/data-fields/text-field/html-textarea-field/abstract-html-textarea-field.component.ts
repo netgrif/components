@@ -4,6 +4,7 @@ import {AbstractTextErrorsComponent} from '../abstract-text-errors.component';
 import {TextAreaField} from '../models/text-area-field';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
+import {NAE_SAVE_DATA_INFORM} from "../../models/save-data-inform-token";
 
 @Component({
     selector: 'ncc-abstract-html-area-field',
@@ -34,8 +35,9 @@ export abstract class AbstractHtmlTextareaFieldComponent extends AbstractTextErr
     public disabledDisplay: SafeHtml;
 
     constructor(protected _translate: TranslateService, protected _sanitizer: DomSanitizer,
-                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextAreaField>) {
-        super(_translate, dataFieldPortalData);
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextAreaField>,
+                @Optional() @Inject(NAE_SAVE_DATA_INFORM) _saveDataInform: boolean) {
+        super(_translate, dataFieldPortalData, _saveDataInform);
     }
 
     ngOnInit(): void {

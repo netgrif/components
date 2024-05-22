@@ -62,6 +62,8 @@ export class EasymdeWrapperComponent implements OnDestroy, AfterViewInit, Contro
         this._easyMDE = new EasyMDE(this.options);
         this._easyMDE.value(this.textAreaField.value);
         this._easyMDE.codemirror.on('change', this._onChange);
+        this._easyMDE.codemirror.on('focus', () => this.textAreaField.setFocus());
+        this._easyMDE.codemirror.on('blur', () => this.textAreaField.unsetFocus());
         this.formControlRef.valueChanges.subscribe(value => {
             if (this._easyMDE) {
                 if (!this._fromEditor) {

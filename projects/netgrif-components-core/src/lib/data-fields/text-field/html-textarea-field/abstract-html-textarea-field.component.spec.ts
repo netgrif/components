@@ -22,6 +22,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {TextAreaField} from '../models/text-area-field';
 import {QuillModule} from 'ngx-quill';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
+import {NAE_SAVE_DATA_INFORM} from "../../models/save-data-inform-token";
 
 describe('AbstractHtmlTextareaFieldComponent', () => {
     let component: TestTextComponent;
@@ -80,8 +81,9 @@ describe('AbstractHtmlTextareaFieldComponent', () => {
 })
 class TestTextComponent extends AbstractHtmlTextareaFieldComponent {
     constructor(protected _translate: TranslateService, protected _sanitizer: DomSanitizer,
-                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextAreaField>) {
-        super(_translate, _sanitizer, dataFieldPortalData);
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextAreaField>,
+                @Optional() @Inject(NAE_SAVE_DATA_INFORM) _saveDataInform: boolean) {
+        super(_translate, _sanitizer, dataFieldPortalData, _saveDataInform);
     }
 }
 
