@@ -10,6 +10,7 @@ import {
     TestConfigurationService,
     TranslateLibModule
 } from '@netgrif/components-core';
+import {MatInputModule} from '@angular/material/input';
 
 describe('ProfileComponent', () => {
     let component: ProfileComponent;
@@ -21,7 +22,8 @@ describe('ProfileComponent', () => {
                 MaterialModule,
                 NoopAnimationsModule,
                 HttpClientTestingModule,
-                TranslateLibModule
+                TranslateLibModule,
+                MatInputModule
             ],
             declarations: [ProfileComponent],
             providers: [

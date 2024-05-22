@@ -68,7 +68,6 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
     protected _forceLoadDataOnOpen = false;
     @Input() taskListVirtualScroll: CdkVirtualScrollViewport;
     @Input() panelContentComponent: Type<any>;
-    @Input() public selectedHeaders$: Observable<Array<HeaderColumn>>;
     @Input() public first: boolean;
     @Input() public last: boolean;
     @Input() responsiveBody = true;

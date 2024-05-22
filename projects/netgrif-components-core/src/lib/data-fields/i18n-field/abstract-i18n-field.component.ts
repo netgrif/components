@@ -12,7 +12,7 @@ import {I18nField} from './models/i18n-field';
 })
 export abstract class AbstractI18nFieldComponent extends AbstractDataFieldComponent {
 
-    @Input() dataField: I18nField;
+    @Input() declare dataField: I18nField;
 
     constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
         super(informAboutInvalidData);

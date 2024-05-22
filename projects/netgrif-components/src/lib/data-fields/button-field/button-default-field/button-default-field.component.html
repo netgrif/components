@@ -1,8 +1,9 @@
 <div [ngClass]="{'flex-end': align === 'end',
                      'flex-start': align === 'start',
                      'flex-center': align === 'center',
-                     'full-button-width': stretch ,
-                     'padding-bottom': !hasTitle()}">
+                     'full-button-width': stretch,
+                     'padding-bottom': !hasTitle(),
+                     'padding-bottom-9px': !dataField.isInvalid(formControlRef) && hasTitle()}">
     <mat-label class="netgrif-label" [ngClass]="{'netgrif-label-disabled': formControlRef.disabled}"
                *ngIf="!showLargeLayout.value && hasTitle()">
         {{dataField.title}}
@@ -35,5 +36,5 @@
         </div>
     </button>
 
-    <mat-error *ngIf="dataField.isInvalid(formControlRef) || hasTitle()">{{getErrorMessage()}}</mat-error>
+    <mat-error *ngIf="dataField.isInvalid(formControlRef)">{{getErrorMessage()}}</mat-error>
 </div>

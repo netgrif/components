@@ -1,4 +1,4 @@
-<div fxLayout="row wrap" fxLayoutAlign="start center">
+<div fxLayout="row wrap" class="padding-top-search" fxLayoutAlign="start center">
 
     <div *ngIf="advancedSearchDisplayed; then advancedSearch; else fullTextSearch"></div>
 
@@ -13,7 +13,7 @@
     <button mat-stroked-button class="search-buttons-margin search-buttons-padding" *ngIf="showSearchToggleButton" [disabled]="disabled"
             [matTooltip]="(advancedSearchDisplayed ? 'search.tooltip.toFullText' : 'search.tooltip.toAdvanced') | translate"
             (click)="toggleSearchMode()">
-        <mat-icon class="advanced-search-icon" svgIcon="filter-variant"></mat-icon>
+        <mat-icon class="advanced-search-icon fix-mat-icon" svgIcon="filter-variant"></mat-icon>
     </button>
 
     <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="menu" *ngIf="advancedSearchDisplayed" [disabled]="disabled">

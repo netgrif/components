@@ -52,13 +52,8 @@
 }
 
 .user-hint-error {
-    font-size: 75%;
     padding: 0 1em;
     width: unset;
-
-    position: absolute;
-    margin-top: 0.5em;
-    top: calc(100% - 2em);
 }
 
 .image-preview {
@@ -100,6 +95,5 @@
 }
 
 .netgrif-user-padding {
-    padding-bottom: 13px;
     position: relative;
 }
