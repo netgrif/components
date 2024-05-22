@@ -35,7 +35,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 export class I18nTextFieldComponent extends AbstractI18nTextFieldComponent {
     constructor(languageIconsService: LanguageIconsService, translateService: TranslateService, domSanitizer: DomSanitizer,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<I18nField>,
-                @Optional() @Inject(NAE_SAVE_DATA_INFORM) _saveDataInform: boolean | null = false) {
+                @Optional() @Inject(NAE_SAVE_DATA_INFORM) _saveDataInform: boolean) {
         super(languageIconsService, translateService, domSanitizer, dataFieldPortalData, _saveDataInform);
     }
 }

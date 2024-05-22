@@ -15,7 +15,7 @@ export abstract class AbstractTextErrorsComponent<T extends TextField> extends A
 
     protected constructor(protected _translate: TranslateService,
                           @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<T>,
-                          @Optional() @Inject(NAE_SAVE_DATA_INFORM) _saveDataInform: boolean | null = false) {
+                          @Optional() @Inject(NAE_SAVE_DATA_INFORM) _saveDataInform: boolean) {
         super(dataFieldPortalData, _saveDataInform);
     }
 

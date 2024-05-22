@@ -17,7 +17,7 @@ export abstract class AbstractBaseDataFieldComponent<T extends DataField<unknown
     public _saveDataInform: boolean;
 
     constructor(@Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<T>,
-                @Optional() @Inject(NAE_SAVE_DATA_INFORM) _saveDataInform: boolean | null = false) {
+                @Optional() @Inject(NAE_SAVE_DATA_INFORM) _saveDataInform: boolean = false) {
         if (!!dataFieldPortalData) {
             this.dataField = dataFieldPortalData.dataField;
             this.formControlRef = dataFieldPortalData.formControlRef;
@@ -36,7 +36,7 @@ export abstract class AbstractBaseDataFieldComponent<T extends DataField<unknown
 
     @HostListener('window:beforeunload', ['$event'])
     beforeUnloadEventHandler(event) {
-        if (this._saveDataInform && this.dataField.isFocused()) {
+        if (!!this._saveDataInform && this.dataField.isFocused()) {
             this.dataField.unsetFocus();
             (document.activeElement as HTMLElement).blur();
             return false;

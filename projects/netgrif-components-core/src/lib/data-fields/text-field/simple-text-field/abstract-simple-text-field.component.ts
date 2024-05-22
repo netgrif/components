@@ -13,7 +13,7 @@ export abstract class AbstractSimpleTextFieldComponent extends AbstractTextError
 
     constructor(protected _translate: TranslateService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextField>,
-                @Optional() @Inject(NAE_SAVE_DATA_INFORM) _saveDataInform: boolean | null = false) {
+                @Optional() @Inject(NAE_SAVE_DATA_INFORM) _saveDataInform: boolean) {
         super(_translate, dataFieldPortalData, _saveDataInform);
     }
 

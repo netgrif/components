@@ -16,7 +16,7 @@ export class TextareaFieldComponent extends AbstractTextareaFieldComponent {
 
     constructor(protected _translate: TranslateService, protected _ngZone: NgZone,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextAreaField>,
-                @Optional() @Inject(NAE_SAVE_DATA_INFORM) _saveDataInform: boolean | null = false) {
+                @Optional() @Inject(NAE_SAVE_DATA_INFORM) _saveDataInform: boolean) {
         super(_translate, _ngZone, dataFieldPortalData, _saveDataInform);
     }
 }

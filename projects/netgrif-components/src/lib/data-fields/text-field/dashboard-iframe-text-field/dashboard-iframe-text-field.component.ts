@@ -16,7 +16,7 @@ export class DashboardIframeTextFieldComponent extends AbstractDashboardIframeTe
 
     constructor(translate: TranslateService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextField>,
-                @Optional() @Inject(NAE_SAVE_DATA_INFORM) _saveDataInform: boolean | null = false) {
+                @Optional() @Inject(NAE_SAVE_DATA_INFORM) _saveDataInform: boolean) {
         super(translate, dataFieldPortalData, _saveDataInform);
     }
 

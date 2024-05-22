@@ -15,7 +15,7 @@ import {TranslateService} from '@ngx-translate/core';
 export class RichTextareaFieldComponent extends AbstractRichTextareaFieldComponent {
     constructor(protected _translate: TranslateService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextAreaField>,
-                @Optional() @Inject(NAE_SAVE_DATA_INFORM) _saveDataInform: boolean | null = false) {
+                @Optional() @Inject(NAE_SAVE_DATA_INFORM) _saveDataInform: boolean) {
         super(_translate, dataFieldPortalData, _saveDataInform);
     }
 }

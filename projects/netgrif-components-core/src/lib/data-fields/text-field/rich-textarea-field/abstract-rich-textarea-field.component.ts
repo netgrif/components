@@ -14,7 +14,7 @@ export abstract class AbstractRichTextareaFieldComponent extends AbstractTextErr
     // TODO BUG: update on blur dont working, switch back to update on ngModel
     constructor(protected _translate: TranslateService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextAreaField>,
-                @Optional() @Inject(NAE_SAVE_DATA_INFORM) _saveDataInform: boolean | null = false) {
+                @Optional() @Inject(NAE_SAVE_DATA_INFORM) _saveDataInform: boolean) {
         super(_translate, dataFieldPortalData, _saveDataInform);
     }
 

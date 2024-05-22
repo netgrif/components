@@ -17,7 +17,7 @@ export class NumberCurrencyFieldComponent extends AbstractCurrencyNumberFieldCom
 
     constructor(currencyPipe: CurrencyPipe, translate: TranslateService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<NumberField>,
-                @Optional() @Inject(NAE_SAVE_DATA_INFORM) _saveDataInform: boolean | null = false) {
+                @Optional() @Inject(NAE_SAVE_DATA_INFORM) _saveDataInform: boolean) {
         super(currencyPipe, translate, dataFieldPortalData, _saveDataInform);
     }
 

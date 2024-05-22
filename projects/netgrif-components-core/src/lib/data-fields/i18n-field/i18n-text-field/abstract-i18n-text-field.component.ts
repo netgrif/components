@@ -36,7 +36,7 @@ export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsC
                           protected _translateService: TranslateService,
                           protected _domSanitizer: DomSanitizer,
                           @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<I18nField>,
-                          @Optional() @Inject(NAE_SAVE_DATA_INFORM) _saveDataInform: boolean | null = false) {
+                          @Optional() @Inject(NAE_SAVE_DATA_INFORM) _saveDataInform: boolean) {
         super(languageIconsService, _translateService, dataFieldPortalData, _saveDataInform);
         this.selectedLanguage = this._translateService.currentLang;
         this.languageKeys = Object.keys(this.languageIconsService.languageIcons);

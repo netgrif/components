@@ -16,7 +16,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 export class HtmlTextareaFieldComponent extends AbstractHtmlTextareaFieldComponent implements AfterViewInit {
     constructor(protected _translate: TranslateService, protected _sanitizer: DomSanitizer,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextAreaField>,
-                @Optional() @Inject(NAE_SAVE_DATA_INFORM) _saveDataInform: boolean | null = false) {
+                @Optional() @Inject(NAE_SAVE_DATA_INFORM) _saveDataInform: boolean) {
         super(_translate, _sanitizer, dataFieldPortalData, _saveDataInform);
     }
 
