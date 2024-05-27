@@ -320,7 +320,7 @@
             color: $color-text-enabled !important;
         }
 
-        .mat-mdc-radio-label-content{
+        .mat-mdc-radio-label-content {
             color: $color-text-enabled !important;
         }
 
@@ -335,6 +335,11 @@
         .netgrif-chip-fix {
             .mat-mdc-chip-list-wrapper {
                 margin: -10px !important;
+            }
+
+            &.mat-form-field .mat-form-field-prefix {
+                top: 0.33em !important;
+                padding-right: 4px !important;
             }
         }
 
@@ -525,6 +530,11 @@ ngx-mat-datetime-content {
 }
 
 nc-number-currency-field .mat-mdc-form-field .mat-mdc-form-field-prefix {
+    position: initial !important;
+    padding-right: 4px !important;
+}
+
+nc-user-list-default-field .mat-mdc-form-field .mat-mdc-form-field-prefix {
     position: initial !important;
     padding-right: 4px !important;
 }

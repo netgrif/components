@@ -19,6 +19,7 @@ import {AbstractResourceService} from '../abstract-endpoint/abstract-resource.se
 import {DataGroup} from '../interface/data-groups';
 import {DataField} from '../../data-fields/models/abstract-data-field';
 import {GetDataGroupsEventOutcome} from '../../event/model/event-outcomes/data-outcomes/get-data-groups-event-outcome';
+import {FileFieldRequest} from "../interface/file-field-request-body";
 
 @Injectable({
     providedIn: 'root'
@@ -264,9 +265,9 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      */
     // {{baseUrl}}/api/task/:id/file/:field         - for file field
     // {{baseUrl}}/api/task/:id/file/:field/:name   - for file list field
-    public downloadFile(taskId: string, fieldId: string, name?: string): Observable<ProviderProgress | Blob> {
-        const url = !!name ? 'task/' + taskId + '/file/' + fieldId + '/' + name : 'task/' + taskId + '/file/' + fieldId;
-        return this._resourceProvider.getBlob$(url, this.SERVER_URL).pipe(
+    public downloadFile(taskId: string, params: HttpParams): Observable<ProviderProgress | Blob> {
+        const url = `task/${taskId}/file${params?.has("fileName") ? '/named' : ''}`;
+        return this._resourceProvider.getBlob$(url, this.SERVER_URL, params).pipe(
             map(event => {
                 switch (event.type) {
                     case HttpEventType.DownloadProgress:
@@ -287,9 +288,9 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      */
     // {{baseUrl}}/api/task/:id/file/:field     - for file field
     // {{baseUrl}}/api/task/:id/files/:field    - for file list field
-    public uploadFile(taskId: string, fieldId: string, body: object, multipleFiles: boolean):
+    public uploadFile(taskId: string, body: object, multipleFiles: boolean):
         Observable<ProviderProgress | EventOutcomeMessageResource> {
-        const url = !multipleFiles ? 'task/' + taskId + '/file/' + fieldId : 'task/' + taskId + '/files/' + fieldId;
+        const url = `task/${taskId}/${multipleFiles ? 'files' : 'file'}`;
         return this._resourceProvider.postWithEvent$<EventOutcomeMessageResource>(url, this.SERVER_URL, body).pipe(
             map(event => {
                 switch (event.type) {
@@ -309,9 +310,9 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      * Delete file from the task
      * DELETE
      */
-    public deleteFile(taskId: string, fieldId: string, name?: string, param?: HttpParams): Observable<MessageResource> {
-        const url = !!name ? 'task/' + taskId + '/file/' + fieldId + '/' + name : 'task/' + taskId + '/file/' + fieldId;
-        return this._resourceProvider.delete$(url, this.SERVER_URL, param).pipe(
+    public deleteFile(taskId: string, body?: FileFieldRequest): Observable<MessageResource> {
+        const url = `task/${taskId}/file${body?.fileName ? '/named' : ''}`;
+        return this._resourceProvider.delete$(url, this.SERVER_URL, {}, {}, 'json', body).pipe(
             map(r => this.changeType(r, undefined))
         );
     }
@@ -321,9 +322,9 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      * GET
      */
     // {{baseUrl}}/api/task/:id/file_preview/:field
-    public downloadFilePreview(taskId: string, fieldId: string): Observable<ProviderProgress | Blob> {
-        const url = 'task/' + taskId + '/file_preview/' + fieldId;
-        return this._resourceProvider.getBlob$(url, this.SERVER_URL).pipe(
+    public downloadFilePreview(taskId: string, params: HttpParams): Observable<ProviderProgress | Blob> {
+        const url = `task/${taskId}/file_preview`;
+        return this._resourceProvider.getBlob$(url, this.SERVER_URL, params).pipe(
             map(event => {
                 switch (event.type) {
                     case HttpEventType.DownloadProgress:

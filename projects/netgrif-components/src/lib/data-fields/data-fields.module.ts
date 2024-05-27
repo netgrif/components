@@ -2,12 +2,12 @@ import {Injector, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FlexLayoutModule} from '@ngbracket/ngx-layout';
 import {
-    ComponentRegistryService,
     CovalentModule,
     CurrencyModule,
     CustomDateAdapter, FrontActionModule,
     MaterialModule,
     TranslateLibModule,
+    ComponentRegistryService
 } from '@netgrif/components-core';
 import {AngularResizeEventModule} from 'angular-resize-event';
 import {HttpClientModule} from '@angular/common/http';
@@ -83,6 +83,7 @@ import { UserListFieldComponent } from './user-list-field/user-list-field.compon
 import {
     SideMenuMultiUserAssignComponentModule
 } from "../side-menu/content-components/multi-user-assign/side-menu-multi-user-assign-component.module";
+import { NumberDecimalFieldComponent } from './number-field/number-decimal-field/number-decimal-field.component';
 import {TaskRefFieldComponent} from './task-ref-field/task-ref-field.component';
 import {
     TaskRefDashboardTileComponent
@@ -105,7 +106,6 @@ import {
 } from './text-field/dashboard-iframe-text-field/dashboard-iframe-text-field.component';
 import { RouterModule } from '@angular/router';
 import { FilterFieldTabViewContentComponent } from './filter-field/tab-view-filter-field/filter-field-tab-view-content.component';
-import {ComponentPortal} from "@angular/cdk/portal";
 import { BooleanDefaultFieldComponent } from './boolean-field/boolean-default-field/boolean-default-field.component';
 import { ButtonDefaultFieldComponent } from './button-field/button-default-field/button-default-field.component';
 import { DateDefaultFieldComponent } from './date-field/date-default-field/date-default-field.component';
@@ -124,7 +124,9 @@ import { MultichoiceCaserefFieldComponent } from './multichoice-field/multichoic
 import {
     EnumerationCaserefFieldComponent
 } from './enumeration-field/enumeration-caseref-field/enumeration-caseref-field.component';
+import {SignaturePadFieldComponent} from './text-field/signature-pad-field/signature-pad-field.component';
 import { StringCollectionDefaultFieldComponent } from './string-collection-field/string-collection-default-field/string-collection-default-field.component';
+import {ComponentPortal} from "@angular/cdk/portal";
 
 @NgModule({
     declarations: [
@@ -188,7 +190,9 @@ import { StringCollectionDefaultFieldComponent } from './string-collection-field
         CaseRefDefaultComponent,
         MultichoiceCaserefFieldComponent,
         EnumerationCaserefFieldComponent,
-        StringCollectionDefaultFieldComponent
+        StringCollectionDefaultFieldComponent,
+        SignaturePadFieldComponent,
+        NumberDecimalFieldComponent
     ],
     exports: [
         DataFieldTemplateComponent
@@ -249,11 +253,13 @@ export class DataFieldsComponentModule {
         registry.register("multichoice-autocomplete", (injector: Injector) => new ComponentPortal<any>(MultichoiceAutocompleteFieldComponent, null, injector));
         registry.register("number-default", (injector: Injector) => new ComponentPortal<any>(NumberDefaultFieldComponent, null, injector));
         registry.register("number-currency", (injector: Injector) => new ComponentPortal<any>(NumberCurrencyFieldComponent, null, injector));
+        registry.register("number-decimal", (injector: Injector) => new ComponentPortal<any>(NumberDecimalFieldComponent, null, injector));
         registry.register("text-default", (injector: Injector) => new ComponentPortal<any>(SimpleTextFieldComponent, null, injector));
         registry.register("text-password", (injector: Injector) => new ComponentPortal<any>(PasswordTextFieldComponent, null, injector));
         registry.register("text-textarea", (injector: Injector) => new ComponentPortal<any>(TextareaFieldComponent, null, injector));
         registry.register("text-richtextarea", (injector: Injector) => new ComponentPortal<any>(RichTextareaFieldComponent, null, injector));
         registry.register("text-htmltextarea", (injector: Injector) => new ComponentPortal<any>(HtmlTextareaFieldComponent, null, injector));
+        registry.register("text-signature", (injector: Injector) => new ComponentPortal<any>(SignaturePadFieldComponent, null, injector));
         registry.register("text-dashboard_line_chart", (injector: Injector) => new ComponentPortal<any>(DashboardLineChartTextFieldComponent, null, injector));
         registry.register("text-dashboard_pie_chart", (injector: Injector) => new ComponentPortal<any>(DashboardPieChartTextFieldComponent, null, injector));
         registry.register("text-dashboard_bar_chart", (injector: Injector) => new ComponentPortal<any>(DashboardBarChartTextFieldComponent, null, injector));

@@ -348,7 +348,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
     }
 
     protected isAutocompleteEnumException(field: DataField<unknown>): boolean{
-        return (field instanceof EnumerationField) && (field.getComponentType() === 'autocomplete') && !field.valid;
+        return (field instanceof EnumerationField) && (field.getComponentType() === 'autocomplete') && !(field.valid || field.value === null);
     }
 
     /**
@@ -614,7 +614,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         this._taskEvent.publishTaskEvent(createTaskEventNotification(this._safeTask, event, success));
     }
 
-    private revertToPreviousValue(context: TaskSetDataRequestContext): void {
+    protected revertToPreviousValue(context: TaskSetDataRequestContext): void {
         this._safeTask.dataGroups.forEach(dataGroup => {
             dataGroup.fields.forEach(field => {
                 if (field.initialized && field.valid && Object.keys(context.previousValues).includes(field.stringId)) {
@@ -624,7 +624,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         });
     }
 
-    private clearWaitingForResponseFlag(body: TaskSetDataRequestBody) {
+    protected clearWaitingForResponseFlag(body: TaskSetDataRequestBody) {
         Object.keys(body).forEach(taskId => {
             Object.keys(body[taskId]).forEach(fieldId => {
                 this._taskContentService.taskFieldsIndex[taskId].fields[fieldId].waitingForResponse = false;
