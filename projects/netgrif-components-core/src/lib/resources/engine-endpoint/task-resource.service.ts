@@ -310,9 +310,9 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      * Delete file from the task
      * DELETE
      */
-    public deleteFile(taskId: string, body?: FileFieldRequest): Observable<MessageResource> {
+    public deleteFile(taskId: string, body?: FileFieldRequest): Observable<ProviderProgress | EventOutcomeMessageResource> {
         const url = `task/${taskId}/file${body?.fileName ? '/named' : ''}`;
-        return this._resourceProvider.delete$(url, this.SERVER_URL, {}, {}, 'json', body).pipe(
+        return this._resourceProvider.delete$<EventOutcomeMessageResource>(url, this.SERVER_URL, {}, {}, 'json', body).pipe(
             map(r => this.changeType(r, undefined))
         );
     }
