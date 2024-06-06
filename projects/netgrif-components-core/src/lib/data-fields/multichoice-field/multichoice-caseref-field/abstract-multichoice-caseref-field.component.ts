@@ -11,7 +11,6 @@ import {Subscription} from 'rxjs';
 })
 export abstract class AbstractMultichoiceCaseRefComponent extends AbstractCaseRefBaseFieldComponent<MultichoiceField> implements AfterViewInit, OnDestroy {
 
-    public componentPortal: ComponentPortal<any>;
     protected _sub: Subscription;
     protected _subComp: Subscription;
 
