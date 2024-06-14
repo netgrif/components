@@ -1,6 +1,6 @@
 <div fxLayout="column" fxLayoutGap="24px" *ngIf="tokenVerified && (loadingToken | async) === false">
     <form [formGroup]="rootFormGroup" (ngSubmit)="onSubmit()" class="full-width netgrif-input">
-        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px" class="netgrif-input">
+        <div fxLayout="row" fxLayoutAlign="center center" class="netgrif-input">
             <mat-icon color="primary" class="netgrif-icon-fix">email</mat-icon>
             <mat-form-field fxFlex="100" appearance="outline">
                 <mat-label>{{ 'forms.register.email' | translate}}</mat-label>
@@ -8,7 +8,7 @@
                        autocomplete="username">
             </mat-form-field>
         </div>
-        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px" class="netgrif-input " >
+        <div fxLayout="row" fxLayoutAlign="center center" class="netgrif-input " >
             <mat-icon color="primary" class="netgrif-icon-fix">account_circle</mat-icon>
             <mat-form-field fxFlex="100" appearance="outline">
                 <mat-label>{{ 'forms.register.name' | translate }}</mat-label>
@@ -17,7 +17,7 @@
                 <mat-error *ngIf="!isFieldValid('name')">{{getErrorMessage('name')}}</mat-error>
             </mat-form-field>
         </div>
-        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px" class="netgrif-input" >
+        <div fxLayout="row" fxLayoutAlign="center center" class="netgrif-input" >
             <mat-icon color="primary" class="netgrif-icon-fix">account_circle_outline</mat-icon>
             <mat-form-field fxFlex="100" appearance="outline">
                 <mat-label>{{ 'forms.register.surname' | translate }}</mat-label>
@@ -26,7 +26,7 @@
                 <mat-error *ngIf="!isFieldValid('surname')">{{getErrorMessage('surname')}}</mat-error>
             </mat-form-field>
         </div>
-        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px" class="netgrif-input">
+        <div fxLayout="row" fxLayoutAlign="center center" class="netgrif-input">
             <mat-icon color="primary" class="netgrif-icon-fix">vpn_key</mat-icon>
             <mat-form-field fxFlex="100" appearance="outline">
                 <mat-label>{{ 'forms.login.enterPass' | translate }}</mat-label>
@@ -44,7 +44,7 @@
                 <mat-error *ngIf="!isFieldValid('password')">{{getErrorMessage('password')}}</mat-error>
             </mat-form-field>
         </div>
-        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px" class="netgrif-input">
+        <div fxLayout="row" fxLayoutAlign="center center" class="netgrif-input">
             <mat-icon color="primary" class="netgrif-icon-fix">vpn_key</mat-icon>
             <mat-form-field fxFlex="100" appearance="outline">
                 <mat-label>{{ 'forms.register.repeatPass' | translate }}</mat-label>

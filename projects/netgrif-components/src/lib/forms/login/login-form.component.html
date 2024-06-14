@@ -1,6 +1,6 @@
 <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="8px">
     <form [formGroup]="rootFormGroup" (ngSubmit)="onSubmit()" class="full-width netgrif-input netgrif-input-fix">
-        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
+        <div fxLayout="row" fxLayoutAlign="center center">
             <mat-icon color="primary" class="padding-bottom-18px">account_circle</mat-icon>
             <mat-form-field fxFlex="100" appearance="outline">
                 <mat-label>{{ 'forms.login.login' | translate}}</mat-label>
@@ -11,7 +11,7 @@
                 </mat-error>
             </mat-form-field>
         </div>
-        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px" class="padding-top">
+        <div fxLayout="row" fxLayoutAlign="center center" class="padding-top">
             <mat-icon color="primary" class="padding-bottom-18px">vpn_key</mat-icon>
             <mat-form-field fxFlex="100" appearance="outline">
                 <mat-label>{{ 'forms.login.enterPass' | translate}}</mat-label>

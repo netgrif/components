@@ -23,7 +23,7 @@
     </ng-template>
 </ng-template>
 <ng-template [ngIf]="!formControlRef.disabled">
-    <div class="full-width">
+    <div class="full-width" [ngClass]="{'padding-bottom-3px': filledShown}">
         <div #i18nLabel class="i18n-label" [ngClass]="{'invalid-form-label': dataField.isInvalid(formControlRef)}">
             {{dataField.title}}
             <nc-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nc-required-label>
@@ -34,20 +34,22 @@
                     '-webkit-clip-path': getCutProperty(i18nLabel),
                     'clip-path': getCutProperty(i18nLabel)
             }">
+
+
             <button mat-icon-button color="accent" [matTooltip]="'dataField.i18n.languageSelect' | translate"
-                    class="language-selector-button" (click)="languageDropdown.open()">
+                    class="language-selector-button" [matMenuTriggerFor]="languageMenu">
                 <div class="language-svg-wrapper"
                      [innerHTML]="getLanguageIcons()[this.selectedLanguage].svgIcon"></div>
             </button>
-            <mat-select #languageDropdown class="language-select">
-                <mat-option *ngFor="let languageKey of languageKeys"
-                            [value]="languageKey" (click)="selectLanguage(languageKey)">
-                    <div fxLayout="row" fxLayoutAlign=" center">
-                        <div [innerHTML]="getLanguageIcons()[languageKey].svgIcon" class="language-option-icon"></div>
-                        <span class="language-option-value">{{getLanguageIcons()[languageKey].languageName}}</span>
-                    </div>
-                </mat-option>
-            </mat-select>
+
+            <mat-menu #languageMenu="matMenu">
+                <button *ngFor="let languageKey of languageKeys" mat-menu-item (click)="selectLanguage(languageKey)" fxLayout="row" class="quick-panel-menu"
+                        fxLayoutAlign="start center">
+                    <div [innerHTML]="getLanguageIcons()[languageKey].svgIcon" class="language-option-icon"></div>
+                    <span class="language-option-value">{{getLanguageIcons()[languageKey].languageName}}</span>
+                </button>
+            </mat-menu>
+
             <input class="selected-language-value"
                    type="text"
                    [placeholder]="dataField.placeholder ? dataField.placeholder : ''"
