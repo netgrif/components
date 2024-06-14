@@ -39,11 +39,21 @@
     padding: 0;
 }
 
+.fix-icon-button {
+    height: 45px !important;
+    width: 45px !important;
+    padding: 10.5px !important;
+}
+
 .prefix-icon {
     color: #64748B !important;
 }
 
 .padding-top-search {
     padding-top: 2px;
+}
+
+.fix-filter-button {
+    margin-top: 1px;
 }
 

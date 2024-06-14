@@ -10,10 +10,12 @@
 
 .drawer-container {
     height: 100%;
+
 }
 
 .menu-button {
-    margin: 0 auto;
+    margin-left: 1px;
+    margin-right: 1px;
     border-radius: 8px;
 }
 
@@ -241,6 +243,7 @@
 .content-color {
     background-color: #F8FAFC;
 }
+
 
 .expansion-indicator {
     color: rgba(0, 0, 0, 0.5);

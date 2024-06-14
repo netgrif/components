@@ -31,14 +31,13 @@
     }
 
     .custom-badge>.mat-badge-content {
-        width: fit-content;
+        width: fit-content !important;
         min-width: 16px;
         text-align: center;
         border-radius: 8px;
         padding-left: 3px;
         padding-right: 3px;
         top: 0 !important;
-        right: 0 !important;
     }
 }
 

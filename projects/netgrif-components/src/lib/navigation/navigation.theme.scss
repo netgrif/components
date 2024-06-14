@@ -55,4 +55,15 @@
         background-color: mat.get-color-from-palette($primary, 100);
         color: mat.get-color-from-palette($primary) !important;
     }
+
+    .quick-panel-menu {
+        .mat-mdc-menu-item-text {
+            flex-direction: row;
+            box-sizing: border-box;
+            display: flex;
+            place-content: center flex-start;
+            align-items: center;
+        }
+    }
+
 }
