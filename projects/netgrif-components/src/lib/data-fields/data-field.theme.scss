@@ -241,6 +241,7 @@
 
         // DISABLED
 
+
         .mat-mdc-form-field-appearance-outline.mat-mdc-form-field-disabled .mat-mdc-form-field-outline {
             color: $color-outline-disabled;
             background-color: transparent;
@@ -308,11 +309,11 @@
             background-color: #FFFFFF;
         }
 
-        .mat-mdc-form-field-appearance-outline .mat-mdc-form-field-outline-start {
+        .mdc-text-field--outlined .mdc-notched-outline .mdc-notched-outline__leading {
             border-radius: 6px 0 0 6px;
         }
 
-        .mat-mdc-form-field-appearance-outline .mat-mdc-form-field-outline-end {
+        .mdc-text-field--outlined .mdc-notched-outline .mdc-notched-outline__trailing {
             border-radius: 0 6px 6px 0;
         }
 
@@ -390,6 +391,14 @@
             .mat-mdc-form-field-infix {
                 padding: 7px 0 7px 0 !important;
             }
+
+            .mdc-evolution-chip__cell,
+            .mat-mdc-chip-action-label {
+                word-break: break-word;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis ;
+            }
         }
     }
 
@@ -429,7 +438,7 @@
     }
 
     .netgrif-icon-fix {
-        margin-bottom: 18px;
+        margin-bottom: 22px;
         padding-right: 16px;
     }
 
@@ -480,7 +489,7 @@
         .mat-datepicker-content, .time-container {
             box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
             display: block;
-            border-radius: 4px;
+            border-radius: 6px;
             background-color: var(--mat-datepicker-calendar-container-background-color);
             color: var(--mat-datepicker-calendar-container-text-color);
         }
@@ -490,7 +499,7 @@
             border-color: var(--mat-datepicker-calendar-date-outline-color)
         }
 
-        mat-calendar-body-active {
+        .mat-calendar-body-active {
             background-color: var(--mat-datepicker-calendar-date-hover-state-background-color);
         }
 

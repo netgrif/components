@@ -1,8 +1,9 @@
 <mat-form-field [appearance]="dataField.materialAppearance" class="full-width chip-fix" color="primary">
     <mat-label *ngIf="!showLargeLayout.value">{{dataField.title}}</mat-label>
     <mat-chip-grid #chipList aria-label="Autocomplete" [formControl]="formControlRef">
-        <mat-chip-row
-            *ngFor="let option of dataField.value" (removed)="remove(option)">
+        <mat-chip-row *ngFor="let option of dataField.value"
+                      (removed)="remove(option)"
+                      [value]="option">
             {{getValueFromKey(option)}}
             <button *ngIf="!formControlRef.disabled" matChipRemove>
                 <mat-icon>cancel</mat-icon>
