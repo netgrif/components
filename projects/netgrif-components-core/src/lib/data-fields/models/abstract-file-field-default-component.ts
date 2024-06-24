@@ -80,4 +80,14 @@ export abstract class AbstractFileFieldDefaultComponent<T extends FileField | Fi
     protected resolveParentTaskId(): string {
         return !!this.dataField.parentTaskId ? this.dataField.parentTaskId : this.taskId;
     }
+
+    protected resolveMaxSizeMessage() {
+        if (this.dataField?.component?.properties?.maxSizeMessage) {
+            this._snackbar.openErrorSnackBar(this._translate.instant(this.dataField?.component?.properties?.maxSizeMessage));
+        } else {
+            this._snackbar.openErrorSnackBar(
+                this._translate.instant('dataField.snackBar.maxFilesSizeExceeded') + this.dataField.maxUploadSizeInBytes * 0.000001 + 'MB'
+            );
+        }
+    }
 }
