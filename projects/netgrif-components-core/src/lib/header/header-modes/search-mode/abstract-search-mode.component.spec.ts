@@ -5,7 +5,6 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {RouterTestingModule} from '@angular/router/testing';
 import {Component} from '@angular/core';
 import {AbstractSearchModeComponent} from './abstract-search-mode.component';
-import {SideMenuService} from '../../../side-menu/services/side-menu.service';
 import {CaseHeaderService} from '../../case-header/case-header.service';
 import {UserValue} from '../../../data-fields/user-field/models/user-value';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
@@ -26,6 +25,7 @@ import {ConfigurationService} from '../../../configuration/configuration.service
 import {NAE_BASE_FILTER} from '../../../search/models/base-filter-injection-token';
 import {AllowedNetsService} from '../../../allowed-nets/services/allowed-nets.service';
 import {AllowedNetsServiceFactory} from '../../../allowed-nets/services/factory/allowed-nets-service-factory';
+import {MatDialog} from '@angular/material/dialog';
 
 describe('AbstractSearchModeComponent', () => {
     let component: TestSeaarchModeComponent;
@@ -96,8 +96,8 @@ describe('AbstractSearchModeComponent', () => {
     template: ''
 })
 class TestSeaarchModeComponent extends AbstractSearchModeComponent {
-    constructor(protected _sideMenuService: SideMenuService) {
-        super(_sideMenuService);
+    constructor(protected _dialog: MatDialog) {
+        super(_dialog);
     }
 }
 

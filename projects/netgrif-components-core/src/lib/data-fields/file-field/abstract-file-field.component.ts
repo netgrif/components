@@ -19,8 +19,6 @@ import {FileField} from "./models/file-field";
 })
 export abstract class AbstractFileFieldComponent extends AbstractDataFieldComponent  {
 
-    @Input() declare dataField: FileField;
-
     @Input() taskId: string;
 
     protected constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {

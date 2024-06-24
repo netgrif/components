@@ -14,17 +14,17 @@
                     *ngIf="!!dataField.value"
                     [disabled]="formControlRef.disabled"
                     color="primary"
-                    (click)="selectUser()"
-                    [matTooltip]="'dataField.file.clickToUpload' | translate"
+                    (click)='deleteUser()'
+                    [matTooltip]="'dataField.user.deleteUser' | translate"
                     [class.do-not-click]="formControlRef.disabled">
-                <mat-icon (click)='deleteUser()' color='warn' *ngIf='!formControlRef.disabled'>close</mat-icon>
+                <mat-icon color='warn' *ngIf='!formControlRef.disabled'>close</mat-icon>
             </button>
             <button mat-icon-button
                     *ngIf="!dataField.value"
                     [disabled]="formControlRef.disabled"
                     color="primary"
                     (click)="selectUser()"
-                    [matTooltip]="'dataField.file.clickToUpload' | translate"
+                    [matTooltip]="'dataField.user.selectUser' | translate"
                     [class.do-not-click]="formControlRef.disabled">
                 <mat-icon>person_add</mat-icon>
             </button>

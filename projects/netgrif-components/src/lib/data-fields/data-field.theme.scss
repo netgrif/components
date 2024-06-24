@@ -241,6 +241,7 @@
 
         // DISABLED
 
+
         .mat-mdc-form-field-appearance-outline.mat-mdc-form-field-disabled .mat-mdc-form-field-outline {
             color: $color-outline-disabled;
             background-color: transparent;
@@ -255,7 +256,7 @@
             color: $color-text-disabled;
         }
 
-        .mat-mdc-form-field-prefix .mat-mdc-icon-button.mat-mdc-button-disabled.mat-mdc-button-disabled {
+        .mat-mdc-form-field-icon-prefix .mat-mdc-icon-button.mat-mdc-button-disabled.mat-mdc-button-disabled {
             color: $color-text-disabled;
         }
 
@@ -308,11 +309,11 @@
             background-color: #FFFFFF;
         }
 
-        .mat-mdc-form-field-appearance-outline .mat-mdc-form-field-outline-start {
+        .mdc-text-field--outlined .mdc-notched-outline .mdc-notched-outline__leading {
             border-radius: 6px 0 0 6px;
         }
 
-        .mat-mdc-form-field-appearance-outline .mat-mdc-form-field-outline-end {
+        .mdc-text-field--outlined .mdc-notched-outline .mdc-notched-outline__trailing {
             border-radius: 0 6px 6px 0;
         }
 
@@ -320,7 +321,7 @@
             color: $color-text-enabled !important;
         }
 
-        .mat-mdc-radio-label-content{
+        .mat-mdc-radio-label-content {
             color: $color-text-enabled !important;
         }
 
@@ -337,7 +338,7 @@
                 margin: -10px !important;
             }
 
-            &.mat-mdc-form-field .mat-mdc-form-field-prefix {
+            &.mat-form-field .mat-mdc-form-field-icon-prefix {
                 top: 0.33em !important;
                 padding-right: 4px !important;
             }
@@ -390,6 +391,14 @@
             .mat-mdc-form-field-infix {
                 padding: 7px 0 7px 0 !important;
             }
+
+            .mdc-evolution-chip__cell,
+            .mat-mdc-chip-action-label {
+                word-break: break-word;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis ;
+            }
         }
     }
 
@@ -421,10 +430,16 @@
         .mat-mdc-form-field-subscript-wrapper {
             display: none;
         }
+
+        .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-floating-label,
+        .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-floating-label--float-above {
+            background-color: #FFFFFF;
+        }
     }
 
     .netgrif-icon-fix {
-        margin-bottom: 18px;
+        margin-bottom: 22px;
+        padding-right: 16px;
     }
 
     .netgrif-input-primary-fix {
@@ -459,6 +474,8 @@
         ::placeholder {
             color: mat.get-contrast-color-from-palette($primary, 500) !important;
         }
+
+
     }
 
     .date-field-fix {
@@ -466,6 +483,47 @@
             padding: 0 0.75em 0 0.5em !important;
         }
     }
+
+
+    /// DATE TIME STYLE WORKAROUND
+        .mat-datepicker-content, .time-container {
+            box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+            display: block;
+            border-radius: 6px;
+            background-color: var(--mat-datepicker-calendar-container-background-color);
+            color: var(--mat-datepicker-calendar-container-text-color);
+        }
+
+        .mat-calendar-body-cell-content {
+            color: var(--mat-datepicker-calendar-date-text-color);
+            border-color: var(--mat-datepicker-calendar-date-outline-color)
+        }
+
+        .mat-calendar-body-active {
+            background-color: var(--mat-datepicker-calendar-date-hover-state-background-color);
+        }
+
+        .mat-calendar-body-selected {
+            background-color: var(--mat-datepicker-calendar-date-selected-state-background-color);
+            color: var(--mat-datepicker-calendar-date-selected-state-text-color);
+        }
+
+        .mat-calendar-body-cell-content {
+            border: none !important;
+        }
+
+        .mat-calendar-body-cell:not(.mat-calendar-body-disabled):hover > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical) {
+            background-color: var(--mat-datepicker-calendar-date-hover-state-background-color);
+        }
+
+        .mat-calendar-arrow {
+            fill: var(--mat-datepicker-calendar-period-button-icon-color);
+        }
+
+        .mat-calendar-body-disabled>.mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical) {
+            color: var(--mat-datepicker-calendar-date-disabled-state-text-color);
+        }
+    //// END OF WORKAROUND
 
     .form-input-error {
         border-color: mat.get-color-from-palette($warn) !important;
@@ -529,14 +587,17 @@ ngx-mat-datetime-content {
     background-color: white;
 }
 
-nc-number-currency-field .mat-mdc-form-field .mat-mdc-form-field-prefix {
+nc-number-currency-field .mat-mdc-form-field .mat-mdc-form-field-icon-prefix {
+    position: initial !important;
+}
+
+nc-user-list-default-field .mat-mdc-form-field .mat-mdc-form-field-icon-prefix {
     position: initial !important;
     padding-right: 4px !important;
 }
 
-nc-user-list-default-field .mat-mdc-form-field .mat-mdc-form-field-prefix {
-    top: 0 !important;
-    padding-right: 4px !important;
+nc-number-currency-field .mat-mdc-form-field-has-icon-prefix .mat-mdc-text-field-wrapper {
+    padding-left: initial !important;
 }
 
 :host .editor-toolbar {
