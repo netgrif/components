@@ -48,13 +48,6 @@ describe('ImportNetDialogComponent', () => {
                 {provide: PetriNetResourceService, useClass: MyPetriNetResource},
             ],
             schemas: [NO_ERRORS_SCHEMA]
-        }).overrideModule(BrowserDynamicTestingModule, {
-            set: {
-                entryComponents: [
-                    ErrorSnackBarComponent,
-                    SuccessSnackBarComponent
-                ]
-            }
         }).compileComponents();
     });
 

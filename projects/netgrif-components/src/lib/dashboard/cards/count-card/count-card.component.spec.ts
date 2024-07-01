@@ -1,6 +1,6 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CountCardComponent} from './count-card.component';
-import {FlexLayoutModule} from '@angular/flex-layout';
+import {FlexLayoutModule} from '@ngbracket/ngx-layout';
 import {Component} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {MatCardModule} from '@angular/material/card';

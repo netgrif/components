@@ -31,14 +31,13 @@ export abstract class AbstractCasePanelComponent extends AbstractPanelWithImmedi
 
     @Input() public case_: Case;
     @Input() public approval: boolean;
-    @Input() public selectedHeaders$: Observable<Array<HeaderColumn>>;
     @Input() responsiveBody = true;
     @Input() first: boolean;
     @Input() last: boolean;
     @Input() showCasePanelIcon = true;
     @Input() showDeleteMenu = false;
     @Input() textEllipsis = false;
-    protected _approvalFormControl: FormControl;
+    protected _approvalFormControl: FormControl<boolean | string>;
 
     protected constructor(protected _caseResourceService: CaseResourceService,
                           protected _caseViewService: CaseViewService,
@@ -53,7 +52,7 @@ export abstract class AbstractCasePanelComponent extends AbstractPanelWithImmedi
         this._approvalFormControl = new FormControl();
     }
 
-    get approvalFormControl(): FormControl {
+    get approvalFormControl(): FormControl<boolean | string> {
         return this._approvalFormControl;
     }
 

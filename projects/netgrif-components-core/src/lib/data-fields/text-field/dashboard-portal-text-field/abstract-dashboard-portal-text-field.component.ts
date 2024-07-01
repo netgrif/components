@@ -7,7 +7,7 @@ import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-fie
 import {TextField} from "../models/text-field";
 
 @Component({
-    selector: 'ncc-abstract-dashboard-pie-chart-text-field',
+    selector: 'ncc-abstract-dashboard-portal-text-field',
     template: ''
 })
 export abstract class AbstractDashboardPortalTextFieldComponent extends AbstractDashboardTextFieldComponent {

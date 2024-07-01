@@ -8,7 +8,7 @@ import {
     TestConfigurationService,
     TranslateLibModule
 } from '@netgrif/components-core';
-import {FlexLayoutModule} from '@angular/flex-layout';
+import {FlexLayoutModule} from '@ngbracket/ngx-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NO_ERRORS_SCHEMA} from '@angular/core';

@@ -33,6 +33,10 @@ export class FieldComponentResolverComponent extends AbstractFieldComponentResol
         return this.getDataField() instanceof DateField || this.getDataField() instanceof DateTimeField;
     }
 
+    isDateTimeType() {
+        return this.getDataField() instanceof DateTimeField;
+    }
+
     isFileType() {
         return this.getDataField() instanceof FileField || this.getDataField() instanceof FileListField;
     }

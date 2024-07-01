@@ -15,3 +15,6 @@ if (!fs.existsSync(buildLinkPath)) {
 console.log("Build link exists. Cleaning...");
 
 fs.unlinkSync(buildLinkPath);
+
+const buildNewLinkPath = path.join("dist", "netgrif-components");
+fs.rmSync(buildNewLinkPath, { recursive: true, force: true });

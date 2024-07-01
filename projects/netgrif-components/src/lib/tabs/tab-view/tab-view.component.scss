@@ -14,7 +14,7 @@
     height: 100%;
 }
 
-.mat-badge-content {
+.mat-mdc-badge-content {
     top: -3px !important;
     right: -24px !important;
 }
@@ -24,12 +24,4 @@
     font-size: 14px;
     line-height: 20px;
     letter-spacing: 0.25px;
-    .mat-badge-content {
-        width: fit-content;
-        min-width: 16px;
-        text-align: center;
-        border-radius: 8px;
-        padding-left: 3px;
-        padding-right: 3px;
-    }
 }

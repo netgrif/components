@@ -1,14 +1,15 @@
-<mat-form-field [appearance]="dataField.materialAppearance" class="full-width" color="primary">
+<mat-form-field [appearance]="dataField.materialAppearance" class="full-width chip-fix" color="primary">
     <mat-label *ngIf="!showLargeLayout.value">{{dataField.title}}</mat-label>
-    <mat-chip-list #chipList aria-label="Autocomplete" [formControl]="formControlRef">
-        <mat-chip
+    <mat-chip-grid #chipList aria-label="Autocomplete" [formControl]="formControlRef">
+        <mat-chip-row
             *ngFor="let option of dataField.value" (removed)="remove(option)">
             {{option}}
             <button *ngIf="!formControlRef.disabled" matChipRemove>
                 <mat-icon>cancel</mat-icon>
             </button>
-        </mat-chip>
+        </mat-chip-row>
         <input
+            aria-label="Autocomplete"
             matInput
             #input
             [placeholder]="dataField.placeholder"
@@ -17,7 +18,7 @@
             (matChipInputTokenEnd)="add($event)"
             (blur)="add($event)"
             [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
-    </mat-chip-list>
+    </mat-chip-grid>
     <mat-hint [ngClass]="{'mat-hint-disabled': formControlRef.disabled}">{{dataField.description}}</mat-hint>
     <mat-error
         *ngIf="dataField.isInvalid(formControlRef)">{{'dataField.validations.required' | translate}}</mat-error>

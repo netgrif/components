@@ -51,13 +51,6 @@ describe('NewCaseComponent', () => {
             declarations: [
                 NewCaseComponent,
             ],
-        }).overrideModule(BrowserDynamicTestingModule, {
-            set: {
-                entryComponents: [
-                    ErrorSnackBarComponent,
-                    SuccessSnackBarComponent
-                ]
-            }
         }).compileComponents();
     }));
 

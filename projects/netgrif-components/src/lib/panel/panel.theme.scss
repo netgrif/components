@@ -82,6 +82,10 @@
             height: 100% !important;
         }
     }
+
+    .mat-content.mat-content-hide-toggle {
+        margin-right: 0 !important;
+    }
 }
 
 @media only screen and (max-width: 599.99px) {

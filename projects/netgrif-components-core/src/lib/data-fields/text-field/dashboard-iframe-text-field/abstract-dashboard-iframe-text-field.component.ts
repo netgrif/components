@@ -12,7 +12,7 @@ import {TextField} from "../models/text-field";
 })
 export abstract class AbstractDashboardIframeTextFieldComponent extends AbstractDashboardTextFieldComponent {
 
-    public card?: CustomIframeCard;
+    declare public card?: CustomIframeCard;
 
     protected constructor(translate: TranslateService,
                           @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextField>) {

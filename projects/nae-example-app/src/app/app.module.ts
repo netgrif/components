@@ -22,7 +22,7 @@ import {
     FrontActionModule, NAE_ASYNC_RENDERING_CONFIGURATION
 } from '@netgrif/components-core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
+import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
 import {DocumentationComponent} from './doc/documentation/documentation.component';
 import {NaeExampleAppConfigurationService} from './nae-example-app-configuration.service';
 import {AuthenticationComponent} from './doc/authentication/authentication.component';

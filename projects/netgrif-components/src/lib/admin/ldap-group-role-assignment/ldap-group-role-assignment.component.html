@@ -9,7 +9,7 @@
                 </span>
                 <div fxFlex="5"></div>
 
-                <div fxLayout="row" fxLayoutAlign="start center" class="netgrif-input netgrif-input-search-fix">
+                <div fxLayout="row" fxLayoutAlign="start center" class="netgrif-input netgrif-input-search-fix netgrif-input-primary-search-fix">
                     <mat-form-field fxFlex="100" class="ldapGroup-assign-search" color="primary" appearance="outline">
                         <mat-icon matPrefix class="prefix-icon">search</mat-icon>
                         <input matInput [formControl]="searchLdapGroupControl" placeholder="{{ 'side-menu.ldapGroup.choose' | translate }}">
@@ -44,9 +44,9 @@
                                      [value]="ldapGroup"
                                      [ngClass]="{'list-item-selected':ldapGroup.selected}"
                                      (click)="ldapGroup.toggle();autoSelectRoles()" fxLayoutAlign="start center" fxLayout="row">
-                        <h3 matLine class="primary-color-line">{{ldapGroup.cn}}</h3>
-                        <p *ngIf="ldapGroup.description !== undefined" matLine class="paragraph-fix">DN: {{ldapGroup.dn}}, Description: {{ldapGroup.description}}</p>
-                        <p *ngIf="ldapGroup.description === undefined" matLine class="paragraph-fix">DN: {{ldapGroup.dn}}</p>
+                        <h3 matLine class="primary-color-line margin-none">{{ldapGroup.cn}}</h3>
+                        <p *ngIf="ldapGroup.description !== undefined" matLine class="paragraph-fix margin-none">DN: {{ldapGroup.dn}}, Description: {{ldapGroup.description}}</p>
+                        <p *ngIf="ldapGroup.description === undefined" matLine class="paragraph-fix margin-none">DN: {{ldapGroup.dn}}</p>
                     </mat-list-option>
 
                     <div *ngIf="ldapGroup.loading$ | async" fxLayout="column" fxLayoutAlign="center center">
@@ -126,7 +126,7 @@
                             <mat-list-option *ngFor="let role of net.roles" checkboxPosition="before"
                                              [selected]="role.selected" (click)="role.toggle();update(role)"
                                              fxFlex="50">
-                                <h3 matLine>{{role.name}}</h3>
+                                <h3 matLine class="margin-none">{{role.name}}</h3>
                             </mat-list-option>
                         </mat-selection-list>
                     </div>

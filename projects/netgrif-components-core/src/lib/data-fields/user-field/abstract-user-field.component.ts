@@ -15,7 +15,7 @@ import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token
 })
 export abstract class AbstractUserFieldComponent extends AbstractDataFieldComponent implements OnInit {
 
-    @Input() public dataField: UserField;
+    @Input() declare public dataField: UserField;
 
     protected constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
         super(informAboutInvalidData);

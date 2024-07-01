@@ -1,5 +1,5 @@
 <mat-menu #languageMenu="matMenu">
-    <button *ngFor="let lang of getLangKeys()" mat-menu-item (click)="setLang(lang)" fxLayout="row"
+    <button *ngFor="let lang of getLangKeys()" mat-menu-item (click)="setLang(lang)" fxLayout="row" class="quick-panel-menu"
             fxLayoutAlign="start center" [style.backgroundColor]="lang === getCurrentLang() ? 'rgba(253,151,31,0.1)':''">
         <div [innerHTML]="getLangIcon(lang)" class="icon-small-dimensions"></div>
         <span class="margin-left-default">{{'toolbar.menu.' + lang | translate}}</span>

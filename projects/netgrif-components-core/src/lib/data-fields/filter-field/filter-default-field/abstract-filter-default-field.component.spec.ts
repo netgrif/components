@@ -43,12 +43,6 @@ describe('AbstractFilterDefaultFieldComponent', () => {
                 TestFilterComponent,
                 TestFilterContentComponent
             ]
-        }).overrideModule(BrowserDynamicTestingModule, {
-            set: {
-                entryComponents: [
-                    TestFilterContentComponent
-                ]
-            }
         }).compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;

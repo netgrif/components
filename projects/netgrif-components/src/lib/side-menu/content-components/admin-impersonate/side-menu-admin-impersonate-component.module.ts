@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AdminImpersonateComponent} from './admin-impersonate.component';
-import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
+import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
 import {FormsModule} from '@angular/forms';
 import {
     CovalentModule,
