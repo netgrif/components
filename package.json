@@ -65,7 +65,7 @@
         "project:sonar": "node scripts/sonar-scanner-analysis.js",
         "components:start": "npm run nc:local-build && ng serve",
         "example:start": "ng serve",
-        "example:build": "ng build --configuration production"
+        "example:build": "ng build nae-example-app --configuration production"
     },
     "dependencies": {
         "@angular-material-components/datetime-picker": "~16.0.1",
