@@ -6,7 +6,7 @@ import {NoopAnimationsModule} from "@angular/platform-browser/animations";
 import {TranslateLibModule} from "../../../translate/translate-lib.module";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {TranslateService} from "@ngx-translate/core";
-import {expect} from "@angular/flex-layout/_private-utils/testing";
+import {expect} from "@ngbracket/ngx-layout/_private-utils/testing";
 import {UserValue} from "../../user-field/models/user-value";
 import {Component, Inject, Optional} from "@angular/core";
 import {AbstractUserListFieldComponent} from "../abstract-user-list-field.component";

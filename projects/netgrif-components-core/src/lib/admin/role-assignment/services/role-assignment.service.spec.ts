@@ -39,13 +39,6 @@ describe('RoleAssignmentService', () => {
                     deps: [UserResourceService, PetriNetResourceService, SnackBarService, LoggerService, TranslateService]
                 }
             ]
-        }).overrideModule(BrowserDynamicTestingModule, {
-            set: {
-                entryComponents: [
-                    ErrorSnackBarComponent,
-                    SuccessSnackBarComponent
-                ]
-            }
         });
         service = TestBed.inject(RoleAssignmentService);
     });

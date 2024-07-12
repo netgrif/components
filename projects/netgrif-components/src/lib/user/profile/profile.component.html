@@ -43,11 +43,11 @@
                             <h2>{{ 'profile.authority' | translate}}</h2>
                         </div>
                         <div fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">
-                            <mat-form-field appearance="outline" class="user-chip-list">
-                                <mat-chip-list disabled>
-                                    <mat-chip color="primary"
-                                              *ngFor="let authority of user.authorities">{{authority}}</mat-chip>
-                                </mat-chip-list>
+                            <mat-form-field appearance="outline" class="user-chip-list" *ngIf="user.authorities?.length > 0">
+                                <mat-chip-listbox disabled>
+                                    <mat-chip-option color="primary"
+                                              *ngFor="let authority of user.authorities">{{authority}}</mat-chip-option>
+                                </mat-chip-listbox>
                             </mat-form-field>
                         </div>
                     </div>
@@ -60,10 +60,10 @@
                             <h2>{{ 'profile.roles' | translate}}</h2>
                         </div>
                         <div fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">
-                            <mat-form-field appearance="outline" class="user-chip-list">
-                                <mat-chip-list disabled>
-                                    <mat-chip color="primary" *ngFor="let role of user.roles">{{role.name}}</mat-chip>
-                                </mat-chip-list>
+                            <mat-form-field appearance="outline" class="user-chip-list" *ngIf="user.roles?.length > 0">
+                                <mat-chip-listbox disabled>
+                                    <mat-chip-option color="primary" *ngFor="let role of user.roles">{{role.name}}</mat-chip-option>
+                                </mat-chip-listbox>
                             </mat-form-field>
                         </div>
                     </div>
@@ -74,10 +74,10 @@
                             <h2>{{ 'profile.groups' | translate}}</h2>
                         </div>
                         <div fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">
-                            <mat-form-field appearance="outline" class="user-chip-list">
-                                <mat-chip-list disabled>
-                                    <mat-chip color="primary" *ngFor="let group of user.groups">{{group}}</mat-chip>
-                                </mat-chip-list>
+                            <mat-form-field appearance="outline" class="user-chip-list" *ngIf="user.groups?.length > 0">
+                                <mat-chip-listbox disabled>
+                                    <mat-chip-option color="primary" *ngFor="let group of user.groups">{{group}}</mat-chip-option>
+                                </mat-chip-listbox>
                             </mat-form-field>
                         </div>
                     </div>

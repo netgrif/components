@@ -13,15 +13,11 @@ import {CurrencyPipe} from '@angular/common';
     templateUrl: './number-currency-field.component.html',
     styleUrls: ['./number-currency-field.component.scss']
 })
-export class NumberCurrencyFieldComponent extends AbstractCurrencyNumberFieldComponent implements AfterViewInit {
+export class NumberCurrencyFieldComponent extends AbstractCurrencyNumberFieldComponent {
 
     constructor(currencyPipe: CurrencyPipe, translate: TranslateService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<NumberField>) {
         super(currencyPipe, translate, dataFieldPortalData);
-    }
-
-    ngAfterViewInit() {
-        super.ngAfterViewInit();
     }
 
     onFocusOut(event: Event) {
@@ -30,5 +26,11 @@ export class NumberCurrencyFieldComponent extends AbstractCurrencyNumberFieldCom
 
     onFocusIn() {
         this.transformToNumber();
+    }
+
+    isCodeExists() {
+        return this.dataField.component.properties['code'] !== ' ' &&
+            this.dataField.component.properties['code'] !== '' &&
+            this.dataField.component.properties['code'] !== undefined;
     }
 }

@@ -1,9 +1,13 @@
-<button class="close" mat-icon-button [mat-dialog-close]="true">
-    <mat-icon>close</mat-icon>
-</button>
-<h1 mat-dialog-title *ngIf="!isPdf()">Image: {{data.dataField.value.name}}</h1>
-<h1 mat-dialog-title *ngIf="isPdf()">PDF: {{data.dataField.value.name}}</h1>
-<div mat-dialog-content fxLayout="row" fxLayoutAlign="center center">
+<div fxLayout="row" fxLayoutAlign="start center">
+    <h1 mat-dialog-title *ngIf="!isPdf()">Image: {{data.dataField.value.name}}</h1>
+    <h1 mat-dialog-title *ngIf="isPdf()">PDF: {{data.dataField.value.name}}</h1>
+    <div fxFlex></div>
+    <button mat-icon-button [mat-dialog-close]="true">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+
+<div mat-dialog-content fxLayout="row" fxLayoutAlign="center center" class="fit-content">
     <img class="image-size" *ngIf="!fullImageExists()" [src]="data.imagePreview" alt="Image preview"/>
     <img class="image-size" *ngIf="fullImageExists() && !isPdf()" [src]="image" alt="Image"/>
     <embed class="pdf-view" *ngIf="fullImageExists() && isPdf()" [src]="image" [type]="'application/pdf'" />

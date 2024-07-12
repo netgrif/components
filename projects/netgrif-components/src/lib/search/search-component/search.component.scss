@@ -3,15 +3,13 @@
     margin-right: 8px;
 }
 
-.disable-error-margin .mat-form-field-wrapper {
+.disable-error-margin .mat-mdc-form-field-wrapper {
     margin: 0 !important;
     padding-bottom: 0;
 }
 
 .search-buttons-margin {
     margin-left: 8px;
-    margin-top: 1.5px;
-    margin-bottom: 1.5px;
 }
 
 .search-icon {
@@ -36,12 +34,26 @@
 }
 
 .search-buttons-padding {
-    height: 44px !important;
-    min-width: 44px;
+    height: 43px !important;
+    min-width: 43px;
     padding: 0;
+}
+
+.fix-icon-button {
+    height: 45px !important;
+    width: 45px !important;
+    padding: 10.5px !important;
 }
 
 .prefix-icon {
     color: #64748B !important;
+}
+
+.padding-top-search {
+    padding-top: 2px;
+}
+
+.fix-filter-button {
+    margin-top: 1px;
 }
 

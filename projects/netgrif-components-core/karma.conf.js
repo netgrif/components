@@ -3,6 +3,7 @@
 
 process = require('process');
 process.env.CHROME_BIN = require('puppeteer').executablePath();
+process.setMaxListeners(0);
 
 module.exports = function (config) {
     config.set({
@@ -10,6 +11,7 @@ module.exports = function (config) {
         frameworks: ["jasmine", "@angular-devkit/build-angular"],
         plugins: [
             require("karma-jasmine"),
+            require("karma-webpack"),
             require("karma-firefox-launcher"),
             require("karma-chrome-launcher"),
             require("karma-jasmine-html-reporter"),

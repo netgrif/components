@@ -81,7 +81,7 @@ export function createTabView(
     }));
 
     updateAppModule(tree, view.className, view.fileImportPath, [
-        new ImportToAdd('FlexModule', '@angular/flex-layout'),
+        new ImportToAdd('FlexModule', '@ngbracket/ngx-layout'),
         new ImportToAdd('TabsComponentModule', '@netgrif/components')]);
 
     if (addViewToService) {

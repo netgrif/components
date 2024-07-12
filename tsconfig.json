@@ -10,7 +10,7 @@
         "module": "esnext",
         "moduleResolution": "node",
         "importHelpers": true,
-        "target": "es2015",
+        "target": "ES2022",
         "typeRoots": [
             "node_modules/@types"
         ],
@@ -36,7 +36,6 @@
         "strictInjectionParameters": true,
         "skipTemplateCodegen": true,
         "strictMetadataEmit": true,
-        "enableResourceInlining": true,
-        "enableIvy": true
+        "enableResourceInlining": true
     }
 }

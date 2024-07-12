@@ -37,11 +37,19 @@
     @include dialog-theme($app-theme);
 }
 
-.mat-tab-group.nae-tab-fill-height .mat-tab-body-wrapper {
+.mat-mdc-tab-group.nae-tab-fill-height .mat-mdc-tab-body-wrapper {
     flex: 1 1 100%;
 }
 
-.panel-expanded-spacing mat-expansion-panel.mat-expanded {
+.panel-expanded-spacing mat-expansion-panel.mat-mdc-expanded {
     margin-top: 0 !important;
     margin-bottom: 0 !important;
+}
+
+.mdc-button {
+    letter-spacing: normal;
+}
+
+.mat-mdc-card {
+    padding: 24px;
 }

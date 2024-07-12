@@ -2,7 +2,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {TaskRefListFieldComponent} from './task-ref-list-field.component';
 import {Component} from "@angular/core";
-import {TaskRefField} from "netgrif-components-core";
+import {TaskRefField} from "@netgrif/components-core";
 
 describe('TaskRefListFieldComponent', () => {
     let component: TaskRefListFieldComponent;

@@ -2,7 +2,7 @@
     "extends": "../../tsconfig.json",
     "compilerOptions": {
         "outDir": "../../out-tsc/lib",
-        "target": "es2015",
+        "target": "ES2022",
         "declarationMap": true,
         "declaration": true,
         "inlineSources": true,
@@ -19,8 +19,7 @@
         "skipTemplateCodegen": true,
         "strictMetadataEmit": true,
         "enableResourceInlining": true,
-        "fullTemplateTypeCheck": true,
-        "enableIvy": true
+        "fullTemplateTypeCheck": true
     },
     "exclude": [
         "src/test.ts",

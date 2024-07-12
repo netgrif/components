@@ -1,5 +1,5 @@
 <div fxLayoutAlign="center center" fxLayout="row">
-    <div fxFlex="{{!isFilePreview ? '100' : '75'}}" class="netgrif-file-padding">
+    <div fxFlex="{{!isFilePreview ? '100' : '75'}}" [ngClass]="{'netgrif-file-padding': !(!dataField.isInvalid(formControlRef) && hasHint()) && !dataField.isInvalid(formControlRef)}">
         <div #fileLabel class="file-field-label" [ngClass]="{'netgrif-label-disabled': formControlRef.disabled}">
             {{dataField.title}}
             <nc-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nc-required-label>

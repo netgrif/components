@@ -20,7 +20,7 @@ export interface HeaderOption {
     template: ''
 })
 export abstract class AbstractEditModeComponent extends AbstractHeaderModeComponent implements OnInit, OnDestroy {
-    public formControls: Array<FormControl> = [];
+    public formControls: Array<FormControl<any>> = [];
     public filterOptions: Array<Observable<Array<HeaderOption>>> = [];
     protected subHeader: Subscription;
 
