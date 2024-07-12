@@ -19,7 +19,9 @@ import {
     ViewService,
     ProfileModule,
     Dashboard,
-    FrontActionModule, NAE_ASYNC_RENDERING_CONFIGURATION
+    FrontActionModule, NAE_ASYNC_RENDERING_CONFIGURATION,
+    ValidationRegistryService,
+    validEmail, validTelNumber
 } from '@netgrif/components-core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
@@ -90,7 +92,7 @@ import {
     FilterFieldTabViewComponent,
     FilterFieldTabbedCaseViewComponent,
     FilterFieldTabbedTaskViewComponent,
-    DialogComponentsModule
+    DialogComponentsModule,
 } from '@netgrif/components';
 import {UserInviteComponent} from './doc/user-invite/user-invite.component';
 import {ExamplePortalCardComponent} from './doc/dashboard-example/piechart-card/example-portal-card.component';
@@ -129,6 +131,22 @@ import {
 } from './doc/single-tabbed-view/single-tabbed-task-view/single-tabbed-task-view.component';
 import {ImpersonationDemoComponent} from './doc/impersonation-demo/impersonation-demo.component';
 import { ChangePasswordComponent } from './doc/forms/change-password/change-password.component';
+import {
+    validBetween,
+    validDecimal,
+    validEven,
+    validInRange,
+    validMaxLength,
+    validMinLength,
+    validNegative,
+    validOdd,
+    validPositive,
+    validRegex,
+    validTranslationOnly,
+    validTranslationRequired,
+    validWeekend,
+    validWorkday
+} from '../../../netgrif-components-core/src/lib/registry/validation/model/default-validation-definitions';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -267,7 +285,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 })
 export class AppModule {
 
-    constructor(registry: ComponentRegistryService) {
+    constructor(registry: ComponentRegistryService, validationRegistry: ValidationRegistryService) {
         registry.register('email', (injector: Injector) => new ComponentPortal(EmailSubmissionFormComponent, null, injector));
         registry.register('workflow-view', (injector: Injector) => new ComponentPortal(WorkflowViewExampleComponent, null, injector));
         registry.register('task-view', (injector: Injector) => new ComponentPortal(TaskViewComponent, null, injector));
@@ -276,5 +294,26 @@ export class AppModule {
         registry.register(Dashboard.FILTER_TAB_VIEW_ID, (injector: Injector) => new ComponentPortal(FilterFieldTabViewComponent, null, injector));
         registry.registerType(Dashboard.FILTER_CASE_VIEW_ID, FilterFieldTabbedCaseViewComponent);
         registry.registerType(Dashboard.FILTER_TASK_VIEW_ID, FilterFieldTabbedTaskViewComponent);
+
+        //TextField
+        validationRegistry.register('minLength', validMinLength);
+        validationRegistry.register('maxLength', validMaxLength);
+        validationRegistry.register('regex', validRegex);
+        validationRegistry.register('email', validEmail);
+        validationRegistry.register('telNumber', validTelNumber);
+        //NumberField
+        validationRegistry.register('validOdd', validOdd);
+        validationRegistry.register('validEven', validEven);
+        validationRegistry.register('validNegative', validNegative);
+        validationRegistry.register('validPositive', validPositive);
+        validationRegistry.register('validDecimal', validDecimal);
+        validationRegistry.register('validInRange', validInRange);
+        //DateFields
+        validationRegistry.register('validBetween', validBetween);
+        validationRegistry.register('validWorkday', validWorkday);
+        validationRegistry.register('validWeekend', validWeekend);
+        //i18nField
+        validationRegistry.register('validTranslationRequired', validTranslationRequired);
+        validationRegistry.register('validTranslationOnly', validTranslationOnly);
     }
 }

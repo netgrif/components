@@ -4,6 +4,7 @@ import {Layout} from '../../models/layout';
 import {Validation} from '../../models/validation';
 import {Component, ComponentPrefixes} from '../../models/component';
 import {DataField} from '../../models/abstract-data-field';
+import {ValidationRegistryService} from '../../../registry/validation/validation-registry.service';
 
 export enum TextFieldView {
     DEFAULT = 'default',
@@ -50,7 +51,7 @@ export class TextField extends DataField<string> {
 
     constructor(stringId: string, title: string, value: string, behavior: Behavior, placeholder?: string,
                 description?: string, layout?: Layout, validations?: Array<Validation>, _component?: Component,
-                parentTaskId?: string) {
+                parentTaskId?: string, protected validationRegistry?: ValidationRegistryService) {
         super(stringId, title, value, behavior, placeholder, description, layout, validations, _component, parentTaskId);
     }
 
@@ -62,42 +63,18 @@ export class TextField extends DataField<string> {
 
         this.validations.forEach(item => {
             if (item.validationRule.includes(TextFieldValidation.MIN_LENGTH)) {
-                const tmp = item.validationRule.split(' ');
-                if (tmp[1] !== undefined) {
-                    const length = parseInt(tmp[1], 10);
-                    if (!isNaN(length)) {
-                        result.push(Validators.minLength(length));
-                    }
-                }
+                result.push(this.validationRegistry.get('minLength').call(null, {id: 'minLength', args: [item.validationRule]}));
             } else if (item.validationRule.includes(TextFieldValidation.MAX_LENGTH)) {
-                const tmp = item.validationRule.split(' ');
-                if (tmp[1] !== undefined) {
-                    const length = parseInt(tmp[1], 10);
-                    if (!isNaN(length)) {
-                        result.push(Validators.maxLength(length));
-                    }
-                }
+                result.push(this.validationRegistry.get('maxLength').call(null, {id: 'maxLength', args: [item.validationRule]}));
             } else if (item.validationRule.includes(TextFieldValidation.REGEX)) {
-                if (item.validationRule.startsWith('regex ')) {
-                    result.push(Validators.pattern(new RegExp(item.validationRule.substring(6, item.validationRule.length ))));
-                } else if (item.validationRule.startsWith('regex("')) {
-                    result.push(Validators.pattern(new RegExp(item.validationRule.substring(7, item.validationRule.length - 2))));
-                }
+                result.push(this.validationRegistry.get('regex').call(null, {id: 'regex', args: [item.validationRule]}));
             } else if (item.validationRule.includes(TextFieldValidation.EMAIL)) {
-                result.push(Validators.email);
+                result.push(this.validationRegistry.get('email').call(null, {id: 'email', args: [item.validationRule]}));
             } else if (item.validationRule.includes(TextFieldValidation.TEL_NUMBER)) {
-                result.push(this.validTelNumber);
+                result.push(this.validationRegistry.get('telNumber').call(null, {id: 'telNumber', args: [item.validationRule]}));
             }
         });
 
         return result;
-    }
-
-    private validTelNumber(fc: FormControl) {
-        if (!(new RegExp(/^(?:\+?(\d{1,3}))?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4})(?:[-.x ]*(\d+))?)$/).test(fc.value))) {
-            return ({validTelNumber: true});
-        } else {
-            return null;
-        }
     }
 }

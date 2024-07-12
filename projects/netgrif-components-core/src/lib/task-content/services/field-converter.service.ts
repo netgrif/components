@@ -26,6 +26,7 @@ import {UserListValue} from '../../data-fields/user-list-field/models/user-list-
 import {decodeBase64, encodeBase64} from "../../utility/base64";
 import {CaseRefField} from '../../data-fields/case-ref-field/model/case-ref-field';
 import {StringCollectionField} from '../../data-fields/string-collection-field/models/string-collection-field';
+import {ValidationRegistryService} from '../../registry/validation/validation-registry.service';
 
 @Injectable({
     providedIn: 'root'
@@ -33,7 +34,7 @@ import {StringCollectionField} from '../../data-fields/string-collection-field/m
 export class FieldConverterService {
     private textFieldNames = [ 'richtextarea', 'htmltextarea', 'editor', 'htmlEditor' ]
 
-    constructor() {
+    constructor(protected _validationRegistry: ValidationRegistryService) {
     }
 
     public toClass(item: DataFieldResource): DataField<any> {
@@ -47,10 +48,10 @@ export class FieldConverterService {
                         item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
                 }
                 return new TextField(item.stringId, item.name, this.resolveTextValue(item, item.value), item.behavior, item.placeholder,
-                    item.description, item.layout, item.validations, item.component, item.parentTaskId);
+                    item.description, item.layout, item.validations, item.component, item.parentTaskId, this._validationRegistry);
             case FieldTypeResource.NUMBER:
                 return new NumberField(item.stringId, item.name, item.value as number, item.behavior, item.validations, item.placeholder,
-                    item.description, item.layout, item.formatFilter, this.resolveNumberComponent(item), item.parentTaskId);
+                    item.description, item.layout, item.formatFilter, this.resolveNumberComponent(item), item.parentTaskId, this._validationRegistry);
             case FieldTypeResource.ENUMERATION:
             case FieldTypeResource.ENUMERATION_MAP:
                 return this.resolveEnumField(item);
@@ -68,14 +69,14 @@ export class FieldConverterService {
                     date = moment(new Date(item.value[0], item.value[1] - 1, item.value[2]));
                 }
                 return new DateField(item.stringId, item.name, date, item.behavior, item.placeholder,
-                    item.description, item.layout, item.validations, item.component, item.parentTaskId);
+                    item.description, item.layout, item.validations, item.component, item.parentTaskId, this._validationRegistry);
             case FieldTypeResource.DATE_TIME:
                 let dateTime;
                 if (item.value) {
                     dateTime = moment(new Date(item.value[0], item.value[1] - 1, item.value[2], item.value[3], item.value[4]));
                 }
                 return new DateTimeField(item.stringId, item.name, dateTime, item.behavior,
-                    item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
+                    item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId, this._validationRegistry);
             case FieldTypeResource.USER:
                 let user;
                 if (item.value) {
@@ -113,7 +114,7 @@ export class FieldConverterService {
                     item.behavior, item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.I18N:
                 return new I18nField(item.stringId, item.name, item.value ?? {defaultValue: ''}, item.behavior, item.placeholder,
-                    item.description, item.layout, item.validations, item.component);
+                    item.description, item.layout, item.validations, item.component, this._validationRegistry);
             case FieldTypeResource.STRING_COLLECTION:
                 return new StringCollectionField(item.stringId, item.name, item.value ? item.value : [], item.behavior,
                     item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);

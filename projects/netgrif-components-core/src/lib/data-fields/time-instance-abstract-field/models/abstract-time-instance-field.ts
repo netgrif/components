@@ -1,9 +1,11 @@
 import {Behavior} from '../../models/behavior';
-import {FormControl, ValidatorFn, Validators} from '@angular/forms';
+import {FormControl, ValidatorFn} from '@angular/forms';
 import moment, {Moment} from 'moment';
 import {Layout} from '../../models/layout';
 import {Component} from '../../models/component';
 import {DataField} from '../../models/abstract-data-field';
+import {ValidationRegistryService} from '../../../registry/validation/validation-registry.service';
+import {Validation} from '../../models/validation';
 
 export enum AbstractTimeInstanceFieldValidation {
     BETWEEN = 'between',
@@ -21,7 +23,7 @@ export abstract class AbstractTimeInstanceField extends DataField<Moment> {
     public max: Moment;
 
     protected constructor(stringId: string, title: string, value: Moment, behavior: Behavior, placeholder?: string,
-                          description?: string, layout?: Layout, validations?: any, component?: Component, parentTaskId?: string) {
+                          description?: string, layout?: Layout, validations?: any, component?: Component, parentTaskId?: string, protected validationRegistry?: ValidationRegistryService) {
         super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId);
     }
 
@@ -66,54 +68,34 @@ export abstract class AbstractTimeInstanceField extends DataField<Moment> {
 
         this.validations.forEach(item => {
             if (item.validationRule.includes(AbstractTimeInstanceFieldValidation.BETWEEN)) {
-                const tmp = item.validationRule.split(' ');
-                const ranges = tmp[1].split(',');
-
-                const start = AbstractTimeInstanceField.parseDate(ranges[0]);
-                const end = AbstractTimeInstanceField.parseDate(ranges[1]);
-
-                if (start && end) {
-                    if (start === 'past' && moment(end).isValid()) {
-                        result.push(this.validFromPast(moment(end)));
-                        this.max = moment(end);
-                    } else if (end === 'future' && moment(start).isValid()) {
-                        result.push(this.validToFuture(moment(start)));
-                        this.min = moment(start);
-                    } else if (moment(start).isValid() && moment(end).isValid()) {
-                        result.push(this.validBetween(moment(start), moment(end)));
-                        this.min = moment(start);
-                        this.max = moment(end);
-                    }
-                }
+                result.push(this.validationRegistry.get('validBetween').call(null, {id: 'validBetween', args: [item.validationRule]}));
+                this.checkMinMax(item);
             } else if (item.validationRule.includes(AbstractTimeInstanceFieldValidation.WORKDAY)) {
-                result.push(this.validWorkday);
+                result.push(this.validationRegistry.get('validWorkday').call(null, {id: 'validWorkday', args: [item.validationRule]}));
             } else if (item.validationRule.includes(AbstractTimeInstanceFieldValidation.WEEKEND)) {
-                result.push(this.validWeekend);
+                result.push(this.validationRegistry.get('validWeekend').call(null, {id: 'validWeekend', args: [item.validationRule]}));
             }
         });
 
         return result;
     }
 
-    protected validFromPast(range: Moment): ValidatorFn {
-        return (fc: FormControl): { [key: string]: any } | null => fc.value > range ? {validBetween: true} : null;
-    }
+    protected checkMinMax(item: Validation) {
+        const tmp = item.validationRule.split(' ');
+        const ranges = tmp[1].split(',');
 
-    protected validToFuture(range: Moment): ValidatorFn {
-        return (fc: FormControl): { [key: string]: any } | null => fc.value < range ? {validBetween: true} : null;
-    }
+        const start = AbstractTimeInstanceField.parseDate(ranges[0]);
+        const end = AbstractTimeInstanceField.parseDate(ranges[1]);
 
-    protected validBetween(first: Moment, second: Moment): ValidatorFn {
-        return (fc: FormControl): { [key: string]: any } | null => fc.value < first || fc.value > second ? {validBetween: true} : null;
-    }
-
-    protected validWorkday(fc: FormControl) {
-        const dayOfWeek = !!fc.value ? fc.value.isoWeekday() : null;
-        return dayOfWeek === 6 || dayOfWeek === 7 ? {validWorkday: true} : null;
-    }
-
-    protected validWeekend(fc: FormControl) {
-        const dayOfWeek = !!fc.value ? fc.value.isoWeekday() : null;
-        return dayOfWeek >= 1 && dayOfWeek <= 5 ? {validWeekend: true} : null;
+        if (start && end) {
+            if (start === 'past' && moment(end).isValid()) {
+                this.max = moment(end);
+            } else if (end === 'future' && moment(start).isValid()) {
+                this.min = moment(start);
+            } else if (moment(start).isValid() && moment(end).isValid()) {
+                this.min = moment(start);
+                this.max = moment(end);
+            }
+        }
     }
 }

@@ -6,6 +6,7 @@ import {Component, ComponentPrefixes} from '../../models/component';
 import {I18nFieldTranslations, I18nFieldValue} from './i18n-field-value';
 import {Observable} from 'rxjs';
 import {FormControl, ValidatorFn} from '@angular/forms';
+import {ValidationRegistryService} from '../../../registry/validation/validation-registry.service';
 
 export enum I18nFieldValidation {
     TRANSLATION_REQUIRED = 'translationRequired',
@@ -16,6 +17,8 @@ export enum I18nFieldValidation {
 export const DEFAULT_LANGUAGE_CODE = 'xx';
 
 export class I18nField extends DataField<I18nFieldValue> {
+
+    protected _validationRegistry?: ValidationRegistryService;
 
     public getTypedComponentType(): string {
         return ComponentPrefixes.I18N + this.getComponentType();
@@ -84,11 +87,12 @@ export class I18nField extends DataField<I18nFieldValue> {
     }
 
     constructor(stringId: string, title: string, value: I18nFieldValue | string, behavior: Behavior, placeholder?: string,
-                description?: string, layout?: Layout, validations?: Array<Validation>, _component?: Component) {
+                description?: string, layout?: Layout, validations?: Array<Validation>, _component?: Component, validationRegistry?: ValidationRegistryService) {
         if (typeof value === 'string') {
             value = {defaultValue: value};
         }
         super(stringId, title, value, behavior, placeholder, description, layout, validations, _component);
+        this._validationRegistry = validationRegistry;
     }
 
     protected valueEquality(a: I18nFieldValue, b: I18nFieldValue): boolean {
@@ -152,34 +156,14 @@ export class I18nField extends DataField<I18nFieldValue> {
 
         this.validations.forEach(item => {
             if (item.validationRule.includes(I18nFieldValidation.TRANSLATION_REQUIRED)) {
-                const tmp = item.validationRule.split(' ');
-                if (tmp[1] !== undefined) {
-                    result.push(this.validTranslationRequired(tmp[1].replace(' ', '').split(',')));
-                }
+                result.push(this._validationRegistry.get('validTranslationRequired').call(null, {id: 'validTranslationRequired', args: [item.validationRule]}));
             }
             if (item.validationRule.includes(I18nFieldValidation.TRANSLATION_ONLY)) {
-                const tmp = item.validationRule.split(' ');
-                if (tmp[1] !== undefined) {
-                    result.push(this.validTranslationOnly(tmp[1].replace(' ', '').split(',')));
-                }
+                result.push(this._validationRegistry.get('validTranslationOnly').call(null, {id: 'validTranslationOnly', args: [item.validationRule]}));
             }
         });
 
         return result;
-    }
-
-    private validTranslationRequired(countries: Array<string>): ValidatorFn {
-        return (fc: FormControl): { [key: string]: any } | null => {
-            return countries.every(languageCode => languageCode in fc.value.translations)
-                ? null : ({translationRequired: true});
-        };
-    }
-
-    private validTranslationOnly(countries: Array<string>): ValidatorFn {
-        return (fc: FormControl): { [key: string]: any } | null => {
-            return Object.keys(fc.value.translations).every(translation => countries.includes(translation))
-                ? null : ({translationOnly: true});
-        };
     }
 
     private validRequiredI18n(fc: FormControl): { [k: string]: boolean } {
