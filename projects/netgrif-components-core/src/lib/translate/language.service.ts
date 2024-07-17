@@ -6,6 +6,13 @@ import {TranslateService, TranslationChangeEvent} from '@ngx-translate/core';
 import {Observable, Subject, Subscription} from 'rxjs';
 import {UserPreferenceService} from '../user/services/user-preference.service';
 import {LoggerService} from '../logger/services/logger.service';
+import {CaseSearchRequestBody} from '../filter/models/case-search-request-body';
+import {HttpParams} from '@angular/common/http';
+import {PaginationParams} from '../utility/pagination/pagination-params';
+import {SimpleFilter} from '../filter/models/simple-filter';
+import {CaseResourceService} from '../resources/engine-endpoint/case-resource.service';
+import {CallChainService} from '../utility/call-chain/call-chain.service';
+import {map} from 'rxjs/operators';
 
 export interface Translation {
     key: string,
@@ -23,7 +30,9 @@ export class LanguageService implements OnDestroy {
     protected subTranslate: Subscription;
     protected _defaultLanguage: string = 'en';
 
-    constructor(protected _translate: TranslateService,
+    constructor(protected _caseResourceService: CaseResourceService,
+                protected _callChain: CallChainService,
+                protected _translate: TranslateService,
                 protected _preferenceService: UserPreferenceService,
                 protected _logger: LoggerService) {
         this._translations = [
@@ -43,6 +52,7 @@ export class LanguageService implements OnDestroy {
         setTimeout(() => {
             if (this._preferenceService) {
                 this.subPreference = this._preferenceService.preferencesChanged$.subscribe(() => {
+                    this.checkLanguageCases();
                     const preferredLang = this._preferenceService.getLocale();
                     if (preferredLang !== undefined && preferredLang !== this._translate.currentLang) {
                         this.setLanguage(preferredLang);
@@ -50,7 +60,6 @@ export class LanguageService implements OnDestroy {
                 });
             }
         });
-
 
         this.subTranslate = _translate.onLangChange.subscribe((event: TranslationChangeEvent) => {
             this._logger.debug('Language changed to ' + event.lang);
@@ -124,4 +133,27 @@ export class LanguageService implements OnDestroy {
     }
 
 
+    protected checkLanguageCases() {
+        const searchBody: CaseSearchRequestBody = {
+            process: {identifier: 'language'}
+        };
+
+        let httpParams = new HttpParams()
+            .set(PaginationParams.PAGE_SIZE, 55)
+            .set(PaginationParams.PAGE_NUMBER, 0);
+
+        this._caseResourceService.searchCases(SimpleFilter.fromCaseQuery(searchBody), httpParams).pipe(
+            map(page => page.content ? page.content : [])
+        ).subscribe(cases => {
+            if (Array.isArray(cases)) {
+                cases.forEach(caze => {
+                    const lang = caze.immediateData.find(item => item.stringId === 'language')?.value;
+                    const translations = caze.immediateData.find(item => item.stringId === 'translations')?.value;
+                    if (lang !== undefined && translations !== undefined) {
+                        this.addLanguage(lang.value, JSON.parse(translations.value));
+                    }
+                })
+            }
+        });
+    }
 }
