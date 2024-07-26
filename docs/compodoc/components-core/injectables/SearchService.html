@@ -9,13 +9,64 @@
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 	   <link rel="stylesheet" href="../styles/style.css">
-        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+        <link rel="stylesheet" href="../styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
-            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
@@ -24,7 +75,7 @@
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
@@ -37,22 +88,29 @@
 
 
 
+
 <ol class="breadcrumb">
-  <li>Injectables</li>
-  <li >SearchService</li>
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >SearchService</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
@@ -71,7 +129,7 @@
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -222,7 +280,7 @@
     </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-constructor">
     <h3 id="constructor">Constructor</h3>
         <table class="table table-sm table-bordered">
             <tbody>
@@ -239,7 +297,7 @@
 
                 <tr>
                     <td class="col-md-4">
-                            <div class="io-description"><p>The <a href="../classess/Predicate.html">Predicate</a> tree root uses an <a href="../miscellaneous/enumerations.html#BooleanOperator">AND</a> operator to combine the Predicates.
+                            <div class="io-description"><p>The <a href="../classes/Predicate.html">Predicate</a> tree root uses an <a href="../miscellaneous/enumerations.html#BooleanOperator">AND</a> operator to combine the Predicates.
 It is required if we want to load predicate filter from saved metadata
 Injected trough the <a href="../miscellaneous/variables.html#NAE_BASE_FILTER">NAE_BASE_FILTER</a> injection token.</p>
 </div>
@@ -267,6 +325,8 @@ Injected trough the <a href="../miscellaneous/variables.html#NAE_BASE_FILTER">NA
                                                     </td>
                                                     
                                                         <td>
+                                                                <p><a href="../injectables/LoggerService.html">LoggerService</a></p>
+
                                                         </td>
                                                 </tr>
                                                 <tr>
@@ -281,8 +341,9 @@ Injected trough the <a href="../miscellaneous/variables.html#NAE_BASE_FILTER">NA
                                                     </td>
                                                     
                                                         <td>
-                                                                <code><p>a {</p>
-</code>
+                                                                <p>a <a href="../injectables/CategoryFactory.html">CategoryFactory</a> instance. This dependency is optional.
+It is required if we want to load predicate filter from saved metadata</p>
+
                                                         </td>
                                                 </tr>
                                                 <tr>
@@ -297,9 +358,9 @@ Injected trough the <a href="../miscellaneous/variables.html#NAE_BASE_FILTER">NA
                                                     </td>
                                                     
                                                         <td>
-                                                                <code><p>Filter that should be applied to the view when no searching is being performed.
-Injected trough the {</p>
-</code>
+                                                                <p>Filter that should be applied to the view when no searching is being performed.
+Injected trough the <a href="../miscellaneous/variables.html#NAE_BASE_FILTER">NAE_BASE_FILTER</a> injection token.</p>
+
                                                         </td>
                                                 </tr>
                                         </tbody>
@@ -311,7 +372,7 @@ Injected trough the {</p>
         </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-methods">
     
     <h3 id="methods">
         Methods
@@ -322,7 +383,7 @@ Injected trough the {</p>
                 <td class="col-md-4">
                     <a name="addGeneratedLeafPredicate"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>addGeneratedLeafPredicate</b></span>
                         <a href="#addGeneratedLeafPredicate"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -330,69 +391,68 @@ Injected trough the {</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>addGeneratedLeafPredicate(generator: <a href="../classes/Category.html" target="_self">Category&lt;any&gt;</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="217"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:217</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="217"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:217</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Adds a new hidden branch of the predicate tree with a singular leaf node containing the provided Query.</p>
+                        <div class="io-description"><p>Adds a new hidden branch of the predicate tree with a singular leaf node containing the provided Query.</p>
 <p>This can be used to add predicates to the search tree (think header search),
 which can be made visible and editable in the search GUI later.
 If the generator doesn&#39;t currently generate a query a node with an empty query will be added.</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>generator</td>
-                                    <td>
-                                                <code><a href="../classes/Category.html" target="_self" >Category&lt;any&gt;</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>generator</td>
+                                            <td>
+                                                            <code><a href="../classes/Category.html" target="_self" >Category&lt;any&gt;</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the generator that is in such state, that it generates the Query, that should be added as branch/leaf.
+                                            <td>
+                                                    <p>the generator that is in such state, that it generates the Query, that should be added as branch/leaf.
 If the generator doesn&#39;t currently generate a query a node with an empty query will be added.</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -403,7 +463,7 @@ If the generator doesn&#39;t currently generate a query a node with an empty que
                 <td class="col-md-4">
                     <a name="addPredicate"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>addPredicate</b></span>
                         <a href="#addPredicate"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -411,69 +471,68 @@ If the generator doesn&#39;t currently generate a query a node with an empty que
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>addPredicate(newPredicate: <a href="../classess/Predicate.html" target="_self">Predicate</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="205"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:205</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="205"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:205</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Adds a <a href="../classess/Predicate.html">Predicate</a> to the Predicate root and updates the active Filter.</p>
+                        <div class="io-description"><p>Adds a <a href="../classes/Predicate.html">Predicate</a> to the Predicate root and updates the active Filter.</p>
 <p>Predicates added this way will not be visible in the search GUI.
 If you want to make sure your predicates are visible (and editable)
 use the <a href="../injectables/SearchService.html#addGeneratedLeafPredicate">addGeneratedLeafPredicate()</a> method instead.</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>newPredicate</td>
-                                    <td>
-                                                <code><a href="../classess/Predicate.html" target="_self" >Predicate</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>newPredicate</td>
+                                            <td>
+                                                            <code><a href="../classess/Predicate.html" target="_self" >Predicate</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>Predicate that should be added to the search queries.</p>
+                                            <td>
+                                                    <p>Predicate that should be added to the search queries.</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        <p>the index of the added Predicate</p>
+                        </div>
+                            <div class="io-description">
+                                <p>the index of the added Predicate</p>
 
-                    </div>
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -484,7 +543,7 @@ use the <a href="../injectables/SearchService.html#addGeneratedLeafPredicate">ad
                 <td class="col-md-4">
                     <a name="clearFullTextFilter"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>clearFullTextFilter</b></span>
                         <a href="#clearFullTextFilter"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -492,29 +551,29 @@ use the <a href="../injectables/SearchService.html#addGeneratedLeafPredicate">ad
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>clearFullTextFilter()</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="268"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:268</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="268"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:268</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Clears the full text filter (if set). If the full text filter is not set, does nothing.</p>
+                        <div class="io-description"><p>Clears the full text filter (if set). If the full text filter is not set, does nothing.</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -525,7 +584,7 @@ use the <a href="../injectables/SearchService.html#addGeneratedLeafPredicate">ad
                 <td class="col-md-4">
                     <a name="clearPredicates"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>clearPredicates</b></span>
                         <a href="#clearPredicates"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -533,65 +592,64 @@ use the <a href="../injectables/SearchService.html#addGeneratedLeafPredicate">ad
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>clearPredicates(clearHidden)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="243"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:243</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="243"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:243</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Removes all <a href="../classess/Predicate.html">Predicate</a> objects that contribute to the search. Updates the active Filter if it was affected.</p>
+                        <div class="io-description"><p>Removes all <a href="../classes/Predicate.html">Predicate</a> objects that contribute to the search. Updates the active Filter if it was affected.</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Optional</td>
-                                    <td>Default value</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>clearHidden</td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                            <td>Optional</td>
+                                                <td>Default value</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>clearHidden</td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
-                                    <td>
-                                        <code>false</code>
-                                    </td>
+                                            <td>
+                                                    <code>false</code>
+                                            </td>
 
-                                    <td>
-                                        <p>whether the hidden predicates should be cleared as well</p>
+                                            <td>
+                                                    <p>whether the hidden predicates should be cleared as well</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -602,7 +660,7 @@ use the <a href="../injectables/SearchService.html#addGeneratedLeafPredicate">ad
                 <td class="col-md-4">
                     <a name="createFilterTextSegments"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>createFilterTextSegments</b></span>
                         <a href="#createFilterTextSegments"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -610,33 +668,31 @@ use the <a href="../injectables/SearchService.html#addGeneratedLeafPredicate">ad
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>createFilterTextSegments()</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="367"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:367</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="367"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:367</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../interfaces/FilterTextSegment.html" target="_self" >Array&lt;FilterTextSegment&gt;</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/FilterTextSegment.html" target="_self" >Array&lt;FilterTextSegment&gt;</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        <p>an Array of filter text segments that correspond to the currently displayed completed predicates</p>
+                        </div>
+                            <div class="io-description">
+                                <p>an Array of filter text segments that correspond to the currently displayed completed predicates</p>
 
-                    </div>
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -647,7 +703,7 @@ use the <a href="../injectables/SearchService.html#addGeneratedLeafPredicate">ad
                 <td class="col-md-4">
                     <a name="createPredicateMetadata"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>createPredicateMetadata</b></span>
                         <a href="#createPredicateMetadata"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -655,36 +711,34 @@ use the <a href="../injectables/SearchService.html#addGeneratedLeafPredicate">ad
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>createPredicateMetadata()</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="311"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:311</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="311"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:311</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Otherwise returns the serialized form of the completed queries in the predicate tree.</p>
+                        <div class="io-description"><p>Otherwise returns the serialized form of the completed queries in the predicate tree.</p>
 </div>
 
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classess/Predicate.html" target="_self" >PredicateTreeMetadata | undefined</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classess/Predicate.html" target="_self" >PredicateTreeMetadata | undefined</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        <p><code>undefined</code> if the predicate tree contains no complete query.
+                        </div>
+                            <div class="io-description">
+                                <p><code>undefined</code> if the predicate tree contains no complete query.
 Otherwise returns the serialized form of the completed queries in the predicate tree.</p>
 
-                    </div>
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -695,7 +749,7 @@ Otherwise returns the serialized form of the completed queries in the predicate 
                 <td class="col-md-4">
                     <a name="loadFromMetadata"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>loadFromMetadata</b></span>
                         <a href="#loadFromMetadata"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -703,67 +757,66 @@ Otherwise returns the serialized form of the completed queries in the predicate 
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>loadFromMetadata(metadata: <a href="../interfaces/FilterMetadata.html" target="_self">FilterMetadata</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="324"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:324</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="324"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:324</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Replaces the current predicate filter by the one corresponding to the provided generator metadata.</p>
+                        <div class="io-description"><p>Replaces the current predicate filter by the one corresponding to the provided generator metadata.</p>
 <p>The <a href="../injectables/CategoryFactory.html">CategoryFactory</a> instance must be provided for this service if we want to use this method. Logs an error and does nothing.</p>
 <p>The <code>filterType</code> of this search service must match the <code>filterType</code> of the provided metadata. Otherwise an error is thrown.</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>metadata</td>
-                                    <td>
-                                                <code><a href="../interfaces/FilterMetadata.html" target="_self" >FilterMetadata</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>metadata</td>
+                                            <td>
+                                                            <code><a href="../interfaces/FilterMetadata.html" target="_self" >FilterMetadata</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the serialized state of the predicate tree that should be restored to this search service</p>
+                                            <td>
+                                                    <p>the serialized state of the predicate tree that should be restored to this search service</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -786,21 +839,21 @@ Otherwise returns the serialized form of the completed queries in the predicate 
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="93"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:93</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="93"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:93</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -811,7 +864,7 @@ Otherwise returns the serialized form of the completed queries in the predicate 
                 <td class="col-md-4">
                     <a name="removePredicate"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>removePredicate</b></span>
                         <a href="#removePredicate"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -819,87 +872,86 @@ Otherwise returns the serialized form of the completed queries in the predicate 
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>removePredicate(index: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, clearInput)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="232"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:232</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="232"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:232</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Removes the <a href="../classess/Predicate.html">Predicate</a> object from the provided index. If the index is invalid does nothing.
+                        <div class="io-description"><p>Removes the <a href="../classes/Predicate.html">Predicate</a> object from the provided index. If the index is invalid does nothing.
 Updates the the active Filter if the Predicate tree was affected.</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Default value</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>index</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Default value</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>index</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
-                                    <td>
-                                    </td>
+                                            <td>
+                                            </td>
 
-                                    <td>
-                                        <p>index of the Predicate that should be removed</p>
+                                            <td>
+                                                    <p>index of the Predicate that should be removed</p>
 
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>clearInput</td>
-                                    <td>
-                                    </td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>clearInput</td>
+                                            <td>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
-                                    <td>
-                                        <code>true</code>
-                                    </td>
+                                            <td>
+                                                    <code>true</code>
+                                            </td>
 
-                                    <td>
-                                        <p>whether the input, that corresponds to the predicate should be cleared</p>
+                                            <td>
+                                                    <p>whether the input, that corresponds to the predicate should be cleared</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -910,7 +962,7 @@ Updates the the active Filter if the Predicate tree was affected.</p>
                 <td class="col-md-4">
                     <a name="setFullTextFilter"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>setFullTextFilter</b></span>
                         <a href="#setFullTextFilter"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -918,66 +970,65 @@ Updates the the active Filter if the Predicate tree was affected.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>setFullTextFilter(searchedSubstring: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="259"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:259</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="259"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:259</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Adds a <a href="../classes/Filter.html">Filter</a> with the <a href="../interfaces/CaseSearchRequestBody.html#fullText">fullText</a> attribute set to the provided value.
+                        <div class="io-description"><p>Adds a <a href="../classes/Filter.html">Filter</a> with the <a href="../interfaces/CaseSearchRequestBody.html#fullText">fullText</a> attribute set to the provided value.
 If full text filter is already set, it will be replaced.</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>searchedSubstring</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>searchedSubstring</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>value that should be searched on all full text fields</p>
+                                            <td>
+                                                    <p>value that should be searched on all full text fields</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -988,7 +1039,7 @@ If full text filter is already set, it will be replaced.</p>
                 <td class="col-md-4">
                     <a name="show"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>show</b></span>
                         <a href="#show"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -996,65 +1047,64 @@ If full text filter is already set, it will be replaced.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>show(predicateIds: Array<number>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="280"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:280</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="280"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:280</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Shows the predicates with the given ids. Skips ids that don&#39;t exist.</p>
+                        <div class="io-description"><p>Shows the predicates with the given ids. Skips ids that don&#39;t exist.</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>predicateIds</td>
-                                    <td>
-                                            <code>Array&lt;number&gt;</code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>predicateIds</td>
+                                            <td>
+                                                        <code>Array&lt;number&gt;</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the ids of the predicates that should be shown.</p>
+                                            <td>
+                                                    <p>the ids of the predicates that should be shown.</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1065,7 +1115,7 @@ If full text filter is already set, it will be replaced.</p>
                 <td class="col-md-4">
                     <a name="updateActiveFilter"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>updateActiveFilter</b></span>
                         <a href="#updateActiveFilter"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1073,36 +1123,36 @@ If full text filter is already set, it will be replaced.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>updateActiveFilter()</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="288"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:288</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="288"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:288</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Reads the current query from the predicate tree, combines it with the base Filter and full text Filter (if set)
+                        <div class="io-description"><p>Reads the current query from the predicate tree, combines it with the base Filter and full text Filter (if set)
 and updates the active Filter.</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
+                        </div>
                 </td>
             </tr>
         </tbody>
     </table>
 </section>
-            <section>
+            <section data-compodoc="block-properties">
     
     <h3 id="inputs">
         Properties
@@ -1259,7 +1309,7 @@ and updates the active Filter.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>The index of a removed <a href="../classess/Predicate.html">Predicate</a> is emmited into this stream</p>
+                    <div class="io-description"><p>The index of a removed <a href="../classes/Predicate.html">Predicate</a> is emmited into this stream</p>
 </div>
                 </td>
             </tr>
@@ -1292,7 +1342,7 @@ and updates the active Filter.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Holds the <a href="../classess/Predicate.html">Predicate</a> tree root for user search queries.</p>
+                    <div class="io-description"><p>Holds the <a href="../classes/Predicate.html">Predicate</a> tree root for user search queries.</p>
 </div>
                 </td>
             </tr>
@@ -1301,7 +1351,7 @@ and updates the active Filter.</p>
     </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-accessors">
     <h3 id="accessors">
         Accessors
     </h3>
@@ -1392,6 +1442,8 @@ and updates the active Filter.</p>
                             </tr>
                     <tr>
                         <td class="col-md-4">
+                                <div class="io-description"><p>Returns <code>false</code> if only the base filter is currently applied.</p>
+</div>
 
                                 <div>
                                 </div>
@@ -1425,6 +1477,8 @@ and updates the active Filter.</p>
                             </tr>
                     <tr>
                         <td class="col-md-4">
+                                <div class="io-description"><p>Returns <code>false</code> if there are no predicates, or if there are only hidden predicates applied</p>
+</div>
 
                                 <div>
                                 </div>
@@ -1561,7 +1615,7 @@ and updates the active Filter.</p>
                                 <div>
                                 </div>
                                 <div class="io-description">
-                                    <b>Returns : </b>        <code><a href="../classes/Filter.html" target="_self" >FilterType</a></code>
+                                    <b>Returns : </b>        <code><a href="../miscellaneous/enumerations.html#FilterType" target="_self" >FilterType</a></code>
 
                                 </div>
                         </td>
@@ -1590,6 +1644,8 @@ and updates the active Filter.</p>
                             </tr>
                     <tr>
                         <td class="col-md-4">
+                                <div class="io-description"><p>See <a href="../injectables/SearchService.html#loadFromMetadata">loadFromMetadata()</a></p>
+</div>
 
                                 <div>
                                 </div>
@@ -1623,6 +1679,9 @@ and updates the active Filter.</p>
                             </tr>
                     <tr>
                         <td class="col-md-4">
+                                <div class="io-description"><p>emits <code>false</code> otherwise.</p>
+<p>See <a href="../injectables/SearchService.html#loadFromMetadata">loadFromMetadata()</a></p>
+</div>
 
                                 <div>
                                 </div>
@@ -1672,7 +1731,7 @@ and updates the active Filter.</p>
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Inject, Injectable, OnDestroy, Optional} from &#x27;@angular/core&#x27;;
 import {BooleanOperator} from &#x27;../models/boolean-operator&#x27;;
 import {Filter} from &#x27;../../filter/models/filter&#x27;;
@@ -2054,14 +2113,15 @@ export class SearchService implements OnDestroy {
 
 
 
-                   
+
+
 
 
 
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -2073,6 +2133,15 @@ export class SearchService implements OnDestroy {
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
@@ -2080,10 +2149,23 @@ export class SearchService implements OnDestroy {
             var MAX_SEARCH_RESULTS = 15;
        </script>
 
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       
-       <script type="module" src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/menu-wc.js" defer></script>
        <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>

@@ -9,13 +9,64 @@
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 	   <link rel="stylesheet" href="../styles/style.css">
-        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+        <link rel="stylesheet" href="../styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
-            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
@@ -24,7 +75,7 @@
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
@@ -34,8 +85,8 @@
 
 
 <ol class="breadcrumb">
-    <li>Modules</li>
-    <li >ConfirmDialogModule</li>
+    <li class="breadcrumb-item">Modules</li>
+    <li class="breadcrumb-item" >ConfirmDialogModule</li>
 </ol>
 
 <div class="text-center module-graph-container">
@@ -66,23 +117,23 @@
 <title>cluster_ConfirmDialogModule</title>
 <polygon fill="none" stroke="black" stroke-dasharray="1,5" points="84,-70 84,-268 412,-268 412,-70 84,-70"/>
 </g>
+<g id="clust4" class="cluster">
+<title>cluster_ConfirmDialogModule_imports</title>
+<polygon fill="none" stroke="black" points="282,-78 282,-130 404,-130 404,-78 282,-78"/>
+</g>
 <g id="clust2" class="cluster">
 <title>cluster_ConfirmDialogModule_declarations</title>
-<polygon fill="none" stroke="black" points="222,-78 222,-130 404,-130 404,-78 222,-78"/>
+<polygon fill="none" stroke="black" points="92,-78 92,-130 274,-130 274,-78 92,-78"/>
 </g>
 <g id="clust5" class="cluster">
 <title>cluster_ConfirmDialogModule_exports</title>
 <polygon fill="none" stroke="black" points="155,-208 155,-260 341,-260 341,-208 155,-208"/>
 </g>
-<g id="clust4" class="cluster">
-<title>cluster_ConfirmDialogModule_imports</title>
-<polygon fill="none" stroke="black" points="92,-78 92,-130 214,-130 214,-78 92,-78"/>
-</g>
 <!-- ConfirmDialogComponent -->
 <g id="node1" class="node">
 <title>ConfirmDialogComponent</title>
-<polygon fill="#ffffb3" stroke="black" points="396.37,-122 229.63,-122 229.63,-86 396.37,-86 396.37,-122"/>
-<text text-anchor="middle" x="313" y="-99.8" font-family="Times,serif" font-size="14.00">ConfirmDialogComponent</text>
+<polygon fill="#ffffb3" stroke="black" points="266.37,-122 99.63,-122 99.63,-86 266.37,-86 266.37,-122"/>
+<text text-anchor="middle" x="183" y="-99.8" font-family="Times,serif" font-size="14.00">ConfirmDialogComponent</text>
 </g>
 <!-- ConfirmDialogModule -->
 <g id="node2" class="node">
@@ -93,8 +144,8 @@
 <!-- ConfirmDialogComponent&#45;&gt;ConfirmDialogModule -->
 <g id="edge1" class="edge">
 <title>ConfirmDialogComponent&#45;&gt;ConfirmDialogModule</title>
-<path fill="none" stroke="black" d="M275.05,-122.11C275.05,-122.11 275.05,-140.99 275.05,-140.99"/>
-<polygon fill="black" stroke="black" points="271.55,-140.99 275.05,-150.99 278.55,-140.99 271.55,-140.99"/>
+<path fill="none" stroke="black" d="M220.95,-122.11C220.95,-122.11 220.95,-140.99 220.95,-140.99"/>
+<polygon fill="black" stroke="black" points="217.45,-140.99 220.95,-150.99 224.45,-140.99 217.45,-140.99"/>
 </g>
 <!-- ConfirmDialogComponent  -->
 <g id="node4" class="node">
@@ -111,14 +162,14 @@
 <!-- MaterialModule -->
 <g id="node3" class="node">
 <title>MaterialModule</title>
-<polygon fill="#8dd3c7" stroke="black" points="206.47,-122 203.47,-126 182.47,-126 179.47,-122 99.53,-122 99.53,-86 206.47,-86 206.47,-122"/>
-<text text-anchor="middle" x="153" y="-99.8" font-family="Times,serif" font-size="14.00">MaterialModule</text>
+<polygon fill="#8dd3c7" stroke="black" points="396.47,-122 393.47,-126 372.47,-126 369.47,-122 289.53,-122 289.53,-86 396.47,-86 396.47,-122"/>
+<text text-anchor="middle" x="343" y="-99.8" font-family="Times,serif" font-size="14.00">MaterialModule</text>
 </g>
 <!-- MaterialModule&#45;&gt;ConfirmDialogModule -->
 <g id="edge2" class="edge">
 <title>MaterialModule&#45;&gt;ConfirmDialogModule</title>
-<path fill="none" stroke="black" d="M190.97,-122.11C190.97,-122.11 190.97,-140.99 190.97,-140.99"/>
-<polygon fill="black" stroke="black" points="187.47,-140.99 190.97,-150.99 194.47,-140.99 187.47,-140.99"/>
+<path fill="none" stroke="black" d="M305.03,-122.11C305.03,-122.11 305.03,-140.99 305.03,-140.99"/>
+<polygon fill="black" stroke="black" points="301.53,-140.99 305.03,-150.99 308.53,-140.99 301.53,-140.99"/>
 </g>
 </g>
 </svg>
@@ -135,16 +186,22 @@
 <script src="../js/svg-pan-zoom.controls.js"></script>
 
 <ul class="nav nav-tabs" role="tablist">
-    <li  class="active" >
-        <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+    <li class="nav-item">
+        <a href="#info" 
+            class="nav-link"
+            class="nav-link active"
+            role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
     </li>
-    <li >
-        <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+    <li class="nav-item">
+        <a href="#source" 
+            class="nav-link"
+            
+            role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
     </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
 
         <p class="comment">
             <h3>File</h3>
@@ -160,7 +217,7 @@
         <div class="container-fluid module">
             <div class="row">
                 <div class="col-sm-3">
-                    <h3>Declarations<a href="https://angular.io/api/core/NgModule#declarations" target="_blank"
+                    <h3>Declarations<a href="https://angular.io/api/core/NgModule#declarations" target="_blank" rel="noopener noreferrer"
                             title="Official documentation about module declarations"><span class="icon ion-ios-information-circle-outline"></span></a></h3>
                     <ul class="list-group">
                         <li class="list-group-item">
@@ -169,7 +226,8 @@
                     </ul>
                 </div>
                 <div class="col-sm-3">
-                    <h3>Imports<a href="https://angular.io/api/core/NgModule#imports" target="_blank" title="Official documentation about module imports"><span
+                    <h3>Imports<a href="https://angular.io/api/core/NgModule#imports" target="_blank" rel="noopener noreferrer"
+                            title="Official documentation about module imports"><span
                                 class="icon ion-ios-information-circle-outline"></a></h3>
                     <ul class="list-group">
                         <li class="list-group-item">
@@ -178,7 +236,8 @@
                     </ul>
                 </div>
                 <div class="col-sm-3">
-                    <h3>Exports<a href="https://angular.io/api/core/NgModule#exports" target="_blank" title="Official documentation about module exports"><span
+                    <h3>Exports<a href="https://angular.io/api/core/NgModule#exports" target="_blank" rel="noopener noreferrer"
+                            title="Official documentation about module exports"><span
                                 class="icon ion-ios-information-circle-outline"></a></h3>
                     <ul class="list-group">
                         <li class="list-group-item">
@@ -193,11 +252,11 @@
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {NgModule} from &#x27;@angular/core&#x27;;
 import {CommonModule} from &#x27;@angular/common&#x27;;
 import {FormsModule} from &#x27;@angular/forms&#x27;;
-import {FlexLayoutModule} from &#x27;@angular/flex-layout&#x27;;
+import {FlexLayoutModule} from &#x27;@ngbracket/ngx-layout&#x27;;
 import {MaterialModule} from &#x27;../../../material/material.module&#x27;;
 import {ConfirmDialogComponent} from &#x27;./confirm-dialog.component&#x27;;
 
@@ -231,14 +290,16 @@ export class ConfirmDialogModule {
 
 
 
-                   
+
+
+
 
 
 
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -250,6 +311,15 @@ export class ConfirmDialogModule {
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'module';
@@ -257,10 +327,23 @@ export class ConfirmDialogModule {
             var MAX_SEARCH_RESULTS = 15;
        </script>
 
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       
-       <script type="module" src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/menu-wc.js" defer></script>
        <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>

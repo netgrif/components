@@ -9,13 +9,64 @@
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 	   <link rel="stylesheet" href="../styles/style.css">
-        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+        <link rel="stylesheet" href="../styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
-            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
@@ -24,7 +75,7 @@
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
@@ -37,22 +88,29 @@
 
 
 
+
 <ol class="breadcrumb">
-  <li>Injectables</li>
-  <li >AbstractHeaderService</li>
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >AbstractHeaderService</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
@@ -64,7 +122,7 @@
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -276,7 +334,7 @@
     </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-constructor">
     <h3 id="constructor">Constructor</h3>
         <table class="table table-sm table-bordered">
             <tbody>
@@ -374,7 +432,7 @@
         </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-methods">
     
     <h3 id="methods">
         Methods
@@ -385,7 +443,7 @@
                 <td class="col-md-4">
                     <a name="changeMode"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>changeMode</b></span>
                         <a href="#changeMode"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -393,88 +451,87 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>changeMode(newMode: <a href="../undefineds/Mode.html" target="_self">HeaderMode</a>, saveLastMode)</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>changeMode(newMode: <a href="../undefineds/HeaderMode.html" target="_self">HeaderMode</a>, saveLastMode)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="370"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:370</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="370"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:370</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Change selected header mode there are three possible modes: SORT, SEARCH and EDIT
-It can be restored with the <a href="../classess/HeaderState.html#restoreLastMode">HeaderState.restoreLastMode()</a> method.</p>
+                        <div class="io-description"><p>Change selected header mode there are three possible modes: SORT, SEARCH and EDIT
+It can be restored with the <a href="../classes/HeaderState.html#restoreLastMode">HeaderState.restoreLastMode()</a> method.</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Default value</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>newMode</td>
-                                    <td>
-                                                <code><a href="../miscellaneous/typealiases.html#Mode" target="_self" >HeaderMode</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Default value</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>newMode</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/enumerations.html#HeaderMode" target="_self" >HeaderMode</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
-                                    <td>
-                                    </td>
+                                            <td>
+                                            </td>
 
-                                    <td>
-                                        <p>the mode that the header should change to</p>
+                                            <td>
+                                                    <p>the mode that the header should change to</p>
 
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>saveLastMode</td>
-                                    <td>
-                                    </td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>saveLastMode</td>
+                                            <td>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
-                                    <td>
-                                        <code>true</code>
-                                    </td>
+                                            <td>
+                                                    <code>true</code>
+                                            </td>
 
-                                    <td>
-                                        <p>whether the last state should be remembered.
-It can be restored with the [HeaderState.restoreLastMode()]{</p>
+                                            <td>
+                                                    <p>whether the last state should be remembered.
+It can be restored with the <a href="HeaderState.restoreLastMode">HeaderState.restoreLastMode()</a> method.</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -485,7 +542,7 @@ It can be restored with the [HeaderState.restoreLastMode()]{</p>
                 <td class="col-md-4">
                     <a name="clearHeaderSearch"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>clearHeaderSearch</b></span>
                         <a href="#clearHeaderSearch"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -493,66 +550,65 @@ It can be restored with the [HeaderState.restoreLastMode()]{</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>clearHeaderSearch(columnIndex: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="462"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:462</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="462"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:462</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Emits a new value into the <a href="../injectables/AbstractHeaderService.html#clearHeaderSearch$">clearHeaderSearch$</a> stream, that notifies
+                        <div class="io-description"><p>Emits a new value into the <a href="../injectables/AbstractHeaderService.html#clearHeaderSearch$">clearHeaderSearch$</a> stream, that notifies
 the header search component, that it should clear the input for the specified column.</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>columnIndex</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>columnIndex</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the index of the column that should be cleared</p>
+                                            <td>
+                                                    <p>the index of the column that should be cleared</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -563,7 +619,7 @@ the header search component, that it should clear the input for the specified co
                 <td class="col-md-4">
                     <a name="confirmEditMode"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>confirmEditMode</b></span>
                         <a href="#confirmEditMode"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -571,27 +627,27 @@ the header search component, that it should clear the input for the specified co
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>confirmEditMode()</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="385"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:385</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="385"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:385</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -602,8 +658,8 @@ the header search component, that it should clear the input for the specified co
                 <td class="col-md-4">
                     <a name="createMetaHeaders"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
-                        <span class="modifier">Abstract</span>
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Abstract</span>
                         <span ><b>createMetaHeaders</b></span>
                         <a href="#createMetaHeaders"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -611,27 +667,27 @@ the header search component, that it should clear the input for the specified co
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>createMetaHeaders()</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="287"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:287</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="287"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:287</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classes/HeaderColumn.html" target="_self" >Array&lt;HeaderColumn&gt;</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/HeaderColumn.html" target="_self" >Array&lt;HeaderColumn&gt;</a></code>
 
-                    </div>
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -642,7 +698,7 @@ the header search component, that it should clear the input for the specified co
                 <td class="col-md-4">
                     <a name="createModeChange"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>createModeChange</b></span>
                         <a href="#createModeChange"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -650,82 +706,82 @@ the header search component, that it should clear the input for the specified co
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>createModeChange(oldMode: <a href="../undefineds/Mode.html" target="_self">HeaderMode</a>, newMode: <a href="../undefineds/Mode.html" target="_self">HeaderMode</a>)</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createModeChange(oldMode: <a href="../undefineds/HeaderMode.html" target="_self">HeaderMode</a>, newMode: <a href="../undefineds/HeaderMode.html" target="_self">HeaderMode</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="446"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:446</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="446"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:446</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>containing information about a change to the header mode</p>
+                        <div class="io-description"><p>containing information about a change to the header mode</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>oldMode</td>
-                                    <td>
-                                                <code><a href="../miscellaneous/typealiases.html#Mode" target="_self" >HeaderMode</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>oldMode</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/enumerations.html#HeaderMode" target="_self" >HeaderMode</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>the {</p>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>newMode</td>
-                                    <td>
-                                                <code><a href="../miscellaneous/typealiases.html#Mode" target="_self" >HeaderMode</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the {</p>
+                                            <td>
+                                                    <p>the <a href="../miscellaneous/enumerations.html#HeaderMode">HeaderMode</a> that was previously selected</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../interfaces/HeaderChange.html" target="_self" >HeaderChange</a></code>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>newMode</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/enumerations.html#HeaderMode" target="_self" >HeaderMode</a></code>
+                                            </td>
 
-                    </div>
-                    <div class="io-description">
-                        <p>a {</p>
+                                            <td>
+                                                    No
+                                            </td>
 
-                    </div>
+
+                                            <td>
+                                                    <p>the <a href="../miscellaneous/enumerations.html#HeaderMode">HeaderMode</a> that is selected now</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/HeaderChange.html" target="_self" >HeaderChange</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>a {@link HeaderChange} object with {@link ModeChangeDescription} object as it&#39;s <code>description</code>
+containing information about a change to the header mode</p>
+
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -736,7 +792,7 @@ the header search component, that it should clear the input for the specified co
                 <td class="col-md-4">
                     <a name="getViewId"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>getViewId</b></span>
                         <a href="#getViewId"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -744,33 +800,31 @@ the header search component, that it should clear the input for the specified co
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>getViewId()</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="469"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:469</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="469"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:469</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>string | undefined</code>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>string | undefined</code>
 
-                    </div>
-                    <div class="io-description">
-                        <p>the Id of the view, if the ViewIdService was injected. Returns <code>undefined</code> if the service was not injected.</p>
+                        </div>
+                            <div class="io-description">
+                                <p>the Id of the view, if the ViewIdService was injected. Returns <code>undefined</code> if the service was not injected.</p>
 
-                    </div>
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -781,7 +835,7 @@ the header search component, that it should clear the input for the specified co
                 <td class="col-md-4">
                     <a name="headerColumnSelected"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>headerColumnSelected</b></span>
                         <a href="#headerColumnSelected"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -789,72 +843,71 @@ the header search component, that it should clear the input for the specified co
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>headerColumnSelected(columnIndex: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, newHeaderColumn: <a href="../classes/HeaderColumn.html" target="_self">HeaderColumn</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="348"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:348</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="348"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:348</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Change active header and titles of panels</p>
+                        <div class="io-description"><p>Change active header and titles of panels</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>columnIndex</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>columnIndex</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>newHeaderColumn</td>
-                                    <td>
-                                                <code><a href="../classes/HeaderColumn.html" target="_self" >HeaderColumn</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                        </tr>
+                                        <tr>
+                                                <td>newHeaderColumn</td>
+                                            <td>
+                                                            <code><a href="../classes/HeaderColumn.html" target="_self" >HeaderColumn</a></code>
+                                            </td>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -865,7 +918,7 @@ the header search component, that it should clear the input for the specified co
                 <td class="col-md-4">
                     <a name="headerSearchInputChanged"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>headerSearchInputChanged</b></span>
                         <a href="#headerSearchInputChanged"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -873,73 +926,72 @@ the header search component, that it should clear the input for the specified co
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>headerSearchInputChanged(columnIndex: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, searchInput: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="326"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:326</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="326"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:326</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Saves the search value in the appropriate column in the header
+                        <div class="io-description"><p>Saves the search value in the appropriate column in the header
 Emit request for searched panels by user input query</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>columnIndex</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>columnIndex</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>searchInput</td>
-                                    <td>
-                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                        </tr>
+                                        <tr>
+                                                <td>searchInput</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -950,7 +1002,7 @@ Emit request for searched panels by user input query</p>
                 <td class="col-md-4">
                     <a name="initializeDefaultHeaderState"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>initializeDefaultHeaderState</b></span>
                         <a href="#initializeDefaultHeaderState"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -958,27 +1010,27 @@ Emit request for searched panels by user input query</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>initializeDefaultHeaderState()</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="151"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:151</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="151"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:151</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -989,7 +1041,7 @@ Emit request for searched panels by user input query</p>
                 <td class="col-md-4">
                     <a name="loadHeadersFromPreferences"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>loadHeadersFromPreferences</b></span>
                         <a href="#loadHeadersFromPreferences"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -997,32 +1049,32 @@ Emit request for searched panels by user input query</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>loadHeadersFromPreferences()</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="259"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:259</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="259"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:259</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>If this view has som headers stored in it&#39;s preferences attempts to load them.
+                        <div class="io-description"><p>If this view has som headers stored in it&#39;s preferences attempts to load them.
 If the preferences contain nonexistent headers they will be skipped.</p>
 <p>This function is NOT called by the abstract class&#39; constructor.
 It is the responsibility of the child class to call it at an appropriate moment.</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -1033,7 +1085,7 @@ It is the responsibility of the child class to call it at an appropriate moment.
                 <td class="col-md-4">
                     <a name="modeChangeAfterEdit"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>modeChangeAfterEdit</b></span>
                         <a href="#modeChangeAfterEdit"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1041,36 +1093,36 @@ It is the responsibility of the child class to call it at an appropriate moment.
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>modeChangeAfterEdit()</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="436"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:436</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="436"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:436</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>where the <code>previousMode</code> is set to <a href="../miscellaneous/enumerations.html#HeaderMode">EDIT</a> and the <code>currentMode</code> to the mode
+                        <div class="io-description"><p>where the <code>previousMode</code> is set to <a href="../miscellaneous/enumerations.html#HeaderMode">EDIT</a> and the <code>currentMode</code> to the mode
 that is currently selected</p>
 </div>
 
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../interfaces/HeaderChange.html" target="_self" >HeaderChange</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/HeaderChange.html" target="_self" >HeaderChange</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        <p>a {</p>
+                        </div>
+                            <div class="io-description">
+                                <p>a {@link HeaderChange} object with {@link ModeChangeDescription} object as it&#39;s <code>description</code>,
+where the <code>previousMode</code> is set to [EDIT]{@link HeaderMode.EDIT} and the <code>currentMode</code> to the mode
+that is currently selected</p>
 
-                    </div>
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1081,7 +1133,7 @@ that is currently selected</p>
                 <td class="col-md-4">
                     <a name="modeChangeFromCurrent"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>modeChangeFromCurrent</b></span>
                         <a href="#modeChangeFromCurrent"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1089,65 +1141,64 @@ that is currently selected</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>modeChangeFromCurrent(newMode: <a href="../undefineds/Mode.html" target="_self">HeaderMode</a>)</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>modeChangeFromCurrent(newMode: <a href="../miscellaneouss/HeaderMode.html" target="_self">HeaderMode</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="427"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:427</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="427"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:427</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>where the <code>previousMode</code> is set to the currently selected mode and the <code>currentMode</code> is set to the provided argument</p>
+                        <div class="io-description"><p>where the <code>previousMode</code> is set to the currently selected mode and the <code>currentMode</code> is set to the provided argument</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>newMode</td>
-                                    <td>
-                                                <code><a href="../miscellaneous/typealiases.html#Mode" target="_self" >HeaderMode</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>newMode</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/enumerations.html#HeaderMode" target="_self" >HeaderMode</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the {</p>
+                                            <td>
+                                                    <p>the <a href="../miscellaneous/enumerations.html#HeaderMode">HeaderMode</a> that is being selected as the next mode</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../interfaces/HeaderChange.html" target="_self" >HeaderChange</a></code>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/HeaderChange.html" target="_self" >HeaderChange</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1170,21 +1221,21 @@ that is currently selected</p>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="413"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:413</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="413"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:413</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -1195,8 +1246,8 @@ that is currently selected</p>
                 <td class="col-md-4">
                     <a name="restoreLastState"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
-                        <span class="modifier">Abstract</span>
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Abstract</span>
                         <span ><b>restoreLastState</b></span>
                         <a href="#restoreLastState"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1204,27 +1255,27 @@ that is currently selected</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>restoreLastState()</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="480"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:480</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="480"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:480</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
 
-                    </div>
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -1235,7 +1286,7 @@ that is currently selected</p>
                 <td class="col-md-4">
                     <a name="revertEditMode"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>revertEditMode</b></span>
                         <a href="#revertEditMode"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1243,30 +1294,30 @@ that is currently selected</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>revertEditMode()</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="401"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:401</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="401"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:401</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>When user cancels the edit mode, the last saved headers state is loaded and emitted
+                        <div class="io-description"><p>When user cancels the edit mode, the last saved headers state is loaded and emitted
 Last mode in header is reloaded as well. Possible reloaded modes: sort or search</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -1277,8 +1328,8 @@ Last mode in header is reloaded as well. Possible reloaded modes: sort or search
                 <td class="col-md-4">
                     <a name="saveNewState"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
-                        <span class="modifier">Abstract</span>
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Abstract</span>
                         <span ><b>saveNewState</b></span>
                         <a href="#saveNewState"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1286,27 +1337,27 @@ Last mode in header is reloaded as well. Possible reloaded modes: sort or search
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>saveNewState()</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="478"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:478</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="478"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:478</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
 
-                    </div>
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -1317,8 +1368,8 @@ Last mode in header is reloaded as well. Possible reloaded modes: sort or search
                 <td class="col-md-4">
                     <a name="saveState"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
-                        <span class="modifier">Abstract</span>
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Abstract</span>
                         <span ><b>saveState</b></span>
                         <a href="#saveState"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1326,27 +1377,27 @@ Last mode in header is reloaded as well. Possible reloaded modes: sort or search
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>saveState()</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="476"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:476</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="476"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:476</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
 
-                    </div>
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -1357,7 +1408,7 @@ Last mode in header is reloaded as well. Possible reloaded modes: sort or search
                 <td class="col-md-4">
                     <a name="setAllowedNets"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>setAllowedNets</b></span>
                         <a href="#setAllowedNets"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1365,58 +1416,57 @@ Last mode in header is reloaded as well. Possible reloaded modes: sort or search
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>setAllowedNets(allowedNets: Array<PetriNetReference>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="196"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:196</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="196"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:196</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>allowedNets</td>
-                                    <td>
-                                            <code>Array&lt;PetriNetReference&gt;</code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>allowedNets</td>
+                                            <td>
+                                                        <code>Array&lt;PetriNetReference&gt;</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1427,7 +1477,7 @@ Last mode in header is reloaded as well. Possible reloaded modes: sort or search
                 <td class="col-md-4">
                     <a name="setTaskAllowedNets"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>setTaskAllowedNets</b></span>
                         <a href="#setTaskAllowedNets"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1435,58 +1485,57 @@ Last mode in header is reloaded as well. Possible reloaded modes: sort or search
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>setTaskAllowedNets(allowedNets: Array<Net>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="221"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:221</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="221"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:221</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>allowedNets</td>
-                                    <td>
-                                            <code>Array&lt;Net&gt;</code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>allowedNets</td>
+                                            <td>
+                                                        <code>Array&lt;Net&gt;</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1497,7 +1546,7 @@ Last mode in header is reloaded as well. Possible reloaded modes: sort or search
                 <td class="col-md-4">
                     <a name="sortHeaderChanged"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>sortHeaderChanged</b></span>
                         <a href="#sortHeaderChanged"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1505,98 +1554,97 @@ Last mode in header is reloaded as well. Possible reloaded modes: sort or search
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>sortHeaderChanged(columnIndex: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, active: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, direction: SortDirection)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="296"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:296</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="296"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:296</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Change sort mode for selected column all other column are set to default sort mode
+                        <div class="io-description"><p>Change sort mode for selected column all other column are set to default sort mode
 Emit request for sorted panels</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>columnIndex</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>columnIndex</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>index of the column that caused the sort change</p>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>active</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>Represents column identifier</p>
+                                            <td>
+                                                    <p>index of the column that caused the sort change</p>
 
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>direction</td>
-                                    <td>
-                                            <code>SortDirection</code>
-                                    </td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>active</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>Represent one of sort modes: asd, desc and &#39;&#39;</p>
+                                            <td>
+                                                    <p>Represents column identifier</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>direction</td>
+                                            <td>
+                                                        <code>SortDirection</code>
+                                            </td>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Represent one of sort modes: asd, desc and &#39;&#39;</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1607,7 +1655,7 @@ Emit request for sorted panels</p>
                 <td class="col-md-4">
                     <a name="updateHeaderColumnCount"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>updateHeaderColumnCount</b></span>
                         <a href="#updateHeaderColumnCount"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1615,36 +1663,36 @@ Emit request for sorted panels</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>updateHeaderColumnCount()</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="180"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:180</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="180"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:180</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Adds <code>null</code> headers if the new count is greater than the current count.</p>
+                        <div class="io-description"><p>Adds <code>null</code> headers if the new count is greater than the current count.</p>
 <p>Removes extra headers if the new count is smaller than the current count.</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
+                        </div>
                 </td>
             </tr>
         </tbody>
     </table>
 </section>
-            <section>
+            <section data-compodoc="block-properties">
     
     <h3 id="inputs">
         Properties
@@ -1927,7 +1975,7 @@ Emit request for sorted panels</p>
     </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-accessors">
     <h3 id="accessors">
         Accessors
     </h3>
@@ -2351,7 +2399,7 @@ Emit request for sorted panels</p>
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {BehaviorSubject, Observable, ReplaySubject, Subject} from &#x27;rxjs&#x27;;
 import {FieldsGroup} from &#x27;./models/fields-group&#x27;;
 import {HeaderState, HeaderStateInterface} from &#x27;./header-state&#x27;;
@@ -2844,14 +2892,15 @@ export abstract class AbstractHeaderService implements OnDestroy {
 
 
 
-                   
+
+
 
 
 
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -2863,6 +2912,15 @@ export abstract class AbstractHeaderService implements OnDestroy {
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
@@ -2870,10 +2928,23 @@ export abstract class AbstractHeaderService implements OnDestroy {
             var MAX_SEARCH_RESULTS = 15;
        </script>
 
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       
-       <script type="module" src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/menu-wc.js" defer></script>
        <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>

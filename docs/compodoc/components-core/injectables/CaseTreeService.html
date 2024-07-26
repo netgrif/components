@@ -9,13 +9,64 @@
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 	   <link rel="stylesheet" href="../styles/style.css">
-        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+        <link rel="stylesheet" href="../styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
-            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
@@ -24,7 +75,7 @@
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
@@ -37,22 +88,29 @@
 
 
 
+
 <ol class="breadcrumb">
-  <li>Injectables</li>
-  <li >CaseTreeService</li>
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >CaseTreeService</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
@@ -64,7 +122,7 @@
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -242,7 +300,7 @@
     </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-constructor">
     <h3 id="constructor">Constructor</h3>
         <table class="table table-sm table-bordered">
             <tbody>
@@ -387,7 +445,7 @@
         </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-methods">
     
     <h3 id="methods">
         Methods
@@ -398,7 +456,7 @@
                 <td class="col-md-4">
                     <a name="addChildNode"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>addChildNode</b></span>
                         <a href="#addChildNode"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -406,61 +464,60 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>addChildNode(clickedNode: <a href="../interfaces/Case.html" target="_self">CaseTreeNode</a>)</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>addChildNode(clickedNode: <a href="../classes/CaseTreeNode.html" target="_self">CaseTreeNode</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="468"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:468</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="468"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:468</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Adds a new child node to the given node based on the properties of the node&#39;s case</p>
+                        <div class="io-description"><p>Adds a new child node to the given node based on the properties of the node&#39;s case</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>clickedNode</td>
-                                    <td>
-                                                <code><a href="../interfaces/Case.html" target="_self" >CaseTreeNode</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>clickedNode</td>
+                                            <td>
+                                                            <code><a href="../classes/CaseTreeNode.html" target="_self" >CaseTreeNode</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>Observable&lt;boolean&gt;</code>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;boolean&gt;</code>
 
-                    </div>
-                    <div class="io-description">
-                        <p>emits <code>true</code> if the child was successfully added, <code>false</code> if not</p>
+                        </div>
+                            <div class="io-description">
+                                <p>emits <code>true</code> if the child was successfully added, <code>false</code> if not</p>
 
-                    </div>
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -471,7 +528,7 @@
                 <td class="col-md-4">
                     <a name="addRootChildNode"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>addRootChildNode</b></span>
                         <a href="#addRootChildNode"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -479,36 +536,34 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>addRootChildNode()</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="449"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:449</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="449"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:449</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Adds a child to the root node.</p>
+                        <div class="io-description"><p>Adds a child to the root node.</p>
 <p>Useful if you are using the layout where the root node is hidden.</p>
 </div>
 
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>Observable&lt;boolean&gt;</code>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;boolean&gt;</code>
 
-                    </div>
-                    <div class="io-description">
-                        <p>emits <code>true</code> if the child was successfully added, <code>false</code> if not</p>
+                        </div>
+                            <div class="io-description">
+                                <p>emits <code>true</code> if the child was successfully added, <code>false</code> if not</p>
 
-                    </div>
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -519,7 +574,7 @@
                 <td class="col-md-4">
                     <a name="changeActiveNode"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>changeActiveNode</b></span>
                         <a href="#changeActiveNode"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -527,60 +582,59 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>changeActiveNode(node: <a href="../interfaces/Case.html" target="_self">CaseTreeNode | undefined</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="255"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:255</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="255"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:255</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Notifies the parent TreeCaseView that a case was clicked in the tree and it&#39;s Task should be displayed</p>
+                        <div class="io-description"><p>Notifies the parent TreeCaseView that a case was clicked in the tree and it&#39;s Task should be displayed</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>node</td>
-                                    <td>
-                                                <code><a href="../interfaces/Case.html" target="_self" >CaseTreeNode | undefined</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>node</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Case.html" target="_self" >CaseTreeNode | undefined</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -591,7 +645,7 @@
                 <td class="col-md-4">
                     <a name="convertPathToExpansionTree"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>convertPathToExpansionTree</b></span>
                         <a href="#convertPathToExpansionTree"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -599,67 +653,66 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>convertPathToExpansionTree(paths: <a href="../interfaces/CaseTreePath.html" target="_self">CaseTreePath</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="604"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:604</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="604"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:604</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Transforms a <a href="../interfaces/CaseTreePath.html">CaseTreePath</a> object into an <a href="../interfaces/ExpansionTree.html">ExpansionTree</a> object.
+                        <div class="io-description"><p>Transforms a <a href="../interfaces/CaseTreePath.html">CaseTreePath</a> object into an <a href="../interfaces/ExpansionTree.html">ExpansionTree</a> object.
 The result has all the common paths merged into single branches of the resulting tree structure.</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>paths</td>
-                                    <td>
-                                                <code><a href="../interfaces/CaseTreePath.html" target="_self" >CaseTreePath</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>paths</td>
+                                            <td>
+                                                            <code><a href="../interfaces/CaseTreePath.html" target="_self" >CaseTreePath</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>nodes that should be expanded along with their path from the root node</p>
+                                            <td>
+                                                    <p>nodes that should be expanded along with their path from the root node</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../interfaces/ExpansionTree.html" target="_self" >ExpansionTree</a></code>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/ExpansionTree.html" target="_self" >ExpansionTree</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        <p>an {</p>
+                        </div>
+                            <div class="io-description">
+                                <p>an {@link ExpansionTree} equivalent to the provided {@link CaseTreePath}</p>
 
-                    </div>
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -670,7 +723,7 @@ The result has all the common paths merged into single branches of the resulting
                 <td class="col-md-4">
                     <a name="createAndAddChildCase"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>createAndAddChildCase</b></span>
                         <a href="#createAndAddChildCase"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -678,97 +731,96 @@ The result has all the common paths merged into single branches of the resulting
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>createAndAddChildCase(processIdentifier: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, clickedNode: <a href="../interfaces/Case.html" target="_self">CaseTreeNode</a>, operationResult: Subject<boolean>)</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createAndAddChildCase(processIdentifier: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, clickedNode: <a href="../classes/CaseTreeNode.html" target="_self">CaseTreeNode</a>, operationResult: Subject<boolean>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="510"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:510</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="510"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:510</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Creates a new case and adds it to the children of the specified node</p>
+                        <div class="io-description"><p>Creates a new case and adds it to the children of the specified node</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>processIdentifier</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>processIdentifier</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>identifier of the process that should be created</p>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>clickedNode</td>
-                                    <td>
-                                                <code><a href="../interfaces/Case.html" target="_self" >CaseTreeNode</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the node that is the parent of the new case</p>
+                                            <td>
+                                                    <p>identifier of the process that should be created</p>
 
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>operationResult</td>
-                                    <td>
-                                            <code>Subject&lt;boolean&gt;</code>
-                                    </td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>clickedNode</td>
+                                            <td>
+                                                            <code><a href="../classes/CaseTreeNode.html" target="_self" >CaseTreeNode</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the result of the operation will be emitted into this stream when the operation completes</p>
+                                            <td>
+                                                    <p>the node that is the parent of the new case</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>operationResult</td>
+                                            <td>
+                                                        <code>Subject&lt;boolean&gt;</code>
+                                            </td>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>the result of the operation will be emitted into this stream when the operation completes</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -779,7 +831,7 @@ The result has all the common paths merged into single branches of the resulting
                 <td class="col-md-4">
                     <a name="createChildRequestBody"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>createChildRequestBody</b></span>
                         <a href="#createChildRequestBody"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -787,67 +839,66 @@ The result has all the common paths merged into single branches of the resulting
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>createChildRequestBody(node: <a href="../interfaces/Case.html" target="_self">CaseTreeNode</a>)</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createChildRequestBody(node: <a href="../classes/CaseTreeNode.html" target="_self">CaseTreeNode</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="434"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:434</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="434"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:434</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Returns <code>undefined</code> if the provided <code>node</code> doesn&#39;t contain enough information to create the request body.</p>
+                        <div class="io-description"><p>Returns <code>undefined</code> if the provided <code>node</code> doesn&#39;t contain enough information to create the request body.</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>node</td>
-                                    <td>
-                                                <code><a href="../interfaces/Case.html" target="_self" >CaseTreeNode</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>node</td>
+                                            <td>
+                                                            <code><a href="../classes/CaseTreeNode.html" target="_self" >CaseTreeNode</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the {</p>
+                                            <td>
+                                                    <p>the <a href="../classes/CaseTreeNode.html">CaseTreeNode</a> who&#39;s children the <a href="../classes/Filter.html">Filter</a> should return</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../interfaces/CaseGetRequestBody.html" target="_self" >CaseGetRequestBody</a></code>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/CaseGetRequestBody.html" target="_self" >CaseGetRequestBody</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        <p>a request body that finds all child cases of the given <code>node</code>.
+                        </div>
+                            <div class="io-description">
+                                <p>a request body that finds all child cases of the given <code>node</code>.
 Returns <code>undefined</code> if the provided <code>node</code> doesn&#39;t contain enough information to create the request body.</p>
 
-                    </div>
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -858,7 +909,7 @@ Returns <code>undefined</code> if the provided <code>node</code> doesn&#39;t con
                 <td class="col-md-4">
                     <a name="deleteRemovedNodes"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>deleteRemovedNodes</b></span>
                         <a href="#deleteRemovedNodes"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -866,82 +917,81 @@ Returns <code>undefined</code> if the provided <code>node</code> doesn&#39;t con
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>deleteRemovedNodes(parentNode: <a href="../interfaces/Case.html" target="_self">CaseTreeNode</a>, newCaseRefValue: Array<string>)</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>deleteRemovedNodes(parentNode: <a href="../classes/CaseTreeNode.html" target="_self">CaseTreeNode</a>, newCaseRefValue: Array<string>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="652"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:652</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="652"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:652</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Deletes the subtrees rooted at the nodes that are present in the parent node&#39;s child case ref values,
+                        <div class="io-description"><p>Deletes the subtrees rooted at the nodes that are present in the parent node&#39;s child case ref values,
 but are no longer present in the new value</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>parentNode</td>
-                                    <td>
-                                                <code><a href="../interfaces/Case.html" target="_self" >CaseTreeNode</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>parentNode</td>
+                                            <td>
+                                                            <code><a href="../classes/CaseTreeNode.html" target="_self" >CaseTreeNode</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>an inner node of the tree that had some of it&#39;s children removed</p>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>newCaseRefValue</td>
-                                    <td>
-                                            <code>Array&lt;string&gt;</code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the new value of the parent node&#39;s case ref</p>
+                                            <td>
+                                                    <p>an inner node of the tree that had some of it&#39;s children removed</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>newCaseRefValue</td>
+                                            <td>
+                                                        <code>Array&lt;string&gt;</code>
+                                            </td>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>the new value of the parent node&#39;s case ref</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -952,7 +1002,7 @@ but are no longer present in the new value</p>
                 <td class="col-md-4">
                     <a name="deselectNodeIfDescendantOf"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>deselectNodeIfDescendantOf</b></span>
                         <a href="#deselectNodeIfDescendantOf"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -960,65 +1010,64 @@ but are no longer present in the new value</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>deselectNodeIfDescendantOf(node: <a href="../interfaces/Case.html" target="_self">CaseTreeNode</a>)</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>deselectNodeIfDescendantOf(node: <a href="../classes/CaseTreeNode.html" target="_self">CaseTreeNode</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="668"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:668</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="668"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:668</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Deselects the currently selected node if it is a descendant of the provided node</p>
+                        <div class="io-description"><p>Deselects the currently selected node if it is a descendant of the provided node</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>node</td>
-                                    <td>
-                                                <code><a href="../interfaces/Case.html" target="_self" >CaseTreeNode</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>node</td>
+                                            <td>
+                                                            <code><a href="../classes/CaseTreeNode.html" target="_self" >CaseTreeNode</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the node who&#39;s descendants should be deselected</p>
+                                            <td>
+                                                    <p>the node who&#39;s descendants should be deselected</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1029,7 +1078,7 @@ but are no longer present in the new value</p>
                 <td class="col-md-4">
                     <a name="expandLevel"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>expandLevel</b></span>
                         <a href="#expandLevel"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1037,83 +1086,82 @@ but are no longer present in the new value</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>expandLevel(levelNodes: <a href="../interfaces/Case.html" target="_self">Array&lt;CaseTreeNode&gt;</a>, targets: <a href="../interfaces/ExpansionTree.html" target="_self">ExpansionTree</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="625"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:625</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="625"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:625</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Recursively expands all nodes from the provided array of nodes, that appear in the top level of the <a href="../interfaces/ExpansionTree.html">ExpansionTree</a> object.</p>
+                        <div class="io-description"><p>Recursively expands all nodes from the provided array of nodes, that appear in the top level of the <a href="../interfaces/ExpansionTree.html">ExpansionTree</a> object.</p>
 <p>The top level nodes are expanded first, from the provided <code>levelNodes</code>.</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>levelNodes</td>
-                                    <td>
-                                                <code><a href="../interfaces/Case.html" target="_self" >Array&lt;CaseTreeNode&gt;</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>levelNodes</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Case.html" target="_self" >Array&lt;CaseTreeNode&gt;</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>nodes from which the expansion should start</p>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>targets</td>
-                                    <td>
-                                                <code><a href="../interfaces/ExpansionTree.html" target="_self" >ExpansionTree</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>a tree structure representing the nodes that are to be expanded recursively.
+                                            <td>
+                                                    <p>nodes from which the expansion should start</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>targets</td>
+                                            <td>
+                                                            <code><a href="../interfaces/ExpansionTree.html" target="_self" >ExpansionTree</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>a tree structure representing the nodes that are to be expanded recursively.
 The top level nodes are expanded first, from the provided <code>levelNodes</code>.</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1124,7 +1172,7 @@ The top level nodes are expanded first, from the provided <code>levelNodes</code
                 <td class="col-md-4">
                     <a name="expandNode"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>expandNode</b></span>
                         <a href="#expandNode"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1132,68 +1180,67 @@ The top level nodes are expanded first, from the provided <code>levelNodes</code
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>expandNode(node: <a href="../interfaces/Case.html" target="_self">CaseTreeNode</a>)</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>expandNode(node: <a href="../classes/CaseTreeNode.html" target="_self">CaseTreeNode</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="278"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:278</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="278"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:278</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Expands the target node in the tree and reloads it&#39;s children if they are marked as dirty
+                        <div class="io-description"><p>Expands the target node in the tree and reloads it&#39;s children if they are marked as dirty
 (e.g. eager loaded tree) then, the Observable emits after all the subtree expansions complete.</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>node</td>
-                                    <td>
-                                                <code><a href="../interfaces/Case.html" target="_self" >CaseTreeNode</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>node</td>
+                                            <td>
+                                                            <code><a href="../classes/CaseTreeNode.html" target="_self" >CaseTreeNode</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the {</p>
+                                            <td>
+                                                    <p>the <a href="../classes/CaseTreeNode.html">CaseTreeNode</a> that should be expanded</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>Observable&lt;boolean&gt;</code>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;boolean&gt;</code>
 
-                    </div>
-                    <div class="io-description">
-                        <p>emits <code>true</code> if the node is expanded and <code>false</code> if not. If the expansion causes more node expansions
+                        </div>
+                            <div class="io-description">
+                                <p>emits <code>true</code> if the node is expanded and <code>false</code> if not. If the expansion causes more node expansions
 (e.g. eager loaded tree) then, the Observable emits after all the subtree expansions complete.</p>
 
-                    </div>
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1204,7 +1251,7 @@ The top level nodes are expanded first, from the provided <code>levelNodes</code
                 <td class="col-md-4">
                     <a name="expandPath"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>expandPath</b></span>
                         <a href="#expandPath"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1212,65 +1259,64 @@ The top level nodes are expanded first, from the provided <code>levelNodes</code
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>expandPath(path: <a href="../interfaces/CaseTreePath.html" target="_self">CaseTreePath</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="586"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:586</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="586"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:586</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Expands all nodes in the tree dictated by the argument.</p>
+                        <div class="io-description"><p>Expands all nodes in the tree dictated by the argument.</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>path</td>
-                                    <td>
-                                                <code><a href="../interfaces/CaseTreePath.html" target="_self" >CaseTreePath</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>path</td>
+                                            <td>
+                                                            <code><a href="../interfaces/CaseTreePath.html" target="_self" >CaseTreePath</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>nodes that should be expanded along with their path from the root node</p>
+                                            <td>
+                                                    <p>nodes that should be expanded along with their path from the root node</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1281,7 +1327,7 @@ The top level nodes are expanded first, from the provided <code>levelNodes</code
                 <td class="col-md-4">
                     <a name="initializeTree"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>initializeTree</b></span>
                         <a href="#initializeTree"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1289,68 +1335,67 @@ The top level nodes are expanded first, from the provided <code>levelNodes</code
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>initializeTree(showRoot: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="222"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:222</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="222"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:222</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Adds the loaded tree root to the display based on the setting.
+                        <div class="io-description"><p>Adds the loaded tree root to the display based on the setting.
 If the root is not displayed it&#39;s children will be displayed on the first level.</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>showRoot</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>showRoot</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>whether the root of the tree should be displayed in the tree or not.
+                                            <td>
+                                                    <p>whether the root of the tree should be displayed in the tree or not.
 If the root is not displayed it&#39;s children will be displayed on the first level.</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>Observable&lt;void&gt;</code>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;void&gt;</code>
 
-                    </div>
-                    <div class="io-description">
-                        <p>an Observable that emits when the tree finishes initialization.</p>
+                        </div>
+                            <div class="io-description">
+                                <p>an Observable that emits when the tree finishes initialization.</p>
 
-                    </div>
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1361,7 +1406,7 @@ If the root is not displayed it&#39;s children will be displayed on the first le
                 <td class="col-md-4">
                     <a name="loadTreeRoot"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>loadTreeRoot</b></span>
                         <a href="#loadTreeRoot"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1369,23 +1414,23 @@ If the root is not displayed it&#39;s children will be displayed on the first le
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>loadTreeRoot()</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="197"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:197</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="197"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:197</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Loads and populates the topmost level of the tree.</p>
+                        <div class="io-description"><p>Loads and populates the topmost level of the tree.</p>
 <p>The displayed cases are determined by this object&#39;s <a href="../injectables/CaseTreeService.html#rootFilter">rootFilter</a>.</p>
 <p>Cases are loaded one page at a time and the tree is refreshed after each page.
 <a href="../injectables/CaseTreeService.html#treeRootLoaded$">finishedLoadingFirstLevel$</a>
@@ -1393,10 +1438,10 @@ will emit <code>true</code> once the last page loads successfully.
 <code>false</code> will be emitted if any of the requests fail.</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -1419,21 +1464,21 @@ will emit <code>true</code> once the last page loads successfully.
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="101"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:101</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="101"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:101</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -1444,7 +1489,7 @@ will emit <code>true</code> once the last page loads successfully.
                 <td class="col-md-4">
                     <a name="processChildNodeAdd"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>processChildNodeAdd</b></span>
                         <a href="#processChildNodeAdd"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1452,98 +1497,97 @@ will emit <code>true</code> once the last page loads successfully.
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>processChildNodeAdd(affectedNode: <a href="../interfaces/Case.html" target="_self">CaseTreeNode</a>, caseRefField: ImmediateData, newCaseRefValue: Array<string>)</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>processChildNodeAdd(affectedNode: <a href="../classes/CaseTreeNode.html" target="_self">CaseTreeNode</a>, caseRefField: ImmediateData, newCaseRefValue: Array<string>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="793"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:793</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="793"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:793</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Adds a new child node to the <code>affectedNode</code> by adding the last Case from the <code>newCaseRefValue</code></p>
+                        <div class="io-description"><p>Adds a new child node to the <code>affectedNode</code> by adding the last Case from the <code>newCaseRefValue</code></p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>affectedNode</td>
-                                    <td>
-                                                <code><a href="../interfaces/Case.html" target="_self" >CaseTreeNode</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>affectedNode</td>
+                                            <td>
+                                                            <code><a href="../classes/CaseTreeNode.html" target="_self" >CaseTreeNode</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>the node in the tree that had a child added - the parent node</p>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>caseRefField</td>
-                                    <td>
-                                            <code>ImmediateData</code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the case ref field of the affected node</p>
+                                            <td>
+                                                    <p>the node in the tree that had a child added - the parent node</p>
 
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>newCaseRefValue</td>
-                                    <td>
-                                            <code>Array&lt;string&gt;</code>
-                                    </td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>caseRefField</td>
+                                            <td>
+                                                        <code>ImmediateData</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the new value of the case ref field in the node</p>
+                                            <td>
+                                                    <p>the case ref field of the affected node</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>Observable&lt;ResultWithAfterActions&lt;boolean&gt;&gt;</code>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>newCaseRefValue</td>
+                                            <td>
+                                                        <code>Array&lt;string&gt;</code>
+                                            </td>
 
-                    </div>
-                    <div class="io-description">
-                        <p>an <code>Observable</code> that emits <code>true</code> if a node was successfully added, <code>false</code> otherwise.</p>
+                                            <td>
+                                                    No
+                                            </td>
 
-                    </div>
+
+                                            <td>
+                                                    <p>the new value of the case ref field in the node</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;ResultWithAfterActions&lt;boolean&gt;&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>an <code>Observable</code> that emits <code>true</code> if a node was successfully added, <code>false</code> otherwise.</p>
+
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1554,7 +1598,7 @@ will emit <code>true</code> once the last page loads successfully.
                 <td class="col-md-4">
                     <a name="processChildNodeRemove"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>processChildNodeRemove</b></span>
                         <a href="#processChildNodeRemove"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1562,98 +1606,97 @@ will emit <code>true</code> once the last page loads successfully.
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>processChildNodeRemove(affectedNode: <a href="../interfaces/Case.html" target="_self">CaseTreeNode</a>, caseRefField: ImmediateData, newCaseRefValues: Set<string>)</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>processChildNodeRemove(affectedNode: <a href="../classes/CaseTreeNode.html" target="_self">CaseTreeNode</a>, caseRefField: ImmediateData, newCaseRefValues: Set<string>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="843"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:843</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="843"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:843</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Removes the deleted node from the children of the <code>affectedNode</code></p>
+                        <div class="io-description"><p>Removes the deleted node from the children of the <code>affectedNode</code></p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>affectedNode</td>
-                                    <td>
-                                                <code><a href="../interfaces/Case.html" target="_self" >CaseTreeNode</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>affectedNode</td>
+                                            <td>
+                                                            <code><a href="../classes/CaseTreeNode.html" target="_self" >CaseTreeNode</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>the node in the tree that had it&#39;s child removed</p>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>caseRefField</td>
-                                    <td>
-                                            <code>ImmediateData</code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the case ref field of the affected node</p>
+                                            <td>
+                                                    <p>the node in the tree that had it&#39;s child removed</p>
 
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>newCaseRefValues</td>
-                                    <td>
-                                            <code>Set&lt;string&gt;</code>
-                                    </td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>caseRefField</td>
+                                            <td>
+                                                        <code>ImmediateData</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the new value of the case ref field in the node</p>
+                                            <td>
+                                                    <p>the case ref field of the affected node</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>Observable&lt;ResultWithAfterActions&lt;boolean&gt;&gt;</code>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>newCaseRefValues</td>
+                                            <td>
+                                                        <code>Set&lt;string&gt;</code>
+                                            </td>
 
-                    </div>
-                    <div class="io-description">
-                        <p>an <code>Observable</code> that emits <code>true</code> when the remove operation completes.</p>
+                                            <td>
+                                                    No
+                                            </td>
 
-                    </div>
+
+                                            <td>
+                                                    <p>the new value of the case ref field in the node</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;ResultWithAfterActions&lt;boolean&gt;&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>an <code>Observable</code> that emits <code>true</code> when the remove operation completes.</p>
+
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1664,7 +1707,7 @@ will emit <code>true</code> once the last page loads successfully.
                 <td class="col-md-4">
                     <a name="pushChildToTree"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>pushChildToTree</b></span>
                         <a href="#pushChildToTree"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1672,82 +1715,81 @@ will emit <code>true</code> once the last page loads successfully.
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>pushChildToTree(parentNode: <a href="../interfaces/Case.html" target="_self">CaseTreeNode</a>, childCase: <a href="../interfaces/Case.html" target="_self">Case</a>)</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>pushChildToTree(parentNode: <a href="../classes/CaseTreeNode.html" target="_self">CaseTreeNode</a>, childCase: <a href="../interfaces/Case.html" target="_self">Case</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="829"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:829</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="829"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:829</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Adds a new child node to the target parent node.</p>
+                        <div class="io-description"><p>Adds a new child node to the target parent node.</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>parentNode</td>
-                                    <td>
-                                                <code><a href="../interfaces/Case.html" target="_self" >CaseTreeNode</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>parentNode</td>
+                                            <td>
+                                                            <code><a href="../classes/CaseTreeNode.html" target="_self" >CaseTreeNode</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>the nodes whose child should be added</p>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>childCase</td>
-                                    <td>
-                                                <code><a href="../interfaces/Case.html" target="_self" >Case</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the child case</p>
+                                            <td>
+                                                    <p>the nodes whose child should be added</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../interfaces/Case.html" target="_self" >CaseTreeNode</a></code>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>childCase</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Case.html" target="_self" >Case</a></code>
+                                            </td>
 
-                    </div>
-                    <div class="io-description">
-                        <p>the newly added node</p>
+                                            <td>
+                                                    No
+                                            </td>
 
-                    </div>
+
+                                            <td>
+                                                    <p>the child case</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/CaseTreeNode.html" target="_self" >CaseTreeNode</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>the newly added node</p>
+
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1758,7 +1800,7 @@ will emit <code>true</code> once the last page loads successfully.
                 <td class="col-md-4">
                     <a name="reloadCurrentCase"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>reloadCurrentCase</b></span>
                         <a href="#reloadCurrentCase"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1766,23 +1808,23 @@ will emit <code>true</code> once the last page loads successfully.
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>reloadCurrentCase()</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="872"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:872</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="872"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:872</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Reloads the currently selected case node. The <a href="../interfaces/Case.html">Case</a> object held in the <a href="../classess/CaseTreeNode.html">CaseTreeNode</a> instance is not replaced,
+                        <div class="io-description"><p>Reloads the currently selected case node. The <a href="../interfaces/Case.html">Case</a> object held in the <a href="../classes/CaseTreeNode.html">CaseTreeNode</a> instance is not replaced,
 but the new Case is <code>Object.assign</code>-ed into it. This means that the reference to the Case instance is unchanged but references
 to all it&#39;s non-primitive attributes are changed.</p>
 <p>If a reload of the current node is initiated before the previous one completed, the new one is ignored.</p>
@@ -1790,10 +1832,10 @@ to all it&#39;s non-primitive attributes are changed.</p>
 <p>Note that the parent node, nor the child nodes are reloaded.</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -1804,7 +1846,7 @@ to all it&#39;s non-primitive attributes are changed.</p>
                 <td class="col-md-4">
                     <a name="removeNode"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>removeNode</b></span>
                         <a href="#removeNode"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1812,67 +1854,66 @@ to all it&#39;s non-primitive attributes are changed.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>removeNode(node: <a href="../interfaces/Case.html" target="_self">CaseTreeNode</a>)</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>removeNode(node: <a href="../classes/CaseTreeNode.html" target="_self">CaseTreeNode</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="561"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:561</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="561"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:561</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>removes the provided non-root node if the underlying case allows it.</p>
+                        <div class="io-description"><p>removes the provided non-root node if the underlying case allows it.</p>
 <p>The underlying case is removed from the case ref of it&#39;s parent element with the help from the <code>remove</code>
 operation provided by case ref itself.</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>node</td>
-                                    <td>
-                                                <code><a href="../interfaces/Case.html" target="_self" >CaseTreeNode</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>node</td>
+                                            <td>
+                                                            <code><a href="../classes/CaseTreeNode.html" target="_self" >CaseTreeNode</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the node that should be removed from the tree</p>
+                                            <td>
+                                                    <p>the node that should be removed from the tree</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1883,7 +1924,7 @@ operation provided by case ref itself.</p>
                 <td class="col-md-4">
                     <a name="toggleNode"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>toggleNode</b></span>
                         <a href="#toggleNode"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1891,65 +1932,64 @@ operation provided by case ref itself.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>toggleNode(node: <a href="../interfaces/Case.html" target="_self">CaseTreeNode</a>)</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>toggleNode(node: <a href="../classes/CaseTreeNode.html" target="_self">CaseTreeNode</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="264"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:264</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="264"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:264</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Toggles the expansion state of a node</p>
+                        <div class="io-description"><p>Toggles the expansion state of a node</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>node</td>
-                                    <td>
-                                                <code><a href="../interfaces/Case.html" target="_self" >CaseTreeNode</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>node</td>
+                                            <td>
+                                                            <code><a href="../classes/CaseTreeNode.html" target="_self" >CaseTreeNode</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the {</p>
+                                            <td>
+                                                    <p>the <a href="../classes/CaseTreeNode.html">CaseTreeNode</a> who&#39;s content should be toggled</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1960,7 +2000,7 @@ operation provided by case ref itself.</p>
                 <td class="col-md-4">
                     <a name="updateCurrentChildrenWithNewPage"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>updateCurrentChildrenWithNewPage</b></span>
                         <a href="#updateCurrentChildrenWithNewPage"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1968,81 +2008,80 @@ operation provided by case ref itself.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>updateCurrentChildrenWithNewPage(node: <a href="../interfaces/Case.html" target="_self">CaseTreeNode</a>, page: Page<Case>)</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateCurrentChildrenWithNewPage(node: <a href="../classes/CaseTreeNode.html" target="_self">CaseTreeNode</a>, page: Page<Case>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="413"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:413</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="413"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:413</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Updates the children of the given <a href="../classess/CaseTreeNode.html">CaseTreeNode</a> with <a href="../interfaces/Case.html">Cases</a> from the provided <a href="../interfaces/Page.html">Page</a>.</p>
+                        <div class="io-description"><p>Updates the children of the given <a href="../classes/CaseTreeNode.html">CaseTreeNode</a> with <a href="../interfaces/Case.html">Cases</a> from the provided <a href="../interfaces/Page.html">Page</a>.</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>node</td>
-                                    <td>
-                                                <code><a href="../interfaces/Case.html" target="_self" >CaseTreeNode</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>node</td>
+                                            <td>
+                                                            <code><a href="../classes/CaseTreeNode.html" target="_self" >CaseTreeNode</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>the {</p>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>page</td>
-                                    <td>
-                                            <code>Page&lt;Case&gt;</code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the {</p>
+                                            <td>
+                                                    <p>the <a href="../classes/CaseTreeNode.html">CaseTreeNode</a> who&#39;s children are updated</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>page</td>
+                                            <td>
+                                                        <code>Page&lt;Case&gt;</code>
+                                            </td>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>the <a href="../interfaces/Page.html">Page</a> that contains the updated children</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -2053,7 +2092,7 @@ operation provided by case ref itself.</p>
                 <td class="col-md-4">
                     <a name="updateNodeChildren"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>updateNodeChildren</b></span>
                         <a href="#updateNodeChildren"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -2061,66 +2100,65 @@ operation provided by case ref itself.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>updateNodeChildren(node: <a href="../interfaces/Case.html" target="_self">CaseTreeNode</a>)</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateNodeChildren(node: <a href="../classes/CaseTreeNode.html" target="_self">CaseTreeNode</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="324"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:324</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="324"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:324</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Checks whether dirty children need to be reloaded and reloads them if needed.</p>
+                        <div class="io-description"><p>Checks whether dirty children need to be reloaded and reloads them if needed.</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>node</td>
-                                    <td>
-                                                <code><a href="../interfaces/Case.html" target="_self" >CaseTreeNode</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>node</td>
+                                            <td>
+                                                            <code><a href="../classes/CaseTreeNode.html" target="_self" >CaseTreeNode</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the {</p>
+                                            <td>
+                                                    <p>the <a href="../classes/CaseTreeNode.html">CaseTreeNode</a> who&#39;s children are updated</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>Observable&lt;void&gt;</code>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;void&gt;</code>
 
-                    </div>
-                    <div class="io-description">
-                        <p>emits when loading finishes</p>
+                        </div>
+                            <div class="io-description">
+                                <p>emits when loading finishes</p>
 
-                    </div>
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -2131,7 +2169,7 @@ operation provided by case ref itself.</p>
                 <td class="col-md-4">
                     <a name="updatePageOfChildren"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>updatePageOfChildren</b></span>
                         <a href="#updatePageOfChildren"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -2139,84 +2177,83 @@ operation provided by case ref itself.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>updatePageOfChildren(node: <a href="../interfaces/Case.html" target="_self">CaseTreeNode</a>, pageNumber: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updatePageOfChildren(node: <a href="../classes/CaseTreeNode.html" target="_self">CaseTreeNode</a>, pageNumber: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="366"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:366</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="366"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:366</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Loads every page of children from the given number and updates the existing children.</p>
+                        <div class="io-description"><p>Loads every page of children from the given number and updates the existing children.</p>
 <p>Missing nodes are removed. Existing nodes are marked as dirty. New nodes are added.</p>
 <p>Nodes are returned in their insertion order.</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>node</td>
-                                    <td>
-                                                <code><a href="../interfaces/Case.html" target="_self" >CaseTreeNode</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>node</td>
+                                            <td>
+                                                            <code><a href="../classes/CaseTreeNode.html" target="_self" >CaseTreeNode</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>the {</p>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>pageNumber</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the number of the first page that should be loaded. All following pages are loaded as well</p>
+                                            <td>
+                                                    <p>the <a href="../classes/CaseTreeNode.html">CaseTreeNode</a> who&#39;s children are updated</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>Observable&lt;void&gt;</code>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>pageNumber</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
 
-                    </div>
-                    <div class="io-description">
-                        <p>next is emitted when loading of all pages completes (regardless of the outcome)</p>
+                                            <td>
+                                                    No
+                                            </td>
 
-                    </div>
+
+                                            <td>
+                                                    <p>the number of the first page that should be loaded. All following pages are loaded as well</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;void&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>next is emitted when loading of all pages completes (regardless of the outcome)</p>
+
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -2227,7 +2264,7 @@ operation provided by case ref itself.</p>
                 <td class="col-md-4">
                     <a name="updateTreeAfterChildAdd"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>updateTreeAfterChildAdd</b></span>
                         <a href="#updateTreeAfterChildAdd"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -2235,103 +2272,102 @@ operation provided by case ref itself.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>updateTreeAfterChildAdd(clickedNode: <a href="../interfaces/Case.html" target="_self">CaseTreeNode</a>, newCaseRefValue: Array<string>, operationResult: Subject<boolean>)</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateTreeAfterChildAdd(clickedNode: <a href="../classes/CaseTreeNode.html" target="_self">CaseTreeNode</a>, newCaseRefValue: Array<string>, operationResult: Subject<boolean>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="540"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:540</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="540"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/case-tree.service.ts:540</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Updates the tree after adding a new child</p>
+                        <div class="io-description"><p>Updates the tree after adding a new child</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>clickedNode</td>
-                                    <td>
-                                                <code><a href="../interfaces/Case.html" target="_self" >CaseTreeNode</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>clickedNode</td>
+                                            <td>
+                                                            <code><a href="../classes/CaseTreeNode.html" target="_self" >CaseTreeNode</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>the parent node</p>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>newCaseRefValue</td>
-                                    <td>
-                                            <code>Array&lt;string&gt;</code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the new value of the parent node&#39;s case ref</p>
+                                            <td>
+                                                    <p>the parent node</p>
 
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>operationResult</td>
-                                    <td>
-                                            <code>Subject&lt;boolean&gt;</code>
-                                    </td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>newCaseRefValue</td>
+                                            <td>
+                                                        <code>Array&lt;string&gt;</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the result of the operation will be emitted into this stream when the operation completes</p>
+                                            <td>
+                                                    <p>the new value of the parent node&#39;s case ref</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>operationResult</td>
+                                            <td>
+                                                        <code>Subject&lt;boolean&gt;</code>
+                                            </td>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>the result of the operation will be emitted into this stream when the operation completes</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
     </table>
 </section>
-            <section>
+            <section data-compodoc="block-properties">
     
     <h3 id="inputs">
         Properties
@@ -2350,7 +2386,7 @@ operation provided by case ref itself.</p>
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../interfaces/Case.html" target="_self" >CaseTreeNode</a></code>
+                        <i>Type : </i>        <code><a href="../classes/CaseTreeNode.html" target="_self" >CaseTreeNode</a></code>
 
                     </td>
                 </tr>
@@ -2398,7 +2434,7 @@ operation provided by case ref itself.</p>
     </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-accessors">
     <h3 id="accessors">
         Accessors
     </h3>
@@ -2605,6 +2641,10 @@ operation provided by case ref itself.</p>
                             </tr>
                     <tr>
                         <td class="col-md-4">
+                                <div class="io-description"><p>Returns <code>undefined</code> if the tree has not yet been initialized.</p>
+<p>Wait for an emission on the <a href="../injectables/CaseTreeService.html#treeRootLoaded$">treeRootLoaded$</a> stream before getting this Observable.</p>
+<p>The first value emitted by the Observable is <code>false</code>, when the tree finishes initializing.</p>
+</div>
 
                                 <div>
                                 </div>
@@ -2638,6 +2678,11 @@ operation provided by case ref itself.</p>
                             </tr>
                     <tr>
                         <td class="col-md-4">
+                                <div class="io-description"><p>in the process of adding a new child node or not.
+Returns <code>undefined</code> if the tree has not yet been initialized.</p>
+<p>Wait for an emission on the <a href="../injectables/CaseTreeService.html#treeRootLoaded$">treeRootLoaded$</a> stream before getting this Observable.</p>
+<p>The first value emitted by the Observable is <code>false</code>, when the tree finishes initializing.</p>
+</div>
 
                                 <div>
                                 </div>
@@ -2724,8 +2769,8 @@ operation provided by case ref itself.</p>
                                                         </td>
                                                         
                                                             <td>
-                                                                    <code><p>the new setting for eager loading</p>
-</code>
+                                                                    <p>the new setting for eager loading</p>
+
                                                             </td>
                                                     </tr>
                                             </tbody>
@@ -2745,7 +2790,7 @@ operation provided by case ref itself.</p>
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Inject, Injectable, OnDestroy, Optional} from &#x27;@angular/core&#x27;;
 import {Filter} from &#x27;../../../filter/models/filter&#x27;;
 import {HttpParams} from &#x27;@angular/common/http&#x27;;
@@ -3706,14 +3751,15 @@ export class CaseTreeService implements OnDestroy {
 
 
 
-                   
+
+
 
 
 
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -3725,6 +3771,15 @@ export class CaseTreeService implements OnDestroy {
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
@@ -3732,10 +3787,23 @@ export class CaseTreeService implements OnDestroy {
             var MAX_SEARCH_RESULTS = 15;
        </script>
 
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       
-       <script type="module" src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/menu-wc.js" defer></script>
        <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>

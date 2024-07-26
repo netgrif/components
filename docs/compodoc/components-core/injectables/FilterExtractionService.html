@@ -9,13 +9,64 @@
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 	   <link rel="stylesheet" href="../styles/style.css">
-        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+        <link rel="stylesheet" href="../styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
-            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
@@ -24,7 +75,7 @@
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
@@ -37,22 +88,29 @@
 
 
 
+
 <ol class="breadcrumb">
-  <li>Injectables</li>
-  <li >FilterExtractionService</li>
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >FilterExtractionService</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
@@ -71,7 +129,7 @@
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -103,6 +161,14 @@
                         <ul class="index-list">
                             <li>
                                     <span class="modifier">Public</span>
+                                <a href="#extractAdditionalFilterAllowedNets" >extractAdditionalFilterAllowedNets</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#extractCompleteAdditionalFilterFromData" >extractCompleteAdditionalFilterFromData</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#extractCompleteFilterFromData" >extractCompleteFilterFromData</a>
                             </li>
                             <li>
@@ -121,18 +187,18 @@
     </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-constructor">
     <h3 id="constructor">Constructor</h3>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(_filterRepository: <a href="../injectables/FilterRepository.html" target="_self">FilterRepository</a>, _taskResourceService: <a href="../injectables/TaskResourceService.html" target="_self">TaskResourceService</a>, _log: <a href="../injectables/LoggerService.html" target="_self">LoggerService</a>)</code>
+<code>constructor(_filterRepository: <a href="../injectables/FilterRepository.html" target="_self">FilterRepository</a>, _taskResourceService: <a href="../injectables/TaskResourceService.html" target="_self">TaskResourceService</a>, _factory: <a href="../injectables/AllowedNetsServiceFactory.html" target="_self">AllowedNetsServiceFactory</a>, baseAllowedNets: <a href="../injectables/BaseAllowedNetsService.html" target="_self">BaseAllowedNetsService</a>, _log: <a href="../injectables/LoggerService.html" target="_self">LoggerService</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/utility/filter-extraction.service.ts:24</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/utility/filter-extraction.service.ts:31</a></div>
                             </td>
                         </tr>
 
@@ -174,6 +240,30 @@
                                                     
                                                 </tr>
                                                 <tr>
+                                                        <td>_factory</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/AllowedNetsServiceFactory.html" target="_self" >AllowedNetsServiceFactory</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>baseAllowedNets</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/BaseAllowedNetsService.html" target="_self" >BaseAllowedNetsService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
                                                         <td>_log</td>
                                                   
                                                         <td>
@@ -194,7 +284,7 @@
         </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-methods">
     
     <h3 id="methods">
         Methods
@@ -203,9 +293,147 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="extractAdditionalFilterAllowedNets"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>extractAdditionalFilterAllowedNets</b></span>
+                        <a href="#extractAdditionalFilterAllowedNets"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>extractAdditionalFilterAllowedNets(dataSection: Array<DataGroup>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="40"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/utility/filter-extraction.service.ts:40</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>dataSection</td>
+                                            <td>
+                                                        <code>Array&lt;DataGroup&gt;</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../injectables/AllowedNetsService.html" target="_self" >AllowedNetsService</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="extractCompleteAdditionalFilterFromData"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>extractCompleteAdditionalFilterFromData</b></span>
+                        <a href="#extractCompleteAdditionalFilterFromData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>extractCompleteAdditionalFilterFromData(dataSection: Array<DataGroup>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="52"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/utility/filter-extraction.service.ts:52</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>dataSection</td>
+                                            <td>
+                                                        <code>Array&lt;DataGroup&gt;</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/Filter.html" target="_self" >Filter | undefined</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="extractCompleteFilterFromData"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>extractCompleteFilterFromData</b></span>
                         <a href="#extractCompleteFilterFromData"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -213,58 +441,75 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>extractCompleteFilterFromData(dataSection: Array<DataGroup>)</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>extractCompleteFilterFromData(dataSection: Array<DataGroup>, fieldId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="31"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/utility/filter-extraction.service.ts:31</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="61"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/utility/filter-extraction.service.ts:61</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>dataSection</td>
-                                    <td>
-                                            <code>Array&lt;DataGroup&gt;</code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Default value</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>dataSection</td>
+                                            <td>
+                                                        <code>Array&lt;DataGroup&gt;</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
+                                            <td>
+                                            </td>
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classes/Filter.html" target="_self" >Filter | undefined</a></code>
+                                        </tr>
+                                        <tr>
+                                                <td>fieldId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                                    <code>UserFilterConstants.FILTER_FIELD_ID</code>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/Filter.html" target="_self" >Filter | undefined</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -275,7 +520,7 @@
                 <td class="col-md-4">
                     <a name="extractViewFilter"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>extractViewFilter</b></span>
                         <a href="#extractViewFilter"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -283,64 +528,63 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>extractViewFilter(originViewIdField: <a href="../classess/DataField.html" target="_self">DataField&lt;any&gt;</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="66"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/utility/filter-extraction.service.ts:66</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="96"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/utility/filter-extraction.service.ts:96</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>originViewIdField</td>
-                                    <td>
-                                                <code><a href="../classess/DataField.html" target="_self" >DataField&lt;any&gt;</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>originViewIdField</td>
+                                            <td>
+                                                            <code><a href="../classess/DataField.html" target="_self" >DataField&lt;any&gt;</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classes/Filter.html" target="_self" >Filter | undefined</a></code>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/Filter.html" target="_self" >Filter | undefined</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
     </table>
 </section>
-            <section>
+            <section data-compodoc="block-properties">
     
     <h3 id="inputs">
         Properties
@@ -372,7 +616,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/utility/filter-extraction.service.ts:24</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/utility/filter-extraction.service.ts:31</a></div>
                         </td>
                     </tr>
 
@@ -384,7 +628,7 @@
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Injectable} from &#x27;@angular/core&#x27;;
 import {Filter} from &#x27;../../filter/models/filter&#x27;;
 import {DataGroup} from &#x27;../../resources/interface/data-groups&#x27;;
@@ -398,6 +642,13 @@ import {MergeOperator} from &#x27;../../filter/models/merge-operator&#x27;;
 import {TaskResourceService} from &#x27;../../resources/engine-endpoint/task-resource.service&#x27;;
 import {FilterField} from &#x27;../../data-fields/filter-field/models/filter-field&#x27;;
 import {DataField} from &#x27;../../data-fields/models/abstract-data-field&#x27;;
+import {GroupNavigationConstants} from &quot;../model/group-navigation-constants&quot;;
+import {AllowedNetsService} from &quot;../../allowed-nets/services/allowed-nets.service&quot;;
+import {
+    AllowedNetsServiceFactory,
+    navigationItemTaskAllowedNetsServiceFactory
+} from &quot;../../allowed-nets/services/factory/allowed-nets-service-factory&quot;;
+import {BaseAllowedNetsService} from &quot;../../allowed-nets/services/base-allowed-nets.service&quot;;
 
 /**
  * This service is able to load the full saved filter including all of its ancestor filters.
@@ -407,16 +658,39 @@ import {DataField} from &#x27;../../data-fields/models/abstract-data-field&#x27;
 })
 export class FilterExtractionService {
 
-    // the same regexs is used in a backend filter process action. Please keep them in sync
+    // the same regex is used in a backend filter process action. Please keep them in sync
     protected static readonly UNTABBED_VIEW_ID_EXTRACTOR &#x3D; &#x27;^.*?(-\\d+)?$&#x27;;
 
     constructor(protected _filterRepository: FilterRepository,
                 protected _taskResourceService: TaskResourceService,
+                protected _factory: AllowedNetsServiceFactory,
+                protected baseAllowedNets: BaseAllowedNetsService,
                 protected _log: LoggerService) {
     }
 
-    public extractCompleteFilterFromData(dataSection: Array&lt;DataGroup&gt;): Filter | undefined {
-        const filterIndex &#x3D; getFieldIndexFromDataGroups(dataSection, UserFilterConstants.FILTER_FIELD_ID);
+    public extractAdditionalFilterAllowedNets(dataSection: Array&lt;DataGroup&gt;): AllowedNetsService {
+        const taskRefIndex &#x3D; getFieldIndexFromDataGroups(dataSection, GroupNavigationConstants.ITEM_FIELD_ID_ADDITIONAL_FILTER_TASKREF);
+        if (taskRefIndex &#x3D;&#x3D;&#x3D; undefined) {
+            return undefined;
+        }
+        const sliced &#x3D; dataSection.slice(taskRefIndex.dataGroupIndex + 1)
+        if (sliced.length &#x3D;&#x3D; 0) {
+            return undefined
+        }
+        return navigationItemTaskAllowedNetsServiceFactory(this._factory, this.baseAllowedNets, sliced)
+    }
+
+    public extractCompleteAdditionalFilterFromData(dataSection: Array&lt;DataGroup&gt;): Filter | undefined {
+        const taskRefIndex &#x3D; getFieldIndexFromDataGroups(dataSection, GroupNavigationConstants.ITEM_FIELD_ID_ADDITIONAL_FILTER_TASKREF);
+        if (taskRefIndex &#x3D;&#x3D;&#x3D; undefined) {
+            return undefined;
+        }
+
+        return this.extractCompleteFilterFromData(dataSection.slice(taskRefIndex.dataGroupIndex + 1));
+    }
+
+    public extractCompleteFilterFromData(dataSection: Array&lt;DataGroup&gt;, fieldId: string &#x3D; UserFilterConstants.FILTER_FIELD_ID): Filter | undefined {
+        const filterIndex &#x3D; getFieldIndexFromDataGroups(dataSection, fieldId);
 
         if (filterIndex &#x3D;&#x3D;&#x3D; undefined) {
             return undefined;
@@ -433,7 +707,7 @@ export class FilterExtractionService {
 
         const parentFilter &#x3D; this.extractCompleteFilterFromData(dataSection.slice(filterIndex.dataGroupIndex + 1));
 
-        if (parentFilter !&#x3D;&#x3D; undefined) {
+        if (parentFilter !&#x3D;&#x3D; undefined &amp;&amp; parentFilter.type &#x3D;&#x3D;&#x3D; filterSegment.type) {
             return filterSegment.merge(parentFilter, MergeOperator.AND);
         }
 
@@ -444,7 +718,7 @@ export class FilterExtractionService {
         }
 
         const rootViewFilter &#x3D; this.extractViewFilter(rootViewIdField);
-        if (rootViewFilter !&#x3D;&#x3D; undefined) {
+        if (rootViewFilter !&#x3D;&#x3D; undefined &amp;&amp; rootViewFilter.type &#x3D;&#x3D;&#x3D; filterSegment.type) {
             return filterSegment.merge(rootViewFilter, MergeOperator.AND);
         }
         return filterSegment;
@@ -481,14 +755,15 @@ export class FilterExtractionService {
 
 
 
-                   
+
+
 
 
 
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -500,6 +775,15 @@ export class FilterExtractionService {
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
@@ -507,10 +791,23 @@ export class FilterExtractionService {
             var MAX_SEARCH_RESULTS = 15;
        </script>
 
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       
-       <script type="module" src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/menu-wc.js" defer></script>
        <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>

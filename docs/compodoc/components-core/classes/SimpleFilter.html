@@ -9,13 +9,64 @@
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 	   <link rel="stylesheet" href="../styles/style.css">
-        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+        <link rel="stylesheet" href="../styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
-            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
@@ -24,7 +75,7 @@
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
@@ -41,22 +92,29 @@
 
 
 
+
 <ol class="breadcrumb">
-  <li>Classes</li>
-  <li >SimpleFilter</li>
+  <li class="breadcrumb-item">Classes</li>
+  <li class="breadcrumb-item" >SimpleFilter</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
@@ -77,12 +135,12 @@
                 <h3>Extends</h3>
             </p>
             <p class="comment">
-                        <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
+                            <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
             </p>
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -151,13 +209,13 @@
     </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-constructor">
     <h3 id="constructor">Constructor</h3>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, type: <a href="../classes/Filter.html" target="_self">FilterType</a>, filterBody: <a href="../undefineds/CaseSearch.html" target="_self">CaseSearchRequestBody | TaskSearchRequestBody</a>, title?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+<code>constructor(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, type: <a href="../undefineds/FilterType.html" target="_self">FilterType</a>, filterBody: <a href="../undefineds/CaseSearch.html" target="_self">CaseSearchRequestBody | TaskSearchRequestBody</a>, title?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -192,15 +250,15 @@
                                                     </td>
                                                     
                                                         <td>
-                                                                <code><p>identifier of the filter</p>
-</code>
+                                                                <p>identifier of the filter</p>
+
                                                         </td>
                                                 </tr>
                                                 <tr>
                                                         <td>type</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../classes/Filter.html" target="_self" >FilterType</a></code>
+                                                                        <code><a href="../miscellaneous/enumerations.html#FilterType" target="_self" >FilterType</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -208,8 +266,8 @@
                                                     </td>
                                                     
                                                         <td>
-                                                                <code><p>type of resources that the filter can query</p>
-</code>
+                                                                <p>type of resources that the filter can query</p>
+
                                                         </td>
                                                 </tr>
                                                 <tr>
@@ -224,8 +282,8 @@
                                                     </td>
                                                     
                                                         <td>
-                                                                <code><p>search request matching this filter&#39;s <code>type</code></p>
-</code>
+                                                                <p>search request matching this filter&#39;s <code>type</code></p>
+
                                                         </td>
                                                 </tr>
                                                 <tr>
@@ -240,8 +298,8 @@
                                                     </td>
                                                     
                                                         <td>
-                                                                <code><p>human readable filter name</p>
-</code>
+                                                                <p>human readable filter name</p>
+
                                                         </td>
                                                 </tr>
                                         </tbody>
@@ -254,7 +312,7 @@
 </section>
 
 
-            <section>
+            <section data-compodoc="block-methods">
     
     <h3 id="methods">
         Methods
@@ -277,29 +335,29 @@
             </tr>
 
 
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Inherited from         <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
+</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../classes/Filter.html#source" target="_self" >Filter:101</a></code>
+</div>
+                        </td>
+                    </tr>
+
+
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Inherited from         <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
-</div>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classes/Filter.html#source" target="_self" >Filter:101</a></code>
-</div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>See <a href="../classes/Filter.html#bodyContainsQuery">Filter.bodyContainsQuery()</a></p>
+                        <div class="io-description"><p>See <a href="../classes/Filter.html#bodyContainsQuery">Filter.bodyContainsQuery()</a></p>
 </div>
 
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
 
-                    </div>
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -322,29 +380,29 @@
             </tr>
 
 
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Inherited from         <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
+</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../classes/Filter.html#source" target="_self" >Filter:86</a></code>
+</div>
+                        </td>
+                    </tr>
+
+
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Inherited from         <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
-</div>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classes/Filter.html#source" target="_self" >Filter:86</a></code>
-</div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>See <a href="../classes/Filter.html#clone">Filter.clone()</a></p>
+                        <div class="io-description"><p>See <a href="../classes/Filter.html#clone">Filter.clone()</a></p>
 </div>
 
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
 
-                    </div>
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -355,7 +413,7 @@
                 <td class="col-md-4">
                     <a name="empty"></a>
                     <span class="name">
-                        <span class="modifier">Static</span>
+                            <span class="modifier">Static</span>
                         <span ><b>empty</b></span>
                         <a href="#empty"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -363,66 +421,65 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>empty(type: <a href="../classes/Filter.html" target="_self">FilterType</a>)</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>empty(type: <a href="../undefineds/FilterType.html" target="_self">FilterType</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="24"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/filter/models/simple-filter.ts:24</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="24"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/filter/models/simple-filter.ts:24</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Create an empty filter of provided type</p>
+                        <div class="io-description"><p>Create an empty filter of provided type</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>type</td>
-                                    <td>
-                                                <code><a href="../classes/Filter.html" target="_self" >FilterType</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>type</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/enumerations.html#FilterType" target="_self" >FilterType</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>type of resources that the filter can query</p>
+                                            <td>
+                                                    <p>type of resources that the filter can query</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        <p>a filter with empty body of the provided type. <code>id</code> of the new filter is set to an empty string.</p>
+                        </div>
+                            <div class="io-description">
+                                <p>a filter with empty body of the provided type. <code>id</code> of the new filter is set to an empty string.</p>
 
-                    </div>
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -433,7 +490,7 @@
                 <td class="col-md-4">
                     <a name="emptyCaseFilter"></a>
                     <span class="name">
-                        <span class="modifier">Static</span>
+                            <span class="modifier">Static</span>
                         <span ><b>emptyCaseFilter</b></span>
                         <a href="#emptyCaseFilter"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -441,35 +498,33 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>emptyCaseFilter()</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="32"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/filter/models/simple-filter.ts:32</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="32"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/filter/models/simple-filter.ts:32</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Equivalent to calling <code>SimpleFilter.empty(FilterType.CASE)</code>.</p>
+                        <div class="io-description"><p>Equivalent to calling <code>SimpleFilter.empty(FilterType.CASE)</code>.</p>
 </div>
 
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        <p>a filter with empty body that can be used to search cases</p>
+                        </div>
+                            <div class="io-description">
+                                <p>a filter with empty body that can be used to search cases</p>
 
-                    </div>
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -480,7 +535,7 @@
                 <td class="col-md-4">
                     <a name="emptyTaskFilter"></a>
                     <span class="name">
-                        <span class="modifier">Static</span>
+                            <span class="modifier">Static</span>
                         <span ><b>emptyTaskFilter</b></span>
                         <a href="#emptyTaskFilter"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -488,35 +543,33 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>emptyTaskFilter()</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="40"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/filter/models/simple-filter.ts:40</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="40"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/filter/models/simple-filter.ts:40</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Equivalent to calling <code>SimpleFilter.empty(FilterType.TASK)</code>.</p>
+                        <div class="io-description"><p>Equivalent to calling <code>SimpleFilter.empty(FilterType.TASK)</code>.</p>
 </div>
 
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        <p>a filter with empty body that can be used to search tasks</p>
+                        </div>
+                            <div class="io-description">
+                                <p>a filter with empty body that can be used to search tasks</p>
 
-                    </div>
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -527,7 +580,7 @@
                 <td class="col-md-4">
                     <a name="fromCaseQuery"></a>
                     <span class="name">
-                        <span class="modifier">Static</span>
+                            <span class="modifier">Static</span>
                         <span ><b>fromCaseQuery</b></span>
                         <a href="#fromCaseQuery"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -535,66 +588,65 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>fromCaseQuery(filterBody: <a href="../interfaces/CaseSearchRequestBody.html" target="_self">CaseSearchRequestBody</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="59"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/filter/models/simple-filter.ts:59</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="59"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/filter/models/simple-filter.ts:59</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Creates a case filter with the provided body</p>
+                        <div class="io-description"><p>Creates a case filter with the provided body</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>filterBody</td>
-                                    <td>
-                                                <code><a href="../interfaces/CaseSearchRequestBody.html" target="_self" >CaseSearchRequestBody</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>filterBody</td>
+                                            <td>
+                                                            <code><a href="../interfaces/CaseSearchRequestBody.html" target="_self" >CaseSearchRequestBody</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the body of the new filter</p>
+                                            <td>
+                                                    <p>the body of the new filter</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        <p>a case filter with the given body. <code>id</code> of the new filter is set to an empty string.</p>
+                        </div>
+                            <div class="io-description">
+                                <p>a case filter with the given body. <code>id</code> of the new filter is set to an empty string.</p>
 
-                    </div>
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -605,7 +657,7 @@
                 <td class="col-md-4">
                     <a name="fromQuery"></a>
                     <span class="name">
-                        <span class="modifier">Static</span>
+                            <span class="modifier">Static</span>
                         <span ><b>fromQuery</b></span>
                         <a href="#fromQuery"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -613,82 +665,81 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>fromQuery(filterBody: <a href="../undefineds/CaseSearch.html" target="_self">CaseSearchRequestBody | TaskSearchRequestBody</a>, type: <a href="../classes/Filter.html" target="_self">FilterType</a>)</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>fromQuery(filterBody: <a href="../undefineds/CaseSearch.html" target="_self">CaseSearchRequestBody | TaskSearchRequestBody</a>, type: <a href="../undefineds/FilterType.html" target="_self">FilterType</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="50"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/filter/models/simple-filter.ts:50</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="50"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/filter/models/simple-filter.ts:50</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Creates a filter with the provided body and the provided type</p>
+                        <div class="io-description"><p>Creates a filter with the provided body and the provided type</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>filterBody</td>
-                                    <td>
-                                                <code><a href="../miscellaneous/enumerations.html#CaseSearch" target="_self" >CaseSearchRequestBody | TaskSearchRequestBody</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>filterBody</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/enumerations.html#CaseSearch" target="_self" >CaseSearchRequestBody | TaskSearchRequestBody</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>the body of the new filter</p>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>type</td>
-                                    <td>
-                                                <code><a href="../classes/Filter.html" target="_self" >FilterType</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the type of the new filter. Type must match the type of the body.</p>
+                                            <td>
+                                                    <p>the body of the new filter</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>type</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/enumerations.html#FilterType" target="_self" >FilterType</a></code>
+                                            </td>
 
-                    </div>
-                    <div class="io-description">
-                        <p>a filter with the given body and type. <code>id</code> of the new filter is set to an empty string.</p>
+                                            <td>
+                                                    No
+                                            </td>
 
-                    </div>
+
+                                            <td>
+                                                    <p>the type of the new filter. Type must match the type of the body.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>a filter with the given body and type. <code>id</code> of the new filter is set to an empty string.</p>
+
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -699,7 +750,7 @@
                 <td class="col-md-4">
                     <a name="fromTaskQuery"></a>
                     <span class="name">
-                        <span class="modifier">Static</span>
+                            <span class="modifier">Static</span>
                         <span ><b>fromTaskQuery</b></span>
                         <a href="#fromTaskQuery"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -707,66 +758,65 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>fromTaskQuery(filterBody: <a href="../interfaces/TaskSearchRequestBody.html" target="_self">TaskSearchRequestBody</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="68"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/filter/models/simple-filter.ts:68</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="68"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/filter/models/simple-filter.ts:68</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Creates a task filter with the provided body</p>
+                        <div class="io-description"><p>Creates a task filter with the provided body</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>filterBody</td>
-                                    <td>
-                                                <code><a href="../interfaces/TaskSearchRequestBody.html" target="_self" >TaskSearchRequestBody</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>filterBody</td>
+                                            <td>
+                                                            <code><a href="../interfaces/TaskSearchRequestBody.html" target="_self" >TaskSearchRequestBody</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the body of the new filter</p>
+                                            <td>
+                                                    <p>the body of the new filter</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        <p>a task filter with the given body. <code>id</code> of the new filter is set to an empty string.</p>
+                        </div>
+                            <div class="io-description">
+                                <p>a task filter with the given body. <code>id</code> of the new filter is set to an empty string.</p>
 
-                    </div>
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -789,29 +839,29 @@
             </tr>
 
 
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Inherited from         <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
+</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../classes/Filter.html#source" target="_self" >Filter:108</a></code>
+</div>
+                        </td>
+                    </tr>
+
+
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Inherited from         <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
-</div>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classes/Filter.html#source" target="_self" >Filter:108</a></code>
-</div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>See <a href="../classes/Filter.html#getRequestBody">Filter.getRequestBody()</a></p>
+                        <div class="io-description"><p>See <a href="../classes/Filter.html#getRequestBody">Filter.getRequestBody()</a></p>
 </div>
 
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../miscellaneous/enumerations.html#CaseSearch" target="_self" >TaskSearchRequestBody | CaseSearchRequestBody</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../miscellaneous/enumerations.html#CaseSearch" target="_self" >TaskSearchRequestBody | CaseSearchRequestBody</a></code>
 
-                    </div>
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -829,77 +879,76 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>merge(filter: <a href="../classes/Filter.html" target="_self">Filter</a>, operator: <a href="../classes/Operator.html" target="_self">MergeOperator</a>)</code>
+<code>merge(filter: <a href="../classes/Filter.html" target="_self">Filter</a>, operator: <a href="../miscellaneouss/MergeOperator.html" target="_self">MergeOperator</a>)</code>
                 </td>
             </tr>
 
 
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Inherited from         <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
+</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../classes/Filter.html#source" target="_self" >Filter:93</a></code>
+</div>
+                        </td>
+                    </tr>
+
+
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Inherited from         <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
-</div>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classes/Filter.html#source" target="_self" >Filter:93</a></code>
-</div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>See <a href="../classes/Filter.html#merge">Filter.merge()</a></p>
+                        <div class="io-description"><p>See <a href="../classes/Filter.html#merge">Filter.merge()</a></p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>filter</td>
-                                    <td>
-                                                <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>filter</td>
+                                            <td>
+                                                            <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>operator</td>
-                                    <td>
-                                                <code><a href="../classes/Operator.html" target="_self" >MergeOperator</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classess/MergedFilter.html" target="_self" >MergedFilter</a></code>
+                                        </tr>
+                                        <tr>
+                                                <td>operator</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/enumerations.html#MergeOperator" target="_self" >MergeOperator</a></code>
+                                            </td>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classess/MergedFilter.html" target="_self" >MergedFilter</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -910,7 +959,7 @@
                 <td class="col-md-4">
                     <a name="deepCopy"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>deepCopy</b></span>
                         <a href="#deepCopy"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -918,72 +967,71 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>deepCopy(obj: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank">object</a>)</code>
                 </td>
             </tr>
 
 
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Inherited from         <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
+</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../classes/Filter.html#source" target="_self" >Filter:88</a></code>
+</div>
+                        </td>
+                    </tr>
+
+
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Inherited from         <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
-</div>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classes/Filter.html#source" target="_self" >Filter:88</a></code>
-</div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>Creates a deep copy of a simple object.</p>
+                        <div class="io-description"><p>Creates a deep copy of a simple object.</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>obj</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>obj</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>object that should be copied</p>
+                                            <td>
+                                                    <p>object that should be copied</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        <p>a deep copy of the argument</p>
+                        </div>
+                            <div class="io-description">
+                                <p>a deep copy of the argument</p>
 
-                    </div>
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -994,7 +1042,7 @@
                 <td class="col-md-4">
                     <a name="getRequestParams"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>getRequestParams</b></span>
                         <a href="#getRequestParams"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1002,42 +1050,40 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>getRequestParams()</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Inherited from         <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Inherited from         <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
 </div>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classes/Filter.html#source" target="_self" >Filter:79</a></code>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../classes/Filter.html#source" target="_self" >Filter:79</a></code>
 </div>
-                </td>
-            </tr>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Returns the necessary request params for the filter. Default implementation returns an empty object.
+                        <div class="io-description"><p>Returns the necessary request params for the filter. Default implementation returns an empty object.
 The params are added on top of the request when sending it to the backend by the respective service methods.</p>
 </div>
 
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../miscellaneous/typealiases.html#Params" target="_self" >Params</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../miscellaneous/typealiases.html#Params" target="_self" >Params</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        <p>an empty object <code>{}</code></p>
+                        </div>
+                            <div class="io-description">
+                                <p>an empty object <code>{}</code></p>
 
-                    </div>
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1051,7 +1097,7 @@ The params are added on top of the request when sending it to the backend by the
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Filter} from &#x27;./filter&#x27;;
 import {MergeOperator} from &#x27;./merge-operator&#x27;;
 import {MergedFilter} from &#x27;./merged-filter&#x27;;
@@ -1169,14 +1215,15 @@ export class SimpleFilter extends Filter {
 
 
 
-                   
+
+
 
 
 
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -1188,6 +1235,15 @@ export class SimpleFilter extends Filter {
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
@@ -1195,10 +1251,23 @@ export class SimpleFilter extends Filter {
             var MAX_SEARCH_RESULTS = 15;
        </script>
 
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       
-       <script type="module" src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/menu-wc.js" defer></script>
        <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>

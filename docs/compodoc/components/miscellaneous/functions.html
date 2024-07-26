@@ -9,13 +9,64 @@
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 	   <link rel="stylesheet" href="../styles/style.css">
-        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+        <link rel="stylesheet" href="../styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
-            <a href="../" class="navbar-brand">Netgrif Components library Documentation</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Netgrif Components library Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
@@ -24,7 +75,7 @@
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
@@ -44,20 +95,25 @@
 
 
 
-                   
+
+
+
 
 <ol class="breadcrumb">
-  <li>Miscellaneous</li>
-  <li>Functions</li>
+  <li class="breadcrumb-item">Miscellaneous</li>
+  <li class="breadcrumb-item">Functions</li>
 </ol>
 
-<section>
+<section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
             <tr>
                 <td class="col-md-4">
                     <ul class="index-list">
+                        <li>
+                            <a href="#baseFilterFactory" title="projects/netgrif-components/src/lib/dialog/user-impersonate-dialog/user-impersonate-dialog.component.ts" ><b>baseFilterFactory</b>&nbsp;&nbsp;&nbsp;(projects/.../user-impersonate-dialog.component.ts)</a>
+                        </li>
                         <li>
                             <a href="#baseFilterFactory" title="projects/netgrif-components/src/lib/filter-field-content/filter-field-tabbed-task-view/filter-field-tabbed-task-view.component.ts" ><b>baseFilterFactory</b>&nbsp;&nbsp;&nbsp;(projects/.../filter-field-tabbed-task-view.component.ts)</a>
                         </li>
@@ -119,6 +175,12 @@
                             <a href="#levenshtein" title="projects/netgrif-components/src/commons/angular-cli-devkit-core-strings.ts" ><b>levenshtein</b>&nbsp;&nbsp;&nbsp;(projects/.../angular-cli-devkit-core-strings.ts)</a>
                         </li>
                         <li>
+                            <a href="#loadBaseFilterFactory" title="projects/netgrif-components/src/lib/dialog/load-filter-dialog/load-filter-dialog.component.ts" ><b>loadBaseFilterFactory</b>&nbsp;&nbsp;&nbsp;(projects/.../load-filter-dialog.component.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#localAllowedNetsFactory" title="projects/netgrif-components/src/lib/dialog/user-impersonate-dialog/user-impersonate-dialog.component.ts" ><b>localAllowedNetsFactory</b>&nbsp;&nbsp;&nbsp;(projects/.../user-impersonate-dialog.component.ts)</a>
+                        </li>
+                        <li>
                             <a href="#localAllowedNetsFactory" title="projects/netgrif-components/src/lib/filter-field-content/filter-field-tabbed-case-view/filter-field-tabbed-case-view.component.ts" ><b>localAllowedNetsFactory</b>&nbsp;&nbsp;&nbsp;(projects/.../filter-field-tabbed-case-view.component.ts)</a>
                         </li>
                         <li>
@@ -131,7 +193,13 @@
                             <a href="#localAllowedNetsFactory" title="projects/netgrif-components/src/lib/side-menu/content-components/user-impersonate/user-impersonate.component.ts" ><b>localAllowedNetsFactory</b>&nbsp;&nbsp;&nbsp;(projects/.../user-impersonate.component.ts)</a>
                         </li>
                         <li>
+                            <a href="#saveBaseFilterFactory" title="projects/netgrif-components/src/lib/dialog/save-filter-dialog/save-filter-dialog.component.ts" ><b>saveBaseFilterFactory</b>&nbsp;&nbsp;&nbsp;(projects/.../save-filter-dialog.component.ts)</a>
+                        </li>
+                        <li>
                             <a href="#searchCategoryConverter" title="projects/netgrif-components/src/lib/search/search-component/search.component.ts" ><b>searchCategoryConverter</b>&nbsp;&nbsp;&nbsp;(projects/.../search.component.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#taskViewFilterFactory" title="projects/netgrif-components/src/lib/dialog/task-view-dialog/task-view-dialog.component.ts" ><b>taskViewFilterFactory</b>&nbsp;&nbsp;&nbsp;(projects/.../task-view-dialog.component.ts)</a>
                         </li>
                         <li>
                             <a href="#underscore" title="projects/netgrif-components/src/commons/angular-cli-devkit-core-strings.ts" ><b>underscore</b>&nbsp;&nbsp;&nbsp;(projects/.../angular-cli-devkit-core-strings.ts)</a>
@@ -143,8 +211,8 @@
     </table>
 </section>
 
-    <h3>projects/netgrif-components/src/lib/filter-field-content/filter-field-tabbed-task-view/filter-field-tabbed-task-view.component.ts</h3>
-    <section>
+    <h3>projects/netgrif-components/src/lib/dialog/user-impersonate-dialog/user-impersonate-dialog.component.ts</h3>
+    <section data-compodoc="block-methods">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -158,7 +226,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>baseFilterFactory(injectedTabData)</code>
+<code>baseFilterFactory(dialogControl: UserImpersonateInjectionData)</code>
                 </td>
             </tr>
 
@@ -168,36 +236,163 @@
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>injectedTabData</td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>dialogControl</td>
+                                            <td>
+                                                        <code>UserImpersonateInjectionData</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>BaseFilter</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="localAllowedNetsFactory"></a>
+                    <span class="name">
+                        <span ><b>localAllowedNetsFactory</b></span>
+                        <a href="#localAllowedNetsFactory"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>localAllowedNetsFactory(factory: AllowedNetsServiceFactory)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>factory</td>
+                                            <td>
+                                                        <code>AllowedNetsServiceFactory</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>AllowedNetsService</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components/src/lib/filter-field-content/filter-field-tabbed-task-view/filter-field-tabbed-task-view.component.ts</h3>
+    <section data-compodoc="block-methods">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="baseFilterFactory"></a>
+                    <span class="name">
+                        <span ><b>baseFilterFactory</b></span>
+                        <a href="#baseFilterFactory"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>baseFilterFactory(injectedTabData: InjectedTabbedTaskViewData)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>injectedTabData</td>
+                                            <td>
+                                                        <code>InjectedTabbedTaskViewData</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                 </td>
             </tr>
         </tbody>
     </table>
 </section>    <h3>projects/netgrif-components/src/lib/side-menu/content-components/load-filter/load-filter.component.ts</h3>
-    <section>
+    <section data-compodoc="block-methods">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -211,7 +406,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>baseFilterFactory(sideMenuControl)</code>
+<code>baseFilterFactory(sideMenuControl: SideMenuControl)</code>
                 </td>
             </tr>
 
@@ -221,37 +416,40 @@
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>sideMenuControl</td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>sideMenuControl</td>
+                                            <td>
+                                                        <code>SideMenuControl</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>BaseFilter</code>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>BaseFilter</code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -269,7 +467,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>localAllowedNetsFactory(factory)</code>
+<code>localAllowedNetsFactory(factory: AllowedNetsServiceFactory)</code>
                 </td>
             </tr>
 
@@ -279,43 +477,46 @@
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>factory</td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>factory</td>
+                                            <td>
+                                                        <code>AllowedNetsServiceFactory</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>AllowedNetsService</code>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>AllowedNetsService</code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
     </table>
 </section>    <h3>projects/netgrif-components/src/lib/side-menu/content-components/save-filter/save-filter.component.ts</h3>
-    <section>
+    <section data-compodoc="block-methods">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -329,7 +530,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>baseFilterFactory(sideMenuControl)</code>
+<code>baseFilterFactory(sideMenuControl: SideMenuControl)</code>
                 </td>
             </tr>
 
@@ -339,37 +540,40 @@
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>sideMenuControl</td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>sideMenuControl</td>
+                                            <td>
+                                                        <code>SideMenuControl</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>BaseFilter</code>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>BaseFilter</code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -387,7 +591,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>localAllowedNetsFactory(factory)</code>
+<code>localAllowedNetsFactory(factory: AllowedNetsServiceFactory)</code>
                 </td>
             </tr>
 
@@ -397,43 +601,46 @@
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>factory</td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>factory</td>
+                                            <td>
+                                                        <code>AllowedNetsServiceFactory</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>AllowedNetsService</code>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>AllowedNetsService</code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
     </table>
 </section>    <h3>projects/netgrif-components/src/lib/side-menu/content-components/user-impersonate/user-impersonate.component.ts</h3>
-    <section>
+    <section data-compodoc="block-methods">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -447,7 +654,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>baseFilterFactory(sideMenuControl)</code>
+<code>baseFilterFactory(sideMenuControl: SideMenuControl)</code>
                 </td>
             </tr>
 
@@ -457,37 +664,40 @@
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>sideMenuControl</td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>sideMenuControl</td>
+                                            <td>
+                                                        <code>SideMenuControl</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>BaseFilter</code>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>BaseFilter</code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -505,7 +715,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>localAllowedNetsFactory(factory)</code>
+<code>localAllowedNetsFactory(factory: AllowedNetsServiceFactory)</code>
                 </td>
             </tr>
 
@@ -515,43 +725,46 @@
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>factory</td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>factory</td>
+                                            <td>
+                                                        <code>AllowedNetsServiceFactory</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>AllowedNetsService</code>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>AllowedNetsService</code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
     </table>
 </section>    <h3>projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/default-tabbed-task-view/default-tabbed-task-view.component.ts</h3>
-    <section>
+    <section data-compodoc="block-methods">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -565,7 +778,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>baseFilterFactory(injectedTabData)</code>
+<code>baseFilterFactory(injectedTabData: <a href="../interfaces/InjectedTabbedTaskViewDataWithNavigationItemTaskData.html" target="_self">InjectedTabbedTaskViewDataWithNavigationItemTaskData</a>)</code>
                 </td>
             </tr>
 
@@ -575,36 +788,39 @@
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>injectedTabData</td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>injectedTabData</td>
+                                            <td>
+                                                            <code><a href="../interfaces/InjectedTabbedTaskViewDataWithNavigationItemTaskData.html" target="_self" >InjectedTabbedTaskViewDataWithNavigationItemTaskData</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                 </td>
             </tr>
         </tbody>
     </table>
 </section>    <h3>projects/netgrif-components/src/commons/angular-cli-devkit-core-strings.ts</h3>
-    <section>
+    <section data-compodoc="block-methods">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -618,7 +834,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>camelize(str)</code>
+<code>camelize(str: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
@@ -627,55 +843,53 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Returns the lowerCamelCase form of a string.</p>
-<p>```javascript</p>
-<ul>
-<li>camelize(&#39;innerHTML&#39;);          // &#39;innerHTML&#39;</li>
-<li>camelize(&#39;action_name&#39;);        // &#39;actionName&#39;</li>
-<li>camelize(&#39;css-class-name&#39;);     // &#39;cssClassName&#39;</li>
-<li>camelize(&#39;my favorite items&#39;);  // &#39;myFavoriteItems&#39;</li>
-<li>camelize(&#39;My Favorite Items&#39;);  // &#39;myFavoriteItems&#39;</li>
-<li>```</li>
-</ul>
-</div>
+                        <div class="io-description"><p>Returns the lowerCamelCase form of a string.</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-javascript">camelize(&#39;innerHTML&#39;);          // &#39;innerHTML&#39;
+camelize(&#39;action_name&#39;);        // &#39;actionName&#39;
+camelize(&#39;css-class-name&#39;);     // &#39;cssClassName&#39;
+camelize(&#39;my favorite items&#39;);  // &#39;myFavoriteItems&#39;
+camelize(&#39;My Favorite Items&#39;);  // &#39;myFavoriteItems&#39;</code></pre></div></div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>str</td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>str</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>The string to camelize.</p>
+                                            <td>
+                                                    <p>The string to camelize.</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        <p>the camelized string.</p>
+                        </div>
+                            <div class="io-description">
+                                <p>the camelized string.</p>
 
-                    </div>
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -693,7 +907,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>capitalize(str)</code>
+<code>capitalize(str: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
@@ -702,54 +916,52 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Returns the Capitalized form of a string</p>
-<p>```javascript</p>
-<ul>
-<li>&#39;innerHTML&#39;.capitalize()         // &#39;InnerHTML&#39;</li>
-<li>&#39;action_name&#39;.capitalize()       // &#39;Action_name&#39;</li>
-<li>&#39;css-class-name&#39;.capitalize()    // &#39;Css-class-name&#39;</li>
-<li>&#39;my favorite items&#39;.capitalize() // &#39;My favorite items&#39;</li>
-<li>```</li>
-</ul>
-</div>
+                        <div class="io-description"><p>Returns the Capitalized form of a string</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-javascript">&#39;innerHTML&#39;.capitalize()         // &#39;InnerHTML&#39;
+&#39;action_name&#39;.capitalize()       // &#39;Action_name&#39;
+&#39;css-class-name&#39;.capitalize()    // &#39;Css-class-name&#39;
+&#39;my favorite items&#39;.capitalize() // &#39;My favorite items&#39;</code></pre></div></div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>str</td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>str</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>The string to capitalize.</p>
+                                            <td>
+                                                    <p>The string to capitalize.</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        <p>The capitalized string.</p>
+                        </div>
+                            <div class="io-description">
+                                <p>The capitalized string.</p>
 
-                    </div>
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -767,7 +979,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>classify(str)</code>
+<code>classify(str: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
@@ -776,54 +988,52 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Returns the UpperCamelCase form of a string.</p>
-<p>```javascript</p>
-<ul>
-<li>&#39;innerHTML&#39;.classify();          // &#39;InnerHTML&#39;</li>
-<li>&#39;action_name&#39;.classify();        // &#39;ActionName&#39;</li>
-<li>&#39;css-class-name&#39;.classify();     // &#39;CssClassName&#39;</li>
-<li>&#39;my favorite items&#39;.classify();  // &#39;MyFavoriteItems&#39;</li>
-<li>```</li>
-</ul>
-</div>
+                        <div class="io-description"><p>Returns the UpperCamelCase form of a string.</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-javascript">&#39;innerHTML&#39;.classify();          // &#39;InnerHTML&#39;
+&#39;action_name&#39;.classify();        // &#39;ActionName&#39;
+&#39;css-class-name&#39;.classify();     // &#39;CssClassName&#39;
+&#39;my favorite items&#39;.classify();  // &#39;MyFavoriteItems&#39;</code></pre></div></div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>str</td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>str</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the string to classify</p>
+                                            <td>
+                                                    <p>the string to classify</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        <p>the classified string</p>
+                        </div>
+                            <div class="io-description">
+                                <p>the classified string</p>
 
-                    </div>
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -841,7 +1051,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>dasherize(str)</code>
+<code>dasherize(str: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
@@ -850,54 +1060,52 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Replaces underscores, spaces, or camelCase with dashes.</p>
-<p>```javascript</p>
-<ul>
-<li>dasherize(&#39;innerHTML&#39;);         // &#39;inner-html&#39;</li>
-<li>dasherize(&#39;action_name&#39;);       // &#39;action-name&#39;</li>
-<li>dasherize(&#39;css-class-name&#39;);    // &#39;css-class-name&#39;</li>
-<li>dasherize(&#39;my favorite items&#39;); // &#39;my-favorite-items&#39;</li>
-<li>```</li>
-</ul>
-</div>
+                        <div class="io-description"><p>Replaces underscores, spaces, or camelCase with dashes.</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-javascript">dasherize(&#39;innerHTML&#39;);         // &#39;inner-html&#39;
+dasherize(&#39;action_name&#39;);       // &#39;action-name&#39;
+dasherize(&#39;css-class-name&#39;);    // &#39;css-class-name&#39;
+dasherize(&#39;my favorite items&#39;); // &#39;my-favorite-items&#39;</code></pre></div></div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>str</td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>str</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>The string to dasherize.</p>
+                                            <td>
+                                                    <p>The string to dasherize.</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        <p>the dasherized string.</p>
+                        </div>
+                            <div class="io-description">
+                                <p>the dasherized string.</p>
 
-                    </div>
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -915,7 +1123,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>decamelize(str)</code>
+<code>decamelize(str: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
@@ -924,54 +1132,52 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Converts a camelized string into all lower case separated by underscores.</p>
-<p>```javascript</p>
-<ul>
-<li>decamelize(&#39;innerHTML&#39;);         // &#39;inner_html&#39;</li>
-<li>decamelize(&#39;action_name&#39;);       // &#39;action_name&#39;</li>
-<li>decamelize(&#39;css-class-name&#39;);    // &#39;css-class-name&#39;</li>
-<li>decamelize(&#39;my favorite items&#39;); // &#39;my favorite items&#39;</li>
-<li>```</li>
-</ul>
-</div>
+                        <div class="io-description"><p>Converts a camelized string into all lower case separated by underscores.</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-javascript">decamelize(&#39;innerHTML&#39;);         // &#39;inner_html&#39;
+decamelize(&#39;action_name&#39;);       // &#39;action_name&#39;
+decamelize(&#39;css-class-name&#39;);    // &#39;css-class-name&#39;
+decamelize(&#39;my favorite items&#39;); // &#39;my favorite items&#39;</code></pre></div></div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>str</td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>str</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>The string to decamelize.</p>
+                                            <td>
+                                                    <p>The string to decamelize.</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        <p>the decamelized string.</p>
+                        </div>
+                            <div class="io-description">
+                                <p>the decamelized string.</p>
 
-                    </div>
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -989,7 +1195,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>levenshtein(a, b)</code>
+<code>levenshtein(a: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, b: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
@@ -998,63 +1204,69 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Calculate the levenshtein distance of two strings.
+                        <div class="io-description"><p>Calculate the levenshtein distance of two strings.
 See <a href="https://en.wikipedia.org/wiki/Levenshtein_distance">https://en.wikipedia.org/wiki/Levenshtein_distance</a>.
 Based off <a href="https://gist.github.com/andrei-m/982927">https://gist.github.com/andrei-m/982927</a> (for using the faster dynamic programming
 version).</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>a</td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>a</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>String a.</p>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>b</td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>String b.</p>
+                                            <td>
+                                                    <p>String a.</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>b</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
 
-                    </div>
-                    <div class="io-description">
-                        <p>A number that represents the distance between the two strings. The greater the number
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>String b.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>A number that represents the distance between the two strings. The greater the number
 the more distant the strings are from each others.</p>
 
-                    </div>
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1072,7 +1284,7 @@ the more distant the strings are from each others.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>underscore(str)</code>
+<code>underscore(str: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
@@ -1081,61 +1293,59 @@ the more distant the strings are from each others.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>More general than decamelize. Returns the lower_case_and_underscored
+                        <div class="io-description"><p>More general than decamelize. Returns the lower_case_and_underscored
 form of a string.</p>
-<p>```javascript</p>
-<ul>
-<li>&#39;innerHTML&#39;.underscore();          // &#39;inner_html&#39;</li>
-<li>&#39;action_name&#39;.underscore();        // &#39;action_name&#39;</li>
-<li>&#39;css-class-name&#39;.underscore();     // &#39;css_class_name&#39;</li>
-<li>&#39;my favorite items&#39;.underscore();  // &#39;my_favorite_items&#39;</li>
-<li>```</li>
-</ul>
-</div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-javascript">&#39;innerHTML&#39;.underscore();          // &#39;inner_html&#39;
+&#39;action_name&#39;.underscore();        // &#39;action_name&#39;
+&#39;css-class-name&#39;.underscore();     // &#39;css_class_name&#39;
+&#39;my favorite items&#39;.underscore();  // &#39;my_favorite_items&#39;</code></pre></div></div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>str</td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>str</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>The string to underscore.</p>
+                                            <td>
+                                                    <p>The string to underscore.</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        <p>the underscored string.</p>
+                        </div>
+                            <div class="io-description">
+                                <p>the underscored string.</p>
 
-                    </div>
+                            </div>
                 </td>
             </tr>
         </tbody>
     </table>
 </section>    <h3>projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-components/model/factory-methods.ts</h3>
-    <section>
+    <section data-compodoc="block-methods">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -1149,7 +1359,7 @@ form of a string.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>filterCaseTabbedDataAllowedNetsServiceFactory(allowedNetsServiceFactory, baseAllowedNets, tabData)</code>
+<code>filterCaseTabbedDataAllowedNetsServiceFactory(allowedNetsServiceFactory: AllowedNetsServiceFactory, baseAllowedNets: BaseAllowedNetsService, tabData: <a href="../interfaces/InjectedTabbedCaseViewDataWithNavigationItemTaskData.html" target="_self">InjectedTabbedCaseViewDataWithNavigationItemTaskData</a>)</code>
                 </td>
             </tr>
 
@@ -1158,68 +1368,77 @@ form of a string.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Converts a navigation item case task data injected by the <a href="NAE_TAB_DATA">NAE_TAB_DATA</a> injection token into an <a href="AllowedNetsService">AllowedNetsService</a>
+                        <div class="io-description"><p>Converts a navigation item case task data injected by the <a href="NAE_TAB_DATA">NAE_TAB_DATA</a> injection token into an <a href="AllowedNetsService">AllowedNetsService</a>
 instance</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>allowedNetsServiceFactory</td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>allowedNetsServiceFactory</td>
+                                            <td>
+                                                        <code>AllowedNetsServiceFactory</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>baseAllowedNets</td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>tabData</td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>baseAllowedNets</td>
+                                            <td>
+                                                        <code>BaseAllowedNetsService</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the injected data containing the navigation item case task data</p>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>tabData</td>
+                                            <td>
+                                                            <code><a href="../interfaces/InjectedTabbedCaseViewDataWithNavigationItemTaskData.html" target="_self" >InjectedTabbedCaseViewDataWithNavigationItemTaskData</a></code>
+                                            </td>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>AllowedNetsService</code>
+                                            <td>
+                                                    No
+                                            </td>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+
+                                            <td>
+                                                    <p>the injected data containing the navigation item case task data</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>AllowedNetsService</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1237,7 +1456,7 @@ instance</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>filterCaseTabbedDataFilterFactory(extractionService, tabData)</code>
+<code>filterCaseTabbedDataFilterFactory(extractionService: FilterExtractionService, tabData: <a href="../interfaces/InjectedTabbedCaseViewDataWithNavigationItemTaskData.html" target="_self">InjectedTabbedCaseViewDataWithNavigationItemTaskData</a>)</code>
                 </td>
             </tr>
 
@@ -1246,56 +1465,62 @@ instance</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Converts a navigation item case task data injected by the <a href="NAE_TAB_DATA">NAE_TAB_DATA</a> injection token into a <a href="BaseFilter">BaseFilter</a> instance</p>
+                        <div class="io-description"><p>Converts a navigation item case task data injected by the <a href="NAE_TAB_DATA">NAE_TAB_DATA</a> injection token into a <a href="BaseFilter">BaseFilter</a> instance</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>extractionService</td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>extractionService</td>
+                                            <td>
+                                                        <code>FilterExtractionService</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>tabData</td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the injected data containing the navigation item case task data</p>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>tabData</td>
+                                            <td>
+                                                            <code><a href="../interfaces/InjectedTabbedCaseViewDataWithNavigationItemTaskData.html" target="_self" >InjectedTabbedCaseViewDataWithNavigationItemTaskData</a></code>
+                                            </td>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>BaseFilter</code>
+                                            <td>
+                                                    No
+                                            </td>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+
+                                            <td>
+                                                    <p>the injected data containing the navigation item case task data</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>BaseFilter</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1313,7 +1538,7 @@ instance</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>filterCaseTabbedDataSearchCategoriesFactory(categoryResolverService, tabData, defaultCaseSearchCategories, defaultTaskSearchCategories)</code>
+<code>filterCaseTabbedDataSearchCategoriesFactory(categoryResolverService: CategoryResolverService, tabData: <a href="../interfaces/InjectedTabbedCaseViewDataWithNavigationItemTaskData.html" target="_self">InjectedTabbedCaseViewDataWithNavigationItemTaskData</a>, defaultCaseSearchCategories: Array, defaultTaskSearchCategories: Array)</code>
                 </td>
             </tr>
 
@@ -1322,88 +1547,100 @@ instance</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Converts a navigation item case task data injected by the <a href="NAE_TAB_DATA">NAE_TAB_DATA</a> injection token into an array of <a href="Category">Category</a> classes</p>
+                        <div class="io-description"><p>Converts a navigation item case task data injected by the <a href="NAE_TAB_DATA">NAE_TAB_DATA</a> injection token into an array of <a href="Category">Category</a> classes</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>categoryResolverService</td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>categoryResolverService</td>
+                                            <td>
+                                                        <code>CategoryResolverService</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>tabData</td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the injected data containing the navigation item case task data</p>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>tabData</td>
+                                            <td>
+                                                            <code><a href="../interfaces/InjectedTabbedCaseViewDataWithNavigationItemTaskData.html" target="_self" >InjectedTabbedCaseViewDataWithNavigationItemTaskData</a></code>
+                                            </td>
 
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>defaultCaseSearchCategories</td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>the default case search categories</p>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>defaultTaskSearchCategories</td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the default task search categories</p>
+                                            <td>
+                                                    <p>the injected data containing the navigation item case task data</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>Array&lt;Type&lt;Category&lt;any&gt;&gt;&gt;</code>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>defaultCaseSearchCategories</td>
+                                            <td>
+                                                        <code>Array</code>
+                                            </td>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>the default case search categories</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>defaultTaskSearchCategories</td>
+                                            <td>
+                                                        <code>Array</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>the default task search categories</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Array&lt;Type&lt;Category&lt;any&gt;&gt;&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
     </table>
 </section>    <h3>projects/netgrif-components/src/lib/data-fields/filter-field/filter-field-content/filter-field-content.component.ts</h3>
-    <section>
+    <section data-compodoc="block-methods">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -1417,7 +1654,7 @@ instance</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>filterFieldAllowedNetsFactory(factory, filterField)</code>
+<code>filterFieldAllowedNetsFactory(factory: AllowedNetsServiceFactory, filterField: FilterField)</code>
                 </td>
             </tr>
 
@@ -1427,46 +1664,52 @@ instance</p>
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>factory</td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>factory</td>
+                                            <td>
+                                                        <code>AllowedNetsServiceFactory</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>filterField</td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>AllowedNetsService</code>
+                                        </tr>
+                                        <tr>
+                                                <td>filterField</td>
+                                            <td>
+                                                        <code>FilterField</code>
+                                            </td>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>AllowedNetsService</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1484,7 +1727,7 @@ instance</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>filterFieldBaseFilterFactory(filterField)</code>
+<code>filterFieldBaseFilterFactory(filterField: FilterField)</code>
                 </td>
             </tr>
 
@@ -1494,37 +1737,40 @@ instance</p>
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>filterField</td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>filterField</td>
+                                            <td>
+                                                        <code>FilterField</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>BaseFilter</code>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>BaseFilter</code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1542,7 +1788,7 @@ instance</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>filterFieldCategoriesFactory(factory, filterField)</code>
+<code>filterFieldCategoriesFactory(factory: CategoryResolverService, filterField: FilterField)</code>
                 </td>
             </tr>
 
@@ -1552,52 +1798,58 @@ instance</p>
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>factory</td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>factory</td>
+                                            <td>
+                                                        <code>CategoryResolverService</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>filterField</td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>Array&lt;Type&lt;Category&lt;any&gt;&gt;&gt;</code>
+                                        </tr>
+                                        <tr>
+                                                <td>filterField</td>
+                                            <td>
+                                                        <code>FilterField</code>
+                                            </td>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Array&lt;Type&lt;Category&lt;any&gt;&gt;&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
     </table>
 </section>    <h3>projects/netgrif-components/src/lib/panel/immediate/immediate-filter-text-content/immediate-filter-text-content.component.ts</h3>
-    <section>
+    <section data-compodoc="block-methods">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -1611,7 +1863,7 @@ instance</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>filterTextAllowedNetsFactory(factory, configuration)</code>
+<code>filterTextAllowedNetsFactory(factory: AllowedNetsServiceFactory, configuration: FilterTextConfiguration)</code>
                 </td>
             </tr>
 
@@ -1621,46 +1873,52 @@ instance</p>
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>factory</td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>factory</td>
+                                            <td>
+                                                        <code>AllowedNetsServiceFactory</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>configuration</td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>AllowedNetsService</code>
+                                        </tr>
+                                        <tr>
+                                                <td>configuration</td>
+                                            <td>
+                                                        <code>FilterTextConfiguration</code>
+                                            </td>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>AllowedNetsService</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1678,7 +1936,7 @@ instance</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>filterTextBaseFilterFactory(configuration)</code>
+<code>filterTextBaseFilterFactory(configuration: FilterTextConfiguration)</code>
                 </td>
             </tr>
 
@@ -1688,37 +1946,40 @@ instance</p>
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>configuration</td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>configuration</td>
+                                            <td>
+                                                        <code>FilterTextConfiguration</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>BaseFilter</code>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>BaseFilter</code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1736,7 +1997,7 @@ instance</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>filterTextCategoriesFactory(factory, configuration)</code>
+<code>filterTextCategoriesFactory(factory: CategoryFactory, configuration: FilterTextConfiguration)</code>
                 </td>
             </tr>
 
@@ -1746,52 +2007,121 @@ instance</p>
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>factory</td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>factory</td>
+                                            <td>
+                                                        <code>CategoryFactory</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>configuration</td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>Array&lt;Category&lt;any&gt;&gt;</code>
+                                        </tr>
+                                        <tr>
+                                                <td>configuration</td>
+                                            <td>
+                                                        <code>FilterTextConfiguration</code>
+                                            </td>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Array&lt;Category&lt;any&gt;&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components/src/lib/dialog/load-filter-dialog/load-filter-dialog.component.ts</h3>
+    <section data-compodoc="block-methods">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadBaseFilterFactory"></a>
+                    <span class="name">
+                        <span ><b>loadBaseFilterFactory</b></span>
+                        <a href="#loadBaseFilterFactory"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadBaseFilterFactory(dialogControl: LoadFilterInjectionData)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>dialogControl</td>
+                                            <td>
+                                                        <code>LoadFilterInjectionData</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>BaseFilter</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
     </table>
 </section>    <h3>projects/netgrif-components/src/lib/filter-field-content/filter-field-tabbed-case-view/filter-field-tabbed-case-view.component.ts</h3>
-    <section>
+    <section data-compodoc="block-methods">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -1805,7 +2135,7 @@ instance</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>localAllowedNetsFactory(factory)</code>
+<code>localAllowedNetsFactory(factory: AllowedNetsServiceFactory)</code>
                 </td>
             </tr>
 
@@ -1815,43 +2145,109 @@ instance</p>
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>factory</td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>factory</td>
+                                            <td>
+                                                        <code>AllowedNetsServiceFactory</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>AllowedNetsService</code>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>AllowedNetsService</code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components/src/lib/dialog/save-filter-dialog/save-filter-dialog.component.ts</h3>
+    <section data-compodoc="block-methods">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="saveBaseFilterFactory"></a>
+                    <span class="name">
+                        <span ><b>saveBaseFilterFactory</b></span>
+                        <a href="#saveBaseFilterFactory"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>saveBaseFilterFactory(dialogControl: SaveFilterInjectionData)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>dialogControl</td>
+                                            <td>
+                                                        <code>SaveFilterInjectionData</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>BaseFilter</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
     </table>
 </section>    <h3>projects/netgrif-components/src/lib/search/search-component/search.component.ts</h3>
-    <section>
+    <section data-compodoc="block-methods">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -1865,7 +2261,7 @@ instance</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>searchCategoryConverter(categoryResolverService, baseFilter, defaultCaseSearchCategories, defaultTaskSearchCategories, naeSearchCategories)</code>
+<code>searchCategoryConverter(categoryResolverService: CategoryResolverService, baseFilter: BaseFilter, defaultCaseSearchCategories: Array, defaultTaskSearchCategories: Array, naeSearchCategories)</code>
                 </td>
             </tr>
 
@@ -1874,102 +2270,194 @@ instance</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Converts search categories provided by the <a href="NAE_SEARCH_CATEGORIES">NAE_SEARCH_CATEGORIES</a>
+                        <div class="io-description"><p>Converts search categories provided by the <a href="NAE_SEARCH_CATEGORIES">NAE_SEARCH_CATEGORIES</a>
 injection token in the old (pre 5.6.0) format, to the new format.</p>
 <p>If no search categories are provided converts the default search categories into search categories
 based on the base filter filter type.</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>categoryResolverService</td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Default value</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>categoryResolverService</td>
+                                            <td>
+                                                        <code>CategoryResolverService</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
+                                            <td>
+                                            </td>
 
-                                    <td>
-                                        <p>service for serialisation and deserialization of search categories</p>
+                                            <td>
+                                                    <p>service for serialisation and deserialization of search categories</p>
 
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>baseFilter</td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>baseFilter</td>
+                                            <td>
+                                                        <code>BaseFilter</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
+                                            <td>
+                                            </td>
 
-                                    <td>
-                                        <p>determines the default categories used if no categories are provided, injected by the {</p>
+                                            <td>
+                                                    <p>determines the default categories used if no categories are provided, injected by the <a href="NAE_BASE_FILTER">NAE_BASE_FILTER</a>
+injection token</p>
 
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>defaultCaseSearchCategories</td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>defaultCaseSearchCategories</td>
+                                            <td>
+                                                        <code>Array</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
+                                            <td>
+                                            </td>
 
-                                    <td>
-                                        <p>the default case search categories, injected by the {</p>
+                                            <td>
+                                                    <p>the default case search categories, injected by the <a href="NAE_DEFAULT_CASE_SEARCH_CATEGORIES">NAE_DEFAULT_CASE_SEARCH_CATEGORIES</a>
+injection token</p>
 
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>defaultTaskSearchCategories</td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>defaultTaskSearchCategories</td>
+                                            <td>
+                                                        <code>Array</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
+                                            <td>
+                                            </td>
 
-                                    <td>
-                                        <p>the default task search categories, injected by the {</p>
+                                            <td>
+                                                    <p>the default task search categories, injected by the <a href="NAE_DEFAULT_TASK_SEARCH_CATEGORIES">NAE_DEFAULT_TASK_SEARCH_CATEGORIES</a>
+injection token</p>
 
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>naeSearchCategories</td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>naeSearchCategories</td>
+                                            <td>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
+                                            <td>
+                                                    <code>null</code>
+                                            </td>
 
-                                    <td>
-                                        <p>optionally the search category instances, or the search category classes. Instances are converted to classes.
+                                            <td>
+                                                    <p>optionally the search category instances, or the search category classes. Instances are converted to classes.
 If no categories are provided the default ones based on the base filter filter type will be returned.
-Injected by the {</p>
+Injected by the <a href="NAE_SEARCH_CATEGORIES">NAE_SEARCH_CATEGORIES</a> injection token.</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>Array&lt;Type&lt;Category&lt;any&gt;&gt;&gt;</code>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Array&lt;Type&lt;Category&lt;any&gt;&gt;&gt;</code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components/src/lib/dialog/task-view-dialog/task-view-dialog.component.ts</h3>
+    <section data-compodoc="block-methods">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="taskViewFilterFactory"></a>
+                    <span class="name">
+                        <span ><b>taskViewFilterFactory</b></span>
+                        <a href="#taskViewFilterFactory"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>taskViewFilterFactory(dialogControl: TaskViewInjectionData)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>dialogControl</td>
+                                            <td>
+                                                        <code>TaskViewInjectionData</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>BaseFilter</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1979,7 +2467,7 @@ Injected by the {</p>
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -1991,6 +2479,15 @@ Injected by the {</p>
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'miscellaneous-functions';
@@ -1998,10 +2495,23 @@ Injected by the {</p>
             var MAX_SEARCH_RESULTS = 15;
        </script>
 
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       
-       <script type="module" src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/menu-wc.js" defer></script>
        <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>

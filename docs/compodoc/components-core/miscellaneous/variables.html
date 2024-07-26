@@ -9,13 +9,64 @@
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 	   <link rel="stylesheet" href="../styles/style.css">
-        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+        <link rel="stylesheet" href="../styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
-            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
@@ -24,7 +75,7 @@
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
@@ -46,12 +97,14 @@
 
 
 
+
+
 <ol class="breadcrumb">
-  <li>Miscellaneous</li>
-  <li>Variables</li>
+  <li class="breadcrumb-item">Miscellaneous</li>
+  <li class="breadcrumb-item">Variables</li>
 </ol>
 
-<section>
+<section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -68,6 +121,9 @@
                             <a href="#BOOLEAN_VALUE_LABEL_ENABLED" title="projects/netgrif-components-core/src/lib/data-fields/models/boolean-label-enabled-token.ts" ><b>BOOLEAN_VALUE_LABEL_ENABLED</b>&nbsp;&nbsp;&nbsp;(projects/.../boolean-label-enabled-token.ts)</a>
                         </li>
                         <li>
+                            <a href="#CASE_ID" title="projects/netgrif-components-core/src/lib/public/factories/public-search-factory.ts" ><b>CASE_ID</b>&nbsp;&nbsp;&nbsp;(projects/.../public-search-factory.ts)</a>
+                        </li>
+                        <li>
                             <a href="#CaseResourceServiceProvider" title="projects/netgrif-components-core/src/lib/providers/case-resource/case-resource-service.provider.ts" ><b>CaseResourceServiceProvider</b>&nbsp;&nbsp;&nbsp;(projects/.../case-resource-service.provider.ts)</a>
                         </li>
                         <li>
@@ -75,6 +131,9 @@
                         </li>
                         <li>
                             <a href="#createMockDependencies" title="projects/netgrif-components-core/src/lib/utility/tests/search-category-mock-dependencies.ts" ><b>createMockDependencies</b>&nbsp;&nbsp;&nbsp;(projects/.../search-category-mock-dependencies.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#DATA_FIELD_PORTAL_DATA" title="projects/netgrif-components-core/src/lib/data-fields/models/data-field-portal-data-injection-token.ts" ><b>DATA_FIELD_PORTAL_DATA</b>&nbsp;&nbsp;&nbsp;(projects/.../data-field-portal-data-injection-token.ts)</a>
                         </li>
                         <li>
                             <a href="#DATE_FORMAT" title="projects/netgrif-components-core/src/lib/moment/time-formats.ts" ><b>DATE_FORMAT</b>&nbsp;&nbsp;&nbsp;(projects/.../time-formats.ts)</a>
@@ -87,6 +146,9 @@
                         </li>
                         <li>
                             <a href="#DATE_TIME_FORMAT_STRING" title="projects/netgrif-components-core/src/lib/moment/time-formats.ts" ><b>DATE_TIME_FORMAT_STRING</b>&nbsp;&nbsp;&nbsp;(projects/.../time-formats.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#DEFAULT" title="projects/netgrif-components-core/src/lib/data-fields/models/component.ts" ><b>DEFAULT</b>&nbsp;&nbsp;&nbsp;(projects/.../component.ts)</a>
                         </li>
                         <li>
                             <a href="#DEFAULT_LANGUAGE_CODE" title="projects/netgrif-components-core/src/lib/data-fields/i18n-field/models/i18n-field.ts" ><b>DEFAULT_LANGUAGE_CODE</b>&nbsp;&nbsp;&nbsp;(projects/.../i18n-field.ts)</a>
@@ -104,19 +166,10 @@
                             <a href="#DRAWER_MAX_WIDTH" title="projects/netgrif-components-core/src/lib/navigation/navigation-drawer/abstract-navigation-drawer.component.ts" ><b>DRAWER_MAX_WIDTH</b>&nbsp;&nbsp;&nbsp;(projects/.../abstract-navigation-drawer.component.ts)</a>
                         </li>
                         <li>
-                            <a href="#fieldHeight" title="projects/netgrif-components-core/src/lib/data-fields/file-field/abstract-file-field.component.ts" ><b>fieldHeight</b>&nbsp;&nbsp;&nbsp;(projects/.../abstract-file-field.component.ts)</a>
+                            <a href="#FILE_FIELD_HEIGHT" title="projects/netgrif-components-core/src/lib/data-fields/file-field/models/file-field-constants.ts" ><b>FILE_FIELD_HEIGHT</b>&nbsp;&nbsp;&nbsp;(projects/.../file-field-constants.ts)</a>
                         </li>
                         <li>
-                            <a href="#fieldPadding" title="projects/netgrif-components-core/src/lib/data-fields/file-field/abstract-file-field.component.ts" ><b>fieldPadding</b>&nbsp;&nbsp;&nbsp;(projects/.../abstract-file-field.component.ts)</a>
-                        </li>
-                        <li>
-                            <a href="#FILTER_DEFAULT_HEADERS_ID" title="projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/abstract-navigation-double-drawer.ts" ><b>FILTER_DEFAULT_HEADERS_ID</b>&nbsp;&nbsp;&nbsp;(projects/.../abstract-navigation-double-drawer.ts)</a>
-                        </li>
-                        <li>
-                            <a href="#FILTER_IDENTIFIERS" title="projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/abstract-navigation-double-drawer.ts" ><b>FILTER_IDENTIFIERS</b>&nbsp;&nbsp;&nbsp;(projects/.../abstract-navigation-double-drawer.ts)</a>
-                        </li>
-                        <li>
-                            <a href="#FILTER_VIEW_TASK_TRANSITION_ID" title="projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/abstract-navigation-double-drawer.ts" ><b>FILTER_VIEW_TASK_TRANSITION_ID</b>&nbsp;&nbsp;&nbsp;(projects/.../abstract-navigation-double-drawer.ts)</a>
+                            <a href="#FILE_FIELD_PADDING" title="projects/netgrif-components-core/src/lib/data-fields/file-field/models/file-field-constants.ts" ><b>FILE_FIELD_PADDING</b>&nbsp;&nbsp;&nbsp;(projects/.../file-field-constants.ts)</a>
                         </li>
                         <li>
                             <a href="#getNetAndCreateCase" title="projects/netgrif-components-core/src/lib/public/factories/get-net-and-create-case.ts" ><b>getNetAndCreateCase</b>&nbsp;&nbsp;&nbsp;(projects/.../get-net-and-create-case.ts)</a>
@@ -125,10 +178,16 @@
                             <a href="#initialState" title="projects/netgrif-components-core/src/lib/authentication/store/authentication.state.ts" ><b>initialState</b>&nbsp;&nbsp;&nbsp;(projects/.../authentication.state.ts)</a>
                         </li>
                         <li>
-                            <a href="#LEFT_DRAWER_DEFAULT_WIDTH" title="projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/abstract-navigation-double-drawer.ts" ><b>LEFT_DRAWER_DEFAULT_WIDTH</b>&nbsp;&nbsp;&nbsp;(projects/.../abstract-navigation-double-drawer.ts)</a>
+                            <a href="#LEFT_DRAWER_DEFAULT_WIDTH" title="projects/netgrif-components-core/src/lib/navigation/model/navigation-configs.ts" ><b>LEFT_DRAWER_DEFAULT_WIDTH</b>&nbsp;&nbsp;&nbsp;(projects/.../navigation-configs.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#MENU_IDENTIFIERS" title="projects/netgrif-components-core/src/lib/navigation/model/navigation-configs.ts" ><b>MENU_IDENTIFIERS</b>&nbsp;&nbsp;&nbsp;(projects/.../navigation-configs.ts)</a>
                         </li>
                         <li>
                             <a href="#NAE_ADMIN_IMPERSONATE_COMPONENT" title="projects/netgrif-components-core/src/lib/side-menu/content-components/injection-tokens.ts" ><b>NAE_ADMIN_IMPERSONATE_COMPONENT</b>&nbsp;&nbsp;&nbsp;(projects/.../injection-tokens.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#NAE_ADMIN_IMPERSONATE_DIALOG_COMPONENT" title="projects/netgrif-components-core/src/lib/dialog/injection-tokens.ts" ><b>NAE_ADMIN_IMPERSONATE_DIALOG_COMPONENT</b>&nbsp;&nbsp;&nbsp;(projects/.../injection-tokens.ts)</a>
                         </li>
                         <li>
                             <a href="#NAE_ASYNC_RENDERING_CONFIGURATION" title="projects/netgrif-components-core/src/lib/task-content/model/async-rendering-configuration-injection-token.ts" ><b>NAE_ASYNC_RENDERING_CONFIGURATION</b>&nbsp;&nbsp;&nbsp;(projects/.../async-rendering-configuration-injection-token.ts)</a>
@@ -140,19 +199,28 @@
                             <a href="#NAE_BASE_FILTER" title="projects/netgrif-components-core/src/lib/search/models/base-filter-injection-token.ts" ><b>NAE_BASE_FILTER</b>&nbsp;&nbsp;&nbsp;(projects/.../base-filter-injection-token.ts)</a>
                         </li>
                         <li>
+                            <a href="#NAE_CASE_REF_CREATE_CASE" title="projects/netgrif-components-core/src/lib/data-fields/case-ref-field/model/case-ref-injection-tokens.ts" ><b>NAE_CASE_REF_CREATE_CASE</b>&nbsp;&nbsp;&nbsp;(projects/.../case-ref-injection-tokens.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#NAE_CASE_REF_DATAFIELD" title="projects/netgrif-components-core/src/lib/data-fields/case-ref-field/model/case-ref-injection-tokens.ts" ><b>NAE_CASE_REF_DATAFIELD</b>&nbsp;&nbsp;&nbsp;(projects/.../case-ref-injection-tokens.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#NAE_CASE_REF_SEARCH" title="projects/netgrif-components-core/src/lib/data-fields/case-ref-field/model/case-ref-injection-tokens.ts" ><b>NAE_CASE_REF_SEARCH</b>&nbsp;&nbsp;&nbsp;(projects/.../case-ref-injection-tokens.ts)</a>
+                        </li>
+                        <li>
                             <a href="#NAE_DEFAULT_CASE_SEARCH_CATEGORIES" title="projects/netgrif-components-core/src/lib/search/category-factory/search-categories-injection-token.ts" ><b>NAE_DEFAULT_CASE_SEARCH_CATEGORIES</b>&nbsp;&nbsp;&nbsp;(projects/.../search-categories-injection-token.ts)</a>
                         </li>
                         <li>
                             <a href="#NAE_DEFAULT_HEADERS" title="projects/netgrif-components-core/src/lib/header/models/default-headers-token.ts" ><b>NAE_DEFAULT_HEADERS</b>&nbsp;&nbsp;&nbsp;(projects/.../default-headers-token.ts)</a>
                         </li>
                         <li>
+                            <a href="#NAE_DEFAULT_LANGUAGE" title="projects/netgrif-components-core/src/lib/translate/default-language-injection-token.ts" ><b>NAE_DEFAULT_LANGUAGE</b>&nbsp;&nbsp;&nbsp;(projects/.../default-language-injection-token.ts)</a>
+                        </li>
+                        <li>
                             <a href="#NAE_DEFAULT_MIN_PASSWORD_LENGTH" title="projects/netgrif-components-core/src/lib/forms/min-password-length-token.ts" ><b>NAE_DEFAULT_MIN_PASSWORD_LENGTH</b>&nbsp;&nbsp;&nbsp;(projects/.../min-password-length-token.ts)</a>
                         </li>
                         <li>
                             <a href="#NAE_DEFAULT_TASK_SEARCH_CATEGORIES" title="projects/netgrif-components-core/src/lib/search/category-factory/search-categories-injection-token.ts" ><b>NAE_DEFAULT_TASK_SEARCH_CATEGORIES</b>&nbsp;&nbsp;&nbsp;(projects/.../search-categories-injection-token.ts)</a>
-                        </li>
-                        <li>
-                            <a href="#NAE_FILES_UPLOAD_COMPONENT" title="projects/netgrif-components-core/src/lib/side-menu/content-components/injection-tokens.ts" ><b>NAE_FILES_UPLOAD_COMPONENT</b>&nbsp;&nbsp;&nbsp;(projects/.../injection-tokens.ts)</a>
                         </li>
                         <li>
                             <a href="#NAE_FILTER_FIELD" title="projects/netgrif-components-core/src/lib/data-fields/filter-field/models/filter-field-injection-token.ts" ><b>NAE_FILTER_FIELD</b>&nbsp;&nbsp;&nbsp;(projects/.../filter-field-injection-token.ts)</a>
@@ -167,13 +235,28 @@
                             <a href="#NAE_GROUP_NAVIGATION_COMPONENT_RESOLVER_COMPONENT" title="projects/netgrif-components-core/src/lib/navigation/model/group-navigation-component-resolver-component-injection-token.ts" ><b>NAE_GROUP_NAVIGATION_COMPONENT_RESOLVER_COMPONENT</b>&nbsp;&nbsp;&nbsp;(projects/.../group-navigation-component-resolver-component-injection-token.ts)</a>
                         </li>
                         <li>
+                            <a href="#NAE_IMPORT_NET_COMPONENT" title="projects/netgrif-components-core/src/lib/side-menu/content-components/injection-tokens.ts" ><b>NAE_IMPORT_NET_COMPONENT</b>&nbsp;&nbsp;&nbsp;(projects/.../injection-tokens.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#NAE_IMPORT_NET_DIALOG_COMPONENT" title="projects/netgrif-components-core/src/lib/dialog/injection-tokens.ts" ><b>NAE_IMPORT_NET_DIALOG_COMPONENT</b>&nbsp;&nbsp;&nbsp;(projects/.../injection-tokens.ts)</a>
+                        </li>
+                        <li>
                             <a href="#NAE_INFORM_ABOUT_INVALID_DATA" title="projects/netgrif-components-core/src/lib/data-fields/models/invalid-data-policy-token.ts" ><b>NAE_INFORM_ABOUT_INVALID_DATA</b>&nbsp;&nbsp;&nbsp;(projects/.../invalid-data-policy-token.ts)</a>
                         </li>
                         <li>
                             <a href="#NAE_LOAD_FILTER_COMPONENT" title="projects/netgrif-components-core/src/lib/side-menu/content-components/injection-tokens.ts" ><b>NAE_LOAD_FILTER_COMPONENT</b>&nbsp;&nbsp;&nbsp;(projects/.../injection-tokens.ts)</a>
                         </li>
                         <li>
+                            <a href="#NAE_LOAD_FILTER_DIALOG_COMPONENT" title="projects/netgrif-components-core/src/lib/dialog/injection-tokens.ts" ><b>NAE_LOAD_FILTER_DIALOG_COMPONENT</b>&nbsp;&nbsp;&nbsp;(projects/.../injection-tokens.ts)</a>
+                        </li>
+                        <li>
                             <a href="#NAE_MIN_PASSWORD_LENGTH" title="projects/netgrif-components-core/src/lib/forms/min-password-length-token.ts" ><b>NAE_MIN_PASSWORD_LENGTH</b>&nbsp;&nbsp;&nbsp;(projects/.../min-password-length-token.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#NAE_MULTI_USER_ASSIGN_COMPONENT" title="projects/netgrif-components-core/src/lib/side-menu/content-components/injection-tokens.ts" ><b>NAE_MULTI_USER_ASSIGN_COMPONENT</b>&nbsp;&nbsp;&nbsp;(projects/.../injection-tokens.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#NAE_MULTI_USER_ASSIGN_DIALOG_COMPONENT" title="projects/netgrif-components-core/src/lib/dialog/injection-tokens.ts" ><b>NAE_MULTI_USER_ASSIGN_DIALOG_COMPONENT</b>&nbsp;&nbsp;&nbsp;(projects/.../injection-tokens.ts)</a>
                         </li>
                         <li>
                             <a href="#NAE_NAVIGATION_ITEM_TASK_DATA" title="projects/netgrif-components-core/src/lib/navigation/model/filter-case-injection-token.ts" ><b>NAE_NAVIGATION_ITEM_TASK_DATA</b>&nbsp;&nbsp;&nbsp;(projects/.../filter-case-injection-token.ts)</a>
@@ -194,10 +277,16 @@
                             <a href="#NAE_NEW_CASE_CREATION_CONFIGURATION_DATA" title="projects/netgrif-components-core/src/lib/side-menu/content-components/new-case/model/new-case-injection-data.ts" ><b>NAE_NEW_CASE_CREATION_CONFIGURATION_DATA</b>&nbsp;&nbsp;&nbsp;(projects/.../new-case-injection-data.ts)</a>
                         </li>
                         <li>
+                            <a href="#NAE_NEW_CASE_DIALOG_COMPONENT" title="projects/netgrif-components-core/src/lib/dialog/injection-tokens.ts" ><b>NAE_NEW_CASE_DIALOG_COMPONENT</b>&nbsp;&nbsp;&nbsp;(projects/.../injection-tokens.ts)</a>
+                        </li>
+                        <li>
                             <a href="#NAE_OPEN_EXISTING_TAB" title="projects/netgrif-components-core/src/lib/view/case-view/models/open-existing-tab-token.ts" ><b>NAE_OPEN_EXISTING_TAB</b>&nbsp;&nbsp;&nbsp;(projects/.../open-existing-tab-token.ts)</a>
                         </li>
                         <li>
                             <a href="#NAE_OPTION_SELECTOR_COMPONENT" title="projects/netgrif-components-core/src/lib/side-menu/content-components/injection-tokens.ts" ><b>NAE_OPTION_SELECTOR_COMPONENT</b>&nbsp;&nbsp;&nbsp;(projects/.../injection-tokens.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#NAE_OPTION_SELECTOR_DIALOG_COMPONENT" title="projects/netgrif-components-core/src/lib/dialog/injection-tokens.ts" ><b>NAE_OPTION_SELECTOR_DIALOG_COMPONENT</b>&nbsp;&nbsp;&nbsp;(projects/.../injection-tokens.ts)</a>
                         </li>
                         <li>
                             <a href="#NAE_PREFERRED_TASK_ENDPOINT" title="projects/netgrif-components-core/src/lib/view/task-view/models/injection-token-task-endpoint.ts" class="deprecated-name"><b>NAE_PREFERRED_TASK_ENDPOINT</b>&nbsp;&nbsp;&nbsp;(projects/.../injection-token-task-endpoint.ts)</a>
@@ -207,6 +296,9 @@
                         </li>
                         <li>
                             <a href="#NAE_SAVE_FILTER_COMPONENT" title="projects/netgrif-components-core/src/lib/side-menu/content-components/injection-tokens.ts" ><b>NAE_SAVE_FILTER_COMPONENT</b>&nbsp;&nbsp;&nbsp;(projects/.../injection-tokens.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#NAE_SAVE_FILTER_DIALOG_COMPONENT" title="projects/netgrif-components-core/src/lib/dialog/injection-tokens.ts" ><b>NAE_SAVE_FILTER_DIALOG_COMPONENT</b>&nbsp;&nbsp;&nbsp;(projects/.../injection-tokens.ts)</a>
                         </li>
                         <li>
                             <a href="#NAE_SEARCH_CATEGORIES" title="projects/netgrif-components-core/src/lib/search/category-factory/search-categories-injection-token.ts" ><b>NAE_SEARCH_CATEGORIES</b>&nbsp;&nbsp;&nbsp;(projects/.../search-categories-injection-token.ts)</a>
@@ -224,7 +316,7 @@
                             <a href="#NAE_SNACKBAR_VERTICAL_POSITION" title="projects/netgrif-components-core/src/lib/snack-bar/models/injection-token-snackbar.ts" ><b>NAE_SNACKBAR_VERTICAL_POSITION</b>&nbsp;&nbsp;&nbsp;(projects/.../injection-token-snackbar.ts)</a>
                         </li>
                         <li>
-                            <a href="#NAE_TAB_DATA" title="projects/netgrif-components-core/src/lib/tabs/tab-data-injection-token/tab-data-field-portal-data-injection-token.ts" ><b>NAE_TAB_DATA</b>&nbsp;&nbsp;&nbsp;(projects/.../tab-data-field-portal-data-injection-token.ts)</a>
+                            <a href="#NAE_TAB_DATA" title="projects/netgrif-components-core/src/lib/tabs/tab-data-injection-token/tab-data-injection-token.ts" ><b>NAE_TAB_DATA</b>&nbsp;&nbsp;&nbsp;(projects/.../tab-data-injection-token.ts)</a>
                         </li>
                         <li>
                             <a href="#NAE_TASK_FORCE_OPEN" title="projects/netgrif-components-core/src/lib/view/task-view/models/injection-token-task-force-open.ts" ><b>NAE_TASK_FORCE_OPEN</b>&nbsp;&nbsp;&nbsp;(projects/.../injection-token-task-force-open.ts)</a>
@@ -234,6 +326,9 @@
                         </li>
                         <li>
                             <a href="#NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS" title="projects/netgrif-components-core/src/lib/panel/task-panel/models/disable-functions.ts" ><b>NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS</b>&nbsp;&nbsp;&nbsp;(projects/.../disable-functions.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#NAE_TASK_VIEW_COMPONENT" title="projects/netgrif-components-core/src/lib/side-menu/content-components/injection-tokens.ts" ><b>NAE_TASK_VIEW_COMPONENT</b>&nbsp;&nbsp;&nbsp;(projects/.../injection-tokens.ts)</a>
                         </li>
                         <li>
                             <a href="#NAE_TASK_VIEW_CONFIGURATION" title="projects/netgrif-components-core/src/lib/view/task-view/models/task-view-configuration-injection-token.ts" ><b>NAE_TASK_VIEW_CONFIGURATION</b>&nbsp;&nbsp;&nbsp;(projects/.../task-view-configuration-injection-token.ts)</a>
@@ -248,7 +343,13 @@
                             <a href="#NAE_USER_ASSIGN_COMPONENT" title="projects/netgrif-components-core/src/lib/side-menu/content-components/injection-tokens.ts" ><b>NAE_USER_ASSIGN_COMPONENT</b>&nbsp;&nbsp;&nbsp;(projects/.../injection-tokens.ts)</a>
                         </li>
                         <li>
+                            <a href="#NAE_USER_ASSIGN_DIALOG_COMPONENT" title="projects/netgrif-components-core/src/lib/dialog/injection-tokens.ts" ><b>NAE_USER_ASSIGN_DIALOG_COMPONENT</b>&nbsp;&nbsp;&nbsp;(projects/.../injection-tokens.ts)</a>
+                        </li>
+                        <li>
                             <a href="#NAE_USER_IMPERSONATE_COMPONENT" title="projects/netgrif-components-core/src/lib/side-menu/content-components/injection-tokens.ts" ><b>NAE_USER_IMPERSONATE_COMPONENT</b>&nbsp;&nbsp;&nbsp;(projects/.../injection-tokens.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#NAE_USER_IMPERSONATE_DIALOG_COMPONENT" title="projects/netgrif-components-core/src/lib/dialog/injection-tokens.ts" ><b>NAE_USER_IMPERSONATE_DIALOG_COMPONENT</b>&nbsp;&nbsp;&nbsp;(projects/.../injection-tokens.ts)</a>
                         </li>
                         <li>
                             <a href="#NAE_VIEW_ID" title="projects/netgrif-components-core/src/lib/user/models/view-id-injection-tokens.ts" ><b>NAE_VIEW_ID</b>&nbsp;&nbsp;&nbsp;(projects/.../view-id-injection-tokens.ts)</a>
@@ -275,10 +376,16 @@
                             <a href="#PASSWORD" title="projects/netgrif-components-core/src/lib/forms/change-password/abstract-change-password.component.ts" ><b>PASSWORD</b>&nbsp;&nbsp;&nbsp;(projects/.../abstract-change-password.component.ts)</a>
                         </li>
                         <li>
+                            <a href="#PETRI_NET_ID" title="projects/netgrif-components-core/src/lib/public/factories/public-search-factory.ts" ><b>PETRI_NET_ID</b>&nbsp;&nbsp;&nbsp;(projects/.../public-search-factory.ts)</a>
+                        </li>
+                        <li>
                             <a href="#PetriNetResourceServiceProvider" title="projects/netgrif-components-core/src/lib/providers/petrinet-resource/petrinet-resource-service.provider.ts" ><b>PetriNetResourceServiceProvider</b>&nbsp;&nbsp;&nbsp;(projects/.../petrinet-resource-service.provider.ts)</a>
                         </li>
                         <li>
-                            <a href="#preview" title="projects/netgrif-components-core/src/lib/data-fields/file-field/abstract-file-field.component.ts" ><b>preview</b>&nbsp;&nbsp;&nbsp;(projects/.../abstract-file-field.component.ts)</a>
+                            <a href="#PREVIEW" title="projects/netgrif-components-core/src/lib/data-fields/file-field/models/file-field-constants.ts" ><b>PREVIEW</b>&nbsp;&nbsp;&nbsp;(projects/.../file-field-constants.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#PREVIEW_BUTTON" title="projects/netgrif-components-core/src/lib/data-fields/file-field/models/file-field-constants.ts" ><b>PREVIEW_BUTTON</b>&nbsp;&nbsp;&nbsp;(projects/.../file-field-constants.ts)</a>
                         </li>
                         <li>
                             <a href="#ProcessServiceProvider" title="projects/netgrif-components-core/src/lib/providers/process-service/process-service.provider.ts" ><b>ProcessServiceProvider</b>&nbsp;&nbsp;&nbsp;(projects/.../process-service.provider.ts)</a>
@@ -293,13 +400,28 @@
                             <a href="#PUBLISHERS" title="projects/netgrif-components-core/src/lib/logger/services/log-publisher.service.ts" ><b>PUBLISHERS</b>&nbsp;&nbsp;&nbsp;(projects/.../log-publisher.service.ts)</a>
                         </li>
                         <li>
-                            <a href="#RIGHT_DRAWER_DEFAULT_MIN_WIDTH" title="projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/abstract-navigation-double-drawer.ts" ><b>RIGHT_DRAWER_DEFAULT_MIN_WIDTH</b>&nbsp;&nbsp;&nbsp;(projects/.../abstract-navigation-double-drawer.ts)</a>
+                            <a href="#redirectAction" title="projects/netgrif-components-core/src/lib/actions/model/router-action-definitions.ts" ><b>redirectAction</b>&nbsp;&nbsp;&nbsp;(projects/.../router-action-definitions.ts)</a>
                         </li>
                         <li>
-                            <a href="#RIGHT_DRAWER_DEFAULT_WIDTH" title="projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/abstract-navigation-double-drawer.ts" ><b>RIGHT_DRAWER_DEFAULT_WIDTH</b>&nbsp;&nbsp;&nbsp;(projects/.../abstract-navigation-double-drawer.ts)</a>
+                            <a href="#reloadTaskAction" title="projects/netgrif-components-core/src/lib/actions/model/task-action-definitions.ts" ><b>reloadTaskAction</b>&nbsp;&nbsp;&nbsp;(projects/.../task-action-definitions.ts)</a>
                         </li>
                         <li>
-                            <a href="#RIGHT_DRAWER_MAX_WIDTH" title="projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/abstract-navigation-double-drawer.ts" ><b>RIGHT_DRAWER_MAX_WIDTH</b>&nbsp;&nbsp;&nbsp;(projects/.../abstract-navigation-double-drawer.ts)</a>
+                            <a href="#RIGHT_DRAWER_DEFAULT_MIN_WIDTH" title="projects/netgrif-components-core/src/lib/navigation/model/navigation-configs.ts" ><b>RIGHT_DRAWER_DEFAULT_MIN_WIDTH</b>&nbsp;&nbsp;&nbsp;(projects/.../navigation-configs.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#RIGHT_DRAWER_DEFAULT_WIDTH" title="projects/netgrif-components-core/src/lib/navigation/model/navigation-configs.ts" ><b>RIGHT_DRAWER_DEFAULT_WIDTH</b>&nbsp;&nbsp;&nbsp;(projects/.../navigation-configs.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#RIGHT_DRAWER_MAX_WIDTH" title="projects/netgrif-components-core/src/lib/navigation/model/navigation-configs.ts" ><b>RIGHT_DRAWER_MAX_WIDTH</b>&nbsp;&nbsp;&nbsp;(projects/.../navigation-configs.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#RIGHT_SIDE_INIT_PAGE_SIZE" title="projects/netgrif-components-core/src/lib/navigation/model/navigation-configs.ts" ><b>RIGHT_SIDE_INIT_PAGE_SIZE</b>&nbsp;&nbsp;&nbsp;(projects/.../navigation-configs.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#RIGHT_SIDE_NEW_PAGE_SIZE" title="projects/netgrif-components-core/src/lib/navigation/model/navigation-configs.ts" ><b>RIGHT_SIDE_NEW_PAGE_SIZE</b>&nbsp;&nbsp;&nbsp;(projects/.../navigation-configs.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#SETTINGS_TRANSITION_ID" title="projects/netgrif-components-core/src/lib/navigation/model/navigation-configs.ts" ><b>SETTINGS_TRANSITION_ID</b>&nbsp;&nbsp;&nbsp;(projects/.../navigation-configs.ts)</a>
                         </li>
                         <li>
                             <a href="#STRING_CAMELIZE_REGEXP" title="projects/netgrif-components-core/src/commons/angular-cli-devkit-core-strings.ts" ><b>STRING_CAMELIZE_REGEXP</b>&nbsp;&nbsp;&nbsp;(projects/.../angular-cli-devkit-core-strings.ts)</a>
@@ -334,6 +456,12 @@
                         <li>
                             <a href="#TestTaskViewAllowedNetsFactory" title="projects/netgrif-components-core/src/lib/utility/tests/test-factory-methods.ts" ><b>TestTaskViewAllowedNetsFactory</b>&nbsp;&nbsp;&nbsp;(projects/.../test-factory-methods.ts)</a>
                         </li>
+                        <li>
+                            <a href="#TRANSITION_ID" title="projects/netgrif-components-core/src/lib/public/factories/public-search-factory.ts" ><b>TRANSITION_ID</b>&nbsp;&nbsp;&nbsp;(projects/.../public-search-factory.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#validateTaskAction" title="projects/netgrif-components-core/src/lib/actions/model/task-action-definitions.ts" ><b>validateTaskAction</b>&nbsp;&nbsp;&nbsp;(projects/.../task-action-definitions.ts)</a>
+                        </li>
                     </ul>
                 </td>
             </tr>
@@ -342,7 +470,7 @@
 </section>
 
     <h3>projects/netgrif-components-core/src/lib/authentication/store/authentication.state.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -401,7 +529,7 @@
     </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/providers/base-filter/base-filter-factory.provider.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -443,7 +571,7 @@
     </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/data-fields/models/boolean-label-enabled-token.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -465,8 +593,129 @@
         </tbody>
     </table>
 </section>
+    <h3>projects/netgrif-components-core/src/lib/public/factories/public-search-factory.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="CASE_ID"></a>
+                    <span class="name">
+                        <span ><b>CASE_ID</b></span>
+                        <a href="#CASE_ID"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&quot;caseId&quot;</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="PETRI_NET_ID"></a>
+                    <span class="name">
+                        <span ><b>PETRI_NET_ID</b></span>
+                        <a href="#PETRI_NET_ID"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&quot;petriNetId&quot;</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="publicBaseFilterFactory"></a>
+                    <span class="name">
+                        <span ><b>publicBaseFilterFactory</b></span>
+                        <a href="#publicBaseFilterFactory"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>(router: Router, route: ActivatedRoute, process: ProcessService,
+                                        caseResourceService: CaseResourceService, snackBarService: SnackBarService,
+                                        translate: TranslateService, publicTaskLoadingService: PublicTaskLoadingService) &#x3D;&gt; {
+    const caseId &#x3D; route.snapshot.paramMap.get(CASE_ID)
+    const petriNetId &#x3D; route.snapshot.paramMap.get(PETRI_NET_ID)
+    const transId &#x3D; route.snapshot.paramMap.get(TRANSITION_ID)
+    if (caseId &#x3D;&#x3D;&#x3D; null &amp;&amp; petriNetId !&#x3D;&#x3D; null) {
+        getNetAndCreateCase(router, route, process, caseResourceService, snackBarService, translate, publicTaskLoadingService);
+    } else if (caseId !&#x3D;&#x3D; null &amp;&amp; transId !&#x3D;&#x3D; null) {
+        return {
+            filter: new SimpleFilter(&#x27;&#x27;, FilterType.TASK, {case: {id: caseId}, transitionId: transId})
+        };
+    } else if (caseId !&#x3D;&#x3D; null) {
+        return {
+            filter: new SimpleFilter(&#x27;&#x27;, FilterType.TASK, {case: {id: caseId}})
+        };
+    }
+    return {
+        filter: new SimpleFilter(&#x27;&#x27;, FilterType.TASK, {case: {id: &#x27;No Case&#x27;}})
+    };
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="TRANSITION_ID"></a>
+                    <span class="name">
+                        <span ><b>TRANSITION_ID</b></span>
+                        <a href="#TRANSITION_ID"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&quot;transitionId&quot;</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
     <h3>projects/netgrif-components-core/src/lib/providers/case-resource/case-resource-service.provider.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -526,7 +775,7 @@
     </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/forms/change-password/abstract-change-password.component.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -607,7 +856,7 @@
     </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/utility/tests/search-category-mock-dependencies.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -696,8 +945,31 @@
         </tbody>
     </table>
 </section>
+    <h3>projects/netgrif-components-core/src/lib/data-fields/models/data-field-portal-data-injection-token.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="DATA_FIELD_PORTAL_DATA"></a>
+                    <span class="name">
+                        <span ><b>DATA_FIELD_PORTAL_DATA</b></span>
+                        <a href="#DATA_FIELD_PORTAL_DATA"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new InjectionToken&lt;DataFieldPortalData&lt;DataField&lt;unknown&gt;&gt;&gt;(&#x27;DataFieldPortalData&#x27;)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
     <h3>projects/netgrif-components-core/src/lib/moment/time-formats.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -823,8 +1095,37 @@
         </tbody>
     </table>
 </section>
+    <h3>projects/netgrif-components-core/src/lib/data-fields/models/component.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="DEFAULT"></a>
+                    <span class="name">
+                        <span ><b>DEFAULT</b></span>
+                        <a href="#DEFAULT"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&quot;default&quot;</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
     <h3>projects/netgrif-components-core/src/lib/data-fields/i18n-field/models/i18n-field.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -853,7 +1154,7 @@
     </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/user/services/user-preference.service.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -908,7 +1209,7 @@
     </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/navigation/navigation-drawer/abstract-navigation-drawer.component.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -962,16 +1263,16 @@
         </tbody>
     </table>
 </section>
-    <h3>projects/netgrif-components-core/src/lib/data-fields/file-field/abstract-file-field.component.ts</h3>
-    <section>
+    <h3>projects/netgrif-components-core/src/lib/data-fields/file-field/models/file-field-constants.ts</h3>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="fieldHeight"></a>
+                    <a name="FILE_FIELD_HEIGHT"></a>
                     <span class="name">
-                        <span ><b>fieldHeight</b></span>
-                        <a href="#fieldHeight"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>FILE_FIELD_HEIGHT</b></span>
+                        <a href="#FILE_FIELD_HEIGHT"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
@@ -994,10 +1295,10 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="fieldPadding"></a>
+                    <a name="FILE_FIELD_PADDING"></a>
                     <span class="name">
-                        <span ><b>fieldPadding</b></span>
-                        <a href="#fieldPadding"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>FILE_FIELD_PADDING</b></span>
+                        <a href="#FILE_FIELD_PADDING"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
@@ -1020,10 +1321,10 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="preview"></a>
+                    <a name="PREVIEW"></a>
                     <span class="name">
-                        <span ><b>preview</b></span>
-                        <a href="#preview"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>PREVIEW</b></span>
+                        <a href="#PREVIEW"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
@@ -1042,90 +1343,87 @@
 
         </tbody>
     </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="PREVIEW_BUTTON"></a>
+                    <span class="name">
+                        <span ><b>PREVIEW_BUTTON</b></span>
+                        <a href="#PREVIEW_BUTTON"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;preview_button&#x27;</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
 </section>
-    <h3>projects/netgrif-components-core/src/lib/navigation/navigation-double-drawer/abstract-navigation-double-drawer.ts</h3>
-    <section>
+    <h3>projects/netgrif-components-core/src/lib/public/factories/get-net-and-create-case.ts</h3>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="FILTER_DEFAULT_HEADERS_ID"></a>
+                    <a name="getNetAndCreateCase"></a>
                     <span class="name">
-                        <span ><b>FILTER_DEFAULT_HEADERS_ID</b></span>
-                        <a href="#FILTER_DEFAULT_HEADERS_ID"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>getNetAndCreateCase</b></span>
+                        <a href="#getNetAndCreateCase"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Default value : </i><code>&#x27;default_headers&#x27;</code>
+                        <i>Default value : </i><code>(router: Router,
+                                    route: ActivatedRoute,
+                                    process: ProcessService,
+                                    caseResourceService: CaseResourceService,
+                                    snackBarService: SnackBarService,
+                                    translate: TranslateService,
+                                    publicTaskLoadingService: PublicTaskLoadingService) &#x3D;&gt; {
+    process.getNet(atob(route.snapshot.paramMap.get(&#x27;petriNetId&#x27;))).pipe(mergeMap(net &#x3D;&gt; {
+        if (net) {
+            publicTaskLoadingService.setLoading$(true);
+            const newCase &#x3D; {
+                title: (net.defaultCaseName !&#x3D;&#x3D; undefined &amp;&amp; net.defaultCaseName !&#x3D;&#x3D; &#x27;&#x27;) ?
+                    net.defaultCaseName : translate.instant(&#x27;side-menu.new-case.case&#x27;),
+                color: &#x27;panel-primary-icon&#x27;,
+                netId: net.stringId
+            };
+            return caseResourceService.createCase(newCase);
+        } else {
+            snackBarService.openWarningSnackBar(translate.instant(&#x27;publicView.netNotExist&#x27;));
+        }
+    })).subscribe(response &#x3D;&gt; {
+            router.navigate([route.snapshot.url.join(&#x27;/&#x27;) + &#x27;/&#x27; + (response.outcome as CreateCaseEventOutcome).aCase.stringId]);
+            publicTaskLoadingService.setLoading$(false);
+        }, error &#x3D;&gt; {
+            snackBarService.openErrorSnackBar(translate.instant(&#x27;publicView.errorCreate&#x27;) + error);
+            publicTaskLoadingService.setLoading$(false);
+        }
+    );
+}</code>
                     </td>
                 </tr>
 
 
         </tbody>
     </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="FILTER_IDENTIFIERS"></a>
-                    <span class="name">
-                        <span ><b>FILTER_IDENTIFIERS</b></span>
-                        <a href="#FILTER_IDENTIFIERS"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Type : </i>    <code>[]</code>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Default value : </i><code>[
-    &#x27;preference_filter_item&#x27;,
-]</code>
-                    </td>
-                </tr>
-
-
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="FILTER_VIEW_TASK_TRANSITION_ID"></a>
-                    <span class="name">
-                        <span ><b>FILTER_VIEW_TASK_TRANSITION_ID</b></span>
-                        <a href="#FILTER_VIEW_TASK_TRANSITION_ID"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Default value : </i><code>&#x27;view&#x27;</code>
-                    </td>
-                </tr>
-
-
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
+</section>
+    <h3>projects/netgrif-components-core/src/lib/navigation/model/navigation-configs.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
                 <td class="col-md-4">
@@ -1145,6 +1443,34 @@
                 <tr>
                     <td class="col-md-4">
                         <i>Default value : </i><code>60</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="MENU_IDENTIFIERS"></a>
+                    <span class="name">
+                        <span ><b>MENU_IDENTIFIERS</b></span>
+                        <a href="#MENU_IDENTIFIERS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+    &#x27;preference_item&#x27;,
+]</code>
                     </td>
                 </tr>
 
@@ -1229,51 +1555,78 @@
 
         </tbody>
     </table>
-</section>
-    <h3>projects/netgrif-components-core/src/lib/public/factories/get-net-and-create-case.ts</h3>
-    <section>
-    <h3></h3>    <table class="table table-sm table-bordered">
+    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="getNetAndCreateCase"></a>
+                    <a name="RIGHT_SIDE_INIT_PAGE_SIZE"></a>
                     <span class="name">
-                        <span ><b>getNetAndCreateCase</b></span>
-                        <a href="#getNetAndCreateCase"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>RIGHT_SIDE_INIT_PAGE_SIZE</b></span>
+                        <a href="#RIGHT_SIDE_INIT_PAGE_SIZE"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Default value : </i><code>(router: Router,
-                                    route: ActivatedRoute,
-                                    process: ProcessService,
-                                    caseResourceService: CaseResourceService,
-                                    snackBarService: SnackBarService,
-                                    translate: TranslateService,
-                                    publicTaskLoadingService: PublicTaskLoadingService) &#x3D;&gt; {
-    process.getNet(atob(route.snapshot.paramMap.get(&#x27;petriNetId&#x27;))).pipe(mergeMap(net &#x3D;&gt; {
-        if (net) {
-            publicTaskLoadingService.setLoading$(true);
-            const newCase &#x3D; {
-                title: (net.defaultCaseName !&#x3D;&#x3D; undefined &amp;&amp; net.defaultCaseName !&#x3D;&#x3D; &#x27;&#x27;) ?
-                    net.defaultCaseName : translate.instant(&#x27;side-menu.new-case.case&#x27;),
-                color: &#x27;panel-primary-icon&#x27;,
-                netId: net.stringId
-            };
-            return caseResourceService.createCase(newCase);
-        } else {
-            snackBarService.openWarningSnackBar(translate.instant(&#x27;publicView.netNotExist&#x27;));
-        }
-    })).subscribe(response &#x3D;&gt; {
-            router.navigate([route.snapshot.url.join(&#x27;/&#x27;) + &#x27;/&#x27; + (response.outcome as CreateCaseEventOutcome).aCase.stringId]);
-            publicTaskLoadingService.setLoading$(false);
-        }, error &#x3D;&gt; {
-            snackBarService.openErrorSnackBar(translate.instant(&#x27;publicView.errorCreate&#x27;) + error);
-            publicTaskLoadingService.setLoading$(false);
-        }
-    );
-}</code>
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>20</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="RIGHT_SIDE_NEW_PAGE_SIZE"></a>
+                    <span class="name">
+                        <span ><b>RIGHT_SIDE_NEW_PAGE_SIZE</b></span>
+                        <a href="#RIGHT_SIDE_NEW_PAGE_SIZE"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>10</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="SETTINGS_TRANSITION_ID"></a>
+                    <span class="name">
+                        <span ><b>SETTINGS_TRANSITION_ID</b></span>
+                        <a href="#SETTINGS_TRANSITION_ID"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;item_settings&#x27;</code>
                     </td>
                 </tr>
 
@@ -1282,7 +1635,7 @@
     </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/side-menu/content-components/injection-tokens.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -1307,16 +1660,16 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="NAE_FILES_UPLOAD_COMPONENT"></a>
+                    <a name="NAE_IMPORT_NET_COMPONENT"></a>
                     <span class="name">
-                        <span ><b>NAE_FILES_UPLOAD_COMPONENT</b></span>
-                        <a href="#NAE_FILES_UPLOAD_COMPONENT"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>NAE_IMPORT_NET_COMPONENT</b></span>
+                        <a href="#NAE_IMPORT_NET_COMPONENT"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Default value : </i><code>new InjectionToken&lt;ComponentType&lt;unknown&gt;&gt;(&#x27;NaeFilesUploadComponent&#x27;)</code>
+                        <i>Default value : </i><code>new InjectionToken&lt;ComponentType&lt;unknown&gt;&gt;(&#x27;NaeImportNetComponent&#x27;)</code>
                     </td>
                 </tr>
 
@@ -1337,6 +1690,26 @@
                 <tr>
                     <td class="col-md-4">
                         <i>Default value : </i><code>new InjectionToken&lt;ComponentType&lt;unknown&gt;&gt;(&#x27;NaeLoadFilterComponent&#x27;)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="NAE_MULTI_USER_ASSIGN_COMPONENT"></a>
+                    <span class="name">
+                        <span ><b>NAE_MULTI_USER_ASSIGN_COMPONENT</b></span>
+                        <a href="#NAE_MULTI_USER_ASSIGN_COMPONENT"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new InjectionToken&lt;ComponentType&lt;unknown&gt;&gt;(&#x27;NaeMultiUserAssignComponent&#x27;)</code>
                     </td>
                 </tr>
 
@@ -1407,6 +1780,26 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="NAE_TASK_VIEW_COMPONENT"></a>
+                    <span class="name">
+                        <span ><b>NAE_TASK_VIEW_COMPONENT</b></span>
+                        <a href="#NAE_TASK_VIEW_COMPONENT"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new InjectionToken&lt;ComponentType&lt;unknown&gt;&gt;(&#x27;NaeTaskViewComponent&#x27;)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="NAE_USER_ASSIGN_COMPONENT"></a>
                     <span class="name">
                         <span ><b>NAE_USER_ASSIGN_COMPONENT</b></span>
@@ -1444,8 +1837,191 @@
         </tbody>
     </table>
 </section>
+    <h3>projects/netgrif-components-core/src/lib/dialog/injection-tokens.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="NAE_ADMIN_IMPERSONATE_DIALOG_COMPONENT"></a>
+                    <span class="name">
+                        <span ><b>NAE_ADMIN_IMPERSONATE_DIALOG_COMPONENT</b></span>
+                        <a href="#NAE_ADMIN_IMPERSONATE_DIALOG_COMPONENT"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new InjectionToken&lt;ComponentType&lt;unknown&gt;&gt;(&#x27;NaeAdminImpersonateDialogComponent&#x27;)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="NAE_IMPORT_NET_DIALOG_COMPONENT"></a>
+                    <span class="name">
+                        <span ><b>NAE_IMPORT_NET_DIALOG_COMPONENT</b></span>
+                        <a href="#NAE_IMPORT_NET_DIALOG_COMPONENT"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new InjectionToken&lt;ComponentType&lt;unknown&gt;&gt;(&#x27;NaeImportNetDialogComponent&#x27;)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="NAE_LOAD_FILTER_DIALOG_COMPONENT"></a>
+                    <span class="name">
+                        <span ><b>NAE_LOAD_FILTER_DIALOG_COMPONENT</b></span>
+                        <a href="#NAE_LOAD_FILTER_DIALOG_COMPONENT"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new InjectionToken&lt;ComponentType&lt;unknown&gt;&gt;(&#x27;NaeLoadFilterDialogComponent&#x27;)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="NAE_MULTI_USER_ASSIGN_DIALOG_COMPONENT"></a>
+                    <span class="name">
+                        <span ><b>NAE_MULTI_USER_ASSIGN_DIALOG_COMPONENT</b></span>
+                        <a href="#NAE_MULTI_USER_ASSIGN_DIALOG_COMPONENT"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new InjectionToken&lt;ComponentType&lt;unknown&gt;&gt;(&#x27;NaeMultiUserAssignDialogComponent&#x27;)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="NAE_NEW_CASE_DIALOG_COMPONENT"></a>
+                    <span class="name">
+                        <span ><b>NAE_NEW_CASE_DIALOG_COMPONENT</b></span>
+                        <a href="#NAE_NEW_CASE_DIALOG_COMPONENT"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new InjectionToken&lt;ComponentType&lt;unknown&gt;&gt;(&#x27;NaeNewCaseDialogComponent&#x27;)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="NAE_OPTION_SELECTOR_DIALOG_COMPONENT"></a>
+                    <span class="name">
+                        <span ><b>NAE_OPTION_SELECTOR_DIALOG_COMPONENT</b></span>
+                        <a href="#NAE_OPTION_SELECTOR_DIALOG_COMPONENT"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new InjectionToken&lt;ComponentType&lt;unknown&gt;&gt;(&#x27;NaeOptionSelectorDialogComponent&#x27;)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="NAE_SAVE_FILTER_DIALOG_COMPONENT"></a>
+                    <span class="name">
+                        <span ><b>NAE_SAVE_FILTER_DIALOG_COMPONENT</b></span>
+                        <a href="#NAE_SAVE_FILTER_DIALOG_COMPONENT"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new InjectionToken&lt;ComponentType&lt;unknown&gt;&gt;(&#x27;NaeSaveFilterDialogComponent&#x27;)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="NAE_USER_ASSIGN_DIALOG_COMPONENT"></a>
+                    <span class="name">
+                        <span ><b>NAE_USER_ASSIGN_DIALOG_COMPONENT</b></span>
+                        <a href="#NAE_USER_ASSIGN_DIALOG_COMPONENT"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new InjectionToken&lt;ComponentType&lt;unknown&gt;&gt;(&#x27;NaeUserAssignDialogComponent&#x27;)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="NAE_USER_IMPERSONATE_DIALOG_COMPONENT"></a>
+                    <span class="name">
+                        <span ><b>NAE_USER_IMPERSONATE_DIALOG_COMPONENT</b></span>
+                        <a href="#NAE_USER_IMPERSONATE_DIALOG_COMPONENT"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new InjectionToken&lt;ComponentType&lt;unknown&gt;&gt;(&#x27;NaeUserImpersonateDialogComponent&#x27;)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
     <h3>projects/netgrif-components-core/src/lib/task-content/model/async-rendering-configuration-injection-token.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -1475,7 +2051,7 @@
     </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/view/case-view/models/autoswitch-token.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -1498,7 +2074,7 @@
     </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/search/models/base-filter-injection-token.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -1532,8 +2108,71 @@
         </tbody>
     </table>
 </section>
+    <h3>projects/netgrif-components-core/src/lib/data-fields/case-ref-field/model/case-ref-injection-tokens.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="NAE_CASE_REF_CREATE_CASE"></a>
+                    <span class="name">
+                        <span ><b>NAE_CASE_REF_CREATE_CASE</b></span>
+                        <a href="#NAE_CASE_REF_CREATE_CASE"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new InjectionToken&lt;boolean&gt;(&#x27;NaeCaseRefCreateCase&#x27;)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="NAE_CASE_REF_DATAFIELD"></a>
+                    <span class="name">
+                        <span ><b>NAE_CASE_REF_DATAFIELD</b></span>
+                        <a href="#NAE_CASE_REF_DATAFIELD"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new InjectionToken&lt;CaseRefField&gt;(&#x27;NaeCaseRefDatafield&#x27;)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="NAE_CASE_REF_SEARCH"></a>
+                    <span class="name">
+                        <span ><b>NAE_CASE_REF_SEARCH</b></span>
+                        <a href="#NAE_CASE_REF_SEARCH"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new InjectionToken&lt;boolean&gt;(&#x27;NaeCaseRefSearch&#x27;)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
     <h3>projects/netgrif-components-core/src/lib/search/category-factory/search-categories-injection-token.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -1626,7 +2265,7 @@ but remains for backwards-compatibility.</p>
     </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/header/models/default-headers-token.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -1648,8 +2287,31 @@ but remains for backwards-compatibility.</p>
         </tbody>
     </table>
 </section>
+    <h3>projects/netgrif-components-core/src/lib/translate/default-language-injection-token.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="NAE_DEFAULT_LANGUAGE"></a>
+                    <span class="name">
+                        <span ><b>NAE_DEFAULT_LANGUAGE</b></span>
+                        <a href="#NAE_DEFAULT_LANGUAGE"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new InjectionToken&lt;string&gt;(&#x27;NaeDefaultLanguage&#x27;)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
     <h3>projects/netgrif-components-core/src/lib/forms/min-password-length-token.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -1698,7 +2360,7 @@ but remains for backwards-compatibility.</p>
     </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/data-fields/filter-field/models/filter-field-injection-token.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -1728,7 +2390,7 @@ an <a href="../components/AbstractFilterFieldComponent.html">AbstractFilterField
     </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/panel/immediate/model/filter-text-injection-token.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -1757,7 +2419,7 @@ an <a href="../components/AbstractFilterFieldComponent.html">AbstractFilterField
     </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/filter/models/filters-filter-injection-token.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -1788,7 +2450,7 @@ user filters are loaded via the <a href="../injectables/UserFiltersService.html"
     </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/navigation/model/group-navigation-component-resolver-component-injection-token.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -1817,7 +2479,7 @@ user filters are loaded via the <a href="../injectables/UserFiltersService.html"
     </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/data-fields/models/invalid-data-policy-token.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -1850,7 +2512,7 @@ token at such low level. Applying the token to individual task views is achievab
     </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/navigation/model/filter-case-injection-token.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -1885,7 +2547,7 @@ token at such low level. Applying the token to individual task views is achievab
     </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/side-menu/net-version-visible-injection-token.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -1928,7 +2590,7 @@ token at such low level. Applying the token to individual task views is achievab
     </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/view/case-view/models/new-case-configuration-injection-token.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -1948,7 +2610,7 @@ token at such low level. Applying the token to individual task views is achievab
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Can be used to provide case views with configuration of the <a href="../injectables/CaseViewService.html#createNewCase">CaseViewService</a>[createNewCase()] method without
+                    <div class="io-description"><p>Can be used to provide case views with configuration of the <a href="CaseViewService.createNewCase">CaseViewService.createNewCase</a>[createNewCase()] method without
 having to extend the service and override the method.</p>
 </div>
                 </td>
@@ -1958,7 +2620,7 @@ having to extend the service and override the method.</p>
     </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/side-menu/content-components/new-case/model/new-case-injection-data.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -1981,7 +2643,7 @@ having to extend the service and override the method.</p>
     </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/view/case-view/models/open-existing-tab-token.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -2004,7 +2666,7 @@ having to extend the service and override the method.</p>
     </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/view/task-view/models/injection-token-task-endpoint.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -2018,7 +2680,7 @@ having to extend the service and override the method.</p>
             </tr>
             <tr>
                 <td class="col-md-4 deprecated">
-                    in 5.3.0 - Use {
+                    [object Object],[object Object],[object Object]
                 </td>
             </tr>
                 <tr>
@@ -2038,7 +2700,7 @@ having to extend the service and override the method.</p>
     </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/routing/routing-builder/routing-builder.service.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -2067,7 +2729,7 @@ having to extend the service and override the method.</p>
     </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/search/models/component-configuration/search-component-configuration-injection-token.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -2103,7 +2765,7 @@ having to extend the service and override the method.</p>
     </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/side-menu/side-menu-injection-token.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -2126,7 +2788,7 @@ having to extend the service and override the method.</p>
     </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/snack-bar/models/injection-token-snackbar.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -2168,8 +2830,8 @@ having to extend the service and override the method.</p>
         </tbody>
     </table>
 </section>
-    <h3>projects/netgrif-components-core/src/lib/tabs/tab-data-injection-token/tab-data-field-portal-data-injection-token.ts</h3>
-    <section>
+    <h3>projects/netgrif-components-core/src/lib/tabs/tab-data-injection-token/tab-data-injection-token.ts</h3>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -2195,7 +2857,7 @@ having to extend the service and override the method.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Injection token for injection of <a href="../interfaces/InjectedTabData.html">InjectedTabData</a> into tabs in <a href="../classess/TabView.html">TabView</a>.</p>
+                    <div class="io-description"><p>Injection token for injection of <a href="../interfaces/InjectedTabData.html">InjectedTabData</a> into tabs in <a href="../classes/TabView.html">TabView</a>.</p>
 <p>Also see <a href="../interfaces/TabContent.html">TabContent</a> for more information.</p>
 </div>
                 </td>
@@ -2205,7 +2867,7 @@ having to extend the service and override the method.</p>
     </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/view/task-view/models/injection-token-task-force-open.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -2228,7 +2890,7 @@ having to extend the service and override the method.</p>
     </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/task/models/task-operations-injection-token.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -2251,7 +2913,7 @@ having to extend the service and override the method.</p>
     </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/panel/task-panel/models/disable-functions.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -2274,7 +2936,7 @@ having to extend the service and override the method.</p>
     </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/view/task-view/models/task-view-configuration-injection-token.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -2297,7 +2959,7 @@ having to extend the service and override the method.</p>
     </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/view/tree-case-view/tree-component/model/tree-configuration-injection-token.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -2320,7 +2982,7 @@ having to extend the service and override the method.</p>
     </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/navigation/model/size-menu-injection-token.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -2349,7 +3011,7 @@ having to extend the service and override the method.</p>
     </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/user/models/view-id-injection-tokens.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -2392,7 +3054,7 @@ having to extend the service and override the method.</p>
     </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/view/workflow-view/models/injection-token-workflow-service.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -2447,7 +3109,7 @@ having to extend the service and override the method.</p>
     </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/providers/petrinet-resource/petrinet-resource-service.provider.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -2506,7 +3168,7 @@ having to extend the service and override the method.</p>
     </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/providers/process-service/process-service.provider.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -2567,44 +3229,8 @@ having to extend the service and override the method.</p>
         </tbody>
     </table>
 </section>
-    <h3>projects/netgrif-components-core/src/lib/public/factories/public-search-factory.ts</h3>
-    <section>
-    <h3></h3>    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="publicBaseFilterFactory"></a>
-                    <span class="name">
-                        <span ><b>publicBaseFilterFactory</b></span>
-                        <a href="#publicBaseFilterFactory"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Default value : </i><code>(router: Router, route: ActivatedRoute, process: ProcessService,
-                                        caseResourceService: CaseResourceService, snackBarService: SnackBarService,
-                                        translate: TranslateService, publicTaskLoadingService: PublicTaskLoadingService) &#x3D;&gt; {
-    if (route.snapshot.paramMap.get(&#x27;caseId&#x27;) &#x3D;&#x3D;&#x3D; null &amp;&amp; route.snapshot.paramMap.get(&#x27;petriNetId&#x27;) !&#x3D;&#x3D; null) {
-        getNetAndCreateCase(router, route, process, caseResourceService, snackBarService, translate, publicTaskLoadingService);
-    } else if (route.snapshot.paramMap.get(&#x27;caseId&#x27;) !&#x3D;&#x3D; null) {
-        return {
-            filter: new SimpleFilter(&#x27;&#x27;, FilterType.TASK, {case: {id: route.snapshot.paramMap.get(&#x27;caseId&#x27;)}})
-        };
-    }
-    return {
-        filter: new SimpleFilter(&#x27;&#x27;, FilterType.TASK, {case: {id: &#x27;No Case&#x27;}})
-    };
-}</code>
-                    </td>
-                </tr>
-
-
-        </tbody>
-    </table>
-</section>
     <h3>projects/netgrif-components-core/src/lib/public/factories/public-factory-resolver.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -2642,7 +3268,7 @@ having to extend the service and override the method.</p>
     </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/logger/services/log-publisher.service.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -2674,8 +3300,107 @@ having to extend the service and override the method.</p>
         </tbody>
     </table>
 </section>
+    <h3>projects/netgrif-components-core/src/lib/actions/model/router-action-definitions.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="redirectAction"></a>
+                    <span class="name">
+                        <span ><b>redirectAction</b></span>
+                        <a href="#redirectAction"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/FrontActionDefinition.html" target="_self" >FrontActionDefinition</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    call: (injector: Injector, frontAction: FrontAction) &#x3D;&gt; {
+        const router &#x3D; injector.get(Router);
+        router.navigate([frontAction.args[0]])
+    }
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>projects/netgrif-components-core/src/lib/actions/model/task-action-definitions.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="reloadTaskAction"></a>
+                    <span class="name">
+                        <span ><b>reloadTaskAction</b></span>
+                        <a href="#reloadTaskAction"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/FrontActionDefinition.html" target="_self" >FrontActionDefinition</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    call: (injector: Injector, frontAction: FrontAction) &#x3D;&gt; {
+        const taskDataService &#x3D; injector.get(TaskDataService);
+        taskDataService.initializeTaskDataFields(new AfterAction(), true);
+    }
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="validateTaskAction"></a>
+                    <span class="name">
+                        <span ><b>validateTaskAction</b></span>
+                        <a href="#validateTaskAction"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/FrontActionDefinition.html" target="_self" >FrontActionDefinition</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    call: (injector: Injector, frontAction: FrontAction) &#x3D;&gt; {
+        const taskContentService &#x3D; injector.get(TaskContentService);
+        taskContentService.validateTaskData(frontAction.args[0] as string);
+    }
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
     <h3>projects/netgrif-components-core/src/commons/angular-cli-devkit-core-strings.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -2778,7 +3503,7 @@ having to extend the service and override the method.</p>
     </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/providers/task-resource/task-resource-service.provider.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -2842,7 +3567,7 @@ having to extend the service and override the method.</p>
     </table>
 </section>
     <h3>projects/netgrif-components-core/src/lib/utility/tests/test-factory-methods.ts</h3>
-    <section>
+    <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -2975,7 +3700,7 @@ having to extend the service and override the method.</p>
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -2987,6 +3712,15 @@ having to extend the service and override the method.</p>
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'miscellaneous-variables';
@@ -2994,10 +3728,23 @@ having to extend the service and override the method.</p>
             var MAX_SEARCH_RESULTS = 15;
        </script>
 
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
 
-       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
        <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>

@@ -1,6 +1,6 @@
 {
     "name": "@netgrif/components-project",
-    "version": "6.5.0-beta.1",
+    "version": "7.0.0-beta.1",
     "description": "Netgrif Application Engine Frontend project. Project includes angular libraries as base for NAE applications.",
     "homepage": "https://components.netgrif.com",
     "license": "SEE LICENSE IN LICENSE",
@@ -118,7 +118,7 @@
         "@angular/cli": "~17.3.8",
         "@angular/compiler-cli": "~17.3.11",
         "@angular/language-service": "~17.3.11",
-        "@compodoc/compodoc": "1.1.23",
+        "@compodoc/compodoc": "1.1.25",
         "@types/jasmine": "~3.10.0",
         "@types/jasminewd2": "~2.0.10",
         "@types/moment": "~2.13.0",
@@ -149,7 +149,7 @@
         "schematics-utilities": "~2.0.1",
         "sonarqube-scanner": "~2.5.0",
         "ts-node": "~10.2.1",
-        "typedoc": "~0.22.11",
+        "typedoc": "~0.26.5",
         "typescript": "~5.2.0",
         "typescript-json-schema": "~0.60.0",
         "unique-names-generator": "~4.2.0"

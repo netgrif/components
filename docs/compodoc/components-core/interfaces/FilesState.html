@@ -9,13 +9,64 @@
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 	   <link rel="stylesheet" href="../styles/style.css">
-        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+        <link rel="stylesheet" href="../styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
-            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
@@ -24,7 +75,7 @@
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
@@ -42,35 +93,42 @@
 
 
 
+
 <ol class="breadcrumb">
-  <li>Interfaces</li>
-  <li
+  <li class="breadcrumb-item">Interfaces</li>
+  <li class="breadcrumb-item"
   >
   FilesState</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>projects/netgrif-components-core/src/lib/data-fields/file-list-field/abstract-file-list-field.component.ts</code>
+            <code>projects/netgrif-components-core/src/lib/data-fields/file-list-field/file-list-default-field/abstract-file-list-default-field.component.ts</code>
         </p>
 
 
 
 
-        <section>
+        <section data-compodoc="block-index">
             <h3 id="index">Index</h3>
             <table class="table table-sm table-bordered index-table">
                 <tbody>
@@ -121,7 +179,7 @@
 
 
 
-            <section>
+            <section data-compodoc="block-properties">
                 <h3 id="inputs">Properties</h3>
                     <table class="table table-sm table-bordered">
                         <tbody>
@@ -292,7 +350,7 @@
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
     AfterViewInit,
     Component,
@@ -303,23 +361,25 @@
     OnInit,
     Optional,
     ViewChild
-} from &#x27;@angular/core&#x27;;
-import {TaskResourceService} from &#x27;../../resources/engine-endpoint/task-resource.service&#x27;;
-import {LoggerService} from &#x27;../../logger/services/logger.service&#x27;;
-import {SnackBarService} from &#x27;../../snack-bar/services/snack-bar.service&#x27;;
-import {TranslateService} from &#x27;@ngx-translate/core&#x27;;
-import {AbstractDataFieldComponent} from &#x27;../models/abstract-data-field-component&#x27;;
-import {ProgressType, ProviderProgress} from &#x27;../../resources/resource-provider.service&#x27;;
-import {FileListField, FileListFieldValidation} from &#x27;./models/file-list-field&#x27;;
-import {FileFieldValue} from &#x27;../file-field/models/file-field-value&#x27;;
-import {NAE_INFORM_ABOUT_INVALID_DATA} from &#x27;../models/invalid-data-policy-token&#x27;;
-import {take} from &#x27;rxjs/operators&#x27;;
-import {EventOutcomeMessageResource} from &#x27;../../resources/interface/message-resource&#x27;;
-import {EventService} from &#x27;../../event/services/event.service&#x27;;
-import {ChangedFieldsMap} from &#x27;../../event/services/interfaces/changed-fields-map&#x27;;
-import {Subscription} from &#x27;rxjs&#x27;;
-import {FileFieldIdBody} from &#x27;../models/file-field-id-body&#x27;;
-import { HttpParams } from &#x27;@angular/common/http&#x27;;
+} from &quot;@angular/core&quot;;
+import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from &quot;../../models/data-field-portal-data-injection-token&quot;;
+import {FileListField, FileListFieldValidation} from &quot;../models/file-list-field&quot;;
+import {Subscription} from &quot;rxjs&quot;;
+import {TaskResourceService} from &quot;../../../resources/engine-endpoint/task-resource.service&quot;;
+import {LoggerService} from &quot;../../../logger/services/logger.service&quot;;
+import {SnackBarService} from &quot;../../../snack-bar/services/snack-bar.service&quot;;
+import {TranslateService} from &quot;@ngx-translate/core&quot;;
+import {EventService} from &quot;../../../event/services/event.service&quot;;
+import {FileFieldIdBody} from &quot;../../models/file-field-id-body&quot;;
+import {EventOutcomeMessageResource} from &quot;../../../resources/interface/message-resource&quot;;
+import {ProgressType, ProviderProgress} from &quot;../../../resources/resource-provider.service&quot;;
+import {ChangedFieldsMap} from &quot;../../../event/services/interfaces/changed-fields-map&quot;;
+import {HttpParams} from &quot;@angular/common/http&quot;;
+import {take} from &quot;rxjs/operators&quot;;
+import {FileFieldValue} from &quot;../../file-field/models/file-field-value&quot;;
+import {AbstractBaseDataFieldComponent} from &quot;../../base-component/abstract-base-data-field.component&quot;;
+import {FileFieldRequest} from &quot;../../../resources/interface/file-field-request-body&quot;;
+import {AbstractFileFieldDefaultComponent} from &#x27;../../models/abstract-file-field-default-component&#x27;;
 
 export interface FilesState {
     progress: number;
@@ -329,11 +389,12 @@ export interface FilesState {
     error: boolean;
 }
 
+
 @Component({
-    selector: &#x27;ncc-abstract-filelist-field&#x27;,
+    selector: &#x27;ncc-abstract-file-list-default-field&#x27;,
     template: &#x27;&#x27;
 })
-export abstract class AbstractFileListFieldComponent extends AbstractDataFieldComponent implements OnInit, AfterViewInit, OnDestroy {
+export abstract class AbstractFileListDefaultFieldComponent extends AbstractFileFieldDefaultComponent&lt;FileListField&gt; implements OnInit, AfterViewInit, OnDestroy {
 
     public uploadedFiles: Array&lt;string&gt;;
     public state: FilesState;
@@ -347,33 +408,20 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
     protected maxFilesNumber: number;
     protected maxFilesMessage: string;
 
-    /**
-     * Task mongo string id is binding property from parent component.
-     */
-    @Input() public taskId: string;
-    /**
-     * Binding property as instance from parent component.
-     */
-    @Input() public dataField: FileListField;
-    /**
-     * File picker element reference from component template that is initialized after view init.
-     */
-    @ViewChild(&#x27;fileUploadInput&#x27;) public fileUploadEl: ElementRef&lt;HTMLInputElement&gt;;
-
     protected constructor(protected _taskResourceService: TaskResourceService,
                           protected _log: LoggerService,
                           protected _snackbar: SnackBarService,
                           protected _translate: TranslateService,
                           protected _eventService: EventService,
-                          @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
-        super(informAboutInvalidData);
+                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData&lt;FileListField&gt;) {
+        super(_log, _snackbar, _translate, dataFieldPortalData);
         this.state &#x3D; this.defaultState;
         this.uploadedFiles &#x3D; new Array&lt;string&gt;();
         this.maxFilesNumber &#x3D; Number.POSITIVE_INFINITY;
+        this.taskId &#x3D; dataFieldPortalData.additionalFieldProperties.taskId as string;
     }
 
     ngOnInit(): void {
-        super.ngOnInit();
         this.valueChange$ &#x3D; this.dataField.valueChanges().subscribe(() &#x3D;&gt; {
             this.parseResponse();
         });
@@ -407,7 +455,7 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
     }
 
     public chooseFile() {
-        if (this.state.uploading || this.formControl.disabled) {
+        if (this.state.uploading || this.formControlRef.disabled) {
             return;
         }
         this.fileUploadEl.nativeElement.click();
@@ -450,7 +498,7 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
             return;
         }
 
-        if (this.dataField.value &amp;&amp; this.dataField.value.namesPaths &amp;&amp; this.dataField.value.namesPaths.length !&#x3D;&#x3D; 0) {
+        if (this.dataField.value?.namesPaths &amp;&amp; this.dataField.value?.namesPaths.length !&#x3D;&#x3D; 0) {
             this.dataField.value.namesPaths.forEach(namePath &#x3D;&gt; {
                 filesToUpload &#x3D; filesToUpload.filter(fileToUpload &#x3D;&gt; fileToUpload.name !&#x3D;&#x3D; namePath.name);
             });
@@ -462,6 +510,10 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
             }
         }
 
+        if (!this.checkAllowedTypes()) {
+            return;
+        }
+
         this.state &#x3D; this.defaultState;
         this.state.uploading &#x3D; true;
         const fileFormData &#x3D; new FormData();
@@ -469,12 +521,12 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
         filesToUpload.forEach(fileToUpload &#x3D;&gt; {
             fileFormData.append(&#x27;files&#x27;, fileToUpload);
         });
-        const data: FileFieldIdBody &#x3D; {};
-        data[this.resolveParentTaskId()] &#x3D; this.dataField.stringId;
-        fileFormData.append(&#x27;data&#x27;, new Blob([JSON.stringify(data)], {type: &#x27;application/json&#x27;}));
-        this._taskResourceService.uploadFile(this.taskId,
-            this.dataField.stringId, fileFormData, true)
-            .subscribe((response: EventOutcomeMessageResource) &#x3D;&gt; {
+        const requestBody: FileFieldRequest &#x3D; {
+            parentTaskId: this.resolveParentTaskId(),
+            fieldId: this.dataField.stringId,
+        }
+        fileFormData.append(&#x27;data&#x27;, new Blob([JSON.stringify(requestBody)], {type: &#x27;application/json&#x27;}));
+        this._taskResourceService.uploadFile(this.taskId, fileFormData, true).subscribe((response: EventOutcomeMessageResource) &#x3D;&gt; {
                 if ((response as ProviderProgress).type &amp;&amp; (response as ProviderProgress).type &#x3D;&#x3D;&#x3D; ProgressType.UPLOAD) {
                     this.state.progress &#x3D; (response as ProviderProgress).progress;
                 } else {
@@ -501,7 +553,7 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
                         filesToUpload.forEach(fileToUpload &#x3D;&gt; {
                             this.uploadedFiles.push(fileToUpload.name);
                             this.dataField.value.namesPaths.push({name: fileToUpload.name});
-                            this.formControl.setValue(this.dataField.value.namesPaths.map(namePath &#x3D;&gt; {
+                            this.formControlRef.setValue(this.dataField.value.namesPaths.map(namePath &#x3D;&gt; {
                                 return namePath[&#x27;name&#x27;];
                             }).join(&#x27;/&#x27;));
                         });
@@ -530,8 +582,7 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
     }
 
     public download(fileName: string) {
-        if (!this.dataField.value || !this.dataField.value.namesPaths ||
-            !this.dataField.value.namesPaths.find(namePath &#x3D;&gt; namePath.name &#x3D;&#x3D;&#x3D; fileName)) {
+        if (!this.dataField.value?.namesPaths?.find(namePath &#x3D;&gt; namePath.name &#x3D;&#x3D;&#x3D; fileName)) {
             return;
         }
         if (!this.taskId) {
@@ -541,8 +592,10 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
 
         this.state &#x3D; this.defaultState;
         this.state.downloading &#x3D; true;
-        this._taskResourceService.downloadFile(this.resolveParentTaskId(),
-            this.dataField.stringId, fileName).subscribe(response &#x3D;&gt; {
+        let params &#x3D; new HttpParams();
+        params &#x3D; params.set(&quot;fieldId&quot;, this.dataField.stringId);
+        params &#x3D; params.set(&quot;fileName&quot;, fileName);
+        this._taskResourceService.downloadFile(this.resolveParentTaskId(), params).subscribe(response &#x3D;&gt; {
             if ((response as ProviderProgress).type &amp;&amp; (response as ProviderProgress).type &#x3D;&#x3D;&#x3D; ProgressType.DOWNLOAD) {
                 this.state.progress &#x3D; (response as ProviderProgress).progress;
             } else {
@@ -574,19 +627,19 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
     }
 
     public deleteFile(fileName: string) {
-        if (!this.dataField.value || !this.dataField.value.namesPaths ||
-            !this.dataField.value.namesPaths.find(namePath &#x3D;&gt; namePath.name &#x3D;&#x3D;&#x3D; fileName)) {
+        if (!this.dataField.value?.namesPaths?.find(namePath &#x3D;&gt; namePath.name &#x3D;&#x3D;&#x3D; fileName)) {
             return;
         }
         if (!this.taskId) {
             this._log.error(&#x27;File cannot be deleted. No task is set to the field.&#x27;);
             return;
         }
-        let param &#x3D; new HttpParams();
-        param &#x3D; param.set(&quot;parentTaskId&quot;, this.resolveParentTaskId());
-
-        this._taskResourceService.deleteFile(this.taskId,
-            this.dataField.stringId, fileName, param).pipe(take(1)).subscribe((response: EventOutcomeMessageResource) &#x3D;&gt; {
+        const requestBody: FileFieldRequest &#x3D; {
+            parentTaskId: this.resolveParentTaskId(),
+            fieldId: this.dataField.stringId,
+            fileName
+        }
+        this._taskResourceService.deleteFile(this.taskId, requestBody).pipe(take(1)).subscribe((response: EventOutcomeMessageResource) &#x3D;&gt; {
             if (response.success) {
                 const changedFieldsMap: ChangedFieldsMap &#x3D; this._eventService.parseChangedFieldsFromOutcomeTree(response.outcome);
                 this.dataField.emitChangedFields(changedFieldsMap);
@@ -594,14 +647,14 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
                 this.uploadedFiles &#x3D; this.uploadedFiles.filter(uploadedFile &#x3D;&gt; uploadedFile !&#x3D;&#x3D; fileName);
                 if (this.dataField.value.namesPaths) {
                     this.dataField.value.namesPaths &#x3D; this.dataField.value.namesPaths.filter(namePath &#x3D;&gt; namePath.name !&#x3D;&#x3D; fileName);
-                    this.formControl.setValue(this.dataField.value.namesPaths.map(namePath &#x3D;&gt; {
+                    this.formControlRef.setValue(this.dataField.value.namesPaths.map(namePath &#x3D;&gt; {
                         return namePath[&#x27;name&#x27;];
                     }).join(&#x27;/&#x27;));
                     this.dataField.update();
                 }
                 this.dataField.downloaded &#x3D; this.dataField.downloaded.filter(one &#x3D;&gt; one !&#x3D;&#x3D; fileName);
                 this._log.debug(&#x60;File [${this.dataField.stringId}] ${fileName} was successfully deleted&#x60;);
-                this.formControl.markAsTouched();
+                this.formControlRef.markAsTouched();
             } else {
                 this._log.error(&#x60;Deleting file [${this.dataField.stringId}] ${fileName} has failed!&#x60;, response.error);
                 this._snackbar.openErrorSnackBar(
@@ -644,24 +697,21 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
             this.uploadedFiles &#x3D; this.dataField.value.namesPaths.map(namePath &#x3D;&gt; namePath.name);
         }
     }
-
-    private resolveParentTaskId(): string {
-        return !!this.dataField.parentTaskId ? this.dataField.parentTaskId : this.taskId;
-    }
 }
 </code></pre>
     </div>
 </div>
 
 
-                   
+
+
 
 
 
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -673,6 +723,15 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
@@ -680,10 +739,23 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
             var MAX_SEARCH_RESULTS = 15;
        </script>
 
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       
-       <script type="module" src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/menu-wc.js" defer></script>
        <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>

@@ -9,13 +9,64 @@
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 	   <link rel="stylesheet" href="../styles/style.css">
-        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+        <link rel="stylesheet" href="../styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
-            <a href="../" class="navbar-brand">Netgrif Components library Documentation</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Netgrif Components library Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
@@ -24,7 +75,7 @@
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
@@ -35,32 +86,37 @@
 
 
 <ol class="breadcrumb">
-  <li>Components</li>
-  <li
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
   >
   RoleAssignmentComponent</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
-        <li >
-            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
         </li>
-        <li >
-            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
         </li>
-        <li >
-            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
     <h3>File</h3>
 </p>
 <p class="comment">
@@ -73,15 +129,16 @@
         <h3>Extends</h3>
     </p>
     <p class="comment">
-                <code><a href="../components/RoleAssignmentComponent.html" target="_self" >AbstractRoleAssignmentComponent</a></code>
+                    <code><a href="../components/RoleAssignmentComponent.html" target="_self" >AbstractRoleAssignmentComponent</a></code>
     </p>
 
 
 
-<section>
+<section data-compodoc="block-metadata">
     <h3>Metadata</h3>
-    <table class="table table-sm table-hover">
+    <table class="table table-sm table-hover metadata">
         <tbody>
+
 
 
 
@@ -103,6 +160,8 @@
                 <td class="col-md-3">selector</td>
                 <td class="col-md-9"><code>nc-role-assignment</code></td>
             </tr>
+
+
 
             <tr>
                 <td class="col-md-3">styleUrls</td>
@@ -128,7 +187,7 @@
 </section>
 
 
-    <section>
+    <section data-compodoc="block-constructor">
     <h3 id="constructor">Constructor</h3>
         <table class="table table-sm table-bordered">
             <tbody>
@@ -198,7 +257,7 @@
 </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component} from &#x27;@angular/core&#x27;;
 import {AbstractRoleAssignmentComponent, RoleAssignmentService, UserService} from &#x27;@netgrif/components-core&#x27;;
 
@@ -218,25 +277,25 @@ export class RoleAssignmentComponent extends AbstractRoleAssignmentComponent {
 </code></pre>
     </div>
 
-    <div class="tab-pane fade " id="c-templateData">
-        <pre class="line-numbers"><code class="language-html">&lt;div fxLayout&#x3D;&quot;row&quot; fxLayoutAlign&#x3D;&quot;start center&quot; class&#x3D;&quot;full-height full-width padding-default&quot;&gt;
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div fxLayout&#x3D;&quot;row&quot; fxLayout.lt-sm&#x3D;&quot;column&quot; fxLayoutAlign&#x3D;&quot;start center&quot; class&#x3D;&quot;full-height full-width padding-default&quot;&gt;
 
-    &lt;div fxLayout&#x3D;&quot;column&quot; fxLayoutAlign&#x3D;&quot;start center&quot; fxFlex&#x3D;&quot;47&quot; class&#x3D;&quot;full-height&quot;&gt;
+    &lt;div fxLayout&#x3D;&quot;column&quot; fxLayoutAlign&#x3D;&quot;start center&quot; fxFlex&#x3D;&quot;49&quot; class&#x3D;&quot;role-height&quot;&gt;
         &lt;ng-container *ngIf&#x3D;&quot;users.users$ | async as users_&quot;&gt;
 
-            &lt;mat-toolbar color&#x3D;&quot;primary&quot; class&#x3D;&quot;min-height-72&quot;&gt;
+            &lt;mat-toolbar color&#x3D;&quot;primary&quot; class&#x3D;&quot;min-height-radius&quot;&gt;
                 &lt;span matTooltip&#x3D;&quot;{{users_.length}}/{{users.totalUsers}}&quot;&gt;
                     {{&#x27;admin.user-list.listTitle&#x27; | translate}}
                 &lt;/span&gt;
                 &lt;div fxFlex&#x3D;&quot;5&quot;&gt;&lt;/div&gt;
 
-                &lt;div fxLayout&#x3D;&quot;row&quot; fxLayoutAlign&#x3D;&quot;start center&quot; class&#x3D;&quot;netgrif-input netgrif-input-fix netgrif-input-primary-fix netgrif-input-search-fix&quot;&gt;
-                    &lt;mat-icon fxFlex class&#x3D;&quot;search-icon&quot;&gt;search&lt;/mat-icon&gt;
+                &lt;div fxLayout&#x3D;&quot;row&quot; fxLayoutAlign&#x3D;&quot;start center&quot; class&#x3D;&quot;netgrif-input netgrif-input-search-fix netgrif-input-primary-search-fix&quot;&gt;
                     &lt;mat-form-field fxFlex&#x3D;&quot;100&quot; class&#x3D;&quot;user-assign-search&quot; color&#x3D;&quot;primary&quot; appearance&#x3D;&quot;outline&quot;&gt;
+                        &lt;mat-icon matPrefix class&#x3D;&quot;prefix-icon&quot;&gt;search&lt;/mat-icon&gt;
                         &lt;mat-label&gt;{{ &#x27;side-menu.user.choose&#x27; | translate }}&lt;/mat-label&gt;
                         &lt;input matInput [formControl]&#x3D;&quot;searchUserControl&quot;&gt;
-                        &lt;button mat-button *ngIf&#x3D;&quot;searchUserControl.value&quot; matSuffix mat-icon-button
-                                (click)&#x3D;&quot;searchUserControl.setValue(&#x27;&#x27;)&quot;&gt;
+                        &lt;button *ngIf&#x3D;&quot;searchUserControl.value&quot; matSuffix mat-icon-button
+                                (click)&#x3D;&quot;searchUserControl.setValue(&#x27;&#x27;)&quot; color&#x3D;&quot;warn&quot;&gt;
                             &lt;mat-icon&gt;close&lt;/mat-icon&gt;
                         &lt;/button&gt;
                     &lt;/mat-form-field&gt;
@@ -262,17 +321,17 @@ export class RoleAssignmentComponent extends AbstractRoleAssignmentComponent {
                 &lt;span class&#x3D;&quot;font-size-20&quot;&gt;{{ &#x27;admin.user-list.noUsersWereFound&#x27; | translate}}&lt;/span&gt;
             &lt;/div&gt;
 
-            &lt;mat-selection-list #userList color&#x3D;&quot;accent&quot; fxFlex&#x3D;&quot;100&quot; class&#x3D;&quot;full-width&quot;&gt;
+            &lt;mat-selection-list #userList color&#x3D;&quot;primary&quot; fxFlex&#x3D;&quot;100&quot; class&#x3D;&quot;full-width advanced-option-list&quot;&gt;
 
-                &lt;cdk-virtual-scroll-viewport itemSize&#x3D;&quot;72&quot; (scrolledIndexChange)&#x3D;&quot;loadNextUserPage()&quot;
+                &lt;cdk-virtual-scroll-viewport itemSize&#x3D;&quot;48&quot; (scrolledIndexChange)&#x3D;&quot;loadNextUserPage()&quot;
                                              class&#x3D;&quot;full-width full-height&quot;&gt;
-                    &lt;mat-list-option *cdkVirtualFor&#x3D;&quot;let user of users_; let i &#x3D; index;&quot; checkboxPosition&#x3D;&quot;before&quot;
+                    &lt;mat-list-option class&#x3D;&quot;min-height-option&quot; *cdkVirtualFor&#x3D;&quot;let user of users_; let i &#x3D; index;&quot; checkboxPosition&#x3D;&quot;before&quot;
                                      [selected]&#x3D;&quot;user.selected&quot;
                                      [value]&#x3D;&quot;user&quot;
                                      [ngClass]&#x3D;&quot;{&#x27;list-item-selected&#x27;:user.selected}&quot;
-                                     (click)&#x3D;&quot;user.toggle();autoSelectRoles()&quot;&gt;
-                        &lt;h3 matLine&gt;{{user.fullName}}&lt;/h3&gt;
-                        &lt;p matLine&gt;ID: {{user.id}}, Email: {{user.email}}&lt;/p&gt;
+                                     (click)&#x3D;&quot;user.toggle();autoSelectRoles()&quot; fxLayoutAlign&#x3D;&quot;start center&quot; fxLayout&#x3D;&quot;row&quot;&gt;
+                        &lt;h3 matLine class&#x3D;&quot;primary-color-line margin-none&quot;&gt;{{user.fullName}}&lt;/h3&gt;
+                        &lt;p matLine class&#x3D;&quot;paragraph-fix margin-none&quot;&gt;ID: {{user.id}}, Email: {{user.email}}&lt;/p&gt;
                     &lt;/mat-list-option&gt;
 
                     &lt;div *ngIf&#x3D;&quot;users.loading$ | async&quot; fxLayout&#x3D;&quot;column&quot; fxLayoutAlign&#x3D;&quot;center center&quot;&gt;
@@ -285,11 +344,11 @@ export class RoleAssignmentComponent extends AbstractRoleAssignmentComponent {
         &lt;/ng-container&gt;
     &lt;/div&gt;
 
-    &lt;div fxFlex&#x3D;&quot;3&quot;&gt;&lt;/div&gt;
+    &lt;div fxFlex&#x3D;&quot;2&quot;&gt;&lt;/div&gt;
 
-    &lt;div fxLayout&#x3D;&quot;column&quot; fxLayoutAlign&#x3D;&quot;start center&quot; fxFlex&#x3D;&quot;50&quot; class&#x3D;&quot;full-height&quot;&gt;
+    &lt;div fxLayout&#x3D;&quot;column&quot; fxLayoutAlign&#x3D;&quot;start center&quot; fxFlex&#x3D;&quot;49&quot; class&#x3D;&quot;role-height&quot;&gt;
 
-        &lt;mat-toolbar color&#x3D;&quot;primary&quot; class&#x3D;&quot;min-height-72&quot;&gt;
+        &lt;mat-toolbar color&#x3D;&quot;primary&quot; class&#x3D;&quot;min-height-radius&quot;&gt;
             &lt;span&gt;{{&#x27;admin.process-list.listTitle&#x27; | translate}}&lt;/span&gt;
             &lt;span style&#x3D;&quot;flex: 1 1 auto;&quot;&gt;&lt;/span&gt;
             &lt;mat-spinner *ngIf&#x3D;&quot;users.updating$ | async&quot; color&#x3D;&quot;accent&quot; diameter&#x3D;&quot;30&quot;&gt;&lt;/mat-spinner&gt;
@@ -303,10 +362,10 @@ export class RoleAssignmentComponent extends AbstractRoleAssignmentComponent {
 
         &lt;mat-accordion class&#x3D;&quot;full-width margin-top-default process-list-accordion&quot; multi fxFlex&gt;
 
-            &lt;mat-expansion-panel *ngFor&#x3D;&quot;let item of nets.processes&quot; (afterExpand)&#x3D;&quot;nets.loadProcessItemRoles(item)&quot;
-                                 (afterCollapse)&#x3D;&quot;nets.prepareToTryAgainToLoadRoles(item)&quot;&gt;
+            &lt;mat-expansion-panel *ngFor&#x3D;&quot;let item of nets.processes; let last &#x3D; last;&quot; (afterExpand)&#x3D;&quot;nets.loadProcessItemRoles(item)&quot;
+                                 (afterCollapse)&#x3D;&quot;nets.prepareToTryAgainToLoadRoles(item)&quot; class&#x3D;&quot;panel-body&quot; [ngClass]&#x3D;&quot;{&#x27;panel-last&#x27;:last}&quot;&gt;
 
-                &lt;mat-expansion-panel-header&gt;
+                &lt;mat-expansion-panel-header class&#x3D;&quot;role-header panel-color&quot;&gt;
                     &lt;mat-panel-title&gt;
                         &lt;mat-icon *ngIf&#x3D;&quot;item.someRolesSelected&quot; color&#x3D;&quot;accent&quot; class&#x3D;&quot;margin-right-x2&quot;&gt;tour&lt;/mat-icon&gt;
                         &lt;span&gt;{{item.initials}} - {{item.title}}&lt;/span&gt;
@@ -330,22 +389,31 @@ export class RoleAssignmentComponent extends AbstractRoleAssignmentComponent {
 
                 &lt;div *ngIf&#x3D;&quot;!item.loading &amp;&amp; !item.emptyRoles&quot; fxLayout&#x3D;&quot;column&quot; fxLayoutAlign&#x3D;&quot;start start&quot;
                      class&#x3D;&quot;full-height full-width net-panel-content&quot;&gt;
-                    &lt;h3&gt;{{ &#x27;admin.process-list.roles&#x27; | translate}}&lt;/h3&gt;
+
                     &lt;div *ngFor&#x3D;&quot;let net of item.processes; let first &#x3D; first&quot; fxLayout&#x3D;&quot;column&quot;
                          fxLayoutAlign&#x3D;&quot;start center&quot; class&#x3D;&quot;full-width&quot;&gt;
                         &lt;mat-divider *ngIf&#x3D;&quot;!first&quot; style&#x3D;&quot;position: relative&quot;&gt;&lt;/mat-divider&gt;
 
-                        &lt;button mat-button matTooltip&#x3D;&quot;{{item.someRolesSelected ? &#x27;Deselect All&#x27; : &#x27;Select All&#x27;}}&quot;
-                                (click)&#x3D;&quot;toggleAllRoles(net, !item.someRolesSelected)&quot;&gt;
-                            {{net.version}}
-                        &lt;/button&gt;
+                        &lt;div class&#x3D;&quot;full-width&quot;&gt;
+                            &lt;div fxFlex fxLayoutAlign&#x3D;&quot;start center&quot;&gt;
+                                &lt;h3 class&#x3D;&quot;margin-none&quot; *ngIf&#x3D;&quot;first&quot;&gt;{{ &#x27;admin.process-list.roles&#x27; | translate}}&lt;/h3&gt;
+                            &lt;/div&gt;
+                            &lt;div fxFlex fxLayoutAlign&#x3D;&quot;center center&quot;&gt;
+                                &lt;button mat-stroked-button matTooltip&#x3D;&quot;{{item.someRolesSelected ? &#x27;Deselect All&#x27; : &#x27;Select All&#x27;}}&quot;
+                                        (click)&#x3D;&quot;toggleAllRoles(net, !item.someRolesSelected)&quot;&gt;
+                                    {{net.version}}
+                                &lt;/button&gt;
+                            &lt;/div&gt;
+                            &lt;div fxFlex&gt;&lt;/div&gt;
+                        &lt;/div&gt;
+
 
                         &lt;mat-selection-list color&#x3D;&quot;accent&quot; fxLayout&#x3D;&quot;row wrap&quot; fxLayoutAlign&#x3D;&quot;start center&quot;
                                             class&#x3D;&quot;full-width&quot;&gt;
                             &lt;mat-list-option *ngFor&#x3D;&quot;let role of net.roles&quot; checkboxPosition&#x3D;&quot;before&quot;
                                              [selected]&#x3D;&quot;role.selected&quot; (click)&#x3D;&quot;role.toggle();update(role)&quot;
                                              fxFlex&#x3D;&quot;50&quot;&gt;
-                                &lt;h3 matLine&gt;{{role.name}}&lt;/h3&gt;
+                                &lt;h3 matLine class&#x3D;&quot;margin-none&quot;&gt;{{role.name}}&lt;/h3&gt;
                             &lt;/mat-list-option&gt;
                         &lt;/mat-selection-list&gt;
                     &lt;/div&gt;
@@ -363,11 +431,11 @@ export class RoleAssignmentComponent extends AbstractRoleAssignmentComponent {
 </code></pre>
     </div>
 
-    <div class="tab-pane fade " id="c-styleData">
+    <div class="tab-pane fade " id="styleData">
                 <p class="comment">
                     <code>./role-assignment.component.scss</code>
                 </p>
-                <pre class="line-numbers"><code class="language-scss">@import &quot;projects/netgrif-components/src/styles/core&quot;;
+                <pre class="line-numbers"><code class="language-scss">@import &quot;../../../../src/styles/core&quot;;
 
 .user-list-item-margin {
     margin: 4px 0;
@@ -400,23 +468,72 @@ export class RoleAssignmentComponent extends AbstractRoleAssignmentComponent {
 .process-list-accordion {
     overflow-y: auto;
     padding: 0 2px 4px;
+    .mat-expansion-panel-spacing {
+        margin: 8px 0;
+    }
 }
 
 .user-assign-search {
     width: 100%;
+    color: #64748B;
+    min-width: 250px;
+    border-radius: 6px;
 }
 
 .search-icon {
     margin-right: 10px;
 }
 
-.min-height-72 {
-    min-height: 72px;
+.min-height-radius {
+    min-height: 64px;
+    border-radius: 8px;
+}
+
+.prefix-icon {
+    font-size: 22px;
+}
+
+.paragraph-fix {
+    word-break: break-all;
+    white-space: pre-wrap !important;
+}
+
+.min-height-option {
+    height: auto !important;
+    min-height: 48px;
+    padding: 3px 0 !important;
+}
+
+.role-header {
+    min-height: 48px !important;
+    height: auto !important;
+}
+
+.panel-last {
+    padding-bottom: 16px;
+}
+
+.margin-none {
+    margin-top: 0 !important;
+    margin-bottom: 0!important;
+}
+
+.role-height {
+    height: 100%;
+    min-height: 100%;
+}
+
+@media only screen and (max-width: 599.99px) {
+    .role-height {
+        height: 50%;
+        min-height: 50%;
+        width: 100%;
+    }
 }
 </code></pre>
     </div>
 
-    <div class="tab-pane fade " id="c-tree">
+    <div class="tab-pane fade " id="tree">
         <div id="tree-container"></div>
         <div class="tree-legend">
             <div class="title">
@@ -441,8 +558,8 @@ export class RoleAssignmentComponent extends AbstractRoleAssignmentComponent {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div fxLayout="row" fxLayoutAlign="start center" class="full-height full-width padding-default">    <div fxLayout="column" fxLayoutAlign="start center" fxFlex="47" class="full-height">        <ng-container *ngIf="users.users$ | async as users_">            <mat-toolbar color="primary" class="min-height-72">                <span matTooltip="{{users_.length}}/{{users.totalUsers}}">                    {{\'admin.user-list.listTitle\' | translate}}                </span>                <div fxFlex="5"></div>                <div fxLayout="row" fxLayoutAlign="start center" class="netgrif-input netgrif-input-fix netgrif-input-primary-fix netgrif-input-search-fix">                    <mat-icon fxFlex class="search-icon">search</mat-icon>                    <mat-form-field fxFlex="100" class="user-assign-search" color="primary" appearance="outline">                        <mat-label>{{ \'side-menu.user.choose\' | translate }}</mat-label>                        <input matInput [formControl]="searchUserControl">                        <button mat-button *ngIf="searchUserControl.value" matSuffix mat-icon-button                                (click)="searchUserControl.setValue(\'\')">                            <mat-icon>close</mat-icon>                        </button>                    </mat-form-field>                </div>                <span style="flex: 1 1 auto;"></span>                <button disabled mat-icon-button                        matTooltip="{{userMultiSelect ? \'Multi selection\' : \'Single selection\'}}"                        (click)="userMultiSelect = !userMultiSelect">                    <mat-icon>{{userMultiSelect ? \'group\' : \'person\'}}</mat-icon>                </button>                <button mat-icon-button matTooltip="{{ \'side-menu.tooltip.SelectAll\' | translate }}" (click)="selectAllUsers(true)">                    <mat-icon>done_all</mat-icon>                </button>                <button mat-icon-button matTooltip="{{ \'side-menu.tooltip.DeselectAll\' | translate }}" (click)="selectAllUsers(false)">                    <mat-icon>clear</mat-icon>                </button>            </mat-toolbar>            <div *ngIf="(users.loading$ | async) === false && users_.length === 0" fxLayout="column"                 fxLayoutAlign="center center" fxFlex class="margin-top-x2">                <mat-icon color="accent" class="margin-bottom-default no-user-icon">perm_identity</mat-icon>                <span class="font-size-20">{{ \'admin.user-list.noUsersWereFound\' | translate}}</span>            </div>            <mat-selection-list #userList color="accent" fxFlex="100" class="full-width">                <cdk-virtual-scroll-viewport itemSize="72" (scrolledIndexChange)="loadNextUserPage()"                                             class="full-width full-height">                    <mat-list-option *cdkVirtualFor="let user of users_; let i = index;" checkboxPosition="before"                                     [selected]="user.selected"                                     [value]="user"                                     [ngClass]="{\'list-item-selected\':user.selected}"                                     (click)="user.toggle();autoSelectRoles()">                        <h3 matLine>{{user.fullName}}</h3>                        <p matLine>ID: {{user.id}}, Email: {{user.email}}</p>                    </mat-list-option>                    <div *ngIf="users.loading$ | async" fxLayout="column" fxLayoutAlign="center center">                        <mat-spinner color="primary" diameter="50"></mat-spinner>                    </div>                </cdk-virtual-scroll-viewport>            </mat-selection-list>        </ng-container>    </div>    <div fxFlex="3"></div>    <div fxLayout="column" fxLayoutAlign="start center" fxFlex="50" class="full-height">        <mat-toolbar color="primary" class="min-height-72">            <span>{{\'admin.process-list.listTitle\' | translate}}</span>            <span style="flex: 1 1 auto;"></span>            <mat-spinner *ngIf="users.updating$ | async" color="accent" diameter="30"></mat-spinner>        </mat-toolbar>        <div *ngIf="(users.loading$ | async) === false && nets.processes.length === 0" fxLayout="column"             fxLayoutAlign="center center" fxFlex class="margin-top-x2">            <mat-icon color="accent" class="margin-bottom-default no-user-icon">timeline</mat-icon>            <span class="font-size-20">{{ \'admin.process-list.noProcessesWereFound\' | translate}}</span>        </div>        <mat-accordion class="full-width margin-top-default process-list-accordion" multi fxFlex>            <mat-expansion-panel *ngFor="let item of nets.processes" (afterExpand)="nets.loadProcessItemRoles(item)"                                 (afterCollapse)="nets.prepareToTryAgainToLoadRoles(item)">                <mat-expansion-panel-header>                    <mat-panel-title>                        <mat-icon *ngIf="item.someRolesSelected" color="accent" class="margin-right-x2">tour</mat-icon>                        <span>{{item.initials}} - {{item.title}}</span>                    </mat-panel-title>                    <mat-panel-description class="process-item-description">                        <span                            class="process-item-description full-width">{{\'admin.process-list.newestVersion\' | translate}}                            : {{item.newestVersion}}</span>                    </mat-panel-description>                </mat-expansion-panel-header>                <div *ngIf="item.loading" fxFlex="100" class="full-width">                    <mat-progress-bar mode="indeterminate" color="primary"></mat-progress-bar>                </div>                <div *ngIf="!item.loading && item.emptyRoles" fxLayout="column"                     fxLayoutAlign="center center" fxFlex class="full-width full-height net-panel-content">                    <mat-icon color="accent" class="margin-bottom-default">account_circle</mat-icon>                    <span class="font-size-15">{{ \'admin.process-list.noRoles\' | translate}}</span>                </div>                <div *ngIf="!item.loading && !item.emptyRoles" fxLayout="column" fxLayoutAlign="start start"                     class="full-height full-width net-panel-content">                    <h3>{{ \'admin.process-list.roles\' | translate}}</h3>                    <div *ngFor="let net of item.processes; let first = first" fxLayout="column"                         fxLayoutAlign="start center" class="full-width">                        <mat-divider *ngIf="!first" style="position: relative"></mat-divider>                        <button mat-button matTooltip="{{item.someRolesSelected ? \'Deselect All\' : \'Select All\'}}"                                (click)="toggleAllRoles(net, !item.someRolesSelected)">                            {{net.version}}                        </button>                        <mat-selection-list color="accent" fxLayout="row wrap" fxLayoutAlign="start center"                                            class="full-width">                            <mat-list-option *ngFor="let role of net.roles" checkboxPosition="before"                                             [selected]="role.selected" (click)="role.toggle();update(role)"                                             fxFlex="50">                                <h3 matLine>{{role.name}}</h3>                            </mat-list-option>                        </mat-selection-list>                    </div>                </div>            </mat-expansion-panel>        </mat-accordion>        <div *ngIf="nets.loading$ | async" fxLayout="column" fxLayoutAlign="center center" fxFlex="100">            <mat-spinner color="primary" diameter="65"></mat-spinner>        </div>    </div></div></div>'
-    var COMPONENTS = [{'name': 'AddChildNodeComponent', 'selector': 'nc-add-child-node'},{'name': 'AdminImpersonateComponent', 'selector': 'nc-admin-impersonate'},{'name': 'AdminImpersonateItemComponent', 'selector': 'nc-admin-impersonate-item'},{'name': 'AdminImpersonateListComponent', 'selector': 'nc-admin-impersonate-list'},{'name': 'AdvancedSearchComponent', 'selector': 'nc-advanced-search'},{'name': 'AuthenticationOverlayComponent', 'selector': 'nc-authentication-overlay'},{'name': 'BarchartCardComponent', 'selector': 'nc-barchart-card'},{'name': 'BooleanFieldComponent', 'selector': 'nc-boolean-field'},{'name': 'BreadcrumbsComponent', 'selector': 'nc-breadcrumbs'},{'name': 'ButtonFieldComponent', 'selector': 'nc-button-field'},{'name': 'CaseListComponent', 'selector': 'nc-case-list'},{'name': 'CaseListPaginatorComponent', 'selector': 'nc-case-list-paginator'},{'name': 'CasePanelComponent', 'selector': 'nc-case-panel'},{'name': 'CaseSearchComponent', 'selector': 'nc-case-search'},{'name': 'ChangePasswordFormComponent', 'selector': 'nc-change-password-form'},{'name': 'CountCardComponent', 'selector': 'nc-count-card'},{'name': 'CreateCaseButtonComponent', 'selector': 'nc-create-case-button'},{'name': 'DashboardBarChartTextFieldComponent', 'selector': 'nc-dashboard-bar-chart-text-field'},{'name': 'DashboardContentComponent', 'selector': 'nc-dashboard-content'},{'name': 'DashboardIframeTextFieldComponent', 'selector': 'nc-dashboard-iframe-text-field'},{'name': 'DashboardLineChartTextFieldComponent', 'selector': 'nc-dashboard-line-chart-text-field'},{'name': 'DashboardPieChartTextFieldComponent', 'selector': 'nc-dashboard-pie-chart-text-field'},{'name': 'DashboardPortalTextFieldComponent', 'selector': 'nc-dashboard-portal-text-field'},{'name': 'DataFieldTemplateComponent', 'selector': 'nc-data-field-template'},{'name': 'DateFieldComponent', 'selector': 'nc-date-field'},{'name': 'DateTimeFieldComponent', 'selector': 'nc-date-time-field'},{'name': 'DefaultSimpleTaskViewComponent', 'selector': 'nc-default-simple-task-view'},{'name': 'DefaultTabbedCaseViewComponent', 'selector': 'nc-default-tabbed-case-view'},{'name': 'DefaultTabbedTaskViewComponent', 'selector': 'nc-default-tabbed-task-view'},{'name': 'DefaultTabViewComponent', 'selector': 'nc-default-tab-view'},{'name': 'EasymdeWrapperComponent', 'selector': 'nc-easymde-wrapper'},{'name': 'EditModeComponent', 'selector': 'nc-edit-mode'},{'name': 'EmailSubmissionFormComponent', 'selector': 'nc-email-submission-form'},{'name': 'EnumerationAutocompleteDynamicFieldComponent', 'selector': 'nc-enumeration-autocomplete-dynamic-field'},{'name': 'EnumerationAutocompleteSelectFieldComponent', 'selector': 'nc-enumeration-autocomplete-select-field'},{'name': 'EnumerationFieldComponent', 'selector': 'nc-enumeration-field'},{'name': 'EnumerationIconFieldComponent', 'selector': 'nc-enumeration-icon-field'},{'name': 'EnumerationListFieldComponent', 'selector': 'nc-enumeration-list-field'},{'name': 'EnumerationSelectFieldComponent', 'selector': 'nc-enumeration-select-field'},{'name': 'EnumerationStepperFieldComponent', 'selector': 'nc-enumeration-stepper-field'},{'name': 'FieldComponentResolverComponent', 'selector': 'nc-field-component-resolver'},{'name': 'FileFieldComponent', 'selector': 'nc-file-field'},{'name': 'FileListFieldComponent', 'selector': 'nc-file-list-field'},{'name': 'FilterFieldComponent', 'selector': 'nc-filter-field'},{'name': 'FilterFieldContentComponent', 'selector': 'nc-filter-field-content'},{'name': 'FilterFieldTabbedCaseViewComponent', 'selector': 'nc-filter-field-tabbed-case-view'},{'name': 'FilterFieldTabbedTaskViewComponent', 'selector': 'nc-filter-field-tabbed-task-view'},{'name': 'FilterFieldTabViewComponent', 'selector': 'nc-filter-field-tab-view'},{'name': 'FilterFieldTabViewContentComponent', 'selector': 'nc-filter-field-tab-view-content'},{'name': 'FilterSelectorComponent', 'selector': 'nc-filter-selector'},{'name': 'ForgottenPasswordFormComponent', 'selector': 'nc-forgotten-password-form'},{'name': 'FulltextSearchComponent', 'selector': 'nc-fulltext-search'},{'name': 'GroupNavigationComponentResolverComponent', 'selector': 'nc-group-navigation-component-resolver'},{'name': 'HeaderComponent', 'selector': 'nc-header'},{'name': 'HtmlTextareaFieldComponent', 'selector': 'nc-html-textarea-field'},{'name': 'I18nDividerFieldComponent', 'selector': 'nc-i18n-divider-field'},{'name': 'I18nFieldComponent', 'selector': 'nc-i18n-field'},{'name': 'I18nTextFieldComponent', 'selector': 'nc-i18n-text-field'},{'name': 'IframeCardComponent', 'selector': 'nc-iframe-card'},{'name': 'ImmediateFilterTextComponent', 'selector': 'nc-immediate-filter-text'},{'name': 'ImmediateFilterTextContentComponent', 'selector': 'nc-immediate-filter-text-content'},{'name': 'ImpersonateQuickPanelComponent', 'selector': 'nc-impersonate-quick-panel'},{'name': 'ImportNetComponent', 'selector': 'nc-import-net'},{'name': 'InternalLinkComponent', 'selector': 'nc-internal-link'},{'name': 'LanguageSelectorComponent', 'selector': 'nc-language-selector'},{'name': 'LdapGroupRoleAssignmentComponent', 'selector': 'nc-ldap-group-role-assignment'},{'name': 'LegalNoticeComponent', 'selector': 'nc-legal-notice'},{'name': 'LinearGaugeCardComponent', 'selector': 'nc-linear-gauge-card'},{'name': 'LineChartCardComponent', 'selector': 'nc-line-chart-card'},{'name': 'LoadFilterComponent', 'selector': 'nc-load-filter'},{'name': 'LoadingModeComponent', 'selector': 'nc-loading-mode'},{'name': 'LoginFormComponent', 'selector': 'nc-login-form'},{'name': 'LogoutShortcutComponent', 'selector': 'nc-logout-shortcut'},{'name': 'MultichoiceAutocompleteFieldComponent', 'selector': 'nc-multichoice-autocomplete-field'},{'name': 'MultichoiceFieldComponent', 'selector': 'nc-multichoice-field'},{'name': 'MultichoiceListFieldComponent', 'selector': 'nc-multichoice-list-field'},{'name': 'MultichoiceSelectFieldComponent', 'selector': 'nc-multichoice-select-field'},{'name': 'MultiUserAssignComponent', 'selector': 'nc-multi-user-assign'},{'name': 'MultiUserAssignItemComponent', 'selector': 'nc-multi-user-assign-item'},{'name': 'MultiUserAssignListComponent', 'selector': 'nc-multi-user-assign-list'},{'name': 'NavigationDoubleDrawerComponent', 'selector': 'nc-navigation-double-drawer'},{'name': 'NavigationDrawerComponent', 'selector': 'nc-navigation-drawer'},{'name': 'NavigationRailComponent', 'selector': 'nc-navigation-rail'},{'name': 'NavigationTreeComponent', 'selector': 'nc-navigation-tree'},{'name': 'NewCaseComponent', 'selector': 'nc-new-case'},{'name': 'NumberCurrencyFieldComponent', 'selector': 'nc-number-currency-field'},{'name': 'NumberDefaultFieldComponent', 'selector': 'nc-number-default-field'},{'name': 'NumberFieldComponent', 'selector': 'nc-number-field'},{'name': 'OptionSelectorComponent', 'selector': 'nc-option-selector'},{'name': 'PanelComponent', 'selector': 'nc-app-panel'},{'name': 'PanelItemComponent', 'selector': 'nc-panel-item'},{'name': 'PasswordTextFieldComponent', 'selector': 'nc-password-text-field'},{'name': 'PieChartCardComponent', 'selector': 'nc-pie-chart-card'},{'name': 'PopupSessionIdleComponent', 'selector': 'nc-popup-session-idle'},{'name': 'PortalCardComponent', 'selector': 'nc-portal-card'},{'name': 'PreviewDialogComponent', 'selector': 'nc-preview-dialog'},{'name': 'ProfileComponent', 'selector': 'nc-user-profile'},{'name': 'PublicWorkflowPanelComponent', 'selector': 'nc-public-workflow-panel'},{'name': 'QuickPanelComponent', 'selector': 'nc-quick-panel'},{'name': 'RedirectComponent', 'selector': 'nc-redirect'},{'name': 'RegistrationFormComponent', 'selector': 'nc-registration-form'},{'name': 'RemoveNodeComponent', 'selector': 'nc-remove-node'},{'name': 'RequiredLabelComponent', 'selector': 'nc-required-label'},{'name': 'RichTextareaFieldComponent', 'selector': 'nc-rich-textarea-field'},{'name': 'RoleAssignmentComponent', 'selector': 'nc-role-assignment'},{'name': 'SaveFilterComponent', 'selector': 'nc-save-filter'},{'name': 'SearchClauseComponent', 'selector': 'nc-search-clause'},{'name': 'SearchComponent', 'selector': 'nc-search'},{'name': 'SearchConfigurationInputComponent', 'selector': 'nc-search-configuration-input'},{'name': 'SearchModeComponent', 'selector': 'nc-search-mode'},{'name': 'SearchOperandInputComponent', 'selector': 'nc-search-operand-input'},{'name': 'SearchPredicateComponent', 'selector': 'nc-search-predicate'},{'name': 'SessionIdleComponent', 'selector': 'nc-session-idle'},{'name': 'SideMenuContainerComponent', 'selector': 'nc-side-menu-container'},{'name': 'SimpleTextFieldComponent', 'selector': 'nc-simple-text-field'},{'name': 'SingleTaskComponent', 'selector': 'nc-single-task'},{'name': 'SortModeComponent', 'selector': 'nc-sort-mode'},{'name': 'TabViewComponent', 'selector': 'nc-tab-view'},{'name': 'TaskContentComponent', 'selector': 'nc-task-content'},{'name': 'TaskListComponent', 'selector': 'nc-task-list'},{'name': 'TaskListPaginationComponent', 'selector': 'nc-task-list-pagination'},{'name': 'TaskPanelComponent', 'selector': 'nc-task-panel'},{'name': 'TaskRefDashboardTileComponent', 'selector': 'nc-task-ref-dashboard-tile'},{'name': 'TaskRefFieldComponent', 'selector': 'nc-task-ref-field'},{'name': 'TaskSearchComponent', 'selector': 'nc-task-search'},{'name': 'TextareaFieldComponent', 'selector': 'nc-textarea-field'},{'name': 'TextFieldComponent', 'selector': 'nc-text-field'},{'name': 'ToolbarComponent', 'selector': 'nc-toolbar'},{'name': 'TreeComponent', 'selector': 'nc-tree-component'},{'name': 'TreeTaskContentComponent', 'selector': 'nc-tree-task-content'},{'name': 'UserAssignComponent', 'selector': 'nc-user-assign'},{'name': 'UserAssignItemComponent', 'selector': 'nc-user-assign-item'},{'name': 'UserAssignListComponent', 'selector': 'nc-user-assign-list'},{'name': 'UserCardComponent', 'selector': 'nc-user-card'},{'name': 'UserFieldComponent', 'selector': 'nc-user-field'},{'name': 'UserImpersonateComponent', 'selector': 'nc-user-impersonate'},{'name': 'UserInviteComponent', 'selector': 'nc-user-invite'},{'name': 'UserListFieldComponent', 'selector': 'nc-user-list-field'},{'name': 'WorkflowPanelComponent', 'selector': 'nc-workflow-panel'},{'name': 'WorkflowViewComponent', 'selector': 'nc-workflow-view'}];
+        var COMPONENT_TEMPLATE = '<div><div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="start center" class="full-height full-width padding-default">    <div fxLayout="column" fxLayoutAlign="start center" fxFlex="49" class="role-height">        <ng-container *ngIf="users.users$ | async as users_">            <mat-toolbar color="primary" class="min-height-radius">                <span matTooltip="{{users_.length}}/{{users.totalUsers}}">                    {{\'admin.user-list.listTitle\' | translate}}                </span>                <div fxFlex="5"></div>                <div fxLayout="row" fxLayoutAlign="start center" class="netgrif-input netgrif-input-search-fix netgrif-input-primary-search-fix">                    <mat-form-field fxFlex="100" class="user-assign-search" color="primary" appearance="outline">                        <mat-icon matPrefix class="prefix-icon">search</mat-icon>                        <mat-label>{{ \'side-menu.user.choose\' | translate }}</mat-label>                        <input matInput [formControl]="searchUserControl">                        <button *ngIf="searchUserControl.value" matSuffix mat-icon-button                                (click)="searchUserControl.setValue(\'\')" color="warn">                            <mat-icon>close</mat-icon>                        </button>                    </mat-form-field>                </div>                <span style="flex: 1 1 auto;"></span>                <button disabled mat-icon-button                        matTooltip="{{userMultiSelect ? \'Multi selection\' : \'Single selection\'}}"                        (click)="userMultiSelect = !userMultiSelect">                    <mat-icon>{{userMultiSelect ? \'group\' : \'person\'}}</mat-icon>                </button>                <button mat-icon-button matTooltip="{{ \'side-menu.tooltip.SelectAll\' | translate }}" (click)="selectAllUsers(true)">                    <mat-icon>done_all</mat-icon>                </button>                <button mat-icon-button matTooltip="{{ \'side-menu.tooltip.DeselectAll\' | translate }}" (click)="selectAllUsers(false)">                    <mat-icon>clear</mat-icon>                </button>            </mat-toolbar>            <div *ngIf="(users.loading$ | async) === false && users_.length === 0" fxLayout="column"                 fxLayoutAlign="center center" fxFlex class="margin-top-x2">                <mat-icon color="accent" class="margin-bottom-default no-user-icon">perm_identity</mat-icon>                <span class="font-size-20">{{ \'admin.user-list.noUsersWereFound\' | translate}}</span>            </div>            <mat-selection-list #userList color="primary" fxFlex="100" class="full-width advanced-option-list">                <cdk-virtual-scroll-viewport itemSize="48" (scrolledIndexChange)="loadNextUserPage()"                                             class="full-width full-height">                    <mat-list-option class="min-height-option" *cdkVirtualFor="let user of users_; let i = index;" checkboxPosition="before"                                     [selected]="user.selected"                                     [value]="user"                                     [ngClass]="{\'list-item-selected\':user.selected}"                                     (click)="user.toggle();autoSelectRoles()" fxLayoutAlign="start center" fxLayout="row">                        <h3 matLine class="primary-color-line margin-none">{{user.fullName}}</h3>                        <p matLine class="paragraph-fix margin-none">ID: {{user.id}}, Email: {{user.email}}</p>                    </mat-list-option>                    <div *ngIf="users.loading$ | async" fxLayout="column" fxLayoutAlign="center center">                        <mat-spinner color="primary" diameter="50"></mat-spinner>                    </div>                </cdk-virtual-scroll-viewport>            </mat-selection-list>        </ng-container>    </div>    <div fxFlex="2"></div>    <div fxLayout="column" fxLayoutAlign="start center" fxFlex="49" class="role-height">        <mat-toolbar color="primary" class="min-height-radius">            <span>{{\'admin.process-list.listTitle\' | translate}}</span>            <span style="flex: 1 1 auto;"></span>            <mat-spinner *ngIf="users.updating$ | async" color="accent" diameter="30"></mat-spinner>        </mat-toolbar>        <div *ngIf="(users.loading$ | async) === false && nets.processes.length === 0" fxLayout="column"             fxLayoutAlign="center center" fxFlex class="margin-top-x2">            <mat-icon color="accent" class="margin-bottom-default no-user-icon">timeline</mat-icon>            <span class="font-size-20">{{ \'admin.process-list.noProcessesWereFound\' | translate}}</span>        </div>        <mat-accordion class="full-width margin-top-default process-list-accordion" multi fxFlex>            <mat-expansion-panel *ngFor="let item of nets.processes; let last = last;" (afterExpand)="nets.loadProcessItemRoles(item)"                                 (afterCollapse)="nets.prepareToTryAgainToLoadRoles(item)" class="panel-body" [ngClass]="{\'panel-last\':last}">                <mat-expansion-panel-header class="role-header panel-color">                    <mat-panel-title>                        <mat-icon *ngIf="item.someRolesSelected" color="accent" class="margin-right-x2">tour</mat-icon>                        <span>{{item.initials}} - {{item.title}}</span>                    </mat-panel-title>                    <mat-panel-description class="process-item-description">                        <span                            class="process-item-description full-width">{{\'admin.process-list.newestVersion\' | translate}}                            : {{item.newestVersion}}</span>                    </mat-panel-description>                </mat-expansion-panel-header>                <div *ngIf="item.loading" fxFlex="100" class="full-width">                    <mat-progress-bar mode="indeterminate" color="primary"></mat-progress-bar>                </div>                <div *ngIf="!item.loading && item.emptyRoles" fxLayout="column"                     fxLayoutAlign="center center" fxFlex class="full-width full-height net-panel-content">                    <mat-icon color="accent" class="margin-bottom-default">account_circle</mat-icon>                    <span class="font-size-15">{{ \'admin.process-list.noRoles\' | translate}}</span>                </div>                <div *ngIf="!item.loading && !item.emptyRoles" fxLayout="column" fxLayoutAlign="start start"                     class="full-height full-width net-panel-content">                    <div *ngFor="let net of item.processes; let first = first" fxLayout="column"                         fxLayoutAlign="start center" class="full-width">                        <mat-divider *ngIf="!first" style="position: relative"></mat-divider>                        <div class="full-width">                            <div fxFlex fxLayoutAlign="start center">                                <h3 class="margin-none" *ngIf="first">{{ \'admin.process-list.roles\' | translate}}</h3>                            </div>                            <div fxFlex fxLayoutAlign="center center">                                <button mat-stroked-button matTooltip="{{item.someRolesSelected ? \'Deselect All\' : \'Select All\'}}"                                        (click)="toggleAllRoles(net, !item.someRolesSelected)">                                    {{net.version}}                                </button>                            </div>                            <div fxFlex></div>                        </div>                        <mat-selection-list color="accent" fxLayout="row wrap" fxLayoutAlign="start center"                                            class="full-width">                            <mat-list-option *ngFor="let role of net.roles" checkboxPosition="before"                                             [selected]="role.selected" (click)="role.toggle();update(role)"                                             fxFlex="50">                                <h3 matLine class="margin-none">{{role.name}}</h3>                            </mat-list-option>                        </mat-selection-list>                    </div>                </div>            </mat-expansion-panel>        </mat-accordion>        <div *ngIf="nets.loading$ | async" fxLayout="column" fxLayoutAlign="center center" fxFlex="100">            <mat-spinner color="primary" diameter="65"></mat-spinner>        </div>    </div></div></div>'
+    var COMPONENTS = [{'name': 'AddChildNodeComponent', 'selector': 'nc-add-child-node'},{'name': 'AdminImpersonateComponent', 'selector': 'nc-admin-impersonate'},{'name': 'AdminImpersonateDialogComponent', 'selector': 'nc-admin-impersonate-dialog'},{'name': 'AdminImpersonateItemComponent', 'selector': 'nc-admin-impersonate-item'},{'name': 'AdminImpersonateListComponent', 'selector': 'nc-admin-impersonate-list'},{'name': 'AdvancedSearchComponent', 'selector': 'nc-advanced-search'},{'name': 'AuthenticationOverlayComponent', 'selector': 'nc-authentication-overlay'},{'name': 'BarchartCardComponent', 'selector': 'nc-barchart-card'},{'name': 'BooleanDefaultFieldComponent', 'selector': 'nc-boolean-default-field'},{'name': 'BooleanFieldComponent', 'selector': 'nc-boolean-field'},{'name': 'BreadcrumbsComponent', 'selector': 'nc-breadcrumbs'},{'name': 'ButtonDefaultFieldComponent', 'selector': 'nc-button-default-field'},{'name': 'ButtonFieldComponent', 'selector': 'nc-button-field'},{'name': 'CaseListComponent', 'selector': 'nc-case-list'},{'name': 'CaseListPaginatorComponent', 'selector': 'nc-case-list-paginator'},{'name': 'CasePanelComponent', 'selector': 'nc-case-panel'},{'name': 'CaseRefDefaultComponent', 'selector': 'nc-case-ref-default'},{'name': 'CaseSearchComponent', 'selector': 'nc-case-search'},{'name': 'ChangePasswordFormComponent', 'selector': 'nc-change-password-form'},{'name': 'CountCardComponent', 'selector': 'nc-count-card'},{'name': 'CreateCaseButtonComponent', 'selector': 'nc-create-case-button'},{'name': 'DashboardBarChartTextFieldComponent', 'selector': 'nc-dashboard-bar-chart-text-field'},{'name': 'DashboardContentComponent', 'selector': 'nc-dashboard-content'},{'name': 'DashboardIframeTextFieldComponent', 'selector': 'nc-dashboard-iframe-text-field'},{'name': 'DashboardLineChartTextFieldComponent', 'selector': 'nc-dashboard-line-chart-text-field'},{'name': 'DashboardPieChartTextFieldComponent', 'selector': 'nc-dashboard-pie-chart-text-field'},{'name': 'DashboardPortalTextFieldComponent', 'selector': 'nc-dashboard-portal-text-field'},{'name': 'DataFieldTemplateComponent', 'selector': 'nc-data-field-template'},{'name': 'DateDefaultFieldComponent', 'selector': 'nc-date-default-field'},{'name': 'DateFieldComponent', 'selector': 'nc-date-field'},{'name': 'DateTimeDefaultFieldComponent', 'selector': 'nc-date-time-default-field'},{'name': 'DateTimeFieldComponent', 'selector': 'nc-date-time-field'},{'name': 'DefaultCaseRefListViewComponent', 'selector': 'nc-default-case-view'},{'name': 'DefaultNoFilterProvidedComponent', 'selector': 'nc-default-no-filter-provided'},{'name': 'DefaultSimpleTaskViewComponent', 'selector': 'nc-default-simple-task-view'},{'name': 'DefaultTabbedCaseViewComponent', 'selector': 'nc-default-tabbed-case-view'},{'name': 'DefaultTabbedTaskViewComponent', 'selector': 'nc-default-tabbed-task-view'},{'name': 'DefaultTabViewComponent', 'selector': 'nc-default-tab-view'},{'name': 'DefaultTaskViewComponent', 'selector': 'nc-default-task-view'},{'name': 'EasymdeWrapperComponent', 'selector': 'nc-easymde-wrapper'},{'name': 'EditModeComponent', 'selector': 'nc-edit-mode'},{'name': 'EmailSubmissionFormComponent', 'selector': 'nc-email-submission-form'},{'name': 'EnumerationAutocompleteDynamicFieldComponent', 'selector': 'nc-enumeration-autocomplete-dynamic-field'},{'name': 'EnumerationAutocompleteSelectFieldComponent', 'selector': 'nc-enumeration-autocomplete-select-field'},{'name': 'EnumerationCaserefFieldComponent', 'selector': 'nc-enumeration-caseref-field'},{'name': 'EnumerationFieldComponent', 'selector': 'nc-enumeration-field'},{'name': 'EnumerationIconFieldComponent', 'selector': 'nc-enumeration-icon-field'},{'name': 'EnumerationListFieldComponent', 'selector': 'nc-enumeration-list-field'},{'name': 'EnumerationSelectFieldComponent', 'selector': 'nc-enumeration-select-field'},{'name': 'EnumerationStepperFieldComponent', 'selector': 'nc-enumeration-stepper-field'},{'name': 'FieldComponentResolverComponent', 'selector': 'nc-field-component-resolver'},{'name': 'FileDefaultFieldComponent', 'selector': 'nc-file-default-field'},{'name': 'FileFieldComponent', 'selector': 'nc-file-field'},{'name': 'FileListDefaultFieldComponent', 'selector': 'nc-file-list-default-field'},{'name': 'FileListFieldComponent', 'selector': 'nc-file-list-field'},{'name': 'FilterDefaultFieldComponent', 'selector': 'nc-filter-default-field'},{'name': 'FilterFieldComponent', 'selector': 'nc-filter-field'},{'name': 'FilterFieldContentComponent', 'selector': 'nc-filter-field-content'},{'name': 'FilterFieldTabbedCaseViewComponent', 'selector': 'nc-filter-field-tabbed-case-view'},{'name': 'FilterFieldTabbedTaskViewComponent', 'selector': 'nc-filter-field-tabbed-task-view'},{'name': 'FilterFieldTabViewComponent', 'selector': 'nc-filter-field-tab-view'},{'name': 'FilterFieldTabViewContentComponent', 'selector': 'nc-filter-field-tab-view-content'},{'name': 'FilterSelectorComponent', 'selector': 'nc-filter-selector'},{'name': 'FilterSelectorDialogComponent', 'selector': 'nc-filter-selector-dialog'},{'name': 'ForgottenPasswordFormComponent', 'selector': 'nc-forgotten-password-form'},{'name': 'FulltextSearchComponent', 'selector': 'nc-fulltext-search'},{'name': 'GroupNavigationComponentResolverComponent', 'selector': 'nc-group-navigation-component-resolver'},{'name': 'HeaderComponent', 'selector': 'nc-header'},{'name': 'HtmlTextareaFieldComponent', 'selector': 'nc-html-textarea-field'},{'name': 'I18nDividerFieldComponent', 'selector': 'nc-i18n-divider-field'},{'name': 'I18nFieldComponent', 'selector': 'nc-i18n-field'},{'name': 'I18nTextFieldComponent', 'selector': 'nc-i18n-text-field'},{'name': 'IframeCardComponent', 'selector': 'nc-iframe-card'},{'name': 'ImmediateFilterTextComponent', 'selector': 'nc-immediate-filter-text'},{'name': 'ImmediateFilterTextContentComponent', 'selector': 'nc-immediate-filter-text-content'},{'name': 'ImpersonateQuickPanelComponent', 'selector': 'nc-impersonate-quick-panel'},{'name': 'ImportNetComponent', 'selector': 'nc-import-net'},{'name': 'ImportNetDialogComponent', 'selector': 'nc-import-net-dialog'},{'name': 'InternalLinkComponent', 'selector': 'nc-internal-link'},{'name': 'LanguageSelectorComponent', 'selector': 'nc-language-selector'},{'name': 'LdapGroupRoleAssignmentComponent', 'selector': 'nc-ldap-group-role-assignment'},{'name': 'LegalNoticeComponent', 'selector': 'nc-legal-notice'},{'name': 'LinearGaugeCardComponent', 'selector': 'nc-linear-gauge-card'},{'name': 'LineChartCardComponent', 'selector': 'nc-line-chart-card'},{'name': 'LoadFilterComponent', 'selector': 'nc-load-filter'},{'name': 'LoadFilterDialogComponent', 'selector': 'nc-load-filter-dialog'},{'name': 'LoadingModeComponent', 'selector': 'nc-loading-mode'},{'name': 'LoginFormComponent', 'selector': 'nc-login-form'},{'name': 'LogoutShortcutComponent', 'selector': 'nc-logout-shortcut'},{'name': 'MultichoiceAutocompleteFieldComponent', 'selector': 'nc-multichoice-autocomplete-field'},{'name': 'MultichoiceCaserefFieldComponent', 'selector': 'nc-multichoice-caseref-field'},{'name': 'MultichoiceFieldComponent', 'selector': 'nc-multichoice-field'},{'name': 'MultichoiceListFieldComponent', 'selector': 'nc-multichoice-list-field'},{'name': 'MultichoiceSelectFieldComponent', 'selector': 'nc-multichoice-select-field'},{'name': 'MultiUserAssignComponent', 'selector': 'nc-multi-user-assign'},{'name': 'MultiUserAssignDialogComponent', 'selector': 'nc-multi-user-assign-dialog'},{'name': 'MultiUserAssignItemComponent', 'selector': 'nc-multi-user-assign-item'},{'name': 'MultiUserAssignListComponent', 'selector': 'nc-multi-user-assign-list'},{'name': 'NavigationDoubleDrawerComponent', 'selector': 'nc-navigation-double-drawer'},{'name': 'NavigationDrawerComponent', 'selector': 'nc-navigation-drawer'},{'name': 'NavigationRailComponent', 'selector': 'nc-navigation-rail'},{'name': 'NavigationTreeComponent', 'selector': 'nc-navigation-tree'},{'name': 'NewCaseComponent', 'selector': 'nc-new-case'},{'name': 'NewCaseDialogComponent', 'selector': 'nc-new-case-dialog'},{'name': 'NumberCurrencyFieldComponent', 'selector': 'nc-number-currency-field'},{'name': 'NumberDecimalFieldComponent', 'selector': 'nc-number-decimal-field'},{'name': 'NumberDefaultFieldComponent', 'selector': 'nc-number-default-field'},{'name': 'NumberFieldComponent', 'selector': 'nc-number-field'},{'name': 'OptionSelectorComponent', 'selector': 'nc-option-selector'},{'name': 'PanelComponent', 'selector': 'nc-app-panel'},{'name': 'PanelItemComponent', 'selector': 'nc-panel-item'},{'name': 'PasswordTextFieldComponent', 'selector': 'nc-password-text-field'},{'name': 'PieChartCardComponent', 'selector': 'nc-pie-chart-card'},{'name': 'PopupSessionIdleComponent', 'selector': 'nc-popup-session-idle'},{'name': 'PortalCardComponent', 'selector': 'nc-portal-card'},{'name': 'PreviewDialogComponent', 'selector': 'nc-preview-dialog'},{'name': 'ProfileComponent', 'selector': 'nc-user-profile'},{'name': 'PublicWorkflowPanelComponent', 'selector': 'nc-public-workflow-panel'},{'name': 'QuickPanelComponent', 'selector': 'nc-quick-panel'},{'name': 'RedirectComponent', 'selector': 'nc-redirect'},{'name': 'RegistrationFormComponent', 'selector': 'nc-registration-form'},{'name': 'RemoveNodeComponent', 'selector': 'nc-remove-node'},{'name': 'RequiredLabelComponent', 'selector': 'nc-required-label'},{'name': 'RichTextareaFieldComponent', 'selector': 'nc-rich-textarea-field'},{'name': 'RoleAssignmentComponent', 'selector': 'nc-role-assignment'},{'name': 'SaveFilterComponent', 'selector': 'nc-save-filter'},{'name': 'SaveFilterDialogComponent', 'selector': 'nc-save-filter-dialog'},{'name': 'SearchClauseComponent', 'selector': 'nc-search-clause'},{'name': 'SearchComponent', 'selector': 'nc-search'},{'name': 'SearchConfigurationInputComponent', 'selector': 'nc-search-configuration-input'},{'name': 'SearchModeComponent', 'selector': 'nc-search-mode'},{'name': 'SearchOperandInputComponent', 'selector': 'nc-search-operand-input'},{'name': 'SearchPredicateComponent', 'selector': 'nc-search-predicate'},{'name': 'SessionIdleComponent', 'selector': 'nc-session-idle'},{'name': 'SideMenuContainerComponent', 'selector': 'nc-side-menu-container'},{'name': 'SignaturePadFieldComponent', 'selector': 'nc-signature-pad-field'},{'name': 'SimpleTextFieldComponent', 'selector': 'nc-simple-text-field'},{'name': 'SingleTaskComponent', 'selector': 'nc-single-task'},{'name': 'SortModeComponent', 'selector': 'nc-sort-mode'},{'name': 'StringCollectionDefaultFieldComponent', 'selector': 'nc-string-collection-default-field'},{'name': 'TabViewComponent', 'selector': 'nc-tab-view'},{'name': 'TaskContentComponent', 'selector': 'nc-task-content'},{'name': 'TaskListComponent', 'selector': 'nc-task-list'},{'name': 'TaskListPaginationComponent', 'selector': 'nc-task-list-pagination'},{'name': 'TaskPanelComponent', 'selector': 'nc-task-panel'},{'name': 'TaskRefDashboardFieldComponent', 'selector': 'nc-task-ref-dashboard-field'},{'name': 'TaskRefDashboardTileComponent', 'selector': 'nc-task-ref-dashboard-tile'},{'name': 'TaskRefFieldComponent', 'selector': 'nc-task-ref-field'},{'name': 'TaskRefListFieldComponent', 'selector': 'nc-task-ref-list-field'},{'name': 'TaskSearchComponent', 'selector': 'nc-task-search'},{'name': 'TaskViewDialogComponent', 'selector': 'nc-task-view-dialog'},{'name': 'TextareaFieldComponent', 'selector': 'nc-textarea-field'},{'name': 'TextFieldComponent', 'selector': 'nc-text-field'},{'name': 'ToolbarComponent', 'selector': 'nc-toolbar'},{'name': 'TreeComponent', 'selector': 'nc-tree-component'},{'name': 'TreeTaskContentComponent', 'selector': 'nc-tree-task-content'},{'name': 'UserAssignComponent', 'selector': 'nc-user-assign'},{'name': 'UserAssignDialogComponent', 'selector': 'nc-user-assign-dialog'},{'name': 'UserAssignItemComponent', 'selector': 'nc-user-assign-item'},{'name': 'UserAssignListComponent', 'selector': 'nc-user-assign-list'},{'name': 'UserCardComponent', 'selector': 'nc-user-card'},{'name': 'UserDefaultFieldComponent', 'selector': 'nc-user-default-field'},{'name': 'UserFieldComponent', 'selector': 'nc-user-field'},{'name': 'UserImpersonateComponent', 'selector': 'nc-user-impersonate'},{'name': 'UserImpersonateDialogComponent', 'selector': 'nc-user-impersonate-dialog'},{'name': 'UserInviteComponent', 'selector': 'nc-user-invite'},{'name': 'UserListDefaultFieldComponent', 'selector': 'nc-user-list-default-field'},{'name': 'UserListFieldComponent', 'selector': 'nc-user-list-field'},{'name': 'WorkflowPanelComponent', 'selector': 'nc-workflow-panel'},{'name': 'WorkflowViewComponent', 'selector': 'nc-workflow-view'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'RoleAssignmentComponent'};
 </script>
@@ -457,14 +574,16 @@ export class RoleAssignmentComponent extends AbstractRoleAssignmentComponent {
 
 
 
-                   
+
+
+
 
 
 
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -476,6 +595,15 @@ export class RoleAssignmentComponent extends AbstractRoleAssignmentComponent {
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
@@ -483,10 +611,23 @@ export class RoleAssignmentComponent extends AbstractRoleAssignmentComponent {
             var MAX_SEARCH_RESULTS = 15;
        </script>
 
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       
-       <script type="module" src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/menu-wc.js" defer></script>
        <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>

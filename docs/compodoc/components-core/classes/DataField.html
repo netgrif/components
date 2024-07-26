@@ -9,13 +9,64 @@
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 	   <link rel="stylesheet" href="../styles/style.css">
-        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+        <link rel="stylesheet" href="../styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
-            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
@@ -24,7 +75,7 @@
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
@@ -41,22 +92,29 @@
 
 
 
+
 <ol class="breadcrumb">
-  <li>Classes</li>
-  <li >DataField</li>
+  <li class="breadcrumb-item">Classes</li>
+  <li class="breadcrumb-item" >DataField</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
@@ -76,7 +134,7 @@
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -159,6 +217,10 @@
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
+                                <a href="#componentChange$" >componentChange$</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#destroy" >destroy</a>
                             </li>
                             <li>
@@ -172,6 +234,15 @@
                             <li>
                                     <span class="modifier">Public</span>
                                 <a href="#getComponentType" >getComponentType</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Abstract</span>
+                                <a href="#getTypedComponentType" >getTypedComponentType</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#getUpdateOnStrategy" >getUpdateOnStrategy</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
@@ -324,6 +395,9 @@
                                 <li>
                                     <a href="#input" >input</a>
                                 </li>
+                                <li>
+                                    <a href="#formControlRef" >formControlRef</a>
+                                </li>
                             </ul>
                         </td>
                     </tr>
@@ -331,7 +405,7 @@
     </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-constructor">
     <h3 id="constructor">Constructor</h3>
         <table class="table table-sm table-bordered">
             <tbody>
@@ -343,7 +417,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="124" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:124</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="135" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:135</a></div>
                             </td>
                         </tr>
 
@@ -373,10 +447,10 @@
                                                     </td>
                                                     
                                                         <td>
-                                                                <code><ul>
+                                                                <ul>
 <li>ID of the data field from backend</li>
 </ul>
-</code>
+
                                                         </td>
                                                 </tr>
                                                 <tr>
@@ -391,10 +465,10 @@
                                                     </td>
                                                     
                                                         <td>
-                                                                <code><ul>
+                                                                <ul>
 <li>displayed title of the data field from backend</li>
 </ul>
-</code>
+
                                                         </td>
                                                 </tr>
                                                 <tr>
@@ -409,10 +483,10 @@
                                                     </td>
                                                     
                                                         <td>
-                                                                <code><ul>
+                                                                <ul>
 <li>initial value of the data field</li>
 </ul>
-</code>
+
                                                         </td>
                                                 </tr>
                                                 <tr>
@@ -427,10 +501,10 @@
                                                     </td>
                                                     
                                                         <td>
-                                                                <code><ul>
+                                                                <ul>
 <li>data field behavior</li>
 </ul>
-</code>
+
                                                         </td>
                                                 </tr>
                                                 <tr>
@@ -445,10 +519,10 @@
                                                     </td>
                                                     
                                                         <td>
-                                                                <code><ul>
+                                                                <ul>
 <li>placeholder displayed in the datafield</li>
 </ul>
-</code>
+
                                                         </td>
                                                 </tr>
                                                 <tr>
@@ -463,10 +537,10 @@
                                                     </td>
                                                     
                                                         <td>
-                                                                <code><ul>
+                                                                <ul>
 <li>tooltip of the datafield</li>
 </ul>
-</code>
+
                                                         </td>
                                                 </tr>
                                                 <tr>
@@ -481,10 +555,10 @@
                                                     </td>
                                                     
                                                         <td>
-                                                                <code><ul>
+                                                                <ul>
 <li>information regarding the component rendering</li>
 </ul>
-</code>
+
                                                         </td>
                                                 </tr>
                                                 <tr>
@@ -513,10 +587,10 @@
                                                     </td>
                                                     
                                                         <td>
-                                                                <code><ul>
+                                                                <ul>
 <li>component data of datafield</li>
 </ul>
-</code>
+
                                                         </td>
                                                 </tr>
                                                 <tr>
@@ -531,10 +605,10 @@
                                                     </td>
                                                     
                                                         <td>
-                                                                <code><ul>
-<li>stringId of parent task, only defined if field is loaded using {</li>
+                                                                <ul>
+<li>stringId of parent task, only defined if field is loaded using <a href="../classes/TaskRefField.html">TaskRefField</a></li>
 </ul>
-</code>
+
                                                         </td>
                                                 </tr>
                                                 <tr>
@@ -549,10 +623,10 @@
                                                     </td>
                                                     
                                                         <td>
-                                                                <code><ul>
-<li>stringId of parent case, only defined if field is loaded using {</li>
+                                                                <ul>
+<li>stringId of parent case, only defined if field is loaded using <a href="../classes/TaskRefField.html">TaskRefField</a></li>
 </ul>
-</code>
+
                                                         </td>
                                                 </tr>
                                         </tbody>
@@ -564,7 +638,7 @@
         </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-properties">
     
     <h3 id="inputs">
         Properties
@@ -589,7 +663,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="70" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:70</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="71" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:71</a></div>
                         </td>
                     </tr>
 
@@ -616,7 +690,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="72" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:72</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="73" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:73</a></div>
                         </td>
                     </tr>
 
@@ -643,7 +717,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="102" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:102</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="103" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:103</a></div>
                         </td>
                     </tr>
 
@@ -677,7 +751,7 @@ from executing at the same time</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="114" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:114</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="115" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:115</a></div>
                         </td>
                     </tr>
 
@@ -711,7 +785,7 @@ without affecting the base configuration.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="73" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:73</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="74" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:74</a></div>
                         </td>
                     </tr>
 
@@ -738,7 +812,7 @@ without affecting the base configuration.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="71" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:71</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="72" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:72</a></div>
                         </td>
                     </tr>
 
@@ -765,7 +839,7 @@ without affecting the base configuration.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="69" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:69</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="70" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:70</a></div>
                         </td>
                     </tr>
 
@@ -792,7 +866,7 @@ without affecting the base configuration.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="96" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:96</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="97" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:97</a></div>
                         </td>
                     </tr>
 
@@ -825,7 +899,7 @@ without affecting the base configuration.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="119" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:119</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="120" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:120</a></div>
                         </td>
                     </tr>
 
@@ -859,7 +933,7 @@ without affecting the base configuration.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="141" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:141</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="152" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:152</a></div>
                         </td>
                     </tr>
 
@@ -868,7 +942,7 @@ without affecting the base configuration.</p>
     </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-methods">
     
     <h3 id="methods">
         Methods
@@ -879,7 +953,7 @@ without affecting the base configuration.</p>
                 <td class="col-md-4">
                     <a name="_determineFormControlValidity"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>_determineFormControlValidity</b></span>
                         <a href="#_determineFormControlValidity"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -887,65 +961,64 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>_determineFormControlValidity(formControl: <a href="../interfaces/Form.html" target="_self">FormControl</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="454"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:454</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="490"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:490</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Computes whether the FormControl si valid.</p>
+                        <div class="io-description"><p>Computes whether the FormControl si valid.</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>formControl</td>
-                                    <td>
-                                                <code><a href="../interfaces/Form.html" target="_self" >FormControl</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>formControl</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Form.html" target="_self" >FormControl</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>check form control</p>
+                                            <td>
+                                                    <p>check form control</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -956,7 +1029,7 @@ without affecting the base configuration.</p>
                 <td class="col-md-4">
                     <a name="applyChange"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>applyChange</b></span>
                         <a href="#applyChange"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -964,69 +1037,68 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>applyChange(change: <a href="../interfaces/Change.html" target="_self">Change</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="519"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:519</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="555"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:555</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Updates the state of this data field model object.</p>
+                        <div class="io-description"><p>Updates the state of this data field model object.</p>
 <p>Also see <a href="../interfaces/ChangedFields.html">ChangedFields</a>.</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>change</td>
-                                    <td>
-                                                <code><a href="../interfaces/Change.html" target="_self" >Change</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>change</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Change.html" target="_self" >Change</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <ul>
+                                            <td>
+                                                    <ul>
 <li>object describing the changes - returned from backend</li>
 </ul>
-<p>Also see {</p>
+<p>Also see <a href="../interfaces/ChangedFields.html">ChangedFields</a>.</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1037,7 +1109,7 @@ without affecting the base configuration.</p>
                 <td class="col-md-4">
                     <a name="calculateValidity"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>calculateValidity</b></span>
                         <a href="#calculateValidity"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1045,70 +1117,69 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>calculateValidity(forValidRequired: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>, formControl: <a href="../interfaces/Form.html" target="_self">FormControl</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="562"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:562</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="598"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:598</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>forValidRequired</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>forValidRequired</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>formControl</td>
-                                    <td>
-                                                <code><a href="../interfaces/Form.html" target="_self" >FormControl</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                        </tr>
+                                        <tr>
+                                                <td>formControl</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Form.html" target="_self" >FormControl</a></code>
+                                            </td>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1119,7 +1190,7 @@ without affecting the base configuration.</p>
                 <td class="col-md-4">
                     <a name="clearValidators"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>clearValidators</b></span>
                         <a href="#clearValidators"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1127,27 +1198,66 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>clearValidators()</code>
                 </td>
             </tr>
 
 
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="530"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:530</a></div>
+                        </td>
+                    </tr>
+
+
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="494"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:494</a></div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="componentChange$"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>componentChange$</b></span>
+                        <a href="#componentChange$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>componentChange$()</code>
                 </td>
             </tr>
 
 
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="307"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:307</a></div>
+                        </td>
+                    </tr>
+
+
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/Component.html" target="_self" >Observable&lt;Component&gt;</a></code>
 
-                    </div>
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -1158,7 +1268,7 @@ without affecting the base configuration.</p>
                 <td class="col-md-4">
                     <a name="destroy"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>destroy</b></span>
                         <a href="#destroy"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1166,27 +1276,27 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>destroy()</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="358"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:358</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="393"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:393</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -1197,7 +1307,7 @@ without affecting the base configuration.</p>
                 <td class="col-md-4">
                     <a name="disconnectFormControl"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>disconnectFormControl</b></span>
                         <a href="#disconnectFormControl"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1205,27 +1315,27 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>disconnectFormControl()</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="397"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:397</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="433"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:433</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -1236,7 +1346,7 @@ without affecting the base configuration.</p>
                 <td class="col-md-4">
                     <a name="focus"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>focus</b></span>
                         <a href="#focus"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1244,27 +1354,27 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>focus()</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="336"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:336</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="357"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:357</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -1275,7 +1385,7 @@ without affecting the base configuration.</p>
                 <td class="col-md-4">
                     <a name="getComponentType"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>getComponentType</b></span>
                         <a href="#getComponentType"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1283,35 +1393,112 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>getComponentType()</code>
                 </td>
             </tr>
 
 
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="387"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:387</a></div>
+                        </td>
+                    </tr>
+
+
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="354"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:354</a></div>
+                        <div class="io-description"><p>This function resolve type of component for HTML</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>type of component in string</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getTypedComponentType"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Abstract</span>
+                        <span ><b>getTypedComponentType</b></span>
+                        <a href="#getTypedComponentType"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getTypedComponentType()</code>
                 </td>
             </tr>
 
 
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="391"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:391</a></div>
+                        </td>
+                    </tr>
+
+
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>This function resolve type of component for HTML</p>
-</div>
 
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        <p>type of component in string</p>
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getUpdateOnStrategy"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>getUpdateOnStrategy</b></span>
+                        <a href="#getUpdateOnStrategy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getUpdateOnStrategy()</code>
+                </td>
+            </tr>
 
-                    </div>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="379"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:379</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../miscellaneous/typealiases.html#UpdateOnStrategy" target="_self" >UpdateOnStrategy</a></code>
+
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -1322,7 +1509,7 @@ without affecting the base configuration.</p>
                 <td class="col-md-4">
                     <a name="isInvalid"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>isInvalid</b></span>
                         <a href="#isInvalid"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1330,58 +1517,57 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>isInvalid(formControl: <a href="../interfaces/Form.html" target="_self">FormControl</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="579"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:579</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="615"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:615</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>formControl</td>
-                                    <td>
-                                                <code><a href="../interfaces/Form.html" target="_self" >FormControl</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>formControl</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Form.html" target="_self" >FormControl</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1392,7 +1578,7 @@ without affecting the base configuration.</p>
                 <td class="col-md-4">
                     <a name="registerFormControl"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>registerFormControl</b></span>
                         <a href="#registerFormControl"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1400,58 +1586,57 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>registerFormControl(formControl: <a href="../interfaces/Form.html" target="_self">FormControl</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="368"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:368</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="403"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:403</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>formControl</td>
-                                    <td>
-                                                <code><a href="../interfaces/Form.html" target="_self" >FormControl</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>formControl</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Form.html" target="_self" >FormControl</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1462,7 +1647,7 @@ without affecting the base configuration.</p>
                 <td class="col-md-4">
                     <a name="replaceValidations"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>replaceValidations</b></span>
                         <a href="#replaceValidations"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1470,58 +1655,57 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>replaceValidations(validations: <a href="../interfaces/Validation.html" target="_self">Array&lt;Validation&gt;</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="489"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:489</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="525"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:525</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>validations</td>
-                                    <td>
-                                                <code><a href="../interfaces/Validation.html" target="_self" >Array&lt;Validation&gt;</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>validations</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Validation.html" target="_self" >Array&lt;Validation&gt;</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1532,7 +1716,7 @@ without affecting the base configuration.</p>
                 <td class="col-md-4">
                     <a name="resetLocalLayout"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>resetLocalLayout</b></span>
                         <a href="#resetLocalLayout"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1540,29 +1724,29 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>resetLocalLayout()</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="586"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:586</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="622"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:622</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Copies the layout settings into the local layout.</p>
+                        <div class="io-description"><p>Copies the layout settings into the local layout.</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -1573,7 +1757,7 @@ without affecting the base configuration.</p>
                 <td class="col-md-4">
                     <a name="resolveAppearance"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>resolveAppearance</b></span>
                         <a href="#resolveAppearance"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1581,58 +1765,57 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>resolveAppearance(config: <a href="../classes/ConfigurationService.html" target="_self">ConfigurationService</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="535"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:535</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="571"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:571</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>config</td>
-                                    <td>
-                                                <code><a href="../classes/ConfigurationService.html" target="_self" >ConfigurationService</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>config</td>
+                                            <td>
+                                                            <code><a href="../classes/ConfigurationService.html" target="_self" >ConfigurationService</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1643,7 +1826,7 @@ without affecting the base configuration.</p>
                 <td class="col-md-4">
                     <a name="resolveFormControlValidators"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>resolveFormControlValidators</b></span>
                         <a href="#resolveFormControlValidators"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1651,23 +1834,23 @@ without affecting the base configuration.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>resolveFormControlValidators()</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="470"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:470</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="506"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:506</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Creates Validator objects based on field <code>behavior</code>. Only the <code>required</code> behavior is resolved by default.
+                        <div class="io-description"><p>Creates Validator objects based on field <code>behavior</code>. Only the <code>required</code> behavior is resolved by default.
 Required is resolved as <code>Validators.required</code>.
 If you need to resolve additional Validators or need a different resolution for the <code>required</code> Validator override this method.</p>
 <p>See <a href="../interfaces/Behavior.html">Behavior</a> for information about data field behavior.</p>
@@ -1675,10 +1858,10 @@ If you need to resolve additional Validators or need a different resolution for 
 <p>Alternatively see <a href="https://angular.io/guide/form-validation#reactive-form-validation">Form Validation guide</a> from Angular.</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>Array&lt;ValidatorFn&gt;</code>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Array&lt;ValidatorFn&gt;</code>
 
-                    </div>
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -1689,7 +1872,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 <td class="col-md-4">
                     <a name="resolvePrevValue"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>resolvePrevValue</b></span>
                         <a href="#resolvePrevValue"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1697,58 +1880,57 @@ If you need to resolve additional Validators or need a different resolution for 
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>resolvePrevValue(value: T)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="555"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:555</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="591"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:591</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>value</td>
-                                    <td>
-                                            <code>T</code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>value</td>
+                                            <td>
+                                                        <code>T</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1759,7 +1941,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 <td class="col-md-4">
                     <a name="resolveValidations"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>resolveValidations</b></span>
                         <a href="#resolveValidations"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1767,27 +1949,27 @@ If you need to resolve additional Validators or need a different resolution for 
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>resolveValidations()</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="498"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:498</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="534"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:534</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>Array&lt;ValidatorFn&gt;</code>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Array&lt;ValidatorFn&gt;</code>
 
-                    </div>
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -1798,7 +1980,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 <td class="col-md-4">
                     <a name="revertToPreviousValue"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>revertToPreviousValue</b></span>
                         <a href="#revertToPreviousValue"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1806,27 +1988,27 @@ If you need to resolve additional Validators or need a different resolution for 
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>revertToPreviousValue()</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="290"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:290</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="311"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:311</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -1837,7 +2019,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 <td class="col-md-4">
                     <a name="subscribeToInnerSubjects"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>subscribeToInnerSubjects</b></span>
                         <a href="#subscribeToInnerSubjects"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1845,58 +2027,57 @@ If you need to resolve additional Validators or need a different resolution for 
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>subscribeToInnerSubjects(formControl: <a href="../interfaces/Form.html" target="_self">FormControl</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="422"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:422</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="458"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:458</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>formControl</td>
-                                    <td>
-                                                <code><a href="../interfaces/Form.html" target="_self" >FormControl</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>formControl</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Form.html" target="_self" >FormControl</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1907,7 +2088,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 <td class="col-md-4">
                     <a name="update"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>update</b></span>
                         <a href="#update"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1915,27 +2096,27 @@ If you need to resolve additional Validators or need a different resolution for 
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>update()</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="320"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:320</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="341"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:341</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -1946,7 +2127,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 <td class="col-md-4">
                     <a name="updateFormControlState"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>updateFormControlState</b></span>
                         <a href="#updateFormControlState"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1954,58 +2135,57 @@ If you need to resolve additional Validators or need a different resolution for 
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>updateFormControlState(formControl: <a href="../interfaces/Form.html" target="_self">FormControl</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="416"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:416</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="452"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:452</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>formControl</td>
-                                    <td>
-                                                <code><a href="../interfaces/Form.html" target="_self" >FormControl</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>formControl</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Form.html" target="_self" >FormControl</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -2016,7 +2196,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 <td class="col-md-4">
                     <a name="valueChanges"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>valueChanges</b></span>
                         <a href="#valueChanges"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -2024,27 +2204,27 @@ If you need to resolve additional Validators or need a different resolution for 
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>valueChanges()</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="324"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:324</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="345"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:345</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>Observable&lt;T&gt;</code>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;T&gt;</code>
 
-                    </div>
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -2055,7 +2235,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 <td class="col-md-4">
                     <a name="valueEquality"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>valueEquality</b></span>
                         <a href="#valueEquality"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -2063,86 +2243,85 @@ If you need to resolve additional Validators or need a different resolution for 
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>valueEquality(a: T, b: T)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="509"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:509</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="545"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:545</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Determines if two values of the data field are equal.</p>
+                        <div class="io-description"><p>Determines if two values of the data field are equal.</p>
 <p><code>a === b</code> equality is used by default. If you want different behavior override this method.</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>a</td>
-                                    <td>
-                                            <code>T</code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>a</td>
+                                            <td>
+                                                        <code>T</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <ul>
+                                            <td>
+                                                    <ul>
 <li>first compared value</li>
 </ul>
 
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>b</td>
-                                    <td>
-                                            <code>T</code>
-                                    </td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>b</td>
+                                            <td>
+                                                        <code>T</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <ul>
+                                            <td>
+                                                    <ul>
 <li>second compared value</li>
 </ul>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -2153,7 +2332,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 <td class="col-md-4">
                     <a name="valueWithoutChange"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>valueWithoutChange</b></span>
                         <a href="#valueWithoutChange"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -2161,58 +2340,57 @@ If you need to resolve additional Validators or need a different resolution for 
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>valueWithoutChange(value: T)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="223"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:223</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="235"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:235</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>value</td>
-                                    <td>
-                                            <code>T</code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>value</td>
+                                            <td>
+                                                        <code>T</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -2223,7 +2401,7 @@ If you need to resolve additional Validators or need a different resolution for 
 
 
 
-            <section>
+            <section data-compodoc="block-accessors">
     <h3 id="accessors">
         Accessors
     </h3>
@@ -2243,7 +2421,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="157" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:157</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="169" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:169</a></div>
                                 </td>
                             </tr>
 
@@ -2265,7 +2443,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="165" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:165</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="177" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:177</a></div>
                                 </td>
                             </tr>
 
@@ -2276,7 +2454,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="161" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:161</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="173" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:173</a></div>
                                 </td>
                             </tr>
                     <tr>
@@ -2334,7 +2512,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="173" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:173</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="185" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:185</a></div>
                                 </td>
                             </tr>
 
@@ -2345,7 +2523,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="169" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:169</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="181" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:181</a></div>
                                 </td>
                             </tr>
                     <tr>
@@ -2403,7 +2581,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="181" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:181</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="193" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:193</a></div>
                                 </td>
                             </tr>
 
@@ -2414,7 +2592,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="177" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:177</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="189" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:189</a></div>
                                 </td>
                             </tr>
                     <tr>
@@ -2472,7 +2650,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="189" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:189</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="201" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:201</a></div>
                                 </td>
                             </tr>
 
@@ -2483,7 +2661,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="185" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:185</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="197" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:197</a></div>
                                 </td>
                             </tr>
                     <tr>
@@ -2541,7 +2719,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="193" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:193</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="205" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:205</a></div>
                                 </td>
                             </tr>
 
@@ -2552,7 +2730,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="197" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:197</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="209" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:209</a></div>
                                 </td>
                             </tr>
                     <tr>
@@ -2610,7 +2788,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="207" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:207</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="219" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:219</a></div>
                                 </td>
                             </tr>
 
@@ -2632,7 +2810,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="211" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:211</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="223" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:223</a></div>
                                 </td>
                             </tr>
 
@@ -2654,7 +2832,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="215" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:215</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="227" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:227</a></div>
                                 </td>
                             </tr>
 
@@ -2665,7 +2843,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="219" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:219</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="231" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:231</a></div>
                                 </td>
                             </tr>
                     <tr>
@@ -2723,7 +2901,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="233" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:233</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="245" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:245</a></div>
                                 </td>
                             </tr>
 
@@ -2734,7 +2912,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="228" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:228</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="240" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:240</a></div>
                                 </td>
                             </tr>
                     <tr>
@@ -2792,7 +2970,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="237" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:237</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="249" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:249</a></div>
                                 </td>
                             </tr>
 
@@ -2814,7 +2992,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="241" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:241</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="253" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:253</a></div>
                                 </td>
                             </tr>
 
@@ -2836,7 +3014,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="245" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:245</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="257" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:257</a></div>
                                 </td>
                             </tr>
 
@@ -2858,7 +3036,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="249" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:249</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="261" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:261</a></div>
                                 </td>
                             </tr>
 
@@ -2880,7 +3058,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="257" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:257</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="269" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:269</a></div>
                                 </td>
                             </tr>
 
@@ -2891,7 +3069,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="253" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:253</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="265" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:265</a></div>
                                 </td>
                             </tr>
                     <tr>
@@ -2949,7 +3127,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="265" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:265</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="277" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:277</a></div>
                                 </td>
                             </tr>
 
@@ -2960,7 +3138,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="261" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:261</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="273" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:273</a></div>
                                 </td>
                             </tr>
                     <tr>
@@ -3019,7 +3197,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="269" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:269</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="281" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:281</a></div>
                                 </td>
                             </tr>
                     <tr>
@@ -3078,7 +3256,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="278" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:278</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="290" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:290</a></div>
                                 </td>
                             </tr>
                     <tr>
@@ -3136,7 +3314,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="282" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:282</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="294" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:294</a></div>
                                 </td>
                             </tr>
 
@@ -3158,10 +3336,57 @@ If you need to resolve additional Validators or need a different resolution for 
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="286" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:286</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="298" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:298</a></div>
                                 </td>
                             </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>set</b><code>component(component: <a href="../interfaces/Component.html" target="_self">Component</a>)</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="302" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:302</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <table class="params">
+                                            <thead>
+                                                <tr>
+                                                    <td>Name</td>
+                                                        <td>Type</td>
+                                                    <td>Optional</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr>
+                                                            <td>component</td>
+                                                    
+                                                            <td>
+                                                                            <code><a href="../interfaces/Component.html" target="_self" >Component</a></code>
+                                                            </td>
+                                                    
+                                                        <td>
+                                                                No
+                                                        </td>
+                                                        
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
             </tbody>
         </table>
         <table class="table table-sm table-bordered">
@@ -3180,7 +3405,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="300" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:300</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="321" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:321</a></div>
                                 </td>
                             </tr>
 
@@ -3191,7 +3416,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="296" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:296</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="317" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:317</a></div>
                                 </td>
                             </tr>
                     <tr>
@@ -3249,7 +3474,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="304" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:304</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="325" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:325</a></div>
                                 </td>
                             </tr>
 
@@ -3260,7 +3485,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="308" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:308</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="329" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:329</a></div>
                                 </td>
                             </tr>
                     <tr>
@@ -3318,7 +3543,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="312" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:312</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="333" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:333</a></div>
                                 </td>
                             </tr>
 
@@ -3329,7 +3554,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="316" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:316</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="337" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:337</a></div>
                                 </td>
                             </tr>
                     <tr>
@@ -3387,7 +3612,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="332" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:332</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="353" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:353</a></div>
                                 </td>
                             </tr>
 
@@ -3398,7 +3623,7 @@ If you need to resolve additional Validators or need a different resolution for 
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="328" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:328</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="349" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:349</a></div>
                                 </td>
                             </tr>
                     <tr>
@@ -3456,18 +3681,18 @@ If you need to resolve additional Validators or need a different resolution for 
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="342" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:342</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="363" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:363</a></div>
                                 </td>
                             </tr>
 
                 <tr>
                     <td class="col-md-4">
-                        <span class="accessor"><b>set</b><code>input(value: <a href="https://angular.io/api/core/ElementRef" target="_blank">ElementRef</a>)</code></span>
+                        <span class="accessor"><b>set</b><code>input(value: ElementRef)</code></span>
                     </td>
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="346" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:346</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="367" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:367</a></div>
                                 </td>
                             </tr>
                     <tr>
@@ -3488,7 +3713,76 @@ If you need to resolve additional Validators or need a different resolution for 
                                                             <td>value</td>
                                                     
                                                             <td>
-                                                                            <code><a href="https://angular.io/api/core/ElementRef" target="_blank" >ElementRef</a></code>
+                                                                        <code>ElementRef</code>
+                                                            </td>
+                                                    
+                                                        <td>
+                                                                No
+                                                        </td>
+                                                        
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="formControlRef"></a>
+                        <span class="name"><b>formControlRef</b><a href="#formControlRef"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>formControlRef()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="371" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:371</a></div>
+                                </td>
+                            </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>set</b><code>formControlRef(formControl: <a href="../interfaces/Form.html" target="_self">FormControl</a>)</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="375" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/models/abstract-data-field.ts:375</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <table class="params">
+                                            <thead>
+                                                <tr>
+                                                    <td>Name</td>
+                                                        <td>Type</td>
+                                                    <td>Optional</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr>
+                                                            <td>formControl</td>
+                                                    
+                                                            <td>
+                                                                            <code><a href="../interfaces/Form.html" target="_self" >FormControl</a></code>
                                                             </td>
                                                     
                                                         <td>
@@ -3513,7 +3807,7 @@ If you need to resolve additional Validators or need a different resolution for 
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Behavior} from &#x27;./behavior&#x27;;
 import {BehaviorSubject, Observable, Subject, Subscription} from &#x27;rxjs&#x27;;
 import {FormControl, ValidatorFn, Validators} from &#x27;@angular/forms&#x27;;
@@ -3521,9 +3815,10 @@ import {Change} from &#x27;./changed-fields&#x27;;
 import {distinctUntilChanged, filter, take} from &#x27;rxjs/operators&#x27;;
 import {Layout} from &#x27;./layout&#x27;;
 import {ConfigurationService} from &#x27;../../configuration/configuration.service&#x27;;
-import {Component} from &#x27;./component&#x27;;
+import {Component, DEFAULT} from &#x27;./component&#x27;;
 import {Validation} from &#x27;./validation&#x27;;
 import {ElementRef} from &quot;@angular/core&quot;;
+import {UpdateOnStrategy, UpdateStrategy} from &quot;./update-strategy&quot;;
 
 /**
  * Holds the logic common to all data field Model objects.
@@ -3640,6 +3935,16 @@ export abstract class DataField&lt;T&gt; {
     private _input: ElementRef;
 
     /**
+     * Reference to form control
+     * */
+    private _formControlRef: FormControl;
+
+    /**
+     * change of component
+     * */
+    private _componentChange$: Subject&lt;Component&gt;;
+
+    /**
      * @param _stringId - ID of the data field from backend
      * @param _title - displayed title of the data field from backend
      * @param initialValue - initial value of the data field
@@ -3665,6 +3970,7 @@ export abstract class DataField&lt;T&gt; {
         this._update &#x3D; new Subject&lt;void&gt;();
         this._block &#x3D; new Subject&lt;boolean&gt;();
         this._touch &#x3D; new Subject&lt;boolean&gt;();
+        this._componentChange$ &#x3D; new Subject&lt;Component&gt;();
         this._validRequired &#x3D; true;
         this.layoutSubject &#x3D; new BehaviorSubject&lt;Layout&gt;(_layout);
         this.resetLocalLayout();
@@ -3803,6 +4109,15 @@ export abstract class DataField&lt;T&gt; {
         return this._component;
     }
 
+    set component(component: Component) {
+        this._component &#x3D; component;
+        this._componentChange$.next(component);
+    }
+
+    public componentChange$(): Observable&lt;Component&gt; {
+        return this._componentChange$.asObservable();
+    }
+
     public revertToPreviousValue(): void {
         this.changed &#x3D; false;
         this._reverting &#x3D; true;
@@ -3863,13 +4178,27 @@ export abstract class DataField&lt;T&gt; {
         this._input &#x3D; value;
     }
 
+    get formControlRef(): FormControl {
+        return this._formControlRef;
+    }
+
+    set formControlRef(formControl: FormControl) {
+        this._formControlRef &#x3D; formControl;
+    }
+
+    public getUpdateOnStrategy(): UpdateOnStrategy {
+        return UpdateStrategy.BLUR;
+    }
+
     /**
      * This function resolve type of component for HTML
      * @returns type of component in string
      */
     public getComponentType(): string {
-        return this.component?.name ?? &#x27;&#x27;;
+        return this.component?.name ?? DEFAULT;
     }
+
+    public abstract getTypedComponentType(): string;
 
     public destroy(): void {
         this._value.complete();
@@ -3887,6 +4216,7 @@ export abstract class DataField&lt;T&gt; {
                 + &#x27; Disconnect the previous form control before initializing the data field again!&#x27;);
         }
 
+        this.formControlRef &#x3D; formControl;
         formControl.setValidators(this.resolveFormControlValidators());
 
         this._formControlValueSubscription &#x3D; formControl.valueChanges.pipe(
@@ -4113,14 +4443,15 @@ export abstract class DataField&lt;T&gt; {
 
 
 
-                   
+
+
 
 
 
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -4132,6 +4463,15 @@ export abstract class DataField&lt;T&gt; {
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
@@ -4139,10 +4479,23 @@ export abstract class DataField&lt;T&gt; {
             var MAX_SEARCH_RESULTS = 15;
        </script>
 
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       
-       <script type="module" src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/menu-wc.js" defer></script>
        <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>

@@ -9,13 +9,64 @@
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 	   <link rel="stylesheet" href="../styles/style.css">
-        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+        <link rel="stylesheet" href="../styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
-            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
@@ -24,7 +75,7 @@
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
@@ -37,22 +88,29 @@
 
 
 
+
 <ol class="breadcrumb">
-  <li>Injectables</li>
-  <li >TaskDataService</li>
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >TaskDataService</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
@@ -74,11 +132,11 @@ a single Task object managed by a <a href="../injectables/TaskContentService.htm
                 <h3>Extends</h3>
             </p>
             <p class="comment">
-                        <code><a href="../interfaces/Task.html" target="_self" >TaskHandlingService</a></code>
+                            <code><a href="../classes/TaskHandlingService.html" target="_self" >TaskHandlingService</a></code>
             </p>
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -113,6 +171,10 @@ a single Task object managed by a <a href="../injectables/TaskContentService.htm
                             <li>
                                     <span class="modifier">Protected</span>
                                 <a href="#addFieldToSetDataRequestBody" >addFieldToSetDataRequestBody</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#clearWaitingForResponseFlag" >clearWaitingForResponseFlag</a>
                             </li>
                             <li>
                                     <span class="modifier">Protected</span>
@@ -167,6 +229,10 @@ a single Task object managed by a <a href="../injectables/TaskContentService.htm
                             </li>
                             <li>
                                     <span class="modifier">Protected</span>
+                                <a href="#revertToPreviousValue" >revertToPreviousValue</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
                                 <a href="#sendNotification" >sendNotification</a>
                             </li>
                             <li>
@@ -211,18 +277,18 @@ a single Task object managed by a <a href="../injectables/TaskContentService.htm
     </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-constructor">
     <h3 id="constructor">Constructor</h3>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(_taskState: <a href="../injectables/TaskRequestStateService.html" target="_self">TaskRequestStateService</a>, _translate: TranslateService, _log: <a href="../injectables/LoggerService.html" target="_self">LoggerService</a>, _snackBar: <a href="../injectables/SnackBarService.html" target="_self">SnackBarService</a>, _taskResourceService: <a href="../injectables/TaskResourceService.html" target="_self">TaskResourceService</a>, _fieldConverterService: <a href="../injectables/FieldConverterService.html" target="_self">FieldConverterService</a>, _taskEvent: <a href="../injectables/TaskEventService.html" target="_self">TaskEventService</a>, _taskOperations: <a href="../interfaces/TaskOperations.html" target="_self">TaskOperations</a>, _selectedCaseService: <a href="../injectables/SelectedCaseService.html" target="_self">SelectedCaseService</a>, _taskContentService: <a href="../injectables/TaskContentService.html" target="_self">TaskContentService</a>, _afterActionFactory: <a href="../injectables/CallChainService.html" target="_self">CallChainService</a>, _eventQueue: <a href="../injectables/EventQueueService.html" target="_self">EventQueueService</a>, _userComparator: <a href="../injectables/UserComparatorService.html" target="_self">UserComparatorService</a>, _eventService: <a href="../injectables/EventService.html" target="_self">EventService</a>, _changedFieldsService: <a href="../injectables/ChangedFieldsService.html" target="_self">ChangedFieldsService</a>)</code>
+<code>constructor(_taskState: <a href="../injectables/TaskRequestStateService.html" target="_self">TaskRequestStateService</a>, _translate: TranslateService, _log: <a href="../injectables/LoggerService.html" target="_self">LoggerService</a>, _snackBar: <a href="../injectables/SnackBarService.html" target="_self">SnackBarService</a>, _taskResourceService: <a href="../injectables/TaskResourceService.html" target="_self">TaskResourceService</a>, _fieldConverterService: <a href="../injectables/FieldConverterService.html" target="_self">FieldConverterService</a>, _taskEvent: <a href="../injectables/TaskEventService.html" target="_self">TaskEventService</a>, _taskOperations: <a href="../interfaces/TaskOperations.html" target="_self">TaskOperations</a>, _selectedCaseService: <a href="../injectables/SelectedCaseService.html" target="_self">SelectedCaseService</a>, _taskContentService: <a href="../injectables/TaskContentService.html" target="_self">TaskContentService</a>, _afterActionFactory: <a href="../injectables/CallChainService.html" target="_self">CallChainService</a>, _eventQueue: <a href="../injectables/EventQueueService.html" target="_self">EventQueueService</a>, _userComparator: <a href="../injectables/UserComparatorService.html" target="_self">UserComparatorService</a>, _eventService: <a href="../injectables/EventService.html" target="_self">EventService</a>, _changedFieldsService: <a href="../injectables/ChangedFieldsService.html" target="_self">ChangedFieldsService</a>, _frontActionService: <a href="../injectables/FrontActionService.html" target="_self">FrontActionService</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:47</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:48</a></div>
                             </td>
                         </tr>
 
@@ -419,6 +485,18 @@ a single Task object managed by a <a href="../injectables/TaskContentService.htm
                                                     </td>
                                                     
                                                 </tr>
+                                                <tr>
+                                                        <td>_frontActionService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/FrontActionService.html" target="_self" >FrontActionService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -428,7 +506,7 @@ a single Task object managed by a <a href="../injectables/TaskContentService.htm
         </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-methods">
     
     <h3 id="methods">
         Methods
@@ -439,7 +517,7 @@ a single Task object managed by a <a href="../injectables/TaskContentService.htm
                 <td class="col-md-4">
                     <a name="addFieldToSetDataRequestBody"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>addFieldToSetDataRequestBody</b></span>
                         <a href="#addFieldToSetDataRequestBody"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -447,82 +525,150 @@ a single Task object managed by a <a href="../injectables/TaskContentService.htm
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>addFieldToSetDataRequestBody(context: <a href="../interfaces/TaskSetDataRequestContext.html" target="_self">TaskSetDataRequestContext</a>, taskId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, field: <a href="../classess/DataField.html" target="_self">DataField&lt;any&gt;</a>)</code>
                 </td>
             </tr>
 
 
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="341"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:341</a></div>
+                        </td>
+                    </tr>
+
+
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="343"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:343</a></div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>context</td>
+                                            <td>
+                                                            <code><a href="../interfaces/TaskSetDataRequestContext.html" target="_self" >TaskSetDataRequestContext</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>taskId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>field</td>
+                                            <td>
+                                                            <code><a href="../classess/DataField.html" target="_self" >DataField&lt;any&gt;</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="clearWaitingForResponseFlag"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>clearWaitingForResponseFlag</b></span>
+                        <a href="#clearWaitingForResponseFlag"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>clearWaitingForResponseFlag(body: <a href="../interfaces/TaskSetDataRequestBody.html" target="_self">TaskSetDataRequestBody</a>)</code>
                 </td>
             </tr>
 
 
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="627"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:627</a></div>
+                        </td>
+                    </tr>
+
+
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>context</td>
-                                    <td>
-                                                <code><a href="../interfaces/TaskSetDataRequestContext.html" target="_self" >TaskSetDataRequestContext</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>body</td>
+                                            <td>
+                                                            <code><a href="../interfaces/TaskSetDataRequestBody.html" target="_self" >TaskSetDataRequestBody</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>taskId</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                                <tr>
-                                    <td>field</td>
-                                    <td>
-                                                <code><a href="../classess/DataField.html" target="_self" >DataField&lt;any&gt;</a></code>
-                                    </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -533,7 +679,7 @@ a single Task object managed by a <a href="../injectables/TaskContentService.htm
                 <td class="col-md-4">
                     <a name="compareBackendFormattedFieldValues"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>compareBackendFormattedFieldValues</b></span>
                         <a href="#compareBackendFormattedFieldValues"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -541,76 +687,75 @@ a single Task object managed by a <a href="../injectables/TaskContentService.htm
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>compareBackendFormattedFieldValues(current, old)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="570"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:570</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="572"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:572</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Compares the values that are in the backend compatible format as given by the <a href="../injectables/FieldConverterService.html">FieldConverterService</a>
+                        <div class="io-description"><p>Compares the values that are in the backend compatible format as given by the <a href="../injectables/FieldConverterService.html">FieldConverterService</a>
 and determines whether they are the same value, or not.</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>current</td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>current</td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>the current value (can also be called <code>value1</code> or <code>left</code>)</p>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>old</td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the new value (can also be called <code>value2</code> or <code>right</code>)</p>
+                                            <td>
+                                                    <p>the current value (can also be called <code>value1</code> or <code>left</code>)</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>old</td>
 
-                    </div>
-                    <div class="io-description">
-                        <p><code>true</code> if the values are the same and <code>false</code> otherwise</p>
+                                            <td>
+                                                    No
+                                            </td>
 
-                    </div>
+
+                                            <td>
+                                                    <p>the new value (can also be called <code>value2</code> or <code>right</code>)</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p><code>true</code> if the values are the same and <code>false</code> otherwise</p>
+
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -621,7 +766,7 @@ and determines whether they are the same value, or not.</p>
                 <td class="col-md-4">
                     <a name="initializeTaskDataFields"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>initializeTaskDataFields</b></span>
                         <a href="#initializeTaskDataFields"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -629,23 +774,23 @@ and determines whether they are the same value, or not.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>initializeTaskDataFields(afterAction: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>, force)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="108"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:108</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="106"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:106</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Loads the Data Fields of an uninitialized Task from backend
+                        <div class="io-description"><p>Loads the Data Fields of an uninitialized Task from backend
 and populates the Task managed by <a href="../injectables/TaskContentService.html">TaskContentService</a> with the appropriate objects.</p>
 <p>Beware that if the Task has some data already loaded this function does nothing
 and only passes <code>true</code> to the <code>afterAction</code> argument.</p>
@@ -653,68 +798,67 @@ and only passes <code>true</code> to the <code>afterAction</code> argument.</p>
 and the <code>afterAction</code> will not be executed.</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Default value</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>afterAction</td>
-                                    <td>
-                                                <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Default value</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>afterAction</td>
+                                            <td>
+                                                            <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
-                                    <td>
-                                        <code>new AfterAction()</code>
-                                    </td>
+                                            <td>
+                                                    <code>new AfterAction()</code>
+                                            </td>
 
-                                    <td>
-                                        <p>if the request completes successfully emits <code>true</code> into the Subject, otherwise <code>false</code> will be emitted</p>
+                                            <td>
+                                                    <p>if the request completes successfully emits <code>true</code> into the Subject, otherwise <code>false</code> will be emitted</p>
 
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>force</td>
-                                    <td>
-                                    </td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>force</td>
+                                            <td>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
-                                    <td>
-                                        <code>false</code>
-                                    </td>
+                                            <td>
+                                                    <code>false</code>
+                                            </td>
 
-                                    <td>
-                                        <p>set to <code>true</code> if you need force reload of all task data</p>
+                                            <td>
+                                                    <p>set to <code>true</code> if you need force reload of all task data</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -725,7 +869,7 @@ and the <code>afterAction</code> will not be executed.</p>
                 <td class="col-md-4">
                     <a name="isAutocompleteEnumException"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>isAutocompleteEnumException</b></span>
                         <a href="#isAutocompleteEnumException"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -733,58 +877,57 @@ and the <code>afterAction</code> will not be executed.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>isAutocompleteEnumException(field: <a href="../classess/DataField.html" target="_self">DataField&lt;unknown&gt;</a>)</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>isAutocompleteEnumException(field: <a href="../classess/DataField.html" target="_self">DataField&lt;&gt;</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="352"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:352</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="350"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:350</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>field</td>
-                                    <td>
-                                                <code><a href="../classess/DataField.html" target="_self" >DataField&lt;unknown&gt;</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>field</td>
+                                            <td>
+                                                            <code><a href="../classess/DataField.html" target="_self" >DataField&lt;&gt;</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -795,7 +938,7 @@ and the <code>afterAction</code> will not be executed.</p>
                 <td class="col-md-4">
                     <a name="isSetDataRequestStillValid"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>isSetDataRequestStillValid</b></span>
                         <a href="#isSetDataRequestStillValid"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -803,60 +946,59 @@ and the <code>afterAction</code> will not be executed.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>isSetDataRequestStillValid(request: <a href="../interfaces/TaskSetDataRequestBody.html" target="_self">TaskSetDataRequestBody</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="368"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:368</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="366"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:366</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Checks whether the request could still be performed by the logged user</p>
+                        <div class="io-description"><p>Checks whether the request could still be performed by the logged user</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>request</td>
-                                    <td>
-                                                <code><a href="../interfaces/TaskSetDataRequestBody.html" target="_self" >TaskSetDataRequestBody</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>request</td>
+                                            <td>
+                                                            <code><a href="../interfaces/TaskSetDataRequestBody.html" target="_self" >TaskSetDataRequestBody</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -879,21 +1021,21 @@ and the <code>afterAction</code> will not be executed.</p>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="75"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:75</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="73"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:73</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -904,7 +1046,7 @@ and the <code>afterAction</code> will not be executed.</p>
                 <td class="col-md-4">
                     <a name="performGetDataRequest"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>performGetDataRequest</b></span>
                         <a href="#performGetDataRequest"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -912,97 +1054,96 @@ and the <code>afterAction</code> will not be executed.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>performGetDataRequest(afterAction: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>, force: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>, nextEvent: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="128"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:128</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="126"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:126</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Performs a <code>getData</code> request on the task currently stored in the <code>taskContent</code> service</p>
+                        <div class="io-description"><p>Performs a <code>getData</code> request on the task currently stored in the <code>taskContent</code> service</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>afterAction</td>
-                                    <td>
-                                                <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>afterAction</td>
+                                            <td>
+                                                            <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>the action that should be performed after the request is processed</p>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>force</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>set to <code>true</code> if you need force reload of all task data</p>
+                                            <td>
+                                                    <p>the action that should be performed after the request is processed</p>
 
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>nextEvent</td>
-                                    <td>
-                                                <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
-                                    </td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>force</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>indicates to the event queue that the next event can be processed</p>
+                                            <td>
+                                                    <p>set to <code>true</code> if you need force reload of all task data</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>nextEvent</td>
+                                            <td>
+                                                            <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
+                                            </td>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>indicates to the event queue that the next event can be processed</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1013,7 +1154,7 @@ and the <code>afterAction</code> will not be executed.</p>
                 <td class="col-md-4">
                     <a name="performSetDataRequest"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>performSetDataRequest</b></span>
                         <a href="#performSetDataRequest"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1021,113 +1162,112 @@ and the <code>afterAction</code> will not be executed.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>performSetDataRequest(setTaskId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, context: <a href="../interfaces/TaskSetDataRequestContext.html" target="_self">TaskSetDataRequestContext</a>, afterAction: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>, nextEvent: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="410"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:410</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="408"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:408</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Performs a <code>setData</code> request on the task currently stored in the <code>taskContent</code> service</p>
+                        <div class="io-description"><p>Performs a <code>setData</code> request on the task currently stored in the <code>taskContent</code> service</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>setTaskId</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>setTaskId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>ID of the task</p>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>context</td>
-                                    <td>
-                                                <code><a href="../interfaces/TaskSetDataRequestContext.html" target="_self" >TaskSetDataRequestContext</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>context of the <code>setData</code> request</p>
+                                            <td>
+                                                    <p>ID of the task</p>
 
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>afterAction</td>
-                                    <td>
-                                                <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
-                                    </td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>context</td>
+                                            <td>
+                                                            <code><a href="../interfaces/TaskSetDataRequestContext.html" target="_self" >TaskSetDataRequestContext</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>the action that should be performed after the request is processed</p>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>nextEvent</td>
-                                    <td>
-                                                <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>indicates to the event queue that the next event can be processed</p>
+                                            <td>
+                                                    <p>context of the <code>setData</code> request</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>afterAction</td>
+                                            <td>
+                                                            <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
+                                            </td>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>the action that should be performed after the request is processed</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>nextEvent</td>
+                                            <td>
+                                                            <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>indicates to the event queue that the next event can be processed</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1138,7 +1278,7 @@ and the <code>afterAction</code> will not be executed.</p>
                 <td class="col-md-4">
                     <a name="processErroneousGetDataRequest"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>processErroneousGetDataRequest</b></span>
                         <a href="#processErroneousGetDataRequest"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1146,113 +1286,112 @@ and the <code>afterAction</code> will not be executed.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>processErroneousGetDataRequest(gottenTaskId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, error: HttpErrorResponse | Error, afterAction: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>, nextEvent: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="241"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:241</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="239"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:239</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Processes an erroneous outcome of a <code>getData</code> request</p>
+                        <div class="io-description"><p>Processes an erroneous outcome of a <code>getData</code> request</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>gottenTaskId</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>gottenTaskId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>the ID of the task whose data was requested</p>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>error</td>
-                                    <td>
-                                            <code>HttpErrorResponse | Error</code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the returned error</p>
+                                            <td>
+                                                    <p>the ID of the task whose data was requested</p>
 
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>afterAction</td>
-                                    <td>
-                                                <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
-                                    </td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>error</td>
+                                            <td>
+                                                        <code>HttpErrorResponse | Error</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>the action that should be performed after the request is processed</p>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>nextEvent</td>
-                                    <td>
-                                                <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>indicates to the event queue that the next event can be processed</p>
+                                            <td>
+                                                    <p>the returned error</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>afterAction</td>
+                                            <td>
+                                                            <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
+                                            </td>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>the action that should be performed after the request is processed</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>nextEvent</td>
+                                            <td>
+                                                            <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>indicates to the event queue that the next event can be processed</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1263,7 +1402,7 @@ and the <code>afterAction</code> will not be executed.</p>
                 <td class="col-md-4">
                     <a name="processErroneousSetDataRequest"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>processErroneousSetDataRequest</b></span>
                         <a href="#processErroneousSetDataRequest"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1271,127 +1410,126 @@ and the <code>afterAction</code> will not be executed.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>processErroneousSetDataRequest(setTaskId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, error: <a href="https://angular.io/api/common/http/HttpErrorResponse" target="_blank">HttpErrorResponse</a>, afterAction: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>, nextEvent: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>, context: <a href="../interfaces/TaskSetDataRequestContext.html" target="_self">TaskSetDataRequestContext</a>)</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>processErroneousSetDataRequest(setTaskId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, error: HttpErrorResponse, afterAction: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>, nextEvent: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>, context: <a href="../interfaces/TaskSetDataRequestContext.html" target="_self">TaskSetDataRequestContext</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="507"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:507</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="509"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:509</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Processes an erroneous outcome of a <code>setData</code> request</p>
+                        <div class="io-description"><p>Processes an erroneous outcome of a <code>setData</code> request</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>setTaskId</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>setTaskId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>the ID of the task whose data was set</p>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>error</td>
-                                    <td>
-                                                <code><a href="https://angular.io/api/common/http/HttpErrorResponse" target="_blank" >HttpErrorResponse</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the returned error</p>
+                                            <td>
+                                                    <p>the ID of the task whose data was set</p>
 
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>afterAction</td>
-                                    <td>
-                                                <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
-                                    </td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>error</td>
+                                            <td>
+                                                        <code>HttpErrorResponse</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>the action that should be performed after the request is processed</p>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>nextEvent</td>
-                                    <td>
-                                                <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>indicates to the event queue that the next event can be processed</p>
+                                            <td>
+                                                    <p>the returned error</p>
 
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>context</td>
-                                    <td>
-                                                <code><a href="../interfaces/TaskSetDataRequestContext.html" target="_self" >TaskSetDataRequestContext</a></code>
-                                    </td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>afterAction</td>
+                                            <td>
+                                                            <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                            <td>
+                                                    <p>the action that should be performed after the request is processed</p>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>nextEvent</td>
+                                            <td>
+                                                            <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>indicates to the event queue that the next event can be processed</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>context</td>
+                                            <td>
+                                                            <code><a href="../interfaces/TaskSetDataRequestContext.html" target="_self" >TaskSetDataRequestContext</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1402,7 +1540,7 @@ and the <code>afterAction</code> will not be executed.</p>
                 <td class="col-md-4">
                     <a name="processSuccessfulGetDataRequest"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>processSuccessfulGetDataRequest</b></span>
                         <a href="#processSuccessfulGetDataRequest"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1410,113 +1548,112 @@ and the <code>afterAction</code> will not be executed.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>processSuccessfulGetDataRequest(gottenTaskId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, dataGroups: Array<DataGroup>, afterAction: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>, nextEvent: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="157"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:157</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="155"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:155</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Processes a successful outcome of a <code>getData</code> request</p>
+                        <div class="io-description"><p>Processes a successful outcome of a <code>getData</code> request</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>gottenTaskId</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>gottenTaskId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>the ID of the task whose data was requested</p>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>dataGroups</td>
-                                    <td>
-                                            <code>Array&lt;DataGroup&gt;</code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the returned data groups of the task</p>
+                                            <td>
+                                                    <p>the ID of the task whose data was requested</p>
 
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>afterAction</td>
-                                    <td>
-                                                <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
-                                    </td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>dataGroups</td>
+                                            <td>
+                                                        <code>Array&lt;DataGroup&gt;</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>the action that should be performed after the request is processed</p>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>nextEvent</td>
-                                    <td>
-                                                <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>indicates to the event queue that the next event can be processed</p>
+                                            <td>
+                                                    <p>the returned data groups of the task</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>afterAction</td>
+                                            <td>
+                                                            <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
+                                            </td>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>the action that should be performed after the request is processed</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>nextEvent</td>
+                                            <td>
+                                                            <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>indicates to the event queue that the next event can be processed</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1527,7 +1664,7 @@ and the <code>afterAction</code> will not be executed.</p>
                 <td class="col-md-4">
                     <a name="processSuccessfulSetDataRequest"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>processSuccessfulSetDataRequest</b></span>
                         <a href="#processSuccessfulSetDataRequest"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1535,129 +1672,128 @@ and the <code>afterAction</code> will not be executed.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>processSuccessfulSetDataRequest(setTaskId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, response: <a href="../interfaces/EventOutcomeMessageResource.html" target="_self">EventOutcomeMessageResource</a>, afterAction: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>, nextEvent: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>, context: <a href="../interfaces/TaskSetDataRequestContext.html" target="_self">TaskSetDataRequestContext</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="482"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:482</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="480"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:480</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Processes a successful outcome of a <code>setData</code> request</p>
+                        <div class="io-description"><p>Processes a successful outcome of a <code>setData</code> request</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>setTaskId</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>setTaskId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>the ID of the task whose data was set</p>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>response</td>
-                                    <td>
-                                                <code><a href="../interfaces/EventOutcomeMessageResource.html" target="_self" >EventOutcomeMessageResource</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the resulting Event outcome of the set data request</p>
+                                            <td>
+                                                    <p>the ID of the task whose data was set</p>
 
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>afterAction</td>
-                                    <td>
-                                                <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
-                                    </td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>response</td>
+                                            <td>
+                                                            <code><a href="../interfaces/EventOutcomeMessageResource.html" target="_self" >EventOutcomeMessageResource</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>the action that should be performed after the request is processed</p>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>nextEvent</td>
-                                    <td>
-                                                <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>indicates to the event queue that the next event can be processed</p>
+                                            <td>
+                                                    <p>the resulting Event outcome of the set data request</p>
 
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>context</td>
-                                    <td>
-                                                <code><a href="../interfaces/TaskSetDataRequestContext.html" target="_self" >TaskSetDataRequestContext</a></code>
-                                    </td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>afterAction</td>
+                                            <td>
+                                                            <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>hold the data that was sent in request</p>
+                                            <td>
+                                                    <p>the action that should be performed after the request is processed</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>nextEvent</td>
+                                            <td>
+                                                            <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
+                                            </td>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>indicates to the event queue that the next event can be processed</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>context</td>
+                                            <td>
+                                                            <code><a href="../interfaces/TaskSetDataRequestContext.html" target="_self" >TaskSetDataRequestContext</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>hold the data that was sent in request</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1668,7 +1804,7 @@ and the <code>afterAction</code> will not be executed.</p>
                 <td class="col-md-4">
                     <a name="processUnsuccessfulSetDataRequest"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>processUnsuccessfulSetDataRequest</b></span>
                         <a href="#processUnsuccessfulSetDataRequest"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1676,127 +1812,126 @@ and the <code>afterAction</code> will not be executed.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>processUnsuccessfulSetDataRequest(setTaskId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, response: <a href="../interfaces/EventOutcomeMessageResource.html" target="_self">EventOutcomeMessageResource</a>, afterAction: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>, nextEvent: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>, context: <a href="../interfaces/TaskSetDataRequestContext.html" target="_self">TaskSetDataRequestContext</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="449"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:449</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="447"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:447</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Processes an unsuccessful outcome of a <code>setData</code> request</p>
+                        <div class="io-description"><p>Processes an unsuccessful outcome of a <code>setData</code> request</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>setTaskId</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>setTaskId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>the ID of the task whose data was set</p>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>response</td>
-                                    <td>
-                                                <code><a href="../interfaces/EventOutcomeMessageResource.html" target="_self" >EventOutcomeMessageResource</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the resulting Event outcome of the set data request</p>
+                                            <td>
+                                                    <p>the ID of the task whose data was set</p>
 
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>afterAction</td>
-                                    <td>
-                                                <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
-                                    </td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>response</td>
+                                            <td>
+                                                            <code><a href="../interfaces/EventOutcomeMessageResource.html" target="_self" >EventOutcomeMessageResource</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>the action that should be performed after the request is processed</p>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>nextEvent</td>
-                                    <td>
-                                                <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>indicates to the event queue that the next event can be processed</p>
+                                            <td>
+                                                    <p>the resulting Event outcome of the set data request</p>
 
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>context</td>
-                                    <td>
-                                                <code><a href="../interfaces/TaskSetDataRequestContext.html" target="_self" >TaskSetDataRequestContext</a></code>
-                                    </td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>afterAction</td>
+                                            <td>
+                                                            <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                            <td>
+                                                    <p>the action that should be performed after the request is processed</p>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>nextEvent</td>
+                                            <td>
+                                                            <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>indicates to the event queue that the next event can be processed</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>context</td>
+                                            <td>
+                                                            <code><a href="../interfaces/TaskSetDataRequestContext.html" target="_self" >TaskSetDataRequestContext</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1807,7 +1942,7 @@ and the <code>afterAction</code> will not be executed.</p>
                 <td class="col-md-4">
                     <a name="revertSetDataRequest"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>revertSetDataRequest</b></span>
                         <a href="#revertSetDataRequest"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1815,65 +1950,133 @@ and the <code>afterAction</code> will not be executed.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>revertSetDataRequest(context: <a href="../interfaces/TaskSetDataRequestContext.html" target="_self">TaskSetDataRequestContext</a>)</code>
                 </td>
             </tr>
 
 
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="537"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:537</a></div>
+                        </td>
+                    </tr>
+
+
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="535"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:535</a></div>
+                        <div class="io-description"><p>Reverts the effects of a failed <code>setData</code> request, so that the user sees current values.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>context</td>
+                                            <td>
+                                                            <code><a href="../interfaces/TaskSetDataRequestContext.html" target="_self" >TaskSetDataRequestContext</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>the context of the failed request</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="revertToPreviousValue"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>revertToPreviousValue</b></span>
+                        <a href="#revertToPreviousValue"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>revertToPreviousValue(context: <a href="../interfaces/TaskSetDataRequestContext.html" target="_self">TaskSetDataRequestContext</a>)</code>
                 </td>
             </tr>
 
 
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="617"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:617</a></div>
+                        </td>
+                    </tr>
+
+
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Reverts the effects of a failed <code>setData</code> request, so that the user sees current values.</p>
-</div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>context</td>
-                                    <td>
-                                                <code><a href="../interfaces/TaskSetDataRequestContext.html" target="_self" >TaskSetDataRequestContext</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>context</td>
+                                            <td>
+                                                            <code><a href="../interfaces/TaskSetDataRequestContext.html" target="_self" >TaskSetDataRequestContext</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the context of the failed request</p>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1884,7 +2087,7 @@ and the <code>afterAction</code> will not be executed.</p>
                 <td class="col-md-4">
                     <a name="sendNotification"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>sendNotification</b></span>
                         <a href="#sendNotification"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1892,81 +2095,80 @@ and the <code>afterAction</code> will not be executed.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>sendNotification(event: <a href="../interfaces/Task.html" target="_self">TaskEvent.GET_DATA | TaskEvent.SET_DATA</a>, success: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="611"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:611</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="613"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:613</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Publishes a get/set data notification to the <a href="../injectables/TaskEventService.html">TaskEventService</a></p>
+                        <div class="io-description"><p>Publishes a get/set data notification to the <a href="../injectables/TaskEventService.html">TaskEventService</a></p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>event</td>
-                                    <td>
-                                                <code><a href="../interfaces/Task.html" target="_self" >TaskEvent.GET_DATA | TaskEvent.SET_DATA</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Task.html" target="_self" >TaskEvent.GET_DATA | TaskEvent.SET_DATA</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>the event that occurred to the task</p>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>success</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>whether the get/set data operation was successful or not</p>
+                                            <td>
+                                                    <p>the event that occurred to the task</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>success</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                            </td>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>whether the get/set data operation was successful or not</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1977,7 +2179,7 @@ and the <code>afterAction</code> will not be executed.</p>
                 <td class="col-md-4">
                     <a name="updateTaskDataFields"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>updateTaskDataFields</b></span>
                         <a href="#updateTaskDataFields"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1985,73 +2187,72 @@ and the <code>afterAction</code> will not be executed.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>updateTaskDataFields(afterAction: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="280"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:280</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="278"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:278</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Collects all changed data fields and notifies the backend of the changes.</p>
-<p>If the request is successful clears the <a href="../classess/DataField.html#changed">changed</a> flag on all data fields that were a part of the request
+                        <div class="io-description"><p>Collects all changed data fields and notifies the backend of the changes.</p>
+<p>If the request is successful clears the <a href="../classes/DataField.html#changed">changed</a> flag on all data fields that were a part of the request
 and emits a <a href="../interfaces/ChangedFields.html">ChangedFields</a> object into this object&#39;s <a href="../injectables/TaskDataService.html#changedFields$">changedFields$</a> stream.</p>
 <p>If the task held within the <a href="../injectables/TaskContentService.html">TaskContentService</a> changes before a response is received, the response will be ignored
 and the <code>afterAction</code> will not be executed.</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Default value</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>afterAction</td>
-                                    <td>
-                                                <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Default value</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>afterAction</td>
+                                            <td>
+                                                            <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
-                                    <td>
-                                        <code>new AfterAction()</code>
-                                    </td>
+                                            <td>
+                                                    <code>new AfterAction()</code>
+                                            </td>
 
-                                    <td>
-                                        <p>if the request completes successfully emits <code>true</code> into the Subject, otherwise <code>false</code> will be emitted</p>
+                                            <td>
+                                                    <p>if the request completes successfully emits <code>true</code> into the Subject, otherwise <code>false</code> will be emitted</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -2062,7 +2263,7 @@ and the <code>afterAction</code> will not be executed.</p>
                 <td class="col-md-4">
                     <a name="wasFieldUpdated"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>wasFieldUpdated</b></span>
                         <a href="#wasFieldUpdated"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -2070,64 +2271,63 @@ and the <code>afterAction</code> will not be executed.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>wasFieldUpdated(field: <a href="../classess/DataField.html" target="_self">DataField&lt;unknown&gt;</a>)</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>wasFieldUpdated(field: <a href="../classess/DataField.html" target="_self">DataField&lt;&gt;</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="360"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:360</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="358"
+                                    class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:358</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>field</td>
-                                    <td>
-                                                <code><a href="../classess/DataField.html" target="_self" >DataField&lt;unknown&gt;</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>field</td>
+                                            <td>
+                                                            <code><a href="../classess/DataField.html" target="_self" >DataField&lt;&gt;</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the checked field</p>
+                                            <td>
+                                                    <p>the checked field</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        <p>whether the field was updated on frontend and thus the backend should be notified</p>
+                        </div>
+                            <div class="io-description">
+                                <p>whether the field was updated on frontend and thus the backend should be notified</p>
 
-                    </div>
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -2138,7 +2338,7 @@ and the <code>afterAction</code> will not be executed.</p>
                 <td class="col-md-4">
                     <a name="isTaskPresent"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>isTaskPresent</b></span>
                         <a href="#isTaskPresent"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -2146,39 +2346,37 @@ and the <code>afterAction</code> will not be executed.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>isTaskPresent()</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Inherited from         <code><a href="../interfaces/Task.html" target="_self" >TaskHandlingService</a></code>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Inherited from         <code><a href="../classes/TaskHandlingService.html" target="_self" >TaskHandlingService</a></code>
 </div>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../interfaces/Task.html#source" target="_self" >TaskHandlingService:42</a></code>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../classes/TaskHandlingService.html#source" target="_self" >TaskHandlingService:42</a></code>
 </div>
-                </td>
-            </tr>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        <p><code>true</code> if a {</p>
+                        </div>
+                            <div class="io-description">
+                                <p><code>true</code> if a {@link Task} instance is set, <code>false</code> otherwise</p>
 
-                    </div>
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -2189,7 +2387,7 @@ and the <code>afterAction</code> will not be executed.</p>
                 <td class="col-md-4">
                     <a name="isTaskRelevant"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>isTaskRelevant</b></span>
                         <a href="#isTaskRelevant"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -2197,82 +2395,81 @@ and the <code>afterAction</code> will not be executed.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>isTaskRelevant(requestedTaskId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Inherited from         <code><a href="../interfaces/Task.html" target="_self" >TaskHandlingService</a></code>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Inherited from         <code><a href="../classes/TaskHandlingService.html" target="_self" >TaskHandlingService</a></code>
 </div>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../interfaces/Task.html#source" target="_self" >TaskHandlingService:56</a></code>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../classes/TaskHandlingService.html#source" target="_self" >TaskHandlingService:56</a></code>
 </div>
-                </td>
-            </tr>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Checks whether the current state of the <a href="../injectables/TaskContentService.html">TaskContentService</a> and optionally if the <a href="../injectables/SelectedCaseService.html">SelectedCaseService</a>, is still
+                        <div class="io-description"><p>Checks whether the current state of the <a href="../injectables/TaskContentService.html">TaskContentService</a> and optionally if the <a href="../injectables/SelectedCaseService.html">SelectedCaseService</a>, is still
 relevant to the task that was requested.</p>
 <p>This method is useful if you use <a href="../injectables/UnlimitedTaskContentService.html">UnlimitedTaskContentService</a>, or a similar implementation. It is possible for the currently
 &quot;selected&quot; task to change in-between a backend request was sent and the response was received. In that case the response is no longer
 relevant and should be discarded, otherwise an illegal task state could be achieved on frontend.</p>
 </div>
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>requestedTaskId</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>requestedTaskId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                    <td>
-                                        <p>the <code>stringId</code> of the requested task</p>
+                                            <td>
+                                                    <p>the <code>stringId</code> of the requested task</p>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        <p><code>true</code> if the requested task is still relevant to the state of the frontend. Returns <code>false</code> otherwise.</p>
+                        </div>
+                            <div class="io-description">
+                                <p><code>true</code> if the requested task is still relevant to the state of the frontend. Returns <code>false</code> otherwise.</p>
 
-                    </div>
+                            </div>
                 </td>
             </tr>
         </tbody>
     </table>
 </section>
-            <section>
+            <section data-compodoc="block-properties">
     
     <h3 id="inputs">
         Properties
@@ -2297,7 +2494,7 @@ relevant and should be discarded, otherwise an illegal task state could be achie
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:47</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:48</a></div>
                         </td>
                     </tr>
 
@@ -2324,7 +2521,7 @@ relevant and should be discarded, otherwise an illegal task state could be achie
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:46</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:47</a></div>
                         </td>
                     </tr>
 
@@ -2333,7 +2530,7 @@ relevant and should be discarded, otherwise an illegal task state could be achie
     </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-accessors">
     <h3 id="accessors">
         Accessors
     </h3>
@@ -2353,7 +2550,7 @@ relevant and should be discarded, otherwise an illegal task state could be achie
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="91" class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:91</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="89" class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:89</a></div>
                                 </td>
                             </tr>
                     <tr>
@@ -2375,10 +2572,10 @@ calls in <a href="../injectables/TaskDataService.html#updateTaskDataFields">upda
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Inject, Injectable, OnDestroy, Optional} from &#x27;@angular/core&#x27;;
 import {Observable, Subject, Subscription} from &#x27;rxjs&#x27;;
-import {ChangedFields} from &#x27;../../data-fields/models/changed-fields&#x27;;
+import {ChangedFields, FrontAction} from &#x27;../../data-fields/models/changed-fields&#x27;;
 import {TaskContentService} from &#x27;../../task-content/services/task-content.service&#x27;;
 import {TaskRequestStateService} from &#x27;./task-request-state.service&#x27;;
 import {TranslateService} from &#x27;@ngx-translate/core&#x27;;
@@ -2413,6 +2610,7 @@ import {ChangedFieldsService} from &#x27;../../changed-fields/services/changed-f
 import {ChangedFieldsMap} from &#x27;../../event/services/interfaces/changed-fields-map&#x27;;
 import {TaskFields} from &#x27;../../task-content/model/task-fields&#x27;;
 import {EnumerationField} from &quot;../../data-fields/enumeration-field/models/enumeration-field&quot;;
+import {FrontActionService} from &quot;../../actions/services/front-action.service&quot;;
 
 /**
  * Handles the loading and updating of data fields and behaviour of
@@ -2438,15 +2636,12 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
                 protected _eventQueue: EventQueueService,
                 protected _userComparator: UserComparatorService,
                 protected _eventService: EventService,
-                protected _changedFieldsService: ChangedFieldsService) {
+                protected _changedFieldsService: ChangedFieldsService,
+                protected _frontActionService: FrontActionService) {
         super(_taskContentService, _selectedCaseService);
         this._updateSuccess$ &#x3D; new Subject&lt;boolean&gt;();
         this._dataReloadSubscription &#x3D; this._taskContentService.taskDataReloadRequest$.subscribe(queuedFrontendAction &#x3D;&gt; {
-            this.initializeTaskDataFields(this._afterActionFactory.create(success &#x3D;&gt; {
-                if (success &amp;&amp; queuedFrontendAction) {
-                    this._taskContentService.performFrontendAction(queuedFrontendAction);
-                }
-            }), true);
+            this.initializeTaskDataFields(new AfterAction(), true);
         });
     }
 
@@ -2728,7 +2923,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
     }
 
     protected isAutocompleteEnumException(field: DataField&lt;unknown&gt;): boolean{
-        return (field instanceof EnumerationField) &amp;&amp; (field.getComponentType() &#x3D;&#x3D;&#x3D; &#x27;autocomplete&#x27;) &amp;&amp; !field.valid;
+        return (field instanceof EnumerationField) &amp;&amp; (field.getComponentType() &#x3D;&#x3D;&#x3D; &#x27;autocomplete&#x27;) &amp;&amp; !(field.valid || field.value &#x3D;&#x3D;&#x3D; null);
     }
 
     /**
@@ -2864,9 +3059,13 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
                                               context: TaskSetDataRequestContext) {
         const outcome &#x3D; response.outcome;
         const changedFieldsMap: ChangedFieldsMap &#x3D; this._eventService.parseChangedFieldsFromOutcomeTree(outcome);
+        const frontActions: Array&lt;FrontAction&gt; &#x3D; this._eventService.parseFrontActionsFromOutcomeTree(outcome);
 
         if (Object.keys(changedFieldsMap).length &gt; 0) {
             this._changedFieldsService.emitChangedFields(changedFieldsMap);
+        }
+        if (!!frontActions &amp;&amp; frontActions.length &gt; 0) {
+            this._frontActionService.runAll(frontActions);
         }
         this.clearWaitingForResponseFlag(context.body);
         this._snackBar.openSuccessSnackBar(!!outcome.message ? outcome.message : this._translate.instant(&#x27;tasks.snackbar.dataSaved&#x27;));
@@ -2990,7 +3189,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         this._taskEvent.publishTaskEvent(createTaskEventNotification(this._safeTask, event, success));
     }
 
-    private revertToPreviousValue(context: TaskSetDataRequestContext): void {
+    protected revertToPreviousValue(context: TaskSetDataRequestContext): void {
         this._safeTask.dataGroups.forEach(dataGroup &#x3D;&gt; {
             dataGroup.fields.forEach(field &#x3D;&gt; {
                 if (field.initialized &amp;&amp; field.valid &amp;&amp; Object.keys(context.previousValues).includes(field.stringId)) {
@@ -3000,7 +3199,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         });
     }
 
-    private clearWaitingForResponseFlag(body: TaskSetDataRequestBody) {
+    protected clearWaitingForResponseFlag(body: TaskSetDataRequestBody) {
         Object.keys(body).forEach(taskId &#x3D;&gt; {
             Object.keys(body[taskId]).forEach(fieldId &#x3D;&gt; {
                 this._taskContentService.taskFieldsIndex[taskId].fields[fieldId].waitingForResponse &#x3D; false;
@@ -3019,14 +3218,15 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
 
 
 
-                   
+
+
 
 
 
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -3038,6 +3238,15 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
@@ -3045,10 +3254,23 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
             var MAX_SEARCH_RESULTS = 15;
        </script>
 
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       
-       <script type="module" src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/menu-wc.js" defer></script>
        <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>
