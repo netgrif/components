@@ -63,7 +63,7 @@ export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsC
             return;
         }
         if (!this.initializedLanguage) {
-            if (!(this.selectedLanguage in newValue.translations)) {
+            if (newValue?.translations !== undefined && !(this.selectedLanguage in newValue.translations)) {
                 this.selectedLanguage = DEFAULT_LANGUAGE_CODE;
             }
             this.initializedLanguage = true;

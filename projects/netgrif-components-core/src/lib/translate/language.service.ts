@@ -13,6 +13,8 @@ import {SimpleFilter} from '../filter/models/simple-filter';
 import {CaseResourceService} from '../resources/engine-endpoint/case-resource.service';
 import {CallChainService} from '../utility/call-chain/call-chain.service';
 import {map} from 'rxjs/operators';
+import { LanguageIconsService } from '../data-fields/i18n-field/language-icons.service';
+import {UserService} from '../user/services/user.service';
 
 export interface Translation {
     key: string,
@@ -28,17 +30,20 @@ export class LanguageService implements OnDestroy {
     protected _langChange$: Subject<string>;
     protected subPreference: Subscription;
     protected subTranslate: Subscription;
-    protected _defaultLanguage: string = 'en';
+    protected subUser: Subscription;
+    protected _defaultLanguage: string = 'en-GB';
 
     constructor(protected _caseResourceService: CaseResourceService,
                 protected _callChain: CallChainService,
                 protected _translate: TranslateService,
                 protected _preferenceService: UserPreferenceService,
-                protected _logger: LoggerService) {
+                protected _logger: LoggerService,
+                protected _languageIconsService: LanguageIconsService,
+                protected _userService: UserService) {
         this._translations = [
-            { key: 'en', translation: en },
-            { key: 'sk', translation: sk },
-            { key: 'de', translation: de }
+            { key: 'en-GB', translation: en },
+            { key: 'sk-SK', translation: sk },
+            { key: 'de-DE', translation: de }
         ];
         this._translate.addLangs(this._translations.map(trans => trans.key));
         this._translations.forEach(trans => {
@@ -49,10 +54,15 @@ export class LanguageService implements OnDestroy {
 
         this.checkLocalStorage();
 
+        this.subUser = this._userService.user$.subscribe(loggedUser => {
+            if (loggedUser && loggedUser.id !== '') {
+                this.checkLanguageCases();
+            }
+        });
+
         setTimeout(() => {
             if (this._preferenceService) {
                 this.subPreference = this._preferenceService.preferencesChanged$.subscribe(() => {
-                    this.checkLanguageCases();
                     const preferredLang = this._preferenceService.getLocale();
                     if (preferredLang !== undefined && preferredLang !== this._translate.currentLang) {
                         this.setLanguage(preferredLang);
@@ -71,6 +81,7 @@ export class LanguageService implements OnDestroy {
         if (this.subPreference) {
             this.subPreference.unsubscribe();
         }
+        this.subUser.unsubscribe();
     }
 
     protected checkLocalStorage() {
@@ -147,10 +158,13 @@ export class LanguageService implements OnDestroy {
         ).subscribe(cases => {
             if (Array.isArray(cases)) {
                 cases.forEach(caze => {
-                    const lang = caze.immediateData.find(item => item.stringId === 'language')?.value;
+                    const langKey = caze.immediateData.find(item => item.stringId === 'language')?.value;
+                    const langName = caze.immediateData.find(item => item.stringId === 'languageName')?.value;
                     const translations = caze.immediateData.find(item => item.stringId === 'translations')?.value;
-                    if (lang !== undefined && translations !== undefined) {
-                        this.addLanguage(lang.value, JSON.parse(translations.value));
+                    const svgIcon = caze.immediateData.find(item => item.stringId === 'svgIcon')?.value;
+                    if (langKey !== undefined && translations !== undefined) {
+                        this.addLanguage(langKey.value, JSON.parse(translations.value));
+                        this._languageIconsService.addStringLanguageIcon(langKey.value, langName.value, svgIcon.value);
                     }
                 })
             }

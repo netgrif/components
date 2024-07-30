@@ -53,11 +53,13 @@
 
 .language-svg-wrapper {
     height: 20px;
+    width: 24px;
     line-height: normal;
 }
 
 .language-svg-wrapper>svg {
     height: 18px;
+    border: solid 1px #64748B;
 }
 
 .language-selector-button {
@@ -122,7 +124,11 @@
 }
 
 .language-option-icon {
+    width: 24px;
     margin-left: 0;
+    svg {
+        border: solid 1px #64748B;
+    }
 }
 
 .language-option-value {

@@ -5,7 +5,6 @@ import {
     HeaderColumnType,
     PetriNetReference,
     WorkflowMetaField,
-    Author,
     AllowedNetsServiceFactory,
     SimpleFilter,
     CaseViewService,

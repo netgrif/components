@@ -66,4 +66,9 @@
         }
     }
 
+    .menu-button {
+        .mat-mdc-icon-button .mat-mdc-button-persistent-ripple {
+            border-radius: 8px;
+        }
+    }
 }
