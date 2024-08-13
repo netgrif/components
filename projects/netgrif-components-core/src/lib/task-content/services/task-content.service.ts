@@ -243,6 +243,9 @@ export abstract class TaskContentService implements OnDestroy {
         const updatedField = chFields[field.stringId];
         Object.keys(updatedField).forEach(key => {
             switch (key) {
+                case 'type':
+                    // type is just an information, not an update. A field cannot change its type
+                    return; // continue - the field does not need updating, since nothing changed
                 case 'value':
                     field.valueWithoutChange(this._fieldConverterService.formatValueFromBackend(field, updatedField[key]));
                     break;
