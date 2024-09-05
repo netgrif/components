@@ -49,8 +49,7 @@ describe('TaskRefDashboardFieldComponent', () => {
         <nc-task-ref-dashboard-field [dataField]="field"
                                      [formControlRef]="formControl"
                                     [gdColumn]="'1 / 2'"
-                                    [gdRow]="'1 / 2'"
-                                    [taskContentComponentClassReference]="taskContentComponentClass">
+                                    [gdRow]="'1 / 2'">
         </nc-task-ref-dashboard-field>`
 })
 class TestWrapperComponent {

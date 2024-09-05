@@ -80,8 +80,7 @@ describe('TaskRefDashboardTileComponent', () => {
                                     [taskRef]="field"
                                     [fc]="formControl"
                                     [gdColumn]="'1 / 2'"
-                                    [gdRow]="'1 / 2'"
-                                    [taskContentComponentClassReference]="taskContentComponentClass">
+                                    [gdRow]="'1 / 2'">
         </nc-task-ref-dashboard-tile>`
 })
 class TestWrapperComponent {

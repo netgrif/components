@@ -19,8 +19,6 @@ import {
 })
 export class FieldComponentResolverComponent extends AbstractFieldComponentResolverComponent {
 
-    @Input() taskContentComponentClassReference: Type<any>;
-
     constructor(taskContentService: TaskContentService,
                 fieldConverter: FieldConverterService,
                 @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) _informAboutInvalidData: boolean | null) {

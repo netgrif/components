@@ -11,11 +11,8 @@ export * from './model/task-event-notification';
 export * from './model/task-event';
 export * from './model/field-type-resource';
 export * from './model/task-content-element-type';
-export * from './model/datafield-grid-layout-element';
 export * from './model/async-rendering-configuration';
 export * from './model/async-rendering-configuration-injection-token';
-export * from './model/subgrid';
-export * from './model/split-data-group';
 export * from './model/task-fields';
 export * from './model/resource-interfaces';
 

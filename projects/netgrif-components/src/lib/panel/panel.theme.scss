@@ -16,11 +16,6 @@
         }
     }
 
-    .line-datagroup {
-        height: 1px;
-        background: mat.get-color-from-palette($primary) !important;
-    }
-
     .panel-primary-icon {
         color: mat.get-color-from-palette($primary);
     }

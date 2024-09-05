@@ -188,7 +188,6 @@ class MyTaskResources {
                 }
             },
             alignment: 'start',
-            stretch: true,
             layout: {
                 row: 2,
                 cols: 2

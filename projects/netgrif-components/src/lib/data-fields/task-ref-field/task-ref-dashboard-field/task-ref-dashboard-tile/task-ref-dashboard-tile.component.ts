@@ -27,7 +27,6 @@ import {ComponentPortal} from '@angular/cdk/portal';
 export class TaskRefDashboardTileComponent extends AbstractTaskRefDashboardTileComponent implements OnInit, OnDestroy {
 
     portal: ComponentPortal<any>;
-    @Input() taskContentComponentClassReference: Type<any>;
 
     private _subTask: Subscription;
 

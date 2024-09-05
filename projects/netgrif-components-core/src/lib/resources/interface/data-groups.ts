@@ -1,5 +1,4 @@
 import {DataField} from '../../data-fields/models/abstract-data-field';
-import {DataGroupLayout} from './data-group-layout';
 
 /**
  * Object from Backend
@@ -13,18 +12,6 @@ export interface DataGroup extends ParentDataGroupInformation{
      * Name of the data group
      */
     title?: string;
-    /**
-     * Design alignment
-     * ***Example:*** start
-     */
-    alignment: DataGroupAlignment;
-    /**
-     * Design stretch
-     *
-     * ***Example:*** true
-     */
-    stretch: boolean;
-    layout?: DataGroupLayout;
 }
 
 /**
@@ -51,22 +38,4 @@ export interface ParentDataGroupInformation {
      * Level of nesting in a task reffed data group. Only set if the data group is loaded via a {@link TaskRefField}
      */
     nestingLevel?: number;
-}
-
-/**
- * Determines the position of the last data field when the number of data fields in a data group is odd.
- */
-export enum DataGroupAlignment {
-    /**
-     * Positioned in the left column
-     */
-    START = 'start',
-    /**
-     * Positioned in the center of the screen
-     */
-    CENTER = 'center',
-    /**
-     * Positioned in the right column
-     */
-    END = 'end'
 }

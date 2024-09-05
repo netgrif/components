@@ -3,9 +3,7 @@
     <ng-container *ngFor="let layoutItem of layoutContainerContent.items">
         <div [style]="getWrapperStyle(layoutItem)" *ngIf="!hideItem(layoutContainerContent, layoutItem)">
             <ng-container *ngIf="!!layoutItem.field && !layoutItem.container">
-                <nc-field-component-resolver [id]="layoutItem.field.stringId" [dataField]="layoutItem.field"
-                                             class="width-100"
-                                             [taskContentComponentClassReference]="undefined"></nc-field-component-resolver>
+                <nc-field-component-resolver [dataField]="layoutItem.field" class="width-100"></nc-field-component-resolver>
             </ng-container>
             <ng-container *ngIf="!!layoutItem.container && (!layoutItem.field || !layoutItem.field.behavior.hidden)">
                 <nc-layout-container-wrapper

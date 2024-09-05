@@ -1,4 +1,3 @@
-import {DataGroup} from './data-groups';
 import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../task-content/model/policy';
 import {NaeDate} from '../types/nae-date-type';
 import {UserResourceSmall} from './user-resource-small';
@@ -53,9 +52,6 @@ export interface Task {
      */
     finishPolicy: FinishPolicy;
     stringId: string;
-    /**
-     * Array [DataGroup]{@link DataGroup#}
-     */
     layoutContainer: LayoutContainer;
     _links: object;
     users: UserPermissions;

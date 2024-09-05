@@ -15,8 +15,6 @@ import {
 })
 export class TaskRefDashboardFieldComponent extends AbstractTaskRefDashboardFieldComponent {
 
-    @Input() taskContentComponentClassReference: Type<any>;
-
     constructor(logger: LoggerService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TaskRefField>) {
         super(logger, dataFieldPortalData);

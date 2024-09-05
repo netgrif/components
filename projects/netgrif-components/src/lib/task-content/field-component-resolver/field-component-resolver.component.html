@@ -1,7 +1,7 @@
 <div fxLayout="row" fxLayoutAlign="start center" class="netgrif-input" [ngClass]="{'min-row-height': !isCustomHeight()}">
     <div fxFlex [ngClass]="{'div-overflow': isEnumOrMulti(), 'date-field-fix': isDateType(), 'date-time-fix': isDateTimeType(), 'width-100': isFileType()}">
         <nc-data-field-template *ngIf="!!dataField?.behavior && !dataField.behavior.hidden"
-                                [_additionalFieldProperties]="{taskId: getTaskId(), taskContentComponentClassReference}"
+                                [_additionalFieldProperties]="{taskId: getTaskId()}"
                                 [dataField]="dataField">
         </nc-data-field-template>
     </div>

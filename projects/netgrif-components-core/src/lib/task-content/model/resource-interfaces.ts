@@ -5,23 +5,9 @@ import {FieldTypeResource} from './field-type-resource';
 import {FormatFilter} from '../../data-fields/models/format-filter';
 import {Component} from '../../data-fields/models/component';
 import {FilterMetadata} from '../../search/models/persistance/filter-metadata';
-import {DataGroupLayout} from '../../resources/interface/data-group-layout';
-import {DataGroupAlignment} from '../../resources/interface/data-groups';
 import {LayoutObjectType} from '../../resources/types/layout-object-type';
 import {LayoutObjectProperties} from '../../resources/interface/layout-object-properties';
 
-export interface DataGroupResource {
-    data: Array<string>;
-    dataRefs: Map<string, DataRefResource>;
-    layout: DataGroupLayout;
-    title: string;
-    alignment: DataGroupAlignment;
-    stretch: boolean;
-    parentTaskId: string;
-    parentTransitionId: string;
-    parentCaseId: string;
-    nestingLevel: string;
-}
 
 export interface DataRefResource {
     fieldId: string;

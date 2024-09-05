@@ -80,7 +80,7 @@ export class PublicTaskResourceService extends TaskResourceService {
     // {{baseUrl}}/api/public/task/:id/data
     public rawGetData(taskId: string): Observable<EventOutcomeMessageResource> {
         return this._provider.get$('public/task/' + taskId + '/data', this.SERVER_URL)
-            .pipe(map(r => this.changeType(r, 'dataGroups')));
+            .pipe(map(r => this.changeType(r, undefined)));
     }
 
     /**

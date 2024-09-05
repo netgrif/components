@@ -264,23 +264,6 @@
             },
             "type": "object"
         },
-        "TaskLayout": {
-            "properties": {
-                "name": {
-                    "enum": [
-                        "taskView"
-                    ],
-                    "type": "string"
-                },
-                "params": {
-                    "additionalProperties": true,
-                    "properties": {
-                    },
-                    "type": "object"
-                }
-            },
-            "type": "object"
-        },
         "Theme": {
             "additionalProperties": {
             },
