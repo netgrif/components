@@ -3,9 +3,11 @@ import {
     AbstractTaskViewComponent,
     AllowedNetsService,
     AllowedNetsServiceFactory,
+    callActionRecursively,
     CategoryFactory,
     ChangedFieldsService,
     defaultTaskSearchCategoriesFactory,
+    LayoutItem,
     NAE_ASYNC_RENDERING_CONFIGURATION,
     NAE_BASE_FILTER,
     NAE_DEFAULT_HEADERS,
@@ -35,13 +37,21 @@ const baseFilterFactory = () => {
 const disableButtonsFactory = () => {
     return {
         finish: (t: Task) => {
-            if (t && t.dataGroups && t.dataGroups.length) {
-                for (const dg of t.dataGroups) {
-                    const fld = dg.fields.find(field => field.title === 'Boolean');
-                    if (fld) {
-                        return fld.value;
+            if (!!t && !!t.layoutContainer && t.layoutContainer.hasData) {
+                let boolReturn = { value: false };
+                let terminal = { value: false };
+                callActionRecursively(t.layoutContainer, {doParams: { boolReturn: boolReturn, terminal: terminal }, termParams: terminal},
+                    (layoutItem: LayoutItem, params: { boolReturn: { value: boolean }, terminal: { value: boolean }}) => {
+                        if (layoutItem.field.title === 'Boolean') {
+                            params.terminal.value = true;
+                            params.boolReturn.value = layoutItem.field.value;
+                        }
+                    },
+                    (layoutItem: LayoutItem, params: { value: boolean }) => {
+                        return params.value;
                     }
-                }
+                )
+                return boolReturn.value;
             }
             return false;
         },

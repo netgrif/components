@@ -3,15 +3,4 @@
     <nc-internal-link *ngIf="items.includes('settings')" icon="settings" link="/settings"></nc-internal-link>
     <nc-impersonate-quick-panel *ngIf="items.includes('impersonation')"></nc-impersonate-quick-panel>
     <nc-logout-shortcut *ngIf="items.includes('logout')"></nc-logout-shortcut>
-
-    <button mat-icon-button [matMenuTriggerFor]="quickPanelMoreMenu">
-        <mat-icon class="quick-panel-more-icon">more_vert</mat-icon>
-    </button>
 </div>
-<mat-menu #quickPanelMoreMenu="matMenu">
-    <button mat-menu-item (click)="setPaperView()" fxLayout="row" fxLayoutAlign="start center">
-        <mat-icon *ngIf="isPaperView()">cancel</mat-icon>
-        <mat-icon *ngIf="!isPaperView()">check</mat-icon>
-        <span>{{isPaperView() ? 'Disable' : 'Enable'}} Paper View</span>
-    </button>
-</mat-menu>

@@ -41,7 +41,7 @@ export class EventService {
                 }
                 Object.keys(outcomeChangedFields.fields).forEach(fieldId => {
                     if (Object.keys(changedFieldsMap[caseId][taskId]).includes(fieldId)) {
-                        Object.keys(outcomeChangedFields[fieldId]).forEach(attribute => {
+                        Object.keys(outcomeChangedFields.fields[fieldId]).forEach(attribute => {
                             changedFieldsMap[caseId][taskId][fieldId][attribute] = outcomeChangedFields.fields[fieldId][attribute];
                         });
                     } else {

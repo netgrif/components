@@ -194,6 +194,6 @@ export class FinishTaskService extends TaskHandlingService {
      * @return boolean whether the task contains data or not
      */
     private dataIsEmpty(): boolean {
-        return this._safeTask.dataSize <= 0 || !this._safeTask.dataGroups || this._safeTask.dataGroups.length <= 0;
+        return this._safeTask.dataSize <= 0 || !this._safeTask.layoutContainer || !this._safeTask.layoutContainer.hasData;
     }
 }

@@ -1,11 +1,9 @@
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Optional} from '@angular/core';
 import {
     AbstractTaskContentComponent,
     FieldConverterService,
-    TaskContentService,
-    PaperViewService,
     LoggerService,
-    NAE_ASYNC_RENDERING_CONFIGURATION,
+    TaskContentService,
     TaskEventService
 } from '@netgrif/components-core';
 
@@ -20,10 +18,8 @@ export class TaskContentComponent extends AbstractTaskContentComponent {
 
     constructor(protected _fieldConverter: FieldConverterService,
                 public taskContentService: TaskContentService,
-                protected _paperView: PaperViewService,
                 protected _logger: LoggerService,
-                @Optional() protected _taskEventService: TaskEventService,
-                @Optional() @Inject(NAE_ASYNC_RENDERING_CONFIGURATION) config) {
-        super(_fieldConverter, taskContentService, _paperView, _logger, _taskEventService, config);
+                @Optional() protected _taskEventService: TaskEventService) {
+        super(_fieldConverter, taskContentService, _logger, _taskEventService);
     }
 }

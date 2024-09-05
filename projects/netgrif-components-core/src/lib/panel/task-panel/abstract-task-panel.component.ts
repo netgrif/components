@@ -16,13 +16,12 @@ import {ComponentPortal} from '@angular/cdk/portal';
 import {TaskContentService} from '../../task-content/services/task-content.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {TaskPanelData} from '../task-panel-list/task-panel-data/task-panel-data';
-import {Observable, Subscription} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {filter, map, take} from 'rxjs/operators';
 import {HeaderColumn} from '../../header/models/header-column';
 import {toMoment} from '../../resources/types/nae-date-type';
 import {DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
-import {PaperViewService} from '../../navigation/quick-panel/components/paper-view.service';
 import {TaskEventService} from '../../task-content/services/task-event.service';
 import {AssignTaskService} from '../../task/services/assign-task.service';
 import {DelegateTaskService} from '../../task/services/delegate-task.service';
@@ -49,7 +48,7 @@ import {TaskPanelContext} from './models/task-panel-context';
 import {OverflowService} from '../../header/services/overflow.service';
 import {NAE_TASK_FORCE_OPEN} from '../../view/task-view/models/injection-token-task-force-open';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
-import { FinishPolicyService } from '../../task/services/finish-policy.service';
+import {FinishPolicyService} from '../../task/services/finish-policy.service';
 import {NAE_TAB_DATA} from '../../tabs/tab-data-injection-token/tab-data-injection-token';
 import {InjectedTabData} from '../../tabs/interfaces';
 import {AfterAction} from '../../utility/call-chain/after-action';
@@ -126,7 +125,6 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
     protected constructor(protected _taskContentService: TaskContentService,
                           protected _log: LoggerService,
                           protected _taskViewService: TaskViewService,
-                          protected _paperView: PaperViewService,
                           protected _taskEventService: TaskEventService,
                           protected _assignTaskService: AssignTaskService,
                           protected _delegateTaskService: DelegateTaskService,
@@ -270,10 +268,6 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
     public preventPanelOpen($event: MouseEvent): boolean {
         $event.stopPropagation();
         return false;
-    }
-
-    public isPaperView() {
-        return this._paperView.paperView;
     }
 
     public setPanelRef(panelRef: MatExpansionPanel) {

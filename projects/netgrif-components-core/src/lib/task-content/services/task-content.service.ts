@@ -1,6 +1,5 @@
 import {Injectable, OnDestroy} from '@angular/core';
-import {DataGroup} from '../../resources/interface/data-groups';
-import {BehaviorSubject, Observable, ReplaySubject, Subject, timer} from 'rxjs';
+import {BehaviorSubject, Observable, ReplaySubject, Subject} from 'rxjs';
 import {Task} from '../../resources/interface/task';
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
@@ -16,6 +15,9 @@ import {TaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/t
 import {DataField} from '../../data-fields/models/abstract-data-field';
 import {TaskFields} from '../model/task-fields';
 import {TaskRefField} from "../../data-fields/task-ref-field/model/task-ref-field";
+import {LayoutContainer} from '../../resources/interface/layout-container';
+import {LayoutItem} from '../../resources/interface/layout-item';
+import {callActionRecursively} from '../../utility/layout-operations';
 
 /**
  * Acts as a communication interface between the Component that renders Task content and it's parent Component.
@@ -31,7 +33,7 @@ export abstract class TaskContentService implements OnDestroy {
     public static readonly FRONTEND_ACTIONS_KEY = '_frontend_actions';
     public static readonly ACTION = 'action';
 
-    $shouldCreate: ReplaySubject<Array<DataGroup>>;
+    $shouldCreate: ReplaySubject<LayoutContainer>;
     $shouldCreateCounter: BehaviorSubject<number>;
     protected _task: Task;
     protected _taskDataReloadRequest$: Subject<Change>;
@@ -45,7 +47,7 @@ export abstract class TaskContentService implements OnDestroy {
                           protected _snackBarService: SnackBarService,
                           protected _translate: TranslateService,
                           protected _logger: LoggerService) {
-        this.$shouldCreate = new ReplaySubject<Array<DataGroup>>(1);
+        this.$shouldCreate = new ReplaySubject<LayoutContainer>(1);
         this.$shouldCreateCounter = new BehaviorSubject<number>(0);
         this._isExpanding$ = new BehaviorSubject<boolean>(false);
         this._task = undefined;
@@ -133,19 +135,58 @@ export abstract class TaskContentService implements OnDestroy {
      * @returns whether the task is valid or not
      */
     public validateTaskData(taskId?: string): boolean {
-        if (!this._task || !this._task.dataGroups) {
+        if (!this._task || !this._task.layoutContainer) {
             return false;
         }
-        const valid = !this._task.dataGroups.filter(group => !!group.parentTaskId && !!taskId ? group.parentTaskId === taskId : true).some(group => group.fields.some(field => !field.valid && !field.disabled));
-        const validDisabled = !this._task.dataGroups.filter(group => !!group.parentTaskId && !!taskId ? group.parentTaskId === taskId : true).some(group => group.fields.some(field => !field.validRequired && field.disabled));
-        if (!valid) {
+        const validity = this.validateTaskDataRecursively(this._task.layoutContainer, taskId);
+        if (!validity.valid) {
             this._snackBarService.openErrorSnackBar(this._translate.instant('tasks.snackbar.invalidData'));
-            this._task.dataGroups.forEach(group => group.fields.forEach(field => field.touch = true));
+            callActionRecursively(this._task.layoutContainer, {doParams: undefined, termParams: undefined},
+                (layoutItem: LayoutItem) => {
+                    if (!layoutItem.container) {
+                        layoutItem.field.touch = true;
+                    }
+                },
+                () => {
+                    return false;
+                }
+            );
         }
-        if (!validDisabled) {
+        if (!validity.validRequired) {
             this._snackBarService.openErrorSnackBar(this._translate.instant('tasks.snackbar.missingRequired'));
         }
-        return valid && validDisabled;
+        return validity.valid && validity.validRequired;
+    }
+
+    private validateTaskDataRecursively(layoutContainer: LayoutContainer, taskId?: string): any {
+        const isRelevant = !!layoutContainer.parentTaskId && !!taskId ? layoutContainer.parentTaskId === taskId : true;
+        let validity = {
+            valid: true,
+            validRequired: true
+        }
+        for (let layoutItem of layoutContainer.items) {
+            if (!!layoutItem.field && !layoutItem.container && !layoutItem.field.disabled && isRelevant) {
+                if (!layoutItem.field.valid) {
+                    validity.valid = false;
+                }
+                if (!layoutItem.field.validRequired) {
+                    validity.validRequired = false;
+                }
+            }
+            if (!!layoutItem.container) {
+                const childContainerValidity = this.validateTaskDataRecursively(layoutItem.container, taskId);
+                if (!childContainerValidity.valid) {
+                    validity.valid = false;
+                }
+                if (!childContainerValidity.validRequired) {
+                    validity.validRequired = false;
+                }
+            }
+            if (!validity.valid && !validity.validRequired) {
+                return validity;
+            }
+        }
+        return validity;
     }
 
     /**
@@ -155,38 +196,60 @@ export abstract class TaskContentService implements OnDestroy {
      */
     public getInvalidTaskData(): Array<DataField<any>> {
         const invalidFields = [];
-        this._task.dataGroups.forEach(group => invalidFields.push(...group.fields.filter(field =>
-            (!field.valid && !field.disabled) || (!field.validRequired && !field.disabled))));
+        callActionRecursively(this._task.layoutContainer, {doParams: invalidFields, termParams: undefined},
+            (layoutItem: LayoutItem, params: Array<DataField<any>>) => {
+                if (!layoutItem.container && !layoutItem.field.disabled && (!layoutItem.field.valid || !layoutItem.field.validRequired)) {
+                    params.push(layoutItem.field);
+                }
+            },
+            () => {
+                return false;
+            }
+        );
         return invalidFields;
     }
 
     public validateDynamicEnumField(): boolean {
-        if (!this._task || !this._task.dataGroups) {
+        if (!this._task || !this._task.layoutContainer) {
             return false;
         }
-        const exists = this._task.dataGroups.some(group => group.fields.some(field => field instanceof DynamicEnumerationField));
-        if (!exists) {
+        let exists = {value: false};
+        callActionRecursively(this._task.layoutContainer, {doParams: exists, termParams: exists},
+            (layoutItem: LayoutItem, params: { value: boolean }) => {
+                if (!layoutItem.container && layoutItem.field instanceof DynamicEnumerationField) {
+                    params.value = true;
+                }
+            },
+            (layoutItem: LayoutItem, params: { value: boolean }) => {
+                return params.value;
+            }
+        );
+        if (!exists.value) {
             return true;
         }
-        let valid = true;
-        for (const group of this._task.dataGroups) {
-            for (const field of group.fields) {
-                if (field instanceof DynamicEnumerationField) {
-                    if (field.choices !== undefined && field.choices.length !== 0 && field.value !== '' && field.value !== undefined) {
+        let valid = {value: true};
+        callActionRecursively(this._task.layoutContainer, {doParams: valid, termParams: undefined},
+            (layoutItem: LayoutItem, params: {value: boolean}) => {
+                const field = layoutItem.field;
+                if (!layoutItem.container && field instanceof DynamicEnumerationField) {
+                    if (field.choices !== undefined && field.choices.length !== 0 && field.value !== undefined && field.value !== '') {
                         if (!field.choices.some(choice => choice.key === field.value)) {
                             field.value = '';
                             if (field.behavior.required) {
-                                valid = false;
+                                params.value = false;
                             }
                         }
                     }
                 }
+            },
+            () => {
+                return false;
             }
-        }
-        if (!valid) {
+        );
+        if (!valid.value) {
             this._snackBarService.openErrorSnackBar(this._translate.instant('tasks.snackbar.missingRequired'));
         }
-        return valid;
+        return valid.value;
     }
 
     /**
@@ -194,12 +257,17 @@ export abstract class TaskContentService implements OnDestroy {
      * @param blockingState whether the field should be blocked or not
      */
     public blockFields(blockingState: boolean): void {
-        if (this._task && this._task.dataGroups) {
-            this._task.dataGroups.forEach(group => {
-                group.fields.forEach(field => {
-                    field.block = blockingState;
-                });
-            });
+        if (this._task && this._task.layoutContainer) {
+            callActionRecursively(this._task.layoutContainer, {doParams: blockingState, termParams: undefined},
+                (layoutItem: LayoutItem, params: boolean) => {
+                    if (!layoutItem.container) {
+                        layoutItem.field.block = params;
+                    }
+                },
+                () => {
+                    return false;
+                }
+            );
         }
     }
 
@@ -219,7 +287,7 @@ export abstract class TaskContentService implements OnDestroy {
      * @param chFields object containing the delta of the changes from the previous state
      */
     public updateFromChangedFields(chFields: ChangedFields): void {
-        if (!this._task || !this._task.dataGroups) {
+        if (!this._task || !this._task.layoutContainer) {
             return;
         }
         // todo actions owner zbytočný?
@@ -232,7 +300,7 @@ export abstract class TaskContentService implements OnDestroy {
             }
         });
 
-        this.$shouldCreate.next(this._task.dataGroups);
+        this.$shouldCreate.next(this._task.layoutContainer);
     }
 
     protected updateField(chFields: ChangedFields, field: DataField<any>, frontendActions: Change): void {
@@ -345,7 +413,7 @@ export abstract class TaskContentService implements OnDestroy {
         return undefined;
     }
 
-    protected findTaskRefId(taskId: string, fields: { [fieldId: string]: DataField<any>}): DataField<any> {
+    protected findTaskRefId(taskId: string, fields: { [fieldId: string]: DataField<any> }): DataField<any> {
         let taskRefId = Object.values(fields).find(f => f instanceof TaskRefField && f.value.includes(taskId));
         if (!taskRefId) {
             const referencedTaskIds = Object.values(fields).filter(f => f instanceof TaskRefField).map(tr => tr.value);

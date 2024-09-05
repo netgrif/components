@@ -7,6 +7,8 @@ import {Component} from '../../data-fields/models/component';
 import {FilterMetadata} from '../../search/models/persistance/filter-metadata';
 import {DataGroupLayout} from '../../resources/interface/data-group-layout';
 import {DataGroupAlignment} from '../../resources/interface/data-groups';
+import {LayoutObjectType} from '../../resources/types/layout-object-type';
+import {LayoutObjectProperties} from '../../resources/interface/layout-object-properties';
 
 export interface DataGroupResource {
     data: Array<string>;
@@ -18,7 +20,6 @@ export interface DataGroupResource {
     parentTaskId: string;
     parentTransitionId: string;
     parentCaseId: string;
-    parentTaskRefId: string;
     nestingLevel: string;
 }
 
@@ -61,4 +62,21 @@ export interface DataFieldResource {
     allowedNets?: Array<string>;
     filterMetadata?: FilterMetadata;
     parentTaskId?: string;
+}
+
+export interface LayoutContainerResource {
+    layoutType: LayoutObjectType;
+    items: Array<LayoutItemResource>;
+    properties: LayoutObjectProperties;
+    parentTaskId: string;
+    parentTransitionId: string;
+    parentCaseId: string;
+}
+
+export interface LayoutItemResource {
+    layoutType: LayoutObjectType;
+    dataRefId: string;
+    dataRef: DataRefResource;
+    container: LayoutContainerResource;
+    properties: LayoutObjectProperties;
 }

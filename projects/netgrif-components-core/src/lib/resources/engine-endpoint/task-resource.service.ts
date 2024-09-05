@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 import {Params, ProviderProgress, ResourceProvider} from '../resource-provider.service';
 import {Observable} from 'rxjs';
 import {Count} from '../interface/count';
-import {EventOutcomeMessageResource, MessageResource} from '../interface/message-resource';
+import {EventOutcomeMessageResource} from '../interface/message-resource';
 import {filter, map} from 'rxjs/operators';
 import {TaskReference} from '../interface/task-reference';
 import {Task} from '../interface/task';
@@ -15,9 +15,6 @@ import {Page} from '../interface/page';
 import {FieldConverterService} from '../../task-content/services/field-converter.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {AbstractResourceService} from '../abstract-endpoint/abstract-resource.service';
-import {DataGroup} from '../interface/data-groups';
-import {DataField} from '../../data-fields/models/abstract-data-field';
-import {GetDataGroupsEventOutcome} from '../../event/model/event-outcomes/data-outcomes/get-data-groups-event-outcome';
 import {FileFieldRequest} from "../interface/file-field-request-body";
 import {TaskDataSets} from '../interface/task-data-sets';
 
@@ -202,50 +199,8 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      * @param taskId ID of the task who's data should be retrieved from the server
      * @returns processed data groups of the given task. If the task has no data an empty array will be returned.
      */
-    public getData(taskId: string): Observable<Array<DataGroup>> {
-        return this.rawGetData(taskId).pipe(
-            map((responseOutcome: EventOutcomeMessageResource) => {
-                if (responseOutcome.error) {
-                    throw new Error(responseOutcome.error);
-                }
-
-                const dataGroupsArray = this.changeType((responseOutcome.outcome as GetDataGroupsEventOutcome).data, 'dataGroups');
-                if (!Array.isArray(dataGroupsArray)) {
-                    return [];
-                }
-                const result = [];
-                dataGroupsArray.forEach(dataGroupResource => {
-                    const dataFields: Array<DataField<any>> = [];
-                    // if (!dataGroupResource.fields._embedded) {
-                    //     return; // continue
-                    // }
-                    const fields = [];
-                    Object.keys(dataGroupResource.dataRefs).forEach(fieldId => {
-                        fields.push(dataGroupResource.dataRefs[fieldId]);
-                    });
-                    // fields.sort((a, b) => a.order - b.order);
-                    dataFields.push(...fields.map(dataFieldResource => this._fieldConverter.toClass(dataFieldResource)));
-                    const dataGroupObject: DataGroup = {
-                        fields: dataFields,
-                        stretch: dataGroupResource.stretch,
-                        title: dataGroupResource.title,
-                        layout: dataGroupResource.layout,
-                        alignment: dataGroupResource.alignment,
-                    };
-                    if (dataGroupResource.parentTaskId !== undefined) {
-                        dataGroupObject.parentTaskId = dataGroupResource.parentTaskId;
-                        dataGroupObject.parentTransitionId = dataGroupResource.parentTransitionId;
-                        dataGroupObject.parentTaskRefId = dataGroupResource.parentTaskRefId;
-                        dataGroupObject.nestingLevel = dataGroupResource.nestingLevel;
-                    }
-                    if (dataGroupResource.parentCaseId !== undefined) {
-                        dataGroupObject['parentCaseId'] = dataGroupResource.parentCaseId;
-                    }
-                    result.push(dataGroupObject);
-                });
-                return result;
-            })
-        );
+    public getData(taskId: string): Observable<EventOutcomeMessageResource> {
+        return this.rawGetData(taskId);
     }
 
     /**

@@ -1,7 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {LanguageService} from '../../../translate/language.service';
-import {PaperViewService} from './paper-view.service';
-import {AbstractNavigationResizableDrawerComponent} from '../../navigation-drawer/abstract-navigation-resizable-drawer.component';
+import {
+    AbstractNavigationResizableDrawerComponent
+} from '../../navigation-drawer/abstract-navigation-resizable-drawer.component';
 
 export type QuickPanelItem = 'language' | 'settings' | 'logout' | 'impersonation';
 
@@ -13,19 +14,11 @@ export abstract class AbstractQuickPanelComponent extends AbstractNavigationResi
 
     @Input() public items: Array<QuickPanelItem>;
 
-    constructor(protected _select: LanguageService, protected _paperView: PaperViewService) {
+    constructor(protected _select: LanguageService) {
         super();
     }
 
     ngOnInit(): void {
         super.ngOnInit();
-    }
-
-    setPaperView() {
-        this._paperView.paperView = !this._paperView.paperView;
-    }
-
-    isPaperView() {
-        return this._paperView.paperView;
     }
 }

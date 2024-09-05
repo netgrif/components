@@ -2,13 +2,11 @@ import {Component, ElementRef, Injector, Input, OnInit, TemplateRef, ViewChild} 
 import {WrappedBoolean} from './models/wrapped-boolean';
 import {DataField} from '../models/abstract-data-field';
 import {TemplateAppearance} from '../models/template-appearance';
-import {PaperViewService} from '../../navigation/quick-panel/components/paper-view.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {FormControl} from "@angular/forms";
 import {ComponentPortal} from "@angular/cdk/portal";
 import {ComponentRegistryService} from "../../registry/component-registry.service";
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../models/data-field-portal-data-injection-token";
-import {ButtonField} from '../button-field/models/button-field';
 
 /**
  * Provides a responsive layout to data fields where their appearance can change based on the width of space they have available.
@@ -60,8 +58,7 @@ export abstract class AbstractDataFieldTemplateComponent implements OnInit {
      */
     protected _showLargeLayout: WrappedBoolean = new WrappedBoolean();
 
-    protected constructor(protected _paperView: PaperViewService,
-                          protected _config: ConfigurationService,
+    protected constructor(protected _config: ConfigurationService,
                           protected _componentRegistry: ComponentRegistryService,
                           protected injector: Injector) {
         const configuredTemplate = this._config.getDatafieldConfiguration();
@@ -159,9 +156,5 @@ export abstract class AbstractDataFieldTemplateComponent implements OnInit {
             return true;
         }
         return this._isNetgrifTemplate;
-    }
-
-    public isPaperView(): boolean {
-        return this._paperView.paperView;
     }
 }

@@ -3,20 +3,8 @@
 </div>
 
 <ng-template #notLoading>
-    <div *ngIf="hasDataToDisplay$ | async; else noContentToDisplay"
-         [ngClass]="{'paper-view-content mat-elevation-z10': isPaperView(), 'scrolling_data': this.scrollingNeeded()}"
-         [ngStyle]="{'max-height': this.resolveContentHeightCss()}">
-        <div fxLayout="column" fxLayoutAlign="start stretch"
-             *ngFor="let subgrid of dataSource; trackBy: trackBySubgridFn">
-            <div [gdAreas]="subgrid.gridAreas" [gdColumns]="subgrid.getGridColumns()" class="grid-rows-auto" [ngClass.lt-sm]="{'responsive-grid': true}">
-                <div *ngFor="let item of subgrid.content; trackBy: trackByFn"
-                     [gdArea]="item.gridAreaId"
-                     class="border" fxLayout="row" [fxLayoutAlign]="getItemAlignment(item)">
-                    <nc-field-component-resolver [id]="item?.item?.stringId" [gridElement]="item"
-                                                 [taskContentComponentClassReference]="taskContentComponentClass" fxFlex  class="width-100"></nc-field-component-resolver>
-                </div>
-            </div>
-        </div>
+    <div *ngIf="hasDataToDisplay; else noContentToDisplay" class="scrolling_data height-100">
+        <nc-layout-container-wrapper [layoutContainerContent]="layoutContainerContent"></nc-layout-container-wrapper>
     </div>
 </ng-template>
 

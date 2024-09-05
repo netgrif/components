@@ -1,27 +1,8 @@
-<div fxLayout="row" fxLayoutAlign="start center" class="netgrif-input" [ngClass]="{'min-row-height': isField() && !isCustomHeight()}" [ngSwitch]="getElementType()">
-
-    <div *ngSwitchCase="taskElementEnum.DATA_GROUP_TITLE" fxFlex fxLayout="row" fxLayoutAlign="center center">
-        <div fxFlex="20" class="line-datagroup"></div>
-        <span [ngClass]="{'margin-default': getDataGroupTitle() !== ''}">{{getDataGroupTitle()}}</span>
-        <div fxFlex class="line-datagroup"></div>
-    </div>
-
-    <div *ngSwitchCase="taskElementEnum.LOADER" class="min-row-height" fxFlex fxLayout="row" fxLayoutAlign="center center">
-        <div class="phl-item">
-            <div class="phl-row" fxLayoutAlign="center center">
-                <div class="phl-col">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div *ngSwitchCase="taskElementEnum.BLANK"></div>
-
-    <div *ngSwitchDefault fxFlex [ngClass]="{'div-overflow': isEnumOrMulti(), 'date-field-fix': isDateType(), 'date-time-fix': isDateTimeType(), 'width-100': isFileType()}">
-        <nc-data-field-template *ngIf="!!getDataField()?.behavior && !getDataField().behavior.hidden"
+<div fxLayout="row" fxLayoutAlign="start center" class="netgrif-input" [ngClass]="{'min-row-height': !isCustomHeight()}">
+    <div fxFlex [ngClass]="{'div-overflow': isEnumOrMulti(), 'date-field-fix': isDateType(), 'date-time-fix': isDateTimeType(), 'width-100': isFileType()}">
+        <nc-data-field-template *ngIf="!!dataField?.behavior && !dataField.behavior.hidden"
                                 [_additionalFieldProperties]="{taskId: getTaskId(), taskContentComponentClassReference}"
-                                [dataField]="getDataField()"
-                                [offset]="getFieldOffset()">
+                                [dataField]="dataField">
         </nc-data-field-template>
     </div>
 </div>

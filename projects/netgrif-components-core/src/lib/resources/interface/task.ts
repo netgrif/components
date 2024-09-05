@@ -1,11 +1,11 @@
 import {DataGroup} from './data-groups';
 import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../task-content/model/policy';
-import {TaskLayout} from './task-layout';
 import {NaeDate} from '../types/nae-date-type';
 import {UserResourceSmall} from './user-resource-small';
 import {ImmediateData} from './immediate-data';
 import {AssignedUserPolicy} from './assigned-user-policy';
 import {Permissions, UserPermissions, UserRefs} from '../../process/permissions';
+import {LayoutContainer} from './layout-container';
 
 /**
  * Object from Backend
@@ -53,11 +53,10 @@ export interface Task {
      */
     finishPolicy: FinishPolicy;
     stringId: string;
-    layout: TaskLayout;
     /**
      * Array [DataGroup]{@link DataGroup#}
      */
-    dataGroups: Array<DataGroup>;
+    layoutContainer: LayoutContainer;
     _links: object;
     users: UserPermissions;
     userRefs: UserRefs;

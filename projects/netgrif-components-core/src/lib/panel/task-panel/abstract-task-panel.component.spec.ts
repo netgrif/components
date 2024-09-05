@@ -6,7 +6,6 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {Observable, of, Subject, throwError} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {RouterTestingModule} from '@angular/router/testing';
 import {AbstractTaskPanelComponent} from './abstract-task-panel.component';
 import {SubjectTaskOperations} from '../../task/models/subject-task-operations';
@@ -20,7 +19,6 @@ import {CancelTaskService} from '../../task/services/cancel-task.service';
 import {DelegateTaskService} from '../../task/services/delegate-task.service';
 import {AssignTaskService} from '../../task/services/assign-task.service';
 import {TaskEventService} from '../../task-content/services/task-event.service';
-import {PaperViewService} from '../../navigation/quick-panel/components/paper-view.service';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {TaskContentService} from '../../task-content/services/task-content.service';
@@ -34,8 +32,6 @@ import {TaskResourceService} from '../../resources/engine-endpoint/task-resource
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
 import {SearchService} from '../../search/search-service/search.service';
 import {TestTaskBaseFilterProvider, TestTaskViewAllowedNetsFactory} from '../../utility/tests/test-factory-methods';
-import {ErrorSnackBarComponent} from '../../snack-bar/components/error-snack-bar/error-snack-bar.component';
-import {SuccessSnackBarComponent} from '../../snack-bar/components/success-snack-bar/success-snack-bar.component';
 import {TaskPanelData} from '../task-panel-list/task-panel-data/task-panel-data';
 import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../task-content/model/policy';
 import {ChangedFields} from '../../data-fields/models/changed-fields';
@@ -60,7 +56,7 @@ import {FinishTaskEventOutcome} from '../../event/model/event-outcomes/task-outc
 import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
 import {createMockCase} from '../../utility/tests/utility/create-mock-case';
 import {createMockNet} from '../../utility/tests/utility/create-mock-net';
-import { OverflowService } from '../../header/services/overflow.service';
+import {OverflowService} from '../../header/services/overflow.service';
 import {NAE_TASK_FORCE_OPEN} from '../../view/task-view/models/injection-token-task-force-open';
 import {FrontActionService} from "../../actions/services/front-action.service";
 import {NAE_TAB_DATA} from '../../tabs/tab-data-injection-token/tab-data-injection-token';
@@ -191,7 +187,6 @@ class TestTaskPanelComponent extends AbstractTaskPanelComponent implements After
     constructor(protected _taskContentService: TaskContentService,
                 protected _log: LoggerService,
                 protected _taskViewService: TaskViewService,
-                protected _paperView: PaperViewService,
                 protected _taskEventService: TaskEventService,
                 protected _assignTaskService: AssignTaskService,
                 protected _delegateTaskService: DelegateTaskService,
@@ -211,7 +206,7 @@ class TestTaskPanelComponent extends AbstractTaskPanelComponent implements After
                 @Optional() overflowService: OverflowService,
                 @Optional() @Inject(NAE_TASK_FORCE_OPEN) protected _taskForceOpen: boolean,
                 @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData) {
-        super(_taskContentService, _log, _taskViewService, _paperView, _taskEventService, _assignTaskService,
+        super(_taskContentService, _log, _taskViewService, _taskEventService, _assignTaskService,
             _delegateTaskService, _cancelTaskService, _finishTaskService, _taskState, _taskDataService,
             _assignPolicyService, _finishPolicyService, _callChain, _taskOperations, undefined, _translate,
             _currencyPipe, _changedFieldsService, _permissionService, overflowService, _taskForceOpen, injectedTabData);
@@ -250,12 +245,7 @@ class TestWrapperComponent {
             dataFocusPolicy: DataFocusPolicy.manual,
             finishPolicy: FinishPolicy.manual,
             stringId: 'string',
-            layout: {
-                offset: 0,
-                cols: undefined,
-                rows: undefined
-            },
-            dataGroups: [],
+            layoutContainer: undefined,
             users: {},
             userRefs: {},
             _links: {}
@@ -301,12 +291,7 @@ class MyTaskResources {
                         dataFocusPolicy: DataFocusPolicy.manual,
                         finishPolicy: FinishPolicy.manual,
                         stringId: 'string',
-                        layout: {
-                            offset: 0,
-                            cols: undefined,
-                            rows: undefined
-                        },
-                        dataGroups: [],
+                        layoutContainer: undefined,
                         _links: {},
                         users: {},
                         userRefs: {}
@@ -352,12 +337,7 @@ class MyTaskResources {
                         dataFocusPolicy: DataFocusPolicy.manual,
                         finishPolicy: FinishPolicy.manual,
                         stringId: 'string',
-                        layout: {
-                            offset: 0,
-                            cols: undefined,
-                            rows: undefined
-                        },
-                        dataGroups: [],
+                        layoutContainer: undefined,
                         _links: {},
                         users: {},
                         userRefs: {}

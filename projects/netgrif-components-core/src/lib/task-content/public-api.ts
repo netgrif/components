@@ -22,3 +22,4 @@ export * from './model/resource-interfaces';
 /* MODULES */
 export * from './task-content/abstract-task-content.component';
 export * from './field-component-resolver/abstract-field-component-resolver.component';
+export * from './layout-container-wrapper/abstract-layout-container-wrapper.component';

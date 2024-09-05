@@ -9,7 +9,6 @@ import {TestViewService} from '../../utility/tests/test-view-service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {MaterialModule} from '../../material/material.module';
-import {PaperViewService} from '../../navigation/quick-panel/components/paper-view.service';
 import {ComponentRegistryService} from "../../registry/component-registry.service";
 
 describe('AbstractDataFieldTemplateComponent', () => {
@@ -48,11 +47,10 @@ describe('AbstractDataFieldTemplateComponent', () => {
     template: ''
 })
 class TestDatafieldTemplateComponent extends AbstractDataFieldTemplateComponent {
-    constructor(protected _paperView: PaperViewService,
-                protected _config: ConfigurationService,
+    constructor(protected _config: ConfigurationService,
                 protected _componentRegistry: ComponentRegistryService,
                 protected injector: Injector) {
-        super(_paperView, _config, _componentRegistry, injector);
+        super(_config, _componentRegistry, injector);
     }
 }
 

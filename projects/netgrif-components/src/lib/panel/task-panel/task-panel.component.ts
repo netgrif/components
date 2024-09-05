@@ -13,12 +13,14 @@ import {
     DisableButtonFuntions,
     FinishPolicyService,
     FinishTaskService,
+    FrontActionService,
+    InjectedTabData,
     LoggerService,
+    NAE_TAB_DATA,
     NAE_TASK_FORCE_OPEN,
     NAE_TASK_OPERATIONS,
     NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS,
     OverflowService,
-    PaperViewService,
     PermissionService,
     SingleTaskContentService,
     SubjectTaskOperations,
@@ -26,10 +28,7 @@ import {
     TaskDataService,
     TaskEventService,
     TaskRequestStateService,
-    TaskViewService,
-    FrontActionService,
-    NAE_TAB_DATA,
-    InjectedTabData
+    TaskViewService
 } from '@netgrif/components-core';
 import {TaskContentComponent} from '../../task-content/task-content/task-content.component';
 import {TranslateService} from '@ngx-translate/core';
@@ -61,7 +60,6 @@ export class TaskPanelComponent extends AbstractTaskPanelComponent {
     constructor(protected _taskContentService: TaskContentService,
                 protected _log: LoggerService,
                 protected _taskViewService: TaskViewService,
-                protected _paperView: PaperViewService,
                 protected _taskEventService: TaskEventService,
                 protected _assignTaskService: AssignTaskService,
                 protected _delegateTaskService: DelegateTaskService,
@@ -83,7 +81,7 @@ export class TaskPanelComponent extends AbstractTaskPanelComponent {
                 @Optional() overflowService: OverflowService,
                 @Optional() @Inject(NAE_TASK_FORCE_OPEN) protected _taskForceOpen: boolean,
                 @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData) {
-        super(_taskContentService, _log, _taskViewService, _paperView, _taskEventService, _assignTaskService,
+        super(_taskContentService, _log, _taskViewService, _taskEventService, _assignTaskService,
             _delegateTaskService, _cancelTaskService, _finishTaskService, _taskState, _taskDataService,
             _assignPolicyService, _finishPolicyService, _callChain, _taskOperations, _disableFunctions, _translate, _currencyPipe, _changedFieldsService,
             _permissionService, overflowService, _taskForceOpen, injectedTabData);

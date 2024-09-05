@@ -10,7 +10,7 @@ import {DateField} from '../../data-fields/date-field/models/date-field';
 import {DateTimeField} from '../../data-fields/date-time-field/models/date-time-field';
 import {UserField} from '../../data-fields/user-field/models/user-field';
 import {ButtonField} from '../../data-fields/button-field/models/button-field';
-import {FileField, FileUploadMIMEType} from '../../data-fields/file-field/models/file-field';
+import {FileField} from '../../data-fields/file-field/models/file-field';
 import moment from 'moment';
 import {UserValue} from '../../data-fields/user-field/models/user-value';
 import {FieldTypeResource} from '../model/field-type-resource';
@@ -188,14 +188,14 @@ export class FieldConverterService {
     }
 
     protected resolveNumberComponent(numberField: DataFieldResource): Component {
-        let numberComponent = {name: 'default', properties: undefined};
-        if (numberField.component !== undefined) {
-            numberComponent = {
+        if (!!numberField.component) {
+            return {
                 name: numberField.component.name,
                 properties: numberField.component.properties
             };
+        } else {
+            return { name: 'default', properties: undefined };
         }
-        return numberComponent;
     }
 
     /**
@@ -316,13 +316,5 @@ export class FieldConverterService {
             return decodeBase64(value);
         }
         return value;
-    }
-
-    protected resolveAllowedTypes(allowTypes: string[]) {
-        return allowTypes?.length > 0 ? (allowTypes.length > 1 ? allowTypes as FileUploadMIMEType[] : allowTypes[0]) : null
-    }
-
-    protected resolveByteSize(bytesSize) {
-        return bytesSize !== undefined ? bytesSize : null;
     }
 }

@@ -3,14 +3,16 @@ import {CommonModule} from '@angular/common';
 import {TaskContentComponent} from './task-content/task-content.component';
 import {DataFieldsComponentModule} from '../data-fields/data-fields.module';
 import {FlexModule} from '@ngbracket/ngx-layout';
-import {SnackBarModule, MaterialModule, TranslateLibModule} from '@netgrif/components-core';
+import {MaterialModule, SnackBarModule, TranslateLibModule} from '@netgrif/components-core';
 import {FieldComponentResolverComponent} from './field-component-resolver/field-component-resolver.component';
+import {LayoutContainerWrapperComponent} from './layout-container-wrapper/layout-container-wrapper.component';
 
 
 @NgModule({
     declarations: [
         TaskContentComponent,
-        FieldComponentResolverComponent
+        FieldComponentResolverComponent,
+        LayoutContainerWrapperComponent
     ],
     imports: [
         CommonModule,

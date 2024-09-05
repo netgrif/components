@@ -2,7 +2,7 @@
 
     <!-- Large layout -->
     <ng-template [ngIf]="evaluateTemplateCondition()" [ngIfElse]="elseTemplate">
-        <div fxLayout="row" fxLayoutAlign="start center" class="fill-all-space" [ngClass]="{'padding-16px': isPaperView(), 'padding-32px': !isPaperView()}">
+        <div fxLayout="row" fxLayoutAlign="start center" class="fill-all-space padding-32px">
             <div fxFlex="{{offset}}"></div>
             <div fxFlex="{{47.5 - offset}}" class="cell-padding">
                 <span class="data-field-title" [matTooltip]="dataField.description">{{dataField.title}}<nc-required-label *ngIf="dataField.behavior.required" [isIn]="true"></nc-required-label></span>

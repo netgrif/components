@@ -11,6 +11,7 @@ export * from './model/event-outcomes/task-outcomes/delegate-task-event-outcome'
 export * from './model/event-outcomes/task-outcomes/task-event-outcome';
 export * from './model/event-outcomes/task-outcomes/finish-task-event-outcome';
 export * from './model/event-outcomes/petrinet-outcomes/petri-net-event-outcome';
+export * from './model/event-outcomes/data-outcomes/get-data-layouts-event-outcome';
 
 /* EVENT SERVICE */
 export * from './services/event.service';

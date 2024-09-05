@@ -4,6 +4,7 @@ import {
     DateField,
     DateTimeField,
     EnumerationField,
+    FieldConverterService,
     FileField,
     FileListField,
     MultichoiceField,
@@ -21,23 +22,24 @@ export class FieldComponentResolverComponent extends AbstractFieldComponentResol
     @Input() taskContentComponentClassReference: Type<any>;
 
     constructor(taskContentService: TaskContentService,
+                fieldConverter: FieldConverterService,
                 @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) _informAboutInvalidData: boolean | null) {
-        super(taskContentService, _informAboutInvalidData);
+        super(taskContentService, fieldConverter, _informAboutInvalidData);
     }
 
     isEnumOrMulti() {
-        return this.getDataField() instanceof EnumerationField || this.getDataField() instanceof MultichoiceField;
+        return this.dataField instanceof EnumerationField || this.dataField instanceof MultichoiceField;
     }
 
     isDateType() {
-        return this.getDataField() instanceof DateField || this.getDataField() instanceof DateTimeField;
+        return this.dataField instanceof DateField || this.dataField instanceof DateTimeField;
     }
 
     isDateTimeType() {
-        return this.getDataField() instanceof DateTimeField;
+        return this.dataField instanceof DateTimeField;
     }
 
     isFileType() {
-        return this.getDataField() instanceof FileField || this.getDataField() instanceof FileListField;
+        return this.dataField instanceof FileField || this.dataField instanceof FileListField;
     }
 }

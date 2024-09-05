@@ -45,17 +45,18 @@ export class TaskRefDashboardTileComponent extends AbstractTaskRefDashboardTileC
     }
 
     ngOnInit(): void {
-        if (this.tile.isEmpty) {
-            return;
-        }
-        this._subTask = this._parentTaskContentService.task$.subscribe(t => {
-            const fakeTask = Object.assign({}, t);
-            fakeTask.dataGroups = this.tile.dataGroups;
-            this._myTaskContentService.task = fakeTask;
-            this._myTaskContentService.$shouldCreate.next(fakeTask.dataGroups);
-        });
-
-        this.portal = new ComponentPortal(this.taskContentComponentClassReference, null, this._injector);
+        // TODO JOFO: fix on new layouts
+        // if (this.tile.isEmpty) {
+        //     return;
+        // }
+        // this._subTask = this._parentTaskContentService.task$.subscribe(t => {
+        //     const fakeTask = Object.assign({}, t);
+        //     fakeTask.dataGroups = this.tile.dataGroups;
+        //     this._myTaskContentService.task = fakeTask;
+        //     this._myTaskContentService.$shouldCreate.next(fakeTask.dataGroups);
+        // });
+        //
+        // this.portal = new ComponentPortal(this.taskContentComponentClassReference, null, this._injector);
     }
 
     ngOnDestroy(): void {

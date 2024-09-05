@@ -22,7 +22,6 @@ import {DataField} from '../../data-fields/models/abstract-data-field';
 import {CallChainService} from '../../utility/call-chain/call-chain.service';
 import {take} from 'rxjs/operators';
 import {DynamicEnumerationField} from '../../data-fields/enumeration-field/models/dynamic-enumeration-field';
-import {DataGroup} from '../../resources/interface/data-groups';
 import {EventQueueService} from '../../event-queue/services/event-queue.service';
 import {QueuedEvent} from '../../event-queue/model/queued-event';
 import {AfterAction} from '../../utility/call-chain/after-action';
@@ -36,7 +35,18 @@ import {TaskFields} from '../../task-content/model/task-fields';
 import {EnumerationField} from "../../data-fields/enumeration-field/models/enumeration-field";
 import {FrontActionService} from "../../actions/services/front-action.service";
 import {DataSet, TaskDataSets} from '../../resources/interface/task-data-sets';
-import {DataFieldResource, DataFieldValue} from '../../task-content/model/resource-interfaces';
+import {
+    DataFieldResource,
+    DataFieldValue,
+    LayoutContainerResource,
+    LayoutItemResource
+} from '../../task-content/model/resource-interfaces';
+import {LayoutContainer} from '../../resources/interface/layout-container';
+import {callActionRecursively} from '../../utility/layout-operations';
+import {LayoutItem} from '../../resources/interface/layout-item';
+import {
+    GetDataLayoutsEventOutcome
+} from '../../event/model/event-outcomes/data-outcomes/get-data-layouts-event-outcome';
 
 /**
  * Handles the loading and updating of data fields and behaviour of
@@ -74,12 +84,15 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
     ngOnDestroy(): void {
         this._updateSuccess$.complete();
         this._dataReloadSubscription.unsubscribe();
-        if (this.isTaskPresent() && this._safeTask.dataGroups) {
-            this._safeTask.dataGroups.forEach(group => {
-                if (group && group.fields) {
-                    group.fields.forEach(field => field.destroy());
+        if (this.isTaskPresent() && this._safeTask.layoutContainer) {
+            callActionRecursively(this._safeTask.layoutContainer, {doParams: undefined, termParams: undefined},
+                (layoutItem: LayoutItem) => {
+                    layoutItem.field.destroy();
+                },
+                () => {
+                    return false;
                 }
-            });
+            );
         }
     }
 
@@ -128,7 +141,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         if (this._safeTask.dataSize > 0 && !force) {
             this.sendNotification(TaskEvent.GET_DATA, true);
             afterAction.resolve(true);
-            this._taskContentService.$shouldCreate.next(this._safeTask.dataGroups);
+            this._taskContentService.$shouldCreate.next(this._safeTask.layoutContainer);
             nextEvent.resolve(true);
             return;
         }
@@ -139,8 +152,10 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         const gottenTaskId = this._safeTask.stringId;
         this._taskState.startLoading(gottenTaskId);
 
-        this._taskResourceService.getData(gottenTaskId).pipe(take(1)).subscribe(dataGroups => {
-            this.processSuccessfulGetDataRequest(gottenTaskId, dataGroups, afterAction, nextEvent);
+        this._taskResourceService.getData(gottenTaskId).pipe(take(1)).subscribe(response => {
+            const layoutContainer = (response.outcome as GetDataLayoutsEventOutcome).layout;
+            this.processSuccessfulGetDataRequest(gottenTaskId, this.processLayoutContainerResponse(layoutContainer), afterAction, nextEvent);
+            this.emitChangedFields(response);
         }, error => {
             this.processErroneousGetDataRequest(gottenTaskId, error, afterAction, nextEvent);
         });
@@ -149,12 +164,12 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
     /**
      * Processes a successful outcome of a `getData` request
      * @param gottenTaskId the ID of the task whose data was requested
-     * @param dataGroups the returned data groups of the task
+     * @param layoutContainer the returned data groups of the task
      * @param afterAction the action that should be performed after the request is processed
      * @param nextEvent indicates to the event queue that the next event can be processed
      */
     protected processSuccessfulGetDataRequest(gottenTaskId: string,
-                                              dataGroups: Array<DataGroup>,
+                                              layoutContainer: LayoutContainer,
                                               afterAction: AfterAction,
                                               nextEvent: AfterAction): void {
         if (!this.isTaskRelevant(gottenTaskId)) {
@@ -167,67 +182,106 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         this._taskContentService.referencedTaskAndCaseIds = {};
         this._taskContentService.taskFieldsIndex = {};
 
-        this._safeTask.dataGroups = dataGroups;
-        if (dataGroups.length === 0) {
+        this._safeTask.layoutContainer = layoutContainer;
+        if (!layoutContainer || !layoutContainer.hasData) {
             this._log.info('Task has no data ' + this._safeTask);
             this._safeTask.dataSize = 0;
             this._taskContentService.taskFieldsIndex[this._safeTask.stringId] = {} as TaskFields;
         } else {
             this._taskContentService.referencedTaskAndCaseIds[this._safeTask.caseId] = [this._safeTask.stringId];
-            dataGroups.forEach(group => {
-                const dataGroupParentCaseId: string = group.parentCaseId === undefined ? this._safeTask.caseId : group.parentCaseId;
-                const parentTaskId: string = group.parentTaskId === undefined ? this._safeTask.stringId : group.parentTaskId;
-                const parentTransitionId: string = group.parentTransitionId === undefined ?
-                    this._safeTask.transitionId : group.parentTransitionId;
-                if (dataGroupParentCaseId !== this._safeTask.caseId) {
-                    if (!this._taskContentService.referencedTaskAndCaseIds[dataGroupParentCaseId]) {
-                        this._taskContentService.referencedTaskAndCaseIds[dataGroupParentCaseId] = [group.parentTaskId];
-                    } else {
-                        this._taskContentService.referencedTaskAndCaseIds[dataGroupParentCaseId].push(group.parentTaskId);
-                    }
-                } else if (dataGroupParentCaseId === this._safeTask.caseId
-                    && parentTaskId !== this._safeTask.stringId
-                    && !this._taskContentService.referencedTaskAndCaseIds[dataGroupParentCaseId].includes(parentTaskId)) {
-                    this._taskContentService.referencedTaskAndCaseIds[dataGroupParentCaseId].push(group.parentTaskId);
-                }
-                if (group.fields.length > 0 && !this._taskContentService.taskFieldsIndex[parentTaskId]) {
-                    this._taskContentService.taskFieldsIndex[parentTaskId] = {} as TaskFields;
-                }
-                if (group.fields.length > 0 && !this._taskContentService.taskFieldsIndex[parentTaskId].fields) {
-                    this._taskContentService.taskFieldsIndex[parentTaskId].fields = {};
-                }
-                group.fields.forEach(field => {
-                    this._taskContentService.taskFieldsIndex[parentTaskId].transitionId = parentTransitionId;
-                    this._taskContentService.taskFieldsIndex[parentTaskId].fields[field.stringId] = field;
-                    field.valueChanges().subscribe(() => {
-                        if (this.wasFieldUpdated(field)) {
-                            if (field instanceof DynamicEnumerationField) {
-                                field.loading = true;
-                                this.updateTaskDataFields(this._afterActionFactory.create(bool => {
-                                    field.loading = false;
-                                }));
-                            } else {
-                                this.updateTaskDataFields();
-                            }
-                        }
-                    });
-                    if (field instanceof FileField || field instanceof FileListField) {
-                        field.changedFields$.subscribe((change: ChangedFieldsMap) => {
-                            this._changedFieldsService.emitChangedFields(change);
-                        });
-                    }
-                });
-                this._safeTask.dataSize === undefined ?
-                    this._safeTask.dataSize = group.fields.length :
-                    this._safeTask.dataSize += group.fields.length;
-            });
+            this.processGetDataRequestRecursively(layoutContainer);
         }
         this._taskState.stopLoading(gottenTaskId);
         this.sendNotification(TaskEvent.GET_DATA, true);
         afterAction.resolve(true);
         nextEvent.resolve(true);
-        this._taskContentService.$shouldCreate.next(this._safeTask.dataGroups);
+        this._taskContentService.$shouldCreate.next(this._safeTask.layoutContainer);
         this._taskContentService.$shouldCreateCounter.next(this._taskContentService.$shouldCreateCounter.getValue() + 1);
+    }
+
+    protected processGetDataRequestRecursively(layoutContainer: LayoutContainer) {
+        const layoutContainerParentCaseId: string = layoutContainer.parentCaseId === undefined ? this._safeTask.caseId : layoutContainer.parentCaseId;
+        const parentTaskId: string = layoutContainer.parentTaskId === undefined ? this._safeTask.stringId : layoutContainer.parentTaskId;
+        const parentTransitionId: string = layoutContainer.parentTransitionId === undefined ? this._safeTask.transitionId : layoutContainer.parentTransitionId;
+        if (layoutContainerParentCaseId !== this._safeTask.caseId) {
+            if (!this._taskContentService.referencedTaskAndCaseIds[layoutContainerParentCaseId]) {
+                this._taskContentService.referencedTaskAndCaseIds[layoutContainerParentCaseId] = [layoutContainer.parentTaskId];
+            } else {
+                this._taskContentService.referencedTaskAndCaseIds[layoutContainerParentCaseId].push(layoutContainer.parentTaskId);
+            }
+        } else if (layoutContainerParentCaseId === this._safeTask.caseId && parentTaskId !== this._safeTask.stringId
+            && !this._taskContentService.referencedTaskAndCaseIds[layoutContainerParentCaseId].includes(parentTaskId)) {
+            this._taskContentService.referencedTaskAndCaseIds[layoutContainerParentCaseId].push(layoutContainer.parentTaskId);
+        }
+        if (!!layoutContainer && layoutContainer.hasData && !this._taskContentService.taskFieldsIndex[parentTaskId]) {
+            this._taskContentService.taskFieldsIndex[parentTaskId] = {} as TaskFields;
+        }
+        if (!!layoutContainer && layoutContainer.hasData && !this._taskContentService.taskFieldsIndex[parentTaskId].fields) {
+            this._taskContentService.taskFieldsIndex[parentTaskId].fields = {};
+        }
+        if (!!layoutContainer && layoutContainer.hasData) {
+            this._taskContentService.taskFieldsIndex[parentTaskId].transitionId = parentTransitionId;
+        }
+        let fieldCounter = 0;
+        layoutContainer.items.forEach(layoutItem => {
+            if (!!layoutItem.field) {
+                this._taskContentService.taskFieldsIndex[parentTaskId].fields[layoutItem.field.stringId] = layoutItem.field;
+                layoutItem.field.valueChanges().subscribe(() => {
+                    if (this.wasFieldUpdated(layoutItem.field)) {
+                        if (layoutItem.field instanceof DynamicEnumerationField) {
+                            layoutItem.field.loading = true;
+                            this.updateTaskDataFields(this._afterActionFactory.create(bool => {
+                                (layoutItem.field as DynamicEnumerationField).loading = false;
+                            }));
+                        } else {
+                            this.updateTaskDataFields();
+                        }
+                    }
+                });
+                if (layoutItem.field instanceof FileField || layoutItem.field instanceof FileListField) {
+                    layoutItem.field.changedFields$.subscribe((change: ChangedFieldsMap) => {
+                        this._changedFieldsService.emitChangedFields(change);
+                    });
+                }
+                fieldCounter++;
+            }
+            if (!!layoutItem.container) {
+                this.processGetDataRequestRecursively(layoutItem.container);
+            }
+        });
+        this._safeTask.dataSize === undefined ? this._safeTask.dataSize = fieldCounter : this._safeTask.dataSize += fieldCounter;
+    }
+
+
+    private processLayoutContainerResponse(layoutContainerResource: LayoutContainerResource): LayoutContainer {
+        const layoutItemsArray = [];
+        let hasData = false;
+        if (!layoutContainerResource || !layoutContainerResource.items) {
+            return undefined;
+        }
+        for (let containerItem of layoutContainerResource.items) {
+            const layoutItem = this.processLayoutItemResponse(containerItem);
+            if (!hasData && ((!!layoutItem.container && layoutItem.container.hasData) || !!layoutItem.field)) {
+                hasData = true;
+            }
+            layoutItemsArray.push(layoutItem);
+        }
+        return {
+            layoutType: layoutContainerResource.layoutType,
+            properties: layoutContainerResource.properties,
+            items: layoutItemsArray,
+            hasData: hasData
+        };
+    }
+
+    private processLayoutItemResponse(layoutItemResource: LayoutItemResource): LayoutItem {
+        return {
+            layoutType: layoutItemResource.layoutType,
+            properties: layoutItemResource.properties,
+            dataRefId: layoutItemResource.dataRefId,
+            field: !!layoutItemResource.dataRef ? this._fieldConverterService.toClass(layoutItemResource.dataRef) : null,
+            container: this.processLayoutContainerResponse(layoutItemResource.container)
+        }
     }
 
     /**
@@ -316,27 +370,28 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
      */
     protected createUpdateRequestContext(): TaskSetDataRequestContext {
         const context: TaskSetDataRequestContext = {
-            body: { body: {} } as TaskDataSets,
+            body: {body: {}} as TaskDataSets,
             previousValues: {}
         };
-
-        this._safeTask.dataGroups.filter(dataGroup => dataGroup.parentTaskId === undefined).forEach(dataGroup => {
-            dataGroup.fields.filter(field => this.wasFieldUpdated(field)).forEach(field => {
-                context.body.body[this._task.stringId] = { fields: {} } as DataSet;
-                this.addFieldToSetDataRequestBody(context, this._task.stringId, field);
-            });
-        });
-        this._safeTask.dataGroups.filter(dataGroup => dataGroup.parentTaskId !== undefined).forEach(dataGroup => {
-            if (dataGroup.fields.some(field => this.wasFieldUpdated(field))) {
-                context.body.body[dataGroup.parentTaskId] = { fields: {} } as DataSet;
-            } else {
-                return;
-            }
-            dataGroup.fields.filter(field => this.wasFieldUpdated(field)).forEach(field => {
-                this.addFieldToSetDataRequestBody(context, dataGroup.parentTaskId, field);
-            });
-        });
+        this.createUpdateRequestContextRecursively(context, this._safeTask.layoutContainer);
         return context;
+    }
+
+    protected createUpdateRequestContextRecursively(context: TaskSetDataRequestContext, layoutContainer: LayoutContainer) {
+        const taskId = layoutContainer.parentTaskId === undefined ? this._task.stringId : layoutContainer.parentTaskId;
+        if (!(taskId in context.body.body)) {
+            context.body.body[taskId] = {fields: {}} as DataSet;
+        }
+        layoutContainer.items.forEach(layoutItem => {
+            if (!!layoutItem.field) {
+                if (this.wasFieldUpdated(layoutItem.field)) {
+                    this.addFieldToSetDataRequestBody(context, taskId, layoutItem.field);
+                }
+            }
+            if (!!layoutItem.container) {
+                this.createUpdateRequestContextRecursively(context, layoutItem.container);
+            }
+        });
     }
 
     protected addFieldToSetDataRequestBody(context: TaskSetDataRequestContext, taskId: string, field: DataField<any>): void {
@@ -350,7 +405,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         field.changed = false;
     }
 
-    protected isAutocompleteEnumException(field: DataField<unknown>): boolean{
+    protected isAutocompleteEnumException(field: DataField<unknown>): boolean {
         return (field instanceof EnumerationField) && (field.getComponentType() === 'autocomplete') && !(field.valid || field.value === null);
     }
 
@@ -485,18 +540,9 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
                                               afterAction: AfterAction,
                                               nextEvent: AfterAction,
                                               context: TaskDataSets) {
-        const outcome = response.outcome;
-        const changedFieldsMap: ChangedFieldsMap = this._eventService.parseChangedFieldsFromOutcomeTree(outcome);
-        const frontActions: Array<FrontAction> = this._eventService.parseFrontActionsFromOutcomeTree(outcome);
-
-        if (Object.keys(changedFieldsMap).length > 0) {
-            this._changedFieldsService.emitChangedFields(changedFieldsMap);
-        }
-        if (!!frontActions && frontActions.length > 0) {
-            this._frontActionService.runAll(frontActions);
-        }
+        this.emitChangedFields(response);
         this.clearWaitingForResponseFlag(context);
-        this._snackBar.openSuccessSnackBar(!!outcome.message ? outcome.message : this._translate.instant('tasks.snackbar.dataSaved'));
+        this._snackBar.openSuccessSnackBar(!!response.outcome.message ? response.outcome.message : this._translate.instant('tasks.snackbar.dataSaved'));
         this.updateStateInfo(afterAction, true, setTaskId);
         nextEvent.resolve(true);
     }
@@ -539,30 +585,30 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
      */
     protected revertSetDataRequest(context: TaskSetDataRequestContext) {
         // this iteration could be improved if we had a map of all the data fields in a task
-        const totalCount = Object.keys(context.body.body[this._safeTask.stringId]).length;
-        let foundCount = 0;
-
-        for (const datagroup of this._safeTask.dataGroups) {
-            for (const field of datagroup.fields) {
-                if (!context.body.body[this._safeTask.stringId][field.stringId]) {
-                    continue;
+        const totalCount = {value: Object.keys(context.body.body[this._safeTask.stringId]).length};
+        let foundCount = {value: 0};
+        callActionRecursively(this._safeTask.layoutContainer, {
+                doParams: {foundCount: foundCount, context: context},
+                termParams: {totalCount: totalCount, foundCount: foundCount}
+            },
+            (layoutItem: LayoutItem, params: { foundCount: { value: number }, context: TaskSetDataRequestContext }) => {
+                if (layoutItem.field.stringId in params.context.body.body[this._safeTask.stringId]) {
+                    if (this.compareBackendFormattedFieldValues(
+                        this._fieldConverterService.formatValueForBackend(layoutItem.field, layoutItem.field.value),
+                        params.context.body.body[this._safeTask.stringId][layoutItem.field.stringId].value)
+                    ) {
+                        layoutItem.field.valueWithoutChange(params.context.previousValues[layoutItem.field.stringId]);
+                    }
+                    params.foundCount.value++;
                 }
-
-                if (this.compareBackendFormattedFieldValues(
-                    this._fieldConverterService.formatValueForBackend(field, field.value),
-                    context.body.body[this._safeTask.stringId][field.stringId].value)
-                ) {
-                    field.valueWithoutChange(context.previousValues[field.stringId]);
-                }
-
-                foundCount++;
-                if (foundCount === totalCount) {
-                    return;
-                }
+            },
+            (layoutItem: LayoutItem, params: { totalCount: { value: number }, foundCount: { value: number } }) => {
+                return params.totalCount.value === params.foundCount.value;
             }
+        )
+        if (totalCount.value !== foundCount.value) {
+            this._log.error(`Invalid state. Some data fields of task ${this._safeTask.stringId}, are no longer present in it!`);
         }
-
-        this._log.error(`Invalid state. Some data fields of task ${this._safeTask.stringId}, are no longer present in it!`);
     }
 
     /**
@@ -618,13 +664,29 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
     }
 
     protected revertToPreviousValue(context: TaskDataSets): void {
-        this._safeTask.dataGroups.forEach(dataGroup => {
-            dataGroup.fields.forEach(field => {
-                if (field.initialized && field.valid && Object.keys(context.body.previousValues).includes(field.stringId)) {
-                    field.revertToPreviousValue();
+        callActionRecursively(this._safeTask.layoutContainer, {doParams: undefined, termParams: undefined},
+            (layoutItem: LayoutItem) => {
+                if (layoutItem.field.initialized && layoutItem.field.valid && Object.keys(context.body.previousValues).includes(layoutItem.field.stringId)) {
+                    layoutItem.field.revertToPreviousValue();
                 }
-            });
-        });
+            },
+            () => {
+                return false;
+            }
+        );
+    }
+
+    private emitChangedFields(response: EventOutcomeMessageResource) {
+        const outcome = response.outcome;
+        const changedFieldsMap: ChangedFieldsMap = this._eventService.parseChangedFieldsFromOutcomeTree(outcome);
+        const frontActions: Array<FrontAction> = this._eventService.parseFrontActionsFromOutcomeTree(outcome);
+
+        if (Object.keys(changedFieldsMap).length > 0) {
+            this._changedFieldsService.emitChangedFields(changedFieldsMap);
+        }
+        if (!!frontActions && frontActions.length > 0) {
+            this._frontActionService.runAll(frontActions);
+        }
     }
 
     protected clearWaitingForResponseFlag(body: TaskDataSets) {

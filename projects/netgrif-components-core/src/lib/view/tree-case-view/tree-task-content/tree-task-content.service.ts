@@ -15,7 +15,7 @@ import {UserComparatorService} from '../../../user/services/user-comparator.serv
 import {TreePetriflowIdentifiers} from '../model/tree-petriflow-identifiers';
 import {CallChainService} from '../../../utility/call-chain/call-chain.service';
 import {LoadingEmitter} from '../../../utility/loading-emitter';
-import {Observable, ReplaySubject, Subject} from 'rxjs';
+import {Observable, ReplaySubject} from 'rxjs';
 import {hasContent} from '../../../utility/pagination/page-has-content';
 import {getImmediateData} from '../../../utility/get-immediate-data';
 import {filter} from 'rxjs/operators';
@@ -102,7 +102,7 @@ export class TreeTaskContentService implements OnDestroy {
     }
 
     public displayEmptyTaskContent(): void {
-        this._taskContentService.$shouldCreate.next([]);
+        this._taskContentService.$shouldCreate.next(null);
         this._displayedTaskText$.next('caseTree.noTaskSelected');
     }
 
@@ -256,8 +256,8 @@ export class TreeTaskContentService implements OnDestroy {
      */
     protected resolveTaskBlockState(): void {
         const taskShouldBeBlocked = !this._taskContentService.task
-                                    || this._taskContentService.task.user === undefined
-                                    || !this._userComparator.compareUsers(this._taskContentService.task.user);
+            || this._taskContentService.task.user === undefined
+            || !this._userComparator.compareUsers(this._taskContentService.task.user);
         this._taskContentService.blockFields(taskShouldBeBlocked);
     }
 

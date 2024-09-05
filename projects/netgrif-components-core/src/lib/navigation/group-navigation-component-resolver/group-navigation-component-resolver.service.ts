@@ -20,7 +20,8 @@ export abstract class GroupNavigationComponentResolverService {
         this._taskResourceService.getData(taskId).subscribe(taskData => {
             try {
                 result.next(new ComponentPortal(
-                    this.resolveViewComponent(taskData),
+                    // TODO JOFO: resolve layout data
+                    this.resolveViewComponent([]),
                     null,
                     Injector.create({
                         providers: [
