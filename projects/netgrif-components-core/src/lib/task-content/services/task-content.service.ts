@@ -252,7 +252,7 @@ export abstract class TaskContentService implements OnDestroy {
                 case 'behavior':
                     if (!referenced && updatedField.behavior[this._task.transitionId]) {
                         field.behavior = updatedField.behavior[this._task.transitionId];
-                    } else {
+                    } else if (referenced) {
                         const taskId = this.getReferencedTaskId(field.stringId);
                         const taskRef = this.findTaskRefId(taskId, this.taskFieldsIndex[this._task.stringId].fields);
                         const transitionId = this.taskFieldsIndex[taskId].transitionId;
