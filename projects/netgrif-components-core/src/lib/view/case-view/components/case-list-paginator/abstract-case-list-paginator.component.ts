@@ -26,6 +26,8 @@ export abstract class AbstractCaseListPaginatorComponent extends AbstractDefault
                 @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData,
                 protected route?: ActivatedRoute) {
         super(_caseViewService, _log, injectedTabData, route);
+        this._caseViewService.nextPagePagination(this.pageSize, this.pageIndex);
+        this._caseViewService.paginationView = true;
         this.cases$ = this._caseViewService.cases$.pipe(tap(() => {
             this.length = this._caseViewService.pagination.totalElements;
             this.pageIndex = this._caseViewService.pagination.number;

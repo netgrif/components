@@ -48,6 +48,7 @@
 .i18n-hint-error {
     padding: 0 1em;
     font-size: 75%;
+    width: auto !important;
 }
 
 .language-svg-wrapper {
@@ -143,4 +144,8 @@
 
 .form-input-disabled:hover {
     border-width: 1px;
+}
+
+.i18n-bold-text {
+    font-weight: bold;
 }
