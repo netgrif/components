@@ -2,7 +2,7 @@ import {Component, Inject, Optional} from '@angular/core';
 import {
     AbstractDefaultNumberFieldComponent,
     DATA_FIELD_PORTAL_DATA,
-    DataFieldPortalData,
+    DataFieldPortalData, NAE_SAVE_DATA_INFORM,
     NumberField
 } from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
@@ -14,7 +14,8 @@ import {TranslateService} from '@ngx-translate/core';
 })
 export class NumberDefaultFieldComponent extends AbstractDefaultNumberFieldComponent {
     constructor(translate: TranslateService,
-                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<NumberField>) {
-        super(translate, dataFieldPortalData);
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<NumberField>,
+                @Optional() @Inject(NAE_SAVE_DATA_INFORM) _saveDataInform: boolean) {
+        super(translate, dataFieldPortalData, _saveDataInform);
     }
 }

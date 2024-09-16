@@ -2,7 +2,7 @@ import {Component, Inject, Optional} from '@angular/core';
 import {
     AbstractRichTextareaFieldComponent,
     DATA_FIELD_PORTAL_DATA,
-    DataFieldPortalData,
+    DataFieldPortalData, NAE_SAVE_DATA_INFORM,
     TextAreaField
 } from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
@@ -14,7 +14,8 @@ import {TranslateService} from '@ngx-translate/core';
 })
 export class RichTextareaFieldComponent extends AbstractRichTextareaFieldComponent {
     constructor(protected _translate: TranslateService,
-                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextAreaField>) {
-        super(_translate, dataFieldPortalData);
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextAreaField>,
+                @Optional() @Inject(NAE_SAVE_DATA_INFORM) _saveDataInform: boolean) {
+        super(_translate, dataFieldPortalData, _saveDataInform);
     }
 }
