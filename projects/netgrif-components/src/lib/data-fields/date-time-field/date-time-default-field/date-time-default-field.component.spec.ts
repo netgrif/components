@@ -15,7 +15,9 @@ import {
     TestConfigurationService,
     TranslateLibModule,
     UserResourceService,
-    WrappedBoolean
+    WrappedBoolean,
+    Validator,
+    betweenValidation
 } from "@netgrif/components-core";
 import {AngularResizeEventModule} from "angular-resize-event";
 import {NgxMatDatetimePickerModule, NgxMatNativeDateModule} from "@angular-material-components/datetime-picker";
@@ -56,10 +58,15 @@ describe('DateTimeDefaultFieldComponent', () => {
                         editable: true,
                         hidden: true
                     }, undefined, undefined, undefined, [
-                        {validationRule: 'between today,future', validationMessage: 'This is custom message!'},
-                        {validationRule: 'between past,today', validationMessage: 'This is custom message!'},
-                        {validationRule: 'between 2020-03-03,today', validationMessage: 'This is custom message!'},
-                    ]),
+                        {name: 'between', validationMessage: 'This is custom message!', arguments: {'from': {key: 'from', value: 'today', dynamic: false}, 'to': {key: 'to', value: 'future', dynamic: false}}},
+                        {name: 'between', validationMessage: 'This is custom message!', arguments: {'from': {key: 'from', value: 'past', dynamic: false}, 'to': {key: 'to', value: 'today', dynamic: false}}},
+                        {name: 'between', validationMessage: 'This is custom message!', arguments: {'from': {key: 'from', value: '2020-03-03', dynamic: false}, 'to': {key: 'to', value: 'today', dynamic: false}}}
+                    ],
+                        undefined,
+                        undefined,
+                        new Map<string, Validator>([
+                            ['between', betweenValidation]
+                        ])),
                     formControlRef: new FormControl(),
                     showLargeLayout: new WrappedBoolean()
                 } as DataFieldPortalData<DateTimeField>

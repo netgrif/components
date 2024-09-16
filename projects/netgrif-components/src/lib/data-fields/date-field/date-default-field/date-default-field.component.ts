@@ -3,7 +3,10 @@ import {
     AbstractDateDefaultFieldComponent,
     DATA_FIELD_PORTAL_DATA,
     DataFieldPortalData,
-    DATE_FORMAT, LanguageService, DateField
+    DateField,
+    ValidationRegistryService,
+    DATE_FORMAT,
+    LanguageService
 } from '@netgrif/components-core';
 import {TranslateService} from "@ngx-translate/core";
 import {MAT_DATE_FORMATS, MAT_DATE_LOCALE} from "@angular/material/core";
@@ -23,8 +26,9 @@ export class DateDefaultFieldComponent extends AbstractDateDefaultFieldComponent
                 _adapter: NgxMatDateAdapter<any>,
                 @Inject(MAT_DATE_LOCALE) protected _locale: string,
                 _languageService: LanguageService,
-                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<DateField>) {
-        super(_translate, _adapter, _locale, _languageService, dataFieldPortalData);
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<DateField>,
+                _validationRegistry: ValidationRegistryService) {
+        super(_translate, _adapter, _locale, _languageService, dataFieldPortalData, _validationRegistry);
 
     }
 

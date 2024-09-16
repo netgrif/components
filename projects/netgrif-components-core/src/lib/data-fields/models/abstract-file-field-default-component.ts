@@ -28,7 +28,7 @@ export abstract class AbstractFileFieldDefaultComponent<T extends FileField | Fi
                           protected _snackbar: SnackBarService,
                           protected _translate: TranslateService,
                           @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<T>) {
-        super(dataFieldPortalData);
+        super(null, dataFieldPortalData);
     }
 
     protected checkAllowedTypes(): boolean {

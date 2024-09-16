@@ -4,12 +4,14 @@ import {AbstractTimeInstanceField} from '../../time-instance-abstract-field/mode
 import {Layout} from '../../models/layout';
 import {Validation} from '../../models/validation';
 import {Component, ComponentPrefixes} from '../../models/component';
+import {Validator} from "../../../registry/model/validator";
 
 export class DateField extends AbstractTimeInstanceField {
 
     constructor(stringId: string, title: string, value: Moment, behavior: Behavior, placeholder?: string,
-                description?: string, layout?: Layout, validations?: Array<Validation>, component?: Component, parentTaskId?: string) {
-        super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId);
+                description?: string, layout?: Layout, validations?: Array<Validation>, component?: Component, parentTaskId?: string,
+                validatorRegister?: Map<string, Validator>) {
+        super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId, validatorRegister);
     }
 
     public getTypedComponentType(): string {

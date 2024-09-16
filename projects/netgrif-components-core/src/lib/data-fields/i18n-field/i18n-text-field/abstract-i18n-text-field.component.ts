@@ -8,6 +8,7 @@ import {AbstractI18nErrorsComponent} from '../abstract-i18n-errors.component';
 import {LanguageIcons} from '../models/language-icons';
 import {I18nFieldTranslations} from '../models/i18n-field-value';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
+import {ValidationRegistryService} from "../../../registry/validation-registry.service";
 
 @Component({
     selector: 'ncc-abstract-i18n-text-field',
@@ -34,9 +35,10 @@ export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsC
     protected constructor(protected languageIconsService: LanguageIconsService,
                           protected _translateService: TranslateService,
                           protected _domSanitizer: DomSanitizer,
-                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<I18nField>) {
-        super(languageIconsService, _translateService, dataFieldPortalData);
-        this.selectedLanguage = this._translateService.currentLang;
+                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<I18nField>,
+                          _validationRegistry: ValidationRegistryService) {
+        super(languageIconsService, _translateService, dataFieldPortalData, _validationRegistry);
+        this.selectedLanguage = this._translateService.currentLang.split('-')[0];
         this.languageKeys = Object.keys(this.languageIconsService.languageIcons);
     }
 

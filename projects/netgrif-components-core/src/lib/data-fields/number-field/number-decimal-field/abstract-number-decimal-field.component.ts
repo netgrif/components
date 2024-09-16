@@ -1,9 +1,10 @@
-import {AfterViewInit, ChangeDetectorRef, Component, Inject, Optional} from "@angular/core";
+import {AfterViewInit, Component, Inject, Optional} from "@angular/core";
 import {AbstractNumberErrorsComponent} from "../abstract-number-errors.component";
 import {DecimalPipe} from "@angular/common";
 import {TranslateService} from "@ngx-translate/core";
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {NumberField} from "../models/number-field";
+import {ValidationRegistryService} from "../../../registry/validation-registry.service";
 
 @Component({
     selector: 'ncc-abstract-number-decimal-field',
@@ -19,8 +20,9 @@ export abstract class AbstractNumberDecimalFieldComponent extends AbstractNumber
 
     protected constructor(protected _decimalPipe: DecimalPipe,
                           _translate: TranslateService,
-                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<NumberField>) {
-        super(_translate, dataFieldPortalData);
+                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<NumberField>,
+                          _validationRegistry: ValidationRegistryService) {
+        super(_translate, dataFieldPortalData, _validationRegistry);
     }
 
     ngAfterViewInit() {

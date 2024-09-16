@@ -25,7 +25,7 @@ export abstract class AbstractEnumerationStepperFieldComponent extends AbstractB
 
     constructor(protected ref: ElementRef,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<EnumerationField>) {
-        super(dataFieldPortalData);
+        super(undefined, dataFieldPortalData);
         this.arrowStepper = false;
     }
 

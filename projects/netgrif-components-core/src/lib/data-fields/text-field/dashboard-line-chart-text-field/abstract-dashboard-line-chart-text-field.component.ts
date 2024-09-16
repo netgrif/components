@@ -6,6 +6,7 @@ import {FilterType} from '../../../filter/models/filter-type';
 import {AbstractDashboardTextFieldComponent} from '../abstract-dashboard-text-field.component';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {TextField} from "../models/text-field";
+import {ValidationRegistryService} from "../../../registry/validation-registry.service";
 
 @Component({
     selector: 'ncc-abstract-dashboard-line-chart-text-field',
@@ -14,8 +15,9 @@ import {TextField} from "../models/text-field";
 export abstract class AbstractDashboardLineChartTextFieldComponent extends AbstractDashboardTextFieldComponent {
 
     protected constructor(translate: TranslateService,
-                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextField>) {
-        super(translate, dataFieldPortalData);
+                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextField>,
+                          _validationRegistry: ValidationRegistryService) {
+        super(translate, dataFieldPortalData, _validationRegistry);
     }
 
     protected createCard(textFieldValue: string): CustomCard {

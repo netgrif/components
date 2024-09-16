@@ -63,7 +63,7 @@ describe('AbstractEnumerationAutocompleteSelectFieldComponent', () => {
     template: ''
 })
 class TestEnumAutoComponent extends AbstractEnumerationAutocompleteSelectFieldComponent {
-    constructor(protected _translate: TranslateService,
+    constructor(_translate: TranslateService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<DynamicEnumerationField>) {
         super(_translate, dataFieldPortalData);
     }

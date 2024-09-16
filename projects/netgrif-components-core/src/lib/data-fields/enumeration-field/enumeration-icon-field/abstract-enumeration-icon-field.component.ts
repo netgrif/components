@@ -15,7 +15,7 @@ export abstract class AbstractEnumerationIconFieldComponent extends AbstractBase
     protected subComp: Subscription;
 
     constructor(@Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<EnumerationField>) {
-        super(dataFieldPortalData);
+        super(undefined, dataFieldPortalData);
     }
 
     ngOnInit(): void {

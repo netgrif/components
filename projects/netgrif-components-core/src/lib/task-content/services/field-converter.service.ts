@@ -24,6 +24,8 @@ import {I18nField} from '../../data-fields/i18n-field/models/i18n-field';
 import {UserListField} from '../../data-fields/user-list-field/models/user-list-field';
 import {UserListValue} from '../../data-fields/user-list-field/models/user-list-value';
 import {decodeBase64, encodeBase64} from "../../utility/base64";
+import {ValidationRegistryService} from "../../registry/validation-registry.service";
+import {Validator} from "../../registry/model/validator";
 import {CaseRefField} from '../../data-fields/case-ref-field/model/case-ref-field';
 import {StringCollectionField} from '../../data-fields/string-collection-field/models/string-collection-field';
 
@@ -33,24 +35,28 @@ import {StringCollectionField} from '../../data-fields/string-collection-field/m
 export class FieldConverterService {
     private textFieldNames = [ 'richtextarea', 'htmltextarea', 'editor', 'htmlEditor' ]
 
-    constructor() {
+    constructor(protected validationRegistry: ValidationRegistryService) {
     }
 
     public toClass(item: DataFieldResource): DataField<any> {
         switch (item.type) {
             case FieldTypeResource.BOOLEAN:
                 return new BooleanField(item.stringId, item.name, item.value as boolean, item.behavior,
-                    item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
+                    item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId,
+                    this.getValidators(item.type));
             case FieldTypeResource.TEXT:
                 if (this.textFieldNames.includes(item.component?.name)) {
                     return new TextAreaField(item.stringId, item.name, this.resolveTextValue(item, item.value), item.behavior,
-                        item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
+                        item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId,
+                        this.getValidators(item.type));
                 }
                 return new TextField(item.stringId, item.name, this.resolveTextValue(item, item.value), item.behavior, item.placeholder,
-                    item.description, item.layout, item.validations, item.component, item.parentTaskId);
+                    item.description, item.layout, item.validations, item.component, item.parentTaskId,
+                    this.getValidators(item.type));
             case FieldTypeResource.NUMBER:
                 return new NumberField(item.stringId, item.name, item.value as number, item.behavior, item.validations, item.placeholder,
-                    item.description, item.layout, item.formatFilter, this.resolveNumberComponent(item), item.parentTaskId);
+                    item.description, item.layout, item.formatFilter, this.resolveNumberComponent(item), item.parentTaskId,
+                    this.getValidators(item.type));
             case FieldTypeResource.ENUMERATION:
             case FieldTypeResource.ENUMERATION_MAP:
                 return this.resolveEnumField(item);
@@ -68,14 +74,16 @@ export class FieldConverterService {
                     date = moment(new Date(item.value[0], item.value[1] - 1, item.value[2]));
                 }
                 return new DateField(item.stringId, item.name, date, item.behavior, item.placeholder,
-                    item.description, item.layout, item.validations, item.component, item.parentTaskId);
+                    item.description, item.layout, item.validations, item.component, item.parentTaskId,
+                    this.getValidators(item.type));
             case FieldTypeResource.DATE_TIME:
                 let dateTime;
                 if (item.value) {
                     dateTime = moment(new Date(item.value[0], item.value[1] - 1, item.value[2], item.value[3], item.value[4]));
                 }
                 return new DateTimeField(item.stringId, item.name, dateTime, item.behavior,
-                    item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
+                    item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId,
+                    this.getValidators(item.type));
             case FieldTypeResource.USER:
                 let user;
                 if (item.value) {
@@ -113,14 +121,14 @@ export class FieldConverterService {
                     item.behavior, item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.I18N:
                 return new I18nField(item.stringId, item.name, item.value ?? {defaultValue: ''}, item.behavior, item.placeholder,
-                    item.description, item.layout, item.validations, item.component);
+                    item.description, item.layout, item.validations, item.component, this.getValidators(item.type));
             case FieldTypeResource.STRING_COLLECTION:
                 return new StringCollectionField(item.stringId, item.name, item.value ? item.value : [], item.behavior,
                     item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
         }
     }
 
-    public resolveType(item: DataField<any>): FieldTypeResource {
+    public static resolveType(item: DataField<any>): FieldTypeResource {
         if (item instanceof BooleanField) {
             return FieldTypeResource.BOOLEAN;
         } else if (item instanceof ButtonField) {
@@ -157,10 +165,10 @@ export class FieldConverterService {
     }
 
     public formatValueForBackend(field: DataField<any>, value: any): any {
-        if (this.resolveType(field) === FieldTypeResource.TEXT && value === null) {
+        if (FieldConverterService.resolveType(field) === FieldTypeResource.TEXT && value === null) {
             return null;
         }
-        if (this.resolveType(field) === FieldTypeResource.TEXT && field.component && field.component.name === 'password') {
+        if (FieldConverterService.resolveType(field) === FieldTypeResource.TEXT && field.component && field.component.name === 'password') {
             return encodeBase64(value);
         }
         if (value === null) {
@@ -169,18 +177,18 @@ export class FieldConverterService {
         if (value === undefined) {
             return;
         }
-        if (this.resolveType(field) === FieldTypeResource.DATE) {
+        if (FieldConverterService.resolveType(field) === FieldTypeResource.DATE) {
             if (moment.isMoment(value)) {
                 return value.format('YYYY-MM-DD');
             }
         }
-        if (this.resolveType(field) === FieldTypeResource.USER) {
+        if (FieldConverterService.resolveType(field) === FieldTypeResource.USER) {
             return value.id;
         }
-        if (this.resolveType(field) === FieldTypeResource.USER_LIST) {
+        if (FieldConverterService.resolveType(field) === FieldTypeResource.USER_LIST) {
             return [...value.userValues.keys()];
         }
-        if (this.resolveType(field) === FieldTypeResource.DATE_TIME) {
+        if (FieldConverterService.resolveType(field) === FieldTypeResource.DATE_TIME) {
             if (moment.isMoment(value)) {
                 return value.format('DD.MM.YYYY HH:mm:ss');
             }
@@ -281,19 +289,19 @@ export class FieldConverterService {
         if (value === undefined) {
             return;
         }
-        if (this.resolveType(field) === FieldTypeResource.TEXT && field.component && field.component.name === 'password') {
+        if (FieldConverterService.resolveType(field) === FieldTypeResource.TEXT && field.component && field.component.name === 'password') {
             return decodeBase64(value);
         }
-        if (this.resolveType(field) === FieldTypeResource.DATE) {
+        if (FieldConverterService.resolveType(field) === FieldTypeResource.DATE) {
             return moment(new Date(value[0], value[1] - 1, value[2]));
         }
-        if (this.resolveType(field) === FieldTypeResource.USER) {
+        if (FieldConverterService.resolveType(field) === FieldTypeResource.USER) {
             return new UserValue(value.id, value.name, value.surname, value.email);
         }
-        if (this.resolveType(field) === FieldTypeResource.DATE_TIME) {
+        if (FieldConverterService.resolveType(field) === FieldTypeResource.DATE_TIME) {
             return moment(new Date(value[0], value[1] - 1, value[2], value[3], value[4]));
         }
-        if (this.resolveType(field) === FieldTypeResource.MULTICHOICE) {
+        if (FieldConverterService.resolveType(field) === FieldTypeResource.MULTICHOICE) {
             const array = [];
             value.forEach(v => {
                 if (v.defaultValue) {
@@ -304,7 +312,7 @@ export class FieldConverterService {
             });
             return array;
         }
-        if (this.resolveType(field) === FieldTypeResource.USER_LIST && !!value) {
+        if (FieldConverterService.resolveType(field) === FieldTypeResource.USER_LIST && !!value) {
             return new UserListValue(new Map(value.userValues.map(v => [v.id, v])));
         }
         return value;
@@ -315,6 +323,10 @@ export class FieldConverterService {
             return decodeBase64(value);
         }
         return value;
+    }
+
+    protected getValidators(type: FieldTypeResource): Map<string, Validator> {
+        return this.validationRegistry.getAllForType(type);
     }
 
     protected resolveAllowedTypes(allowTypes: string[]) {

@@ -111,7 +111,7 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractFileFiel
     protected constructor(protected _taskResourceService: TaskResourceService,
                           protected _log: LoggerService,
                           protected _snackbar: SnackBarService,
-                          protected _translate: TranslateService,
+                          _translate: TranslateService,
                           protected _eventService: EventService,
                           protected _sanitizer: DomSanitizer,
                           @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<FileField>) {
@@ -196,7 +196,7 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractFileFiel
         if (this.dataField.value?.name &&
             this.fileUploadEl.nativeElement.files.item(0).name === this.dataField.value?.name) {
             this._log.error('User chose the same file. Uploading skipped');
-            this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.wontUploadSameFile'));
+            this._snackbar.openErrorSnackBar(this.translate.instant('dataField.snackBar.wontUploadSameFile'));
             this.fileUploadEl.nativeElement.value = '';
             return;
         }
@@ -231,9 +231,9 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractFileFiel
                             `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)} uploading has failed!`, response.error
                         );
                         if (response.error) {
-                            this._snackbar.openErrorSnackBar(this._translate.instant(response.error));
+                            this._snackbar.openErrorSnackBar(this.translate.instant(response.error));
                         } else {
-                            this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.fileUploadFailed'));
+                            this._snackbar.openErrorSnackBar(this.translate.instant('dataField.snackBar.fileUploadFailed'));
                         }
                     } else {
                         const changedFieldsMap: ChangedFieldsMap = this._eventService.parseChangedFieldsFromOutcomeTree(response.outcome);
@@ -264,9 +264,9 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractFileFiel
                     `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)} uploading has failed!`, error
                 );
                 if (error?.error?.message) {
-                    this._snackbar.openErrorSnackBar(this._translate.instant(error.error.message));
+                    this._snackbar.openErrorSnackBar(this.translate.instant(error.error.message));
                 } else {
-                    this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.fileUploadFailed'));
+                    this._snackbar.openErrorSnackBar(this.translate.instant('dataField.snackBar.fileUploadFailed'));
                 }
                 this.dataField.touch = true;
                 this.dataField.update();
@@ -300,7 +300,7 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractFileFiel
         }, error => {
             this._log.error(`Downloading file [${this.dataField.stringId}] ${this.dataField.value.name} has failed!`, error);
             this._snackbar.openErrorSnackBar(
-                this.dataField.value.name + ' ' + this._translate.instant('dataField.snackBar.downloadFail')
+                this.dataField.value.name + ' ' + this.translate.instant('dataField.snackBar.downloadFail')
             );
             this.state.downloading = false;
             this.state.progress = 0;
@@ -359,7 +359,7 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractFileFiel
             } else {
                 this._log.error(`Deleting file [${this.dataField.stringId}] ${this.dataField.value.name} has failed!`, response.error);
                 this._snackbar.openErrorSnackBar(
-                    this.dataField.value.name + ' ' + this._translate.instant('dataField.snackBar.fileDeleteFailed')
+                    this.dataField.value.name + ' ' + this.translate.instant('dataField.snackBar.fileDeleteFailed')
                 );
             }
         });
@@ -397,7 +397,7 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractFileFiel
                 return this.dataField.placeholder;
             }
         }
-        return this._translate.instant('dataField.file.noFile');
+        return this.translate.instant('dataField.file.noFile');
     }
 
     /**
@@ -421,7 +421,7 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractFileFiel
         }, error => {
             this._log.error(`Downloading file [${this.dataField.stringId}] ${this.dataField.value.name} has failed!`, error);
             this._snackbar.openErrorSnackBar(
-                this.dataField.value.name + ' ' + this._translate.instant('dataField.snackBar.downloadFail')
+                this.dataField.value.name + ' ' + this.translate.instant('dataField.snackBar.downloadFail')
             );
             this.state.downloading = false;
             this.state.progress = 0;
@@ -452,7 +452,7 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractFileFiel
         }, error => {
             this._log.error(`Downloading file [${this.dataField.stringId}] ${this.dataField.value.name} has failed!`, error);
             this._snackbar.openErrorSnackBar(
-                this.dataField.value.name + ' ' + this._translate.instant('dataField.snackBar.downloadFail')
+                this.dataField.value.name + ' ' + this.translate.instant('dataField.snackBar.downloadFail')
             );
             this.state.progress = 0;
         });

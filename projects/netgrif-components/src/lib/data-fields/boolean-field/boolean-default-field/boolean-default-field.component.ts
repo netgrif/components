@@ -1,6 +1,10 @@
 import {Component, Inject, Optional} from '@angular/core';
 import {
-    AbstractBooleanDefaultFieldComponent, BooleanField, DATA_FIELD_PORTAL_DATA, DataFieldPortalData,
+    AbstractBooleanDefaultFieldComponent,
+    BooleanField,
+    DATA_FIELD_PORTAL_DATA,
+    DataFieldPortalData,
+    ValidationRegistryService
 } from '@netgrif/components-core';
 import {TranslateService} from "@ngx-translate/core";
 
@@ -12,8 +16,9 @@ import {TranslateService} from "@ngx-translate/core";
 export class BooleanDefaultFieldComponent extends AbstractBooleanDefaultFieldComponent {
 
     constructor(_translate: TranslateService,
-                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<BooleanField>) {
-        super(_translate, dataFieldPortalData);
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<BooleanField>,
+                _validationRegistry: ValidationRegistryService) {
+        super(_translate, dataFieldPortalData, _validationRegistry);
     }
 
 }

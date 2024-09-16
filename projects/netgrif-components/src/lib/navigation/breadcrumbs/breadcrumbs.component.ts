@@ -13,7 +13,7 @@ import {TranslateService} from "@ngx-translate/core";
 })
 export class BreadcrumbsComponent extends AbstractBreadcrumbsComponent {
 
-    constructor(protected _uriService: UriService,
+    constructor(_uriService: UriService,
                 _caseResourceService: CaseResourceService,
                 _activatedRoute: ActivatedRoute,
                 _router: Router,

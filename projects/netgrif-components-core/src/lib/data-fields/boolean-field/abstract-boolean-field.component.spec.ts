@@ -16,6 +16,9 @@ import {MaterialModule} from '../../material/material.module';
 import {AbstractBooleanFieldComponent} from './abstract-boolean-field.component';
 import {BooleanField} from './models/boolean-field';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
+import {Validator} from "../../registry/model/validator";
+import {requiredTrueValidation} from "../models/validation-functions";
+import {DataFieldsModule} from "../data-fields.module";
 
 describe('AbstractBooleanFieldComponent', () => {
     let component: TestBooleanComponent;
@@ -28,7 +31,8 @@ describe('AbstractBooleanFieldComponent', () => {
                 AngularResizeEventModule,
                 TranslateLibModule,
                 HttpClientTestingModule,
-                NoopAnimationsModule
+                NoopAnimationsModule,
+                DataFieldsModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
@@ -77,5 +81,8 @@ class TestWrapperComponent {
         }, undefined,
         undefined,
         undefined,
-        [{validationRule: 'requiredTrue', validationMessage: 'this is custom message'}]);
+        [{name: 'requiredTrue', validationMessage: 'this is custom message'}],
+        undefined,
+        undefined,
+        new Map<string, Validator>([['requiredTrue', requiredTrueValidation]]));
 }

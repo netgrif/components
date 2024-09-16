@@ -8,6 +8,7 @@ import {DateTimeField} from "../models/date-time-field";
 import {NgxMatDateAdapter} from "@angular-material-components/datetime-picker";
 import {MAT_DATE_LOCALE} from "@angular/material/core";
 import {LanguageService} from "../../../translate/language.service";
+import {ValidationRegistryService} from "../../../registry/validation-registry.service";
 
 @Component({
     selector: 'ncc-abstract-date-time-default-field',
@@ -15,15 +16,12 @@ import {LanguageService} from "../../../translate/language.service";
 })
 export abstract class AbstractDateTimeDefaultFieldComponent extends AbstractTimeInstanceFieldComponent<DateTimeField> {
 
-    constructor(protected _translate: TranslateService,
-                protected _adapter: NgxMatDateAdapter<any>,
-                @Inject(MAT_DATE_LOCALE) protected _locale: string,
-                protected _languageService: LanguageService,
-                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<DateTimeField>) {
-        super(_translate, _adapter, _locale, _languageService, dataFieldPortalData)
-    }
-
-    getErrorMessage() {
-        return this.buildErrorMessage(this.dataField);
+    constructor(_translate: TranslateService,
+                _adapter: NgxMatDateAdapter<any>,
+                @Inject(MAT_DATE_LOCALE) _locale: string,
+                _languageService: LanguageService,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<DateTimeField>,
+                _validationRegistry: ValidationRegistryService) {
+        super(_translate, _adapter, _locale, _languageService, dataFieldPortalData, _validationRegistry);
     }
 }

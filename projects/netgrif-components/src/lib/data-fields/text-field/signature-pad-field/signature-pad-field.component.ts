@@ -13,7 +13,8 @@ import {
     DATA_FIELD_PORTAL_DATA,
     DataFieldPortalData,
     TextAreaField,
-    AbstractSimpleTextFieldComponent
+    AbstractSimpleTextFieldComponent,
+    ValidationRegistryService
 } from '@netgrif/components-core';
 import {filter} from 'rxjs/operators';
 
@@ -35,8 +36,9 @@ export class SignaturePadFieldComponent extends AbstractSimpleTextFieldComponent
     public aspectRatio = 0.2;
 
     constructor(protected _translate: TranslateService, protected _ngZone: NgZone,
-                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextAreaField>) {
-        super(_translate, dataFieldPortalData);
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextAreaField>,
+                _validationRegistry: ValidationRegistryService) {
+        super(_translate, dataFieldPortalData, _validationRegistry);
     }
 
     public ngAfterViewInit(): void {

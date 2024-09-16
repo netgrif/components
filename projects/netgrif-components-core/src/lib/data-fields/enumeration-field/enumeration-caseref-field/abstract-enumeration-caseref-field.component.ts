@@ -2,6 +2,8 @@ import {AfterViewInit, Component, Inject, Injector, OnDestroy, Optional, Type} f
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {EnumerationField} from '../models/enumeration-field';
 import {Subscription} from 'rxjs';
+import {TranslateService} from "@ngx-translate/core";
+import {ValidationRegistryService} from "../../../registry/validation-registry.service";
 import {AbstractCaseRefBaseFieldComponent} from '../../case-ref-field/model/abstract-case-ref-base-field-component';
 
 @Component({
@@ -15,8 +17,10 @@ export abstract class AbstractEnumerationCaseRefComponent extends AbstractCaseRe
 
     protected constructor(protected injector: Injector,
                           protected caseViewType: Type<any>,
-                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<EnumerationField>) {
-        super(injector, caseViewType, dataFieldPortalData);
+                          _translate: TranslateService,
+                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<EnumerationField>,
+                          _validationRegistryService: ValidationRegistryService) {
+        super(injector, caseViewType, dataFieldPortalData, _validationRegistryService);
     }
 
     ngAfterViewInit(): void {

@@ -8,6 +8,8 @@ import {ViewIdService} from "../../../user/services/view-id.service";
 import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base-data-field.component";
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {ComponentPortal} from "@angular/cdk/portal";
+import {TranslateService} from "@ngx-translate/core";
+import {ValidationRegistryService} from "../../../registry/validation-registry.service";
 
 @Component({
     selector: 'ncc-abstract-task-ref-list-field',
@@ -19,8 +21,10 @@ export abstract class AbstractTaskRefListFieldComponent extends AbstractBaseData
 
     protected constructor(protected injector: Injector,
                           protected taskViewType: Type<any>,
-                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TaskRefField>) {
-        super(dataFieldPortalData);
+                          _translate: TranslateService,
+                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TaskRefField>,
+                          _validationRegistry: ValidationRegistryService) {
+        super(_translate, dataFieldPortalData, _validationRegistry);
     }
 
     ngAfterViewInit(): void {

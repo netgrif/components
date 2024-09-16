@@ -22,7 +22,7 @@ export abstract class AbstractMultichoiceAutocompleteFieldComponentComponent ext
     filteredOptions: Observable<Array<MultichoiceFieldValue>>;
 
     constructor(@Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<MultichoiceField>) {
-        super(dataFieldPortalData);
+        super(undefined, dataFieldPortalData);
     }
 
     ngOnInit() {

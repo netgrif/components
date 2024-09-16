@@ -20,6 +20,9 @@ import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resou
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
+import {Validator} from "../../registry/model/validator";
+import {weekendValidation} from "../models/validation-functions";
+import {DataFieldsModule} from "../data-fields.module";
 import {DateAdapter} from '@angular/material/core';
 import {NgxMatMomentModule} from '@angular-material-components/moment-adapter';
 import {CustomDateAdapter} from '../date-field/models/custom-date-adapter';
@@ -38,6 +41,7 @@ describe('AbstractDatetimeFieldComponent', () => {
                 TranslateLibModule,
                 HttpClientTestingModule,
                 NoopAnimationsModule,
+                DataFieldsModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
@@ -88,9 +92,14 @@ class TestWrapperComponent {
         editable: true,
         hidden: true
     }, undefined, undefined, undefined, [
-        {validationRule: 'between today,future', validationMessage: 'This is custom message!'},
-        {validationRule: 'between past,today', validationMessage: 'This is custom message!'},
-        {validationRule: 'between 2020-03-03,today', validationMessage: 'This is custom message!'},
-    ]);
+            {name: 'between', validationMessage: 'This is custom message!', arguments: {'from': {key: 'from', value: 'today', dynamic: false}, 'to': {key: 'to', value: 'future', dynamic: false}}},
+            {name: 'between', validationMessage: 'This is custom message!', arguments: {'from': {key: 'from', value: 'past', dynamic: false}, 'to': {key: 'to', value: 'today', dynamic: false}}},
+            {name: 'between', validationMessage: 'This is custom message!', arguments: {'from': {key: 'from', value: '2020-03-03', dynamic: false}, 'to': {key: 'to', value: 'today', dynamic: false}}}
+        ],
+        undefined,
+        undefined,
+        new Map<string, Validator>([
+            ['between', weekendValidation]
+        ]));
     changedFields = new BehaviorSubject<ChangedFields>({behavior: {editable: true}, taskId: 'testTaskId'});
 }
