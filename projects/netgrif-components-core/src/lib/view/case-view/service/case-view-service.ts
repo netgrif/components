@@ -47,6 +47,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
     protected _endOfData: boolean;
     protected _pagination: Pagination;
     protected _newCaseConfiguration: NewCaseConfiguration;
+    protected _paginationView: boolean = false;
 
     constructor(protected _allowedNetsService: AllowedNetsService,
                 protected _dialog: MatDialog,
@@ -100,6 +101,9 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
                     this._loading$.off(pageLoadResult.requestContext.filter);
                 }
                 Object.assign(this._pagination, pageLoadResult.requestContext.pagination);
+                if (this._paginationView) {
+                    return pageLoadResult.cases;
+                }
                 return {...acc, ...pageLoadResult.cases};
             }, {})
         );
@@ -132,6 +136,10 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
 
     protected get activeFilter(): Filter {
         return this._searchService.activeFilter;
+    }
+
+    public set paginationView(value: boolean) {
+        this._paginationView = value;
     }
 
     public loadPage(requestContext: PageLoadRequestContext): Observable<CasePageLoadRequestResult> {

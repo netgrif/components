@@ -1,7 +1,7 @@
 <div [ngClass]="{'flex-end': align === 'end',
                      'flex-start': align === 'start',
                      'flex-center': align === 'center',
-                     'full-button-width': stretch === 'true',
+                     'full-button-width': stretch ,
                      'padding-bottom': !hasTitle()}">
     <mat-label class="netgrif-label" [ngClass]="{'netgrif-label-disabled': formControlRef.disabled}"
                *ngIf="!showLargeLayout.value && hasTitle()">
@@ -17,7 +17,8 @@
                 'mat-icon-button': dataField.getComponentType() === 'icon',
                 'mat-fab': dataField.getComponentType() === 'fab',
                 'mat-mini-fab': dataField.getComponentType() === 'minifab',
-                'full-button-width': stretch === 'true'}"
+                'full-button-width': stretch ,
+                'no-shadow': dataField.getComponentType() === 'fab' || dataField.getComponentType() === 'minifab'}"
             color="primary"
             [matTooltip]="dataField.description"
             [disabled]="formControlRef.disabled || dataField.waitingForResponse"

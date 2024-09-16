@@ -52,7 +52,7 @@ describe('FieldConvertorService', () => {
 
         const date = moment();
         dataField.type = FieldTypeResource.DATE;
-        expect(service.formatValueForBackend(service.toClass(dataField), null)).toEqual(undefined);
+        expect(service.formatValueForBackend(service.toClass(dataField), null)).toEqual(null);
         expect(service.formatValueForBackend(service.toClass(dataField), date))
             .toEqual(date.format('YYYY-MM-DD'));
 

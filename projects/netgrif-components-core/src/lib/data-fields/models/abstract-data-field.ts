@@ -131,6 +131,11 @@ export abstract class DataField<T> {
     private _formControlRef: FormControl;
 
     /**
+     * change of component
+     * */
+    private _componentChange$: Subject<Component>;
+
+    /**
      * @param _stringId - ID of the data field from backend
      * @param _title - displayed title of the data field from backend
      * @param initialValue - initial value of the data field
@@ -158,6 +163,7 @@ export abstract class DataField<T> {
         this._update = new Subject<void>();
         this._block = new Subject<boolean>();
         this._touch = new Subject<boolean>();
+        this._componentChange$ = new Subject<Component>();
         this._validRequired = true;
         this.layoutSubject = new BehaviorSubject<Layout>(_layout);
         this.resetLocalLayout();
@@ -294,6 +300,15 @@ export abstract class DataField<T> {
 
     get component(): Component {
         return this._component;
+    }
+
+    set component(component: Component) {
+        this._component = component;
+        this._componentChange$.next(component);
+    }
+
+    public componentChange$(): Observable<Component> {
+        return this._componentChange$.asObservable();
     }
 
     public revertToPreviousValue(): void {

@@ -2,14 +2,14 @@ import {Injector, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {
-    ComponentRegistryService,
     CovalentModule,
     CurrencyModule,
     CustomDateAdapter,
     DataFieldsModule,
     FrontActionModule,
     MaterialModule,
-    TranslateLibModule
+    TranslateLibModule,
+    ComponentRegistryService
 } from '@netgrif/components-core';
 import {AngularResizeEventModule} from 'angular-resize-event';
 import {HttpClientModule} from '@angular/common/http';
@@ -85,6 +85,7 @@ import {UserListFieldComponent} from './user-list-field/user-list-field.componen
 import {
     SideMenuMultiUserAssignComponentModule
 } from "../side-menu/content-components/multi-user-assign/side-menu-multi-user-assign-component.module";
+import { NumberDecimalFieldComponent } from './number-field/number-decimal-field/number-decimal-field.component';
 import {TaskRefFieldComponent} from './task-ref-field/task-ref-field.component';
 import {
     TaskRefDashboardTileComponent
@@ -128,7 +129,9 @@ import { MultichoiceCaserefFieldComponent } from './multichoice-field/multichoic
 import {
     EnumerationCaserefFieldComponent
 } from './enumeration-field/enumeration-caseref-field/enumeration-caseref-field.component';
+import {SignaturePadFieldComponent} from './text-field/signature-pad-field/signature-pad-field.component';
 import { StringCollectionDefaultFieldComponent } from './string-collection-field/string-collection-default-field/string-collection-default-field.component';
+import {ComponentPortal} from "@angular/cdk/portal";
 
 @NgModule({
     declarations: [
@@ -192,7 +195,9 @@ import { StringCollectionDefaultFieldComponent } from './string-collection-field
         CaseRefDefaultComponent,
         MultichoiceCaserefFieldComponent,
         EnumerationCaserefFieldComponent,
-        StringCollectionDefaultFieldComponent
+        StringCollectionDefaultFieldComponent,
+        SignaturePadFieldComponent,
+        NumberDecimalFieldComponent
     ],
     exports: [
         DataFieldTemplateComponent
@@ -239,36 +244,45 @@ export class DataFieldsComponentModule {
         componentRegistry.register('enumeration-list', (injector: Injector) => new ComponentPortal<any>(EnumerationListFieldComponent, null, injector));
         componentRegistry.register('enumeration-stepper', (injector: Injector) => new ComponentPortal<any>(EnumerationStepperFieldComponent, null, injector));
         componentRegistry.register('enumeration-icon', (injector: Injector) => new ComponentPortal<any>(EnumerationIconFieldComponent, null, injector));
+        componentRegistry.register('enumeration-caseref', (injector: Injector) => new ComponentPortal<any>(EnumerationCaserefFieldComponent, null, injector));
         componentRegistry.register('file-default', (injector: Injector) => new ComponentPortal<any>(FileDefaultFieldComponent, null, injector));
         componentRegistry.register("file-preview", (injector: Injector) => new ComponentPortal<any>(FileDefaultFieldComponent, null, injector));
         componentRegistry.register('file-list-default', (injector: Injector) => new ComponentPortal<any>(FileListDefaultFieldComponent, null, injector));
         componentRegistry.register('filter-default', (injector: Injector) => new ComponentPortal<any>(FilterDefaultFieldComponent, null, injector));
         componentRegistry.register('filter-filter-tab-view', (injector: Injector) => new ComponentPortal<any>(FilterDefaultFieldComponent, null, injector));
         componentRegistry.register('i18n-divider', (injector: Injector) => new ComponentPortal<any>(I18nDividerFieldComponent, null, injector));
+        componentRegistry.register('i18n-text', (injector: Injector) => new ComponentPortal<any>(I18nTextFieldComponent, null, injector));
         componentRegistry.register('i18n-default', (injector: Injector) => new ComponentPortal<any>(I18nTextFieldComponent, null, injector));
         componentRegistry.register('multichoice-default', (injector: Injector) => new ComponentPortal<any>(MultichoiceSelectFieldComponent, null, injector));
         componentRegistry.register('multichoice-list', (injector: Injector) => new ComponentPortal<any>(MultichoiceListFieldComponent, null, injector));
+        componentRegistry.register('multichoice-caseref', (injector: Injector) => new ComponentPortal<any>(MultichoiceCaserefFieldComponent, null, injector));
         componentRegistry.register('multichoice-autocomplete', (injector: Injector) => new ComponentPortal<any>(MultichoiceAutocompleteFieldComponent, null, injector));
         componentRegistry.register('number-default', (injector: Injector) => new ComponentPortal<any>(NumberDefaultFieldComponent, null, injector));
         componentRegistry.register('number-currency', (injector: Injector) => new ComponentPortal<any>(NumberCurrencyFieldComponent, null, injector));
+        componentRegistry.register('number-decimal', (injector: Injector) => new ComponentPortal<any>(NumberDecimalFieldComponent, null, injector));
         componentRegistry.register('text-default', (injector: Injector) => new ComponentPortal<any>(SimpleTextFieldComponent, null, injector));
         componentRegistry.register('text-password', (injector: Injector) => new ComponentPortal<any>(PasswordTextFieldComponent, null, injector));
         componentRegistry.register('text-textarea', (injector: Injector) => new ComponentPortal<any>(TextareaFieldComponent, null, injector));
         componentRegistry.register('text-richtextarea', (injector: Injector) => new ComponentPortal<any>(RichTextareaFieldComponent, null, injector));
         componentRegistry.register('text-htmltextarea', (injector: Injector) => new ComponentPortal<any>(HtmlTextareaFieldComponent, null, injector));
+        componentRegistry.register('text-signature', (injector: Injector) => new ComponentPortal<any>(SignaturePadFieldComponent, null, injector));
         componentRegistry.register('text-dashboard_line_chart', (injector: Injector) => new ComponentPortal<any>(DashboardLineChartTextFieldComponent, null, injector));
         componentRegistry.register('text-dashboard_pie_chart', (injector: Injector) => new ComponentPortal<any>(DashboardPieChartTextFieldComponent, null, injector));
         componentRegistry.register('text-dashboard_bar_chart', (injector: Injector) => new ComponentPortal<any>(DashboardBarChartTextFieldComponent, null, injector));
         componentRegistry.register('text-dashboard_iframe', (injector: Injector) => new ComponentPortal<any>(DashboardIframeTextFieldComponent, null, injector));
         componentRegistry.register('text-dashboard_portal', (injector: Injector) => new ComponentPortal<any>(DashboardPortalTextFieldComponent, null, injector));
+        componentRegistry.register('task-ref-dashboard', (injector: Injector) => new ComponentPortal<any>(TaskRefDashboardFieldComponent, null, injector));
+        componentRegistry.register('task-ref-task-list', (injector: Injector) => new ComponentPortal<any>(TaskRefListFieldComponent, null, injector));
+        componentRegistry.register('case-ref-default', (injector: Injector) => new ComponentPortal<any>(CaseRefDefaultComponent, null, injector));
+        componentRegistry.register('user-default', (injector: Injector) => new ComponentPortal<any>(UserDefaultFieldComponent, null, injector));
         componentRegistry.register('user-default', (injector: Injector) => new ComponentPortal<any>(UserDefaultFieldComponent, null, injector));
         componentRegistry.register('user-list-default', (injector: Injector) => new ComponentPortal<any>(UserListDefaultFieldComponent, null, injector));
-        componentRegistry.register("enumeration-caseref", (injector: Injector) => new ComponentPortal<any>(EnumerationCaserefFieldComponent, null, injector));
-        componentRegistry.register("i18n-text", (injector: Injector) => new ComponentPortal<any>(I18nTextFieldComponent, null, injector));
-        componentRegistry.register("multichoice-caseref", (injector: Injector) => new ComponentPortal<any>(MultichoiceCaserefFieldComponent, null, injector));
-        componentRegistry.register("task-ref-dashboard", (injector: Injector) => new ComponentPortal<any>(TaskRefDashboardFieldComponent, null, injector));
-        componentRegistry.register("task-ref-task-list", (injector: Injector) => new ComponentPortal<any>(TaskRefListFieldComponent, null, injector));
-        componentRegistry.register("case-ref-default", (injector: Injector) => new ComponentPortal<any>(CaseRefDefaultComponent, null, injector));
-        componentRegistry.register("string-collection-default", (injector: Injector) => new ComponentPortal<any>(StringCollectionDefaultFieldComponent, null, injector));
+        componentRegistry.register('enumeration-caseref', (injector: Injector) => new ComponentPortal<any>(EnumerationCaserefFieldComponent, null, injector));
+        componentRegistry.register('i18n-text', (injector: Injector) => new ComponentPortal<any>(I18nTextFieldComponent, null, injector));
+        componentRegistry.register('multichoice-caseref', (injector: Injector) => new ComponentPortal<any>(MultichoiceCaserefFieldComponent, null, injector));
+        componentRegistry.register('task-ref-dashboard', (injector: Injector) => new ComponentPortal<any>(TaskRefDashboardFieldComponent, null, injector));
+        componentRegistry.register('task-ref-task-list', (injector: Injector) => new ComponentPortal<any>(TaskRefListFieldComponent, null, injector));
+        componentRegistry.register('case-ref-default', (injector: Injector) => new ComponentPortal<any>(CaseRefDefaultComponent, null, injector));
+        componentRegistry.register('string-collection-default', (injector: Injector) => new ComponentPortal<any>(StringCollectionDefaultFieldComponent, null, injector));
     }
 }

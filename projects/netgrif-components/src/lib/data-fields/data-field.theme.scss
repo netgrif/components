@@ -89,6 +89,7 @@
         .mat-paginator-page-size-select .mat-form-field-infix {
             min-width: unset !important;
         }
+
         .mat-form-field-infix {
             padding: 5px 0 11px 0 !important;
             font-weight: 400 !important;
@@ -299,7 +300,7 @@
             color: $color-text-enabled !important;
         }
 
-        .mat-radio-label-content{
+        .mat-radio-label-content {
             color: $color-text-enabled !important;
         }
 
@@ -315,6 +316,7 @@
             .mat-chip-list-wrapper {
                 margin: -10px !important;
             }
+
             &.mat-form-field .mat-form-field-prefix {
                 top: 0.33em !important;
                 padding-right: 4px !important;
@@ -384,7 +386,7 @@
             }
 
             .mat-form-field-outline-thick {
-                color: mat.get-contrast-color-from-palette($primary ,500);
+                color: mat.get-contrast-color-from-palette($primary, 500);
             }
 
             &.mat-focused {
@@ -441,6 +443,7 @@
     width: 10px !important;
     height: 5px !important;
 }
+
 ngx-mat-calendar-header .mat-calendar-arrow {
     border-left: 5px solid transparent !important;
     border-right: 5px solid transparent !important;
@@ -483,6 +486,7 @@ nc-user-list-default-field .mat-form-field .mat-form-field-prefix {
     top: 0 !important;
     padding-right: 4px !important;
 }
+
 :host .editor-toolbar {
     background-color: #FFFFFF !important;
     border-top: 1px solid #FFFFFF !important;

@@ -265,13 +265,16 @@
                 "false": "nie"
             }
         },
+        "clear": "Vymazať",
+        "save": "Uložiť",
         "noFile": "Žiadny súbor",
         "file": {
             "noFile": "Žiadny súbor",
             "clickToUpload": "Kliknutím nahrajte súbor",
             "clickToDownload": "Kliknutím stiahnite súbor {{fileName}}",
             "clickToOpen": "Kliknutím zobrazíte obsah súboru",
-            "clickToDelete": "Kliknutím vymažte súbor"
+            "clickToDelete": "Kliknutím vymažte súbor",
+            "notAllowed": "Súbor {{fileName}} nie je možné nahrať. Jeho typ nie je povolený."
         },
         "i18n": {
             "languageSelect": "Výber jazyka",

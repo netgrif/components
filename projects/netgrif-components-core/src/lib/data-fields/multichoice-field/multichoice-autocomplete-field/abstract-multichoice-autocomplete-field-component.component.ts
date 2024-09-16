@@ -65,7 +65,7 @@ export abstract class AbstractMultichoiceAutocompleteFieldComponentComponent ext
 
     change() {
         if (this.input.nativeElement.value !== undefined) {
-            this.filteredOptions = of(this._filter(this.input.nativeElement.value).filter((option) => !this.dataField.value.includes(option.key)));
+            this.filteredOptions = of(this._filter(this.input.nativeElement.value).filter((option) => !this.dataField.value?.includes(option.key)));
         }
     }
 

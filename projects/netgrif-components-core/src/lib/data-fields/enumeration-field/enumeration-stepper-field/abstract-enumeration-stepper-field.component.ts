@@ -2,7 +2,7 @@ import {
     AfterViewChecked,
     Component,
     ElementRef,
-    Inject,
+    Inject, OnDestroy,
     OnInit,
     Optional,
     QueryList,
@@ -11,25 +11,29 @@ import {
 import {EnumerationField} from '../models/enumeration-field';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base-data-field.component";
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'ncc-abstract-enumeration-stepper-field',
     template: ''
 })
-export abstract class AbstractEnumerationStepperFieldComponent extends AbstractBaseDataFieldComponent<EnumerationField> implements OnInit, AfterViewChecked {
+export abstract class AbstractEnumerationStepperFieldComponent extends AbstractBaseDataFieldComponent<EnumerationField> implements OnInit, AfterViewChecked, OnDestroy {
 
     @ViewChildren('oneStep') steps: QueryList<ElementRef>;
     public arrowStepper: boolean;
+    protected subComp: Subscription;
 
     constructor(protected ref: ElementRef,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<EnumerationField>) {
         super(undefined, dataFieldPortalData);
         this.arrowStepper = false;
-
     }
 
     ngOnInit() {
+        this.arrowStepper = this.dataField.component?.properties?.arrowStepper === 'true';
+        this.subComp = this.dataField.componentChange$().subscribe(() => {
             this.arrowStepper = this.dataField.component?.properties?.arrowStepper === 'true';
+        });
     }
 
     canShowDoneIcon(index: number): boolean {
@@ -62,5 +66,10 @@ export abstract class AbstractEnumerationStepperFieldComponent extends AbstractB
 
     public resolveValue(key: string): string {
         return this.dataField.choices.find(k => k.key === key)?.value;
+    }
+
+    ngOnDestroy() {
+        super.ngOnDestroy();
+        this.subComp.unsubscribe();
     }
 }

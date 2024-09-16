@@ -25,6 +25,8 @@ import {HttpParams} from "@angular/common/http";
 import {take} from "rxjs/operators";
 import {FileFieldValue} from "../../file-field/models/file-field-value";
 import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base-data-field.component";
+import {FileFieldRequest} from "../../../resources/interface/file-field-request-body";
+import {AbstractFileFieldDefaultComponent} from '../../models/abstract-file-field-default-component';
 
 export interface FilesState {
     progress: number;
@@ -39,10 +41,8 @@ export interface FilesState {
     selector: 'ncc-abstract-file-list-default-field',
     template: ''
 })
-export abstract class AbstractFileListDefaultFieldComponent extends AbstractBaseDataFieldComponent<FileListField> implements OnInit, AfterViewInit, OnDestroy {
+export abstract class AbstractFileListDefaultFieldComponent extends AbstractFileFieldDefaultComponent<FileListField> implements OnInit, AfterViewInit, OnDestroy {
 
-    private labelWidth: number;
-    public cutProperty: string;
     public uploadedFiles: Array<string>;
     public state: FilesState;
     private valueChange$: Subscription;
@@ -55,23 +55,13 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractBase
     protected maxFilesNumber: number;
     protected maxFilesMessage: string;
 
-    /**
-     * Task mongo string id is binding property from parent component.
-     */
-    @Input() public taskId: string;
-
-    /**
-     * File picker element reference from component template that is initialized after view init.
-     */
-    @ViewChild('fileUploadInput') public fileUploadEl: ElementRef<HTMLInputElement>;
-
     protected constructor(protected _taskResourceService: TaskResourceService,
                           protected _log: LoggerService,
                           protected _snackbar: SnackBarService,
                           _translate: TranslateService,
                           protected _eventService: EventService,
                           @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<FileListField>) {
-        super(_translate, dataFieldPortalData);
+        super(_log, _snackbar, _translate, dataFieldPortalData);
         this.state = this.defaultState;
         this.uploadedFiles = new Array<string>();
         this.maxFilesNumber = Number.POSITIVE_INFINITY;
@@ -148,9 +138,7 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractBase
         if (this.dataField.maxUploadSizeInBytes &&
             this.dataField.maxUploadSizeInBytes < sum) {
             this._log.error('Files cannot be uploaded. Maximum size of files exceeded.');
-            this._snackbar.openErrorSnackBar(
-                this.translate.instant('dataField.snackBar.maxFilesSizeExceeded') + this.dataField.maxUploadSizeInBytes
-            );
+            this.resolveMaxSizeMessage();
             this.fileUploadEl.nativeElement.value = '';
             return;
         }
@@ -167,6 +155,10 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractBase
             }
         }
 
+        if (!this.checkAllowedTypes()) {
+            return;
+        }
+
         this.state = this.defaultState;
         this.state.uploading = true;
         const fileFormData = new FormData();
@@ -174,12 +166,12 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractBase
         filesToUpload.forEach(fileToUpload => {
             fileFormData.append('files', fileToUpload);
         });
-        const data: FileFieldIdBody = {};
-        data[this.resolveParentTaskId()] = this.dataField.stringId;
-        fileFormData.append('data', new Blob([JSON.stringify(data)], {type: 'application/json'}));
-        this._taskResourceService.uploadFile(this.taskId,
-            this.dataField.stringId, fileFormData, true)
-            .subscribe((response: EventOutcomeMessageResource) => {
+        const requestBody: FileFieldRequest = {
+            parentTaskId: this.resolveParentTaskId(),
+            fieldId: this.dataField.stringId,
+        }
+        fileFormData.append('data', new Blob([JSON.stringify(requestBody)], {type: 'application/json'}));
+        this._taskResourceService.uploadFile(this.taskId, fileFormData, true).subscribe((response: EventOutcomeMessageResource) => {
                 if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.UPLOAD) {
                     this.state.progress = (response as ProviderProgress).progress;
                 } else {
@@ -245,8 +237,10 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractBase
 
         this.state = this.defaultState;
         this.state.downloading = true;
-        this._taskResourceService.downloadFile(this.resolveParentTaskId(),
-            this.dataField.stringId, fileName).subscribe(response => {
+        let params = new HttpParams();
+        params = params.set("fieldId", this.dataField.stringId);
+        params = params.set("fileName", fileName);
+        this._taskResourceService.downloadFile(this.resolveParentTaskId(), params).subscribe(response => {
             if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.DOWNLOAD) {
                 this.state.progress = (response as ProviderProgress).progress;
             } else {
@@ -285,11 +279,12 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractBase
             this._log.error('File cannot be deleted. No task is set to the field.');
             return;
         }
-        let param = new HttpParams();
-        param = param.set("parentTaskId", this.resolveParentTaskId());
-
-        this._taskResourceService.deleteFile(this.taskId,
-            this.dataField.stringId, fileName, param).pipe(take(1)).subscribe((response: EventOutcomeMessageResource) => {
+        const requestBody: FileFieldRequest = {
+            parentTaskId: this.resolveParentTaskId(),
+            fieldId: this.dataField.stringId,
+            fileName
+        }
+        this._taskResourceService.deleteFile(this.taskId, requestBody).pipe(take(1)).subscribe((response: EventOutcomeMessageResource) => {
             if (response.success) {
                 const changedFieldsMap: ChangedFieldsMap = this._eventService.parseChangedFieldsFromOutcomeTree(response.outcome);
                 this.dataField.emitChangedFields(changedFieldsMap);
@@ -346,18 +341,5 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractBase
             }
             this.uploadedFiles = this.dataField.value.namesPaths.map(namePath => namePath.name);
         }
-    }
-
-    private resolveParentTaskId(): string {
-        return !!this.dataField.parentTaskId ? this.dataField.parentTaskId : this.taskId;
-    }
-
-    public getCutProperty(i18nLabel): string {
-        if (this.labelWidth !== i18nLabel.offsetWidth) {
-            this.labelWidth = i18nLabel.offsetWidth;
-            const calculatedWidth = 'calc(0.5em + ' + i18nLabel.offsetWidth / 4 * 3 + 'px)';
-            this.cutProperty = `polygon(0 0, 0 100%, 100% 100%, 100% 0%, ${calculatedWidth} 0, ${calculatedWidth} 3px, 0.5em 3px, 0.5em 0)`;
-        }
-        return this.cutProperty;
     }
 }
