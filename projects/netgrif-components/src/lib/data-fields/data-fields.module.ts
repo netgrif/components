@@ -110,7 +110,6 @@ import {RouterModule} from '@angular/router';
 import {
     FilterFieldTabViewContentComponent
 } from './filter-field/tab-view-filter-field/filter-field-tab-view-content.component';
-import {ComponentPortal} from "@angular/cdk/portal";
 import { BooleanDefaultFieldComponent } from './boolean-field/boolean-default-field/boolean-default-field.component';
 import { ButtonDefaultFieldComponent } from './button-field/button-default-field/button-default-field.component';
 import { DateDefaultFieldComponent } from './date-field/date-default-field/date-default-field.component';

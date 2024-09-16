@@ -24,7 +24,7 @@ export abstract class AbstractMultichoiceCaseRefComponent extends AbstractCaseRe
                           _translate: TranslateService,
                           @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<MultichoiceField>,
                           _validationRegistryService: ValidationRegistryService) {
-        super(injector, caseViewType, dataFieldPortalData);
+        super(injector, caseViewType, dataFieldPortalData, _validationRegistryService);
     }
 
     ngAfterViewInit(): void {

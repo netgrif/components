@@ -20,7 +20,7 @@ export abstract class AbstractEnumerationCaseRefComponent extends AbstractCaseRe
                           _translate: TranslateService,
                           @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<EnumerationField>,
                           _validationRegistryService: ValidationRegistryService) {
-        super(injector, caseViewType, dataFieldPortalData);
+        super(injector, caseViewType, dataFieldPortalData, _validationRegistryService);
     }
 
     ngAfterViewInit(): void {

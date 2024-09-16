@@ -20,7 +20,7 @@ export abstract class AbstractCaseRefDefaultComponent extends AbstractCaseRefBas
                           _translate: TranslateService,
                           @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<CaseRefField>,
                           _validationRegistryService: ValidationRegistryService) {
-        super(injector, caseViewType, dataFieldPortalData);
+        super(injector, caseViewType, dataFieldPortalData, _validationRegistryService);
     }
 
     ngAfterViewInit(): void {

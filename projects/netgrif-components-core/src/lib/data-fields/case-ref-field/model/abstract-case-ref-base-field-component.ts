@@ -12,6 +12,7 @@ import {BaseFilter} from '../../../search/models/base-filter';
 import {NAE_VIEW_ID_SEGMENT} from '../../../user/models/view-id-injection-tokens';
 import {ViewIdService} from '../../../user/services/view-id.service';
 import {DataField} from '../../models/abstract-data-field';
+import {ValidationRegistryService} from "../../../registry/validation-registry.service";
 
 export abstract class AbstractCaseRefBaseFieldComponent<T extends DataField<unknown>> extends AbstractBaseDataFieldComponent<T> {
 
@@ -19,8 +20,9 @@ export abstract class AbstractCaseRefBaseFieldComponent<T extends DataField<unkn
 
     protected constructor(protected injector: Injector,
                           protected caseViewType: Type<any>,
-                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<T>) {
-        super(dataFieldPortalData);
+                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<T>,
+                          _validationRegistry: ValidationRegistryService,) {
+        super(null, dataFieldPortalData);
     }
 
     createFilter(filterValue: string | string[]) {
