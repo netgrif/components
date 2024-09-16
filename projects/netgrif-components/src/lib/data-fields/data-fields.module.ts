@@ -4,7 +4,8 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {
     CovalentModule,
     CurrencyModule,
-    CustomDateAdapter, FrontActionModule,
+    CustomDateAdapter,
+    FrontActionModule,
     MaterialModule,
     TranslateLibModule,
     ComponentRegistryService
@@ -76,6 +77,8 @@ import {I18nTextFieldComponent} from './i18n-field/i18n-text-field/i18n-text-fie
 import {EasymdeWrapperComponent} from './text-field/rich-textarea-field/easymde-wrapper/easymde-wrapper.component';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { CaseRefFieldComponent } from './case-ref-field/case-ref-field.component';
+import {PetriflowCanvasModule} from '@netgrif/petriflow.svg';
 import {
     MultichoiceAutocompleteFieldComponent
 } from './multichoice-field/multichoice-autocomplete-field/multichoice-autocomplete-field.component';
@@ -191,6 +194,7 @@ import {ComponentPortal} from "@angular/cdk/portal";
         MultichoiceCaserefFieldComponent,
         EnumerationCaserefFieldComponent,
         StringCollectionDefaultFieldComponent,
+        CaseRefFieldComponent,
         SignaturePadFieldComponent,
         NumberDecimalFieldComponent
     ],
@@ -219,7 +223,8 @@ import {ComponentPortal} from "@angular/cdk/portal";
         BrowserAnimationsModule,
         DashboardComponentModule,
         RouterModule,
-        FrontActionModule
+        FrontActionModule.
+        PetriflowCanvasModule
     ],
     providers: [
         {provide: DateAdapter, useClass: CustomDateAdapter}

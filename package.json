@@ -104,7 +104,10 @@
         "rxjs": "~6.6.7",
         "showdown": "^2.0.3",
         "tslib": "^2.0.0",
-        "zone.js": "~0.11.4"
+        "zone.js": "~0.11.4",
+        "panzoom": "~9.4.3",
+        "@netgrif/petriflow.svg": "~1.0.0",
+        "@netgrif/petri.svg": "~1.0.0"
     },
     "devDependencies": {
         "@angular-devkit/build-angular": "~13.3.1",

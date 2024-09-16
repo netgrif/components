@@ -436,6 +436,27 @@
         border-left: 1px solid $color-outline-enabled !important;
         border-right: 1px solid $color-outline-enabled !important;
     }
+
+    .svg-inactive-stroke {
+        stroke: black !important;
+    }
+
+    .svg-inactive-fill {
+        fill: black !important;
+    }
+
+    .svg-active-stroke {
+        stroke: map-get($primary, A200) !important;
+    }
+
+    .svg-active-fill {
+        fill: map-get($primary, A200) !important;
+    }
+
+    .svg-transition-enabled {
+        stroke: green;
+        fill: yellowgreen;
+    }
 }
 
 .mat-calendar-arrow {
