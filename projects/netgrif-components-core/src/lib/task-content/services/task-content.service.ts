@@ -222,20 +222,19 @@ export abstract class TaskContentService implements OnDestroy {
         if (!this._task || !this._task.dataGroups) {
             return;
         }
-        // todo actions owner zbytočný?
         const frontendActions = chFields.taskId === this.task.stringId && chFields[TaskContentService.FRONTEND_ACTIONS_KEY];
         Object.keys(chFields).forEach(changedField => {
-            if (this.isFieldInTask(chFields.taskId, changedField)) {
+            if (chFields.taskId === this._task.stringId && this.isFieldInTask(chFields.taskId, changedField)) {
                 this.updateField(chFields, this.taskFieldsIndex[chFields.taskId].fields[changedField], frontendActions);
             } else if (!!this.getReferencedTaskId(changedField)) {
-                this.updateReferencedField(chFields, this.taskFieldsIndex[this.getReferencedTaskId(changedField)].fields[changedField], frontendActions);
+                this.updateField(chFields, this.taskFieldsIndex[this.getReferencedTaskId(changedField)].fields[changedField], frontendActions, true);
             }
         });
 
         this.$shouldCreate.next(this._task.dataGroups);
     }
 
-    protected updateField(chFields: ChangedFields, field: DataField<any>, frontendActions: Change): void {
+    protected updateField(chFields: ChangedFields, field: DataField<any>, frontendActions: Change, referenced: boolean = false): void {
         if (this._fieldConverterService.resolveType(field) === FieldTypeResource.TASK_REF) {
             this._taskDataReloadRequest$.next(frontendActions ? frontendActions : undefined);
             return;
@@ -251,14 +250,14 @@ export abstract class TaskContentService implements OnDestroy {
                     field.valueWithoutChange(this._fieldConverterService.formatValueFromBackend(field, updatedField[key]));
                     break;
                 case 'behavior':
-                    if (updatedField.behavior[this._task.transitionId]) {
-                        // TODO NGSD-489 fix behavior resolution
+                    if (!referenced && updatedField.behavior[this._task.transitionId]) {
                         field.behavior = updatedField.behavior[this._task.transitionId];
-                    } else {
-                        const transitionId = this.getReferencedTransitionId(field.stringId);
+                    } else if (referenced) {
+                        const taskId = this.getReferencedTaskId(field.stringId);
+                        const taskRef = this.findTaskRefId(taskId, this.taskFieldsIndex[this._task.stringId].fields);
+                        const transitionId = this.taskFieldsIndex[taskId].transitionId;
                         if (!!transitionId && transitionId !== '' && updatedField.behavior[transitionId])
-                            field.behavior = updatedField.behavior[transitionId];
-                        break;
+                            field.behavior = taskRef.behavior.editable ? updatedField.behavior[transitionId] : taskRef.behavior;
                     }
                     break;
                 case 'choices':
@@ -292,32 +291,6 @@ export abstract class TaskContentService implements OnDestroy {
                 default:
                     field[key] = updatedField[key];
 
-            }
-            field.update();
-        });
-    }
-
-    protected updateReferencedField(chFields: ChangedFields, field: DataField<any>, frontendActions: Change): void {
-        if (this._fieldConverterService.resolveType(field) === FieldTypeResource.TASK_REF) {
-            this._taskDataReloadRequest$.next(frontendActions ? frontendActions : undefined);
-            return;
-        }
-        const updatedField = chFields[field.stringId];
-        Object.keys(updatedField).forEach(key => {
-            switch (key) {
-                case 'behavior': {
-                    const taskId = this.getReferencedTaskId(field.stringId);
-                    const taskRef = this.findTaskRefId(taskId, this.taskFieldsIndex[this._task.stringId].fields);
-                    const transitionId = this.taskFieldsIndex[taskId].transitionId;
-                    if (!!transitionId && transitionId !== '' && updatedField.behavior[transitionId])
-                        field.behavior = taskRef.behavior.editable ? updatedField.behavior[transitionId] : taskRef.behavior;
-                    break;
-                }
-                case 'value':
-                    field.valueWithoutChange(this._fieldConverterService.formatValueFromBackend(field, updatedField[key]));
-                    break;
-                default:
-                    field[key] = updatedField[key];
             }
             field.update();
         });
