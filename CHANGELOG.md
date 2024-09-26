@@ -7,7 +7,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Full Changelog: [https://github.com/netgrif/components/commits/v6.4.0](https://github.com/netgrif/components/commits/v6.4.0)
 
-## [6.4.0](https://github.com/netgrif/components/releases/tag/v6.4.0) (2024-04-19)
+## [6.4.0](https://github.com/netgrif/components/releases/tag/v6.4.0) (2024-09-26)
 
 ### Fixed
 - [NAE-1915] TaskRef behaviour handling for multiple level
