@@ -1,11 +1,45 @@
 @use '@angular/material' as mat;
 
-@mixin user-profile($theme) {
+@mixin user-profile($theme, $nae-variables) {
     $primary: map-get($theme, primary);
     .card-title {
         background: mat.get-color-from-palette($primary) !important;
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;
+    }
+
+    .white-name {
+        color: map-get($nae-variables, profile-name);
+    }
+
+    .tab-profile-group {
+        background: map-get($nae-variables, profile-border);
+    }
+
+    .div-background {
+        background: map-get($nae-variables, profile-border-background);
+    }
+
+    .profile-border {
+        border: 1px solid map-get($nae-variables, profile-border);
+        background: map-get($nae-variables, profile-name);
+    }
+
+    .full-showcase-text {
+        span {
+            &:first-child {
+                color: map-get($nae-variables, user-card-text);
+            }
+            color: rgba(map-get($nae-variables, user-card-text), 0.9);
+        }
+    }
+
+    .horizontal-showcase-container {
+        border: 1px solid map-get($nae-variables, user-card);
+    }
+
+    .vertical-showcase-container {
+        border: 1px solid map-get($nae-variables, user-card);
     }
 }
 

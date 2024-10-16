@@ -1,10 +1,14 @@
 @use '@angular/material' as mat;
 
-@mixin roles-assignment-theme($theme) {
+@mixin ldap-assignment-theme($theme, $nae-variables) {
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
 
     .list-item-selected {
         background: mat.get-color-from-palette($primary, 100, 1);
+    }
+
+    .ldapGroup-assign-search {
+        color: map-get($nae-variables, base-color);
     }
 }

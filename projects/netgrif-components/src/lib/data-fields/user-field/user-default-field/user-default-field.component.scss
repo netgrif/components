@@ -8,10 +8,6 @@
     text-overflow: ellipsis;
 }
 
-.input-placeholder {
-    color: #64748B;
-}
-
 .button-icon-input {
     padding: 2px !important;
 }
@@ -22,10 +18,7 @@
 }
 
 .form-input {
-    background: #FFFFFF;
-    color: #64748B;
     outline: none;
-    border: 1px solid #64748B;
     text-align: left;
     font-size: 14px;
     line-height: 20px;
@@ -43,7 +36,6 @@
 
 .form-input-disabled {
     background: transparent !important;
-    border-color: #CBD5E1 !important;
 }
 
 .form-input-disabled:hover {
@@ -69,7 +61,6 @@
 
 .no-cursor {
     cursor: default !important;
-    color: #64748B;
 }
 
 .border-default {
@@ -90,7 +81,6 @@
 .user-field-label {
     transform: translate(0.4em,-0.45em) scale(.75);
     transform-origin: left;
-    color: #64748B;
     background: transparent;
     width: fit-content;
     padding: 0 0.5em;

@@ -1,6 +1,6 @@
 @use '@angular/material' as mat;
 
-@mixin search-predicate-theme($theme) {
+@mixin search-predicate-theme($theme, $nae-variables) {
     $primary: map-get($theme, primary);
 
     .predicate-body-color {
@@ -12,5 +12,17 @@
             margin: 0 !important;
             padding-bottom: 0;
         }
+    }
+
+    white-background {
+        background: map-get($nae-variables, search-background);
+    }
+
+    .mat-form-field-wrapper-search {
+        background: map-get($nae-variables, search-background);
+    }
+
+    .prefix-icon {
+        color: map-get($nae-variables, base-color);
     }
 }

@@ -8,7 +8,7 @@
     }
 }
 
-@mixin side-menu-theme($theme) {
+@mixin side-menu-theme($theme, $nae-variables) {
     $primary: map-get($theme, primary);
 
     .custom-mat-toolbar {
@@ -20,5 +20,9 @@
         font-size: 20px;
         line-height: 32px;
         font-family: 'Roboto', sans-serif;
+    }
+
+    .version-span {
+        color: map-get($nae-variables, base-color);
     }
 }

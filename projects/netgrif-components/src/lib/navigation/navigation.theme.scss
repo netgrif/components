@@ -1,17 +1,58 @@
 @use '@angular/material' as mat;
 
-@mixin navigation-theme($theme) {
+@mixin navigation-theme($theme, $nae-variables) {
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
 
+    // DOUBLE DRAWER
+    .drawer-border-bottom {
+        border-bottom: 1px solid map-get($nae-variables, drawer-border);
+    }
+
+    .menu-font-color {
+        color: map-get($nae-variables, drawer-color) !important;
+    }
+
+    .icon-large {
+        color: map-get($nae-variables, drawer-color);
+    }
+
+    .tree-node {
+        color: map-get($nae-variables, drawer-color);
+        .menu-item-focus-overlay {
+            background: map-get($nae-variables, drawer-color);
+        }
+    }
+
+    .logoimg-tool {
+        background: map-get($nae-variables, drawer-logo);
+    }
+
+    .toolbar {
+        border-bottom: 1px solid map-get($nae-variables, drawer-border);
+    }
+
+    .content-color {
+        background-color: map-get($nae-variables, drawer-background);
+    }
+
+    .expansion-indicator {
+        color: map-get($nae-variables, drawer-color);
+    }
+
+    .order-text {
+        color: map-get($nae-variables, drawer-color);
+    }
+
+    // END
     .active-navigation-route {
         background-color: rgba(mat.get-color-from-palette($accent), 0.3);
     }
 
     .active-rail {
-        background: white;
-        border-bottom: 1px solid #dddddd;
-        border-top: 1px solid #dddddd;
+        background: map-get($nae-variables, rail-background);
+        border-bottom: 1px solid map-get($nae-variables, rail-border);
+        border-top: 1px solid map-get($nae-variables, drail-border);
         border-left: 3px solid mat.get-color-from-palette($primary);
 
         .icon-large {
@@ -20,7 +61,7 @@
     }
 
     .rail-color {
-        background: #F8FAFC;
+        background: map-get($nae-variables, drawer-background);
     }
 
     .rail-selected-color {

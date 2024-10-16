@@ -6,7 +6,7 @@
     }
 }
 
-@mixin dialog-theme($theme) {
+@mixin dialog-theme($theme, $nae-variables) {
     .dialog-content-margin {
         margin-bottom: 16px;
     }
@@ -47,7 +47,7 @@
         font-size: 20px;
         line-height: 24px;
         letter-spacing: 0.15px;
-        color: #1E293B;
+        color: map-get($theme, 800);
     }
 
     .mat-dialog-container {
@@ -58,6 +58,18 @@
         .netgrif-input .mat-form-field-appearance-outline .mat-form-field-suffix {
             top: unset;
         }
+    }
+
+    .prefix-icon {
+        color: map-get($nae-variables, base-color);
+    }
+
+    .upper-divider {
+        border-top-color: map-get($theme, 800);
+    }
+
+    .version-span {
+        color: map-get($nae-variables, base-color);
     }
 }
 

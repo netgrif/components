@@ -4,24 +4,148 @@
 @import "quill/dist/quill.core.css";
 @import '~node_modules/@covalent/markdown/markdown-theme';
 
-@mixin data-field-component($theme) {
+@mixin data-field-component($theme, $nae-variables) {
     $primary: map-get($theme, primary);
     $secondary: map-get($theme, accent);
     $warn: map-get($theme, warn);
 
-    $color-text-disabled: #64748B;
-    $color-outline-disabled: #CBD5E1;
+    $color-text-disabled: map-get($nae-variables, datafield-text-disabled);
+    $color-outline-disabled: map-get($nae-variables, datafield-outline-disabled);
 
-    $color-text-enabled: #64748B;
-    $color-outline-enabled: #64748B;
+    $color-text-enabled: map-get($nae-variables, datafield-text-enabled);
+    $color-outline-enabled: map-get($nae-variables, datafield-outline-enabled);
+
+    // DATAFIELD PALETTE CUSTOMIZATION
+    .enum-icon-item {
+        color: $color-text-enabled;
+    }
+    .enum-icon-item-disabled {
+        color: map-get($nae-variables,datafield-icon-disabled);
+    }
+    .stepper-arrow-text {
+        color: $color-text-enabled;
+    }
+    .stepper-disabled .stepper-arrow-text {
+        color: map-get($nae-variables,datafield-icon-disabled);
+    }
+    .stepper-tooltip-text {
+        color: map-get($nae-variables,datafield-stepper-color);
+    }
+    .vertical-state {
+        color: map-get($nae-variables,datafield-stepper-color);
+    }
+    .horizontal-state {
+        color: map-get($nae-variables,datafield-stepper-color);
+    }
+    .stepper-min-height {
+        background-color: map-get($nae-variables,datafield-stepper-background);
+    }
 
     .editor-preview > h1 {
-        border-bottom: 1px solid #ddd;
+        border-bottom: 1px solid map-get($nae-variables, border);
     }
 
     .editor-preview > h2 {
-        border-bottom: 1px solid #eee;
+        border-bottom: 1px solid map-get($nae-variables, border);
     }
+
+    .input-placeholder {
+        color: $color-text-enabled;
+    }
+
+    .form-input {
+        background: map-get($nae-variables, datafield-background);
+        color: $color-text-enabled;
+        border: 1px solid $color-text-enabled;
+    }
+
+    .form-input-disabled, .form-input-disabled:focus-within {
+        border-color: $color-outline-disabled !important;
+    }
+
+    .form-input-disabled {
+        border-color: $color-outline-disabled !important;
+    }
+
+    .no-cursor {
+        color: $color-text-disabled;
+    }
+
+    .file-field-label {
+        color: $color-text-enabled;
+    }
+
+    .selected-language-value {
+        color: $color-text-enabled;
+    }
+
+    .selected-language-value:disabled {
+        color: $color-text-disabled;
+    }
+
+    .form-input-interfield {
+        background: map-get($nae-variables, datafield-background);
+        color: $color-text-enabled;
+        border: 1px solid
+    }
+
+    .form-input-interfield:hover {
+        border: solid 2px $color-outline-enabled;
+    }
+
+    .language-svg-icon {
+        border: solid 1px $color-outline-enabled;
+    }
+
+    .filled-language-row {
+        background-color: map-get($nae-variables, datafield-background);
+    }
+
+    .filled-language-row:not(:last-child) {
+        border-bottom: 1px solid $color-outline-enabled;
+    }
+
+    .filled-languages-wrapper {
+        border-radius: 0 0 6px 6px;
+        border-left: 1px solid $color-outline-enabled;
+        border-right: 1px solid $color-outline-enabled;
+        border-bottom: 1px solid $color-outline-enabled;
+    }
+
+    .i18n-label {
+        color: $color-text-enabled;
+    }
+
+    .required-label-color {
+        color: map-get($nae-variables, datafield-required-label);
+    }
+
+    .disabled-color {
+        color: map-get($nae-variables, datafield-icon-disabled);
+    }
+
+    .html-border {
+        border: 1px solid $color-outline-disabled;
+    }
+
+    .rich-border {
+        border: 1px solid $color-outline-disabled;
+    }
+
+    .signature-canvas {
+        border: 1px solid $color-outline-enabled;
+        -webkit-text-stroke-color: map-get($nae-variables, datafield-canvas-stroke);
+    }
+
+    .canvas-background-disabled {
+        background-color: map-get($nae-variables, datafield-canvas-disabled);
+    }
+
+    .user-field-label {
+        color: $color-text-enabled;
+    }
+
+    // END BLOCK
 
     .mat-option {
         height: auto !important;
@@ -271,12 +395,12 @@
 
         .mat-form-field-appearance-outline .mat-form-field-outline {
             color: $color-outline-enabled;
-            background-color: #FFFFFF;
+            background-color: map-get($nae-variables, datafield-background);
             border-radius: 6px;
         }
 
         .ql-toolbar {
-            background-color: #FFFFFF;
+            background-color: map-get($nae-variables, datafield-background);
         }
 
         .ql-editor {
@@ -285,7 +409,7 @@
         }
 
         .ql-editor.ql-blank {
-            background-color: #FFFFFF;
+            background-color: map-get($nae-variables, datafield-background);
         }
 
         .mat-form-field-appearance-outline .mat-form-field-outline-start {
@@ -431,7 +555,7 @@
     }
 
     :host ::ng-deep .editor-toolbar {
-        background-color: #FFFFFF !important;
+        background-color: map-get($nae-variables, datafield-background) !important;
         border-top: 1px solid $color-outline-enabled !important;
         border-left: 1px solid $color-outline-enabled !important;
         border-right: 1px solid $color-outline-enabled !important;
@@ -485,11 +609,4 @@ nc-number-currency-field .mat-form-field .mat-form-field-prefix {
 nc-user-list-default-field .mat-form-field .mat-form-field-prefix {
     top: 0 !important;
     padding-right: 4px !important;
-}
-
-:host .editor-toolbar {
-    background-color: #FFFFFF !important;
-    border-top: 1px solid #FFFFFF !important;
-    border-left: 1px solid #FFFFFF !important;
-    border-right: 1px solid #FFFFFF !important;
 }

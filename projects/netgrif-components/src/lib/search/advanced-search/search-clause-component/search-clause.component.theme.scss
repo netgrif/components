@@ -1,9 +1,13 @@
 @use '@angular/material' as mat;
 
-@mixin search-clause-theme($theme) {
+@mixin search-clause-theme($theme, $nae-variables) {
     $primary: map-get($theme, primary);
 
     .clause-body-color {
         background: mat.get-color-from-palette($primary, 100);
+    }
+
+    .prefix-icon{
+        color: map-get($nae-variables, base-color);
     }
 }

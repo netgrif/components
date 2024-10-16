@@ -12,7 +12,8 @@
                 <div fxLayout="row" fxLayoutAlign="start center" class="netgrif-input netgrif-input-search-fix">
                     <mat-form-field fxFlex="100" class="ldapGroup-assign-search" color="primary" appearance="outline">
                         <mat-icon matPrefix class="prefix-icon">search</mat-icon>
-                        <input matInput [formControl]="searchLdapGroupControl" placeholder="{{ 'side-menu.ldapGroup.choose' | translate }}">
+                        <mat-label>{{ 'side-menu.ldapGroup.choose' | translate }}</mat-label>
+                        <input matInput [formControl]="searchLdapGroupControl">
                         <button color="warn" *ngIf="searchLdapGroupControl.value" matSuffix mat-icon-button
                                 (click)="searchLdapGroupControl.setValue('')">
                             <mat-icon>close</mat-icon>
