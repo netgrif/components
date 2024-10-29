@@ -7,7 +7,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Full Changelog: [https://github.com/netgrif/components/commits/v6.4.0](https://github.com/netgrif/components/commits/v6.4.0)
 
-## [6.4.0](https://github.com/netgrif/components/releases/tag/v6.4.0) (2024-09-26)
+## [6.4.0](https://github.com/netgrif/components/releases/tag/v6.4.0) (2024-10-29)
 
 ### Fixed
 - [NAE-1915] TaskRef behaviour handling for multiple level
@@ -21,7 +21,7 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.4.0](https://g
 - [NAE-1983] Public view file handling
 - [NAE-1999] Broken pagination on paged case view
 - [NAE-2005] Field behavior change does not work correctly with multiple references using taskRef
-
+- [NAE-2013] Autocomplete options are set to the first dropdown
 
 ### Added
 - [NAE-1890] Data field component register
