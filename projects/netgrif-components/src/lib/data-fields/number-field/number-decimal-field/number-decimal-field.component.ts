@@ -3,7 +3,7 @@ import {TranslateService} from "@ngx-translate/core";
 import {
     AbstractNumberDecimalFieldComponent,
     DATA_FIELD_PORTAL_DATA,
-    DataFieldPortalData,
+    DataFieldPortalData, NAE_SAVE_DATA_INFORM,
     NumberField
 } from "@netgrif/components-core";
 import {DecimalPipe} from "@angular/common";
@@ -17,9 +17,9 @@ import {MatFormFieldAppearance} from "@angular/material/form-field";
 export class NumberDecimalFieldComponent extends AbstractNumberDecimalFieldComponent {
     constructor(decimalPipe: DecimalPipe,
                 translate: TranslateService,
-                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<NumberField>
-                ) {
-        super(decimalPipe, translate, dataFieldPortalData);
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<NumberField>,
+                @Optional() @Inject(NAE_SAVE_DATA_INFORM) _saveDataInform: boolean) {
+        super(decimalPipe, translate, dataFieldPortalData, _saveDataInform);
     }
 
     getAppearance(): MatFormFieldAppearance {

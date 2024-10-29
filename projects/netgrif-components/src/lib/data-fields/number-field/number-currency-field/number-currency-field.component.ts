@@ -3,7 +3,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {
     AbstractCurrencyNumberFieldComponent,
     DATA_FIELD_PORTAL_DATA,
-    DataFieldPortalData,
+    DataFieldPortalData, NAE_SAVE_DATA_INFORM,
     NumberField
 } from '@netgrif/components-core';
 import {CurrencyPipe} from '@angular/common';
@@ -16,8 +16,9 @@ import {CurrencyPipe} from '@angular/common';
 export class NumberCurrencyFieldComponent extends AbstractCurrencyNumberFieldComponent implements AfterViewInit {
 
     constructor(currencyPipe: CurrencyPipe, translate: TranslateService,
-                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<NumberField>) {
-        super(currencyPipe, translate, dataFieldPortalData);
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<NumberField>,
+                @Optional() @Inject(NAE_SAVE_DATA_INFORM) _saveDataInform: boolean) {
+        super(currencyPipe, translate, dataFieldPortalData, _saveDataInform);
     }
 
     ngAfterViewInit() {

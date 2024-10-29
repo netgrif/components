@@ -22,6 +22,7 @@ import {LanguageIconsService} from '../language-icons.service';
 import {DomSanitizer} from '@angular/platform-browser';
 import {LanguageService} from '../../../translate/language.service';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
+import {NAE_SAVE_DATA_INFORM} from "../../models/save-data-inform-token";
 
 describe('AbstractI18nTextFieldComponent', () => {
     let component: TestI18nTextComponent;
@@ -86,8 +87,9 @@ class TestI18nTextComponent extends AbstractI18nTextFieldComponent {
     constructor(protected languageIconsService: LanguageIconsService,
                 protected _translateService: TranslateService,
                 protected _domSanitizer: DomSanitizer,
-                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<I18nField>) {
-        super(languageIconsService, _translateService, _domSanitizer, dataFieldPortalData);
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<I18nField>,
+                @Optional() @Inject(NAE_SAVE_DATA_INFORM) _saveDataInform: boolean) {
+        super(languageIconsService, _translateService, _domSanitizer, dataFieldPortalData, _saveDataInform);
     }
 }
 

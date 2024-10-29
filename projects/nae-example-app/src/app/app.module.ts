@@ -19,7 +19,9 @@ import {
     ViewService,
     ProfileModule,
     Dashboard,
-    FrontActionModule, NAE_ASYNC_RENDERING_CONFIGURATION
+    FrontActionModule,
+    NAE_ASYNC_RENDERING_CONFIGURATION,
+    NAE_SAVE_DATA_INFORM
 } from '@netgrif/components-core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -257,6 +259,7 @@ export function HttpLoaderFactory(http: HttpClient) {
                 enableAsyncRenderingForNewFields: true,
                 enableAsyncRenderingOnTaskExpand: true
             }},
+        {provide: NAE_SAVE_DATA_INFORM, useValue: true},
         ResourceProvider,
         TranslateService,
         TranslatePipe,

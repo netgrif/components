@@ -4,7 +4,9 @@
            type="number"
            [formControl]="formControlRef"
            [placeholder]="dataField.placeholder"
-           [required]="dataField.behavior.required">
+           [required]="dataField.behavior.required"
+           (focusout)="dataField.unsetFocus()"
+           (focusin)="dataField.setFocus()">
     <mat-hint [ngClass]="{'mat-hint-disabled': formControlRef.disabled}">{{dataField.description}}</mat-hint>
     <mat-error *ngIf="dataField.isInvalid(formControlRef)">{{getErrorMessage()}}</mat-error>
 </mat-form-field>
