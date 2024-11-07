@@ -305,7 +305,8 @@ export abstract class TaskContentService implements OnDestroy {
 
     protected getReferencedTaskId(changedField: string, chFields: ChangedFields): string {
         return !!this.taskFieldsIndex ?
-            Object.keys(this.taskFieldsIndex).find(taskId => taskId !== this.task.stringId && taskId === chFields.taskId && Object.keys(this.taskFieldsIndex[taskId].fields).includes(changedField)) : undefined;
+            (Object.keys(this.taskFieldsIndex).find(taskId => taskId !== this.task.stringId && taskId === chFields.taskId && Object.keys(this.taskFieldsIndex[taskId].fields).includes(changedField))
+            || Object.keys(this.taskFieldsIndex).find(taskId => taskId !== this.task.stringId && Object.keys(this.taskFieldsIndex[taskId].fields).includes(changedField))) : undefined;
     }
 
     protected findTaskRefId(taskId: string, fields: { [fieldId: string]: DataField<any>}): DataField<any> {
