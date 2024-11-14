@@ -121,7 +121,7 @@ export class PublicTaskResourceService extends TaskResourceService {
      * GET
      */
     public downloadFile(taskId: string, params: HttpParams): Observable<ProviderProgress | Blob> {
-        const url = `task/${taskId}/file${params?.has("fileName") ? '/named' : ''}`;
+        const url = `public/task/${taskId}/file${params?.has("fileName") ? '/named' : ''}`;
         return this._resourceProvider.getBlob$(url, this.SERVER_URL, params).pipe(
             map(event => {
                 switch (event.type) {

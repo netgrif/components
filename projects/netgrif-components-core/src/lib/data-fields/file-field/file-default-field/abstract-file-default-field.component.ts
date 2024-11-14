@@ -3,7 +3,6 @@ import {
     Component,
     ElementRef,
     Inject,
-    Input,
     OnDestroy,
     OnInit,
     Optional,
@@ -17,7 +16,6 @@ import {LoggerService} from "../../../logger/services/logger.service";
 import {SnackBarService} from "../../../snack-bar/services/snack-bar.service";
 import {TranslateService} from "@ngx-translate/core";
 import {EventService} from "../../../event/services/event.service";
-import {FileFieldIdBody} from "../../models/file-field-id-body";
 import {EventOutcomeMessageResource} from "../../../resources/interface/message-resource";
 import {ProgressType, ProviderProgress} from "../../../resources/resource-provider.service";
 import {ChangedFieldsMap} from "../../../event/services/interfaces/changed-fields-map";
@@ -205,9 +203,7 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractFileFiel
         if (this.dataField.maxUploadSizeInBytes &&
             this.dataField.maxUploadSizeInBytes < this.fileUploadEl.nativeElement.files.item(0).size) {
             this._log.error('File cannot be uploaded. Maximum size of file exceeded.');
-            this._snackbar.openErrorSnackBar(
-                this._translate.instant('dataField.snackBar.maxFilesSizeExceeded') + this.dataField.maxUploadSizeInBytes
-            );
+            this.resolveMaxSizeMessage();
             this.fileUploadEl.nativeElement.value = '';
             return;
         }
