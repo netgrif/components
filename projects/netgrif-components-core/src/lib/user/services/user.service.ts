@@ -26,6 +26,8 @@ export class UserService implements OnDestroy {
     protected _subAnonym: Subscription;
     private _publicLoadCalled: boolean;
 
+    public readonly GLOBAL_ROLE_PREFIX = 'global_';
+
     constructor(protected _authService: AuthenticationService,
                 protected _userResource: UserResourceService,
                 protected _userTransform: UserTransformer,
@@ -131,7 +133,7 @@ export class UserService implements OnDestroy {
 
         return user.roles.some(r => {
             const matchesRole = r.importId === roleIdentifier;
-            const isGlobalRole = r.importId.startsWith('global_');
+            const isGlobalRole = r.importId.startsWith(this.GLOBAL_ROLE_PREFIX);
             const matchesNet = r.netImportId === netIdentifier;
             return matchesRole && (isGlobalRole || matchesNet);
         });
