@@ -118,16 +118,23 @@ export class UserService implements OnDestroy {
     }
 
     /**
-     * Checks whether the user has role with the specified identifier in a process with the specified identifier (any version)
+     * Checks whether the user has a role with the specified identifier in a process with the specified identifier (any version),
+     * or if the role is global (with prefix 'global_').
      * @param roleIdentifier identifier (import ID) of the role we want to check
      * @param netIdentifier identifier (import ID) of the process the role is defined in
      */
     public hasRoleByIdentifier(roleIdentifier: string, netIdentifier: string): boolean {
         const user = this._user.getSelfOrImpersonated();
-        if (!roleIdentifier || !netIdentifier || !user.roles) {
+        if (!roleIdentifier || !user.roles) {
             return false;
         }
-        return user.roles.some(r => r.netImportId === netIdentifier && r.importId === roleIdentifier);
+
+        return user.roles.some(r => {
+            const matchesRole = r.importId === roleIdentifier;
+            const isGlobalRole = r.importId.startsWith('global_');
+            const matchesNet = r.netImportId === netIdentifier;
+            return matchesRole && (isGlobalRole || matchesNet);
+        });
     }
 
     /**
