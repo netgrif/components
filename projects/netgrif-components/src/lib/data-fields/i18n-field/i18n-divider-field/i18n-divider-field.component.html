@@ -1,5 +1,5 @@
 <div fxFlex fxLayout="row" fxLayoutAlign="center center">
-    <div fxFlex="20" class="divider-line"
+    <div *ngIf='!!dataField.value?.defaultValue && dataField.value?.defaultValue.length > 0' fxFlex="20" class="divider-line"
          [ngClass]="{'divider-line-lgbt': isDividerLGBTQ(), 'primary-background-color': !checkPropertyInComponent('dividerColor')}"
          [ngStyle]="checkPropertyInComponent('dividerColor') && {'background': getDividerColor()}"></div>
     <span *ngIf='!!dataField.value' [ngClass]="{'margin-default': dataField.value?.defaultValue !== ''}"
