@@ -15,7 +15,7 @@
             [matTooltip]="'dataField.user.deleteAll' | translate">
         <mat-icon>delete_outline</mat-icon>
     </button>
-    <mat-chip-grid #chipList aria-label="Autocomplete" [formControl]="formControlRef">
+    <mat-chip-grid #chipList aria-label="Autocomplete">
         <mat-chip-row
             *ngFor='let user of dataField.value.userValues | keyvalue' (removed)="deleteUser(user.key)">
             {{user.value.fullName}}
@@ -26,6 +26,7 @@
         <input
             aria-label="Autocomplete"
             matInput
+            disabled
             #input
             [placeholder]="dataField.placeholder"
             [required]="dataField.behavior.required"
