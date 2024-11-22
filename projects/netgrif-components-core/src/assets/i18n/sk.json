@@ -88,6 +88,7 @@
             "noNets": "Žiadne povolené siete",
             "createCase": "Úspešne vytvorený nový prípad",
             "defaultCaseName": "s prednastaveným názvom prípadu",
+            "errorCreate": "Chyba pri vytváraní prípadu ",
             "createCaseError": "Nový prípad vytvorený, nastala však chyba pri vykonávaní akcií"
         },
         "user": {
