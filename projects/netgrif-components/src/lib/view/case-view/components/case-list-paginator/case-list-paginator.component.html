@@ -11,7 +11,7 @@
             <div [ngStyle]="{'width': width ? width : '100%' }" class="fix-padding">
                 <nc-case-panel [responsiveBody]="responsiveBody"
                                [textEllipsis]="textEllipsis"
-                               *ngFor="let case_ of cases | slice: (pageIndex) * pageSize : (pageIndex + 1) * pageSize;
+                               *ngFor="let case_ of cases;
                                 let first = first;
                                 let last = last;
                                 trackBy: trackById"
