@@ -5,7 +5,7 @@ import {Subscription} from 'rxjs';
 import {AbstractCaseRefBaseFieldComponent} from '../../case-ref-field/model/abstract-case-ref-base-field-component';
 
 @Component({
-    selector: 'ncc-abstract-case-ref-default',
+    selector: 'ncc-abstract-enumeration-case-ref-default',
     template: ''
 })
 export abstract class AbstractEnumerationCaseRefComponent extends AbstractCaseRefBaseFieldComponent<EnumerationField> implements AfterViewInit, OnDestroy {
