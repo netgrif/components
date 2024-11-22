@@ -7,6 +7,15 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Full Changelog: [https://github.com/netgrif/components/commits/v6.4.0](https://github.com/netgrif/components/commits/v6.4.0)
 
+## [7.0.0](https://github.com/netgrif/components/releases/tag/v7.0.0) (2024-11-22)
+
+### Fixed
+- [NAE-2018] User list input is not showing dialog
+- [NAE-2019] Bugs after merge with 6.4.0
+
+### Changed
+- [NAE- 1940] Update to new Angular
+
 ## [6.4.0](https://github.com/netgrif/components/releases/tag/v6.4.0) (2024-11-07)
 
 ### Fixed
