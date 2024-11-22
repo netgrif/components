@@ -22,6 +22,7 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.4.0](https://g
 - [NAE-1999] Broken pagination on paged case view
 - [NAE-2005] Field behavior change does not work correctly with multiple references using taskRef
 - [NAE-2013] Autocomplete options are set to the first dropdown
+- [NAE-2020] Create case error when allowed net blocks are present
 
 ### Added
 - [NAE-1890] Data field component register

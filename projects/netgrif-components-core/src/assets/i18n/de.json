@@ -88,6 +88,7 @@
             "noNets": "Es gibt keine erlaubte Netze",
             "createCase": "Neuen Fall würde erfolgreich erzeugt",
             "defaultCaseName": "mit einem Standardfallnamen",
+            "errorCreate": "Fehler beim Erstellen des Falles ",
             "createCaseError": "Neuer Fall wurde erstellt, aber beim Ausführen von Aktionen ist ein Fehler aufgetreten"
         },
         "user": {

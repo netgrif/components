@@ -7,6 +7,7 @@ import {
     NewCaseButtonConfiguration,
     LoadingEmitter
 } from '@netgrif/components-core';
+import {map} from "rxjs/operators";
 
 @Component({
     selector: 'nc-create-case-button',
@@ -47,8 +48,11 @@ export class CreateCaseButtonComponent implements OnInit {
         }
     }
 
-    public shouldShowCreateButton(): boolean {
-        return this._caseViewService.getAllowedNetsCount() >= 1;
+    public shouldShowCreateButton(): Observable<boolean> {
+        const blockNets = this.newCaseCreationConfig?.blockNets || [];
+        return this._caseViewService.getNewCaseAllowedNets(blockNets).pipe(
+            map(allowedNets => allowedNets.length > 0)
+        );
     }
 
     public createNewCase(): Observable<Case> {
