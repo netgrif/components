@@ -33,6 +33,31 @@
 
 .user-chip-list {
     width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-start;
+    padding: 8px;
+}
+
+.chip-listbox {
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.chip-option {
+    white-space: normal;
+    word-break: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+.form-field {
+    min-width: 200px;
+    max-width: 100%;
+    width: 100%;
 }
 
 .border {
