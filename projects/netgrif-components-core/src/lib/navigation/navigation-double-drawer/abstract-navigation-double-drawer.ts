@@ -1,17 +1,23 @@
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
-import {Component, Input, OnDestroy, OnInit, TemplateRef} from '@angular/core';
-import {MatDrawerMode} from '@angular/material/sidenav';
+import {HttpParams} from '@angular/common/http';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, TemplateRef} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
 import {ResizeEvent} from 'angular-resizable-element';
 import {Observable, of, Subscription} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {RoleAccess, View} from '../../../commons/schema';
 import {AccessService} from '../../authorization/permission/access.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
+import {I18nFieldValue} from '../../data-fields/i18n-field/models/i18n-field-value';
+import {CaseSearchRequestBody, PetriNetSearchRequest} from '../../filter/models/case-search-request-body';
+import {SimpleFilter} from '../../filter/models/simple-filter';
 import {ImpersonationUserSelectService} from '../../impersonation/services/impersonation-user-select.service';
 import {ImpersonationService} from '../../impersonation/services/impersonation.service';
 import {LoggerService} from '../../logger/services/logger.service';
+import {CaseResourceService} from '../../resources/engine-endpoint/case-resource.service';
 import {Case} from '../../resources/interface/case';
+import {Page} from '../../resources/interface/page';
 import {
     DynamicNavigationRouteProviderService,
 } from '../../routing/dynamic-navigation-route-provider/dynamic-navigation-route-provider.service';
@@ -20,30 +26,29 @@ import {LanguageService} from '../../translate/language.service';
 import {User} from '../../user/models/user';
 import {UserService} from '../../user/services/user.service';
 import {LoadingEmitter} from '../../utility/loading-emitter';
-import {UriNodeResource} from '../model/uri-resource';
-import {UriService} from '../service/uri.service';
-import {I18nFieldValue} from "../../data-fields/i18n-field/models/i18n-field-value";
-import {TranslateService} from "@ngx-translate/core";
-import {GroupNavigationConstants} from "../model/group-navigation-constants";
-import {CaseResourceService} from "../../resources/engine-endpoint/case-resource.service";
-import {Page} from "../../resources/interface/page";
-import {CaseSearchRequestBody, PetriNetSearchRequest} from "../../filter/models/case-search-request-body";
-import {HttpParams} from "@angular/common/http";
-import {PaginationParams} from "../../utility/pagination/pagination-params";
-import {SimpleFilter} from "../../filter/models/simple-filter";
+import {PaginationParams} from '../../utility/pagination/pagination-params';
+import {GroupNavigationConstants} from '../model/group-navigation-constants';
 import {
     ConfigDoubleMenu,
     LEFT_DRAWER_DEFAULT_WIDTH,
     MENU_IDENTIFIERS,
     MenuOrder,
-    NavigationItem, RIGHT_DRAWER_DEFAULT_MIN_WIDTH,
+    NavigationItem,
+    RIGHT_DRAWER_DEFAULT_MIN_WIDTH,
     RIGHT_DRAWER_DEFAULT_WIDTH,
     RIGHT_DRAWER_MAX_WIDTH,
     RIGHT_SIDE_INIT_PAGE_SIZE,
     RIGHT_SIDE_NEW_PAGE_SIZE,
-    SETTINGS_TRANSITION_ID
+    SETTINGS_TRANSITION_ID,
 } from '../model/navigation-configs';
-
+import {
+    MenuItemClickEvent,
+    MenuItemLoadedEvent,
+    MenuResizeEvent,
+    MenuStateChangeEvent,
+} from '../model/navigation-menu-events';
+import {UriNodeResource} from '../model/uri-resource';
+import {UriService} from '../service/uri.service';
 
 @Component({
     selector: 'ncc-abstract-navigation-double-drawer',
@@ -68,15 +73,22 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     @Input() foldersCategoryName: string = 'toolbar.menu.folders';
     @Input() viewsCategoryName: string = 'toolbar.menu.views';
 
+    @Output() loggedOut = new EventEmitter<any>(true); // on logout
+    @Output() stateChanged = new EventEmitter<MenuStateChangeEvent>(); // on menu state change
+    @Output() itemClicked = new EventEmitter<MenuItemClickEvent>(); // on item click
+    @Output() resized = new EventEmitter<MenuResizeEvent>(true); // on menu resize
+    @Output() itemLoaded = new EventEmitter<MenuItemLoadedEvent>(true); // on item loaded
+
+
     /**
      * List of displayed items on the left side
      * */
-    leftItems: Array<NavigationItem>
+    leftItems: Array<NavigationItem>;
 
     /**
      * List of displayed items on the right side
      * */
-    rightItems: Array<NavigationItem>
+    rightItems: Array<NavigationItem>;
 
     /**
      * List of hidden items
@@ -194,7 +206,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         }
         if (this.nodeLoading$.isActive) {
             this.nodeLoading$.subscribe(() => {
-                this.resolveMenuItems(node)
+                this.resolveMenuItems(node);
             });
         } else {
             this.resolveMenuItems(node);
@@ -219,6 +231,11 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         this.leftLoading$.complete();
         this.rightLoading$.complete();
         this.nodeLoading$.complete();
+        this.loggedOut.complete();
+        this.stateChanged.complete();
+        this.itemClicked.complete();
+        this.resized.complete();
+        this.itemLoaded.complete();
     }
 
     get configLeftMenu() {
@@ -238,10 +255,12 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
 
     toggleLeftMenu() {
         this._configLeftMenu.opened = !this._configLeftMenu.opened;
+        this.stateChanged.emit({menu: 'left', isOpened: this._configLeftMenu.opened});
     }
 
     toggleRightMenu() {
         this._configRightMenu.opened = !this._configRightMenu.opened;
+        this.stateChanged.emit({menu: 'right', isOpened: this._configRightMenu.opened});
     }
 
     protected resolveLayout(isLargeScreen: boolean): void {
@@ -274,10 +293,11 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     }
 
     logout(): void {
-        this._userService.logout().subscribe(() => {
+        this._userService.logout().subscribe(response => {
             this._log.debug('User is logged out');
-            if (this._config.get().services && this._config.get().services.auth && this._config.get().services.auth.logoutRedirect) {
-                const redirectPath = this._config.get().services.auth.logoutRedirect;
+            this.loggedOut.emit(response);
+            if (this._config.get().services && this._config.get().services.auth && this._config.getOnLogoutPath()) {
+                const redirectPath = this._config.getOnLogoutPath();
                 this._log.info('Redirecting to ' + redirectPath);
                 this._router.navigate([redirectPath]);
             }
@@ -306,9 +326,10 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
      * */
     onHomeClick(): void {
         if (this.leftLoading$.isActive || this.rightLoading$.isActive) {
-            return
+            return;
         }
         this._uriService.activeNode = this._uriService.root;
+        this.itemClicked.emit({uriNode: this._uriService.activeNode, isHome: true});
     }
 
     /**
@@ -319,9 +340,10 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
      * */
     onBackClick(): void {
         if (this.leftLoading$.isActive || this.rightLoading$.isActive || this._uriService.isRoot(this._currentNode)) {
-            return
+            return;
         }
         this._uriService.activeNode = this._currentNode.parent;
+        this.itemClicked.emit({uriNode: this._uriService.activeNode, isHome: false});
     }
 
     onItemClick(item: NavigationItem): void {
@@ -332,28 +354,32 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             } else {
                 this._uriService.activeNode = this._currentNode.parent;
             }
+            this.itemClicked.emit({uriNode: this._uriService.activeNode, isHome: false});
         } else {
-            const path = item.resource.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)?.value
+            const path = item.resource.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)?.value;
             if (this.hasItemChildren(item) && !this.leftLoading$.isActive && !this.rightLoading$.isActive) {
                 this._uriService.getNodeByPath(path).subscribe(node => {
-                    this._uriService.activeNode = node
+                    this._uriService.activeNode = node;
+                    this.itemClicked.emit({uriNode: this._uriService.activeNode, isHome: false});
                 }, error => {
                     this._log.error(error);
                 });
-            } else if (!path.includes(this.currentNode.uriPath)){
+            } else if (!path.includes(this.currentNode.uriPath)) {
                 this._uriService.activeNode = this._currentNode.parent;
+                this.itemClicked.emit({uriNode: this._uriService.activeNode, isHome: false});
             } else {
                 this._uriService.activeNode = this._currentNode;
+                this.itemClicked.emit({uriNode: this._uriService.activeNode, isHome: false});
             }
         }
     }
 
     hasItemChildren(item: NavigationItem): boolean {
-        return item.resource?.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_HAS_CHILDREN)?.value
+        return item.resource?.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_HAS_CHILDREN)?.value;
     }
 
     isItemAndNodeEqual(item: NavigationItem, node: UriNodeResource): boolean {
-        return item.resource?.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)?.value === node.uriPath
+        return item.resource?.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)?.value === node.uriPath;
     }
 
     protected loadLeftSide() {
@@ -368,30 +394,31 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             let orderedChildCaseIds;
 
             if (page?.pagination?.totalElements === 0) {
-                childCases$ = of([])
+                childCases$ = of([]);
             } else {
-                targetItem = page.content[0]
-                orderedChildCaseIds = this.extractChildCaseIds(targetItem)
+                targetItem = page.content[0];
+                orderedChildCaseIds = this.extractChildCaseIds(targetItem);
                 childCases$ = this.getItemCasesByIdsInOnePage(orderedChildCaseIds).pipe(
                     map(p => p.content),
-                )
+                );
             }
 
             childCases$.subscribe(result => {
                 result = result.map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i);
                 this.leftItems = result.sort((a, b) => orderedChildCaseIds.indexOf(a.resource.stringId) - orderedChildCaseIds.indexOf(b.resource.stringId));
-                this.resolveCustomViewsInLeftSide()
+                this.resolveCustomViewsInLeftSide();
                 this.leftLoading$.off();
+                this.itemLoaded.emit({menu: 'left', items: this.leftItems});
             }, error => {
                 this._log.error(error);
                 this.leftItems = [];
-                this.resolveCustomViewsInLeftSide()
+                this.resolveCustomViewsInLeftSide();
                 this.leftLoading$.off();
             });
         }, error => {
             this._log.error(error);
             this.leftItems = [];
-            this.resolveCustomViewsInLeftSide()
+            this.resolveCustomViewsInLeftSide();
             this.leftLoading$.off();
         });
     }
@@ -405,13 +432,13 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             let orderedChildCaseIds;
 
             if (page?.pagination?.totalElements === 0) {
-                childCases$ = of([])
+                childCases$ = of([]);
             } else {
-                targetItem = page.content[0]
-                orderedChildCaseIds = this.extractChildCaseIds(targetItem)
+                targetItem = page.content[0];
+                orderedChildCaseIds = this.extractChildCaseIds(targetItem);
                 childCases$ = this.getItemCasesByIdsInOnePage(orderedChildCaseIds).pipe(
                     map(p => p.content),
-                )
+                );
             }
 
             childCases$.subscribe(result => {
@@ -423,36 +450,37 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                 } else {
                     this.rightItems = result.map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i);
                 }
-                this.resolveCustomViewsInRightSide()
+                this.resolveCustomViewsInRightSide();
                 this.rightLoading$.off();
+                this.itemLoaded.emit({menu: 'right', items: this.rightItems});
             }, error => {
                 this._log.error(error);
                 this.rightItems = [];
                 this.moreItems = [];
-                this.resolveCustomViewsInRightSide()
+                this.resolveCustomViewsInRightSide();
                 this.rightLoading$.off();
             });
         }, error => {
             this._log.error(error);
             this.rightItems = [];
             this.moreItems = [];
-            this.resolveCustomViewsInRightSide()
+            this.resolveCustomViewsInRightSide();
             this.rightLoading$.off();
         });
     }
 
     protected extractChildCaseIds(item: Case): string[] {
-        return item.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_CHILD_ITEM_IDS)?.value
+        return item.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_CHILD_ITEM_IDS)?.value;
     }
 
-    protected getItemCasesByIdsInOnePage(caseIds: string[]): Observable<Page<Case>>  {
-        return this.getItemCasesByIds(caseIds, 0, caseIds.length)
+    protected getItemCasesByIdsInOnePage(caseIds: string[]): Observable<Page<Case>> {
+        return this.getItemCasesByIds(caseIds, 0, caseIds.length);
     }
 
     protected getItemCasesByIds(caseIds: string[], pageNumber: number, pageSize: string | number): Observable<Page<Case>> {
         const searchBody: CaseSearchRequestBody = {
             stringId: caseIds,
-            process: MENU_IDENTIFIERS.map(id => ({identifier: id} as PetriNetSearchRequest))
+            process: MENU_IDENTIFIERS.map(id => ({identifier: id} as PetriNetSearchRequest)),
         };
 
         let httpParams = new HttpParams()
@@ -463,10 +491,10 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
 
     public loadMoreItems() {
         if (this.moreItems.length > RIGHT_SIDE_NEW_PAGE_SIZE) {
-            this.rightItems.push(...this.moreItems.splice(0, RIGHT_SIDE_NEW_PAGE_SIZE))
+            this.rightItems.push(...this.moreItems.splice(0, RIGHT_SIDE_NEW_PAGE_SIZE));
         } else {
-            this.rightItems.push(...this.moreItems)
-            this.moreItems = []
+            this.rightItems.push(...this.moreItems);
+            this.moreItems = [];
         }
     }
 
@@ -476,9 +504,9 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
 
     public switchOrder() {
         this.itemsOrder = (this.itemsOrder + 1) % 2;
-        let multiplier = 1
+        let multiplier = 1;
         if (this.itemsOrder === MenuOrder.Descending) {
-            multiplier = -1
+            multiplier = -1;
         }
         this.rightItems.sort((a, b) => multiplier * (a?.navigation as NavigationItem)?.title.localeCompare((b?.navigation as NavigationItem)?.title));
         this.leftItems.sort((a, b) => multiplier * (a?.navigation as NavigationItem)?.title.localeCompare((b?.navigation as NavigationItem)?.title));
@@ -498,7 +526,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
 
     protected resolveItemCaseToNavigationItem(itemCase: Case): NavigationItem | undefined {
         if (this.representsRootNode(itemCase)) {
-            return
+            return;
         }
         const item: NavigationItem = {
             access: {},
@@ -521,7 +549,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     }
 
     protected representsRootNode(item: Case): boolean {
-        return item.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH).value === "/"
+        return item.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH).value === '/';
     }
 
     protected getTranslation(value: I18nFieldValue): string {
@@ -582,6 +610,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         } else {
             this._configRightMenu.width = event.rectangle.width;
         }
+        this.resized.emit({width: this._configRightMenu.width});
         // TODO implement saving drawer width to user preferences
         // this.userPreferenceService._drawerWidthChanged$.next(this.width);
         // this.contentWidth.next(this.width);
