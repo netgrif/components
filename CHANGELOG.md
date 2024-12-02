@@ -48,6 +48,7 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.4.0](https://g
 - [NAE-1958] Make component properties changeable
 - [NAE-1949] Allowed Types for Filefield
 - [NAE-2016] Global roles for menu items permissions
+- [NAE-2021] Outputs for navigation components
 
 
 ## [6.3.3](https://github.com/netgrif/components/releases/tag/v6.3.3) (2024-01-19)

@@ -23,6 +23,7 @@ export * from './model/size-menu-injection-token'
 export * from './model/group-navigation-item-label';
 export * from './model/uri-resource';
 export * from './model/navigation-configs';
+export * from './model/navigation-menu-events';
 
 /* UTILITY METHODS */
 export * from './utility/navigation-item-task-utility-methods';

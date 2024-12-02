@@ -27,8 +27,10 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
     @Input() redirectOnClick: boolean = true;
     @Input() lengthOfPath: number = 30;
     @Input() partsAfterDots: number = 2;
+
     filterName: string;
     breadcrumbsParts: Array<string>;
+
     private static DOTS: string = '...';
     private static DELIMETER: string = '/';
     private static NODE_PATH: string = 'nodePath';
