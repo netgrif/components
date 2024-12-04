@@ -49,16 +49,12 @@
 
 .full-showcase-text {
     text-align: center;
-
     span {
         &:first-child {
             font-size: 20px;
-            color: #424242;
             margin-bottom: 4px;
         }
-
         font-size: 12px;
-        color: #616161;
     }
 }
 
@@ -68,7 +64,6 @@
 
 .horizontal-showcase-container {
     height: 80px;
-    border: 1px solid #fd971f;
     border-radius: 6px;
 
     .user-avatar-large {
@@ -78,7 +73,6 @@
 
 .vertical-showcase-container {
     width: 160px;
-    border: 1px solid #f0ad4e;
     border-radius: 6px;
     white-space: pre-line;
 

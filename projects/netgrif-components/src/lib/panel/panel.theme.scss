@@ -1,6 +1,6 @@
 @use '@angular/material' as mat;
 
-@mixin panel-component($theme) {
+@mixin panel-component($theme, $nae-variables) {
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
     .panel-color:hover {
@@ -73,8 +73,13 @@
     .panel-body {
         .mat-expansion-panel-body {
             padding: 0 !important;
-            background-color: #F8FAFC;
+            background-color: map-get($nae-variables, panel-background);
         }
+    }
+
+    .mat-expansion-panel-header {
+        border-bottom: 1px solid map-get($nae-variables, panel-border);
+        color: map-get($nae-variables, panel-color);
     }
 
     .single-task-fix {

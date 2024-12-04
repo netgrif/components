@@ -1,0 +1,12 @@
+@use '@angular/material' as mat;
+
+@mixin user-invite-theme($theme, $nae-variables) {
+    .user-invite-search {
+        color: map-get($nae-variables, base-color);
+    }
+    .invited-card {
+        border: 1px solid map-get($nae-variables, border);
+        background: map-get($nae-variables, background);
+    }
+}
+

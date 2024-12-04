@@ -1,8 +1,12 @@
 @use '@angular/material' as mat;
 
-@mixin roles-assignment-theme($theme) {
+@mixin roles-assignment-theme($theme, $nae-variables) {
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
+
+    .user-assign-search {
+        color: map-get($nae-variables, base-color);
+    }
 
     .list-item-selected {
         background-color: mat.get-color-from-palette($primary, 100, 1);

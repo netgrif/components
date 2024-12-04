@@ -3,10 +3,8 @@
     height: 100%;
 }
 
-.canvas {
-    border: 1px solid #64748B;
+.signature-canvas {
     border-radius: 6px;
-    -webkit-text-stroke-color: #000;
 }
 
 .canvas-disabled {
@@ -15,6 +13,5 @@
 }
 
 .canvas-background-disabled {
-    background-color: #CBD5E1;
     pointer-events: none;
 }

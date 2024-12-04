@@ -6,10 +6,12 @@
     }
 }
 
-.snack-bar-icon-margin {
-    margin-right: 8px;
-}
+@mixin snack-bar-theme($theme, $nae-variables) {
+    .snack-bar-icon-margin {
+        margin-right: 8px;
+    }
 
-.snack-bar-close-icon {
-    color: #dedede
+    .snack-bar-close-icon {
+        color: map-get($nae-variables, snack-bar-icon);
+    }
 }

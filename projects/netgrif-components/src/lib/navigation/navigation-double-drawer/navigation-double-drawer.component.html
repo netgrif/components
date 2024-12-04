@@ -110,7 +110,7 @@
 
 <ng-template #defaultLeftSide>
 
-    <div class="height-60 border-bottom" fxLayoutAlign="center center" fxHide.lt-md>
+    <div class="height-60 drawer-border-bottom" fxLayoutAlign="center center" fxHide.lt-md>
         <button mat-icon-button (click)="toggleRightMenu()" class="menu-button mat-typography menu-font-color">
             <mat-icon>menu</mat-icon>
         </button>
@@ -146,7 +146,7 @@
 </ng-template>
 
 <ng-template #defaultRightSide>
-    <div class="logo border-bottom" fxLayoutAlign="center center" fxHide.lt-md>
+    <div class="logo drawer-border-bottom" fxLayoutAlign="center center" fxHide.lt-md>
         <img *ngIf="image !== undefined" [alt]="imageAlt" [src]="image" class="logoimg"
              [routerLink]="imageRouterLink !== undefined ? imageRouterLink : []">
     </div>

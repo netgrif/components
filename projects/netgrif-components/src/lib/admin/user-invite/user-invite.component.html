@@ -5,9 +5,9 @@
         <mat-toolbar color="primary" class="min-height-72 margin-bottom-16px">
             <span>{{'admin.user-invite.newUser' | translate}}</span>
             <div fxFlex></div>
-            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="40"  class="padding-right-16px netgrif-input netgrif-input-fix netgrif-input-primary-fix netgrif-input-search-fix">
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="40"  class="padding-right-16px netgrif-input netgrif-input-search-fix">
                 <mat-icon fxFlex class="mail-icon">email</mat-icon>
-                <mat-form-field fxFlex="100" class="user-assign-search" color="primary" appearance="outline">
+                <mat-form-field fxFlex="100" class="user-invite-search" color="primary" appearance="outline">
                     <mat-label>{{ 'admin.user-invite.mail' | translate }}</mat-label>
                     <input matInput [formControl]="invitedEmailControl">
                     <button mat-button *ngIf="invitedEmailControl.value" matSuffix mat-icon-button

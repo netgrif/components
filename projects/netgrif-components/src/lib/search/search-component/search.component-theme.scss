@@ -1,6 +1,6 @@
 @use '@angular/material' as mat;
 
-@mixin advanced-search-icon($theme) {
+@mixin advanced-search-icon($theme, $nae-variables) {
     $primary: map-get($theme, primary);
 
     .advanced-search-icon {
@@ -17,5 +17,13 @@
     }
     .mat-menu-item:hover:not([disabled]), .mat-menu-item.cdk-program-focused:not([disabled]), .mat-menu-item.cdk-keyboard-focused:not([disabled]), .mat-menu-item-highlighted:not([disabled]) {
         background: mat.get-color-from-palette($primary, 50) !important;
+    }
+
+    .prefix-icon {
+        color: map-get($nae-variables, base-color) !important;
+    }
+
+    .fulltext-search {
+        background: map-get($nae-variables, search-backgroud);
     }
 }

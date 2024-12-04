@@ -16,8 +16,10 @@
     padding: 0 16px;
     width: 100%;
     white-space: nowrap;
-    border: 1px solid #eeeeee;
-    background: white;
+}
+
+.user-invite-search {
+    border-radius: 6px;
 }
 
 .invited-card-font, .invited-card-font h1, .invited-card-font h2, .invited-card-font h3, .invited-card-font h4, .invited-card-font h5, .invited-card-font h6 {

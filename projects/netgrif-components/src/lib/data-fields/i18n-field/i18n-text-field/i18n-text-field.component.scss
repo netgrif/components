@@ -11,19 +11,11 @@
     font-size: 14px;
     border: 0;
     margin-left: 8px;
-    color: #64748B;
     background: transparent;
 }
 
-.selected-language-value:disabled {
-    color: #94A3B8;
-}
-
 .form-input-interfield {
-    background: #FFFFFF;
-    color: #64748B;
     outline: none;
-    border: 1px solid #64748B;
     text-align: left;
     font-size: 14px;
     line-height: 15.75px;
@@ -31,10 +23,6 @@
     min-width: 5px;
     box-sizing: border-box;
     height: 44px;
-}
-
-.form-input-interfield:hover {
-    border: solid 2px #64748B;
 }
 
 .button-icon-input {
@@ -66,18 +54,9 @@
     margin: 0 8px;
 }
 
-.language-svg-icon {
-    border: solid 1px #64748B;
-}
-
 .filled-language-row {
     min-height: 28px;
     padding: 4px 0;
-    background-color: #FFFFFF;
-}
-
-.filled-language-row:not(:last-child) {
-    border-bottom: 1px solid #64748B;
 }
 
 .filled-language-row:last-child {
@@ -87,9 +66,6 @@
 
 .filled-languages-wrapper {
     border-radius: 0 0 6px 6px;
-    border-left: 1px solid #64748B;
-    border-right: 1px solid #64748B;
-    border-bottom: 1px solid #64748B;
     margin-top: -5px;
     padding-top: 5px;
     transform-origin: top;
@@ -127,7 +103,6 @@
 .i18n-label {
     transform: translate(0.4em,-0.4em) scale(.75);
     transform-origin: left;
-    color: #64748B;
     background: transparent;
     width: fit-content;
     padding: 0 0.5em;
@@ -139,7 +114,6 @@
 
 .form-input-disabled {
     background: transparent !important;
-    border-color: #CBD5E1 !important;
 }
 
 .form-input-disabled:hover {

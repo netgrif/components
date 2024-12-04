@@ -3,7 +3,7 @@
                   [modules]="quillModules" [bounds]="quillContainer" placeholder="{{ dataField.placeholder |translate}}"></quill-editor>
     <mat-error *ngIf="dataField.isInvalid(formControlRef)">{{getErrorMessage()}}</mat-error>
     <input type="hidden" [formControl]="formControlRef">
-    <div *ngIf="formControlRef.disabled" class="ql-snow user-select-auto" [ngClass]="{'border' : dataField.materialAppearance === 'outline'}">
+    <div *ngIf="formControlRef.disabled" class="ql-snow user-select-auto" [ngClass]="{'html-border' : dataField.materialAppearance === 'outline'}">
         <div [ngClass]="{'ql-editor' : dataField.materialAppearance === 'outline'}" [innerHTML]="disabledDisplay"></div>
     </div>
 </div>

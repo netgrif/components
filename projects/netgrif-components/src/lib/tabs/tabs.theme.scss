@@ -1,6 +1,6 @@
 @use '@angular/material' as mat;
 
-@mixin tabs-theme($theme) {
+@mixin tabs-theme($theme, $nae-variables) {
     $primary: map-get($theme, primary);
     .center-tabs {
         .mat-tab-labels {
@@ -15,11 +15,11 @@
     }
 
     .mat-tab-label-container {
-        background: white;
+        background: map-get($nae-variables, tabs-background);
     }
 
     .mat-tab-header {
-        border-bottom: 2px solid #E2E8F0;
+        border-bottom: 2px solid map-get($nae-variables, tabs-border);
     }
 
     .icon-tab-color {

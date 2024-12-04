@@ -19,11 +19,6 @@
     margin-left: 4px;
 }
 
-// TODO 19.1.2021 - we might want to get the "white" color from the theme, so that it is not hardcoded
-.white-background {
-    background: #fafafa;
-}
-
 ::ng-deep .mat-form-field-wrapper {
     margin: 0;
     padding-bottom: 0;
@@ -32,7 +27,6 @@
 .mat-form-field-wrapper-search {
     margin: 0 !important;
     border-radius: 5px;
-    background: #fafafa;
     min-width: 250px;
 }
 
@@ -45,7 +39,6 @@
 
 .prefix-icon {
     font-size: 18px;
-    color: #64748B;
 }
 
 @media only screen and (max-width: 599px) {
