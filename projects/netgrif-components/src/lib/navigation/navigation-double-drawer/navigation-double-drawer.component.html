@@ -64,7 +64,9 @@
             </button>
 
             <div *ngIf="includeLanguage" fxLayout="row" class="icon-container" fxLayoutAlign="center center">
-                <nc-language-selector fxLayout="row"></nc-language-selector>
+                <button mat-icon-button class="menu-button mat-typography menu-font-color">
+                    <nc-language-selector fxLayout="row"></nc-language-selector>
+                </button>
             </div>
 
             <mat-menu #railMenu="matMenu">
