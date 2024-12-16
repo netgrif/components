@@ -179,7 +179,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             return;
         }
         if (node.parentId && !node.parent) {
-            if (node.parentId === this._uriService.root.id) {
+            if (node.parentId === this._uriService.root.path) {
                 node.parent = this._uriService.root;
             } else {
                 this.nodeLoading$.on();
@@ -206,7 +206,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             this.leftItems = [];
             this.loadRightSide();
         } else {
-            if (!this.leftItems.find(item => item.resource?.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)?.value === node.uriPath)) {
+            if (!this.leftItems.find(item => item.resource?.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)?.value === node.path)) {
                 this.loadLeftSide();
             }
             this.loadRightSide();
@@ -327,7 +327,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     onItemClick(item: NavigationItem): void {
         if (item.resource === undefined) {
             // custom view represented only in nae.json
-            if (item.processUri === this.currentNode.uriPath) {
+            if (item.processUri === this.currentNode.path) {
                 this._uriService.activeNode = this._currentNode;
             } else {
                 this._uriService.activeNode = this._currentNode.parent;
@@ -340,7 +340,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                 }, error => {
                     this._log.error(error);
                 });
-            } else if (!path.includes(this.currentNode.uriPath)){
+            } else if (!path.includes(this.currentNode.path)){
                 this._uriService.activeNode = this._currentNode.parent;
             } else {
                 this._uriService.activeNode = this._currentNode;
@@ -353,7 +353,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     }
 
     isItemAndNodeEqual(item: NavigationItem, node: UriNodeResource): boolean {
-        return item.resource?.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)?.value === node.uriPath
+        return item.resource?.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)?.value === node.path
     }
 
     protected loadLeftSide() {
@@ -485,14 +485,14 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     }
 
     protected resolveCustomViewsInRightSide() {
-        if (!!this._childCustomViews[this._currentNode.uriPath]) {
-            this.rightItems.push(...Object.values(this._childCustomViews[this._currentNode.uriPath]));
+        if (!!this._childCustomViews[this._currentNode.path]) {
+            this.rightItems.push(...Object.values(this._childCustomViews[this._currentNode.path]));
         }
     }
 
     protected resolveCustomViewsInLeftSide() {
-        if (!!this._childCustomViews[this._currentNode.parent.uriPath]) {
-            this.leftItems.push(...Object.values(this._childCustomViews[this._currentNode.parent.uriPath]));
+        if (!!this._childCustomViews[this._currentNode.parent.path]) {
+            this.leftItems.push(...Object.values(this._childCustomViews[this._currentNode.parent.path]));
         }
     }
 
@@ -567,7 +567,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     }
 
     uriNodeTrackBy(index: number, node: UriNodeResource) {
-        return node.id;
+        return node.path;
     }
 
     itemsTrackBy(index: number, item: NavigationItem) {
