@@ -3,7 +3,7 @@
     "extends": "nae-default",
     "providers": {
         "auth": {
-            "address": "http://localhost:8080/api/",
+            "address": "http://localhost:8800/api/",
             "authentication": "Basic",
             "endpoints": {
                 "login": "auth/login",
@@ -24,37 +24,37 @@
         "resources": [
             {
                 "name": "case",
-                "address": "http://localhost:8080/api/",
+                "address": "http://localhost:8800/api/",
                 "format": "json"
             },
             {
                 "name": "task",
-                "address": "http://localhost:8080/api/",
+                "address": "http://localhost:8800/api/",
                 "format": "json"
             },
             {
                 "name": "petrinet",
-                "address": "http://localhost:8080/api/",
+                "address": "http://localhost:8800/api/",
                 "format": "json"
             },
             {
                 "name": "user",
-                "address": "http://localhost:8080/api/",
+                "address": "http://localhost:8800/api/",
                 "format": "json"
             },
             {
                 "name": "dashboard",
-                "address": "http://localhost:8080/api/",
+                "address": "http://localhost:8800/api/",
                 "format": "json"
             },
             {
                 "name": "filter",
-                "address": "http://localhost:8080/api/",
+                "address": "http://localhost:8800/api/",
                 "format": "json"
             },
             {
                 "name": "impersonation",
-                "address": "http://localhost:8080/api/",
+                "address": "http://localhost:8800/api/",
                 "format": "json"
             }
         ]
