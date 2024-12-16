@@ -77,4 +77,21 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
         this.isSectionOpen[section] = !this.isSectionOpen[section];
     }
 
+    ngOnInit(): void {
+        super.ngOnInit();
+        setTimeout(() => {
+            this.leftItems = Array.from({length: 50}, (_, i) => ({
+                id: `item-${i}`,
+                access: 'public',
+                navigation: {
+                    title: `Item ${i}`,
+                    icon: 'folder'
+                },
+                routing: {
+                    path: `/path-${i}`
+                }
+            }));
+        }, 1000);
+    }
+
 }
