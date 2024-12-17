@@ -290,6 +290,7 @@
         },
         "user": {
             "selectUser": "Select user",
+            "deleteUser": "Delete user",
             "save": "Assign",
             "deleteAll": "Empty user list"
         },
