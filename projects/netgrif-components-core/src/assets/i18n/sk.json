@@ -290,6 +290,7 @@
         },
         "user": {
             "selectUser": "Vyberte používateľa",
+            "deleteUser": "Vymazať používateľa",
             "save": "Priradiť",
             "deleteAll": "Vymazať zoznam používateľov"
         },

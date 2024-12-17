@@ -1,8 +1,10 @@
-<div class="drawer-control rail-color height-60" [ngClass]="{'index-menu': !configLeftMenu.opened}" fxLayoutAlign="center center" fxHide.lt-md>
+<div class="drawer-control rail-color height-60" [ngClass]="{'index-menu': !configLeftMenu.opened}"
+     fxLayoutAlign="center center" fxHide.lt-md>
     <button mat-icon-button (click)="toggleMenu()" class="menu-button mat-typography menu-font-color">
         <mat-icon>menu</mat-icon>
     </button>
 </div>
+
 <mat-toolbar fxHide.gt-sm class="toolbar">
     <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between stretch">
         <div fxFlex fxLayoutAlign="start center">
@@ -27,6 +29,8 @@
 
             <div *ngTemplateOutlet="portalLeftMenu || defaultLeftSide"></div>
 
+            <div class="margin-top-x2"></div>
+
             <div fxFlex></div>
 
             <mat-menu #userRailMenu="matMenu">
@@ -34,39 +38,45 @@
                      [routerLink]="profileRouterLink" routerLinkActive="active-tree-node">
                     <mat-icon class="margin-auto" fxFlex>face</mat-icon>
                     <div class="large-menu-item" fxLayout="column" fxFlexAlign="start center" fxFlex>
-                        <span *ngIf="!user.isImpersonating()"  class="large-menu-item-text" fxFlex="50">{{user.fullName}}</span>
-                        <span *ngIf="user.isImpersonating()" class="large-menu-item-text" fxFlex="50">{{user.fullName}} ({{user.getSelfOrImpersonated().fullName}})</span>
-                        <span class="large-menu-item-text" style="font-size: 12px;" fxFlex="50">{{user.email}}</span>
+                        <span *ngIf="!user.isImpersonating()" class="large-menu-item-text"
+                              fxFlex="50">{{ user.fullName }}</span>
+                        <span *ngIf="user.isImpersonating()" class="large-menu-item-text"
+                              fxFlex="50">{{ user.fullName }} ({{ user.getSelfOrImpersonated().fullName }})</span>
+                        <span class="large-menu-item-text" style="font-size: 12px;" fxFlex="50">{{ user.email }}</span>
                     </div>
                 </div>
                 <button *ngIf="includeImpersonation && !user.isImpersonating()" mat-menu-item (click)="impersonate()">
                     <mat-icon>supervisor_account</mat-icon>
-                    <span>{{'side-menu.impersonation.submit' | translate}}</span>
+                    <span>{{ 'side-menu.impersonation.submit' | translate }}</span>
                 </button>
-                <button *ngIf="includeImpersonation && user.isImpersonating()" mat-menu-item (click)="stopImpersonating()">
+                <button *ngIf="includeImpersonation && user.isImpersonating()" mat-menu-item
+                        (click)="stopImpersonating()">
                     <mat-icon>clear</mat-icon>
-                    <span>{{'side-menu.impersonation.cease' | translate }}</span>
+                    <span>{{ 'side-menu.impersonation.cease' | translate }}</span>
                 </button>
                 <button mat-menu-item (click)="logout()">
                     <mat-icon>exit_to_app</mat-icon>
                     <span>{{ 'toolbar.menu.logout' | translate }}</span>
                 </button>
             </mat-menu>
-            <button *ngIf="includeUser" mat-icon-button [matMenuTriggerFor]="userRailMenu" class="menu-button mat-typography menu-font-color"
+            <button *ngIf="includeUser" mat-icon-button [matMenuTriggerFor]="userRailMenu"
+                    class="menu-button mat-typography menu-font-color"
                     [matTooltip]="user.fullName"
                     [matTooltipPosition]="'right'">
                 <mat-icon>account_circle</mat-icon>
             </button>
 
-            <div *ngIf="includeLanguage" fxLayout="row" class="icon-container" fxLayoutAlign="center center">
-                <nc-language-selector fxLayout="row" ></nc-language-selector>
+            <div *ngIf="includeLanguage" fxLayout="row" class="icon-container">
+                <button mat-icon-button class="menu-button mat-typography menu-font-color">
+                    <nc-language-selector fxLayout="row"></nc-language-selector>
+                </button>
             </div>
 
             <mat-menu #railMenu="matMenu">
                 <button *ngFor='let item of hiddenCustomItems; trackBy: itemsTrackBy' mat-menu-item
                         [routerLink]='item.routing.path' routerLinkActive="active-tree-node">
-                    <mat-icon>{{item.navigation.icon}}</mat-icon>
-                    <span>{{item.navigation.title}}</span>
+                    <mat-icon>{{ item.navigation.icon }}</mat-icon>
+                    <span>{{ item.navigation.title }}</span>
                 </button>
             </mat-menu>
             <!--            <div fxLayout="row" class="margin-bottom-x2 icon-container" matTooltip="Otvoriť menu"-->
@@ -76,17 +86,19 @@
             <!--                    <mat-icon class="icon-large sidemenu-icon">more_vert</mat-icon>-->
             <!--                </button>-->
             <!--            </div>-->
-            <button mat-icon-button [matMenuTriggerFor]="railMenu"
-                    class="menu-button mat-typography menu-font-color margin-bottom-x2"
+            <button mat-icon-button *ngIf="hiddenCustomItems && hiddenCustomItems.length > 0"
+                    [matMenuTriggerFor]="railMenu"
+                    class="menu-button mat-typography menu-font-color"
                     [matTooltip]="'toolbar.menu.open' | translate"
                     matTooltipPosition="right">
                 <mat-icon>more_vert</mat-icon>
             </button>
 
+            <div class="margin-top-x2"></div>
         </div>
     </mat-sidenav>
 
-    <mat-sidenav-content class="first-content index-menu" >
+    <mat-sidenav-content class="first-content index-menu">
         <mat-sidenav-container class="drawer-container" (backdropClick)="toggleLeftMenu()">
             <mat-sidenav [mode]="configRightMenu.mode" [(opened)]="configRightMenu.opened" position="start"
                          [disableClose]="configRightMenu.disableClose"
@@ -116,7 +128,8 @@
         </button>
     </div>
 
-    <button mat-icon-button (click)="onHomeClick()" class="menu-button mat-typography menu-font-color margin-top-default"
+    <button mat-icon-button (click)="onHomeClick()"
+            class="menu-button mat-typography menu-font-color margin-top-default"
             [matTooltip]="'toolbar.menu.home' | translate"
             matTooltipPosition="right">
         <mat-icon>home</mat-icon>
@@ -134,10 +147,12 @@
     <div class="margin-top-x2"></div>
 
     <button *ngFor='let folder of leftItems; trackBy: itemsTrackBy' mat-icon-button (click)="onItemClick(folder)"
-            class="menu-button mat-typography menu-font-color" [matTooltip]="folder.navigation.title" [matTooltipPosition]="'right'"
-            [ngClass]="isItemAndNodeEqual(folder, currentNode) ? 'rail-selected-color' : 'menu-font-color'" [routerLink]='folder.routing.path'
+            class="menu-button mat-typography menu-font-color" [matTooltip]="folder.navigation.title"
+            [matTooltipPosition]="'right'"
+            [ngClass]="isItemAndNodeEqual(folder, currentNode) ? 'rail-selected-color' : 'menu-font-color'"
+            [routerLink]='folder.routing.path'
             routerLinkActive="active">
-        <mat-icon>{{folder.navigation.icon}}</mat-icon>
+        <mat-icon>{{ folder.navigation.icon }}</mat-icon>
     </button>
 
     <div *ngIf="(leftLoading$ | async)" fxLayout="column" fxLayoutAlign="center center" class="margin-top-default">
@@ -152,20 +167,23 @@
     </div>
     <div *ngIf="(rightLoading$ | async) === false">
         <div fxLayout="column" fxLayoutAlign="end end" class="order-icon-wrapper">
-            <button mat-icon-button fxLayout="column" fxLayoutAlign="center center" class="mat-button mat-typography menu-font-color order-icon" (click)="switchOrder()"
+            <button mat-icon-button fxLayout="column" fxLayoutAlign="center center"
+                    class="mat-button mat-typography menu-font-color order-icon" (click)="switchOrder()"
                     [matTooltip]="isAscending() ? ('dynamicNavigation.ascending' | translate) : ('dynamicNavigation.descending' | translate)">
-                <mat-icon>{{isAscending() ? "expand_more" : "expand_less"}}</mat-icon>
+                <mat-icon>{{ isAscending() ? "expand_more" : "expand_less" }}</mat-icon>
             </button>
         </div>
         <div *ngFor='let item of rightItems; trackBy: itemsTrackBy' (click)="onItemClick(item)"
              class="tree-node mat-typography mat-body-2" fxLayoutAlign="start center" [routerLink]='item.routing.path'
              routerLinkActive="active-tree-node">
-            <mat-icon class="tree-node-icon">{{item.navigation.icon}}</mat-icon>
-            <span>{{item.navigation.title}}</span>
+            <mat-icon class="tree-node-icon">{{ item.navigation.icon }}</mat-icon>
+            <span>{{ item.navigation.title }}</span>
             <span class="menu-item-focus-overlay"></span>
         </div>
         <div *ngIf="moreItems.length > 0">
-            <button mat-button color="primary" (click)="loadMoreItems()">{{'dynamicNavigation.loadMoreItems' | translate}}</button>
+            <button mat-button color="primary"
+                    (click)="loadMoreItems()">{{ 'dynamicNavigation.loadMoreItems' | translate }}
+            </button>
         </div>
     </div>
     <div *ngIf="(rightLoading$ | async)" fxLayout="column" fxLayoutAlign="center center" class="margin-top-default">

@@ -11,24 +11,24 @@
                     'clip-path': getCutProperty(userLabel)
             }">
             <button mat-icon-button
-                    *ngIf="!!dataField.value"
+                    *ngIf="!!dataField.value && !formControlRef.disabled"
                     [disabled]="formControlRef.disabled"
                     color="primary"
                     (click)="selectUser()"
-                    [matTooltip]="'dataField.file.clickToUpload' | translate"
+                    [matTooltip]="'dataField.user.deleteUser' | translate"
                     [class.do-not-click]="formControlRef.disabled">
                 <mat-icon (click)='deleteUser()' color='warn' *ngIf='!formControlRef.disabled'>close</mat-icon>
             </button>
             <button mat-icon-button
-                    *ngIf="!dataField.value"
+                    *ngIf="!dataField.value && !formControlRef.disabled"
                     [disabled]="formControlRef.disabled"
                     color="primary"
                     (click)="selectUser()"
-                    [matTooltip]="'dataField.file.clickToUpload' | translate"
+                    [matTooltip]="'dataField.user.selectUser' | translate"
                     [class.do-not-click]="formControlRef.disabled">
                 <mat-icon>person_add</mat-icon>
             </button>
-            <span fxFlex class="input-name-ellipsis" [ngClass]="{'input-placeholder': !!dataField.value, 'no-cursor': !!dataField.value && formControlRef.disabled}">
+            <span fxFlex class="input-name-ellipsis padding-left" [ngClass]="{'input-placeholder': !!dataField.value, 'no-cursor': !!dataField.value && formControlRef.disabled}">
                     {{!!dataField.value ? dataField.value.fullName : 'dataField.user.selectUser' | translate}}</span>
         </div>
         <mat-hint class="user-hint-error" [ngClass]="{'mat-hint-disabled': formControlRef.disabled}"
