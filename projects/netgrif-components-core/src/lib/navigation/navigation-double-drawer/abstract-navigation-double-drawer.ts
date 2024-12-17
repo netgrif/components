@@ -179,7 +179,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             return;
         }
         if (node.parentId && !node.parent) {
-            if (node.parentId === this._uriService.root.path) {
+            if (this._uriService.isRoot(node)) {
                 node.parent = this._uriService.root;
             } else {
                 this.nodeLoading$.on();
