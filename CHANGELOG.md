@@ -14,7 +14,8 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.4.0](https://g
 - [NAE-2019] Bugs after merge with 6.4.0
 
 ### Changed
-- [NAE- 1940] Update to new Angular
+- [NAE-1940] Update to new Angular
+- [NAE-2023] Update URI attributes on frontend
 
 ## [6.4.0](https://github.com/netgrif/components/releases/tag/v6.4.0) (2024-11-07)
 

@@ -8,26 +8,22 @@ import {ResourceProvider} from '../../../resources/resource-provider.service';
 @Injectable()
 export class MockUriResourceService extends UriResourceService {
 
-    static TEST1_ID = 'test1';
     static TEST1_PATH = 'root/test1';
-    static TEST2_ID = 'test2';
     static TEST2_PATH = 'root/test2';
 
     private _root: UriNodeResource = {
-        id: 'root',
-        uriPath: 'root',
+        path: 'root',
         name: 'root',
         parentId: null,
         parent: undefined,
-        childrenId: new Set<string>([MockUriResourceService.TEST1_ID, MockUriResourceService.TEST2_ID]),
+        childrenId: new Set<string>([MockUriResourceService.TEST1_PATH, MockUriResourceService.TEST2_PATH]),
         children: undefined,
         level: 0,
         contentTypes: undefined,
     } as UriNodeResource;
     private _test1Node: UriNodeResource = {
-        id: MockUriResourceService.TEST1_ID,
-        uriPath: MockUriResourceService.TEST1_PATH,
-        name: MockUriResourceService.TEST1_ID,
+        path: MockUriResourceService.TEST1_PATH,
+        name: MockUriResourceService.TEST1_PATH,
         parentId: 'root',
         parent: this._root,
         childrenId: undefined,
@@ -36,9 +32,8 @@ export class MockUriResourceService extends UriResourceService {
         contentTypes: new Set<UriContentType>([UriContentType.PROCESS]),
     } as UriNodeResource;
     private _test2Node: UriNodeResource = {
-        id: MockUriResourceService.TEST2_ID,
-        uriPath: MockUriResourceService.TEST2_PATH,
-        name: MockUriResourceService.TEST2_ID,
+        path: MockUriResourceService.TEST2_PATH,
+        name: MockUriResourceService.TEST2_PATH,
         parentId: 'root',
         parent: this._root,
         childrenId: undefined,

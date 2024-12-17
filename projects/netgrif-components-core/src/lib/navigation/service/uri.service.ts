@@ -62,7 +62,7 @@ export class UriService implements OnDestroy {
     }
 
     public isRoot(node: UriNodeResource): boolean {
-        return node.id === this._rootNode.id && node.uriPath === this._rootNode.uriPath;
+        return node.path === this._rootNode.path;
     }
 
     public get activeNode(): UriNodeResource {
@@ -71,7 +71,7 @@ export class UriService implements OnDestroy {
 
     public set activeNode(node: UriNodeResource) {
         if (node.parentId && !node.parent) {
-            if (node.parentId === this._rootNode.id) {
+            if (node.parentId === this._rootNode.path) {
                 node.parent = this._rootNode;
             } else {
                 this._parentLoading$.on();
@@ -137,7 +137,7 @@ export class UriService implements OnDestroy {
      */
     public getChildNodes(node?: UriNodeResource): Observable<Array<UriNodeResource>> {
         if (!node) node = this.activeNode;
-        return this._resourceService.getNodesByParent(node.id).pipe(
+        return this._resourceService.getNodesByParent(node.path).pipe(
             map(nodes => {
                 this.capitalizeNames(nodes);
                 return nodes;
@@ -155,7 +155,7 @@ export class UriService implements OnDestroy {
     public getCasesOfNode(node?: UriNodeResource, processIdentifiers?: Array<string>, pageNumber: number = 0, pageSize: string | number = this.pageSize): Observable<Page<Case>> {
         if (!node) node = this.activeNode;
         const searchBody: CaseSearchRequestBody = {
-            uriNodeId: node.id,
+            uriNodeId: node.path,
         };
         if (!!processIdentifiers) {
             searchBody.process = processIdentifiers.map(id => ({identifier: id} as PetriNetSearchRequest));
@@ -182,7 +182,7 @@ export class UriService implements OnDestroy {
         }
         const searchBody: CaseSearchRequestBody = {
             data: {
-                [GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH] : node.uriPath
+                [GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH] : node.path
             },
             process: {identifier: "preference_item"}
         };
@@ -216,7 +216,7 @@ export class UriService implements OnDestroy {
         if (level === 0) return of([this.root]);
         return this._resourceService.getByLevel(level).pipe(
             map(nodes => {
-                const ns = !!parent?.id ? nodes.filter(n => n.parentId === parent.id) : nodes;
+                const ns = !!parent?.path ? nodes.filter(n => n.parentId === parent.path) : nodes;
                 this.capitalizeNames(ns);
                 return ns;
             }),
@@ -225,13 +225,13 @@ export class UriService implements OnDestroy {
 
     public resolveParentPath(node?: UriNodeResource): string {
         if (!node) node = this.activeNode;
-        const lastDelimiter = node.uriPath.lastIndexOf('/');
+        const lastDelimiter = node.path.lastIndexOf('/');
         if (lastDelimiter === 0) return '/';
-        return node.uriPath.substring(0, lastDelimiter);
+        return node.path.substring(0, lastDelimiter);
     }
 
     public splitNodePath(node: UriNodeResource): Array<string> {
-        return node?.uriPath.split('/').filter(s => s !== UriService.ROOT);
+        return node?.path.split('/').filter(s => s !== UriService.ROOT);
     }
 
     private capitalizeNames(nodes: Array<UriNodeResource>) {

@@ -126,7 +126,7 @@ export class ImportNetDialogComponent implements AfterViewInit {
     protected uploadFile(file: FileUploadModel) {
         const fileFormData = new FormData();
         fileFormData.append('file', file.data as File);
-        fileFormData.append('uriNodeId', this._uriService.activeNode.id);
+        fileFormData.append('uriNodeId', this._uriService.activeNode.path);
         fileFormData.append('meta', this.releaseTypeControl.value.toString().toUpperCase());
 
         file.inProgress = true;
