@@ -7,7 +7,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Full Changelog: [https://github.com/netgrif/components/commits/v6.4.0](https://github.com/netgrif/components/commits/v6.4.0)
 
-## [6.4.0](https://github.com/netgrif/components/releases/tag/v6.4.0) (2024-11-07)
+## [6.4.0](https://github.com/netgrif/components/releases/tag/v6.4.0) (2024-12-23)
 
 ### Fixed
 - [NAE-1915] TaskRef behaviour handling for multiple level
@@ -23,6 +23,9 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.4.0](https://g
 - [NAE-2005] Field behavior change does not work correctly with multiple references using taskRef
 - [NAE-2013] Autocomplete options are set to the first dropdown
 - [NAE-2020] Create case error when allowed net blocks are present
+- [NAE-1948] Bugs after merge to 6.4.0
+- [NAE-2022] UI Design Fixes and Improvements
+
 
 ### Added
 - [NAE-1890] Data field component register
