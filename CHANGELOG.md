@@ -10,6 +10,7 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.4.0](https://g
 ## [6.4.0](https://github.com/netgrif/components/releases/tag/v6.4.0) (2024-12-23)
 
 ### Fixed
+
 - [NAE-1915] TaskRef behaviour handling for multiple level
 - [NAE-1908] NAE-1906 Improvements
 - [NAE-1925] Panel is not opening
@@ -26,8 +27,8 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.4.0](https://g
 - [NAE-1948] Bugs after merge to 6.4.0
 - [NAE-2022] UI Design Fixes and Improvements
 
-
 ### Added
+
 - [NAE-1890] Data field component register
 - [NAE-1901] Taskref rendering update
 - [NAE-1904] CaseRef list component
@@ -53,13 +54,11 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.4.0](https://g
 - [NAE-2016] Global roles for menu items permissions
 - [NAE-2021] Outputs for navigation components
 
-
 ## [6.3.3](https://github.com/netgrif/components/releases/tag/v6.3.3) (2024-01-19)
 
 ### Added
 
 - [NAE-1933] UserList deleteAll button
-
 
 ## [6.3.2](https://github.com/netgrif/components/releases/tag/v6.3.2) (2023-07-25)
 
