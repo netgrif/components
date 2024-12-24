@@ -24,13 +24,13 @@
 <title>cluster_SideMenuUserAssignComponentModule</title>
 <polygon fill="none" stroke="black" stroke-dasharray="1,5" points="8,-70 8,-268 562,-268 562,-70 8,-70"/>
 </g>
-<g id="clust2" class="cluster">
-<title>cluster_SideMenuUserAssignComponentModule_declarations</title>
-<polygon fill="none" stroke="black" points="16,-78 16,-130 554,-130 554,-78 16,-78"/>
-</g>
 <g id="clust7" class="cluster">
 <title>cluster_SideMenuUserAssignComponentModule_exports</title>
 <polygon fill="none" stroke="black" points="110,-208 110,-260 466,-260 466,-208 110,-208"/>
+</g>
+<g id="clust2" class="cluster">
+<title>cluster_SideMenuUserAssignComponentModule_declarations</title>
+<polygon fill="none" stroke="black" points="16,-78 16,-130 554,-130 554,-78 16,-78"/>
 </g>
 <!-- UserAssignComponent -->
 <g id="node1" class="node">

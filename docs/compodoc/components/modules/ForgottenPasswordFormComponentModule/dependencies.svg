@@ -24,13 +24,13 @@
 <title>cluster_ForgottenPasswordFormComponentModule</title>
 <polygon fill="none" stroke="black" stroke-dasharray="1,5" points="108,-70 108,-268 388,-268 388,-70 108,-70"/>
 </g>
-<g id="clust2" class="cluster">
-<title>cluster_ForgottenPasswordFormComponentModule_declarations</title>
-<polygon fill="none" stroke="black" points="130,-78 130,-130 366,-130 366,-78 130,-78"/>
-</g>
 <g id="clust5" class="cluster">
 <title>cluster_ForgottenPasswordFormComponentModule_exports</title>
 <polygon fill="none" stroke="black" points="128,-208 128,-260 368,-260 368,-208 128,-208"/>
+</g>
+<g id="clust2" class="cluster">
+<title>cluster_ForgottenPasswordFormComponentModule_declarations</title>
+<polygon fill="none" stroke="black" points="130,-78 130,-130 366,-130 366,-78 130,-78"/>
 </g>
 <!-- ForgottenPasswordFormComponent -->
 <g id="node1" class="node">

@@ -24,13 +24,13 @@
 <title>cluster_SideMenuAdminImpersonateComponentModule</title>
 <polygon fill="none" stroke="black" stroke-dasharray="1,5" points="8,-70 8,-379.59 1081,-379.59 1081,-70 8,-70"/>
 </g>
-<g id="clust7" class="cluster">
-<title>cluster_SideMenuAdminImpersonateComponentModule_exports</title>
-<polygon fill="none" stroke="black" points="135,-319.59 135,-371.59 576,-371.59 576,-319.59 135,-319.59"/>
-</g>
 <g id="clust3" class="cluster">
 <title>cluster_SideMenuAdminImpersonateComponentModule_AdminImpersonateComponent_providers</title>
 <polygon fill="none" stroke="black" points="485,-78 485,-241.59 1073,-241.59 1073,-78 485,-78"/>
+</g>
+<g id="clust7" class="cluster">
+<title>cluster_SideMenuAdminImpersonateComponentModule_exports</title>
+<polygon fill="none" stroke="black" points="135,-319.59 135,-371.59 576,-371.59 576,-319.59 135,-319.59"/>
 </g>
 <g id="clust2" class="cluster">
 <title>cluster_SideMenuAdminImpersonateComponentModule_declarations</title>

@@ -28,13 +28,13 @@
 <title>cluster_SideMenuNewCaseComponentModule_declarations</title>
 <polygon fill="none" stroke="black" points="263,-189.59 263,-241.59 413,-241.59 413,-189.59 263,-189.59"/>
 </g>
-<g id="clust5" class="cluster">
-<title>cluster_SideMenuNewCaseComponentModule_exports</title>
-<polygon fill="none" stroke="black" points="261,-319.59 261,-371.59 415,-371.59 415,-319.59 261,-319.59"/>
-</g>
 <g id="clust3" class="cluster">
 <title>cluster_SideMenuNewCaseComponentModule_NewCaseComponent_providers</title>
 <polygon fill="none" stroke="black" points="16,-78 16,-176.59 660,-176.59 660,-78 16,-78"/>
+</g>
+<g id="clust5" class="cluster">
+<title>cluster_SideMenuNewCaseComponentModule_exports</title>
+<polygon fill="none" stroke="black" points="261,-319.59 261,-371.59 415,-371.59 415,-319.59 261,-319.59"/>
 </g>
 <!-- NewCaseComponent -->
 <g id="node1" class="node">
