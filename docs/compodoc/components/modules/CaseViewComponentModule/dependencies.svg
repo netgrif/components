@@ -24,13 +24,13 @@
 <title>cluster_CaseViewComponentModule</title>
 <polygon fill="none" stroke="black" stroke-dasharray="1,5" points="8,-70 8,-268 584,-268 584,-70 8,-70"/>
 </g>
-<g id="clust2" class="cluster">
-<title>cluster_CaseViewComponentModule_declarations</title>
-<polygon fill="none" stroke="black" points="20,-78 20,-130 570,-130 570,-78 20,-78"/>
-</g>
 <g id="clust7" class="cluster">
 <title>cluster_CaseViewComponentModule_exports</title>
 <polygon fill="none" stroke="black" points="16,-208 16,-260 576,-260 576,-208 16,-208"/>
+</g>
+<g id="clust2" class="cluster">
+<title>cluster_CaseViewComponentModule_declarations</title>
+<polygon fill="none" stroke="black" points="20,-78 20,-130 570,-130 570,-78 20,-78"/>
 </g>
 <!-- CaseListComponent -->
 <g id="node1" class="node">
