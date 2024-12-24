@@ -3,7 +3,7 @@ import {UserValue} from './user-value';
 import {Behavior} from '../../models/behavior';
 import {Layout} from '../../models/layout';
 import {ProcessRole} from '../../../resources/interface/process-role';
-import {Component} from '../../models/component';
+import {Component, ComponentPrefixes} from '../../models/component';
 import {Validation} from '../../models/validation';
 
 export class UserField extends DataField<UserValue> {
@@ -13,6 +13,9 @@ export class UserField extends DataField<UserValue> {
         super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId);
     }
 
+    public getTypedComponentType(): string {
+        return ComponentPrefixes.USER + this.getComponentType();
+    }
     get roles(): Array<ProcessRole> {
         return this._roles;
     }

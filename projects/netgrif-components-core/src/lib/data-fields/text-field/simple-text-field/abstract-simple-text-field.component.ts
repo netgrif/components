@@ -1,25 +1,21 @@
-import {Component, Input} from '@angular/core';
-import {FormControl} from '@angular/forms';
+import {Component, Inject, Optional} from '@angular/core';
 import {TextField} from '../models/text-field';
-import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {TranslateService} from '@ngx-translate/core';
 import {AbstractTextErrorsComponent} from '../abstract-text-errors.component';
+import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 
 @Component({
     selector: 'ncc-abstract-simple-text-field',
     template: ''
 })
-export abstract class AbstractSimpleTextFieldComponent extends AbstractTextErrorsComponent {
+export abstract class AbstractSimpleTextFieldComponent extends AbstractTextErrorsComponent<TextField> {
 
-    @Input() textField: TextField;
-    @Input() formControlRef: FormControl;
-    @Input() showLargeLayout: WrappedBoolean;
-
-    constructor(protected _translate: TranslateService) {
-        super(_translate);
+    constructor(protected _translate: TranslateService,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextField>) {
+        super(_translate, dataFieldPortalData);
     }
 
     public getErrorMessage() {
-        return this.buildErrorMessage(this.textField, this.formControlRef);
+        return this.buildErrorMessage(this.dataField, this.formControlRef);
     }
 }

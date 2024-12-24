@@ -32,7 +32,7 @@ import {
         TranslateLibModule,
         MatFormFieldModule
     ],
-    exports: [AdminImpersonateComponent],
+    exports: [AdminImpersonateComponent, AdminImpersonateListComponent],
     providers: [
         { provide: NAE_ADMIN_IMPERSONATE_COMPONENT, useValue: AdminImpersonateComponent },
     ]

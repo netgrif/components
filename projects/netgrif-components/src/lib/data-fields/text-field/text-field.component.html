@@ -1,50 +1,5 @@
 <nc-data-field-template *ngIf="!dataField.behavior.hidden"
                         [dataField]="dataField"
-                        [dataFieldTemplate]="textFieldTemplate"
                         [offset]="taskOffset">
 </nc-data-field-template>
 
-<ng-template #textFieldTemplate let-showLargeLayout="showLargeLayout">
-    <div [ngSwitch]="dataField.getComponentType()">
-        <nc-password-text-field *ngSwitchCase="textFieldComponentEnum.PASSWORD" [passwordTextField]="dataField" [formControlRef]="formControl"
-                                [showLargeLayout]="showLargeLayout"></nc-password-text-field>
-        <nc-textarea-field *ngSwitchCase="textFieldComponentEnum.TEXT_AREA" [textAreaField]="dataField" [formControlRef]="formControl"
-                           [showLargeLayout]="showLargeLayout"></nc-textarea-field>
-        <nc-textarea-field *ngSwitchCase="'area'" [textAreaField]="dataField" [formControlRef]="formControl"
-                           [showLargeLayout]="showLargeLayout"></nc-textarea-field>
-        <nc-rich-textarea-field *ngSwitchCase="textFieldComponentEnum.RICH_TEXT_AREA" [textAreaField]="dataField"
-                                [formControlRef]="formControl"
-                                [showLargeLayout]="showLargeLayout"></nc-rich-textarea-field>
-        <nc-rich-textarea-field *ngSwitchCase="'editor'" [textAreaField]="dataField"
-                                [formControlRef]="formControl"
-                                [showLargeLayout]="showLargeLayout"></nc-rich-textarea-field>
-        <nc-html-textarea-field *ngSwitchCase="textFieldComponentEnum.HTML_TEXT_AREA" [textAreaField]="dataField"
-                                [formControlRef]="formControl"
-                                [showLargeLayout]="showLargeLayout"></nc-html-textarea-field>
-        <nc-html-textarea-field *ngSwitchCase="'htmlEditor'" [textAreaField]="dataField"
-                                [formControlRef]="formControl"
-                                [showLargeLayout]="showLargeLayout"></nc-html-textarea-field>
-        <nc-dashboard-line-chart-text-field *ngSwitchCase="textFieldComponentEnum.DASHBOARD_LINE_CHART"
-                                            [textField]="dataField"
-                                            [showLargeLayout]="showLargeLayout"
-                                            [formControlRef]="formControl"></nc-dashboard-line-chart-text-field>
-        <nc-dashboard-pie-chart-text-field *ngSwitchCase="textFieldComponentEnum.DASHBOARD_PIE_CHART"
-                                           [textField]="dataField"
-                                           [showLargeLayout]="showLargeLayout"
-                                           [formControlRef]="formControl"></nc-dashboard-pie-chart-text-field>
-        <nc-dashboard-bar-chart-text-field *ngSwitchCase="textFieldComponentEnum.DASHBOARD_BAR_CHART"
-                                           [textField]="dataField"
-                                           [showLargeLayout]="showLargeLayout"
-                                           [formControlRef]="formControl"></nc-dashboard-bar-chart-text-field>
-        <nc-dashboard-iframe-text-field *ngSwitchCase="textFieldComponentEnum.DASHBOARD_IFRAME"
-                                        [textField]="dataField"
-                                        [showLargeLayout]="showLargeLayout"
-                                        [formControlRef]="formControl"></nc-dashboard-iframe-text-field>
-        <nc-dashboard-portal-text-field *ngSwitchCase="textFieldComponentEnum.DASHBOARD_PORTAL"
-                                        [textField]="dataField"
-                                        [showLargeLayout]="showLargeLayout"
-                                        [formControlRef]="formControl"></nc-dashboard-portal-text-field>
-        <nc-simple-text-field *ngSwitchDefault [textField]="dataField" [formControlRef]="formControl"
-                              [showLargeLayout]="showLargeLayout"></nc-simple-text-field>
-    </div>
-</ng-template>

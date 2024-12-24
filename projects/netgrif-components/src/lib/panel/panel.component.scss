@@ -8,20 +8,8 @@
 }
 
 .header-min-height {
-    min-height: 42px !important;
+    min-height: 53px !important;
     height: auto !important;
-}
-
-.panel-margin {
-    margin: 0 2px;
-
-    //.mat-expanded {
-    //    margin: 16px 2px !important;
-    //}
-}
-
-.margin-top {
-    margin-top: 2px;
 }
 
 .margin-bottom {
@@ -31,3 +19,10 @@
 .mat-expansion-panel {
     user-select: text !important;
 }
+
+.panel-last {
+    padding-bottom: 16px;
+    border-bottom-left-radius: 8px !important;
+    border-bottom-right-radius: 8px !important;
+}
+

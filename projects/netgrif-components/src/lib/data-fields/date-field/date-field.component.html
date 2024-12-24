@@ -1,24 +1,5 @@
 <nc-data-field-template *ngIf="!dataField.behavior.hidden"
                         [dataField]="dataField"
-                        [dataFieldTemplate]="date"
                         [offset]="taskOffset">
 </nc-data-field-template>
 
-<ng-template #date let-showLargeLayout="showLargeLayout">
-    <mat-form-field [appearance]="dataField.materialAppearance" class="full-width" color="primary">
-        <mat-label *ngIf="!showLargeLayout.value">{{dataField.title}}</mat-label>
-        <input matInput
-               [matDatepicker]="datepicker"
-               [required]="dataField.behavior.required"
-               [placeholder]="dataField.placeholder"
-               [formControl]="formControl"
-               (click)="datepicker.open()"
-               [min]="dataField.min"
-               [max]="dataField.max"
-               (keydown.enter)="datepicker.close()">
-        <mat-datepicker-toggle matPrefix [for]="datepicker"></mat-datepicker-toggle>
-        <mat-datepicker #datepicker></mat-datepicker>
-        <mat-hint>{{dataField.description}}</mat-hint>
-        <mat-error *ngIf="dataField.isInvalid(formControl)">{{getErrorMessage()}}</mat-error>
-    </mat-form-field>
-</ng-template>

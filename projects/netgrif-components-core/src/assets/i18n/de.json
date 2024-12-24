@@ -88,6 +88,7 @@
             "noNets": "Es gibt keine erlaubte Netze",
             "createCase": "Neuen Fall würde erfolgreich erzeugt",
             "defaultCaseName": "mit einem Standardfallnamen",
+            "errorCreate": "Fehler beim Erstellen des Falles ",
             "createCaseError": "Neuer Fall wurde erstellt, aber beim Ausführen von Aktionen ist ein Fehler aufgetreten"
         },
         "user": {
@@ -264,12 +265,16 @@
                 "false": "nein"
             }
         },
-        "noFile": "No file",
+        "clear": "Klar",
+        "save": "Speichern",
+        "noFile": "keine Datei",
         "file": {
             "noFile": "keine Datei",
             "clickToUpload": "Klicken Sie, um eine Datei hochzuladen",
             "clickToDownload": "Klicken Sie, um {{fileName}} herunterzuladen",
-            "clickToDelete": "Klicken Sie, um die Datei zu löschen"
+            "clickToOpen": "Klicken Sie hier, um den Dateiinhalt anzuzeigen",
+            "clickToDelete": "Klicken Sie, um die Datei zu löschen",
+            "notAllowed": "Datei {{fileName}} kann nicht hochgeladen werden. Der Datentyp ist nicht zulässig."
         },
         "i18n": {
             "languageSelect": "Sprache auswählen",
@@ -285,6 +290,7 @@
         },
         "user": {
             "selectUser": "Benutzer auswählen",
+            "deleteUser": "Benutzer löschen",
             "save": "Zuweisen",
             "deleteAll": "Leere Benutzerliste"
         },
@@ -476,7 +482,11 @@
         "errorCreate": "Fehler beim Erstellen des Falles "
     },
     "dynamicNavigation": {
-        "couldNotResolveView": "Ein Fehler ist aufgetreten während des Ansichtauflösungsprocess. Der Ansicht kann nicht angezeigt werden"
+        "couldNotResolveView": "Ein Fehler ist aufgetreten während des Ansichtauflösungsprocess. Der Ansicht kann nicht angezeigt werden",
+        "filterNotFound": "Diese Ansicht hat keinen Filter",
+        "loadMoreItems": "Mehr",
+        "ascending": "Aufsteigend",
+        "descending": "Absteigend"
     },
     "impersonation": {
         "user": {
@@ -494,5 +504,14 @@
         "expireDetail": "Ihre Sitzung läuft bald ab.\n\nSie werden in {{time}} Sekunden weitergeleitet",
         "exitButton": "Abmelden",
         "refreshButton": "Angemeldet bleiben"
+    },
+    "paginator": {
+        "firstPage": "Vorderseite",
+        "itemsPage": "Elemente pro Seite:",
+        "lastPage": "Letzte Seite",
+        "nextPage": "Nächste Seite",
+        "previousPage": "Vorherige Seite",
+        "pageOne": "Seite 1 von 1",
+        "pageAmount": "Seite {{page}} von {{amountPages}}"
     }
 }

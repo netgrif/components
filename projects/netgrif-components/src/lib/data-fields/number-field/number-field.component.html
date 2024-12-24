@@ -1,22 +1,4 @@
 <nc-data-field-template *ngIf="!dataField.behavior.hidden"
                         [dataField]="dataField"
-                        [dataFieldTemplate]="dataFieldTemplate"
                         [offset]="taskOffset">
-
 </nc-data-field-template>
-
-<ng-template #dataFieldTemplate let-showLargeLayout="showLargeLayout">
-    <div [ngSwitch]="dataField.getComponentType()">
-        <nc-number-currency-field *ngSwitchCase="'currency'"
-                                 [numberField]="dataField"
-                                 [formControlRef]="formControl"
-                                 [showLargeLayout] = showLargeLayout>
-        </nc-number-currency-field>
-        <nc-number-default-field *ngSwitchDefault
-                                 [numberField]="dataField"
-                                 [formControlRef]="formControl"
-                                 [showLargeLayout] = showLargeLayout>
-        </nc-number-default-field>
-    </div>
-
-</ng-template>

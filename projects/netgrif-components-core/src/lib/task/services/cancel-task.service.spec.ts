@@ -35,6 +35,7 @@ import {createMockNet} from '../../utility/tests/utility/create-mock-net';
 import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
 import {User} from '../../user/models/user';
 import {ProcessRole} from '../../resources/interface/process-role';
+import {FrontActionService} from "../../actions/services/front-action.service";
 
 describe('CancelTaskService', () => {
     let service: CancelTaskService;
@@ -59,6 +60,7 @@ describe('CancelTaskService', () => {
                 TaskDataService,
                 DataFocusPolicyService,
                 ChangedFieldsService,
+                FrontActionService,
                 {provide: TaskContentService, useClass: UnlimitedTaskContentService},
                 {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
                 {provide: ConfigurationService, useClass: TestConfigurationService},

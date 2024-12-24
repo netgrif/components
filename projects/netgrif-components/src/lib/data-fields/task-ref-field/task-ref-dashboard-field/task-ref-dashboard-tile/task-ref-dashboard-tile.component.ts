@@ -9,7 +9,8 @@ import {
     TaskContentService, TaskDataService,
     TaskOperations,
     TaskResourceService,
-    UnlimitedTaskContentService
+    UnlimitedTaskContentService,
+    FrontActionService
 } from '@netgrif/components-core';
 import {Subscription} from 'rxjs';
 import {ComponentPortal} from '@angular/cdk/portal';
@@ -19,6 +20,7 @@ import {ComponentPortal} from '@angular/cdk/portal';
     templateUrl: './task-ref-dashboard-tile.component.html',
     styleUrls: ['./task-ref-dashboard-tile.component.scss'],
     providers: [
+        FrontActionService,
         {provide: TaskContentService, useClass: UnlimitedTaskContentService}
     ]
 })

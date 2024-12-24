@@ -1,7 +1,7 @@
 import {DataField} from '../../models/abstract-data-field';
 import {Behavior} from '../../models/behavior';
 import {Layout} from '../../models/layout';
-import {Component} from '../../models/component';
+import {Component, ComponentPrefixes} from '../../models/component';
 import {Validation} from '../../models/validation';
 import {TaskRefDashboardTile} from './task-ref-dashboard-tile';
 
@@ -39,5 +39,9 @@ export class TaskRefField extends DataField<Array<string>> {
 
     set dashboardCols(value: number) {
         this._dashboardCols = value;
+    }
+
+    public getTypedComponentType(): string {
+        return ComponentPrefixes.TASK_REF + this.getComponentType();
     }
 }

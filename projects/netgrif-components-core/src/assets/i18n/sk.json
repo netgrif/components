@@ -88,6 +88,7 @@
             "noNets": "Žiadne povolené siete",
             "createCase": "Úspešne vytvorený nový prípad",
             "defaultCaseName": "s prednastaveným názvom prípadu",
+            "errorCreate": "Chyba pri vytváraní prípadu ",
             "createCaseError": "Nový prípad vytvorený, nastala však chyba pri vykonávaní akcií"
         },
         "user": {
@@ -264,12 +265,16 @@
                 "false": "nie"
             }
         },
+        "clear": "Vymazať",
+        "save": "Uložiť",
         "noFile": "Žiadny súbor",
         "file": {
             "noFile": "Žiadny súbor",
             "clickToUpload": "Kliknutím nahrajte súbor",
             "clickToDownload": "Kliknutím stiahnite súbor {{fileName}}",
-            "clickToDelete": "Kliknutím vymažte súbor"
+            "clickToOpen": "Kliknutím zobrazíte obsah súboru",
+            "clickToDelete": "Kliknutím vymažte súbor",
+            "notAllowed": "Súbor {{fileName}} nie je možné nahrať. Jeho typ nie je povolený."
         },
         "i18n": {
             "languageSelect": "Výber jazyka",
@@ -285,6 +290,7 @@
         },
         "user": {
             "selectUser": "Vyberte používateľa",
+            "deleteUser": "Vymazať používateľa",
             "save": "Priradiť",
             "deleteAll": "Vymazať zoznam používateľov"
         },
@@ -476,7 +482,11 @@
         "errorCreate": "Chyba pri vytváraní prípadu "
     },
     "dynamicNavigation": {
-        "couldNotResolveView": "Počas načítania zobrazenia sa vyskytla chyba. Zobrazenie nie je možné zobraziť"
+        "couldNotResolveView": "Počas načítania zobrazenia sa vyskytla chyba. Zobrazenie nie je možné zobraziť",
+        "filterNotFound": "Toto zobrazenie neobsahuje filter",
+        "loadMoreItems": "Viac",
+        "ascending": "Vzostupne",
+        "descending": "Zostupne"
     },
     "impersonation": {
         "user": {
@@ -494,5 +504,14 @@
         "expireDetail": "Vaša relácia čoskoro vyprší.\n\nBudete odhlásený za {{time}} sekúnd.",
         "exitButton": "Odhlásiť sa",
         "refreshButton": "Zostaň pripojený"
+    },
+    "paginator": {
+        "firstPage": "Prvá strana",
+        "itemsPage": "Položky na stranu:",
+        "lastPage": "Posledná strana",
+        "nextPage": "Ďalšia strana",
+        "previousPage": "Predchádzajúca strana",
+        "pageOne": "Strana 1 z 1",
+        "pageAmount": "Strana {{page}} z {{amountPages}}"
     }
 }
