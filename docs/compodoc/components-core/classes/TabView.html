@@ -840,8 +840,8 @@ Throws an error if the tab has it&#39;s <code>canBeClosed</code> property set to
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="244"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/tabs/classes/tab-view.ts:244</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="245"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/tabs/classes/tab-view.ts:245</a></div>
                 </td>
             </tr>
 
@@ -1297,8 +1297,8 @@ Creates a new <a href="ComponentPortal">ComponentPortal</a> for the tab and prov
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="275"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/tabs/classes/tab-view.ts:275</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="276"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/tabs/classes/tab-view.ts:276</a></div>
                 </td>
             </tr>
 
@@ -1579,7 +1579,8 @@ export class TabView implements TabViewInterface {
         if (!force &amp;&amp; !this.openedTabs[index].canBeClosed) {
             throw new Error(error);
         }
-        if (index &#x3D;&#x3D;&#x3D; this.selectedIndex.value &amp;&amp; this.openedTabs[index].parentUniqueId) {
+        if (index &#x3D;&#x3D;&#x3D; this.selectedIndex.value &amp;&amp; this.openedTabs[index].parentUniqueId &amp;&amp;
+            this.openedTabs.findIndex(tab &#x3D;&gt; tab.uniqueId &#x3D;&#x3D;&#x3D; this.openedTabs[index].parentUniqueId) !&#x3D;&#x3D; -1) {
             this.switchToTabUniqueId(this.openedTabs[index].parentUniqueId);
         }
         if (index &#x3D;&#x3D;&#x3D; this.selectedIndex.value &amp;&amp; this.selectedIndex.value + 1 &lt; this.openedTabs.length) {

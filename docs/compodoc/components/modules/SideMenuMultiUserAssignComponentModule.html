@@ -66,10 +66,6 @@
 <title>cluster_SideMenuMultiUserAssignComponentModule</title>
 <polygon fill="none" stroke="black" stroke-dasharray="1,5" points="8,-70 8,-333 657,-333 657,-70 8,-70"/>
 </g>
-<g id="clust7" class="cluster">
-<title>cluster_SideMenuMultiUserAssignComponentModule_exports</title>
-<polygon fill="none" stroke="black" points="244,-273 244,-325 442,-325 442,-273 244,-273"/>
-</g>
 <g id="clust2" class="cluster">
 <title>cluster_SideMenuMultiUserAssignComponentModule_declarations</title>
 <polygon fill="none" stroke="black" points="16,-143 16,-195 649,-195 649,-143 16,-143"/>
@@ -77,6 +73,10 @@
 <g id="clust3" class="cluster">
 <title>cluster_SideMenuMultiUserAssignComponentModule_MultiUserAssignComponent_providers</title>
 <polygon fill="none" stroke="black" points="471,-78 471,-130 633,-130 633,-78 471,-78"/>
+</g>
+<g id="clust7" class="cluster">
+<title>cluster_SideMenuMultiUserAssignComponentModule_exports</title>
+<polygon fill="none" stroke="black" points="126,-273 126,-325 545,-325 545,-273 126,-273"/>
 </g>
 <!-- MultiUserAssignComponent -->
 <g id="node1" class="node">
@@ -123,14 +123,26 @@
 <!-- MultiUserAssignComponent  -->
 <g id="node6" class="node">
 <title>MultiUserAssignComponent </title>
-<polygon fill="#fb8072" stroke="black" points="433.76,-317 252.24,-317 252.24,-281 433.76,-281 433.76,-317"/>
-<text text-anchor="middle" x="343" y="-294.8" font-family="Times,serif" font-size="14.00">MultiUserAssignComponent </text>
+<polygon fill="#fb8072" stroke="black" points="536.76,-317 355.24,-317 355.24,-281 536.76,-281 536.76,-317"/>
+<text text-anchor="middle" x="446" y="-294.8" font-family="Times,serif" font-size="14.00">MultiUserAssignComponent </text>
 </g>
 <!-- SideMenuMultiUserAssignComponentModule&#45;&gt;MultiUserAssignComponent  -->
 <g id="edge5" class="edge">
 <title>SideMenuMultiUserAssignComponentModule&#45;&gt;MultiUserAssignComponent </title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M343,-252.11C343,-252.11 343,-270.99 343,-270.99"/>
-<polygon fill="black" stroke="black" points="339.5,-270.99 343,-280.99 346.5,-270.99 339.5,-270.99"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M418.9,-252.11C418.9,-252.11 418.9,-270.99 418.9,-270.99"/>
+<polygon fill="black" stroke="black" points="415.4,-270.99 418.9,-280.99 422.4,-270.99 415.4,-270.99"/>
+</g>
+<!-- MultiUserAssignListComponent  -->
+<g id="node7" class="node">
+<title>MultiUserAssignListComponent </title>
+<polygon fill="#fb8072" stroke="black" points="337.54,-317 134.46,-317 134.46,-281 337.54,-281 337.54,-317"/>
+<text text-anchor="middle" x="236" y="-294.8" font-family="Times,serif" font-size="14.00">MultiUserAssignListComponent </text>
+</g>
+<!-- SideMenuMultiUserAssignComponentModule&#45;&gt;MultiUserAssignListComponent  -->
+<g id="edge6" class="edge">
+<title>SideMenuMultiUserAssignComponentModule&#45;&gt;MultiUserAssignListComponent </title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M270.55,-252.11C270.55,-252.11 270.55,-270.99 270.55,-270.99"/>
+<polygon fill="black" stroke="black" points="267.05,-270.99 270.55,-280.99 274.05,-270.99 267.05,-270.99"/>
 </g>
 <!-- UserListService -->
 <g id="node5" class="node">
@@ -205,6 +217,9 @@
                         <li class="list-group-item">
                             <a href="../components/MultiUserAssignComponent.html">MultiUserAssignComponent</a>
                         </li>
+                        <li class="list-group-item">
+                            <a href="../components/MultiUserAssignListComponent.html">MultiUserAssignListComponent</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -225,7 +240,7 @@ import {CommonModule} from &quot;@angular/common&quot;;
 import {
     CovalentModule,
     MaterialModule,
-    NAE_USER_ASSIGN_COMPONENT,
+    NAE_MULTI_USER_ASSIGN_COMPONENT,
     TranslateLibModule,
     UtilityModule
 } from &quot;@netgrif/components-core&quot;;
@@ -250,9 +265,9 @@ import {MatFormFieldModule} from &quot;@angular/material/form-field&quot;;
         MatFormFieldModule,
         UtilityModule
     ],
-    exports: [MultiUserAssignComponent],
+    exports: [MultiUserAssignComponent, MultiUserAssignListComponent],
     providers: [
-        { provide: NAE_USER_ASSIGN_COMPONENT, useValue: MultiUserAssignComponent },
+        { provide: NAE_MULTI_USER_ASSIGN_COMPONENT, useValue: MultiUserAssignComponent },
     ]
 })
 export class SideMenuMultiUserAssignComponentModule {

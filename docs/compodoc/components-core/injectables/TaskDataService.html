@@ -116,6 +116,10 @@ a single Task object managed by a <a href="../injectables/TaskContentService.htm
                             </li>
                             <li>
                                     <span class="modifier">Protected</span>
+                                <a href="#clearWaitingForResponseFlag" >clearWaitingForResponseFlag</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
                                 <a href="#compareBackendFormattedFieldValues" >compareBackendFormattedFieldValues</a>
                             </li>
                             <li>
@@ -164,6 +168,10 @@ a single Task object managed by a <a href="../injectables/TaskContentService.htm
                             <li>
                                     <span class="modifier">Protected</span>
                                 <a href="#revertSetDataRequest" >revertSetDataRequest</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#revertToPreviousValue" >revertToPreviousValue</a>
                             </li>
                             <li>
                                     <span class="modifier">Protected</span>
@@ -217,12 +225,12 @@ a single Task object managed by a <a href="../injectables/TaskContentService.htm
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(_taskState: <a href="../injectables/TaskRequestStateService.html" target="_self">TaskRequestStateService</a>, _translate: TranslateService, _log: <a href="../injectables/LoggerService.html" target="_self">LoggerService</a>, _snackBar: <a href="../injectables/SnackBarService.html" target="_self">SnackBarService</a>, _taskResourceService: <a href="../injectables/TaskResourceService.html" target="_self">TaskResourceService</a>, _fieldConverterService: <a href="../injectables/FieldConverterService.html" target="_self">FieldConverterService</a>, _taskEvent: <a href="../injectables/TaskEventService.html" target="_self">TaskEventService</a>, _taskOperations: <a href="../interfaces/TaskOperations.html" target="_self">TaskOperations</a>, _selectedCaseService: <a href="../injectables/SelectedCaseService.html" target="_self">SelectedCaseService</a>, _taskContentService: <a href="../injectables/TaskContentService.html" target="_self">TaskContentService</a>, _afterActionFactory: <a href="../injectables/CallChainService.html" target="_self">CallChainService</a>, _eventQueue: <a href="../injectables/EventQueueService.html" target="_self">EventQueueService</a>, _userComparator: <a href="../injectables/UserComparatorService.html" target="_self">UserComparatorService</a>, _eventService: <a href="../injectables/EventService.html" target="_self">EventService</a>, _changedFieldsService: <a href="../injectables/ChangedFieldsService.html" target="_self">ChangedFieldsService</a>)</code>
+<code>constructor(_taskState: <a href="../injectables/TaskRequestStateService.html" target="_self">TaskRequestStateService</a>, _translate: TranslateService, _log: <a href="../injectables/LoggerService.html" target="_self">LoggerService</a>, _snackBar: <a href="../injectables/SnackBarService.html" target="_self">SnackBarService</a>, _taskResourceService: <a href="../injectables/TaskResourceService.html" target="_self">TaskResourceService</a>, _fieldConverterService: <a href="../injectables/FieldConverterService.html" target="_self">FieldConverterService</a>, _taskEvent: <a href="../injectables/TaskEventService.html" target="_self">TaskEventService</a>, _taskOperations: <a href="../interfaces/TaskOperations.html" target="_self">TaskOperations</a>, _selectedCaseService: <a href="../injectables/SelectedCaseService.html" target="_self">SelectedCaseService</a>, _taskContentService: <a href="../injectables/TaskContentService.html" target="_self">TaskContentService</a>, _afterActionFactory: <a href="../injectables/CallChainService.html" target="_self">CallChainService</a>, _eventQueue: <a href="../injectables/EventQueueService.html" target="_self">EventQueueService</a>, _userComparator: <a href="../injectables/UserComparatorService.html" target="_self">UserComparatorService</a>, _eventService: <a href="../injectables/EventService.html" target="_self">EventService</a>, _changedFieldsService: <a href="../injectables/ChangedFieldsService.html" target="_self">ChangedFieldsService</a>, _frontActionService: <a href="../injectables/FrontActionService.html" target="_self">FrontActionService</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:47</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:48</a></div>
                             </td>
                         </tr>
 
@@ -419,6 +427,18 @@ a single Task object managed by a <a href="../injectables/TaskContentService.htm
                                                     </td>
                                                     
                                                 </tr>
+                                                <tr>
+                                                        <td>_frontActionService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/FrontActionService.html" target="_self" >FrontActionService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -455,8 +475,8 @@ a single Task object managed by a <a href="../injectables/TaskContentService.htm
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="343"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:343</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="341"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:341</a></div>
                 </td>
             </tr>
 
@@ -531,6 +551,76 @@ a single Task object managed by a <a href="../injectables/TaskContentService.htm
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="clearWaitingForResponseFlag"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>clearWaitingForResponseFlag</b></span>
+                        <a href="#clearWaitingForResponseFlag"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>clearWaitingForResponseFlag(body: <a href="../interfaces/TaskSetDataRequestBody.html" target="_self">TaskSetDataRequestBody</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="627"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:627</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>body</td>
+                                    <td>
+                                                <code><a href="../interfaces/TaskSetDataRequestBody.html" target="_self" >TaskSetDataRequestBody</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="compareBackendFormattedFieldValues"></a>
                     <span class="name">
                         <span class="modifier">Protected</span>
@@ -549,8 +639,8 @@ a single Task object managed by a <a href="../injectables/TaskContentService.htm
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="570"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:570</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="572"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:572</a></div>
                 </td>
             </tr>
 
@@ -637,8 +727,8 @@ and determines whether they are the same value, or not.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="108"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:108</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="106"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:106</a></div>
                 </td>
             </tr>
 
@@ -741,8 +831,8 @@ and the <code>afterAction</code> will not be executed.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="352"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:352</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="350"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:350</a></div>
                 </td>
             </tr>
 
@@ -811,8 +901,8 @@ and the <code>afterAction</code> will not be executed.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="368"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:368</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="366"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:366</a></div>
                 </td>
             </tr>
 
@@ -881,8 +971,8 @@ and the <code>afterAction</code> will not be executed.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="75"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:75</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="73"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:73</a></div>
                 </td>
             </tr>
 
@@ -920,8 +1010,8 @@ and the <code>afterAction</code> will not be executed.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="128"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:128</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="126"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:126</a></div>
                 </td>
             </tr>
 
@@ -1029,8 +1119,8 @@ and the <code>afterAction</code> will not be executed.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="410"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:410</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="408"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:408</a></div>
                 </td>
             </tr>
 
@@ -1154,8 +1244,8 @@ and the <code>afterAction</code> will not be executed.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="241"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:241</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="239"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:239</a></div>
                 </td>
             </tr>
 
@@ -1279,8 +1369,8 @@ and the <code>afterAction</code> will not be executed.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="507"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:507</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="509"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:509</a></div>
                 </td>
             </tr>
 
@@ -1418,8 +1508,8 @@ and the <code>afterAction</code> will not be executed.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="157"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:157</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="155"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:155</a></div>
                 </td>
             </tr>
 
@@ -1543,8 +1633,8 @@ and the <code>afterAction</code> will not be executed.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="482"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:482</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="480"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:480</a></div>
                 </td>
             </tr>
 
@@ -1684,8 +1774,8 @@ and the <code>afterAction</code> will not be executed.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="449"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:449</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="447"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:447</a></div>
                 </td>
             </tr>
 
@@ -1823,8 +1913,8 @@ and the <code>afterAction</code> will not be executed.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="535"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:535</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="537"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:537</a></div>
                 </td>
             </tr>
 
@@ -1882,6 +1972,76 @@ and the <code>afterAction</code> will not be executed.</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="revertToPreviousValue"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>revertToPreviousValue</b></span>
+                        <a href="#revertToPreviousValue"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>revertToPreviousValue(context: <a href="../interfaces/TaskSetDataRequestContext.html" target="_self">TaskSetDataRequestContext</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="617"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:617</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                                <code><a href="../interfaces/TaskSetDataRequestContext.html" target="_self" >TaskSetDataRequestContext</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="sendNotification"></a>
                     <span class="name">
                         <span class="modifier">Protected</span>
@@ -1900,8 +2060,8 @@ and the <code>afterAction</code> will not be executed.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="611"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:611</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="613"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:613</a></div>
                 </td>
             </tr>
 
@@ -1993,8 +2153,8 @@ and the <code>afterAction</code> will not be executed.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="280"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:280</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="278"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:278</a></div>
                 </td>
             </tr>
 
@@ -2078,8 +2238,8 @@ and the <code>afterAction</code> will not be executed.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="360"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:360</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="358"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:358</a></div>
                 </td>
             </tr>
 
@@ -2297,7 +2457,7 @@ relevant and should be discarded, otherwise an illegal task state could be achie
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:47</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:48</a></div>
                         </td>
                     </tr>
 
@@ -2324,7 +2484,7 @@ relevant and should be discarded, otherwise an illegal task state could be achie
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:46</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:47</a></div>
                         </td>
                     </tr>
 
@@ -2353,7 +2513,7 @@ relevant and should be discarded, otherwise an illegal task state could be achie
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="91" class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:91</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="89" class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:89</a></div>
                                 </td>
                             </tr>
                     <tr>
@@ -2378,7 +2538,7 @@ calls in <a href="../injectables/TaskDataService.html#updateTaskDataFields">upda
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Inject, Injectable, OnDestroy, Optional} from &#x27;@angular/core&#x27;;
 import {Observable, Subject, Subscription} from &#x27;rxjs&#x27;;
-import {ChangedFields} from &#x27;../../data-fields/models/changed-fields&#x27;;
+import {ChangedFields, FrontAction} from &#x27;../../data-fields/models/changed-fields&#x27;;
 import {TaskContentService} from &#x27;../../task-content/services/task-content.service&#x27;;
 import {TaskRequestStateService} from &#x27;./task-request-state.service&#x27;;
 import {TranslateService} from &#x27;@ngx-translate/core&#x27;;
@@ -2413,6 +2573,7 @@ import {ChangedFieldsService} from &#x27;../../changed-fields/services/changed-f
 import {ChangedFieldsMap} from &#x27;../../event/services/interfaces/changed-fields-map&#x27;;
 import {TaskFields} from &#x27;../../task-content/model/task-fields&#x27;;
 import {EnumerationField} from &quot;../../data-fields/enumeration-field/models/enumeration-field&quot;;
+import {FrontActionService} from &quot;../../actions/services/front-action.service&quot;;
 
 /**
  * Handles the loading and updating of data fields and behaviour of
@@ -2438,15 +2599,12 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
                 protected _eventQueue: EventQueueService,
                 protected _userComparator: UserComparatorService,
                 protected _eventService: EventService,
-                protected _changedFieldsService: ChangedFieldsService) {
+                protected _changedFieldsService: ChangedFieldsService,
+                protected _frontActionService: FrontActionService) {
         super(_taskContentService, _selectedCaseService);
         this._updateSuccess$ &#x3D; new Subject&lt;boolean&gt;();
         this._dataReloadSubscription &#x3D; this._taskContentService.taskDataReloadRequest$.subscribe(queuedFrontendAction &#x3D;&gt; {
-            this.initializeTaskDataFields(this._afterActionFactory.create(success &#x3D;&gt; {
-                if (success &amp;&amp; queuedFrontendAction) {
-                    this._taskContentService.performFrontendAction(queuedFrontendAction);
-                }
-            }), true);
+            this.initializeTaskDataFields(new AfterAction(), true);
         });
     }
 
@@ -2728,7 +2886,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
     }
 
     protected isAutocompleteEnumException(field: DataField&lt;unknown&gt;): boolean{
-        return (field instanceof EnumerationField) &amp;&amp; (field.getComponentType() &#x3D;&#x3D;&#x3D; &#x27;autocomplete&#x27;) &amp;&amp; !field.valid;
+        return (field instanceof EnumerationField) &amp;&amp; (field.getComponentType() &#x3D;&#x3D;&#x3D; &#x27;autocomplete&#x27;) &amp;&amp; !(field.valid || field.value &#x3D;&#x3D;&#x3D; null);
     }
 
     /**
@@ -2864,9 +3022,13 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
                                               context: TaskSetDataRequestContext) {
         const outcome &#x3D; response.outcome;
         const changedFieldsMap: ChangedFieldsMap &#x3D; this._eventService.parseChangedFieldsFromOutcomeTree(outcome);
+        const frontActions: Array&lt;FrontAction&gt; &#x3D; this._eventService.parseFrontActionsFromOutcomeTree(outcome);
 
         if (Object.keys(changedFieldsMap).length &gt; 0) {
             this._changedFieldsService.emitChangedFields(changedFieldsMap);
+        }
+        if (!!frontActions &amp;&amp; frontActions.length &gt; 0) {
+            this._frontActionService.runAll(frontActions);
         }
         this.clearWaitingForResponseFlag(context.body);
         this._snackBar.openSuccessSnackBar(!!outcome.message ? outcome.message : this._translate.instant(&#x27;tasks.snackbar.dataSaved&#x27;));
@@ -2990,7 +3152,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         this._taskEvent.publishTaskEvent(createTaskEventNotification(this._safeTask, event, success));
     }
 
-    private revertToPreviousValue(context: TaskSetDataRequestContext): void {
+    protected revertToPreviousValue(context: TaskSetDataRequestContext): void {
         this._safeTask.dataGroups.forEach(dataGroup &#x3D;&gt; {
             dataGroup.fields.forEach(field &#x3D;&gt; {
                 if (field.initialized &amp;&amp; field.valid &amp;&amp; Object.keys(context.previousValues).includes(field.stringId)) {
@@ -3000,7 +3162,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         });
     }
 
-    private clearWaitingForResponseFlag(body: TaskSetDataRequestBody) {
+    protected clearWaitingForResponseFlag(body: TaskSetDataRequestBody) {
         Object.keys(body).forEach(taskId &#x3D;&gt; {
             Object.keys(body[taskId]).forEach(fieldId &#x3D;&gt; {
                 this._taskContentService.taskFieldsIndex[taskId].fields[fieldId].waitingForResponse &#x3D; false;

@@ -73,7 +73,7 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {NgModule} from &#x27;@angular/core&#x27;;
-import {CommonModule, CurrencyPipe, registerLocaleData} from &#x27;@angular/common&#x27;;
+import {CommonModule, CurrencyPipe, DecimalPipe, registerLocaleData} from &#x27;@angular/common&#x27;;
 import en from &#x27;@angular/common/locales/en&#x27;;
 import sk from &#x27;@angular/common/locales/sk&#x27;;
 import de from &#x27;@angular/common/locales/de&#x27;;
@@ -84,7 +84,7 @@ import de from &#x27;@angular/common/locales/de&#x27;;
     imports: [
         CommonModule
     ],
-    providers: [CurrencyPipe]
+    providers: [CurrencyPipe, DecimalPipe]
 })
 export class CurrencyModule {
 

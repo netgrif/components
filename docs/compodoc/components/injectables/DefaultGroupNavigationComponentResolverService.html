@@ -84,6 +84,22 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#resolveComponentClass" >resolveComponentClass</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#resolveComponentClassFromLayout" >resolveComponentClassFromLayout</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#resolveCustomComponent" >resolveCustomComponent</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#resolveDefaultComponent" >resolveDefaultComponent</a>
+                            </li>
+                            <li>
                                     <span class="modifier">Public</span>
                                 <a href="#resolveViewComponent" >resolveViewComponent</a>
                             </li>
@@ -105,12 +121,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(taskResourceService: TaskResourceService, log: LoggerService)</code>
+<code>constructor(taskResourceService: TaskResourceService, log: LoggerService, _configService: ConfigurationService, _viewService: ViewService)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-group-navigation-component-resolver.service.ts:11</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-group-navigation-component-resolver.service.ts:22</a></div>
                             </td>
                         </tr>
 
@@ -151,6 +167,30 @@
                                                     </td>
                                                     
                                                 </tr>
+                                                <tr>
+                                                        <td>_configService</td>
+                                                  
+                                                        <td>
+                                                                    <code>ConfigurationService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_viewService</td>
+                                                  
+                                                        <td>
+                                                                    <code>ViewService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -169,26 +209,26 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="resolveViewComponent"></a>
+                    <a name="resolveComponentClass"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
-                        <span ><b>resolveViewComponent</b></span>
-                        <a href="#resolveViewComponent"><span class="icon ion-ios-link"></span></a>
+                        <span class="modifier">Protected</span>
+                        <span ><b>resolveComponentClass</b></span>
+                        <a href="#resolveComponentClass"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>resolveViewComponent(navigationItemTaskData: Array<DataGroup>)</code>
+                    <code>resolveComponentClass(view: View, configPath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="17"
-                            class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-group-navigation-component-resolver.service.ts:17</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="46"
+                            class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-group-navigation-component-resolver.service.ts:46</a></div>
                 </td>
             </tr>
 
@@ -208,7 +248,311 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>navigationItemTaskData</td>
+                                    <td>view</td>
+                                    <td>
+                                            <code>View</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>configPath</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Type | undefined</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resolveComponentClassFromLayout"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>resolveComponentClassFromLayout</b></span>
+                        <a href="#resolveComponentClassFromLayout"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resolveComponentClassFromLayout(view: View, configPath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="61"
+                            class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-group-navigation-component-resolver.service.ts:61</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>view</td>
+                                    <td>
+                                            <code>View</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>configPath</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Type | undefined</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resolveCustomComponent"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>resolveCustomComponent</b></span>
+                        <a href="#resolveCustomComponent"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resolveCustomComponent(navItemData: Array<DataGroup>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="37"
+                            class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-group-navigation-component-resolver.service.ts:37</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>navItemData</td>
+                                    <td>
+                                            <code>Array&lt;DataGroup&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Type&lt;any&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resolveDefaultComponent"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>resolveDefaultComponent</b></span>
+                        <a href="#resolveDefaultComponent"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resolveDefaultComponent(navItemData: Array<DataGroup>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="66"
+                            class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-group-navigation-component-resolver.service.ts:66</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>navItemData</td>
+                                    <td>
+                                            <code>Array&lt;DataGroup&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Type&lt;any&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resolveViewComponent"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>resolveViewComponent</b></span>
+                        <a href="#resolveViewComponent"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resolveViewComponent(navItemData: Array<DataGroup>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="28"
+                            class="link-to-prism">projects/netgrif-components/src/lib/navigation/group-navigation-component-resolver/default-group-navigation-component-resolver.service.ts:28</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>navItemData</td>
                                     <td>
                                             <code>Array&lt;DataGroup&gt;</code>
                                     </td>
@@ -243,34 +587,86 @@
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Injectable, Type} from &#x27;@angular/core&#x27;;
 import {
-    DataGroup, extractFilterFromData,
+    DataGroup,
+    extractFilterFromData,
     FilterType,
-    GroupNavigationComponentResolverService, LoggerService, TaskResourceService,
+    GroupNavigationComponentResolverService,
+    LoggerService,
+    TaskResourceService,
+    ConfigurationService,
+    View,
+    ViewService,
+    extractFieldValueFromData,
+    RoutingBuilderService,
+    GroupNavigationConstants
 } from &#x27;@netgrif/components-core&#x27;;
 import {DefaultTabViewComponent} from &#x27;./default-components/default-tab-view/default-tab-view.component&#x27;;
-import {DefaultSimpleTaskViewComponent} from &#x27;./default-components/default-simple-task-view/default-simple-task-view.component&#x27;;
+import {
+    DefaultNoFilterProvidedComponent
+} from &quot;./default-components/default-no-filter-provided/default-no-filter-provided.component&quot;;
 
 @Injectable()
 export class DefaultGroupNavigationComponentResolverService extends GroupNavigationComponentResolverService {
 
-    constructor(taskResourceService: TaskResourceService, log: LoggerService) {
+    constructor(taskResourceService: TaskResourceService, log: LoggerService, private _configService: ConfigurationService, private _viewService: ViewService,) {
         super(taskResourceService, log);
     }
 
-    public resolveViewComponent(navigationItemTaskData: Array&lt;DataGroup&gt;): Type&lt;any&gt; {
-        const filter &#x3D; extractFilterFromData(navigationItemTaskData);
+    public resolveViewComponent(navItemData: Array&lt;DataGroup&gt;): Type&lt;any&gt; {
+        const useCustomRouting &#x3D; extractFieldValueFromData&lt;boolean&gt;(navItemData, &#x27;use_custom_view&#x27;);
+        if (useCustomRouting) {
+            return this.resolveCustomComponent(navItemData);
+        } else {
+            return this.resolveDefaultComponent(navItemData);
+        }
+    }
 
+    protected resolveCustomComponent(navItemData: Array&lt;DataGroup&gt;): Type&lt;any&gt; {
+        const customSelector &#x3D; extractFieldValueFromData&lt;string&gt;(navItemData, &#x27;custom_view_selector&#x27;);
+        for (const [pathSegment, view] of Object.entries(this._configService.get().views)) {
+            if (pathSegment &#x3D;&#x3D;&#x3D; customSelector) {
+                return this.resolveComponentClass(view, pathSegment);
+            }
+        }
+    }
+
+    protected resolveComponentClass(view: View, configPath: string): Type&lt;any&gt; | undefined {
+        let result;
+        if (!!view.component) {
+            result &#x3D; this._viewService.resolveNameToClass(view.component.class);
+        } else if (!!view.layout) {
+            result &#x3D; this.resolveComponentClassFromLayout(view, configPath);
+        } else {
+            return undefined;
+        }
+        if (result &#x3D;&#x3D;&#x3D; undefined) {
+            return undefined;
+        }
+        return result;
+    }
+
+    protected resolveComponentClassFromLayout(view: View, configPath: string): Type&lt;any&gt; | undefined {
+        const className &#x3D; RoutingBuilderService.parseClassNameFromView(view, configPath);
+        return this._viewService.resolveNameToClass(className);
+    }
+
+    protected resolveDefaultComponent(navItemData: Array&lt;DataGroup&gt;): Type&lt;any&gt; {
+        const filterTaskRefValue &#x3D; extractFieldValueFromData&lt;string[]&gt;(navItemData, GroupNavigationConstants.ITEM_FIELD_ID_FILTER_TASKREF);
+        if (filterTaskRefValue &#x3D;&#x3D; undefined || filterTaskRefValue.length &#x3D;&#x3D; 0) {
+            return DefaultNoFilterProvidedComponent
+        }
+
+        const filter &#x3D; extractFilterFromData(navItemData);
         if (filter &#x3D;&#x3D;&#x3D; undefined) {
             throw new Error(&#x27;Provided navigation item task data does not contain a filter field&#x27;);
         }
 
         switch (filter.type) {
             case FilterType.CASE:
-                return DefaultTabViewComponent;
             case FilterType.TASK:
-                return DefaultSimpleTaskViewComponent;
+                return DefaultTabViewComponent;
             default:
-                throw new Error(&#x60;Cannot resolve group navigation component from &#x27;${filter.type}&#x27; filter type&#x60;);
+                throw new Error(&#x60;Cannot resolve navigation component from &#x27;${filter.type}&#x27; filter type&#x60;);
         }
     }
 }

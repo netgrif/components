@@ -37,6 +37,7 @@
 <ol class="breadcrumb">
   <li>Components</li>
   <li
+        class="deprecated-name"
   >
   AbstractTaskRefFieldComponent</li>
 </ol>
@@ -61,6 +62,12 @@
     <code>projects/netgrif-components-core/src/lib/data-fields/task-ref-field/abstract-task-ref-field.component.ts</code>
 </p>
 
+    <p class="comment">
+        <h3 class="deprecated">Deprecated</h3>
+    </p>
+    <p class="comment">
+        
+    </p>
 
 
     <p class="comment">
@@ -147,30 +154,14 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                    <span class="modifier">Protected</span>
-                                <a href="#createDashboardTile" >createDashboardTile</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Protected</span>
-                                <a href="#createDashboardTiles" >createDashboardTiles</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Protected</span>
-                                <a href="#createEmptyDashboardTile" >createEmptyDashboardTile</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Protected</span>
-                                <a href="#createFlagGrid" >createFlagGrid</a>
-                            </li>
-                            <li>
-                                <a href="#ngOnInit" >ngOnInit</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Protected</span>
-                                <a href="#occupySpace" >occupySpace</a>
+                                    <span class="modifier">Public</span>
+                                <a href="#hasTitle" >hasTitle</a>
                             </li>
                             <li>
                                 <a href="#ngOnDestroy" >ngOnDestroy</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
                             </li>
                         </ul>
                     </td>
@@ -208,12 +199,12 @@
                 <tr>
                     <td class="col-md-4">
                                 <span class="modifier">Protected</span>
-                        <code>constructor(_logger: <a href="../injectables/LoggerService.html" target="_self">LoggerService</a>, informAboutInvalidData: boolean | null)</code>
+                        <code>constructor(informAboutInvalidData: boolean | null)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/task-ref-field/abstract-task-ref-field.component.ts:17</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/task-ref-field/abstract-task-ref-field.component.ts:15</a></div>
                             </td>
                         </tr>
 
@@ -230,18 +221,6 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                                <tr>
-                                                        <td>_logger</td>
-                                                  
-                                                        <td>
-                                                                        <code><a href="../injectables/LoggerService.html" target="_self" >LoggerService</a></code>
-                                                        </td>
-                                                  
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
-                                                </tr>
                                                 <tr>
                                                         <td>informAboutInvalidData</td>
                                                   
@@ -275,7 +254,7 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../interfaces/Task.html" target="_self" >TaskRefField</a></code>
+                        <i>Type : </i>        <code><a href="../classess/DataField.html" target="_self" >DataField&lt;any&gt;</a></code>
 
                     </td>
                 </tr>
@@ -287,10 +266,17 @@
                             </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractDataFieldComponent:16</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractDataFieldComponent:20</a></code>
 </div>
                             </td>
                         </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The Model object that this Component should render.
+It should be overridden in each class that extends this one, to provide a more specific type.</p>
+</div>
+                    </td>
+                </tr>
             </tbody>
         </table>
         <table class="table table-sm table-bordered">
@@ -320,7 +306,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractDataFieldComponent:20</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractDataFieldComponent:21</a></code>
 </div>
                             </td>
                         </tr>
@@ -339,296 +325,18 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="createDashboardTile"></a>
+                    <a name="hasTitle"></a>
                     <span class="name">
-                        <span class="modifier">Protected</span>
-                        <span ><b>createDashboardTile</b></span>
-                        <a href="#createDashboardTile"><span class="icon ion-ios-link"></span></a>
+                        <span class="modifier">Public</span>
+                        <span ><b>hasTitle</b></span>
+                        <a href="#hasTitle"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>createDashboardTile(tile: <a href="../interfaces/TaskRefDashboardTile.html" target="_self">TaskRefDashboardTile</a>)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="64"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/task-ref-field/abstract-task-ref-field.component.ts:64</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>tile</td>
-                                    <td>
-                                                <code><a href="../interfaces/TaskRefDashboardTile.html" target="_self" >TaskRefDashboardTile</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../interfaces/TaskRefDashboardTile.html" target="_self" >TaskRefDashboardTile</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="createDashboardTiles"></a>
-                    <span class="name">
-                        <span class="modifier">Protected</span>
-                        <span ><b>createDashboardTiles</b></span>
-                        <a href="#createDashboardTiles"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>createDashboardTiles()</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="29"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/task-ref-field/abstract-task-ref-field.component.ts:29</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="createEmptyDashboardTile"></a>
-                    <span class="name">
-                        <span class="modifier">Protected</span>
-                        <span ><b>createEmptyDashboardTile</b></span>
-                        <a href="#createEmptyDashboardTile"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>createEmptyDashboardTile(x: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, y: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="126"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/task-ref-field/abstract-task-ref-field.component.ts:126</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>x</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>y</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../interfaces/TaskRefDashboardTile.html" target="_self" >TaskRefDashboardTile</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="createFlagGrid"></a>
-                    <span class="name">
-                        <span class="modifier">Protected</span>
-                        <span ><b>createFlagGrid</b></span>
-                        <a href="#createFlagGrid"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>createFlagGrid(rows: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, cols: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="56"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/task-ref-field/abstract-task-ref-field.component.ts:56</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Default value</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>rows</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-                                    <td>
-                                        <code>1</code>
-                                    </td>
-
-                                </tr>
-                                <tr>
-                                    <td>cols</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-                                    <td>
-                                        <code>1</code>
-                                    </td>
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>Array&lt;Array&lt;boolean&gt;&gt;</code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="ngOnInit"></a>
-                    <span class="name">
-                        <span ><b>ngOnInit</b></span>
-                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-<code>ngOnInit()</code>
+                    <code>hasTitle()</code>
                 </td>
             </tr>
 
@@ -641,7 +349,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractDataFieldComponent:24</a></code>
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractDataFieldComponent:53</a></code>
 </div>
                 </td>
             </tr>
@@ -651,126 +359,8 @@
                 <td class="col-md-4">
 
                     <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
 
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="occupySpace"></a>
-                    <span class="name">
-                        <span class="modifier">Protected</span>
-                        <span ><b>occupySpace</b></span>
-                        <a href="#occupySpace"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>occupySpace(grid: Array<Array<boolean>>, y: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, x: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, width: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, height: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="118"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/task-ref-field/abstract-task-ref-field.component.ts:118</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>grid</td>
-                                    <td>
-                                            <code>Array&lt;Array&lt;boolean&gt;&gt;</code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>y</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>x</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>width</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>height</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
                     </div>
                 </td>
             </tr>
@@ -802,7 +392,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractDataFieldComponent:41</a></code>
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractDataFieldComponent:42</a></code>
 </div>
                 </td>
             </tr>
@@ -810,6 +400,52 @@
 
             <tr>
                 <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../interfaces/Component.html" target="_self" >AbstractDataFieldComponent</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractDataFieldComponent:37</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Registers the <a href="FormControl">FormControl</a> to the provided data field.</p>
+<p>See <a href="../classess/DataField.html#registerFormControl">DataField.registerFormControl</a> form more information.</p>
+</div>
 
                     <div class="io-description">
                         <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -844,7 +480,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/task-ref-field/abstract-task-ref-field.component.ts:17</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/task-ref-field/abstract-task-ref-field.component.ts:15</a></div>
                         </td>
                     </tr>
 
@@ -864,7 +500,7 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../interfaces/Task.html" target="_self" >TaskRefField</a></code>
+                        <i>Type : </i>        <code><a href="../classess/DataField.html" target="_self" >DataField&lt;any&gt;</a></code>
 
                     </td>
                 </tr>
@@ -885,11 +521,18 @@
                         </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractDataFieldComponent:16</a></code>
+                                <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractDataFieldComponent:20</a></code>
 </div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>The Model object that this Component should render.
+It should be overridden in each class that extends this one, to provide a more specific type.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -932,7 +575,7 @@
                         </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractDataFieldComponent:20</a></code>
+                                <div class="io-line">Defined in         <code><a href="../interfaces/Component.html#source" target="_self" >AbstractDataFieldComponent:21</a></code>
 </div>
                         </td>
                     </tr>
@@ -946,140 +589,24 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, Inject, Input, OnInit, Optional} from &#x27;@angular/core&#x27;;
-import {LoggerService} from &#x27;../../logger/public-api&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, Inject, OnInit, Optional} from &#x27;@angular/core&#x27;;
 import {AbstractDataFieldComponent} from &#x27;../models/abstract-data-field-component&#x27;;
 import {NAE_INFORM_ABOUT_INVALID_DATA} from &#x27;../models/invalid-data-policy-token&#x27;;
-import {TaskRefDashboardConstants} from &#x27;./model/task-ref-dashboard-constants&#x27;;
-import {TaskRefField} from &#x27;./model/task-ref-field&#x27;;
-import {TaskRefDashboardTileConstants} from &#x27;./model/task-ref-dashboard-tile-constants&#x27;;
 import {TaskRefDashboardTile} from &#x27;./model/task-ref-dashboard-tile&#x27;;
 
+/**
+ * @deprecated
+ * */
 @Component({
     selector: &#x27;ncc-abstract-task-ref-field&#x27;,
     template: &#x27;&#x27;
 })
 export abstract class AbstractTaskRefFieldComponent extends AbstractDataFieldComponent implements OnInit {
 
-    @Input() dataField: TaskRefField;
     dashboardTiles: Array&lt;TaskRefDashboardTile&gt;;
 
-    protected constructor(protected _logger: LoggerService,
-                          @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+    protected constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
         super(informAboutInvalidData);
-    }
-
-    ngOnInit() {
-        super.ngOnInit();
-        this.createDashboardTiles();
-    }
-
-    protected createDashboardTiles() {
-        const gridRows &#x3D; this.dataField.dashboardRows;
-        if (gridRows &#x3D;&#x3D;&#x3D; undefined) {
-            this._logger.error(&#x60;TaskRef Dashboard &#x27;${this.dataField.stringId}&#x27; does not specify grid height! Add a number field with id &#x27;${TaskRefDashboardConstants.DASHBOARD_ROWS}&#x27; to the same task as the task ref field, to specify the height.&#x60;);
-        }
-        const gridCols &#x3D; this.dataField.dashboardCols;
-        if (gridCols &#x3D;&#x3D;&#x3D; undefined) {
-            this._logger.error(&#x60;TaskRef Dashboard &#x27;${this.dataField.stringId}&#x27; does not specify grid width! Add a number field with id &#x27;${TaskRefDashboardConstants.DASHBOARD_COLS}&#x27; to the same task as the task ref field, to specify the width.&#x60;);
-        }
-        const occupiedTiles &#x3D; this.createFlagGrid(gridRows, gridCols);
-        this.dashboardTiles &#x3D; [];
-        if (this.dataField.dashboardTiles &amp;&amp; this.dataField.dashboardTiles.length &gt; 0) {
-            for (const extractedTile of this.dataField.dashboardTiles) {
-                const tile &#x3D; this.createDashboardTile(extractedTile);
-                this.dashboardTiles.push(tile);
-                this.occupySpace(occupiedTiles, tile.y, tile.x, tile.cols, tile.rows);
-            }
-        }
-        for (let y &#x3D; 0; y &lt; occupiedTiles.length; y++) {
-            for (let x &#x3D; 0; x &lt; occupiedTiles[y].length; x++) {
-                if (!occupiedTiles[y][x]) {
-                    this.dashboardTiles.push(this.createEmptyDashboardTile(x, y));
-                }
-            }
-        }
-    }
-
-    protected createFlagGrid(rows: number &#x3D; 1, cols: number &#x3D; 1): Array&lt;Array&lt;boolean&gt;&gt; {
-        const result &#x3D; [];
-        for (let r &#x3D; 0; r &lt; rows; r++) {
-            result.push(Array(cols).fill(false));
-        }
-        return result;
-    }
-
-    protected createDashboardTile(tile: TaskRefDashboardTile): TaskRefDashboardTile {
-        const result: TaskRefDashboardTile &#x3D; {
-            dataGroups: tile.dataGroups
-        };
-
-        for (const dg of tile.dataGroups) {
-            for (const field of dg.fields) {
-                switch (field.stringId) {
-                    case TaskRefDashboardTileConstants.DASHBOARD_TILE_X:
-                        result.x &#x3D; field.value;
-                        break;
-                    case TaskRefDashboardTileConstants.DASHBOARD_TILE_Y:
-                        result.y &#x3D; field.value;
-                        break;
-                    case TaskRefDashboardTileConstants.DASHBOARD_TILE_ROWS:
-                        result.rows &#x3D; field.value;
-                        break;
-                    case TaskRefDashboardTileConstants.DASHBOARD_TILE_COLS:
-                        result.cols &#x3D; field.value;
-                        break;
-
-                }
-            }
-        }
-
-        if (result.x &#x3D;&#x3D;&#x3D; undefined) {
-            if (tile.dataGroups.length &gt; 0) {
-                this._logger.error(&#x60;Task ref dashboard tile from task &#x27;${tile.dataGroups[0].parentTaskId}&#x27; transition &#x27;${tile.dataGroups[0].parentTransitionId}&#x27; case &#x27;${tile.dataGroups[0].parentCaseId}&#x27; does not specify tile grid X coordinate! Add a number field with ID &#x27;${TaskRefDashboardTileConstants.DASHBOARD_TILE_X}&#x27; to the referenced task to specify it.&#x60;);
-            }
-            result.x &#x3D; 0;
-        }
-        if (result.y &#x3D;&#x3D;&#x3D; undefined) {
-            if (tile.dataGroups.length &gt; 0) {
-                this._logger.error(&#x60;Task ref dashboard tile from task &#x27;${tile.dataGroups[0].parentTaskId}&#x27; transition &#x27;${tile.dataGroups[0].parentTransitionId}&#x27; case &#x27;${tile.dataGroups[0].parentCaseId}&#x27; does not specify tile grid Y coordinate! Add a number field with ID &#x27;${TaskRefDashboardTileConstants.DASHBOARD_TILE_Y}&#x27; to the referenced task to specify it.&#x60;);
-            }
-            result.y &#x3D; 0;
-        }
-        if (result.rows &#x3D;&#x3D;&#x3D; undefined) {
-            if (tile.dataGroups.length &gt; 0) {
-                this._logger.error(&#x60;Task ref dashboard tile from task &#x27;${tile.dataGroups[0].parentTaskId}&#x27; transition &#x27;${tile.dataGroups[0].parentTransitionId}&#x27; case &#x27;${tile.dataGroups[0].parentCaseId}&#x27; does not specify tile height coordinate! Add a number field with ID &#x27;${TaskRefDashboardTileConstants.DASHBOARD_TILE_ROWS}&#x27; to the referenced task to specify it.&#x60;);
-            }
-            result.rows &#x3D; 1;
-        }
-        if (result.cols &#x3D;&#x3D;&#x3D; undefined) {
-            if (tile.dataGroups.length &gt; 0) {
-                this._logger.error(&#x60;Task ref dashboard tile from task &#x27;${tile.dataGroups[0].parentTaskId}&#x27; transition &#x27;${tile.dataGroups[0].parentTransitionId}&#x27; case &#x27;${tile.dataGroups[0].parentCaseId}&#x27; does not specify tile width coordinate! Add a number field with ID &#x27;${TaskRefDashboardTileConstants.DASHBOARD_TILE_COLS}&#x27; to the referenced task to specify it.&#x60;);
-            }
-            result.cols &#x3D; 1;
-        }
-
-        return result;
-    }
-
-    // TODO a modified copy of a method of the same name from AbstractTaskContentComponent
-    protected occupySpace(grid: Array&lt;Array&lt;boolean&gt;&gt;, y: number, x: number, width: number, height: number) {
-        for (let j &#x3D; y; j &lt; y + height; j++) {
-            for (let i &#x3D; x; i &lt; x + width; i++) {
-                grid[j][i] &#x3D; true;
-            }
-        }
-    }
-
-    protected createEmptyDashboardTile(x: number, y: number): TaskRefDashboardTile {
-        return {
-            dataGroups: [],
-            x,
-            y,
-            rows: 1,
-            cols: 1,
-            isEmpty: true
-        }
     }
 }
 </code></pre>
@@ -1113,7 +640,7 @@ export abstract class AbstractTaskRefFieldComponent extends AbstractDataFieldCom
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
         var COMPONENT_TEMPLATE = '<div></div>'
-    var COMPONENTS = [{'name': 'AbstractAddChildNodeComponent', 'selector': 'ncc-abstract-add-child-node'},{'name': 'AbstractAdvancedSearchComponent', 'selector': 'ncc-abstract-advanced-search'},{'name': 'AbstractAuthenticationOverlayComponent', 'selector': 'ncc-abstract-auth-overlay'},{'name': 'AbstractBaseUserAssignListComponent', 'selector': 'ncc-base-user-assign-list'},{'name': 'AbstractBooleanFieldComponent', 'selector': 'ncc-abstract-boolean-field'},{'name': 'AbstractBreadcrumbsComponent', 'selector': 'ncc-breadcrumbs-component'},{'name': 'AbstractButtonFieldComponent', 'selector': 'ncc-abstract-button-field'},{'name': 'AbstractCaseListComponent', 'selector': 'ncc-abstract-case-list'},{'name': 'AbstractCaseListPaginatorComponent', 'selector': 'ncc-abstract-case-list-paginator'},{'name': 'AbstractCasePanelComponent', 'selector': 'ncc-abstract-case-panel'},{'name': 'AbstractCaseViewComponent', 'selector': 'ncc-abstract-case-view'},{'name': 'AbstractChangePasswordComponent', 'selector': 'ncc-abstract-change-password'},{'name': 'AbstractCountCardComponent', 'selector': 'ncc-abstract-count-card'},{'name': 'AbstractCurrencyNumberFieldComponent', 'selector': 'ncc-abstract-currency-field'},{'name': 'AbstractCustomCardComponent', 'selector': 'ncc-abstract-custom-card'},{'name': 'AbstractDashboardBarChartTextFieldComponent', 'selector': 'ncc-abstract-dashboard-bar-chart-text-field'},{'name': 'AbstractDashboardContentComponent', 'selector': 'ncc-abstract-dashboard-content'},{'name': 'AbstractDashboardIframeTextFieldComponent', 'selector': 'ncc-abstract-dashboard-iframe-text-field'},{'name': 'AbstractDashboardLineChartTextFieldComponent', 'selector': 'ncc-abstract-dashboard-line-chart-text-field'},{'name': 'AbstractDashboardPieChartTextFieldComponent', 'selector': 'ncc-abstract-dashboard-pie-chart-text-field'},{'name': 'AbstractDashboardPortalTextFieldComponent', 'selector': 'ncc-abstract-dashboard-pie-chart-text-field'},{'name': 'AbstractDashboardTextFieldComponent', 'selector': 'ncc-abstract-dashboard-text-field'},{'name': 'AbstractDataFieldComponent', 'selector': 'ncc-abstract-datafield'},{'name': 'AbstractDataFieldTemplateComponent', 'selector': 'ncc-abstract-datafield-template'},{'name': 'AbstractDateFieldComponent', 'selector': 'ncc-abstract-date-field'},{'name': 'AbstractDateTimeFieldComponent', 'selector': 'ncc-abstract-date-time-field'},{'name': 'AbstractDefaultCaseListComponent', 'selector': 'ncc-abstract-default-case-list'},{'name': 'AbstractDefaultNumberFieldComponent', 'selector': 'ncc-abstract-number-default-field'},{'name': 'AbstractDefaultTaskListComponent', 'selector': 'ncc-abstract-default-task-list'},{'name': 'AbstractDialogComponent', 'selector': 'ncc-abstract-dialog'},{'name': 'AbstractEditModeComponent', 'selector': 'ncc-abstract-edit-mode'},{'name': 'AbstractEmailSubmissionFormComponent', 'selector': 'ncc-abstract-email-submission-form'},{'name': 'AbstractEnumerationAutocompleteDynamicFieldComponent', 'selector': 'ncc-abstract-enumeration-autocomplete-dynamic-field'},{'name': 'AbstractEnumerationAutocompleteSelectFieldComponent', 'selector': 'ncc-abstract-enumeration-autocomplete-field'},{'name': 'AbstractEnumerationFieldComponent', 'selector': 'ncc-abstract-enumeration-field'},{'name': 'AbstractEnumerationIconFieldComponent', 'selector': 'ncc-abstract-enumerataion-icon-field'},{'name': 'AbstractEnumerationListFieldComponent', 'selector': 'ncc-abstract-enumeration-list-field'},{'name': 'AbstractEnumerationSelectFieldComponent', 'selector': 'ncc-abstract-enumeration-select-field'},{'name': 'AbstractEnumerationStepperFieldComponent', 'selector': 'ncc-abstract-enumeration-stepper-field'},{'name': 'AbstractFieldComponentResolverComponent', 'selector': 'ncc-abstract-field-component-resolver'},{'name': 'AbstractFileFieldComponent', 'selector': 'ncc-abstract-file-field'},{'name': 'AbstractFileListFieldComponent', 'selector': 'ncc-abstract-filelist-field'},{'name': 'AbstractFilterFieldComponent', 'selector': 'ncc-abstract-filter-field'},{'name': 'AbstractFilterFieldContentComponent', 'selector': 'ncc-abstract-filtercontent-field'},{'name': 'AbstractFilterFieldTabViewComponent', 'selector': 'ncc-abstract-filter-field-tab-view'},{'name': 'AbstractFilterFieldTabViewContentComponent', 'selector': 'ncc-abstract-filter-field-tab-view-content'},{'name': 'AbstractFilterSelectorComponent', 'selector': 'ncc-abstract-filter-selector'},{'name': 'AbstractForgottenPasswordComponent', 'selector': 'ncc-abstract-forgotten-password'},{'name': 'AbstractFulltextSearchComponent', 'selector': 'ncc-abstract-fulltext-search'},{'name': 'AbstractGroupNavigationComponentResolverComponent', 'selector': 'ncc-abstract-group-nagiation-resolver'},{'name': 'AbstractHeaderComponent', 'selector': 'ncc-abstract-header'},{'name': 'AbstractHeaderModeComponent', 'selector': 'ncc-abstract-header-mode'},{'name': 'AbstractHtmlTextareaFieldComponent', 'selector': 'ncc-abstract-html-area-field'},{'name': 'AbstractI18nDividerFieldComponent', 'selector': 'ncc-abstract-i18n-divider-field'},{'name': 'AbstractI18nErrorsComponent', 'selector': 'ncc-abstract-i18n-errors'},{'name': 'AbstractI18nFieldComponent', 'selector': 'ncc-abstract-i18n-field'},{'name': 'AbstractI18nTextFieldComponent', 'selector': 'ncc-abstract-i18n-text-field'},{'name': 'AbstractIframeCardComponent', 'selector': 'ncc-abstract-iframe-card'},{'name': 'AbstractImmediateFilterTextComponent', 'selector': 'ncc-abstract-immediate-filter-text'},{'name': 'AbstractImmediateFilterTextContentComponent', 'selector': 'ncc-abstract-immediate-filter-text-content'},{'name': 'AbstractImportNetComponent', 'selector': 'ncc-abstract-import-net'},{'name': 'AbstractInternalLinkComponent', 'selector': 'ncc-abstract-internal-link'},{'name': 'AbstractLanguageSelectorComponent', 'selector': 'ncc-abstract-language-selector'},{'name': 'AbstractLdapGroupRoleAssignmentComponent', 'selector': 'ncc-abstract-ldap-group-role-assignment'},{'name': 'AbstractLegalNoticeComponent', 'selector': 'ncc-abstract-legal-notice'},{'name': 'AbstractLoadFilterComponent', 'selector': 'ncc-abstract-load-filter'},{'name': 'AbstractLoadingModeComponent', 'selector': 'ncc-abstract-loading-mode'},{'name': 'AbstractLoginFormComponent', 'selector': 'ncc-abstract-login-field'},{'name': 'AbstractLogoutShortcutComponent', 'selector': 'ncc-abstract-logout-shortcut'},{'name': 'AbstractMultichoiceAutocompleteFieldComponentComponent', 'selector': 'ncc-abstract-multichoice-autocomplete-field'},{'name': 'AbstractMultichoiceFieldComponent', 'selector': 'ncc-abstract-multichoice-field'},{'name': 'AbstractMultichoiceListFieldComponent', 'selector': 'ncc-abstract-multichoice-list-field'},{'name': 'AbstractMultichoiceSelectFieldComponent', 'selector': 'ncc-abstract-multichoice-select-field'},{'name': 'AbstractMultiUserAssignComponent', 'selector': 'ncc-abstract-multi-user-assign'},{'name': 'AbstractMultiUserAssignItemComponent', 'selector': 'ncc-abstract-user-assign-item'},{'name': 'AbstractMultiUserAssignListComponent', 'selector': 'ncc-abstract-multi-user-assign-list'},{'name': 'AbstractNavigationDoubleDrawerComponent', 'selector': 'ncc-abstract-navigation-double-drawer'},{'name': 'AbstractNavigationDrawerComponent', 'selector': 'ncc-abstract-navigation-drawer'},{'name': 'AbstractNavigationRailComponent', 'selector': 'ncc-abstract-navigation-rail'},{'name': 'AbstractNavigationResizableDrawerComponent', 'selector': 'ncc-abstract-navigation-resizable-drawer'},{'name': 'AbstractNavigationTreeComponent', 'selector': 'ncc-abstract-navigation-tree'},{'name': 'AbstractNewCaseComponent', 'selector': 'ncc-abstract-new-case'},{'name': 'AbstractNumberErrorsComponent', 'selector': 'ncc-abstract-number-errors-field'},{'name': 'AbstractNumberFieldComponent', 'selector': 'ncc-abstract-number-field'},{'name': 'AbstractOptionSelectorComponent', 'selector': 'ncc-abstract-option-selector'},{'name': 'AbstractPanelComponent', 'selector': 'ncc-abstract-panel'},{'name': 'AbstractPanelItemComponent', 'selector': 'ncc-abstract-panel-item-component'},{'name': 'AbstractPanelWithHeaderBindingComponent', 'selector': 'ncc-abstract-panel-with-header-binding'},{'name': 'AbstractPanelWithImmediateDataComponent', 'selector': 'ncc-abstract-panel-with-immediate'},{'name': 'AbstractPasswordTextFieldComponent', 'selector': 'ncc-abstract-password-text-field'},{'name': 'AbstractProfileComponent', 'selector': 'ncc-abstract-profile'},{'name': 'AbstractQuickPanelComponent', 'selector': 'ncc-abstract-quick-panel'},{'name': 'AbstractRegistrationComponent', 'selector': 'ncc-abstract-registration'},{'name': 'AbstractRegistrationFormComponent', 'selector': 'ncc-abstract-registration-form'},{'name': 'AbstractRemoveNodeComponent', 'selector': 'ncc-abstract-remove-node'},{'name': 'AbstractRichTextareaFieldComponent', 'selector': 'ncc-abstract-rich-text-field'},{'name': 'AbstractRoleAssignmentComponent', 'selector': 'ncc-abstract-role'},{'name': 'AbstractSaveFilterComponent', 'selector': 'ncc-abstract-save-filter'},{'name': 'AbstractSearchClauseComponent', 'selector': 'ncc-abstract-search-clause'},{'name': 'AbstractSearchComponent', 'selector': 'ncc-abstract-search'},{'name': 'AbstractSearchConfigurationInputComponent', 'selector': 'ncc-abstract-search-configuration-input'},{'name': 'AbstractSearchModeComponent', 'selector': 'ncc-abstract-seatch-mode'},{'name': 'AbstractSearchOperandInputComponent', 'selector': 'ncc-abstract-search-operand-input'},{'name': 'AbstractSearchPredicateComponent', 'selector': 'ncc-abstract-search-predicate'},{'name': 'AbstractSessionIdleComponent', 'selector': 'ncc-abstract-session-idle'},{'name': 'AbstractSideMenuContainerComponent', 'selector': 'ncc-abstract-side-menu-container'},{'name': 'AbstractSimpleTextFieldComponent', 'selector': 'ncc-abstract-simple-text-field'},{'name': 'AbstractSingleTaskComponent', 'selector': 'ncc-abstract-single-task'},{'name': 'AbstractSingleTaskViewComponent', 'selector': 'ncc-abstract-single-task-view'},{'name': 'AbstractSortableViewComponent', 'selector': 'ncc-abstract-sortable-view'},{'name': 'AbstractSortModeComponent', 'selector': 'ncc-abstract-sort-mode'},{'name': 'AbstractTabbedCaseViewComponent', 'selector': 'ncc-abstract-tabbed-case-view'},{'name': 'AbstractTabbedTaskViewComponent', 'selector': 'ncc-abstract-tabbed-task-view'},{'name': 'AbstractTabViewComponent', 'selector': 'ncc-abstract-tab-view'},{'name': 'AbstractTaskContentComponent', 'selector': 'ncc-abstract-task-content'},{'name': 'AbstractTaskListComponent', 'selector': 'ncc-abstract-task-list'},{'name': 'AbstractTaskListPaginationComponent', 'selector': 'ncc-abstract-task-list-pagination-component'},{'name': 'AbstractTaskPanelComponent', 'selector': 'ncc-abstract-legal-notice'},{'name': 'AbstractTaskRefDashboardTileComponent', 'selector': 'ncc-abstract-task-ref-dashboard-tile'},{'name': 'AbstractTaskRefFieldComponent', 'selector': 'ncc-abstract-task-ref-field'},{'name': 'AbstractTaskViewComponent', 'selector': 'ncc-abstract-task-view'},{'name': 'AbstractTextareaFieldComponent', 'selector': 'ncc-abstract-text-area-field'},{'name': 'AbstractTextFieldComponent', 'selector': 'ncc-abstract-text-field'},{'name': 'AbstractTimeInstanceFieldComponent', 'selector': 'ncc-abstract-time-instance-field'},{'name': 'AbstractToolbarComponent', 'selector': 'ncc-abstract-toolbar'},{'name': 'AbstractTreeComponent', 'selector': 'ncc-abstract-tree'},{'name': 'AbstractTreeTaskContentComponent', 'selector': 'ncc-abstract-tree-task-content'},{'name': 'AbstractUserAssignComponent', 'selector': 'ncc-abstract-user-assign'},{'name': 'AbstractUserAssignItemComponent', 'selector': 'ncc-abstract-user-assign-item'},{'name': 'AbstractUserAssignListComponent', 'selector': 'ncc-abstract-user-assign-list'},{'name': 'AbstractUserCardComponent', 'selector': 'ncc-abstract-user-card'},{'name': 'AbstractUserFieldComponent', 'selector': 'ncc-abstract-user-field'},{'name': 'AbstractUserImpersonateComponent', 'selector': 'ncc-abstract-user-impersonate'},{'name': 'AbstractUserInviteComponent', 'selector': 'ncc-abstract-user-invite'},{'name': 'AbstractUserListFieldComponent', 'selector': 'ncc-abstract-user-list-field'},{'name': 'AbstractViewWithHeadersComponent', 'selector': 'ncc-abstract-view-with-headers'},{'name': 'AbstractWorkflowPanelComponent', 'selector': 'ncc-abstract-workflow-panel'},{'name': 'AbstractWorkflowViewComponent', 'selector': 'ncc-abstract-workflow-view'},{'name': 'AlertDialogComponent', 'selector': 'ncc-simple-dialog'},{'name': 'ConfirmDialogComponent', 'selector': 'ncc-question-dialog'},{'name': 'ErrorSnackBarComponent', 'selector': 'ncc-error-snack-bar'},{'name': 'GenericSnackBarComponent', 'selector': 'ncc-generic-snack-bar'},{'name': 'PromptDialogComponent', 'selector': 'ncc-question-dialog-with-answer'},{'name': 'SnackBarComponent', 'selector': 'ncc-abstract-snackbar'},{'name': 'SuccessSnackBarComponent', 'selector': 'ncc-success-snack-bar'},{'name': 'TabbedVirtualScrollComponent', 'selector': 'ncc-abstract-tabbed-virtual-scroll'},{'name': 'WarningSnackBarComponent', 'selector': 'ncc-warning-snack-bar'}];
+    var COMPONENTS = [{'name': 'AbstractAddChildNodeComponent', 'selector': 'ncc-abstract-add-child-node'},{'name': 'AbstractAdvancedSearchComponent', 'selector': 'ncc-abstract-advanced-search'},{'name': 'AbstractAuthenticationOverlayComponent', 'selector': 'ncc-abstract-auth-overlay'},{'name': 'AbstractBaseDataFieldComponent', 'selector': 'ncc-base-data-field'},{'name': 'AbstractBaseUserAssignListComponent', 'selector': 'ncc-base-user-assign-list'},{'name': 'AbstractBooleanDefaultFieldComponent', 'selector': 'ncc-abstract-boolean-default-field'},{'name': 'AbstractBooleanFieldComponent', 'selector': 'ncc-abstract-boolean-field'},{'name': 'AbstractBreadcrumbsComponent', 'selector': 'ncc-breadcrumbs-component'},{'name': 'AbstractButtonDefaultFieldComponent', 'selector': 'ncc-abstract-button-default-field'},{'name': 'AbstractButtonFieldComponent', 'selector': 'ncc-abstract-button-field'},{'name': 'AbstractCaseListComponent', 'selector': 'ncc-abstract-case-list'},{'name': 'AbstractCaseListPaginatorComponent', 'selector': 'ncc-abstract-case-list-paginator'},{'name': 'AbstractCasePanelComponent', 'selector': 'ncc-abstract-case-panel'},{'name': 'AbstractCaseRefDefaultComponent', 'selector': 'ncc-abstract-case-ref-default'},{'name': 'AbstractCaseViewComponent', 'selector': 'ncc-abstract-case-view'},{'name': 'AbstractChangePasswordComponent', 'selector': 'ncc-abstract-change-password'},{'name': 'AbstractCountCardComponent', 'selector': 'ncc-abstract-count-card'},{'name': 'AbstractCurrencyNumberFieldComponent', 'selector': 'ncc-abstract-currency-field'},{'name': 'AbstractCustomCardComponent', 'selector': 'ncc-abstract-custom-card'},{'name': 'AbstractDashboardBarChartTextFieldComponent', 'selector': 'ncc-abstract-dashboard-bar-chart-text-field'},{'name': 'AbstractDashboardContentComponent', 'selector': 'ncc-abstract-dashboard-content'},{'name': 'AbstractDashboardIframeTextFieldComponent', 'selector': 'ncc-abstract-dashboard-iframe-text-field'},{'name': 'AbstractDashboardLineChartTextFieldComponent', 'selector': 'ncc-abstract-dashboard-line-chart-text-field'},{'name': 'AbstractDashboardPieChartTextFieldComponent', 'selector': 'ncc-abstract-dashboard-pie-chart-text-field'},{'name': 'AbstractDashboardPortalTextFieldComponent', 'selector': 'ncc-abstract-dashboard-pie-chart-text-field'},{'name': 'AbstractDashboardTextFieldComponent', 'selector': 'ncc-abstract-dashboard-text-field'},{'name': 'AbstractDataFieldComponent', 'selector': 'ncc-abstract-datafield'},{'name': 'AbstractDataFieldTemplateComponent', 'selector': 'ncc-abstract-datafield-template'},{'name': 'AbstractDateDefaultFieldComponent', 'selector': 'ncc-abstract-date-default-field'},{'name': 'AbstractDateFieldComponent', 'selector': 'ncc-abstract-date-field'},{'name': 'AbstractDateTimeDefaultFieldComponent', 'selector': 'ncc-abstract-date-time-default-field'},{'name': 'AbstractDateTimeFieldComponent', 'selector': 'ncc-abstract-date-time-field'},{'name': 'AbstractDefaultCaseListComponent', 'selector': 'ncc-abstract-default-case-list'},{'name': 'AbstractDefaultNumberFieldComponent', 'selector': 'ncc-abstract-number-default-field'},{'name': 'AbstractDefaultTaskListComponent', 'selector': 'ncc-abstract-default-task-list'},{'name': 'AbstractDialogComponent', 'selector': 'ncc-abstract-dialog'},{'name': 'AbstractEditModeComponent', 'selector': 'ncc-abstract-edit-mode'},{'name': 'AbstractEmailSubmissionFormComponent', 'selector': 'ncc-abstract-email-submission-form'},{'name': 'AbstractEnumerationAutocompleteDynamicFieldComponent', 'selector': 'ncc-abstract-enumeration-autocomplete-dynamic-field'},{'name': 'AbstractEnumerationAutocompleteSelectFieldComponent', 'selector': 'ncc-abstract-enumeration-autocomplete-field'},{'name': 'AbstractEnumerationCaseRefComponent', 'selector': 'ncc-abstract-case-ref-default'},{'name': 'AbstractEnumerationFieldComponent', 'selector': 'ncc-abstract-enumeration-field'},{'name': 'AbstractEnumerationIconFieldComponent', 'selector': 'ncc-abstract-enumerataion-icon-field'},{'name': 'AbstractEnumerationListFieldComponent', 'selector': 'ncc-abstract-enumeration-list-field'},{'name': 'AbstractEnumerationSelectFieldComponent', 'selector': 'ncc-abstract-enumeration-select-field'},{'name': 'AbstractEnumerationStepperFieldComponent', 'selector': 'ncc-abstract-enumeration-stepper-field'},{'name': 'AbstractFieldComponentResolverComponent', 'selector': 'ncc-abstract-field-component-resolver'},{'name': 'AbstractFileDefaultFieldComponent', 'selector': 'ncc-abstract-file-default-fied'},{'name': 'AbstractFileFieldComponent', 'selector': 'ncc-abstract-file-field'},{'name': 'AbstractFileFieldDefaultComponent', 'selector': 'ncc-abstract-file-field-default-component'},{'name': 'AbstractFileListDefaultFieldComponent', 'selector': 'ncc-abstract-file-list-default-field'},{'name': 'AbstractFileListFieldComponent', 'selector': 'ncc-abstract-filelist-field'},{'name': 'AbstractFilterDefaultFieldComponent', 'selector': 'ncc-abstract-filter-default-field'},{'name': 'AbstractFilterFieldComponent', 'selector': 'ncc-abstract-filter-field'},{'name': 'AbstractFilterFieldContentComponent', 'selector': 'ncc-abstract-filtercontent-field'},{'name': 'AbstractFilterFieldTabViewComponent', 'selector': 'ncc-abstract-filter-field-tab-view'},{'name': 'AbstractFilterFieldTabViewContentComponent', 'selector': 'ncc-abstract-filter-field-tab-view-content'},{'name': 'AbstractFilterSelectorComponent', 'selector': 'ncc-abstract-filter-selector'},{'name': 'AbstractForgottenPasswordComponent', 'selector': 'ncc-abstract-forgotten-password'},{'name': 'AbstractFulltextSearchComponent', 'selector': 'ncc-abstract-fulltext-search'},{'name': 'AbstractGroupNavigationComponentResolverComponent', 'selector': 'ncc-abstract-group-nagiation-resolver'},{'name': 'AbstractHeaderComponent', 'selector': 'ncc-abstract-header'},{'name': 'AbstractHeaderModeComponent', 'selector': 'ncc-abstract-header-mode'},{'name': 'AbstractHtmlTextareaFieldComponent', 'selector': 'ncc-abstract-html-area-field'},{'name': 'AbstractI18nDividerFieldComponent', 'selector': 'ncc-abstract-i18n-divider-field'},{'name': 'AbstractI18nErrorsComponent', 'selector': 'ncc-abstract-i18n-errors'},{'name': 'AbstractI18nFieldComponent', 'selector': 'ncc-abstract-i18n-field'},{'name': 'AbstractI18nTextFieldComponent', 'selector': 'ncc-abstract-i18n-text-field'},{'name': 'AbstractIframeCardComponent', 'selector': 'ncc-abstract-iframe-card'},{'name': 'AbstractImmediateFilterTextComponent', 'selector': 'ncc-abstract-immediate-filter-text'},{'name': 'AbstractImmediateFilterTextContentComponent', 'selector': 'ncc-abstract-immediate-filter-text-content'},{'name': 'AbstractImportNetComponent', 'selector': 'ncc-abstract-import-net'},{'name': 'AbstractInternalLinkComponent', 'selector': 'ncc-abstract-internal-link'},{'name': 'AbstractLanguageSelectorComponent', 'selector': 'ncc-abstract-language-selector'},{'name': 'AbstractLdapGroupRoleAssignmentComponent', 'selector': 'ncc-abstract-ldap-group-role-assignment'},{'name': 'AbstractLegalNoticeComponent', 'selector': 'ncc-abstract-legal-notice'},{'name': 'AbstractLoadFilterComponent', 'selector': 'ncc-abstract-load-filter'},{'name': 'AbstractLoadingModeComponent', 'selector': 'ncc-abstract-loading-mode'},{'name': 'AbstractLoginFormComponent', 'selector': 'ncc-abstract-login-field'},{'name': 'AbstractLogoutShortcutComponent', 'selector': 'ncc-abstract-logout-shortcut'},{'name': 'AbstractMultichoiceAutocompleteFieldComponentComponent', 'selector': 'ncc-abstract-multichoice-autocomplete-field'},{'name': 'AbstractMultichoiceCaseRefComponent', 'selector': 'ncc-abstract-case-ref-default'},{'name': 'AbstractMultichoiceFieldComponent', 'selector': 'ncc-abstract-multichoice-field'},{'name': 'AbstractMultichoiceListFieldComponent', 'selector': 'ncc-abstract-multichoice-list-field'},{'name': 'AbstractMultichoiceSelectFieldComponent', 'selector': 'ncc-abstract-multichoice-select-field'},{'name': 'AbstractMultiUserAssignComponent', 'selector': 'ncc-abstract-multi-user-assign'},{'name': 'AbstractMultiUserAssignItemComponent', 'selector': 'ncc-abstract-user-assign-item'},{'name': 'AbstractMultiUserAssignListComponent', 'selector': 'ncc-abstract-multi-user-assign-list'},{'name': 'AbstractNavigationDoubleDrawerComponent', 'selector': 'ncc-abstract-navigation-double-drawer'},{'name': 'AbstractNavigationDrawerComponent', 'selector': 'ncc-abstract-navigation-drawer'},{'name': 'AbstractNavigationRailComponent', 'selector': 'ncc-abstract-navigation-rail'},{'name': 'AbstractNavigationResizableDrawerComponent', 'selector': 'ncc-abstract-navigation-resizable-drawer'},{'name': 'AbstractNavigationTreeComponent', 'selector': 'ncc-abstract-navigation-tree'},{'name': 'AbstractNewCaseComponent', 'selector': 'ncc-abstract-new-case'},{'name': 'AbstractNumberDecimalFieldComponent', 'selector': 'ncc-abstract-number-decimal-field'},{'name': 'AbstractNumberErrorsComponent', 'selector': 'ncc-abstract-number-errors-field'},{'name': 'AbstractNumberFieldComponent', 'selector': 'ncc-abstract-number-field'},{'name': 'AbstractOptionSelectorComponent', 'selector': 'ncc-abstract-option-selector'},{'name': 'AbstractPanelComponent', 'selector': 'ncc-abstract-panel'},{'name': 'AbstractPanelItemComponent', 'selector': 'ncc-abstract-panel-item-component'},{'name': 'AbstractPanelWithHeaderBindingComponent', 'selector': 'ncc-abstract-panel-with-header-binding'},{'name': 'AbstractPanelWithImmediateDataComponent', 'selector': 'ncc-abstract-panel-with-immediate'},{'name': 'AbstractPasswordTextFieldComponent', 'selector': 'ncc-abstract-password-text-field'},{'name': 'AbstractProfileComponent', 'selector': 'ncc-abstract-profile'},{'name': 'AbstractQuickPanelComponent', 'selector': 'ncc-abstract-quick-panel'},{'name': 'AbstractRegistrationComponent', 'selector': 'ncc-abstract-registration'},{'name': 'AbstractRegistrationFormComponent', 'selector': 'ncc-abstract-registration-form'},{'name': 'AbstractRemoveNodeComponent', 'selector': 'ncc-abstract-remove-node'},{'name': 'AbstractRichTextareaFieldComponent', 'selector': 'ncc-abstract-rich-text-field'},{'name': 'AbstractRoleAssignmentComponent', 'selector': 'ncc-abstract-role'},{'name': 'AbstractSaveFilterComponent', 'selector': 'ncc-abstract-save-filter'},{'name': 'AbstractSearchClauseComponent', 'selector': 'ncc-abstract-search-clause'},{'name': 'AbstractSearchComponent', 'selector': 'ncc-abstract-search'},{'name': 'AbstractSearchConfigurationInputComponent', 'selector': 'ncc-abstract-search-configuration-input'},{'name': 'AbstractSearchModeComponent', 'selector': 'ncc-abstract-seatch-mode'},{'name': 'AbstractSearchOperandInputComponent', 'selector': 'ncc-abstract-search-operand-input'},{'name': 'AbstractSearchPredicateComponent', 'selector': 'ncc-abstract-search-predicate'},{'name': 'AbstractSessionIdleComponent', 'selector': 'ncc-abstract-session-idle'},{'name': 'AbstractSideMenuContainerComponent', 'selector': 'ncc-abstract-side-menu-container'},{'name': 'AbstractSimpleTextFieldComponent', 'selector': 'ncc-abstract-simple-text-field'},{'name': 'AbstractSingleTaskComponent', 'selector': 'ncc-abstract-single-task'},{'name': 'AbstractSingleTaskViewComponent', 'selector': 'ncc-abstract-single-task-view'},{'name': 'AbstractSortableViewComponent', 'selector': 'ncc-abstract-sortable-view'},{'name': 'AbstractSortModeComponent', 'selector': 'ncc-abstract-sort-mode'},{'name': 'AbstractStringCollectionDefaultFieldComponent', 'selector': 'ncc-abstract-string-collection-default-field'},{'name': 'AbstractTabbedCaseViewComponent', 'selector': 'ncc-abstract-tabbed-case-view'},{'name': 'AbstractTabbedTaskViewComponent', 'selector': 'ncc-abstract-tabbed-task-view'},{'name': 'AbstractTabViewComponent', 'selector': 'ncc-abstract-tab-view'},{'name': 'AbstractTaskContentComponent', 'selector': 'ncc-abstract-task-content'},{'name': 'AbstractTaskListComponent', 'selector': 'ncc-abstract-task-list'},{'name': 'AbstractTaskListPaginationComponent', 'selector': 'ncc-abstract-task-list-pagination-component'},{'name': 'AbstractTaskPanelComponent', 'selector': 'ncc-abstract-legal-notice'},{'name': 'AbstractTaskRefDashboardFieldComponent', 'selector': 'ncc-abstract-task-ref-dashboard'},{'name': 'AbstractTaskRefDashboardTileComponent', 'selector': 'ncc-abstract-task-ref-dashboard-tile'},{'name': 'AbstractTaskRefFieldComponent', 'selector': 'ncc-abstract-task-ref-field'},{'name': 'AbstractTaskRefListFieldComponent', 'selector': 'ncc-abstract-task-ref-list-field'},{'name': 'AbstractTaskViewComponent', 'selector': 'ncc-abstract-task-view'},{'name': 'AbstractTextareaFieldComponent', 'selector': 'ncc-abstract-text-area-field'},{'name': 'AbstractTextErrorsComponent', 'selector': 'ncc-text-errors'},{'name': 'AbstractTextFieldComponent', 'selector': 'ncc-abstract-text-field'},{'name': 'AbstractTimeInstanceFieldComponent', 'selector': 'ncc-abstract-time-instance-field'},{'name': 'AbstractToolbarComponent', 'selector': 'ncc-abstract-toolbar'},{'name': 'AbstractTreeComponent', 'selector': 'ncc-abstract-tree'},{'name': 'AbstractTreeTaskContentComponent', 'selector': 'ncc-abstract-tree-task-content'},{'name': 'AbstractUserAssignComponent', 'selector': 'ncc-abstract-user-assign'},{'name': 'AbstractUserAssignItemComponent', 'selector': 'ncc-abstract-user-assign-item'},{'name': 'AbstractUserAssignListComponent', 'selector': 'ncc-abstract-user-assign-list'},{'name': 'AbstractUserCardComponent', 'selector': 'ncc-abstract-user-card'},{'name': 'AbstractUserDefaultFieldComponent', 'selector': 'ncc-abstract-user-default-field'},{'name': 'AbstractUserFieldComponent', 'selector': 'ncc-abstract-user-field'},{'name': 'AbstractUserImpersonateComponent', 'selector': 'ncc-abstract-user-impersonate'},{'name': 'AbstractUserInviteComponent', 'selector': 'ncc-abstract-user-invite'},{'name': 'AbstractUserListDefaultFieldComponent', 'selector': 'ncc-abstract-user-list-default-field'},{'name': 'AbstractUserListFieldComponent', 'selector': 'ncc-abstract-user-list-field'},{'name': 'AbstractViewWithHeadersComponent', 'selector': 'ncc-abstract-view-with-headers'},{'name': 'AbstractWorkflowPanelComponent', 'selector': 'ncc-abstract-workflow-panel'},{'name': 'AbstractWorkflowViewComponent', 'selector': 'ncc-abstract-workflow-view'},{'name': 'AlertDialogComponent', 'selector': 'ncc-simple-dialog'},{'name': 'ConfirmDialogComponent', 'selector': 'ncc-question-dialog'},{'name': 'ErrorSnackBarComponent', 'selector': 'ncc-error-snack-bar'},{'name': 'GenericSnackBarComponent', 'selector': 'ncc-generic-snack-bar'},{'name': 'PromptDialogComponent', 'selector': 'ncc-question-dialog-with-answer'},{'name': 'SnackBarComponent', 'selector': 'ncc-abstract-snackbar'},{'name': 'SuccessSnackBarComponent', 'selector': 'ncc-success-snack-bar'},{'name': 'TabbedVirtualScrollComponent', 'selector': 'ncc-abstract-tabbed-virtual-scroll'},{'name': 'WarningSnackBarComponent', 'selector': 'ncc-warning-snack-bar'}];
     var DIRECTIVES = [{'name': 'LetDirective', 'selector': '[nccLet]'}];
     var ACTUAL_COMPONENT = {'name': 'AbstractTaskRefFieldComponent'};
 </script>

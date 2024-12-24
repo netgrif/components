@@ -72,7 +72,7 @@
                 <h3>Description</h3>
             </p>
             <p class="comment">
-                <p>injection token used for new case title configuration</p>
+                <p>injection token used for new case configuration</p>
 
             </p>
 
@@ -89,6 +89,13 @@
                     <tr>
                         <td class="col-md-4">
                             <ul class="index-list">
+                                <li>
+                                            <span class="modifier">Optional</span>
+                                        <a href="#blockNets" 
+>
+                                            blockNets
+                                        </a>
+                                </li>
                                 <li>
                                         <a href="#enableCaseTitle" 
 >
@@ -119,6 +126,44 @@
 
             <section>
                 <h3 id="inputs">Properties</h3>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="blockNets"></a>
+                                        <span class="name "><b>blockNets</b>
+                                            <a href="#blockNets">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>blockNets:     <code>string[]</code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>    <code>string[]</code>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
+
+
+
+
+                        </tbody>
+                    </table>
                     <table class="table table-sm table-bordered">
                         <tbody>
                                 <tr>
@@ -240,7 +285,7 @@ export interface NewCaseInjectionData extends SideMenuInjectionData {
 export const NAE_NEW_CASE_CREATION_CONFIGURATION_DATA &#x3D; new InjectionToken&lt;NewCaseCreationConfigurationData&gt;(&#x27;NewCaseCreationConfigurationData&#x27;);
 
 /**
- * injection token used for new case title configuration
+ * injection token used for new case configuration
  */
 export interface NewCaseCreationConfigurationData {
 
@@ -250,6 +295,8 @@ export interface NewCaseCreationConfigurationData {
 
     newCaseButtonConfig?: NewCaseButtonConfiguration;
 
+    blockNets?: string[];
+
 }
 
 export interface NewCaseButtonConfiguration {
@@ -257,6 +304,8 @@ export interface NewCaseButtonConfiguration {
     createCaseButtonTitle?: string;
 
     createCaseButtonIcon?: string;
+
+    showCreateCaseButton?: boolean;
 
 }
 </code></pre>
