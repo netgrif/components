@@ -240,7 +240,7 @@
                     "routing": {
                         "path": "task-view"
                     },
-                    "processUri": "examples"
+                    "processUri": "/"
                 },
                 "hidden-workflow-view": {
                     "component": {
@@ -1269,8 +1269,9 @@
         }
     },
     "i18n": [
-        "sk-SK",
-        "en-US"
+        "sk",
+        "en",
+        "de"
     ],
     "services": {
         "log": {

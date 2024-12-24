@@ -1,5 +1,4 @@
 import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
-import {SideMenuService} from '../../../side-menu/services/side-menu.service';
 import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
 import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
 import {HttpParams} from '@angular/common/http';
@@ -7,12 +6,10 @@ import {Case} from '../../../resources/interface/case';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {SearchService} from '../../../search/search-service/search.service';
-import {SideMenuSize} from '../../../side-menu/models/side-menu-size';
 import {TranslateService} from '@ngx-translate/core';
 import {catchError, concatMap, filter, map, mergeMap, scan, switchMap, tap} from 'rxjs/operators';
 import {Pagination} from '../../../resources/interface/pagination';
 import {CaseMetaField} from '../../../header/case-header/case-menta-enum';
-import {NAE_NEW_CASE_COMPONENT} from '../../../side-menu/content-components/injection-tokens';
 import {PageLoadRequestContext} from '../../abstract/page-load-request-context';
 import {Filter} from '../../../filter/models/filter';
 import {ListRange} from '@angular/cdk/collections';
@@ -25,15 +22,21 @@ import {NAE_NEW_CASE_CONFIGURATION} from '../models/new-case-configuration-injec
 import {NewCaseConfiguration} from '../models/new-case-configuration';
 import {ProcessService} from '../../../process/process.service';
 import {PetriNetReferenceWithPermissions} from '../../../process/petri-net-reference-with-permissions';
-import {SearchIndexResolverService} from '../../../search/search-keyword-resolver-service/search-index-resolver.service';
+import {
+    SearchIndexResolverService
+} from '../../../search/search-keyword-resolver-service/search-index-resolver.service';
 import {AllowedNetsService} from '../../../allowed-nets/services/allowed-nets.service';
 import {AbstractSortableViewComponent} from '../../abstract/sortable-view';
-import {NewCaseCreationConfigurationData} from '../../../side-menu/content-components/new-case/model/new-case-injection-data';
+import {
+    NewCaseCreationConfigurationData
+} from '../../../side-menu/content-components/new-case/model/new-case-injection-data';
 import {PermissionService} from '../../../authorization/permission/permission.service';
 import {EventOutcomeMessageResource} from '../../../resources/interface/message-resource';
 import {CreateCaseEventOutcome} from '../../../event/model/event-outcomes/case-outcomes/create-case-event-outcome';
 import {PaginationParams} from '../../../utility/pagination/pagination-params';
 import {createSortParam, PaginationSort} from '../../../utility/pagination/pagination-sort';
+import {MatDialog} from '@angular/material/dialog';
+import {NAE_NEW_CASE_DIALOG_COMPONENT} from '../../../dialog/injection-tokens';
 
 @Injectable()
 export class CaseViewService extends AbstractSortableViewComponent implements OnDestroy {
@@ -48,9 +51,10 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
     protected _endOfData: boolean;
     protected _pagination: Pagination;
     protected _newCaseConfiguration: NewCaseConfiguration;
+    protected _paginationView: boolean = false;
 
     constructor(protected _allowedNetsService: AllowedNetsService,
-                protected _sideMenuService: SideMenuService,
+                protected _dialog: MatDialog,
                 protected _caseResourceService: CaseResourceService,
                 protected _log: LoggerService,
                 protected _snackBarService: SnackBarService,
@@ -59,7 +63,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
                 protected _user: UserService,
                 protected _processService: ProcessService,
                 resolver: SearchIndexResolverService,
-                @Optional() @Inject(NAE_NEW_CASE_COMPONENT) protected _newCaseComponent: any,
+                @Optional() @Inject(NAE_NEW_CASE_DIALOG_COMPONENT) protected _newCaseComponent: any,
                 @Optional() @Inject(NAE_NEW_CASE_CONFIGURATION) newCaseConfig: NewCaseConfiguration,
                 protected _permissionService: PermissionService) {
         super(resolver);
@@ -101,6 +105,9 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
                     this._loading$.off(pageLoadResult.requestContext.filter);
                 }
                 Object.assign(this._pagination, pageLoadResult.requestContext.pagination);
+                if (this._paginationView) {
+                    return pageLoadResult.cases;
+                }
                 return {...acc, ...pageLoadResult.cases};
             }, {})
         );
@@ -133,6 +140,10 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
 
     protected get activeFilter(): Filter {
         return this._searchService.activeFilter;
+    }
+
+    public set paginationView(value: boolean) {
+        this._paginationView = value;
     }
 
     public loadPage(requestContext: PageLoadRequestContext): Observable<CasePageLoadRequestResult> {
@@ -214,12 +225,18 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
         isCaseTitleRequired: true
     }): Observable<Case> {
         const myCase = new Subject<Case>();
-        this._sideMenuService.open(this._newCaseComponent, SideMenuSize.MEDIUM, {
-            allowedNets$: this.getNewCaseAllowedNets(),
-            newCaseCreationConfiguration
-        }).onClose.subscribe($event => {
-            this._log.debug($event.message, $event.data);
-            if ($event.data) {
+        const dialogRef = this._dialog.open(this._newCaseComponent, {
+            width: '40%',
+            minWidth: '300px',
+            panelClass: "dialog-responsive",
+            data: {
+                allowedNets$: this.getNewCaseAllowedNets(newCaseCreationConfiguration.blockNets),
+                newCaseCreationConfiguration
+            },
+        });
+        dialogRef.afterClosed().subscribe($event => {
+            if ($event?.data) {
+                this._log.debug($event.message, $event.data);
                 this.reload();
                 myCase.next($event.data);
             }
@@ -228,9 +245,18 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
         return myCase.asObservable();
     }
 
-    public createDefaultNewCase(): Observable<Case> {
+    public createDefaultNewCase(newCaseCreationConfiguration: NewCaseCreationConfigurationData = {
+        enableCaseTitle: true,
+        isCaseTitleRequired: true
+    }): Observable<Case> {
         const myCase = new Subject<Case>();
-        this.getNewCaseAllowedNets().subscribe((nets: Array<PetriNetReferenceWithPermissions>) => {
+        this.getNewCaseAllowedNets(newCaseCreationConfiguration.blockNets).subscribe((nets: Array<PetriNetReferenceWithPermissions>) => {
+            if (!nets || nets.length === 0) {
+                const errorMessage = this._translate.instant('side-menu.new-case.noNets');
+                this._snackBarService.openErrorSnackBar(errorMessage);
+                this._log.error('No nets available for case creation. Ensure the allowed nets configuration is correct.');
+                return;
+            }
             this._caseResourceService.createCase({
                 title: null,
                 color: 'panel-primary-icon',
@@ -241,20 +267,30 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
                 this.reload();
                 myCase.next((response.outcome as CreateCaseEventOutcome).aCase);
                 myCase.complete();
-            }, error => this._snackBarService.openErrorSnackBar(error.message ? error.message : error));
+            }, error => {
+                const errorMessage = error.message ? error.message : this._translate.instant('side-menu.new-case.createCaseError');
+                this._snackBarService.openErrorSnackBar(errorMessage);
+                this._log.error('Error occurred during case creation: ' + errorMessage);
+            });
+        }, error => {
+            const errorMessage = error.message || this._translate.instant('side-menu.new-case.errorCreate');
+            this._log.error('Failed to fetch allowed nets. Error: ' + errorMessage);
+            this._snackBarService.openErrorSnackBar(errorMessage);
         });
         return myCase;
     }
 
-    public getNewCaseAllowedNets(): Observable<Array<PetriNetReferenceWithPermissions>> {
+    public getNewCaseAllowedNets(blockNets: string[] = []): Observable<Array<PetriNetReferenceWithPermissions>> {
         if (this._newCaseConfiguration.useCachedProcesses) {
             return this._allowedNetsService.allowedNets$.pipe(
+                map(net => net.filter(n => blockNets.indexOf(n.identifier) === -1)),
                 map(net => net.filter(n => this._permissionService.hasNetPermission(PermissionType.CREATE, n)))
             );
         } else {
             return this._allowedNetsService.allowedNets$.pipe(
                 switchMap(allowedNets => {
                     return this._processService.getNetReferences(allowedNets.map(net => net.identifier)).pipe(
+                        map(net => net.filter(n => blockNets.indexOf(n.identifier) === -1)),
                         map(net => net.filter(n => this._permissionService.hasNetPermission(PermissionType.CREATE, n)))
                     );
                 })

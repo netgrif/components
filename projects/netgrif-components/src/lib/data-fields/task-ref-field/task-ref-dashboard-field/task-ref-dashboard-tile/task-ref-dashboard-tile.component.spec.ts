@@ -20,7 +20,8 @@ import {
     TaskRequestStateService,
     TestConfigurationService,
     TranslateLibModule,
-    UserResourceService
+    UserResourceService,
+    FrontActionService
 } from '@netgrif/components-core';
 import {FormControl} from '@angular/forms';
 import {TaskContentComponent} from '../../../../task-content/task-content/task-content.component';
@@ -46,6 +47,7 @@ describe('TaskRefDashboardTileComponent', () => {
                 TaskRequestStateService,
                 TaskEventService,
                 ChangedFieldsService,
+                FrontActionService,
                 {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
                 {provide: TaskContentService, useClass: SingleTaskContentService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},

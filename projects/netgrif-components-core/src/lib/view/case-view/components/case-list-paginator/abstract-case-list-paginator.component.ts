@@ -1,4 +1,4 @@
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Input, Optional} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {tap} from 'rxjs/operators';
 import {Case} from '../../../../resources/interface/case';
@@ -18,12 +18,16 @@ export abstract class AbstractCaseListPaginatorComponent extends AbstractDefault
     public pageSize = 20;
     public pageIndex = 0;
     public pageSizeOptions: number[] = [10, 20, 50];
+    @Input() public approval: boolean;
+    @Input() public disabled: boolean;
 
     constructor(protected _caseViewService: CaseViewService,
                 protected _log: LoggerService,
                 @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData,
                 protected route?: ActivatedRoute) {
         super(_caseViewService, _log, injectedTabData, route);
+        this._caseViewService.nextPagePagination(this.pageSize, this.pageIndex);
+        this._caseViewService.paginationView = true;
         this.cases$ = this._caseViewService.cases$.pipe(tap(() => {
             this.length = this._caseViewService.pagination.totalElements;
             this.pageIndex = this._caseViewService.pagination.number;

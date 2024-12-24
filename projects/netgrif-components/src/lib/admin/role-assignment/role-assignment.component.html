@@ -1,21 +1,21 @@
-<div fxLayout="row" fxLayoutAlign="start center" class="full-height full-width padding-default">
+<div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="start center" class="full-height full-width padding-default">
 
-    <div fxLayout="column" fxLayoutAlign="start center" fxFlex="47" class="full-height">
+    <div fxLayout="column" fxLayoutAlign="start center" fxFlex="49" class="role-height">
         <ng-container *ngIf="users.users$ | async as users_">
 
-            <mat-toolbar color="primary" class="min-height-72">
+            <mat-toolbar color="primary" class="min-height-radius">
                 <span matTooltip="{{users_.length}}/{{users.totalUsers}}">
                     {{'admin.user-list.listTitle' | translate}}
                 </span>
                 <div fxFlex="5"></div>
 
-                <div fxLayout="row" fxLayoutAlign="start center" class="netgrif-input netgrif-input-fix netgrif-input-primary-fix netgrif-input-search-fix">
-                    <mat-icon fxFlex class="search-icon">search</mat-icon>
+                <div fxLayout="row" fxLayoutAlign="start center" class="netgrif-input netgrif-input-search-fix">
                     <mat-form-field fxFlex="100" class="user-assign-search" color="primary" appearance="outline">
+                        <mat-icon matPrefix class="prefix-icon">search</mat-icon>
                         <mat-label>{{ 'side-menu.user.choose' | translate }}</mat-label>
                         <input matInput [formControl]="searchUserControl">
-                        <button mat-button *ngIf="searchUserControl.value" matSuffix mat-icon-button
-                                (click)="searchUserControl.setValue('')">
+                        <button *ngIf="searchUserControl.value" matSuffix mat-icon-button
+                                (click)="searchUserControl.setValue('')" color="warn">
                             <mat-icon>close</mat-icon>
                         </button>
                     </mat-form-field>
@@ -41,17 +41,17 @@
                 <span class="font-size-20">{{ 'admin.user-list.noUsersWereFound' | translate}}</span>
             </div>
 
-            <mat-selection-list #userList color="accent" fxFlex="100" class="full-width">
+            <mat-selection-list #userList color="primary" fxFlex="100" class="full-width advanced-option-list">
 
-                <cdk-virtual-scroll-viewport itemSize="72" (scrolledIndexChange)="loadNextUserPage()"
+                <cdk-virtual-scroll-viewport itemSize="48" (scrolledIndexChange)="loadNextUserPage()"
                                              class="full-width full-height">
-                    <mat-list-option *cdkVirtualFor="let user of users_; let i = index;" checkboxPosition="before"
+                    <mat-list-option class="min-height-option" *cdkVirtualFor="let user of users_; let i = index;" checkboxPosition="before"
                                      [selected]="user.selected"
                                      [value]="user"
                                      [ngClass]="{'list-item-selected':user.selected}"
-                                     (click)="user.toggle();autoSelectRoles()">
-                        <h3 matLine>{{user.fullName}}</h3>
-                        <p matLine>ID: {{user.id}}, Email: {{user.email}}</p>
+                                     (click)="user.toggle();autoSelectRoles()" fxLayoutAlign="start center" fxLayout="row">
+                        <h3 matLine class="primary-color-line">{{user.fullName}}</h3>
+                        <p matLine class="paragraph-fix">ID: {{user.id}}, Email: {{user.email}}</p>
                     </mat-list-option>
 
                     <div *ngIf="users.loading$ | async" fxLayout="column" fxLayoutAlign="center center">
@@ -64,11 +64,11 @@
         </ng-container>
     </div>
 
-    <div fxFlex="3"></div>
+    <div fxFlex="2"></div>
 
-    <div fxLayout="column" fxLayoutAlign="start center" fxFlex="50" class="full-height">
+    <div fxLayout="column" fxLayoutAlign="start center" fxFlex="49" class="role-height">
 
-        <mat-toolbar color="primary" class="min-height-72">
+        <mat-toolbar color="primary" class="min-height-radius">
             <span>{{'admin.process-list.listTitle' | translate}}</span>
             <span style="flex: 1 1 auto;"></span>
             <mat-spinner *ngIf="users.updating$ | async" color="accent" diameter="30"></mat-spinner>
@@ -82,10 +82,10 @@
 
         <mat-accordion class="full-width margin-top-default process-list-accordion" multi fxFlex>
 
-            <mat-expansion-panel *ngFor="let item of nets.processes" (afterExpand)="nets.loadProcessItemRoles(item)"
-                                 (afterCollapse)="nets.prepareToTryAgainToLoadRoles(item)">
+            <mat-expansion-panel *ngFor="let item of nets.processes; let last = last;" (afterExpand)="nets.loadProcessItemRoles(item)"
+                                 (afterCollapse)="nets.prepareToTryAgainToLoadRoles(item)" class="panel-body" [ngClass]="{'panel-last':last}">
 
-                <mat-expansion-panel-header>
+                <mat-expansion-panel-header class="role-header panel-color">
                     <mat-panel-title>
                         <mat-icon *ngIf="item.someRolesSelected" color="accent" class="margin-right-x2">tour</mat-icon>
                         <span>{{item.initials}} - {{item.title}}</span>
@@ -109,15 +109,24 @@
 
                 <div *ngIf="!item.loading && !item.emptyRoles" fxLayout="column" fxLayoutAlign="start start"
                      class="full-height full-width net-panel-content">
-                    <h3>{{ 'admin.process-list.roles' | translate}}</h3>
+
                     <div *ngFor="let net of item.processes; let first = first" fxLayout="column"
                          fxLayoutAlign="start center" class="full-width">
                         <mat-divider *ngIf="!first" style="position: relative"></mat-divider>
 
-                        <button mat-button matTooltip="{{item.someRolesSelected ? 'Deselect All' : 'Select All'}}"
-                                (click)="toggleAllRoles(net, !item.someRolesSelected)">
-                            {{net.version}}
-                        </button>
+                        <div class="full-width">
+                            <div fxFlex fxLayoutAlign="start center">
+                                <h3 class="margin-none" *ngIf="first">{{ 'admin.process-list.roles' | translate}}</h3>
+                            </div>
+                            <div fxFlex fxLayoutAlign="center center">
+                                <button mat-stroked-button matTooltip="{{item.someRolesSelected ? 'Deselect All' : 'Select All'}}"
+                                        (click)="toggleAllRoles(net, !item.someRolesSelected)">
+                                    {{net.version}}
+                                </button>
+                            </div>
+                            <div fxFlex></div>
+                        </div>
+
 
                         <mat-selection-list color="accent" fxLayout="row wrap" fxLayoutAlign="start center"
                                             class="full-width">

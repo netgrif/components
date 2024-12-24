@@ -3,7 +3,7 @@ import {Behavior} from '../../models/behavior';
 import {Layout} from '../../models/layout';
 import {FileFieldValue} from './file-field-value';
 import {Observable, Subject} from 'rxjs';
-import {Component} from '../../models/component';
+import {Component, ComponentPrefixes} from '../../models/component';
 import {FormControl} from '@angular/forms';
 import {Validation} from '../../models/validation';
 import {ChangedFieldsMap} from '../../../event/services/interfaces/changed-fields-map';
@@ -17,7 +17,7 @@ export enum FileUploadMIMEType {
     VIDEO = 'video/*',
     AUDIO = 'audio/*',
     PDF = '.pdf',
-    JPG = '.jpg',
+    JPG_JPEG = '.jpg,.jpeg',
     XML = '.xml',
     DOC_DOCX = '.doc,.docx',
     XLS_XLSX = '.xls,.xlsx'
@@ -78,6 +78,10 @@ export class FileField extends DataField<FileFieldValue> {
         return this._update.asObservable();
     }
 
+    public getTypedComponentType(): string {
+        return ComponentPrefixes.FILE + this.getComponentType();
+    }
+
     public valueWithoutChange(value: FileFieldValue) {
         this.changed = false;
         this._value.next(value ?? {});
@@ -125,7 +129,7 @@ export class FileField extends DataField<FileFieldValue> {
             throw new Error('Data field can be initialized only once!'
                 + ' Disconnect the previous form control before initializing the data field again!');
         }
-
+        this.formControlRef = formControl;
         formControl.setValidators(this.resolveFormControlValidators());
 
         this._myValueSubscription = this._value.pipe(

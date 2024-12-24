@@ -61,7 +61,7 @@ describe('DashboardPieChartTextFieldComponent', () => {
     selector: 'nc-test-wrapper',
     template: `
         <nc-dashboard-pie-chart-text-field [showLargeLayout]="label"
-                                           [textField]="field"
+                                           [dataField]="field"
                                            [formControlRef]="formControl">
         </nc-dashboard-pie-chart-text-field>`
 })

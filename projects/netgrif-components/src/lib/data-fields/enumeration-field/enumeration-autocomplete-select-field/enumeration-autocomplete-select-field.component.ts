@@ -1,6 +1,10 @@
-import {Component} from '@angular/core';
+import {Component, Inject, Optional} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {AbstractEnumerationAutocompleteSelectFieldComponent} from '@netgrif/components-core';
+import {
+    AbstractEnumerationAutocompleteSelectFieldComponent,
+    DATA_FIELD_PORTAL_DATA,
+    DataFieldPortalData, EnumerationField
+} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-enumeration-autocomplete-select-field',
@@ -9,7 +13,8 @@ import {AbstractEnumerationAutocompleteSelectFieldComponent} from '@netgrif/comp
 })
 export class EnumerationAutocompleteSelectFieldComponent extends AbstractEnumerationAutocompleteSelectFieldComponent {
 
-    constructor(protected _translate: TranslateService) {
-        super(_translate);
+    constructor(protected _translate: TranslateService,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<EnumerationField>) {
+        super(_translate, dataFieldPortalData);
     }
 }
