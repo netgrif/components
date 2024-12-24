@@ -230,6 +230,28 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Properties} from &#x27;./properties&#x27;;
 import {Icon} from &#x27;./icon&#x27;;
 
+export const DEFAULT &#x3D; &quot;default&quot;;
+
+export enum ComponentPrefixes {
+    BOOLEAN &#x3D; &#x27;boolean-&#x27;,
+    BUTTON &#x3D; &#x27;button-&#x27;,
+    DATE &#x3D; &#x27;date-&#x27;,
+    DATE_TIME &#x3D; &#x27;date-time-&#x27;,
+    ENUMERATION &#x3D; &#x27;enumeration-&#x27;,
+    FILE &#x3D; &#x27;file-&#x27;,
+    FILE_LIST &#x3D; &#x27;file-list-&#x27;,
+    FILTER &#x3D; &#x27;filter-&#x27;,
+    I18N &#x3D; &#x27;i18n-&#x27;,
+    MULTICHOICE &#x3D; &#x27;multichoice-&#x27;,
+    NUMBER &#x3D; &#x27;number-&#x27;,
+    TASK_REF &#x3D; &#x27;task-ref-&#x27;,
+    CASE_REF &#x3D; &#x27;case-ref-&#x27;,
+    TEXT &#x3D; &#x27;text-&#x27;,
+    USER &#x3D; &#x27;user-&#x27;,
+    USER_LIST &#x3D; &#x27;user-list-&#x27;,
+    STRING_COLLECTION &#x3D; &#x27;string-collection-&#x27;,
+}
+
 export interface Component {
     name: string;
     properties?: Properties;

@@ -227,7 +227,7 @@ import {Behavior} from &#x27;../../models/behavior&#x27;;
 import {Layout} from &#x27;../../models/layout&#x27;;
 import {FileFieldValue} from &#x27;./file-field-value&#x27;;
 import {Observable, Subject} from &#x27;rxjs&#x27;;
-import {Component} from &#x27;../../models/component&#x27;;
+import {Component, ComponentPrefixes} from &#x27;../../models/component&#x27;;
 import {FormControl} from &#x27;@angular/forms&#x27;;
 import {Validation} from &#x27;../../models/validation&#x27;;
 import {ChangedFieldsMap} from &#x27;../../../event/services/interfaces/changed-fields-map&#x27;;
@@ -241,7 +241,7 @@ export enum FileUploadMIMEType {
     VIDEO &#x3D; &#x27;video/*&#x27;,
     AUDIO &#x3D; &#x27;audio/*&#x27;,
     PDF &#x3D; &#x27;.pdf&#x27;,
-    JPG &#x3D; &#x27;.jpg&#x27;,
+    JPG_JPEG &#x3D; &#x27;.jpg,.jpeg&#x27;,
     XML &#x3D; &#x27;.xml&#x27;,
     DOC_DOCX &#x3D; &#x27;.doc,.docx&#x27;,
     XLS_XLSX &#x3D; &#x27;.xls,.xlsx&#x27;
@@ -302,6 +302,10 @@ export class FileField extends DataField&lt;FileFieldValue&gt; {
         return this._update.asObservable();
     }
 
+    public getTypedComponentType(): string {
+        return ComponentPrefixes.FILE + this.getComponentType();
+    }
+
     public valueWithoutChange(value: FileFieldValue) {
         this.changed &#x3D; false;
         this._value.next(value ?? {});
@@ -349,7 +353,7 @@ export class FileField extends DataField&lt;FileFieldValue&gt; {
             throw new Error(&#x27;Data field can be initialized only once!&#x27;
                 + &#x27; Disconnect the previous form control before initializing the data field again!&#x27;);
         }
-
+        this.formControlRef &#x3D; formControl;
         formControl.setValidators(this.resolveFormControlValidators());
 
         this._myValueSubscription &#x3D; this._value.pipe(

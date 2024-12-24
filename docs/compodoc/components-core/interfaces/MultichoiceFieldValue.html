@@ -180,8 +180,10 @@
 import {Behavior} from &#x27;../../models/behavior&#x27;;
 import {Layout} from &#x27;../../models/layout&#x27;;
 import {FieldTypeResource} from &#x27;../../../task-content/model/field-type-resource&#x27;;
-import {Component} from &#x27;../../models/component&#x27;;
+import {Component, ComponentPrefixes} from &#x27;../../models/component&#x27;;
 import {Validation} from &#x27;../../models/validation&#x27;;
+import {UpdateOnStrategy, UpdateStrategy} from &quot;../../models/update-strategy&quot;;
+import {Observable, Subject} from &#x27;rxjs&#x27;;
 
 export interface MultichoiceFieldValue {
     key: string;
@@ -190,11 +192,14 @@ export interface MultichoiceFieldValue {
 
 export class MultichoiceField  extends DataField&lt;Array&lt;string&gt;&gt; {
 
+    protected _updatedChoices: Subject&lt;void&gt;;
+
     constructor(stringId: string, title: string, values: Array&lt;string&gt;, private _choices: Array&lt;MultichoiceFieldValue&gt;,
                 behavior: Behavior, placeholder?: string, description?: string, layout?: Layout,
                 private readonly _fieldType &#x3D; FieldTypeResource.MULTICHOICE, validations?: Array&lt;Validation&gt;,
                 component?: Component, parentTaskId?: string) {
         super(stringId, title, values, behavior, placeholder, description, layout, validations, component, parentTaskId);
+        this._updatedChoices &#x3D; new Subject&lt;void&gt;();
     }
 
     set choices(choices: Array&lt;MultichoiceFieldValue&gt;) {
@@ -207,6 +212,22 @@ export class MultichoiceField  extends DataField&lt;Array&lt;string&gt;&gt; {
 
     get fieldType(): FieldTypeResource {
         return this._fieldType;
+    }
+
+    get updatedChoices(): Observable&lt;void&gt; {
+        return this._updatedChoices.asObservable();
+    }
+
+    public updateChoice(): void {
+        this._updatedChoices.next();
+    }
+
+    public getUpdateOnStrategy(): UpdateOnStrategy {
+        return UpdateStrategy.CHANGE;
+    }
+
+    public getTypedComponentType(): string {
+        return ComponentPrefixes.MULTICHOICE + this.getComponentType();
     }
 
     protected valueEquality(a: Array&lt;string&gt;, b: Array&lt;string&gt;): boolean {

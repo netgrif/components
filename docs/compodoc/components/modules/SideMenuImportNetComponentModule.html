@@ -174,7 +174,7 @@ import {CommonModule} from &#x27;@angular/common&#x27;;
 import {ImportNetComponent} from &#x27;./import-net.component&#x27;;
 import {FlexLayoutModule, FlexModule} from &#x27;@angular/flex-layout&#x27;;
 import {FormsModule} from &#x27;@angular/forms&#x27;;
-import {CovalentModule, MaterialModule, TranslateLibModule} from &#x27;@netgrif/components-core&#x27;;
+import {CovalentModule, MaterialModule, NAE_IMPORT_NET_COMPONENT, TranslateLibModule} from &#x27;@netgrif/components-core&#x27;;
 
 @NgModule({
     declarations: [
@@ -189,7 +189,10 @@ import {CovalentModule, MaterialModule, TranslateLibModule} from &#x27;@netgrif/
         FormsModule,
         TranslateLibModule
     ],
-    exports: [ImportNetComponent]
+    exports: [ImportNetComponent],
+    providers: [
+        { provide: NAE_IMPORT_NET_COMPONENT, useValue: ImportNetComponent }
+    ]
 })
 export class SideMenuImportNetComponentModule {
 }

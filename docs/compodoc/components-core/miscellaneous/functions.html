@@ -146,6 +146,9 @@
                             <a href="#encodeBase64" title="projects/netgrif-components-core/src/lib/utility/base64.ts" ><b>encodeBase64</b>&nbsp;&nbsp;&nbsp;(projects/.../base64.ts)</a>
                         </li>
                         <li>
+                            <a href="#extractFieldValueFromData" title="projects/netgrif-components-core/src/lib/navigation/utility/navigation-item-task-utility-methods.ts" ><b>extractFieldValueFromData</b>&nbsp;&nbsp;&nbsp;(projects/.../navigation-item-task-utility-methods.ts)</a>
+                        </li>
+                        <li>
                             <a href="#extractFilterFieldFromData" title="projects/netgrif-components-core/src/lib/navigation/utility/navigation-item-task-utility-methods.ts" ><b>extractFilterFieldFromData</b>&nbsp;&nbsp;&nbsp;(projects/.../navigation-item-task-utility-methods.ts)</a>
                         </li>
                         <li>
@@ -159,6 +162,9 @@
                         </li>
                         <li>
                             <a href="#extractRoles" title="projects/netgrif-components-core/src/lib/navigation/utility/navigation-item-task-utility-methods.ts" ><b>extractRoles</b>&nbsp;&nbsp;&nbsp;(projects/.../navigation-item-task-utility-methods.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#extractSearchTypeFromData" title="projects/netgrif-components-core/src/lib/navigation/utility/navigation-item-task-utility-methods.ts" ><b>extractSearchTypeFromData</b>&nbsp;&nbsp;&nbsp;(projects/.../navigation-item-task-utility-methods.ts)</a>
                         </li>
                         <li>
                             <a href="#getField" title="projects/netgrif-components-core/src/lib/utility/get-field.ts" ><b>getField</b>&nbsp;&nbsp;&nbsp;(projects/.../get-field.ts)</a>
@@ -200,6 +206,12 @@
                             <a href="#mockUserAutocompleteValue" title="projects/netgrif-components-core/src/lib/utility/tests/mocks/mock-user-autocomplete-value.ts" ><b>mockUserAutocompleteValue</b>&nbsp;&nbsp;&nbsp;(projects/.../mock-user-autocomplete-value.ts)</a>
                         </li>
                         <li>
+                            <a href="#navigationItemCaseViewDefaultHeadersFactory" title="projects/netgrif-components-core/src/lib/utility/navigation-item-default-headers-factory.ts" ><b>navigationItemCaseViewDefaultHeadersFactory</b>&nbsp;&nbsp;&nbsp;(projects/.../navigation-item-default-headers-factory.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#navigationItemDefaultHeadersFactory" title="projects/netgrif-components-core/src/lib/utility/navigation-item-default-headers-factory.ts" ><b>navigationItemDefaultHeadersFactory</b>&nbsp;&nbsp;&nbsp;(projects/.../navigation-item-default-headers-factory.ts)</a>
+                        </li>
+                        <li>
                             <a href="#navigationItemTaskAllowedNetsServiceFactory" title="projects/netgrif-components-core/src/lib/allowed-nets/services/factory/allowed-nets-service-factory.ts" ><b>navigationItemTaskAllowedNetsServiceFactory</b>&nbsp;&nbsp;&nbsp;(projects/.../allowed-nets-service-factory.ts)</a>
                         </li>
                         <li>
@@ -207,6 +219,9 @@
                         </li>
                         <li>
                             <a href="#navigationItemTaskFilterFactory" title="projects/netgrif-components-core/src/lib/utility/navigation-item-task-filter-factory.ts" ><b>navigationItemTaskFilterFactory</b>&nbsp;&nbsp;&nbsp;(projects/.../navigation-item-task-filter-factory.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#navigationItemTaskViewDefaultHeadersFactory" title="projects/netgrif-components-core/src/lib/utility/navigation-item-default-headers-factory.ts" ><b>navigationItemTaskViewDefaultHeadersFactory</b>&nbsp;&nbsp;&nbsp;(projects/.../navigation-item-default-headers-factory.ts)</a>
                         </li>
                         <li>
                             <a href="#ofVoid" title="projects/netgrif-components-core/src/lib/utility/of-void.ts" ><b>ofVoid</b>&nbsp;&nbsp;&nbsp;(projects/.../of-void.ts)</a>
@@ -3065,6 +3080,76 @@ caused by uncompleted Subjects. They should only be used to create new Category 
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="extractFieldValueFromData"></a>
+                    <span class="name">
+                        <span ><b>extractFieldValueFromData</b></span>
+                        <a href="#extractFieldValueFromData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>extractFieldValueFromData(dataSection, fieldId)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Extracts field value from data</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>dataSection</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>fieldId</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>T</code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>value of extracted field</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="extractFilterFieldFromData"></a>
                     <span class="name">
                         <span ><b>extractFilterFieldFromData</b></span>
@@ -3264,7 +3349,7 @@ caused by uncompleted Subjects. They should only be used to create new Category 
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>extractIconAndTitle(dataSection)</code>
+<code>extractIconAndTitle(dataSection, translateService)</code>
                 </td>
             </tr>
 
@@ -3297,6 +3382,19 @@ caused by uncompleted Subjects. They should only be used to create new Category 
 
                                     <td>
                                         <p>an array containing the data groups that correspond to a single navigation entry</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>translateService</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>is a service to translate label name</p>
 
                                     </td>
                                 </tr>
@@ -3390,6 +3488,76 @@ Each item has format ROLE_IMPORT_ID:NET_IMPORT_ID</p>
                     </div>
                     <div class="io-description">
                         <p>an Array of string values representing role IDs</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="extractSearchTypeFromData"></a>
+                    <span class="name">
+                        <span ><b>extractSearchTypeFromData</b></span>
+                        <a href="#extractSearchTypeFromData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>extractSearchTypeFromData(dataSection, typeFieldId)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Extracts the selected search type from enumeration field of the navigation item task data.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>dataSection</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>typeFieldId</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../miscellaneous/typealiases.html#Mode" target="_self" >SearchMode</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>a {</p>
 
                     </div>
                 </td>
@@ -4334,6 +4502,200 @@ Pages will be loaded from the provided page number onwards, page size will be up
                     </div>
                     <div class="io-description">
                         <b>Returns : </b>    <code>SearchAutocompleteOption&lt;Array&lt;string&gt;&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/utility/navigation-item-default-headers-factory.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="navigationItemCaseViewDefaultHeadersFactory"></a>
+                    <span class="name">
+                        <span ><b>navigationItemCaseViewDefaultHeadersFactory</b></span>
+                        <a href="#navigationItemCaseViewDefaultHeadersFactory"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>navigationItemCaseViewDefaultHeadersFactory(navigationItemTaskData)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>navigationItemTaskData</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Array | undefined</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="navigationItemDefaultHeadersFactory"></a>
+                    <span class="name">
+                        <span ><b>navigationItemDefaultHeadersFactory</b></span>
+                        <a href="#navigationItemDefaultHeadersFactory"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>navigationItemDefaultHeadersFactory(navigationItemTaskData, useFieldId, defaultHeadersFieldId)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>navigationItemTaskData</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>useFieldId</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>defaultHeadersFieldId</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Array | undefined</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="navigationItemTaskViewDefaultHeadersFactory"></a>
+                    <span class="name">
+                        <span ><b>navigationItemTaskViewDefaultHeadersFactory</b></span>
+                        <a href="#navigationItemTaskViewDefaultHeadersFactory"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>navigationItemTaskViewDefaultHeadersFactory(navigationItemTaskData)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>navigationItemTaskData</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Array | undefined</code>
 
                     </div>
                     <div class="io-description">

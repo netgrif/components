@@ -26,7 +26,7 @@
 </g>
 <g id="clust7" class="cluster">
 <title>cluster_SideMenuAdminImpersonateComponentModule_exports</title>
-<polygon fill="none" stroke="black" points="257,-319.59 257,-371.59 465,-371.59 465,-319.59 257,-319.59"/>
+<polygon fill="none" stroke="black" points="135,-319.59 135,-371.59 576,-371.59 576,-319.59 135,-319.59"/>
 </g>
 <g id="clust3" class="cluster">
 <title>cluster_SideMenuAdminImpersonateComponentModule_AdminImpersonateComponent_providers</title>
@@ -81,14 +81,26 @@
 <!-- AdminImpersonateComponent  -->
 <g id="node6" class="node">
 <title>AdminImpersonateComponent </title>
-<polygon fill="#fb8072" stroke="black" points="457.41,-363.59 264.59,-363.59 264.59,-327.59 457.41,-327.59 457.41,-363.59"/>
-<text text-anchor="middle" x="361" y="-341.39" font-family="Times,serif" font-size="14.00">AdminImpersonateComponent </text>
+<polygon fill="#fb8072" stroke="black" points="568.41,-363.59 375.59,-363.59 375.59,-327.59 568.41,-327.59 568.41,-363.59"/>
+<text text-anchor="middle" x="472" y="-341.39" font-family="Times,serif" font-size="14.00">AdminImpersonateComponent </text>
 </g>
 <!-- SideMenuAdminImpersonateComponentModule&#45;&gt;AdminImpersonateComponent  -->
 <g id="edge5" class="edge">
 <title>SideMenuAdminImpersonateComponentModule&#45;&gt;AdminImpersonateComponent </title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M361,-298.7C361,-298.7 361,-317.58 361,-317.58"/>
-<polygon fill="black" stroke="black" points="357.5,-317.58 361,-327.58 364.5,-317.58 357.5,-317.58"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M440.9,-298.7C440.9,-298.7 440.9,-317.58 440.9,-317.58"/>
+<polygon fill="black" stroke="black" points="437.4,-317.58 440.9,-327.58 444.4,-317.58 437.4,-317.58"/>
+</g>
+<!-- AdminImpersonateListComponent  -->
+<g id="node7" class="node">
+<title>AdminImpersonateListComponent </title>
+<polygon fill="#fb8072" stroke="black" points="357.19,-363.59 142.81,-363.59 142.81,-327.59 357.19,-327.59 357.19,-363.59"/>
+<text text-anchor="middle" x="250" y="-341.39" font-family="Times,serif" font-size="14.00">AdminImpersonateListComponent </text>
+</g>
+<!-- SideMenuAdminImpersonateComponentModule&#45;&gt;AdminImpersonateListComponent  -->
+<g id="edge6" class="edge">
+<title>SideMenuAdminImpersonateComponentModule&#45;&gt;AdminImpersonateListComponent </title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M286.55,-298.7C286.55,-298.7 286.55,-317.58 286.55,-317.58"/>
+<polygon fill="black" stroke="black" points="283.05,-317.58 286.55,-327.58 290.05,-317.58 283.05,-317.58"/>
 </g>
 <!-- {
  &#160;&#160;&#160;provide: UserListService, useClass: ImpersonationUserListService

@@ -1,0 +1,329 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Netgrif Components library Documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li
+  >
+  MultichoiceCaserefFieldComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>projects/netgrif-components/src/lib/data-fields/multichoice-field/multichoice-caseref-field/multichoice-caseref-field.component.ts</code>
+</p>
+
+
+
+    <p class="comment">
+        <h3>Extends</h3>
+    </p>
+    <p class="comment">
+            <code>AbstractMultichoiceCaseRefComponent</code>
+    </p>
+
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>nc-multichoice-caseref-field</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./multichoice-caseref-field.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./multichoice-caseref-field.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(injector: <a href="https://angular.io/api/core/Injector" target="_blank">Injector</a>, dataFieldPortalData: DataFieldPortalData<MultichoiceField>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">projects/netgrif-components/src/lib/data-fields/multichoice-field/multichoice-caseref-field/multichoice-caseref-field.component.ts:17</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>injector</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/core/Injector" target="_blank" >Injector</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>dataFieldPortalData</td>
+                                                  
+                                                        <td>
+                                                                    <code>DataFieldPortalData&lt;MultichoiceField&gt;</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, Inject, Injector, Optional} from &#x27;@angular/core&#x27;;
+import {
+    DATA_FIELD_PORTAL_DATA,
+    DataFieldPortalData,
+    AbstractMultichoiceCaseRefComponent,
+    MultichoiceField
+} from &#x27;@netgrif/components-core&#x27;;
+import {
+    DefaultCaseRefListViewComponent
+} from &#x27;../../../navigation/group-navigation-component-resolver/default-components/default-case-ref-list-view/default-case-ref-list-view.component&#x27;;
+
+@Component({
+  selector: &#x27;nc-multichoice-caseref-field&#x27;,
+  templateUrl: &#x27;./multichoice-caseref-field.component.html&#x27;,
+  styleUrls: [&#x27;./multichoice-caseref-field.component.scss&#x27;]
+})
+export class MultichoiceCaserefFieldComponent extends AbstractMultichoiceCaseRefComponent {
+
+    constructor(injector: Injector,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData&lt;MultichoiceField&gt;) {
+        super(injector, DefaultCaseRefListViewComponent, dataFieldPortalData)
+    }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;ng-template [cdkPortalOutlet]&#x3D;&quot;componentPortal&quot;&gt;&lt;/ng-template&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>./multichoice-caseref-field.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss"></code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><ng-template [cdkPortalOutlet]="componentPortal"></ng-template></div>'
+    var COMPONENTS = [{'name': 'AddChildNodeComponent', 'selector': 'nc-add-child-node'},{'name': 'AdminImpersonateComponent', 'selector': 'nc-admin-impersonate'},{'name': 'AdminImpersonateDialogComponent', 'selector': 'nc-admin-impersonate-dialog'},{'name': 'AdminImpersonateItemComponent', 'selector': 'nc-admin-impersonate-item'},{'name': 'AdminImpersonateListComponent', 'selector': 'nc-admin-impersonate-list'},{'name': 'AdvancedSearchComponent', 'selector': 'nc-advanced-search'},{'name': 'AuthenticationOverlayComponent', 'selector': 'nc-authentication-overlay'},{'name': 'BarchartCardComponent', 'selector': 'nc-barchart-card'},{'name': 'BooleanDefaultFieldComponent', 'selector': 'nc-boolean-default-field'},{'name': 'BooleanFieldComponent', 'selector': 'nc-boolean-field'},{'name': 'BreadcrumbsComponent', 'selector': 'nc-breadcrumbs'},{'name': 'ButtonDefaultFieldComponent', 'selector': 'nc-button-default-field'},{'name': 'ButtonFieldComponent', 'selector': 'nc-button-field'},{'name': 'CaseListComponent', 'selector': 'nc-case-list'},{'name': 'CaseListPaginatorComponent', 'selector': 'nc-case-list-paginator'},{'name': 'CasePanelComponent', 'selector': 'nc-case-panel'},{'name': 'CaseRefDefaultComponent', 'selector': 'nc-case-ref-default'},{'name': 'CaseSearchComponent', 'selector': 'nc-case-search'},{'name': 'ChangePasswordFormComponent', 'selector': 'nc-change-password-form'},{'name': 'CountCardComponent', 'selector': 'nc-count-card'},{'name': 'CreateCaseButtonComponent', 'selector': 'nc-create-case-button'},{'name': 'DashboardBarChartTextFieldComponent', 'selector': 'nc-dashboard-bar-chart-text-field'},{'name': 'DashboardContentComponent', 'selector': 'nc-dashboard-content'},{'name': 'DashboardIframeTextFieldComponent', 'selector': 'nc-dashboard-iframe-text-field'},{'name': 'DashboardLineChartTextFieldComponent', 'selector': 'nc-dashboard-line-chart-text-field'},{'name': 'DashboardPieChartTextFieldComponent', 'selector': 'nc-dashboard-pie-chart-text-field'},{'name': 'DashboardPortalTextFieldComponent', 'selector': 'nc-dashboard-portal-text-field'},{'name': 'DataFieldTemplateComponent', 'selector': 'nc-data-field-template'},{'name': 'DateDefaultFieldComponent', 'selector': 'nc-date-default-field'},{'name': 'DateFieldComponent', 'selector': 'nc-date-field'},{'name': 'DateTimeDefaultFieldComponent', 'selector': 'nc-date-time-default-field'},{'name': 'DateTimeFieldComponent', 'selector': 'nc-date-time-field'},{'name': 'DefaultCaseRefListViewComponent', 'selector': 'nc-default-case-view'},{'name': 'DefaultNoFilterProvidedComponent', 'selector': 'nc-default-no-filter-provided'},{'name': 'DefaultSimpleTaskViewComponent', 'selector': 'nc-default-simple-task-view'},{'name': 'DefaultTabbedCaseViewComponent', 'selector': 'nc-default-tabbed-case-view'},{'name': 'DefaultTabbedTaskViewComponent', 'selector': 'nc-default-tabbed-task-view'},{'name': 'DefaultTabViewComponent', 'selector': 'nc-default-tab-view'},{'name': 'DefaultTaskViewComponent', 'selector': 'nc-default-task-view'},{'name': 'EasymdeWrapperComponent', 'selector': 'nc-easymde-wrapper'},{'name': 'EditModeComponent', 'selector': 'nc-edit-mode'},{'name': 'EmailSubmissionFormComponent', 'selector': 'nc-email-submission-form'},{'name': 'EnumerationAutocompleteDynamicFieldComponent', 'selector': 'nc-enumeration-autocomplete-dynamic-field'},{'name': 'EnumerationAutocompleteSelectFieldComponent', 'selector': 'nc-enumeration-autocomplete-select-field'},{'name': 'EnumerationCaserefFieldComponent', 'selector': 'nc-enumeration-caseref-field'},{'name': 'EnumerationFieldComponent', 'selector': 'nc-enumeration-field'},{'name': 'EnumerationIconFieldComponent', 'selector': 'nc-enumeration-icon-field'},{'name': 'EnumerationListFieldComponent', 'selector': 'nc-enumeration-list-field'},{'name': 'EnumerationSelectFieldComponent', 'selector': 'nc-enumeration-select-field'},{'name': 'EnumerationStepperFieldComponent', 'selector': 'nc-enumeration-stepper-field'},{'name': 'FieldComponentResolverComponent', 'selector': 'nc-field-component-resolver'},{'name': 'FileDefaultFieldComponent', 'selector': 'nc-file-default-field'},{'name': 'FileFieldComponent', 'selector': 'nc-file-field'},{'name': 'FileListDefaultFieldComponent', 'selector': 'nc-file-list-default-field'},{'name': 'FileListFieldComponent', 'selector': 'nc-file-list-field'},{'name': 'FilterDefaultFieldComponent', 'selector': 'nc-filter-default-field'},{'name': 'FilterFieldComponent', 'selector': 'nc-filter-field'},{'name': 'FilterFieldContentComponent', 'selector': 'nc-filter-field-content'},{'name': 'FilterFieldTabbedCaseViewComponent', 'selector': 'nc-filter-field-tabbed-case-view'},{'name': 'FilterFieldTabbedTaskViewComponent', 'selector': 'nc-filter-field-tabbed-task-view'},{'name': 'FilterFieldTabViewComponent', 'selector': 'nc-filter-field-tab-view'},{'name': 'FilterFieldTabViewContentComponent', 'selector': 'nc-filter-field-tab-view-content'},{'name': 'FilterSelectorComponent', 'selector': 'nc-filter-selector'},{'name': 'FilterSelectorDialogComponent', 'selector': 'nc-filter-selector-dialog'},{'name': 'ForgottenPasswordFormComponent', 'selector': 'nc-forgotten-password-form'},{'name': 'FulltextSearchComponent', 'selector': 'nc-fulltext-search'},{'name': 'GroupNavigationComponentResolverComponent', 'selector': 'nc-group-navigation-component-resolver'},{'name': 'HeaderComponent', 'selector': 'nc-header'},{'name': 'HtmlTextareaFieldComponent', 'selector': 'nc-html-textarea-field'},{'name': 'I18nDividerFieldComponent', 'selector': 'nc-i18n-divider-field'},{'name': 'I18nFieldComponent', 'selector': 'nc-i18n-field'},{'name': 'I18nTextFieldComponent', 'selector': 'nc-i18n-text-field'},{'name': 'IframeCardComponent', 'selector': 'nc-iframe-card'},{'name': 'ImmediateFilterTextComponent', 'selector': 'nc-immediate-filter-text'},{'name': 'ImmediateFilterTextContentComponent', 'selector': 'nc-immediate-filter-text-content'},{'name': 'ImpersonateQuickPanelComponent', 'selector': 'nc-impersonate-quick-panel'},{'name': 'ImportNetComponent', 'selector': 'nc-import-net'},{'name': 'ImportNetDialogComponent', 'selector': 'nc-import-net-dialog'},{'name': 'InternalLinkComponent', 'selector': 'nc-internal-link'},{'name': 'LanguageSelectorComponent', 'selector': 'nc-language-selector'},{'name': 'LdapGroupRoleAssignmentComponent', 'selector': 'nc-ldap-group-role-assignment'},{'name': 'LegalNoticeComponent', 'selector': 'nc-legal-notice'},{'name': 'LinearGaugeCardComponent', 'selector': 'nc-linear-gauge-card'},{'name': 'LineChartCardComponent', 'selector': 'nc-line-chart-card'},{'name': 'LoadFilterComponent', 'selector': 'nc-load-filter'},{'name': 'LoadFilterDialogComponent', 'selector': 'nc-load-filter-dialog'},{'name': 'LoadingModeComponent', 'selector': 'nc-loading-mode'},{'name': 'LoginFormComponent', 'selector': 'nc-login-form'},{'name': 'LogoutShortcutComponent', 'selector': 'nc-logout-shortcut'},{'name': 'MultichoiceAutocompleteFieldComponent', 'selector': 'nc-multichoice-autocomplete-field'},{'name': 'MultichoiceCaserefFieldComponent', 'selector': 'nc-multichoice-caseref-field'},{'name': 'MultichoiceFieldComponent', 'selector': 'nc-multichoice-field'},{'name': 'MultichoiceListFieldComponent', 'selector': 'nc-multichoice-list-field'},{'name': 'MultichoiceSelectFieldComponent', 'selector': 'nc-multichoice-select-field'},{'name': 'MultiUserAssignComponent', 'selector': 'nc-multi-user-assign'},{'name': 'MultiUserAssignDialogComponent', 'selector': 'nc-multi-user-assign-dialog'},{'name': 'MultiUserAssignItemComponent', 'selector': 'nc-multi-user-assign-item'},{'name': 'MultiUserAssignListComponent', 'selector': 'nc-multi-user-assign-list'},{'name': 'NavigationDoubleDrawerComponent', 'selector': 'nc-navigation-double-drawer'},{'name': 'NavigationDrawerComponent', 'selector': 'nc-navigation-drawer'},{'name': 'NavigationRailComponent', 'selector': 'nc-navigation-rail'},{'name': 'NavigationTreeComponent', 'selector': 'nc-navigation-tree'},{'name': 'NewCaseComponent', 'selector': 'nc-new-case'},{'name': 'NewCaseDialogComponent', 'selector': 'nc-new-case-dialog'},{'name': 'NumberCurrencyFieldComponent', 'selector': 'nc-number-currency-field'},{'name': 'NumberDecimalFieldComponent', 'selector': 'nc-number-decimal-field'},{'name': 'NumberDefaultFieldComponent', 'selector': 'nc-number-default-field'},{'name': 'NumberFieldComponent', 'selector': 'nc-number-field'},{'name': 'OptionSelectorComponent', 'selector': 'nc-option-selector'},{'name': 'PanelComponent', 'selector': 'nc-app-panel'},{'name': 'PanelItemComponent', 'selector': 'nc-panel-item'},{'name': 'PasswordTextFieldComponent', 'selector': 'nc-password-text-field'},{'name': 'PieChartCardComponent', 'selector': 'nc-pie-chart-card'},{'name': 'PopupSessionIdleComponent', 'selector': 'nc-popup-session-idle'},{'name': 'PortalCardComponent', 'selector': 'nc-portal-card'},{'name': 'PreviewDialogComponent', 'selector': 'nc-preview-dialog'},{'name': 'ProfileComponent', 'selector': 'nc-user-profile'},{'name': 'PublicWorkflowPanelComponent', 'selector': 'nc-public-workflow-panel'},{'name': 'QuickPanelComponent', 'selector': 'nc-quick-panel'},{'name': 'RedirectComponent', 'selector': 'nc-redirect'},{'name': 'RegistrationFormComponent', 'selector': 'nc-registration-form'},{'name': 'RemoveNodeComponent', 'selector': 'nc-remove-node'},{'name': 'RequiredLabelComponent', 'selector': 'nc-required-label'},{'name': 'RichTextareaFieldComponent', 'selector': 'nc-rich-textarea-field'},{'name': 'RoleAssignmentComponent', 'selector': 'nc-role-assignment'},{'name': 'SaveFilterComponent', 'selector': 'nc-save-filter'},{'name': 'SaveFilterDialogComponent', 'selector': 'nc-save-filter-dialog'},{'name': 'SearchClauseComponent', 'selector': 'nc-search-clause'},{'name': 'SearchComponent', 'selector': 'nc-search'},{'name': 'SearchConfigurationInputComponent', 'selector': 'nc-search-configuration-input'},{'name': 'SearchModeComponent', 'selector': 'nc-search-mode'},{'name': 'SearchOperandInputComponent', 'selector': 'nc-search-operand-input'},{'name': 'SearchPredicateComponent', 'selector': 'nc-search-predicate'},{'name': 'SessionIdleComponent', 'selector': 'nc-session-idle'},{'name': 'SideMenuContainerComponent', 'selector': 'nc-side-menu-container'},{'name': 'SignaturePadFieldComponent', 'selector': 'nc-signature-pad-field'},{'name': 'SimpleTextFieldComponent', 'selector': 'nc-simple-text-field'},{'name': 'SingleTaskComponent', 'selector': 'nc-single-task'},{'name': 'SortModeComponent', 'selector': 'nc-sort-mode'},{'name': 'StringCollectionDefaultFieldComponent', 'selector': 'nc-string-collection-default-field'},{'name': 'TabViewComponent', 'selector': 'nc-tab-view'},{'name': 'TaskContentComponent', 'selector': 'nc-task-content'},{'name': 'TaskListComponent', 'selector': 'nc-task-list'},{'name': 'TaskListPaginationComponent', 'selector': 'nc-task-list-pagination'},{'name': 'TaskPanelComponent', 'selector': 'nc-task-panel'},{'name': 'TaskRefDashboardFieldComponent', 'selector': 'nc-task-ref-dashboard-field'},{'name': 'TaskRefDashboardTileComponent', 'selector': 'nc-task-ref-dashboard-tile'},{'name': 'TaskRefFieldComponent', 'selector': 'nc-task-ref-field'},{'name': 'TaskRefListFieldComponent', 'selector': 'nc-task-ref-list-field'},{'name': 'TaskSearchComponent', 'selector': 'nc-task-search'},{'name': 'TaskViewDialogComponent', 'selector': 'nc-task-view-dialog'},{'name': 'TextareaFieldComponent', 'selector': 'nc-textarea-field'},{'name': 'TextFieldComponent', 'selector': 'nc-text-field'},{'name': 'ToolbarComponent', 'selector': 'nc-toolbar'},{'name': 'TreeComponent', 'selector': 'nc-tree-component'},{'name': 'TreeTaskContentComponent', 'selector': 'nc-tree-task-content'},{'name': 'UserAssignComponent', 'selector': 'nc-user-assign'},{'name': 'UserAssignDialogComponent', 'selector': 'nc-user-assign-dialog'},{'name': 'UserAssignItemComponent', 'selector': 'nc-user-assign-item'},{'name': 'UserAssignListComponent', 'selector': 'nc-user-assign-list'},{'name': 'UserCardComponent', 'selector': 'nc-user-card'},{'name': 'UserDefaultFieldComponent', 'selector': 'nc-user-default-field'},{'name': 'UserFieldComponent', 'selector': 'nc-user-field'},{'name': 'UserImpersonateComponent', 'selector': 'nc-user-impersonate'},{'name': 'UserImpersonateDialogComponent', 'selector': 'nc-user-impersonate-dialog'},{'name': 'UserInviteComponent', 'selector': 'nc-user-invite'},{'name': 'UserListDefaultFieldComponent', 'selector': 'nc-user-list-default-field'},{'name': 'UserListFieldComponent', 'selector': 'nc-user-list-field'},{'name': 'WorkflowPanelComponent', 'selector': 'nc-workflow-panel'},{'name': 'WorkflowViewComponent', 'selector': 'nc-workflow-view'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'MultichoiceCaserefFieldComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'MultichoiceCaserefFieldComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

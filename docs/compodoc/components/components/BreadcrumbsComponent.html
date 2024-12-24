@@ -128,12 +128,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(_uriService: UriService)</code>
+<code>constructor(_uriService: UriService, _caseResourceService: CaseResourceService, _activatedRoute: <a href="https://angular.io/api/router/ActivatedRoute" target="_blank">ActivatedRoute</a>, _router: <a href="https://angular.io/api/router/Router" target="_blank">Router</a>, _dynamicRoutingService: DynamicNavigationRouteProviderService, _translateService: TranslateService, _log: LoggerService)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">projects/netgrif-components/src/lib/navigation/breadcrumbs/breadcrumbs.component.ts:12</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">projects/netgrif-components/src/lib/navigation/breadcrumbs/breadcrumbs.component.ts:14</a></div>
                             </td>
                         </tr>
 
@@ -155,6 +155,78 @@
                                                   
                                                         <td>
                                                                     <code>UriService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_caseResourceService</td>
+                                                  
+                                                        <td>
+                                                                    <code>CaseResourceService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_activatedRoute</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/router/ActivatedRoute" target="_blank" >ActivatedRoute</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_router</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/router/Router" target="_blank" >Router</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_dynamicRoutingService</td>
+                                                  
+                                                        <td>
+                                                                    <code>DynamicNavigationRouteProviderService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_translateService</td>
+                                                  
+                                                        <td>
+                                                                    <code>TranslateService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_log</td>
+                                                  
+                                                        <td>
+                                                                    <code>LoggerService</code>
                                                         </td>
                                                   
                                                     <td>
@@ -184,8 +256,10 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component} from &#x27;@angular/core&#x27;;
 import {
     UriService,
-    AbstractBreadcrumbsComponent
+    AbstractBreadcrumbsComponent, CaseResourceService, DynamicNavigationRouteProviderService, LoggerService
 } from &#x27;@netgrif/components-core&#x27;;
+import {ActivatedRoute, Router} from &quot;@angular/router&quot;;
+import {TranslateService} from &quot;@ngx-translate/core&quot;;
 
 @Component({
     selector: &#x27;nc-breadcrumbs&#x27;,
@@ -194,8 +268,14 @@ import {
 })
 export class BreadcrumbsComponent extends AbstractBreadcrumbsComponent {
 
-    constructor(protected _uriService: UriService) {
-        super(_uriService);
+    constructor(protected _uriService: UriService,
+                _caseResourceService: CaseResourceService,
+                _activatedRoute: ActivatedRoute,
+                _router: Router,
+                _dynamicRoutingService: DynamicNavigationRouteProviderService,
+                _translateService: TranslateService,
+                _log: LoggerService) {
+        super(_uriService, _caseResourceService, _activatedRoute, _router, _dynamicRoutingService, _translateService, _log);
     }
 }
 </code></pre>
@@ -205,11 +285,13 @@ export class BreadcrumbsComponent extends AbstractBreadcrumbsComponent {
         <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;breadcrumbs&quot;&gt;
     &lt;div *ngIf&#x3D;&quot;showHome&quot;&gt;
         &lt;span class&#x3D;&quot;breadcrumbs-span&quot; (click)&#x3D;&quot;reset()&quot;&gt;{{&#x27;toolbar.menu.home&#x27; | translate}}&lt;/span&gt;
-        &lt;span class&#x3D;&quot;delimeter&quot; *ngIf&#x3D;&quot;getPath()?.length &gt; 0&quot;&gt;/&lt;/span&gt;
     &lt;/div&gt;
-    &lt;div *ngFor&#x3D;&quot;let path of getPath();let i &#x3D; index;let last &#x3D; last;&quot;&gt;
+    &lt;div *ngFor&#x3D;&quot;let path of breadcrumbsParts;let i &#x3D; index;let last &#x3D; last;&quot;&gt;
         &lt;span class&#x3D;&quot;breadcrumbs-span&quot; (click)&#x3D;&quot;changePath(path, i)&quot;&gt;{{path | titlecase}}&lt;/span&gt;
-        &lt;span class&#x3D;&quot;delimeter&quot; *ngIf&#x3D;&quot;!last&quot;&gt;/&lt;/span&gt;
+        &lt;span class&#x3D;&quot;delimeter&quot; *ngIf&#x3D;&quot;!last || (showFilter &amp;&amp; !!filterName)&quot;&gt;/&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div *ngIf&#x3D;&quot;showFilter &amp;&amp; !!filterName&quot;&gt;
+        &lt;span class&#x3D;&quot;breadcrumbs-span&quot;&gt;{{filterName}}&lt;/span&gt;
     &lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
@@ -220,7 +302,7 @@ export class BreadcrumbsComponent extends AbstractBreadcrumbsComponent {
                     <code>./breadcrumbs.component.scss</code>
                 </p>
                 <pre class="line-numbers"><code class="language-scss">.breadcrumbs {
-    margin: 8px;
+    margin: 4px;
     -webkit-box-align: center;
     align-items: center;
     align-self: center;
@@ -230,9 +312,15 @@ export class BreadcrumbsComponent extends AbstractBreadcrumbsComponent {
     flex-wrap: wrap;
 }
 
+.breadcrumbs-span {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0.4px;
+}
+
 .breadcrumbs-span:hover {
     cursor: pointer;
-    text-decoration: underline;
 }
 
 .delimeter {
@@ -266,8 +354,8 @@ export class BreadcrumbsComponent extends AbstractBreadcrumbsComponent {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="breadcrumbs">    <div *ngIf="showHome">        <span class="breadcrumbs-span" (click)="reset()">{{\'toolbar.menu.home\' | translate}}</span>        <span class="delimeter" *ngIf="getPath()?.length > 0">/</span>    </div>    <div *ngFor="let path of getPath();let i = index;let last = last;">        <span class="breadcrumbs-span" (click)="changePath(path, i)">{{path | titlecase}}</span>        <span class="delimeter" *ngIf="!last">/</span>    </div></div></div>'
-    var COMPONENTS = [{'name': 'AddChildNodeComponent', 'selector': 'nc-add-child-node'},{'name': 'AdminImpersonateComponent', 'selector': 'nc-admin-impersonate'},{'name': 'AdminImpersonateItemComponent', 'selector': 'nc-admin-impersonate-item'},{'name': 'AdminImpersonateListComponent', 'selector': 'nc-admin-impersonate-list'},{'name': 'AdvancedSearchComponent', 'selector': 'nc-advanced-search'},{'name': 'AuthenticationOverlayComponent', 'selector': 'nc-authentication-overlay'},{'name': 'BarchartCardComponent', 'selector': 'nc-barchart-card'},{'name': 'BooleanFieldComponent', 'selector': 'nc-boolean-field'},{'name': 'BreadcrumbsComponent', 'selector': 'nc-breadcrumbs'},{'name': 'ButtonFieldComponent', 'selector': 'nc-button-field'},{'name': 'CaseListComponent', 'selector': 'nc-case-list'},{'name': 'CaseListPaginatorComponent', 'selector': 'nc-case-list-paginator'},{'name': 'CasePanelComponent', 'selector': 'nc-case-panel'},{'name': 'CaseSearchComponent', 'selector': 'nc-case-search'},{'name': 'ChangePasswordFormComponent', 'selector': 'nc-change-password-form'},{'name': 'CountCardComponent', 'selector': 'nc-count-card'},{'name': 'CreateCaseButtonComponent', 'selector': 'nc-create-case-button'},{'name': 'DashboardBarChartTextFieldComponent', 'selector': 'nc-dashboard-bar-chart-text-field'},{'name': 'DashboardContentComponent', 'selector': 'nc-dashboard-content'},{'name': 'DashboardIframeTextFieldComponent', 'selector': 'nc-dashboard-iframe-text-field'},{'name': 'DashboardLineChartTextFieldComponent', 'selector': 'nc-dashboard-line-chart-text-field'},{'name': 'DashboardPieChartTextFieldComponent', 'selector': 'nc-dashboard-pie-chart-text-field'},{'name': 'DashboardPortalTextFieldComponent', 'selector': 'nc-dashboard-portal-text-field'},{'name': 'DataFieldTemplateComponent', 'selector': 'nc-data-field-template'},{'name': 'DateFieldComponent', 'selector': 'nc-date-field'},{'name': 'DateTimeFieldComponent', 'selector': 'nc-date-time-field'},{'name': 'DefaultSimpleTaskViewComponent', 'selector': 'nc-default-simple-task-view'},{'name': 'DefaultTabbedCaseViewComponent', 'selector': 'nc-default-tabbed-case-view'},{'name': 'DefaultTabbedTaskViewComponent', 'selector': 'nc-default-tabbed-task-view'},{'name': 'DefaultTabViewComponent', 'selector': 'nc-default-tab-view'},{'name': 'EasymdeWrapperComponent', 'selector': 'nc-easymde-wrapper'},{'name': 'EditModeComponent', 'selector': 'nc-edit-mode'},{'name': 'EmailSubmissionFormComponent', 'selector': 'nc-email-submission-form'},{'name': 'EnumerationAutocompleteDynamicFieldComponent', 'selector': 'nc-enumeration-autocomplete-dynamic-field'},{'name': 'EnumerationAutocompleteSelectFieldComponent', 'selector': 'nc-enumeration-autocomplete-select-field'},{'name': 'EnumerationFieldComponent', 'selector': 'nc-enumeration-field'},{'name': 'EnumerationIconFieldComponent', 'selector': 'nc-enumeration-icon-field'},{'name': 'EnumerationListFieldComponent', 'selector': 'nc-enumeration-list-field'},{'name': 'EnumerationSelectFieldComponent', 'selector': 'nc-enumeration-select-field'},{'name': 'EnumerationStepperFieldComponent', 'selector': 'nc-enumeration-stepper-field'},{'name': 'FieldComponentResolverComponent', 'selector': 'nc-field-component-resolver'},{'name': 'FileFieldComponent', 'selector': 'nc-file-field'},{'name': 'FileListFieldComponent', 'selector': 'nc-file-list-field'},{'name': 'FilterFieldComponent', 'selector': 'nc-filter-field'},{'name': 'FilterFieldContentComponent', 'selector': 'nc-filter-field-content'},{'name': 'FilterFieldTabbedCaseViewComponent', 'selector': 'nc-filter-field-tabbed-case-view'},{'name': 'FilterFieldTabbedTaskViewComponent', 'selector': 'nc-filter-field-tabbed-task-view'},{'name': 'FilterFieldTabViewComponent', 'selector': 'nc-filter-field-tab-view'},{'name': 'FilterFieldTabViewContentComponent', 'selector': 'nc-filter-field-tab-view-content'},{'name': 'FilterSelectorComponent', 'selector': 'nc-filter-selector'},{'name': 'ForgottenPasswordFormComponent', 'selector': 'nc-forgotten-password-form'},{'name': 'FulltextSearchComponent', 'selector': 'nc-fulltext-search'},{'name': 'GroupNavigationComponentResolverComponent', 'selector': 'nc-group-navigation-component-resolver'},{'name': 'HeaderComponent', 'selector': 'nc-header'},{'name': 'HtmlTextareaFieldComponent', 'selector': 'nc-html-textarea-field'},{'name': 'I18nDividerFieldComponent', 'selector': 'nc-i18n-divider-field'},{'name': 'I18nFieldComponent', 'selector': 'nc-i18n-field'},{'name': 'I18nTextFieldComponent', 'selector': 'nc-i18n-text-field'},{'name': 'IframeCardComponent', 'selector': 'nc-iframe-card'},{'name': 'ImmediateFilterTextComponent', 'selector': 'nc-immediate-filter-text'},{'name': 'ImmediateFilterTextContentComponent', 'selector': 'nc-immediate-filter-text-content'},{'name': 'ImpersonateQuickPanelComponent', 'selector': 'nc-impersonate-quick-panel'},{'name': 'ImportNetComponent', 'selector': 'nc-import-net'},{'name': 'InternalLinkComponent', 'selector': 'nc-internal-link'},{'name': 'LanguageSelectorComponent', 'selector': 'nc-language-selector'},{'name': 'LdapGroupRoleAssignmentComponent', 'selector': 'nc-ldap-group-role-assignment'},{'name': 'LegalNoticeComponent', 'selector': 'nc-legal-notice'},{'name': 'LinearGaugeCardComponent', 'selector': 'nc-linear-gauge-card'},{'name': 'LineChartCardComponent', 'selector': 'nc-line-chart-card'},{'name': 'LoadFilterComponent', 'selector': 'nc-load-filter'},{'name': 'LoadingModeComponent', 'selector': 'nc-loading-mode'},{'name': 'LoginFormComponent', 'selector': 'nc-login-form'},{'name': 'LogoutShortcutComponent', 'selector': 'nc-logout-shortcut'},{'name': 'MultichoiceAutocompleteFieldComponent', 'selector': 'nc-multichoice-autocomplete-field'},{'name': 'MultichoiceFieldComponent', 'selector': 'nc-multichoice-field'},{'name': 'MultichoiceListFieldComponent', 'selector': 'nc-multichoice-list-field'},{'name': 'MultichoiceSelectFieldComponent', 'selector': 'nc-multichoice-select-field'},{'name': 'MultiUserAssignComponent', 'selector': 'nc-multi-user-assign'},{'name': 'MultiUserAssignItemComponent', 'selector': 'nc-multi-user-assign-item'},{'name': 'MultiUserAssignListComponent', 'selector': 'nc-multi-user-assign-list'},{'name': 'NavigationDoubleDrawerComponent', 'selector': 'nc-navigation-double-drawer'},{'name': 'NavigationDrawerComponent', 'selector': 'nc-navigation-drawer'},{'name': 'NavigationRailComponent', 'selector': 'nc-navigation-rail'},{'name': 'NavigationTreeComponent', 'selector': 'nc-navigation-tree'},{'name': 'NewCaseComponent', 'selector': 'nc-new-case'},{'name': 'NumberCurrencyFieldComponent', 'selector': 'nc-number-currency-field'},{'name': 'NumberDefaultFieldComponent', 'selector': 'nc-number-default-field'},{'name': 'NumberFieldComponent', 'selector': 'nc-number-field'},{'name': 'OptionSelectorComponent', 'selector': 'nc-option-selector'},{'name': 'PanelComponent', 'selector': 'nc-app-panel'},{'name': 'PanelItemComponent', 'selector': 'nc-panel-item'},{'name': 'PasswordTextFieldComponent', 'selector': 'nc-password-text-field'},{'name': 'PieChartCardComponent', 'selector': 'nc-pie-chart-card'},{'name': 'PopupSessionIdleComponent', 'selector': 'nc-popup-session-idle'},{'name': 'PortalCardComponent', 'selector': 'nc-portal-card'},{'name': 'PreviewDialogComponent', 'selector': 'nc-preview-dialog'},{'name': 'ProfileComponent', 'selector': 'nc-user-profile'},{'name': 'PublicWorkflowPanelComponent', 'selector': 'nc-public-workflow-panel'},{'name': 'QuickPanelComponent', 'selector': 'nc-quick-panel'},{'name': 'RedirectComponent', 'selector': 'nc-redirect'},{'name': 'RegistrationFormComponent', 'selector': 'nc-registration-form'},{'name': 'RemoveNodeComponent', 'selector': 'nc-remove-node'},{'name': 'RequiredLabelComponent', 'selector': 'nc-required-label'},{'name': 'RichTextareaFieldComponent', 'selector': 'nc-rich-textarea-field'},{'name': 'RoleAssignmentComponent', 'selector': 'nc-role-assignment'},{'name': 'SaveFilterComponent', 'selector': 'nc-save-filter'},{'name': 'SearchClauseComponent', 'selector': 'nc-search-clause'},{'name': 'SearchComponent', 'selector': 'nc-search'},{'name': 'SearchConfigurationInputComponent', 'selector': 'nc-search-configuration-input'},{'name': 'SearchModeComponent', 'selector': 'nc-search-mode'},{'name': 'SearchOperandInputComponent', 'selector': 'nc-search-operand-input'},{'name': 'SearchPredicateComponent', 'selector': 'nc-search-predicate'},{'name': 'SessionIdleComponent', 'selector': 'nc-session-idle'},{'name': 'SideMenuContainerComponent', 'selector': 'nc-side-menu-container'},{'name': 'SimpleTextFieldComponent', 'selector': 'nc-simple-text-field'},{'name': 'SingleTaskComponent', 'selector': 'nc-single-task'},{'name': 'SortModeComponent', 'selector': 'nc-sort-mode'},{'name': 'TabViewComponent', 'selector': 'nc-tab-view'},{'name': 'TaskContentComponent', 'selector': 'nc-task-content'},{'name': 'TaskListComponent', 'selector': 'nc-task-list'},{'name': 'TaskListPaginationComponent', 'selector': 'nc-task-list-pagination'},{'name': 'TaskPanelComponent', 'selector': 'nc-task-panel'},{'name': 'TaskRefDashboardTileComponent', 'selector': 'nc-task-ref-dashboard-tile'},{'name': 'TaskRefFieldComponent', 'selector': 'nc-task-ref-field'},{'name': 'TaskSearchComponent', 'selector': 'nc-task-search'},{'name': 'TextareaFieldComponent', 'selector': 'nc-textarea-field'},{'name': 'TextFieldComponent', 'selector': 'nc-text-field'},{'name': 'ToolbarComponent', 'selector': 'nc-toolbar'},{'name': 'TreeComponent', 'selector': 'nc-tree-component'},{'name': 'TreeTaskContentComponent', 'selector': 'nc-tree-task-content'},{'name': 'UserAssignComponent', 'selector': 'nc-user-assign'},{'name': 'UserAssignItemComponent', 'selector': 'nc-user-assign-item'},{'name': 'UserAssignListComponent', 'selector': 'nc-user-assign-list'},{'name': 'UserCardComponent', 'selector': 'nc-user-card'},{'name': 'UserFieldComponent', 'selector': 'nc-user-field'},{'name': 'UserImpersonateComponent', 'selector': 'nc-user-impersonate'},{'name': 'UserInviteComponent', 'selector': 'nc-user-invite'},{'name': 'UserListFieldComponent', 'selector': 'nc-user-list-field'},{'name': 'WorkflowPanelComponent', 'selector': 'nc-workflow-panel'},{'name': 'WorkflowViewComponent', 'selector': 'nc-workflow-view'}];
+        var COMPONENT_TEMPLATE = '<div><div class="breadcrumbs">    <div *ngIf="showHome">        <span class="breadcrumbs-span" (click)="reset()">{{\'toolbar.menu.home\' | translate}}</span>    </div>    <div *ngFor="let path of breadcrumbsParts;let i = index;let last = last;">        <span class="breadcrumbs-span" (click)="changePath(path, i)">{{path | titlecase}}</span>        <span class="delimeter" *ngIf="!last || (showFilter && !!filterName)">/</span>    </div>    <div *ngIf="showFilter && !!filterName">        <span class="breadcrumbs-span">{{filterName}}</span>    </div></div></div>'
+    var COMPONENTS = [{'name': 'AddChildNodeComponent', 'selector': 'nc-add-child-node'},{'name': 'AdminImpersonateComponent', 'selector': 'nc-admin-impersonate'},{'name': 'AdminImpersonateDialogComponent', 'selector': 'nc-admin-impersonate-dialog'},{'name': 'AdminImpersonateItemComponent', 'selector': 'nc-admin-impersonate-item'},{'name': 'AdminImpersonateListComponent', 'selector': 'nc-admin-impersonate-list'},{'name': 'AdvancedSearchComponent', 'selector': 'nc-advanced-search'},{'name': 'AuthenticationOverlayComponent', 'selector': 'nc-authentication-overlay'},{'name': 'BarchartCardComponent', 'selector': 'nc-barchart-card'},{'name': 'BooleanDefaultFieldComponent', 'selector': 'nc-boolean-default-field'},{'name': 'BooleanFieldComponent', 'selector': 'nc-boolean-field'},{'name': 'BreadcrumbsComponent', 'selector': 'nc-breadcrumbs'},{'name': 'ButtonDefaultFieldComponent', 'selector': 'nc-button-default-field'},{'name': 'ButtonFieldComponent', 'selector': 'nc-button-field'},{'name': 'CaseListComponent', 'selector': 'nc-case-list'},{'name': 'CaseListPaginatorComponent', 'selector': 'nc-case-list-paginator'},{'name': 'CasePanelComponent', 'selector': 'nc-case-panel'},{'name': 'CaseRefDefaultComponent', 'selector': 'nc-case-ref-default'},{'name': 'CaseSearchComponent', 'selector': 'nc-case-search'},{'name': 'ChangePasswordFormComponent', 'selector': 'nc-change-password-form'},{'name': 'CountCardComponent', 'selector': 'nc-count-card'},{'name': 'CreateCaseButtonComponent', 'selector': 'nc-create-case-button'},{'name': 'DashboardBarChartTextFieldComponent', 'selector': 'nc-dashboard-bar-chart-text-field'},{'name': 'DashboardContentComponent', 'selector': 'nc-dashboard-content'},{'name': 'DashboardIframeTextFieldComponent', 'selector': 'nc-dashboard-iframe-text-field'},{'name': 'DashboardLineChartTextFieldComponent', 'selector': 'nc-dashboard-line-chart-text-field'},{'name': 'DashboardPieChartTextFieldComponent', 'selector': 'nc-dashboard-pie-chart-text-field'},{'name': 'DashboardPortalTextFieldComponent', 'selector': 'nc-dashboard-portal-text-field'},{'name': 'DataFieldTemplateComponent', 'selector': 'nc-data-field-template'},{'name': 'DateDefaultFieldComponent', 'selector': 'nc-date-default-field'},{'name': 'DateFieldComponent', 'selector': 'nc-date-field'},{'name': 'DateTimeDefaultFieldComponent', 'selector': 'nc-date-time-default-field'},{'name': 'DateTimeFieldComponent', 'selector': 'nc-date-time-field'},{'name': 'DefaultCaseRefListViewComponent', 'selector': 'nc-default-case-view'},{'name': 'DefaultNoFilterProvidedComponent', 'selector': 'nc-default-no-filter-provided'},{'name': 'DefaultSimpleTaskViewComponent', 'selector': 'nc-default-simple-task-view'},{'name': 'DefaultTabbedCaseViewComponent', 'selector': 'nc-default-tabbed-case-view'},{'name': 'DefaultTabbedTaskViewComponent', 'selector': 'nc-default-tabbed-task-view'},{'name': 'DefaultTabViewComponent', 'selector': 'nc-default-tab-view'},{'name': 'DefaultTaskViewComponent', 'selector': 'nc-default-task-view'},{'name': 'EasymdeWrapperComponent', 'selector': 'nc-easymde-wrapper'},{'name': 'EditModeComponent', 'selector': 'nc-edit-mode'},{'name': 'EmailSubmissionFormComponent', 'selector': 'nc-email-submission-form'},{'name': 'EnumerationAutocompleteDynamicFieldComponent', 'selector': 'nc-enumeration-autocomplete-dynamic-field'},{'name': 'EnumerationAutocompleteSelectFieldComponent', 'selector': 'nc-enumeration-autocomplete-select-field'},{'name': 'EnumerationCaserefFieldComponent', 'selector': 'nc-enumeration-caseref-field'},{'name': 'EnumerationFieldComponent', 'selector': 'nc-enumeration-field'},{'name': 'EnumerationIconFieldComponent', 'selector': 'nc-enumeration-icon-field'},{'name': 'EnumerationListFieldComponent', 'selector': 'nc-enumeration-list-field'},{'name': 'EnumerationSelectFieldComponent', 'selector': 'nc-enumeration-select-field'},{'name': 'EnumerationStepperFieldComponent', 'selector': 'nc-enumeration-stepper-field'},{'name': 'FieldComponentResolverComponent', 'selector': 'nc-field-component-resolver'},{'name': 'FileDefaultFieldComponent', 'selector': 'nc-file-default-field'},{'name': 'FileFieldComponent', 'selector': 'nc-file-field'},{'name': 'FileListDefaultFieldComponent', 'selector': 'nc-file-list-default-field'},{'name': 'FileListFieldComponent', 'selector': 'nc-file-list-field'},{'name': 'FilterDefaultFieldComponent', 'selector': 'nc-filter-default-field'},{'name': 'FilterFieldComponent', 'selector': 'nc-filter-field'},{'name': 'FilterFieldContentComponent', 'selector': 'nc-filter-field-content'},{'name': 'FilterFieldTabbedCaseViewComponent', 'selector': 'nc-filter-field-tabbed-case-view'},{'name': 'FilterFieldTabbedTaskViewComponent', 'selector': 'nc-filter-field-tabbed-task-view'},{'name': 'FilterFieldTabViewComponent', 'selector': 'nc-filter-field-tab-view'},{'name': 'FilterFieldTabViewContentComponent', 'selector': 'nc-filter-field-tab-view-content'},{'name': 'FilterSelectorComponent', 'selector': 'nc-filter-selector'},{'name': 'FilterSelectorDialogComponent', 'selector': 'nc-filter-selector-dialog'},{'name': 'ForgottenPasswordFormComponent', 'selector': 'nc-forgotten-password-form'},{'name': 'FulltextSearchComponent', 'selector': 'nc-fulltext-search'},{'name': 'GroupNavigationComponentResolverComponent', 'selector': 'nc-group-navigation-component-resolver'},{'name': 'HeaderComponent', 'selector': 'nc-header'},{'name': 'HtmlTextareaFieldComponent', 'selector': 'nc-html-textarea-field'},{'name': 'I18nDividerFieldComponent', 'selector': 'nc-i18n-divider-field'},{'name': 'I18nFieldComponent', 'selector': 'nc-i18n-field'},{'name': 'I18nTextFieldComponent', 'selector': 'nc-i18n-text-field'},{'name': 'IframeCardComponent', 'selector': 'nc-iframe-card'},{'name': 'ImmediateFilterTextComponent', 'selector': 'nc-immediate-filter-text'},{'name': 'ImmediateFilterTextContentComponent', 'selector': 'nc-immediate-filter-text-content'},{'name': 'ImpersonateQuickPanelComponent', 'selector': 'nc-impersonate-quick-panel'},{'name': 'ImportNetComponent', 'selector': 'nc-import-net'},{'name': 'ImportNetDialogComponent', 'selector': 'nc-import-net-dialog'},{'name': 'InternalLinkComponent', 'selector': 'nc-internal-link'},{'name': 'LanguageSelectorComponent', 'selector': 'nc-language-selector'},{'name': 'LdapGroupRoleAssignmentComponent', 'selector': 'nc-ldap-group-role-assignment'},{'name': 'LegalNoticeComponent', 'selector': 'nc-legal-notice'},{'name': 'LinearGaugeCardComponent', 'selector': 'nc-linear-gauge-card'},{'name': 'LineChartCardComponent', 'selector': 'nc-line-chart-card'},{'name': 'LoadFilterComponent', 'selector': 'nc-load-filter'},{'name': 'LoadFilterDialogComponent', 'selector': 'nc-load-filter-dialog'},{'name': 'LoadingModeComponent', 'selector': 'nc-loading-mode'},{'name': 'LoginFormComponent', 'selector': 'nc-login-form'},{'name': 'LogoutShortcutComponent', 'selector': 'nc-logout-shortcut'},{'name': 'MultichoiceAutocompleteFieldComponent', 'selector': 'nc-multichoice-autocomplete-field'},{'name': 'MultichoiceCaserefFieldComponent', 'selector': 'nc-multichoice-caseref-field'},{'name': 'MultichoiceFieldComponent', 'selector': 'nc-multichoice-field'},{'name': 'MultichoiceListFieldComponent', 'selector': 'nc-multichoice-list-field'},{'name': 'MultichoiceSelectFieldComponent', 'selector': 'nc-multichoice-select-field'},{'name': 'MultiUserAssignComponent', 'selector': 'nc-multi-user-assign'},{'name': 'MultiUserAssignDialogComponent', 'selector': 'nc-multi-user-assign-dialog'},{'name': 'MultiUserAssignItemComponent', 'selector': 'nc-multi-user-assign-item'},{'name': 'MultiUserAssignListComponent', 'selector': 'nc-multi-user-assign-list'},{'name': 'NavigationDoubleDrawerComponent', 'selector': 'nc-navigation-double-drawer'},{'name': 'NavigationDrawerComponent', 'selector': 'nc-navigation-drawer'},{'name': 'NavigationRailComponent', 'selector': 'nc-navigation-rail'},{'name': 'NavigationTreeComponent', 'selector': 'nc-navigation-tree'},{'name': 'NewCaseComponent', 'selector': 'nc-new-case'},{'name': 'NewCaseDialogComponent', 'selector': 'nc-new-case-dialog'},{'name': 'NumberCurrencyFieldComponent', 'selector': 'nc-number-currency-field'},{'name': 'NumberDecimalFieldComponent', 'selector': 'nc-number-decimal-field'},{'name': 'NumberDefaultFieldComponent', 'selector': 'nc-number-default-field'},{'name': 'NumberFieldComponent', 'selector': 'nc-number-field'},{'name': 'OptionSelectorComponent', 'selector': 'nc-option-selector'},{'name': 'PanelComponent', 'selector': 'nc-app-panel'},{'name': 'PanelItemComponent', 'selector': 'nc-panel-item'},{'name': 'PasswordTextFieldComponent', 'selector': 'nc-password-text-field'},{'name': 'PieChartCardComponent', 'selector': 'nc-pie-chart-card'},{'name': 'PopupSessionIdleComponent', 'selector': 'nc-popup-session-idle'},{'name': 'PortalCardComponent', 'selector': 'nc-portal-card'},{'name': 'PreviewDialogComponent', 'selector': 'nc-preview-dialog'},{'name': 'ProfileComponent', 'selector': 'nc-user-profile'},{'name': 'PublicWorkflowPanelComponent', 'selector': 'nc-public-workflow-panel'},{'name': 'QuickPanelComponent', 'selector': 'nc-quick-panel'},{'name': 'RedirectComponent', 'selector': 'nc-redirect'},{'name': 'RegistrationFormComponent', 'selector': 'nc-registration-form'},{'name': 'RemoveNodeComponent', 'selector': 'nc-remove-node'},{'name': 'RequiredLabelComponent', 'selector': 'nc-required-label'},{'name': 'RichTextareaFieldComponent', 'selector': 'nc-rich-textarea-field'},{'name': 'RoleAssignmentComponent', 'selector': 'nc-role-assignment'},{'name': 'SaveFilterComponent', 'selector': 'nc-save-filter'},{'name': 'SaveFilterDialogComponent', 'selector': 'nc-save-filter-dialog'},{'name': 'SearchClauseComponent', 'selector': 'nc-search-clause'},{'name': 'SearchComponent', 'selector': 'nc-search'},{'name': 'SearchConfigurationInputComponent', 'selector': 'nc-search-configuration-input'},{'name': 'SearchModeComponent', 'selector': 'nc-search-mode'},{'name': 'SearchOperandInputComponent', 'selector': 'nc-search-operand-input'},{'name': 'SearchPredicateComponent', 'selector': 'nc-search-predicate'},{'name': 'SessionIdleComponent', 'selector': 'nc-session-idle'},{'name': 'SideMenuContainerComponent', 'selector': 'nc-side-menu-container'},{'name': 'SignaturePadFieldComponent', 'selector': 'nc-signature-pad-field'},{'name': 'SimpleTextFieldComponent', 'selector': 'nc-simple-text-field'},{'name': 'SingleTaskComponent', 'selector': 'nc-single-task'},{'name': 'SortModeComponent', 'selector': 'nc-sort-mode'},{'name': 'StringCollectionDefaultFieldComponent', 'selector': 'nc-string-collection-default-field'},{'name': 'TabViewComponent', 'selector': 'nc-tab-view'},{'name': 'TaskContentComponent', 'selector': 'nc-task-content'},{'name': 'TaskListComponent', 'selector': 'nc-task-list'},{'name': 'TaskListPaginationComponent', 'selector': 'nc-task-list-pagination'},{'name': 'TaskPanelComponent', 'selector': 'nc-task-panel'},{'name': 'TaskRefDashboardFieldComponent', 'selector': 'nc-task-ref-dashboard-field'},{'name': 'TaskRefDashboardTileComponent', 'selector': 'nc-task-ref-dashboard-tile'},{'name': 'TaskRefFieldComponent', 'selector': 'nc-task-ref-field'},{'name': 'TaskRefListFieldComponent', 'selector': 'nc-task-ref-list-field'},{'name': 'TaskSearchComponent', 'selector': 'nc-task-search'},{'name': 'TaskViewDialogComponent', 'selector': 'nc-task-view-dialog'},{'name': 'TextareaFieldComponent', 'selector': 'nc-textarea-field'},{'name': 'TextFieldComponent', 'selector': 'nc-text-field'},{'name': 'ToolbarComponent', 'selector': 'nc-toolbar'},{'name': 'TreeComponent', 'selector': 'nc-tree-component'},{'name': 'TreeTaskContentComponent', 'selector': 'nc-tree-task-content'},{'name': 'UserAssignComponent', 'selector': 'nc-user-assign'},{'name': 'UserAssignDialogComponent', 'selector': 'nc-user-assign-dialog'},{'name': 'UserAssignItemComponent', 'selector': 'nc-user-assign-item'},{'name': 'UserAssignListComponent', 'selector': 'nc-user-assign-list'},{'name': 'UserCardComponent', 'selector': 'nc-user-card'},{'name': 'UserDefaultFieldComponent', 'selector': 'nc-user-default-field'},{'name': 'UserFieldComponent', 'selector': 'nc-user-field'},{'name': 'UserImpersonateComponent', 'selector': 'nc-user-impersonate'},{'name': 'UserImpersonateDialogComponent', 'selector': 'nc-user-impersonate-dialog'},{'name': 'UserInviteComponent', 'selector': 'nc-user-invite'},{'name': 'UserListDefaultFieldComponent', 'selector': 'nc-user-list-default-field'},{'name': 'UserListFieldComponent', 'selector': 'nc-user-list-field'},{'name': 'WorkflowPanelComponent', 'selector': 'nc-workflow-panel'},{'name': 'WorkflowViewComponent', 'selector': 'nc-workflow-view'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'BreadcrumbsComponent'};
 </script>

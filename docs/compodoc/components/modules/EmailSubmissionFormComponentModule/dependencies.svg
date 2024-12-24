@@ -28,13 +28,13 @@
 <title>cluster_EmailSubmissionFormComponentModule_declarations</title>
 <polygon fill="none" stroke="black" points="211,-78 211,-130 437,-130 437,-78 211,-78"/>
 </g>
-<g id="clust4" class="cluster">
-<title>cluster_EmailSubmissionFormComponentModule_imports</title>
-<polygon fill="none" stroke="black" points="59,-78 59,-130 203,-130 203,-78 59,-78"/>
-</g>
 <g id="clust5" class="cluster">
 <title>cluster_EmailSubmissionFormComponentModule_exports</title>
 <polygon fill="none" stroke="black" points="133,-208 133,-260 363,-260 363,-208 133,-208"/>
+</g>
+<g id="clust4" class="cluster">
+<title>cluster_EmailSubmissionFormComponentModule_imports</title>
+<polygon fill="none" stroke="black" points="59,-78 59,-130 203,-130 203,-78 59,-78"/>
 </g>
 <!-- EmailSubmissionFormComponent -->
 <g id="node1" class="node">
