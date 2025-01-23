@@ -171,12 +171,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(_router: <a href="https://angular.io/api/router/Router" target="_blank">Router</a>, _activatedRoute: <a href="https://angular.io/api/router/ActivatedRoute" target="_blank">ActivatedRoute</a>, _breakpoint: BreakpointObserver, _languageService: LanguageService, _userService: UserService, _accessService: AccessService, _log: LoggerService, _config: ConfigurationService, _uriService: UriService, _impersonationUserSelect: ImpersonationUserSelectService, _impersonation: ImpersonationService, _dynamicRouteProviderService: DynamicNavigationRouteProviderService)</code>
+<code>constructor(_router: <a href="https://angular.io/api/router/Router" target="_blank">Router</a>, _activatedRoute: <a href="https://angular.io/api/router/ActivatedRoute" target="_blank">ActivatedRoute</a>, _breakpoint: BreakpointObserver, _languageService: LanguageService, _translateService: TranslateService, _userService: UserService, _accessService: AccessService, _log: LoggerService, _config: ConfigurationService, _uriService: UriService, _caseResourceService: CaseResourceService, _impersonationUserSelect: ImpersonationUserSelectService, _impersonation: ImpersonationService, _dynamicRouteProviderService: DynamicNavigationRouteProviderService)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">projects/netgrif-components/src/lib/navigation/navigation-double-drawer/navigation-double-drawer.component.ts:51</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">projects/netgrif-components/src/lib/navigation/navigation-double-drawer/navigation-double-drawer.component.ts:56</a></div>
                             </td>
                         </tr>
 
@@ -242,6 +242,18 @@
                                                     
                                                 </tr>
                                                 <tr>
+                                                        <td>_translateService</td>
+                                                  
+                                                        <td>
+                                                                    <code>TranslateService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
                                                         <td>_userService</td>
                                                   
                                                         <td>
@@ -294,6 +306,18 @@
                                                   
                                                         <td>
                                                                     <code>UriService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_caseResourceService</td>
+                                                  
+                                                        <td>
+                                                                    <code>CaseResourceService</code>
                                                         </td>
                                                   
                                                     <td>
@@ -377,8 +401,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="69"
-                            class="link-to-prism">projects/netgrif-components/src/lib/navigation/navigation-double-drawer/navigation-double-drawer.component.ts:69</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="76"
+                            class="link-to-prism">projects/netgrif-components/src/lib/navigation/navigation-double-drawer/navigation-double-drawer.component.ts:76</a></div>
                 </td>
             </tr>
 
@@ -459,7 +483,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">projects/netgrif-components/src/lib/navigation/navigation-double-drawer/navigation-double-drawer.component.ts:48</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">projects/netgrif-components/src/lib/navigation/navigation-double-drawer/navigation-double-drawer.component.ts:53</a></div>
                         </td>
                     </tr>
 
@@ -482,9 +506,14 @@ import {
     LoggerService,
     UserService,
     AbstractNavigationDoubleDrawerComponent,
-    DynamicNavigationRouteProviderService, AccessService, ImpersonationUserSelectService, ImpersonationService
+    DynamicNavigationRouteProviderService,
+    AccessService,
+    ImpersonationUserSelectService,
+    ImpersonationService,
+    CaseResourceService
 } from &#x27;@netgrif/components-core&#x27;;
 import {animate, state, style, transition, trigger} from &quot;@angular/animations&quot;;
+import {TranslateService} from &quot;@ngx-translate/core&quot;;
 
 @Component({
     selector: &#x27;nc-navigation-double-drawer&#x27;,
@@ -528,16 +557,18 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
                 _activatedRoute: ActivatedRoute,
                 _breakpoint: BreakpointObserver,
                 _languageService: LanguageService,
+                _translateService: TranslateService,
                 _userService: UserService,
                 _accessService: AccessService,
                 _log: LoggerService,
                 _config: ConfigurationService,
                 _uriService: UriService,
+                _caseResourceService: CaseResourceService,
                 _impersonationUserSelect: ImpersonationUserSelectService,
                 _impersonation: ImpersonationService,
                 _dynamicRouteProviderService: DynamicNavigationRouteProviderService) {
-        super(_router, _activatedRoute, _breakpoint, _languageService, _userService, _accessService, _log, _config, _uriService,
-            _impersonationUserSelect, _impersonation, _dynamicRouteProviderService)
+        super(_router, _activatedRoute, _breakpoint, _languageService, _translateService, _userService, _accessService,
+            _log, _config, _uriService, _caseResourceService, _impersonationUserSelect, _impersonation, _dynamicRouteProviderService)
     }
 
     public toggleSection(section: string): void {
@@ -549,11 +580,13 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
     </div>
 
     <div class="tab-pane fade " id="c-templateData">
-        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;drawer-control rail-color&quot; fxLayoutAlign&#x3D;&quot;start center&quot; fxHide.lt-md&gt;
-    &lt;button mat-icon-button (click)&#x3D;&quot;toggleMenu()&quot; class&#x3D;&quot;mat-button mat-typography menu-font-color&quot;&gt;
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;drawer-control rail-color height-60&quot; [ngClass]&#x3D;&quot;{&#x27;index-menu&#x27;: !configLeftMenu.opened}&quot;
+     fxLayoutAlign&#x3D;&quot;center center&quot; fxHide.lt-md&gt;
+    &lt;button mat-icon-button (click)&#x3D;&quot;toggleMenu()&quot; class&#x3D;&quot;menu-button mat-typography menu-font-color&quot;&gt;
         &lt;mat-icon&gt;menu&lt;/mat-icon&gt;
     &lt;/button&gt;
 &lt;/div&gt;
+
 &lt;mat-toolbar fxHide.gt-sm class&#x3D;&quot;toolbar&quot;&gt;
     &lt;mat-toolbar-row fxLayout&#x3D;&quot;row&quot; fxLayoutAlign&#x3D;&quot;space-between stretch&quot;&gt;
         &lt;div fxFlex fxLayoutAlign&#x3D;&quot;start center&quot;&gt;
@@ -561,7 +594,7 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
                 &lt;mat-icon&gt;menu&lt;/mat-icon&gt;
             &lt;/button&gt;
         &lt;/div&gt;
-        &lt;div class&#x3D;&quot;logo-tool&quot; fxLayoutAlign&#x3D;&quot;center center&quot; fxFlex&gt;
+        &lt;div fxLayoutAlign&#x3D;&quot;center center&quot; fxFlex&gt;
             &lt;img #logo [alt]&#x3D;&quot;imageAlt&quot; [src]&#x3D;&quot;image&quot; class&#x3D;&quot;logoimg-tool&quot;
                  [routerLink]&#x3D;&quot;imageRouterLink !&#x3D;&#x3D; undefined ? imageRouterLink : []&quot;&gt;
         &lt;/div&gt;
@@ -569,7 +602,7 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
     &lt;/mat-toolbar-row&gt;
 &lt;/mat-toolbar&gt;
 &lt;mat-spinner *ngIf&#x3D;&quot;!logo&quot;&gt;&lt;/mat-spinner&gt;
-&lt;mat-sidenav-container class&#x3D;&quot;rail-container&quot;&gt;
+&lt;mat-sidenav-container class&#x3D;&quot;rail-container deny-select&quot;&gt;
     &lt;mat-sidenav mode&#x3D;&quot;side&quot; [(opened)]&#x3D;&quot;configLeftMenu.opened&quot; position&#x3D;&quot;start&quot;
                  [disableClose]&#x3D;&quot;configLeftMenu.disableClose&quot;
                  class&#x3D;&quot;rail-content&quot;&gt;
@@ -578,28 +611,30 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
 
             &lt;div *ngTemplateOutlet&#x3D;&quot;portalLeftMenu || defaultLeftSide&quot;&gt;&lt;/div&gt;
 
+            &lt;div class&#x3D;&quot;margin-top-x2&quot;&gt;&lt;/div&gt;
+
             &lt;div fxFlex&gt;&lt;/div&gt;
 
             &lt;mat-menu #userRailMenu&#x3D;&quot;matMenu&quot;&gt;
                 &lt;div mat-menu-item role&#x3D;&quot;menuitem&quot; class&#x3D;&quot;large-menu-item&quot; fxLayout&#x3D;&quot;row&quot; fxFlexAlign&#x3D;&quot;center center&quot;
-                     [routerLink]&#x3D;&quot;profileRouterLink&quot; routerLinkActive&#x3D;&quot;active&quot;&gt;
+                     [routerLink]&#x3D;&quot;profileRouterLink&quot; routerLinkActive&#x3D;&quot;active-tree-node&quot;&gt;
                     &lt;mat-icon class&#x3D;&quot;margin-auto&quot; fxFlex&gt;face&lt;/mat-icon&gt;
                     &lt;div class&#x3D;&quot;large-menu-item&quot; fxLayout&#x3D;&quot;column&quot; fxFlexAlign&#x3D;&quot;start center&quot; fxFlex&gt;
                         &lt;span *ngIf&#x3D;&quot;!user.isImpersonating()&quot; class&#x3D;&quot;large-menu-item-text&quot;
-                              fxFlex&#x3D;&quot;50&quot;&gt;{{user.fullName}}&lt;/span&gt;
-                        &lt;span *ngIf&#x3D;&quot;user.isImpersonating()&quot; class&#x3D;&quot;large-menu-item-text&quot; fxFlex&#x3D;&quot;50&quot;&gt;{{user.fullName}}
-                            ({{user.getSelfOrImpersonated().fullName}})&lt;/span&gt;
-                        &lt;span class&#x3D;&quot;large-menu-item-text&quot; style&#x3D;&quot;font-size: 12px;&quot; fxFlex&#x3D;&quot;50&quot;&gt;{{user.email}}&lt;/span&gt;
+                              fxFlex&#x3D;&quot;50&quot;&gt;{{ user.fullName }}&lt;/span&gt;
+                        &lt;span *ngIf&#x3D;&quot;user.isImpersonating()&quot; class&#x3D;&quot;large-menu-item-text&quot;
+                              fxFlex&#x3D;&quot;50&quot;&gt;{{ user.fullName }} ({{ user.getSelfOrImpersonated().fullName }})&lt;/span&gt;
+                        &lt;span class&#x3D;&quot;large-menu-item-text&quot; style&#x3D;&quot;font-size: 12px;&quot; fxFlex&#x3D;&quot;50&quot;&gt;{{ user.email }}&lt;/span&gt;
                     &lt;/div&gt;
                 &lt;/div&gt;
                 &lt;button *ngIf&#x3D;&quot;includeImpersonation &amp;&amp; !user.isImpersonating()&quot; mat-menu-item (click)&#x3D;&quot;impersonate()&quot;&gt;
                     &lt;mat-icon&gt;supervisor_account&lt;/mat-icon&gt;
-                    &lt;span&gt;{{&#x27;side-menu.impersonation.submit&#x27; | translate}}&lt;/span&gt;
+                    &lt;span&gt;{{ &#x27;side-menu.impersonation.submit&#x27; | translate }}&lt;/span&gt;
                 &lt;/button&gt;
                 &lt;button *ngIf&#x3D;&quot;includeImpersonation &amp;&amp; user.isImpersonating()&quot; mat-menu-item
                         (click)&#x3D;&quot;stopImpersonating()&quot;&gt;
                     &lt;mat-icon&gt;clear&lt;/mat-icon&gt;
-                    &lt;span&gt;{{&#x27;side-menu.impersonation.cease&#x27; | translate }}&lt;/span&gt;
+                    &lt;span&gt;{{ &#x27;side-menu.impersonation.cease&#x27; | translate }}&lt;/span&gt;
                 &lt;/button&gt;
                 &lt;button mat-menu-item (click)&#x3D;&quot;logout()&quot;&gt;
                     &lt;mat-icon&gt;exit_to_app&lt;/mat-icon&gt;
@@ -607,21 +642,23 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
                 &lt;/button&gt;
             &lt;/mat-menu&gt;
             &lt;button *ngIf&#x3D;&quot;includeUser&quot; mat-icon-button [matMenuTriggerFor]&#x3D;&quot;userRailMenu&quot;
-                    class&#x3D;&quot;mat-button mat-typography menu-font-color&quot;
+                    class&#x3D;&quot;menu-button mat-typography menu-font-color&quot;
                     [matTooltip]&#x3D;&quot;user.fullName&quot;
                     [matTooltipPosition]&#x3D;&quot;&#x27;right&#x27;&quot;&gt;
                 &lt;mat-icon&gt;account_circle&lt;/mat-icon&gt;
             &lt;/button&gt;
 
-            &lt;div *ngIf&#x3D;&quot;includeLanguage&quot; fxLayout&#x3D;&quot;row&quot; class&#x3D;&quot;icon-container&quot; fxLayoutAlign&#x3D;&quot;center center&quot;&gt;
-                &lt;nc-language-selector fxLayout&#x3D;&quot;row&quot; [language]&#x3D;&quot;getLang()&quot;&gt;&lt;/nc-language-selector&gt;
+            &lt;div *ngIf&#x3D;&quot;includeLanguage&quot; fxLayout&#x3D;&quot;row&quot; class&#x3D;&quot;icon-container&quot;&gt;
+                &lt;button mat-icon-button class&#x3D;&quot;menu-button mat-typography menu-font-color&quot;&gt;
+                    &lt;nc-language-selector fxLayout&#x3D;&quot;row&quot;&gt;&lt;/nc-language-selector&gt;
+                &lt;/button&gt;
             &lt;/div&gt;
 
             &lt;mat-menu #railMenu&#x3D;&quot;matMenu&quot;&gt;
-                &lt;button *ngFor&#x3D;&#x27;let item of moreMenuItems; trackBy: viewsTrackBy&#x27; mat-menu-item
-                        [routerLink]&#x3D;&#x27;item.routing.path&#x27; routerLinkActive&#x3D;&quot;active&quot;&gt;
-                    &lt;mat-icon&gt;{{item.navigation.icon}}&lt;/mat-icon&gt;
-                    &lt;span&gt;{{item.navigation.title}}&lt;/span&gt;
+                &lt;button *ngFor&#x3D;&#x27;let item of hiddenCustomItems; trackBy: itemsTrackBy&#x27; mat-menu-item
+                        [routerLink]&#x3D;&#x27;item.routing.path&#x27; routerLinkActive&#x3D;&quot;active-tree-node&quot;&gt;
+                    &lt;mat-icon&gt;{{ item.navigation.icon }}&lt;/mat-icon&gt;
+                    &lt;span&gt;{{ item.navigation.title }}&lt;/span&gt;
                 &lt;/button&gt;
             &lt;/mat-menu&gt;
             &lt;!--            &lt;div fxLayout&#x3D;&quot;row&quot; class&#x3D;&quot;margin-bottom-x2 icon-container&quot; matTooltip&#x3D;&quot;Otvoriť menu&quot;--&gt;
@@ -631,22 +668,23 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
             &lt;!--                    &lt;mat-icon class&#x3D;&quot;icon-large sidemenu-icon&quot;&gt;more_vert&lt;/mat-icon&gt;--&gt;
             &lt;!--                &lt;/button&gt;--&gt;
             &lt;!--            &lt;/div&gt;--&gt;
-            &lt;button *ngIf&#x3D;&quot;includeMoreMenu&quot; mat-icon-button [matMenuTriggerFor]&#x3D;&quot;railMenu&quot;
-                    class&#x3D;&quot;mat-button mat-typography menu-font-color margin-bottom-x2&quot;
+            &lt;button mat-icon-button *ngIf&#x3D;&quot;hiddenCustomItems &amp;&amp; hiddenCustomItems.length &gt; 0&quot;
+                    [matMenuTriggerFor]&#x3D;&quot;railMenu&quot;
+                    class&#x3D;&quot;menu-button mat-typography menu-font-color&quot;
                     [matTooltip]&#x3D;&quot;&#x27;toolbar.menu.open&#x27; | translate&quot;
                     matTooltipPosition&#x3D;&quot;right&quot;&gt;
                 &lt;mat-icon&gt;more_vert&lt;/mat-icon&gt;
             &lt;/button&gt;
 
+            &lt;div class&#x3D;&quot;margin-top-x2&quot;&gt;&lt;/div&gt;
         &lt;/div&gt;
-
     &lt;/mat-sidenav&gt;
 
-    &lt;mat-sidenav-content&gt;
-        &lt;mat-sidenav-container class&#x3D;&quot;drawer-container&quot;&gt;
+    &lt;mat-sidenav-content class&#x3D;&quot;first-content index-menu&quot;&gt;
+        &lt;mat-sidenav-container class&#x3D;&quot;drawer-container&quot; (backdropClick)&#x3D;&quot;toggleLeftMenu()&quot;&gt;
             &lt;mat-sidenav [mode]&#x3D;&quot;configRightMenu.mode&quot; [(opened)]&#x3D;&quot;configRightMenu.opened&quot; position&#x3D;&quot;start&quot;
                          [disableClose]&#x3D;&quot;configRightMenu.disableClose&quot;
-                         class&#x3D;&quot;drawer-content mat-elevation-z8&quot;
+                         class&#x3D;&quot;drawer-content&quot;
                          mwlResizable
                          [style.width.px]&#x3D;&quot;configRightMenu.width&quot;
                          [resizeCursorPrecision]&#x3D;&quot;20&quot;
@@ -657,7 +695,7 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
 
             &lt;/mat-sidenav&gt;
 
-            &lt;mat-sidenav-content&gt;
+            &lt;mat-sidenav-content class&#x3D;&quot;content-color&quot;&gt;
                 &lt;ng-content&gt;&lt;/ng-content&gt;
             &lt;/mat-sidenav-content&gt;
         &lt;/mat-sidenav-container&gt;
@@ -665,22 +703,22 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
 &lt;/mat-sidenav-container&gt;
 
 &lt;ng-template #defaultLeftSide&gt;
-    &lt;!--    &lt;div fxLayout&#x3D;&quot;row&quot; class&#x3D;&quot;icon-container&quot; fxLayoutAlign&#x3D;&quot;center center&quot;--&gt;
-    &lt;!--         (click)&#x3D;&#x27;onHomeClick()&#x27;&gt;--&gt;
-    &lt;!--        &lt;mat-icon class&#x3D;&quot;icon-large&quot; [matTooltip]&#x3D;&quot;&#x27;Home&#x27;&quot; [matTooltipPosition]&#x3D;&quot;&#x27;right&#x27;&quot;&gt;home&lt;/mat-icon&gt;--&gt;
-    &lt;!--    &lt;/div&gt;--&gt;
-    &lt;button mat-icon-button (click)&#x3D;&quot;onHomeClick()&quot; class&#x3D;&quot;mat-button mat-typography menu-font-color&quot;
+
+    &lt;div class&#x3D;&quot;height-60 border-bottom&quot; fxLayoutAlign&#x3D;&quot;center center&quot; fxHide.lt-md&gt;
+        &lt;button mat-icon-button (click)&#x3D;&quot;toggleRightMenu()&quot; class&#x3D;&quot;menu-button mat-typography menu-font-color&quot;&gt;
+            &lt;mat-icon&gt;menu&lt;/mat-icon&gt;
+        &lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;button mat-icon-button (click)&#x3D;&quot;onHomeClick()&quot;
+            class&#x3D;&quot;menu-button mat-typography menu-font-color margin-top-default&quot;
             [matTooltip]&#x3D;&quot;&#x27;toolbar.menu.home&#x27; | translate&quot;
             matTooltipPosition&#x3D;&quot;right&quot;&gt;
         &lt;mat-icon&gt;home&lt;/mat-icon&gt;
     &lt;/button&gt;
 
-    &lt;!--    &lt;div *ngIf&#x3D;&#x27;!isOnZeroLevel()&#x27; fxLayout&#x3D;&quot;row&quot; class&#x3D;&quot;icon-container&quot; fxLayoutAlign&#x3D;&quot;center center&quot;--&gt;
-    &lt;!--         (click)&#x3D;&#x27;onBackClick()&#x27;&gt;--&gt;
-    &lt;!--        &lt;mat-icon class&#x3D;&quot;icon-large&quot; [matTooltip]&#x3D;&quot;&#x27;Back&#x27;&quot; [matTooltipPosition]&#x3D;&quot;&#x27;right&#x27;&quot;&gt;arrow_back&lt;/mat-icon&gt;--&gt;
-    &lt;!--    &lt;/div&gt;--&gt;
     &lt;button *ngIf&#x3D;&#x27;!isOnZeroLevel() &amp;&amp; (canGoBackLoading$ | async) &#x3D;&#x3D;&#x3D; false&#x27; mat-icon-button (click)&#x3D;&quot;onBackClick()&quot;
-            class&#x3D;&quot;mat-button mat-typography menu-font-color&quot; [matTooltip]&#x3D;&quot;&#x27;toolbar.menu.back&#x27; | translate&quot;
+            class&#x3D;&quot;menu-button mat-typography menu-font-color&quot; [matTooltip]&#x3D;&quot;&#x27;toolbar.menu.back&#x27; | translate&quot;
             matTooltipPosition&#x3D;&quot;right&quot;&gt;
         &lt;mat-icon&gt;arrow_back&lt;/mat-icon&gt;
     &lt;/button&gt;
@@ -689,16 +727,14 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
     &lt;/div&gt;
 
     &lt;div class&#x3D;&quot;margin-top-x2&quot;&gt;&lt;/div&gt;
-    &lt;!--    &lt;div *ngFor&#x3D;&#x27;let node of leftNodes; trackBy: uriNodeTrackBy&#x27; fxLayout&#x3D;&quot;row&quot; class&#x3D;&quot;icon-container&quot;--&gt;
-    &lt;!--         fxLayoutAlign&#x3D;&quot;center center&quot;--&gt;
-    &lt;!--         (click)&#x3D;&#x27;onLeftSideClick(node)&#x27;&gt;--&gt;
-    &lt;!--        &lt;mat-icon class&#x3D;&quot;icon-large&quot; [matTooltip]&#x3D;&quot;node.name&quot;--&gt;
-    &lt;!--                  [matTooltipPosition]&#x3D;&quot;&#x27;right&#x27;&quot;&gt;{{node.id &#x3D;&#x3D;&#x3D; currentNode.id ? &#x27;folder_open&#x27; : &#x27;folder&#x27;}}&lt;/mat-icon&gt;--&gt;
-    &lt;!--    &lt;/div&gt;--&gt;
-    &lt;button *ngFor&#x3D;&#x27;let node of leftNodes; trackBy: uriNodeTrackBy&#x27; mat-icon-button (click)&#x3D;&quot;onNodeClick(node)&quot;
-            class&#x3D;&quot;mat-button mat-typography menu-font-color&quot; [matTooltip]&#x3D;&quot;node.name&quot; [matTooltipPosition]&#x3D;&quot;&#x27;right&#x27;&quot;
-            [ngClass]&#x3D;&quot;node.id &#x3D;&#x3D;&#x3D; currentNode.id ? &#x27;rail-selected-color&#x27; : &#x27;&#x27;&quot;&gt;
-        &lt;mat-icon&gt;{{node.id &#x3D;&#x3D;&#x3D; currentNode.id ? openedFolderIcon : folderIcon}}&lt;/mat-icon&gt;
+
+    &lt;button *ngFor&#x3D;&#x27;let folder of leftItems; trackBy: itemsTrackBy&#x27; mat-icon-button (click)&#x3D;&quot;onItemClick(folder)&quot;
+            class&#x3D;&quot;menu-button mat-typography menu-font-color&quot; [matTooltip]&#x3D;&quot;folder.navigation.title&quot;
+            [matTooltipPosition]&#x3D;&quot;&#x27;right&#x27;&quot;
+            [ngClass]&#x3D;&quot;isItemAndNodeEqual(folder, currentNode) ? &#x27;rail-selected-color&#x27; : &#x27;menu-font-color&#x27;&quot;
+            [routerLink]&#x3D;&#x27;folder.routing.path&#x27;
+            routerLinkActive&#x3D;&quot;active&quot;&gt;
+        &lt;mat-icon&gt;{{ folder.navigation.icon }}&lt;/mat-icon&gt;
     &lt;/button&gt;
 
     &lt;div *ngIf&#x3D;&quot;(leftLoading$ | async)&quot; fxLayout&#x3D;&quot;column&quot; fxLayoutAlign&#x3D;&quot;center center&quot; class&#x3D;&quot;margin-top-default&quot;&gt;
@@ -707,47 +743,29 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
 &lt;/ng-template&gt;
 
 &lt;ng-template #defaultRightSide&gt;
-    &lt;div class&#x3D;&quot;logo&quot; fxLayoutAlign&#x3D;&quot;center center&quot; fxHide.lt-md&gt;
+    &lt;div class&#x3D;&quot;logo border-bottom&quot; fxLayoutAlign&#x3D;&quot;center center&quot; fxHide.lt-md&gt;
         &lt;img *ngIf&#x3D;&quot;image !&#x3D;&#x3D; undefined&quot; [alt]&#x3D;&quot;imageAlt&quot; [src]&#x3D;&quot;image&quot; class&#x3D;&quot;logoimg&quot;
              [routerLink]&#x3D;&quot;imageRouterLink !&#x3D;&#x3D; undefined ? imageRouterLink : []&quot;&gt;
     &lt;/div&gt;
-    &lt;div *ngIf&#x3D;&quot;(rightLoading$ | async) &#x3D;&#x3D;&#x3D; false&quot; ngClass.gt-sm&#x3D;&quot;padding-top-8&quot;&gt;
-        &lt;div class&#x3D;&quot;margin-auto cursor-pointer&quot; *ngIf&#x3D;&#x27;rightNodes | isNonEmpty&#x27; (click)&#x3D;&quot;toggleSection(&#x27;folders&#x27;)&quot;
-             fxLayout&#x3D;&quot;row&quot; fxFlexAlign&#x3D;&quot;start center&quot;&gt;
-            &lt;span class&#x3D;&quot;headline-text mat-typography&quot;&gt;{{foldersCategoryName | translate}}&lt;/span&gt;
-            &lt;div fxFlex&gt;&lt;/div&gt;
-            &lt;span *ngIf&#x3D;&quot;isSectionOpen&quot; [@indicatorRotate]&#x3D;&quot;isSectionOpen.folders ? &#x27;expanded&#x27; : &#x27;collapsed&#x27;&quot;
-                  class&#x3D;&quot;expansion-indicator mat-typography&quot;&gt;&lt;/span&gt;
+    &lt;div *ngIf&#x3D;&quot;(rightLoading$ | async) &#x3D;&#x3D;&#x3D; false&quot;&gt;
+        &lt;div fxLayout&#x3D;&quot;column&quot; fxLayoutAlign&#x3D;&quot;end end&quot; class&#x3D;&quot;order-icon-wrapper&quot;&gt;
+            &lt;button mat-icon-button fxLayout&#x3D;&quot;column&quot; fxLayoutAlign&#x3D;&quot;center center&quot;
+                    class&#x3D;&quot;mat-button mat-typography menu-font-color order-icon&quot; (click)&#x3D;&quot;switchOrder()&quot;
+                    [matTooltip]&#x3D;&quot;isAscending() ? (&#x27;dynamicNavigation.ascending&#x27; | translate) : (&#x27;dynamicNavigation.descending&#x27; | translate)&quot;&gt;
+                &lt;mat-icon&gt;{{ isAscending() ? &quot;expand_more&quot; : &quot;expand_less&quot; }}&lt;/mat-icon&gt;
+            &lt;/button&gt;
         &lt;/div&gt;
-        &lt;div [@sectionExpansion]&#x3D;&quot;isSectionOpen.folders ? &#x27;expanded&#x27; : &#x27;collapsed&#x27;&quot; class&#x3D;&quot;box-container&quot;&gt;
-            &lt;div *ngFor&#x3D;&#x27;let node of rightNodes; trackBy: uriNodeTrackBy&#x27; (click)&#x3D;&quot;onNodeClick(node)&quot;
-                 class&#x3D;&quot;tree-node mat-typography mat-body-2&quot; fxLayoutAlign&#x3D;&quot;start center&quot; routerLinkActive&#x3D;&quot;active&quot;&gt;
-                &lt;mat-icon class&#x3D;&quot;tree-node-icon&quot;&gt;folder&lt;/mat-icon&gt;
-                &lt;span&gt;{{node.name}}&lt;/span&gt;
-                &lt;span class&#x3D;&quot;menu-item-focus-overlay&quot;&gt;&lt;/span&gt;
-            &lt;/div&gt;
+        &lt;div *ngFor&#x3D;&#x27;let item of rightItems; trackBy: itemsTrackBy&#x27; (click)&#x3D;&quot;onItemClick(item)&quot;
+             class&#x3D;&quot;tree-node mat-typography mat-body-2&quot; fxLayoutAlign&#x3D;&quot;start center&quot; [routerLink]&#x3D;&#x27;item.routing.path&#x27;
+             routerLinkActive&#x3D;&quot;active-tree-node&quot;&gt;
+            &lt;mat-icon class&#x3D;&quot;tree-node-icon&quot;&gt;{{ item.navigation.icon }}&lt;/mat-icon&gt;
+            &lt;span&gt;{{ item.navigation.title }}&lt;/span&gt;
+            &lt;span class&#x3D;&quot;menu-item-focus-overlay&quot;&gt;&lt;/span&gt;
         &lt;/div&gt;
-
-        &lt;div class&#x3D;&quot;margin-auto&quot; *ngIf&#x3D;&#x27;views | isNonEmpty&#x27; fxLayout&#x3D;&quot;column&quot; fxFlexAlign&#x3D;&quot;center start&quot;&gt;
-            &lt;div *ngIf&#x3D;&quot;rightNodes | isNonEmpty&quot; class&#x3D;&quot;line margin-bottom-x2&quot;&gt;
-                &lt;mat-divider&gt;&lt;/mat-divider&gt;
-            &lt;/div&gt;
-            &lt;div class&#x3D;&quot;cursor-pointer&quot; (click)&#x3D;&quot;toggleSection(&#x27;views&#x27;)&quot; fxLayout&#x3D;&quot;row&quot; fxFlexAlign&#x3D;&quot;start center&quot;
-                 fxFlex&gt;
-                &lt;span class&#x3D;&quot;headline-text mat-typography&quot;&gt;{{viewsCategoryName | translate}}&lt;/span&gt;
-                &lt;div fxFlex&gt;&lt;/div&gt;
-                &lt;span *ngIf&#x3D;&quot;isSectionOpen&quot; [@indicatorRotate]&#x3D;&quot;isSectionOpen.views ? &#x27;expanded&#x27; : &#x27;collapsed&#x27;&quot;
-                      class&#x3D;&quot;expansion-indicator mat-typography&quot;&gt;&lt;/span&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-        &lt;div [@sectionExpansion]&#x3D;&quot;isSectionOpen.views ? &#x27;expanded&#x27; : &#x27;collapsed&#x27;&quot; class&#x3D;&quot;box-container&quot;&gt;
-            &lt;div *ngFor&#x3D;&#x27;let view of views; trackBy: viewsTrackBy&#x27; class&#x3D;&quot;tree-node mat-typography&quot;
-                 fxLayoutAlign&#x3D;&quot;start center&quot; [routerLink]&#x3D;&#x27;view.routing.path&#x27; routerLinkActive&#x3D;&quot;active&quot;
-                 (click)&#x3D;&quot;onViewClick(view)&quot;&gt;
-                &lt;mat-icon class&#x3D;&quot;tree-node-icon&quot;&gt;{{view.navigation.icon}}&lt;/mat-icon&gt;
-                &lt;span&gt;{{view.navigation.title}}&lt;/span&gt;
-                &lt;span class&#x3D;&quot;menu-item-focus-overlay&quot;&gt;&lt;/span&gt;
-            &lt;/div&gt;
+        &lt;div *ngIf&#x3D;&quot;moreItems.length &gt; 0&quot;&gt;
+            &lt;button mat-button color&#x3D;&quot;primary&quot;
+                    (click)&#x3D;&quot;loadMoreItems()&quot;&gt;{{ &#x27;dynamicNavigation.loadMoreItems&#x27; | translate }}
+            &lt;/button&gt;
         &lt;/div&gt;
     &lt;/div&gt;
     &lt;div *ngIf&#x3D;&quot;(rightLoading$ | async)&quot; fxLayout&#x3D;&quot;column&quot; fxLayoutAlign&#x3D;&quot;center center&quot; class&#x3D;&quot;margin-top-default&quot;&gt;
@@ -766,9 +784,8 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
 }
 
 .rail-content {
-    width: 60px;
-    min-width: 60px;
-    top: 48px;
+    width: 52px;
+    min-width: 52px;
     border-right: none !important;
 }
 
@@ -776,25 +793,40 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
     height: 100%;
 }
 
-.mat-button {
-    margin-left: 10px;
-    margin-right: 10px;
+.menu-button {
+    margin: 0 auto;
+    border-radius: 8px;
 }
 
 .drawer-content {
     width: 300px;
     min-width: 300px;
+    box-shadow: 0px 2px 4px rgba(13, 45, 60, 0.16), 0px 4px 8px rgba(84, 110, 122, 0.16);
+}
+
+.height-60 {
+    height: 60px;
 }
 
 .drawer-control {
-    width: 60px !important;
-    height: 48px;
     position: absolute;
+    box-shadow: 0px 2px 4px rgba(13, 45, 60, 0.16), 0px 4px 8px rgba(84, 110, 122, 0.16);
+}
+
+.index-menu {
     z-index: 2;
 }
 
+.first-content {
+    box-shadow: 0px 2px 4px rgba(13, 45, 60, 0.16), 0px 4px 8px rgba(84, 110, 122, 0.16);
+}
+
+.border-bottom {
+    border-bottom: 1px solid #E2E8F0;
+}
+
 .logo {
-    height: 48px;
+    height: 60px;
 }
 
 .logo-closed {
@@ -804,7 +836,7 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
 .logoimg {
     margin-left: auto;
     margin-right: auto;
-    height: 46px;
+    height: 35px;
     outline: none !important;
     cursor: pointer;
 }
@@ -852,11 +884,15 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
 .tree-node {
     outline: none !important;
     cursor: pointer;
-    padding: 8px;
+    padding: 10px 8px;
+    margin: 0 8px;
     color: rgba(0, 0, 0, 0.7);
-    line-height: 24px;
     position: relative;
-    border-radius: 18px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.1px;
 
     mat-icon.tree-node-icon {
         height: 24px;
@@ -903,31 +939,27 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
     margin-top: 16px;
 }
 
-.logo-tool {
-    height: 48px;
-}
-
 .logoimg-tool {
-    height: 46px;
+    height: 33px;
     outline: none !important;
     cursor: pointer;
     background: #fafafa;
 }
 
 .toolbar {
-    min-height: 48px !important;
-    height: 48px;
-    border-bottom: 1px solid #ddd;
+    min-height: 50px !important;
+    height: 50px;
+    border-bottom: 1px solid #E2E8F0;
 }
 
 @media screen and (max-width: 959.99px) {
     .rail-container {
-        height: calc(100% - 49px);
+        height: calc(100% - 50px);
     }
 
     .rail-content {
-        width: 60px;
-        min-width: 60px;
+        width: 52px;
+        min-width: 52px;
         top: 0px;
         border-right: none !important;
     }
@@ -957,10 +989,15 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
 }
 
 .headline-text {
-    color: rgba(0, 0, 0, 0.7);
-    padding-left: 8px;
-    padding-right: 10px;
-    margin-bottom: 8px;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0.4px;
+    padding-top: 4px;
+}
+
+.headline-padding {
+    padding: 0 8px;
 }
 
 .large-menu-item {
@@ -982,6 +1019,10 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
     overflow: hidden;
 }
 
+.content-color {
+    background-color: #F8FAFC;
+}
+
 .expansion-indicator {
     color: rgba(0, 0, 0, 0.5);
     margin-right: 10px;
@@ -995,6 +1036,24 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
     padding: 3px;
     vertical-align: middle;
     transform: rotate(45deg);
+}
+
+.order-icon {
+    transform: scale(0.7);
+}
+
+.order-text {
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.order-icon-wrapper {
+    margin-bottom: 0;
+}
+
+.deny-select {
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 </code></pre>
     </div>
@@ -1024,8 +1083,8 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="drawer-control rail-color" fxLayoutAlign="start center" fxHide.lt-md>    <button mat-icon-button (click)="toggleMenu()" class="mat-button mat-typography menu-font-color">        <mat-icon>menu</mat-icon>    </button></div><mat-toolbar fxHide.gt-sm class="toolbar">    <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between stretch">        <div fxFlex fxLayoutAlign="start center">            <button mat-icon-button (click)="toggleMenu()">                <mat-icon>menu</mat-icon>            </button>        </div>        <div class="logo-tool" fxLayoutAlign="center center" fxFlex>            <img #logo [alt]="imageAlt" [src]="image" class="logoimg-tool"                 [routerLink]="imageRouterLink !== undefined ? imageRouterLink : []">        </div>        <div fxFlex></div>    </mat-toolbar-row></mat-toolbar><mat-spinner *ngIf="!logo"></mat-spinner><mat-sidenav-container class="rail-container">    <mat-sidenav mode="side" [(opened)]="configLeftMenu.opened" position="start"                 [disableClose]="configLeftMenu.disableClose"                 class="rail-content">        <div fxLayout="column" class="rail-color" fxFlex>            <div *ngTemplateOutlet="portalLeftMenu || defaultLeftSide"></div>            <div fxFlex></div>            <mat-menu #userRailMenu="matMenu">                <div mat-menu-item role="menuitem" class="large-menu-item" fxLayout="row" fxFlexAlign="center center"                     [routerLink]="profileRouterLink" routerLinkActive="active">                    <mat-icon class="margin-auto" fxFlex>face</mat-icon>                    <div class="large-menu-item" fxLayout="column" fxFlexAlign="start center" fxFlex>                        <span *ngIf="!user.isImpersonating()" class="large-menu-item-text"                              fxFlex="50">{{user.fullName}}</span>                        <span *ngIf="user.isImpersonating()" class="large-menu-item-text" fxFlex="50">{{user.fullName}}                            ({{user.getSelfOrImpersonated().fullName}})</span>                        <span class="large-menu-item-text" style="font-size: 12px;" fxFlex="50">{{user.email}}</span>                    </div>                </div>                <button *ngIf="includeImpersonation && !user.isImpersonating()" mat-menu-item (click)="impersonate()">                    <mat-icon>supervisor_account</mat-icon>                    <span>{{\'side-menu.impersonation.submit\' | translate}}</span>                </button>                <button *ngIf="includeImpersonation && user.isImpersonating()" mat-menu-item                        (click)="stopImpersonating()">                    <mat-icon>clear</mat-icon>                    <span>{{\'side-menu.impersonation.cease\' | translate }}</span>                </button>                <button mat-menu-item (click)="logout()">                    <mat-icon>exit_to_app</mat-icon>                    <span>{{ \'toolbar.menu.logout\' | translate }}</span>                </button>            </mat-menu>            <button *ngIf="includeUser" mat-icon-button [matMenuTriggerFor]="userRailMenu"                    class="mat-button mat-typography menu-font-color"                    [matTooltip]="user.fullName"                    [matTooltipPosition]="\'right\'">                <mat-icon>account_circle</mat-icon>            </button>            <div *ngIf="includeLanguage" fxLayout="row" class="icon-container" fxLayoutAlign="center center">                <nc-language-selector fxLayout="row" [language]="getLang()"></nc-language-selector>            </div>            <mat-menu #railMenu="matMenu">                <button *ngFor=\'let item of moreMenuItems; trackBy: viewsTrackBy\' mat-menu-item                        [routerLink]=\'item.routing.path\' routerLinkActive="active">                    <mat-icon>{{item.navigation.icon}}</mat-icon>                    <span>{{item.navigation.title}}</span>                </button>            </mat-menu>            <!--            <div fxLayout="row" class="margin-bottom-x2 icon-container" matTooltip="Otvoriť menu"-->            <!--                 matTooltipPosition="right"-->            <!--                 fxLayoutAlign="center center">-->            <!--                <button mat-icon-button [matMenuTriggerFor]="railMenu">-->            <!--                    <mat-icon class="icon-large sidemenu-icon">more_vert</mat-icon>-->            <!--                </button>-->            <!--            </div>-->            <button *ngIf="includeMoreMenu" mat-icon-button [matMenuTriggerFor]="railMenu"                    class="mat-button mat-typography menu-font-color margin-bottom-x2"                    [matTooltip]="\'toolbar.menu.open\' | translate"                    matTooltipPosition="right">                <mat-icon>more_vert</mat-icon>            </button>        </div>    </mat-sidenav>    <mat-sidenav-content>        <mat-sidenav-container class="drawer-container">            <mat-sidenav [mode]="configRightMenu.mode" [(opened)]="configRightMenu.opened" position="start"                         [disableClose]="configRightMenu.disableClose"                         class="drawer-content mat-elevation-z8"                         mwlResizable                         [style.width.px]="configRightMenu.width"                         [resizeCursorPrecision]="20"                         [resizeEdges]="{right: true}"                         (resizing)="onResizeEvent($event)">                <div *ngTemplateOutlet="portalRightMenu || defaultRightSide"></div>            </mat-sidenav>            <mat-sidenav-content>                <ng-content></ng-content>            </mat-sidenav-content>        </mat-sidenav-container>    </mat-sidenav-content></mat-sidenav-container><ng-template #defaultLeftSide>    <!--    <div fxLayout="row" class="icon-container" fxLayoutAlign="center center"-->    <!--         (click)=\'onHomeClick()\'>-->    <!--        <mat-icon class="icon-large" [matTooltip]="\'Home\'" [matTooltipPosition]="\'right\'">home</mat-icon>-->    <!--    </div>-->    <button mat-icon-button (click)="onHomeClick()" class="mat-button mat-typography menu-font-color"            [matTooltip]="\'toolbar.menu.home\' | translate"            matTooltipPosition="right">        <mat-icon>home</mat-icon>    </button>    <!--    <div *ngIf=\'!isOnZeroLevel()\' fxLayout="row" class="icon-container" fxLayoutAlign="center center"-->    <!--         (click)=\'onBackClick()\'>-->    <!--        <mat-icon class="icon-large" [matTooltip]="\'Back\'" [matTooltipPosition]="\'right\'">arrow_back</mat-icon>-->    <!--    </div>-->    <button *ngIf=\'!isOnZeroLevel() && (canGoBackLoading$ | async) === false\' mat-icon-button (click)="onBackClick()"            class="mat-button mat-typography menu-font-color" [matTooltip]="\'toolbar.menu.back\' | translate"            matTooltipPosition="right">        <mat-icon>arrow_back</mat-icon>    </button>    <div *ngIf="(canGoBackLoading$ | async)" fxLayout="column" fxLayoutAlign="center center" class="margin-top-default">        <mat-spinner color="primary" diameter="30" mode="indeterminate"></mat-spinner>    </div>    <div class="margin-top-x2"></div>    <!--    <div *ngFor=\'let node of leftNodes; trackBy: uriNodeTrackBy\' fxLayout="row" class="icon-container"-->    <!--         fxLayoutAlign="center center"-->    <!--         (click)=\'onLeftSideClick(node)\'>-->    <!--        <mat-icon class="icon-large" [matTooltip]="node.name"-->    <!--                  [matTooltipPosition]="\'right\'">{{node.id === currentNode.id ? \'folder_open\' : \'folder\'}}</mat-icon>-->    <!--    </div>-->    <button *ngFor=\'let node of leftNodes; trackBy: uriNodeTrackBy\' mat-icon-button (click)="onNodeClick(node)"            class="mat-button mat-typography menu-font-color" [matTooltip]="node.name" [matTooltipPosition]="\'right\'"            [ngClass]="node.id === currentNode.id ? \'rail-selected-color\' : \'\'">        <mat-icon>{{node.id === currentNode.id ? openedFolderIcon : folderIcon}}</mat-icon>    </button>    <div *ngIf="(leftLoading$ | async)" fxLayout="column" fxLayoutAlign="center center" class="margin-top-default">        <mat-spinner color="primary" diameter="30" mode="indeterminate"></mat-spinner>    </div></ng-template><ng-template #defaultRightSide>    <div class="logo" fxLayoutAlign="center center" fxHide.lt-md>        <img *ngIf="image !== undefined" [alt]="imageAlt" [src]="image" class="logoimg"             [routerLink]="imageRouterLink !== undefined ? imageRouterLink : []">    </div>    <div *ngIf="(rightLoading$ | async) === false" ngClass.gt-sm="padding-top-8">        <div class="margin-auto cursor-pointer" *ngIf=\'rightNodes | isNonEmpty\' (click)="toggleSection(\'folders\')"             fxLayout="row" fxFlexAlign="start center">            <span class="headline-text mat-typography">{{foldersCategoryName | translate}}</span>            <div fxFlex></div>            <span *ngIf="isSectionOpen" [@indicatorRotate]="isSectionOpen.folders ? \'expanded\' : \'collapsed\'"                  class="expansion-indicator mat-typography"></span>        </div>        <div [@sectionExpansion]="isSectionOpen.folders ? \'expanded\' : \'collapsed\'" class="box-container">            <div *ngFor=\'let node of rightNodes; trackBy: uriNodeTrackBy\' (click)="onNodeClick(node)"                 class="tree-node mat-typography mat-body-2" fxLayoutAlign="start center" routerLinkActive="active">                <mat-icon class="tree-node-icon">folder</mat-icon>                <span>{{node.name}}</span>                <span class="menu-item-focus-overlay"></span>            </div>        </div>        <div class="margin-auto" *ngIf=\'views | isNonEmpty\' fxLayout="column" fxFlexAlign="center start">            <div *ngIf="rightNodes | isNonEmpty" class="line margin-bottom-x2">                <mat-divider></mat-divider>            </div>            <div class="cursor-pointer" (click)="toggleSection(\'views\')" fxLayout="row" fxFlexAlign="start center"                 fxFlex>                <span class="headline-text mat-typography">{{viewsCategoryName | translate}}</span>                <div fxFlex></div>                <span *ngIf="isSectionOpen" [@indicatorRotate]="isSectionOpen.views ? \'expanded\' : \'collapsed\'"                      class="expansion-indicator mat-typography"></span>            </div>        </div>        <div [@sectionExpansion]="isSectionOpen.views ? \'expanded\' : \'collapsed\'" class="box-container">            <div *ngFor=\'let view of views; trackBy: viewsTrackBy\' class="tree-node mat-typography"                 fxLayoutAlign="start center" [routerLink]=\'view.routing.path\' routerLinkActive="active"                 (click)="onViewClick(view)">                <mat-icon class="tree-node-icon">{{view.navigation.icon}}</mat-icon>                <span>{{view.navigation.title}}</span>                <span class="menu-item-focus-overlay"></span>            </div>        </div>    </div>    <div *ngIf="(rightLoading$ | async)" fxLayout="column" fxLayoutAlign="center center" class="margin-top-default">        <mat-spinner color="primary" diameter="40" mode="indeterminate"></mat-spinner>    </div></ng-template></div>'
-    var COMPONENTS = [{'name': 'AddChildNodeComponent', 'selector': 'nc-add-child-node'},{'name': 'AdminImpersonateComponent', 'selector': 'nc-admin-impersonate'},{'name': 'AdminImpersonateItemComponent', 'selector': 'nc-admin-impersonate-item'},{'name': 'AdminImpersonateListComponent', 'selector': 'nc-admin-impersonate-list'},{'name': 'AdvancedSearchComponent', 'selector': 'nc-advanced-search'},{'name': 'AuthenticationOverlayComponent', 'selector': 'nc-authentication-overlay'},{'name': 'BarchartCardComponent', 'selector': 'nc-barchart-card'},{'name': 'BooleanFieldComponent', 'selector': 'nc-boolean-field'},{'name': 'BreadcrumbsComponent', 'selector': 'nc-breadcrumbs'},{'name': 'ButtonFieldComponent', 'selector': 'nc-button-field'},{'name': 'CaseListComponent', 'selector': 'nc-case-list'},{'name': 'CaseListPaginatorComponent', 'selector': 'nc-case-list-paginator'},{'name': 'CasePanelComponent', 'selector': 'nc-case-panel'},{'name': 'CaseSearchComponent', 'selector': 'nc-case-search'},{'name': 'ChangePasswordFormComponent', 'selector': 'nc-change-password-form'},{'name': 'CountCardComponent', 'selector': 'nc-count-card'},{'name': 'CreateCaseButtonComponent', 'selector': 'nc-create-case-button'},{'name': 'DashboardBarChartTextFieldComponent', 'selector': 'nc-dashboard-bar-chart-text-field'},{'name': 'DashboardContentComponent', 'selector': 'nc-dashboard-content'},{'name': 'DashboardIframeTextFieldComponent', 'selector': 'nc-dashboard-iframe-text-field'},{'name': 'DashboardLineChartTextFieldComponent', 'selector': 'nc-dashboard-line-chart-text-field'},{'name': 'DashboardPieChartTextFieldComponent', 'selector': 'nc-dashboard-pie-chart-text-field'},{'name': 'DashboardPortalTextFieldComponent', 'selector': 'nc-dashboard-portal-text-field'},{'name': 'DataFieldTemplateComponent', 'selector': 'nc-data-field-template'},{'name': 'DateFieldComponent', 'selector': 'nc-date-field'},{'name': 'DateTimeFieldComponent', 'selector': 'nc-date-time-field'},{'name': 'DefaultSimpleTaskViewComponent', 'selector': 'nc-default-simple-task-view'},{'name': 'DefaultTabbedCaseViewComponent', 'selector': 'nc-default-tabbed-case-view'},{'name': 'DefaultTabbedTaskViewComponent', 'selector': 'nc-default-tabbed-task-view'},{'name': 'DefaultTabViewComponent', 'selector': 'nc-default-tab-view'},{'name': 'EasymdeWrapperComponent', 'selector': 'nc-easymde-wrapper'},{'name': 'EditModeComponent', 'selector': 'nc-edit-mode'},{'name': 'EmailSubmissionFormComponent', 'selector': 'nc-email-submission-form'},{'name': 'EnumerationAutocompleteDynamicFieldComponent', 'selector': 'nc-enumeration-autocomplete-dynamic-field'},{'name': 'EnumerationAutocompleteSelectFieldComponent', 'selector': 'nc-enumeration-autocomplete-select-field'},{'name': 'EnumerationFieldComponent', 'selector': 'nc-enumeration-field'},{'name': 'EnumerationIconFieldComponent', 'selector': 'nc-enumeration-icon-field'},{'name': 'EnumerationListFieldComponent', 'selector': 'nc-enumeration-list-field'},{'name': 'EnumerationSelectFieldComponent', 'selector': 'nc-enumeration-select-field'},{'name': 'EnumerationStepperFieldComponent', 'selector': 'nc-enumeration-stepper-field'},{'name': 'FieldComponentResolverComponent', 'selector': 'nc-field-component-resolver'},{'name': 'FileFieldComponent', 'selector': 'nc-file-field'},{'name': 'FileListFieldComponent', 'selector': 'nc-file-list-field'},{'name': 'FilterFieldComponent', 'selector': 'nc-filter-field'},{'name': 'FilterFieldContentComponent', 'selector': 'nc-filter-field-content'},{'name': 'FilterFieldTabbedCaseViewComponent', 'selector': 'nc-filter-field-tabbed-case-view'},{'name': 'FilterFieldTabbedTaskViewComponent', 'selector': 'nc-filter-field-tabbed-task-view'},{'name': 'FilterFieldTabViewComponent', 'selector': 'nc-filter-field-tab-view'},{'name': 'FilterFieldTabViewContentComponent', 'selector': 'nc-filter-field-tab-view-content'},{'name': 'FilterSelectorComponent', 'selector': 'nc-filter-selector'},{'name': 'ForgottenPasswordFormComponent', 'selector': 'nc-forgotten-password-form'},{'name': 'FulltextSearchComponent', 'selector': 'nc-fulltext-search'},{'name': 'GroupNavigationComponentResolverComponent', 'selector': 'nc-group-navigation-component-resolver'},{'name': 'HeaderComponent', 'selector': 'nc-header'},{'name': 'HtmlTextareaFieldComponent', 'selector': 'nc-html-textarea-field'},{'name': 'I18nDividerFieldComponent', 'selector': 'nc-i18n-divider-field'},{'name': 'I18nFieldComponent', 'selector': 'nc-i18n-field'},{'name': 'I18nTextFieldComponent', 'selector': 'nc-i18n-text-field'},{'name': 'IframeCardComponent', 'selector': 'nc-iframe-card'},{'name': 'ImmediateFilterTextComponent', 'selector': 'nc-immediate-filter-text'},{'name': 'ImmediateFilterTextContentComponent', 'selector': 'nc-immediate-filter-text-content'},{'name': 'ImpersonateQuickPanelComponent', 'selector': 'nc-impersonate-quick-panel'},{'name': 'ImportNetComponent', 'selector': 'nc-import-net'},{'name': 'InternalLinkComponent', 'selector': 'nc-internal-link'},{'name': 'LanguageSelectorComponent', 'selector': 'nc-language-selector'},{'name': 'LdapGroupRoleAssignmentComponent', 'selector': 'nc-ldap-group-role-assignment'},{'name': 'LegalNoticeComponent', 'selector': 'nc-legal-notice'},{'name': 'LinearGaugeCardComponent', 'selector': 'nc-linear-gauge-card'},{'name': 'LineChartCardComponent', 'selector': 'nc-line-chart-card'},{'name': 'LoadFilterComponent', 'selector': 'nc-load-filter'},{'name': 'LoadingModeComponent', 'selector': 'nc-loading-mode'},{'name': 'LoginFormComponent', 'selector': 'nc-login-form'},{'name': 'LogoutShortcutComponent', 'selector': 'nc-logout-shortcut'},{'name': 'MultichoiceAutocompleteFieldComponent', 'selector': 'nc-multichoice-autocomplete-field'},{'name': 'MultichoiceFieldComponent', 'selector': 'nc-multichoice-field'},{'name': 'MultichoiceListFieldComponent', 'selector': 'nc-multichoice-list-field'},{'name': 'MultichoiceSelectFieldComponent', 'selector': 'nc-multichoice-select-field'},{'name': 'MultiUserAssignComponent', 'selector': 'nc-multi-user-assign'},{'name': 'MultiUserAssignItemComponent', 'selector': 'nc-multi-user-assign-item'},{'name': 'MultiUserAssignListComponent', 'selector': 'nc-multi-user-assign-list'},{'name': 'NavigationDoubleDrawerComponent', 'selector': 'nc-navigation-double-drawer'},{'name': 'NavigationDrawerComponent', 'selector': 'nc-navigation-drawer'},{'name': 'NavigationRailComponent', 'selector': 'nc-navigation-rail'},{'name': 'NavigationTreeComponent', 'selector': 'nc-navigation-tree'},{'name': 'NewCaseComponent', 'selector': 'nc-new-case'},{'name': 'NumberCurrencyFieldComponent', 'selector': 'nc-number-currency-field'},{'name': 'NumberDefaultFieldComponent', 'selector': 'nc-number-default-field'},{'name': 'NumberFieldComponent', 'selector': 'nc-number-field'},{'name': 'OptionSelectorComponent', 'selector': 'nc-option-selector'},{'name': 'PanelComponent', 'selector': 'nc-app-panel'},{'name': 'PanelItemComponent', 'selector': 'nc-panel-item'},{'name': 'PasswordTextFieldComponent', 'selector': 'nc-password-text-field'},{'name': 'PieChartCardComponent', 'selector': 'nc-pie-chart-card'},{'name': 'PopupSessionIdleComponent', 'selector': 'nc-popup-session-idle'},{'name': 'PortalCardComponent', 'selector': 'nc-portal-card'},{'name': 'PreviewDialogComponent', 'selector': 'nc-preview-dialog'},{'name': 'ProfileComponent', 'selector': 'nc-user-profile'},{'name': 'PublicWorkflowPanelComponent', 'selector': 'nc-public-workflow-panel'},{'name': 'QuickPanelComponent', 'selector': 'nc-quick-panel'},{'name': 'RedirectComponent', 'selector': 'nc-redirect'},{'name': 'RegistrationFormComponent', 'selector': 'nc-registration-form'},{'name': 'RemoveNodeComponent', 'selector': 'nc-remove-node'},{'name': 'RequiredLabelComponent', 'selector': 'nc-required-label'},{'name': 'RichTextareaFieldComponent', 'selector': 'nc-rich-textarea-field'},{'name': 'RoleAssignmentComponent', 'selector': 'nc-role-assignment'},{'name': 'SaveFilterComponent', 'selector': 'nc-save-filter'},{'name': 'SearchClauseComponent', 'selector': 'nc-search-clause'},{'name': 'SearchComponent', 'selector': 'nc-search'},{'name': 'SearchConfigurationInputComponent', 'selector': 'nc-search-configuration-input'},{'name': 'SearchModeComponent', 'selector': 'nc-search-mode'},{'name': 'SearchOperandInputComponent', 'selector': 'nc-search-operand-input'},{'name': 'SearchPredicateComponent', 'selector': 'nc-search-predicate'},{'name': 'SessionIdleComponent', 'selector': 'nc-session-idle'},{'name': 'SideMenuContainerComponent', 'selector': 'nc-side-menu-container'},{'name': 'SimpleTextFieldComponent', 'selector': 'nc-simple-text-field'},{'name': 'SingleTaskComponent', 'selector': 'nc-single-task'},{'name': 'SortModeComponent', 'selector': 'nc-sort-mode'},{'name': 'TabViewComponent', 'selector': 'nc-tab-view'},{'name': 'TaskContentComponent', 'selector': 'nc-task-content'},{'name': 'TaskListComponent', 'selector': 'nc-task-list'},{'name': 'TaskListPaginationComponent', 'selector': 'nc-task-list-pagination'},{'name': 'TaskPanelComponent', 'selector': 'nc-task-panel'},{'name': 'TaskRefDashboardTileComponent', 'selector': 'nc-task-ref-dashboard-tile'},{'name': 'TaskRefFieldComponent', 'selector': 'nc-task-ref-field'},{'name': 'TaskSearchComponent', 'selector': 'nc-task-search'},{'name': 'TextareaFieldComponent', 'selector': 'nc-textarea-field'},{'name': 'TextFieldComponent', 'selector': 'nc-text-field'},{'name': 'ToolbarComponent', 'selector': 'nc-toolbar'},{'name': 'TreeComponent', 'selector': 'nc-tree-component'},{'name': 'TreeTaskContentComponent', 'selector': 'nc-tree-task-content'},{'name': 'UserAssignComponent', 'selector': 'nc-user-assign'},{'name': 'UserAssignItemComponent', 'selector': 'nc-user-assign-item'},{'name': 'UserAssignListComponent', 'selector': 'nc-user-assign-list'},{'name': 'UserCardComponent', 'selector': 'nc-user-card'},{'name': 'UserFieldComponent', 'selector': 'nc-user-field'},{'name': 'UserImpersonateComponent', 'selector': 'nc-user-impersonate'},{'name': 'UserInviteComponent', 'selector': 'nc-user-invite'},{'name': 'UserListFieldComponent', 'selector': 'nc-user-list-field'},{'name': 'WorkflowPanelComponent', 'selector': 'nc-workflow-panel'},{'name': 'WorkflowViewComponent', 'selector': 'nc-workflow-view'}];
+        var COMPONENT_TEMPLATE = '<div><div class="drawer-control rail-color height-60" [ngClass]="{\'index-menu\': !configLeftMenu.opened}"     fxLayoutAlign="center center" fxHide.lt-md>    <button mat-icon-button (click)="toggleMenu()" class="menu-button mat-typography menu-font-color">        <mat-icon>menu</mat-icon>    </button></div><mat-toolbar fxHide.gt-sm class="toolbar">    <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between stretch">        <div fxFlex fxLayoutAlign="start center">            <button mat-icon-button (click)="toggleMenu()">                <mat-icon>menu</mat-icon>            </button>        </div>        <div fxLayoutAlign="center center" fxFlex>            <img #logo [alt]="imageAlt" [src]="image" class="logoimg-tool"                 [routerLink]="imageRouterLink !== undefined ? imageRouterLink : []">        </div>        <div fxFlex></div>    </mat-toolbar-row></mat-toolbar><mat-spinner *ngIf="!logo"></mat-spinner><mat-sidenav-container class="rail-container deny-select">    <mat-sidenav mode="side" [(opened)]="configLeftMenu.opened" position="start"                 [disableClose]="configLeftMenu.disableClose"                 class="rail-content">        <div fxLayout="column" class="rail-color" fxFlex>            <div *ngTemplateOutlet="portalLeftMenu || defaultLeftSide"></div>            <div class="margin-top-x2"></div>            <div fxFlex></div>            <mat-menu #userRailMenu="matMenu">                <div mat-menu-item role="menuitem" class="large-menu-item" fxLayout="row" fxFlexAlign="center center"                     [routerLink]="profileRouterLink" routerLinkActive="active-tree-node">                    <mat-icon class="margin-auto" fxFlex>face</mat-icon>                    <div class="large-menu-item" fxLayout="column" fxFlexAlign="start center" fxFlex>                        <span *ngIf="!user.isImpersonating()" class="large-menu-item-text"                              fxFlex="50">{{ user.fullName }}</span>                        <span *ngIf="user.isImpersonating()" class="large-menu-item-text"                              fxFlex="50">{{ user.fullName }} ({{ user.getSelfOrImpersonated().fullName }})</span>                        <span class="large-menu-item-text" style="font-size: 12px;" fxFlex="50">{{ user.email }}</span>                    </div>                </div>                <button *ngIf="includeImpersonation && !user.isImpersonating()" mat-menu-item (click)="impersonate()">                    <mat-icon>supervisor_account</mat-icon>                    <span>{{ \'side-menu.impersonation.submit\' | translate }}</span>                </button>                <button *ngIf="includeImpersonation && user.isImpersonating()" mat-menu-item                        (click)="stopImpersonating()">                    <mat-icon>clear</mat-icon>                    <span>{{ \'side-menu.impersonation.cease\' | translate }}</span>                </button>                <button mat-menu-item (click)="logout()">                    <mat-icon>exit_to_app</mat-icon>                    <span>{{ \'toolbar.menu.logout\' | translate }}</span>                </button>            </mat-menu>            <button *ngIf="includeUser" mat-icon-button [matMenuTriggerFor]="userRailMenu"                    class="menu-button mat-typography menu-font-color"                    [matTooltip]="user.fullName"                    [matTooltipPosition]="\'right\'">                <mat-icon>account_circle</mat-icon>            </button>            <div *ngIf="includeLanguage" fxLayout="row" class="icon-container">                <button mat-icon-button class="menu-button mat-typography menu-font-color">                    <nc-language-selector fxLayout="row"></nc-language-selector>                </button>            </div>            <mat-menu #railMenu="matMenu">                <button *ngFor=\'let item of hiddenCustomItems; trackBy: itemsTrackBy\' mat-menu-item                        [routerLink]=\'item.routing.path\' routerLinkActive="active-tree-node">                    <mat-icon>{{ item.navigation.icon }}</mat-icon>                    <span>{{ item.navigation.title }}</span>                </button>            </mat-menu>            <!--            <div fxLayout="row" class="margin-bottom-x2 icon-container" matTooltip="Otvoriť menu"-->            <!--                 matTooltipPosition="right"-->            <!--                 fxLayoutAlign="center center">-->            <!--                <button mat-icon-button [matMenuTriggerFor]="railMenu">-->            <!--                    <mat-icon class="icon-large sidemenu-icon">more_vert</mat-icon>-->            <!--                </button>-->            <!--            </div>-->            <button mat-icon-button *ngIf="hiddenCustomItems && hiddenCustomItems.length > 0"                    [matMenuTriggerFor]="railMenu"                    class="menu-button mat-typography menu-font-color"                    [matTooltip]="\'toolbar.menu.open\' | translate"                    matTooltipPosition="right">                <mat-icon>more_vert</mat-icon>            </button>            <div class="margin-top-x2"></div>        </div>    </mat-sidenav>    <mat-sidenav-content class="first-content index-menu">        <mat-sidenav-container class="drawer-container" (backdropClick)="toggleLeftMenu()">            <mat-sidenav [mode]="configRightMenu.mode" [(opened)]="configRightMenu.opened" position="start"                         [disableClose]="configRightMenu.disableClose"                         class="drawer-content"                         mwlResizable                         [style.width.px]="configRightMenu.width"                         [resizeCursorPrecision]="20"                         [resizeEdges]="{right: true}"                         (resizing)="onResizeEvent($event)">                <div *ngTemplateOutlet="portalRightMenu || defaultRightSide"></div>            </mat-sidenav>            <mat-sidenav-content class="content-color">                <ng-content></ng-content>            </mat-sidenav-content>        </mat-sidenav-container>    </mat-sidenav-content></mat-sidenav-container><ng-template #defaultLeftSide>    <div class="height-60 border-bottom" fxLayoutAlign="center center" fxHide.lt-md>        <button mat-icon-button (click)="toggleRightMenu()" class="menu-button mat-typography menu-font-color">            <mat-icon>menu</mat-icon>        </button>    </div>    <button mat-icon-button (click)="onHomeClick()"            class="menu-button mat-typography menu-font-color margin-top-default"            [matTooltip]="\'toolbar.menu.home\' | translate"            matTooltipPosition="right">        <mat-icon>home</mat-icon>    </button>    <button *ngIf=\'!isOnZeroLevel() && (canGoBackLoading$ | async) === false\' mat-icon-button (click)="onBackClick()"            class="menu-button mat-typography menu-font-color" [matTooltip]="\'toolbar.menu.back\' | translate"            matTooltipPosition="right">        <mat-icon>arrow_back</mat-icon>    </button>    <div *ngIf="(canGoBackLoading$ | async)" fxLayout="column" fxLayoutAlign="center center" class="margin-top-default">        <mat-spinner color="primary" diameter="30" mode="indeterminate"></mat-spinner>    </div>    <div class="margin-top-x2"></div>    <button *ngFor=\'let folder of leftItems; trackBy: itemsTrackBy\' mat-icon-button (click)="onItemClick(folder)"            class="menu-button mat-typography menu-font-color" [matTooltip]="folder.navigation.title"            [matTooltipPosition]="\'right\'"            [ngClass]="isItemAndNodeEqual(folder, currentNode) ? \'rail-selected-color\' : \'menu-font-color\'"            [routerLink]=\'folder.routing.path\'            routerLinkActive="active">        <mat-icon>{{ folder.navigation.icon }}</mat-icon>    </button>    <div *ngIf="(leftLoading$ | async)" fxLayout="column" fxLayoutAlign="center center" class="margin-top-default">        <mat-spinner color="primary" diameter="30" mode="indeterminate"></mat-spinner>    </div></ng-template><ng-template #defaultRightSide>    <div class="logo border-bottom" fxLayoutAlign="center center" fxHide.lt-md>        <img *ngIf="image !== undefined" [alt]="imageAlt" [src]="image" class="logoimg"             [routerLink]="imageRouterLink !== undefined ? imageRouterLink : []">    </div>    <div *ngIf="(rightLoading$ | async) === false">        <div fxLayout="column" fxLayoutAlign="end end" class="order-icon-wrapper">            <button mat-icon-button fxLayout="column" fxLayoutAlign="center center"                    class="mat-button mat-typography menu-font-color order-icon" (click)="switchOrder()"                    [matTooltip]="isAscending() ? (\'dynamicNavigation.ascending\' | translate) : (\'dynamicNavigation.descending\' | translate)">                <mat-icon>{{ isAscending() ? "expand_more" : "expand_less" }}</mat-icon>            </button>        </div>        <div *ngFor=\'let item of rightItems; trackBy: itemsTrackBy\' (click)="onItemClick(item)"             class="tree-node mat-typography mat-body-2" fxLayoutAlign="start center" [routerLink]=\'item.routing.path\'             routerLinkActive="active-tree-node">            <mat-icon class="tree-node-icon">{{ item.navigation.icon }}</mat-icon>            <span>{{ item.navigation.title }}</span>            <span class="menu-item-focus-overlay"></span>        </div>        <div *ngIf="moreItems.length > 0">            <button mat-button color="primary"                    (click)="loadMoreItems()">{{ \'dynamicNavigation.loadMoreItems\' | translate }}            </button>        </div>    </div>    <div *ngIf="(rightLoading$ | async)" fxLayout="column" fxLayoutAlign="center center" class="margin-top-default">        <mat-spinner color="primary" diameter="40" mode="indeterminate"></mat-spinner>    </div></ng-template></div>'
+    var COMPONENTS = [{'name': 'AddChildNodeComponent', 'selector': 'nc-add-child-node'},{'name': 'AdminImpersonateComponent', 'selector': 'nc-admin-impersonate'},{'name': 'AdminImpersonateDialogComponent', 'selector': 'nc-admin-impersonate-dialog'},{'name': 'AdminImpersonateItemComponent', 'selector': 'nc-admin-impersonate-item'},{'name': 'AdminImpersonateListComponent', 'selector': 'nc-admin-impersonate-list'},{'name': 'AdvancedSearchComponent', 'selector': 'nc-advanced-search'},{'name': 'AuthenticationOverlayComponent', 'selector': 'nc-authentication-overlay'},{'name': 'BarchartCardComponent', 'selector': 'nc-barchart-card'},{'name': 'BooleanDefaultFieldComponent', 'selector': 'nc-boolean-default-field'},{'name': 'BooleanFieldComponent', 'selector': 'nc-boolean-field'},{'name': 'BreadcrumbsComponent', 'selector': 'nc-breadcrumbs'},{'name': 'ButtonDefaultFieldComponent', 'selector': 'nc-button-default-field'},{'name': 'ButtonFieldComponent', 'selector': 'nc-button-field'},{'name': 'CaseListComponent', 'selector': 'nc-case-list'},{'name': 'CaseListPaginatorComponent', 'selector': 'nc-case-list-paginator'},{'name': 'CasePanelComponent', 'selector': 'nc-case-panel'},{'name': 'CaseRefDefaultComponent', 'selector': 'nc-case-ref-default'},{'name': 'CaseSearchComponent', 'selector': 'nc-case-search'},{'name': 'ChangePasswordFormComponent', 'selector': 'nc-change-password-form'},{'name': 'CountCardComponent', 'selector': 'nc-count-card'},{'name': 'CreateCaseButtonComponent', 'selector': 'nc-create-case-button'},{'name': 'DashboardBarChartTextFieldComponent', 'selector': 'nc-dashboard-bar-chart-text-field'},{'name': 'DashboardContentComponent', 'selector': 'nc-dashboard-content'},{'name': 'DashboardIframeTextFieldComponent', 'selector': 'nc-dashboard-iframe-text-field'},{'name': 'DashboardLineChartTextFieldComponent', 'selector': 'nc-dashboard-line-chart-text-field'},{'name': 'DashboardPieChartTextFieldComponent', 'selector': 'nc-dashboard-pie-chart-text-field'},{'name': 'DashboardPortalTextFieldComponent', 'selector': 'nc-dashboard-portal-text-field'},{'name': 'DataFieldTemplateComponent', 'selector': 'nc-data-field-template'},{'name': 'DateDefaultFieldComponent', 'selector': 'nc-date-default-field'},{'name': 'DateFieldComponent', 'selector': 'nc-date-field'},{'name': 'DateTimeDefaultFieldComponent', 'selector': 'nc-date-time-default-field'},{'name': 'DateTimeFieldComponent', 'selector': 'nc-date-time-field'},{'name': 'DefaultCaseRefListViewComponent', 'selector': 'nc-default-case-view'},{'name': 'DefaultNoFilterProvidedComponent', 'selector': 'nc-default-no-filter-provided'},{'name': 'DefaultSimpleTaskViewComponent', 'selector': 'nc-default-simple-task-view'},{'name': 'DefaultTabbedCaseViewComponent', 'selector': 'nc-default-tabbed-case-view'},{'name': 'DefaultTabbedTaskViewComponent', 'selector': 'nc-default-tabbed-task-view'},{'name': 'DefaultTabViewComponent', 'selector': 'nc-default-tab-view'},{'name': 'DefaultTaskViewComponent', 'selector': 'nc-default-task-view'},{'name': 'EasymdeWrapperComponent', 'selector': 'nc-easymde-wrapper'},{'name': 'EditModeComponent', 'selector': 'nc-edit-mode'},{'name': 'EmailSubmissionFormComponent', 'selector': 'nc-email-submission-form'},{'name': 'EnumerationAutocompleteDynamicFieldComponent', 'selector': 'nc-enumeration-autocomplete-dynamic-field'},{'name': 'EnumerationAutocompleteSelectFieldComponent', 'selector': 'nc-enumeration-autocomplete-select-field'},{'name': 'EnumerationCaserefFieldComponent', 'selector': 'nc-enumeration-caseref-field'},{'name': 'EnumerationFieldComponent', 'selector': 'nc-enumeration-field'},{'name': 'EnumerationIconFieldComponent', 'selector': 'nc-enumeration-icon-field'},{'name': 'EnumerationListFieldComponent', 'selector': 'nc-enumeration-list-field'},{'name': 'EnumerationSelectFieldComponent', 'selector': 'nc-enumeration-select-field'},{'name': 'EnumerationStepperFieldComponent', 'selector': 'nc-enumeration-stepper-field'},{'name': 'FieldComponentResolverComponent', 'selector': 'nc-field-component-resolver'},{'name': 'FileDefaultFieldComponent', 'selector': 'nc-file-default-field'},{'name': 'FileFieldComponent', 'selector': 'nc-file-field'},{'name': 'FileListDefaultFieldComponent', 'selector': 'nc-file-list-default-field'},{'name': 'FileListFieldComponent', 'selector': 'nc-file-list-field'},{'name': 'FilterDefaultFieldComponent', 'selector': 'nc-filter-default-field'},{'name': 'FilterFieldComponent', 'selector': 'nc-filter-field'},{'name': 'FilterFieldContentComponent', 'selector': 'nc-filter-field-content'},{'name': 'FilterFieldTabbedCaseViewComponent', 'selector': 'nc-filter-field-tabbed-case-view'},{'name': 'FilterFieldTabbedTaskViewComponent', 'selector': 'nc-filter-field-tabbed-task-view'},{'name': 'FilterFieldTabViewComponent', 'selector': 'nc-filter-field-tab-view'},{'name': 'FilterFieldTabViewContentComponent', 'selector': 'nc-filter-field-tab-view-content'},{'name': 'FilterSelectorComponent', 'selector': 'nc-filter-selector'},{'name': 'FilterSelectorDialogComponent', 'selector': 'nc-filter-selector-dialog'},{'name': 'ForgottenPasswordFormComponent', 'selector': 'nc-forgotten-password-form'},{'name': 'FulltextSearchComponent', 'selector': 'nc-fulltext-search'},{'name': 'GroupNavigationComponentResolverComponent', 'selector': 'nc-group-navigation-component-resolver'},{'name': 'HeaderComponent', 'selector': 'nc-header'},{'name': 'HtmlTextareaFieldComponent', 'selector': 'nc-html-textarea-field'},{'name': 'I18nDividerFieldComponent', 'selector': 'nc-i18n-divider-field'},{'name': 'I18nFieldComponent', 'selector': 'nc-i18n-field'},{'name': 'I18nTextFieldComponent', 'selector': 'nc-i18n-text-field'},{'name': 'IframeCardComponent', 'selector': 'nc-iframe-card'},{'name': 'ImmediateFilterTextComponent', 'selector': 'nc-immediate-filter-text'},{'name': 'ImmediateFilterTextContentComponent', 'selector': 'nc-immediate-filter-text-content'},{'name': 'ImpersonateQuickPanelComponent', 'selector': 'nc-impersonate-quick-panel'},{'name': 'ImportNetComponent', 'selector': 'nc-import-net'},{'name': 'ImportNetDialogComponent', 'selector': 'nc-import-net-dialog'},{'name': 'InternalLinkComponent', 'selector': 'nc-internal-link'},{'name': 'LanguageSelectorComponent', 'selector': 'nc-language-selector'},{'name': 'LdapGroupRoleAssignmentComponent', 'selector': 'nc-ldap-group-role-assignment'},{'name': 'LegalNoticeComponent', 'selector': 'nc-legal-notice'},{'name': 'LinearGaugeCardComponent', 'selector': 'nc-linear-gauge-card'},{'name': 'LineChartCardComponent', 'selector': 'nc-line-chart-card'},{'name': 'LoadFilterComponent', 'selector': 'nc-load-filter'},{'name': 'LoadFilterDialogComponent', 'selector': 'nc-load-filter-dialog'},{'name': 'LoadingModeComponent', 'selector': 'nc-loading-mode'},{'name': 'LoginFormComponent', 'selector': 'nc-login-form'},{'name': 'LogoutShortcutComponent', 'selector': 'nc-logout-shortcut'},{'name': 'MultichoiceAutocompleteFieldComponent', 'selector': 'nc-multichoice-autocomplete-field'},{'name': 'MultichoiceCaserefFieldComponent', 'selector': 'nc-multichoice-caseref-field'},{'name': 'MultichoiceFieldComponent', 'selector': 'nc-multichoice-field'},{'name': 'MultichoiceListFieldComponent', 'selector': 'nc-multichoice-list-field'},{'name': 'MultichoiceSelectFieldComponent', 'selector': 'nc-multichoice-select-field'},{'name': 'MultiUserAssignComponent', 'selector': 'nc-multi-user-assign'},{'name': 'MultiUserAssignDialogComponent', 'selector': 'nc-multi-user-assign-dialog'},{'name': 'MultiUserAssignItemComponent', 'selector': 'nc-multi-user-assign-item'},{'name': 'MultiUserAssignListComponent', 'selector': 'nc-multi-user-assign-list'},{'name': 'NavigationDoubleDrawerComponent', 'selector': 'nc-navigation-double-drawer'},{'name': 'NavigationDrawerComponent', 'selector': 'nc-navigation-drawer'},{'name': 'NavigationRailComponent', 'selector': 'nc-navigation-rail'},{'name': 'NavigationTreeComponent', 'selector': 'nc-navigation-tree'},{'name': 'NewCaseComponent', 'selector': 'nc-new-case'},{'name': 'NewCaseDialogComponent', 'selector': 'nc-new-case-dialog'},{'name': 'NumberCurrencyFieldComponent', 'selector': 'nc-number-currency-field'},{'name': 'NumberDecimalFieldComponent', 'selector': 'nc-number-decimal-field'},{'name': 'NumberDefaultFieldComponent', 'selector': 'nc-number-default-field'},{'name': 'NumberFieldComponent', 'selector': 'nc-number-field'},{'name': 'OptionSelectorComponent', 'selector': 'nc-option-selector'},{'name': 'PanelComponent', 'selector': 'nc-app-panel'},{'name': 'PanelItemComponent', 'selector': 'nc-panel-item'},{'name': 'PasswordTextFieldComponent', 'selector': 'nc-password-text-field'},{'name': 'PieChartCardComponent', 'selector': 'nc-pie-chart-card'},{'name': 'PopupSessionIdleComponent', 'selector': 'nc-popup-session-idle'},{'name': 'PortalCardComponent', 'selector': 'nc-portal-card'},{'name': 'PreviewDialogComponent', 'selector': 'nc-preview-dialog'},{'name': 'ProfileComponent', 'selector': 'nc-user-profile'},{'name': 'PublicWorkflowPanelComponent', 'selector': 'nc-public-workflow-panel'},{'name': 'QuickPanelComponent', 'selector': 'nc-quick-panel'},{'name': 'RedirectComponent', 'selector': 'nc-redirect'},{'name': 'RegistrationFormComponent', 'selector': 'nc-registration-form'},{'name': 'RemoveNodeComponent', 'selector': 'nc-remove-node'},{'name': 'RequiredLabelComponent', 'selector': 'nc-required-label'},{'name': 'RichTextareaFieldComponent', 'selector': 'nc-rich-textarea-field'},{'name': 'RoleAssignmentComponent', 'selector': 'nc-role-assignment'},{'name': 'SaveFilterComponent', 'selector': 'nc-save-filter'},{'name': 'SaveFilterDialogComponent', 'selector': 'nc-save-filter-dialog'},{'name': 'SearchClauseComponent', 'selector': 'nc-search-clause'},{'name': 'SearchComponent', 'selector': 'nc-search'},{'name': 'SearchConfigurationInputComponent', 'selector': 'nc-search-configuration-input'},{'name': 'SearchModeComponent', 'selector': 'nc-search-mode'},{'name': 'SearchOperandInputComponent', 'selector': 'nc-search-operand-input'},{'name': 'SearchPredicateComponent', 'selector': 'nc-search-predicate'},{'name': 'SessionIdleComponent', 'selector': 'nc-session-idle'},{'name': 'SideMenuContainerComponent', 'selector': 'nc-side-menu-container'},{'name': 'SignaturePadFieldComponent', 'selector': 'nc-signature-pad-field'},{'name': 'SimpleTextFieldComponent', 'selector': 'nc-simple-text-field'},{'name': 'SingleTaskComponent', 'selector': 'nc-single-task'},{'name': 'SortModeComponent', 'selector': 'nc-sort-mode'},{'name': 'StringCollectionDefaultFieldComponent', 'selector': 'nc-string-collection-default-field'},{'name': 'TabViewComponent', 'selector': 'nc-tab-view'},{'name': 'TaskContentComponent', 'selector': 'nc-task-content'},{'name': 'TaskListComponent', 'selector': 'nc-task-list'},{'name': 'TaskListPaginationComponent', 'selector': 'nc-task-list-pagination'},{'name': 'TaskPanelComponent', 'selector': 'nc-task-panel'},{'name': 'TaskRefDashboardFieldComponent', 'selector': 'nc-task-ref-dashboard-field'},{'name': 'TaskRefDashboardTileComponent', 'selector': 'nc-task-ref-dashboard-tile'},{'name': 'TaskRefFieldComponent', 'selector': 'nc-task-ref-field'},{'name': 'TaskRefListFieldComponent', 'selector': 'nc-task-ref-list-field'},{'name': 'TaskSearchComponent', 'selector': 'nc-task-search'},{'name': 'TaskViewDialogComponent', 'selector': 'nc-task-view-dialog'},{'name': 'TextareaFieldComponent', 'selector': 'nc-textarea-field'},{'name': 'TextFieldComponent', 'selector': 'nc-text-field'},{'name': 'ToolbarComponent', 'selector': 'nc-toolbar'},{'name': 'TreeComponent', 'selector': 'nc-tree-component'},{'name': 'TreeTaskContentComponent', 'selector': 'nc-tree-task-content'},{'name': 'UserAssignComponent', 'selector': 'nc-user-assign'},{'name': 'UserAssignDialogComponent', 'selector': 'nc-user-assign-dialog'},{'name': 'UserAssignItemComponent', 'selector': 'nc-user-assign-item'},{'name': 'UserAssignListComponent', 'selector': 'nc-user-assign-list'},{'name': 'UserCardComponent', 'selector': 'nc-user-card'},{'name': 'UserDefaultFieldComponent', 'selector': 'nc-user-default-field'},{'name': 'UserFieldComponent', 'selector': 'nc-user-field'},{'name': 'UserImpersonateComponent', 'selector': 'nc-user-impersonate'},{'name': 'UserImpersonateDialogComponent', 'selector': 'nc-user-impersonate-dialog'},{'name': 'UserInviteComponent', 'selector': 'nc-user-invite'},{'name': 'UserListDefaultFieldComponent', 'selector': 'nc-user-list-default-field'},{'name': 'UserListFieldComponent', 'selector': 'nc-user-list-field'},{'name': 'WorkflowPanelComponent', 'selector': 'nc-workflow-panel'},{'name': 'WorkflowViewComponent', 'selector': 'nc-workflow-view'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'NavigationDoubleDrawerComponent'};
 </script>

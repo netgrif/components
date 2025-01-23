@@ -135,6 +135,20 @@ method in <a href="../injectables/TaskResourceService.html">TaskResourceService<
                                 </li>
                                 <li>
                                             <span class="modifier">Optional</span>
+                                        <a href="#stringId" 
+>
+                                            stringId
+                                        </a>
+                                </li>
+                                <li>
+                                            <span class="modifier">Optional</span>
+                                        <a href="#tags" 
+>
+                                            tags
+                                        </a>
+                                </li>
+                                <li>
+                                            <span class="modifier">Optional</span>
                                         <a href="#title" 
 >
                                             title
@@ -443,6 +457,89 @@ of the <a href="../injectables/TaskResourceService.html">TaskResourceService</a>
                         <tbody>
                                 <tr>
                                     <td class="col-md-4">
+                                        <a name="stringId"></a>
+                                        <span class="name "><b>stringId</b>
+                                            <a href="#stringId">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>stringId:     <code>string | Array&lt;string&gt;</code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>    <code>string | Array&lt;string&gt;</code>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
+
+
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Returned tasks must have the specified string ID.</p>
+<p>If more than one string ID is specified, the returned tasks must have one of them.</p>
+</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="tags"></a>
+                                        <span class="name "><b>tags</b>
+                                            <a href="#tags">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>tags:     <code>literal type</code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>    <code>literal type</code>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
                                         <a name="title"></a>
                                         <span class="name "><b>title</b>
                                             <a href="#title">
@@ -647,6 +744,17 @@ export interface TaskSearchRequestBody {
      * If more than one group ID is specified, the returned tasks are from cases of one of the groups.
      */
     group?: string | Array&lt;string&gt;;
+
+    /**
+     * Returned tasks must have the specified string ID.
+     *
+     * If more than one string ID is specified, the returned tasks must have one of them.
+     */
+    stringId?: string | Array&lt;string&gt;;
+
+    tags?: {
+        [key: string]: string
+    };
 }
 
 /**

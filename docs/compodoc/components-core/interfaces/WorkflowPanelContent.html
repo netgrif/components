@@ -332,6 +332,8 @@ export abstract class AbstractWorkflowPanelComponent extends AbstractPanelWithHe
     @Input() public selectedHeaders$: Observable&lt;Array&lt;HeaderColumn&gt;&gt;;
     @Input() responsiveBody &#x3D; true;
     @Input() showDeleteMenu &#x3D; false;
+    @Input() public first: boolean;
+    @Input() public last: boolean;
     public panelRef: MatExpansionPanel;
     public panelContent: WorkflowPanelContent;
     private _subscription: Subscription;

@@ -71,6 +71,34 @@
 
 
 
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Static</span>
+                                <a href="#parseClassNameFromView" >parseClassNameFromView</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
 
             <section>
     <h3 id="constructor">Constructor</h3>
@@ -181,7 +209,94 @@
         </table>
 </section>
 
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="parseClassNameFromView"></a>
+                    <span class="name">
+                        <span class="modifier">Static</span>
+                        <span ><b>parseClassNameFromView</b></span>
+                        <a href="#parseClassNameFromView"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>parseClassNameFromView(view: <a href="../interfaces/View.html" target="_self">View</a>, configPath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
 
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="161"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/routing/routing-builder/routing-builder.service.ts:161</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>view</td>
+                                    <td>
+                                                <code><a href="../interfaces/View.html" target="_self" >View</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>configPath</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
 
     </div>
 
@@ -343,14 +458,17 @@ export class RoutingBuilderService {
             return this._groupNavigationComponentResolverComponent;
         }
 
-        let className;
+        const className &#x3D; RoutingBuilderService.parseClassNameFromView(view, configPath);
+        return this._viewService.resolveNameToClass(className);
+    }
+
+    public static parseClassNameFromView(view: View, configPath: string): string {
         if (!!view.layout.componentName) {
-            className &#x3D; &#x60;${classify(view.layout.componentName)}Component&#x60;;
+            return &#x60;${classify(view.layout.componentName)}Component&#x60;;
         } else {
             const classInfo &#x3D; new ViewClassInfo(configPath, view.layout.name, view.layout.componentName);
-            className &#x3D; classInfo.className;
+            return classInfo.className;
         }
-        return this._viewService.resolveNameToClass(className);
     }
 
     private defaultRoutesRedirects(): Array&lt;Route&gt; {

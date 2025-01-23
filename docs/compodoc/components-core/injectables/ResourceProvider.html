@@ -150,7 +150,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="200" class="link-to-prism">projects/netgrif-components-core/src/lib/resources/resource-provider.service.ts:200</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="201" class="link-to-prism">projects/netgrif-components-core/src/lib/resources/resource-provider.service.ts:201</a></div>
                             </td>
                         </tr>
 
@@ -393,7 +393,7 @@ If a parameter is declared in both instances uses the value of the <code>highPri
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>delete$(endpoint?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, url?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, params?: <a href="../miscellaneouss/Params.html" target="_self">Params</a>, headers?: <a href="../undefineds/Headers.html" target="_self">Headers</a>, responseType?: <a href="../undefineds/ResponseType.html" target="_self">ResponseType</a>)</code>
+                    <code>delete$(endpoint?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, url?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, params?: <a href="../miscellaneouss/Params.html" target="_self">Params</a>, headers?: <a href="../undefineds/Headers.html" target="_self">Headers</a>, responseType?: <a href="../undefineds/ResponseType.html" target="_self">ResponseType</a>, body?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank">object</a>)</code>
                 </td>
             </tr>
 
@@ -486,6 +486,18 @@ If a parameter is declared in both instances uses the value of the <code>highPri
                                     <td>responseType</td>
                                     <td>
                                                 <code><a href="../miscellaneous/typealiases.html#ResponseType" target="_self" >ResponseType</a></code>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>body</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
                                     </td>
 
                                     <td>
@@ -1618,12 +1630,13 @@ export abstract class AbstractResourceProvider {
     }
 
     public delete$&lt;T&gt;(endpoint?: string, url?: string, params ?: Params, headers ?: Headers,
-                      responseType ?: ResponseType): Observable&lt;T&gt; {
+                      responseType ?: ResponseType, body?: object,): Observable&lt;T&gt; {
         return this.httpClient.delete&lt;T&gt;(AbstractResourceProvider.sanitizeUrl(endpoint, url), {
             headers,
             params,
             responseType: &#x27;json&#x27;,
-            observe: &#x27;body&#x27;
+            observe: &#x27;body&#x27;,
+            body
         });
     }
 }

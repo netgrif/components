@@ -66,13 +66,13 @@
 <title>cluster_SearchComponentModule</title>
 <polygon fill="none" stroke="black" stroke-dasharray="1,5" points="8,-70 8,-268 669,-268 669,-70 8,-70"/>
 </g>
-<g id="clust2" class="cluster">
-<title>cluster_SearchComponentModule_declarations</title>
-<polygon fill="none" stroke="black" points="16,-78 16,-130 661,-130 661,-78 16,-78"/>
-</g>
 <g id="clust8" class="cluster">
 <title>cluster_SearchComponentModule_exports</title>
 <polygon fill="none" stroke="black" points="92,-208 92,-260 568,-260 568,-208 92,-208"/>
+</g>
+<g id="clust2" class="cluster">
+<title>cluster_SearchComponentModule_declarations</title>
+<polygon fill="none" stroke="black" points="16,-78 16,-130 661,-130 661,-78 16,-78"/>
 </g>
 <!-- CaseSearchComponent -->
 <g id="node1" class="node">
@@ -253,6 +253,8 @@ import {NgxMatDatetimePickerModule} from &#x27;@angular-material-components/date
 import {DefaultSearchCategoriesModule, MaterialModule, TranslateLibModule} from &#x27;@netgrif/components-core&#x27;;
 import {FulltextSearchComponent} from &#x27;./fulltext-search-component/fulltext-search.component&#x27;;
 import {AdvancedSearchComponentModule} from &#x27;./advanced-search/advanced-search.module&#x27;;
+import {MatIconRegistry} from &#x27;@angular/material/icon&#x27;;
+import {DomSanitizer} from &#x27;@angular/platform-browser&#x27;;
 
 @NgModule({
     declarations: [
@@ -277,6 +279,13 @@ import {AdvancedSearchComponentModule} from &#x27;./advanced-search/advanced-sea
     ]
 })
 export class SearchComponentModule {
+
+    private FILTER_VARIANT &#x3D;
+        &#x60;&lt;svg xmlns&#x3D;&quot;http://www.w3.org/2000/svg&quot; viewBox&#x3D;&quot;0 0 24 24&quot;&gt;&lt;path d&#x3D;&quot;M6,13H18V11H6M3,6V8H21V6M10,18H14V16H10V18Z&quot; /&gt;&lt;/svg&gt;&#x60;;
+    constructor(iconRegistry: MatIconRegistry,
+                sanitizer: DomSanitizer) {
+        iconRegistry.addSvgIconLiteral(&#x27;filter-variant&#x27;, sanitizer.bypassSecurityTrustHtml(this.FILTER_VARIANT));
+    }
 }
 </code></pre>
     </div>

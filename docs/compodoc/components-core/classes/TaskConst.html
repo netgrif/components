@@ -131,7 +131,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">projects/netgrif-components-core/src/lib/view/task-view/abstract-single-task-view.component.ts:10</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">projects/netgrif-components-core/src/lib/view/task-view/abstract-single-task-view.component.ts:14</a></div>
                         </td>
                     </tr>
 
@@ -150,13 +150,17 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, EventEmitter, Input, OnDestroy, Output} from &#x27;@angular/core&#x27;;
-import { AbstractViewWithHeadersComponent } from &#x27;../abstract/view-with-headers&#x27;;
-import { Observable, ReplaySubject, Subscription } from &#x27;rxjs&#x27;;
-import { TaskPanelData } from &#x27;../../panel/task-panel-list/task-panel-data/task-panel-data&#x27;;
-import { TaskViewService } from &#x27;./service/task-view.service&#x27;;
-import { ActivatedRoute } from &#x27;@angular/router&#x27;;
-import {AsyncPipe} from &quot;@angular/common&quot;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, EventEmitter, Inject, Input, OnDestroy, Output} from &#x27;@angular/core&#x27;;
+import {AbstractViewWithHeadersComponent} from &#x27;../abstract/view-with-headers&#x27;;
+import {Observable, Subscription} from &#x27;rxjs&#x27;;
+import {TaskPanelData} from &#x27;../../panel/task-panel-list/task-panel-data/task-panel-data&#x27;;
+import {TaskViewService} from &#x27;./service/task-view.service&#x27;;
+import {ActivatedRoute} from &#x27;@angular/router&#x27;;
+import {BaseFilter} from &quot;../../search/models/base-filter&quot;;
+import {SimpleFilter} from &quot;../../filter/models/simple-filter&quot;;
+import {TaskSearchRequestBody} from &quot;../../filter/models/task-search-request-body&quot;;
+import {NAE_BASE_FILTER} from &quot;../../search/models/base-filter-injection-token&quot;;
+import {map, tap} from &quot;rxjs/operators&quot;;
 
 export class TaskConst {
     public static readonly TRANSITION_ID &#x3D; &#x27;transitionId&#x27;;
@@ -170,36 +174,29 @@ export abstract class AbstractSingleTaskViewComponent extends AbstractViewWithHe
 
     @Input() initiallyExpanded: boolean &#x3D; true;
     @Input() preventCollapse: boolean &#x3D; true;
-
     @Output() noTaskPresent: EventEmitter&lt;void&gt;;
-    public taskPanelData: ReplaySubject&lt;TaskPanelData&gt;;
+    public taskPanelData: Observable&lt;TaskPanelData&gt;;
     public loading$: Observable&lt;boolean&gt;;
-    private transitionId: string;
-    private subRoute: Subscription | undefined;
+    protected transitionId: string;
+    protected subRoute: Subscription | undefined;
     protected subPanelData: Subscription | undefined;
     protected subLoading: Subscription | undefined;
 
     protected constructor(protected taskViewService: TaskViewService,
-                          activatedRoute: ActivatedRoute, async: AsyncPipe) {
+                          activatedRoute: ActivatedRoute,
+                          @Inject(NAE_BASE_FILTER) protected baseFilter: BaseFilter) {
         super(taskViewService, activatedRoute);
         this.noTaskPresent &#x3D; new EventEmitter&lt;void&gt;();
-        this.taskPanelData &#x3D; new ReplaySubject&lt;TaskPanelData&gt;(1);
-        this.subRoute &#x3D; this._activatedRoute.paramMap.subscribe(paramMap &#x3D;&gt; {
-            if (!!(paramMap?.[&#x27;params&#x27;]?.[TaskConst.TRANSITION_ID])) {
-                this.transitionId &#x3D; paramMap[&#x27;params&#x27;][TaskConst.TRANSITION_ID];
-                this.subPanelData &#x3D; this.taskViewService.tasks$.subscribe(tasks &#x3D;&gt;  {
-                    if (!!tasks &amp;&amp; tasks.length &gt; 0) {
-                        this.taskPanelData.next(this.resolveTransitionTask(tasks));
-                    } else {
-                        const isLoading &#x3D; async.transform(this.loading$);
-                        if (!isLoading) {
-                            this.taskPanelData.next(undefined);
-                            this.noTaskPresent.next();
-                        }
-                    }
-                });
-            }
-        });
+        this.taskPanelData &#x3D; this.taskViewService.tasks$.pipe(
+            map&lt;TaskPanelData[], TaskPanelData&gt;(tasks &#x3D;&gt; tasks.find(
+                panelData &#x3D;&gt; this.isTaskMatchingFilter(panelData, (baseFilter.filter as SimpleFilter).getRequestBody())))
+        ).pipe(
+            tap(panelData &#x3D;&gt; {
+                if (!!panelData) {
+                    panelData.initiallyExpanded &#x3D; true
+                }
+            })
+        );
         this.loading$ &#x3D; this.taskViewService.loading$;
     }
 
@@ -211,21 +208,14 @@ export abstract class AbstractSingleTaskViewComponent extends AbstractViewWithHe
         if (!!this.subPanelData) {
             this.subPanelData.unsubscribe();
         }
-        if (!!this.taskPanelData) {
-            this.taskPanelData.complete();
-        }
     }
 
     get task$(): Observable&lt;TaskPanelData&gt; {
-        return this.taskPanelData.asObservable();
+        return this.taskPanelData;
     }
 
-    private resolveTransitionTask(tasks: Array&lt;TaskPanelData&gt;): TaskPanelData {
-        const transitionTask &#x3D; tasks.find(t &#x3D;&gt; t.task.transitionId &#x3D;&#x3D;&#x3D; this.transitionId);
-        if (!!transitionTask) {
-            transitionTask.initiallyExpanded &#x3D; transitionTask.task.finishDate &#x3D;&#x3D;&#x3D; undefined;
-        }
-        return transitionTask;
+    protected isTaskMatchingFilter(panelData: TaskPanelData, taskSearchRequestBody: TaskSearchRequestBody): boolean {
+        return panelData.task.stringId &#x3D;&#x3D;&#x3D; taskSearchRequestBody.stringId || panelData.task.transitionId &#x3D;&#x3D;&#x3D; taskSearchRequestBody.transitionId;
     }
 }
 </code></pre>

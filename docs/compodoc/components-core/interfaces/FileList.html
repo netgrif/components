@@ -84,7 +84,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">projects/netgrif-components-core/src/lib/side-menu/content-components/import-net/abstract-import-net.component.ts:26</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">projects/netgrif-components-core/src/lib/side-menu/content-components/import-net/abstract-import-net.component.ts:27</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -107,6 +107,7 @@ import {FileUploadDataModel} from &#x27;../../../data-fields/file-field/models/f
 import {Subscription} from &#x27;rxjs&#x27;;
 import {TranslateService} from &#x27;@ngx-translate/core&#x27;;
 import {PetriNetEventOutcome} from &#x27;../../../event/model/event-outcomes/petrinet-outcomes/petri-net-event-outcome&#x27;;
+import {UriService} from &quot;../../../navigation/service/uri.service&quot;;
 
 export class FileUploadModel {
     stringId: string;
@@ -139,6 +140,7 @@ export abstract class AbstractImportNetComponent implements AfterViewInit {
 
     constructor(protected _sideMenuControl: SideMenuControl,
                 protected _petriNetResource: PetriNetResourceService,
+                protected _uriService: UriService,
                 protected _log: LoggerService,
                 protected _snackbar: SnackBarService,
                 protected _translate: TranslateService) {
@@ -221,6 +223,7 @@ export abstract class AbstractImportNetComponent implements AfterViewInit {
     protected uploadFile(file: FileUploadModel) {
         const fileFormData &#x3D; new FormData();
         fileFormData.append(&#x27;file&#x27;, file.data as File);
+        fileFormData.append(&#x27;uriNodeId&#x27;, this._uriService.activeNode.id);
         fileFormData.append(&#x27;meta&#x27;, this.releaseTypeControl.value.toString().toUpperCase());
 
         file.inProgress &#x3D; true;
