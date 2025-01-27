@@ -295,25 +295,5 @@ export class AppModule {
         registry.registerType(Dashboard.FILTER_CASE_VIEW_ID, FilterFieldTabbedCaseViewComponent);
         registry.registerType(Dashboard.FILTER_TASK_VIEW_ID, FilterFieldTabbedTaskViewComponent);
 
-        //TextField
-        validationRegistry.register('minLength', validMinLength);
-        validationRegistry.register('maxLength', validMaxLength);
-        validationRegistry.register('regex', validRegex);
-        validationRegistry.register('email', validEmail);
-        validationRegistry.register('telNumber', validTelNumber);
-        //NumberField
-        validationRegistry.register('validOdd', validOdd);
-        validationRegistry.register('validEven', validEven);
-        validationRegistry.register('validNegative', validNegative);
-        validationRegistry.register('validPositive', validPositive);
-        validationRegistry.register('validDecimal', validDecimal);
-        validationRegistry.register('validInRange', validInRange);
-        //DateFields
-        validationRegistry.register('validBetween', validBetween);
-        validationRegistry.register('validWorkday', validWorkday);
-        validationRegistry.register('validWeekend', validWeekend);
-        //i18nField
-        validationRegistry.register('validTranslationRequired', validTranslationRequired);
-        validationRegistry.register('validTranslationOnly', validTranslationOnly);
     }
 }

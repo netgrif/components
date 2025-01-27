@@ -7,7 +7,7 @@ import {
     CustomDateAdapter, FrontActionModule,
     MaterialModule,
     TranslateLibModule,
-    ComponentRegistryService
+    ComponentRegistryService, DataFieldsModule
 } from '@netgrif/components-core';
 import {AngularResizeEventModule} from 'angular-resize-event';
 import {HttpClientModule} from '@angular/common/http';
@@ -219,7 +219,8 @@ import {ComponentPortal} from "@angular/cdk/portal";
         BrowserAnimationsModule,
         DashboardComponentModule,
         RouterModule,
-        FrontActionModule
+        FrontActionModule,
+        DataFieldsModule
     ],
     providers: [
         {provide: DateAdapter, useClass: CustomDateAdapter}
