@@ -16,23 +16,25 @@ export class PermissionService {
     }
 
     public hasTaskPermission(task: Task | undefined, permission: PermissionType): boolean {
-        if (!task) {
-            return false;
-        }
-
-        const rolePermValue = this.checkRolePerms(task.roles, permission);
-        const userPermValue = this.checkUserPerms(task.users, permission);
-        return this.resolvePermissions(rolePermValue, userPermValue);
+        return true;
+        // if (!task) {
+        //     return false;
+        // }
+        //
+        // const rolePermValue = this.checkRolePerms(task.roles, permission);
+        // const userPermValue = this.checkUserPerms(task.users, permission);
+        // return this.resolvePermissions(rolePermValue, userPermValue);
     }
 
     public hasCasePermission(case_: Case | undefined, permission: PermissionType): boolean {
-        if (!case_) {
-            return false;
-        }
-
-        const rolePermValue = this.checkRolePerms(case_.permissions, permission);
-        const userPermValue = this.checkUserPerms(case_.users, permission);
-        return this.resolvePermissions(rolePermValue, userPermValue);
+        return true;
+        // if (!case_) {
+        //     return false;
+        // }
+        //
+        // const rolePermValue = this.checkRolePerms(case_.permissions, permission);
+        // const userPermValue = this.checkUserPerms(case_.users, permission);
+        // return this.resolvePermissions(rolePermValue, userPermValue);
     }
 
     public resolvePermissions(rolePermValue: boolean | undefined, userPermValue: boolean | undefined): boolean {
@@ -40,52 +42,57 @@ export class PermissionService {
     }
 
     public hasNetPermission(action: PermissionType, net: PetriNetReferenceWithPermissions): boolean {
-        if (!net
-            || !net.permissions
-            || !action
-            || !(net.permissions instanceof Object)
-        ) {
-            return false;
-        }
-        if (Object.keys(net.permissions).some(role =>
-            this._userService.hasRoleById(role) ? net.permissions[role][action] === false : false)) {
-            return false;
-        }
-        return Object.keys(net.permissions).some(role =>
-            this._userService.hasRoleById(role) ? !!net.permissions[role][action] : false
-        );
+        return true;
+        // if (!net
+        //     || !net.permissions
+        //     || !action
+        //     || !(net.permissions instanceof Object)
+        // ) {
+        //     return false;
+        // }
+        // if (Object.keys(net.permissions).some(role =>
+        //     this._userService.hasRoleById(role) ? net.permissions[role][action] === false : false)) {
+        //     return false;
+        // }
+        // return Object.keys(net.permissions).some(role =>
+        //     this._userService.hasRoleById(role) ? !!net.permissions[role][action] : false
+        // );
     }
 
     public canAssign(task: Task | undefined): boolean {
-        return !!task
-            && (
-                (
-                    task.assignPolicy === AssignPolicy.manual
-                    && !task.user
-                    && this.hasTaskPermission(task, PermissionType.ASSIGN)
-                )
-            );
+        return true;
+        // return !!task
+        //     && (
+        //         (
+        //             task.assignPolicy === AssignPolicy.manual
+        //             && !task.user
+        //             && this.hasTaskPermission(task, PermissionType.ASSIGN)
+        //         )
+        //     );
     }
 
     public canCancel(task: Task | undefined): boolean {
-        return !!task && !!task.user
-            && this.hasTaskPermission(task, PermissionType.CANCEL)
-            && ((task.assignedUserPolicy === undefined || task.assignedUserPolicy.cancel === undefined)
-                || task.assignedUserPolicy.cancel);
+        return true;
+        // return !!task && !!task.user
+        //     && this.hasTaskPermission(task, PermissionType.CANCEL)
+        //     && ((task.assignedUserPolicy === undefined || task.assignedUserPolicy.cancel === undefined)
+        //         || task.assignedUserPolicy.cancel);
     }
 
     public canReassign(task: Task | undefined): boolean {
-        return !!task && !!task.user && this.userComparator.compareUsers(task.user)
-            && this.hasTaskPermission(task, PermissionType.DELEGATE)
-            && ((task.assignedUserPolicy === undefined || task.assignedUserPolicy.reassign === undefined)
-                || task.assignedUserPolicy.reassign);
+        return true;
+        // return !!task && !!task.user && this.userComparator.compareUsers(task.user)
+        //     && this.hasTaskPermission(task, PermissionType.DELEGATE)
+        //     && ((task.assignedUserPolicy === undefined || task.assignedUserPolicy.reassign === undefined)
+        //         || task.assignedUserPolicy.reassign);
     }
 
     public canFinish(task: Task | undefined): boolean {
-        return !!task
-            && !!task.user
-            && this.userComparator.compareUsers(task.user)
-            && this.hasTaskPermission(task, PermissionType.FINISH);
+        return true;
+        // return !!task
+        //     && !!task.user
+        //     && this.userComparator.compareUsers(task.user)
+        //     && this.hasTaskPermission(task, PermissionType.FINISH);
     }
 
     public canCollapse(task: Task | undefined): boolean {

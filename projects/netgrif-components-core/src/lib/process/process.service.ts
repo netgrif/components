@@ -186,14 +186,12 @@ export class ProcessService implements OnDestroy {
         if (!this._nets[net.identifier]) {
             return;
         }
-        if (!net.transitions.length || !net.transactions.length || !net.roles.length) {
+        if (!net.transitions.length || !net.roles.length) {
             forkJoin({
                 transitions: this.loadTransitions(net.stringId),
-                transactions: this.loadTransactions(net.stringId),
                 roles: this.loadRoles(net.stringId)
             }).subscribe(values => {
                 net.transitions = values.transitions;
-                net.transactions = values.transactions;
                 net.roles = values.roles.processRoles;
                 net.permissions = values.roles.permissions;
                 this._nets[net.identifier] = net;
@@ -243,15 +241,13 @@ export class ProcessService implements OnDestroy {
                 returnNet.complete();
                 return;
             }
-            this._log.debug(`loading net '${id}' transitions, transactions and roles`);
+            this._log.debug(`loading net '${id}' transitions and roles`);
             forkJoin({
                 transitions: this.loadTransitions(net.stringId),
-                transactions: this.loadTransactions(net.stringId),
                 roles: this.loadRoles(net.stringId)
             }).subscribe(values => {
                 this._nets[net.identifier] = new Net(net);
                 this._nets[net.identifier].transitions = values.transitions;
-                this._nets[net.identifier].transactions = values.transactions;
                 this._nets[net.identifier].roles = values.roles.processRoles;
                 this._nets[net.identifier].permissions = values.roles.permissions;
                 returnNet.next(this._nets[net.identifier]);
@@ -295,26 +291,6 @@ export class ProcessService implements OnDestroy {
             }),
             catchError(err => {
                 this._log.error('References for transitions of net ' + id + ' failed to load!', err);
-                throw err;
-            })
-        );
-    }
-
-    protected loadTransactions(id: string): Observable<Array<Transaction>> {
-        return this._petriNetResource.getPetriNetTransactions(id).pipe(
-            map(trans => {
-                if (trans instanceof Array) {
-                    return trans;
-                }
-                return [];
-            }),
-            tap(trans => {
-                if (trans.length === 0) {
-                    this._log.info('References for transactions of net ' + id + ' were not found!');
-                }
-            }),
-            catchError(err => {
-                this._log.error('References for transactions of net ' + id + ' failed to load!', err);
                 throw err;
             })
         );

@@ -150,6 +150,17 @@
                 "path": "signup-or-reset"
             }
         },
+        "test-drag-drop": {
+            "component": {
+                "class": "TestDragDropComponent",
+                "from": "./doc/test-drag-drop/test-drag-drop.component"
+            },
+            "access": "public",
+            "navigation": true,
+            "routing": {
+                "path": "test-drag-drop"
+            }
+        },
         "demo-registration": {
             "component": {
                 "class": "RegisterFormComponent",

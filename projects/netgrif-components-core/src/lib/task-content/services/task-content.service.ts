@@ -257,6 +257,7 @@ export abstract class TaskContentService implements OnDestroy {
      * @param blockingState whether the field should be blocked or not
      */
     public blockFields(blockingState: boolean): void {
+        console.log("TASK CONTENT BLOCK => " + blockingState);
         if (this._task && this._task.layoutContainer) {
             callActionRecursively(this._task.layoutContainer, {doParams: blockingState, termParams: undefined},
                 (layoutItem: LayoutItem, params: boolean) => {

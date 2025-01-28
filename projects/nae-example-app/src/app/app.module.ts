@@ -129,6 +129,8 @@ import {
 } from './doc/single-tabbed-view/single-tabbed-task-view/single-tabbed-task-view.component';
 import {ImpersonationDemoComponent} from './doc/impersonation-demo/impersonation-demo.component';
 import { ChangePasswordComponent } from './doc/forms/change-password/change-password.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import {TestDragDropComponent} from './doc/test-drag-drop/test-drag-drop.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -189,7 +191,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         SingleTabbedCaseViewComponent,
         SingleTabbedTaskViewComponent,
         BreadcrumbsExampleComponent,
-        ChangePasswordComponent
+        ChangePasswordComponent,
+        TestDragDropComponent
     ],
     imports: [
         BrowserModule,
@@ -242,7 +245,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         RedirectComponentModule,
         FilterFieldContentModule,
         DialogComponentsModule,
-        FrontActionModule
+        FrontActionModule,
+        DragDropModule
     ],
     providers: [{
         provide: ConfigurationService,

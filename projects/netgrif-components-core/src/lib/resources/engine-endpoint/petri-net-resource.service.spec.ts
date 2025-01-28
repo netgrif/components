@@ -68,22 +68,6 @@ describe('PetriNetResourceService', () => {
         }
     );
 
-    it('should getPetriNetTransactions', (done) => {
-            inject([HttpTestingController],
-                (httpMock: HttpTestingController) => {
-                    service.getPetriNetTransactions('id').subscribe(res => {
-                        expect(res.length).toEqual(0);
-                        done();
-                    });
-
-                    const reqLog = httpMock.expectOne('http://localhost:8080/api/petrinet/id/transactions');
-                    expect(reqLog.request.method).toEqual('GET');
-
-                    reqLog.flush([]);
-                })();
-        }
-    );
-
     it('should getNetFile', (done) => {
             inject([HttpTestingController],
                 (httpMock: HttpTestingController) => {

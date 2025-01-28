@@ -86,9 +86,11 @@ export class TreeTaskContentService implements OnDestroy {
             this._treeCaseService.reloadCase$.next();
         });
         _taskOperations.open$.subscribe(() => {
+            console.log("OPEN OPERATION");
             this._taskContentService.blockFields(false);
         });
         _taskOperations.close$.subscribe(() => {
+            console.log("CLOSE OPERATION");
             this._taskContentService.blockFields(true);
         });
     }
@@ -112,6 +114,7 @@ export class TreeTaskContentService implements OnDestroy {
      */
     protected cancelAndLoadFeaturedTask(selectedCase: Case | undefined) {
         this._processingTaskChange.on();
+        console.log("cancelAndLoadFeaturedTask BLOCK");
         this._taskContentService.blockFields(true);
         if (this.shouldCancelTask) {
             this._cancel.cancel(this._callchain.create(success => {
@@ -215,6 +218,7 @@ export class TreeTaskContentService implements OnDestroy {
 
         task.assignPolicy = AssignPolicy.auto;
         this._taskContentService.task = task;
+        console.log("switchToTask BLOCK");
         this._taskContentService.blockFields(true);
         this._assignPolicy.performAssignPolicy(true, this._callchain.create(() => {
             this._processingTaskChange.off();

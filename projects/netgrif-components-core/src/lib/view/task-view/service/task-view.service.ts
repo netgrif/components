@@ -277,6 +277,7 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
         if (!task.layoutContainer) {
             return;
         }
+        console.log("TASK VIEW BLOCK => " + block);
         callActionRecursively(task.layoutContainer, {doParams: block, termParams: undefined},
             (layoutItem: LayoutItem, params: boolean) => {
                 layoutItem.field.block = params;

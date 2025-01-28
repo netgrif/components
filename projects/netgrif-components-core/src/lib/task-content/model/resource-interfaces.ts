@@ -26,7 +26,7 @@ export interface DataFieldValue {
 export interface DataFieldResource {
     stringId: string;
     type: FieldTypeResource;
-    name: string;
+    title: string;
     description?: string;
     placeholder?: string;
     behavior?: Behavior;

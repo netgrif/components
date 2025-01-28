@@ -40,7 +40,6 @@ describe('Net', () => {
         expect(net.author).toEqual({email: 'mail', fullName: 'name'});
         expect(net.immediateData).toEqual([]);
         expect(net.transitions).toEqual([]);
-        expect(net.transactions).toEqual([]);
         expect(net.roles).toEqual([]);
     });
 

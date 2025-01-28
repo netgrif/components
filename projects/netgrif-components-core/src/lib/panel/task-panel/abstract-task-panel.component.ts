@@ -231,6 +231,9 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
         });
         this.panelRef.afterExpand.subscribe(() => {
             this._taskContentService.$shouldCreate.pipe(take(1)).subscribe(() => {
+                if (this.hasNoFinishPermission()) {
+                    console.log("NO PERMISSION");
+                }
                 this._taskContentService.blockFields(this.hasNoFinishPermission());
                 this._taskPanelData.initiallyExpanded = true;
             });

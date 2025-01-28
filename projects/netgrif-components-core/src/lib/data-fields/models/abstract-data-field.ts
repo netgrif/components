@@ -460,6 +460,8 @@ export abstract class DataField<T> {
             this.validRequired = this.calculateValidity(true, formControl);
             this.valid = this.calculateValidity(false, formControl);
             if (!this._blocked) {
+                // TODO JOFO: check this
+                console.log("BLOCKED UPDATE FIELD");
                 this.disabled ? formControl.disable() : formControl.enable();
             }
         });
@@ -467,9 +469,11 @@ export abstract class DataField<T> {
         this._blockSubscription = this._block.subscribe(bool => {
             if (bool) {
                 this._blocked = true;
+                console.log("BLOCK TRUE FIELD");
                 formControl.disable();
             } else {
                 this._blocked = false;
+                console.log("BLOCK FALSE FIELD");
                 this.disabled ? formControl.disable() : formControl.enable();
             }
         });

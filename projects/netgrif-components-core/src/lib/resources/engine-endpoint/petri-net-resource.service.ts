@@ -61,18 +61,6 @@ export class PetriNetResourceService extends AbstractResourceService {
     }
 
     /**
-     * Get Transaction References Using
-     *
-     * **Request Type:** GET
-     *
-     * **Request URL:** {{baseUrl}}/api/petrinet/{id}/transactions
-     */
-    public getPetriNetTransactions(netId: string, params?: Params): Observable<Array<Transaction>> {
-        return this._resourceProvider.get$('/petrinet/' + netId + '/transactions', this.SERVER_URL, params)
-            .pipe(map(r => this.changeType(r, 'transactions')));
-    }
-
-    /**
      * Get Roles References Using
      *
      * **Request Type:** GET

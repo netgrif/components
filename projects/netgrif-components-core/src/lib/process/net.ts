@@ -58,10 +58,6 @@ export class Net implements PetriNetReferenceWithPermissions {
     /**
      * @ignore
      */
-    private _transactions: Array<Transaction>;
-    /**
-     * @ignore
-     */
     private _roles: Array<NetRole>;
     /**
      * @ignore
@@ -81,7 +77,6 @@ export class Net implements PetriNetReferenceWithPermissions {
         this._author = net.author;
         this._immediateData = net.immediateData;
         this._transitions = [];
-        this._transactions = [];
         this._roles = [];
         this._uriNodeId = net.uriNodeId;
     }
@@ -164,14 +159,6 @@ export class Net implements PetriNetReferenceWithPermissions {
 
     set transitions(value: Array<Transition>) {
         this._transitions = value;
-    }
-
-    get transactions(): Array<Transaction> {
-        return this._transactions;
-    }
-
-    set transactions(value: Array<Transaction>) {
-        this._transactions = value;
     }
 
     get roles(): Array<NetRole> {

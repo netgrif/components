@@ -71,18 +71,6 @@ export class PublicPetriNetResourceService extends PetriNetResourceService {
     }
 
     /**
-     * Get Transaction References Using
-     *
-     * **Request Type:** GET
-     *
-     * **Request URL:** {{baseUrl}}/api/petrinet/{id}/transactions
-     */
-    public getPetriNetTransactions(netId: string, params?: Params): Observable<Array<Transaction>> {
-        return this._resourceProvider.get$('public/petrinet/' + netId + '/transactions', this.SERVER_URL, params)
-            .pipe(map(r => this.changeType(r, 'transactions')));
-    }
-
-    /**
      * Get Data Field References Using
      *
      * **Request Type:** POST

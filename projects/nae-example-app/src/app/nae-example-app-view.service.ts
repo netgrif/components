@@ -42,6 +42,7 @@ import {BreadcrumbsExampleComponent} from './doc/breadcrumbs-example/breadcrumbs
 import {DashboardCaseExampleComponent} from './doc/dashboard-case-example/dashboard-case-example.component';
 import {ImpersonationDemoComponent} from './doc/impersonation-demo/impersonation-demo.component';
 import {ChangePasswordComponent} from "./doc/forms/change-password/change-password.component";
+import {TestDragDropComponent} from './doc/test-drag-drop/test-drag-drop.component';
 
 @Injectable({
     providedIn: 'root'
@@ -91,6 +92,7 @@ export class NaeExampleAppViewService extends ViewService {
             {id: 'PublicTaskViewComponent', class: PublicTaskViewComponent},
             {id: 'PublicWorkflowViewComponent', class: PublicWorkflowViewComponent},
             {id: 'PublicResolverComponent', class: PublicResolverComponent},
+            {id: 'TestDragDropComponent', class: TestDragDropComponent},
             {
                 id: 'ResetPasswordFormComponent',
                 class: ResetPasswordFormComponent
