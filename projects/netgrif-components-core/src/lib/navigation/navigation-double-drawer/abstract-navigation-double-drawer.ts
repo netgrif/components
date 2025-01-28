@@ -5,7 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {ResizeEvent} from 'angular-resizable-element';
 import {Observable, of, Subscription} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {filter, map, take} from 'rxjs/operators';
 import {RoleAccess, View} from '../../../commons/schema';
 import {AccessService} from '../../authorization/permission/access.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
@@ -21,6 +21,7 @@ import {Page} from '../../resources/interface/page';
 import {
     DynamicNavigationRouteProviderService,
 } from '../../routing/dynamic-navigation-route-provider/dynamic-navigation-route-provider.service';
+import { RedirectService } from '../../routing/redirect-service/redirect.service';
 import {NAE_ROUTING_CONFIGURATION_PATH} from '../../routing/routing-builder/routing-builder.service';
 import {LanguageService} from '../../translate/language.service';
 import {User} from '../../user/models/user';
@@ -111,9 +112,15 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
      */
     protected _currentNode: UriNodeResource;
 
+    /**
+     * Currently selected navigation item
+     */
+    protected _currentNavigationItem: NavigationItem;
+
     leftLoading$: LoadingEmitter;
     rightLoading$: LoadingEmitter;
     nodeLoading$: LoadingEmitter;
+    isRightSideInitialized: boolean;
 
     protected _configLeftMenu: ConfigDoubleMenu = {
         mode: 'side',
@@ -143,15 +150,18 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                           protected _caseResourceService: CaseResourceService,
                           protected _impersonationUserSelect: ImpersonationUserSelectService,
                           protected _impersonation: ImpersonationService,
-                          protected _dynamicRoutingService: DynamicNavigationRouteProviderService) {
+                          protected _dynamicRoutingService: DynamicNavigationRouteProviderService,
+                          protected _redirectService: RedirectService) {
         this.leftItems = new Array<NavigationItem>();
         this.rightItems = new Array<NavigationItem>();
         this.leftLoading$ = new LoadingEmitter();
         this.rightLoading$ = new LoadingEmitter();
         this.nodeLoading$ = new LoadingEmitter();
+        this.isRightSideInitialized = false;
         this.itemsOrder = MenuOrder.Ascending;
         this.hiddenCustomItems = [];
         this.moreItems = new Array<NavigationItem>();
+        this._currentNavigationItem = null;
         this._childCustomViews = {};
     }
 
@@ -167,6 +177,14 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         this._currentNodeSubscription = this._uriService.activeNode$.subscribe(node => {
             this.currentNode = node;
         });
+
+        this.rightLoading$.pipe(
+            filter(() => this.isRightSideInitialized === true),
+            filter(isRightLoading => isRightLoading === false),
+            take(1)
+        ).subscribe(()=> {
+            this.openAvailableView();
+        })
 
         const viewConfigurationPath = this._activatedRoute.snapshot.data[NAE_ROUTING_CONFIGURATION_PATH];
         if (!!viewConfigurationPath) {
@@ -347,6 +365,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     }
 
     onItemClick(item: NavigationItem): void {
+        this._currentNavigationItem = item;
         if (item.resource === undefined) {
             // custom view represented only in nae.json
             if (item.processUri === this.currentNode.uriPath) {
@@ -361,6 +380,12 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                 this._uriService.getNodeByPath(path).subscribe(node => {
                     this._uriService.activeNode = node;
                     this.itemClicked.emit({uriNode: this._uriService.activeNode, isHome: false});
+                    this.rightLoading$.pipe(
+                        filter(isRightLoading => isRightLoading === false),
+                        take(1)
+                    ).subscribe(()=> {
+                        this.openAvailableView();
+                    })
                 }, error => {
                     this._log.error(error);
                 });
@@ -374,8 +399,37 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         }
     }
 
+    protected openAvailableView() {
+        let allItems: Array<NavigationItem> = this.rightItems.concat(this.moreItems);
+
+        let autoOpenItems: Array<NavigationItem> = allItems.filter(item => this.hasItemAutoOpenView(item));
+        if (autoOpenItems.length > 0) {
+            this._redirectService.redirect(autoOpenItems[0].routing.path);
+            return;
+        }
+
+        if (this.hasItemView(this._currentNavigationItem)) {
+            // is routed by routerLink on item click
+            return;
+        }
+
+        let itemsWithView: Array<NavigationItem> = allItems.filter(item => this.hasItemView(item));
+        if (itemsWithView.length > 0) {
+            this._redirectService.redirect(autoOpenItems[0].routing.path);
+            return;
+        }
+    }
+
     hasItemChildren(item: NavigationItem): boolean {
         return item.resource?.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_HAS_CHILDREN)?.value;
+    }
+
+    protected hasItemAutoOpenView(item: NavigationItem): boolean {
+        return item.resource?.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_IS_AUTO_SELECT)?.value;
+    }
+
+    protected hasItemView(item: NavigationItem): boolean {
+        return item?.resource?.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_CONTAINS_FILTER)?.value;
     }
 
     isItemAndNodeEqual(item: NavigationItem, node: UriNodeResource): boolean {
@@ -451,6 +505,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                     this.rightItems = result.map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i);
                 }
                 this.resolveCustomViewsInRightSide();
+                this.isRightSideInitialized = true;
                 this.rightLoading$.off();
                 this.itemLoaded.emit({menu: 'right', items: this.rightItems});
             }, error => {
