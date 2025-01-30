@@ -17,6 +17,7 @@ import {
 } from '@netgrif/components-core';
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {TranslateService} from "@ngx-translate/core";
+import {DoubleDrawerNavigationService} from "@netgrif/components-core";
 
 @Component({
     selector: 'nc-navigation-double-drawer',
@@ -70,10 +71,11 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
                 _impersonationUserSelect: ImpersonationUserSelectService,
                 _impersonation: ImpersonationService,
                 _dynamicRouteProviderService: DynamicNavigationRouteProviderService,
-                _redirectService: RedirectService) {
+                _redirectService: RedirectService,
+                _navigationService: DoubleDrawerNavigationService) {
         super(_router, _activatedRoute, _breakpoint, _languageService, _translateService, _userService, _accessService,
             _log, _config, _uriService, _caseResourceService, _impersonationUserSelect, _impersonation,
-            _dynamicRouteProviderService, _redirectService)
+            _dynamicRouteProviderService, _redirectService, _navigationService)
     }
 
     public toggleSection(section: string): void {
