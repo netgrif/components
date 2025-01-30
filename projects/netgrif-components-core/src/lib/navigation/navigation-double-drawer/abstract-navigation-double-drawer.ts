@@ -149,6 +149,10 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         return this._navigationService.currentNode;
     }
 
+    public set currentNode(node: UriNodeResource) {
+        this._navigationService.currentNode = node;
+    }
+
     public get configLeftMenu() {
         return this._configLeftMenu;
     }
@@ -161,8 +165,16 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         return this._navigationService.leftItems$;
     }
 
+    public get leftItems() {
+        return this._navigationService.leftItems;
+    }
+
     public get rightItems$() {
         return this._navigationService.rightItems$;
+    }
+
+    public get rightItems() {
+        return this._navigationService.rightItems;
     }
 
     public get moreItems$() {
