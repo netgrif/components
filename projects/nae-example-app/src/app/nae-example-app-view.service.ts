@@ -37,11 +37,15 @@ import {ExampleRedirectComponent} from './doc/redirect/example-redirect.componen
 import {ActiveGroupComponent} from './doc/active-group/active-group.component';
 import {WrapperEmptyViewComponent} from './views/wrapper/wrapper-empty-view.component';
 import {DoubleDrawerExampleComponent} from './doc/double-drawer-example/double-drawer-example.component';
-import {PublicSingleTaskViewComponent} from './doc/public-single-task-view/public-single-task-view.component';
 import {BreadcrumbsExampleComponent} from './doc/breadcrumbs-example/breadcrumbs-example.component';
 import {DashboardCaseExampleComponent} from './doc/dashboard-case-example/dashboard-case-example.component';
 import {ImpersonationDemoComponent} from './doc/impersonation-demo/impersonation-demo.component';
 import {ChangePasswordComponent} from "./doc/forms/change-password/change-password.component";
+import {
+    DefaultPublicResolverComponent, DefaultPublicSingleTaskViewComponent,
+    DefaultPublicTaskViewComponent,
+    DefaultPublicWorkflowViewComponent
+} from "@netgrif/components";
 
 @Injectable({
     providedIn: 'root'
@@ -54,7 +58,7 @@ export class NaeExampleAppViewService extends ViewService {
             {id: 'ImpersonationDemoComponent', class: ImpersonationDemoComponent},
             {id: 'BreadcrumbsExampleComponent', class: BreadcrumbsExampleComponent},
             {id: 'TitleConfigComponent', class: TitleConfigComponent},
-            {id: 'PublicSingleTaskViewComponent', class: PublicSingleTaskViewComponent},
+            {id: 'PublicSingleTaskViewComponent', class: DefaultPublicSingleTaskViewComponent},
             {id: 'WrapperEmptyViewComponent', class: WrapperEmptyViewComponent},
             {id: 'ActiveGroupComponent', class: ActiveGroupComponent},
             {id: 'ExampleRedirectComponent', class: ExampleRedirectComponent},
@@ -88,9 +92,9 @@ export class NaeExampleAppViewService extends ViewService {
             {id: 'AuthenticationComponent', class: AuthenticationComponent},
             {id: 'RolesAssignComponent', class: RolesAssignComponent},
             {id: 'LdapGroupRolesAssignComponent', class: LdapGroupRolesAssignComponent},
-            {id: 'PublicTaskViewComponent', class: PublicTaskViewComponent},
-            {id: 'PublicWorkflowViewComponent', class: PublicWorkflowViewComponent},
-            {id: 'PublicResolverComponent', class: PublicResolverComponent},
+            {id: 'PublicTaskViewComponent', class: DefaultPublicTaskViewComponent},
+            {id: 'PublicWorkflowViewComponent', class: DefaultPublicWorkflowViewComponent},
+            {id: 'PublicResolverComponent', class: DefaultPublicResolverComponent},
             {
                 id: 'ResetPasswordFormComponent',
                 class: ResetPasswordFormComponent

@@ -170,7 +170,7 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
             this.expand();
         });
         _taskOperations.close$.subscribe(() => {
-            if (!this._taskForceOpen) {
+            if (!(this._taskForceOpen || this.preventCollapse)) {
                 this.collapse();
             }
         });

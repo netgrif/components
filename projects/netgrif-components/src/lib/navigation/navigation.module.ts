@@ -46,6 +46,14 @@ import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { DefaultTaskViewComponent } from './group-navigation-component-resolver/default-components/default-task-view/default-task-view.component';
 import { DefaultCaseRefListViewComponent } from './group-navigation-component-resolver/default-components/default-case-ref-list-view/default-case-ref-list-view.component';
 import { DefaultNoFilterProvidedComponent } from './group-navigation-component-resolver/default-components/default-no-filter-provided/default-no-filter-provided.component';
+import { DefaultPublicResolverComponent } from './group-navigation-component-resolver/default-components/public/default-public-resolver/default-public-resolver.component';
+import {TranslateModule} from "@ngx-translate/core";
+import { DefaultPublicSingleTaskViewComponent } from './group-navigation-component-resolver/default-components/public/default-public-single-task-view/default-public-single-task-view.component';
+import {MatButtonModule} from "@angular/material/button";
+import {MatCardModule} from "@angular/material/card";
+import {MatIconModule} from "@angular/material/icon";
+import { DefaultPublicTaskViewComponent } from './group-navigation-component-resolver/default-components/public/default-public-task-view/default-public-task-view.component';
+import { DefaultPublicWorkflowViewComponent } from './group-navigation-component-resolver/default-components/public/default-public-workflow-view/default-public-workflow-view.component';
 
 
 @NgModule({
@@ -63,27 +71,35 @@ import { DefaultNoFilterProvidedComponent } from './group-navigation-component-r
         DefaultTaskViewComponent,
         DefaultCaseRefListViewComponent,
         BreadcrumbsComponent,
-        DefaultNoFilterProvidedComponent
+        DefaultNoFilterProvidedComponent,
+        DefaultPublicResolverComponent,
+        DefaultPublicSingleTaskViewComponent,
+        DefaultPublicTaskViewComponent,
+        DefaultPublicWorkflowViewComponent
     ],
-	imports: [
-		CommonModule,
-		RouterModule,
-		MaterialModule,
-		FlexModule,
-		FlexLayoutModule,
-		QuickPanelComponentModule,
-		TranslateLibModule,
-		UserComponentModule,
-		ResizableModule,
-		MatProgressSpinnerModule,
-		SearchComponentModule,
-		HeaderComponentModule,
-		PanelComponentModule,
-		TabsComponentModule,
-		CaseViewComponentModule,
-		MatDividerModule,
+    imports: [
+        CommonModule,
+        RouterModule,
+        MaterialModule,
+        FlexModule,
+        FlexLayoutModule,
+        QuickPanelComponentModule,
+        TranslateLibModule,
+        UserComponentModule,
+        ResizableModule,
+        MatProgressSpinnerModule,
+        SearchComponentModule,
+        HeaderComponentModule,
+        PanelComponentModule,
+        TabsComponentModule,
+        CaseViewComponentModule,
+        MatDividerModule,
         UtilityModule,
-	],
+        TranslateModule,
+        MatButtonModule,
+        MatCardModule,
+        MatIconModule,
+    ],
     exports: [
         NavigationDrawerComponent,
         NavigationDoubleDrawerComponent,
@@ -94,7 +110,11 @@ import { DefaultNoFilterProvidedComponent } from './group-navigation-component-r
         DefaultTabbedTaskViewComponent,
         DefaultTabbedCaseViewComponent,
         DefaultTabViewComponent,
-        BreadcrumbsComponent
+        BreadcrumbsComponent,
+        DefaultPublicResolverComponent,
+        DefaultPublicSingleTaskViewComponent,
+        DefaultPublicTaskViewComponent,
+        DefaultPublicWorkflowViewComponent
     ],
     providers: [
         { provide: NAE_GROUP_NAVIGATION_COMPONENT_RESOLVER_COMPONENT, useValue: GroupNavigationComponentResolverComponent },
