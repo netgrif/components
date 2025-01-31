@@ -55,8 +55,8 @@ export abstract class AbstractResourceProvider {
                     return endpoint;
                 } else {
                     return url?.includes('https://') ? 'https://' +
-                        endpoint.replace(/(^\w+:|^)\/\//, '') : 'http://' +
-                        endpoint.replace(/(^\w+:|^)\/\//, '');
+                        endpoint?.replace(/(^\w+:|^)\/\//, '') : 'http://' +
+                        endpoint?.replace(/(^\w+:|^)\/\//, '');
                 }
             } else {
                 return endpoint;

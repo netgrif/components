@@ -90,6 +90,6 @@ export class RedirectService {
         } else {
             path = url;
         }
-        return path.replace('/redirect', '');
+        return path?.replace('/redirect', '');
     }
 }
