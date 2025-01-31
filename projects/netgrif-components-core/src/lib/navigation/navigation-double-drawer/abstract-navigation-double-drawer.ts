@@ -364,7 +364,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                 }, error => {
                     this._log.error(error);
                 });
-            } else if (!path.includes(this.currentNode.uriPath)) {
+            } else if (!path?.includes(this.currentNode.uriPath)) {
                 this._uriService.activeNode = this._currentNode.parent;
                 this.itemClicked.emit({uriNode: this._uriService.activeNode, isHome: false});
             } else {

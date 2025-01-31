@@ -85,7 +85,7 @@ export class RedirectService {
 
     public parseRedirectPath(url: string): string {
         let path: string;
-        if (url.includes('?')) {
+        if (url?.includes('?')) {
             path = url.slice(0, url.indexOf('?'));
         } else {
             path = url;

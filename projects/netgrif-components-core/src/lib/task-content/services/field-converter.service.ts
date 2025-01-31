@@ -42,7 +42,7 @@ export class FieldConverterService {
                 return new BooleanField(item.stringId, item.name, item.value as boolean, item.behavior,
                     item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.TEXT:
-                if (this.textFieldNames.includes(item.component?.name)) {
+                if (this.textFieldNames?.includes(item.component?.name)) {
                     return new TextAreaField(item.stringId, item.name, this.resolveTextValue(item, item.value), item.behavior,
                         item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
                 }

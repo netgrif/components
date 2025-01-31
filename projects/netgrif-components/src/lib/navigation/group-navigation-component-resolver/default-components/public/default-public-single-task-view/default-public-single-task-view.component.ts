@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {AsyncPipe} from "@angular/common";
 import {combineLatest} from "rxjs";
@@ -29,7 +29,6 @@ import {
     NAE_BASE_FILTER,
     BaseFilter,
 } from '@netgrif/components-core';
-import {HeaderComponent} from "../../../../../header/header.component";
 
 const localAllowedNetsServiceFactory = (factory: AllowedNetsServiceFactory, route: ActivatedRoute) => {
     const array = [];
@@ -71,9 +70,7 @@ const localAllowedNetsServiceFactory = (factory: AllowedNetsServiceFactory, rout
         AsyncPipe
     ]
 })
-export class DefaultPublicSingleTaskViewComponent extends AbstractSingleTaskViewComponent implements OnInit, AfterViewInit {
-
-    @ViewChild('header') public taskHeaderComponent: HeaderComponent;
+export class DefaultPublicSingleTaskViewComponent extends AbstractSingleTaskViewComponent implements OnInit {
 
     hidden: boolean;
 
@@ -93,9 +90,5 @@ export class DefaultPublicSingleTaskViewComponent extends AbstractSingleTaskView
 
     ngOnInit(): void {
         this._router.routeReuseStrategy.shouldReuseRoute = () => false
-    }
-
-    ngAfterViewInit(): void {
-        this.initializeHeader(this.taskHeaderComponent);
     }
 }
