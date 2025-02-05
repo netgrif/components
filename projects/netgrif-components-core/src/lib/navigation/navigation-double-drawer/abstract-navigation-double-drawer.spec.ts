@@ -38,6 +38,8 @@ import {AbstractNavigationDoubleDrawerComponent} from './abstract-navigation-dou
 import {TranslateService} from "@ngx-translate/core";
 import {CaseResourceService} from "../../resources/engine-endpoint/case-resource.service";
 import {MockCaseResourceService} from "../../utility/tests/mocks/mock-case-resource.service";
+import {DoubleDrawerNavigationService} from "./service/double-drawer-navigation.service";
+import {RedirectService} from "../../routing/redirect-service/redirect.service";
 
 xdescribe('AbstractNavigationDoubleDrawerComponent', () => {
     let component: TestDrawerComponent;
@@ -151,9 +153,12 @@ class TestDrawerComponent extends AbstractNavigationDoubleDrawerComponent {
                 _caseResourceService: CaseResourceService,
                 _impersonationUserSelect: ImpersonationUserSelectService,
                 _impersonation: ImpersonationService,
-                _dynamicRouteProviderService: DynamicNavigationRouteProviderService) {
+                _dynamicRouteProviderService: DynamicNavigationRouteProviderService,
+                _redirectService: RedirectService,
+                _navigationService: DoubleDrawerNavigationService) {
         super(_router, _activatedRoute, _breakpoint, _languageService, _translateService, _userService, _accessService,
-            _log, _config, _uriService, _caseResourceService, _impersonationUserSelect, _impersonation, _dynamicRouteProviderService);
+            _log, _config, _uriService, _caseResourceService, _impersonationUserSelect, _impersonation,
+            _dynamicRouteProviderService, _redirectService, _navigationService);
     }
 }
 

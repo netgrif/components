@@ -15,6 +15,7 @@ export * from './utility/filter-extraction.service';
 export * from './service/uri.service';
 export * from './service/uri-resource.service';
 export * from './service/navigation-utils.service';
+export * from './navigation-double-drawer/service/double-drawer-navigation.service';
 
 /* MODELS */
 export * from './model/group-navigation-constants';

@@ -175,4 +175,14 @@ export enum GroupNavigationConstants {
      * */
     ITEM_FIELD_ID_CHILD_ITEM_IDS = 'childItemIds',
 
+    /**
+     * Boolean field, that is true if item contains view, that should be automatically opened.
+     * */
+    ITEM_FIELD_ID_IS_AUTO_SELECT = 'is_auto_select',
+
+    /**
+     * Boolean field, that is true if item contains view.
+     * */
+    ITEM_FIELD_CONTAINS_FILTER = 'contains_filter',
+
 }

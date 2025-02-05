@@ -1313,6 +1313,9 @@
         },
         "groupNavigation": {
             "groupNavigationRoute": "group-nav"
+        },
+        "doubleDrawer": {
+            "url": "drawer-double"
         }
     }
 }
