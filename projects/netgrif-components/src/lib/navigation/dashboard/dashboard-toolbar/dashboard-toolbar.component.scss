@@ -1,0 +1,196 @@
+.dashboard-card {
+    width: 280px;
+    height: 280px;
+    background: #FFFFFF;
+    margin: 20px;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1), 0px 2px 6px 2px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 24px;
+    gap: 16px;
+    cursor: pointer;
+}
+
+.news-card {
+    width: 100%;
+    background: #FFFFFF;
+    margin: 10px;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1), 0px 2px 6px 2px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 24px;
+    gap: 16px;
+}
+
+.news-card-title {
+    width: 100%;
+    background: #FFFFFF;
+    margin: 20px 10px 10px;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1), 0px 2px 6px 2px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 12px;
+    gap: 16px;
+}
+
+.example-header-image {
+    background-size: cover;
+}
+
+.card-content {
+    text-align: center;
+    margin-bottom: 0 !important;
+}
+
+.card-main-text {
+    font-weight: 400;
+    font-size: 34px;
+    line-height: 40px;
+    letter-spacing: 0.25px;
+    text-align: center;
+}
+
+.card-article-text {
+    width: 100%;
+}
+
+.news-important {
+    background-color: white;
+    border-bottom: 3px solid;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2), 0px 2px 6px 2px rgba(0, 0, 0, 0.22);
+}
+
+.card-title-text {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 32px;
+    letter-spacing: 0.25px;
+    text-align: center;
+}
+
+.card-no-articles {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+    letter-spacing: 0.25px;
+    text-align: center;
+}
+
+.card-secondary-text {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.25px;
+    color: #64748B;
+    text-align: center;
+}
+
+.card-icon {
+    height: 100px;
+    width: 100px;
+    font-size: 100px;
+}
+
+.cards-container {
+    padding: 5% 0 5% 1%;
+}
+
+.news-container {
+    padding: 5% 1% 5% 5%;
+}
+
+.main-toolbar-logo {
+    max-height: 60%;
+}
+
+.main-toolbar-logo img {
+    width: 120px;
+}
+
+mat-icon.main-toolbar-icon {
+    font-size: 48px;
+    height: 100%;
+    margin-right: 15px;
+}
+
+.main-toolbar-logged-user {
+    margin-right: 15px;
+}
+
+.main-toolbar-menu {
+    font-size: 20px;
+    height: 100%;
+}
+
+.main-toolbar-menu-icon {
+    font-size: 23px;
+}
+
+.counter {
+    margin-top: 12px;
+}
+
+.info-text {
+    font-size: 12pt;
+}
+
+.mat-badge-content {
+    width: fit-content;
+    min-width: 32px;
+    min-height: 32px;
+    text-align: center;
+    border-radius: 16px;
+    font-size: 18px;
+    padding: 2px;
+}
+
+.fixed-bottom-toolbar {
+    position: fixed;
+    bottom: 0;
+
+    min-height: 40px !important;
+    max-height: 40px !important;
+}
+
+link {
+    display: block !important;
+}
+
+.external-icon-26 {
+    margin-right: 10px;
+    margin-left: 10px;
+    width: 26px;
+    height: 26px;
+}
+
+.external-icon-28 {
+    margin-right: 10px;
+    margin-left: 10px;
+    width: 28px;
+    height: 28px;
+}
+
+.external-icon-white {
+    margin-right: 10px;
+    margin-left: 10px;
+    width: 24px;
+    height: 24px;
+    background-color: white;
+    border-radius: 50%;
+    padding: 2px;
+}
+
+.weight-text {
+    font-weight: 600;
+    font-size: 36px;
+    line-height: 36px;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.menu-item-focus-overlay:hover {
+    opacity: 0.89;
+}
+
+.logo img {
+    height: 50px;
+}

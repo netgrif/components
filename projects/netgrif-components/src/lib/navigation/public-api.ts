@@ -16,6 +16,8 @@ export * from './group-navigation-component-resolver/default-components/default-
 export * from './group-navigation-component-resolver/default-components/default-tabbed-task-view/default-tabbed-task-view.component';
 export * from './breadcrumbs/breadcrumbs.component';
 export * from './group-navigation-component-resolver/default-components/default-task-view/default-task-view.component';
+export * from './dashboard/dashboard.component';
+export * from './dashboard/dashboard-toolbar/dashboard-toolbar.component';
 
 /* FUNCTIONS */
 export * from './group-navigation-component-resolver/default-components/model/factory-methods';

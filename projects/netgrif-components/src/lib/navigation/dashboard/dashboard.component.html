@@ -1,0 +1,27 @@
+<div class="height-100" fxLayout="column" >
+    <nc-dashboard-toolbar></nc-dashboard-toolbar>
+    <div fxLayout="column" fxFlex="100" fxLayoutAlign="center center" class="background-dashboard">
+        <div class="cards-container" fxLayout="row wrap" fxLayoutAlign="center center" fxFlex="100">
+
+            <div *ngIf="loading$ | async" fxLayout="column" fxLayoutAlign="center center" class="margin-top-default">
+                <mat-spinner color="primary" diameter="60" mode="indeterminate"></mat-spinner>
+            </div>
+
+            <div fxLayout="column" fxLayoutAlign="center center" *ngFor="let view of customViews" class="dashboard-card"
+                 (click)="openView(view)">
+                <mat-card-content fxLayout="column" fxLayoutAlign="center center" class="card-content"
+                                  (click)="openView(view)" [ngClass]="{'highlight-color': view.navigation.title === 'Search'}">
+                    <mat-icon class="card-icon">{{ view.navigation.icon }}</mat-icon>
+                    <div class="card-main-text">{{ view.navigation.title }}</div>
+                    <div *ngIf="view.showCounter && isCountLoaded(view)" class="card-secondary-text counter"
+                         [ngClass]="{'accent-text-color': countView(view) !== 0}">
+                        {{ countView(view) }} {{ 'nidec-dashboard.cases' | translate }}
+                    </div>
+                    <div *ngIf="!isCountLoaded(view)" class="card-secondary-text counter">
+                        <mat-spinner color="accent" diameter="24"></mat-spinner>
+                    </div>
+                </mat-card-content>
+            </div>
+        </div>
+    </div>
+</div>

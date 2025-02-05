@@ -46,6 +46,8 @@ import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { DefaultTaskViewComponent } from './group-navigation-component-resolver/default-components/default-task-view/default-task-view.component';
 import { DefaultCaseRefListViewComponent } from './group-navigation-component-resolver/default-components/default-case-ref-list-view/default-case-ref-list-view.component';
 import { DefaultNoFilterProvidedComponent } from './group-navigation-component-resolver/default-components/default-no-filter-provided/default-no-filter-provided.component';
+import {DashboardComponent} from './dashboard/dashboard.component';
+import {DashboardToolbarComponent} from './dashboard/dashboard-toolbar/dashboard-toolbar.component';
 
 
 @NgModule({
@@ -63,7 +65,9 @@ import { DefaultNoFilterProvidedComponent } from './group-navigation-component-r
         DefaultTaskViewComponent,
         DefaultCaseRefListViewComponent,
         BreadcrumbsComponent,
-        DefaultNoFilterProvidedComponent
+        DefaultNoFilterProvidedComponent,
+        DashboardComponent,
+        DashboardToolbarComponent
     ],
 	imports: [
 		CommonModule,
@@ -94,7 +98,9 @@ import { DefaultNoFilterProvidedComponent } from './group-navigation-component-r
         DefaultTabbedTaskViewComponent,
         DefaultTabbedCaseViewComponent,
         DefaultTabViewComponent,
-        BreadcrumbsComponent
+        BreadcrumbsComponent,
+        DashboardComponent,
+        DashboardToolbarComponent
     ],
     providers: [
         { provide: NAE_GROUP_NAVIGATION_COMPONENT_RESOLVER_COMPONENT, useValue: GroupNavigationComponentResolverComponent },

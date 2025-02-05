@@ -42,6 +42,9 @@ import {BreadcrumbsExampleComponent} from './doc/breadcrumbs-example/breadcrumbs
 import {DashboardCaseExampleComponent} from './doc/dashboard-case-example/dashboard-case-example.component';
 import {ImpersonationDemoComponent} from './doc/impersonation-demo/impersonation-demo.component';
 import {ChangePasswordComponent} from "./doc/forms/change-password/change-password.component";
+import {
+    NavigationDashboardExampleComponent
+} from './doc/navigation-dashboard-example/navigation-dashboard-example.component';
 
 @Injectable({
     providedIn: 'root'
@@ -82,6 +85,7 @@ export class NaeExampleAppViewService extends ViewService {
             {id: 'RailExampleComponent', class: RailExampleComponent},
             {id: 'DrawerExampleComponent', class: DrawerExampleComponent},
             {id: 'DoubleDrawerExampleComponent', class: DoubleDrawerExampleComponent},
+            {id: 'NavigationDashboardExampleComponent', class: NavigationDashboardExampleComponent},
             {id: 'RegisterFormComponent', class: RegisterFormComponent},
             {id: 'PasswordFormComponent', class: PasswordFormComponent},
             {id: 'LoginFormComponent', class: LoginFormComponent},
