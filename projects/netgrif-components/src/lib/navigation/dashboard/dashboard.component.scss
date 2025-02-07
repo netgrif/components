@@ -1,11 +1,25 @@
+.height-100 {
+    height: 100%;
+    min-height: 935px;
+
+}
+
+.background-dashboard {
+    background: #f2f2f2;
+}
+
+.cards-container {
+    max-width: 1050px;
+}
+
 .dashboard-card {
     width: 300px;
     height: 250px;
     background: #FFFFFF;
-    margin: 20px;
+    margin: 16px;
     box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1), 0px 2px 6px 2px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    padding: 24px;
+    padding: 20px;
     gap: 16px;
     cursor: pointer;
 }
@@ -15,140 +29,21 @@
     margin-bottom: 0 !important;
 }
 
+.card-icon {
+    max-height: 80px;
+    max-width: 80px;
+    height: auto;
+    width: auto;
+    margin-bottom: 20px;
+    font-size: 75px;
+}
+
 .card-main-text {
     font-weight: 400;
-    font-size: 48px;
+    font-size: 44px;
     line-height: 50px;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
     text-align: center;
-}
-
-.card-secondary-text {
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 24px;
-    letter-spacing: 0.25px;
-    color: #64748B;
-    text-align: center;
-}
-
-.card-icon {
-    height: 80px;
-    width: 80px;
-    font-size: 80px;
-}
-
-.cards-container {
-    max-width: 1050px;
-}
-
-.news-container {
-    padding: 1% 1% 5% 5%;
-}
-
-.main-toolbar-logo {
-    max-height: 60%;
-}
-
-.main-toolbar-logo img {
-    width: 120px;
-}
-
-mat-icon.main-toolbar-icon {
-    font-size: 48px;
-    height: 100%;
-    margin-right: 15px;
-}
-
-.main-toolbar-logged-user {
-    margin-right: 15px;
-}
-
-.main-toolbar-menu {
-    font-size: 20px;
-    height: 100%;
-}
-
-.main-toolbar-menu-icon {
-    font-size: 23px;
-}
-
-.counter {
-    margin-top: 12px;
-}
-
-.info-text {
-    font-size: 12pt;
-}
-
-.mat-badge-content {
-    width: fit-content;
-    min-width: 32px;
-    min-height: 32px;
-    text-align: center;
-    border-radius: 16px;
-    font-size: 18px;
-    padding: 2px;
-}
-
-.fixed-toolbar {
-    position: fixed;
-}
-
-.fixed-bottom-toolbar {
-    position: fixed;
-    bottom: 0;
-
-    min-height: 40px !important;
-    max-height: 40px !important;
-}
-
-link {
-    display: block !important;
-}
-
-.external-icon-70 {
-    width: 70px;
-    height: 70px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-
-.external-icon-service-now {
-    width: 70px;
-    margin-top: 9px;
-    margin-bottom: 9px;
-}
-
-.weight-text {
-    font-weight: 600;
-    font-size: 36px;
-    line-height: 36px;
-}
-
-.clickable {
-    cursor: pointer;
-}
-
-.menu-item-focus-overlay:hover {
-    opacity: 0.89;
-}
-
-.height-100 {
-    height: 100%;
-    min-height: 935px;
-
-}
-
-.background-dashboard {
-    background: #f2f2f2;
-    color: #009b4b;
-}
-
-.highlight-color {
-    color: #9B0050;
-}
-
-.dashboard-divider {
-    min-width: 50%;
+    margin-bottom: 20px !important;
+    margin-top: 10px !important;
 }

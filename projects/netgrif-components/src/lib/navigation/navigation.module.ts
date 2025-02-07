@@ -47,7 +47,7 @@ import { DefaultTaskViewComponent } from './group-navigation-component-resolver/
 import { DefaultCaseRefListViewComponent } from './group-navigation-component-resolver/default-components/default-case-ref-list-view/default-case-ref-list-view.component';
 import { DefaultNoFilterProvidedComponent } from './group-navigation-component-resolver/default-components/default-no-filter-provided/default-no-filter-provided.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
-import {DashboardToolbarComponent} from './dashboard/dashboard-toolbar/dashboard-toolbar.component';
+import {ToolbarComponentModule} from '../toolbar/toolbar.module';
 
 
 @NgModule({
@@ -67,27 +67,27 @@ import {DashboardToolbarComponent} from './dashboard/dashboard-toolbar/dashboard
         BreadcrumbsComponent,
         DefaultNoFilterProvidedComponent,
         DashboardComponent,
-        DashboardToolbarComponent
     ],
-	imports: [
-		CommonModule,
-		RouterModule,
-		MaterialModule,
-		FlexModule,
-		FlexLayoutModule,
-		QuickPanelComponentModule,
-		TranslateLibModule,
-		UserComponentModule,
-		ResizableModule,
-		MatProgressSpinnerModule,
-		SearchComponentModule,
-		HeaderComponentModule,
-		PanelComponentModule,
-		TabsComponentModule,
-		CaseViewComponentModule,
-		MatDividerModule,
+    imports: [
+        CommonModule,
+        RouterModule,
+        MaterialModule,
+        FlexModule,
+        FlexLayoutModule,
+        QuickPanelComponentModule,
+        TranslateLibModule,
+        UserComponentModule,
+        ResizableModule,
+        MatProgressSpinnerModule,
+        SearchComponentModule,
+        HeaderComponentModule,
+        PanelComponentModule,
+        TabsComponentModule,
+        CaseViewComponentModule,
+        MatDividerModule,
         UtilityModule,
-	],
+        ToolbarComponentModule,
+    ],
     exports: [
         NavigationDrawerComponent,
         NavigationDoubleDrawerComponent,
@@ -100,7 +100,6 @@ import {DashboardToolbarComponent} from './dashboard/dashboard-toolbar/dashboard
         DefaultTabViewComponent,
         BreadcrumbsComponent,
         DashboardComponent,
-        DashboardToolbarComponent
     ],
     providers: [
         { provide: NAE_GROUP_NAVIGATION_COMPONENT_RESOLVER_COMPONENT, useValue: GroupNavigationComponentResolverComponent },
