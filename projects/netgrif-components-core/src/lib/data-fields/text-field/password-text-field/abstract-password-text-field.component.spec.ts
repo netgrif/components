@@ -19,6 +19,7 @@ import {TextField} from '../models/text-field';
 import {TranslateService} from '@ngx-translate/core';
 import {AbstractPasswordTextFieldComponent} from './abstract-password-text-field.component';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
+import {NAE_SAVE_DATA_INFORM} from "../../models/save-data-inform-token";
 
 describe('AbstractPasswordTextFieldComponent', () => {
     let component: TestPasswordTextComponent;
@@ -79,8 +80,9 @@ describe('AbstractPasswordTextFieldComponent', () => {
 })
 class TestPasswordTextComponent extends AbstractPasswordTextFieldComponent {
     constructor(protected _translate: TranslateService,
-                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextField>) {
-        super(_translate, dataFieldPortalData);
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextField>,
+                @Optional() @Inject(NAE_SAVE_DATA_INFORM) _saveDataInform: boolean) {
+        super(_translate, dataFieldPortalData, _saveDataInform);
     }
 }
 

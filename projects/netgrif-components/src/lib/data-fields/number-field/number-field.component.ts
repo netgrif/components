@@ -1,5 +1,9 @@
 import {Component, Inject, Optional} from '@angular/core';
-import {AbstractNumberFieldComponent, NAE_INFORM_ABOUT_INVALID_DATA} from '@netgrif/components-core';
+import {
+    AbstractNumberFieldComponent,
+    NAE_INFORM_ABOUT_INVALID_DATA,
+    NAE_SAVE_DATA_INFORM
+} from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 
 /**
@@ -12,7 +16,8 @@ import {TranslateService} from '@ngx-translate/core';
 })
 export class NumberFieldComponent extends AbstractNumberFieldComponent {
     constructor(translate: TranslateService,
-                @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
-        super(translate, informAboutInvalidData);
+                @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null,
+                @Optional() @Inject(NAE_SAVE_DATA_INFORM) saveDataInform: boolean | null) {
+        super(translate, informAboutInvalidData, saveDataInform);
     }
 }

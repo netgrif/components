@@ -1,5 +1,10 @@
 import {Component, Inject, Optional} from '@angular/core';
-import {AbstractTextFieldComponent, NAE_INFORM_ABOUT_INVALID_DATA} from '@netgrif/components-core';
+import {
+    AbstractTextFieldComponent,
+    NAE_INFORM_ABOUT_INVALID_DATA,
+    NAE_SAVE_DATA_INFORM,
+    TextFieldComponent as TextFieldComponentEnum
+} from '@netgrif/components-core';
 
 /**
  * @deprecated
@@ -11,7 +16,10 @@ import {AbstractTextFieldComponent, NAE_INFORM_ABOUT_INVALID_DATA} from '@netgri
 })
 export class TextFieldComponent extends AbstractTextFieldComponent {
 
-    constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
-        super(informAboutInvalidData);
+    textFieldComponentEnum = TextFieldComponentEnum;
+
+    constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null,
+                @Optional() @Inject(NAE_SAVE_DATA_INFORM) saveDataInform: boolean | null) {
+        super(informAboutInvalidData, saveDataInform);
     }
 }

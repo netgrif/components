@@ -5,6 +5,7 @@ import {CustomCard} from '../../dashboard/cards/model/custom-dashboard-model/cus
 import {Subscription} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../models/data-field-portal-data-injection-token";
+import {NAE_SAVE_DATA_INFORM} from "../models/save-data-inform-token";
 
 @Component({
     selector: 'ncc-abstract-dashboard-text-field',
@@ -16,8 +17,9 @@ export abstract class AbstractDashboardTextFieldComponent extends AbstractTextEr
     protected _sub: Subscription;
 
     protected constructor(translate: TranslateService,
-                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextField>) {
-        super(translate, dataFieldPortalData);
+                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextField>,
+                          @Optional() @Inject(NAE_SAVE_DATA_INFORM) _saveDataInform: boolean) {
+        super(translate, dataFieldPortalData, _saveDataInform);
     }
 
     ngOnInit(): void {

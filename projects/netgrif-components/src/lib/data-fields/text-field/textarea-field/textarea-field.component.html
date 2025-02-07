@@ -7,11 +7,14 @@
               #textArea
               [placeholder]="dataField.placeholder"
               [required]="dataField.behavior.required"
-              [formControl]="formControlRef"
+              [(ngModel)]="dataField.value"
               [ngStyle]="{'min-height': getHeight()+'px', 'height': getHeight()+'px'}"
               #dynamicTextArea="cdkTextareaAutosize"
               cdkTextareaAutosize
-              cdkAutosizeMinRows="1"></textarea>
+              cdkAutosizeMinRows="1"
+              (focusin)="dataField.setFocus()"
+              (focusout)="dataField.unsetFocus()"></textarea>
+    <input type="hidden" [formControl]="formControlRef">
     <mat-hint [ngClass]="{'mat-hint-disabled': formControlRef.disabled}">{{dataField.description}}</mat-hint>
     <mat-error *ngIf="dataField.isInvalid(formControlRef)">{{getErrorMessage()}}</mat-error>
 </mat-form-field>

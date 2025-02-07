@@ -5,6 +5,7 @@ import {CustomIframeCard} from '../../../dashboard/cards/model/custom-dashboard-
 import {AbstractDashboardTextFieldComponent} from '../abstract-dashboard-text-field.component';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {TextField} from "../models/text-field";
+import {NAE_SAVE_DATA_INFORM} from "../../models/save-data-inform-token";
 
 @Component({
     selector: 'ncc-abstract-dashboard-iframe-text-field',
@@ -15,8 +16,9 @@ export abstract class AbstractDashboardIframeTextFieldComponent extends Abstract
     public card?: CustomIframeCard;
 
     protected constructor(translate: TranslateService,
-                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextField>) {
-        super(translate, dataFieldPortalData);
+                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextField>,
+                          @Optional() @Inject(NAE_SAVE_DATA_INFORM) _saveDataInform: boolean) {
+        super(translate, dataFieldPortalData, _saveDataInform);
     }
 
     protected createCard(textFieldValue: string): CustomIframeCard {

@@ -109,6 +109,7 @@ export * from './models/boolean-label-enabled-token';
 export * from './models/invalid-data-policy-token';
 export * from './models/data-field-portal-data-injection-token';
 export * from './filter-field/models/filter-field-injection-token';
+export * from './models/save-data-inform-token';
 
 /* Enums */
 export * from './models/template-appearance';

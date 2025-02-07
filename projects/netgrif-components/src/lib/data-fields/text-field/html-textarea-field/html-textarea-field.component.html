@@ -1,6 +1,7 @@
 <div class="height-100" #quillContainer [ngClass]="{'padding-bottom-custom': !formControlRef.disabled}">
     <quill-editor theme="snow" *ngIf="!formControlRef.disabled" [(ngModel)]="dataField.value"
-                  [modules]="quillModules" [bounds]="quillContainer" placeholder="{{ dataField.placeholder |translate}}"></quill-editor>
+                  [modules]="quillModules" [bounds]="quillContainer" placeholder="{{ dataField.placeholder |translate}}"
+                  (focusin)="dataField.setFocus()" (focusout)="dataField.unsetFocus()"></quill-editor>
     <mat-error *ngIf="dataField.isInvalid(formControlRef)">{{getErrorMessage()}}</mat-error>
     <input type="hidden" [formControl]="formControlRef">
     <div *ngIf="formControlRef.disabled" class="ql-snow user-select-auto" [ngClass]="{'border' : dataField.materialAppearance === 'outline'}">

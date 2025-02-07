@@ -3,7 +3,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {
     AbstractDashboardBarChartTextFieldComponent,
     DATA_FIELD_PORTAL_DATA,
-    DataFieldPortalData,
+    DataFieldPortalData, NAE_SAVE_DATA_INFORM,
     TextField
 } from '@netgrif/components-core';
 
@@ -15,8 +15,9 @@ import {
 export class DashboardBarChartTextFieldComponent extends AbstractDashboardBarChartTextFieldComponent {
 
     constructor(translate: TranslateService,
-                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextField>) {
-        super(translate, dataFieldPortalData);
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextField>,
+                @Optional() @Inject(NAE_SAVE_DATA_INFORM) _saveDataInform: boolean) {
+        super(translate, dataFieldPortalData, _saveDataInform);
     }
 
 }

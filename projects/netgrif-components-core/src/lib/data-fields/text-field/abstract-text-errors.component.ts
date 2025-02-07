@@ -5,6 +5,7 @@ import {TextAreaField} from './models/text-area-field';
 import {Component, Inject, Optional} from "@angular/core";
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../models/data-field-portal-data-injection-token";
 import {AbstractBaseDataFieldComponent} from "../base-component/abstract-base-data-field.component";
+import {NAE_SAVE_DATA_INFORM} from "../models/save-data-inform-token";
 
 @Component({
     selector: 'ncc-text-errors',
@@ -13,8 +14,9 @@ import {AbstractBaseDataFieldComponent} from "../base-component/abstract-base-da
 export abstract class AbstractTextErrorsComponent<T extends TextField> extends AbstractBaseDataFieldComponent<T>{
 
     protected constructor(protected _translate: TranslateService,
-                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<T>) {
-        super(dataFieldPortalData);
+                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<T>,
+                          @Optional() @Inject(NAE_SAVE_DATA_INFORM) _saveDataInform: boolean) {
+        super(dataFieldPortalData, _saveDataInform);
     }
 
     protected buildErrorMessage(textField: TextField | TextAreaField, formControlRef: FormControl) {

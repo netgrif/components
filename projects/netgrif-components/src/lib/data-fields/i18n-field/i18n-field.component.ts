@@ -1,5 +1,9 @@
 import {Component, Inject, Optional} from '@angular/core';
-import {AbstractI18nFieldComponent, NAE_INFORM_ABOUT_INVALID_DATA} from '@netgrif/components-core';
+import {
+    AbstractI18nFieldComponent,
+    NAE_INFORM_ABOUT_INVALID_DATA,
+    NAE_SAVE_DATA_INFORM
+} from '@netgrif/components-core';
 
 /**
  * @deprecated
@@ -11,7 +15,8 @@ import {AbstractI18nFieldComponent, NAE_INFORM_ABOUT_INVALID_DATA} from '@netgri
 })
 export class I18nFieldComponent extends AbstractI18nFieldComponent {
 
-    constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
-        super(informAboutInvalidData);
+    constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null,
+                @Optional() @Inject(NAE_SAVE_DATA_INFORM) saveDataInform: boolean | null) {
+        super(informAboutInvalidData, saveDataInform);
     }
 }

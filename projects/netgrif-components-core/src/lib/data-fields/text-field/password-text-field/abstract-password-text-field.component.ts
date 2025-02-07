@@ -3,6 +3,7 @@ import {TextField} from '../models/text-field';
 import {TranslateService} from '@ngx-translate/core';
 import {AbstractTextErrorsComponent} from '../abstract-text-errors.component';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
+import {NAE_SAVE_DATA_INFORM} from "../../models/save-data-inform-token";
 
 @Component({
     selector: 'ncc-abstract-password-text-field',
@@ -11,8 +12,9 @@ import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-fie
 export abstract class AbstractPasswordTextFieldComponent extends AbstractTextErrorsComponent<TextField> {
 
     constructor(protected _translate: TranslateService,
-                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextField>) {
-        super(_translate, dataFieldPortalData);
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextField>,
+                @Optional() @Inject(NAE_SAVE_DATA_INFORM) _saveDataInform: boolean) {
+        super(_translate, dataFieldPortalData, _saveDataInform);
     }
 
     public getErrorMessage() {

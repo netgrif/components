@@ -9,8 +9,8 @@
            [formControl]="formControlRef"
            [placeholder]="dataField.placeholder"
            [required]="dataField.behavior.required"
-           (focusout)="onFocusOut($event)"
-           (focusin)="onFocusIn()">
+           (focusout)="dataField.unsetFocus(); onFocusOut($event)"
+           (focusin)="dataField.setFocus(); onFocusIn()">
     <mat-hint [ngClass]="{'mat-hint-disabled': formControlRef.disabled}">{{dataField.description}}</mat-hint>
     <mat-error *ngIf="dataField.isInvalid(formControlRef)">{{getErrorMessage()}}</mat-error>
 </mat-form-field>
