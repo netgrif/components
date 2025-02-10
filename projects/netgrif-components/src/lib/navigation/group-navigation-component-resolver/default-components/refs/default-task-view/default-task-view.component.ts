@@ -10,8 +10,8 @@ import {
     SearchService,
     TaskEventNotification,
     TaskViewService, ViewIdService
-} from "@netgrif/components-core";
-import {HeaderComponent} from "../../../../header/header.component";
+} from "netgrif-components-core";
+import {HeaderComponent} from "../../../../../header/header.component";
 
 const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
     return factory.createWithAllNets();

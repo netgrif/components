@@ -20,12 +20,12 @@ import {
     SimpleFilter,
     TaskSetDataRequestFields,
     ViewIdService, DATA_FIELD_PORTAL_DATA, DataFieldPortalData, MultichoiceField, EnumerationField
-} from '@netgrif/components-core';
-import {HeaderComponent} from '../../../../header/header.component'
-import {DefaultTabbedTaskViewComponent} from '../default-tabbed-task-view/default-tabbed-task-view.component';
+} from 'netgrif-components-core';
+import {HeaderComponent} from '../../../../../header/header.component'
+import {DefaultTabbedTaskViewComponent} from '../../tabbed/default-tabbed-task-view/default-tabbed-task-view.component';
 import {
     InjectedTabbedTaskViewDataWithNavigationItemTaskData
-} from "../model/injected-tabbed-task-view-data-with-navigation-item-task-data";
+} from "../../model/injected-tabbed-task-view-data-with-navigation-item-task-data";
 
 const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
     return factory.createWithAllNets();

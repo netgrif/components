@@ -1,6 +1,6 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {DefaultTabbedCaseViewComponent} from './default-tabbed-case-view.component';
-import {NavigationComponentModule} from '../../../navigation.module';
+import {NavigationComponentModule} from '../../../../navigation.module';
 import {
     BooleanField,
     FilterField,
@@ -14,7 +14,7 @@ import {
     TestMockDependenciesModule,
     TextField,
     UserFilterConstants
-} from '@netgrif/components-core';
+} from 'netgrif-components-core';
 import {of} from 'rxjs';
 import {DefaultTabbedTaskViewComponent} from '../default-tabbed-task-view/default-tabbed-task-view.component';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';

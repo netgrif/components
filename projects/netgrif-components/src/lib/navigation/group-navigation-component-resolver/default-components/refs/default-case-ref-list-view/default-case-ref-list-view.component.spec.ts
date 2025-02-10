@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DefaultCaseRefListViewComponent } from './default-case-ref-list-view.component';
-import {NavigationComponentModule} from '../../../navigation.module';
+import {NavigationComponentModule} from '../../../../navigation.module';
 import {
     FilterField, FilterType,
     NAE_TAB_DATA,
@@ -10,11 +10,11 @@ import {
     TestMockDependenciesModule, UserFilterConstants,
     NAE_BASE_FILTER,
     SimpleFilter
-} from '@netgrif/components-core';
+} from 'netgrif-components-core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
 import {of} from 'rxjs';
-import {DefaultTabbedTaskViewComponent} from '../default-tabbed-task-view/default-tabbed-task-view.component';
+import {DefaultTabbedTaskViewComponent} from '../../tabbed/default-tabbed-task-view/default-tabbed-task-view.component';
 
 describe('DefaultCaseRefListViewComponent', () => {
   let component: DefaultCaseRefListViewComponent;

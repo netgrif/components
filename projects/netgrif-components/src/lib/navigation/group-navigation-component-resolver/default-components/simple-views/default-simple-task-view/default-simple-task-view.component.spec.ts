@@ -1,13 +1,13 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {DefaultSimpleTaskViewComponent} from './default-simple-task-view.component';
-import {NavigationComponentModule} from '../../../navigation.module';
+import {NavigationComponentModule} from '../../../../navigation.module';
 import {
     FilterField, FilterType,
     NAE_NAVIGATION_ITEM_TASK_DATA,
     OverflowService,
     TestMockDependenciesModule,
     UserFilterConstants
-} from '@netgrif/components-core';
+} from 'netgrif-components-core';
 import {RouterModule} from '@angular/router';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 

@@ -13,7 +13,7 @@ import {
     RoutingBuilderService,
     GroupNavigationConstants
 } from '@netgrif/components-core';
-import {DefaultTabViewComponent} from './default-components/default-tab-view/default-tab-view.component';
+import {DefaultTabViewComponent} from './default-components/tabbed/default-tab-view/default-tab-view.component';
 import {
     DefaultNoFilterProvidedComponent
 } from "./default-components/default-no-filter-provided/default-no-filter-provided.component";

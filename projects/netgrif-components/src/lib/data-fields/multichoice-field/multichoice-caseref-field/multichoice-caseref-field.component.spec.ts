@@ -13,7 +13,7 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {of} from 'rxjs';
 import {
     DefaultTabbedTaskViewComponent
-} from '../../../navigation/group-navigation-component-resolver/default-components/default-tabbed-task-view/default-tabbed-task-view.component';
+} from '../../../navigation/group-navigation-component-resolver/default-components/tabbed/default-tabbed-task-view/default-tabbed-task-view.component';
 import {Component} from '@angular/core';
 
 describe('MultichoiceCaserefFieldComponent', () => {

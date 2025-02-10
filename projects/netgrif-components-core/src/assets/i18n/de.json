@@ -49,7 +49,8 @@
             "finish": "Abschließen",
             "cancel": "Stornieren",
             "noData": "Diese Aufgabe hat keine Dateien. Schließen Sie die Aufgabe ab, um fortzufahren.",
-            "redirecting": "Umleiten..."
+            "redirecting": "Umleiten...",
+            "closeTab": "Schließen"
         },
         "footer": {
             "defaultText": "NETGRIF, s.r.o. © 2022"

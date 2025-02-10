@@ -18,8 +18,8 @@ import {
     CategoryResolverService,
     NAE_DEFAULT_CASE_SEARCH_CATEGORIES, NAE_DEFAULT_TASK_SEARCH_CATEGORIES, BaseAllowedNetsService, FilterExtractionService,
     ChangedFieldsService
-} from '@netgrif/components-core';
-import {HeaderComponent} from '../../../../header/header.component';
+} from 'netgrif-components-core';
+import {HeaderComponent} from '../../../../../header/header.component';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({

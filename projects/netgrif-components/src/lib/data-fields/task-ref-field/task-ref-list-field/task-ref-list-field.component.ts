@@ -7,7 +7,7 @@ import {
 } from "@netgrif/components-core";
 import {
     DefaultTaskViewComponent
-} from "../../../navigation/group-navigation-component-resolver/default-components/default-task-view/default-task-view.component";
+} from "../../../navigation/group-navigation-component-resolver/default-components/refs/default-task-view/default-task-view.component";
 
 @Component({
   selector: 'nc-task-ref-list-field',

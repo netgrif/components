@@ -1,6 +1,6 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {DefaultTabbedTaskViewComponent} from './default-tabbed-task-view.component';
-import {NavigationComponentModule} from '../../../navigation.module';
+import {NavigationComponentModule} from '../../../../navigation.module';
 import {
     BooleanField,
     GroupNavigationConstants,
@@ -13,7 +13,7 @@ import {
     TestMockDependenciesModule,
     TextField,
     ViewIdService
-} from '@netgrif/components-core';
+} from 'netgrif-components-core';
 import {of} from 'rxjs';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
