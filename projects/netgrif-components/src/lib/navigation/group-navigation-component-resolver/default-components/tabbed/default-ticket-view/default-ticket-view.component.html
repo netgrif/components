@@ -1,0 +1,27 @@
+<div fxLayout="column" fxFlex="100">
+    <div class="cards-container" fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="100">
+
+        <div *ngIf="(loading$ | async) || isCardLoading()" fxLayout="column" fxLayoutAlign="center center"
+             class="margin-top-default" fxFlex="100">
+            <mat-spinner color="primary" diameter="60" mode="indeterminate"></mat-spinner>
+        </div>
+
+        <div fxLayout="column" fxFlex="100" fxLayoutAlign="center center" *ngIf="!isCardLoading()">
+            <mat-form-field fxFlex="100" appearance="outline" class="full-width-search">
+                <mat-label>Search</mat-label>
+                <mat-icon matSuffix>search</mat-icon>
+                <input matInput type="search" (keyup)="this.searchItems($event)">
+            </mat-form-field>
+            <div fxLayout="row wrap" fxLayoutAlign="center center">
+                <div fxLayout="column" *ngFor="let item of dashboardItemsForSearch" class="dashboard-card"
+                     (click)="createCase(item)">
+                    <mat-card-content fxLayout="row" fxLayoutAlign="center center" class="card-content"
+                                      (click)="createCase(item)">
+                        <mat-icon class="card-icon">{{ item.icon }}</mat-icon>
+                        <div class="card-main-text">{{ item.title }}</div>
+                    </mat-card-content>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

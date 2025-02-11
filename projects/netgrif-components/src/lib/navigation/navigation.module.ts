@@ -56,6 +56,7 @@ import { DefaultPublicTaskViewComponent } from './group-navigation-component-res
 import { DefaultPublicWorkflowViewComponent } from './group-navigation-component-resolver/default-components/public/default-public-workflow-view/default-public-workflow-view.component';
 import { DefaultTabbedSingleTaskViewComponent } from './group-navigation-component-resolver/default-components/tabbed/default-tabbed-single-task-view/default-tabbed-single-task-view.component';
 import { DefaultSingleTaskViewComponent } from './group-navigation-component-resolver/default-components/simple-views/default-single-task-view/default-single-task-view.component';
+import { DefaultTicketViewComponent } from './group-navigation-component-resolver/default-components/tabbed/default-ticket-view/default-ticket-view.component';
 
 
 @NgModule({
@@ -79,7 +80,8 @@ import { DefaultSingleTaskViewComponent } from './group-navigation-component-res
         DefaultPublicTaskViewComponent,
         DefaultPublicWorkflowViewComponent,
         DefaultTabbedSingleTaskViewComponent,
-        DefaultSingleTaskViewComponent
+        DefaultSingleTaskViewComponent,
+        DefaultTicketViewComponent
     ],
     imports: [
         CommonModule,
@@ -119,7 +121,9 @@ import { DefaultSingleTaskViewComponent } from './group-navigation-component-res
         DefaultPublicSingleTaskViewComponent,
         DefaultPublicTaskViewComponent,
         DefaultPublicWorkflowViewComponent,
-        DefaultTabbedSingleTaskViewComponent
+        DefaultTabbedSingleTaskViewComponent,
+        DefaultSingleTaskViewComponent,
+        DefaultTicketViewComponent
     ],
     providers: [
         { provide: NAE_GROUP_NAVIGATION_COMPONENT_RESOLVER_COMPONENT, useValue: GroupNavigationComponentResolverComponent },
