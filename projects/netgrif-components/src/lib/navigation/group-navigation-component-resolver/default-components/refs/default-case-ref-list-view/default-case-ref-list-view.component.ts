@@ -20,7 +20,7 @@ import {
     SimpleFilter,
     TaskSetDataRequestFields,
     ViewIdService, DATA_FIELD_PORTAL_DATA, DataFieldPortalData, MultichoiceField, EnumerationField
-} from 'netgrif-components-core';
+} from '@netgrif/components-core';
 import {HeaderComponent} from '../../../../../header/header.component'
 import {DefaultTabbedTaskViewComponent} from '../../tabbed/default-tabbed-task-view/default-tabbed-task-view.component';
 import {

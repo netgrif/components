@@ -16,7 +16,7 @@ import {
     NAE_TAB_DATA, SimpleFilter,
     TestConfigurationService
 } from "@netgrif/components-core";
-import {FilterField, NAE_NAVIGATION_ITEM_TASK_DATA, UserFilterConstants} from "netgrif-components-core";
+import {FilterField, NAE_NAVIGATION_ITEM_TASK_DATA, UserFilterConstants} from "@netgrif/components-core";
 
 describe('DefaultSingleTaskViewComponent', () => {
   let component: DefaultSingleTaskViewComponent;

@@ -13,7 +13,7 @@ import {
     TestMockDependenciesModule,
     TextField,
     ViewIdService
-} from 'netgrif-components-core';
+} from '@netgrif/components-core';
 import {of} from 'rxjs';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';

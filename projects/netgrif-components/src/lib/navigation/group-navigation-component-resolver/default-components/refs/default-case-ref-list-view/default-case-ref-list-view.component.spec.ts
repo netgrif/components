@@ -10,7 +10,7 @@ import {
     TestMockDependenciesModule, UserFilterConstants,
     NAE_BASE_FILTER,
     SimpleFilter
-} from 'netgrif-components-core';
+} from '@netgrif/components-core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
 import {of} from 'rxjs';
