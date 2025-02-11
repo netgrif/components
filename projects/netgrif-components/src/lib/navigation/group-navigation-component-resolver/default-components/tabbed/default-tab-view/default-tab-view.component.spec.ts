@@ -19,7 +19,7 @@ import {
     TranslateLibModule,
     UserFilterConstants,
     ViewService
-} from 'netgrif-components-core';
+} from '@netgrif/components-core';
 import {RouterModule} from '@angular/router';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 

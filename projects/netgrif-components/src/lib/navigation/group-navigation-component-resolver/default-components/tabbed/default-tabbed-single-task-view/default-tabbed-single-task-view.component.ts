@@ -19,7 +19,7 @@ import {
     TaskRequestStateService,
     TaskViewService,
     ViewIdService,
-} from 'netgrif-components-core';
+} from '@netgrif/components-core';
 import {AsyncPipe} from "@angular/common";
 import {
     InjectedTabbedTaskViewDataWithNavigationItemTaskData
