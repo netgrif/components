@@ -7,6 +7,7 @@ import {ActivatedRoute} from '@angular/router';
 /**
  * Converts an {@link NAE_NAVIGATION_ITEM_TASK_DATA} injection token into {@link NAE_BASE_FILTER}
  * @param extractionService
+ * @param activatedRoute
  * @param navigationItemTaskData a navigation item task containing the aggregated data representing a navigation item
  */
 export function navigationItemTaskFilterFactory(extractionService: FilterExtractionService,
