@@ -242,6 +242,15 @@
                     },
                     "processUri": "/"
                 },
+                "task-list-view": {
+                    "component": {
+                        "class": "DefaultSimpleTaskViewComponent"
+                    },
+                    "access": "private",
+                    "routing": {
+                        "path": "task-list/:singleCaseId"
+                    }
+                },
                 "hidden-workflow-view": {
                     "component": {
                         "class": "WorkflowViewExampleComponent",

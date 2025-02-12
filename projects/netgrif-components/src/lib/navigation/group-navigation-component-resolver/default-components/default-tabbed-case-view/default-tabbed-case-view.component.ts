@@ -38,6 +38,7 @@ import {
     filterCaseTabbedDataFilterFactory,
     filterCaseTabbedDataSearchCategoriesFactory
 } from '../model/factory-methods';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
     selector: 'nc-default-tabbed-case-view',
@@ -52,7 +53,7 @@ import {
         {
             provide: NAE_BASE_FILTER,
             useFactory: filterCaseTabbedDataFilterFactory,
-            deps: [FilterExtractionService, NAE_TAB_DATA]
+            deps: [FilterExtractionService, NAE_TAB_DATA, ActivatedRoute]
         },
         {
             provide: AllowedNetsService,

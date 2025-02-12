@@ -37,7 +37,8 @@ export class DefaultTabViewComponent {
 
     constructor(@Inject(NAE_NAVIGATION_ITEM_TASK_DATA) protected _navigationItemTaskData: Array<DataGroup>,
                 protected translationService: TranslateService,
-                protected extractionService: FilterExtractionService) {
+                protected extractionService: FilterExtractionService,
+                protected activatedRoute: ActivatedRoute) {
         const filter = extractFilterFromData(this._navigationItemTaskData);
         this.tabs = this.getTabs(filter.type);
     }
@@ -95,7 +96,7 @@ export class DefaultTabViewComponent {
         const taskViewHeadersMode = extractFieldValueFromData<string[]>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_TASK_HEADERS_MODE);
         const taskViewAllowTableMode = extractFieldValueFromData<boolean>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_TASK_ALLOW_TABLE_MODE);
         const taskViewDefaultHeadersMode = extractFieldValueFromData<string[]>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_TASK_DEFAULT_HEADERS_MODE);
-        const taskViewAdditionalFilter = this.extractionService.extractCompleteAdditionalFilterFromData(this._navigationItemTaskData);
+        const taskViewAdditionalFilter = this.extractionService.extractCompleteAdditionalFilterFromData(this.activatedRoute, this._navigationItemTaskData);
         const mergeWithBaseFilter = extractFieldValueFromData<boolean>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_MERGE_FILTERS);
         const additionalAllowedNets = this.extractionService.extractAdditionalFilterAllowedNets(this._navigationItemTaskData)?.allowedNetsIdentifiers;
 
@@ -146,7 +147,7 @@ export class DefaultTabViewComponent {
         }
         const showMoreMenu = extractFieldValueFromData<boolean>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_TASK_SHOW_MORE_MENU);
 
-        const filter = this.extractionService.extractCompleteFilterFromData(this._navigationItemTaskData);
+        const filter = this.extractionService.extractCompleteFilterFromData(this.activatedRoute, this._navigationItemTaskData);
         return [
             {
                 label: {text: labelData.name, icon: labelData.icon},

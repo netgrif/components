@@ -18,6 +18,8 @@ import {
     navigationItemTaskAllowedNetsServiceFactory
 } from "../../allowed-nets/services/factory/allowed-nets-service-factory";
 import {BaseAllowedNetsService} from "../../allowed-nets/services/base-allowed-nets.service";
+import {ActivatedRoute} from '@angular/router';
+import {SimpleFilter} from '../../filter/models/simple-filter';
 
 /**
  * This service is able to load the full saved filter including all of its ancestor filters.
@@ -49,16 +51,23 @@ export class FilterExtractionService {
         return navigationItemTaskAllowedNetsServiceFactory(this._factory, this.baseAllowedNets, sliced)
     }
 
-    public extractCompleteAdditionalFilterFromData(dataSection: Array<DataGroup>): Filter | undefined {
+    public extractCompleteAdditionalFilterFromData(activatedRoute: ActivatedRoute, dataSection: Array<DataGroup>): Filter | undefined {
         const taskRefIndex = getFieldIndexFromDataGroups(dataSection, GroupNavigationConstants.ITEM_FIELD_ID_ADDITIONAL_FILTER_TASKREF);
         if (taskRefIndex === undefined) {
             return undefined;
         }
 
-        return this.extractCompleteFilterFromData(dataSection.slice(taskRefIndex.dataGroupIndex + 1));
+        return this.extractCompleteFilterFromData(activatedRoute, dataSection.slice(taskRefIndex.dataGroupIndex + 1));
     }
 
-    public extractCompleteFilterFromData(dataSection: Array<DataGroup>, fieldId: string = UserFilterConstants.FILTER_FIELD_ID): Filter | undefined {
+    public extractCompleteFilterFromData(activatedRoute: ActivatedRoute, dataSection?: Array<DataGroup>, fieldId: string = UserFilterConstants.FILTER_FIELD_ID): Filter | undefined {
+        if (!dataSection) {
+            const singleCaseId = activatedRoute.snapshot.paramMap.get('singleCaseId');
+            if (!singleCaseId) {
+                throw new Error('Case ID not found in route.');
+            }
+            return SimpleFilter.fromTaskQuery({case: {id: singleCaseId}});
+        }
         const filterIndex = getFieldIndexFromDataGroups(dataSection, fieldId);
 
         if (filterIndex === undefined) {
@@ -74,7 +83,7 @@ export class FilterExtractionService {
             throw new Error('Filter segment could not be extracted from filter field');
         }
 
-        const parentFilter = this.extractCompleteFilterFromData(dataSection.slice(filterIndex.dataGroupIndex + 1));
+        const parentFilter = this.extractCompleteFilterFromData(activatedRoute, dataSection.slice(filterIndex.dataGroupIndex + 1));
 
         if (parentFilter !== undefined && parentFilter.type === filterSegment.type) {
             return filterSegment.merge(parentFilter, MergeOperator.AND);
