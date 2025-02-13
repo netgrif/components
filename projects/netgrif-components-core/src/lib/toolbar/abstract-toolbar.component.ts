@@ -5,6 +5,7 @@ import {ToolbarConfig} from './toolbar-config';
 import {UserService} from '../user/services/user.service';
 import {Router} from '@angular/router';
 import {User} from '../user/models/user';
+import {RedirectService} from '../routing/redirect-service/redirect.service';
 
 @Component({
     selector: 'ncc-abstract-toolbar',
@@ -13,10 +14,22 @@ import {User} from '../user/models/user';
 export abstract class AbstractToolbarComponent {
 
     @Input()
-    public toolbarConfig: ToolbarConfig;
+    public toolbarConfig: ToolbarConfig = {
+        profileEnabled: false,
+        languageEnabled: false,
+        logoutEnabled: false,
+        simpleToolbar: true,
+        toolbarName: {
+            defaultValue: 'Netgrif',
+            translations: {}
+        },
+        toolbarLogo: 'assets/img/netgrif_full_white.svg',
+        profileUrl: 'profile',
+        loginUrl: ''
+    };
 
     constructor(protected translate: TranslateService, protected selectLangService: LanguageService,
-                protected userService: UserService, protected router: Router) {
+                protected userService: UserService, protected router: Router, protected redirectService: RedirectService) {
     }
 
     setLang(lang: string): void {
@@ -29,12 +42,16 @@ export abstract class AbstractToolbarComponent {
 
     public logout(): void {
         this.userService.logout().subscribe(() => {
-            this.router.navigate(['login']);
+            if (!!this.toolbarConfig.loginUrl && this.toolbarConfig.loginUrl !== "") {
+                this.router.navigate([this.toolbarConfig.loginUrl]);
+            } else {
+                this.router.navigate([this.redirectService.resolveLoginPath()]);
+            }
         });
     }
 
     public profile(): void {
-        this.router.navigate(['profile']);
+        this.router.navigate([this.toolbarConfig.profileUrl]);
     }
 
     public get loggedUser(): User {

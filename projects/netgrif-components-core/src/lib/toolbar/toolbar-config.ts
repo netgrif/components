@@ -7,4 +7,6 @@ export interface ToolbarConfig {
     simpleToolbar?: boolean;
     toolbarName?: I18nFieldValue;
     toolbarLogo?: string;
+    profileUrl?: string;
+    loginUrl?: string;
 }

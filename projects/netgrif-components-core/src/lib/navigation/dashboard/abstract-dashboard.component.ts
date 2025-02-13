@@ -34,6 +34,8 @@ export abstract class AbstractDashboardComponent {
     public static readonly DASHBOARD_MANAGEMENT_NAME_DATAFIELD = 'dashboard_name';
     public static readonly DASHBOARD_MANAGEMENT_LOGO_DATAFIELD = 'dashboard_logo';
     public static readonly DASHBOARD_MANAGEMENT_ITEMS_ORDER_DATAFIELD = "items_order";
+    public static readonly DASHBOARD_MANAGEMENT_PROFILE_URL_DATAFIELD = "profile_url";
+    public static readonly DASHBOARD_MANAGEMENT_LOGIN_URL_DATAFIELD = "login_url";
 
     public static readonly DASHBOARD_ITEM_ICON_DATAFIELD = 'item_icon';
     public static readonly DASHBOARD_ITEM_NAME_DATAFIELD = 'item_name';
@@ -53,7 +55,9 @@ export abstract class AbstractDashboardComponent {
             defaultValue: 'Netgrif',
             translations: {}
         },
-        toolbarLogo: 'assets/img/netgrif_full_white.svg'
+        toolbarLogo: 'assets/img/netgrif_full_white.svg',
+        profileUrl: 'profile',
+        loginUrl: ''
     };
 
     public dashboardId: string = AbstractDashboardComponent.MAIN_DASHBOARD;
@@ -62,6 +66,7 @@ export abstract class AbstractDashboardComponent {
     public dashboardItemsMapping: {
         [key: string]: Case
     };
+    private itemsLoaded: number = 0;
 
     public loading$: LoadingEmitter = new LoadingEmitter();
 
@@ -99,6 +104,8 @@ export abstract class AbstractDashboardComponent {
                 simpleToolbar: this.getManagementSimpleToolbar(this.dashboardCase),
                 toolbarName: this.getManagementName(this.dashboardCase),
                 toolbarLogo: this.getManagementLogo(this.dashboardCase),
+                profileUrl: this.getManagementProfileUrl(this.dashboardCase),
+                loginUrl: this.getManagementLoginUrl(this.dashboardCase)
             }
 
             const dashboardItemsOptions = this.dashboardCase.immediateData
@@ -111,51 +118,56 @@ export abstract class AbstractDashboardComponent {
                     return accum;
                 }, {});
 
-            const itemsOrder = this.getManagementItemsOrder(this.dashboardCase).split(",");
-            let dashboardItemsSearchBody: CaseSearchRequestBody = {
-                stringId: Object.keys(dashboardItemsOptions)
-            };
-            let itemsLoaded = 0;
             let dashboardItemsParams = new HttpParams()
                 .set(PaginationParams.PAGE_SIZE, 100);
-            this._caseResource.searchCases(SimpleFilter.fromCaseQuery(dashboardItemsSearchBody), dashboardItemsParams).subscribe(resultItems => {
-                const itemsContent = resultItems.content;
-                if (!itemsContent || !itemsContent.length || itemsContent.length < 1) {
-                    this.loading$.off();
-                    this._log.error('No dashboard items found.');
+            this.getDashboardItems(dashboardItemsOptions, dashboardItemsParams);
+            this.getPreferenceItems(dashboardPreferenceToItems, dashboardItemsParams);
+        });
+    }
+
+    private getPreferenceItems(dashboardPreferenceToItems: {}, dashboardItemsParams: HttpParams) {
+        let preferenceItemsSearchBody = {
+            stringId: Object.keys(dashboardPreferenceToItems)
+        };
+        this._caseResource.searchCases(SimpleFilter.fromCaseQuery(preferenceItemsSearchBody), dashboardItemsParams).subscribe(resultItems => {
+            const itemsContent = resultItems.content;
+            itemsContent.forEach(preferenceItemCase => {
+                const navigationItem = this._doubleDrawerNavigationService.resolveItemCaseToNavigationItem(preferenceItemCase);
+                const dashboardItemId = dashboardPreferenceToItems[preferenceItemCase.stringId];
+                if (!navigationItem) {
+                    this.dashboardItems = this.dashboardItems.filter(dashItem => dashItem.stringId !== dashboardItemId);
+                    return;
                 }
-                itemsContent.forEach(item => {
-                    const itemIndex = itemsOrder.indexOf(item.stringId);
-                    this.dashboardItems[itemIndex] = item;
-                });
-                itemsLoaded += 1;
-                if (itemsLoaded == 2) {
-                    this.loading$.off();
-                }
+                this.dashboardItemsMapping[dashboardItemId] = preferenceItemCase;
             });
-            dashboardItemsSearchBody = {
-                stringId: Object.keys(dashboardPreferenceToItems)
-            };
-            this._caseResource.searchCases(SimpleFilter.fromCaseQuery(dashboardItemsSearchBody), dashboardItemsParams).subscribe(resultItems => {
-                const itemsContent = resultItems.content;
-                if (!itemsContent || !itemsContent.length || itemsContent.length < 1) {
-                    this.loading$.off();
-                    this._log.error('No dashboard items found.');
-                }
-                itemsContent.forEach(preferenceItemCase => {
-                    const navigationItem = this._doubleDrawerNavigationService.resolveItemCaseToNavigationItem(preferenceItemCase);
-                    const dashboardItemId = dashboardPreferenceToItems[preferenceItemCase.stringId];
-                    if (!navigationItem) {
-                        this.dashboardItems = this.dashboardItems.filter(dashItem => dashItem.stringId !== dashboardItemId);
-                        return;
-                    }
-                    this.dashboardItemsMapping[dashboardItemId] = preferenceItemCase;
-                });
-                itemsLoaded += 1;
-                if (itemsLoaded == 2) {
-                    this.loading$.off();
-                }
+            this.itemsLoaded += 1;
+            if (this.itemsLoaded == 2) {
+                this.loading$.off();
+            }
+        });
+    }
+
+    private getDashboardItems(dashboardItemsOptions: {
+        defaultValue?: string
+    }, dashboardItemsParams: HttpParams) {
+        const itemsOrder = this.getManagementItemsOrder(this.dashboardCase).split(",");
+        let dashboardItemsSearchBody: CaseSearchRequestBody = {
+            stringId: Object.keys(dashboardItemsOptions)
+        };
+        this._caseResource.searchCases(SimpleFilter.fromCaseQuery(dashboardItemsSearchBody), dashboardItemsParams).subscribe(resultItems => {
+            const itemsContent = resultItems.content;
+            if (!itemsContent || !itemsContent.length || itemsContent.length < 1) {
+                this.loading$.off();
+                this._log.error('No dashboard items found.');
+            }
+            itemsContent.forEach(item => {
+                const itemIndex = itemsOrder.indexOf(item.stringId);
+                this.dashboardItems[itemIndex] = item;
             });
+            this.itemsLoaded += 1;
+            if (this.itemsLoaded == 2) {
+                this.loading$.off();
+            }
         });
     }
 
@@ -225,6 +237,14 @@ export abstract class AbstractDashboardComponent {
 
     protected getManagementItemsOrder(itemCase: Case): string {
         return this.getFieldValue(itemCase, AbstractDashboardComponent.DASHBOARD_MANAGEMENT_ITEMS_ORDER_DATAFIELD) as string;
+    }
+
+    protected getManagementProfileUrl(itemCase: Case): string {
+        return this.getFieldValue(itemCase, AbstractDashboardComponent.DASHBOARD_MANAGEMENT_PROFILE_URL_DATAFIELD) as string;
+    }
+
+    protected getManagementLoginUrl(itemCase: Case): string {
+        return this.getFieldValue(itemCase, AbstractDashboardComponent.DASHBOARD_MANAGEMENT_LOGIN_URL_DATAFIELD) as string;
     }
 
     protected getFieldValue(itemCase: Case, fieldId: string): any {
