@@ -158,7 +158,7 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
         let tmp = '';
         return splitPath.filter(s => s !== "").map((value) => {
             tmp += AbstractBreadcrumbsComponent.DELIMETER + value;
-            return tmp.replace("//", AbstractBreadcrumbsComponent.DELIMETER)
+            return tmp?.replace("//", AbstractBreadcrumbsComponent.DELIMETER)
         });
     }
 

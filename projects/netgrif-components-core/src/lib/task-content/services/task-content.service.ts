@@ -305,12 +305,12 @@ export abstract class TaskContentService implements OnDestroy {
 
     protected getReferencedTaskId(changedField: string, chFields: ChangedFields): string {
         return !!this.taskFieldsIndex ?
-            (Object.keys(this.taskFieldsIndex).find(taskId => taskId !== this.task.stringId && taskId === chFields.taskId && Object.keys(this.taskFieldsIndex[taskId].fields).includes(changedField))
-            || Object.keys(this.taskFieldsIndex).find(taskId => taskId !== this.task.stringId && Object.keys(this.taskFieldsIndex[taskId].fields).includes(changedField))) : undefined;
+            (Object.keys(this.taskFieldsIndex).find(taskId => taskId !== this.task.stringId && taskId === chFields.taskId && Object.keys(this.taskFieldsIndex[taskId].fields)?.includes(changedField))
+            || Object.keys(this.taskFieldsIndex).find(taskId => taskId !== this.task.stringId && Object.keys(this.taskFieldsIndex[taskId].fields)?.includes(changedField))) : undefined;
     }
 
     protected findTaskRefId(taskId: string, fields: { [fieldId: string]: DataField<any>}): DataField<any> {
-        let taskRefId = Object.values(fields).find(f => f instanceof TaskRefField && f.value.includes(taskId));
+        let taskRefId = Object.values(fields).find(f => f instanceof TaskRefField && f.value?.includes(taskId));
         if (!taskRefId) {
             const referencedTaskIds = Object.values(fields).filter(f => f instanceof TaskRefField).map(tr => tr.value);
             referencedTaskIds.forEach(id => {
