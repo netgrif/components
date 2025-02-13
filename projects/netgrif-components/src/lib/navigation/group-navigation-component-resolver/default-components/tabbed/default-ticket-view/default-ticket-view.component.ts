@@ -1,41 +1,42 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Component, Inject, OnInit, Optional} from '@angular/core';
+import {Router} from '@angular/router';
 import {
-    AllowedNetsService,
     Case,
     CaseResourceService,
-    CaseSearchRequestBody,
-    CreateCaseRequestBody,
     GroupNavigationConstants,
     LoadingEmitter,
-    MENU_IDENTIFIERS,
-    Net,
-    Page,
-    PaginationParams,
     PermissionService,
-    PermissionType,
-    PetriNetResourceService,
-    PetriNetSearchRequest,
-    SimpleFilter,
     SnackBarService,
-    UriService
+    UriService,
+    DoubleDrawerNavigationService,
+    NavigationItem,
+    TaskResourceService,
+    SETTINGS_TRANSITION_ID,
+    extractFilterFieldFromData,
+    DoubleDrawerUtils,
+    DataGroup,
+    NAE_TAB_DATA,
+    InjectedTabbedCaseViewData,
+    SimpleFilter,
+    FilterType, CaseEventOutcome,
+    NAE_AUTOSWITCH_TAB_TOKEN, NAE_OPEN_EXISTING_TAB, LoggerService, ProcessService
 } from '@netgrif/components-core';
-import {Observable, of, Subscription} from 'rxjs';
-import {map} from 'rxjs/operators';
-import {
-    CaseEventOutcome
-} from '@netgrif/components-core/lib/event/model/event-outcomes/case-outcomes/case-event-outcome';
-import {HttpParams} from '@angular/common/http';
-import {I18nFieldValue} from '@netgrif/components-core/lib/data-fields/i18n-field/models/i18n-field-value';
 import {TranslateService} from "@ngx-translate/core";
+import {FormControl} from "@angular/forms";
+import {forkJoin} from "rxjs";
+import {map} from 'rxjs/operators';
 
 export interface TicketItem {
     id: string;
     petriNetId: string;
     title: string;
     icon: string;
-    customViewSelector: string;
     resource?: Case;
+}
+
+export interface DataGroupCaseIdPair {
+    caseId: string;
+    dataGroups: DataGroup[];
 }
 
 @Component({
@@ -48,100 +49,90 @@ export class DefaultTicketViewComponent implements OnInit {
     public loading$: LoadingEmitter = new LoadingEmitter();
     public createCaseLoading$: LoadingEmitter = new LoadingEmitter();
 
-    public nets: Net[];
     public dashboardItems: Array<TicketItem>;
-    public dashboardItemsForSearch: Array<TicketItem>;
+    public filteredDashboardItems: Array<TicketItem>;
+    public search: FormControl;
 
-    constructor(private _caseResourceService: CaseResourceService,
-                private _allowedNetsService: AllowedNetsService,
-                private _permissionService: PermissionService,
-                private _snackbar: SnackBarService,
-                private _activeRoute: ActivatedRoute,
-                private _router: Router,
-                private _uriService: UriService,
+    constructor(protected _caseResourceService: CaseResourceService,
+                protected _permissionService: PermissionService,
+                protected _snackbar: SnackBarService,
+                protected _router: Router,
+                protected _log: LoggerService,
+                protected _uriService: UriService,
                 protected _translateService: TranslateService,
-                protected _petriNetService: PetriNetResourceService) {
+                protected _navigationService: DoubleDrawerNavigationService,
+                protected _taskResourceService: TaskResourceService,
+                protected _processService: ProcessService,
+                @Inject(NAE_TAB_DATA) protected _injectedTabData: InjectedTabbedCaseViewData,
+                @Optional() @Inject(NAE_AUTOSWITCH_TAB_TOKEN) protected _autoswitchToTaskTab = true,
+                @Optional() @Inject(NAE_OPEN_EXISTING_TAB) protected _openExistingTab = true) {
+        this.search = new FormControl('');
     }
 
     ngOnInit(): void {
+        if (this._autoswitchToTaskTab === null) {
+            this._autoswitchToTaskTab = true;
+        }
+        if (this._openExistingTab === null) {
+            this._openExistingTab = true;
+        }
         this.loadTicketCreateContent();
+        this.search.valueChanges.subscribe(value => this.searchItems(value))
     }
 
     public loadTicketCreateContent() {
-
-        this._uriService.getNodeByPath("/it").subscribe(uri => {
-            this._uriService.getChildNodes(uri).subscribe(childNodes => {
-                this._uriService.getItemCaseByNodePath(uri).subscribe(page => {
-                    let childCases$;
-                    if (page.pagination.totalElements === 0) {
-                        childCases$ = of([]);
-                    } else {
-                        let orderedChildCaseIds = this.extractChildCaseIds(page.content[0]);
-                        childCases$ = this.getItemCasesByIdsInOnePage(orderedChildCaseIds).pipe(
-                            map(p => p.content)
-                        );
+        this.loading$.on();
+        this._navigationService.rightItems$.pipe(
+            map(navItems => this.transformItemCases(navItems).filter(itm => !!itm && !!itm.resource))
+        ).subscribe(items => {
+            forkJoin(items.map(item => {
+                const taskId = DoubleDrawerUtils.findTaskIdInCase(item.resource, SETTINGS_TRANSITION_ID);
+                if (taskId === undefined) {
+                    return;
+                }
+                return this._taskResourceService.getData(taskId).pipe(map(dataGroups => {return {caseId: item.resource.stringId, dataGroups} as DataGroupCaseIdPair}));
+            })).subscribe(dataGroups => {
+                dataGroups.forEach(dataGroupPair => {
+                    if (dataGroupPair.dataGroups === undefined) {
+                        return;
                     }
-                    childCases$.subscribe(result => {
-                        result = (result as Case[]);
-                        this.dashboardItems = result.map(item => this.resolveItemCaseToNavigationItem(item)).filter(menuItem => menuItem.customViewSelector == "create-ticket-tile");
-                        this.dashboardItemsForSearch = result.map(item => this.resolveItemCaseToNavigationItem(item)).filter(menuItem => menuItem.customViewSelector == "create-ticket-tile");
-                    })
+                    let net = undefined;
+                    try {
+                        net = extractFilterFieldFromData(dataGroupPair.dataGroups)?.allowedNets[0];
+                    } catch (error) {
+                        this._log.warn("View doesn't have a filter, skipping...");
+                    }
+                    items.find(itm => itm.resource.stringId === dataGroupPair.caseId).petriNetId = net;
                 });
-            })
+                this.dashboardItems = items.filter(item => item.petriNetId !== undefined);
+                this.searchItems(this.search.value);
+                this.loading$.off()
+            }, error => {
+                this._log.error(error.message);
+                this.loading$.off()
+            });
+        }, error => {
+            this._log.error(error.message);
+            this.loading$.off()
         })
+
     }
 
+    protected transformItemCases(navItems: NavigationItem[]) {
+        return navItems.map(item => this.resolveItemCaseToNavigationItem(item));
+    }
     // copied from abstract-navigation-double-drawer
-    protected resolveItemCaseToNavigationItem(itemCase: Case): TicketItem | undefined {
-        // TODO dotiahnut allowed nets do petriNetId
-        // this._caseResourceService.getOneCase(itemCase.immediateData.find(f => f.stringId === GroupNavigationConstants.GROUP_NAVIGATION_ROUTER_PARAM)?.value).subscribe(value => {
-        //     return value.immediateData.
-        // })
-        // this._filterExtractionService.extractCompleteFilterFromData()
-
-        return {
-            id: itemCase.stringId,
-            icon: itemCase.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_MENU_ICON)?.value || "add",
-            title: this.getTranslation(itemCase.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_MENU_NAME)?.value) || itemCase.title,
-            petriNetId: "ticket",
-            customViewSelector: itemCase.immediateData.find(f => f.stringId === "custom_view_selector")?.value,
-            resource: itemCase,
+    protected resolveItemCaseToNavigationItem(navItem: NavigationItem): TicketItem | undefined {
+        if (navItem.resource === undefined) {
+            return undefined;
         }
-    }
-
-    // copied from abstract-navigation-double-drawer
-    protected getTranslation(value: I18nFieldValue): string {
-        const locale = this._translateService.currentLang.split('-')[0];
-        return locale in value.translations ? value.translations[locale] : value.defaultValue;
-    }
-
-    // copied from abstract-navigation-double-drawer
-    protected getItemCasesByIdsInOnePage(caseIds: string[]): Observable<Page<Case>> {
-        return this.getItemCasesByIds(caseIds, 0, caseIds.length);
-    }
-
-    // copied from abstract-navigation-double-drawer
-    protected getItemCasesByIds(caseIds: string[], pageNumber: number, pageSize: string | number): Observable<Page<Case>> {
-        const searchBody: CaseSearchRequestBody = {
-            stringId: caseIds,
-            process: MENU_IDENTIFIERS.map(id => ({identifier: id} as PetriNetSearchRequest)),
-        };
-
-        let httpParams = new HttpParams()
-            .set(PaginationParams.PAGE_SIZE, pageSize)
-            .set(PaginationParams.PAGE_NUMBER, pageNumber);
-        return this._caseResourceService.searchCases(SimpleFilter.fromCaseQuery(searchBody), httpParams);
-    }
-
-    // copied from abstract-navigation-double-drawer
-    protected extractChildCaseIds(item: Case): string[] {
-        return item.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_CHILD_ITEM_IDS)?.value;
-    }
-
-    public getAllowedNets(): Observable<Net[]> {
-        return this._allowedNetsService.allowedNets$.pipe(
-            map(net => net.filter(n => this._permissionService.hasNetPermission(PermissionType.CREATE, n)))
-        );
+        return {
+            id: navItem.resource.stringId,
+            icon: navItem.resource.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_MENU_ICON)?.value || "add",
+            title: (navItem.navigation as any).title,
+            petriNetId: undefined,
+            resource: navItem.resource,
+        }
     }
 
     public createCase(item: TicketItem) {
@@ -149,14 +140,15 @@ export class DefaultTicketViewComponent implements OnInit {
             return;
         }
         this.createCaseLoading$.on();
-        this._petriNetService.getOne(item.petriNetId, "latest").subscribe(petriNet => {
+        this._processService.getNet(item.petriNetId).subscribe(petriNet => {
             this._caseResourceService.createCase({
                 netId: petriNet.stringId,
                 title: item.title
-            } as CreateCaseRequestBody).subscribe((caseResult) => {
-                this._router.navigate(['case', (caseResult.outcome as CaseEventOutcome).aCase.stringId, this._activeRoute.snapshot.paramMap.get('filterCaseId')])
+            }).subscribe((caseResult) => {
                 this.createCaseLoading$.off();
-
+                if ((caseResult?.outcome as CaseEventOutcome)?.aCase) {
+                    this.openTab((caseResult.outcome as CaseEventOutcome).aCase);
+                }
             }, (error) => {
                 this._snackbar.openErrorSnackBar(error);
                 this.createCaseLoading$.off();
@@ -168,11 +160,27 @@ export class DefaultTicketViewComponent implements OnInit {
         return this.createCaseLoading$.isActive;
     }
 
-    public searchItems($event: any) {
-        if ($event.target.value.length === 0) {
-            this.dashboardItemsForSearch = this.dashboardItems;
-            return
+    protected searchItems(val: string) {
+        if (val && val.length === 0) {
+            this.filteredDashboardItems = this.dashboardItems;
         }
-        this.dashboardItemsForSearch = this.dashboardItems.filter(value => value.title.toLowerCase().includes($event.target.value.toLowerCase()));
+        this.filteredDashboardItems = this.dashboardItems.filter(value => value.title.toLowerCase().includes(val.toLowerCase()));
+    }
+
+    protected openTab(openCase: Case) {
+        this._injectedTabData.tabViewRef.openTab({
+            label: {
+                text: openCase.title,
+                icon: openCase.icon ? openCase.icon : 'check_box'
+            },
+            canBeClosed: true,
+            tabContentComponent: this._injectedTabData.tabViewComponent,
+            injectedObject: {
+                baseFilter: new SimpleFilter('', FilterType.TASK, {case: {id: `${openCase.stringId}`}}),
+                allowedNets: [openCase.processIdentifier]
+            },
+            order: this._injectedTabData.tabViewOrder,
+            parentUniqueId: this._injectedTabData.tabUniqueId
+        }, this._autoswitchToTaskTab, this._openExistingTab);
     }
 }

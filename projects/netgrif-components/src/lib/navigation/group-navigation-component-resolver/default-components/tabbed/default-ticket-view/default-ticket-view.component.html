@@ -7,19 +7,19 @@
         </div>
 
         <div fxLayout="column" fxFlex="100" fxLayoutAlign="center center" *ngIf="!isCardLoading()">
-            <mat-form-field fxFlex="100" appearance="outline" class="full-width-search">
+            <mat-form-field appearance="outline" class="width-search">
                 <mat-label>Search</mat-label>
                 <mat-icon matSuffix>search</mat-icon>
-                <input matInput type="search" (keyup)="this.searchItems($event)">
+                <input matInput type="search" [formControl]="search">
             </mat-form-field>
-            <div fxLayout="row wrap" fxLayoutAlign="center center">
-                <div fxLayout="column" *ngFor="let item of dashboardItemsForSearch" class="dashboard-card"
+            <div fxLayout="row wrap" fxLayoutAlign="center center" class="width-80">
+                <div fxLayout="column" *ngFor="let item of filteredDashboardItems" class="dashboard-card"
                      (click)="createCase(item)">
-                    <mat-card-content fxLayout="row" fxLayoutAlign="center center" class="card-content"
+                    <mat-card fxLayout="row" fxFlex fxLayoutAlign="center center"
                                       (click)="createCase(item)">
                         <mat-icon class="card-icon">{{ item.icon }}</mat-icon>
                         <div class="card-main-text">{{ item.title }}</div>
-                    </mat-card-content>
+                    </mat-card>
                 </div>
             </div>
         </div>
