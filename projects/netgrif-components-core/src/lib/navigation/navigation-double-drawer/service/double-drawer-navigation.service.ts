@@ -1,12 +1,5 @@
 import {EventEmitter, Injectable, OnDestroy} from '@angular/core';
 import {BehaviorSubject, Observable, of, Subscription} from 'rxjs';
-import {
-    GroupNavigationConstants, MENU_IDENTIFIERS, MenuItemClickEvent,
-    MenuOrder,
-    NavigationItem,
-    RIGHT_SIDE_INIT_PAGE_SIZE, SETTINGS_TRANSITION_ID,
-    UriNodeResource
-} from '../../public-api';
 import {UriService} from "../../service/uri.service";
 import {LoadingEmitter} from "../../../utility/loading-emitter";
 import {filter, map, take} from "rxjs/operators";
@@ -29,7 +22,16 @@ import {AccessService} from "../../../authorization/permission/access.service";
 import {ActivatedRoute} from "@angular/router";
 import {ConfigurationService} from "../../../configuration/configuration.service";
 import {View} from "../../../../commons/schema";
-import { RIGHT_SIDE_NEW_PAGE_SIZE } from '../../model/navigation-configs';
+import {
+    MENU_IDENTIFIERS,
+    MenuOrder,
+    NavigationItem, RIGHT_SIDE_INIT_PAGE_SIZE,
+    RIGHT_SIDE_NEW_PAGE_SIZE,
+    SETTINGS_TRANSITION_ID
+} from '../../model/navigation-configs';
+import { UriNodeResource } from '../../model/uri-resource';
+import {MenuItemClickEvent, MenuItemLoadedEvent} from '../../model/navigation-menu-events';
+import {GroupNavigationConstants} from "../../model/group-navigation-constants";
 
 /**
  * Service for managing navigation in double-drawer
@@ -77,6 +79,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
     protected customItemsInitialized: boolean;
     protected hiddenCustomItemsInitialized: boolean;
     protected itemClicked: EventEmitter<MenuItemClickEvent>;
+    protected itemLoaded: EventEmitter<MenuItemLoadedEvent>;
 
     constructor(protected _uriService: UriService,
                 protected _log: LoggerService,
@@ -100,6 +103,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
         this.customItemsInitialized = false;
         this.hiddenCustomItemsInitialized = false;
         this.itemClicked = new EventEmitter<MenuItemClickEvent>();
+        this.itemLoaded = new EventEmitter<MenuItemLoadedEvent>();
 
         this._currentNodeSubscription = this._uriService.activeNode$.subscribe(node => {
             this.currentNode = node;
@@ -112,6 +116,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
         this._rightLoading$.complete();
         this._nodeLoading$.complete();
         this.itemClicked.complete();
+        this.itemLoaded.complete();
     }
 
     public get canGoBackLoading$(): Observable<boolean> {
@@ -155,6 +160,10 @@ export class DoubleDrawerNavigationService implements OnDestroy {
 
     public get itemClicked$(): EventEmitter<MenuItemClickEvent> {
         return this.itemClicked;
+    }
+
+    public get itemLoaded$(): EventEmitter<MenuItemLoadedEvent> {
+        return this.itemLoaded;
     }
 
     public get rightItems$(): BehaviorSubject<Array<NavigationItem>> {
@@ -380,7 +389,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
                 this._leftItems$.next(result.sort((a, b) => orderedChildCaseIds.indexOf(a.resource.stringId) - orderedChildCaseIds.indexOf(b.resource.stringId)));
                 this.resolveCustomViewsInLeftSide();
                 this._leftLoading$.off();
-                // this.itemLoaded.emit({menu: 'left', items: this.leftItems});
+                this.itemLoaded.emit({menu: 'left', items: this.leftItems});
             }, error => {
                 this._log.error(error);
                 this._leftItems$.next([])
@@ -423,9 +432,8 @@ export class DoubleDrawerNavigationService implements OnDestroy {
                     this._rightItems$.next(result.map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i));
                 }
                 this.resolveCustomViewsInRightSide();
-                // this.isRightSideInitialized = true;
                 this._rightLoading$.off();
-                // this.itemLoaded.emit({menu: 'right', items: this.rightItems});
+                this.itemLoaded.emit({menu: 'right', items: this.rightItems});
             }, error => {
                 this._log.error(error);
                 this._rightItems$.next([]);

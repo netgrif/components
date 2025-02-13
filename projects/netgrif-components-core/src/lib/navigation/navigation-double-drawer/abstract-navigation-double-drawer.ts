@@ -109,6 +109,9 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         this._navigationService.itemClicked$.subscribe((itemClickEvent: MenuItemClickEvent) => {
             this.itemClicked.emit(itemClickEvent);
         })
+        this._navigationService.itemLoaded$.subscribe((itemLoadedEvent: MenuItemLoadedEvent) => {
+            this.itemLoaded.emit(itemLoadedEvent);
+        })
     }
 
     public ngOnInit(): void {
