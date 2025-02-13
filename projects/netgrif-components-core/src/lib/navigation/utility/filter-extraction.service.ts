@@ -51,17 +51,20 @@ export class FilterExtractionService {
         return navigationItemTaskAllowedNetsServiceFactory(this._factory, this.baseAllowedNets, sliced)
     }
 
-    public extractCompleteAdditionalFilterFromData(activatedRoute: ActivatedRoute, dataSection: Array<DataGroup>): Filter | undefined {
+    public extractCompleteAdditionalFilterFromData(dataSection: Array<DataGroup>, activatedRoute?: ActivatedRoute): Filter | undefined {
         const taskRefIndex = getFieldIndexFromDataGroups(dataSection, GroupNavigationConstants.ITEM_FIELD_ID_ADDITIONAL_FILTER_TASKREF);
         if (taskRefIndex === undefined) {
             return undefined;
         }
 
-        return this.extractCompleteFilterFromData(activatedRoute, dataSection.slice(taskRefIndex.dataGroupIndex + 1));
+        return this.extractCompleteFilterFromData(dataSection.slice(taskRefIndex.dataGroupIndex + 1), activatedRoute);
     }
 
-    public extractCompleteFilterFromData(activatedRoute: ActivatedRoute, dataSection?: Array<DataGroup>, fieldId: string = UserFilterConstants.FILTER_FIELD_ID): Filter | undefined {
+    public extractCompleteFilterFromData(dataSection?: Array<DataGroup>, activatedRoute?: ActivatedRoute, fieldId: string = UserFilterConstants.FILTER_FIELD_ID): Filter | undefined {
         if (!dataSection) {
+            if (!activatedRoute) {
+                throw new Error('ActivatedRoute not provided.');
+            }
             const singleCaseId = activatedRoute.snapshot.paramMap.get('singleCaseId');
             if (!singleCaseId) {
                 throw new Error('Case ID not found in route.');
@@ -83,7 +86,7 @@ export class FilterExtractionService {
             throw new Error('Filter segment could not be extracted from filter field');
         }
 
-        const parentFilter = this.extractCompleteFilterFromData(activatedRoute, dataSection.slice(filterIndex.dataGroupIndex + 1));
+        const parentFilter = this.extractCompleteFilterFromData(dataSection.slice(filterIndex.dataGroupIndex + 1), activatedRoute);
 
         if (parentFilter !== undefined && parentFilter.type === filterSegment.type) {
             return filterSegment.merge(parentFilter, MergeOperator.AND);

@@ -11,9 +11,9 @@ import {ActivatedRoute} from '@angular/router';
  * @param navigationItemTaskData a navigation item task containing the aggregated data representing a navigation item
  */
 export function navigationItemTaskFilterFactory(extractionService: FilterExtractionService,
-                                                activatedRoute: ActivatedRoute,
+                                                activatedRoute?: ActivatedRoute,
                                                 navigationItemTaskData?: Array<DataGroup>): BaseFilter {
     return {
-        filter: extractionService.extractCompleteFilterFromData(activatedRoute, navigationItemTaskData)
+        filter: extractionService.extractCompleteFilterFromData(navigationItemTaskData, activatedRoute)
     };
 }
