@@ -1,5 +1,4 @@
-import {AfterViewInit, Component, Input, ViewChild} from '@angular/core';
-import {SideMenuService} from '../../side-menu/services/side-menu.service';
+import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {WorkflowViewService} from './workflow-view.service';
 import {AbstractHeaderComponent} from '../../header/abstract-header.component';
 import {AbstractViewWithHeadersComponent} from '../abstract/view-with-headers';
@@ -11,12 +10,15 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {ProcessService} from '../../process/process.service';
 import { ActivatedRoute } from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
+import {FormControl} from "@angular/forms";
+import {debounceTime, filter, map, take, tap} from "rxjs/operators";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'ncc-abstract-workflow-view',
     template: ''
 })
-export abstract class AbstractWorkflowViewComponent extends AbstractViewWithHeadersComponent implements AfterViewInit {
+export abstract class AbstractWorkflowViewComponent extends AbstractViewWithHeadersComponent implements OnInit, AfterViewInit {
 
     @Input() public footerSize: number;
     @Input() showDeleteMenu = false;
@@ -25,6 +27,7 @@ export abstract class AbstractWorkflowViewComponent extends AbstractViewWithHead
     public readonly headerType = HeaderType.WORKFLOW;
     public workflows$: Observable<Array<Net>>;
     public loading$: Observable<boolean>;
+    public fullTextFormControl: FormControl;
 
     @ViewChild(CdkVirtualScrollViewport) public viewport: CdkVirtualScrollViewport;
 
@@ -37,6 +40,21 @@ export abstract class AbstractWorkflowViewComponent extends AbstractViewWithHead
         this.workflows$ = this._workflowViewService.workflows$;
         this.loading$ = this._workflowViewService.loading$;
         this.footerSize = 0;
+        this.fullTextFormControl = new FormControl();
+    }
+
+    ngOnInit(): void {
+        this.fullTextFormControl.valueChanges.pipe(
+            debounceTime(600),
+            filter(newValue => typeof newValue === 'string'),
+            map((newValue: string) => newValue.trim())
+        ).subscribe((fulltext: string) => {
+            if (fulltext.length === 0) {
+                this._workflowViewService.clearSearchTitle();
+            } else {
+                this._workflowViewService.setSearchTitle(fulltext);
+            }
+        });
     }
 
     ngAfterViewInit(): void {
