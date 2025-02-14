@@ -70,7 +70,8 @@
         "import-net": {
             "upload": "Model hochladen",
             "choose": "Prozessdatei auswählen",
-            "done": "Bestätigen"
+            "done": "Bestätigen",
+            "search": "Nach Prozess suchen"
         },
         "new-case": {
             "case": "Neuen Fall erstellen",

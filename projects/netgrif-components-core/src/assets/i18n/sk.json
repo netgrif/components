@@ -70,7 +70,8 @@
         "import-net": {
             "upload": "Nahrať model",
             "choose": "Vyberte súbor s procesom",
-            "done": "Dokončiť"
+            "done": "Dokončiť",
+            "search": "Vyhľadajte proces"
         },
         "new-case": {
             "case": "Nový prípad",

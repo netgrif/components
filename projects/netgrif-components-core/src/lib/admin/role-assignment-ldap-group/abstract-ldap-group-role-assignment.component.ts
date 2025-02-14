@@ -1,7 +1,12 @@
 import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatSelectionList} from '@angular/material/list';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
-import {ProcessList, ExtendedProcessRole, ProcessVersion} from '../role-assignment/services/ProcessList';
+import {
+    ProcessList,
+    ExtendedProcessRole,
+    ProcessVersion,
+    ProcessListItem
+} from '../role-assignment/services/ProcessList';
 import {FormControl} from '@angular/forms';
 import {debounceTime} from 'rxjs/operators';
 import {Subscription} from 'rxjs';
@@ -19,10 +24,13 @@ export abstract class AbstractLdapGroupRoleAssignmentComponent implements OnInit
 
     public ldapGroup: LdapGroupListService;
     public nets: ProcessList;
+    public filteredProcesses: Array<ProcessListItem> = [];
     public ldapGroupMultiSelect: boolean;
     public searchLdapGroupControl = new FormControl();
+    public searchNetControl = new FormControl();
     protected SEARCH_DEBOUNCE_TIME = 600;
     protected subValueChanges: Subscription;
+    protected subNetValueChanges: Subscription;
     protected subLdapGroup: Subscription;
 
     constructor(protected _service: RoleAssignmentLdapGroupService) {
@@ -32,11 +40,16 @@ export abstract class AbstractLdapGroupRoleAssignmentComponent implements OnInit
     }
 
     ngOnInit(): void {
-        this.nets.loadProcesses();
+        this.nets.loadProcesses().subscribe(processes => {
+            this.filteredProcesses = processes;
+        });
         this.subValueChanges = this.searchLdapGroupControl.valueChanges.pipe(
             debounceTime(this.SEARCH_DEBOUNCE_TIME)
         ).subscribe(searchText => {
             this.ldapGroup.reload(searchText);
+        });
+        this.subNetValueChanges = this.searchNetControl.valueChanges.subscribe(searchText => {
+            this.filteredProcesses = this.nets.processes.filter(itm => itm.title.toLowerCase().includes(searchText.toLowerCase()));
         });
     }
 
@@ -52,7 +65,9 @@ export abstract class AbstractLdapGroupRoleAssignmentComponent implements OnInit
         this.subValueChanges.unsubscribe();
         this.subLdapGroup.unsubscribe();
         this.ldapGroup = undefined;
+        this.subNetValueChanges.unsubscribe();
         this.nets = undefined;
+        this.filteredProcesses = undefined;
     }
 
     public loadNextLdapGroupPage(): void {
