@@ -207,6 +207,17 @@
                 "path": "drawer"
             }
         },
+        "demo-dashboard": {
+            "component": {
+                "class": "NavigationDashboardExampleComponent",
+                "from": "./doc/navigation-dashboard-example/navigation-dashboard-example.component"
+            },
+            "access": "private",
+            "navigation": true,
+            "routing": {
+                "path": "dashboard"
+            }
+        },
         "demo-double-drawer": {
             "component": {
                 "class": "DoubleDrawerExampleComponent",

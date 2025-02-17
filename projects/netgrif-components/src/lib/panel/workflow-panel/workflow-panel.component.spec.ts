@@ -26,7 +26,6 @@ import {
     WorkflowViewService
 } from '@netgrif/components-core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import { RouterModule } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
 

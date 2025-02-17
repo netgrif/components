@@ -46,6 +46,9 @@ import {
     DefaultPublicTaskViewComponent,
     DefaultPublicWorkflowViewComponent
 } from "@netgrif/components";
+import {
+    NavigationDashboardExampleComponent
+} from './doc/navigation-dashboard-example/navigation-dashboard-example.component';
 
 @Injectable({
     providedIn: 'root'
@@ -86,6 +89,7 @@ export class NaeExampleAppViewService extends ViewService {
             {id: 'RailExampleComponent', class: RailExampleComponent},
             {id: 'DrawerExampleComponent', class: DrawerExampleComponent},
             {id: 'DoubleDrawerExampleComponent', class: DoubleDrawerExampleComponent},
+            {id: 'NavigationDashboardExampleComponent', class: NavigationDashboardExampleComponent},
             {id: 'RegisterFormComponent', class: RegisterFormComponent},
             {id: 'PasswordFormComponent', class: PasswordFormComponent},
             {id: 'LoginFormComponent', class: LoginFormComponent},

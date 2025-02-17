@@ -8,6 +8,7 @@ export * from './navigation-double-drawer/abstract-navigation-double-drawer';
 export * from './navigation-rail/abstract-navigation-rail.component';
 export * from './group-navigation-component-resolver/abstract-group-navigation-component-resolver.component';
 export * from './breadcrumbs/abstract-breadcrumbs.component';
+export * from './dashboard/abstract-dashboard.component';
 
 /* SERVICES */
 export * from './group-navigation-component-resolver/group-navigation-component-resolver.service';

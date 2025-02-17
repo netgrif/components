@@ -129,6 +129,10 @@ import {
 } from './doc/single-tabbed-view/single-tabbed-task-view/single-tabbed-task-view.component';
 import {ImpersonationDemoComponent} from './doc/impersonation-demo/impersonation-demo.component';
 import { ChangePasswordComponent } from './doc/forms/change-password/change-password.component';
+import { NavigationDashboardExampleComponent } from './doc/navigation-dashboard-example/navigation-dashboard-example.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatListModule } from '@angular/material/list';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -189,7 +193,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         SingleTabbedCaseViewComponent,
         SingleTabbedTaskViewComponent,
         BreadcrumbsExampleComponent,
-        ChangePasswordComponent
+        ChangePasswordComponent,
+        NavigationDashboardExampleComponent
     ],
     imports: [
         BrowserModule,
@@ -242,7 +247,10 @@ export function HttpLoaderFactory(http: HttpClient) {
         RedirectComponentModule,
         FilterFieldContentModule,
         DialogComponentsModule,
-        FrontActionModule
+        FrontActionModule,
+        LayoutModule,
+        MatToolbarModule,
+        MatListModule
     ],
     providers: [{
         provide: ConfigurationService,

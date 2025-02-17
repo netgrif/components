@@ -11,6 +11,7 @@ export interface ConfigDoubleMenu {
 
 export interface NavigationItem extends View {
     id: string;
+    showCounter?: boolean;
     resource?: Case;
 }
 

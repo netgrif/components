@@ -4,7 +4,6 @@ import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {SideMenuContentComponentModule} from '../../side-menu/content-components/side-menu-content-component.module';
-import {RouterModule} from '@angular/router';
 import {
     AuthenticationMethodService,
     AuthenticationService,
@@ -23,6 +22,7 @@ import {
 } from '@netgrif/components-core';
 import {PanelComponentModule} from '../../panel/panel.module';
 import {HeaderComponentModule} from '../../header/header.module';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('WorkflowViewComponent', () => {
     let component: WorkflowViewComponent;
@@ -41,7 +41,7 @@ describe('WorkflowViewComponent', () => {
                 HttpClientTestingModule,
                 SideMenuContentComponentModule,
                 TranslateLibModule,
-                RouterModule.forRoot([], { relativeLinkResolution: 'legacy' })
+                RouterTestingModule.withRoutes([], { relativeLinkResolution: 'legacy' }),
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
             providers: [

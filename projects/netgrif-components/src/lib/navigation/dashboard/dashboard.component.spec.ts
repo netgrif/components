@@ -1,30 +1,34 @@
-import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+
+import {DashboardComponent} from './dashboard.component';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {
     AllowedNetsService, AllowedNetsServiceFactory,
-    AuthenticationMethodService,
+    AuthenticationMethodService, AuthorityGuardService,
     CaseResourceService,
     CaseViewService,
-    ConfigurationService,
+    ConfigurationService, GroupGuardService,
     MaterialModule,
-    MockAuthenticationMethodService, NAE_BASE_FILTER,
+    MockAuthenticationMethodService,
+    NAE_BASE_FILTER, RoleGuardService,
     SearchService,
-    TestCaseBaseFilterProvider, TestCaseViewAllowedNetsFactory,
+    TestCaseBaseFilterProvider,
+    TestCaseViewAllowedNetsFactory,
     TestConfigurationService,
     TranslateLibModule
-} from '@netgrif/components-core';
-import {CaseListPaginatorComponent} from './case-list-paginator.component';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {PanelComponentModule} from '../../../../panel/panel.module';
+} from 'netgrif-components-core';
+import {PanelComponentModule} from '../../panel/panel.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
 import {of} from 'rxjs';
+import {AccessService, DoubleDrawerNavigationService} from '@netgrif/components-core';
 
-describe('CaseListPaginatorComponent', () => {
-    let component: CaseListPaginatorComponent;
-    let fixture: ComponentFixture<CaseListPaginatorComponent>;
+describe('DashboardComponent', () => {
+    let component: DashboardComponent;
+    let fixture: ComponentFixture<DashboardComponent>;
 
-    beforeEach(waitForAsync(() => {
-        TestBed.configureTestingModule({
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
             imports: [
                 HttpClientTestingModule,
                 MaterialModule,
@@ -37,35 +41,36 @@ describe('CaseListPaginatorComponent', () => {
                 {provide: CaseResourceService, useClass: MyResources},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                GroupGuardService,
+                AuthorityGuardService,
+                RoleGuardService,
+                AccessService,
+                DoubleDrawerNavigationService,
                 CaseViewService,
                 SearchService,
                 {
                     provide: NAE_BASE_FILTER,
                     useFactory: TestCaseBaseFilterProvider
                 },
-                {
-                    provide: AllowedNetsService,
-                    useFactory: TestCaseViewAllowedNetsFactory,
-                    deps: [AllowedNetsServiceFactory]
-                }
+                {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ],
-            declarations: [CaseListPaginatorComponent]
+            declarations: [DashboardComponent]
         })
             .compileComponents();
-    }));
+    });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(CaseListPaginatorComponent);
+        fixture = TestBed.createComponent(DashboardComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
-
     afterEach(() => {
         TestBed.resetTestingModule();
+    });
+
+    it('should create', () => {
+        expect(component).toBeTruthy();
     });
 });
 

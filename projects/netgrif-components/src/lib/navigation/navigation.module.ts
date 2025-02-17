@@ -49,11 +49,10 @@ import { DefaultNoFilterProvidedComponent } from './group-navigation-component-r
 import { DefaultPublicResolverComponent } from './group-navigation-component-resolver/default-components/public/default-public-resolver/default-public-resolver.component';
 import {TranslateModule} from "@ngx-translate/core";
 import { DefaultPublicSingleTaskViewComponent } from './group-navigation-component-resolver/default-components/public/default-public-single-task-view/default-public-single-task-view.component';
-import {MatButtonModule} from "@angular/material/button";
-import {MatCardModule} from "@angular/material/card";
-import {MatIconModule} from "@angular/material/icon";
 import { DefaultPublicTaskViewComponent } from './group-navigation-component-resolver/default-components/public/default-public-task-view/default-public-task-view.component';
 import { DefaultPublicWorkflowViewComponent } from './group-navigation-component-resolver/default-components/public/default-public-workflow-view/default-public-workflow-view.component';
+import {DashboardComponent} from './dashboard/dashboard.component';
+import {ToolbarComponentModule} from '../toolbar/toolbar.module';
 
 
 @NgModule({
@@ -75,7 +74,8 @@ import { DefaultPublicWorkflowViewComponent } from './group-navigation-component
         DefaultPublicResolverComponent,
         DefaultPublicSingleTaskViewComponent,
         DefaultPublicTaskViewComponent,
-        DefaultPublicWorkflowViewComponent
+        DefaultPublicWorkflowViewComponent,
+        DashboardComponent,
     ],
     imports: [
         CommonModule,
@@ -96,9 +96,7 @@ import { DefaultPublicWorkflowViewComponent } from './group-navigation-component
         MatDividerModule,
         UtilityModule,
         TranslateModule,
-        MatButtonModule,
-        MatCardModule,
-        MatIconModule,
+        ToolbarComponentModule,
     ],
     exports: [
         NavigationDrawerComponent,
@@ -114,7 +112,8 @@ import { DefaultPublicWorkflowViewComponent } from './group-navigation-component
         DefaultPublicResolverComponent,
         DefaultPublicSingleTaskViewComponent,
         DefaultPublicTaskViewComponent,
-        DefaultPublicWorkflowViewComponent
+        DefaultPublicWorkflowViewComponent,
+        DashboardComponent,
     ],
     providers: [
         { provide: NAE_GROUP_NAVIGATION_COMPONENT_RESOLVER_COMPONENT, useValue: GroupNavigationComponentResolverComponent },
