@@ -48,7 +48,7 @@ export abstract class AbstractLdapGroupRoleAssignmentComponent implements OnInit
         ).subscribe(searchText => {
             this.ldapGroup.reload(searchText);
         });
-        this.subNetValueChanges = this.searchNetControl.valueChanges.subscribe(searchText => {
+        this.subNetValueChanges = this.searchNetControl.valueChanges.pipe(debounceTime(this.SEARCH_DEBOUNCE_TIME)).subscribe(searchText => {
             this.filteredProcesses = this.nets.processes.filter(itm => itm.title.toLowerCase().includes(searchText.toLowerCase()));
         });
     }

@@ -1,5 +1,5 @@
 import { Component} from '@angular/core';
-import {TabContent} from "netgrif-components-core";
+import {TabContent} from "@netgrif/components-core";
 import {DefaultTabbedSingleTaskViewComponent, DefaultTicketViewComponent} from "@netgrif/components";
 
 @Component({

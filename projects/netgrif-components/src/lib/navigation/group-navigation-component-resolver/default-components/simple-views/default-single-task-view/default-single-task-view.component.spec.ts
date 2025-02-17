@@ -7,16 +7,13 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {RouterTestingModule} from "@angular/router/testing";
 import {Observable} from "rxjs";
 import {
-    DefaultTabbedSingleTaskViewComponent
-} from "../../tabbed/default-tabbed-single-task-view/default-tabbed-single-task-view.component";
-import {
     AuthenticationMethodService,
     ConfigurationService, FilterType,
     MaterialModule,
     NAE_TAB_DATA, SimpleFilter,
-    TestConfigurationService
+    TestConfigurationService,
+    FilterField, NAE_NAVIGATION_ITEM_TASK_DATA, UserFilterConstants
 } from "@netgrif/components-core";
-import {FilterField, NAE_NAVIGATION_ITEM_TASK_DATA, UserFilterConstants} from "@netgrif/components-core";
 
 describe('DefaultSingleTaskViewComponent', () => {
   let component: DefaultSingleTaskViewComponent;

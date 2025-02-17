@@ -1,10 +1,9 @@
-import {Component} from '@angular/core';
+import {Component, Optional} from '@angular/core';
 import {
     AbstractSingleTaskViewComponent,
     AllowedNetsService,
     AllowedNetsServiceFactory, BaseAllowedNetsService,
     ChangedFieldsService, FilterExtractionService,
-    FilterType,
     FinishTaskService,
     FrontActionService,
     NAE_BASE_FILTER, NAE_NAVIGATION_ITEM_TASK_DATA,
@@ -12,7 +11,6 @@ import {
     NAE_VIEW_ID_SEGMENT, navigationItemTaskAllowedNetsServiceFactory, navigationItemTaskFilterFactory,
     RedirectService,
     SearchService,
-    SimpleFilter,
     SubjectTaskOperations,
     TaskDataService,
     TaskEventService,
@@ -35,7 +33,7 @@ import {AsyncPipe} from "@angular/common";
         {
             provide: NAE_BASE_FILTER,
             useFactory: navigationItemTaskFilterFactory,
-            deps: [FilterExtractionService, NAE_NAVIGATION_ITEM_TASK_DATA]
+            deps: [FilterExtractionService, ActivatedRoute, [new Optional(), NAE_NAVIGATION_ITEM_TASK_DATA]]
         },
         {provide: NAE_VIEW_ID_SEGMENT, useValue: 'publicTaskView'},
         {provide: AllowedNetsServiceFactory, useClass: AllowedNetsServiceFactory},

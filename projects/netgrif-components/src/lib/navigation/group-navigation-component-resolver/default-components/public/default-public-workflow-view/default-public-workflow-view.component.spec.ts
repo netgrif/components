@@ -3,7 +3,6 @@ import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {DefaultPublicWorkflowViewComponent} from './default-public-workflow-view.component';
 import {NoopAnimationsModule} from "@angular/platform-browser/animations";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
-import {RouterModule} from "@angular/router";
 import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from "@angular/core";
 import {AuthenticationMethodService,
     AuthenticationService, ConfigurationService, MaterialModule, MockAuthenticationMethodService,
@@ -15,6 +14,7 @@ import {HeaderComponentModule} from "../../../../../header/header.module";
 import {
     SideMenuContentComponentModule
 } from "../../../../../side-menu/content-components/side-menu-content-component.module";
+import {RouterTestingModule} from "@angular/router/testing";
 
 describe('DefaultPublicWorkflowViewComponent', () => {
     let component: DefaultPublicWorkflowViewComponent;
@@ -33,7 +33,7 @@ describe('DefaultPublicWorkflowViewComponent', () => {
                 HttpClientTestingModule,
                 SideMenuContentComponentModule,
                 TranslateLibModule,
-                RouterModule.forRoot([], {relativeLinkResolution: 'legacy'})
+                RouterTestingModule.withRoutes([], {relativeLinkResolution: 'legacy'})
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
             providers: [

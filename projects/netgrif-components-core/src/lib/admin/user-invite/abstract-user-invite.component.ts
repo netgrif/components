@@ -9,7 +9,7 @@ import {SignUpService} from '../../authentication/sign-up/services/sign-up.servi
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {UserInvitationRequest} from '../../authentication/sign-up/models/user-invitation-request';
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {take} from 'rxjs/operators';
+import {debounceTime, take} from 'rxjs/operators';
 import {Subscription} from "rxjs";
 
 @Component({
@@ -23,6 +23,7 @@ export abstract class AbstractUserInviteComponent implements OnInit, OnDestroy {
     public invitedRoles: Array<ExtendedProcessRole>;
     public nets: ProcessList;
     public filteredProcesses: Array<ProcessListItem> = [];
+    protected SEARCH_DEBOUNCE_TIME = 600;
     public searchNetControl = new FormControl();
     protected subNetValueChanges: Subscription;
     public loading: LoadingEmitter;
@@ -48,7 +49,7 @@ export abstract class AbstractUserInviteComponent implements OnInit, OnDestroy {
             this.filteredProcesses = processes;
         });
         this._orgList.loadGroups();
-        this.subNetValueChanges = this.searchNetControl.valueChanges.subscribe(searchText => {
+        this.subNetValueChanges = this.searchNetControl.valueChanges.pipe(debounceTime(this.SEARCH_DEBOUNCE_TIME)).subscribe(searchText => {
             this.filteredProcesses = this.nets.processes.filter(itm => itm.title.toLowerCase().includes(searchText.toLowerCase()));
         });
     }

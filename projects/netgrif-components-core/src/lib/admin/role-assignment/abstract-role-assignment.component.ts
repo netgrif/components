@@ -42,7 +42,7 @@ export abstract class AbstractRoleAssignmentComponent implements OnInit, AfterVi
         this.subValueChanges = this.searchUserControl.valueChanges.pipe(debounceTime(this.SEARCH_DEBOUNCE_TIME)).subscribe(searchText => {
             this.users.reload(searchText);
         });
-        this.subNetValueChanges = this.searchNetControl.valueChanges.subscribe(searchText => {
+        this.subNetValueChanges = this.searchNetControl.valueChanges.pipe(debounceTime(this.SEARCH_DEBOUNCE_TIME)).subscribe(searchText => {
             this.filteredProcesses = this.nets.processes.filter(itm => itm.title.toLowerCase().includes(searchText.toLowerCase()));
         });
     }

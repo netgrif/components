@@ -16,7 +16,7 @@ import {
     TestCaseViewAllowedNetsFactory,
     TestConfigurationService,
     TranslateLibModule
-} from 'netgrif-components-core';
+} from '@netgrif/components-core';
 import {PanelComponentModule} from '../../panel/panel.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
