@@ -310,7 +310,6 @@ export class DoubleDrawerNavigationService implements OnDestroy {
         let itemsWithView: Array<NavigationItem> = allItems.filter(item => DoubleDrawerUtils.hasItemView(item));
         if (itemsWithView.length > 0) {
             this._redirectService.redirect(autoOpenItems[0].routing.path);
-            return;
         }
     }
 

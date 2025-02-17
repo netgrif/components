@@ -13,11 +13,11 @@ import {
     ImpersonationUserSelectService,
     ImpersonationService,
     CaseResourceService,
-    RedirectService
+    RedirectService,
+    DoubleDrawerNavigationService
 } from '@netgrif/components-core';
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {TranslateService} from "@ngx-translate/core";
-import {DoubleDrawerNavigationService} from "@netgrif/components-core";
 
 @Component({
     selector: 'nc-navigation-double-drawer',
