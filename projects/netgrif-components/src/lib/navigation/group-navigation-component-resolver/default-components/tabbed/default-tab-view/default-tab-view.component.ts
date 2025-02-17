@@ -21,6 +21,10 @@ import {DefaultTabbedCaseViewComponent} from '../default-tabbed-case-view/defaul
 import {DefaultTabbedTaskViewComponent} from '../default-tabbed-task-view/default-tabbed-task-view.component';
 import {ActivatedRoute} from '@angular/router';
 import {TranslateService} from "@ngx-translate/core";
+import {DefaultTicketViewComponent} from "../default-ticket-view/default-ticket-view.component";
+import {
+    DefaultTabbedSingleTaskViewComponent
+} from "../default-tabbed-single-task-view/default-tabbed-single-task-view.component";
 
 @Component({
     selector: 'nc-default-tab-view',
@@ -53,6 +57,8 @@ export class DefaultTabViewComponent {
                 return this.getCaseTabs(menuItemDataGroups, viewDataGroups);
             case "tabbed_task_view":
                 return this.getTaskTabs(menuItemDataGroups, viewDataGroups);
+            case "tabbed_ticket_view":
+                return this.getTicketTabs(menuItemDataGroups, viewDataGroups);
             default:
                 throw new Error(`Cannot resolve tabs for '${viewType}' view type`);
         }
@@ -140,7 +146,7 @@ export class DefaultTabViewComponent {
         ];
     }
 
-    private getTaskTabs(menuItemDataGroups: Array<DataGroup>, viewDataGroups: Array<DataGroup>): TabContent[] {
+    protected getTaskTabs(menuItemDataGroups: Array<DataGroup>, viewDataGroups: Array<DataGroup>): TabContent[] {
         const labelData = extractIconAndTitle(menuItemDataGroups, this.translationService);
         const taskSearchType = extractSearchTypeFromData(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_TASK_VIEW_SEARCH_TYPE);
         const headersChangeable = extractFieldValueFromData<boolean>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_TASK_HEADERS_CHANGEABLE);
@@ -170,6 +176,27 @@ export class DefaultTabViewComponent {
                     headersMode: headersMode,
                     allowTableMode: allowTableMode,
                     defaultHeadersMode: defaultHeadersMode
+                }
+            }
+        ];
+    }
+
+    protected getTicketTabs(menuItemDataGroups: Array<DataGroup>, viewDataGroups: Array<DataGroup>): TabContent[] {
+        const labelData = extractIconAndTitle(menuItemDataGroups, this.translationService);
+
+        if (!hasView(viewDataGroups)) {
+            throw new Error(`Ticket view has missing configuration for single task view.`);
+        }
+
+        return [
+            {
+                label: {text: labelData.name, icon: labelData.icon},
+                canBeClosed: false,
+                tabContentComponent: DefaultTicketViewComponent,
+                injectedObject: {
+                    navigationItemTaskData: this._navigationItemTaskData,
+                    tabViewComponent: DefaultTabbedSingleTaskViewComponent,
+                    tabViewOrder: 0,
                 }
             }
         ];

@@ -16,15 +16,17 @@ import {
     DoubleDrawerUtils,
     DataGroup,
     NAE_TAB_DATA,
-    InjectedTabbedCaseViewData,
     SimpleFilter,
     FilterType, CaseEventOutcome,
-    NAE_AUTOSWITCH_TAB_TOKEN, NAE_OPEN_EXISTING_TAB, LoggerService, ProcessService
+    NAE_AUTOSWITCH_TAB_TOKEN, NAE_OPEN_EXISTING_TAB, LoggerService, ProcessService, extractFieldValueFromData
 } from '@netgrif/components-core';
 import {TranslateService} from "@ngx-translate/core";
 import {FormControl} from "@angular/forms";
 import {forkJoin} from "rxjs";
 import {map} from 'rxjs/operators';
+import {
+    InjectedTabbedTicketViewDataWithNavigationItemTaskData
+} from "../../model/injected-tabbed-ticket-view-data-with-navigation-item-task-data";
 
 export interface TicketItem {
     id: string;
@@ -63,7 +65,7 @@ export class DefaultTicketViewComponent implements OnInit {
                 protected _navigationService: DoubleDrawerNavigationService,
                 protected _taskResourceService: TaskResourceService,
                 protected _processService: ProcessService,
-                @Inject(NAE_TAB_DATA) protected _injectedTabData: InjectedTabbedCaseViewData,
+                @Inject(NAE_TAB_DATA) protected _injectedTabData: InjectedTabbedTicketViewDataWithNavigationItemTaskData,
                 @Optional() @Inject(NAE_AUTOSWITCH_TAB_TOKEN) protected _autoswitchToTaskTab = true,
                 @Optional() @Inject(NAE_OPEN_EXISTING_TAB) protected _openExistingTab = true) {
         this.search = new FormControl('');
@@ -121,7 +123,7 @@ export class DefaultTicketViewComponent implements OnInit {
     protected transformItemCases(navItems: NavigationItem[]) {
         return navItems.map(item => this.resolveItemCaseToNavigationItem(item));
     }
-    // copied from abstract-navigation-double-drawer
+    // copied from DoubleDrawerNavigationService
     protected resolveItemCaseToNavigationItem(navItem: NavigationItem): TicketItem | undefined {
         if (navItem.resource === undefined) {
             return undefined;
@@ -168,6 +170,7 @@ export class DefaultTicketViewComponent implements OnInit {
     }
 
     protected openTab(openCase: Case) {
+        const transId: string = extractFieldValueFromData(this._injectedTabData.navigationItemTaskData, "transition_id")
         this._injectedTabData.tabViewRef.openTab({
             label: {
                 text: openCase.title,
@@ -176,7 +179,7 @@ export class DefaultTicketViewComponent implements OnInit {
             canBeClosed: true,
             tabContentComponent: this._injectedTabData.tabViewComponent,
             injectedObject: {
-                baseFilter: new SimpleFilter('', FilterType.TASK, {case: {id: `${openCase.stringId}`}}),
+                baseFilter: new SimpleFilter('', FilterType.TASK, {case: {id: `${openCase.stringId}`}, transitionId: transId}),
                 allowedNets: [openCase.processIdentifier]
             },
             order: this._injectedTabData.tabViewOrder,
