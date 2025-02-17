@@ -80,8 +80,7 @@ describe('AbstractSingleTaskViewComponent', () => {
 })
 class TestAbstractSingleTaskViewComponent extends AbstractSingleTaskViewComponent {
     constructor(taskViewService: TaskViewService,
-                activatedRoute: ActivatedRoute,
-                @Inject(NAE_BASE_FILTER) baseFilter: BaseFilter){
-        super(taskViewService, activatedRoute, baseFilter);
+                activatedRoute: ActivatedRoute){
+        super(taskViewService, activatedRoute);
     }
 }

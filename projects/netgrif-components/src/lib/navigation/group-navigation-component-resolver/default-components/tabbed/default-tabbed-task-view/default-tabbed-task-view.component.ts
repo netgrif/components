@@ -20,10 +20,10 @@ import {
     NAE_NAVIGATION_ITEM_TASK_DATA,
     OverflowService,
 } from '@netgrif/components-core';
-import {HeaderComponent} from '../../../../header/header.component';
+import {HeaderComponent} from '../../../../../header/header.component';
 import {
     InjectedTabbedTaskViewDataWithNavigationItemTaskData
-} from "../model/injected-tabbed-task-view-data-with-navigation-item-task-data";
+} from "../../model/injected-tabbed-task-view-data-with-navigation-item-task-data";
 
 export function baseFilterFactory(injectedTabData: InjectedTabbedTaskViewDataWithNavigationItemTaskData) {
     return {

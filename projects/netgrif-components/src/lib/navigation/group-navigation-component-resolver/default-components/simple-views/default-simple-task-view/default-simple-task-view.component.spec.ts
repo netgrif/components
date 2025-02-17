@@ -1,6 +1,6 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {DefaultSimpleTaskViewComponent} from './default-simple-task-view.component';
-import {NavigationComponentModule} from '../../../navigation.module';
+import {NavigationComponentModule} from '../../../../navigation.module';
 import {
     FilterField, FilterType,
     NAE_NAVIGATION_ITEM_TASK_DATA,

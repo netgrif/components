@@ -29,15 +29,15 @@ import {
     NAE_NAVIGATION_ITEM_TASK_DATA,
     OverflowService,
 } from '@netgrif/components-core';
-import {HeaderComponent} from '../../../../header/header.component';
+import {HeaderComponent} from '../../../../../header/header.component';
 import {
     InjectedTabbedCaseViewDataWithNavigationItemTaskData
-} from '../model/injected-tabbed-case-view-data-with-navigation-item-task-data';
+} from '../../model/injected-tabbed-case-view-data-with-navigation-item-task-data';
 import {
     filterCaseTabbedDataAllowedNetsServiceFactory,
     filterCaseTabbedDataFilterFactory,
     filterCaseTabbedDataSearchCategoriesFactory
-} from '../model/factory-methods';
+} from '../../model/factory-methods';
 
 @Component({
     selector: 'nc-default-tabbed-case-view',

@@ -25,16 +25,16 @@ import {
 } from './group-navigation-component-resolver/default-group-navigation-component-resolver.service';
 import {
     DefaultSimpleTaskViewComponent
-} from './group-navigation-component-resolver/default-components/default-simple-task-view/default-simple-task-view.component';
+} from './group-navigation-component-resolver/default-components/simple-views/default-simple-task-view/default-simple-task-view.component';
 import {
     DefaultTabbedTaskViewComponent
-} from './group-navigation-component-resolver/default-components/default-tabbed-task-view/default-tabbed-task-view.component';
+} from './group-navigation-component-resolver/default-components/tabbed/default-tabbed-task-view/default-tabbed-task-view.component';
 import {
     DefaultTabbedCaseViewComponent
-} from './group-navigation-component-resolver/default-components/default-tabbed-case-view/default-tabbed-case-view.component';
+} from './group-navigation-component-resolver/default-components/tabbed/default-tabbed-case-view/default-tabbed-case-view.component';
 import {
     DefaultTabViewComponent
-} from './group-navigation-component-resolver/default-components/default-tab-view/default-tab-view.component';
+} from './group-navigation-component-resolver/default-components/tabbed/default-tab-view/default-tab-view.component';
 import {SearchComponentModule} from '../search/search.module';
 import {HeaderComponentModule} from '../header/header.module';
 import {PanelComponentModule} from '../panel/panel.module';
@@ -43,8 +43,8 @@ import {CaseViewComponentModule} from '../view/case-view/case-view.module';
 import { NavigationDoubleDrawerComponent } from './navigation-double-drawer/navigation-double-drawer.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
-import { DefaultTaskViewComponent } from './group-navigation-component-resolver/default-components/default-task-view/default-task-view.component';
-import { DefaultCaseRefListViewComponent } from './group-navigation-component-resolver/default-components/default-case-ref-list-view/default-case-ref-list-view.component';
+import { DefaultTaskViewComponent } from './group-navigation-component-resolver/default-components/refs/default-task-view/default-task-view.component';
+import { DefaultCaseRefListViewComponent } from './group-navigation-component-resolver/default-components/refs/default-case-ref-list-view/default-case-ref-list-view.component';
 import { DefaultNoFilterProvidedComponent } from './group-navigation-component-resolver/default-components/default-no-filter-provided/default-no-filter-provided.component';
 import { DefaultPublicResolverComponent } from './group-navigation-component-resolver/default-components/public/default-public-resolver/default-public-resolver.component';
 import {TranslateModule} from "@ngx-translate/core";
@@ -53,6 +53,8 @@ import { DefaultPublicTaskViewComponent } from './group-navigation-component-res
 import { DefaultPublicWorkflowViewComponent } from './group-navigation-component-resolver/default-components/public/default-public-workflow-view/default-public-workflow-view.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {ToolbarComponentModule} from '../toolbar/toolbar.module';
+import { DefaultTabbedSingleTaskViewComponent } from './group-navigation-component-resolver/default-components/tabbed/default-tabbed-single-task-view/default-tabbed-single-task-view.component';
+import { DefaultSingleTaskViewComponent } from './group-navigation-component-resolver/default-components/simple-views/default-single-task-view/default-single-task-view.component';
 
 
 @NgModule({
@@ -76,6 +78,8 @@ import {ToolbarComponentModule} from '../toolbar/toolbar.module';
         DefaultPublicTaskViewComponent,
         DefaultPublicWorkflowViewComponent,
         DashboardComponent,
+        DefaultTabbedSingleTaskViewComponent,
+        DefaultSingleTaskViewComponent
     ],
     imports: [
         CommonModule,
@@ -114,6 +118,8 @@ import {ToolbarComponentModule} from '../toolbar/toolbar.module';
         DefaultPublicTaskViewComponent,
         DefaultPublicWorkflowViewComponent,
         DashboardComponent,
+        DefaultTabbedSingleTaskViewComponent,
+        DefaultSingleTaskViewComponent
     ],
     providers: [
         { provide: NAE_GROUP_NAVIGATION_COMPONENT_RESOLVER_COMPONENT, useValue: GroupNavigationComponentResolverComponent },
