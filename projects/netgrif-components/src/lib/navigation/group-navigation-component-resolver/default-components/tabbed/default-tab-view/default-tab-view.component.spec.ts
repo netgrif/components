@@ -45,11 +45,32 @@ describe('DefaultTabViewComponent', () => {
                     useValue: [
                         {
                             fields: [
+                                new EnumerationField(
+                                    "view_configuration_type",
+                                    '',"tabbed_case_view",[],{visible: true}
+                                ),
                                 new I18nField(
                                     GroupNavigationConstants.NAVIGATION_ENTRY_TITLE_FIELD_ID_SUFFIX,
                                     '',
                                     {defaultValue: 'Default translation', translations: {en: 'English translation'}},
                                     {visible: true}
+                                ),
+                            ]
+                        },
+                        {
+                            fields: []
+                        },
+                        {
+                            fields: []
+                        },
+                        {
+                            fields: []
+                        },
+                        {
+                            fields: [
+                                new TaskRefField(
+                                    "view_configuration_form",
+                                    '',["thisistaskid"],{visible: true}
                                 ),
                                 new BooleanField(
                                     GroupNavigationConstants.NAVIGATION_ENTRY_ICON_ENABLED_FIELD_ID_SUFFIX,

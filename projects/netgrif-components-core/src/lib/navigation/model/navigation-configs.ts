@@ -16,7 +16,7 @@ export interface NavigationItem extends View {
 }
 
 export const MENU_IDENTIFIERS = [
-    'preference_item',
+    'menu_item',
 ];
 export const SETTINGS_TRANSITION_ID = 'item_settings';
 
