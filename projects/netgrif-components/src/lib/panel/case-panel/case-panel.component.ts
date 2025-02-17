@@ -45,7 +45,7 @@ export class CasePanelComponent extends AbstractCasePanelComponent implements On
     ngOnInit() {
         super.ngOnInit();
         if (this._dataFieldPortalData !== null && this._dataFieldPortalData.dataField instanceof MultichoiceField) {
-            this.approvalFormControl.setValue(this._dataFieldPortalData.dataField.value.includes(this.case_.stringId));
+            this.approvalFormControl.setValue(this._dataFieldPortalData.dataField.value?.includes(this.case_.stringId));
             this.approvalFormControl.valueChanges.subscribe(value => {
                 if (this._changeValue) {
                     if (value) {
@@ -63,7 +63,7 @@ export class CasePanelComponent extends AbstractCasePanelComponent implements On
             })
             this._dataFieldPortalData.dataField.valueChanges().subscribe(() => {
                 this._changeValue = false;
-                this.approvalFormControl.setValue(this._dataFieldPortalData.dataField.value.includes(this.case_.stringId));
+                this.approvalFormControl.setValue(this._dataFieldPortalData.dataField.value?.includes(this.case_.stringId));
             })
         }
         if (this._dataFieldPortalData !== null && this._dataFieldPortalData.dataField instanceof EnumerationField) {

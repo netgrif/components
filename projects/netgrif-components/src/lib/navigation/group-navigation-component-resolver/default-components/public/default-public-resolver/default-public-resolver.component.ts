@@ -1,22 +1,22 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Subscription} from "rxjs";
+import {Router} from "@angular/router";
 import {
-    UserService,
-    SessionService,
     AuthenticationService,
     PublicUrlResolverService,
-    RedirectService
+    RedirectService,
+    SessionService,
+    UserService
 } from '@netgrif/components-core';
-import {Router} from '@angular/router';
-import {Subscription} from 'rxjs';
 
 @Component({
-    selector: 'nae-app-public-resolver',
-    templateUrl: './public-resolver.component.html',
-    styleUrls: ['./public-resolver.component.scss']
+    selector: 'nc-default-public-resolver',
+    templateUrl: './default-public-resolver.component.html',
+    styleUrls: ['./default-public-resolver.component.scss']
 })
-export class PublicResolverComponent implements OnInit, OnDestroy {
+export class DefaultPublicResolverComponent implements OnInit, OnDestroy {
 
-    private _userSub: Subscription;
+    protected _userSub: Subscription;
 
     constructor(protected _userService: UserService, protected _sessionService: SessionService, protected _router: Router,
                 protected _auth: AuthenticationService, protected _publicResolver: PublicUrlResolverService,
@@ -28,7 +28,7 @@ export class PublicResolverComponent implements OnInit, OnDestroy {
             if ((!!user && user.id !== '') || (!this._sessionService.verified && !this._sessionService.isVerifying &&
                 this._sessionService.isInitialized && !this._auth.isAuthenticated)) {
                 this._router.navigate([this.redirectService.parseRedirectPath(this._publicResolver.url)],
-                    { queryParams: this.redirectService.queryParams });
+                    {queryParams: this.redirectService.queryParams});
                 this._publicResolver.url = undefined;
             }
         });

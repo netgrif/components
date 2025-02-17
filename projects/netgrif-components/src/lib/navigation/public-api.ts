@@ -16,6 +16,10 @@ export * from './group-navigation-component-resolver/default-components/default-
 export * from './group-navigation-component-resolver/default-components/default-tabbed-task-view/default-tabbed-task-view.component';
 export * from './breadcrumbs/breadcrumbs.component';
 export * from './group-navigation-component-resolver/default-components/default-task-view/default-task-view.component';
+export * from './group-navigation-component-resolver/default-components/public/default-public-resolver/default-public-resolver.component';
+export * from './group-navigation-component-resolver/default-components/public/default-public-task-view/default-public-task-view.component';
+export * from './group-navigation-component-resolver/default-components/public/default-public-workflow-view/default-public-workflow-view.component';
+export * from './group-navigation-component-resolver/default-components/public/default-public-single-task-view/default-public-single-task-view.component';
 
 /* FUNCTIONS */
 export * from './group-navigation-component-resolver/default-components/model/factory-methods';

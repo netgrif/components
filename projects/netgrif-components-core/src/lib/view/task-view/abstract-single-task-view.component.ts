@@ -10,10 +10,6 @@ import {TaskSearchRequestBody} from "../../filter/models/task-search-request-bod
 import {NAE_BASE_FILTER} from "../../search/models/base-filter-injection-token";
 import {map, tap} from "rxjs/operators";
 
-export class TaskConst {
-    public static readonly TRANSITION_ID = 'transitionId';
-}
-
 @Component({
     selector: 'ncc-abstract-single-task-view',
     template: ''
