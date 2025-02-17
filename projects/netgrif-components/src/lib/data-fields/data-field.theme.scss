@@ -350,7 +350,8 @@
     }
 
     .netgrif-input-search-fix {
-        .mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix .mat-icon-button {
+        .mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix .mat-icon-button,
+        .mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-prefix .mat-icon-button{
             width: unset !important;
             height: unset !important;
             top: 3px !important;
@@ -358,6 +359,38 @@
 
         .mat-form-field-wrapper {
             padding-bottom: 0 !important;
+        }
+
+        .mat-form-field-appearance-outline {
+            .mat-form-field-outline {
+                color: $color-outline-enabled;
+            }
+
+            .mat-form-field-outline-thick {
+                color: $color-outline-enabled;
+            }
+
+            &.mat-focused {
+                .mat-form-field-outline-thick {
+                    color: $color-outline-enabled;
+                }
+            }
+        }
+
+        .mat-form-field-label {
+            color: $color-outline-enabled;
+        }
+
+        .mat-form-field.mat-focused .mat-form-field-label {
+            color: $color-outline-enabled;
+        }
+
+        .mat-datepicker-toggle {
+            color: $color-outline-enabled !important;;
+        }
+
+        ::placeholder {
+            color: $color-outline-enabled !important;;
         }
     }
 

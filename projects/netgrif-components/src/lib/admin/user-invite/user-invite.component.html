@@ -5,7 +5,7 @@
         <mat-toolbar color="primary" class="min-height-72 margin-bottom-16px">
             <span>{{'admin.user-invite.newUser' | translate}}</span>
             <div fxFlex></div>
-            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="40"  class="padding-right-16px netgrif-input netgrif-input-fix netgrif-input-primary-fix netgrif-input-search-fix">
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="40"  class="padding-right-16px netgrif-input netgrif-input-fix netgrif-input-search-fix">
                 <mat-icon fxFlex class="mail-icon">email</mat-icon>
                 <mat-form-field fxFlex="100" class="user-assign-search" color="primary" appearance="outline">
                     <mat-label>{{ 'admin.user-invite.mail' | translate }}</mat-label>
@@ -102,6 +102,20 @@
 
         <mat-toolbar color="primary" class="min-height-72 margin-bottom-16px">
             <span>{{'admin.process-list.listTitle' | translate}}</span>
+
+            <div fxFlex="5"></div>
+
+            <div fxLayout="row" fxLayoutAlign="start center" class="netgrif-input netgrif-input-search-fix">
+                <mat-form-field fxFlex="100" class="user-assign-search" color="primary" appearance="outline">
+                    <mat-icon matPrefix class="prefix-icon">search</mat-icon>
+                    <mat-label>{{ 'side-menu.import-net.search' | translate }}</mat-label>
+                    <input matInput [formControl]="searchNetControl">
+                    <button *ngIf="searchNetControl.value" matSuffix mat-icon-button
+                            (click)="searchNetControl.setValue('')" color="warn">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </mat-form-field>
+            </div>
         </mat-toolbar>
 
         <div *ngIf="nets.processes.length === 0" fxLayout="column"
@@ -112,7 +126,7 @@
 
         <mat-accordion class="full-width margin-top-default process-list-accordion" multi fxFlex>
 
-            <mat-expansion-panel *ngFor="let item of nets.processes" (afterExpand)="nets.loadProcessItemRoles(item)"
+            <mat-expansion-panel *ngFor="let item of filteredProcesses" (afterExpand)="nets.loadProcessItemRoles(item)"
                                  (afterCollapse)="nets.prepareToTryAgainToLoadRoles(item)">
 
                 <mat-expansion-panel-header>

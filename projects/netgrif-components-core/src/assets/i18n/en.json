@@ -71,7 +71,8 @@
         "import-net": {
             "upload": "Upload model",
             "choose": "Choose a process file",
-            "done": "Done"
+            "done": "Done",
+            "search": "Search for process"
         },
         "new-case": {
             "case": "New Case",
