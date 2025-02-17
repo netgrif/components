@@ -1,7 +1,6 @@
 import {Component, Inject} from '@angular/core';
 import {
     DataGroup,
-    extractFilterFromData,
     extractIconAndTitle,
     extractSearchTypeFromData,
     extractFieldValueFromData,
@@ -43,7 +42,6 @@ export class DefaultTabViewComponent {
                 protected translationService: TranslateService,
                 protected extractionService: FilterExtractionService,
                 protected activatedRoute: ActivatedRoute) {
-        const filter = extractFilterFromData(this._navigationItemTaskData);
         this.tabs = this.getTabs();
     }
 
