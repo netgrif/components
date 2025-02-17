@@ -28,9 +28,6 @@ import {LdapGroupRolesAssignComponent} from './doc/ldap-group-roles-assign/ldap-
 import {TreeViewExampleComponent} from './doc/tree-view-example/tree-view-example.component';
 import {UserInviteComponent} from './doc/user-invite/user-invite.component';
 import {ResetPasswordFormComponent} from './doc/forms/reset-password-form/reset-password-form.component';
-import {PublicTaskViewComponent} from './doc/public-task-view/public-task-view.component';
-import {PublicWorkflowViewComponent} from './doc/public-workflow-view/public-workflow-view.component';
-import {PublicResolverComponent} from './doc/public-resolver/public-resolver.component';
 import {GroupViewComponent} from './doc/group-view/group-view.component';
 import {TitleConfigComponent} from './doc/demo-title-config/title-config.component';
 import {ExampleRedirectComponent} from './doc/redirect/example-redirect.component';
@@ -42,9 +39,11 @@ import {DashboardCaseExampleComponent} from './doc/dashboard-case-example/dashbo
 import {ImpersonationDemoComponent} from './doc/impersonation-demo/impersonation-demo.component';
 import {ChangePasswordComponent} from "./doc/forms/change-password/change-password.component";
 import {
-    DefaultPublicResolverComponent, DefaultPublicSingleTaskViewComponent,
+    DefaultPublicResolverComponent,
     DefaultPublicTaskViewComponent,
-    DefaultPublicWorkflowViewComponent
+    DefaultPublicWorkflowViewComponent,
+    DefaultSimpleTaskViewComponent,
+    DefaultPublicSingleTaskViewComponent
 } from "@netgrif/components";
 import {
     NavigationDashboardExampleComponent
@@ -99,6 +98,7 @@ export class NaeExampleAppViewService extends ViewService {
             {id: 'PublicTaskViewComponent', class: DefaultPublicTaskViewComponent},
             {id: 'PublicWorkflowViewComponent', class: DefaultPublicWorkflowViewComponent},
             {id: 'PublicResolverComponent', class: DefaultPublicResolverComponent},
+            {id: 'DefaultSimpleTaskViewComponent', class: DefaultSimpleTaskViewComponent},
             {
                 id: 'ResetPasswordFormComponent',
                 class: ResetPasswordFormComponent

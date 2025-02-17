@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Optional, ViewChild} from '@angular/core';
 import {
     SearchService,
     AllowedNetsService,
@@ -36,20 +36,20 @@ import {ActivatedRoute} from '@angular/router';
         {
             provide: NAE_BASE_FILTER,
             useFactory: navigationItemTaskFilterFactory,
-            deps: [FilterExtractionService, NAE_NAVIGATION_ITEM_TASK_DATA]
+            deps: [FilterExtractionService, ActivatedRoute, [new Optional(), NAE_NAVIGATION_ITEM_TASK_DATA]]
         },
         {
             provide: AllowedNetsService,
             useFactory: navigationItemTaskAllowedNetsServiceFactory,
-            deps: [AllowedNetsServiceFactory, BaseAllowedNetsService, NAE_NAVIGATION_ITEM_TASK_DATA]
+            deps: [AllowedNetsServiceFactory, BaseAllowedNetsService, [new Optional(), NAE_NAVIGATION_ITEM_TASK_DATA]]
         },
         {   provide: NAE_SEARCH_CATEGORIES,
             useFactory: navigationItemTaskCategoryFactory,
             deps: [
                 CategoryResolverService,
-                NAE_NAVIGATION_ITEM_TASK_DATA,
-                NAE_DEFAULT_CASE_SEARCH_CATEGORIES,
-                NAE_DEFAULT_TASK_SEARCH_CATEGORIES
+                [new Optional(), NAE_NAVIGATION_ITEM_TASK_DATA],
+                [new Optional(), NAE_DEFAULT_CASE_SEARCH_CATEGORIES],
+                [new Optional(), NAE_DEFAULT_TASK_SEARCH_CATEGORIES]
             ]
         },
     ]
@@ -58,8 +58,13 @@ export class DefaultSimpleTaskViewComponent extends AbstractTaskViewComponent im
 
     @ViewChild('header') public taskHeaderComponent: HeaderComponent;
 
-    constructor(taskViewService: TaskViewService) {
+    public searchEnabled: boolean = true;
+
+    constructor(taskViewService: TaskViewService, activatedRoute: ActivatedRoute) {
         super(taskViewService);
+        if (!!activatedRoute.snapshot.paramMap.get('singleCaseId')) {
+            this.searchEnabled = false;
+        }
     }
 
     ngAfterViewInit(): void {
