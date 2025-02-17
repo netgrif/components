@@ -133,6 +133,7 @@ import { NavigationDashboardExampleComponent } from './doc/navigation-dashboard-
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
+import { TabbedTicketViewComponent } from './doc/tabbed-ticket-view/tabbed-ticket-view.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -194,7 +195,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         SingleTabbedTaskViewComponent,
         BreadcrumbsExampleComponent,
         ChangePasswordComponent,
-        NavigationDashboardExampleComponent
+        NavigationDashboardExampleComponent,
+        TabbedTicketViewComponent
     ],
     imports: [
         BrowserModule,

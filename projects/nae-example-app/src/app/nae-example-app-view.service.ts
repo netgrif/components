@@ -48,6 +48,7 @@ import {
 import {
     NavigationDashboardExampleComponent
 } from './doc/navigation-dashboard-example/navigation-dashboard-example.component';
+import {TabbedTicketViewComponent} from "./doc/tabbed-ticket-view/tabbed-ticket-view.component";
 
 @Injectable({
     providedIn: 'root'
@@ -99,6 +100,7 @@ export class NaeExampleAppViewService extends ViewService {
             {id: 'PublicWorkflowViewComponent', class: DefaultPublicWorkflowViewComponent},
             {id: 'PublicResolverComponent', class: DefaultPublicResolverComponent},
             {id: 'DefaultSimpleTaskViewComponent', class: DefaultSimpleTaskViewComponent},
+            {id: 'TabbedTicketView', class: TabbedTicketViewComponent},
             {
                 id: 'ResetPasswordFormComponent',
                 class: ResetPasswordFormComponent

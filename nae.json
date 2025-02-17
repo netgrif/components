@@ -281,6 +281,21 @@
                         "path": "workflow-view"
                     }
                 },
+                "ticket-view": {
+                    "component": {
+                        "class": "TabbedTicketView",
+                        "from": "@netgrif/components"
+                    },
+                    "access": "private",
+                    "navigation": {
+                        "title": "Custom ticket view",
+                        "icon": "add"
+                    },
+                    "routing": {
+                        "path": "ticket-view"
+                    },
+                    "processUri": "/test"
+                },
                 "hidden-active-group": {
                     "component": {
                         "class": "ActiveGroupComponent",
