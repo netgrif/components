@@ -341,6 +341,9 @@ export interface Services {
     groupNavigation?: {
         groupNavigationRoute: string,
     };
+    doubleDrawer?: {
+        url: string,
+    }
 
     [k: string]: any;
 }

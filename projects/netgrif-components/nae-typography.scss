@@ -1,6 +1,7 @@
 @import 'src/lib/side-menu/side-menu.theme';
 @import 'src/lib/snack-bar/snack-bar.theme';
 @import 'src/lib/dialog/dialog.theme';
+@import 'src/lib/admin/user-invite/user-invite.component.theme';
 
 @function nae-typography-level(
     $font-size,
@@ -32,4 +33,5 @@
     @include side-menu-typography($typography-config);
     @include snack-bar-typography($typography-config);
     @include dialog-typography($typography-config);
+    @include user-invite-typography($typography-config);
 }

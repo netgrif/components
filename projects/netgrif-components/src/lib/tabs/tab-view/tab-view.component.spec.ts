@@ -18,8 +18,8 @@ import {
     UserResourceService,
     ViewService
 } from '@netgrif/components-core';
-import {RouterModule} from '@angular/router';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('TabViewComponent', () => {
     let component: TabViewComponent;
@@ -33,7 +33,7 @@ describe('TabViewComponent', () => {
                 MaterialModule,
                 TabTestModule,
                 NoopAnimationsModule,
-                RouterModule.forRoot([], { relativeLinkResolution: 'legacy' })
+                RouterTestingModule.withRoutes([], { relativeLinkResolution: 'legacy' }),
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},

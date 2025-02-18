@@ -2,7 +2,6 @@ import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {RouterModule} from '@angular/router';
 import {Component} from '@angular/core';
 import {AbstractLoadingModeComponent} from './abstract-loading-mode.component';
 import {CaseHeaderService} from '../../case-header/case-header.service';

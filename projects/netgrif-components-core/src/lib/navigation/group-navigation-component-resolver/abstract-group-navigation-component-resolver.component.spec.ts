@@ -2,7 +2,7 @@ import {AbstractGroupNavigationComponentResolverComponent} from './abstract-grou
 import {Component, Injector} from '@angular/core';
 import {LoggerService} from '../../logger/services/logger.service';
 import {GroupNavigationComponentResolverService} from './group-navigation-component-resolver.service';
-import {ActivatedRoute, Router, RouterModule} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {MaterialModule} from '../../material/material.module';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
@@ -11,6 +11,7 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {TestGroupNavigationComponentResolverService} from './group-navigation-component-resolver.service.spec';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('AbstractGroupNavigationComponentResolverComponent', () => {
     let component: TestAbstractGroupNavigationComponentResolverComponent;
@@ -23,7 +24,7 @@ describe('AbstractGroupNavigationComponentResolverComponent', () => {
                 TranslateLibModule,
                 HttpClientTestingModule,
                 NoopAnimationsModule,
-                RouterModule.forRoot([], { relativeLinkResolution: 'legacy' })
+                RouterTestingModule.withRoutes([], { relativeLinkResolution: 'legacy' }),
             ],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
