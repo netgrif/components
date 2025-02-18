@@ -1,6 +1,6 @@
 import {FormControl, Validators} from '@angular/forms';
 import {TranslateService} from '@ngx-translate/core';
-import {ExtendedProcessRole, ProcessList} from '../role-assignment/services/ProcessList';
+import {ExtendedProcessRole, ProcessList, ProcessListItem} from '../role-assignment/services/ProcessList';
 import {GroupInterface} from '../../resources/interface/group';
 import {LoadingEmitter} from '../../utility/loading-emitter';
 import {UserInviteService} from './services/user-invite.service';
@@ -8,19 +8,24 @@ import {OrganizationListService} from './services/organization-list.service';
 import {SignUpService} from '../../authentication/sign-up/services/sign-up.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {UserInvitationRequest} from '../../authentication/sign-up/models/user-invitation-request';
-import {Component, OnInit} from '@angular/core';
-import {take} from 'rxjs/operators';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {debounceTime, take} from 'rxjs/operators';
+import {Subscription} from "rxjs";
 
 @Component({
     selector: 'ncc-abstract-user-invite',
     template: ''
 })
-export abstract class AbstractUserInviteComponent implements OnInit {
+export abstract class AbstractUserInviteComponent implements OnInit, OnDestroy {
 
     public invitedEmailControl: FormControl;
     public invitedGroups: Array<GroupInterface>;
     public invitedRoles: Array<ExtendedProcessRole>;
     public nets: ProcessList;
+    public filteredProcesses: Array<ProcessListItem> = [];
+    protected SEARCH_DEBOUNCE_TIME = 600;
+    public searchNetControl = new FormControl();
+    protected subNetValueChanges: Subscription;
     public loading: LoadingEmitter;
 
     constructor(protected _userInviteService: UserInviteService,
@@ -36,38 +41,49 @@ export abstract class AbstractUserInviteComponent implements OnInit {
     }
 
     public get groups() {
-            return this._orgList.groups;
+        return this._orgList.groups;
     }
 
     ngOnInit(): void {
-            this.nets.loadProcesses();
-            this._orgList.loadGroups();
+        this.nets.loadProcesses().subscribe(processes => {
+            this.filteredProcesses = processes;
+        });
+        this._orgList.loadGroups();
+        this.subNetValueChanges = this.searchNetControl.valueChanges.pipe(debounceTime(this.SEARCH_DEBOUNCE_TIME)).subscribe(searchText => {
+            this.filteredProcesses = this.nets.processes.filter(itm => itm.title.toLowerCase().includes(searchText.toLowerCase()));
+        });
+    }
+
+    ngOnDestroy(): void {
+        this.subNetValueChanges.unsubscribe();
+        this.nets = undefined;
+        this.filteredProcesses = undefined;
     }
 
     public removeGroup(org: GroupInterface): void {
-            const itemIndex = this.invitedGroups.findIndex(g => g.id === org.id);
-            if (itemIndex !== -1) {
+        const itemIndex = this.invitedGroups.findIndex(g => g.id === org.id);
+        if (itemIndex !== -1) {
             this.invitedGroups.splice(itemIndex, 1);
         }
     }
 
     public addGroup(org: GroupInterface): void {
-            const itemIndex = this.invitedGroups.findIndex(g => g.id === org.id);
-            if (itemIndex === -1) {
+        const itemIndex = this.invitedGroups.findIndex(g => g.id === org.id);
+        if (itemIndex === -1) {
             this.invitedGroups.push(org);
         }
     }
 
     public removeRole(role: ExtendedProcessRole): void {
-            const itemIndex = this.invitedRoles.findIndex(r => r.stringId === role.stringId);
-            if (itemIndex !== -1) {
+        const itemIndex = this.invitedRoles.findIndex(r => r.stringId === role.stringId);
+        if (itemIndex !== -1) {
             this.invitedRoles.splice(itemIndex, 1);
         }
     }
 
     public addRole(role: ExtendedProcessRole): void {
-            const itemIndex = this.invitedRoles.findIndex(r => r.stringId === role.stringId);
-            if (itemIndex === -1) {
+        const itemIndex = this.invitedRoles.findIndex(r => r.stringId === role.stringId);
+        if (itemIndex === -1) {
             this.invitedRoles.push(role);
         }
     }

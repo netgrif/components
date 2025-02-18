@@ -465,7 +465,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
         return this._caseResourceService.searchCases(SimpleFilter.fromCaseQuery(searchBody), httpParams);
     }
 
-    protected resolveItemCaseToNavigationItem(itemCase: Case): NavigationItem | undefined {
+    public resolveItemCaseToNavigationItem(itemCase: Case): NavigationItem | undefined {
         if (DoubleDrawerUtils.representsRootNode(itemCase)) {
             return;
         }
@@ -535,7 +535,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
         return locale in value.translations ? value.translations[locale] : value.defaultValue;
     }
 
-    protected getItemRoutingPath(itemCase: Case) {
+    public getItemRoutingPath(itemCase: Case) {
         const taskId = DoubleDrawerUtils.findTaskIdInCase(itemCase, SETTINGS_TRANSITION_ID);
         const url = this._dynamicRoutingService.route;
         return `/${url}/${taskId}`;

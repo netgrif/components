@@ -2,7 +2,7 @@ import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/c
 import {MatSelectionList} from '@angular/material/list';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {UserListItem, UserListService} from '../../user/services/user-list.service';
-import {ProcessList, ExtendedProcessRole, ProcessVersion} from './services/ProcessList';
+import {ProcessList, ExtendedProcessRole, ProcessVersion, ProcessListItem} from './services/ProcessList';
 import {FormControl} from '@angular/forms';
 import {RoleAssignmentService} from './services/role-assignment.service';
 import {UserService} from '../../user/services/user.service';
@@ -20,10 +20,13 @@ export abstract class AbstractRoleAssignmentComponent implements OnInit, AfterVi
 
     public users: UserListService;
     public nets: ProcessList;
+    public filteredProcesses: Array<ProcessListItem> = [];
     public userMultiSelect: boolean;
     public searchUserControl = new FormControl();
+    public searchNetControl = new FormControl();
     protected SEARCH_DEBOUNCE_TIME = 600;
     protected subValueChanges: Subscription;
+    protected subNetValueChanges: Subscription;
     protected subUsers: Subscription;
 
     constructor(protected _service: RoleAssignmentService, protected _userService: UserService) {
@@ -33,9 +36,14 @@ export abstract class AbstractRoleAssignmentComponent implements OnInit, AfterVi
     }
 
     ngOnInit(): void {
-        this.nets.loadProcesses();
+        this.nets.loadProcesses().subscribe(processes => {
+            this.filteredProcesses = processes;
+        });
         this.subValueChanges = this.searchUserControl.valueChanges.pipe(debounceTime(this.SEARCH_DEBOUNCE_TIME)).subscribe(searchText => {
             this.users.reload(searchText);
+        });
+        this.subNetValueChanges = this.searchNetControl.valueChanges.pipe(debounceTime(this.SEARCH_DEBOUNCE_TIME)).subscribe(searchText => {
+            this.filteredProcesses = this.nets.processes.filter(itm => itm.title.toLowerCase().includes(searchText.toLowerCase()));
         });
     }
 
@@ -50,9 +58,11 @@ export abstract class AbstractRoleAssignmentComponent implements OnInit, AfterVi
     ngOnDestroy(): void {
         this._userService.reload();
         this.subValueChanges.unsubscribe();
+        this.subNetValueChanges.unsubscribe();
         this.subUsers.unsubscribe();
         this.users = undefined;
         this.nets = undefined;
+        this.filteredProcesses = undefined;
     }
 
     public loadNextUserPage(): void {

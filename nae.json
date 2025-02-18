@@ -207,6 +207,17 @@
                 "path": "drawer"
             }
         },
+        "demo-dashboard": {
+            "component": {
+                "class": "NavigationDashboardExampleComponent",
+                "from": "./doc/navigation-dashboard-example/navigation-dashboard-example.component"
+            },
+            "access": "private",
+            "navigation": true,
+            "routing": {
+                "path": "dashboard"
+            }
+        },
         "demo-double-drawer": {
             "component": {
                 "class": "DoubleDrawerExampleComponent",
@@ -242,6 +253,15 @@
                     },
                     "processUri": "/"
                 },
+                "task-list-view": {
+                    "component": {
+                        "class": "DefaultSimpleTaskViewComponent"
+                    },
+                    "access": "private",
+                    "routing": {
+                        "path": "task-list/:singleCaseId"
+                    }
+                },
                 "hidden-workflow-view": {
                     "component": {
                         "class": "WorkflowViewExampleComponent",
@@ -260,6 +280,21 @@
                     "routing": {
                         "path": "workflow-view"
                     }
+                },
+                "ticket-view": {
+                    "component": {
+                        "class": "TabbedTicketView",
+                        "from": "@netgrif/components"
+                    },
+                    "access": "private",
+                    "navigation": {
+                        "title": "Custom ticket view",
+                        "icon": "add"
+                    },
+                    "routing": {
+                        "path": "ticket-view"
+                    },
+                    "processUri": "/test"
                 },
                 "hidden-active-group": {
                     "component": {

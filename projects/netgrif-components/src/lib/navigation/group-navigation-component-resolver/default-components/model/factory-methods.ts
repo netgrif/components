@@ -10,15 +10,18 @@ import {
 } from '@netgrif/components-core';
 import {InjectedTabbedCaseViewDataWithNavigationItemTaskData} from './injected-tabbed-case-view-data-with-navigation-item-task-data';
 import {Type} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 
 /**
  * Converts a navigation item case task data injected by the {@link NAE_TAB_DATA} injection token into a {@link BaseFilter} instance
  * @param extractionService
  * @param tabData the injected data containing the navigation item case task data
+ * @param activatedRoute
  */
 export function filterCaseTabbedDataFilterFactory(extractionService: FilterExtractionService,
-                                                  tabData: InjectedTabbedCaseViewDataWithNavigationItemTaskData): BaseFilter {
-    return navigationItemTaskFilterFactory(extractionService, tabData.navigationItemTaskData);
+                                                  tabData: InjectedTabbedCaseViewDataWithNavigationItemTaskData,
+                                                  activatedRoute: ActivatedRoute): BaseFilter {
+    return navigationItemTaskFilterFactory(extractionService, activatedRoute, tabData.navigationItemTaskData);
 }
 
 /**

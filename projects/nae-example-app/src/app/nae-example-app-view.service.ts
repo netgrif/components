@@ -28,20 +28,27 @@ import {LdapGroupRolesAssignComponent} from './doc/ldap-group-roles-assign/ldap-
 import {TreeViewExampleComponent} from './doc/tree-view-example/tree-view-example.component';
 import {UserInviteComponent} from './doc/user-invite/user-invite.component';
 import {ResetPasswordFormComponent} from './doc/forms/reset-password-form/reset-password-form.component';
-import {PublicTaskViewComponent} from './doc/public-task-view/public-task-view.component';
-import {PublicWorkflowViewComponent} from './doc/public-workflow-view/public-workflow-view.component';
-import {PublicResolverComponent} from './doc/public-resolver/public-resolver.component';
 import {GroupViewComponent} from './doc/group-view/group-view.component';
 import {TitleConfigComponent} from './doc/demo-title-config/title-config.component';
 import {ExampleRedirectComponent} from './doc/redirect/example-redirect.component';
 import {ActiveGroupComponent} from './doc/active-group/active-group.component';
 import {WrapperEmptyViewComponent} from './views/wrapper/wrapper-empty-view.component';
 import {DoubleDrawerExampleComponent} from './doc/double-drawer-example/double-drawer-example.component';
-import {PublicSingleTaskViewComponent} from './doc/public-single-task-view/public-single-task-view.component';
 import {BreadcrumbsExampleComponent} from './doc/breadcrumbs-example/breadcrumbs-example.component';
 import {DashboardCaseExampleComponent} from './doc/dashboard-case-example/dashboard-case-example.component';
 import {ImpersonationDemoComponent} from './doc/impersonation-demo/impersonation-demo.component';
 import {ChangePasswordComponent} from "./doc/forms/change-password/change-password.component";
+import {
+    DefaultPublicResolverComponent,
+    DefaultPublicTaskViewComponent,
+    DefaultPublicWorkflowViewComponent,
+    DefaultSimpleTaskViewComponent,
+    DefaultPublicSingleTaskViewComponent
+} from "@netgrif/components";
+import {
+    NavigationDashboardExampleComponent
+} from './doc/navigation-dashboard-example/navigation-dashboard-example.component';
+import {TabbedTicketViewComponent} from "./doc/tabbed-ticket-view/tabbed-ticket-view.component";
 
 @Injectable({
     providedIn: 'root'
@@ -54,7 +61,7 @@ export class NaeExampleAppViewService extends ViewService {
             {id: 'ImpersonationDemoComponent', class: ImpersonationDemoComponent},
             {id: 'BreadcrumbsExampleComponent', class: BreadcrumbsExampleComponent},
             {id: 'TitleConfigComponent', class: TitleConfigComponent},
-            {id: 'PublicSingleTaskViewComponent', class: PublicSingleTaskViewComponent},
+            {id: 'PublicSingleTaskViewComponent', class: DefaultPublicSingleTaskViewComponent},
             {id: 'WrapperEmptyViewComponent', class: WrapperEmptyViewComponent},
             {id: 'ActiveGroupComponent', class: ActiveGroupComponent},
             {id: 'ExampleRedirectComponent', class: ExampleRedirectComponent},
@@ -82,15 +89,18 @@ export class NaeExampleAppViewService extends ViewService {
             {id: 'RailExampleComponent', class: RailExampleComponent},
             {id: 'DrawerExampleComponent', class: DrawerExampleComponent},
             {id: 'DoubleDrawerExampleComponent', class: DoubleDrawerExampleComponent},
+            {id: 'NavigationDashboardExampleComponent', class: NavigationDashboardExampleComponent},
             {id: 'RegisterFormComponent', class: RegisterFormComponent},
             {id: 'PasswordFormComponent', class: PasswordFormComponent},
             {id: 'LoginFormComponent', class: LoginFormComponent},
             {id: 'AuthenticationComponent', class: AuthenticationComponent},
             {id: 'RolesAssignComponent', class: RolesAssignComponent},
             {id: 'LdapGroupRolesAssignComponent', class: LdapGroupRolesAssignComponent},
-            {id: 'PublicTaskViewComponent', class: PublicTaskViewComponent},
-            {id: 'PublicWorkflowViewComponent', class: PublicWorkflowViewComponent},
-            {id: 'PublicResolverComponent', class: PublicResolverComponent},
+            {id: 'PublicTaskViewComponent', class: DefaultPublicTaskViewComponent},
+            {id: 'PublicWorkflowViewComponent', class: DefaultPublicWorkflowViewComponent},
+            {id: 'PublicResolverComponent', class: DefaultPublicResolverComponent},
+            {id: 'DefaultSimpleTaskViewComponent', class: DefaultSimpleTaskViewComponent},
+            {id: 'TabbedTicketView', class: TabbedTicketViewComponent},
             {
                 id: 'ResetPasswordFormComponent',
                 class: ResetPasswordFormComponent

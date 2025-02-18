@@ -95,6 +95,6 @@
 </ng-template>
 
 <ng-template #collapseButton>
-    <button *ngIf="canCollapse()" color="primary" (click)="collapse()" mat-stroked-button color="primary">
+    <button *ngIf="canCollapse() && !this.preventCollapse" color="primary" (click)="collapse()" mat-stroked-button color="primary">
         {{ 'tasks.view.collapse' | translate | uppercase }}</button>
 </ng-template>
