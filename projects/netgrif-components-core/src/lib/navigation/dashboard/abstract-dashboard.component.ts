@@ -26,7 +26,7 @@ export abstract class AbstractDashboardComponent {
     public static readonly DASHBOARD_MANAGEMENT_IDENTIFIER = 'dashboard_management';
 
     public static readonly DASHBOARD_MANAGEMENT_ID_DATAFIELD = 'dashboard_id';
-    public static readonly DASHBOARD_MANAGEMENT_ITEM_TO_PREFERENCE_ITEM_DATAFIELD = 'dashboard_item_to_preference_item';
+    public static readonly DASHBOARD_MANAGEMENT_ITEM_TO_MENU_ITEM_DATAFIELD = 'dashboard_item_to_menu_item';
     public static readonly DASHBOARD_MANAGEMENT_SIMPLE_TOOLBAR_DATAFIELD = 'simple_dashboard_toolbar';
     public static readonly DASHBOARD_MANAGEMENT_PROFILE_TOOLBAR_DATAFIELD = 'profile_dashboard_toolbar';
     public static readonly DASHBOARD_MANAGEMENT_LANGUAGE_TOOLBAR_DATAFIELD = 'language_dashboard_toolbar';
@@ -109,9 +109,9 @@ export abstract class AbstractDashboardComponent {
             }
 
             const dashboardItemsOptions = this.dashboardCase.immediateData
-                .find(immediateField => immediateField['importId'] === AbstractDashboardComponent.DASHBOARD_MANAGEMENT_ITEM_TO_PREFERENCE_ITEM_DATAFIELD).options;
+                .find(immediateField => immediateField['importId'] === AbstractDashboardComponent.DASHBOARD_MANAGEMENT_ITEM_TO_MENU_ITEM_DATAFIELD).options;
 
-            const dashboardPreferenceToItems = Object.entries(dashboardItemsOptions)
+            const dashboardMenuToItems = Object.entries(dashboardItemsOptions)
                 .filter(([key, value]) => (value as any as I18nFieldValue).defaultValue != null)
                 .reduce((accum, [key, value]) => {
                     accum[(value as any as I18nFieldValue).defaultValue] = key;
@@ -121,24 +121,24 @@ export abstract class AbstractDashboardComponent {
             let dashboardItemsParams = new HttpParams()
                 .set(PaginationParams.PAGE_SIZE, 100);
             this.getDashboardItems(dashboardItemsOptions, dashboardItemsParams);
-            this.getPreferenceItems(dashboardPreferenceToItems, dashboardItemsParams);
+            this.getMenuItems(dashboardMenuToItems, dashboardItemsParams);
         });
     }
 
-    private getPreferenceItems(dashboardPreferenceToItems: {}, dashboardItemsParams: HttpParams) {
-        let preferenceItemsSearchBody = {
-            stringId: Object.keys(dashboardPreferenceToItems)
+    private getMenuItems(dashboardMenuToItems: {}, dashboardItemsParams: HttpParams) {
+        let menuItemsSearchBody = {
+            stringId: Object.keys(dashboardMenuToItems)
         };
-        this._caseResource.searchCases(SimpleFilter.fromCaseQuery(preferenceItemsSearchBody), dashboardItemsParams).subscribe(resultItems => {
+        this._caseResource.searchCases(SimpleFilter.fromCaseQuery(menuItemsSearchBody), dashboardItemsParams).subscribe(resultItems => {
             const itemsContent = resultItems.content;
-            itemsContent.forEach(preferenceItemCase => {
-                const navigationItem = this._doubleDrawerNavigationService.resolveItemCaseToNavigationItem(preferenceItemCase);
-                const dashboardItemId = dashboardPreferenceToItems[preferenceItemCase.stringId];
+            itemsContent.forEach(menuItemCase => {
+                const navigationItem = this._doubleDrawerNavigationService.resolveItemCaseToNavigationItem(menuItemCase);
+                const dashboardItemId = dashboardMenuToItems[menuItemCase.stringId];
                 if (!navigationItem) {
                     this.dashboardItems = this.dashboardItems.filter(dashItem => dashItem.stringId !== dashboardItemId);
                     return;
                 }
-                this.dashboardItemsMapping[dashboardItemId] = preferenceItemCase;
+                this.dashboardItemsMapping[dashboardItemId] = menuItemCase;
             });
             this.itemsLoaded += 1;
             if (this.itemsLoaded == 2) {
