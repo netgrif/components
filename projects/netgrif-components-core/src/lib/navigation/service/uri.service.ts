@@ -184,7 +184,7 @@ export class UriService implements OnDestroy {
             data: {
                 [GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH] : node.uriPath
             },
-            process: {identifier: "preference_item"}
+            process: {identifier: "menu_item"}
         };
 
         let httpParams = new HttpParams()

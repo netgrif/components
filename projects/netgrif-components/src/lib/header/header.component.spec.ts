@@ -3,7 +3,6 @@ import {HeaderComponent} from './header.component';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {of} from 'rxjs';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {RouterModule} from '@angular/router';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {MatIconModule} from '@angular/material/icon';
 import {HeaderComponentModule} from './header.module';
@@ -25,6 +24,7 @@ import {
     UserResourceService,
     ViewService
 } from '@netgrif/components-core';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('HeaderComponent', () => {
     let component: HeaderComponent;
@@ -38,7 +38,7 @@ describe('HeaderComponent', () => {
                 TranslateLibModule,
                 HttpClientTestingModule,
                 MatIconModule,
-                RouterModule.forRoot([], { relativeLinkResolution: 'legacy' })
+                RouterTestingModule.withRoutes([], { relativeLinkResolution: 'legacy' }),
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},

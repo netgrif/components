@@ -118,6 +118,16 @@ export class WorkflowViewService extends AbstractSortableViewComponent implement
         return this._workflows$;
     }
 
+    public setSearchTitle(title: string) {
+        this._baseFilter.title = title;
+        this.reload();
+    }
+
+    public clearSearchTitle() {
+        this._baseFilter.title = undefined;
+        this.reload();
+    }
+
     public loadPage(pageRequest: Pagination): Observable<Array<Net>> {
         if (pageRequest.number < 0) {
             return of([]);
@@ -127,7 +137,13 @@ export class WorkflowViewService extends AbstractSortableViewComponent implement
         params = this.addPageParams(params, pageRequest);
         this._loading$.on();
 
-        return this._petriNetResource.searchPetriNets(this._baseFilter, params).pipe(
+        let request: Observable<Page<PetriNetReference>>;
+        if (this._baseFilter.title !== undefined) {
+            request = this._petriNetResource.searchElasticPetriNets(this._baseFilter, params);
+        } else {
+            request = this._petriNetResource.searchPetriNets(this._baseFilter, params);
+        }
+        return request.pipe(
             catchError(err => {
                 this._log.error('Loading Petri nets has failed!', err);
                 return of({content: [], pagination: {...this._pagination}});

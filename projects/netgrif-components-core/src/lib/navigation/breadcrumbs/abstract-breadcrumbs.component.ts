@@ -70,7 +70,7 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
         }
         const splitPath = this._uriService.splitNodePath(this._uriService.activeNode);
         const fullPath = this.createFullPath(splitPath);
-        const fullPathQueries = fullPath.map(p => '(processIdentifier:preference_item AND dataSet.nodePath.textValue.keyword:\"' + p + '\")')
+        const fullPathQueries = fullPath.map(p => '(processIdentifier:menu_item AND dataSet.nodePath.textValue.keyword:\"' + p + '\")')
         fullPathQueries.push('(taskMongoIds:\"' + filterId + '\")')
 
         const searchBody: CaseSearchRequestBody = {
@@ -158,7 +158,7 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
         let tmp = '';
         return splitPath.filter(s => s !== "").map((value) => {
             tmp += AbstractBreadcrumbsComponent.DELIMETER + value;
-            return tmp.replace("//", AbstractBreadcrumbsComponent.DELIMETER)
+            return tmp?.replace("//", AbstractBreadcrumbsComponent.DELIMETER)
         });
     }
 

@@ -5,7 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres
 to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-Full Changelog: [https://github.com/netgrif/components/commits/v6.4.0](https://github.com/netgrif/components/commits/v6.4.0)
+Full Changelog: [https://github.com/netgrif/components/commits/v6.5.0](https://github.com/netgrif/components/commits/v6.5.0)
+
+## [6.5.0](https://github.com/netgrif/components/releases/tag/v6.5.0) (2025-02-18)
+
+### Added
+
+- [NAE-2033] Welcome dashboard
+- [NAE-2041] Implementing Ticket View
+
+### Changed
+
+- [NAE-2051] Implement configurable view in menu items
+- [NAE-2034] Open first view
+- [NAE-2038] Public View
+- [NAE-2035] Implement Single-Task-View
+- [NAE-2036] Task-List-View to open Case by link
+- [NAE-2040] Search in role management
+- [NAE-2052] Integrate ticket view with menu items
+- [NAE-2039] Search in workflow view
 
 ## [6.4.0](https://github.com/netgrif/components/releases/tag/v6.4.0) (2024-12-24)
 

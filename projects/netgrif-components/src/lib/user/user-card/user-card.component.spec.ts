@@ -2,7 +2,6 @@ import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {UserCardComponent} from './user-card.component';
 import {CommonModule} from '@angular/common';
-import {RouterModule} from '@angular/router';
 import {
     AuthenticationMethodService,
     ConfigurationService,
@@ -26,7 +25,6 @@ describe('UserCardComponent', () => {
             declarations: [UserCardComponent],
             imports: [
                 CommonModule,
-                RouterModule,
                 MaterialModule,
                 HttpClientTestingModule,
                 RouterTestingModule.withRoutes([]),

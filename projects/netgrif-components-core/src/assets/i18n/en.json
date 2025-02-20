@@ -49,7 +49,8 @@
             "finish": "Finish",
             "cancel": "Cancel",
             "noData": "This task has no data. Finish to continue.",
-            "redirecting": "Redirecting..."
+            "redirecting": "Redirecting...",
+            "closeTab": "Close"
         },
         "footer": {
             "defaultText": "NETGRIF, s.r.o. © 2022"
@@ -70,7 +71,8 @@
         "import-net": {
             "upload": "Upload model",
             "choose": "Choose a process file",
-            "done": "Done"
+            "done": "Done",
+            "search": "Search for process"
         },
         "new-case": {
             "case": "New Case",

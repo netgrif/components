@@ -73,7 +73,7 @@
             </div>
 
             <mat-menu #railMenu="matMenu">
-                <button *ngFor='let item of hiddenCustomItems; trackBy: itemsTrackBy' mat-menu-item
+                <button *ngFor='let item of hiddenCustomItems$ | async; trackBy: itemsTrackBy' mat-menu-item
                         [routerLink]='item.routing.path' routerLinkActive="active-tree-node">
                     <mat-icon>{{ item.navigation.icon }}</mat-icon>
                     <span>{{ item.navigation.title }}</span>
@@ -146,7 +146,7 @@
 
     <div class="margin-top-x2"></div>
 
-    <button *ngFor='let folder of leftItems; trackBy: itemsTrackBy' mat-icon-button (click)="onItemClick(folder)"
+    <button *ngFor='let folder of leftItems$ | async; trackBy: itemsTrackBy' mat-icon-button (click)="onItemClick(folder)"
             class="menu-button mat-typography menu-font-color" [matTooltip]="folder.navigation.title"
             [matTooltipPosition]="'right'"
             [ngClass]="isItemAndNodeEqual(folder, currentNode) ? 'rail-selected-color' : 'menu-font-color'"
@@ -173,7 +173,7 @@
                 <mat-icon>{{ isAscending() ? "expand_more" : "expand_less" }}</mat-icon>
             </button>
         </div>
-        <div *ngFor='let item of rightItems; trackBy: itemsTrackBy' (click)="onItemClick(item)"
+        <div *ngFor='let item of rightItems$ | async; trackBy: itemsTrackBy' (click)="onItemClick(item)"
              class="tree-node mat-typography mat-body-2" fxLayoutAlign="start center" [routerLink]='item.routing.path'
              routerLinkActive="active-tree-node">
             <mat-icon class="tree-node-icon">{{ item.navigation.icon }}</mat-icon>
