@@ -47,6 +47,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
 
     protected _loading$: LoadingWithFilterEmitter;
     protected _cases$: Observable<Array<Case>>;
+    protected _cases: Array<Case>;
     protected _nextPage$: BehaviorSubject<PageLoadRequestContext>;
     protected _endOfData: boolean;
     protected _pagination: Pagination;
@@ -67,6 +68,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
                 @Optional() @Inject(NAE_NEW_CASE_CONFIGURATION) newCaseConfig: NewCaseConfiguration,
                 protected _permissionService: PermissionService) {
         super(resolver);
+        this._cases = [];
         this._newCaseConfiguration = {...this.DEFAULT_NEW_CASE_CONFIGURATION};
         if (newCaseConfig !== null) {
             Object.assign(this._newCaseConfiguration, newCaseConfig);
@@ -112,7 +114,8 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
             }, {})
         );
         this._cases$ = casesMap.pipe(
-            map(v => Object.values(v))
+            map(v => Object.values(v) as Array<Case>),
+            tap(cases => this._cases = cases as Array<Case>),
         );
     }
 
@@ -132,6 +135,10 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
 
     public get cases$(): Observable<Array<Case>> {
         return this._cases$;
+    }
+
+    public get cases(): Array<Case> {
+        return this._cases;
     }
 
     public get pagination(): Pagination {
