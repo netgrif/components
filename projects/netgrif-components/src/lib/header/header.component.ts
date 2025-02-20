@@ -22,7 +22,7 @@ import {TranslateService} from '@ngx-translate/core';
         CategoryFactory
     ]
 })
-export class HeaderComponent extends AbstractHeaderComponent implements OnInit {
+export class HeaderComponent extends AbstractHeaderComponent {
 
     constructor(injector: Injector,
                 translate: TranslateService,
