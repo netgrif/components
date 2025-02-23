@@ -495,6 +495,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         this.clearWaitingForResponseFlag(context.body);
         this._snackBar.openSuccessSnackBar(!!outcome.message ? outcome.message : this._translate.instant('tasks.snackbar.dataSaved'));
         this.updateStateInfo(afterAction, true, setTaskId);
+        this._taskOperations.reload();
         nextEvent.resolve(true);
     }
 
