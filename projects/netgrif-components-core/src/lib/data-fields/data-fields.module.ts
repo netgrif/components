@@ -11,6 +11,7 @@ import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-
 import {NgxMatMomentModule} from '@angular-material-components/moment-adapter';
 import {TranslateLibModule} from '../translate/translate-lib.module';
 import {DateAdapter} from '@angular/material/core';
+import {PetriflowCanvasModule} from '@netgrif/petriflow.svg';
 
 @NgModule({
     imports: [
@@ -23,7 +24,8 @@ import {DateAdapter} from '@angular/material/core';
         ReactiveFormsModule,
         NgxMatDatetimePickerModule,
         NgxMatMomentModule,
-        TranslateLibModule
+        TranslateLibModule,
+        PetriflowCanvasModule
     ],
     providers: [
         {provide: DateAdapter, useClass: CustomDateAdapter}

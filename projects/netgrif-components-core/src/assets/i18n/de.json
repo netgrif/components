@@ -257,7 +257,8 @@
             "maxFilesSizeExceeded": "Die maximale Größe der hochgeladenen Dateien wird überschritten: ",
             "notSelectedUser": "Es wurde kein Benutzer ausgewählt",
             "userAssigned": "Benutzer {{userName}} wurde zugewiesen",
-            "userListAssigned": "Ausgewählte Benutzer {{userNames}} wurden zugewiesen"
+            "userListAssigned": "Ausgewählte Benutzer {{userNames}} wurden zugewiesen",
+            "caseNetGetFailed": "Das Abrufen des Fallnetzes ist fehlgeschlagen"
         },
         "values": {
             "boolean": {

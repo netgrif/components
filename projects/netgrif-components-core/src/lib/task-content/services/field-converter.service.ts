@@ -117,6 +117,9 @@ export class FieldConverterService {
             case FieldTypeResource.STRING_COLLECTION:
                 return new StringCollectionField(item.stringId, item.name, item.value ? item.value : [], item.behavior,
                     item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
+            case FieldTypeResource.CASE_REF:
+                return new CaseRefField(item.stringId, item.name, item.value ?? [], item.behavior, item.placeholder,
+                    item.description, item.layout, item.validations, item.component);
         }
     }
 
@@ -143,6 +146,8 @@ export class FieldConverterService {
             return FieldTypeResource.USER_LIST;
         } else if (item instanceof TaskRefField) {
             return FieldTypeResource.TASK_REF;
+        } else if (item instanceof CaseRefField) {
+            return FieldTypeResource.CASE_REF;
         } else if (item instanceof EnumerationField || item instanceof MultichoiceField) {
             return item.fieldType;
         } else if (item instanceof FilterField) {

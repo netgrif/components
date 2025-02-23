@@ -257,7 +257,8 @@
             "maxFilesSizeExceeded": "The maximum size of uploaded files is exceeded: ",
             "notSelectedUser": "No user has been selected",
             "userAssigned": "User {{userName}} was assigned",
-            "userListAssigned": "Selected users {{userNames}} were assigned"
+            "userListAssigned": "Selected users {{userNames}} were assigned",
+            "caseNetGetFailed": "Getting case net failed"
         },
         "values": {
             "boolean": {
