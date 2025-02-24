@@ -18,7 +18,7 @@ import {Type} from '@angular/core';
  */
 export function filterCaseTabbedDataFilterFactory(extractionService: FilterExtractionService,
                                                   tabData: InjectedTabbedCaseViewDataWithNavigationItemTaskData): BaseFilter {
-    return navigationItemTaskFilterFactory(extractionService, tabData.navigationItemTaskData);
+    return navigationItemTaskFilterFactory(extractionService, tabData.navigationItemTaskData, tabData.loadFilter);
 }
 
 /**

@@ -120,7 +120,7 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
             },
             canBeClosed: true,
             tabContentComponent: DefaultTabbedCaseViewComponent,
-            injectedObject: {...this._injectedTabData, filterCase: filterData.filterCase},
+            injectedObject: {...this._injectedTabData, loadFilter: filterData.filter},
             order: this._injectedTabData.tabViewOrder,
             parentUniqueId: this._injectedTabData.tabUniqueId
         }, this._autoswitchToTaskTab, this._openExistingTab);
