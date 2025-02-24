@@ -21,7 +21,7 @@ import {ActivatedRoute} from '@angular/router';
 export function filterCaseTabbedDataFilterFactory(extractionService: FilterExtractionService,
                                                   tabData: InjectedTabbedCaseViewDataWithNavigationItemTaskData,
                                                   activatedRoute: ActivatedRoute): BaseFilter {
-    return navigationItemTaskFilterFactory(extractionService, activatedRoute, tabData.navigationItemTaskData);
+    return navigationItemTaskFilterFactory(extractionService, activatedRoute, tabData.navigationItemTaskData, tabData.loadFilter);
 }
 
 /**
