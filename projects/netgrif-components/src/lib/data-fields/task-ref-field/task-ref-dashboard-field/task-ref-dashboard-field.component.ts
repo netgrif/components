@@ -20,6 +20,9 @@ export class TaskRefDashboardFieldComponent extends AbstractTaskRefDashboardFiel
     constructor(logger: LoggerService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TaskRefField>) {
         super(logger, dataFieldPortalData);
+        if (!!dataFieldPortalData && dataFieldPortalData?.additionalFieldProperties?.taskContentComponentClassReference) {
+            this.taskContentComponentClassReference = dataFieldPortalData.additionalFieldProperties.taskContentComponentClassReference as unknown as Type<any>;
+        }
     }
 
     getGridColumns(): string {
