@@ -83,6 +83,9 @@ export class DefaultCaseRefListViewComponent extends AbstractCaseViewComponent i
         });
         this.search = !!_caseRefSearch;
         this.createCase = !!_caseRefCreateCase;
+        if (!this._baseFilter || !this._baseFilter.filter) {
+            return;
+        }
         if (this._baseFilter.filter instanceof Filter) {
             this.initFilter = this._baseFilter.filter
         } else {
