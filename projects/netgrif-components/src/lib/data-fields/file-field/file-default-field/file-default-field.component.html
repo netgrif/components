@@ -52,7 +52,7 @@
                     'border-color': getPreviewBorderColor()
                  }"
              [ngClass]="{'border-LGBTQ': isBorderLGBTQ(), 'border-default': isBorderDefault()}"
-             [src]="previewSource" alt="Image preview" (click)="showPreviewDialog()"/>
+             [src]="previewSource" alt="Image preview" (click)="showPreviewDialog()" loading="lazy"/>
         <mat-spinner *ngIf="previewSource === undefined && !!state.downloading && isDisplayable"
                      [diameter]="26"></mat-spinner>
     </div>
