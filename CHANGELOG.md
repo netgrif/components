@@ -5,7 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres
 to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-Full Changelog: [https://github.com/netgrif/components/commits/v6.4.0](https://github.com/netgrif/components/commits/v6.4.0)
+Full Changelog: [https://github.com/netgrif/components/commits/v6.4.1](https://github.com/netgrif/components/commits/v6.4.1)
+
+## [6.4.1](https://github.com/netgrif/components/releases/tag/v6.4.1) (2025-02-26)
+
+### Fixed
+- [NAE-2031] Dashboard bug fix
+
+### Changed
+- [NAE-2047] Fulltext search and advanced search usability with multichoice caseRef
+- [NAE-2048] Apply saved filter of advanced search in caseRef field
 
 ## [6.4.0](https://github.com/netgrif/components/releases/tag/v6.4.0) (2024-12-24)
 
