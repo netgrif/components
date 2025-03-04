@@ -172,7 +172,7 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
                                     ? 'Confirm new case setup'
                                     : response.outcome.message
                                 ,
-                                data: (response.outcome as CreateCaseEventOutcome).aCase
+                                data: (response.outcome as CreateCaseEventOutcome).case
                             });
                         } else if (!!response.error) {
                             this._snackBarService.openWarningSnackBar(this._translate.instant('side-menu.new-case.createCaseError') + ' ' + newCase.title);

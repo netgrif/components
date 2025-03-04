@@ -138,7 +138,7 @@ describe('FinishTaskService', () => {
                     users: {},
                     userRefs: {}
                 },
-                aCase: createMockCase(),
+                case: createMockCase(),
                 net: createMockNet()
             } as AssignTaskEventOutcome
         };

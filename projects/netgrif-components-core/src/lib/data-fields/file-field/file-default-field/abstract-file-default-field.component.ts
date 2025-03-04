@@ -350,26 +350,44 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractFileFiel
             return;
         }
 
-        this._taskResourceService.deleteFile(this.taskId, this.createRequestBody()).pipe(take(1)).subscribe(response => {
-            if (response.success) {
-                const filename = this.dataField.value.name;
-                this.dataField.value = {};
-                this.formControlRef.setValue('');
+        this._taskResourceService.deleteFile(this.taskId, this.createRequestBody()).pipe(take(1))
+            .subscribe((response: EventOutcomeMessageResource) => {
+                if (response.success) {
+                    const changedFieldsMap: ChangedFieldsMap = this._eventService.parseChangedFieldsFromOutcomeTree(response.outcome);
+                    this.dataField.emitChangedFields(changedFieldsMap);
+                    this._log.debug(
+                        `Deleting file [${this.dataField.stringId}] ${this.dataField.value.name} successfully!`
+                    );
+                    this.state.error = false;
+                    this.dataField.downloaded = false;
+                    this.dataField.value.name = '';
+                    this.fullSource.next(undefined);
+                    this.fileForDownload = undefined;
+                    this.previewSource = undefined;
+                    this.fileForPreview = undefined;
+                } else {
+                    this.state.error = true;
+                    this._log.error(`Deleting file [${this.dataField.stringId}] ${this.dataField.value.name} has failed!`, response.error);
+                    this._snackbar.openErrorSnackBar(
+                        this.dataField.value.name + ' ' + this._translate.instant('dataField.snackBar.fileDeleteFailed')
+                    );
+                }
+                this.dataField.touch = true;
                 this.dataField.update();
-                this.dataField.downloaded = false;
-                this.fullSource.next(undefined);
-                this.fileForDownload = undefined;
-                this.previewSource = undefined;
-                this.fileForPreview = undefined;
-                this._log.debug(`File [${this.dataField.stringId}] ${filename} was successfully deleted`);
-                this.formControlRef.markAsTouched();
-            } else {
-                this._log.error(`Deleting file [${this.dataField.stringId}] ${this.dataField.value.name} has failed!`, response.error);
-                this._snackbar.openErrorSnackBar(
-                    this.dataField.value.name + ' ' + this._translate.instant('dataField.snackBar.fileDeleteFailed')
-                );
-            }
-        });
+                this.fileUploadEl.nativeElement.value = '';
+            }, error => {
+                this.state.error = true;
+                this._log.error(`Deleting file [${this.dataField.stringId}] ${this.dataField.value.name} has failed!`);
+                if (error?.error?.message) {
+                    this._snackbar.openErrorSnackBar(this._translate.instant(error.error.message));
+                } else {
+                    this._snackbar.openErrorSnackBar(
+                        this.dataField.value.name + ' ' + this._translate.instant('dataField.snackBar.fileDeleteFailed')
+                    );
+                }
+                this.dataField.touch = true;
+                this.dataField.update();
+            });
     }
 
     isEmpty(): boolean {

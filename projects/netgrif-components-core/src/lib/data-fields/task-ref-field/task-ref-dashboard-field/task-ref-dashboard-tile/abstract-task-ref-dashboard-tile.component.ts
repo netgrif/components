@@ -10,7 +10,6 @@ import {switchMap} from 'rxjs/operators';
 import {CreateCaseEventOutcome} from '../../../../event/model/event-outcomes/case-outcomes/create-case-event-outcome';
 import {FormControl} from '@angular/forms';
 import {LoggerService} from '../../../../logger/services/logger.service';
-import {TaskSetDataRequestBody} from '../../../../resources/interface/task-set-data-request-body';
 import {TaskResourceService} from '../../../../resources/engine-endpoint/task-resource.service';
 import {CallChainService} from '../../../../utility/call-chain/call-chain.service';
 import {FieldTypeResource} from '../../../../task-content/model/field-type-resource';
@@ -19,6 +18,8 @@ import {TaskOperations} from '../../../../task/interfaces/task-operations';
 import {NAE_TASK_OPERATIONS} from '../../../../task/models/task-operations-injection-token';
 import {TaskDataService} from '../../../../task/services/task-data.service';
 import {AfterAction} from '../../../../utility/call-chain/after-action';
+import {DataSet, TaskDataSets} from '../../../../resources/interface/task-data-sets';
+import {DataFieldResource, DataFieldValue} from '../../../../task-content/model/resource-interfaces';
 
 @Component({
     selector: 'ncc-abstract-task-ref-dashboard-tile',
@@ -64,31 +65,45 @@ export abstract class AbstractTaskRefDashboardTileComponent implements OnDestroy
                 this._logger.error(`Could not create task ref dashboard tile case`, outcome.error);
                 return;
             }
-            const _case = (outcome.outcome as CreateCaseEventOutcome).aCase;
+            const _case = (outcome.outcome as CreateCaseEventOutcome).case;
 
             // set tile info
             this.assignSetData(_case.tasks[0].task, {
-                [_case.tasks[0].task]: {
-                    [TaskRefDashboardTileConstants.DASHBOARD_TILE_X]: {
-                        type: FieldTypeResource.NUMBER,
-                        value: this.tile.x
-                    },
-                    [TaskRefDashboardTileConstants.DASHBOARD_TILE_Y]: {
-                        type: FieldTypeResource.NUMBER,
-                        value: this.tile.y
-                    },
-                    [TaskRefDashboardTileConstants.DASHBOARD_TILE_ROWS]: {
-                        type: FieldTypeResource.NUMBER,
-                        value: this.tile.rows
-                    },
-                    [TaskRefDashboardTileConstants.DASHBOARD_TILE_COLS]: {
-                        type: FieldTypeResource.NUMBER,
-                        value: this.tile.cols
-                    },
-                    [TaskRefDashboardTileConstants.DASHBOARD_TILE_PARENT_ID]: {
-                        type: FieldTypeResource.TEXT,
-                        value: this._parentTaskContentService.task.caseId
-                    }
+                body: {
+                    [_case.tasks[0].task]: {
+                        fields: {
+                            [TaskRefDashboardTileConstants.DASHBOARD_TILE_X]: {
+                                type: FieldTypeResource.NUMBER,
+                                value: {
+                                    value: this.tile.x
+                                } as DataFieldValue
+                            } as DataFieldResource,
+                            [TaskRefDashboardTileConstants.DASHBOARD_TILE_Y]: {
+                                type: FieldTypeResource.NUMBER,
+                                value: {
+                                    value: this.tile.y
+                                } as DataFieldValue
+                            } as DataFieldResource,
+                            [TaskRefDashboardTileConstants.DASHBOARD_TILE_ROWS]: {
+                                type: FieldTypeResource.NUMBER,
+                                value: {
+                                    value: this.tile.rows
+                                } as DataFieldValue
+                            } as DataFieldResource,
+                            [TaskRefDashboardTileConstants.DASHBOARD_TILE_COLS]: {
+                                type: FieldTypeResource.NUMBER,
+                                value: {
+                                    value: this.tile.cols
+                                } as DataFieldValue
+                            } as DataFieldResource,
+                            [TaskRefDashboardTileConstants.DASHBOARD_TILE_PARENT_ID]: {
+                                type: FieldTypeResource.TEXT,
+                                value: {
+                                    value: this._parentTaskContentService.task.caseId
+                                } as DataFieldValue
+                            } as DataFieldResource
+                        }
+                    } as DataSet
                 }
             }, this._callChainService.create(success => {
                 if (!success) {
@@ -97,11 +112,17 @@ export abstract class AbstractTaskRefDashboardTileComponent implements OnDestroy
 
                 // reference new tile in task ref
                 this._taskResourceService.setData(this._parentTaskContentService.task.stringId, {
-                    [this._parentTaskContentService.task.stringId]: {
-                        [TaskRefDashboardConstants.DASHBOARD_TASK_REF]: {
-                            type: FieldTypeResource.TASK_REF,
-                            value: [...this.taskRef.value, _case.tasks[0].task]
-                        }
+                    body: {
+                        [this._parentTaskContentService.task.stringId]: {
+                            fields: {
+                                [TaskRefDashboardConstants.DASHBOARD_TASK_REF]: {
+                                    type: FieldTypeResource.TASK_REF,
+                                    value: {
+                                        value: [...this.taskRef.value, _case.tasks[0].task]
+                                    } as DataFieldValue
+                                } as DataFieldResource
+                            }
+                        } as DataSet
                     }
                 }).subscribe(outcome => {
                     if (outcome.error) {
@@ -119,7 +140,7 @@ export abstract class AbstractTaskRefDashboardTileComponent implements OnDestroy
     }
 
     // TODO copy of a similar method found in UserFilterService
-    protected assignSetData(taskId: string, data: TaskSetDataRequestBody, callChain: Subject<boolean>): void {
+    protected assignSetData(taskId: string, data: TaskDataSets, callChain: Subject<boolean>): void {
         this._taskResourceService.assignTask(taskId).subscribe(assignOutcome => {
             if (assignOutcome.error) {
                 this._logger.error(`Could not assign task '${taskId}'`, assignOutcome.error);

@@ -248,7 +248,7 @@ export abstract class TaskContentService implements OnDestroy {
                     // type is just an information, not an update. A field cannot change its type
                     return; // continue - the field does not need updating, since nothing changed
                 case 'value':
-                    field.valueWithoutChange(this._fieldConverterService.formatValueFromBackend(field, updatedField[key]));
+                    field.valueWithoutChange(this._fieldConverterService.formatValueFromBackend(field, updatedField[key][key]));
                     break;
                 case 'behavior':
                     if (updatedField.behavior[this._task.transitionId]) {

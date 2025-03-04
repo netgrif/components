@@ -10,17 +10,16 @@ import {Task} from '../interface/task';
 import {CountService} from '../abstract-endpoint/count-service';
 import {Filter} from '../../filter/models/filter';
 import {FilterType} from '../../filter/models/filter-type';
-import { HttpEventType, HttpParams } from '@angular/common/http';
+import {HttpEventType, HttpParams} from '@angular/common/http';
 import {Page} from '../interface/page';
 import {FieldConverterService} from '../../task-content/services/field-converter.service';
-import {TaskSetDataRequestBody} from '../interface/task-set-data-request-body';
 import {LoggerService} from '../../logger/services/logger.service';
 import {AbstractResourceService} from '../abstract-endpoint/abstract-resource.service';
 import {DataGroup} from '../interface/data-groups';
 import {DataField} from '../../data-fields/models/abstract-data-field';
 import {GetDataGroupsEventOutcome} from '../../event/model/event-outcomes/data-outcomes/get-data-groups-event-outcome';
 import {FileFieldRequest} from "../interface/file-field-request-body";
-import {ValidationLoaderService} from "../../registry/validation/validation-loader.service";
+import {TaskDataSets} from '../interface/task-data-sets';
 
 @Injectable({
     providedIn: 'root'
@@ -217,14 +216,14 @@ export class TaskResourceService extends AbstractResourceService implements Coun
                 const result = [];
                 dataGroupsArray.forEach(dataGroupResource => {
                     const dataFields: Array<DataField<any>> = [];
-                    if (!dataGroupResource.fields._embedded) {
-                        return; // continue
-                    }
+                    // if (!dataGroupResource.fields._embedded) {
+                    //     return; // continue
+                    // }
                     const fields = [];
-                    Object.keys(dataGroupResource.fields._embedded).forEach(localizedFields => {
-                        fields.push(...dataGroupResource.fields._embedded[localizedFields]);
+                    Object.keys(dataGroupResource.dataRefs).forEach(fieldId => {
+                        fields.push(dataGroupResource.dataRefs[fieldId]);
                     });
-                    fields.sort((a, b) => a.order - b.order);
+                    // fields.sort((a, b) => a.order - b.order);
                     dataFields.push(...fields.map(dataFieldResource => this._fieldConverter.toClass(dataFieldResource)));
                     const dataGroupObject: DataGroup = {
                         fields: dataFields,
@@ -254,7 +253,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      * POST
      */
     // {{baseUrl}}/api/task/:id/data
-    public setData(taskId: string, body: TaskSetDataRequestBody): Observable<EventOutcomeMessageResource> {
+    public setData(taskId: string, body: TaskDataSets): Observable<EventOutcomeMessageResource> {
         return this._resourceProvider.post$('task/' + taskId + '/data', this.SERVER_URL, body)
             .pipe(map(r => this.changeType(r, undefined)));
     }
@@ -311,9 +310,9 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      * Delete file from the task
      * DELETE
      */
-    public deleteFile(taskId: string, body?: FileFieldRequest): Observable<MessageResource> {
+    public deleteFile(taskId: string, body?: FileFieldRequest): Observable<ProviderProgress | EventOutcomeMessageResource> {
         const url = `task/${taskId}/file${body?.fileName ? '/named' : ''}`;
-        return this._resourceProvider.delete$(url, this.SERVER_URL, {}, {}, 'json', body).pipe(
+        return this._resourceProvider.delete$<EventOutcomeMessageResource>(url, this.SERVER_URL, {}, {}, 'json', body).pipe(
             map(r => this.changeType(r, undefined))
         );
     }

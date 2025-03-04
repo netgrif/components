@@ -17,7 +17,7 @@
     </button>
     <mat-chip-grid #chipList aria-label="Autocomplete" [formControl]="formControlRef">
         <mat-chip-row
-            *ngFor='let user of dataField.value.userValues | keyvalue' (removed)="deleteUser(user.key)">
+            *ngFor='let user of dataField.value?.userValues | keyvalue' (removed)="deleteUser(user.key)">
             {{user.value.fullName}}
             <button *ngIf="!formControlRef.disabled" matChipRemove>
                 <mat-icon>cancel</mat-icon>
