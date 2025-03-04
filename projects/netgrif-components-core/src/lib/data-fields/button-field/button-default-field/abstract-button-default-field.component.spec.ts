@@ -21,6 +21,7 @@ import {AbstractButtonDefaultFieldComponent} from "./abstract-button-default-fie
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {FormControl} from "@angular/forms";
 import {WrappedBoolean} from "../../data-field-template/models/wrapped-boolean";
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
 
 describe('AbstractButtonDefaultFieldComponent', () => {
     let component: TestButtonComponent;
@@ -83,8 +84,9 @@ describe('AbstractButtonDefaultFieldComponent', () => {
 class TestButtonComponent extends AbstractButtonDefaultFieldComponent {
     constructor(translate: TranslateService,
                 dialog: DialogService,
+                validationRegistry: ValidationRegistryService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<ButtonField>) {
-        super(translate, dialog, dataFieldPortalData);
+        super(translate, dialog, validationRegistry, dataFieldPortalData);
     }
 }
 

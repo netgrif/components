@@ -3,7 +3,7 @@ import {
     AbstractDashboardIframeTextFieldComponent,
     DATA_FIELD_PORTAL_DATA,
     DataFieldPortalData,
-    TextField
+    TextField, ValidationRegistryService
 } from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 
@@ -15,8 +15,9 @@ import {TranslateService} from '@ngx-translate/core';
 export class DashboardIframeTextFieldComponent extends AbstractDashboardIframeTextFieldComponent {
 
     constructor(translate: TranslateService,
+                validationRegistry: ValidationRegistryService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextField>) {
-        super(translate, dataFieldPortalData);
+        super(translate, validationRegistry, dataFieldPortalData);
     }
 
 }

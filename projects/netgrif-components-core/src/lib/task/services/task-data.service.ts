@@ -36,6 +36,7 @@ import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-m
 import {TaskFields} from '../../task-content/model/task-fields';
 import {EnumerationField} from "../../data-fields/enumeration-field/models/enumeration-field";
 import {FrontActionService} from "../../actions/services/front-action.service";
+import {ValidationLoaderService} from "../../registry/validation/validation-loader.service";
 
 /**
  * Handles the loading and updating of data fields and behaviour of
@@ -62,7 +63,8 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
                 protected _userComparator: UserComparatorService,
                 protected _eventService: EventService,
                 protected _changedFieldsService: ChangedFieldsService,
-                protected _frontActionService: FrontActionService) {
+                protected _frontActionService: FrontActionService,
+                protected _validationLoader: ValidationLoaderService) {
         super(_taskContentService, _selectedCaseService);
         this._updateSuccess$ = new Subject<boolean>();
         this._dataReloadSubscription = this._taskContentService.taskDataReloadRequest$.subscribe(queuedFrontendAction => {
@@ -137,12 +139,15 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
 
         const gottenTaskId = this._safeTask.stringId;
         this._taskState.startLoading(gottenTaskId);
-
-        this._taskResourceService.getData(gottenTaskId).pipe(take(1)).subscribe(dataGroups => {
-            this.processSuccessfulGetDataRequest(gottenTaskId, dataGroups, afterAction, nextEvent);
+        this._validationLoader.loadValidations().pipe(take(1)).subscribe(() => {
+            this._taskResourceService.getData(gottenTaskId).pipe(take(1)).subscribe(dataGroups => {
+                this.processSuccessfulGetDataRequest(gottenTaskId, dataGroups, afterAction, nextEvent);
+            }, error => {
+                this.processErroneousGetDataRequest(gottenTaskId, error, afterAction, nextEvent);
+            });
         }, error => {
             this.processErroneousGetDataRequest(gottenTaskId, error, afterAction, nextEvent);
-        });
+        })
     }
 
     /**

@@ -5,7 +5,7 @@ import {
     LoggerService,
     SnackBarService,
     TaskResourceService,
-    AbstractFileDefaultFieldComponent
+    AbstractFileDefaultFieldComponent, ValidationRegistryService
 } from "@netgrif/components-core";
 import {TranslateService} from "@ngx-translate/core";
 import {DomSanitizer} from "@angular/platform-browser";
@@ -23,11 +23,12 @@ export class FileDefaultFieldComponent extends AbstractFileDefaultFieldComponent
                 log: LoggerService,
                 snackbar: SnackBarService,
                 translate: TranslateService,
+                validationRegistry: ValidationRegistryService,
                 eventService: EventService,
                 protected _sanitizer: DomSanitizer,
                 protected dialog: MatDialog,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<FileField>) {
-        super(taskResourceService, log, snackbar, translate, eventService, _sanitizer, dataFieldPortalData);
+        super(taskResourceService, log, snackbar, translate, validationRegistry, eventService, _sanitizer, dataFieldPortalData);
     }
 
     public showPreviewDialog() {

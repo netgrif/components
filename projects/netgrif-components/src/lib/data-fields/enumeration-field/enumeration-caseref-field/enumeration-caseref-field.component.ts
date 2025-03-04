@@ -2,11 +2,12 @@ import {Component, Inject, Injector, Optional} from '@angular/core';
 import {
     DATA_FIELD_PORTAL_DATA,
     DataFieldPortalData, EnumerationField,
-    AbstractEnumerationCaseRefComponent
+    AbstractEnumerationCaseRefComponent, ValidationRegistryService
 } from '@netgrif/components-core';
 import {
     DefaultCaseRefListViewComponent
 } from '../../../navigation/group-navigation-component-resolver/default-components/default-case-ref-list-view/default-case-ref-list-view.component';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'nc-enumeration-caseref-field',
@@ -16,7 +17,9 @@ import {
 export class EnumerationCaserefFieldComponent extends AbstractEnumerationCaseRefComponent {
 
     constructor(injector: Injector,
+                translate: TranslateService,
+                validationRegistry: ValidationRegistryService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<EnumerationField>) {
-        super(injector, DefaultCaseRefListViewComponent, dataFieldPortalData)
+        super(injector, translate, validationRegistry, DefaultCaseRefListViewComponent, dataFieldPortalData)
     }
 }

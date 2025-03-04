@@ -3,8 +3,9 @@ import {
     AbstractMultichoiceAutocompleteFieldComponentComponent,
     DATA_FIELD_PORTAL_DATA,
     DataFieldPortalData,
-    MultichoiceField
+    MultichoiceField, ValidationRegistryService
 } from '@netgrif/components-core';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'nc-multichoice-autocomplete-field',
@@ -13,8 +14,10 @@ import {
 })
 export class MultichoiceAutocompleteFieldComponent  extends AbstractMultichoiceAutocompleteFieldComponentComponent {
 
-    constructor(@Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<MultichoiceField>) {
-        super(dataFieldPortalData);
+    constructor(translate: TranslateService,
+                validationRegistry: ValidationRegistryService,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<MultichoiceField>) {
+        super(translate, validationRegistry, dataFieldPortalData);
     }
 
 }

@@ -3,7 +3,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {
     AbstractEnumerationAutocompleteSelectFieldComponent,
     DATA_FIELD_PORTAL_DATA,
-    DataFieldPortalData, EnumerationField
+    DataFieldPortalData, EnumerationField, ValidationRegistryService
 } from '@netgrif/components-core';
 
 @Component({
@@ -14,7 +14,8 @@ import {
 export class EnumerationAutocompleteSelectFieldComponent extends AbstractEnumerationAutocompleteSelectFieldComponent {
 
     constructor(protected _translate: TranslateService,
+                validationRegistry: ValidationRegistryService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<EnumerationField>) {
-        super(_translate, dataFieldPortalData);
+        super(_translate, validationRegistry, dataFieldPortalData);
     }
 }

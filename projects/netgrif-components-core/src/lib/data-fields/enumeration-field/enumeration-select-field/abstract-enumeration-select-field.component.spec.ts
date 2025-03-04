@@ -11,6 +11,8 @@ import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {EnumerationField} from '../models/enumeration-field';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {DynamicEnumerationField} from "../models/dynamic-enumeration-field";
+import {TranslateService} from "@ngx-translate/core";
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
 
 describe('AbstractEnumerationSelectFieldComponent', () => {
     let component: TestEnumSelectComponent;
@@ -63,8 +65,10 @@ describe('AbstractEnumerationSelectFieldComponent', () => {
     template: ''
 })
 class TestEnumSelectComponent extends AbstractEnumerationSelectFieldComponent {
-    constructor(@Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<DynamicEnumerationField>) {
-        super(dataFieldPortalData);
+    constructor(translate: TranslateService,
+                validationRegistry: ValidationRegistryService,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<DynamicEnumerationField>) {
+        super(translate, validationRegistry, dataFieldPortalData);
     }
 }
 

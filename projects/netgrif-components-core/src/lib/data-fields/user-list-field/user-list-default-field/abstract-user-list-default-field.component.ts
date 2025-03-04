@@ -8,18 +8,20 @@ import {UserValue} from "../../user-field/models/user-value";
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base-data-field.component";
 import {MatDialog} from '@angular/material/dialog';
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
 
 @Component({
     selector: 'ncc-abstract-user-list-default-field',
     template: '',
 })
-export abstract class AbstractUserListDefaultFieldComponent extends AbstractBaseDataFieldComponent<UserListField>{
+export abstract class AbstractUserListDefaultFieldComponent extends AbstractBaseDataFieldComponent<UserListField> {
 
     protected constructor(protected _dialog: MatDialog,
                           protected _snackbar: SnackBarService,
                           protected _translate: TranslateService,
+                          protected _validationRegistry: ValidationRegistryService,
                           @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<UserListField>) {
-        super(dataFieldPortalData);
+        super(_translate, _validationRegistry, dataFieldPortalData);
     }
 
     /**

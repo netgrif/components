@@ -24,6 +24,7 @@ import {DateAdapter, MAT_DATE_LOCALE} from "@angular/material/core";
 import {LanguageService} from "../../../translate/language.service";
 import {CustomDateAdapter} from "../models/custom-date-adapter";
 import {NgxMatDateAdapter} from "@angular-material-components/datetime-picker";
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
 
 describe('AbstractDateDefaultFieldComponent', () => {
     let component: TestDateFieldComponent;
@@ -50,8 +51,8 @@ describe('AbstractDateDefaultFieldComponent', () => {
                             editable: true,
                             hidden: true
                         }, undefined, undefined, undefined, [
-                            {validationRule: 'weekend', validationMessage: 'This is custom message!'},
-                            {validationRule: 'workday', validationMessage: 'This is custom message!'}
+                            {name: 'weekend', message: 'This is custom message!'},
+                            {name: 'workday', message: 'This is custom message!'}
                         ]),
                         formControlRef: new FormControl(),
                         showLargeLayout: new WrappedBoolean()
@@ -90,11 +91,12 @@ describe('AbstractDateDefaultFieldComponent', () => {
 })
 class TestDateFieldComponent extends AbstractDateDefaultFieldComponent {
     constructor(_translate: TranslateService,
+                validationRegistry: ValidationRegistryService,
                 _adapter: DateAdapter<any>,
                 @Inject(MAT_DATE_LOCALE) _locale: string,
                 _languageService: LanguageService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<DateField>) {
-        super(_translate, _adapter, _locale, _languageService, dataFieldPortalData);
+        super(_translate, validationRegistry, _adapter, _locale, _languageService, dataFieldPortalData);
     }
 }
 

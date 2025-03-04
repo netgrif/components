@@ -50,7 +50,7 @@ describe('FileDefaultFieldComponent', () => {
                         visible: true,
                         editable: true,
                         hidden: true
-                    }),
+                    }, undefined, undefined),
                     formControlRef: new FormControl(),
                     showLargeLayout: new WrappedBoolean(),
                     additionalFieldProperties: {taskId: '0'}

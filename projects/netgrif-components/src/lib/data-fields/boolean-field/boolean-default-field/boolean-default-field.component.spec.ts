@@ -43,7 +43,7 @@ describe('BooleanSimpleFieldComponent', () => {
                         }, undefined,
                         undefined,
                         undefined,
-                        [{validationRule: 'requiredTrue', validationMessage: 'this is custom message'}]),
+                        [{name: 'requiredTrue', message: 'this is custom message'}]),
                     formControlRef: new FormControl(),
                     showLargeLayout: new WrappedBoolean()
                 } as DataFieldPortalData<BooleanField>

@@ -4,7 +4,7 @@ import {
     LanguageIconsService,
     DATA_FIELD_PORTAL_DATA,
     DataFieldPortalData,
-    I18nField
+    I18nField, ValidationRegistryService
 } from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 import {DomSanitizer} from '@angular/platform-browser';
@@ -33,8 +33,11 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
     ]
 })
 export class I18nTextFieldComponent extends AbstractI18nTextFieldComponent {
-    constructor(languageIconsService: LanguageIconsService, translateService: TranslateService, domSanitizer: DomSanitizer,
+    constructor(languageIconsService: LanguageIconsService,
+                translateService: TranslateService,
+                validationRegistry: ValidationRegistryService,
+                domSanitizer: DomSanitizer,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<I18nField>) {
-        super(languageIconsService, translateService, domSanitizer, dataFieldPortalData);
+        super(languageIconsService, translateService, validationRegistry, domSanitizer, dataFieldPortalData);
     }
 }

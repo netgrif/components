@@ -77,5 +77,5 @@ class TestWrapperComponent {
         }, undefined,
         undefined,
         undefined,
-        [{validationRule: 'requiredTrue', validationMessage: 'this is custom message'}]);
+        [{name: 'requiredTrue', message: 'this is custom message'}]);
 }

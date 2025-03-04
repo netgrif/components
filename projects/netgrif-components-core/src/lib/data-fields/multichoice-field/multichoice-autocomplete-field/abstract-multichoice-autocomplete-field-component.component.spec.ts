@@ -13,6 +13,8 @@ import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {FormControl} from '@angular/forms';
 import {MultichoiceField} from '../models/multichoice-field';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
+import {TranslateService} from "@ngx-translate/core";
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
 
 describe('AbstractMultichoiceAutocompleteFieldComponentComponent', () => {
     let component: TestEnumAutoComponent;
@@ -66,8 +68,10 @@ describe('AbstractMultichoiceAutocompleteFieldComponentComponent', () => {
 })
 class TestEnumAutoComponent extends AbstractMultichoiceAutocompleteFieldComponentComponent {
 
-    constructor(@Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<MultichoiceField>) {
-        super(dataFieldPortalData);
+    constructor(translate: TranslateService,
+                validationRegistry: ValidationRegistryService,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<MultichoiceField>) {
+        super(translate, validationRegistry, dataFieldPortalData);
     }
 
 }

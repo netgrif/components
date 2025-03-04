@@ -4,7 +4,7 @@ import {
     DATA_FIELD_PORTAL_DATA,
     DataFieldPortalData,
     SnackBarService,
-    UserListField
+    UserListField, ValidationRegistryService
 } from "@netgrif/components-core";
 import {TranslateService} from "@ngx-translate/core";
 import {
@@ -22,8 +22,9 @@ export class UserListDefaultFieldComponent extends AbstractUserListDefaultFieldC
     constructor(dialog: MatDialog,
                 snackbar: SnackBarService,
                 translate: TranslateService,
+                validationRegistry: ValidationRegistryService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<UserListField>) {
-        super(dialog, snackbar, translate, dataFieldPortalData);
+        super(dialog, snackbar, translate, validationRegistry, dataFieldPortalData);
     }
 
     public selectUser() {

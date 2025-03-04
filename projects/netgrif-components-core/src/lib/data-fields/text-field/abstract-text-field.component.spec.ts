@@ -59,5 +59,5 @@ class TestWrapperComponent {
         visible: true,
         editable: true,
         hidden: true
-    }, undefined, undefined, undefined, [{validationRule: 'email', validationMessage: 'custom message'}]);
+    }, undefined, undefined, undefined, [{name: 'email', message: 'custom message'}]);
 }

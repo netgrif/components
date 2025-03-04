@@ -7,18 +7,13 @@ import {I18nFieldTranslations, I18nFieldValue} from './i18n-field-value';
 import {Observable} from 'rxjs';
 import {FormControl, ValidatorFn} from '@angular/forms';
 import {ValidationRegistryService} from '../../../registry/validation/validation-registry.service';
-
-export enum I18nFieldValidation {
-    TRANSLATION_REQUIRED = 'translationRequired',
-    TRANSLATION_ONLY = 'translationOnly',
-    REQUIRED_I18N = 'requiredI18n'
-}
+import {Injector} from "@angular/core";
+import {validRequiredI18n} from "../../../registry/validation/model/default-validation-definitions";
+import {I18nFieldValidation} from "../../../registry/validation/model/validation-enums";
 
 export const DEFAULT_LANGUAGE_CODE = 'xx';
 
 export class I18nField extends DataField<I18nFieldValue> {
-
-    protected _validationRegistry?: ValidationRegistryService;
 
     public getTypedComponentType(): string {
         return ComponentPrefixes.I18N + this.getComponentType();
@@ -87,12 +82,12 @@ export class I18nField extends DataField<I18nFieldValue> {
     }
 
     constructor(stringId: string, title: string, value: I18nFieldValue | string, behavior: Behavior, placeholder?: string,
-                description?: string, layout?: Layout, validations?: Array<Validation>, _component?: Component, validationRegistry?: ValidationRegistryService) {
+                description?: string, layout?: Layout, validations?: Array<Validation>, _component?: Component,
+                protected _validationRegistry?: ValidationRegistryService, protected _injector?: Injector,) {
         if (typeof value === 'string') {
             value = {defaultValue: value};
         }
-        super(stringId, title, value, behavior, placeholder, description, layout, validations, _component);
-        this._validationRegistry = validationRegistry;
+        super(stringId, title, value, behavior, placeholder, description, layout, validations, _component, undefined, undefined, _validationRegistry, _injector);
     }
 
     protected valueEquality(a: I18nFieldValue, b: I18nFieldValue): boolean {
@@ -122,7 +117,7 @@ export class I18nField extends DataField<I18nFieldValue> {
         }
         formControl.clearValidators();
         if (forValidRequired) {
-            formControl.setValidators(this.behavior.required ? [this.validRequiredI18n] : []);
+            formControl.setValidators(this.behavior.required ? [validRequiredI18n.call(this._injector, {name: I18nFieldValidation.REQUIRED_I18N, args: []})] : []);
         } else {
             formControl.setValidators(this.resolveFormControlValidators());
         }
@@ -136,7 +131,7 @@ export class I18nField extends DataField<I18nFieldValue> {
         const result = [];
 
         if (this.behavior.required) {
-            result.push(this.validRequiredI18n);
+            result.push(validRequiredI18n);
         }
 
         if (this.validations) {
@@ -149,25 +144,5 @@ export class I18nField extends DataField<I18nFieldValue> {
         }
 
         return result;
-    }
-
-    protected resolveValidations(): Array<ValidatorFn> {
-        const result = [];
-
-        this.validations.forEach(item => {
-            if (item.validationRule.includes(I18nFieldValidation.TRANSLATION_REQUIRED)) {
-                result.push(this._validationRegistry.get('validTranslationRequired').call(null, {id: 'validTranslationRequired', args: [item.validationRule]}));
-            }
-            if (item.validationRule.includes(I18nFieldValidation.TRANSLATION_ONLY)) {
-                result.push(this._validationRegistry.get('validTranslationOnly').call(null, {id: 'validTranslationOnly', args: [item.validationRule]}));
-            }
-        });
-
-        return result;
-    }
-
-    private validRequiredI18n(fc: FormControl): { [k: string]: boolean } {
-        return (fc.value.defaultValue === '' && !!fc.value?.translations && Object.keys(fc.value.translations).length === 0)
-            ? ({requiredI18n: true}) : null;
     }
 }

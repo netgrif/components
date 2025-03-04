@@ -22,6 +22,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {TextAreaField} from '../models/text-area-field';
 import {QuillModule} from 'ngx-quill';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
 
 describe('AbstractHtmlTextareaFieldComponent', () => {
     let component: TestTextComponent;
@@ -46,7 +47,7 @@ describe('AbstractHtmlTextareaFieldComponent', () => {
                 {provide: DATA_FIELD_PORTAL_DATA, useValue: {
                         dataField: new TextAreaField('', '', 'text', {
                             editable: true
-                        }, undefined, undefined, undefined, [{validationRule: 'regex 5', validationMessage: 'This is custom message!'}]),
+                        }, undefined, undefined, undefined, [{name: 'regex', message: 'This is custom message!', clientArguments: ['5']}]),
                         formControlRef: new FormControl(),
                         showLargeLayout: new WrappedBoolean()
                     } as DataFieldPortalData<TextAreaField>
@@ -79,9 +80,11 @@ describe('AbstractHtmlTextareaFieldComponent', () => {
     template: ''
 })
 class TestTextComponent extends AbstractHtmlTextareaFieldComponent {
-    constructor(protected _translate: TranslateService, protected _sanitizer: DomSanitizer,
+    constructor(protected _translate: TranslateService,
+                validationRegistry: ValidationRegistryService,
+                protected _sanitizer: DomSanitizer,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextAreaField>) {
-        super(_translate, _sanitizer, dataFieldPortalData);
+        super(_translate, validationRegistry, _sanitizer, dataFieldPortalData);
     }
 }
 

@@ -12,6 +12,8 @@ import {EnumerationField} from '../models/enumeration-field';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base-data-field.component";
 import {Subscription} from 'rxjs';
+import {TranslateService} from "@ngx-translate/core";
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
 
 @Component({
     selector: 'ncc-abstract-enumeration-stepper-field',
@@ -24,8 +26,10 @@ export abstract class AbstractEnumerationStepperFieldComponent extends AbstractB
     protected subComp: Subscription;
 
     constructor(protected ref: ElementRef,
+                protected _translate: TranslateService,
+                protected _validationRegistry: ValidationRegistryService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<EnumerationField>) {
-        super(dataFieldPortalData);
+        super(_translate, _validationRegistry, dataFieldPortalData);
         this.arrowStepper = false;
     }
 

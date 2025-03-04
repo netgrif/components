@@ -3,7 +3,7 @@ import {
     AbstractHtmlTextareaFieldComponent,
     DATA_FIELD_PORTAL_DATA,
     DataFieldPortalData,
-    TextAreaField,
+    TextAreaField, ValidationRegistryService,
 } from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 import {DomSanitizer} from '@angular/platform-browser';
@@ -14,9 +14,11 @@ import {DomSanitizer} from '@angular/platform-browser';
     styleUrls: ['./html-textarea-field.component.scss']
 })
 export class HtmlTextareaFieldComponent extends AbstractHtmlTextareaFieldComponent implements AfterViewInit {
-    constructor(protected _translate: TranslateService, protected _sanitizer: DomSanitizer,
+    constructor(protected _translate: TranslateService,
+                validationRegistry: ValidationRegistryService,
+                protected _sanitizer: DomSanitizer,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextAreaField>) {
-        super(_translate, _sanitizer, dataFieldPortalData);
+        super(_translate, validationRegistry, _sanitizer, dataFieldPortalData);
     }
 
     ngAfterViewInit(): void {

@@ -3,7 +3,7 @@ import {
     AbstractEnumerationAutocompleteDynamicFieldComponent,
     DATA_FIELD_PORTAL_DATA,
     DataFieldPortalData,
-    DynamicEnumerationField
+    DynamicEnumerationField, ValidationRegistryService
 } from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 
@@ -15,7 +15,8 @@ import {TranslateService} from '@ngx-translate/core';
 export class EnumerationAutocompleteDynamicFieldComponent extends AbstractEnumerationAutocompleteDynamicFieldComponent {
 
     constructor(protected _translate: TranslateService,
+                validationRegistry: ValidationRegistryService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<DynamicEnumerationField>) {
-        super(_translate, dataFieldPortalData);
+        super(_translate, validationRegistry, dataFieldPortalData);
     }
 }

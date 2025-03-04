@@ -7,7 +7,7 @@ import {
     EventService,
     DATA_FIELD_PORTAL_DATA,
     DataFieldPortalData,
-    FileListField, AbstractFileListDefaultFieldComponent
+    FileListField, AbstractFileListDefaultFieldComponent, ValidationRegistryService
 } from '@netgrif/components-core'
 
 @Component({
@@ -21,8 +21,9 @@ export class FileListDefaultFieldComponent extends AbstractFileListDefaultFieldC
                 log: LoggerService,
                 snackbar: SnackBarService,
                 translate: TranslateService,
+                validationRegistry: ValidationRegistryService,
                 eventService: EventService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<FileListField>) {
-        super(taskResourceService, log, snackbar, translate, eventService, dataFieldPortalData);
+        super(taskResourceService, log, snackbar, translate, eventService, validationRegistry, dataFieldPortalData);
     }
 }

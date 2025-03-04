@@ -241,7 +241,8 @@
             "translationRequired": "Musí byť vyplnený preklad pre jazyky: <{{translation}}>",
             "translationOnly": "Je povolený iba preklad pre jazyky: <{{translation}}>",
             "requiredI18n": "Aspoň jedna hodnota musí byť vyplnená",
-            "requiredUserList": "Aspoň jedna hodnota musí byť vyplnená"
+            "requiredUserList": "Aspoň jedna hodnota musí byť vyplnená",
+            "invalid": "Neplatný vstup"
         },
         "snackBar": {
             "downloadFail": " sťahovanie zlyhalo",

@@ -56,9 +56,9 @@ describe('DateTimeDefaultFieldComponent', () => {
                         editable: true,
                         hidden: true
                     }, undefined, undefined, undefined, [
-                        {validationRule: 'between today,future', validationMessage: 'This is custom message!'},
-                        {validationRule: 'between past,today', validationMessage: 'This is custom message!'},
-                        {validationRule: 'between 2020-03-03,today', validationMessage: 'This is custom message!'},
+                        {name: 'between', message: 'This is custom message!', clientArguments: ['today', 'future']},
+                        {name: 'between', message: 'This is custom message!', clientArguments: ['past', 'today']},
+                        {name: 'between', message: 'This is custom message!', clientArguments: ['2020-03-03', 'today']},
                     ]),
                     formControlRef: new FormControl(),
                     showLargeLayout: new WrappedBoolean()

@@ -7,12 +7,13 @@ import {UserValue} from "../models/user-value";
 import {UserField} from "../models/user-field";
 import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base-data-field.component";
 import {MatDialog} from '@angular/material/dialog';
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
 
 @Component({
     selector: 'ncc-abstract-user-default-field',
     template: ''
 })
-export abstract class AbstractUserDefaultFieldComponent extends AbstractBaseDataFieldComponent<UserField>{
+export abstract class AbstractUserDefaultFieldComponent extends AbstractBaseDataFieldComponent<UserField> {
 
     private labelWidth: number;
     public cutProperty: string;
@@ -22,14 +23,15 @@ export abstract class AbstractUserDefaultFieldComponent extends AbstractBaseData
      * @param _dialog Service to open and close [UserAssignDialogComponent]{@link UserAssignDialogComponent} with user data.
      * @param _snackbar Service to displaying information to the user.
      * @param _translate Service to translate text.
-     * @param informAboutInvalidData whether the backend should be notified about invalid values.
+     * @param _validationRegistry service for validations
      * Option injected trough `NAE_INFORM_ABOUT_INVALID_DATA` InjectionToken
      */
     protected constructor(protected _dialog: MatDialog,
                           protected _snackbar: SnackBarService,
                           protected _translate: TranslateService,
+                          protected _validationRegistry: ValidationRegistryService,
                           @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<UserField>) {
-        super(dataFieldPortalData);
+        super(_translate, _validationRegistry, dataFieldPortalData);
     }
 
     /**

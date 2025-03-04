@@ -25,6 +25,7 @@ import {DateAdapter, MAT_DATE_LOCALE} from "@angular/material/core";
 import {CustomDateAdapter} from "../../date-field/models/custom-date-adapter";
 import {LanguageService} from "../../../translate/language.service";
 import {NgxMatMomentModule} from "@angular-material-components/moment-adapter";
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
 
 describe('AbstractDatetimeDefaultFieldComponent', () => {
     let component: TestDateTimeFieldComponent;
@@ -54,9 +55,9 @@ describe('AbstractDatetimeDefaultFieldComponent', () => {
                             editable: true,
                             hidden: true
                         }, undefined, undefined, undefined, [
-                            {validationRule: 'between today,future', validationMessage: 'This is custom message!'},
-                            {validationRule: 'between past,today', validationMessage: 'This is custom message!'},
-                            {validationRule: 'between 2020-03-03,today', validationMessage: 'This is custom message!'},
+                            {name: 'between', message: 'This is custom message!', clientArguments: ['today', 'future']},
+                            {name: 'between', message: 'This is custom message!', clientArguments: ['past', 'today']},
+                            {name: 'between', message: 'This is custom message!', clientArguments: ['2020-03-03', 'today']},
                         ]),
                         formControlRef: new FormControl(),
                         showLargeLayout: new WrappedBoolean()
@@ -94,11 +95,12 @@ describe('AbstractDatetimeDefaultFieldComponent', () => {
 })
 class TestDateTimeFieldComponent extends AbstractDateTimeDefaultFieldComponent {
     constructor(_translate: TranslateService,
+                validationRegistry: ValidationRegistryService,
                 _adapter: NgxMatDateAdapter<any>,
                 @Inject(MAT_DATE_LOCALE) _locale: string,
                 _languageService: LanguageService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<DateTimeField>) {
-        super(_translate, _adapter, _locale, _languageService, dataFieldPortalData)
+        super(_translate, validationRegistry, _adapter, _locale, _languageService, dataFieldPortalData)
     }
 }
 

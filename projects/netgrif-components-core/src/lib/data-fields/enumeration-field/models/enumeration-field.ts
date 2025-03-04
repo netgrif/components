@@ -8,26 +8,23 @@ import {Validation} from '../../models/validation';
 import {Observable, Subject} from "rxjs";
 import {debounceTime} from "rxjs/operators";
 import {UpdateOnStrategy, UpdateStrategy} from "../../models/update-strategy";
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
+import {Injector} from "@angular/core";
 
 export interface EnumerationFieldValue {
     key: string;
     value: string;
 }
 
-export enum EnumerationFieldValidation {
-    WRONG_VALUE = 'wrongValue',
-    REQUIRED = 'required'
-}
-
 export class EnumerationField extends DataField<string> {
     protected REQUEST_DEBOUNCE_TIME = 600;
     protected _updatedChoices: Subject<void>;
 
-    constructor(stringId: string, title: string, value: string,
-                protected _choices: Array<EnumerationFieldValue>, behavior: Behavior, placeholder?: string, description?: string,
-                layout?: Layout, protected readonly _fieldType = FieldTypeResource.ENUMERATION,
-                validations?: Array<Validation>, component?: Component, parentTaskId?: string) {
-        super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId);
+    constructor(stringId: string, title: string, value: string, protected _choices: Array<EnumerationFieldValue>,
+                behavior: Behavior, placeholder?: string, description?: string, layout?: Layout,
+                protected readonly _fieldType = FieldTypeResource.ENUMERATION, validations?: Array<Validation>,
+                component?: Component, parentTaskId?: string, validationRegistry?: ValidationRegistryService, injector?: Injector) {
+        super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId, undefined, validationRegistry, injector);
         this._updatedChoices = new Subject<void>();
     }
 
@@ -69,11 +66,8 @@ export class EnumerationField extends DataField<string> {
     }
 
     protected resolveFormControlValidators(): Array<ValidatorFn> {
-        const result = [];
+        const result = super.resolveFormControlValidators();
 
-        if (this.behavior.required) {
-            result.push(Validators.required);
-        }
         result.push((control: AbstractControl) => this.checkKey(control));
 
         return result;

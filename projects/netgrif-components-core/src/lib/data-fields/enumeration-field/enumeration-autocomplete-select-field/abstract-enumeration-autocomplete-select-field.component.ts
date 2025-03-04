@@ -1,11 +1,15 @@
 import {Component, ElementRef, Inject, OnDestroy, OnInit, Optional, ViewChild} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
-import {EnumerationField, EnumerationFieldValidation, EnumerationFieldValue} from '../models/enumeration-field';
+import {EnumerationField, EnumerationFieldValue} from '../models/enumeration-field';
 import {TranslateService} from '@ngx-translate/core';
 import {EnumerationAutocompleteFilterProperty} from "./enumeration-autocomplete-filter-property";
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base-data-field.component";
+import {DataField} from "../../models/abstract-data-field";
+import {FormControl} from "@angular/forms";
+import {EnumerationFieldValidation} from "../../../registry/validation/model/validation-enums";
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
 
 @Component({
     selector: 'ncc-abstract-enumeration-autocomplete-field',
@@ -17,8 +21,9 @@ export abstract class AbstractEnumerationAutocompleteSelectFieldComponent extend
     filteredOptions: Observable<Array<EnumerationFieldValue>>;
 
     constructor(protected _translate: TranslateService,
+                protected _validationRegistry: ValidationRegistryService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<EnumerationField>) {
-        super(dataFieldPortalData);
+        super(_translate, _validationRegistry, dataFieldPortalData);
     }
 
     ngOnInit() {
@@ -87,12 +92,10 @@ export abstract class AbstractEnumerationAutocompleteSelectFieldComponent extend
         return key;
     }
 
-    public buildErrorMessage() {
-        if (this.formControlRef.hasError(EnumerationFieldValidation.REQUIRED)) {
-            return this._translate.instant('dataField.validations.required');
-        }
-        if (this.formControlRef.hasError(EnumerationFieldValidation.WRONG_VALUE)) {
+    protected resolveComponentSpecificErrors(field: DataField<any>, formControlRef: FormControl) {
+        if (formControlRef.hasError(EnumerationFieldValidation.WRONG_VALUE)) {
             return this._translate.instant('dataField.validations.enumeration');
         }
+        return undefined;
     }
 }

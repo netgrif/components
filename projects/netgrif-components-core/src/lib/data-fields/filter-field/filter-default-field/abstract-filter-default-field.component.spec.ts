@@ -13,6 +13,9 @@ import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-fie
 import {AbstractFilterDefaultFieldComponent} from "./abstract-filter-default-field.component";
 import {FormControl} from "@angular/forms";
 import {WrappedBoolean} from "../../data-field-template/models/wrapped-boolean";
+import { TranslateService } from "@ngx-translate/core";
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
+import {TranslateLibModule} from "../../../translate/translate-lib.module";
 
 describe('AbstractFilterDefaultFieldComponent', () => {
     let component: TestFilterComponent;
@@ -27,7 +30,7 @@ describe('AbstractFilterDefaultFieldComponent', () => {
         };
 
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, HttpClientTestingModule],
+            imports: [NoopAnimationsModule, HttpClientTestingModule, TranslateLibModule],
             providers: [
                 {provide: DATA_FIELD_PORTAL_DATA, useValue: {
                         dataField: new FilterField('', '', '', {
@@ -64,8 +67,10 @@ describe('AbstractFilterDefaultFieldComponent', () => {
 })
 class TestFilterComponent extends AbstractFilterDefaultFieldComponent {
     constructor(parentInjector: Injector,
+                translate: TranslateService,
+                validationRegistry: ValidationRegistryService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<FilterField>) {
-        super(parentInjector, dataFieldPortalData);
+        super(parentInjector, translate, validationRegistry, dataFieldPortalData);
     }
 
     protected getFilterContentComponent(): ComponentType<AbstractFilterFieldContentComponent> {

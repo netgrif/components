@@ -29,7 +29,8 @@
                 "./node_modules/jszip/dist/jszip.min.js"
             ]
         },
-        "resolveJsonModule": true
+        "resolveJsonModule": true,
+        "allowSyntheticDefaultImports": true
     },
     "angularCompilerOptions": {
         "fullTemplateTypeCheck": true,

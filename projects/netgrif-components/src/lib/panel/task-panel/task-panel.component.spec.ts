@@ -172,10 +172,10 @@ class MyTaskResources {
                         value: 10.0,
                         order: 0,
                         validations: [{
-                            validationRule: 'inrange 0,inf'
+                            name: 'inrange 0,inf'
                         }, {
-                            validationRule: 'inrange 0,inf',
-                            validationMessage: 'Number field validation message'
+                            name: 'inrange 0,inf',
+                            message: 'Number field validation message'
                         }],
                         defaultValue: 10.0,
                         layout: {

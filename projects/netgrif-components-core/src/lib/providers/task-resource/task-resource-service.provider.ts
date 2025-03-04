@@ -11,6 +11,7 @@ import { FieldConverterService } from '../../task-content/services/field-convert
 import { RedirectService } from '../../routing/redirect-service/redirect.service';
 import { publicFactoryResolver } from '../../public/factories/public-factory-resolver';
 import { PublicTaskResourceService } from '../../resources/engine-endpoint/public/public-task-resource.service';
+import {ValidationLoaderService} from "../../registry/validation/validation-loader.service";
 
 export const TaskResourceServiceProvider = {
     provide: TaskResourceService,
@@ -46,5 +47,6 @@ export const TaskResourceServiceProvider = {
         ResourceProvider,
         ConfigurationService,
         FieldConverterService,
-        RedirectService]
+        RedirectService,
+        ValidationLoaderService]
 }

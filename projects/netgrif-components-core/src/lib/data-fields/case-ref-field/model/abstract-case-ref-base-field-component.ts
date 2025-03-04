@@ -12,15 +12,19 @@ import {BaseFilter} from '../../../search/models/base-filter';
 import {NAE_VIEW_ID_SEGMENT} from '../../../user/models/view-id-injection-tokens';
 import {ViewIdService} from '../../../user/services/view-id.service';
 import {DataField} from '../../models/abstract-data-field';
+import {TranslateService} from "@ngx-translate/core";
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
 
 export abstract class AbstractCaseRefBaseFieldComponent<T extends DataField<unknown>> extends AbstractBaseDataFieldComponent<T> {
 
     public componentPortal: ComponentPortal<any>;
 
     protected constructor(protected injector: Injector,
+                          protected _translate: TranslateService,
+                          protected _validationRegistry: ValidationRegistryService,
                           protected caseViewType: Type<any>,
                           @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<T>) {
-        super(dataFieldPortalData);
+        super(_translate, _validationRegistry, dataFieldPortalData);
     }
 
     createFilter(filterValue: string | string[]) {

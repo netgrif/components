@@ -10,6 +10,8 @@ import {AbstractMultichoiceListFieldComponent} from './abstract-multichoice-list
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {MultichoiceField} from '../models/multichoice-field';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
+import {TranslateService} from "@ngx-translate/core";
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
 
 describe('AbstractMultichoiceListFieldComponent', () => {
     let component: TestEnumComponent;
@@ -63,8 +65,10 @@ describe('AbstractMultichoiceListFieldComponent', () => {
     template: ''
 })
 class TestEnumComponent extends AbstractMultichoiceListFieldComponent {
-    constructor(@Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<MultichoiceField>) {
-        super(dataFieldPortalData);
+    constructor(translate: TranslateService,
+                validationRegistry: ValidationRegistryService,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<MultichoiceField>) {
+        super(translate, validationRegistry, dataFieldPortalData);
     }
 }
 

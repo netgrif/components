@@ -3,7 +3,7 @@ import {
     AbstractDefaultNumberFieldComponent,
     DATA_FIELD_PORTAL_DATA,
     DataFieldPortalData,
-    NumberField
+    NumberField, ValidationRegistryService
 } from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 
@@ -14,7 +14,8 @@ import {TranslateService} from '@ngx-translate/core';
 })
 export class NumberDefaultFieldComponent extends AbstractDefaultNumberFieldComponent {
     constructor(translate: TranslateService,
+                validationRegistry: ValidationRegistryService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<NumberField>) {
-        super(translate, dataFieldPortalData);
+        super(translate, validationRegistry, dataFieldPortalData);
     }
 }

@@ -19,6 +19,7 @@ import {AbstractBooleanDefaultFieldComponent} from "./abstract-boolean-default-f
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {FormControl} from "@angular/forms";
 import {WrappedBoolean} from "../../data-field-template/models/wrapped-boolean";
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
 
 describe('AbstractBooleanDefaultFieldComponent', () => {
     let component: TestBooleanComponent;
@@ -44,7 +45,7 @@ describe('AbstractBooleanDefaultFieldComponent', () => {
                             }, undefined,
                             undefined,
                             undefined,
-                            [{validationRule: 'requiredTrue', validationMessage: 'this is custom message'}]),
+                            [{name: 'requiredTrue', message: 'this is custom message'}]),
                         formControlRef: new FormControl(),
                         showLargeLayout: new WrappedBoolean()
                     } as DataFieldPortalData<BooleanField>
@@ -82,8 +83,9 @@ describe('AbstractBooleanDefaultFieldComponent', () => {
 class TestBooleanComponent extends AbstractBooleanDefaultFieldComponent {
 
     constructor(translate: TranslateService,
+                validationRegistry: ValidationRegistryService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<BooleanField>) {
-        super(translate, dataFieldPortalData);
+        super(translate, validationRegistry, dataFieldPortalData);
     }
 }
 

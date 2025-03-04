@@ -6,6 +6,7 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
 import {FileListField} from '../file-list-field/models/file-list-field';
+import {ValidationRegistryService} from "../../registry/validation/validation-registry.service";
 
 @Component({
     selector: 'ncc-abstract-file-field-default-component',
@@ -27,8 +28,9 @@ export abstract class AbstractFileFieldDefaultComponent<T extends FileField | Fi
     protected constructor(protected _log: LoggerService,
                           protected _snackbar: SnackBarService,
                           protected _translate: TranslateService,
+                          protected _validationRegistry: ValidationRegistryService,
                           @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<T>) {
-        super(dataFieldPortalData);
+        super(_translate, _validationRegistry, dataFieldPortalData);
     }
 
     protected checkAllowedTypes(): boolean {

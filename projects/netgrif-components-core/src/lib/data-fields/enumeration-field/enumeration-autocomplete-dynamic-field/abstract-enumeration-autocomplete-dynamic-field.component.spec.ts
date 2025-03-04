@@ -11,6 +11,7 @@ import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {FormControl} from '@angular/forms';
 import {DynamicEnumerationField} from '../models/dynamic-enumeration-field';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
 
 describe('AbstractEnumerationAutocompleteDynamicFieldComponent', () => {
     let component: TestEnumAutoComponent;
@@ -63,8 +64,9 @@ describe('AbstractEnumerationAutocompleteDynamicFieldComponent', () => {
 })
 class TestEnumAutoComponent extends AbstractEnumerationAutocompleteDynamicFieldComponent {
     constructor(protected _translate: TranslateService,
+                validationRegistry: ValidationRegistryService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<DynamicEnumerationField>) {
-        super(_translate, dataFieldPortalData);
+        super(_translate, validationRegistry, dataFieldPortalData);
     }
 }
 

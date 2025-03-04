@@ -1,21 +1,25 @@
-import {Component, OnInit, Inject, Optional, OnDestroy} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, Optional} from '@angular/core';
 import {EnumerationField} from '../models/enumeration-field';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base-data-field.component";
 import {Subscription} from 'rxjs';
+import {TranslateService} from "@ngx-translate/core";
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
 
 @Component({
     selector: 'ncc-abstract-enumerataion-icon-field',
     template: ''
 })
-export abstract class AbstractEnumerationIconFieldComponent extends AbstractBaseDataFieldComponent<EnumerationField> implements OnInit, OnDestroy{
+export abstract class AbstractEnumerationIconFieldComponent extends AbstractBaseDataFieldComponent<EnumerationField> implements OnInit, OnDestroy {
     public horizontal: boolean;
     protected arrow: boolean;
     protected divider: boolean;
     protected subComp: Subscription;
 
-    constructor(@Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<EnumerationField>) {
-        super(dataFieldPortalData);
+    constructor(protected _translate: TranslateService,
+                protected _validationRegistry: ValidationRegistryService,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<EnumerationField>) {
+        super(_translate, _validationRegistry, dataFieldPortalData);
     }
 
     ngOnInit(): void {

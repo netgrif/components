@@ -2,6 +2,8 @@ import {Component, Inject, Optional} from '@angular/core';
 import {I18nField} from '../models/i18n-field';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base-data-field.component";
+import {TranslateService} from "@ngx-translate/core";
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
 
 @Component({
     selector: 'ncc-abstract-i18n-divider-field',
@@ -10,8 +12,10 @@ import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base
 export abstract class AbstractI18nDividerFieldComponent extends AbstractBaseDataFieldComponent<I18nField>{
 
 
-    constructor(@Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<I18nField>) {
-        super(dataFieldPortalData);
+    constructor(protected _translate: TranslateService,
+                protected _validationRegistry: ValidationRegistryService,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<I18nField>) {
+        super(_translate, _validationRegistry, dataFieldPortalData);
     }
 
     public getDividerColor(): string {

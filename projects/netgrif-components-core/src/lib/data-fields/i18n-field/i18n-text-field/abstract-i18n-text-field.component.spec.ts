@@ -22,6 +22,7 @@ import {LanguageIconsService} from '../language-icons.service';
 import {DomSanitizer} from '@angular/platform-browser';
 import {LanguageService} from '../../../translate/language.service';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
 
 describe('AbstractI18nTextFieldComponent', () => {
     let component: TestI18nTextComponent;
@@ -85,9 +86,10 @@ describe('AbstractI18nTextFieldComponent', () => {
 class TestI18nTextComponent extends AbstractI18nTextFieldComponent {
     constructor(protected languageIconsService: LanguageIconsService,
                 protected _translateService: TranslateService,
+                validationRegistry: ValidationRegistryService,
                 protected _domSanitizer: DomSanitizer,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<I18nField>) {
-        super(languageIconsService, _translateService, _domSanitizer, dataFieldPortalData);
+        super(languageIconsService, _translateService, validationRegistry, _domSanitizer, dataFieldPortalData);
     }
 }
 

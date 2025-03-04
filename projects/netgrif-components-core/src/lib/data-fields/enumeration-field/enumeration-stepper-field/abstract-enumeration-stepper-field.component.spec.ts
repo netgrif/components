@@ -11,6 +11,8 @@ import {EnumerationField} from '../models/enumeration-field';
 import {AbstractEnumerationStepperFieldComponent} from './abstract-enumeration-stepper-field.component';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {DynamicEnumerationField} from "../models/dynamic-enumeration-field";
+import { TranslateService } from '@ngx-translate/core';
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
 
 describe('AbstractEnumerationStepperFieldComponent', () => {
     let component: TestEnumStepperComponent;
@@ -64,8 +66,10 @@ describe('AbstractEnumerationStepperFieldComponent', () => {
 })
 class TestEnumStepperComponent extends AbstractEnumerationStepperFieldComponent {
     constructor(protected ref: ElementRef,
+                translate: TranslateService,
+                validationRegistry: ValidationRegistryService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<DynamicEnumerationField>) {
-        super(ref, dataFieldPortalData);
+        super(ref, translate, validationRegistry, dataFieldPortalData);
     }
 }
 

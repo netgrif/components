@@ -8,6 +8,8 @@ import {FormControl} from '@angular/forms';
 import {Validation} from '../../models/validation';
 import {ChangedFieldsMap} from '../../../event/services/interfaces/changed-fields-map';
 import {distinctUntilChanged} from 'rxjs/operators';
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
+import {Injector} from "@angular/core";
 
 /**
  * Supported types of files a user can select through a file picker.
@@ -93,10 +95,10 @@ export class FileField extends DataField<FileFieldValue> {
      * Placeholder is a substitute for the value name if not set value.
      */
     constructor(stringId: string, title: string, behavior: Behavior, value?: FileFieldValue, placeholder?: string, description?: string,
-                layout?: Layout, private _maxUploadSizeInBytes?: number,
-                private _allowTypes?: string | FileUploadMIMEType | Array<FileUploadMIMEType>,
-                validations?: Array<Validation>, component?: Component, parentTaskId?: string) {
-        super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId);
+                layout?: Layout, private _maxUploadSizeInBytes?: number, private _allowTypes?: string | FileUploadMIMEType | Array<FileUploadMIMEType>,
+                validations?: Array<Validation>, component?: Component, parentTaskId?: string,
+                validationRegistry?: ValidationRegistryService, injector?: Injector) {
+        super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId, undefined, validationRegistry, injector);
         this._changedFields$ = new Subject<ChangedFieldsMap>();
     }
 

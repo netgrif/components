@@ -8,18 +8,20 @@ import {Observable, Subject} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
 import {LoadingEmitter} from '../../../utility/loading-emitter';
 import {Validation} from '../../models/validation';
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
+import {Injector} from "@angular/core";
 
 export class DynamicEnumerationField extends EnumerationField {
     protected REQUEST_DEBOUNCE_TIME = 600;
     protected _choicesChange$: Subject<void>;
     protected _loading: LoadingEmitter;
 
-    constructor(stringId: string, title: string, value: string,
-                protected _choices: Array<EnumerationFieldValue>, behavior: Behavior, placeholder?: string, description?: string,
-                layout?: Layout, protected readonly _fieldType = FieldTypeResource.ENUMERATION,
-                validations?: Array<Validation>, component?: Component, parentTaskId?: string) {
+    constructor(stringId: string, title: string, value: string, protected _choices: Array<EnumerationFieldValue>,
+                behavior: Behavior, placeholder?: string, description?: string, layout?: Layout, protected readonly _fieldType = FieldTypeResource.ENUMERATION,
+                validations?: Array<Validation>, component?: Component, parentTaskId?: string,
+                validationRegistry?: ValidationRegistryService, injector?: Injector) {
         super(stringId, title, value, _choices, behavior, placeholder, description, layout, _fieldType, validations,
-            component, parentTaskId);
+            component, parentTaskId, validationRegistry, injector);
         this._choicesChange$ = new Subject<void>();
         this._loading = new LoadingEmitter();
     }
@@ -54,6 +56,15 @@ export class DynamicEnumerationField extends EnumerationField {
 
         if (this.behavior.required) {
             result.push(Validators.required);
+        }
+
+        if (this.validations) {
+            if (this._validators) {
+                result.push(...this._validators);
+            } else {
+                this._validators = this.resolveValidations();
+                result.push(...this._validators);
+            }
         }
 
         return result;

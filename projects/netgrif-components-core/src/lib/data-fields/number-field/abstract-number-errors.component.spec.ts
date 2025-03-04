@@ -20,6 +20,7 @@ import {LanguageService} from '../../translate/language.service';
 import {FormControl} from '@angular/forms';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../models/data-field-portal-data-injection-token";
 import {WrappedBoolean} from "../data-field-template/models/wrapped-boolean";
+import {ValidationRegistryService} from "../../registry/validation/validation-registry.service";
 
 describe('AbstractNumberErrorsComponent', () => {
     let component: TestNumErrorComponent;
@@ -46,14 +47,14 @@ describe('AbstractNumberErrorsComponent', () => {
                             editable: true,
                             hidden: true
                         }, [
-                            {validationRule: 'odd', validationMessage: 'This is custom odd message!'},
-                            {validationRule: 'even', validationMessage: ''},
-                            {validationRule: 'positive', validationMessage: 'This is custom message!'},
-                            {validationRule: 'negative', validationMessage: 'This is custom message!'},
-                            {validationRule: 'decimal', validationMessage: 'This is custom message!'},
-                            {validationRule: 'inrange inf,0', validationMessage: 'This is custom message!'},
-                            {validationRule: 'inrange 0,inf', validationMessage: 'This is custom message!'},
-                            {validationRule: 'inrange -5,0', validationMessage: 'This is custom message!'},
+                            {name: 'odd', message: 'This is custom odd message!'},
+                            {name: 'even', message: ''},
+                            {name: 'positive', message: 'This is custom message!'},
+                            {name: 'negative', message: 'This is custom message!'},
+                            {name: 'decimal', message: 'This is custom message!'},
+                            {name: 'inrange', message: 'This is custom message!', clientArguments: ['inf', '0']},
+                            {name: 'inrange', message: 'This is custom message!', clientArguments: ['0', 'inf']},
+                            {name: 'inrange', message: 'This is custom message!', clientArguments: ['-5', '0']},
                         ]),
                         formControlRef: new FormControl(),
                         showLargeLayout: new WrappedBoolean()
@@ -94,8 +95,10 @@ describe('AbstractNumberErrorsComponent', () => {
     template: ''
 })
 class TestNumErrorComponent extends AbstractNumberErrorsComponent {
-    constructor(translate: TranslateService, @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<NumberField>) {
-        super(translate, dataFieldPortalData);
+    constructor(translate: TranslateService,
+                validationRegistry: ValidationRegistryService,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<NumberField>) {
+        super(translate, validationRegistry, dataFieldPortalData);
     }
 }
 

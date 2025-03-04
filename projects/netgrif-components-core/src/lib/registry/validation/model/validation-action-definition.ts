@@ -7,7 +7,7 @@ export interface ValidationActionDefinition {
 }
 
 export interface ValidationAction {
-    id: string;
+    name: string;
     args?: {
         [k: string]: any;
     }

@@ -3,7 +3,7 @@ import {
     AbstractButtonDefaultFieldComponent, ButtonField,
     DATA_FIELD_PORTAL_DATA,
     DataFieldPortalData,
-    DialogService
+    DialogService, ValidationRegistryService
 } from '@netgrif/components-core';
 import {TranslateService} from "@ngx-translate/core";
 import {Subscription} from 'rxjs';
@@ -20,9 +20,10 @@ export class ButtonDefaultFieldComponent extends AbstractButtonDefaultFieldCompo
     protected subComp: Subscription;
 
     constructor(_translate: TranslateService,
+                _validationRegistry: ValidationRegistryService,
                 _dialogService: DialogService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<ButtonField>) {
-        super(_translate, _dialogService, dataFieldPortalData);
+        super(_translate, _dialogService, _validationRegistry, dataFieldPortalData);
     }
 
     ngOnInit() {

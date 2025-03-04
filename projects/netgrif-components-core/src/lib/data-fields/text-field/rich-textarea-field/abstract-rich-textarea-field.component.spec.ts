@@ -20,6 +20,7 @@ import {CovalentModule} from '../../../covalent/covalent.module';
 import {MaterialModule} from '../../../material/material.module';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {TextAreaField} from "../models/text-area-field";
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
 
 describe('AbstractRichTextareaFieldComponent', () => {
     let component: TestTextComponent;
@@ -43,7 +44,7 @@ describe('AbstractRichTextareaFieldComponent', () => {
                 {provide: DATA_FIELD_PORTAL_DATA, useValue: {
                         dataField: new TextAreaField('', '', 'text', {
                             editable: true
-                        }, undefined, undefined, undefined, [{validationRule: 'regex 5', validationMessage: 'This is custom message!'}]),
+                        }, undefined, undefined, undefined, [{name: 'regex', message: 'This is custom message!', clientArguments: ['5']}]),
                         formControlRef: new FormControl(),
                         showLargeLayout: new WrappedBoolean()
                     } as DataFieldPortalData<TextAreaField>
@@ -77,8 +78,9 @@ describe('AbstractRichTextareaFieldComponent', () => {
 })
 class TestTextComponent extends AbstractRichTextareaFieldComponent {
     constructor(protected _translate: TranslateService,
+                validationRegistry: ValidationRegistryService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextAreaField>) {
-        super(_translate, dataFieldPortalData);
+        super(_translate, validationRegistry, dataFieldPortalData);
     }
 }
 

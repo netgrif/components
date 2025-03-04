@@ -7,8 +7,9 @@ import {
     DataFieldPortalData,
     FilterField,
     AbstractFilterFieldContentComponent,
-    Dashboard, AbstractFilterDefaultFieldComponent
+    Dashboard, AbstractFilterDefaultFieldComponent, ValidationRegistryService
 } from '@netgrif/components-core';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'nc-filter-default-field',
@@ -18,8 +19,10 @@ import {
 export class FilterDefaultFieldComponent extends AbstractFilterDefaultFieldComponent {
 
     constructor(parentInjector: Injector,
+                translate: TranslateService,
+                validationRegistry: ValidationRegistryService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<FilterField>) {
-        super(parentInjector, dataFieldPortalData);
+        super(parentInjector, translate, validationRegistry, dataFieldPortalData);
     }
 
     protected getFilterContentComponent(): ComponentType<AbstractFilterFieldContentComponent> {

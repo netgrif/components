@@ -3,9 +3,10 @@ import {AbstractBaseDataFieldComponent} from '../../base-component/abstract-base
 import {TranslateService} from '@ngx-translate/core';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from '../../models/data-field-portal-data-injection-token';
 import {StringCollectionField} from '../models/string-collection-field';
-import {ENTER, COMMA, SEMICOLON} from '@angular/cdk/keycodes';
+import {COMMA, ENTER, SEMICOLON} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {Subscription} from 'rxjs';
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
 
 @Component({
     selector: 'ncc-abstract-string-collection-default-field',
@@ -18,8 +19,9 @@ export abstract class AbstractStringCollectionDefaultFieldComponent extends Abst
     protected subComp: Subscription;
 
     protected constructor(protected _translate: TranslateService,
-                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<StringCollectionField>) {
-        super(dataFieldPortalData);
+                          protected _validationRegistry: ValidationRegistryService,
+                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<StringCollectionField>) {
+        super(_translate, _validationRegistry, dataFieldPortalData);
     }
 
     ngOnInit() {

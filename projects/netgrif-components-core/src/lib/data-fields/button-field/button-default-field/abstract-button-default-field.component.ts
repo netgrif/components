@@ -1,11 +1,11 @@
 import {Component, Inject, Optional} from "@angular/core";
 import {TranslateService} from "@ngx-translate/core";
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
-import {ButtonField, ButtonFieldValidation} from "../models/button-field";
+import {ButtonField} from "../models/button-field";
 import {take} from "rxjs/operators";
 import {DialogService} from "../../../dialog/services/dialog.service";
 import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base-data-field.component";
-
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
 
 @Component({
     selector: 'ncc-abstract-button-default-field',
@@ -15,14 +15,9 @@ export abstract class AbstractButtonDefaultFieldComponent extends AbstractBaseDa
 
     constructor(protected _translate: TranslateService,
                 protected _dialogService: DialogService,
+                protected _validationRegistry: ValidationRegistryService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<ButtonField>) {
-        super(dataFieldPortalData);
-    }
-
-    public getErrorMessage() {
-        if (this.formControlRef.hasError(ButtonFieldValidation.REQUIRED)) {
-            return this._translate.instant('dataField.validations.required');
-        }
+        super(_translate, _validationRegistry, dataFieldPortalData);
     }
 
     /**

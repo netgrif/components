@@ -5,7 +5,7 @@ import {
     SnackBarService,
     DataFieldPortalData,
     UserField,
-    AbstractUserDefaultFieldComponent
+    AbstractUserDefaultFieldComponent, ValidationRegistryService
 } from '@netgrif/components-core';
 import {UserAssignDialogComponent} from '../../../dialog/user-assign-dialog/user-assign-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
@@ -20,8 +20,9 @@ export class UserDefaultFieldComponent extends AbstractUserDefaultFieldComponent
     constructor(dialog: MatDialog,
                 snackbar: SnackBarService,
                 translate: TranslateService,
+                validationRegistry: ValidationRegistryService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<UserField>) {
-        super(dialog, snackbar, translate, dataFieldPortalData);
+        super(dialog, snackbar, translate, validationRegistry, dataFieldPortalData);
     }
 
     public selectUser() {

@@ -7,9 +7,11 @@ import {ValidationActionDefinition} from './model/validation-action-definition';
 export class ValidationRegistryService {
 
     protected _registry: Map<string, ValidationActionDefinition>;
+    protected _translations: Map<string, string>;
 
     constructor() {
         this._registry = new Map<string, ValidationActionDefinition>();
+        this._translations = new Map<string, string>();
     }
 
     get registry(): Map<string, ValidationActionDefinition> {
@@ -18,6 +20,14 @@ export class ValidationRegistryService {
 
     set registry(value: Map<string, ValidationActionDefinition>) {
         this._registry = value;
+    }
+
+    get translations(): Map<string, string> {
+        return this._translations;
+    }
+
+    set translations(value: Map<string, string>) {
+        this._translations = value;
     }
 
     public register(key: string, fn: ValidationActionDefinition): void {
@@ -31,6 +41,21 @@ export class ValidationRegistryService {
     public get(key: string): ValidationActionDefinition {
         if (this._registry.has(key)) {
             return this._registry.get(key);
+        }
+        return undefined;
+    }
+
+    public registerTranslation(key: string, translation: string): void {
+        this._translations.set(key, translation);
+    }
+
+    public containsTranslation(key: string): boolean {
+        return this._translations.has(key);
+    }
+
+    public getTranslation(key: string): string {
+        if (this._translations.has(key)) {
+            return this._translations.get(key);
         }
         return undefined;
     }

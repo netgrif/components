@@ -3,6 +3,8 @@ import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-fie
 import {EnumerationField} from '../models/enumeration-field';
 import {Subscription} from 'rxjs';
 import {AbstractCaseRefBaseFieldComponent} from '../../case-ref-field/model/abstract-case-ref-base-field-component';
+import {TranslateService} from "@ngx-translate/core";
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
 
 @Component({
     selector: 'ncc-abstract-case-ref-default',
@@ -14,9 +16,11 @@ export abstract class AbstractEnumerationCaseRefComponent extends AbstractCaseRe
     protected _subComp: Subscription;
 
     protected constructor(protected injector: Injector,
+                          protected _translate: TranslateService,
+                          protected _validationRegistry: ValidationRegistryService,
                           protected caseViewType: Type<any>,
                           @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<EnumerationField>) {
-        super(injector, caseViewType, dataFieldPortalData);
+        super(injector, _translate, _validationRegistry, caseViewType, dataFieldPortalData);
     }
 
     ngAfterViewInit(): void {

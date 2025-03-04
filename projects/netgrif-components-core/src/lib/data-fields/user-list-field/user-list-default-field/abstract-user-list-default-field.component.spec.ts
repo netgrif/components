@@ -25,6 +25,7 @@ import {AbstractUserListDefaultFieldComponent} from "./abstract-user-list-defaul
 import {FormControl} from "@angular/forms";
 import {WrappedBoolean} from "../../data-field-template/models/wrapped-boolean";
 import {MatDialog} from '@angular/material/dialog';
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
 
 describe('AbstractUserListDefaultFieldComponent', () => {
     let component: TestUserListFieldComponent;
@@ -83,7 +84,8 @@ class TestUserListFieldComponent extends AbstractUserListDefaultFieldComponent {
     constructor(matDialog: MatDialog,
                 snackbar: SnackBarService,
                 translate: TranslateService,
+                validationRegistry: ValidationRegistryService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<UserListField>) {
-        super(matDialog, snackbar, translate, dataFieldPortalData);
+        super(matDialog, snackbar, translate, validationRegistry, dataFieldPortalData);
     }
 }

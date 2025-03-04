@@ -6,6 +6,8 @@ import {Observable, of, Subscription} from 'rxjs';
 import {MultichoiceAutocompleteFilterProperty} from './multichoice-autocomplete-filter-property';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base-data-field.component";
+import {TranslateService} from "@ngx-translate/core";
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
 
 @Component({
     selector: 'ncc-abstract-multichoice-autocomplete-field',
@@ -21,8 +23,10 @@ export abstract class AbstractMultichoiceAutocompleteFieldComponentComponent ext
 
     filteredOptions: Observable<Array<MultichoiceFieldValue>>;
 
-    constructor(@Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<MultichoiceField>) {
-        super(dataFieldPortalData);
+    constructor(protected _translate: TranslateService,
+                protected _validationRegistry: ValidationRegistryService,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<MultichoiceField>) {
+        super(_translate, _validationRegistry, dataFieldPortalData);
     }
 
     ngOnInit() {

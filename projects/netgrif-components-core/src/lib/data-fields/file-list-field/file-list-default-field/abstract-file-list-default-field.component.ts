@@ -10,23 +10,23 @@ import {
     ViewChild
 } from "@angular/core";
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
-import {FileListField, FileListFieldValidation} from "../models/file-list-field";
+import {FileListField} from "../models/file-list-field";
 import {Subscription} from "rxjs";
 import {TaskResourceService} from "../../../resources/engine-endpoint/task-resource.service";
 import {LoggerService} from "../../../logger/services/logger.service";
 import {SnackBarService} from "../../../snack-bar/services/snack-bar.service";
 import {TranslateService} from "@ngx-translate/core";
 import {EventService} from "../../../event/services/event.service";
-import {FileFieldIdBody} from "../../models/file-field-id-body";
 import {EventOutcomeMessageResource} from "../../../resources/interface/message-resource";
 import {ProgressType, ProviderProgress} from "../../../resources/resource-provider.service";
 import {ChangedFieldsMap} from "../../../event/services/interfaces/changed-fields-map";
 import {HttpParams} from "@angular/common/http";
 import {take} from "rxjs/operators";
 import {FileFieldValue} from "../../file-field/models/file-field-value";
-import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base-data-field.component";
 import {FileFieldRequest} from "../../../resources/interface/file-field-request-body";
 import {AbstractFileFieldDefaultComponent} from '../../models/abstract-file-field-default-component';
+import {FileListFieldValidation} from "../../../registry/validation/model/validation-enums";
+import { ValidationRegistryService } from "../../../registry/validation/validation-registry.service";
 
 export interface FilesState {
     progress: number;
@@ -60,8 +60,9 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractFile
                           protected _snackbar: SnackBarService,
                           protected _translate: TranslateService,
                           protected _eventService: EventService,
+                          protected _validationRegistry: ValidationRegistryService,
                           @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<FileListField>) {
-        super(_log, _snackbar, _translate, dataFieldPortalData);
+        super(_log, _snackbar, _translate, _validationRegistry, dataFieldPortalData);
         this.state = this.defaultState;
         this.uploadedFiles = new Array<string>();
         this.maxFilesNumber = Number.POSITIVE_INFINITY;
@@ -74,11 +75,11 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractFile
         });
         if (this.dataField.validations && this.dataField.validations.length !== 0) {
             const val = this.dataField.validations.find(validation =>
-                validation.validationRule.includes(FileListFieldValidation.MAX_FILES)
+                validation.name === FileListFieldValidation.MAX_FILES
             );
-            if (val && val.validationRule.split(' ').length === 2 && !isNaN(parseInt(val.validationRule.split(' ')[1], 10))) {
-                this.maxFilesNumber = parseInt(val.validationRule.split(' ')[1], 10);
-                this.maxFilesMessage = val.validationMessage && val.validationMessage !== '' ? val.validationMessage : null;
+            if (val && val.clientArguments.length === 1 && !isNaN(parseInt(val.clientArguments[1], 10))) {
+                this.maxFilesNumber = parseInt(val.clientArguments[1], 10);
+                this.maxFilesMessage = val.message && val.message !== '' ? val.message : null;
             }
         }
     }

@@ -24,6 +24,6 @@
         </ng-container>
     </mat-autocomplete>
     <mat-hint [ngClass]="{'mat-hint-disabled': formControlRef.disabled}">{{dataField.description}}</mat-hint>
-    <mat-error *ngIf="dataField.isInvalid(formControlRef)">{{buildErrorMessage()}}</mat-error>
+    <mat-error *ngIf="dataField.isInvalid(formControlRef)">{{getErrorMessage()}}</mat-error>
 </mat-form-field>
 

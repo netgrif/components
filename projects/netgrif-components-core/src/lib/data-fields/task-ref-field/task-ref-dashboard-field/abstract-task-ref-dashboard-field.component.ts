@@ -6,6 +6,8 @@ import {TaskRefDashboardConstants} from "../model/task-ref-dashboard-constants";
 import {TaskRefDashboardTileConstants} from "../model/task-ref-dashboard-tile-constants";
 import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base-data-field.component";
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
+import {TranslateService} from "@ngx-translate/core";
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
 
 @Component({
     selector: 'ncc-abstract-task-ref-dashboard',
@@ -15,8 +17,10 @@ export abstract class AbstractTaskRefDashboardFieldComponent extends AbstractBas
 
     dashboardTiles: Array<TaskRefDashboardTile>;
     protected constructor(protected _logger: LoggerService,
+                          protected _translate: TranslateService,
+                          protected _validationRegistry: ValidationRegistryService,
                           @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TaskRefField>) {
-        super(dataFieldPortalData);
+        super(_translate, _validationRegistry, dataFieldPortalData);
     }
 
     ngOnInit() {

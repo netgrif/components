@@ -3,6 +3,8 @@ import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-fie
 import {CaseRefField} from '../model/case-ref-field';
 import {Subscription} from 'rxjs';
 import {AbstractCaseRefBaseFieldComponent} from '../model/abstract-case-ref-base-field-component';
+import {TranslateService} from "@ngx-translate/core";
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
 
 @Component({
     selector: 'ncc-abstract-case-ref-default',
@@ -14,9 +16,11 @@ export abstract class AbstractCaseRefDefaultComponent extends AbstractCaseRefBas
     protected _subComp: Subscription;
 
     protected constructor(protected injector: Injector,
+                          protected _translate: TranslateService,
+                          protected _validationRegistry: ValidationRegistryService,
                           protected caseViewType: Type<any>,
                           @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<CaseRefField>) {
-        super(injector, caseViewType, dataFieldPortalData);
+        super(injector, _translate, _validationRegistry, caseViewType, dataFieldPortalData);
     }
 
     ngAfterViewInit(): void {

@@ -5,6 +5,8 @@ import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-fie
 import {FilterField} from "../models/filter-field";
 import {NAE_FILTER_FIELD} from "../models/filter-field-injection-token";
 import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base-data-field.component";
+import {TranslateService} from "@ngx-translate/core";
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
 
 @Component({
     selector: 'ncc-abstract-filter-default-field',
@@ -16,8 +18,10 @@ export abstract class AbstractFilterDefaultFieldComponent extends AbstractBaseDa
     public portal: ComponentPortal<AbstractFilterFieldContentComponent>;
 
     constructor(protected _parentInjector: Injector,
+                protected _translate: TranslateService,
+                protected _validationRegistry: ValidationRegistryService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<FilterField>) {
-        super(dataFieldPortalData);
+        super(_translate, _validationRegistry, dataFieldPortalData);
     }
 
     ngOnInit() {

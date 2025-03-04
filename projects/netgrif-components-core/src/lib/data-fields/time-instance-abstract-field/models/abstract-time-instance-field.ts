@@ -1,21 +1,13 @@
 import {Behavior} from '../../models/behavior';
-import {FormControl, ValidatorFn} from '@angular/forms';
+import {ValidatorFn} from '@angular/forms';
 import moment, {Moment} from 'moment';
 import {Layout} from '../../models/layout';
 import {Component} from '../../models/component';
 import {DataField} from '../../models/abstract-data-field';
 import {ValidationRegistryService} from '../../../registry/validation/validation-registry.service';
 import {Validation} from '../../models/validation';
-
-export enum AbstractTimeInstanceFieldValidation {
-    BETWEEN = 'between',
-    WORKDAY = 'workday',
-    WEEKEND = 'weekend',
-    REQUIRED = 'required',
-    VALID_BETWEEN = 'validBetween',
-    VALID_WORKDAY = 'validWorkday',
-    VALID_WEEKEND = 'validWeekend'
-}
+import {Injector} from "@angular/core";
+import {AbstractTimeInstanceFieldValidation} from "../../../registry/validation/model/validation-enums";
 
 export abstract class AbstractTimeInstanceField extends DataField<Moment> {
 
@@ -23,8 +15,9 @@ export abstract class AbstractTimeInstanceField extends DataField<Moment> {
     public max: Moment;
 
     protected constructor(stringId: string, title: string, value: Moment, behavior: Behavior, placeholder?: string,
-                          description?: string, layout?: Layout, validations?: any, component?: Component, parentTaskId?: string, protected validationRegistry?: ValidationRegistryService) {
-        super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId);
+                          description?: string, layout?: Layout, validations?: any, component?: Component, parentTaskId?: string,
+                          protected _validationRegistry?: ValidationRegistryService, protected _injector?: Injector, ) {
+        super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId, undefined, _validationRegistry, _injector);
     }
 
     public static isEqual(a: Moment, b: Moment, granularity?: moment.unitOfTime.StartOf): boolean {
@@ -67,13 +60,11 @@ export abstract class AbstractTimeInstanceField extends DataField<Moment> {
         const result = [];
 
         this.validations.forEach(item => {
-            if (item.validationRule.includes(AbstractTimeInstanceFieldValidation.BETWEEN)) {
-                result.push(this.validationRegistry.get('validBetween').call(null, {id: 'validBetween', args: [item.validationRule]}));
-                this.checkMinMax(item);
-            } else if (item.validationRule.includes(AbstractTimeInstanceFieldValidation.WORKDAY)) {
-                result.push(this.validationRegistry.get('validWorkday').call(null, {id: 'validWorkday', args: [item.validationRule]}));
-            } else if (item.validationRule.includes(AbstractTimeInstanceFieldValidation.WEEKEND)) {
-                result.push(this.validationRegistry.get('validWeekend').call(null, {id: 'validWeekend', args: [item.validationRule]}));
+            if (this._validationRegistry.contains(item.name)) {
+                result.push(this._validationRegistry.get(item.name).call(null, {name: item.name, args: item.clientArguments}));
+                if (item.name.includes(AbstractTimeInstanceFieldValidation.BETWEEN)) {
+                    this.checkMinMax(item);
+                }
             }
         });
 
@@ -81,11 +72,8 @@ export abstract class AbstractTimeInstanceField extends DataField<Moment> {
     }
 
     protected checkMinMax(item: Validation) {
-        const tmp = item.validationRule.split(' ');
-        const ranges = tmp[1].split(',');
-
-        const start = AbstractTimeInstanceField.parseDate(ranges[0]);
-        const end = AbstractTimeInstanceField.parseDate(ranges[1]);
+        const start = AbstractTimeInstanceField.parseDate(item.clientArguments[0]);
+        const end = AbstractTimeInstanceField.parseDate(item.clientArguments[1]);
 
         if (start && end) {
             if (start === 'past' && moment(end).isValid()) {

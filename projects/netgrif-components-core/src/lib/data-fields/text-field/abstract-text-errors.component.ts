@@ -1,10 +1,12 @@
 import {FormControl} from '@angular/forms';
-import {TextField, TextFieldValidation} from './models/text-field';
+import {TextField} from './models/text-field';
 import {TranslateService} from '@ngx-translate/core';
-import {TextAreaField} from './models/text-area-field';
 import {Component, Inject, Optional} from "@angular/core";
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../models/data-field-portal-data-injection-token";
 import {AbstractBaseDataFieldComponent} from "../base-component/abstract-base-data-field.component";
+import {DataField} from "../models/abstract-data-field";
+import {TextFieldValidation} from "../../registry/validation/model/validation-enums";
+import {ValidationRegistryService} from "../../registry/validation/validation-registry.service";
 
 @Component({
     selector: 'ncc-text-errors',
@@ -13,41 +15,22 @@ import {AbstractBaseDataFieldComponent} from "../base-component/abstract-base-da
 export abstract class AbstractTextErrorsComponent<T extends TextField> extends AbstractBaseDataFieldComponent<T>{
 
     protected constructor(protected _translate: TranslateService,
+                          protected _validationRegistry: ValidationRegistryService,
                           @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<T>) {
-        super(dataFieldPortalData);
+        super(_translate, _validationRegistry, dataFieldPortalData);
     }
 
-    protected buildErrorMessage(textField: TextField | TextAreaField, formControlRef: FormControl) {
-        if (formControlRef.hasError(TextFieldValidation.REQUIRED)) {
-            return this._translate.instant('dataField.validations.required');
-        }
-        if (formControlRef.hasError(TextFieldValidation.VALID_MIN_LENGTH)) {
-            return this.resolveErrorMessage(textField, TextFieldValidation.MIN_LENGTH,
+    protected resolveComponentSpecificErrors(field: DataField<any>, formControlRef: FormControl) {
+        if (formControlRef.hasError(TextFieldValidation.MIN_LENGTH)) {
+            const validation = field.validations.find(value => value.name === TextFieldValidation.MIN_LENGTH);
+            return this.resolveErrorMessage(validation, TextFieldValidation.MIN_LENGTH,
                 this._translate.instant('dataField.validations.minLength', {length: formControlRef.errors.minlength.requiredLength}));
         }
-        if (formControlRef.hasError(TextFieldValidation.VALID_MAX_LENGTH)) {
-            return this.resolveErrorMessage(textField, TextFieldValidation.MAX_LENGTH,
+        if (formControlRef.hasError(TextFieldValidation.MAX_LENGTH)) {
+            const validation = field.validations.find(value => value.name === TextFieldValidation.MIN_LENGTH);
+            return this.resolveErrorMessage(validation, TextFieldValidation.MAX_LENGTH,
                 this._translate.instant('dataField.validations.maxLength', {length: formControlRef.errors.maxlength.requiredLength}));
         }
-        if (formControlRef.hasError(TextFieldValidation.PATTERN)) {
-            return this.resolveErrorMessage(textField, TextFieldValidation.REGEX, this._translate.instant('dataField.validations.pattern'));
-        }
-        if (formControlRef.hasError(TextFieldValidation.VALID_TEL_NUMBER)) {
-            return this.resolveErrorMessage(
-                textField, TextFieldValidation.TEL_NUMBER, this._translate.instant('dataField.validations.phone')
-            );
-        }
-        if (formControlRef.hasError(TextFieldValidation.EMAIL)) {
-            return this.resolveErrorMessage(textField, TextFieldValidation.EMAIL, this._translate.instant('dataField.validations.email'));
-        }
-        return '';
-    }
-
-    protected resolveErrorMessage(textField: TextField | TextAreaField, search: string, generalMessage: string) {
-        const validation = textField.validations.find(value => value.validationRule.includes(search));
-        if (validation.validationMessage && validation.validationMessage !== '') {
-            return validation.validationMessage;
-        }
-        return generalMessage;
+        return undefined;
     }
 }

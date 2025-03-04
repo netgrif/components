@@ -4,6 +4,8 @@ import {Layout} from '../../models/layout';
 import {Component, ComponentPrefixes} from '../../models/component';
 import {Validation} from '../../models/validation';
 import {TaskRefDashboardTile} from './task-ref-dashboard-tile';
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
+import {Injector} from "@angular/core";
 
 export class TaskRefField extends DataField<Array<string>> {
 
@@ -13,8 +15,8 @@ export class TaskRefField extends DataField<Array<string>> {
 
     constructor(stringId: string, title: string, initialValue: Array<string>, behavior: Behavior,
                 placeholder?: string, description?: string, layout?: Layout, validations?: Array<Validation>, component?: Component,
-                parentTaskId?: string) {
-        super(stringId, title, initialValue, behavior, placeholder, description, layout, validations, component, parentTaskId);
+                parentTaskId?: string, validationRegistry?: ValidationRegistryService, injector?: Injector) {
+        super(stringId, title, initialValue, behavior, placeholder, description, layout, validations, component, parentTaskId, undefined, validationRegistry, injector);
     }
 
     get dashboardTiles(): Array<TaskRefDashboardTile> {

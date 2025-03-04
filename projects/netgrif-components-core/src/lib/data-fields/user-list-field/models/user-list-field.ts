@@ -6,13 +6,15 @@ import {Component, ComponentPrefixes} from '../../models/component';
 import { UserListValue } from './user-list-value';
 import {AbstractControl, FormControl, ValidatorFn} from "@angular/forms";
 import {ProcessRole} from "../../../resources/interface/process-role";
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
+import {Injector} from "@angular/core";
 
 export class UserListField extends DataField<UserListValue> {
 
     constructor(stringId: string, title: string, behavior: Behavior, value: UserListValue, private _roles: Array<ProcessRole>,
                 placeholder?: string, description?: string, layout?: Layout, validations?: Array<Validation>, component?: Component,
-                parentTaskId?: string) {
-        super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId);
+                parentTaskId?: string, validationRegistry?: ValidationRegistryService, injector?: Injector,) {
+        super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId, undefined, validationRegistry, injector);
     }
 
     get roles(): Array<ProcessRole> {

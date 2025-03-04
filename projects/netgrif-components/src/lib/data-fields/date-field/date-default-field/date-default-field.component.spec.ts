@@ -55,8 +55,8 @@ describe('DateDefaultFieldComponent', () => {
                         editable: true,
                         hidden: true
                     }, undefined, undefined, undefined, [
-                        {validationRule: 'weekend', validationMessage: 'This is custom message!'},
-                        {validationRule: 'workday', validationMessage: 'This is custom message!'}
+                        {name: 'weekend', message: 'This is custom message!'},
+                        {name: 'workday', message: 'This is custom message!'}
                     ]),
                     formControlRef: new FormControl(),
                     showLargeLayout: new WrappedBoolean()

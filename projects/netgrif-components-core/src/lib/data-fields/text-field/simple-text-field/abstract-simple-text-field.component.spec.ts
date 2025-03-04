@@ -19,6 +19,7 @@ import {TextField} from '../models/text-field';
 import {TranslateService} from '@ngx-translate/core';
 import {AbstractSimpleTextFieldComponent} from './abstract-simple-text-field.component';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
 
 describe('AbstractSimpleTextFieldComponent', () => {
     let component: TestTextComponent;
@@ -45,7 +46,7 @@ describe('AbstractSimpleTextFieldComponent', () => {
                             visible: true,
                             editable: true,
                             hidden: true
-                        }, undefined, undefined, undefined, [{validationRule: 'minLength 5', validationMessage: 'This is custom message!'}]),
+                        }, undefined, undefined, undefined, [{name: 'minLength', message: 'This is custom message!', clientArguments: ['5']}]),
                         formControlRef: new FormControl(),
                         showLargeLayout: new WrappedBoolean()
                     } as DataFieldPortalData<TextField>
@@ -79,8 +80,9 @@ describe('AbstractSimpleTextFieldComponent', () => {
 })
 class TestTextComponent extends AbstractSimpleTextFieldComponent {
     constructor(protected _translate: TranslateService,
+                validationRegistry: ValidationRegistryService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextField>) {
-        super(_translate, dataFieldPortalData);
+        super(_translate, validationRegistry, dataFieldPortalData);
     }
 }
 

@@ -29,6 +29,7 @@ import {AbstractFileDefaultFieldComponent} from "./abstract-file-default-field.c
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {FormControl} from "@angular/forms";
 import {WrappedBoolean} from "../../data-field-template/models/wrapped-boolean";
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
 
 describe('AbstractFileDefaultFieldComponent', () => {
     let component: TestFileComponent;
@@ -95,10 +96,11 @@ class TestFileComponent extends AbstractFileDefaultFieldComponent {
                 log: LoggerService,
                 snackbar: SnackBarService,
                 translate: TranslateService,
+                validationRegistry: ValidationRegistryService,
                 sanitizer: DomSanitizer,
                 eventService: EventService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<FileField>) {
-        super(taskResourceService, log, snackbar, translate, eventService, sanitizer, dataFieldPortalData);
+        super(taskResourceService, log, snackbar, translate, validationRegistry, eventService, sanitizer, dataFieldPortalData);
     }
 }
 

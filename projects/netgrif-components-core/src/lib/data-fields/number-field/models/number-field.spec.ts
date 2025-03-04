@@ -10,14 +10,14 @@ describe('NumberField', () => {
             editable: true,
             hidden: true
         }, [
-            {validationRule: 'odd', validationMessage: ''},
-            {validationRule: 'even', validationMessage: ''},
-            {validationRule: 'positive', validationMessage: ''},
-            {validationRule: 'negative', validationMessage: ''},
-            {validationRule: 'decimal', validationMessage: ''},
-            {validationRule: 'inrange inf,0', validationMessage: ''},
-            {validationRule: 'inrange 0,inf', validationMessage: ''},
-            {validationRule: 'inrange -5,0', validationMessage: ''},
+            {name: 'odd', message: ''},
+            {name: 'even', message: ''},
+            {name: 'positive', message: ''},
+            {name: 'negative', message: ''},
+            {name: 'decimal', message: ''},
+            {name: 'inrange', message: 'This is custom message!', clientArguments: ['inf', '0']},
+            {name: 'inrange', message: 'This is custom message!', clientArguments: ['0', 'inf']},
+            {name: 'inrange', message: 'This is custom message!', clientArguments: ['-5', '0']},
         ])).toBeTruthy();
     });
 

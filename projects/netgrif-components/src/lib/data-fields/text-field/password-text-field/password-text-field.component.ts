@@ -3,7 +3,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {
     AbstractPasswordTextFieldComponent,
     DATA_FIELD_PORTAL_DATA,
-    DataFieldPortalData, TextField
+    DataFieldPortalData, TextField, ValidationRegistryService
 } from '@netgrif/components-core';
 
 @Component({
@@ -15,9 +15,10 @@ export class PasswordTextFieldComponent extends AbstractPasswordTextFieldCompone
 
     hide: boolean;
 
-    constructor(protected _translate: TranslateService,
+    constructor(translate: TranslateService,
+                validationRegistry: ValidationRegistryService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextField>) {
-        super(_translate, dataFieldPortalData);
+        super(translate, validationRegistry, dataFieldPortalData);
         this.hide = true;
     }
 }

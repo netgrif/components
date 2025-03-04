@@ -28,6 +28,7 @@ import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-fie
 import {FILE_FIELD_HEIGHT, FILE_FIELD_PADDING, PREVIEW, PREVIEW_BUTTON} from '../models/file-field-constants';
 import {FileFieldRequest} from "../../../resources/interface/file-field-request-body";
 import {AbstractFileFieldDefaultComponent} from '../../models/abstract-file-field-default-component';
+import { ValidationRegistryService } from "../../../registry/validation/validation-registry.service";
 
 export interface FileState {
     progress: number;
@@ -105,6 +106,7 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractFileFiel
      * @param _log Logger service
      * @param _snackbar Snackbar service to notify user
      * @param _translate Translate service for I18N
+     * @param _validationRegistry service for translations
      * @param _eventService used for parsing of backend response
      * Option injected trough `NAE_INFORM_ABOUT_INVALID_DATA` InjectionToken
      * @param _sanitizer Sanitize url of image preview
@@ -114,10 +116,11 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractFileFiel
                           protected _log: LoggerService,
                           protected _snackbar: SnackBarService,
                           protected _translate: TranslateService,
+                          protected _validationRegistry: ValidationRegistryService,
                           protected _eventService: EventService,
                           protected _sanitizer: DomSanitizer,
                           @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<FileField>) {
-        super(_log, _snackbar, _translate, dataFieldPortalData);
+        super(_log, _snackbar, _translate, _validationRegistry, dataFieldPortalData);
         this.state = this.defaultState;
         this.fullSource = new BehaviorSubject<SafeUrl>(null);
         this.taskId = dataFieldPortalData.additionalFieldProperties.taskId as string;

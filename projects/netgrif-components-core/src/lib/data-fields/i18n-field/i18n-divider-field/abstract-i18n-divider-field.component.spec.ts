@@ -10,6 +10,8 @@ import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-b
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
+import {TranslateService} from "@ngx-translate/core";
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
 
 describe('AbstractI18nDividerFieldComponent', () => {
     let component: TestI18nDividerComponent;
@@ -62,8 +64,10 @@ describe('AbstractI18nDividerFieldComponent', () => {
     template: ''
 })
 class TestI18nDividerComponent extends AbstractI18nDividerFieldComponent {
-    constructor(@Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<I18nField>) {
-        super(dataFieldPortalData);
+    constructor(protected _translate: TranslateService,
+                protected _validationRegistry: ValidationRegistryService,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<I18nField>) {
+        super(_translate, _validationRegistry, dataFieldPortalData);
     }
 }
 

@@ -5,6 +5,7 @@ import {DashboardCardTypes} from '../../../dashboard/cards/model/dashboard-card-
 import {AbstractDashboardTextFieldComponent} from '../abstract-dashboard-text-field.component';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {TextField} from "../models/text-field";
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
 
 @Component({
     selector: 'ncc-abstract-dashboard-portal-text-field',
@@ -13,8 +14,9 @@ import {TextField} from "../models/text-field";
 export abstract class AbstractDashboardPortalTextFieldComponent extends AbstractDashboardTextFieldComponent {
 
     protected constructor(translate: TranslateService,
+                          validationRegistry: ValidationRegistryService,
                           @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextField>) {
-        super(translate, dataFieldPortalData);
+        super(translate, validationRegistry, dataFieldPortalData);
     }
 
     protected createCard(textFieldValue: string): CustomCard {

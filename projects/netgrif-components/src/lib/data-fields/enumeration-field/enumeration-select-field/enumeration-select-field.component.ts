@@ -2,8 +2,9 @@ import {Component, Inject, Optional} from '@angular/core';
 import {
     AbstractEnumerationSelectFieldComponent,
     DATA_FIELD_PORTAL_DATA,
-    DataFieldPortalData, EnumerationField
+    DataFieldPortalData, EnumerationField, ValidationRegistryService
 } from '@netgrif/components-core';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'nc-enumeration-select-field',
@@ -11,7 +12,9 @@ import {
     styleUrls: ['./enumeration-select-field.component.scss']
 })
 export class EnumerationSelectFieldComponent extends AbstractEnumerationSelectFieldComponent {
-    constructor(@Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<EnumerationField>) {
-        super(dataFieldPortalData);
+    constructor(translate: TranslateService,
+                validationRegistry: ValidationRegistryService,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<EnumerationField>) {
+        super(translate, validationRegistry, dataFieldPortalData);
     }
 }

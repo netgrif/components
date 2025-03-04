@@ -6,6 +6,8 @@ import {Component, ComponentPrefixes} from '../../models/component';
 import {Validation} from '../../models/validation';
 import {UpdateOnStrategy, UpdateStrategy} from "../../models/update-strategy";
 import {Observable, Subject} from 'rxjs';
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
+import {Injector} from "@angular/core";
 
 export interface MultichoiceFieldValue {
     key: string;
@@ -19,8 +21,8 @@ export class MultichoiceField  extends DataField<Array<string>> {
     constructor(stringId: string, title: string, values: Array<string>, private _choices: Array<MultichoiceFieldValue>,
                 behavior: Behavior, placeholder?: string, description?: string, layout?: Layout,
                 private readonly _fieldType = FieldTypeResource.MULTICHOICE, validations?: Array<Validation>,
-                component?: Component, parentTaskId?: string) {
-        super(stringId, title, values, behavior, placeholder, description, layout, validations, component, parentTaskId);
+                component?: Component, parentTaskId?: string, validationRegistry?: ValidationRegistryService, injector?: Injector,) {
+        super(stringId, title, values, behavior, placeholder, description, layout, validations, component, parentTaskId, undefined, validationRegistry, injector);
         this._updatedChoices = new Subject<void>();
     }
 

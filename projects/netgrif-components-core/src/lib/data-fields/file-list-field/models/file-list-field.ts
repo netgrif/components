@@ -9,10 +9,8 @@ import {Component, ComponentPrefixes} from '../../models/component';
 import {FormControl} from '@angular/forms';
 import {ChangedFieldsMap} from '../../../event/services/interfaces/changed-fields-map';
 import {distinctUntilChanged} from 'rxjs/operators';
-
-export enum FileListFieldValidation {
-    MAX_FILES = 'maxFiles'
-}
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
+import {Injector} from "@angular/core";
 
 export class FileListField extends DataField<FileListFieldValue> {
     /**
@@ -52,8 +50,8 @@ export class FileListField extends DataField<FileListFieldValue> {
     constructor(stringId: string, title: string, behavior: Behavior, value?: FileListFieldValue, placeholder?: string, description?: string,
                 layout?: Layout, validations?: Array<Validation>, private _maxUploadSizeInBytes?: number,
                 private _allowTypes?: string | FileUploadMIMEType | Array<FileUploadMIMEType>,
-                component?: Component, parentTaskId?: string) {
-        super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId);
+                component?: Component, parentTaskId?: string, validationRegistry?: ValidationRegistryService, injector?: Injector) {
+        super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId, undefined, validationRegistry, injector);
         this._changedFields$ = new Subject<ChangedFieldsMap>();
         this.downloaded = new Array<string>();
     }

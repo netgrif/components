@@ -12,6 +12,7 @@ import {MaterialModule} from '../../../material/material.module';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {DynamicEnumerationField} from "../models/dynamic-enumeration-field";
+import { ValidationRegistryService } from '../../../registry/validation/validation-registry.service';
 
 describe('AbstractEnumerationAutocompleteSelectFieldComponent', () => {
     let component: TestEnumAutoComponent;
@@ -64,8 +65,9 @@ describe('AbstractEnumerationAutocompleteSelectFieldComponent', () => {
 })
 class TestEnumAutoComponent extends AbstractEnumerationAutocompleteSelectFieldComponent {
     constructor(protected _translate: TranslateService,
+                validationRegistry: ValidationRegistryService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<DynamicEnumerationField>) {
-        super(_translate, dataFieldPortalData);
+        super(_translate, validationRegistry, dataFieldPortalData);
     }
 }
 

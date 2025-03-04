@@ -4,6 +4,7 @@ import {AbstractTextErrorsComponent} from '../abstract-text-errors.component';
 import {TextAreaField} from '../models/text-area-field';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
 
 @Component({
     selector: 'ncc-abstract-html-area-field',
@@ -33,9 +34,11 @@ export abstract class AbstractHtmlTextareaFieldComponent extends AbstractTextErr
 
     public disabledDisplay: SafeHtml;
 
-    constructor(protected _translate: TranslateService, protected _sanitizer: DomSanitizer,
+    constructor(protected _translate: TranslateService,
+                protected _validationRegistry: ValidationRegistryService,
+                protected _sanitizer: DomSanitizer,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextAreaField>) {
-        super(_translate, dataFieldPortalData);
+        super(_translate, _validationRegistry, dataFieldPortalData);
     }
 
     ngOnInit(): void {
@@ -47,9 +50,5 @@ export abstract class AbstractHtmlTextareaFieldComponent extends AbstractTextErr
 
     protected sanitizeValue(): SafeHtml {
         return this._sanitizer.bypassSecurityTrustHtml(this.dataField.value !== undefined ? this.dataField.value : '');
-    }
-
-    public getErrorMessage() {
-        return this.buildErrorMessage(this.dataField, this.formControlRef);
     }
 }

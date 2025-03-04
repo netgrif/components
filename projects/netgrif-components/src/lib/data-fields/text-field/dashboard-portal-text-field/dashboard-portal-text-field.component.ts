@@ -4,7 +4,7 @@ import {
     AbstractDashboardPortalTextFieldComponent, ComponentRegistryService,
     DATA_FIELD_PORTAL_DATA,
     DataFieldPortalData,
-    TextField
+    TextField, ValidationRegistryService
 } from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 import {Subscription} from 'rxjs';
@@ -19,10 +19,11 @@ export class DashboardPortalTextFieldComponent extends AbstractDashboardPortalTe
     public componentPortal: ComponentPortal<any>;
 
     constructor(translate: TranslateService,
+                validationRegistry: ValidationRegistryService,
                 private registry: ComponentRegistryService,
                 private injector: Injector,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextField>) {
-        super(translate, dataFieldPortalData);
+        super(translate, validationRegistry, dataFieldPortalData);
     }
 
     ngOnInit(): void {
