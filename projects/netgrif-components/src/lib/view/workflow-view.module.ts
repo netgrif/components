@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {FlexLayoutModule} from '@angular/flex-layout';
+import {FlexLayoutModule} from '@ngbracket/ngx-layout';
 import {SideMenuComponentModule} from '../side-menu/side-menu.module';
 import {HeaderComponentModule} from '../header/header.module';
 import {PanelComponentModule} from '../panel/panel.module';

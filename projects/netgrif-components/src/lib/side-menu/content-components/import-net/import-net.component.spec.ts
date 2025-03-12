@@ -5,6 +5,7 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {SideMenuImportNetComponentModule} from './side-menu-import-net-component.module';
 import {ImportNetComponent} from './import-net.component';
 import {
+    AuthenticationModule,
     ConfigurationService,
     ErrorSnackBarComponent,
     NAE_SIDE_MENU_CONTROL,
@@ -29,6 +30,7 @@ describe('ImportNetComponent', () => {
                 SideMenuImportNetComponentModule,
                 HttpClientTestingModule,
                 NoopAnimationsModule,
+                AuthenticationModule,
                 TranslateLibModule,
                 MatIconModule,
                 SnackBarModule
@@ -41,13 +43,6 @@ describe('ImportNetComponent', () => {
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: PetriNetResourceService, useClass: MyPetriNetResource}
             ],
-        }).overrideModule(BrowserDynamicTestingModule, {
-            set: {
-                entryComponents: [
-                    ErrorSnackBarComponent,
-                    SuccessSnackBarComponent
-                ]
-            }
         }).compileComponents();
     }));
 

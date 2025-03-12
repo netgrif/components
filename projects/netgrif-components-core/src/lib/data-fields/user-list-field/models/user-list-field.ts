@@ -2,21 +2,32 @@ import { DataField } from '../../models/abstract-data-field';
 import { Behavior } from '../../models/behavior';
 import { Layout } from '../../models/layout';
 import { Validation } from '../../models/validation';
-import { Component } from '../../models/component';
+import {Component, ComponentPrefixes} from '../../models/component';
 import { UserListValue } from './user-list-value';
 import {AbstractControl, FormControl, ValidatorFn} from "@angular/forms";
+import {ProcessRole} from "../../../resources/interface/process-role";
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
+import {Injector} from "@angular/core";
 
 export class UserListField extends DataField<UserListValue> {
 
-    constructor(stringId: string, title: string, behavior: Behavior, value: UserListValue,
+    constructor(stringId: string, title: string, behavior: Behavior, value: UserListValue, private _roles: Array<ProcessRole>,
                 placeholder?: string, description?: string, layout?: Layout, validations?: Array<Validation>, component?: Component,
-                parentTaskId?: string) {
-        super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId);
+                parentTaskId?: string, validationRegistry?: ValidationRegistryService, injector?: Injector,) {
+        super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId, undefined, validationRegistry, injector);
+    }
+
+    get roles(): Array<ProcessRole> {
+        return this._roles;
+    }
+
+    public getTypedComponentType(): string {
+        return ComponentPrefixes.USER_LIST + this.getComponentType();
     }
 
     protected valueEquality(a: UserListValue, b: UserListValue): boolean {
         return (!a && !b) ||
-            (!!a && !!b && a.userValues.size === b.userValues.size);
+            (!!a && !!b && a.userValues?.size === b.userValues?.size);
     }
 
     protected calculateValidity(forValidRequired: boolean, formControl: FormControl): boolean {

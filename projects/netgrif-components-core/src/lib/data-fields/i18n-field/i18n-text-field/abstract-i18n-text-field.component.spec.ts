@@ -1,5 +1,5 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional} from '@angular/core';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {FormControl} from '@angular/forms';
 import {I18nField} from '../models/i18n-field';
@@ -21,6 +21,8 @@ import {TranslateService} from '@ngx-translate/core';
 import {LanguageIconsService} from '../language-icons.service';
 import {DomSanitizer} from '@angular/platform-browser';
 import {LanguageService} from '../../../translate/language.service';
+import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
 
 describe('AbstractI18nTextFieldComponent', () => {
     let component: TestI18nTextComponent;
@@ -41,7 +43,22 @@ describe('AbstractI18nTextFieldComponent', () => {
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
-                {provide: ConfigurationService, useClass: TestConfigurationService}
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: DATA_FIELD_PORTAL_DATA, useValue: {
+                        dataField: new I18nField('', '',
+                            {defaultValue: 'Default translation', translations: {en: 'English translation'}},
+                            {
+                                required: true,
+                                optional: true,
+                                visible: true,
+                                editable: true,
+                                hidden: true
+                            }
+                        ),
+                        formControlRef: new FormControl(),
+                        showLargeLayout: new WrappedBoolean()
+                    } as DataFieldPortalData<I18nField>
+                }
             ],
             declarations: [TestI18nTextComponent, TestWrapperComponent],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -69,30 +86,17 @@ describe('AbstractI18nTextFieldComponent', () => {
 class TestI18nTextComponent extends AbstractI18nTextFieldComponent {
     constructor(protected languageIconsService: LanguageIconsService,
                 protected _translateService: TranslateService,
-                protected _domSanitizer: DomSanitizer) {
-        super(languageIconsService, _translateService, _domSanitizer);
+                validationRegistry: ValidationRegistryService,
+                protected _domSanitizer: DomSanitizer,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<I18nField>) {
+        super(languageIconsService, _translateService, validationRegistry, _domSanitizer, dataFieldPortalData);
     }
 }
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: `
-        <ncc-test-i18n-text [showLargeLayout]="label"
-                            [textI18nField]="field"
-                            [formControlRef]="formControl">
-        </ncc-test-i18n-text>`
+    template: '<ncc-test-i18n-text></ncc-test-i18n-text>'
 })
 class TestWrapperComponent {
-    label = new WrappedBoolean();
-    field = new I18nField('', '',
-        {defaultValue: 'Default translation', translations: {en: 'English translation'}},
-        {
-            required: true,
-            optional: true,
-            visible: true,
-            editable: true,
-            hidden: true
-        }
-    );
-    formControl = new FormControl();
+
 }

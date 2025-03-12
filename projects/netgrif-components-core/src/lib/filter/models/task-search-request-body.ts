@@ -66,6 +66,22 @@ export interface TaskSearchRequestBody {
      * If more than one group ID is specified, the returned tasks are from cases of one of the groups.
      */
     group?: string | Array<string>;
+
+    /**
+     * Returned tasks must have the specified string ID.
+     *
+     * If more than one string ID is specified, the returned tasks must have one of them.
+     */
+    stringId?: string | Array<string>;
+
+    tags?: {
+        [key: string]: string
+    };
+
+    /**
+     * state can determine if the task is Assignable or not
+     */
+    state?: TaskState;
 }
 
 /**
@@ -82,4 +98,9 @@ export interface TaskSearchCaseQuery {
      * Returned tasks must be of case that contains the specified string in its title.
      */
     title?: string;
+}
+
+export enum TaskState {
+    ENABLED = 'ENABLED',
+    DISABLED = 'DISABLED'
 }

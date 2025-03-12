@@ -6,7 +6,7 @@ import {createMockNet} from './create-mock-net';
 import {Case} from '../../../resources/interface/case';
 import {createMockCase} from './create-mock-case';
 import {EventOutcome} from '../../../resources/interface/event-outcome';
-import {ChangedFieldContainer} from '../../../resources/interface/changed-field-container';
+import {DataSet} from '../../../resources/interface/task-data-sets';
 
 
 /**
@@ -14,11 +14,11 @@ import {ChangedFieldContainer} from '../../../resources/interface/changed-field-
  *
  * If attributes are not specified, default values are used.
  */
-export function createMockSetDataOutcome(changedFields: ChangedFieldContainer = { changedFields: {}}, task: Task = createMockTask(),
+export function createMockSetDataOutcome(changedFields: DataSet = { fields: {}} as DataSet, task: Task = createMockTask(),
                                          net: Net = createMockNet(), aCase: Case = createMockCase(), outcomes: Array<EventOutcome> = []) {
     return {
         net,
-        aCase,
+        case: aCase,
         task,
         outcomes,
         message: 'Mock set data event outcome',

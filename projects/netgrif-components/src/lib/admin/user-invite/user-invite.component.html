@@ -1,11 +1,11 @@
-<div fxLayout="row" fxLayoutAlign="start start" class="full-height full-width padding-default">
+<div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="start start" class="full-height full-width padding-default">
 
-    <div fxLayout="column" fxLayoutAlign="start center" fxFlex="40" class="full-height margin-right-16px">
+    <div fxLayout="column" fxLayoutAlign="start center" fxFlex="40" class="role-height margin-right-16px">
 
         <mat-toolbar color="primary" class="min-height-72 margin-bottom-16px">
             <span>{{'admin.user-invite.newUser' | translate}}</span>
             <div fxFlex></div>
-            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="40"  class="padding-right-16px netgrif-input netgrif-input-fix netgrif-input-primary-fix netgrif-input-search-fix">
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="40"  class="padding-right-16px netgrif-input netgrif-input-fix netgrif-input-primary-search-fix netgrif-input-primary-fix netgrif-input-search-fix">
                 <mat-icon fxFlex class="mail-icon">email</mat-icon>
                 <mat-form-field fxFlex="100" class="user-assign-search" color="primary" appearance="outline">
                     <mat-label>{{ 'admin.user-invite.mail' | translate }}</mat-label>
@@ -71,7 +71,7 @@
         </div>
     </div>
 
-    <div fxLayout="column" fxLayoutAlign="start center" fxFlex="30" class="full-height margin-right-16px">
+    <div fxLayout="column" fxLayoutAlign="start center" fxFlex="30" class="role-height margin-right-16px">
 
         <mat-toolbar color="primary" class="min-height-72 margin-bottom-16px">
             <span>{{'admin.user-invite.orgs' | translate}}</span>
@@ -84,7 +84,7 @@
 
         <div fxLayout="column" class="invited-card " *ngIf="groups.length !== 0">
             <div fxLayout="column">
-                <div *ngFor="let group of groups" class="padding-16px-0" fxFlex fxLayout="row"
+                <div *ngFor="let group of groups" fxFlex fxLayout="row"
                      fxLayoutAlign="start center">
                     <span>{{group.name}}</span>
 
@@ -98,7 +98,7 @@
         </div>
     </div>
 
-    <div fxLayout="column" fxLayoutAlign="start center" fxFlex="30" class="full-height">
+    <div fxLayout="column" fxLayoutAlign="start center" fxFlex="30" class="role-height">
 
         <mat-toolbar color="primary" class="min-height-72 margin-bottom-16px">
             <span>{{'admin.process-list.listTitle' | translate}}</span>

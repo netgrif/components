@@ -7,5 +7,6 @@ export enum DashboardCardTypes {
     LINE = 'line',
     LINEARGAUGE = 'lineargauge',
     BAR = 'bar',
+    PORTAL = 'portal',
     DEFAULT = 'default'
 }

@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AdminImpersonateComponent} from './admin-impersonate.component';
-import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
+import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
 import {FormsModule} from '@angular/forms';
 import {
     CovalentModule,
@@ -32,7 +32,7 @@ import {
         TranslateLibModule,
         MatFormFieldModule
     ],
-    exports: [AdminImpersonateComponent],
+    exports: [AdminImpersonateComponent, AdminImpersonateListComponent],
     providers: [
         { provide: NAE_ADMIN_IMPERSONATE_COMPONENT, useValue: AdminImpersonateComponent },
     ]

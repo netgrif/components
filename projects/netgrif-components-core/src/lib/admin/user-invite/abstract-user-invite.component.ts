@@ -17,7 +17,7 @@ import {take} from 'rxjs/operators';
 })
 export abstract class AbstractUserInviteComponent implements OnInit {
 
-    public invitedEmailControl: FormControl;
+    public invitedEmailControl: FormControl<string>;
     public invitedGroups: Array<GroupInterface>;
     public invitedRoles: Array<ExtendedProcessRole>;
     public nets: ProcessList;

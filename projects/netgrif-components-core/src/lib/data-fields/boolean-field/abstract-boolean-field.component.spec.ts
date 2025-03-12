@@ -13,7 +13,6 @@ import {TestConfigurationService} from '../../utility/tests/test-config';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {MaterialModule} from '../../material/material.module';
-import {TranslateService} from '@ngx-translate/core';
 import {AbstractBooleanFieldComponent} from './abstract-boolean-field.component';
 import {BooleanField} from './models/boolean-field';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
@@ -53,10 +52,6 @@ describe('AbstractBooleanFieldComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should get error message', () => {
-        expect(component.getErrorMessage()).toEqual('this is custom message');
-    });
-
     afterEach(() => {
         TestBed.resetTestingModule();
     });
@@ -67,9 +62,8 @@ describe('AbstractBooleanFieldComponent', () => {
     template: ''
 })
 class TestBooleanComponent extends AbstractBooleanFieldComponent {
-    constructor(translate: TranslateService,
-                @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
-        super(translate, informAboutInvalidData);
+    constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+        super(informAboutInvalidData);
     }
 }
 
@@ -83,5 +77,5 @@ class TestWrapperComponent {
         }, undefined,
         undefined,
         undefined,
-        [{validationRule: 'requiredTrue', validationMessage: 'this is custom message'}]);
+        [{name: 'requiredTrue', message: 'this is custom message'}]);
 }

@@ -21,10 +21,6 @@ export abstract class AbstractQuickPanelComponent extends AbstractNavigationResi
         super.ngOnInit();
     }
 
-    getLang(): string {
-        return this._select.getLanguage();
-    }
-
     setPaperView() {
         this._paperView.paperView = !this._paperView.paperView;
     }

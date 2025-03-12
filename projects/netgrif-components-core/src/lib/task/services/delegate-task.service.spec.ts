@@ -17,6 +17,7 @@ import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-au
 import {TaskDataService} from './task-data.service';
 import {DataFocusPolicyService} from './data-focus-policy.service';
 import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
+import {FrontActionService} from "../../actions/services/front-action.service";
 
 describe('DelegateTaskService', () => {
     let service: DelegateTaskService;
@@ -31,6 +32,7 @@ describe('DelegateTaskService', () => {
                 TaskDataService,
                 DataFocusPolicyService,
                 ChangedFieldsService,
+                FrontActionService,
                 {provide: TaskContentService, useClass: UnlimitedTaskContentService},
                 {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
                 {provide: ConfigurationService, useClass: TestConfigurationService},

@@ -2,7 +2,7 @@ import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {UserAssignListComponent} from './user-assign-list.component';
 import {UserAssignItemComponent} from './user-assign-item/user-assign-item.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
@@ -39,16 +39,8 @@ describe('UserAssignListComponent', () => {
                 ErrorSnackBarComponent,
                 TestWrapperComponent
             ],
-            schemas: [NO_ERRORS_SCHEMA]
-        })
-            .overrideModule(BrowserDynamicTestingModule, {
-                set: {
-                    entryComponents: [
-                        ErrorSnackBarComponent
-                    ]
-                }
-            })
-            .compileComponents();
+            schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]
+        }).compileComponents();
 
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;

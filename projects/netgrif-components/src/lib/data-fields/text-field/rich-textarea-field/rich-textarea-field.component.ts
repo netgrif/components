@@ -1,5 +1,10 @@
-import {Component} from '@angular/core';
-import {AbstractRichTextareaFieldComponent} from '@netgrif/components-core';
+import {Component, Inject, Optional} from '@angular/core';
+import {
+    AbstractRichTextareaFieldComponent,
+    DATA_FIELD_PORTAL_DATA,
+    DataFieldPortalData,
+    TextAreaField, ValidationRegistryService
+} from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
@@ -8,7 +13,9 @@ import {TranslateService} from '@ngx-translate/core';
     styleUrls: ['./rich-textarea-field.component.scss']
 })
 export class RichTextareaFieldComponent extends AbstractRichTextareaFieldComponent {
-    constructor(protected _translate: TranslateService) {
-        super(_translate);
+    constructor(translate: TranslateService,
+                validationRegistry: ValidationRegistryService,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextAreaField>) {
+        super(translate, validationRegistry, dataFieldPortalData);
     }
 }

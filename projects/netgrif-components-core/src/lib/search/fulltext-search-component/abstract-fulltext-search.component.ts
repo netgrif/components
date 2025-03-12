@@ -1,7 +1,7 @@
 import {FormControl} from '@angular/forms';
 import {debounceTime, filter, map} from 'rxjs/operators';
 import {SearchService} from '../search-service/search.service';
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 @Component({
     selector: 'ncc-abstract-fulltext-search',
@@ -9,6 +9,14 @@ import {Component} from '@angular/core';
 })
 export abstract class AbstractFulltextSearchComponent {
 
+
+    @Input() set disabled(value: boolean) {
+        if (value) {
+            this.fullTextFormControl.disable();
+        } else {
+            this.fullTextFormControl.enable();
+        }
+    }
     public fullTextFormControl: FormControl;
 
     protected constructor(protected _searchService: SearchService) {

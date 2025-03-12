@@ -3,29 +3,29 @@ import {Behavior} from '../../models/behavior';
 import {Layout} from '../../models/layout';
 import {AbstractControl, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 import {FieldTypeResource} from '../../../task-content/model/field-type-resource';
-import {Component} from '../../models/component';
+import {Component, ComponentPrefixes} from '../../models/component';
 import {Validation} from '../../models/validation';
-import {Observable} from "rxjs";
+import {Observable, Subject} from "rxjs";
 import {debounceTime} from "rxjs/operators";
+import {UpdateOnStrategy, UpdateStrategy} from "../../models/update-strategy";
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
+import {Injector} from "@angular/core";
 
 export interface EnumerationFieldValue {
     key: string;
     value: string;
 }
 
-export enum EnumerationFieldValidation {
-    WRONG_VALUE = 'wrongValue',
-    REQUIRED = 'required'
-}
-
 export class EnumerationField extends DataField<string> {
     protected REQUEST_DEBOUNCE_TIME = 600;
+    protected _updatedChoices: Subject<void>;
 
-    constructor(stringId: string, title: string, value: string,
-                protected _choices: Array<EnumerationFieldValue>, behavior: Behavior, placeholder?: string, description?: string,
-                layout?: Layout, protected readonly _fieldType = FieldTypeResource.ENUMERATION,
-                validations?: Array<Validation>, component?: Component, parentTaskId?: string) {
-        super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId);
+    constructor(stringId: string, title: string, value: string, protected _choices: Array<EnumerationFieldValue>,
+                behavior: Behavior, placeholder?: string, description?: string, layout?: Layout,
+                protected readonly _fieldType = FieldTypeResource.ENUMERATION, validations?: Array<Validation>,
+                component?: Component, parentTaskId?: string, validationRegistry?: ValidationRegistryService, injector?: Injector) {
+        super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId, undefined, validationRegistry, injector);
+        this._updatedChoices = new Subject<void>();
     }
 
     set choices(choices: Array<EnumerationFieldValue>) {
@@ -40,16 +40,34 @@ export class EnumerationField extends DataField<string> {
         return this._fieldType;
     }
 
+    public getUpdateOnStrategy(): UpdateOnStrategy {
+        return UpdateStrategy.CHANGE;
+    }
+
     public valueChanges(): Observable<string> {
         return this._value.pipe(debounceTime(this.REQUEST_DEBOUNCE_TIME));
     }
 
-    protected resolveFormControlValidators(): Array<ValidatorFn> {
-        const result = [];
+    public getTypedComponentType(): string {
+        return ComponentPrefixes.ENUMERATION + this.getComponentType();
+    }
 
-        if (this.behavior.required) {
-            result.push(Validators.required);
-        }
+    get updatedChoices(): Observable<void> {
+        return this._updatedChoices.asObservable();
+    }
+
+    public updateChoice(): void {
+        this._updatedChoices.next();
+    }
+
+    public destroy(): void {
+        super.destroy();
+        this._updatedChoices.complete();
+    }
+
+    protected resolveFormControlValidators(): Array<ValidatorFn> {
+        const result = super.resolveFormControlValidators();
+
         result.push((control: AbstractControl) => this.checkKey(control));
 
         return result;

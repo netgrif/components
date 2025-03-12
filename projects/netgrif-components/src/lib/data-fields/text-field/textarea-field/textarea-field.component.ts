@@ -1,6 +1,11 @@
-import {Component, NgZone} from '@angular/core';
+import {Component, Inject, NgZone, Optional} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {AbstractTextareaFieldComponent} from '@netgrif/components-core';
+import {
+    AbstractTextareaFieldComponent,
+    DATA_FIELD_PORTAL_DATA,
+    DataFieldPortalData,
+    TextAreaField, ValidationRegistryService
+} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-textarea-field',
@@ -9,7 +14,10 @@ import {AbstractTextareaFieldComponent} from '@netgrif/components-core';
 })
 export class TextareaFieldComponent extends AbstractTextareaFieldComponent {
 
-    constructor(protected _translate: TranslateService, protected _ngZone: NgZone) {
-        super(_translate, _ngZone);
+    constructor(translate: TranslateService,
+                validationRegistry: ValidationRegistryService,
+                protected _ngZone: NgZone,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextAreaField>) {
+        super(translate, validationRegistry, _ngZone, dataFieldPortalData);
     }
 }

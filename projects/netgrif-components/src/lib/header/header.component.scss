@@ -2,8 +2,13 @@
     height: 40px;
 }
 
+.header-card {
+    border-radius: 8px 8px 0 0;
+    padding: 10px 16px;
+}
+
 .padding-custom {
-    padding: 4px 16px;
+    padding: 6px 16px;
 }
 
 .flex-95 {
@@ -14,7 +19,7 @@
     flex: 1 1 5%;
 }
 
-.mat-menu-item-look {
+.mat-mdc-menu-item-look {
     user-select: none;
     cursor: pointer;
     outline: none;
@@ -34,7 +39,7 @@
     font-size: 14px;
 }
 
-.mat-menu-item-height {
+.mat-mdc-menu-item-height {
     min-height: 64px;
     height: auto;
 }

@@ -18,7 +18,7 @@ export class SessionIdleTimerService implements OnDestroy {
 
     public remainSeconds$ = this._remainSeconds.asObservable();
 
-    constructor(private _config: ConfigurationService,) {
+    constructor(protected _config: ConfigurationService) {
         this._enableService = this._config.getConfigurationSubtreeByPath('providers.auth.sessionTimeoutEnabled') ?? false;
         this._timeoutSeconds = this._config.getConfigurationSubtreeByPath('providers.auth.sessionTimeout') ?? SessionIdleTimerService.DEFAULT_SESSION_TIMEOUTTIME;
     }
@@ -50,8 +50,10 @@ export class SessionIdleTimerService implements OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this.timerSubscription.unsubscribe();
-        this._remainSeconds.unsubscribe();
+        if (this._enableService) {
+            this.timerSubscription.unsubscribe();
+            this._remainSeconds.unsubscribe();
+        }
     }
 
 }

@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {DataFieldResource} from '../model/resource-interface';
+import {Injectable, Injector} from '@angular/core';
+import {DataFieldResource, DataRefResource} from '../model/resource-interfaces';
 import {DataField} from '../../data-fields/models/abstract-data-field';
 import {BooleanField} from '../../data-fields/boolean-field/models/boolean-field';
 import {TextField} from '../../data-fields/text-field/models/text-field';
@@ -10,7 +10,7 @@ import {DateField} from '../../data-fields/date-field/models/date-field';
 import {DateTimeField} from '../../data-fields/date-time-field/models/date-time-field';
 import {UserField} from '../../data-fields/user-field/models/user-field';
 import {ButtonField} from '../../data-fields/button-field/models/button-field';
-import {FileField} from '../../data-fields/file-field/models/file-field';
+import {FileField, FileUploadMIMEType} from '../../data-fields/file-field/models/file-field';
 import moment from 'moment';
 import {UserValue} from '../../data-fields/user-field/models/user-value';
 import {FieldTypeResource} from '../model/field-type-resource';
@@ -24,91 +24,112 @@ import {I18nField} from '../../data-fields/i18n-field/models/i18n-field';
 import {UserListField} from '../../data-fields/user-list-field/models/user-list-field';
 import {UserListValue} from '../../data-fields/user-list-field/models/user-list-value';
 import {decodeBase64, encodeBase64} from "../../utility/base64";
-
+import {CaseRefField} from '../../data-fields/case-ref-field/model/case-ref-field';
+import {StringCollectionField} from '../../data-fields/string-collection-field/models/string-collection-field';
+import {ValidationRegistryService} from '../../registry/validation/validation-registry.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class FieldConverterService {
-    private textFieldNames = ['textarea', 'richtextarea', 'htmltextarea', 'editor', 'htmlEditor', 'area']
+    private textFieldNames = ['richtextarea', 'htmltextarea', 'editor', 'htmlEditor']
 
-    constructor() {
+    constructor(protected _validationRegistry: ValidationRegistryService, protected _injector: Injector) {
     }
 
-    public toClass(item: DataFieldResource): DataField<any> {
-        switch (item.type) {
+    public toClass(item: DataRefResource): DataField<any> {
+        switch (item.field.type) {
             case FieldTypeResource.BOOLEAN:
-                return new BooleanField(item.stringId, item.name, item.value as boolean, item.behavior,
-                    item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
+                return new BooleanField(item.fieldId, item.field.name, item.field.value.value as boolean, item.behavior,
+                    item.field.placeholder, item.field.description, item.layout, item.field.validations, item.component, item.parentTaskId,
+                    this._validationRegistry, this._injector);
             case FieldTypeResource.TEXT:
                 if (this.textFieldNames.includes(item.component?.name)) {
-                    return new TextAreaField(item.stringId, item.name, this.resolveTextValue(item, item.value), item.behavior,
-                        item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
+                    return new TextAreaField(item.fieldId, item.field.name, this.resolveTextValue(item, item.field.value.value), item.behavior,
+                        item.field.placeholder, item.field.description, item.layout, item.field.validations, item.component, item.parentTaskId,
+                        this._validationRegistry, this._injector);
                 }
-                return new TextField(item.stringId, item.name, this.resolveTextValue(item, item.value), item.behavior, item.placeholder,
-                    item.description, item.layout, item.validations, item.component, item.parentTaskId);
+                return new TextField(item.fieldId, item.field.name, this.resolveTextValue(item, item.field.value.value), item.behavior, item.field.placeholder,
+                    item.field.description, item.layout, item.field.validations, item.component, item.parentTaskId,
+                    this._validationRegistry, this._injector);
             case FieldTypeResource.NUMBER:
-                return new NumberField(item.stringId, item.name, item.value as number, item.behavior, item.validations, item.placeholder,
-                    item.description, item.layout, item.formatFilter, this.resolveNumberComponent(item), item.parentTaskId);
+                return new NumberField(item.fieldId, item.field.name, item.field.value.value as number, item.behavior, item.field.validations, item.field.placeholder,
+                    item.field.description, item.layout, item.field.formatFilter, this.resolveNumberComponent(item.field), item.parentTaskId,
+                    this._validationRegistry, this._injector);
             case FieldTypeResource.ENUMERATION:
             case FieldTypeResource.ENUMERATION_MAP:
                 return this.resolveEnumField(item);
             case FieldTypeResource.MULTICHOICE:
-                return new MultichoiceField(item.stringId, item.name, item.value, this.resolveMultichoiceChoices(item),
-                    item.behavior, item.placeholder, item.description, item.layout, item.type, item.validations,
-                    item.component, item.parentTaskId);
+                return new MultichoiceField(item.fieldId, item.field.name, item.field.value.value, this.resolveMultichoiceChoices(item.field),
+                    item.behavior, item.field.placeholder, item.field.description, item.layout, item.field.type, item.field.validations,
+                    item.component, item.parentTaskId, this._validationRegistry, this._injector);
             case FieldTypeResource.MULTICHOICE_MAP:
-                return new MultichoiceField(item.stringId, item.name, item.value, this.resolveMultichoiceOptions(item),
-                    item.behavior, item.placeholder, item.description, item.layout,
-                    item.type, item.validations, item.component, item.parentTaskId);
+                return new MultichoiceField(item.fieldId, item.field.name, item.field.value.value, this.resolveMultichoiceOptions(item.field),
+                    item.behavior, item.field.placeholder, item.field.description, item.layout,
+                    item.field.type, item.field.validations, item.component, item.parentTaskId,
+                    this._validationRegistry, this._injector);
             case FieldTypeResource.DATE:
                 let date;
-                if (item.value) {
-                    date = moment(new Date(item.value[0], item.value[1] - 1, item.value[2]));
+                if (item.field.value.value) {
+                    date = moment(new Date(item.field.value.value[0], item.field.value.value[1] - 1, item.field.value.value[2]));
                 }
-                return new DateField(item.stringId, item.name, date, item.behavior, item.placeholder,
-                    item.description, item.layout, item.validations, item.component, item.parentTaskId);
+                return new DateField(item.fieldId, item.field.name, date, item.behavior, item.field.placeholder,
+                    item.field.description, item.layout, item.field.validations, item.component, item.parentTaskId,
+                    this._validationRegistry, this._injector);
             case FieldTypeResource.DATE_TIME:
                 let dateTime;
-                if (item.value) {
-                    dateTime = moment(new Date(item.value[0], item.value[1] - 1, item.value[2], item.value[3], item.value[4]));
+                if (item.field.value.value) {
+                    dateTime = moment(new Date(item.field.value.value[0], item.field.value.value[1] - 1, item.field.value.value[2], item.field.value.value[3], item.field.value.value[4]));
                 }
-                return new DateTimeField(item.stringId, item.name, dateTime, item.behavior,
-                    item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
+                return new DateTimeField(item.fieldId, item.field.name, dateTime, item.behavior,
+                    item.field.placeholder, item.field.description, item.layout, item.field.validations, item.component, item.parentTaskId,
+                    this._validationRegistry, this._injector);
             case FieldTypeResource.USER:
                 let user;
-                if (item.value) {
-                    user = new UserValue(item.value.id, item.value.name, item.value.surname, item.value.email);
+                if (item.field.value.value) {
+                    user = new UserValue(item.field.value.value.id, item.field.value.value.name, item.field.value.value.surname, item.field.value.value.email);
                 }
-                return new UserField(item.stringId, item.name, item.behavior, user,
-                    item.roles, item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
+                return new UserField(item.fieldId, item.field.name, item.behavior, user,
+                    item.field.roles, item.field.placeholder, item.field.description, item.layout, item.field.validations, item.component, item.parentTaskId,
+                    this._validationRegistry, this._injector);
             case FieldTypeResource.USER_LIST:
                 let userListValue = new UserListValue(new Map<string, UserValue>());
-                if (item.value) {
-                    item.value.userValues.forEach(u => userListValue.addUserValue(new UserValue(u.id, u.name, u.surname, u.email)));
+                if (item.field.value.value) {
+                    item.field.value.value.userValues.forEach(u => userListValue.addUserValue(new UserValue(u.id, u.name, u.surname, u.email)));
                 }
-                return new UserListField(item.stringId, item.name, item.behavior, userListValue,
-                    item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
+                return new UserListField(item.fieldId, item.field.name, item.behavior, userListValue, item.field.roles,
+                    item.field.placeholder, item.field.description, item.layout, item.field.validations, item.component, item.parentTaskId,
+                    this._validationRegistry, this._injector);
             case FieldTypeResource.BUTTON:
-                return new ButtonField(item.stringId, item.name, item.behavior, item.value as number,
-                    item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
+                return new ButtonField(item.fieldId, item.field.name, item.behavior, item.field.value.value as number,
+                    item.field.placeholder, item.field.description, item.layout, item.field.validations, item.component, item.parentTaskId,
+                    this._validationRegistry, this._injector);
             case FieldTypeResource.FILE:
-                return new FileField(item.stringId, item.name, item.behavior, item.value ? item.value : {},
-                    item.placeholder, item.description, item.layout, null, null, item.validations, item.component,
-                    item.parentTaskId);
+                return new FileField(item.fieldId, item.field.name, item.behavior, item.field.value.value ? item.field.value.value : {},
+                    item.field.placeholder, item.field.description, item.layout, this.resolveByteSize(item.field.component?.properties?.maxSize),
+                    this.resolveAllowedTypes(item.field.component?.properties?.allowTypes?.split(",")), item.field.validations, item.component,
+                    item.parentTaskId, this._validationRegistry, this._injector);
             case FieldTypeResource.FILE_LIST:
-                return new FileListField(item.stringId, item.name, item.behavior, item.value ? item.value : {},
-                    item.placeholder, item.description, item.layout, item.validations, null, null, item.component,
-                    item.parentTaskId);
+                return new FileListField(item.fieldId, item.field.name, item.behavior, item.field.value.value ? item.field.value.value : {},
+                    item.field.placeholder, item.field.description, item.layout, item.field.validations, this.resolveByteSize(item.field.component?.properties?.maxSize),
+                    this.resolveAllowedTypes(item.field.component?.properties?.allowTypes?.split(",")), item.component,
+                    item.parentTaskId,
+                    this._validationRegistry, this._injector);
             case FieldTypeResource.TASK_REF:
-                return new TaskRefField(item.stringId, item.name, item.value ? item.value : [], item.behavior,
-                    item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
+                return new TaskRefField(item.fieldId, item.field.name, item.field.value.value ? item.field.value.value : [], item.behavior,
+                    item.field.placeholder, item.field.description, item.layout, item.field.validations, item.component, item.parentTaskId, this._validationRegistry, this._injector);
+            case FieldTypeResource.CASE_REF:
+                return new CaseRefField(item.fieldId, item.field.name, item.field.value.value ? item.field.value.value : [], item.behavior,
+                    item.field.placeholder, item.field.description, item.layout, item.field.validations, item.component, item.parentTaskId, this._validationRegistry, this._injector);
             case FieldTypeResource.FILTER:
-                return new FilterField(item.stringId, item.name, item.value ?? '', item.filterMetadata, item.allowedNets,
-                    item.behavior, item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
+                return new FilterField(item.fieldId, item.field.name, item.field.value.value ?? '', item.field.filterMetadata, item.field.allowedNets,
+                    item.behavior, item.field.placeholder, item.field.description, item.layout, item.field.validations, item.component, item.parentTaskId, this._validationRegistry, this._injector);
             case FieldTypeResource.I18N:
-                return new I18nField(item.stringId, item.name, item.value ?? {defaultValue: ''}, item.behavior, item.placeholder,
-                    item.description, item.layout, item.validations, item.component);
+                return new I18nField(item.fieldId, item.field.name, item.field.value.value ?? {defaultValue: ''}, item.behavior, item.field.placeholder,
+                    item.field.description, item.layout, item.field.validations, item.component, this._validationRegistry, this._injector);
+            case FieldTypeResource.STRING_COLLECTION:
+                return new StringCollectionField(item.fieldId, item.field.name, item.field.value.value ? item.field.value.value : [], item.behavior,
+                    item.field.placeholder, item.field.description, item.layout, item.field.validations, item.component, item.parentTaskId, this._validationRegistry, this._injector);
         }
     }
 
@@ -141,6 +162,10 @@ export class FieldConverterService {
             return FieldTypeResource.FILTER;
         } else if (item instanceof I18nField) {
             return FieldTypeResource.I18N;
+        } else if (item instanceof CaseRefField) {
+            return FieldTypeResource.CASE_REF;
+        } else if (item instanceof StringCollectionField) {
+            return FieldTypeResource.STRING_COLLECTION;
         }
     }
 
@@ -151,7 +176,10 @@ export class FieldConverterService {
         if (this.resolveType(field) === FieldTypeResource.TEXT && field.component && field.component.name === 'password') {
             return encodeBase64(value);
         }
-        if (value === undefined || value === null) {
+        if (value === null) {
+            return null;
+        }
+        if (value === undefined) {
             return;
         }
         if (this.resolveType(field) === FieldTypeResource.DATE) {
@@ -186,20 +214,21 @@ export class FieldConverterService {
 
     /**
      * Resolves `enumeration` and `eunumeration_map` fields into their appropriate class instances
-     * @param enumField enumeration field resource
+     * @param dataRef enumeration dataRef resource
      */
-    protected resolveEnumField(enumField: DataFieldResource): EnumerationField {
+    protected resolveEnumField(dataRef: DataRefResource): EnumerationField {
+        const enumField = dataRef.field;
         const options = enumField.type === FieldTypeResource.ENUMERATION
             ? this.resolveEnumChoices(enumField)
             : this.resolveEnumOptions(enumField);
         if (enumField.component && enumField.component.name === 'autocomplete_dynamic') {
-            return new DynamicEnumerationField(enumField.stringId, enumField.name, enumField.value, options,
-                enumField.behavior, enumField.placeholder, enumField.description, enumField.layout,
-                enumField.type, enumField.validations, enumField.component, enumField.parentTaskId);
+            return new DynamicEnumerationField(enumField.stringId, enumField.name, enumField.value.value, options,
+                dataRef.behavior, enumField.placeholder, enumField.description, dataRef.layout,
+                enumField.type, enumField.validations, enumField.component, enumField.parentTaskId, this._validationRegistry, this._injector);
         } else {
-            return new EnumerationField(enumField.stringId, enumField.name, enumField.value, options,
-                enumField.behavior, enumField.placeholder, enumField.description, enumField.layout,
-                enumField.type, enumField.validations, enumField.component, enumField.parentTaskId);
+            return new EnumerationField(enumField.stringId, enumField.name, enumField.value.value, options,
+                dataRef.behavior, enumField.placeholder, enumField.description, dataRef.layout,
+                enumField.type, enumField.validations, enumField.component, enumField.parentTaskId, this._validationRegistry, this._injector);
         }
     }
 
@@ -290,15 +319,24 @@ export class FieldConverterService {
             return array;
         }
         if (this.resolveType(field) === FieldTypeResource.USER_LIST && !!value) {
-            return new Map(value.map(v => [v.id, v]))
+            return new UserListValue(new Map(value.userValues.map(v => [v.id, v])));
         }
         return value;
     }
 
-    protected resolveTextValue(field: DataFieldResource, value: string): string {
-        if (field.component !== undefined && field.component.name === 'password' && value !== '' && value !== undefined) {
+    protected resolveTextValue(dataRef: DataRefResource, value: string): string {
+        if (((dataRef.component !== undefined && dataRef.component.name === 'password')
+            || (dataRef.field.component !== undefined && dataRef.field.component.name === 'password')) && (value !== '' && value !== undefined)) {
             return decodeBase64(value);
         }
         return value;
+    }
+
+    protected resolveAllowedTypes(allowTypes: string[]) {
+        return allowTypes?.length > 0 ? (allowTypes.length > 1 ? allowTypes as FileUploadMIMEType[] : allowTypes[0]) : null
+    }
+
+    protected resolveByteSize(bytesSize) {
+        return bytesSize !== undefined ? bytesSize : null;
     }
 }

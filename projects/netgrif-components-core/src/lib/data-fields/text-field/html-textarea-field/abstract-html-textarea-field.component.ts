@@ -1,16 +1,16 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {FormControl} from '@angular/forms';
-import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
+import {Component, Inject, OnInit, Optional} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {AbstractTextErrorsComponent} from '../abstract-text-errors.component';
 import {TextAreaField} from '../models/text-area-field';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
+import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
 
 @Component({
     selector: 'ncc-abstract-html-area-field',
     template: ''
 })
-export abstract class AbstractHtmlTextareaFieldComponent extends AbstractTextErrorsComponent implements OnInit {
+export abstract class AbstractHtmlTextareaFieldComponent extends AbstractTextErrorsComponent<TextAreaField> implements OnInit {
 
     public quillModules = {
         toolbar: [
@@ -34,26 +34,21 @@ export abstract class AbstractHtmlTextareaFieldComponent extends AbstractTextErr
 
     public disabledDisplay: SafeHtml;
 
-    @Input() textAreaField: TextAreaField;
-    @Input() formControlRef: FormControl;
-    @Input() showLargeLayout: WrappedBoolean;
-
-    constructor(protected _translate: TranslateService, protected _sanitizer: DomSanitizer) {
-        super(_translate);
+    constructor(protected _translate: TranslateService,
+                protected _validationRegistry: ValidationRegistryService,
+                protected _sanitizer: DomSanitizer,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextAreaField>) {
+        super(_translate, _validationRegistry, dataFieldPortalData);
     }
 
     ngOnInit(): void {
         this.disabledDisplay = this.sanitizeValue();
-        this.textAreaField.valueChanges().subscribe(() => {
+        this.dataField.valueChanges().subscribe(() => {
             this.disabledDisplay = this.sanitizeValue();
         });
     }
 
     protected sanitizeValue(): SafeHtml {
-        return this._sanitizer.bypassSecurityTrustHtml(this.textAreaField.value !== undefined ? this.textAreaField.value : '');
-    }
-
-    public getErrorMessage() {
-        return this.buildErrorMessage(this.textAreaField, this.formControlRef);
+        return this._sanitizer.bypassSecurityTrustHtml(this.dataField.value !== undefined ? this.dataField.value : '');
     }
 }

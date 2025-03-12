@@ -2,7 +2,7 @@ import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {AngularResizeEventModule} from 'angular-resize-event';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {Component, CUSTOM_ELEMENTS_SCHEMA, NgZone} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, NgZone, Optional} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {AbstractTextareaFieldComponent} from './abstract-textarea-field.component';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
@@ -18,6 +18,9 @@ import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
 import {MaterialModule} from '../../../material/material.module';
 import {TranslateService} from '@ngx-translate/core';
+import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
+import {TextAreaField} from "../models/text-area-field";
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
 
 describe('AbstractTextareaFieldComponent', () => {
     let component: TestTextComponent;
@@ -37,6 +40,18 @@ describe('AbstractTextareaFieldComponent', () => {
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: DATA_FIELD_PORTAL_DATA, useValue: {
+                        dataField: new TextField('', '', 'text', {
+                            required: true,
+                            optional: true,
+                            visible: true,
+                            editable: true,
+                            hidden: true
+                        }, undefined, undefined, undefined, [{name: 'minLength', message: 'This is custom message!', clientArguments: ['5']}]),
+                        formControlRef: new FormControl(),
+                        showLargeLayout: new WrappedBoolean()
+                    } as DataFieldPortalData<TextField>
+                }
             ],
             declarations: [TestTextComponent, TestWrapperComponent],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -65,8 +80,8 @@ describe('AbstractTextareaFieldComponent', () => {
     selector: 'ncc-test-text',
     template: '<textarea matInput\n' +
         '              #textArea\n' +
-        '              [placeholder]="textAreaField.placeholder"\n' +
-        '              [required]="textAreaField.behavior.required"\n' +
+        '              [placeholder]="dataField.placeholder"\n' +
+        '              [required]="dataField.behavior.required"\n' +
         '              [formControl]="formControlRef"\n' +
         '              [ngStyle]="{\'min-height\': getHeight()+\'px\', \'height\': getHeight()+\'px\'}"\n' +
         '              #dynamicTextArea="cdkTextareaAutosize"\n' +
@@ -74,27 +89,18 @@ describe('AbstractTextareaFieldComponent', () => {
         '              cdkAutosizeMinRows="1"></textarea>'
 })
 class TestTextComponent extends AbstractTextareaFieldComponent {
-    constructor(protected _translate: TranslateService, protected _ngZone: NgZone) {
-        super(_translate, _ngZone);
+    constructor(protected _translate: TranslateService,
+                validationRegistry: ValidationRegistryService,
+                protected _ngZone: NgZone,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextAreaField>) {
+        super(_translate, validationRegistry, _ngZone, dataFieldPortalData);
     }
 }
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<ncc-test-text [showLargeLayout]="label" [textAreaField]="field" [formControlRef]="formControl"> </ncc-test-text>'
+    template: '<ncc-test-text></ncc-test-text>'
 })
 class TestWrapperComponent {
-    label = new WrappedBoolean();
-    field = new TextField('', '', 'text', {
-        required: true,
-        optional: true,
-        visible: true,
-        editable: true,
-        hidden: true
-    }, undefined, undefined, undefined, [{validationRule: 'minLength 5', validationMessage: 'This is custom message!'}]);
-    formControl = new FormControl();
 
-    constructor() {
-        this.field.registerFormControl(this.formControl);
-    }
 }

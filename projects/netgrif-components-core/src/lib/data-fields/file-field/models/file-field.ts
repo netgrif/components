@@ -3,11 +3,13 @@ import {Behavior} from '../../models/behavior';
 import {Layout} from '../../models/layout';
 import {FileFieldValue} from './file-field-value';
 import {Observable, Subject} from 'rxjs';
-import {Component} from '../../models/component';
+import {Component, ComponentPrefixes} from '../../models/component';
 import {FormControl} from '@angular/forms';
 import {Validation} from '../../models/validation';
 import {ChangedFieldsMap} from '../../../event/services/interfaces/changed-fields-map';
 import {distinctUntilChanged} from 'rxjs/operators';
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
+import {Injector} from "@angular/core";
 
 /**
  * Supported types of files a user can select through a file picker.
@@ -17,7 +19,7 @@ export enum FileUploadMIMEType {
     VIDEO = 'video/*',
     AUDIO = 'audio/*',
     PDF = '.pdf',
-    JPG = '.jpg',
+    JPG_JPEG = '.jpg,.jpeg',
     XML = '.xml',
     DOC_DOCX = '.doc,.docx',
     XLS_XLSX = '.xls,.xlsx'
@@ -78,6 +80,10 @@ export class FileField extends DataField<FileFieldValue> {
         return this._update.asObservable();
     }
 
+    public getTypedComponentType(): string {
+        return ComponentPrefixes.FILE + this.getComponentType();
+    }
+
     public valueWithoutChange(value: FileFieldValue) {
         this.changed = false;
         this._value.next(value ?? {});
@@ -89,10 +95,10 @@ export class FileField extends DataField<FileFieldValue> {
      * Placeholder is a substitute for the value name if not set value.
      */
     constructor(stringId: string, title: string, behavior: Behavior, value?: FileFieldValue, placeholder?: string, description?: string,
-                layout?: Layout, private _maxUploadSizeInBytes?: number,
-                private _allowTypes?: string | FileUploadMIMEType | Array<FileUploadMIMEType>,
-                validations?: Array<Validation>, component?: Component, parentTaskId?: string) {
-        super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId);
+                layout?: Layout, private _maxUploadSizeInBytes?: number, private _allowTypes?: string | FileUploadMIMEType | Array<FileUploadMIMEType>,
+                validations?: Array<Validation>, component?: Component, parentTaskId?: string,
+                validationRegistry?: ValidationRegistryService, injector?: Injector) {
+        super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId, undefined, validationRegistry, injector);
         this._changedFields$ = new Subject<ChangedFieldsMap>();
     }
 
@@ -125,7 +131,7 @@ export class FileField extends DataField<FileFieldValue> {
             throw new Error('Data field can be initialized only once!'
                 + ' Disconnect the previous form control before initializing the data field again!');
         }
-
+        this.formControlRef = formControl;
         formControl.setValidators(this.resolveFormControlValidators());
 
         this._myValueSubscription = this._value.pipe(

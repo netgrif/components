@@ -127,7 +127,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">projects/netgrif-components-core/src/lib/allowed-nets/services/factory/allowed-nets-service-factory.ts:61</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="73" class="link-to-prism">projects/netgrif-components-core/src/lib/allowed-nets/services/factory/allowed-nets-service-factory.ts:73</a></div>
                             </td>
                         </tr>
 
@@ -228,8 +228,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="92"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/allowed-nets/services/factory/allowed-nets-service-factory.ts:92</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="104"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/allowed-nets/services/factory/allowed-nets-service-factory.ts:104</a></div>
                 </td>
             </tr>
 
@@ -305,8 +305,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="104"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/allowed-nets/services/factory/allowed-nets-service-factory.ts:104</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="116"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/allowed-nets/services/factory/allowed-nets-service-factory.ts:116</a></div>
                 </td>
             </tr>
 
@@ -384,8 +384,8 @@ Allowed nets are loaded from the configuration of the view.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="136"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/allowed-nets/services/factory/allowed-nets-service-factory.ts:136</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="148"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/allowed-nets/services/factory/allowed-nets-service-factory.ts:148</a></div>
                 </td>
             </tr>
 
@@ -463,8 +463,8 @@ Allowed nets are set from filter process immediate data</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="124"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/allowed-nets/services/factory/allowed-nets-service-factory.ts:124</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="136"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/allowed-nets/services/factory/allowed-nets-service-factory.ts:136</a></div>
                 </td>
             </tr>
 
@@ -542,8 +542,8 @@ When a new value is emitted the allowed nets will be updated.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="73"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/allowed-nets/services/factory/allowed-nets-service-factory.ts:73</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="85"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/allowed-nets/services/factory/allowed-nets-service-factory.ts:85</a></div>
                 </td>
             </tr>
 
@@ -591,7 +591,13 @@ import {DataGroup} from &#x27;../../../resources/public-api&#x27;;
 import {getFieldFromDataGroups} from &#x27;../../../utility/get-field&#x27;;
 import {FilterField} from &#x27;../../../data-fields/filter-field/models/filter-field&#x27;;
 import {BaseAllowedNetsService} from &#x27;../base-allowed-nets.service&#x27;;
+import {MultichoiceField} from &quot;../../../data-fields/multichoice-field/models/multichoice-field&quot;;
 
+function addAllowedNets(allowedNets, existingAllowedNets) {
+    if (!!allowedNets &amp;&amp; allowedNets.length &gt; 0) {
+        existingAllowedNets.next([...allowedNets]);
+    }
+}
 
 /**
  * Convenience method that can be used as an allowed nets factory for tabbed task views.
@@ -611,17 +617,23 @@ export function navigationItemTaskAllowedNetsServiceFactory(factory: AllowedNets
                                                             baseAllowedNets: BaseAllowedNetsService,
                                                             navigationItemTaskData: Array&lt;DataGroup&gt;): AllowedNetsService {
     const filterField &#x3D; getFieldFromDataGroups(navigationItemTaskData, UserFilterConstants.FILTER_FIELD_ID) as FilterField;
+    const allowedNetsField &#x3D; getFieldFromDataGroups(navigationItemTaskData, UserFilterConstants.ALLOWED_NETS_FIELD_ID) as MultichoiceField;
 
     if (filterField &#x3D;&#x3D;&#x3D; undefined) {
         throw new Error(&#x60;Provided navigation item task data does not contain a filter field with ID &#x27;${UserFilterConstants.FILTER_FIELD_ID
         }&#x27;! Allowed nets cannot be generated from it!&#x60;);
     }
     const nets &#x3D; new BehaviorSubject&lt;Array&lt;string&gt;&gt;(Array.from(new Set&lt;string&gt;([...filterField.allowedNets])));
-
     if (filterField.filterMetadata.inheritAllowedNets) {
         baseAllowedNets.allowedNets$.subscribe(allowedNets &#x3D;&gt; {
             const netSet &#x3D; new Set&lt;string&gt;(allowedNets);
             nets.next(Array.from(netSet));
+        });
+    }
+    if (!!allowedNetsField) {
+        addAllowedNets(allowedNetsField.value, nets);
+        allowedNetsField.valueChanges().subscribe(allowedNets &#x3D;&gt; {
+            addAllowedNets(allowedNetsField.value, nets);
         });
     }
     return factory.createFromObservable(nets.asObservable());

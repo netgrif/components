@@ -1,6 +1,13 @@
 import {TestBed} from '@angular/core/testing';
 import {DefaultGroupNavigationComponentResolverService} from './default-group-navigation-component-resolver.service';
-import {TestMockDependenciesModule} from '@netgrif/components-core';
+import {
+    ConfigurationService,
+    TestConfigurationService,
+    TestMockDependenciesModule,
+    TestViewService,
+    ViewService
+} from '@netgrif/components-core';
+import {RouterModule} from "@angular/router";
 
 describe('DefaultGroupNavigationComponentResolverService', () => {
     let service: DefaultGroupNavigationComponentResolverService;
@@ -8,10 +15,13 @@ describe('DefaultGroupNavigationComponentResolverService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                TestMockDependenciesModule
+                TestMockDependenciesModule,
+                RouterModule.forRoot([])
             ],
             providers: [
-                DefaultGroupNavigationComponentResolverService
+                DefaultGroupNavigationComponentResolverService,
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: ViewService, useClass: TestViewService}
             ]
         });
         service = TestBed.inject(DefaultGroupNavigationComponentResolverService);

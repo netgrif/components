@@ -4,7 +4,7 @@
 }
 
 .panel-icon {
-    margin-right: 8px;
+    padding-right: 8px;
 }
 
 .text-column-ellipsis {
@@ -24,5 +24,14 @@
 
 .width-100 {
     width: 100%;
+}
+
+.panel-text {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.1px;
+
 }
 

@@ -5,20 +5,17 @@ import {TaskResourceService} from '../resources/engine-endpoint/task-resource.se
 import {SearchService} from '../search/search-service/search.service';
 import {ProcessService} from '../process/process.service';
 import {LoggerService} from '../logger/services/logger.service';
-import {filter, take} from 'rxjs/operators';
+import {take} from 'rxjs/operators';
 import {SimpleFilter} from './models/simple-filter';
 import {hasContent} from '../utility/pagination/page-has-content';
 import {Task} from '../resources/interface/task';
 import {CallChainService} from '../utility/call-chain/call-chain.service';
-import {TaskSetDataRequestBody, TaskSetDataRequestFields} from '../resources/interface/task-set-data-request-body';
 import {FieldTypeResource} from '../task-content/model/field-type-resource';
 import {Category} from '../search/models/category/category';
 import {Net} from '../process/net';
 import {UserFilterConstants} from './models/user-filter-constants';
-import {SideMenuSize} from '../side-menu/models/side-menu-size';
 import {SaveFilterInjectionData} from '../side-menu/content-components/save-filter/model/save-filter-injection-data';
 import {SideMenuService} from '../side-menu/services/side-menu.service';
-import {NAE_LOAD_FILTER_COMPONENT, NAE_SAVE_FILTER_COMPONENT} from '../side-menu/content-components/injection-tokens';
 import {ComponentType} from '@angular/cdk/portal';
 import {LoadFilterInjectionData} from '../side-menu/content-components/load-filter/model/load-filter-injection-data';
 import {FilterType} from './models/filter-type';
@@ -31,6 +28,10 @@ import {CategoryResolverService} from '../search/category-factory/category-resol
 import {DataGroup} from '../resources/interface/data-groups';
 import {getFieldFromDataGroups} from '../utility/get-field';
 import {EventOutcomeMessageResource} from '../resources/interface/message-resource';
+import {MatDialog} from '@angular/material/dialog';
+import {NAE_LOAD_FILTER_DIALOG_COMPONENT, NAE_SAVE_FILTER_DIALOG_COMPONENT} from '../dialog/injection-tokens';
+import {DataSet, TaskDataSets} from '../resources/interface/task-data-sets';
+import {DataFieldResource, DataFieldValue} from '../task-content/model/resource-interfaces';
 
 /**
  * Service that manages filters created by users of the application.
@@ -50,8 +51,9 @@ export class UserFiltersService implements OnDestroy {
                 protected _sideMenuService: SideMenuService,
                 protected _log: LoggerService,
                 protected _categoryResolverService: CategoryResolverService,
-                @Optional() @Inject(NAE_SAVE_FILTER_COMPONENT) protected _saveFilterComponent: ComponentType<unknown>,
-                @Optional() @Inject(NAE_LOAD_FILTER_COMPONENT) protected _loadFilterComponent: ComponentType<unknown>) {
+                protected _dialog: MatDialog,
+                @Optional() @Inject(NAE_SAVE_FILTER_DIALOG_COMPONENT) protected _saveFilterComponent: ComponentType<unknown>,
+                @Optional() @Inject(NAE_LOAD_FILTER_DIALOG_COMPONENT) protected _loadFilterComponent: ComponentType<unknown>) {
         this._initialized$ = new ReplaySubject<boolean>(1);
         this._processService.getNet(UserFilterConstants.FILTER_NET_IDENTIFIER).subscribe(net => {
             this._filterNet = net;
@@ -120,12 +122,15 @@ export class UserFiltersService implements OnDestroy {
         }
 
         const result = new ReplaySubject<any>(1);
-        const ref = this._sideMenuService.open(this._loadFilterComponent, SideMenuSize.LARGE, {
-            filter: filterCasesFilter
-        } as LoadFilterInjectionData);
-        ref.onClose.pipe(filter(e => !e.opened), take(1)).subscribe(event => {
+        const ref = this._dialog.open(this._loadFilterComponent, {
+            panelClass: "dialog-responsive",
+            data: {
+                filter: filterCasesFilter
+            } as LoadFilterInjectionData,
+        });
+        ref.afterClosed().subscribe(event => {
             if (event.message === 'Side menu closed unexpectedly') {
-                result.next();
+                result.next(undefined);
             } else {
                 result.next(event.data);
             }
@@ -167,7 +172,7 @@ export class UserFiltersService implements OnDestroy {
                 allowedNets: ReadonlyArray<string>,
                 searchCategories: ReadonlyArray<Type<Category<any>>>,
                 viewId?: string,
-                additionalData: TaskSetDataRequestFields = {},
+                additionalData: DataSet = { fields: {} } as DataSet,
                 withDefaultCategories = true,
                 inheritAllowedNets = true,
                 navigationItemTaskData: Array<DataGroup> = null): Observable<SavedFilterMetadata> {
@@ -187,13 +192,16 @@ export class UserFiltersService implements OnDestroy {
             inheritAllowedNets,
             navigationItemTaskData
         ).subscribe(filterCaseId => {
-            const ref = this._sideMenuService.open(this._saveFilterComponent, SideMenuSize.LARGE, {
-                newFilterCaseId: filterCaseId
-            } as SaveFilterInjectionData);
-            ref.onClose.pipe(filter(e => !e.opened), take(1)).subscribe(event => {
+            const ref = this._dialog.open(this._saveFilterComponent, {
+                panelClass: "dialog-responsive",
+                data: {
+                    newFilterCaseId: filterCaseId
+                } as SaveFilterInjectionData,
+            });
+            ref.afterClosed().subscribe(event => {
                 if (event.message === 'Side menu closed unexpectedly') {
                     this.delete(filterCaseId);
-                    result.next();
+                    result.next(undefined);
                 } else {
                     result.next({
                         filterCaseId,
@@ -243,7 +251,7 @@ export class UserFiltersService implements OnDestroy {
                                       allowedNets: ReadonlyArray<string>,
                                       searchCategories: ReadonlyArray<Type<Category<any>>>,
                                       viewId?: string,
-                                      additionalData: TaskSetDataRequestFields = {},
+                                      additionalData: DataSet = { fields: {} } as DataSet,
                                       withDefaultCategories = true,
                                       inheritAllowedNets = true,
                                       navigationItemTaskData: Array<DataGroup> = null): Observable<string> {
@@ -255,7 +263,7 @@ export class UserFiltersService implements OnDestroy {
             }).subscribe(filterCase => {
                 this._taskService.getTasks(SimpleFilter.fromTaskQuery({
                     case: {
-                        id: (filterCase.outcome as CreateCaseEventOutcome).aCase.stringId
+                        id: (filterCase.outcome as CreateCaseEventOutcome).case.stringId
                     }
                 })).subscribe(page => {
                     if (!hasContent(page)) {
@@ -269,22 +277,29 @@ export class UserFiltersService implements OnDestroy {
                     }
 
                     const requestBody = {
-                        [UserFilterConstants.FILTER_TYPE_FIELD_ID]: {
-                            type: FieldTypeResource.ENUMERATION_MAP,
-                            value: searchService.filterType
-                        },
-                        [UserFilterConstants.FILTER_FIELD_ID]: {
-                            type: FieldTypeResource.FILTER,
-                            value: searchService.rootPredicate.query.value,
-                            allowedNets,
-                            filterMetadata: this.filterMetadataFromSearchService(
-                                searchService,
-                                searchCategories,
-                                withDefaultCategories,
-                                inheritAllowedNets
-                            )
-                        },
-                    };
+                        fields: {
+                            [UserFilterConstants.FILTER_TYPE_FIELD_ID]: {
+                                stringId: UserFilterConstants.FILTER_TYPE_FIELD_ID,
+                                type: FieldTypeResource.ENUMERATION_MAP,
+                                value: {
+                                    value: searchService.filterType
+                                } as DataFieldValue
+                            } as DataFieldResource,
+                            [UserFilterConstants.FILTER_FIELD_ID]: {
+                                type: FieldTypeResource.FILTER,
+                                value: {
+                                    value: searchService.rootPredicate.query.value
+                                } as DataFieldValue,
+                                allowedNets,
+                                filterMetadata: this.filterMetadataFromSearchService(
+                                    searchService,
+                                    searchCategories,
+                                    withDefaultCategories,
+                                    inheritAllowedNets
+                                )
+                            } as DataFieldResource,
+                        }
+                    } as DataSet;
 
                     let parentFilterCaseIdField;
                     if (navigationItemTaskData !== null && navigationItemTaskData !== undefined) {
@@ -295,26 +310,32 @@ export class UserFiltersService implements OnDestroy {
                     if (parentFilterCaseIdField !== undefined) {
                         requestBody[UserFilterConstants.PARENT_FILTER_CASE_ID_FIELD_ID] = {
                             type: FieldTypeResource.TEXT,
-                            value: parentFilterCaseIdField.value
-                        };
+                            value: {
+                                value: parentFilterCaseIdField.value
+                            } as DataFieldValue
+                        } as DataFieldResource;
                     } else if (viewId !== undefined || viewId !== '') {
                         requestBody[UserFilterConstants.ORIGIN_VIEW_ID_FIELD_ID] = {
                             type: FieldTypeResource.TEXT,
-                            value: viewId
-                        };
+                            value: {
+                                value: viewId
+                            } as DataFieldValue
+                        } as DataFieldResource;
                     }
 
                     this.assignSetDataFinish(initTask, {
-                        [initTask.stringId]: {
-                            ...requestBody,
-                            ...additionalData
+                        body: {
+                            [initTask.stringId]: {
+                                ...requestBody,
+                                ...additionalData
+                            } as DataSet
                         }
-                    }, this._callChainService.create(success => {
+                    } as TaskDataSets, this._callChainService.create(success => {
                         if (!success) {
                             throw new Error('Filter instance could not be initialized');
                         }
 
-                        result.next((filterCase.outcome as CreateCaseEventOutcome).aCase.stringId);
+                        result.next((filterCase.outcome as CreateCaseEventOutcome).case.stringId);
                         result.complete();
                     }));
                 });
@@ -336,11 +357,12 @@ export class UserFiltersService implements OnDestroy {
     }
 
     // TODO 6.4.2021 IMPROVEMENT - extract similar method into some utility service
-    protected assignSetDataFinish(task: Task, data: TaskSetDataRequestBody, callChain: Subject<boolean>): void {
+    protected assignSetDataFinish(task: Task, data: TaskDataSets, callChain: Subject<boolean>): void {
         this._taskService.assignTask(task.stringId).subscribe(assignOutcome => {
             if (assignOutcome.error) {
                 this._log.error(`Could not assign task '${task.title}'`, task, assignOutcome.error);
                 callChain.next(false);
+                return;
             }
 
             this._taskService.setData(task.stringId, data).subscribe(() => {
@@ -348,6 +370,7 @@ export class UserFiltersService implements OnDestroy {
                     if (finishOutcome.error) {
                         this._log.error(`Could not finish task '${task.title}'`, task, finishOutcome.error);
                         callChain.next(false);
+                        return;
                     }
 
                     callChain.next(true);

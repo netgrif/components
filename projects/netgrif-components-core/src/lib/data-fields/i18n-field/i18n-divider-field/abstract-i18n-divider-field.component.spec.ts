@@ -1,15 +1,17 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
 import {AbstractI18nDividerFieldComponent} from './abstract-i18n-divider-field.component';
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional} from '@angular/core';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
-import {FormControl} from '@angular/forms';
 import {I18nField} from '../models/i18n-field';
 import {MaterialModule} from '../../../material/material.module';
 import {AngularResizeEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
+import {TranslateService} from "@ngx-translate/core";
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
 
 describe('AbstractI18nDividerFieldComponent', () => {
     let component: TestI18nDividerComponent;
@@ -24,6 +26,20 @@ describe('AbstractI18nDividerFieldComponent', () => {
                 TranslateLibModule,
                 HttpClientTestingModule,
                 NoopAnimationsModule
+            ],
+            providers: [
+                {provide: DATA_FIELD_PORTAL_DATA, useValue: {
+                        dataField: new I18nField('', '', '', {
+                            required: true,
+                            optional: true,
+                            visible: true,
+                            editable: true,
+                            hidden: true
+                        }),
+                        formControlRef: undefined,
+                        showLargeLayout: new WrappedBoolean()
+                    } as DataFieldPortalData<I18nField>
+                }
             ],
             declarations: [TestI18nDividerComponent, TestWrapperComponent],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -48,27 +64,17 @@ describe('AbstractI18nDividerFieldComponent', () => {
     template: ''
 })
 class TestI18nDividerComponent extends AbstractI18nDividerFieldComponent {
-    constructor() {
-        super();
+    constructor(protected _translate: TranslateService,
+                protected _validationRegistry: ValidationRegistryService,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<I18nField>) {
+        super(_translate, _validationRegistry, dataFieldPortalData);
     }
 }
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: `
-        <ncc-test-i18n-divider [showLargeLayout]="label"
-                               [dividerI18nField]="field"
-                               [formControlRef]="formControl">
-        </ncc-test-i18n-divider>`
+    template: '<ncc-test-i18n-divider></ncc-test-i18n-divider>'
 })
 class TestWrapperComponent {
-    label = new WrappedBoolean();
-    field = new I18nField('', '', '', {
-        required: true,
-        optional: true,
-        visible: true,
-        editable: true,
-        hidden: true
-    });
-    formControl = new FormControl();
+
 }

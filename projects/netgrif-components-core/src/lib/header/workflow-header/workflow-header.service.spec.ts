@@ -44,13 +44,6 @@ describe('WorkflowHeaderService', () => {
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: ViewService, useClass: TestViewService},
             ]
-        }).overrideModule(BrowserDynamicTestingModule, {
-            set: {
-                entryComponents: [
-                    ErrorSnackBarComponent,
-                    SuccessSnackBarComponent
-                ]
-            }
         });
         service = TestBed.inject(WorkflowHeaderService);
     });

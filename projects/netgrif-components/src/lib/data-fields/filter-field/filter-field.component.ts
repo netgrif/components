@@ -1,12 +1,12 @@
-import {Component, Inject, Injector, Optional} from '@angular/core';
+import {Component, Inject, Optional} from '@angular/core';
 import {
     AbstractFilterFieldComponent,
-    AbstractFilterFieldContentComponent,
     NAE_INFORM_ABOUT_INVALID_DATA
 } from '@netgrif/components-core';
-import {ComponentType} from '@angular/cdk/portal';
-import {FilterFieldContentComponent} from './filter-field-content/filter-field-content.component';
 
+/**
+ * @deprecated
+ * */
 @Component({
     selector: 'nc-filter-field',
     templateUrl: './filter-field.component.html',
@@ -14,12 +14,8 @@ import {FilterFieldContentComponent} from './filter-field-content/filter-field-c
 })
 export class FilterFieldComponent extends AbstractFilterFieldComponent {
 
-    constructor(parentInjector: Injector,
-                @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
-        super(parentInjector, informAboutInvalidData);
+    constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+        super(informAboutInvalidData);
     }
 
-    protected getFilterContentComponent(): ComponentType<AbstractFilterFieldContentComponent> {
-        return FilterFieldContentComponent;
-    }
 }

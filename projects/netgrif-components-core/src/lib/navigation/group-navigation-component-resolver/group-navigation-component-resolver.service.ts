@@ -23,7 +23,9 @@ export abstract class GroupNavigationComponentResolverService {
                     this.resolveViewComponent(taskData),
                     null,
                     Injector.create({
-                        providers: [{provide: NAE_NAVIGATION_ITEM_TASK_DATA, useValue: taskData}],
+                        providers: [
+                            {provide: NAE_NAVIGATION_ITEM_TASK_DATA, useValue: taskData},
+                        ],
                         parent: parentInjector
                     })
                 ));

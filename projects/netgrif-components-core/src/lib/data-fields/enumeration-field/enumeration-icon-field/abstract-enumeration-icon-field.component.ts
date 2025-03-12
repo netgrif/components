@@ -1,44 +1,68 @@
-import {Component, Input} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, Optional} from '@angular/core';
 import {EnumerationField} from '../models/enumeration-field';
-import {FormControl} from '@angular/forms';
-import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
+import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
+import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base-data-field.component";
+import {Subscription} from 'rxjs';
+import {TranslateService} from "@ngx-translate/core";
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
 
 @Component({
     selector: 'ncc-abstract-enumerataion-icon-field',
     template: ''
 })
-export abstract class AbstractEnumerationIconFieldComponent {
+export abstract class AbstractEnumerationIconFieldComponent extends AbstractBaseDataFieldComponent<EnumerationField> implements OnInit, OnDestroy {
+    public horizontal: boolean;
+    protected arrow: boolean;
+    protected divider: boolean;
+    protected subComp: Subscription;
 
-    @Input() enumerationField: EnumerationField;
-    @Input() formControlRef: FormControl;
-    @Input() showLargeLayout: WrappedBoolean;
+    constructor(protected _translate: TranslateService,
+                protected _validationRegistry: ValidationRegistryService,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<EnumerationField>) {
+        super(_translate, _validationRegistry, dataFieldPortalData);
+    }
 
-    constructor() {
+    ngOnInit(): void {
+        this.checkProperties();
+        this.subComp = this.dataField.componentChange$().subscribe(() => {
+            this.checkProperties();
+        })
+    }
+
+    checkProperties() {
+        this.horizontal = this.dataField.component?.properties?.horizontal === 'true';
+        this.arrow = this.dataField.component?.properties?.arrow === 'true';
+        this.divider = this.dataField.component?.properties?.divider === 'true';
     }
 
     resolveIconValue(key: string) {
-        return this.enumerationField.component?.optionIcons.find(icon => icon.key === key)?.value;
+        return this.dataField.component?.optionIcons.find(icon => icon.key === key)?.value;
     }
 
     resolveIconType(key: string) {
-        return this.enumerationField.component?.optionIcons.find(icon => icon.key === key)?.type;
+        return this.dataField.component?.optionIcons.find(icon => icon.key === key)?.type;
     }
 
-    resolveArrow(key: string) {
-        return this.enumerationField.component?.properties.arrow === 'true';
+    isArrow() {
+        return this.arrow;
     }
 
-    resolveDivider(key: string) {
-        return this.enumerationField.component?.properties.divider === 'true';
+    isDivider() {
+        return this.divider;
     }
 
     setEnumValue(key: string) {
-        if (!this.enumerationField.disabled) {
+        if (!this.formControlRef.disabled) {
             this.formControlRef.setValue(key);
         }
     }
 
     isSelected(key: string): boolean {
-        return key === this.enumerationField.value;
+        return key === this.dataField.value;
+    }
+
+    ngOnDestroy() {
+        super.ngOnDestroy();
+        this.subComp.unsubscribe();
     }
 }

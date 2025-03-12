@@ -15,7 +15,7 @@ export class PermissionService {
     constructor(protected userComparator: UserComparatorService, protected _userService: UserService) {
     }
 
-    public hasTaskPermission(task: Task | undefined, permission: string): boolean {
+    public hasTaskPermission(task: Task | undefined, permission: PermissionType): boolean {
         if (!task) {
             return false;
         }
@@ -25,7 +25,7 @@ export class PermissionService {
         return this.resolvePermissions(rolePermValue, userPermValue);
     }
 
-    public hasCasePermission(case_: Case | undefined, permission: string): boolean {
+    public hasCasePermission(case_: Case | undefined, permission: PermissionType): boolean {
         if (!case_) {
             return false;
         }
@@ -39,7 +39,7 @@ export class PermissionService {
         return userPermValue === undefined ? (!!rolePermValue) : userPermValue;
     }
 
-    public hasNetPermission(action: string, net: PetriNetReferenceWithPermissions): boolean {
+    public hasNetPermission(action: PermissionType, net: PetriNetReferenceWithPermissions): boolean {
         if (!net
             || !net.permissions
             || !action
@@ -93,7 +93,7 @@ export class PermissionService {
             && task.assignPolicy === AssignPolicy.manual;
     }
 
-    public checkRolePerms(roles: Permissions, permission: string): boolean | undefined {
+    public checkRolePerms(roles: Permissions, permission: PermissionType): boolean | undefined {
         let rolePermValue: boolean;
         if (!!roles) {
             Object.keys(roles).forEach(role => {
@@ -105,7 +105,7 @@ export class PermissionService {
         return rolePermValue;
     }
 
-    public checkUserPerms(users: UserPermissions, permission): boolean | undefined {
+    public checkUserPerms(users: UserPermissions, permission: PermissionType): boolean | undefined {
         let userPermValue: boolean;
         if (!!users) {
             const loggedUserId = this._userService.user.getSelfOrImpersonated().id;

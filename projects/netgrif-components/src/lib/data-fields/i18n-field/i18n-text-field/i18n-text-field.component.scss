@@ -11,25 +11,30 @@
     font-size: 14px;
     border: 0;
     margin-left: 8px;
+    color: #64748B;
     background: transparent;
 }
 
+.selected-language-value:disabled {
+    color: #94A3B8;
+}
+
 .form-input-interfield {
-    background: transparent;
-    color: #333333;
+    background: #FFFFFF;
+    color: #64748B;
     outline: none;
-    border: 1px solid rgba(0, 0, 0, 0.12);
+    border: 1px solid #64748B;
     text-align: left;
     font-size: 14px;
     line-height: 15.75px;
     border-radius: 6px;
     min-width: 5px;
     box-sizing: border-box;
-    height: 48px;
+    height: 44px;
 }
 
 .form-input-interfield:hover {
-    border: solid 2px black;
+    border: solid 2px #64748B;
 }
 
 .button-icon-input {
@@ -43,11 +48,16 @@
 .i18n-hint-error {
     padding: 0 1em;
     font-size: 75%;
+    width: auto !important;
 }
 
 .language-svg-wrapper {
     height: 20px;
     line-height: normal;
+}
+
+.language-svg-wrapper>svg {
+    height: 18px;
 }
 
 .language-selector-button {
@@ -61,23 +71,29 @@
 }
 
 .language-svg-icon {
-    border: solid 1px black;
+    border: solid 1px #64748B;
 }
 
 .filled-language-row {
     min-height: 28px;
     padding: 4px 0;
+    background-color: #FFFFFF;
 }
 
 .filled-language-row:not(:last-child) {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid #64748B;
+}
+
+.filled-language-row:last-child {
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
 }
 
 .filled-languages-wrapper {
     border-radius: 0 0 6px 6px;
-    border-left: 1px solid rgba(0, 0, 0, 0.12);
-    border-right: 1px solid rgba(0, 0, 0, 0.12);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    border-left: 1px solid #64748B;
+    border-right: 1px solid #64748B;
+    border-bottom: 1px solid #64748B;
     margin-top: -5px;
     padding-top: 5px;
     transform-origin: top;
@@ -86,6 +102,7 @@
 .filled-language-icon {
     margin: 0 10px;
     height: 20px;
+    box-sizing: border-box;
 }
 
 .filled-language-value {
@@ -101,7 +118,7 @@
 }
 
 .language-select {
-    width: 18px !important;
+    width: 10px !important;
 }
 
 .language-option-icon {
@@ -115,14 +132,29 @@
 .i18n-label {
     transform: translate(0.4em,-0.4em) scale(.75);
     transform-origin: left;
-    color: rgba(0, 0, 0, 0.6);
+    color: #64748B;
     background: transparent;
     width: fit-content;
     padding: 0 0.5em;
+    z-index: 5;
     height: 0;
+    position: relative;
+    top: -1px;
+}
+
+.form-input-disabled {
+    background: transparent !important;
+    border-color: #CBD5E1 !important;
 }
 
 .form-input-disabled:hover {
-    border-color: rgba(0, 0, 0, 0.12) !important;
     border-width: 1px;
+}
+
+.i18n-bold-text {
+    font-weight: bold;
+}
+
+.padding-bottom-3px {
+    padding-bottom: 3px;
 }

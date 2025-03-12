@@ -1,7 +1,7 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CasePanelComponent} from './case-panel.component';
 import {CommonModule} from '@angular/common';
-import {FlexModule} from '@angular/flex-layout';
+import {FlexModule} from '@ngbracket/ngx-layout';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {DataFieldsComponentModule} from '../../data-fields/data-fields.module';
 import {Component, NO_ERRORS_SCHEMA} from '@angular/core';

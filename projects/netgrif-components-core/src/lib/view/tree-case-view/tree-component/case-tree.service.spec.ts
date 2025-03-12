@@ -28,14 +28,14 @@ import {Net} from '../../../process/net';
 import {ProcessService} from '../../../process/process.service';
 import {createMockPage} from '../../../utility/tests/utility/create-mock-page';
 import {TaskSearchCaseQuery, TaskSearchRequestBody} from '../../../filter/models/task-search-request-body';
-import {TaskSetDataRequestBody} from '../../../resources/interface/task-set-data-request-body';
 import {getImmediateData} from '../../../utility/get-immediate-data';
-import {ChangedFields} from '../../../data-fields/models/changed-fields';
 import {EventOutcomeMessageResource} from '../../../resources/interface/message-resource';
 import {SetDataEventOutcome} from '../../../event/model/event-outcomes/data-outcomes/set-data-event-outcome';
 import {AssignTaskEventOutcome} from '../../../event/model/event-outcomes/task-outcomes/assign-task-event-outcome';
 import {CreateCaseEventOutcome} from '../../../event/model/event-outcomes/case-outcomes/create-case-event-outcome';
 import {createMockNet} from '../../../utility/tests/utility/create-mock-net';
+import {DataSet, TaskDataSets} from '../../../resources/interface/task-data-sets';
+import {DataFieldResource, DataFieldValue} from '../../../task-content/model/resource-interfaces';
 
 
 class MockTreeNode {
@@ -363,10 +363,12 @@ describe('CaseTreeService', () => {
         caseResourceMock.createMockTree(new MockTreeNode(true, [subtreeToAdd, secondSubtree], 'root'));
         caseResourceMock.createNext = subtreeToAdd;
         getImmediateData(caseResourceMock.mockCases.get('root'), TreePetriflowIdentifiers.CHILDREN_CASE_REF).value = [];
-        taskResourceMock.changeNext = {};
-        taskResourceMock.changeNext[TreePetriflowIdentifiers.CHILDREN_CASE_REF] = {
+        taskResourceMock.changeNext = {fields: {}} as DataSet;
+        taskResourceMock.changeNext.fields[TreePetriflowIdentifiers.CHILDREN_CASE_REF] = {
+            value: {
                 value: [subtreeToAdd.stringId, secondSubtree.stringId]
-        };
+            } as DataFieldValue
+        } as DataFieldResource;
 
         treeService.treeRootLoaded$.subscribe(loaded => {
             if (loaded) {
@@ -489,7 +491,7 @@ class TreeTestCaseResourceService {
                     success: '',
                     outcome: {
                         net: createMockNet(),
-                        aCase: newCase,
+                        case: newCase,
                         message: '',
                         outcomes: []
                     } as CreateCaseEventOutcome
@@ -506,7 +508,7 @@ class TreeTestCaseResourceService {
                     success: '',
                     outcome: {
                         net: createMockNet(),
-                        aCase: preparedCase,
+                        case: preparedCase,
                         message: '',
                         outcomes: []
                     } as CreateCaseEventOutcome
@@ -529,7 +531,7 @@ class TreeTestTaskResourceService {
     public mockTasks: Map<string, Task>;
 
     // merging of changes is not implemented so be careful when using this feature for testing
-    public changeNext: ChangedFields = undefined;
+    public changeNext: DataSet = undefined;
 
     constructor() {
         this.mockTasks = new Map<string, Task>();
@@ -571,13 +573,13 @@ class TreeTestTaskResourceService {
                 outcomes: [],
                 message: '',
                 task: createMockTask(),
-                aCase: createMockCase(),
+                case: createMockCase(),
                 net: createMockNet()
             } as AssignTaskEventOutcome
         });
     }
 
-    public setData(taskId: string, body: TaskSetDataRequestBody): Observable<EventOutcomeMessageResource> {
+    public setData(taskId: string, body: TaskDataSets): Observable<EventOutcomeMessageResource> {
         const task = this.mockTasks.get(taskId);
         const caseOfTask = this._mockCaseService.mockCases.get(task.caseId);
         Object.entries(body).forEach(([fieldId, changeRequest]) => {
@@ -594,11 +596,11 @@ class TreeTestTaskResourceService {
                     outcomes: [],
                     message: '',
                     task: createMockTask(),
-                    aCase: createMockCase(),
+                    case: createMockCase(),
                     net: createMockNet(),
                     changedFields: {
-                        changedFields: []
-                    }
+                        fields: {}
+                    } as DataSet
                 } as SetDataEventOutcome
             });
         } else {
@@ -616,11 +618,9 @@ class TreeTestTaskResourceService {
                     outcomes: [],
                     message: '',
                     task: createMockTask(),
-                    aCase: createMockCase(),
+                    case: createMockCase(),
                     net: createMockNet(),
-                    changedFields: {
-                        changedFields: change
-                    }
+                    changedFields: change
                 } as SetDataEventOutcome
             });
         }

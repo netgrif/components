@@ -1,19 +1,43 @@
+@use '@angular/material' as mat;
+
 @mixin tabs-theme($theme) {
+    $primary: map-get($theme, primary);
     .center-tabs {
-        .mat-tab-labels {
+        .mat-mdc-tab-labels {
             justify-content: center;
         }
     }
 
     .end-tabs {
-        .mat-tab-labels {
+        .mat-mdc-tab-labels {
             justify-content: flex-end;
         }
     }
 
-    .mat-tab-label-container {
-        border-radius: 6px;
+    .mat-mdc-tab-label-container {
         background: white;
+    }
+
+    .mat-mdc-tab-header {
+        border-bottom: 2px solid #E2E8F0;
+    }
+
+    .icon-tab-color {
+        color: mat.get-color-from-palette($primary);
+    }
+
+    .mat-mdc-tab-label {
+        opacity: 1 !important;
+    }
+
+    .custom-badge>.mat-badge-content {
+        width: fit-content !important;
+        min-width: 16px;
+        text-align: center;
+        border-radius: 8px;
+        padding-left: 3px;
+        padding-right: 3px;
+        top: 10px !important;
     }
 }
 

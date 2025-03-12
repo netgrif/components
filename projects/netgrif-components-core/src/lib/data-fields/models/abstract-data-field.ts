@@ -5,9 +5,11 @@ import {Change} from './changed-fields';
 import {distinctUntilChanged, filter, take} from 'rxjs/operators';
 import {Layout} from './layout';
 import {ConfigurationService} from '../../configuration/configuration.service';
-import {Component} from './component';
+import {Component, DEFAULT} from './component';
 import {Validation} from './validation';
-import {ElementRef} from "@angular/core";
+import {ElementRef, Injector} from "@angular/core";
+import {UpdateOnStrategy, UpdateStrategy} from "./update-strategy";
+import {ValidationRegistryService} from "../../registry/validation/validation-registry.service";
 
 /**
  * Holds the logic common to all data field Model objects.
@@ -124,6 +126,18 @@ export abstract class DataField<T> {
     private _input: ElementRef;
 
     /**
+     * Reference to form control
+     * */
+    private _formControlRef: FormControl;
+
+    /**
+     * change of component
+     * */
+    private _componentChange$: Subject<Component>;
+
+    /**
+     * @param _validationRegistry - Register for validations
+     * @param _injector - Injector for injecting services for validations
      * @param _stringId - ID of the data field from backend
      * @param _title - displayed title of the data field from backend
      * @param initialValue - initial value of the data field
@@ -139,7 +153,8 @@ export abstract class DataField<T> {
     protected constructor(private _stringId: string, private _title: string, initialValue: T,
                           private _behavior: Behavior, private _placeholder?: string,
                           private _description?: string, private _layout?: Layout, public validations?: Array<Validation>,
-                          private _component?: Component, private _parentTaskId?: string, private _parentCaseId?: string) {
+                          private _component?: Component, private _parentTaskId?: string, private _parentCaseId?: string,
+                          protected _validationRegistry?: ValidationRegistryService, protected _injector?: Injector,) {
         this._value = new BehaviorSubject<T>(initialValue);
         this._previousValue = new BehaviorSubject<T>(initialValue);
         this._initialized$ = new BehaviorSubject<boolean>(false);
@@ -149,6 +164,7 @@ export abstract class DataField<T> {
         this._update = new Subject<void>();
         this._block = new Subject<boolean>();
         this._touch = new Subject<boolean>();
+        this._componentChange$ = new Subject<Component>();
         this._validRequired = true;
         this.layoutSubject = new BehaviorSubject<Layout>(_layout);
         this.resetLocalLayout();
@@ -287,6 +303,15 @@ export abstract class DataField<T> {
         return this._component;
     }
 
+    set component(component: Component) {
+        this._component = component;
+        this._componentChange$.next(component);
+    }
+
+    public componentChange$(): Observable<Component> {
+        return this._componentChange$.asObservable();
+    }
+
     public revertToPreviousValue(): void {
         this.changed = false;
         this._reverting = true;
@@ -347,13 +372,27 @@ export abstract class DataField<T> {
         this._input = value;
     }
 
+    get formControlRef(): FormControl {
+        return this._formControlRef;
+    }
+
+    set formControlRef(formControl: FormControl) {
+        this._formControlRef = formControl;
+    }
+
+    public getUpdateOnStrategy(): UpdateOnStrategy {
+        return UpdateStrategy.BLUR;
+    }
+
     /**
      * This function resolve type of component for HTML
      * @returns type of component in string
      */
     public getComponentType(): string {
-        return this.component?.name ?? '';
+        return this.component?.name ?? DEFAULT;
     }
+
+    public abstract getTypedComponentType(): string;
 
     public destroy(): void {
         this._value.complete();
@@ -371,6 +410,7 @@ export abstract class DataField<T> {
                 + ' Disconnect the previous form control before initializing the data field again!');
         }
 
+        this.formControlRef = formControl;
         formControl.setValidators(this.resolveFormControlValidators());
 
         this._formControlValueSubscription = formControl.valueChanges.pipe(
@@ -496,7 +536,15 @@ export abstract class DataField<T> {
     }
 
     protected resolveValidations(): Array<ValidatorFn> {
-        return [];
+        const result = [];
+
+        this.validations.forEach(item => {
+            if (this._validationRegistry && this._validationRegistry.contains(item.name)) {
+                result.push(this._validationRegistry.get(item.name).call(this._injector, {name: item.name, arguments: item.clientArguments?.argument ?? []}));
+            }
+        });
+
+        return result;
     }
 
     /**

@@ -1,6 +1,9 @@
 import {TranslateService} from '@ngx-translate/core';
 import {AbstractNumberErrorsComponent} from '../abstract-number-errors.component';
-import {Component} from '@angular/core';
+import {Component, Inject, Optional} from '@angular/core';
+import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
+import {NumberField} from "../models/number-field";
+import {ValidationRegistryService} from "../../../registry/validation/validation-registry.service";
 
 @Component({
     selector: 'ncc-abstract-number-default-field',
@@ -8,7 +11,9 @@ import {Component} from '@angular/core';
 })
 export abstract class AbstractDefaultNumberFieldComponent extends AbstractNumberErrorsComponent {
 
-    protected constructor(translateService: TranslateService) {
-        super(translateService);
+    protected constructor(translateService: TranslateService,
+                          validationRegistry: ValidationRegistryService,
+                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<NumberField>) {
+        super(translateService, validationRegistry, dataFieldPortalData);
     }
 }

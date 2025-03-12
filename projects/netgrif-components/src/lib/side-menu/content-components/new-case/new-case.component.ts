@@ -11,6 +11,9 @@ import {
     SnackBarService
 } from '@netgrif/components-core';
 
+/**
+ * @deprecated
+ * */
 @Component({
     selector: 'nc-new-case',
     templateUrl: './new-case.component.html',
@@ -27,7 +30,7 @@ export class NewCaseComponent extends AbstractNewCaseComponent {
                 protected _formBuilder: FormBuilder,
                 protected _snackBarService: SnackBarService,
                 protected _caseResourceService: CaseResourceService,
-                protected _hotkeysService: HotkeysService,
+                _hotkeysService: HotkeysService,
                 protected _translate: TranslateService) {
         super(_sideMenuControl, _formBuilder, _snackBarService, _caseResourceService, _hotkeysService, _translate);
         this.isVersionVisible = _sideMenuControl.isVersionVisible;

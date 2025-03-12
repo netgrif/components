@@ -5,7 +5,6 @@ import { MaterialModule, SideMenuService, TranslateLibModule, UserListField } fr
 import { AngularResizeEventModule } from 'angular-resize-event';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { UserFieldComponent } from '../user-field/user-field.component';
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('UserListFieldComponent', () => {
@@ -15,7 +14,7 @@ describe('UserListFieldComponent', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             imports: [MaterialModule, AngularResizeEventModule, BrowserAnimationsModule, HttpClientTestingModule, TranslateLibModule],
-            declarations: [UserFieldComponent, TestWrapperComponent],
+            declarations: [UserListFieldComponent, TestWrapperComponent],
             providers: [SideMenuService],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         })
@@ -48,5 +47,6 @@ class TestWrapperComponent {
         visible: true,
         editable: true,
         hidden: true
-    }, undefined);
+    }, undefined,
+        undefined);
 }

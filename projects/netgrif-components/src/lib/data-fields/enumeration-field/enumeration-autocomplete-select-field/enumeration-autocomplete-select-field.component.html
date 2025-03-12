@@ -1,13 +1,13 @@
-<mat-form-field [appearance]="enumerationField.materialAppearance" class="full-width" color="primary">
-    <mat-label *ngIf="!showLargeLayout.value">{{enumerationField.title}}</mat-label>
+<mat-form-field [appearance]="dataField.materialAppearance" class="full-width" color="primary">
+    <mat-label *ngIf="!showLargeLayout.value">{{dataField.title}}</mat-label>
     <input type="text"
            aria-label="Autocomplete"
            matInput
            #input
-           [placeholder]="enumerationField.placeholder"
+           [placeholder]="dataField.placeholder"
            [formControl]="formControlRef"
            [matAutocomplete]="auto"
-           [required]="enumerationField.behavior.required"
+           [required]="dataField.behavior.required"
            (focus)="change()"
            (keyup)="change()">
     <mat-autocomplete [displayWith]="renderSelection" autoActiveFirstOption #auto="matAutocomplete">
@@ -16,6 +16,6 @@
             {{option.value}}
         </mat-option>
     </mat-autocomplete>
-    <mat-hint>{{enumerationField.description}}</mat-hint>
-    <mat-error *ngIf="enumerationField.isInvalid(formControlRef)">{{buildErrorMessage()}}</mat-error>
+    <mat-hint [ngClass]="{'mat-hint-disabled': formControlRef.disabled}">{{dataField.description}}</mat-hint>
+    <mat-error *ngIf="dataField.isInvalid(formControlRef)">{{getErrorMessage()}}</mat-error>
 </mat-form-field>

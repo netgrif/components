@@ -10,15 +10,16 @@ import {Task} from '../interface/task';
 import {CountService} from '../abstract-endpoint/count-service';
 import {Filter} from '../../filter/models/filter';
 import {FilterType} from '../../filter/models/filter-type';
-import { HttpEventType, HttpParams } from '@angular/common/http';
+import {HttpEventType, HttpParams} from '@angular/common/http';
 import {Page} from '../interface/page';
 import {FieldConverterService} from '../../task-content/services/field-converter.service';
-import {TaskSetDataRequestBody} from '../interface/task-set-data-request-body';
 import {LoggerService} from '../../logger/services/logger.service';
 import {AbstractResourceService} from '../abstract-endpoint/abstract-resource.service';
 import {DataGroup} from '../interface/data-groups';
 import {DataField} from '../../data-fields/models/abstract-data-field';
 import {GetDataGroupsEventOutcome} from '../../event/model/event-outcomes/data-outcomes/get-data-groups-event-outcome';
+import {FileFieldRequest} from "../interface/file-field-request-body";
+import {TaskDataSets} from '../interface/task-data-sets';
 
 @Injectable({
     providedIn: 'root'
@@ -215,14 +216,14 @@ export class TaskResourceService extends AbstractResourceService implements Coun
                 const result = [];
                 dataGroupsArray.forEach(dataGroupResource => {
                     const dataFields: Array<DataField<any>> = [];
-                    if (!dataGroupResource.fields._embedded) {
-                        return; // continue
-                    }
+                    // if (!dataGroupResource.fields._embedded) {
+                    //     return; // continue
+                    // }
                     const fields = [];
-                    Object.keys(dataGroupResource.fields._embedded).forEach(localizedFields => {
-                        fields.push(...dataGroupResource.fields._embedded[localizedFields]);
+                    Object.keys(dataGroupResource.dataRefs).forEach(fieldId => {
+                        fields.push(dataGroupResource.dataRefs[fieldId]);
                     });
-                    fields.sort((a, b) => a.order - b.order);
+                    // fields.sort((a, b) => a.order - b.order);
                     dataFields.push(...fields.map(dataFieldResource => this._fieldConverter.toClass(dataFieldResource)));
                     const dataGroupObject: DataGroup = {
                         fields: dataFields,
@@ -252,7 +253,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      * POST
      */
     // {{baseUrl}}/api/task/:id/data
-    public setData(taskId: string, body: TaskSetDataRequestBody): Observable<EventOutcomeMessageResource> {
+    public setData(taskId: string, body: TaskDataSets): Observable<EventOutcomeMessageResource> {
         return this._resourceProvider.post$('task/' + taskId + '/data', this.SERVER_URL, body)
             .pipe(map(r => this.changeType(r, undefined)));
     }
@@ -264,9 +265,9 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      */
     // {{baseUrl}}/api/task/:id/file/:field         - for file field
     // {{baseUrl}}/api/task/:id/file/:field/:name   - for file list field
-    public downloadFile(taskId: string, fieldId: string, name?: string): Observable<ProviderProgress | Blob> {
-        const url = !!name ? 'task/' + taskId + '/file/' + fieldId + '/' + name : 'task/' + taskId + '/file/' + fieldId;
-        return this._resourceProvider.getBlob$(url, this.SERVER_URL).pipe(
+    public downloadFile(taskId: string, params: HttpParams): Observable<ProviderProgress | Blob> {
+        const url = `task/${taskId}/file${params?.has("fileName") ? '/named' : ''}`;
+        return this._resourceProvider.getBlob$(url, this.SERVER_URL, params).pipe(
             map(event => {
                 switch (event.type) {
                     case HttpEventType.DownloadProgress:
@@ -287,9 +288,9 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      */
     // {{baseUrl}}/api/task/:id/file/:field     - for file field
     // {{baseUrl}}/api/task/:id/files/:field    - for file list field
-    public uploadFile(taskId: string, fieldId: string, body: object, multipleFiles: boolean):
+    public uploadFile(taskId: string, body: object, multipleFiles: boolean):
         Observable<ProviderProgress | EventOutcomeMessageResource> {
-        const url = !multipleFiles ? 'task/' + taskId + '/file/' + fieldId : 'task/' + taskId + '/files/' + fieldId;
+        const url = `task/${taskId}/${multipleFiles ? 'files' : 'file'}`;
         return this._resourceProvider.postWithEvent$<EventOutcomeMessageResource>(url, this.SERVER_URL, body).pipe(
             map(event => {
                 switch (event.type) {
@@ -309,9 +310,9 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      * Delete file from the task
      * DELETE
      */
-    public deleteFile(taskId: string, fieldId: string, name?: string, param?: HttpParams): Observable<MessageResource> {
-        const url = !!name ? 'task/' + taskId + '/file/' + fieldId + '/' + name : 'task/' + taskId + '/file/' + fieldId;
-        return this._resourceProvider.delete$(url, this.SERVER_URL, param).pipe(
+    public deleteFile(taskId: string, body?: FileFieldRequest): Observable<ProviderProgress | EventOutcomeMessageResource> {
+        const url = `task/${taskId}/file${body?.fileName ? '/named' : ''}`;
+        return this._resourceProvider.delete$<EventOutcomeMessageResource>(url, this.SERVER_URL, {}, {}, 'json', body).pipe(
             map(r => this.changeType(r, undefined))
         );
     }
@@ -321,9 +322,9 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      * GET
      */
     // {{baseUrl}}/api/task/:id/file_preview/:field
-    public downloadFilePreview(taskId: string, fieldId: string): Observable<ProviderProgress | Blob> {
-        const url = 'task/' + taskId + '/file_preview/' + fieldId;
-        return this._resourceProvider.getBlob$(url, this.SERVER_URL).pipe(
+    public downloadFilePreview(taskId: string, params: HttpParams): Observable<ProviderProgress | Blob> {
+        const url = `task/${taskId}/file_preview`;
+        return this._resourceProvider.getBlob$(url, this.SERVER_URL, params).pipe(
             map(event => {
                 switch (event.type) {
                     case HttpEventType.DownloadProgress:

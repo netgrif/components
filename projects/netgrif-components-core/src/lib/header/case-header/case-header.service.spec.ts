@@ -64,13 +64,6 @@ describe('CaseHeaderService', () => {
                 {provide: ViewService, useClass: TestViewService},
                 {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ]
-        }).overrideModule(BrowserDynamicTestingModule, {
-            set: {
-                entryComponents: [
-                    ErrorSnackBarComponent,
-                    SuccessSnackBarComponent
-                ]
-            }
         });
         service = TestBed.inject(CaseHeaderService);
     });

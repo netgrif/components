@@ -1,11 +1,12 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {Injector, NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {
     AuthenticationModule,
     ConfigurationService,
     CovalentModule,
+    ComponentRegistryService,
     DialogModule,
     MaterialModule,
     NAE_SNACKBAR_HORIZONTAL_POSITION,
@@ -16,10 +17,14 @@ import {
     SnackBarModule,
     SnackBarVerticalPosition,
     ViewService,
-    ProfileModule
+    ProfileModule,
+    Dashboard,
+    FrontActionModule, NAE_ASYNC_RENDERING_CONFIGURATION,
+    ValidationRegistryService,
+    validEmail, validTelNumber
 } from '@netgrif/components-core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
+import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
 import {DocumentationComponent} from './doc/documentation/documentation.component';
 import {NaeExampleAppConfigurationService} from './nae-example-app-configuration.service';
 import {AuthenticationComponent} from './doc/authentication/authentication.component';
@@ -64,13 +69,17 @@ import {
     AuthenticationComponentModule,
     CaseViewComponentModule,
     DashboardComponentModule,
-    DataFieldsComponentModule, EmailSubmissionFormComponentModule,
+    DataFieldsComponentModule,
+    EmailSubmissionFormComponent,
+    EmailSubmissionFormComponentModule,
+    FilterFieldContentModule,
     ForgottenPasswordFormComponentModule,
     HeaderComponentModule,
     LoginFormComponentModule,
     NavigationComponentModule,
     PanelComponentModule,
-    ProfileComponentModule, RedirectComponentModule,
+    ProfileComponentModule,
+    RedirectComponentModule,
     RegistrationFormComponentModule,
     SearchComponentModule,
     SideMenuComponentModule,
@@ -79,29 +88,65 @@ import {
     ChangePasswordFormComponentModule,
     ToolbarComponentModule,
     TreeCaseViewComponentModule,
-    WorkflowViewComponentModule
+    WorkflowViewComponentModule,
+    FilterFieldTabViewComponent,
+    FilterFieldTabbedCaseViewComponent,
+    FilterFieldTabbedTaskViewComponent,
+    DialogComponentsModule,
 } from '@netgrif/components';
 import {UserInviteComponent} from './doc/user-invite/user-invite.component';
 import {ExamplePortalCardComponent} from './doc/dashboard-example/piechart-card/example-portal-card.component';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
-import { ResetPasswordFormComponent } from './doc/forms/reset-password-form/reset-password-form.component';
-import { PublicTaskViewComponent } from './doc/public-task-view/public-task-view.component';
-import { PublicWorkflowViewComponent } from './doc/public-workflow-view/public-workflow-view.component';
+import {ResetPasswordFormComponent} from './doc/forms/reset-password-form/reset-password-form.component';
+import {PublicTaskViewComponent} from './doc/public-task-view/public-task-view.component';
+import {PublicWorkflowViewComponent} from './doc/public-workflow-view/public-workflow-view.component';
 import {PublicResolverComponent} from './doc/public-resolver/public-resolver.component';
-import { GroupViewComponent } from './doc/group-view/group-view.component';
-import { DemoTitleConfigContent0TaskViewComponent } from './doc/demo-title-config/content/0/demo-title-config-content0-task-view.component';
-import { DemoTitleConfigContent1CaseViewComponent } from './doc/demo-title-config/content/1/demo-title-config-content1-case-view.component';
-import { DemoTitleConfigContent2CaseViewComponent } from './doc/demo-title-config/content/2/demo-title-config-content2-case-view.component';
-import { DemoTitleConfigContent3CaseViewComponent } from './doc/demo-title-config/content/3/demo-title-config-content3-case-view.component';
-import { TitleConfigComponent } from './doc/demo-title-config/title-config.component';
-import { ExampleRedirectComponent } from './doc/redirect/example-redirect.component';
-import { ActiveGroupComponent } from './doc/active-group/active-group.component';
-import { WrapperEmptyViewComponent } from './views/wrapper/wrapper-empty-view.component';
+import {GroupViewComponent} from './doc/group-view/group-view.component';
+import {
+    DemoTitleConfigContent0TaskViewComponent
+} from './doc/demo-title-config/content/0/demo-title-config-content0-task-view.component';
+import {
+    DemoTitleConfigContent1CaseViewComponent
+} from './doc/demo-title-config/content/1/demo-title-config-content1-case-view.component';
+import {
+    DemoTitleConfigContent2CaseViewComponent
+} from './doc/demo-title-config/content/2/demo-title-config-content2-case-view.component';
+import {
+    DemoTitleConfigContent3CaseViewComponent
+} from './doc/demo-title-config/content/3/demo-title-config-content3-case-view.component';
+import {TitleConfigComponent} from './doc/demo-title-config/title-config.component';
+import {ExampleRedirectComponent} from './doc/redirect/example-redirect.component';
+import {ActiveGroupComponent} from './doc/active-group/active-group.component';
+import {WrapperEmptyViewComponent} from './views/wrapper/wrapper-empty-view.component';
 import {DoubleDrawerExampleComponent} from './doc/double-drawer-example/double-drawer-example.component';
-import { PublicSingleTaskViewComponent } from './doc/public-single-task-view/public-single-task-view.component';
-import { BreadcrumbsExampleComponent } from './doc/breadcrumbs-example/breadcrumbs-example.component';
+import {PublicSingleTaskViewComponent} from './doc/public-single-task-view/public-single-task-view.component';
+import {BreadcrumbsExampleComponent} from './doc/breadcrumbs-example/breadcrumbs-example.component';
+import {ComponentPortal} from '@angular/cdk/portal';
+import {DashboardCaseExampleComponent} from './doc/dashboard-case-example/dashboard-case-example.component';
+import {
+    SingleTabbedCaseViewComponent
+} from './doc/single-tabbed-view/single-tabbed-case-view/single-tabbed-case-view.component';
+import {
+    SingleTabbedTaskViewComponent
+} from './doc/single-tabbed-view/single-tabbed-task-view/single-tabbed-task-view.component';
 import {ImpersonationDemoComponent} from './doc/impersonation-demo/impersonation-demo.component';
 import { ChangePasswordComponent } from './doc/forms/change-password/change-password.component';
+import {
+    validBetween,
+    validDecimal,
+    validEven,
+    validInRange,
+    validMaxLength,
+    validMinLength,
+    validNegative,
+    validOdd,
+    validPositive,
+    validRegex,
+    validTranslationOnly,
+    validTranslationRequired,
+    validWeekend,
+    validWorkday
+} from '../../../netgrif-components-core/src/lib/registry/validation/model/default-validation-definitions';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -158,6 +203,10 @@ export function HttpLoaderFactory(http: HttpClient) {
         DoubleDrawerExampleComponent,
         PublicSingleTaskViewComponent,
         BreadcrumbsExampleComponent,
+        DashboardCaseExampleComponent,
+        SingleTabbedCaseViewComponent,
+        SingleTabbedTaskViewComponent,
+        BreadcrumbsExampleComponent,
         ChangePasswordComponent
     ],
     imports: [
@@ -208,21 +257,43 @@ export function HttpLoaderFactory(http: HttpClient) {
         WorkflowViewComponentModule,
         NgxChartsModule,
         EmailSubmissionFormComponentModule,
-        RedirectComponentModule
+        RedirectComponentModule,
+        FilterFieldContentModule,
+        DialogComponentsModule,
+        FrontActionModule
     ],
     providers: [{
-            provide: ConfigurationService,
-            useClass: NaeExampleAppConfigurationService
-        },
-        { provide: NAE_SNACKBAR_VERTICAL_POSITION, useValue: SnackBarVerticalPosition.TOP },
-        { provide: NAE_SNACKBAR_HORIZONTAL_POSITION, useValue: SnackBarHorizontalPosition.LEFT },
+        provide: ConfigurationService,
+        useClass: NaeExampleAppConfigurationService
+    },
+        {provide: NAE_SNACKBAR_VERTICAL_POSITION, useValue: SnackBarVerticalPosition.TOP},
+        {provide: NAE_SNACKBAR_HORIZONTAL_POSITION, useValue: SnackBarHorizontalPosition.LEFT},
+        {provide: NAE_ASYNC_RENDERING_CONFIGURATION, useValue: {
+                batchSize: 20,
+                batchDelay: 50,
+                numberOfPlaceholders: 4,
+                enableAsyncRenderingForNewFields: true,
+                enableAsyncRenderingOnTaskExpand: true
+            }},
         ResourceProvider,
         TranslateService,
         TranslatePipe,
         TranslateStore,
-        { provide: ViewService, useClass: NaeExampleAppViewService },
+        {provide: ViewService, useClass: NaeExampleAppViewService},
     ],
     bootstrap: [AppComponent]
 })
 export class AppModule {
+
+    constructor(registry: ComponentRegistryService, validationRegistry: ValidationRegistryService) {
+        registry.register('email', (injector: Injector) => new ComponentPortal(EmailSubmissionFormComponent, null, injector));
+        registry.register('workflow-view', (injector: Injector) => new ComponentPortal(WorkflowViewExampleComponent, null, injector));
+        registry.register('task-view', (injector: Injector) => new ComponentPortal(TaskViewComponent, null, injector));
+        registry.register('case-view', (injector: Injector) => new ComponentPortal(CaseViewComponent, null, injector));
+        registry.register('tab-view', (injector: Injector) => new ComponentPortal(TabbedViewsExampleComponent, null, injector));
+        registry.register(Dashboard.FILTER_TAB_VIEW_ID, (injector: Injector) => new ComponentPortal(FilterFieldTabViewComponent, null, injector));
+        registry.registerType(Dashboard.FILTER_CASE_VIEW_ID, FilterFieldTabbedCaseViewComponent);
+        registry.registerType(Dashboard.FILTER_TASK_VIEW_ID, FilterFieldTabbedTaskViewComponent);
+
+    }
 }
