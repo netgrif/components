@@ -61,7 +61,7 @@ export abstract class AbstractTimeInstanceField extends DataField<Moment> {
 
         this.validations.forEach(item => {
             if (this._validationRegistry.contains(item.name)) {
-                result.push(this._validationRegistry.get(item.name).call(null, {name: item.name, args: item.clientArguments}));
+                result.push(this._validationRegistry.get(item.name).call(null, {name: item.name, arguments: item.clientArguments?.argument ?? []}));
                 if (item.name.includes(AbstractTimeInstanceFieldValidation.BETWEEN)) {
                     this.checkMinMax(item);
                 }
@@ -72,8 +72,8 @@ export abstract class AbstractTimeInstanceField extends DataField<Moment> {
     }
 
     protected checkMinMax(item: Validation) {
-        const start = AbstractTimeInstanceField.parseDate(item.clientArguments[0]);
-        const end = AbstractTimeInstanceField.parseDate(item.clientArguments[1]);
+        const start = AbstractTimeInstanceField.parseDate(item.clientArguments.argument[0].value);
+        const end = AbstractTimeInstanceField.parseDate(item.clientArguments.argument[1].value);
 
         if (start && end) {
             if (start === 'past' && moment(end).isValid()) {

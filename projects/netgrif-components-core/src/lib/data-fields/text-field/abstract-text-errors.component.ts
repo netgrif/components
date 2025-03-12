@@ -24,12 +24,12 @@ export abstract class AbstractTextErrorsComponent<T extends TextField> extends A
         if (formControlRef.hasError(TextFieldValidation.MIN_LENGTH)) {
             const validation = field.validations.find(value => value.name === TextFieldValidation.MIN_LENGTH);
             return this.resolveErrorMessage(validation, TextFieldValidation.MIN_LENGTH,
-                this._translate.instant('dataField.validations.minLength', {length: formControlRef.errors.minlength.requiredLength}));
+                this._translate.instant('dataField.validations.minLength', {length: formControlRef.errors.minLength.requiredLength}));
         }
         if (formControlRef.hasError(TextFieldValidation.MAX_LENGTH)) {
-            const validation = field.validations.find(value => value.name === TextFieldValidation.MIN_LENGTH);
+            const validation = field.validations.find(value => value.name === TextFieldValidation.MAX_LENGTH);
             return this.resolveErrorMessage(validation, TextFieldValidation.MAX_LENGTH,
-                this._translate.instant('dataField.validations.maxLength', {length: formControlRef.errors.maxlength.requiredLength}));
+                this._translate.instant('dataField.validations.maxLength', {length: formControlRef.errors.maxLength.requiredLength}));
         }
         return undefined;
     }

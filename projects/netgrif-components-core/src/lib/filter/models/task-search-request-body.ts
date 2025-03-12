@@ -77,6 +77,11 @@ export interface TaskSearchRequestBody {
     tags?: {
         [key: string]: string
     };
+
+    /**
+     * state can determine if the task is Assignable or not
+     */
+    state?: TaskState;
 }
 
 /**
@@ -93,4 +98,9 @@ export interface TaskSearchCaseQuery {
      * Returned tasks must be of case that contains the specified string in its title.
      */
     title?: string;
+}
+
+export enum TaskState {
+    ENABLED = 'ENABLED',
+    DISABLED = 'DISABLED'
 }

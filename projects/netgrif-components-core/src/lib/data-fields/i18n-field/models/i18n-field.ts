@@ -117,7 +117,7 @@ export class I18nField extends DataField<I18nFieldValue> {
         }
         formControl.clearValidators();
         if (forValidRequired) {
-            formControl.setValidators(this.behavior.required ? [validRequiredI18n.call(this._injector, {name: I18nFieldValidation.REQUIRED_I18N, args: []})] : []);
+            formControl.setValidators(this.behavior.required ? [validRequiredI18n.call(this._injector, {name: I18nFieldValidation.REQUIRED_I18N, arguments: []})] : []);
         } else {
             formControl.setValidators(this.resolveFormControlValidators());
         }
@@ -131,7 +131,7 @@ export class I18nField extends DataField<I18nFieldValue> {
         const result = [];
 
         if (this.behavior.required) {
-            result.push(validRequiredI18n);
+            result.push(validRequiredI18n.call(this._injector, {name: I18nFieldValidation.REQUIRED_I18N, arguments: []}));
         }
 
         if (this.validations) {

@@ -367,6 +367,12 @@
             border-color: $color-outline-enabled;
         }
 
+        .mdc-text-field--outlined.mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-notched-outline__leading,
+        .mdc-text-field--outlined.mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-notched-outline__notch,
+        .mdc-text-field--outlined.mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing {
+            border-color: #f44336 !important;
+        }
+
         .mat-mdc-icon-button .mat-mdc-button-touch-target {
             height: 42px;
             width: 42px;

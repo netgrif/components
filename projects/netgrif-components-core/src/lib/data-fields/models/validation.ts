@@ -17,6 +17,14 @@ export interface Validation {
     /**
      *
      */
-    clientArguments?: Array<string>;
-    serverArguments?: Array<string>;
+    clientArguments?: Argument;
+    serverArguments?: Argument;
+}
+
+export interface Argument {
+    argument: Array<Value>;
+}
+
+export interface Value {
+    value: string;
 }

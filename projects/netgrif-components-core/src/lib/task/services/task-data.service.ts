@@ -625,7 +625,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
     protected revertToPreviousValue(context: TaskDataSets): void {
         this._safeTask.dataGroups.forEach(dataGroup => {
             dataGroup.fields.forEach(field => {
-                if (field.initialized && field.valid && Object.keys(context.body.previousValues).includes(field.stringId)) {
+                if (field.initialized && field.valid && context?.body?.previousValues && Object.keys(context.body.previousValues).includes(field.stringId)) {
                     field.revertToPreviousValue();
                 }
             });

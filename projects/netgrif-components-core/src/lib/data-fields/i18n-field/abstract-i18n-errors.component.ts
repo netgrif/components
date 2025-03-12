@@ -29,10 +29,8 @@ export abstract class AbstractI18nErrorsComponent extends AbstractBaseDataFieldC
         if (formControlRef.hasError(I18nFieldValidation.TRANSLATION_REQUIRED)) {
             const validation = field.validations.find(value =>
                 value.name === I18nFieldValidation.TRANSLATION_REQUIRED);
-            const missingLanguages = validation.clientArguments[0]
-                .replace(' ', '')
-                .split(',')
-                .filter(lanCode => !Object.keys(this.formControlRef.value.translations).includes(lanCode))
+            const missingLanguages = validation.clientArguments.argument.map(item => item.value)
+                .filter(lanCode => !Object.keys(this.formControlRef.value?.translations ?? []).includes(lanCode))
                 .map(lanCode => this.languageIconsService.languageIcons[lanCode].languageName)
                 .join(', ');
             return this.resolveErrorMessage(validation,
@@ -46,9 +44,7 @@ export abstract class AbstractI18nErrorsComponent extends AbstractBaseDataFieldC
         if (formControlRef.hasError(I18nFieldValidation.TRANSLATION_ONLY)) {
             const validation = field.validations.find(value =>
                 value.name === I18nFieldValidation.TRANSLATION_ONLY);
-            const onlyLanguages = validation.clientArguments[0]
-                .replace(' ', '')
-                .split(',')
+            const onlyLanguages = validation.clientArguments.argument.map(item => item.value)
                 .map(lanCode => this.languageIconsService.languageIcons[lanCode].languageName)
                 .join(', ');
             return this.resolveErrorMessage(validation,

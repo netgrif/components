@@ -77,8 +77,8 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractFile
             const val = this.dataField.validations.find(validation =>
                 validation.name === FileListFieldValidation.MAX_FILES
             );
-            if (val && val.clientArguments.length === 1 && !isNaN(parseInt(val.clientArguments[1], 10))) {
-                this.maxFilesNumber = parseInt(val.clientArguments[1], 10);
+            if (val && val.clientArguments.argument.length === 1 && !isNaN(parseInt(val.clientArguments.argument[0].value, 10))) {
+                this.maxFilesNumber = parseInt(val.clientArguments.argument[0].value, 10);
                 this.maxFilesMessage = val.message && val.message !== '' ? val.message : null;
             }
         }

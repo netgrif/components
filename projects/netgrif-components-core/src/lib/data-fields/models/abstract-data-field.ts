@@ -540,7 +540,7 @@ export abstract class DataField<T> {
 
         this.validations.forEach(item => {
             if (this._validationRegistry && this._validationRegistry.contains(item.name)) {
-                result.push(this._validationRegistry.get(item.name).call(this._injector, {name: item.name, args: item.clientArguments}));
+                result.push(this._validationRegistry.get(item.name).call(this._injector, {name: item.name, arguments: item.clientArguments?.argument ?? []}));
             }
         });
 

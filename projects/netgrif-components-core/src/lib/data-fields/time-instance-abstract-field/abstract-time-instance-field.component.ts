@@ -49,8 +49,8 @@ export abstract class AbstractTimeInstanceFieldComponent<T extends AbstractTimeI
         if (this.formControlRef.hasError(AbstractTimeInstanceFieldValidation.BETWEEN)) {
             const validation = field.validations.find(value =>
                 value.name.includes(AbstractTimeInstanceFieldValidation.BETWEEN))
-            let left = AbstractTimeInstanceField.parseDate(validation.clientArguments[0]);
-            let right = AbstractTimeInstanceField.parseDate(validation.clientArguments[1]);
+            let left = AbstractTimeInstanceField.parseDate(validation.clientArguments.argument[0].value);
+            let right = AbstractTimeInstanceField.parseDate(validation.clientArguments.argument[1].value);
             left = moment.isMoment(left) ? (left as Moment).format('DD.MM.YYYY HH:mm:ss') : left;
             right = moment.isMoment(right) ? (right as Moment).format('DD.MM.YYYY HH:mm:ss') : right;
             if (left === 'past') {

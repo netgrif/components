@@ -24,7 +24,7 @@ export abstract class AbstractNumberErrorsComponent extends AbstractBaseDataFiel
         if (this.formControlRef.hasError(NumberFieldValidation.IN_RANGE)) {
             const validation = field.validations.find(value => value.name === NumberFieldValidation.IN_RANGE);
             return this.resolveErrorMessage(validation,
-                NumberFieldValidation.IN_RANGE, this._translate.instant('dataField.validations.inrange', {range: `${validation.clientArguments[0]},${validation.clientArguments[1]}`})
+                NumberFieldValidation.IN_RANGE, this._translate.instant('dataField.validations.inrange', {range: `${validation.clientArguments.argument[0].value},${validation.clientArguments[1]}`})
             );
         }
         return undefined;
