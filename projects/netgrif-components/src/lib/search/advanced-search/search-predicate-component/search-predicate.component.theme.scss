@@ -4,7 +4,7 @@
     $primary: map-get($theme, primary);
 
     .predicate-body-color {
-        background: mat.get-color-from-palette($primary, 50);
+        background: mat.m2-get-color-from-palette($primary, 50);
     }
 
     .mat-mdc-form-field-wrapper-search {

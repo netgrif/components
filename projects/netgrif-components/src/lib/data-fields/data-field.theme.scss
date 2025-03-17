@@ -24,50 +24,50 @@
     }
 
     .horizontal-state-primary {
-        background-color: mat.get-color-from-palette($primary);
+        background-color: mat.m2-get-color-from-palette($primary);
     }
 
     .horizontal-state-secondary {
-        background-color: mat.get-color-from-palette($secondary);
+        background-color: mat.m2-get-color-from-palette($secondary);
     }
 
     .stepper-arrow-selected {
-        color: mat.get-color-from-palette($primary) !important;
+        color: mat.m2-get-color-from-palette($primary) !important;
         font-weight: 600 !important;
     }
 
     .enum-icon-item-hover:hover {
-        color: mat.get-color-from-palette($primary, 200) !important;
+        color: mat.m2-get-color-from-palette($primary, 200) !important;
     }
 
     .enum-icon-item-active {
-        color: mat.get-color-from-palette($primary) !important;
+        color: mat.m2-get-color-from-palette($primary) !important;
     }
 
     .file-list-item:hover {
-        background-color: rgba(mat.get-color-from-palette($secondary, A200), 0.3)
+        background-color: rgba(mat.m2-get-color-from-palette($secondary, A200), 0.3)
     }
 
     .primary-background-color {
-        background: mat.get-color-from-palette($primary);
+        background: mat.m2-get-color-from-palette($primary);
     }
 
     .filled-language-row:hover {
-        background-color: rgba(mat.get-color-from-palette($primary), 0.2);
+        background-color: rgba(mat.m2-get-color-from-palette($primary), 0.2);
     }
 
     .form-input:focus-within:not(.invalid-form-input) {
-        border: solid 2px mat.get-color-from-palette($primary) !important;
+        border: solid 2px mat.m2-get-color-from-palette($primary) !important;
         padding: 1px !important;
     }
 
     .invalid-form-input {
-        border: solid 2px mat.get-color-from-palette($primary) !important;
+        border: solid 2px mat.m2-get-color-from-palette($primary) !important;
         padding: 1px !important;
     }
 
     .invalid-form-label {
-        color: mat.get-color-from-palette($primary) !important;
+        color: mat.m2-get-color-from-palette($primary) !important;
     }
 
     .mat-mdc-option {
@@ -445,34 +445,34 @@
     .netgrif-input-primary-fix {
         .mat-mdc-form-field-appearance-outline {
             .mat-mdc-form-field-outline {
-                color: mat.get-contrast-color-from-palette($primary, 500);
+                color: mat.m2-get-contrast-color-from-palette($primary, 500);
             }
 
             .mat-mdc-form-field-outline-thick {
-                color: mat.get-contrast-color-from-palette($primary ,500);
+                color: mat.m2-get-contrast-color-from-palette($primary ,500);
             }
 
             &.mat-mdc-focused {
                 .mat-mdc-form-field-outline-thick {
-                    color: mat.get-contrast-color-from-palette($primary, 500);
+                    color: mat.m2-get-contrast-color-from-palette($primary, 500);
                 }
             }
         }
 
         .mat-mdc-form-field-label {
-            color: mat.get-contrast-color-from-palette($primary, 500);
+            color: mat.m2-get-contrast-color-from-palette($primary, 500);
         }
 
         .mat-mdc-form-field.mat-mdc-focused .mat-mdc-form-field-label {
-            color: mat.get-contrast-color-from-palette($primary, 500);
+            color: mat.m2-get-contrast-color-from-palette($primary, 500);
         }
 
         .mat-datepicker-toggle {
-            color: mat.get-contrast-color-from-palette($primary, 500) !important;
+            color: mat.m2-get-contrast-color-from-palette($primary, 500) !important;
         }
 
         ::placeholder {
-            color: mat.get-contrast-color-from-palette($primary, 500) !important;
+            color: mat.m2-get-contrast-color-from-palette($primary, 500) !important;
         }
 
 
@@ -526,11 +526,11 @@
     //// END OF WORKAROUND
 
     .form-input-error {
-        border-color: mat.get-color-from-palette($warn) !important;
+        border-color: mat.m2-get-color-from-palette($warn) !important;
     }
 
     .new-dashboard-tile {
-        border-color: mat.get-color-from-palette($primary);
+        border-color: mat.m2-get-color-from-palette($primary);
         border-style: dashed;
         border-radius: 16px;
         border-width: thin;

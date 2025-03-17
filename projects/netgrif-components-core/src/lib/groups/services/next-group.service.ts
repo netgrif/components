@@ -33,12 +33,12 @@ export class NextGroupService implements OnDestroy {
 
         this._userSub = this._userService.user$.pipe(
             switchMap(user => {
-                if (!user || user.id === '') {
+                if (!user || user.id === '' || (user as any).nextGroups === undefined) {
                     return of([]);
                 }
 
                 const params = new HttpParams();
-                params.set(PaginationParams.PAGE_SIZE, `${(user as any).nextGroups.length}`);
+                params.set(PaginationParams.PAGE_SIZE, `${(user as any).nextGroups?.length}`);
 
                 return this._caseResourceService.searchCases(SimpleFilter.fromCaseQuery({stringId: (user as any).nextGroups}), params)
                     .pipe(

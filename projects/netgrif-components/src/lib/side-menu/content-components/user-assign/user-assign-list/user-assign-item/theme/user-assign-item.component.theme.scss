@@ -4,12 +4,12 @@
     $primary: map-get($theme, primary);
 
     .user-assign-item-selected {
-        background-color: mat.get-color-from-palette($primary, 300);
-        color: mat.get-contrast-color-from-palette($primary, 300) !important;
+        background-color: mat.m2-get-color-from-palette($primary, 300);
+        color: mat.m2-get-contrast-color-from-palette($primary, 300) !important;
     }
 
     .user-assign-item-selected:hover {
-        background-color: mat.get-color-from-palette($primary, 500) !important;
-        color: mat.get-contrast-color-from-palette($primary, 500) !important;
+        background-color: mat.m2-get-color-from-palette($primary, 500) !important;
+        color: mat.m2-get-contrast-color-from-palette($primary, 500) !important;
     }
 }

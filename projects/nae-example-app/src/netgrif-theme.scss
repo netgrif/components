@@ -1,9 +1,9 @@
 @use '@angular/material' as mat;
 @import 'node_modules/@netgrif/components/nae-theme';
 
-$typography: mat.define-typography-config(
+$typography: mat.m2-define-typography-config(
     $font-family: 'Roboto, sans-serif',
-    $headline-1: mat.define-typography-level(32px, 48px, 700)
+    $headline-1: mat.m2-define-typography-level(32px, 48px, 700)
 );
 
 @include mat.core();
@@ -41,11 +41,11 @@ $netgrif-blue: (
     )
 );
 
-$netgrif-primary: mat.define-palette($netgrif-blue);
-$netgrif-accent:  mat.define-palette($netgrif-blue, A200, A100, A400);
-$netgrif-warn:    mat.define-palette(mat.$red-palette);
+$netgrif-primary: mat.m2-define-palette($netgrif-blue);
+$netgrif-accent:  mat.m2-define-palette($netgrif-blue, A200, A100, A400);
+$netgrif-warn:    mat.m2-define-palette(mat.$m2-red-palette);
 
-$netgrif-theme: mat.define-light-theme((
+$netgrif-theme: mat.m2-define-light-theme((
     color: (
         primary: $netgrif-primary,
         accent: $netgrif-accent,

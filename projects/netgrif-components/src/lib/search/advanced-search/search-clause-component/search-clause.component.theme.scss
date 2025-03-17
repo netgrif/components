@@ -4,6 +4,6 @@
     $primary: map-get($theme, primary);
 
     .clause-body-color {
-        background: mat.get-color-from-palette($primary, 100);
+        background: mat.m2-get-color-from-palette($primary, 100);
     }
 }

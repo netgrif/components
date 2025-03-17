@@ -4,7 +4,7 @@
     $primary: map-get($theme, primary);
 
     .advanced-search-icon {
-        color: mat.get-color-from-palette($primary, 500);
+        color: mat.m2-get-color-from-palette($primary, 500);
     }
 
     .mat-mdc-menu-border-radius {
@@ -16,7 +16,7 @@
         }
     }
     .mat-mdc-menu-item:hover:not([disabled]), .mat-mdc-menu-item.cdk-program-focused:not([disabled]), .mat-mdc-menu-item.cdk-keyboard-focused:not([disabled]), .mat-mdc-menu-item-highlighted:not([disabled]) {
-        background: mat.get-color-from-palette($primary, 50) !important;
+        background: mat.m2-get-color-from-palette($primary, 50) !important;
     }
 
     .fix-mat-icon {

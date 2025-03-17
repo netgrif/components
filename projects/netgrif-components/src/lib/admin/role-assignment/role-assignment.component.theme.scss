@@ -5,7 +5,7 @@
     $accent: map-get($theme, accent);
 
     .list-item-selected {
-        background-color: mat.get-color-from-palette($primary, 100, 1);
+        background-color: mat.m2-get-color-from-palette($primary, 100, 1);
     }
 
     .advanced-option-list {
@@ -16,11 +16,11 @@
         }
 
         .min-height-option:hover {
-            background: mat.get-color-from-palette($primary, 50) !important;
+            background: mat.m2-get-color-from-palette($primary, 50) !important;
         }
 
         .primary-color-line {
-            color: mat.get-color-from-palette($primary, 500) !important;
+            color: mat.m2-get-color-from-palette($primary, 500) !important;
         }
     }
 }

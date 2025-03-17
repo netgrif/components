@@ -5,6 +5,6 @@
     $accent: map-get($theme, accent);
 
     .list-item-selected {
-        background: mat.get-color-from-palette($primary, 100, 1);
+        background: mat.m2-get-color-from-palette($primary, 100, 1);
     }
 }
