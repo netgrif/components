@@ -22,7 +22,8 @@ import {ComponentPortal} from '@angular/cdk/portal';
     providers: [
         FrontActionService,
         {provide: TaskContentService, useClass: UnlimitedTaskContentService}
-    ]
+    ],
+    standalone: false
 })
 export class TaskRefDashboardTileComponent extends AbstractTaskRefDashboardTileComponent implements OnInit, OnDestroy {
 

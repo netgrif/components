@@ -5,7 +5,8 @@ import {AbstractLoginFormComponent, UserService} from '@netgrif/components-core'
 @Component({
     selector: 'nc-login-form',
     templateUrl: './login-form.component.html',
-    styleUrls: ['./login-form.component.scss']
+    styleUrls: ['./login-form.component.scss'],
+    standalone: false
 })
 export class LoginFormComponent extends AbstractLoginFormComponent {
     constructor(formBuilder: FormBuilder, protected _userService: UserService) {

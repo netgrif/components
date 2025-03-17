@@ -14,7 +14,8 @@ import {AbstractUserAssignComponent, NAE_SIDE_MENU_CONTROL, SideMenuControl, Use
     styleUrls: ['./admin-impersonate.component.scss'],
     providers: [{
         provide: UserListService, useClass: ImpersonationUserListService
-    }]
+    }],
+    standalone: false
 })
 export class AdminImpersonateComponent extends AbstractUserAssignComponent {
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) sideMenuControl: SideMenuControl) {

@@ -60,7 +60,8 @@ const baseFilterFactory = (injectedTabData: InjectedTabbedTaskViewData) => {
         },
         {provide: NAE_TASK_FORCE_OPEN, useValue: true},
         {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultTaskSearchCategoriesFactory, deps: [CategoryFactory]}
-    ]
+    ],
+    standalone: false
 })
 export class SingleTabbedTaskViewComponent extends AbstractTabbedTaskViewComponent implements AfterViewInit {
 

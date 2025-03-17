@@ -10,7 +10,8 @@ import {
 @Component({
     selector: 'nc-enumeration-stepper-field',
     templateUrl: './enumeration-stepper-field.component.html',
-    styleUrls: ['./enumeration-stepper-field.component.scss']
+    styleUrls: ['./enumeration-stepper-field.component.scss'],
+    standalone: false
 })
 export class EnumerationStepperFieldComponent extends AbstractEnumerationStepperFieldComponent {
 

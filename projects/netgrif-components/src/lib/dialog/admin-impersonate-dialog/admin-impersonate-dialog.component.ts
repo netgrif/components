@@ -15,7 +15,8 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
     styleUrls: ['./admin-impersonate-dialog.component.scss'],
     providers: [{
         provide: UserListService, useClass: ImpersonationUserListService
-    }]
+    }],
+    standalone: false
 })
 export class AdminImpersonateDialogComponent {
     /**

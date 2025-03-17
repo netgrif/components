@@ -51,7 +51,8 @@ function localAllowedNetsFactory(factory: AllowedNetsServiceFactory): AllowedNet
                 `${UserImpersonationConstants.IMPERSONATION_CONFIG_NET_IDENTIFIER}-${UserImpersonationConstants.IMPERSONATION_CONFIG_FIELD_ROLES}`,
                 `${UserImpersonationConstants.IMPERSONATION_CONFIG_NET_IDENTIFIER}-${UserImpersonationConstants.IMPERSONATION_CONFIG_FIELD_AUTHS}`,
             ]}
-    ]
+    ],
+    standalone: false
 })
 export class UserImpersonateComponent extends AbstractUserImpersonateComponent implements AfterViewInit {
 

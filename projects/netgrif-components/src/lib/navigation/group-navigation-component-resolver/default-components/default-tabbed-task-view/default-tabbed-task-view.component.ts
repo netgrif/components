@@ -62,7 +62,8 @@ export function baseFilterFactory(injectedTabData: InjectedTabbedTaskViewDataWit
             useFactory: navigationItemTaskViewDefaultHeadersFactory,
             deps: [[new Optional(), NAE_NAVIGATION_ITEM_TASK_DATA]]
         }
-    ]
+    ],
+    standalone: false
 })
 export class DefaultTabbedTaskViewComponent extends AbstractTabbedTaskViewComponent implements AfterViewInit {
 

@@ -3,7 +3,8 @@ import {Component, OnInit} from '@angular/core';
 @Component({
     selector: 'nae-app-rail-example',
     templateUrl: './rail-example.component.html',
-    styleUrls: ['./rail-example.component.scss']
+    styleUrls: ['./rail-example.component.scss'],
+    standalone: false
 })
 export class RailExampleComponent implements OnInit {
 

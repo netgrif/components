@@ -1,6 +1,6 @@
 <mat-form-field [appearance]="dataField.materialAppearance" class="full-width" color="primary">
     <mat-label *ngIf="!showLargeLayout.value">{{dataField.title}}</mat-label>
-    <span matPrefix *ngIf="isNumberType() && isCodeExists()">{{this.dataField.component.properties['code'] ?? ''}}</span>
+    <span matPrefix *ngIf="isNumberType() && isCodeExists()">{{dataField.component.properties['code'] ?? ''}}</span>
     <input matInput
            [type]="fieldType"
            [value]="transformedValue"

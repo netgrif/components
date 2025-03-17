@@ -15,7 +15,8 @@ import {PreviewDialogComponent} from "../preview-dialog/preview-dialog.component
 @Component({
   selector: 'nc-file-default-field',
   templateUrl: './file-default-field.component.html',
-  styleUrls: ['./file-default-field.component.scss']
+  styleUrls: ['./file-default-field.component.scss'],
+    standalone: false
 })
 export class FileDefaultFieldComponent extends AbstractFileDefaultFieldComponent{
 

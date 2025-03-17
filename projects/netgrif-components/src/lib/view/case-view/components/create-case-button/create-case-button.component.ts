@@ -11,7 +11,8 @@ import {
 @Component({
     selector: 'nc-create-case-button',
     templateUrl: './create-case-button.component.html',
-    styleUrls: ['./create-case-button.component.scss']
+    styleUrls: ['./create-case-button.component.scss'],
+    standalone: false
 })
 export class CreateCaseButtonComponent implements OnInit {
 

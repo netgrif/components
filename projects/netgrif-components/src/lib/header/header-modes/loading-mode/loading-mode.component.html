@@ -1,9 +1,9 @@
 <div fxFlex="100" fxLayout="row" fxLayoutAlign=" center">
     <div *ngFor="let header of headerService.headerState.selectedHeaders$ | async; let i = index" fxFlex
-         [fxHide.lt-xl]="i >= 4 && this.headerService.responsiveHeaders && !this.headerService.overflowMode"
-         [fxHide.lt-lg]="i >= 3 && this.headerService.responsiveHeaders && !this.headerService.overflowMode"
-         [fxHide.lt-md]="i >= 2 && this.headerService.responsiveHeaders && !this.headerService.overflowMode"
-         [fxHide.lt-sm]="i >= 1 && this.headerService.responsiveHeaders && !this.headerService.overflowMode"
+         [fxHide.lt-xl]="i >= 4 && headerService.responsiveHeaders && !headerService.overflowMode"
+         [fxHide.lt-lg]="i >= 3 && headerService.responsiveHeaders && !headerService.overflowMode"
+         [fxHide.lt-md]="i >= 2 && headerService.responsiveHeaders && !headerService.overflowMode"
+         [fxHide.lt-sm]="i >= 1 && headerService.responsiveHeaders && !headerService.overflowMode"
          [ngStyle]="{'min-width': getMinWidth()}">
         <div class="phl-item">
             <div class="phl-row" fxLayoutAlign="start center">

@@ -14,7 +14,8 @@ import {take} from "rxjs/operators";
 @Component({
     selector: 'nc-session-idle',
     templateUrl: './session-idle.component.html',
-    styleUrls: []
+    styleUrls: [],
+    standalone: false
 })
 export class SessionIdleComponent extends AbstractSessionIdleComponent {
 

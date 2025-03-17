@@ -1,19 +1,21 @@
 import {Component, Inject, Optional} from '@angular/core';
 import {TranslateService} from "@ngx-translate/core";
 import {
-    TaskResourceService,
-    LoggerService,
-    SnackBarService,
-    EventService,
+    AbstractFileListDefaultFieldComponent,
     DATA_FIELD_PORTAL_DATA,
     DataFieldPortalData,
-    FileListField, AbstractFileListDefaultFieldComponent
+    EventService,
+    FileListField,
+    LoggerService,
+    SnackBarService,
+    TaskResourceService
 } from '@netgrif/components-core'
 
 @Component({
-  selector: 'nc-file-list-default-field',
-  templateUrl: './file-list-default-field.component.html',
-  styleUrls: ['./file-list-default-field.component.scss']
+    selector: 'nc-file-list-default-field',
+    templateUrl: './file-list-default-field.component.html',
+    styleUrls: ['./file-list-default-field.component.scss'],
+    standalone: false
 })
 export class FileListDefaultFieldComponent extends AbstractFileListDefaultFieldComponent {
 

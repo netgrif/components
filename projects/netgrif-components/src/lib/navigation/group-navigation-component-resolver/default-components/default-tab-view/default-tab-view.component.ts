@@ -29,7 +29,8 @@ import {TranslateService} from "@ngx-translate/core";
     providers: [
         ViewIdService,
         {provide: NAE_VIEW_ID_SEGMENT, useFactory: groupNavigationViewIdSegmentFactory, deps: [ActivatedRoute]}
-    ]
+    ],
+    standalone: false
 })
 export class DefaultTabViewComponent {
 

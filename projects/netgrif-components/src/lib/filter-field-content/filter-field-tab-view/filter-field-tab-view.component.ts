@@ -16,6 +16,7 @@ import {
   selector: 'nc-filter-field-tab-view',
   templateUrl: './filter-field-tab-view.component.html',
   styleUrls: ['./filter-field-tab-view.component.scss'],
+    standalone: false
 })
 export class FilterFieldTabViewComponent extends AbstractFilterFieldTabViewComponent {
 

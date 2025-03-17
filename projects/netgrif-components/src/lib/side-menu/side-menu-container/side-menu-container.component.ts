@@ -7,7 +7,8 @@ import {AbstractSideMenuContainerComponent, SideMenuService} from '@netgrif/comp
 @Component({
     selector: 'nc-side-menu-container',
     templateUrl: './side-menu-container.component.html',
-    styleUrls: ['./side-menu-container.component.scss']
+    styleUrls: ['./side-menu-container.component.scss'],
+    standalone: false
 })
 export class SideMenuContainerComponent extends AbstractSideMenuContainerComponent {
 

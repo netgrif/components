@@ -10,7 +10,8 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'nc-single-task',
   templateUrl: './single-task.component.html',
-  styleUrls: ['./single-task.component.scss']
+  styleUrls: ['./single-task.component.scss'],
+    standalone: false
 })
 export class SingleTaskComponent extends AbstractSingleTaskComponent {
 

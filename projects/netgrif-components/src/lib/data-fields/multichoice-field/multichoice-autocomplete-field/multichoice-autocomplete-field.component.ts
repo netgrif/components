@@ -9,7 +9,8 @@ import {
 @Component({
   selector: 'nc-multichoice-autocomplete-field',
   templateUrl: './multichoice-autocomplete-field.component.html',
-  styleUrls: ['./multichoice-autocomplete-field.component.scss']
+  styleUrls: ['./multichoice-autocomplete-field.component.scss'],
+    standalone: false
 })
 export class MultichoiceAutocompleteFieldComponent  extends AbstractMultichoiceAutocompleteFieldComponentComponent {
 

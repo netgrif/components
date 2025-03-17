@@ -41,7 +41,8 @@ export function localAllowedNetsFactory(factory: AllowedNetsServiceFactory): All
             deps: [AllowedNetsServiceFactory]},
         {provide: NAE_SEARCH_CATEGORIES, useFactory: searchCategoryConverter, deps: [CategoryResolverService, NAE_TAB_DATA, NAE_DEFAULT_CASE_SEARCH_CATEGORIES, NAE_DEFAULT_TASK_SEARCH_CATEGORIES]},
         {provide: NAE_NEW_CASE_CONFIGURATION, useFactory: newCaseConfigFactory, deps: [NAE_TAB_DATA]}
-    ]
+    ],
+    standalone: false
 })
 export class FilterFieldTabbedCaseViewComponent extends AbstractTabbedCaseViewComponent implements AfterViewInit {
 

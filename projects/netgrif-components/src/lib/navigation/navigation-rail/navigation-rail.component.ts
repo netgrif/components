@@ -30,7 +30,8 @@ const railContentAnimation = trigger('transformContent', [
     selector: 'nc-navigation-rail',
     templateUrl: './navigation-rail.component.html',
     styleUrls: ['./navigation-rail.component.scss'],
-    animations: [railAnimation, railContentAnimation]
+    animations: [railAnimation, railContentAnimation],
+    standalone: false
 })
 export class NavigationRailComponent extends AbstractNavigationRailComponent {
     constructor() {

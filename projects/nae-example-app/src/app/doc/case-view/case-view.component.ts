@@ -50,6 +50,7 @@ const baseFilterFactory = () => {
         ViewIdService,
         {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
     ],
+    standalone: false
 })
 export class CaseViewComponent extends AbstractCaseViewComponent {
 

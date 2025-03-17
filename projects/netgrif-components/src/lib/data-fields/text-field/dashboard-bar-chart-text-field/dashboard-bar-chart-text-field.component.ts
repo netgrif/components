@@ -10,7 +10,8 @@ import {
 @Component({
   selector: 'nc-dashboard-bar-chart-text-field',
   templateUrl: './dashboard-bar-chart-text-field.component.html',
-  styleUrls: ['./dashboard-bar-chart-text-field.component.scss']
+  styleUrls: ['./dashboard-bar-chart-text-field.component.scss'],
+    standalone: false
 })
 export class DashboardBarChartTextFieldComponent extends AbstractDashboardBarChartTextFieldComponent {
 

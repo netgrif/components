@@ -7,7 +7,8 @@ import {AbstractButtonFieldComponent, NAE_INFORM_ABOUT_INVALID_DATA} from '@netg
 @Component({
     selector: 'nc-button-field',
     templateUrl: './button-field.component.html',
-    styleUrls: ['./button-field.component.scss']
+    styleUrls: ['./button-field.component.scss'],
+    standalone: false
 })
 export class ButtonFieldComponent extends AbstractButtonFieldComponent {
 

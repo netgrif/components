@@ -7,7 +7,8 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
     selector: 'nc-multi-user-assign-dialog',
     templateUrl: './multi-user-assign-dialog.component.html',
     styleUrls: ['./multi-user-assign-dialog.component.scss'],
-    providers: [UserListService]
+    providers: [UserListService],
+    standalone: false
 })
 export class MultiUserAssignDialogComponent {
 

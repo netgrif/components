@@ -39,7 +39,7 @@
             <button mat-icon-button color="accent" [matTooltip]="'dataField.i18n.languageSelect' | translate"
                     class="language-selector-button" [matMenuTriggerFor]="languageMenu">
                 <div class="language-svg-wrapper"
-                     [innerHTML]="getLanguageIcons()[this.selectedLanguage].svgIcon"></div>
+                     [innerHTML]="getLanguageIcons()[selectedLanguage].svgIcon"></div>
             </button>
 
             <mat-menu #languageMenu="matMenu">

@@ -4,7 +4,8 @@ import {AbstractAddChildNodeComponent, CaseTreeService} from '@netgrif/component
 @Component({
     selector: 'nc-add-child-node',
     templateUrl: './add-child-node.component.html',
-    styleUrls: ['./add-child-node.component.scss']
+    styleUrls: ['./add-child-node.component.scss'],
+    standalone: false
 })
 export class AddChildNodeComponent extends AbstractAddChildNodeComponent {
     constructor(protected _treeService: CaseTreeService) {

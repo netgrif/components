@@ -4,7 +4,8 @@ import {AbstractRemoveNodeComponent, CaseTreeService} from '@netgrif/components-
 @Component({
     selector: 'nc-remove-node',
     templateUrl: './remove-node.component.html',
-    styleUrls: ['./remove-node.component.scss']
+    styleUrls: ['./remove-node.component.scss'],
+    standalone: false
 })
 export class RemoveNodeComponent extends AbstractRemoveNodeComponent {
     constructor(protected _treeService: CaseTreeService) {

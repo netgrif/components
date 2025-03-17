@@ -11,7 +11,8 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
     selector: 'nc-user-assign-dialog',
     templateUrl: './user-assign-dialog.component.html',
     styleUrls: ['./user-assign-dialog.component.scss'],
-    providers: [UserListService]
+    providers: [UserListService],
+    standalone: false
 })
 export class UserAssignDialogComponent {
     /**

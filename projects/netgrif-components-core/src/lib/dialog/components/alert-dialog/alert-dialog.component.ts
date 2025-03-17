@@ -11,7 +11,8 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 @Component({
     selector: 'ncc-simple-dialog',
     templateUrl: './alert-dialog.component.html',
-    styleUrls: ['./alert-dialog.component.scss']
+    styleUrls: ['./alert-dialog.component.scss'],
+    standalone: false
 })
 export class AlertDialogComponent extends AbstractDialogComponent<AlertDialogComponent> {
     /**

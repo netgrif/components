@@ -7,7 +7,8 @@ import {AbstractUserAssignItemComponent} from '@netgrif/components-core';
 @Component({
     selector: 'nc-admin-impersonate-item',
     templateUrl: './admin-impersonate-item.component.html',
-    styleUrls: ['./admin-impersonate-item.component.scss']
+    styleUrls: ['./admin-impersonate-item.component.scss'],
+    standalone: false
 })
 export class AdminImpersonateItemComponent extends AbstractUserAssignItemComponent {
 

@@ -4,7 +4,8 @@ import {AbstractDataFieldTemplateComponent, ConfigurationService, ComponentRegis
 @Component({
     selector: 'nc-data-field-template',
     templateUrl: './data-field-template.component.html',
-    styleUrls: ['./data-field-template.component.scss']
+    styleUrls: ['./data-field-template.component.scss'],
+    standalone: false
 })
 export class DataFieldTemplateComponent extends AbstractDataFieldTemplateComponent {
 

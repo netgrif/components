@@ -11,7 +11,8 @@ import {
 @Component({
     selector: 'nc-authentication-overlay',
     templateUrl: './authentication-overlay.component.html',
-    styleUrls: ['./authentication-overlay.component.scss']
+    styleUrls: ['./authentication-overlay.component.scss'],
+    standalone: false
 })
 export class AuthenticationOverlayComponent extends AbstractAuthenticationOverlayComponent {
 

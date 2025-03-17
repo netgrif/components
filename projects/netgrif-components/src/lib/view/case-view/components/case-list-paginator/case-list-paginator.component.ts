@@ -14,7 +14,8 @@ import {MatPaginatorIntl} from '@angular/material/paginator';
     selector: 'nc-case-list-paginator',
     templateUrl: './case-list-paginator.component.html',
     styleUrls: ['./case-list-paginator.component.scss'],
-    providers: [{provide: MatPaginatorIntl, useClass: NetgrifPaginatorIntl}]
+    providers: [{provide: MatPaginatorIntl, useClass: NetgrifPaginatorIntl}],
+    standalone: false
 })
 export class CaseListPaginatorComponent extends AbstractCaseListPaginatorComponent implements OnDestroy {
 

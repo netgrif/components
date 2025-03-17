@@ -7,7 +7,8 @@ import {TranslateService} from "@ngx-translate/core";
 @Component({
     selector: 'nc-boolean-default-field',
     templateUrl: './boolean-default-field.component.html',
-    styleUrls: ['./boolean-default-field.component.scss']
+    styleUrls: ['./boolean-default-field.component.scss'],
+    standalone: false
 })
 export class BooleanDefaultFieldComponent extends AbstractBooleanDefaultFieldComponent {
 

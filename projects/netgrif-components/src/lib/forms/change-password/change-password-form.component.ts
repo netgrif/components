@@ -14,7 +14,8 @@ import {Subscription} from "rxjs";
 @Component({
     selector: 'nc-change-password-form',
     templateUrl: './change-password-form.component.html',
-    styleUrls: ['./change-password-form.component.scss']
+    styleUrls: ['./change-password-form.component.scss'],
+    standalone: false
 })
 export class ChangePasswordFormComponent extends AbstractChangePasswordComponent implements OnDestroy {
 

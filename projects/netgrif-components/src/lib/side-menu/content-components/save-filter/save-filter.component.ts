@@ -51,7 +51,8 @@ export function localAllowedNetsFactory(factory: AllowedNetsServiceFactory): All
         {   provide: AllowedNetsService,
             useFactory: localAllowedNetsFactory,
             deps: [AllowedNetsServiceFactory]},
-    ]
+    ],
+    standalone: false
 })
 export class SaveFilterComponent extends AbstractSaveFilterComponent {
 

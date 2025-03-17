@@ -11,6 +11,7 @@ import {
     selector: 'nc-file-field',
     templateUrl: './file-field.component.html',
     styleUrls: ['./file-field.component.scss'],
+    standalone: false
 })
 export class FileFieldComponent extends AbstractFileFieldComponent {
 

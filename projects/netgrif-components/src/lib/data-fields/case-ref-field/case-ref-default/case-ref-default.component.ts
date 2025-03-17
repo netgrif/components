@@ -12,7 +12,8 @@ import {
 @Component({
   selector: 'nc-case-ref-default',
   templateUrl: './case-ref-default.component.html',
-  styleUrls: ['./case-ref-default.component.scss']
+  styleUrls: ['./case-ref-default.component.scss'],
+    standalone: false
 })
 export class CaseRefDefaultComponent extends AbstractCaseRefDefaultComponent {
 

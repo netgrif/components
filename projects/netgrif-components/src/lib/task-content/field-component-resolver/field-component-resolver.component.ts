@@ -15,7 +15,8 @@ import {
 @Component({
     selector: 'nc-field-component-resolver',
     templateUrl: './field-component-resolver.component.html',
-    styleUrls: ['./field-component-resolver.component.scss']
+    styleUrls: ['./field-component-resolver.component.scss'],
+    standalone: false
 })
 export class FieldComponentResolverComponent extends AbstractFieldComponentResolverComponent {
 

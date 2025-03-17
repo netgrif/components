@@ -39,7 +39,8 @@ import {
         FinishPolicyService,
         SelectedCaseService,
         {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
-    ]
+    ],
+    standalone: false
 })
 export class TreeTaskContentComponent extends AbstractTreeTaskContentComponent {
 

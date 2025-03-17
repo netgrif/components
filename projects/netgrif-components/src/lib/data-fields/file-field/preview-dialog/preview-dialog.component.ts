@@ -7,7 +7,8 @@ import {SafeUrl} from '@angular/platform-browser';
 @Component({
     selector: 'nc-preview-dialog',
     templateUrl: './preview-dialog.component.html',
-    styleUrls: ['./preview-dialog.component.scss']
+    styleUrls: ['./preview-dialog.component.scss'],
+    standalone: false
 })
 export class PreviewDialogComponent {
     image: SafeUrl;

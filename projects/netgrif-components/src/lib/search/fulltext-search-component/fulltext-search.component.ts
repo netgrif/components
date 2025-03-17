@@ -4,7 +4,8 @@ import {AbstractFulltextSearchComponent, SearchService} from '@netgrif/component
 @Component({
     selector: 'nc-fulltext-search',
     templateUrl: './fulltext-search.component.html',
-    styleUrls: ['./fulltext-search.component.scss']
+    styleUrls: ['./fulltext-search.component.scss'],
+    standalone: false
 })
 export class FulltextSearchComponent extends AbstractFulltextSearchComponent {
 

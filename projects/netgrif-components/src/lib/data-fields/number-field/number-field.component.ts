@@ -8,7 +8,8 @@ import {TranslateService} from '@ngx-translate/core';
 @Component({
     selector: 'nc-number-field',
     templateUrl: './number-field.component.html',
-    styleUrls: ['./number-field.component.scss']
+    styleUrls: ['./number-field.component.scss'],
+    standalone: false
 })
 export class NumberFieldComponent extends AbstractNumberFieldComponent {
     constructor(translate: TranslateService,

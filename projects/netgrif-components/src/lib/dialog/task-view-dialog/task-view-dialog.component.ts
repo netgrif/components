@@ -49,7 +49,8 @@ export function taskViewFilterFactory(dialogControl: TaskViewInjectionData): Bas
             useFactory: localAllowedNetsFactory,
             deps: [AllowedNetsServiceFactory]
         }
-    ]
+    ],
+    standalone: false
 })
 export class TaskViewDialogComponent extends AbstractSingleTaskViewComponent implements AfterViewInit {
 

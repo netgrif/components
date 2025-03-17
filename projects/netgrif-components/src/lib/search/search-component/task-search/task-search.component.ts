@@ -14,7 +14,8 @@ import {CategoryFactory, defaultTaskSearchCategoriesFactory, NAE_SEARCH_CATEGORI
     providers: [
         CategoryFactory,
         {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultTaskSearchCategoriesFactory, deps: [CategoryFactory]}
-    ]
+    ],
+    standalone: false
 })
 export class TaskSearchComponent {
 }

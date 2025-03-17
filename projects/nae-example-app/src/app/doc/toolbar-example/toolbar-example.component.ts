@@ -4,7 +4,8 @@ import {TranslateService} from '@ngx-translate/core';
 @Component({
     selector: 'nae-app-toolbar-example',
     templateUrl: './toolbar-example.component.html',
-    styleUrls: ['./toolbar-example.component.scss']
+    styleUrls: ['./toolbar-example.component.scss'],
+    standalone: false
 })
 export class ToolbarExampleComponent implements OnInit {
     readonly TITLE = 'Toolbar';

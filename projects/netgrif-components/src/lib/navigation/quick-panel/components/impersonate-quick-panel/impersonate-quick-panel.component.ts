@@ -4,7 +4,8 @@ import {ImpersonationService, ImpersonationUserSelectService, UserService} from 
 @Component({
     selector: 'nc-impersonate-quick-panel',
     templateUrl: './impersonate-quick-panel.component.html',
-    styleUrls: []
+    styleUrls: [],
+    standalone: false
 })
 export class ImpersonateQuickPanelComponent {
 

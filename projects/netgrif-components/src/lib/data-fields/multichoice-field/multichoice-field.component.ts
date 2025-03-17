@@ -7,7 +7,8 @@ import {AbstractMultichoiceFieldComponent, NAE_INFORM_ABOUT_INVALID_DATA} from '
 @Component({
     selector: 'nc-multichoice-field',
     templateUrl: './multichoice-field.component.html',
-    styleUrls: ['./multichoice-field.component.scss']
+    styleUrls: ['./multichoice-field.component.scss'],
+    standalone: false
 })
 export class MultichoiceFieldComponent extends AbstractMultichoiceFieldComponent {
 

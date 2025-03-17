@@ -3,10 +3,10 @@
                   (click)="$event.stopPropagation();" color='primary' class="checkbox-padding"></mat-checkbox>
     <mat-icon *ngIf="approval && typeApproval === 'enumeration'" color="warn" (click)="setValue();$event.stopPropagation();" class="checkbox-padding cursor-fix">close</mat-icon>
     <div [ngStyle]="{'min-width': getMinWidth()}" *ngFor="let header of headerService.headerState.selectedHeaders$ | async; let i = index" fxFlex
-         [fxHide.lt-xl]="i >= 4 && this.headerService.responsiveHeaders && !this.headerService.overflowMode"
-         [fxHide.lt-lg]="i >= 3 && this.headerService.responsiveHeaders && !this.headerService.overflowMode"
-         [fxHide.lt-md]="i >= 2 && this.headerService.responsiveHeaders && !this.headerService.overflowMode"
-         [fxHide.lt-sm]="i >= 1 && this.headerService.responsiveHeaders && !this.headerService.overflowMode">
+         [fxHide.lt-xl]="i >= 4 && headerService.responsiveHeaders && !headerService.overflowMode"
+         [fxHide.lt-lg]="i >= 3 && headerService.responsiveHeaders && !headerService.overflowMode"
+         [fxHide.lt-md]="i >= 2 && headerService.responsiveHeaders && !headerService.overflowMode"
+         [fxHide.lt-sm]="i >= 1 && headerService.responsiveHeaders && !headerService.overflowMode">
         <div *ngIf="!!header; then thenBlock else elseBlock" fxFlex></div>
         <ng-template #thenBlock>
             <span fxFlex class="header-text"

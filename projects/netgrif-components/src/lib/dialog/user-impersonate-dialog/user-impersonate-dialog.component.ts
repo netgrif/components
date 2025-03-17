@@ -53,7 +53,8 @@ function localAllowedNetsFactory(factory: AllowedNetsServiceFactory): AllowedNet
                 `${UserImpersonationConstants.IMPERSONATION_CONFIG_NET_IDENTIFIER}-${UserImpersonationConstants.IMPERSONATION_CONFIG_FIELD_AUTHS}`,
             ]
         }
-    ]
+    ],
+    standalone: false
 })
 export class UserImpersonateDialogComponent extends AbstractCaseViewComponent implements AfterViewInit {
 

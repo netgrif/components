@@ -10,7 +10,8 @@ import {TranslateService} from '@ngx-translate/core';
 @Component({
     selector: 'nc-rich-textarea-field',
     templateUrl: './rich-textarea-field.component.html',
-    styleUrls: ['./rich-textarea-field.component.scss']
+    styleUrls: ['./rich-textarea-field.component.scss'],
+    standalone: false
 })
 export class RichTextareaFieldComponent extends AbstractRichTextareaFieldComponent {
     constructor(protected _translate: TranslateService,

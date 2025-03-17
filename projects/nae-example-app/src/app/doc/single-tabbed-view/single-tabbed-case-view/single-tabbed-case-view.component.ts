@@ -23,7 +23,8 @@ import {HeaderComponent} from '@netgrif/components';
         SearchService,
         OverflowService,
         ViewIdService
-    ]
+    ],
+    standalone: false
 })
 export class SingleTabbedCaseViewComponent extends AbstractTabbedCaseViewComponent implements AfterViewInit {
 

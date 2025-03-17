@@ -8,7 +8,8 @@ import {AbstractMultiUserAssignComponent, NAE_SIDE_MENU_CONTROL, SideMenuControl
     selector: 'nc-multi-user-assign',
     templateUrl: './multi-user-assign.component.html',
     styleUrls: ['./multi-user-assign.component.scss'],
-    providers: [UserListService]
+    providers: [UserListService],
+    standalone: false
 })
 export class MultiUserAssignComponent extends AbstractMultiUserAssignComponent {
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) protected _sideMenuControl: SideMenuControl) {

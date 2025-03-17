@@ -3,17 +3,19 @@ import {ComponentType} from "@angular/cdk/portal";
 import {FilterFieldTabViewContentComponent} from "../tab-view-filter-field/filter-field-tab-view-content.component";
 import {FilterFieldContentComponent} from "../filter-field-content/filter-field-content.component";
 import {
+    AbstractFilterDefaultFieldComponent,
+    AbstractFilterFieldContentComponent,
+    Dashboard,
     DATA_FIELD_PORTAL_DATA,
     DataFieldPortalData,
-    FilterField,
-    AbstractFilterFieldContentComponent,
-    Dashboard, AbstractFilterDefaultFieldComponent
+    FilterField
 } from '@netgrif/components-core';
 
 @Component({
-  selector: 'nc-filter-default-field',
-  templateUrl: './filter-default-field.component.html',
-  styleUrls: ['./filter-default-field.component.scss']
+    selector: 'nc-filter-default-field',
+    templateUrl: './filter-default-field.component.html',
+    styleUrls: ['./filter-default-field.component.scss'],
+    standalone: false
 })
 export class FilterDefaultFieldComponent extends AbstractFilterDefaultFieldComponent {
 

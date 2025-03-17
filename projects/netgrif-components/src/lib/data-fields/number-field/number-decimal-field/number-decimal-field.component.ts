@@ -12,7 +12,8 @@ import {MatFormFieldAppearance} from "@angular/material/form-field";
 @Component({
   selector: 'nc-number-decimal-field',
   templateUrl: './number-decimal-field.component.html',
-  styleUrls: ['./number-decimal-field.component.scss']
+  styleUrls: ['./number-decimal-field.component.scss'],
+    standalone: false
 })
 export class NumberDecimalFieldComponent extends AbstractNumberDecimalFieldComponent {
     constructor(decimalPipe: DecimalPipe,

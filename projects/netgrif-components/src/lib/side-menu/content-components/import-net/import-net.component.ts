@@ -25,7 +25,8 @@ import {TranslateService} from '@ngx-translate/core';
                 animate(300, style({opacity: 0}))
             ])
         ])
-    ]
+    ],
+    standalone: false
 })
 export class ImportNetComponent extends AbstractImportNetComponent {
 

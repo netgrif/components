@@ -48,7 +48,8 @@ function baseFilterFactory(injectedTabData: InjectedTabbedTaskViewData) {
             useFactory: tabbedTaskViewConfigurationFactory,
             deps: [NAE_TAB_DATA]
         }
-    ]
+    ],
+    standalone: false
 })
 export class FilterFieldTabbedTaskViewComponent extends AbstractTabbedTaskViewComponent implements AfterViewInit {
 

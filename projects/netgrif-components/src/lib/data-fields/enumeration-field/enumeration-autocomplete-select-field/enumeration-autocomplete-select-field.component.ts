@@ -9,7 +9,8 @@ import {
 @Component({
     selector: 'nc-enumeration-autocomplete-select-field',
     templateUrl: './enumeration-autocomplete-select-field.component.html',
-    styleUrls: ['./enumeration-autocomplete-select-field.component.scss']
+    styleUrls: ['./enumeration-autocomplete-select-field.component.scss'],
+    standalone: false
 })
 export class EnumerationAutocompleteSelectFieldComponent extends AbstractEnumerationAutocompleteSelectFieldComponent {
 

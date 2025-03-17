@@ -4,7 +4,8 @@ import {LoggerService, User, UserService} from '@netgrif/components-core';
 @Component({
     selector: 'nae-app-authentication',
     templateUrl: './authentication.component.html',
-    styleUrls: ['./authentication.component.scss']
+    styleUrls: ['./authentication.component.scss'],
+    standalone: false
 })
 export class AuthenticationComponent implements OnInit {
 

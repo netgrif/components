@@ -20,7 +20,8 @@ import {
     styleUrls: ['./new-case.component.scss'],
     providers: [{
         provide: STEPPER_GLOBAL_OPTIONS, useValue: {showError: true}
-    }]
+    }],
+    standalone: false
 })
 export class NewCaseComponent extends AbstractNewCaseComponent {
 

@@ -11,7 +11,8 @@ import {
 @Component({
   selector: 'nc-task-ref-dashboard-field',
   templateUrl: './task-ref-dashboard-field.component.html',
-  styleUrls: ['./task-ref-dashboard-field.component.scss']
+  styleUrls: ['./task-ref-dashboard-field.component.scss'],
+    standalone: false
 })
 export class TaskRefDashboardFieldComponent extends AbstractTaskRefDashboardFieldComponent {
 

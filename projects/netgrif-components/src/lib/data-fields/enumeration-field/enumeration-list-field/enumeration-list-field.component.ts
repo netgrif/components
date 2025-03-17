@@ -8,7 +8,8 @@ import {
 @Component({
     selector: 'nc-enumeration-list-field',
     templateUrl: './enumeration-list-field.component.html',
-    styleUrls: ['./enumeration-list-field.component.scss']
+    styleUrls: ['./enumeration-list-field.component.scss'],
+    standalone: false
 })
 export class EnumerationListFieldComponent extends AbstractEnumerationListFieldComponent {
     constructor(@Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<EnumerationField>) {

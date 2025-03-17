@@ -10,7 +10,8 @@ import {NewCaseComponent, UserAssignComponent, FilterSelectorComponent} from '@n
 @Component({
     selector: 'nae-app-sidemenu-example',
     templateUrl: './sidemenu-example.component.html',
-    styleUrls: ['./sidemenu-example.component.scss']
+    styleUrls: ['./sidemenu-example.component.scss'],
+    standalone: false
 })
 export class SidemenuExampleComponent implements OnInit {
     readonly TITLE = 'SideMenu';

@@ -11,7 +11,8 @@ import {
 @Component({
   selector: 'nc-public-workflow-panel',
   templateUrl: './public-workflow-panel.component.html',
-  styleUrls: ['./public-workflow-panel.component.scss']
+  styleUrls: ['./public-workflow-panel.component.scss'],
+    standalone: false
 })
 export class PublicWorkflowPanelComponent extends AbstractWorkflowPanelComponent {
     constructor(log: LoggerService,

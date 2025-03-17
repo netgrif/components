@@ -12,7 +12,8 @@ import {
 @Component({
   selector: 'nc-task-ref-list-field',
   templateUrl: './task-ref-list-field.component.html',
-  styleUrls: ['./task-ref-list-field.component.scss']
+  styleUrls: ['./task-ref-list-field.component.scss'],
+    standalone: false
 })
 export class TaskRefListFieldComponent extends AbstractTaskRefListFieldComponent {
 

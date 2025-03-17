@@ -19,7 +19,8 @@ import {MatDialog} from '@angular/material/dialog';
         WorkflowViewService,
         ProcessServiceProvider,
         PetriNetResourceServiceProvider,
-    ]
+    ],
+    standalone: false
 })
 export class PublicWorkflowViewComponent extends AbstractWorkflowViewComponent {
     constructor(protected _dialog: MatDialog,

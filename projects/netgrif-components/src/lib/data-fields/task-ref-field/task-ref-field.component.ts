@@ -7,7 +7,8 @@ import {AbstractTaskRefFieldComponent, NAE_INFORM_ABOUT_INVALID_DATA} from '@net
 @Component({
     selector: 'nc-task-ref-field',
     templateUrl: './task-ref-field.component.html',
-    styleUrls: ['./task-ref-field.component.scss']
+    styleUrls: ['./task-ref-field.component.scss'],
+    standalone: false
 })
 export class TaskRefFieldComponent extends AbstractTaskRefFieldComponent {
 

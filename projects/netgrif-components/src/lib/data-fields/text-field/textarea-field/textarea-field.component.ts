@@ -10,7 +10,8 @@ import {
 @Component({
     selector: 'nc-textarea-field',
     templateUrl: './textarea-field.component.html',
-    styleUrls: ['./textarea-field.component.scss']
+    styleUrls: ['./textarea-field.component.scss'],
+    standalone: false
 })
 export class TextareaFieldComponent extends AbstractTextareaFieldComponent {
 

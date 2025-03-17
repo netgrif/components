@@ -47,7 +47,8 @@ export function localAllowedNetsFactory(factory: AllowedNetsServiceFactory): All
             deps: [AllowedNetsServiceFactory]},
         {   provide: NAE_DEFAULT_HEADERS,
             useValue: ['meta-title', `${UserFilterConstants.FILTER_NET_IDENTIFIER}-${UserFilterConstants.FILTER_FIELD_ID}`]}
-    ]
+    ],
+    standalone: false
 })
 export class LoadFilterComponent extends AbstractLoadFilterComponent implements AfterViewInit {
 

@@ -37,7 +37,8 @@ const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
             provide: NAE_ASYNC_RENDERING_CONFIGURATION,
             useValue: {enableAsyncRenderingForNewFields: false, enableAsyncRenderingOnTaskExpand: false}
         }
-    ]
+    ],
+    standalone: false
 })
 export class DefaultTaskViewComponent extends AbstractTaskViewComponent implements AfterViewInit {
 

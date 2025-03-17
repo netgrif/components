@@ -7,7 +7,8 @@ import {AbstractUserAssignListComponent, UserListService} from '@netgrif/compone
 @Component({
     selector: 'nc-admin-impersonate-list',
     templateUrl: './admin-impersonate-list.component.html',
-    styleUrls: ['./admin-impersonate-list.component.scss']
+    styleUrls: ['./admin-impersonate-list.component.scss'],
+    standalone: false
 })
 export class AdminImpersonateListComponent extends AbstractUserAssignListComponent {
 

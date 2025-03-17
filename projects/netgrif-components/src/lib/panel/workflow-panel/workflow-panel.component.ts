@@ -10,7 +10,8 @@ import {TranslateService} from '@ngx-translate/core';
 @Component({
     selector: 'nc-workflow-panel',
     templateUrl: './workflow-panel.component.html',
-    styleUrls: ['./workflow-panel.component.scss']
+    styleUrls: ['./workflow-panel.component.scss'],
+    standalone: false
 })
 export class WorkflowPanelComponent extends AbstractWorkflowPanelComponent {
     constructor(log: LoggerService,

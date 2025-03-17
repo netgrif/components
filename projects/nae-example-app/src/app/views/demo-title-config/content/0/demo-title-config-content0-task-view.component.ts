@@ -47,7 +47,8 @@ const baseFilterFactory = (injectedTabData: InjectedTabbedTaskViewData) => {
             deps: [NAE_TAB_DATA]},
         {   provide: ViewIdService, useValue: null},
         {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultTaskSearchCategoriesFactory, deps: [CategoryFactory]},
-    ]
+    ],
+    standalone: false
 })
 export class DemoTitleConfigContent0TaskViewComponent extends AbstractTabbedTaskViewComponent implements AfterViewInit {
 

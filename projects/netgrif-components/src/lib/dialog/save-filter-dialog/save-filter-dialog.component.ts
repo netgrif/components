@@ -48,7 +48,8 @@ export function saveBaseFilterFactory(dialogControl: SaveFilterInjectionData): B
             useFactory: localAllowedNetsFactory,
             deps: [AllowedNetsServiceFactory]
         },
-    ]
+    ],
+    standalone: false
 })
 export class SaveFilterDialogComponent extends AbstractTaskViewComponent {
 

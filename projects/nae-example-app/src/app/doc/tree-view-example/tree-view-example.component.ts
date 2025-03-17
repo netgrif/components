@@ -23,7 +23,8 @@ import {HttpParams} from '@angular/common/http';
         ChangedFieldsService,
         TreeCaseViewService,
         {provide: NAE_TREE_CASE_VIEW_CONFIGURATION, useValue: {pageSize: 100}}
-    ]
+    ],
+    standalone: false
 })
 export class TreeViewExampleComponent {
 

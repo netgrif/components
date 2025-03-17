@@ -4,7 +4,8 @@ import {RedirectService, User} from '@netgrif/components-core';
 @Component({
     selector: 'nae-app-login-card',
     templateUrl: './login-form.component.html',
-    styleUrls: ['./login-form.component.scss']
+    styleUrls: ['./login-form.component.scss'],
+    standalone: false
 })
 export class LoginFormComponent implements OnInit {
 

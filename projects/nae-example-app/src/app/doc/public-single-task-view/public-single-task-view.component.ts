@@ -70,7 +70,8 @@ const localAllowedNetsServiceFactory = (factory: AllowedNetsServiceFactory, rout
         {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
         {provide: AllowedNetsServiceFactory, useClass: AllowedNetsServiceFactory},
         AsyncPipe
-    ]
+    ],
+    standalone: false
 })
 export class PublicSingleTaskViewComponent extends AbstractSingleTaskViewComponent implements OnInit, AfterViewInit {
 

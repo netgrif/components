@@ -11,7 +11,8 @@ import {Subscription} from 'rxjs';
 @Component({
     selector: 'nc-button-default-field',
     templateUrl: './button-default-field.component.html',
-    styleUrls: ['./button-default-field.component.scss']
+    styleUrls: ['./button-default-field.component.scss'],
+    standalone: false
 })
 export class ButtonDefaultFieldComponent extends AbstractButtonDefaultFieldComponent implements OnInit, OnDestroy {
 

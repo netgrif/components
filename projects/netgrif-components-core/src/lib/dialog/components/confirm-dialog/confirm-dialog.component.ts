@@ -12,7 +12,8 @@ import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 @Component({
     selector: 'ncc-question-dialog',
     templateUrl: './confirm-dialog.component.html',
-    styleUrls: ['./confirm-dialog.component.scss']
+    styleUrls: ['./confirm-dialog.component.scss'],
+    standalone: false
 })
 export class ConfirmDialogComponent extends AbstractDialogComponent<ConfirmDialogComponent> {
 

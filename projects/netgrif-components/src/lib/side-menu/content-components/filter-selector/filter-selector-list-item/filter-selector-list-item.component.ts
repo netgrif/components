@@ -8,7 +8,8 @@ import {AbstractFilterSelectorListItemComponent} from '@netgrif/components-core'
 @Component({
     selector: 'nc-filter-selector-list-item',
     templateUrl: './filter-selector-list-item.component.html',
-    styleUrls: ['./filter-selector-list-item.component.scss']
+    styleUrls: ['./filter-selector-list-item.component.scss'],
+    standalone: false
 })
 export class FilterSelectorListItemComponent extends AbstractFilterSelectorListItemComponent {
 

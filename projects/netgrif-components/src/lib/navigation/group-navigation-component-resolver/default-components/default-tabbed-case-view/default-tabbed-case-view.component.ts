@@ -69,7 +69,8 @@ import {
             useFactory: navigationItemCaseViewDefaultHeadersFactory,
             deps: [NAE_NAVIGATION_ITEM_TASK_DATA]
         }
-    ]
+    ],
+    standalone: false
 })
 export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewComponent implements AfterViewInit {
 

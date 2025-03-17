@@ -18,7 +18,8 @@ interface EndpointOption {
 @Component({
     selector: 'nae-app-password-card',
     templateUrl: './password-form.component.html',
-    styleUrls: ['./password-form.component.scss']
+    styleUrls: ['./password-form.component.scss'],
+    standalone: false
 })
 export class PasswordFormComponent implements OnDestroy {
 

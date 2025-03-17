@@ -7,7 +7,8 @@ import {AbstractRoleAssignmentComponent, RoleAssignmentService, UserService} fro
     styleUrls: ['./role-assignment.component.scss'],
     providers: [
         RoleAssignmentService
-    ]
+    ],
+    standalone: false
 })
 export class RoleAssignmentComponent extends AbstractRoleAssignmentComponent {
     constructor(protected _service: RoleAssignmentService, protected _userService: UserService) {

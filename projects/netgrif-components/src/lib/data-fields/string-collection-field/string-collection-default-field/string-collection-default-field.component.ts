@@ -10,7 +10,8 @@ import {TranslateService} from '@ngx-translate/core';
 @Component({
   selector: 'nc-string-collection-default-field',
   templateUrl: './string-collection-default-field.component.html',
-  styleUrls: ['./string-collection-default-field.component.scss']
+  styleUrls: ['./string-collection-default-field.component.scss'],
+    standalone: false
 })
 export class StringCollectionDefaultFieldComponent extends AbstractStringCollectionDefaultFieldComponent {
 

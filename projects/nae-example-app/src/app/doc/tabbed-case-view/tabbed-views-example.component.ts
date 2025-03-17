@@ -12,7 +12,8 @@ import {ReplaySubject} from 'rxjs';
         {provide: NAE_VIEW_ID_SEGMENT, useValue: 'all-cases'},
         {provide: NAE_TASK_FORCE_OPEN, useValue: false},
         ViewIdService
-    ]
+    ],
+    standalone: false
 })
 export class TabbedViewsExampleComponent implements OnInit {
     readonly TITLE = 'Tabbed Views';

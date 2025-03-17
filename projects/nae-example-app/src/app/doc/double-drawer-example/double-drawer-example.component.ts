@@ -3,7 +3,8 @@ import {Component} from '@angular/core';
 @Component({
     selector: 'nae-app-drawer-example',
     templateUrl: './double-drawer-example.component.html',
-    styleUrls: ['./double-drawer-example.component.scss']
+    styleUrls: ['./double-drawer-example.component.scss'],
+    standalone: false
 })
 export class DoubleDrawerExampleComponent {
 

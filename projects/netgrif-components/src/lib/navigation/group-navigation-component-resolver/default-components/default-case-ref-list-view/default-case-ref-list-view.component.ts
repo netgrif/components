@@ -49,6 +49,7 @@ const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
         ViewIdService,
         {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
     ],
+    standalone: false
 })
 export class DefaultCaseRefListViewComponent extends AbstractCaseViewComponent {
 

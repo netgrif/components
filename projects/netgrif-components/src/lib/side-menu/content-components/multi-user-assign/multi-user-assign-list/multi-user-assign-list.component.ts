@@ -4,7 +4,8 @@ import {AbstractMultiUserAssignListComponent, UserListService} from '@netgrif/co
 @Component({
   selector: 'nc-multi-user-assign-list',
   templateUrl: './multi-user-assign-list.component.html',
-  styleUrls: ['./multi-user-assign-list.component.scss']
+  styleUrls: ['./multi-user-assign-list.component.scss'],
+    standalone: false
 })
 export class MultiUserAssignListComponent extends AbstractMultiUserAssignListComponent {
 

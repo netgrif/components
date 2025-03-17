@@ -7,7 +7,8 @@ import {AbstractBooleanFieldComponent, NAE_INFORM_ABOUT_INVALID_DATA} from '@net
 @Component({
     selector: 'nc-boolean-field',
     templateUrl: './boolean-field.component.html',
-    styleUrls: ['./boolean-field.component.scss']
+    styleUrls: ['./boolean-field.component.scss'],
+    standalone: false
 })
 export class BooleanFieldComponent extends AbstractBooleanFieldComponent {
 

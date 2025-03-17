@@ -34,6 +34,7 @@ const baseFilterFactory = () => {
             deps: [AllowedNetsServiceFactory]
         },
     ],
+    standalone: false
 })
 export class HeadersComponent implements OnInit {
 

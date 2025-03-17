@@ -9,7 +9,8 @@ import {
 @Component({
     selector: 'nc-multichoice-select-field',
     templateUrl: './multichoice-select-field.component.html',
-    styleUrls: ['./multichoice-select-field.component.scss']
+    styleUrls: ['./multichoice-select-field.component.scss'],
+    standalone: false
 })
 export class MultichoiceSelectFieldComponent extends AbstractMultichoiceSelectFieldComponent {
 

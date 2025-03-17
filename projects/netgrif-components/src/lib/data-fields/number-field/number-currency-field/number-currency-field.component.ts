@@ -11,7 +11,8 @@ import {CurrencyPipe} from '@angular/common';
 @Component({
     selector: 'nc-number-currency-field',
     templateUrl: './number-currency-field.component.html',
-    styleUrls: ['./number-currency-field.component.scss']
+    styleUrls: ['./number-currency-field.component.scss'],
+    standalone: false
 })
 export class NumberCurrencyFieldComponent extends AbstractCurrencyNumberFieldComponent {
 

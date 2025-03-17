@@ -11,7 +11,8 @@ import {DomSanitizer} from '@angular/platform-browser';
 @Component({
     selector: 'nc-html-textarea-field',
     templateUrl: './html-textarea-field.component.html',
-    styleUrls: ['./html-textarea-field.component.scss']
+    styleUrls: ['./html-textarea-field.component.scss'],
+    standalone: false
 })
 export class HtmlTextareaFieldComponent extends AbstractHtmlTextareaFieldComponent implements AfterViewInit {
     constructor(protected _translate: TranslateService, protected _sanitizer: DomSanitizer,

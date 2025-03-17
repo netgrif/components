@@ -10,7 +10,8 @@ import {
 @Component({
     selector: 'nc-filter-field',
     templateUrl: './filter-field.component.html',
-    styleUrls: ['./filter-field.component.scss']
+    styleUrls: ['./filter-field.component.scss'],
+    standalone: false
 })
 export class FilterFieldComponent extends AbstractFilterFieldComponent {
 

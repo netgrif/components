@@ -76,7 +76,8 @@ const baseFilterFactory = (filterRepository: FilterRepository, userService: User
             provide: NAE_NEW_CASE_COMPONENT,
             useValue: NewCaseComponent
         }
-    ]
+    ],
+    standalone: false
 })
 export class DashboardCaseExampleComponent implements OnInit {
 

@@ -10,7 +10,8 @@ import {
 @Component({
     selector: 'nc-task-content',
     templateUrl: './task-content.component.html',
-    styleUrls: ['./task-content.component.scss']
+    styleUrls: ['./task-content.component.scss'],
+    standalone: false
 })
 export class TaskContentComponent extends AbstractTaskContentComponent {
 

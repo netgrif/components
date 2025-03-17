@@ -4,7 +4,8 @@ import {AbstractLayoutContainerWrapperComponent} from '@netgrif/components-core'
 @Component({
     selector: 'nc-layout-container-wrapper',
     templateUrl: './layout-container-wrapper.component.html',
-    styleUrls: ['./layout-container-wrapper.component.scss']
+    styleUrls: ['./layout-container-wrapper.component.scss'],
+    standalone: false
 })
 export class LayoutContainerWrapperComponent extends AbstractLayoutContainerWrapperComponent {
     constructor() {

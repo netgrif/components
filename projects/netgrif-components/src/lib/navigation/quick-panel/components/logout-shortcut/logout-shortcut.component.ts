@@ -5,7 +5,8 @@ import {AbstractLogoutShortcutComponent, ConfigurationService, LoggerService, Us
 @Component({
     selector: 'nc-logout-shortcut',
     templateUrl: './logout-shortcut.component.html',
-    styleUrls: ['./logout-shortcut.component.scss']
+    styleUrls: ['./logout-shortcut.component.scss'],
+    standalone: false
 })
 export class LogoutShortcutComponent extends AbstractLogoutShortcutComponent {
 

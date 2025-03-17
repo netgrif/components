@@ -4,7 +4,8 @@ import {FilterRepository, MergeOperator} from '@netgrif/components-core';
 @Component({
     selector: 'nae-app-filter-repository-example',
     templateUrl: './filter-repository-example.component.html',
-    styleUrls: ['./filter-repository-example.component.scss']
+    styleUrls: ['./filter-repository-example.component.scss'],
+    standalone: false
 })
 export class FilterRepositoryExampleComponent implements OnInit {
 

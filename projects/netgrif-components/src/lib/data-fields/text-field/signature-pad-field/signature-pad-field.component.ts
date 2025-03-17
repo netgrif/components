@@ -20,7 +20,8 @@ import {filter} from 'rxjs/operators';
 @Component({
     selector: 'nc-signature-pad-field',
     templateUrl: './signature-pad-field.component.html',
-    styleUrls: ['./signature-pad-field.component.scss']
+    styleUrls: ['./signature-pad-field.component.scss'],
+    standalone: false
 })
 export class SignaturePadFieldComponent extends AbstractSimpleTextFieldComponent implements AfterViewInit {
 

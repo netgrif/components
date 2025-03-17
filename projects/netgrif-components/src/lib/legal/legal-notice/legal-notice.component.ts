@@ -4,7 +4,8 @@ import {AbstractLegalNoticeComponent, ConfigurationService} from '@netgrif/compo
 @Component({
     selector: 'nc-legal-notice',
     templateUrl: './legal-notice.component.html',
-    styleUrls: ['./legal-notice.component.scss']
+    styleUrls: ['./legal-notice.component.scss'],
+    standalone: false
 })
 export class LegalNoticeComponent extends AbstractLegalNoticeComponent {
 

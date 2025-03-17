@@ -18,7 +18,8 @@ import {AbstractFilterSelectorComponent, FilterRepository, NAE_SIDE_MENU_CONTROL
 @Component({
     selector: 'nc-filter-selector',
     templateUrl: './filter-selector.component.html',
-    styleUrls: ['./filter-selector.component.scss']
+    styleUrls: ['./filter-selector.component.scss'],
+    standalone: false
 })
 export class FilterSelectorComponent extends AbstractFilterSelectorComponent {
     /**

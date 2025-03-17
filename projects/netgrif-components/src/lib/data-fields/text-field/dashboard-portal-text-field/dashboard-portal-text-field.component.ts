@@ -12,7 +12,8 @@ import {Subscription} from 'rxjs';
 @Component({
     selector: 'nc-dashboard-portal-text-field',
     templateUrl: './dashboard-portal-text-field.component.html',
-    styleUrls: ['./dashboard-portal-text-field.component.scss']
+    styleUrls: ['./dashboard-portal-text-field.component.scss'],
+    standalone: false
 })
 export class DashboardPortalTextFieldComponent extends AbstractDashboardPortalTextFieldComponent implements OnInit, OnDestroy {
     protected _subValue: Subscription;

@@ -10,7 +10,8 @@ import {TranslateService} from '@ngx-translate/core';
 @Component({
     selector: 'nc-dashboard-line-chart-text-field',
     templateUrl: './dashboard-line-chart-text-field.component.html',
-    styleUrls: ['./dashboard-line-chart-text-field.component.scss']
+    styleUrls: ['./dashboard-line-chart-text-field.component.scss'],
+    standalone: false
 })
 export class DashboardLineChartTextFieldComponent extends AbstractDashboardLineChartTextFieldComponent {
 

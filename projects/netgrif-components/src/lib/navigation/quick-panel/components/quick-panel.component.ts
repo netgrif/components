@@ -4,7 +4,8 @@ import {AbstractQuickPanelComponent, LanguageService} from '@netgrif/components-
 @Component({
     selector: 'nc-quick-panel',
     templateUrl: './quick-panel.component.html',
-    styleUrls: ['./quick-panel.component.scss']
+    styleUrls: ['./quick-panel.component.scss'],
+    standalone: false
 })
 export class QuickPanelComponent extends AbstractQuickPanelComponent {
     constructor(protected _select: LanguageService) {

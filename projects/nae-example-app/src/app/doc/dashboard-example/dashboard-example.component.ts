@@ -6,7 +6,8 @@ import {ExamplePortalCardComponent} from './piechart-card/example-portal-card.co
 @Component({
     selector: 'nae-app-dashboard-example',
     templateUrl: './dashboard-example.component.html',
-    styleUrls: ['./dashboard-example.component.scss']
+    styleUrls: ['./dashboard-example.component.scss'],
+    standalone: false
 })
 export class DashboardExampleComponent {
 

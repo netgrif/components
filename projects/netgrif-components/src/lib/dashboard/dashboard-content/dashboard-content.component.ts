@@ -4,7 +4,8 @@ import {AbstractDashboardContentComponent, LoggerService} from '@netgrif/compone
 @Component({
     selector: 'nc-dashboard-content',
     templateUrl: './dashboard-content.component.html',
-    styleUrls: ['./dashboard-content.component.scss']
+    styleUrls: ['./dashboard-content.component.scss'],
+    standalone: false
 })
 export class DashboardContentComponent extends AbstractDashboardContentComponent {
 

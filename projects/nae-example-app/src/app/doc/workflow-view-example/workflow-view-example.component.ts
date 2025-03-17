@@ -13,7 +13,8 @@ import {tap} from 'rxjs/operators';
     styleUrls: ['./workflow-view-example.component.scss'],
     providers: [
         // {provide: NAE_WORKFLOW_SERVICE_CONFIRM_DELETE, useValue: false}
-    ]
+    ],
+    standalone: false
 })
 export class WorkflowViewExampleComponent implements OnInit, AfterViewInit {
     readonly TITLE = 'Workflows view';

@@ -39,7 +39,8 @@ const baseFilterFactory = () => {
         {   provide: AllowedNetsService,
             useFactory: localAllowedNetsFactory,
             deps: [AllowedNetsServiceFactory]},
-    ]
+    ],
+    standalone: false
 })
 export class PanelsComponent implements OnInit {
     readonly TITLE = 'Case panel';

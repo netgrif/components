@@ -12,7 +12,8 @@ import {
 @Component({
   selector: 'nc-multichoice-caseref-field',
   templateUrl: './multichoice-caseref-field.component.html',
-  styleUrls: ['./multichoice-caseref-field.component.scss']
+  styleUrls: ['./multichoice-caseref-field.component.scss'],
+    standalone: false
 })
 export class MultichoiceCaserefFieldComponent extends AbstractMultichoiceCaseRefComponent {
 

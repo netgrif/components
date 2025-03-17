@@ -6,7 +6,8 @@ import {TranslateService} from '@ngx-translate/core';
 @Component({
     selector: 'nc-registration-form',
     templateUrl: './registration-form.component.html',
-    styleUrls: ['./registration-form.component.scss']
+    styleUrls: ['./registration-form.component.scss'],
+    standalone: false
 })
 export class RegistrationFormComponent extends AbstractRegistrationFormComponent {
     constructor(formBuilder: FormBuilder,

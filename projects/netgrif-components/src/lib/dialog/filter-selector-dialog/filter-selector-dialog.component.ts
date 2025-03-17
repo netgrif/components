@@ -13,7 +13,8 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 @Component({
   selector: 'nc-filter-selector-dialog',
   templateUrl: './filter-selector-dialog.component.html',
-  styleUrls: ['./filter-selector-dialog.component.scss']
+  styleUrls: ['./filter-selector-dialog.component.scss'],
+    standalone: false
 })
 export class FilterSelectorDialogComponent implements OnDestroy {
 

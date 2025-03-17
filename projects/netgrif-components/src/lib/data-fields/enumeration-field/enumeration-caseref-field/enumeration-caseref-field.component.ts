@@ -11,7 +11,8 @@ import {
 @Component({
   selector: 'nc-enumeration-caseref-field',
   templateUrl: './enumeration-caseref-field.component.html',
-  styleUrls: ['./enumeration-caseref-field.component.scss']
+  styleUrls: ['./enumeration-caseref-field.component.scss'],
+    standalone: false
 })
 export class EnumerationCaserefFieldComponent extends AbstractEnumerationCaseRefComponent {
 

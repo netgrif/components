@@ -14,7 +14,8 @@ import {
 @Component({
     selector: 'nc-navigation-tree',
     templateUrl: './navigation-tree.component.html',
-    styleUrls: ['./navigation-tree.component.scss']
+    styleUrls: ['./navigation-tree.component.scss'],
+    standalone: false
 })
 export class NavigationTreeComponent extends AbstractNavigationTreeComponent {
 

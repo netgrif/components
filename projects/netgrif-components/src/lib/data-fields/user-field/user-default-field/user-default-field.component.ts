@@ -13,7 +13,8 @@ import {MatDialog} from '@angular/material/dialog';
 @Component({
   selector: 'nc-user-default-field',
   templateUrl: './user-default-field.component.html',
-  styleUrls: ['./user-default-field.component.scss']
+  styleUrls: ['./user-default-field.component.scss'],
+    standalone: false
 })
 export class UserDefaultFieldComponent extends AbstractUserDefaultFieldComponent {
 

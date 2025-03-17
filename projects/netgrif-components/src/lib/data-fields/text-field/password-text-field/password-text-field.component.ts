@@ -9,7 +9,8 @@ import {
 @Component({
   selector: 'nc-password-text-field',
   templateUrl: './password-text-field.component.html',
-  styleUrls: ['./password-text-field.component.scss']
+  styleUrls: ['./password-text-field.component.scss'],
+    standalone: false
 })
 export class PasswordTextFieldComponent extends AbstractPasswordTextFieldComponent {
 

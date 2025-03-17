@@ -16,7 +16,8 @@ import {filter, take} from 'rxjs/operators';
 @Component({
     selector: 'nae-app-root',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+    styleUrls: ['./app.component.scss'],
+    standalone: false
 })
 export class AppComponent {
     title = 'nae-example-app';

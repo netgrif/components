@@ -10,7 +10,8 @@ import {
     styleUrls: ['./ldap-group-role-assignment.component.scss'],
     providers: [
         RoleAssignmentLdapGroupService
-    ]
+    ],
+    standalone: false
 })
 export class LdapGroupRoleAssignmentComponent extends AbstractLdapGroupRoleAssignmentComponent {
     constructor(protected _service: RoleAssignmentLdapGroupService) {

@@ -53,7 +53,8 @@ import {CurrencyPipe} from '@angular/common';
         FinishPolicyService,
         ChangedFieldsService,
         {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
-    ]
+    ],
+    standalone: false
 })
 export class TaskPanelComponent extends AbstractTaskPanelComponent {
 

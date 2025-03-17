@@ -25,7 +25,8 @@ interface Form {
 @Component({
     selector: 'nc-new-case-dialog',
     templateUrl: './new-case-dialog.component.html',
-    styleUrls: ['./new-case-dialog.component.scss']
+    styleUrls: ['./new-case-dialog.component.scss'],
+    standalone: false
 })
 export class NewCaseDialogComponent implements OnDestroy {
 

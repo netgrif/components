@@ -5,7 +5,8 @@ import {AbstractTreeComponent, CaseTreeService} from '@netgrif/components-core';
     selector: 'nc-tree-component',
     templateUrl: './tree.component.html',
     styleUrls: ['./tree.component.scss'],
-    providers: [CaseTreeService]
+    providers: [CaseTreeService],
+    standalone: false
 })
 export class TreeComponent extends AbstractTreeComponent {
     constructor(protected _treeService: CaseTreeService) {

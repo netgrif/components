@@ -49,7 +49,8 @@ const localAllowedNetsServiceFactory = (factory: AllowedNetsServiceFactory, rout
         {   provide: NAE_VIEW_ID_SEGMENT, useValue: 'publicView'},
         {   provide: AllowedNetsServiceFactory, useClass: AllowedNetsServiceFactory},
         ViewIdService,
-    ]
+    ],
+    standalone: false
 })
 export class PublicTaskViewComponent extends AbstractTaskViewComponent implements AfterViewInit {
 

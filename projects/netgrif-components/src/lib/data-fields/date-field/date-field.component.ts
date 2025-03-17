@@ -11,7 +11,8 @@ import {AbstractDateFieldComponent, DATE_FORMAT, NAE_INFORM_ABOUT_INVALID_DATA} 
     styleUrls: ['./date-field.component.scss'],
     providers: [
         {provide: MAT_DATE_FORMATS, useValue: DATE_FORMAT}
-    ]
+    ],
+    standalone: false
 })
 export class DateFieldComponent extends AbstractDateFieldComponent {
     constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {

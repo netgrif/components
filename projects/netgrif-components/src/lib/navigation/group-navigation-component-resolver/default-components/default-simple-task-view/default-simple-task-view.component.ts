@@ -52,7 +52,8 @@ import {ActivatedRoute} from '@angular/router';
                 NAE_DEFAULT_TASK_SEARCH_CATEGORIES
             ]
         },
-    ]
+    ],
+    standalone: false
 })
 export class DefaultSimpleTaskViewComponent extends AbstractTaskViewComponent implements AfterViewInit {
 

@@ -15,7 +15,8 @@ import {MatDialog} from '@angular/material/dialog';
 @Component({
   selector: 'nc-user-list-default-field',
   templateUrl: './user-list-default-field.component.html',
-  styleUrls: ['./user-list-default-field.component.scss']
+  styleUrls: ['./user-list-default-field.component.scss'],
+    standalone: false
 })
 export class UserListDefaultFieldComponent extends AbstractUserListDefaultFieldComponent{
 

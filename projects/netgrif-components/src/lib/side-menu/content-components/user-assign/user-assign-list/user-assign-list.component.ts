@@ -7,7 +7,8 @@ import {AbstractUserAssignListComponent, UserListService} from '@netgrif/compone
 @Component({
     selector: 'nc-user-assign-list',
     templateUrl: './user-assign-list.component.html',
-    styleUrls: ['./user-assign-list.component.scss']
+    styleUrls: ['./user-assign-list.component.scss'],
+    standalone: false
 })
 export class UserAssignListComponent extends AbstractUserAssignListComponent {
 

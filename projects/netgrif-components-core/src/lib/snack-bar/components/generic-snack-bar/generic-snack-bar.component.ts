@@ -6,7 +6,8 @@ import {MAT_SNACK_BAR_DATA, MatSnackBarRef} from '@angular/material/snack-bar';
 @Component({
     selector: 'ncc-generic-snack-bar',
     templateUrl: './generic-snack-bar.component.html',
-    styleUrls: ['./generic-snack-bar.component.scss']
+    styleUrls: ['./generic-snack-bar.component.scss'],
+    standalone: false
 })
 export class GenericSnackBarComponent extends SnackBarComponent<GenericSnackBarComponent> {
 

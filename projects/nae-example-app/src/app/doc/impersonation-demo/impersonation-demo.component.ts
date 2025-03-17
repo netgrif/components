@@ -4,7 +4,8 @@ import {ImpersonationService, ImpersonationUserSelectService, LoggerService} fro
 @Component({
     selector: 'nae-app-impersonation-demo',
     templateUrl: './impersonation-demo.component.html',
-    styleUrls: ['./impersonation-demo.component.scss']
+    styleUrls: ['./impersonation-demo.component.scss'],
+    standalone: false
 })
 export class ImpersonationDemoComponent {
 

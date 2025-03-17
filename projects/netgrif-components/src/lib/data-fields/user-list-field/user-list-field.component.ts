@@ -10,7 +10,8 @@ import {
 @Component({
   selector: 'nc-user-list-field',
   templateUrl: './user-list-field.component.html',
-  styleUrls: ['./user-list-field.component.scss']
+  styleUrls: ['./user-list-field.component.scss'],
+    standalone: false
 })
 export class UserListFieldComponent extends AbstractUserListFieldComponent {
 

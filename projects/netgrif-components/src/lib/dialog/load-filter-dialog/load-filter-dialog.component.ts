@@ -47,7 +47,8 @@ export function loadBaseFilterFactory(dialogControl: LoadFilterInjectionData): B
             provide: NAE_DEFAULT_HEADERS,
             useValue: ['meta-title', `${UserFilterConstants.FILTER_NET_IDENTIFIER}-${UserFilterConstants.FILTER_FIELD_ID}`]
         }
-    ]
+    ],
+    standalone: false
 })
 export class LoadFilterDialogComponent extends AbstractCaseViewComponent implements AfterViewInit {
 

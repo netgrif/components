@@ -10,7 +10,8 @@ import {
 @Component({
     selector: 'nc-file-list-field',
     templateUrl: './file-list-field.component.html',
-    styleUrls: ['./file-list-field.component.scss']
+    styleUrls: ['./file-list-field.component.scss'],
+    standalone: false
 })
 export class FileListFieldComponent extends AbstractFileListFieldComponent {
 

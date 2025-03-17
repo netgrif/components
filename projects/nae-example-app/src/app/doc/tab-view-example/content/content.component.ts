@@ -4,7 +4,8 @@ import {InjectedTabData, NAE_TAB_DATA} from '@netgrif/components-core';
 @Component({
   selector: 'nae-app-content',
   templateUrl: './content.component.html',
-  styleUrls: ['./content.component.scss']
+  styleUrls: ['./content.component.scss'],
+    standalone: false
 })
 export class ContentComponent implements OnInit {
 

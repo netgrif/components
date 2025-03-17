@@ -10,7 +10,8 @@ import {TranslateService} from '@ngx-translate/core';
 @Component({
     selector: 'nc-dashboard-pie-chart-text-field',
     templateUrl: './dashboard-pie-chart-text-field.component.html',
-    styleUrls: ['./dashboard-pie-chart-text-field.component.scss']
+    styleUrls: ['./dashboard-pie-chart-text-field.component.scss'],
+    standalone: false
 })
 export class DashboardPieChartTextFieldComponent extends AbstractDashboardPieChartTextFieldComponent {
 

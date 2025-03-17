@@ -12,8 +12,6 @@ import {
 import {AngularResizeEventModule} from 'angular-resize-event';
 import {HttpClientModule} from '@angular/common/http';
 import {ReactiveFormsModule} from '@angular/forms';
-import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-picker';
-import {NgxMatMomentModule} from '@angular-material-components/moment-adapter';
 import {BooleanFieldComponent} from './boolean-field/boolean-field.component';
 import {ButtonFieldComponent} from './button-field/button-field.component';
 import {DateAdapter} from '@angular/material/core';
@@ -127,6 +125,9 @@ import {
 import {SignaturePadFieldComponent} from './text-field/signature-pad-field/signature-pad-field.component';
 import { StringCollectionDefaultFieldComponent } from './string-collection-field/string-collection-default-field/string-collection-default-field.component';
 import {ComponentPortal} from "@angular/cdk/portal";
+import {
+    NgxMatDatepickerInput, NgxMatDatetimepicker
+} from "@ngxmc/datetime-picker";
 
 @NgModule({
     declarations: [
@@ -205,8 +206,6 @@ import {ComponentPortal} from "@angular/cdk/portal";
         AngularResizeEventModule,
         HttpClientModule,
         ReactiveFormsModule,
-        NgxMatDatetimePickerModule,
-        NgxMatMomentModule,
         TranslateLibModule,
         SideMenuUserAssignComponentModule,
         SideMenuMultiUserAssignComponentModule,
@@ -219,7 +218,9 @@ import {ComponentPortal} from "@angular/cdk/portal";
         BrowserAnimationsModule,
         DashboardComponentModule,
         RouterModule,
-        FrontActionModule
+        FrontActionModule,
+        NgxMatDatepickerInput,
+        NgxMatDatetimepicker,
     ],
     providers: [
         {provide: DateAdapter, useClass: CustomDateAdapter}

@@ -14,7 +14,8 @@ import {CurrencyPipe} from '@angular/common';
 @Component({
     selector: 'nc-case-panel',
     templateUrl: './case-panel.component.html',
-    styleUrls: ['./case-panel.component.scss']
+    styleUrls: ['./case-panel.component.scss'],
+    standalone: false
 })
 export class CasePanelComponent extends AbstractCasePanelComponent implements OnInit {
     protected _changeValue: boolean;

@@ -10,7 +10,8 @@ import {TranslateService} from '@ngx-translate/core';
 @Component({
     selector: 'nc-simple-text-field',
     templateUrl: './simple-text-field.component.html',
-    styleUrls: ['./simple-text-field.component.scss']
+    styleUrls: ['./simple-text-field.component.scss'],
+    standalone: false
 })
 export class SimpleTextFieldComponent extends AbstractSimpleTextFieldComponent {
     constructor(protected _translate: TranslateService,

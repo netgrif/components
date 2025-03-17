@@ -95,7 +95,8 @@ const disableButtonsFactory = () => {
             provide: NAE_ASYNC_RENDERING_CONFIGURATION,
             useValue: {enableAsyncRenderingForNewFields: false, enableAsyncRenderingOnTaskExpand: false}
         }
-    ]
+    ],
+    standalone: false
 })
 export class TaskViewComponent extends AbstractTaskViewComponent implements AfterViewInit {
 

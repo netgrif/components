@@ -12,7 +12,8 @@ import {Subscription} from 'rxjs';
 @Component({
     selector: 'nae-app-public-resolver',
     templateUrl: './public-resolver.component.html',
-    styleUrls: ['./public-resolver.component.scss']
+    styleUrls: ['./public-resolver.component.scss'],
+    standalone: false
 })
 export class PublicResolverComponent implements OnInit, OnDestroy {
 

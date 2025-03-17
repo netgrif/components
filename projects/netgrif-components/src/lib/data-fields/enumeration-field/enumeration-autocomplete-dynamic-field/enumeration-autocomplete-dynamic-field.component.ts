@@ -10,7 +10,8 @@ import {TranslateService} from '@ngx-translate/core';
 @Component({
   selector: 'nc-enumeration-autocomplete-dynamic-field',
   templateUrl: './enumeration-autocomplete-dynamic-field.component.html',
-  styleUrls: ['./enumeration-autocomplete-dynamic-field.component.scss']
+  styleUrls: ['./enumeration-autocomplete-dynamic-field.component.scss'],
+    standalone: false
 })
 export class EnumerationAutocompleteDynamicFieldComponent extends AbstractEnumerationAutocompleteDynamicFieldComponent {
 

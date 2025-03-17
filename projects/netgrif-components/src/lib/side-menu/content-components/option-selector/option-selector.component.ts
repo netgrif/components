@@ -7,7 +7,8 @@ import {AbstractOptionSelectorComponent, NAE_SIDE_MENU_CONTROL, SideMenuControl}
 @Component({
     selector: 'nc-option-selector',
     templateUrl: './option-selector.component.html',
-    styleUrls: ['./option-selector.component.scss']
+    styleUrls: ['./option-selector.component.scss'],
+    standalone: false
 })
 export class OptionSelectorComponent extends AbstractOptionSelectorComponent {
 

@@ -12,7 +12,8 @@ import {TranslateService} from '@ngx-translate/core';
 @Component({
     selector: 'nc-barchart-card',
     templateUrl: './barchart-card.component.html',
-    styleUrls: ['./barchart-card.component.scss']
+    styleUrls: ['./barchart-card.component.scss'],
+    standalone: false
 })
 export class BarchartCardComponent extends AbstractCustomCardComponent implements OnInit {
 

@@ -30,7 +30,8 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
                 animate('0.1s')
             ]),
         ])
-    ]
+    ],
+    standalone: false
 })
 export class I18nTextFieldComponent extends AbstractI18nTextFieldComponent {
     constructor(languageIconsService: LanguageIconsService, translateService: TranslateService, domSanitizer: DomSanitizer,

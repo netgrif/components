@@ -2,12 +2,12 @@
     <mat-checkbox *ngIf="approval && typeApproval === 'multichoice'" [formControl]="approvalFormControl" [indeterminate]="indeterminate"
                   (click)="$event.stopPropagation();" color='primary' class="checkbox-padding"></mat-checkbox>
     <mat-icon *ngIf="approval && typeApproval === 'enumeration'" color="warn" (click)="setValue();$event.stopPropagation();" class="checkbox-padding cursor-fix">close</mat-icon>
-    <mat-form-field *ngFor="let header of this.headerService.selectedHeaders$ | async; let i = index" fxLayout="row"
+    <mat-form-field *ngFor="let header of headerService.selectedHeaders$ | async; let i = index" fxLayout="row"
                     fxLayoutAlign=" center" fxFlex [ngStyle]="{'min-width': getMinWidth()}" appearance="outline"
-                    [fxHide.lt-xl]="i >= 4 && this.headerService.responsiveHeaders && !this.headerService.overflowMode"
-                    [fxHide.lt-lg]="i >= 3 && this.headerService.responsiveHeaders && !this.headerService.overflowMode"
-                    [fxHide.lt-md]="i >= 2 && this.headerService.responsiveHeaders && !this.headerService.overflowMode"
-                    [fxHide.lt-sm]="i >= 1 && this.headerService.responsiveHeaders && !this.headerService.overflowMode">
+                    [fxHide.lt-xl]="i >= 4 && headerService.responsiveHeaders && !headerService.overflowMode"
+                    [fxHide.lt-lg]="i >= 3 && headerService.responsiveHeaders && !headerService.overflowMode"
+                    [fxHide.lt-md]="i >= 2 && headerService.responsiveHeaders && !headerService.overflowMode"
+                    [fxHide.lt-sm]="i >= 1 && headerService.responsiveHeaders && !headerService.overflowMode">
         <mat-label *ngIf="!header">{{ 'headers.newHeader' | translate}}</mat-label>
         <input type="text"
                aria-label="Autocomplete"
@@ -16,7 +16,7 @@
                [matAutocomplete]="auto">
         <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="renderSelection"
                           (optionSelected)="headerColumnSelected(i, $event.option.value)" fxFlex>
-            <mat-optgroup *ngFor="let group of this.filterOptions[i] | async" [label]="group.groupTitle">
+            <mat-optgroup *ngFor="let group of filterOptions[i] | async" [label]="group.groupTitle">
                 <mat-option *ngFor="let field of group.fields" [value]="field">
                     {{field.title | translate}}
                 </mat-option>

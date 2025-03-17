@@ -2,6 +2,7 @@ import {Pipe, PipeTransform} from '@angular/core';
 
 @Pipe({
     name: 'isNonEmpty',
+    standalone: false
 })
 export class IsNonEmptyPipe implements PipeTransform {
 

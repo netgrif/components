@@ -20,7 +20,8 @@ import {TranslateService} from '@ngx-translate/core';
         WorkflowHeaderService,
         HeaderSearchService,
         CategoryFactory
-    ]
+    ],
+    standalone: false
 })
 export class HeaderComponent extends AbstractHeaderComponent implements OnInit {
     protected _changeValue: boolean;
