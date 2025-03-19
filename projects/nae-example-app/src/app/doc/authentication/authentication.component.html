@@ -8,6 +8,10 @@
             <form fxLayout="column" fxLayoutAlign="start center" class="full-width outer-padding">
                 <mat-form-field class="full-width">
                     <mat-label>Login</mat-label>
+                    <input matInput type="text" placeholder="RealmId" name="realmId" [(ngModel)]="credentials.realmId">
+                </mat-form-field>
+                <mat-form-field class="full-width">
+                    <mat-label>Login</mat-label>
                     <input matInput type="text" placeholder="Login" name="login" [(ngModel)]="credentials.username">
                 </mat-form-field>
                 <mat-form-field class="full-width">
