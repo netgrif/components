@@ -1,5 +1,6 @@
 <!-- Button without title -->
-<button *ngIf="!resolvedCaseButtonTitle && shouldShowCreateButton(); else titleButton" class="create-case-mat-mini-fab"
+<button *ngIf="(!resolvedCaseButtonTitle && (shouldShowCreateButton() | async)); else titleButton"
+        class="create-case-mat-mini-fab"
         mat-mini-fab color="primary" (click)="createNewCase()"
         [class.spinner]="loading$ | async" [disabled]="(loading$ | async) || disabled">
     <mat-icon *ngIf="(loading$ | async) === false" class="net-upload" aria-hidden="false">
@@ -9,8 +10,9 @@
 
 <!-- Button with title -->
 <ng-template #titleButton>
-    <button *ngIf="shouldShowCreateButton()" mat-flat-button class="height-44" color="primary" (click)="createNewCase()"
-            [class.spinner]="loading$ | async" [disabled]="(loading$ | async) || disabled">
+    <button *ngIf="shouldShowCreateButton() | async" mat-flat-button class="height-44" color="primary"
+            (click)="createNewCase()" [class.spinner]="loading$ | async"
+            [disabled]="(loading$ | async) || disabled">
         <mat-icon *ngIf="!!resolvedCaseButtonIcon && (loading$ | async) === false" class="button-icon"
                   aria-hidden="false">
             {{ resolvedCaseButtonIcon }}

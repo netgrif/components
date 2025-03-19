@@ -1,84 +1,92 @@
 <div *ngIf="!user">
     <div fxLayout="row" fxFlex="50" fxLayoutAlign="center center">
         <mat-card fxLayoutAlign="center center">
-            <h1>{{ 'profile.notLogged' | translate}}</h1>
+            <h1>{{ 'profile.notLogged' | translate }}</h1>
         </mat-card>
     </div>
 </div>
 <div *ngIf="user" fxLayout="column" fxLayoutAlign="center start">
-    <div [style.backgroundImage]="'url('+userBanner+')'" fxLayout="row" class="full-width banner mat-elevation-z6"
+    <div [style.backgroundImage]="'url('+userBanner+')'" fxLayout="row wrap" class="full-width banner mat-elevation-z6"
          matRipple fxLayoutAlign="start center">
         <div class="user-avatar-large mat-elevation-z6 margin-banner" matRipple>
             <img [src]="userAvatar" alt="user avatar" class="full-width full-height">
         </div>
-        <h1 class="white-name">{{user.fullName}}</h1>
+        <h1 class="white-name">{{ user.fullName }}</h1>
     </div>
     <div fxLayout="row" fxFlex fxLayoutAlign="center end" class="full-width div-background netgrif-input">
-        <div fxFlex="80" class="tab-group margin-bottom-x2 mat-elevation-z4">
-            <div fxLayout="row">
-                <div fxFlex="50" class="padding-x2" fxLayout="column">
+        <div fxFlex="100" fxFlex.gt-sm="80" class="tab-group margin-bottom-x2 mat-elevation-z4">
+            <div fxLayout="row wrap">
+                <div fxFlex="100" fxFlex.gt-sm="50" class="padding-x2" fxLayout="column">
                     <div fxLayout="column" class="full-height border">
-                        <div fxLayoutAlign="center start" class="card-title" matRipple>
-                            <h2>{{ 'profile.personal' | translate}}</h2>
+                        <div fxLayoutAlign="center start" class="card-title margin-bottom-default" matRipple>
+                            <h2>{{ 'profile.personal' | translate }}</h2>
                         </div>
                         <div fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">
-                            <mat-form-field appearance="outline" class="full-width">
-                                <mat-label>{{ 'profile.name' | translate}}</mat-label>
-                                <input matInput disabled [value]=user.firstName>
+                            <mat-form-field appearance="outline" class="full-width form-field">
+                                <mat-label>{{ 'profile.name' | translate }}</mat-label>
+                                <input matInput disabled [value]="user.firstName">
                             </mat-form-field>
-                            <mat-form-field appearance="outline" class="full-width">
-                                <mat-label>{{ 'profile.surname' | translate}}</mat-label>
-                                <input matInput disabled [value]=user.lastName>
+                            <mat-form-field appearance="outline" class="full-width form-field">
+                                <mat-label>{{ 'profile.surname' | translate }}</mat-label>
+                                <input matInput disabled [value]="user.lastName">
                             </mat-form-field>
-                            <mat-form-field appearance="outline" class="full-width">
+                            <mat-form-field appearance="outline" class="full-width form-field">
                                 <mat-label>Email</mat-label>
-                                <input disabled matInput [value]="user.email">
+                                <input matInput disabled [value]="user.email">
                             </mat-form-field>
                         </div>
                     </div>
                 </div>
-                <div fxFlex="50" class="padding-x2" fxLayout="column">
+                <div fxFlex="100" fxFlex.gt-sm="50" class="padding-x2" fxLayout="column">
                     <div fxLayout="column" class="full-height border">
-                        <div fxLayoutAlign="center start" class="card-title" matRipple>
-                            <h2>{{ 'profile.authority' | translate}}</h2>
+                        <div fxLayoutAlign="center start" class="card-title margin-bottom-default" matRipple>
+                            <h2>{{ 'profile.authority' | translate }}</h2>
                         </div>
                         <div fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">
-                            <mat-form-field appearance="outline" class="user-chip-list" *ngIf="user.authorities?.length > 0">
-                                <mat-chip-listbox disabled>
-                                    <mat-chip-option color="primary"
-                                              *ngFor="let authority of user.authorities">{{authority}}</mat-chip-option>
+                            <div class="user-chip-list full-width" *ngIf="user.authorities?.length > 0">
+                                <mat-chip-listbox class="chip-listbox" [disabled]="true">
+                                    <mat-chip-option class="chip-option" color="primary"
+                                                     *ngFor="let authority of user.authorities">
+                                        {{ authority }}
+                                    </mat-chip-option>
                                 </mat-chip-listbox>
-                            </mat-form-field>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div fxLayout="row">
-                <div fxFlex="50" class="padding-x2" fxLayout="column">
+            <div fxLayout="row wrap">
+                <div fxFlex="100" fxFlex.gt-sm="50" class="padding-x2" fxLayout="column">
                     <div fxLayout="column" class="full-height border">
-                        <div fxLayoutAlign="center start" class="card-title" matRipple>
-                            <h2>{{ 'profile.roles' | translate}}</h2>
+                        <div fxLayoutAlign="center start" class="card-title margin-bottom-default" matRipple>
+                            <h2>{{ 'profile.roles' | translate }}</h2>
                         </div>
                         <div fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">
-                            <mat-form-field appearance="outline" class="user-chip-list" *ngIf="user.roles?.length > 0">
-                                <mat-chip-listbox disabled>
-                                    <mat-chip-option color="primary" *ngFor="let role of user.roles">{{role.name}}</mat-chip-option>
+                            <div class="user-chip-list full-width" *ngIf="user.roles?.length > 0">
+                                <mat-chip-listbox class="chip-listbox margin-top-default" [disabled]="true">
+                                    <mat-chip-option class="chip-option" color="primary"
+                                                     *ngFor="let role of user.roles">
+                                        {{ role.name }}
+                                    </mat-chip-option>
                                 </mat-chip-listbox>
-                            </mat-form-field>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div fxFlex="50" class="padding-x2" fxLayout="column">
+                <div fxFlex="100" fxFlex.gt-sm="50" class="padding-x2" fxLayout="column">
                     <div fxLayout="column" class="full-height border">
-                        <div fxLayoutAlign="center start" class="card-title" matRipple>
-                            <h2>{{ 'profile.groups' | translate}}</h2>
+                        <div fxLayoutAlign="center start" class="card-title margin-bottom-default" matRipple>
+                            <h2>{{ 'profile.groups' | translate }}</h2>
                         </div>
                         <div fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">
-                            <mat-form-field appearance="outline" class="user-chip-list" *ngIf="user.groups?.length > 0">
-                                <mat-chip-listbox disabled>
-                                    <mat-chip-option color="primary" *ngFor="let group of user.groups">{{group}}</mat-chip-option>
+                            <div class="user-chip-list full-width" *ngIf="user.groups?.length > 0">
+                                <mat-chip-listbox class="chip-listbox" [disabled]="true">
+                                    <mat-chip-option class="chip-option" color="primary"
+                                                     *ngFor="let group of user.groups">
+                                        {{ group }}
+                                    </mat-chip-option>
                                 </mat-chip-listbox>
-                            </mat-form-field>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -22,10 +22,14 @@ import {NAE_NEW_CASE_CONFIGURATION} from '../models/new-case-configuration-injec
 import {NewCaseConfiguration} from '../models/new-case-configuration';
 import {ProcessService} from '../../../process/process.service';
 import {PetriNetReferenceWithPermissions} from '../../../process/petri-net-reference-with-permissions';
-import {SearchIndexResolverService} from '../../../search/search-keyword-resolver-service/search-index-resolver.service';
+import {
+    SearchIndexResolverService
+} from '../../../search/search-keyword-resolver-service/search-index-resolver.service';
 import {AllowedNetsService} from '../../../allowed-nets/services/allowed-nets.service';
 import {AbstractSortableViewComponent} from '../../abstract/sortable-view';
-import {NewCaseCreationConfigurationData} from '../../../side-menu/content-components/new-case/model/new-case-injection-data';
+import {
+    NewCaseCreationConfigurationData
+} from '../../../side-menu/content-components/new-case/model/new-case-injection-data';
 import {PermissionService} from '../../../authorization/permission/permission.service';
 import {EventOutcomeMessageResource} from '../../../resources/interface/message-resource';
 import {CreateCaseEventOutcome} from '../../../event/model/event-outcomes/case-outcomes/create-case-event-outcome';
@@ -247,6 +251,12 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
     }): Observable<Case> {
         const myCase = new Subject<Case>();
         this.getNewCaseAllowedNets(newCaseCreationConfiguration.blockNets).subscribe((nets: Array<PetriNetReferenceWithPermissions>) => {
+            if (!nets || nets.length === 0) {
+                const errorMessage = this._translate.instant('side-menu.new-case.noNets');
+                this._snackBarService.openErrorSnackBar(errorMessage);
+                this._log.error('No nets available for case creation. Ensure the allowed nets configuration is correct.');
+                return;
+            }
             this._caseResourceService.createCase({
                 title: null,
                 color: 'panel-primary-icon',
@@ -257,7 +267,15 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
                 this.reload();
                 myCase.next((response.outcome as CreateCaseEventOutcome).aCase);
                 myCase.complete();
-            }, error => this._snackBarService.openErrorSnackBar(error.message ? error.message : error));
+            }, error => {
+                const errorMessage = error.message ? error.message : this._translate.instant('side-menu.new-case.createCaseError');
+                this._snackBarService.openErrorSnackBar(errorMessage);
+                this._log.error('Error occurred during case creation: ' + errorMessage);
+            });
+        }, error => {
+            const errorMessage = error.message || this._translate.instant('side-menu.new-case.errorCreate');
+            this._log.error('Failed to fetch allowed nets. Error: ' + errorMessage);
+            this._snackBarService.openErrorSnackBar(errorMessage);
         });
         return myCase;
     }
