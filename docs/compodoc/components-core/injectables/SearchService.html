@@ -166,6 +166,10 @@
                                     <span class="modifier">Protected</span>
                                 <a href="#updateActiveFilter" >updateActiveFilter</a>
                             </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#updateWithFullFilter" >updateWithFullFilter</a>
+                            </li>
                         </ul>
                     </td>
                 </tr>
@@ -618,8 +622,8 @@ use the <a href="../injectables/SearchService.html#addGeneratedLeafPredicate">ad
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="367"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:367</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="375"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:375</a></div>
                 </td>
             </tr>
 
@@ -663,8 +667,8 @@ use the <a href="../injectables/SearchService.html#addGeneratedLeafPredicate">ad
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="311"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:311</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="319"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:319</a></div>
                 </td>
             </tr>
 
@@ -711,8 +715,8 @@ Otherwise returns the serialized form of the completed queries in the predicate 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="324"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:324</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="332"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:332</a></div>
                 </td>
             </tr>
 
@@ -1096,6 +1100,83 @@ and updates the active Filter.</p>
                     <div class="io-description">
                         <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateWithFullFilter"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>updateWithFullFilter</b></span>
+                        <a href="#updateWithFullFilter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateWithFullFilter(newFilter: <a href="../classes/Filter.html" target="_self">Filter</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="311"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:311</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Loads whole new filter and search cases/tasks based on this filter</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>newFilter</td>
+                                    <td>
+                                                <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>whole new filter that should be used for search</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
                     </div>
                 </td>
             </tr>
@@ -1977,6 +2058,14 @@ export class SearchService implements OnDestroy {
         } else {
             this._activeFilter.next(this._baseFilter.clone());
         }
+    }
+
+    /**
+     * Loads whole new filter and search cases/tasks based on this filter
+     * @param newFilter whole new filter that should be used for search
+     */
+    public updateWithFullFilter(newFilter: Filter): void {
+        this._activeFilter.next(newFilter);
     }
 
     /**

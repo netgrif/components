@@ -299,8 +299,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="25"
-                            class="link-to-prism">projects/netgrif-components/src/lib/data-fields/task-ref-field/task-ref-dashboard-field/task-ref-dashboard-field.component.ts:25</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="28"
+                            class="link-to-prism">projects/netgrif-components/src/lib/data-fields/task-ref-field/task-ref-dashboard-field/task-ref-dashboard-field.component.ts:28</a></div>
                 </td>
             </tr>
 
@@ -336,8 +336,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="29"
-                            class="link-to-prism">projects/netgrif-components/src/lib/data-fields/task-ref-field/task-ref-dashboard-field/task-ref-dashboard-field.component.ts:29</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="32"
+                            class="link-to-prism">projects/netgrif-components/src/lib/data-fields/task-ref-field/task-ref-dashboard-field/task-ref-dashboard-field.component.ts:32</a></div>
                 </td>
             </tr>
 
@@ -373,8 +373,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="33"
-                            class="link-to-prism">projects/netgrif-components/src/lib/data-fields/task-ref-field/task-ref-dashboard-field/task-ref-dashboard-field.component.ts:33</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="36"
+                            class="link-to-prism">projects/netgrif-components/src/lib/data-fields/task-ref-field/task-ref-dashboard-field/task-ref-dashboard-field.component.ts:36</a></div>
                 </td>
             </tr>
 
@@ -441,8 +441,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="37"
-                            class="link-to-prism">projects/netgrif-components/src/lib/data-fields/task-ref-field/task-ref-dashboard-field/task-ref-dashboard-field.component.ts:37</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="40"
+                            class="link-to-prism">projects/netgrif-components/src/lib/data-fields/task-ref-field/task-ref-dashboard-field/task-ref-dashboard-field.component.ts:40</a></div>
                 </td>
             </tr>
 
@@ -558,6 +558,9 @@ export class TaskRefDashboardFieldComponent extends AbstractTaskRefDashboardFiel
     constructor(logger: LoggerService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData&lt;TaskRefField&gt;) {
         super(logger, dataFieldPortalData);
+        if (!!dataFieldPortalData &amp;&amp; dataFieldPortalData?.additionalFieldProperties?.taskContentComponentClassReference) {
+            this.taskContentComponentClassReference &#x3D; dataFieldPortalData.additionalFieldProperties.taskContentComponentClassReference as unknown as Type&lt;any&gt;;
+        }
     }
 
     getGridColumns(): string {

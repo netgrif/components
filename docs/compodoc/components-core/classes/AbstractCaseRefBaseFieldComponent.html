@@ -343,7 +343,7 @@ export abstract class AbstractCaseRefBaseFieldComponent&lt;T extends DataField&l
         }
         let providers &#x3D; [
             {
-                provide: NAE_DEFAULT_HEADERS, useValue: this.dataField.component?.properties?.headers.split(&#x27;,&#x27;)
+                provide: NAE_DEFAULT_HEADERS, useValue: this.dataField.component?.properties?.headers?.split(&#x27;,&#x27;)
             },
             {
                 provide: NAE_CASE_REF_CREATE_CASE, useValue: this.dataField.component?.properties?.createCase &#x3D;&#x3D;&#x3D; &#x27;true&#x27;

@@ -386,7 +386,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>extractCompleteFilterFromData(dataSection: Array<DataGroup>, fieldId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>extractCompleteFilterFromData(dataSection?: Array<DataGroup>, filterData?: <a href="../classes/Filter.html" target="_self">Filter</a>, fieldId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
@@ -421,7 +421,21 @@
                                     </td>
 
                                     <td>
-                                        No
+                                        Yes
+                                    </td>
+
+                                    <td>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td>filterData</td>
+                                    <td>
+                                                <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
+                                    </td>
+
+                                    <td>
+                                        Yes
                                     </td>
 
                                     <td>
@@ -481,8 +495,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="96"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/utility/filter-extraction.service.ts:96</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="100"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/utility/filter-extraction.service.ts:100</a></div>
                 </td>
             </tr>
 
@@ -635,7 +649,7 @@ export class FilterExtractionService {
         return this.extractCompleteFilterFromData(dataSection.slice(taskRefIndex.dataGroupIndex + 1));
     }
 
-    public extractCompleteFilterFromData(dataSection: Array&lt;DataGroup&gt;, fieldId: string &#x3D; UserFilterConstants.FILTER_FIELD_ID): Filter | undefined {
+    public extractCompleteFilterFromData(dataSection?: Array&lt;DataGroup&gt;, filterData?: Filter, fieldId: string &#x3D; UserFilterConstants.FILTER_FIELD_ID): Filter | undefined {
         const filterIndex &#x3D; getFieldIndexFromDataGroups(dataSection, fieldId);
 
         if (filterIndex &#x3D;&#x3D;&#x3D; undefined) {
@@ -651,7 +665,11 @@ export class FilterExtractionService {
             throw new Error(&#x27;Filter segment could not be extracted from filter field&#x27;);
         }
 
-        const parentFilter &#x3D; this.extractCompleteFilterFromData(dataSection.slice(filterIndex.dataGroupIndex + 1));
+        if (!!filterData) {
+            filterSegment &#x3D; filterSegment.merge(filterData, MergeOperator.AND);
+        }
+
+        const parentFilter &#x3D; this.extractCompleteFilterFromData(dataSection.slice(filterIndex.dataGroupIndex + 1), filterData);
 
         if (parentFilter !&#x3D;&#x3D; undefined &amp;&amp; parentFilter.type &#x3D;&#x3D;&#x3D; filterSegment.type) {
             return filterSegment.merge(parentFilter, MergeOperator.AND);
