@@ -58,7 +58,7 @@ export class FilterExtractionService {
         return this.extractCompleteFilterFromData(dataSection.slice(taskRefIndex.dataGroupIndex + 1));
     }
 
-    public extractCompleteFilterFromData(dataSection: Array<DataGroup>, fieldId: string = UserFilterConstants.FILTER_FIELD_ID): Filter | undefined {
+    public extractCompleteFilterFromData(dataSection?: Array<DataGroup>, filterData?: Filter, fieldId: string = UserFilterConstants.FILTER_FIELD_ID): Filter | undefined {
         const filterIndex = getFieldIndexFromDataGroups(dataSection, fieldId);
 
         if (filterIndex === undefined) {
@@ -74,7 +74,11 @@ export class FilterExtractionService {
             throw new Error('Filter segment could not be extracted from filter field');
         }
 
-        const parentFilter = this.extractCompleteFilterFromData(dataSection.slice(filterIndex.dataGroupIndex + 1));
+        if (!!filterData) {
+            filterSegment = filterSegment.merge(filterData, MergeOperator.AND);
+        }
+
+        const parentFilter = this.extractCompleteFilterFromData(dataSection.slice(filterIndex.dataGroupIndex + 1), filterData);
 
         if (parentFilter !== undefined && parentFilter.type === filterSegment.type) {
             return filterSegment.merge(parentFilter, MergeOperator.AND);

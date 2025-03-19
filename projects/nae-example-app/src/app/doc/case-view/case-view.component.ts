@@ -13,7 +13,9 @@ import {
     defaultCaseSearchCategoriesFactory,
     NAE_BASE_FILTER,
     AllowedNetsServiceFactory,
-    AllowedNetsService, UserFilterConstants, TaskSetDataRequestFields
+    AllowedNetsService,
+    UserFilterConstants,
+    TaskSetDataRequestFields
 } from '@netgrif/components-core';
 import {HeaderComponent} from '@netgrif/components';
 

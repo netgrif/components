@@ -17,7 +17,7 @@ export abstract class AbstractCaseListPaginatorComponent extends AbstractDefault
     public length: number;
     public pageSize = 20;
     public pageIndex = 0;
-    public pageSizeOptions: number[] = [10, 20, 50];
+    public pageSizeOptions: number[] = [10, 20, 50, 100];
     @Input() public approval: boolean;
     @Input() public disabled: boolean;
 
