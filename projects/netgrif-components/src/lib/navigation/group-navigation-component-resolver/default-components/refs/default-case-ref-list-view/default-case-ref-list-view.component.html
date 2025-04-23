@@ -3,7 +3,7 @@
     <div class="case-view-search-container">
         <div fxLayout="row" fxLayoutAlign="space-between">
             <div fxLayoutAlign="start center" fxFlex *ngIf="search">
-                <nc-search class="search-width" [disabled]="disabled()" [additionalFilterData]="additionalFilterData"></nc-search>
+                <nc-search class="search-width" [disabled]="disabled()" [additionalFilterData]="additionalFilterData" (filterLoaded)="loadFilter($event)"></nc-search>
             </div>
             <div fxLayoutAlign="end center" *ngIf="createCase">
                 <nc-create-case-button [disabled]="disabled()" [newCaseCreationConfig]="newCaseCreationConfig" (caseCreatedEvent)="createdCase($event)"></nc-create-case-button>

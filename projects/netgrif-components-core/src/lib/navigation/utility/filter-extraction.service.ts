@@ -60,7 +60,8 @@ export class FilterExtractionService {
         return this.extractCompleteFilterFromData(dataSection.slice(taskRefIndex.dataGroupIndex + 1), activatedRoute);
     }
 
-    public extractCompleteFilterFromData(dataSection?: Array<DataGroup>, activatedRoute?: ActivatedRoute, fieldId: string = UserFilterConstants.FILTER_FIELD_ID): Filter | undefined {
+    public extractCompleteFilterFromData(dataSection?: Array<DataGroup>, activatedRoute?: ActivatedRoute, filterData?: Filter,
+                                         fieldId: string = UserFilterConstants.FILTER_FIELD_ID): Filter | undefined {
         if (!dataSection) {
             if (!activatedRoute) {
                 throw new Error('ActivatedRoute not provided.');
@@ -86,7 +87,11 @@ export class FilterExtractionService {
             throw new Error('Filter segment could not be extracted from filter field');
         }
 
-        const parentFilter = this.extractCompleteFilterFromData(dataSection.slice(filterIndex.dataGroupIndex + 1), activatedRoute);
+        if (!!filterData) {
+            filterSegment = filterSegment.merge(filterData, MergeOperator.AND);
+        }
+
+        const parentFilter = this.extractCompleteFilterFromData(dataSection.slice(filterIndex.dataGroupIndex + 1), activatedRoute, filterData);
 
         if (parentFilter !== undefined && parentFilter.type === filterSegment.type) {
             return filterSegment.merge(parentFilter, MergeOperator.AND);
