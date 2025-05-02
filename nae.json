@@ -4,7 +4,7 @@
     "providers": {
         "auth": {
             "address": "http://localhost:8080/api/",
-            "authentication": "Basic",
+            "authentication": "BasicWithAuth",
             "endpoints": {
                 "login": "auth/login",
                 "logout": "auth/logout",

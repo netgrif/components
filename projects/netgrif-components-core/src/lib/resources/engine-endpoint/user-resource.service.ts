@@ -25,10 +25,10 @@ export class UserResourceService extends AbstractResourceService {
      *
      * **Request Type:** POST
      *
-     * **Request URL:** {{baseUrl}}/api/user/{id}/authority/assign
+     * **Request URL:** {{baseUrl}}/api/users/{id}/authority/assign
      */
     public assignAuthority(userId: string, body: object, params?: Params): Observable<MessageResource> {
-        return this._resourceProvider.post$('user/' + userId + '/authority/assign', this.SERVER_URL, body, params,
+        return this._resourceProvider.post$('users/' + userId + '/authority/assign', this.SERVER_URL, body, params,
             {'Content-Type': 'text/plain'})
             .pipe(map(r => this.changeType(r, undefined)));
     }
@@ -38,10 +38,10 @@ export class UserResourceService extends AbstractResourceService {
      *
      * **Request Type:** POST
      *
-     * **Request URL:** {{baseUrl}}/api/user/{id}/role/assign
+     * **Request URL:** {{baseUrl}}/api/users/{id}/role/assign
      */
     public assignRoles(userId: string, body: object, params?: Params): Observable<MessageResource> {
-        return this._resourceProvider.post$('user/' + userId + '/role/assign', this.SERVER_URL, body, params)
+        return this._resourceProvider.post$('users/' + userId + '/role/assign', this.SERVER_URL, body, params)
             .pipe(map(r => this.changeType(r, undefined)));
     }
 
@@ -50,10 +50,10 @@ export class UserResourceService extends AbstractResourceService {
      *
      * **Request Type:** GET
      *
-     * **Request URL:** {{baseUrl}}/api/user/authority
+     * **Request URL:** {{baseUrl}}/api/users/authority
      */
     public getAllAuthorities(): Observable<Array<Authority>> {
-        return this._resourceProvider.get$('user/authority', this.SERVER_URL)
+        return this._resourceProvider.get$('users/authority', this.SERVER_URL)
             .pipe(map(r => this.changeType(r, 'authorities')));
     }
 
@@ -74,10 +74,10 @@ export class UserResourceService extends AbstractResourceService {
      *
      * **Request Type:** POST
      *
-     * **Request URL:** {{baseUrl}}/api/user/role
+     * **Request URL:** {{baseUrl}}/api/users/role
      */
     public getAllWithRole(body: object, params?: Params): Observable<Array<UserResource>> {
-        return this._resourceProvider.post$('user/role', this.SERVER_URL, body, params)
+        return this._resourceProvider.post$('users/role', this.SERVER_URL, body, params)
             .pipe(map(r => this.changeType(r, 'users')));
     }
 
@@ -86,10 +86,10 @@ export class UserResourceService extends AbstractResourceService {
      *
      * **Request Type:** GET
      *
-     * **Request URL:** {{baseUrl}}/api/user/me
+     * **Request URL:** {{baseUrl}}/api/users/me
      */
     public getLoggedUser(params?: Params): Observable<UserResource> {
-        return this._resourceProvider.get$('user/me', this.SERVER_URL, params).pipe(
+        return this._resourceProvider.get$('users/me', this.SERVER_URL, params).pipe(
                 map(r => this.changeType(r, undefined)));
     }
 
@@ -98,10 +98,10 @@ export class UserResourceService extends AbstractResourceService {
      *
      * **Request Type:** GET
      *
-     * **Request URL:** {{baseUrl}}/api/user/me
+     * **Request URL:** {{baseUrl}}/api/users/me
      */
     public getPublicLoggedUser(params?: Params): Observable<UserResource> {
-        return this._resourceProvider.get$('public/user/me', this.SERVER_URL, params).pipe(
+        return this._resourceProvider.get$('public/users/me', this.SERVER_URL, params).pipe(
             map(r => this.changeType(r, undefined)));
     }
 
@@ -110,10 +110,10 @@ export class UserResourceService extends AbstractResourceService {
      *
      * **Request Type:** GET
      *
-     * **Request URL:** {{baseUrl}}/api/user/{id}
+     * **Request URL:** {{baseUrl}}/api/users/{id}
      */
     public getUser(userId: string, params?: Params): Observable<UserResource> {
-        return this._resourceProvider.get$('user/' + userId, this.SERVER_URL, params)
+        return this._resourceProvider.get$('users/' + userId, this.SERVER_URL, params)
             .pipe(map(r => this.changeType(r, undefined)));
     }
 
@@ -122,10 +122,10 @@ export class UserResourceService extends AbstractResourceService {
      *
      * **Request Type:** GET
      *
-     * **Request URL:** {{baseUrl}}/api/user/preferences
+     * **Request URL:** {{baseUrl}}/api/users/preferences
      */
     public getPreferences(params?: Params): Observable<Preferences> {
-        return this._resourceProvider.get$('user/preferences', this.SERVER_URL, params)
+        return this._resourceProvider.get$('users/preferences', this.SERVER_URL, params)
             .pipe(map(r => this.changeType(r, undefined)));
     }
 
@@ -134,10 +134,10 @@ export class UserResourceService extends AbstractResourceService {
      *
      * **Request Type:** POST
      *
-     * **Request URL:** {{baseUrl}}/api/user/preferences
+     * **Request URL:** {{baseUrl}}/api/users/preferences
      */
     public setPreferences(body: object, params?: Params): Observable<MessageResource> {
-        return this._resourceProvider.post$('user/preferences', this.SERVER_URL, body, params)
+        return this._resourceProvider.post$('users/preferences', this.SERVER_URL, body, params)
             .pipe(map(r => this.changeType(r, undefined)));
     }
 
@@ -146,10 +146,10 @@ export class UserResourceService extends AbstractResourceService {
      *
      * **Request Type:** GET
      *
-     * **Request URL:** {{baseUrl}}/api/user/preferences
+     * **Request URL:** {{baseUrl}}/api/users/preferences
      */
     public getPublicPreferences(params?: Params): Observable<Preferences> {
-        return this._resourceProvider.get$('public/user/preferences', this.SERVER_URL, params)
+        return this._resourceProvider.get$('public/users/preferences', this.SERVER_URL, params)
             .pipe(map(r => this.changeType(r, undefined)));
     }
 
@@ -158,10 +158,10 @@ export class UserResourceService extends AbstractResourceService {
      *
      * **Request Type:** POST
      *
-     * **Request URL:** {{baseUrl}}/api/user/preferences
+     * **Request URL:** {{baseUrl}}/api/users/preferences
      */
     public setPublicPreferences(body: object, params?: Params): Observable<MessageResource> {
-        return this._resourceProvider.post$('public/user/preferences', this.SERVER_URL, body, params)
+        return this._resourceProvider.post$('public/users/preferences', this.SERVER_URL, body, params)
             .pipe(map(r => this.changeType(r, undefined)));
     }
 
@@ -170,10 +170,10 @@ export class UserResourceService extends AbstractResourceService {
      *
      * **Request Type:** POST
      *
-     * **Request URL:** {{baseUrl}}/api/user/search
+     * **Request URL:** {{baseUrl}}/api/users/search
      */
     public search(body: object, params?: Params): Observable<Page<UserResource>> {
-        return this._resourceProvider.post$('user/search', this.SERVER_URL, body, params)
+        return this._resourceProvider.post$('users/search', this.SERVER_URL, body, params)
             .pipe(map(r => this.getResourcePage<UserResource>(r, 'users')));
     }
 
@@ -182,10 +182,10 @@ export class UserResourceService extends AbstractResourceService {
      *
      * **Request Type:** POST
      *
-     * **Request URL:** {{baseUrl}}/api/user/{id}
+     * **Request URL:** {{baseUrl}}/api/users/{id}
      */
     public updateUser(userId: string, body: object, params?: Params): Observable<UserResource> {
-        return this._resourceProvider.post$('user/' + userId, this.SERVER_URL, body, params)
+        return this._resourceProvider.post$('users/' + userId, this.SERVER_URL, body, params)
             .pipe(map(r => this.changeType(r, undefined)));
     }
 
