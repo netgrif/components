@@ -55,7 +55,8 @@ export class PublicPetriNetResourceService extends PetriNetResourceService {
      */
     public searchPetriNets(body: PetriNetRequestBody, params?: Params): Observable<Page<PetriNetReference>> {
         return this._resourceProvider.post$('public/petrinet/search', this.SERVER_URL, body, params)
-            .pipe(map(r => this.getResourcePage<PetriNetReference>(r, 'petriNetReferences')));
+            // .pipe(map(r => this.getResourcePage<PetriNetReference>(r, 'petriNetReferences')));
+            .pipe(map(r => this.mapToPage<PetriNetReference>(r)));
     }
 
     /**

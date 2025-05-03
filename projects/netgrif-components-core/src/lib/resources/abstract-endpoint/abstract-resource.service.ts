@@ -89,4 +89,35 @@ export abstract class AbstractResourceService {
             return r;
         }
     }
+
+    /**
+     * Converts a Spring-style paginated response into the application's Page<T> format.
+     * @param response The raw response from backend (Spring `PageImpl` structure).
+     * @returns Converted Page<T> object.
+     */
+    protected mapToPage<T>(response: any): Page<T> {
+        if (!response || !response.content) {
+            return {
+                content: [],
+                pagination: {
+                    size: 0,
+                    totalElements: 0,
+                    totalPages: 0,
+                    number: 0
+                }
+            };
+        }
+
+        return {
+            content: response.content,
+            pagination: {
+                size: response.size,
+                totalElements: response.totalElements,
+                totalPages: response.totalPages,
+                number: response.number
+            }
+        };
+    }
+
+
 }
