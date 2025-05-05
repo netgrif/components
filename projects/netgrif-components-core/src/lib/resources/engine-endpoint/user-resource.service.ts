@@ -65,8 +65,8 @@ export class UserResourceService extends AbstractResourceService {
      * **Request URL:** {{baseUrl}}/api/user
      */
     public getAll(params?: Params): Observable<Page<UserResource>> {
-        return this._resourceProvider.get$('user', this.SERVER_URL, params)
-            .pipe(map(r => this.getResourcePage<UserResource>(r, 'users')));
+        return this._resourceProvider.get$('users', this.SERVER_URL, params)
+            .pipe(map(r => this.mapToPage<UserResource>(r)));
     }
 
     /**
@@ -174,7 +174,7 @@ export class UserResourceService extends AbstractResourceService {
      */
     public search(body: object, params?: Params): Observable<Page<UserResource>> {
         return this._resourceProvider.post$('users/search', this.SERVER_URL, body, params)
-            .pipe(map(r => this.getResourcePage<UserResource>(r, 'users')));
+            .pipe(map(r => this.mapToPage<UserResource>(r)));
     }
 
     /**
