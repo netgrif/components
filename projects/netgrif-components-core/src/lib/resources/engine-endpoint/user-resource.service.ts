@@ -40,8 +40,8 @@ export class UserResourceService extends AbstractResourceService {
      *
      * **Request URL:** {{baseUrl}}/api/users/{id}/role/assign
      */
-    public assignRoles(userId: string, body: object, params?: Params): Observable<MessageResource> {
-        return this._resourceProvider.post$('users/' + userId + '/role/assign', this.SERVER_URL, body, params)
+    public assignRoles(userId: string, realmId: string, body: object, params?: Params): Observable<MessageResource> {
+        return this._resourceProvider.put$('users/' + realmId + '/' + userId + '/roles', this.SERVER_URL, body, params)
             .pipe(map(r => this.changeType(r, undefined)));
     }
 

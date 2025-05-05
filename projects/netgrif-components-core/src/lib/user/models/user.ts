@@ -8,7 +8,9 @@ export class User implements IUser {
 
     constructor(
         public id: string,
+        public username: string,
         public email: string,
+        public realmId: string,
         public firstName: string,
         public lastName: string,
         public authorities: Array<string>,
@@ -57,4 +59,5 @@ export class User implements IUser {
     public isImpersonating(): boolean {
         return !!this.impersonated;
     }
+
 }
