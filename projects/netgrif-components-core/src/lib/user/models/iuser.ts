@@ -18,10 +18,20 @@ export interface IUser {
     realmId: string;
     /**
      * **Example:** Example
+     * @deprecated
      */
     name: string;
     /**
+     * **Example:** Example
+     */
+    firstName: string;
+    /**
      * **Example:** Netgrif
+     @deprecated
      */
     surname: string;
+    /**
+     * **Example:** Netgrif
+     */
+    lastName: string;
 }
