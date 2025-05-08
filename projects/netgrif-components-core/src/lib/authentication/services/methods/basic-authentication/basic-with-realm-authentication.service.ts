@@ -26,7 +26,6 @@ export class BasicWithRealmAuthenticationService extends AuthenticationMethodSer
         if (credentials.username === '' || credentials.password === '') {
             return throwError(new Error('User\'s credentials are empty!'));
         }
-        console.log("TOTOOOTOTOTOOK!!!")
         return this._http.post<UserResource>(url, credentials);
     }
 
