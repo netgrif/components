@@ -12,7 +12,7 @@ import {AbstractResourceService} from '../abstract-endpoint/abstract-resource.se
 import {UserResource} from '../interface/user-resource';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class UserResourceService extends AbstractResourceService {
 
@@ -27,8 +27,8 @@ export class UserResourceService extends AbstractResourceService {
      *
      * **Request URL:** {{baseUrl}}/api/users/{id}/authority/assign
      */
-    public assignAuthority(userId: string, body: object, params?: Params): Observable<MessageResource> {
-        return this._resourceProvider.post$('users/' + userId + '/authority/assign', this.SERVER_URL, body, params,
+    public assignAuthority(userId: string, body: object, realmId: string = 'default', params?: Params): Observable<MessageResource> {
+        return this._resourceProvider.post$('users/' + realmId + '/' + userId + '/authority', this.SERVER_URL, body, params, // TODO 2025-05-08 refactor this for exact realm id
             {'Content-Type': 'text/plain'})
             .pipe(map(r => this.changeType(r, undefined)));
     }
@@ -90,7 +90,7 @@ export class UserResourceService extends AbstractResourceService {
      */
     public getLoggedUser(params?: Params): Observable<UserResource> {
         return this._resourceProvider.get$('users/me', this.SERVER_URL, params).pipe(
-                map(r => this.changeType(r, undefined)));
+            map(r => this.changeType(r, undefined)));
     }
 
     /**
@@ -112,8 +112,8 @@ export class UserResourceService extends AbstractResourceService {
      *
      * **Request URL:** {{baseUrl}}/api/users/{id}
      */
-    public getUser(userId: string, params?: Params): Observable<UserResource> {
-        return this._resourceProvider.get$('users/' + userId, this.SERVER_URL, params)
+    public getUser(userId: string, realmId: string = 'default', params?: Params): Observable<UserResource> {
+        return this._resourceProvider.get$('users/' + realmId + '/' + userId, this.SERVER_URL, params)
             .pipe(map(r => this.changeType(r, undefined)));
     }
 
@@ -184,8 +184,8 @@ export class UserResourceService extends AbstractResourceService {
      *
      * **Request URL:** {{baseUrl}}/api/users/{id}
      */
-    public updateUser(userId: string, body: object, params?: Params): Observable<UserResource> {
-        return this._resourceProvider.post$('users/' + userId, this.SERVER_URL, body, params)
+    public updateUser(userId: string, body: object, realmId: string = 'default', params?: Params): Observable<UserResource> {
+        return this._resourceProvider.post$('users/' + realmId + '/' + userId, this.SERVER_URL, body, params) // TODO 2025-05-08 refactor this for exact realm id
             .pipe(map(r => this.changeType(r, undefined)));
     }
 

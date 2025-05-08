@@ -78,10 +78,14 @@ describe('CancelTaskService', () => {
             caseTitle: '',
             user: {
                 id: '',
+                username: '',
+                realmId: '',
                 email: 'mail',
                 name: '',
                 surname: '',
-                fullName: ''
+                fullName: '',
+                firstName: '',
+                lastName: ''
             },
             roles: {
                 role: {
@@ -247,7 +251,7 @@ class TestTaskResourceService {
 
 class TestUserService {
     public get user() {
-        return new User('id', 'mail', '', '', [], [{stringId: 'role'} as ProcessRole]);
+        return new User('id', 'mail', '', '', '', '',[], [{stringId: 'role'} as ProcessRole]);
     }
 
     public hasRoleById(): boolean {
