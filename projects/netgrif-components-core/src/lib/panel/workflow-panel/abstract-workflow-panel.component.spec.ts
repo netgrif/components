@@ -12,7 +12,7 @@ import {AuthenticationMethodService} from '../../authentication/services/authent
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
 import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
-import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
+import {IdentityResourceService} from '../../resources/engine-endpoint/identity-resource.service';
 import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {AbstractWorkflowPanelComponent} from './abstract-workflow-panel.component';
@@ -49,7 +49,7 @@ describe('AbstractWorkflowPanelComponent', () => {
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
-                {provide: UserResourceService, useClass: MockUserResourceService},
+                {provide: IdentityResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 WorkflowViewService,
                 OverflowService,

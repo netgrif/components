@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {
-    UserService,
+    IdentityService,
     SessionService,
     AuthenticationService,
     PublicUrlResolverService,
@@ -19,13 +19,13 @@ export class PublicResolverComponent implements OnInit, OnDestroy {
 
     private _userSub: Subscription;
 
-    constructor(protected _userService: UserService, protected _sessionService: SessionService, protected _router: Router,
+    constructor(protected _userService: IdentityService, protected _sessionService: SessionService, protected _router: Router,
                 protected _auth: AuthenticationService, protected _publicResolver: PublicUrlResolverService,
                 protected redirectService: RedirectService) {
     }
 
     ngOnInit(): void {
-        this._userSub = this._userService.user$.subscribe(user => {
+        this._userSub = this._userService.identity$.subscribe(user => {
             if (!!user && user.id !== '') {
                 this._router.navigate([this.redirectService.parseRedirectPath(this._publicResolver.url)],
                     { queryParams: this.redirectService.queryParams });

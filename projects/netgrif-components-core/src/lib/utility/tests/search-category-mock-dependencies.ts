@@ -1,6 +1,6 @@
 import {OperatorService} from '../../search/operator-service/operator.service';
 import {Observable, of} from 'rxjs';
-import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
+import {IdentityResourceService} from '../../resources/engine-endpoint/identity-resource.service';
 import {CategoryFactory} from '../../search/category-factory/category-factory';
 import {Net} from '../../process/net';
 import {SearchIndexResolverService} from '../../search/search-keyword-resolver-service/search-index-resolver.service';
@@ -15,11 +15,11 @@ const opService = new OperatorService(opResolver);
 export const createMockDependencies: (
     allowedNets$?: Observable<Array<Net>>,
     operatorService?: OperatorService,
-    userResourceService?: UserResourceService) => OptionalDependencies =
+    userResourceService?: IdentityResourceService) => OptionalDependencies =
     (
         allowedNets$: Observable<Array<Net>> = of([]),
         operatorService?: OperatorService,
-        userResourceService = {getAll: () => of({content: [], pagination: {}})} as UserResourceService
+        userResourceService = {getAll: () => of({content: [], pagination: {}})} as IdentityResourceService
     ) => {
         const searchIndexResolver = new SearchIndexResolverService();
         const allowedNetsService = {allowedNets$} as AllowedNetsService;

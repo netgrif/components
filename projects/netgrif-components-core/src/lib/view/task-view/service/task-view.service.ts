@@ -9,7 +9,7 @@ import {Task} from '../../../resources/interface/task';
 import {SearchService} from '../../../search/search-service/search.service';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {ListRange} from '@angular/cdk/collections';
-import {UserComparatorService} from '../../../user/services/user-comparator.service';
+import {UserComparatorService} from '../../../identity/services/user-comparator.service';
 import {TaskEndpoint} from '../models/task-endpoint';
 import {Page} from '../../../resources/interface/page';
 import {NAE_PREFERRED_TASK_ENDPOINT} from '../models/injection-token-task-endpoint';

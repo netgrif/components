@@ -3,7 +3,7 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {Component} from '@angular/core';
 import {AbstractProfileComponent} from './abstract-profile.component';
-import {UserService} from '../services/user.service';
+import {IdentityService} from '../services/identity.service';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
@@ -55,7 +55,7 @@ describe('AbstractProfileComponent', () => {
     template: ''
 })
 class TestProfileComponent extends AbstractProfileComponent {
-    constructor(protected _userService: UserService) {
+    constructor(protected _userService: IdentityService) {
         super(_userService);
     }
 }

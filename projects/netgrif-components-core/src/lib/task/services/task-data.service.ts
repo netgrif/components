@@ -25,7 +25,7 @@ import {DynamicEnumerationField} from '../../data-fields/enumeration-field/model
 import {EventQueueService} from '../../event-queue/services/event-queue.service';
 import {QueuedEvent} from '../../event-queue/model/queued-event';
 import {AfterAction} from '../../utility/call-chain/after-action';
-import {UserComparatorService} from '../../user/services/user-comparator.service';
+import {UserComparatorService} from '../../identity/services/user-comparator.service';
 import {TaskSetDataRequestContext} from '../models/task-set-data-request-context';
 import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
 import {EventService} from '../../event/services/event.service';

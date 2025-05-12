@@ -29,7 +29,7 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
-import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
+import {IdentityResourceService} from '../../resources/engine-endpoint/identity-resource.service';
 import {SearchService} from '../../search/search-service/search.service';
 import {TestTaskBaseFilterProvider, TestTaskViewAllowedNetsFactory} from '../../utility/tests/test-factory-methods';
 import {TaskPanelData} from '../task-panel-list/task-panel-data/task-panel-data';
@@ -93,7 +93,7 @@ describe('AbtsractTaskPanelComponent', () => {
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: TaskResourceService, useClass: MyTaskResources},
-                {provide: UserResourceService, useClass: MockUserResourceService},
+                {provide: IdentityResourceService, useClass: MockUserResourceService},
                 SearchService,
                 {
                     provide: NAE_BASE_FILTER,

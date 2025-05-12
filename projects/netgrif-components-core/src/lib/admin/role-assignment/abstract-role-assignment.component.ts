@@ -1,11 +1,11 @@
 import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatSelectionList} from '@angular/material/list';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
-import {UserListItem, UserListService} from '../../user/services/user-list.service';
+import {UserListItem, UserListService} from '../../actor/services/user-list.service';
 import {ProcessList, ExtendedProcessRole, ProcessVersion} from './services/ProcessList';
 import {FormControl} from '@angular/forms';
 import {RoleAssignmentService} from './services/role-assignment.service';
-import {UserService} from '../../user/services/user.service';
+import {IdentityService} from '../../identity/services/identity.service';
 import {debounceTime} from 'rxjs/operators';
 import {Subscription} from 'rxjs';
 
@@ -14,6 +14,8 @@ import {Subscription} from 'rxjs';
     template: ''
 })
 export abstract class AbstractRoleAssignmentComponent implements OnInit, AfterViewInit, OnDestroy {
+
+    // todo 2058
 
     @ViewChild('userList') public userList: MatSelectionList;
     @ViewChild(CdkVirtualScrollViewport) public viewport: CdkVirtualScrollViewport;
@@ -26,7 +28,7 @@ export abstract class AbstractRoleAssignmentComponent implements OnInit, AfterVi
     protected subValueChanges: Subscription;
     protected subUsers: Subscription;
 
-    constructor(protected _service: RoleAssignmentService, protected _userService: UserService) {
+    constructor(protected _service: RoleAssignmentService, protected _userService: IdentityService) {
         this.users = this._service.userList;
         this.nets = this._service.processList;
         this.userMultiSelect = true;

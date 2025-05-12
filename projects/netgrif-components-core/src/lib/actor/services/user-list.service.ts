@@ -2,7 +2,7 @@ import {Injectable, OnDestroy} from '@angular/core';
 import {BehaviorSubject, forkJoin, Observable, of, Subject, timer} from 'rxjs';
 import {LoadingEmitter} from '../../utility/loading-emitter';
 import {Pagination} from '../../resources/interface/pagination';
-import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
+import {IdentityResourceService} from '../../resources/engine-endpoint/identity-resource.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
@@ -10,10 +10,10 @@ import {catchError, map, mergeMap, scan, tap} from 'rxjs/operators';
 import {HttpParams} from '@angular/common/http';
 import {MessageResource} from '../../resources/interface/message-resource';
 import {Page} from '../../resources/interface/page';
-import {UserResource} from '../../resources/interface/user-resource';
+import {IdentityResource} from '../../resources/interface/identity-resource';
 import {PaginationParams} from '../../utility/pagination/pagination-params';
 
-export interface UserListItem extends UserResource {
+export interface UserListItem extends IdentityResource {
     selected: boolean;
     roles: Set<string>;
 
@@ -85,7 +85,7 @@ export class UserListService implements OnDestroy {
      * @param _snackbar Display info about loading from backend for user.
      * @param _translate Translate messages for user.
      */
-    constructor(private _resources: UserResourceService,
+    constructor(private _resources: IdentityResourceService,
                 private _log: LoggerService,
                 private _snackbar: SnackBarService,
                 private _translate: TranslateService) {
@@ -172,13 +172,14 @@ export class UserListService implements OnDestroy {
             tap(u => this._endOfData = !Array.isArray(u.content) ||
                 (Array.isArray(u.content) && u.content.length === 0) ||
                 u.pagination.number === u.pagination.totalPages),
-            map(users => (Array.isArray(users.content) ? users : {...users, content: []}) as Page<UserResource>),
+            map(users => (Array.isArray(users.content) ? users : {...users, content: []}) as Page<IdentityResource>),
             map(users => {
                 this._pagination = users.pagination;
                 return users.content.reduce((acc, curr) => {
                     const item = curr as UserListItem;
-                    item.roles = new Set<string>(curr.processRoles.map(pr => pr.stringId));
-                    item.processRoles = undefined;
+                    // todo 2058
+                    // item.roles = new Set<string>(curr.processRoles.map(pr => pr.stringId));
+                    // item.processRoles = undefined;
                     item.selected = false;
                     item.toggle = function() {
                         this.selected = !this.selected;
@@ -228,20 +229,20 @@ export class UserListService implements OnDestroy {
             return of([]);
         }
         this._updateProgress$.on();
-        return forkJoin(selectedUsers.map(user => this._resources.assignRoles(user.id + '', selectedRoles))).pipe(
-            tap(messages => {
-                messages.forEach((message, idx) => {
-                    if (message.error) {
-                        this._log.error(message.error, message);
-                        this._snackbar.openErrorSnackBar(message.error);
-                    } else {
-                        this._log.info(message.success);
-                        selectedUsers[idx].roles = new Set<string>(selectedRoles);
-                        this._snackbar.openSuccessSnackBar(this._translate.instant('tasks.snackbar.rolesSuccessAssign'));
-                    }
-                });
-                this._updateProgress$.off();
-            }));
+        // return forkJoin(selectedUsers.map(user => this._resources.assignRoles(user.id + '', selectedRoles))).pipe(
+        //     tap(messages => {
+        //         messages.forEach((message, idx) => {
+        //             if (message.error) {
+        //                 this._log.error(message.error, message);
+        //                 this._snackbar.openErrorSnackBar(message.error);
+        //             } else {
+        //                 this._log.info(message.success);
+        //                 selectedUsers[idx].roles = new Set<string>(selectedRoles);
+        //                 this._snackbar.openSuccessSnackBar(this._translate.instant('tasks.snackbar.rolesSuccessAssign'));
+        //             }
+        //         });
+        //         this._updateProgress$.off();
+        //     }));
     }
 
     /**

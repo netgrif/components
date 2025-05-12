@@ -8,7 +8,7 @@ import {TranslateLibModule} from './translate-lib.module';
 import {AuthenticationMethodService} from '../authentication/services/authentication-method.service';
 import {AuthenticationService} from '../authentication/services/authentication/authentication.service';
 import {MockAuthenticationService} from '../utility/tests/mocks/mock-authentication.service';
-import {UserResourceService} from '../resources/engine-endpoint/user-resource.service';
+import {IdentityResourceService} from '../resources/engine-endpoint/identity-resource.service';
 import {MockUserResourceService} from '../utility/tests/mocks/mock-user-resource.service';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -27,7 +27,7 @@ describe('TranslateInterceptor', () => {
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
-                {provide: UserResourceService, useClass: MockUserResourceService},
+                {provide: IdentityResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {
                     provide: HTTP_INTERCEPTORS,

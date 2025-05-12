@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AbstractProfileComponent, UserService} from '@netgrif/components-core';
+import {AbstractProfileComponent, IdentityService} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-user-profile',
@@ -8,7 +8,7 @@ import {AbstractProfileComponent, UserService} from '@netgrif/components-core';
     standalone: false
 })
 export class ProfileComponent extends AbstractProfileComponent {
-    constructor(protected _userService: UserService) {
+    constructor(protected _userService: IdentityService) {
         super(_userService);
     }
 }

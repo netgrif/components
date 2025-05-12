@@ -1,5 +1,5 @@
 import {Injectable, OnDestroy} from '@angular/core';
-import {UserService} from '../../user/services/user.service';
+import {IdentityService} from '../../identity/services/identity.service';
 import {CaseResourceService} from '../../resources/engine-endpoint/case-resource.service';
 import {SimpleFilter} from '../../filter/models/simple-filter';
 import {HttpParams} from '@angular/common/http';
@@ -27,11 +27,11 @@ export class NextGroupService implements OnDestroy {
 
     private _userSub: Subscription;
 
-    constructor(protected _userService: UserService, protected _caseResourceService: CaseResourceService) {
+    constructor(protected _userService: IdentityService, protected _caseResourceService: CaseResourceService) {
         this._ownerGroups$ = new BehaviorSubject<Array<Case>>([]);
         this._memberGroups$ = new BehaviorSubject<Array<Case>>([]);
 
-        this._userSub = this._userService.user$.pipe(
+        this._userSub = this._userService.identity$.pipe(
             switchMap(user => {
                 if (!user || user.id === '' || (user as any).nextGroups === undefined) {
                     return of([]);
@@ -47,7 +47,7 @@ export class NextGroupService implements OnDestroy {
                     );
             })
         ).subscribe(groups => {
-            const ownerGroups = groups.filter(g => g.author.email === this._userService.user.email);
+            const ownerGroups = groups.filter(g => g.author.email === this._userService.identity.username);
             this._ownerGroups$.next(ownerGroups);
             this._memberGroups$.next(groups);
         });

@@ -5,7 +5,7 @@ import {
     SessionService,
     SpinnerOverlayService,
     AbstractAuthenticationOverlayComponent,
-    UserService
+    IdentityService
 } from '@netgrif/components-core';
 
 @Component({
@@ -17,7 +17,7 @@ import {
 export class AuthenticationOverlayComponent extends AbstractAuthenticationOverlayComponent {
 
     constructor(protected _session: SessionService, protected _spinnerOverlay: SpinnerOverlayService,
-                protected router: Router, protected redirectService: RedirectService, protected userService: UserService) {
+                protected router: Router, protected redirectService: RedirectService, protected userService: IdentityService) {
         super(_session, _spinnerOverlay, router, redirectService, userService);
     }
 }

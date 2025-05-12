@@ -10,11 +10,11 @@ import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {TaskOperations} from '../interfaces/task-operations';
 import {CallChainService} from '../../utility/call-chain/call-chain.service';
 import {race, Subject} from 'rxjs';
-import {UserComparatorService} from '../../user/services/user-comparator.service';
+import {UserComparatorService} from '../../identity/services/user-comparator.service';
 import {AfterAction} from '../../utility/call-chain/after-action';
 import {PermissionService} from '../../authorization/permission/permission.service';
 import {PermissionType} from '../../process/permissions';
-import {UserService} from "../../user/services/user.service";
+import {IdentityService} from "../../identity/services/identity.service";
 import {filter, take} from "rxjs/operators";
 
 /**
@@ -34,7 +34,7 @@ export class AssignPolicyService extends TaskHandlingService {
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
                 taskContentService: TaskContentService,
                 protected _permissionService: PermissionService,
-                protected _userService: UserService) {
+                protected _userService: IdentityService) {
         super(taskContentService);
     }
 
@@ -52,14 +52,14 @@ export class AssignPolicyService extends TaskHandlingService {
      * @param afterAction the action that should be performed when the assign policy (and all following policies) finishes
      */
     public performAssignPolicy(taskOpened: boolean, afterAction: AfterAction = new AfterAction()): void {
-        if (!this._userService.isCurrentUserEmpty()) {
+        if (!this._userService.isCurrentIdentityEmpty()) {
             this.performAssign(taskOpened, afterAction);
         } else {
             race([
-                this._userService.anonymousUser$,
-                this._userService.user$
+                this._userService.anonymousIdentity$,
+                this._userService.identity$
             ])
-                .pipe(filter(user => !this._userService.isUserEmpty(user)))
+                .pipe(filter(user => !this._userService.isIdentityEmpty(user)))
                 .pipe(take(1))
                 .subscribe(user => this.performAssign(taskOpened, afterAction));
         }

@@ -1,6 +1,6 @@
 import {TestBed} from '@angular/core/testing';
 import {RoleAssignmentService} from './role-assignment.service';
-import {UserResourceService} from '../../../resources/engine-endpoint/user-resource.service';
+import {IdentityResourceService} from '../../../resources/engine-endpoint/identity-resource.service';
 import {PetriNetResourceService} from '../../../resources/engine-endpoint/petri-net-resource.service';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {LoggerService} from '../../../logger/services/logger.service';
@@ -16,7 +16,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {SnackBarModule} from '../../../snack-bar/snack-bar.module';
 
-const serviceFactory = (userResources: UserResourceService, processResources: PetriNetResourceService,
+const serviceFactory = (userResources: IdentityResourceService, processResources: PetriNetResourceService,
                         snackbar: SnackBarService, log: LoggerService, translate: TranslateService) => {
     return new RoleAssignmentService(userResources, processResources, snackbar, log, translate);
 };
@@ -29,14 +29,14 @@ describe('RoleAssignmentService', () => {
             imports: [HttpClientTestingModule, MaterialModule, TranslateLibModule, NoopAnimationsModule, SnackBarModule],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                UserResourceService,
+                IdentityResourceService,
                 PetriNetResourceService,
                 SnackBarService,
                 LoggerService,
                 {
                     provide: RoleAssignmentService,
                     useFactory: serviceFactory,
-                    deps: [UserResourceService, PetriNetResourceService, SnackBarService, LoggerService, TranslateService]
+                    deps: [IdentityResourceService, PetriNetResourceService, SnackBarService, LoggerService, TranslateService]
                 }
             ]
         });

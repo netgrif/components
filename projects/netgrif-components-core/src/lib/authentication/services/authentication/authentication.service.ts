@@ -4,10 +4,10 @@ import {AuthenticationMethodService} from '../authentication-method.service';
 import {BehaviorSubject, Observable, of, Subscription} from 'rxjs';
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {catchError, map, tap} from 'rxjs/operators';
-import {User} from '../../../user/models/user';
-import {UserTransformer} from '../../models/user.transformer';
+import {Identity} from '../../../identity/models/Identity';
+import {IdentityTransformer} from '../../models/identity.transformer';
 import {SessionService} from '../../session/services/session.service';
-import {UserResource} from '../../../resources/interface/user-resource';
+import {IdentityResource} from '../../../resources/interface/identity-resource';
 
 @Injectable({
     providedIn: 'root'
@@ -22,19 +22,19 @@ export class AuthenticationService implements OnDestroy {
     constructor(protected _auth: AuthenticationMethodService,
                 protected _config: ConfigurationService,
                 protected _sessionService: SessionService,
-                protected _userTransformer: UserTransformer) {
+                protected _userTransformer: IdentityTransformer) {
         this._authenticated$ = new BehaviorSubject<boolean>(false);
         this.subSession = this._sessionService.session$.subscribe(token => {
             this._authenticated$.next(!!token && token.length !== 0 && this._sessionService.verified);
         });
     }
 
-    login(credentials: Credentials): Observable<User> {
+    login(credentials: Credentials): Observable<Identity> {
         return this._auth.login(credentials).pipe(
-            tap((user: UserResource) => {
+            tap((user: IdentityResource) => {
                 this._authenticated$.next(!!user[AuthenticationService.IDENTIFICATION_ATTRIBUTE]);
             }),
-            map((user: UserResource) => this._userTransformer.transform(user)),
+            map((user: IdentityResource) => this._userTransformer.transform(user)),
             catchError(error => {
                 console.error(error);
                 return of(null);

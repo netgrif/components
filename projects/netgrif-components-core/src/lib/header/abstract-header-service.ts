@@ -9,12 +9,12 @@ import {PetriNetReference} from '../resources/interface/petri-net-reference';
 import {HeaderType} from './models/header-type';
 import {HeaderMode} from './models/header-mode';
 import {HeaderColumn, HeaderColumnType} from './models/header-column';
-import {UserPreferenceService} from '../user/services/user-preference.service';
+import {UserPreferenceService} from '../identity/services/user-preference.service';
 import {LoggerService} from '../logger/services/logger.service';
 import {LoadingEmitter} from '../utility/loading-emitter';
 import {SortDirection} from '@angular/material/sort';
 import {HeaderChangeType} from './models/user-changes/header-change-type';
-import {ViewIdService} from '../user/services/view-id.service';
+import {ViewIdService} from '../identity/services/view-id.service';
 import {Net} from '../process/net';
 import {OverflowService} from './services/overflow.service';
 

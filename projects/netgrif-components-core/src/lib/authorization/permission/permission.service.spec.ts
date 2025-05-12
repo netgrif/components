@@ -8,15 +8,15 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {PermissionService} from './permission.service';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {MockUserService} from '../../utility/tests/mocks/mock-user.service';
-import {UserService} from '../../user/services/user.service';
-import {User} from '../../user/models/user';
+import {IdentityService} from '../../identity/services/identity.service';
+import {Identity} from '../../identity/models/Identity';
 import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../task-content/model/policy';
 import {PermissionType} from '../../process/permissions';
 import {Net} from '../../process/net';
 
 describe('PermissionService', () => {
     let permissionService: PermissionService;
-    let userService: UserService;
+    let userService: IdentityService;
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
@@ -31,18 +31,18 @@ describe('PermissionService', () => {
             ],
             providers: [
                 PermissionService,
-                {provide: UserService, useClass: MockUserService},
+                {provide: IdentityService, useClass: MockUserService},
             ],
             declarations: [],
             schemas: [NO_ERRORS_SCHEMA]
         });
         permissionService = TestBed.inject(PermissionService);
-        userService = TestBed.inject(UserService);
+        userService = TestBed.inject(IdentityService);
     }));
 
     it('should canAssign be true with role', () => {
         (userService as unknown as MockUserService).user =
-            new User('', '', '', '', [], [{stringId: 'assignRole', name: '', importId: ''}]);
+            new Identity('', '', '', '', [], [{stringId: 'assignRole', name: '', importId: ''}]);
         const task = {
             caseId: 'string',
             transitionId: 'string',
@@ -76,7 +76,7 @@ describe('PermissionService', () => {
 
     it('should canAssign be false with role', () => {
         (userService as unknown as MockUserService).user =
-            new User('', '', '', '', [], [{stringId: 'assignRole', name: '', importId: ''}]);
+            new Identity('', '', '', '', [], [{stringId: 'assignRole', name: '', importId: ''}]);
         const task = {
             caseId: 'string',
             transitionId: 'string',
@@ -110,7 +110,7 @@ describe('PermissionService', () => {
 
     it('should canAssign be true with userRef', () => {
         (userService as unknown as MockUserService).user =
-            new User('user123', '', '', '', [], [{stringId: 'assignRole', name: '', importId: ''}]);
+            new Identity('user123', '', '', '', [], [{stringId: 'assignRole', name: '', importId: ''}]);
         const task = {
             caseId: 'string',
             transitionId: 'string',
@@ -148,7 +148,7 @@ describe('PermissionService', () => {
 
     it('should canAssign be false with userRef', () => {
         (userService as unknown as MockUserService).user =
-            new User('', '', '', '', [], [{stringId: 'assignRole', name: '', importId: ''}]);
+            new Identity('', '', '', '', [], [{stringId: 'assignRole', name: '', importId: ''}]);
         const task = {
             caseId: 'string',
             transitionId: 'string',
@@ -182,7 +182,7 @@ describe('PermissionService', () => {
 
     it('should canDelete', () => {
         (userService as unknown as MockUserService).user =
-            new User('', '', '', '', [], [{stringId: 'deleteRole', name: '', importId: ''}]);
+            new Identity('', '', '', '', [], [{stringId: 'deleteRole', name: '', importId: ''}]);
         const case_ = {
             stringId: 'string',
             title: 'string',
@@ -221,7 +221,7 @@ describe('PermissionService', () => {
 
     it('should canDelete be false', () => {
         (userService as unknown as MockUserService).user =
-            new User('', '', '', '', [], [{stringId: 'deleteRole', name: '', importId: ''}]);
+            new Identity('', '', '', '', [], [{stringId: 'deleteRole', name: '', importId: ''}]);
         const case_ = {
             stringId: 'string',
             title: 'string',
@@ -275,7 +275,7 @@ describe('PermissionService', () => {
         expect(permissionService.hasNetPermission(PermissionType.CREATE, net)).toBeFalse();
 
         (userService as unknown as MockUserService).user =
-            new User('', '', '', '', [], [{stringId: 'role1', name: '', importId: ''}]);
+            new Identity('', '', '', '', [], [{stringId: 'role1', name: '', importId: ''}]);
         net.permissions = {role1: {create: true}};
         expect(permissionService.hasNetPermission(PermissionType.CREATE, net)).toBeTrue();
 
@@ -286,7 +286,7 @@ describe('PermissionService', () => {
         expect(permissionService.hasNetPermission(PermissionType.CREATE, net)).toBeFalse();
 
         (userService as unknown as MockUserService).user =
-            new User('', '', '', '', [],
+            new Identity('', '', '', '', [],
                 [{stringId: 'role1', name: '', importId: ''}, {stringId: 'role2', name: '', importId: ''}]);
         net.permissions = {role1: {create: false}, role2: {create: true}};
         expect(permissionService.hasNetPermission(PermissionType.CREATE, net)).toBeFalse();

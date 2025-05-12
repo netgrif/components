@@ -38,7 +38,12 @@
                 "format": "json"
             },
             {
-                "name": "user",
+                "name": "identity",
+                "address": "http://localhost:8080/api/",
+                "format": "json"
+            },
+            {
+                "name": "actor",
                 "address": "http://localhost:8080/api/",
                 "format": "json"
             },

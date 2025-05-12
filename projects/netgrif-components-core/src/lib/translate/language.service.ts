@@ -4,7 +4,7 @@ import sk from '../../assets/i18n/sk.json';
 import de from '../../assets/i18n/de.json';
 import {TranslateService, TranslationChangeEvent} from '@ngx-translate/core';
 import {Observable, Subject, Subscription} from 'rxjs';
-import {UserPreferenceService} from '../user/services/user-preference.service';
+import {UserPreferenceService} from '../identity/services/user-preference.service';
 import {LoggerService} from '../logger/services/logger.service';
 
 export interface Translation {

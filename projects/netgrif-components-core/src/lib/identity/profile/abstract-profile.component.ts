@@ -1,6 +1,6 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {User} from '../models/user';
-import {UserService} from '../services/user.service';
+import {Identity} from '../models/Identity';
+import {IdentityService} from '../services/identity.service';
 import {Subscription} from 'rxjs';
 
 @Component({
@@ -9,16 +9,16 @@ import {Subscription} from 'rxjs';
 })
 export abstract class AbstractProfileComponent implements OnInit, OnDestroy {
 
-    @Input() public user: User;
+    @Input() public user: Identity;
     protected subUser: Subscription;
 
-    constructor(protected _userService: UserService) {
+    constructor(protected _userService: IdentityService) {
     }
 
     ngOnInit(): void {
         if (!this.user) {
-            this.user = this._userService.user;
-            this.subUser = this._userService.user$.subscribe(user => {
+            this.user = this._userService.identity;
+            this.subUser = this._userService.identity$.subscribe(user => {
                 this.user = user;
             });
         }

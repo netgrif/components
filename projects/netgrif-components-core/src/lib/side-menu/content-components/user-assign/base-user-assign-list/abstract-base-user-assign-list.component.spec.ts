@@ -4,7 +4,7 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {Component, NO_ERRORS_SCHEMA, OnDestroy} from '@angular/core';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {FormControl} from '@angular/forms';
-import {UserListItem, UserListService} from '../../../../user/services/user-list.service';
+import {UserListItem, UserListService} from '../../../../actor/services/user-list.service';
 import {ErrorSnackBarComponent} from '../../../../snack-bar/components/error-snack-bar/error-snack-bar.component';
 import {UserValue} from '../../../../data-fields/user-field/models/user-value';
 import {UserListInjectedData} from '../model/user-list-injected-data';

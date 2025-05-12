@@ -12,7 +12,7 @@ import {SnackBarModule} from '../../snack-bar/snack-bar.module';
 import {ErrorSnackBarComponent} from '../../snack-bar/components/error-snack-bar/error-snack-bar.component';
 import {SuccessSnackBarComponent} from '../../snack-bar/components/success-snack-bar/success-snack-bar.component';
 import {RoleAssignmentService} from './services/role-assignment.service';
-import {UserService} from '../../user/services/user.service';
+import {IdentityService} from '../../identity/services/identity.service';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {RouterTestingModule} from '@angular/router/testing';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
@@ -66,7 +66,7 @@ describe('AbstractRoleAssignment', () => {
     template: '',
 })
 class TestRoleAssignmentComponent extends AbstractRoleAssignmentComponent {
-    constructor(protected _service: RoleAssignmentService, protected _userService: UserService) {
+    constructor(protected _service: RoleAssignmentService, protected _userService: IdentityService) {
         super(_service, _userService);
     }
 }

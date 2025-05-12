@@ -14,7 +14,7 @@ import {
     NAE_VIEW_ID_SEGMENT,
     SearchService,
     SimpleFilter,
-    UserService,
+    IdentityService,
     ViewIdService
 } from '@netgrif/components-core';
 import {NewCaseComponent} from '@netgrif/components';
@@ -33,9 +33,9 @@ export const dashboardAllowedNetsFactory = (factory: AllowedNetsServiceFactory) 
     return factory.createFromArray(['dashboard']);
 };
 
-const baseFilterFactory = (filterRepository: FilterRepository, userService: UserService) => {
+const baseFilterFactory = (filterRepository: FilterRepository, userService: IdentityService) => {
     const filter = SimpleFilter.fromCaseQuery({process: {identifier: 'dashboard'}})
-        .merge(SimpleFilter.fromCaseQuery({author: {email: userService.user.email}}), MergeOperator.AND);
+        .merge(SimpleFilter.fromCaseQuery({author: {email: userService.identity.username}}), MergeOperator.AND);
     return {filter};
 };
 
@@ -65,7 +65,7 @@ const baseFilterFactory = (filterRepository: FilterRepository, userService: User
         {
             provide: NAE_BASE_FILTER,
             useFactory: baseFilterFactory,
-            deps: [FilterRepository, UserService]
+            deps: [FilterRepository, IdentityService]
         },
         {
             provide: AllowedNetsService,
@@ -83,9 +83,9 @@ export class DashboardCaseExampleComponent implements OnInit {
 
     public tabs = [];
 
-    constructor(public userService: UserService) {
+    constructor(public userService: IdentityService) {
         const filter = SimpleFilter.fromCaseQuery({process: {identifier: 'dashboard'}}).merge(
-            SimpleFilter.fromCaseQuery({author: {email: userService.user.email}}), MergeOperator.AND
+            SimpleFilter.fromCaseQuery({author: {email: userService.identity.username}}), MergeOperator.AND
         );
         this.tabs = [
             {

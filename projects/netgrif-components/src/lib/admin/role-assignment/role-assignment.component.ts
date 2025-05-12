@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AbstractRoleAssignmentComponent, RoleAssignmentService, UserService} from '@netgrif/components-core';
+import {AbstractRoleAssignmentComponent, RoleAssignmentService, IdentityService} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-role-assignment',
@@ -11,7 +11,7 @@ import {AbstractRoleAssignmentComponent, RoleAssignmentService, UserService} fro
     standalone: false
 })
 export class RoleAssignmentComponent extends AbstractRoleAssignmentComponent {
-    constructor(protected _service: RoleAssignmentService, protected _userService: UserService) {
+    constructor(protected _service: RoleAssignmentService, protected _userService: IdentityService) {
         super(_service, _userService);
     }
 }

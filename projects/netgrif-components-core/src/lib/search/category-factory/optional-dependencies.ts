@@ -1,5 +1,5 @@
 import {CategoryFactory} from './category-factory';
-import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
+import {IdentityResourceService} from '../../resources/engine-endpoint/identity-resource.service';
 import {SearchIndexResolverService} from '../search-keyword-resolver-service/search-index-resolver.service';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 
@@ -19,5 +19,5 @@ export interface OptionalDependencies {
     /**
      * If the {@link CategoryFactory} cannot inject an instance of this service into itself `null` will be provided.
      */
-    userResourceService: UserResourceService | null;
+    userResourceService: IdentityResourceService | null;
 }

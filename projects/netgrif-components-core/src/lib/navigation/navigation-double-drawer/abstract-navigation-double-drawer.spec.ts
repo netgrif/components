@@ -18,14 +18,14 @@ import {ImpersonationUserSelectService} from '../../impersonation/services/imper
 import {ImpersonationService} from '../../impersonation/services/impersonation.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {MaterialModule} from '../../material/material.module';
-import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
+import {IdentityResourceService} from '../../resources/engine-endpoint/identity-resource.service';
 import {
     DynamicNavigationRouteProviderService,
 } from '../../routing/dynamic-navigation-route-provider/dynamic-navigation-route-provider.service';
 import {LanguageService} from '../../translate/language.service';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
-import {UserPreferenceService} from '../../user/services/user-preference.service';
-import {UserService} from '../../user/services/user.service';
+import {UserPreferenceService} from '../../identity/services/user-preference.service';
+import {IdentityService} from '../../identity/services/identity.service';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
 import {MockUriResourceService} from '../../utility/tests/mocks/mock-uri-resource.service';
@@ -63,7 +63,7 @@ xdescribe('AbstractNavigationDoubleDrawerComponent', () => {
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: ConfigurationService, useClass: TestLoggingConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
-                {provide: UserResourceService, useClass: MockUserResourceService},
+                {provide: IdentityResourceService, useClass: MockUserResourceService},
                 {provide: UserPreferenceService, useClass: MockUserPreferenceService},
                 {provide: CaseResourceService, useClass: MockCaseResourceService},
                 {provide: UriResourceService, useClass: MockUriResourceService},
@@ -143,7 +143,7 @@ class TestDrawerComponent extends AbstractNavigationDoubleDrawerComponent {
                 _breakpoint: BreakpointObserver,
                 _languageService: LanguageService,
                 _translateService: TranslateService,
-                _userService: UserService,
+                _userService: IdentityService,
                 _accessService: AccessService,
                 _log: LoggerService,
                 _config: ConfigurationService,

@@ -5,7 +5,7 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {MockUserService} from '../../utility/tests/mocks/mock-user.service';
-import {UserService} from '../../user/services/user.service';
+import {IdentityService} from '../../identity/services/identity.service';
 import {CaseResourceService} from '../../resources/engine-endpoint/case-resource.service';
 import {MockCaseResourceService} from '../../utility/tests/mocks/mock-case-resource.service';
 
@@ -19,7 +19,7 @@ describe('NextGroupService', () => {
                 NoopAnimationsModule
             ],
             providers: [
-                {provide: UserService, useClass: MockUserService},
+                {provide: IdentityService, useClass: MockUserService},
                 {provide: CaseResourceService, useClass: MockCaseResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService}
             ]

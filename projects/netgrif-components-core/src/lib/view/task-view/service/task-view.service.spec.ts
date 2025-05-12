@@ -12,7 +12,7 @@ import {SearchService} from '../../../search/search-service/search.service';
 import {TestTaskBaseFilterProvider, TestTaskViewAllowedNetsFactory} from '../../../utility/tests/test-factory-methods';
 import {AuthenticationService} from '../../../authentication/services/authentication/authentication.service';
 import {MockAuthenticationService} from '../../../utility/tests/mocks/mock-authentication.service';
-import {UserResourceService} from '../../../resources/engine-endpoint/user-resource.service';
+import {IdentityResourceService} from '../../../resources/engine-endpoint/identity-resource.service';
 import {MockUserResourceService} from '../../../utility/tests/mocks/mock-user-resource.service';
 import {ErrorSnackBarComponent} from '../../../snack-bar/components/error-snack-bar/error-snack-bar.component';
 import {SuccessSnackBarComponent} from '../../../snack-bar/components/success-snack-bar/success-snack-bar.component';
@@ -50,7 +50,7 @@ describe('TaskViewService', () => {
                 TaskViewService,
                 {provide: TaskResourceService, useClass: MyResources},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
-                {provide: UserResourceService, useClass: MockUserResourceService},
+                {provide: IdentityResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 SearchService,
                 {

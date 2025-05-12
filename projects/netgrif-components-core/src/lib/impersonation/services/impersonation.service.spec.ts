@@ -4,7 +4,7 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {ImpersonationService} from './impersonation.service';
-import {UserService} from '../../user/services/user.service';
+import {IdentityService} from '../../identity/services/identity.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {FilterRepository} from '../../filter/filter.repository';
 import {LoggerService} from '../../logger/services/logger.service';
@@ -17,10 +17,10 @@ import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authenti
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
-import {User} from '../../user/models/user';
+import {Identity} from '../../identity/models/Identity';
 import {ProcessRole} from '../../resources/interface/process-role';
 import {Observable, ReplaySubject} from 'rxjs';
-import {UserPreferenceService} from '../../user/services/user-preference.service';
+import {UserPreferenceService} from '../../identity/services/user-preference.service';
 import {MockUserPreferenceService} from '../../utility/tests/mocks/mock-user-preference.service';
 
 describe('ImpersonationService', () => {
@@ -37,13 +37,13 @@ describe('ImpersonationService', () => {
                 TranslateService,
                 ImpersonationService,
                 {provide: UserPreferenceService, useClass: MockUserPreferenceService},
-                {provide: UserService, useClass: TestUserService},
+                {provide: IdentityService, useClass: TestUserService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: ConfigurationService, useClass: TestConfigurationService}]
         });
         service = TestBed.inject(ImpersonationService);
-        userService = (TestBed.inject(UserService) as any) as TestUserService;
+        userService = (TestBed.inject(IdentityService) as any) as TestUserService;
     });
 
     it('should be created', () => {
@@ -115,23 +115,23 @@ describe('ImpersonationService', () => {
 
 class TestUserService {
 
-    protected mockUser$ = new ReplaySubject<User>();
+    protected mockUser$ = new ReplaySubject<Identity>();
 
-    public userObj = new User('id', 'mail', '', '', [], [{stringId: 'role'} as ProcessRole], [], []);
-    public userObjAfter = new User(
-        this.userObj.id, this.userObj.email, this.userObj.firstName, this.userObj.lastName, this.userObj.authorities, this.userObj.roles, this.userObj.groups, this.userObj.nextGroups,
-        new User('impId', 'mail', '', '', [], [{stringId: 'role'} as ProcessRole], [], [])
+    public userObj = new Identity('id', 'mail', '', '', [], [{stringId: 'role'} as ProcessRole], [], []);
+    public userObjAfter = new Identity(
+        this.userObj.id, this.userObj.username, this.userObj.firstName, this.userObj.lastName, this.userObj.authorities, this.userObj.roles, this.userObj.groups, this.userObj.nextGroups,
+        new Identity('impId', 'mail', '', '', [], [{stringId: 'role'} as ProcessRole], [], [])
     );
 
-    public get user(): User {
+    public get user(): Identity {
         return this.userObj;
     }
 
-    public get user$(): Observable<User> {
+    public get user$(): Observable<Identity> {
         return this.mockUser$.asObservable();
     }
 
-    public get anonymousUser$(): Observable<User> {
+    public get anonymousUser$(): Observable<Identity> {
         return this.mockUser$.asObservable();
     }
 

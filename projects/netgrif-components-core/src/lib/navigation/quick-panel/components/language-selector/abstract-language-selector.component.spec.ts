@@ -11,7 +11,7 @@ import {TranslateLibModule} from '../../../../translate/translate-lib.module';
 import {MockAuthenticationMethodService} from '../../../../utility/tests/mocks/mock-authentication-method-service';
 import {AuthenticationMethodService} from '../../../../authentication/services/authentication-method.service';
 import {AuthenticationService} from '../../../../authentication/services/authentication/authentication.service';
-import {UserResourceService} from '../../../../resources/engine-endpoint/user-resource.service';
+import {IdentityResourceService} from '../../../../resources/engine-endpoint/identity-resource.service';
 import {ConfigurationService} from '../../../../configuration/configuration.service';
 import {TestConfigurationService} from '../../../../utility/tests/test-config';
 import {MockUserResourceService} from '../../../../utility/tests/mocks/mock-user-resource.service';
@@ -35,7 +35,7 @@ describe('AbstractLanguageSelectorComponent', () => {
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
-                {provide: UserResourceService, useClass: MockUserResourceService},
+                {provide: IdentityResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
             ],
             declarations: [TestLangComponent, TestWrapperComponent],

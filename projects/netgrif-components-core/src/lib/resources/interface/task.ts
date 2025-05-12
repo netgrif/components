@@ -1,6 +1,6 @@
 import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../task-content/model/policy';
 import {NaeDate} from '../types/nae-date-type';
-import {UserResourceSmall} from './user-resource-small';
+import {IdentityResourceSmall} from './identity-resource-small';
 import {ImmediateData} from './immediate-data';
 import {AssignedUserPolicy} from './assigned-user-policy';
 import {Permissions, UserPermissions, UserRefs} from '../../process/permissions';
@@ -26,9 +26,9 @@ export interface Task {
     caseColor: string;
     caseTitle: string;
     /**
-     * See [UserSmall]{@link UserResourceSmall#}
+     * See [UserSmall]{@link IdentityResourceSmall#}
      */
-    user: UserResourceSmall;
+    user: IdentityResourceSmall;
     /**
      * ***Example:***
      *

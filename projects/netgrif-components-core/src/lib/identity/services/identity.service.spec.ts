@@ -1,5 +1,5 @@
 import {TestBed} from '@angular/core/testing';
-import {UserService} from './user.service';
+import {IdentityService} from './identity.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {TestConfigurationService} from '../../utility/tests/test-config';
@@ -9,8 +9,8 @@ import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authenti
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 
-describe('UserService', () => {
-    let service: UserService;
+describe('IdentityService', () => {
+    let service: IdentityService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -24,7 +24,7 @@ describe('UserService', () => {
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
             ]
         });
-        service = TestBed.inject(UserService);
+        service = TestBed.inject(IdentityService);
     });
 
     it('should be created', () => {
@@ -34,8 +34,6 @@ describe('UserService', () => {
     it('should login', (done) => {
         service.login({password: '', username: ''}).subscribe(res => {
             expect(res.id).toEqual('id');
-            expect(service.hasAuthority('ADMIN')).toBeTrue();
-            expect(service.hasRoleById('id')).toBeTrue();
             done();
         });
     });
@@ -45,12 +43,6 @@ describe('UserService', () => {
             expect(res).toEqual(undefined);
             done();
         });
-    });
-
-    it('should check authorities and roles', () => {
-        expect(service.hasRole({stringId: 'ids', name: 'ids', importId: 'importId'})).toBeFalse();
-        expect(service.hasAuthority('USER')).toBeFalse();
-        expect(service.hasRoleById('ids')).toBeFalse();
     });
 
     afterEach(() => {

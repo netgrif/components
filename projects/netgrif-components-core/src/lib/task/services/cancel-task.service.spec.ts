@@ -23,7 +23,7 @@ import {SnackBarModule} from '../../snack-bar/snack-bar.module';
 import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../task-content/model/policy';
 import {CallChainService} from '../../utility/call-chain/call-chain.service';
 import {Task} from '../../resources/interface/task';
-import {UserService} from '../../user/services/user.service';
+import {IdentityService} from '../../identity/services/identity.service';
 import {TaskEventNotification} from '../../task-content/model/task-event-notification';
 import {TaskEvent} from '../../task-content/model/task-event';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
@@ -33,7 +33,7 @@ import {TaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/t
 import {createMockCase} from '../../utility/tests/utility/create-mock-case';
 import {createMockNet} from '../../utility/tests/utility/create-mock-net';
 import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
-import {User} from '../../user/models/user';
+import {Identity} from '../../identity/models/Identity';
 import {ProcessRole} from '../../resources/interface/process-role';
 import {FrontActionService} from "../../actions/services/front-action.service";
 
@@ -66,7 +66,7 @@ describe('CancelTaskService', () => {
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: TaskResourceService, useClass: TestTaskResourceService},
-                {provide: UserService, useClass: TestUserService}
+                {provide: IdentityService, useClass: TestUserService}
             ]
         }).compileComponents();
         service = TestBed.inject(CancelTaskService);
@@ -78,9 +78,9 @@ describe('CancelTaskService', () => {
             caseTitle: '',
             user: {
                 id: '',
-                email: 'mail',
-                name: '',
-                surname: '',
+                username: 'mail',
+                firstname: '',
+                lastname: '',
                 fullName: ''
             },
             roles: {
@@ -247,7 +247,7 @@ class TestTaskResourceService {
 
 class TestUserService {
     public get user() {
-        return new User('id', 'mail', '', '', [], [{stringId: 'role'} as ProcessRole]);
+        return new Identity('id', 'mail', '', '', [], [{stringId: 'role'} as ProcessRole]);
     }
 
     public hasRoleById(): boolean {

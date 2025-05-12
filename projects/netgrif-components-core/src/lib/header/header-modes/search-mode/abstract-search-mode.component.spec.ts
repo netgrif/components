@@ -19,7 +19,7 @@ import {MockAuthenticationService} from '../../../utility/tests/mocks/mock-authe
 import {MockUserResourceService} from '../../../utility/tests/mocks/mock-user-resource.service';
 import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {TestViewService} from '../../../utility/tests/test-view-service';
-import {UserResourceService} from '../../../resources/engine-endpoint/user-resource.service';
+import {IdentityResourceService} from '../../../resources/engine-endpoint/identity-resource.service';
 import {ViewService} from '../../../routing/view-service/view.service';
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {NAE_BASE_FILTER} from '../../../search/models/base-filter-injection-token';
@@ -52,7 +52,7 @@ describe('AbstractSearchModeComponent', () => {
                     useFactory: TestCaseBaseFilterProvider
                 },
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
-                {provide: UserResourceService, useClass: MockUserResourceService},
+                {provide: IdentityResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: ViewService, useClass: TestViewService},
                 CaseHeaderService,

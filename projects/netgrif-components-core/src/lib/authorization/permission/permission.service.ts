@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {UserComparatorService} from '../../user/services/user-comparator.service';
+import {UserComparatorService} from '../../identity/services/user-comparator.service';
 import {AssignPolicy} from '../../task-content/model/policy';
 import {Task} from '../../resources/interface/task';
-import {UserService} from '../../user/services/user.service';
+import {IdentityService} from '../../identity/services/identity.service';
 import {Case} from '../../resources/interface/case';
 import {PetriNetReferenceWithPermissions} from '../../process/petri-net-reference-with-permissions';
 import {Permissions, PermissionType, UserPermissions} from '../../process/permissions';
@@ -12,7 +12,7 @@ import {Permissions, PermissionType, UserPermissions} from '../../process/permis
 })
 export class PermissionService {
 
-    constructor(protected userComparator: UserComparatorService, protected _userService: UserService) {
+    constructor(protected userComparator: UserComparatorService, protected _userService: IdentityService) {
     }
 
     public hasTaskPermission(task: Task | undefined, permission: PermissionType): boolean {
@@ -104,9 +104,10 @@ export class PermissionService {
         let rolePermValue: boolean;
         if (!!roles) {
             Object.keys(roles).forEach(role => {
-                if (roles[role][permission] !== undefined && this._userService.hasRoleById(role)) {
-                    rolePermValue = rolePermValue === undefined ? roles[role][permission] : rolePermValue && roles[role][permission];
-                }
+                // todo 2058
+                // if (roles[role][permission] !== undefined && this._userService.hasRoleById(role)) {
+                //     rolePermValue = rolePermValue === undefined ? roles[role][permission] : rolePermValue && roles[role][permission];
+                // }
             });
         }
         return rolePermValue;
@@ -115,7 +116,7 @@ export class PermissionService {
     public checkUserPerms(users: UserPermissions, permission: PermissionType): boolean | undefined {
         let userPermValue: boolean;
         if (!!users) {
-            const loggedUserId = this._userService.user.getSelfOrImpersonated().id;
+            const loggedUserId = this._userService.identity.getSelfOrImpersonated().id;
             Object.keys(users).forEach(user => {
                 if (user === loggedUserId && users[user][permission] !== undefined) {
                     userPermValue = userPermValue === undefined ?

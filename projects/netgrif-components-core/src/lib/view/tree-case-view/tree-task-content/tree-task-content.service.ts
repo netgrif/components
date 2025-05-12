@@ -11,7 +11,7 @@ import {AssignPolicyService} from '../../../task/services/assign-policy.service'
 import {AssignPolicy} from '../../../task-content/model/policy';
 import {NAE_TASK_OPERATIONS} from '../../../task/models/task-operations-injection-token';
 import {SubjectTaskOperations} from '../../../task/models/subject-task-operations';
-import {UserComparatorService} from '../../../user/services/user-comparator.service';
+import {UserComparatorService} from '../../../identity/services/user-comparator.service';
 import {TreePetriflowIdentifiers} from '../model/tree-petriflow-identifiers';
 import {CallChainService} from '../../../utility/call-chain/call-chain.service';
 import {LoadingEmitter} from '../../../utility/loading-emitter';

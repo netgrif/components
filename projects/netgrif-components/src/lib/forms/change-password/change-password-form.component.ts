@@ -2,7 +2,7 @@ import {Component, Inject, OnDestroy, Optional} from "@angular/core";
 import {
     AbstractChangePasswordComponent,
     ProfileService,
-    UserService,
+    IdentityService,
     LoggerService,
     SnackBarService,
     NAE_MIN_PASSWORD_LENGTH
@@ -23,7 +23,7 @@ export class ChangePasswordFormComponent extends AbstractChangePasswordComponent
 
     constructor(formBuilder: FormBuilder,
                 profileService: ProfileService,
-                user: UserService,
+                user: IdentityService,
                 log: LoggerService,
                 translate: TranslateService,
                 @Optional() @Inject(NAE_MIN_PASSWORD_LENGTH) minPasswordLength,

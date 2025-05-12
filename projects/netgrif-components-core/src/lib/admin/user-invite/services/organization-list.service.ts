@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {GroupInterface} from '../../../resources/interface/group';
 import {LoadingEmitter} from '../../../utility/loading-emitter';
-import {UserResourceService} from '../../../resources/engine-endpoint/user-resource.service';
+import {IdentityResourceService} from '../../../resources/engine-endpoint/identity-resource.service';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {Observable, of} from 'rxjs';
 import {take} from 'rxjs/operators';
@@ -14,7 +14,7 @@ export class OrganizationListService {
     private _groups: Array<GroupInterface>;
     private _loading$: LoadingEmitter;
 
-    constructor(private _resource: UserResourceService, private _log: LoggerService) {
+    constructor(private _resource: IdentityResourceService, private _log: LoggerService) {
         this._groups = [];
         this._loading$ = new LoadingEmitter();
     }

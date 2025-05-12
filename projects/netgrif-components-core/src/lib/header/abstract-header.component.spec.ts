@@ -11,7 +11,7 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {SnackBarModule} from '../snack-bar/snack-bar.module';
 import {AuthenticationMethodService} from '../authentication/services/authentication-method.service';
 import {AuthenticationService} from '../authentication/services/authentication/authentication.service';
-import {UserResourceService} from '../resources/engine-endpoint/user-resource.service';
+import {IdentityResourceService} from '../resources/engine-endpoint/identity-resource.service';
 import {MockAuthenticationService} from '../utility/tests/mocks/mock-authentication.service';
 import {MockUserResourceService} from '../utility/tests/mocks/mock-user-resource.service';
 import {ConfigurationService} from '../configuration/configuration.service';
@@ -51,7 +51,7 @@ describe('AbstractHeaderComponent', () => {
                 CategoryFactory,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
-                {provide: UserResourceService, useClass: MockUserResourceService},
+                {provide: IdentityResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: ViewService, useClass: TestViewService},
                 {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}

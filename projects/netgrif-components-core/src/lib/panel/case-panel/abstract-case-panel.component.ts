@@ -12,7 +12,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {LoggerService} from '../../logger/services/logger.service';
 import {OverflowService} from '../../header/services/overflow.service';
 import {AbstractPanelWithImmediateDataComponent} from '../abstract/panel-with-immediate-data';
-import {UserService} from '../../user/services/user.service';
+import {IdentityService} from '../../identity/services/identity.service';
 import {take} from 'rxjs/operators';
 import {getImmediateData} from '../../utility/get-immediate-data';
 import {FeaturedValue} from '../abstract/featured-value';
@@ -44,7 +44,7 @@ export abstract class AbstractCasePanelComponent extends AbstractPanelWithImmedi
                           protected _snackBarService: SnackBarService,
                           protected _translateService: TranslateService,
                           protected _log: LoggerService,
-                          protected _userService: UserService,
+                          protected _userService: IdentityService,
                           protected _currencyPipe: CurrencyPipe,
                           protected _permissionService: PermissionService,
                           @Optional() protected _overflowService: OverflowService,) {

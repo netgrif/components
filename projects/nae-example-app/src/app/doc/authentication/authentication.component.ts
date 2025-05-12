@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {LoggerService, User, UserService} from '@netgrif/components-core';
+import {LoggerService, Identity, IdentityService} from '@netgrif/components-core';
 
 @Component({
     selector: 'nae-app-authentication',
@@ -13,15 +13,15 @@ export class AuthenticationComponent implements OnInit {
     readonly DESCRIPTION = 'Ukážka použitia AuthenticationService...';
 
     authenticated = false;
-    user: User = null;
+    user: Identity = null;
     userString = null;
     credentials = {
         username: null,
         password: null
     };
 
-    constructor(private userService: UserService, private log: LoggerService) {
-        this.userString = JSON.stringify(userService.user, undefined, 2);
+    constructor(private userService: IdentityService, private log: LoggerService) {
+        this.userString = JSON.stringify(userService.identity, undefined, 2);
     }
 
     ngOnInit(): void {

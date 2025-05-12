@@ -8,7 +8,7 @@ import {MaterialModule} from '../../material/material.module';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
-import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
+import {IdentityResourceService} from '../../resources/engine-endpoint/identity-resource.service';
 import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
 import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
@@ -43,7 +43,7 @@ describe('AbstractFileFieldComponent', () => {
                 EventService,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
-                {provide: UserResourceService, useClass: MockUserResourceService},
+                {provide: IdentityResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService}
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA],

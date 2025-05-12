@@ -1,7 +1,7 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import {Preferences} from '../../resources/interface/preferences';
-import {UserService} from './user.service';
-import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
+import {IdentityService} from './identity.service';
+import {IdentityResourceService} from '../../resources/engine-endpoint/identity-resource.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {Observable, Subject, Subscription} from 'rxjs';
@@ -23,8 +23,8 @@ export class UserPreferenceService implements OnDestroy {
     public _drawerWidthChanged$: Subject<number>;
     protected _anonym: boolean;
 
-    constructor(protected _userService: UserService,
-                protected _userResourceService: UserResourceService,
+    constructor(protected _userService: IdentityService,
+                protected _userResourceService: IdentityResourceService,
                 protected _logger: LoggerService,
                 protected _snackbar: SnackBarService,
                 protected _translate: TranslateService) {
@@ -33,7 +33,7 @@ export class UserPreferenceService implements OnDestroy {
         this._drawerWidthChanged$ = new Subject<number>();
         this._anonym = false;
 
-        this._sub = this._userService.user$.subscribe(loggedUser => {
+        this._sub = this._userService.identity$.subscribe(loggedUser => {
             if (loggedUser && loggedUser.id !== '') {
                 this._userResourceService.getPreferences().subscribe(prefs => {
                         this._preferences = this._emptyPreferences();
@@ -47,7 +47,7 @@ export class UserPreferenceService implements OnDestroy {
             }
         });
 
-        this._subAnonym = this._userService.anonymousUser$.subscribe(loggedUser => {
+        this._subAnonym = this._userService.anonymousIdentity$.subscribe(loggedUser => {
             if (loggedUser && loggedUser.id !== '') {
                 this._userResourceService.getPublicPreferences().subscribe(prefs => {
                         this._preferences = this._emptyPreferences();

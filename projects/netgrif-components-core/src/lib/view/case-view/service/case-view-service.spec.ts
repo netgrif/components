@@ -15,7 +15,7 @@ import {Case} from '../../../resources/interface/case';
 import {createMockCase} from '../../../utility/tests/utility/create-mock-case';
 import {ElementaryPredicate} from '../../../search/models/predicate/elementary-predicate';
 import {Query} from '../../../search/models/query/query';
-import {UserService} from '../../../user/services/user.service';
+import {IdentityService} from '../../../identity/services/identity.service';
 import {MockUserService} from '../../../utility/tests/mocks/mock-user.service';
 import {NAE_BASE_FILTER} from '../../../search/models/base-filter-injection-token';
 import {TestCaseBaseFilterProvider, TestCaseViewAllowedNetsFactory} from '../../../utility/tests/test-factory-methods';
@@ -28,7 +28,7 @@ describe('CaseViewService', () => {
     let service: CaseViewService;
     let caseService: MyResources;
     let searchService: SearchService;
-    let userService: UserService;
+    let userService: IdentityService;
     let permissionService: PermissionService;
 
     beforeEach(() => {
@@ -42,7 +42,7 @@ describe('CaseViewService', () => {
             providers: [
                 CaseViewService,
                 {provide: CaseResourceService, useClass: MyResources},
-                {provide: UserService, useClass: MockUserService},
+                {provide: IdentityService, useClass: MockUserService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 SearchService,
                 PermissionService,
@@ -56,7 +56,7 @@ describe('CaseViewService', () => {
         service = TestBed.inject(CaseViewService);
         caseService = TestBed.inject(CaseResourceService) as unknown as MyResources;
         searchService = TestBed.inject(SearchService);
-        userService = TestBed.inject(UserService);
+        userService = TestBed.inject(IdentityService);
         permissionService = TestBed.inject(PermissionService);
     });
 

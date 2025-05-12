@@ -1,6 +1,6 @@
 import {TestBed} from '@angular/core/testing';
 import {UserPreferenceService} from './user-preference.service';
-import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
+import {IdentityResourceService} from '../../resources/engine-endpoint/identity-resource.service';
 import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
@@ -33,7 +33,7 @@ describe('UserPreferenceService', () => {
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
-                {provide: UserResourceService, useClass: MockUserResourceService}
+                {provide: IdentityResourceService, useClass: MockUserResourceService}
             ],
             declarations: [
             ]

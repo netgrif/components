@@ -7,7 +7,7 @@ import {FlexModule} from "@ngbracket/ngx-layout";
 import {BrowserAnimationsModule, NoopAnimationsModule} from "@angular/platform-browser/animations";
 import {TranslateLibModule} from "../../translate/translate-lib.module";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
-import {UserService} from "../../user/services/user.service";
+import {IdentityService} from "../../identity/services/identity.service";
 import {MockUserService} from "../../utility/tests/mocks/mock-user.service";
 import {NO_ERRORS_SCHEMA} from "@angular/core";
 import {ConfigurationService} from "../../configuration/configuration.service";
@@ -33,7 +33,7 @@ describe('AccessService', () => {
             ],
             providers: [
                 AccessService,
-                {provide: UserService, useClass: MockUserService},
+                {provide: IdentityService, useClass: MockUserService},
                 {provide: ConfigurationService, useClass: TestConfigurationService}
             ],
             declarations: [],

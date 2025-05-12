@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {ImpersonationService, ImpersonationUserSelectService, UserService} from '@netgrif/components-core';
+import {ImpersonationService, ImpersonationUserSelectService, IdentityService} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-impersonate-quick-panel',
@@ -12,7 +12,7 @@ export class ImpersonateQuickPanelComponent {
     constructor(
         private impersonateUserSelect: ImpersonationUserSelectService,
         private impersonationService: ImpersonationService,
-        private user: UserService,
+        private user: IdentityService,
     ) {}
 
     public impersonate(): void {
@@ -24,7 +24,7 @@ export class ImpersonateQuickPanelComponent {
     }
 
     public isImpersonating(): boolean {
-        return this.user.user.isImpersonating();
+        return this.user.identity.isImpersonating();
     }
 
 }

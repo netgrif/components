@@ -7,7 +7,7 @@ import {of} from 'rxjs';
 import {Component} from '@angular/core';
 import {AbstractLogoutShortcutComponent} from './abstract-logout-shortcut.component';
 import {Router} from '@angular/router';
-import {UserService} from '../../../../user/services/user.service';
+import {IdentityService} from '../../../../identity/services/identity.service';
 import {LoggerService} from '../../../../logger/services/logger.service';
 import {ConfigurationService} from '../../../../configuration/configuration.service';
 import {MaterialModule} from '../../../../material/material.module';
@@ -38,7 +38,7 @@ describe('AbstractLogoutShortcutComponent', () => {
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: UserService, useClass: MyUserService}
+                {provide: IdentityService, useClass: MyUserService}
             ]
         })
             .compileComponents();
@@ -70,7 +70,7 @@ describe('AbstractLogoutShortcutComponent', () => {
     template: ''
 })
 class TestLogoutComponent extends AbstractLogoutShortcutComponent {
-    constructor(protected _user: UserService,
+    constructor(protected _user: IdentityService,
                 protected _log: LoggerService,
                 protected _config: ConfigurationService,
                 protected _router: Router) {

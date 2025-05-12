@@ -1,7 +1,7 @@
 
 import { Router } from '@angular/router';
 import { CaseResourceService } from '../../resources/engine-endpoint/case-resource.service';
-import { UserService } from '../../user/services/user.service';
+import { IdentityService } from '../../identity/services/identity.service';
 import { SessionService } from '../../authentication/session/services/session.service';
 import { AuthenticationService } from '../../authentication/services/authentication/authentication.service';
 import { PublicUrlResolverService } from '../../public/services/public-url-resolver.service';
@@ -13,7 +13,7 @@ import { PublicCaseResourceService } from '../../resources/engine-endpoint/publi
 
 export const CaseResourceServiceProvider = {
     provide: CaseResourceService,
-    useFactory: (userService: UserService,
+    useFactory: (userService: IdentityService,
                  sessionService: SessionService,
                  authService: AuthenticationService,
                  router: Router,
@@ -33,7 +33,7 @@ export const CaseResourceServiceProvider = {
         );
     },
     deps: [
-        UserService,
+        IdentityService,
         SessionService,
         AuthenticationService,
         Router,

@@ -10,7 +10,7 @@ import {InjectedTabbedTaskViewData} from '../../view/task-view/models/injected-t
 import {TaskSearchCaseQuery, TaskSearchRequestBody} from '../../filter/models/task-search-request-body';
 import {MatTabChangeEvent} from '@angular/material/tabs';
 import {IncrementingCounter} from '../../utility/incrementing-counter';
-import {NAE_VIEW_ID_SEGMENT} from '../../user/models/view-id-injection-tokens';
+import {NAE_VIEW_ID_SEGMENT} from '../../identity/models/view-id-injection-tokens';
 import {FormControl} from '@angular/forms';
 
 /**

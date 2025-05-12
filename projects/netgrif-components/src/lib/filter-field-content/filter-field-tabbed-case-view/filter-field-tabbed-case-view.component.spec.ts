@@ -9,7 +9,7 @@ import {
     ConfigurationService, createMockNet, MaterialModule, MockAuthenticationMethodService, MockUserService,
     NAE_BASE_FILTER, NAE_TAB_DATA, ProcessService,
     SearchService, SimpleFilter,
-    TestConfigurationService, TestNoAllowedNetsFactory, TranslateLibModule, User, UserService,
+    TestConfigurationService, TestNoAllowedNetsFactory, TranslateLibModule, User, IdentityService,
     TestMockDependenciesModule,
     AbstractHeaderService,
     UserPreferenceService,
@@ -52,7 +52,7 @@ describe('FilterFieldTabbedCaseViewComponent', () => {
             providers: [
                 {provide: NAE_VIEW_ID_SEGMENT, useValue: 'id'},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-                {provide: UserService, useClass: CustomMockUserService},
+                {provide: IdentityService, useClass: CustomMockUserService},
                 SearchService,
                 {provide: NAE_BASE_FILTER, useValue: {filter: SimpleFilter.emptyCaseFilter()}},
                 {

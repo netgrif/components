@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {RedirectService, User} from '@netgrif/components-core';
+import {RedirectService, Identity} from '@netgrif/components-core';
 
 @Component({
     selector: 'nae-app-login-card',
@@ -18,7 +18,7 @@ export class LoginFormComponent implements OnInit {
     ngOnInit(): void {
     }
 
-    onLogin(user: User) {
+    onLogin(user: Identity) {
         console.log(user);
         if (!!user.id) {
             this.redirectService.redirect();

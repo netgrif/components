@@ -10,7 +10,7 @@ import {AuthenticationMethodService} from '../../../authentication/services/auth
 import {MockAuthenticationMethodService} from '../../../utility/tests/mocks/mock-authentication-method-service';
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {TestConfigurationService} from '../../../utility/tests/test-config';
-import {UserResourceService} from '../../../resources/engine-endpoint/user-resource.service';
+import {IdentityResourceService} from '../../../resources/engine-endpoint/identity-resource.service';
 import {AuthenticationService} from '../../../authentication/services/authentication/authentication.service';
 import {MockAuthenticationService} from '../../../utility/tests/mocks/mock-authentication.service';
 import {MockUserResourceService} from '../../../utility/tests/mocks/mock-user-resource.service';
@@ -37,7 +37,7 @@ describe('AbstractSimpleTextFieldComponent', () => {
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
-                {provide: UserResourceService, useClass: MockUserResourceService},
+                {provide: IdentityResourceService, useClass: MockUserResourceService},
                 {provide: DATA_FIELD_PORTAL_DATA, useValue: {
                         dataField: new TextField('', '', 'text', {
                             required: true,

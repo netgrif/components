@@ -6,7 +6,7 @@ import {FlexModule} from "@ngbracket/ngx-layout";
 import {BrowserAnimationsModule, NoopAnimationsModule} from "@angular/platform-browser/animations";
 import {TranslateLibModule} from "../../translate/translate-lib.module";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
-import {UserService} from "../../user/services/user.service";
+import {IdentityService} from "../../identity/services/identity.service";
 import {MockUserService} from "../../utility/tests/mocks/mock-user.service";
 import { Injectable, NO_ERRORS_SCHEMA } from '@angular/core';
 import {ConfigurationService} from "../../configuration/configuration.service";
@@ -15,7 +15,7 @@ import {AuthenticationModule} from "../../authentication/authentication.module";
 import {RouterTestingModule} from "@angular/router/testing";
 import { RoleGuardService } from './role-guard.service';
 import { Access, View } from '../../../commons/schema';
-import { User } from '../../user/models/user';
+import { Identity } from '../../identity/models/Identity';
 
 describe('RoleGuardService', () => {
     let service: RoleGuardService;
@@ -36,7 +36,7 @@ describe('RoleGuardService', () => {
             providers: [
                 RoleGuardService,
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: UserService, useClass: CustomMockUserService},
+                {provide: IdentityService, useClass: CustomMockUserService},
             ],
             declarations: [],
             schemas: [NO_ERRORS_SCHEMA]
@@ -73,7 +73,7 @@ describe('RoleGuardService', () => {
 class CustomMockUserService extends MockUserService {
     constructor() {
         super();
-        this._user = new User('123', 'test@netgrif.com', 'Test', 'User', ['ROLE_USER'], [{
+        this._user = new Identity('123', 'test@netgrif.com', 'Test', 'User', ['ROLE_USER'], [{
             stringId: 'role_user',
             name: 'role_user',
             description: '',

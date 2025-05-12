@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { UserService } from '../../user/services/user.service';
+import { IdentityService } from '../../identity/services/identity.service';
 import { TaskResourceService } from '../../resources/engine-endpoint/task-resource.service';
 import { SessionService } from '../../authentication/session/services/session.service';
 import { AuthenticationService } from '../../authentication/services/authentication/authentication.service';
@@ -15,7 +15,7 @@ import { PublicTaskResourceService } from '../../resources/engine-endpoint/publi
 export const TaskResourceServiceProvider = {
     provide: TaskResourceService,
     useFactory: (
-        userService: UserService,
+        userService: IdentityService,
         sessionService: SessionService,
         authService: AuthenticationService,
         router: Router,
@@ -37,7 +37,7 @@ export const TaskResourceServiceProvider = {
         );
     },
     deps: [
-        UserService,
+        IdentityService,
         SessionService,
         AuthenticationService,
         Router,

@@ -1,12 +1,11 @@
 import {Observable, of} from 'rxjs';
 import {AuthenticationMethodService} from '../../../authentication/services/authentication-method.service';
 import {Credentials} from '../../../authentication/models/credentials';
-import {UserResource} from '../../../resources/interface/user-resource';
+import {IdentityResource} from '../../../resources/interface/identity-resource';
 
 export class MockAuthenticationMethodService extends AuthenticationMethodService {
-    login(credentials: Credentials): Observable<UserResource> {
-        return of({email: 'mail', id: 'id', name: 'name', surname: 'surname', fullName: 'name surname',
-            groups: [], authorities: [], nextGroups: [], processRoles: []});
+    login(credentials: Credentials): Observable<IdentityResource> {
+        return of({username: 'mail', id: 'id', firstname: 'name', lastname: 'surname', fullName: 'name surname', activeActorId: 'actorId'});
     }
 
     logout(): Observable<object> {

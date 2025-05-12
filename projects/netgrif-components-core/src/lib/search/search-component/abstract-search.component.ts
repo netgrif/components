@@ -11,7 +11,7 @@ import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.servi
 import {NAE_SEARCH_CATEGORIES} from '../category-factory/search-categories-injection-token';
 import {Category} from '../models/category/category';
 import {SavedFilterMetadata} from '../models/persistance/saved-filter-metadata';
-import {ViewIdService} from '../../user/services/view-id.service';
+import {ViewIdService} from '../../identity/services/view-id.service';
 import {NAE_FILTERS_FILTER} from '../../filter/models/filters-filter-injection-token';
 import {Filter} from '../../filter/models/filter';
 import {NAE_NAVIGATION_ITEM_TASK_DATA} from '../../navigation/model/filter-case-injection-token';

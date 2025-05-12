@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree} from '@angular/router';
-import {UserService} from '../../user/services/user.service';
+import {IdentityService} from '../../identity/services/identity.service';
 import {AuthenticationModule} from '../../authentication/authentication.module';
 import {RedirectService} from '../../routing/redirect-service/redirect.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
@@ -23,7 +23,7 @@ export class RoleGuardService implements CanActivate {
     private readonly _loginUrl: string;
 
     constructor(protected _redirectService: RedirectService,
-                protected _userService: UserService,
+                protected _userService: IdentityService,
                 protected _configService: ConfigurationService,
                 protected _log: LoggerService) {
         this._loginUrl = this._redirectService.resolveLoginPath();
@@ -125,11 +125,13 @@ export class RoleGuardService implements CanActivate {
     }
 
     private decideAccessByRole(constraint: RoleConstraint): boolean {
-        if (constraint.roleIdentifier) {
-            return this._userService.hasRoleByIdentifier(constraint.roleIdentifier, constraint.processIdentifier);
-        } else {
-            return this._userService.hasRoleByName(constraint.roleName, constraint.processIdentifier);
-        }
+        return true
+        // todo 2058
+        // if (constraint.roleIdentifier) {
+        //     return this._userService.hasRoleByIdentifier(constraint.roleIdentifier, constraint.processIdentifier);
+        // } else {
+        //     return this._userService.hasRoleByName(constraint.roleName, constraint.processIdentifier);
+        // }
     }
 
 }

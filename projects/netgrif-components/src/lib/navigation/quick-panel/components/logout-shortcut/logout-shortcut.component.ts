@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {Router} from '@angular/router';
-import {AbstractLogoutShortcutComponent, ConfigurationService, LoggerService, UserService} from '@netgrif/components-core';
+import {AbstractLogoutShortcutComponent, ConfigurationService, LoggerService, IdentityService} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-logout-shortcut',
@@ -10,7 +10,7 @@ import {AbstractLogoutShortcutComponent, ConfigurationService, LoggerService, Us
 })
 export class LogoutShortcutComponent extends AbstractLogoutShortcutComponent {
 
-    constructor(protected _user: UserService,
+    constructor(protected _user: IdentityService,
                 protected _log: LoggerService,
                 protected _config: ConfigurationService,
                 protected _router: Router) {

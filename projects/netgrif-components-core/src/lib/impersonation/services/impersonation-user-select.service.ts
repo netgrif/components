@@ -9,7 +9,7 @@ import {
 import {SimpleFilter} from '../../filter/models/simple-filter';
 import {UserImpersonationConstants} from '../models/user-impersonation-constants';
 import moment from 'moment';
-import {UserService} from '../../user/services/user.service';
+import {IdentityService} from '../../identity/services/identity.service';
 import {MatDialog} from '@angular/material/dialog';
 import {
     NAE_ADMIN_IMPERSONATE_DIALOG_COMPONENT,
@@ -24,7 +24,7 @@ export class ImpersonationUserSelectService {
     constructor(protected _log: LoggerService,
                 protected _snackBar: SnackBarService,
                 protected _impersonation: ImpersonationService,
-                protected _user: UserService,
+                protected _user: IdentityService,
                 protected _dialog: MatDialog,
                 @Optional() @Inject(NAE_USER_IMPERSONATE_DIALOG_COMPONENT) protected _userImpersonateComponent: any,
                 @Optional() @Inject(NAE_ADMIN_IMPERSONATE_DIALOG_COMPONENT) protected _adminImpersonateComponent: any,
@@ -68,7 +68,7 @@ export class ImpersonationUserSelectService {
                 identifier: UserImpersonationConstants.IMPERSONATION_CONFIG_NET_IDENTIFIER
             },
             query: `
-            (dataSet.impersonators.keyValue:${this._user.user.id}) AND
+            (dataSet.impersonators.keyValue:${this._user.identity.id}) AND
             (dataSet.is_active.booleanValue:true) AND
             ((!(_exists_:dataSet.valid_from.timestampValue)) OR (dataSet.valid_from.timestampValue:<` + currentTime.valueOf() + `)) AND
             ((!(_exists_:dataSet.valid_to.timestampValue)) OR (dataSet.valid_to.timestampValue:>${currentTime.valueOf()}))
@@ -80,7 +80,9 @@ export class ImpersonationUserSelectService {
     }
 
     protected isAdmin(): boolean {
-        return this._user.hasAuthority('ROLE_ADMIN');
+        return true;
+        // todo 2058
+        // return this._user.hasAuthority('ROLE_ADMIN');
     }
 
 }

@@ -2,7 +2,7 @@ import {Component, Input, OnDestroy, OnInit} from "@angular/core";
 import {Subscription} from "rxjs";
 import {Router} from "@angular/router";
 import {SessionIdleTimerService} from "../session/services/session-idle-timer.service";
-import {UserService} from "../../user/services/user.service";
+import {IdentityService} from "../../identity/services/identity.service";
 import {LoggerService} from "../../logger/services/logger.service";
 import {ConfigurationService} from "../../configuration/configuration.service";
 
@@ -20,7 +20,7 @@ export abstract class AbstractSessionIdleComponent implements OnInit, OnDestroy 
     protected _enableIdle: boolean;
 
     constructor(protected sessionTimer: SessionIdleTimerService,
-                protected _user: UserService,
+                protected _user: IdentityService,
                 protected _log: LoggerService,
                 protected _config: ConfigurationService,
                 protected _router: Router) {

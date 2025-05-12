@@ -15,7 +15,7 @@ import {Filter} from '../../../filter/models/filter';
 import {ListRange} from '@angular/cdk/collections';
 import {LoadingWithFilterEmitter} from '../../../utility/loading-with-filter-emitter';
 import {CasePageLoadRequestResult} from '../models/case-page-load-request-result';
-import {UserService} from '../../../user/services/user.service';
+import {IdentityService} from '../../../identity/services/identity.service';
 import {arrayToObservable} from '../../../utility/array-to-observable';
 import {PermissionType} from '../../../process/permissions';
 import {NAE_NEW_CASE_CONFIGURATION} from '../models/new-case-configuration-injection-token';
@@ -55,7 +55,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
                 protected _snackBarService: SnackBarService,
                 protected _searchService: SearchService,
                 protected _translate: TranslateService,
-                protected _user: UserService,
+                protected _user: IdentityService,
                 protected _processService: ProcessService,
                 resolver: SearchIndexResolverService,
                 @Optional() @Inject(NAE_NEW_CASE_DIALOG_COMPONENT) protected _newCaseComponent: any,
@@ -320,7 +320,9 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
     }
 
     public hasAuthority(authority: Array<string> | string): boolean {
-        return this._user.hasAuthority(authority);
+        return true;
+        // todo 2058
+        // return this._user.hasAuthority(authority);
     }
 
     /**

@@ -12,16 +12,16 @@ import {Component, Injectable} from '@angular/core';
 import {AbstractNavigationTreeComponent} from './abstract-navigation-tree.component';
 import {Router} from '@angular/router';
 import {LoggerService} from '../../logger/services/logger.service';
-import {UserService} from '../../user/services/user.service';
+import {IdentityService} from '../../identity/services/identity.service';
 import {AuthenticationModule} from '../../authentication/authentication.module';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {Views} from '../../../commons/schema';
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
-import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
-import {UserTransformer} from '../../authentication/models/user.transformer';
+import {IdentityResourceService} from '../../resources/engine-endpoint/identity-resource.service';
+import {IdentityTransformer} from '../../authentication/models/identity.transformer';
 import {SessionService} from '../../authentication/session/services/session.service';
-import {User} from '../../user/models/user';
+import {Identity} from '../../identity/models/Identity';
 import {AnonymousService} from '../../authentication/anonymous/anonymous.service';
 import {ActiveGroupService} from '../../groups/services/active-group.service';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
@@ -45,7 +45,7 @@ xdescribe('AbstractNavigationTreeComponent', () => {
                 TestUserService,
                 {provide: ConfigurationService, useExisting: ConfigurableTestConfigurationService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-                {provide: UserService, useExisting: TestUserService}
+                {provide: IdentityService, useExisting: TestUserService}
             ],
             imports: [
                 CommonModule,
@@ -155,7 +155,7 @@ xdescribe('AbstractNavigationTreeComponent', () => {
                 }
             }
         });
-        userService.setUser(new User('', '', '', '', [], [], [],[]));
+        userService.setUser(new Identity('', '', '', '', [], [], [],[]));
         initializeComponent();
 
         expect(component).toBeTruthy();
@@ -205,7 +205,7 @@ xdescribe('AbstractNavigationTreeComponent', () => {
                 }
             },
         });
-        userService.setUser(new User('user', '', '', '', [], [{
+        userService.setUser(new Identity('user', '', '', '', [], [{
             stringId: '',
             name: 'name',
             importId: 'id',
@@ -249,7 +249,7 @@ xdescribe('AbstractNavigationTreeComponent', () => {
                 }
             },
         });
-        userService.setUser(new User('user', '', '', '', ['AUTHORITY'], [],[],[]));
+        userService.setUser(new Identity('user', '', '', '', ['AUTHORITY'], [],[],[]));
         initializeComponent();
 
         expect(component).toBeTruthy();
@@ -275,7 +275,7 @@ xdescribe('AbstractNavigationTreeComponent', () => {
                 }
             },
         });
-        userService.setUser(new User('', '', '', '', [], [],[],[]));
+        userService.setUser(new Identity('', '', '', '', [], [],[],[]));
         initializeComponent();
 
         expect(component).toBeTruthy();
@@ -327,7 +327,7 @@ xdescribe('AbstractNavigationTreeComponent', () => {
                 }
             }
         });
-        userService.setUser(new User('user', '', '', '', ['AUTHORITY'], [{
+        userService.setUser(new Identity('user', '', '', '', ['AUTHORITY'], [{
             stringId: '',
             name: 'name',
             importId: 'id',
@@ -355,7 +355,7 @@ class TestTreeComponent extends AbstractNavigationTreeComponent {
     constructor(config: ConfigurationService,
                 router: Router,
                 log: LoggerService,
-                userService: UserService,
+                userService: IdentityService,
                 accessService: AccessService,
                 activeGroupService: ActiveGroupService,
                 taskResourceService: TaskResourceService,
@@ -389,19 +389,19 @@ class ConfigurableTestConfigurationService extends TestConfigurationService {
 }
 
 @Injectable()
-class TestUserService extends UserService {
+class TestUserService extends IdentityService {
 
     constructor(authService: AuthenticationService,
-                userResource: UserResourceService,
-                userTransform: UserTransformer,
+                userResource: IdentityResourceService,
+                userTransform: IdentityTransformer,
                 log: LoggerService,
                 session: SessionService,
                 anonymousService: AnonymousService) {
         super(authService, userResource, userTransform, log, session, anonymousService);
     }
 
-    public setUser(user: User) {
-        this._user = user;
-        this.publishUserChange();
+    public setUser(user: Identity) {
+        this._identity = user;
+        this.publishIdentityChange();
     }
 }

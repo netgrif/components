@@ -1,4 +1,4 @@
-import {UserListService} from '../../user/services/user-list.service';
+import {UserListService} from '../../actor/services/user-list.service';
 import {Injectable} from '@angular/core';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';

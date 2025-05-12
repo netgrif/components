@@ -1,7 +1,7 @@
 import {AutocompleteOptions} from './autocomplete-options';
 import {Observable, of} from 'rxjs';
 import {SearchAutocompleteOption} from './search-autocomplete-option';
-import {UserResourceService} from '../../../resources/engine-endpoint/user-resource.service';
+import {IdentityResourceService} from '../../../resources/engine-endpoint/identity-resource.service';
 import {debounceTime, map, startWith, switchMap} from 'rxjs/operators';
 import {hasContent} from '../../../utility/pagination/page-has-content';
 import {OptionalDependencies} from '../../category-factory/optional-dependencies';
@@ -23,7 +23,7 @@ export class UserAutocomplete implements AutocompleteOptions {
     private static readonly _i18n = 'search.category.userMe';
 
 
-    protected _userResourceService: UserResourceService;
+    protected _userResourceService: IdentityResourceService;
 
     /**
      * @param optionalDependencies search OptionalDependencies

@@ -6,7 +6,7 @@ import {NavigationEnd, Router} from '@angular/router';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
 import {ReplaySubject, Subscription} from 'rxjs';
 import {LoggerService} from '../../logger/services/logger.service';
-import {UserService} from '../../user/services/user.service';
+import {IdentityService} from '../../identity/services/identity.service';
 import {
     AbstractNavigationResizableDrawerComponent
 } from '../navigation-drawer/abstract-navigation-resizable-drawer.component';
@@ -50,7 +50,7 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
     protected constructor(protected _config: ConfigurationService,
                           protected _router: Router,
                           protected _log: LoggerService,
-                          protected _userService: UserService,
+                          protected _userService: IdentityService,
                           protected _accessService: AccessService,
                           protected _activeGroupService: ActiveGroupService,
                           protected _taskResourceService: TaskResourceService,
@@ -73,7 +73,7 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
         this._subscriptions = [
             this._router.events.pipe(filter(event => event instanceof NavigationEnd && this.routerChange))
                 .subscribe(() => this._reloadNavigation.next()),
-            this._userService.user$.subscribe(() => this._reloadNavigation.next()),
+            this._userService.identity$.subscribe(() => this._reloadNavigation.next()),
             this._activeGroupService.activeGroups$.subscribe(() => this._reloadNavigation.next())
         ];
 

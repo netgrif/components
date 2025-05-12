@@ -8,7 +8,7 @@ import {
     LanguageService,
     LoggerService,
     TaskResourceService,
-    UserService
+    IdentityService
 } from '@netgrif/components-core';
 
 @Component({
@@ -22,7 +22,7 @@ export class NavigationTreeComponent extends AbstractNavigationTreeComponent {
     constructor(config: ConfigurationService,
                 router: Router,
                 log: LoggerService,
-                userService: UserService,
+                userService: IdentityService,
                 accessService: AccessService,
                 activeGroupService: ActiveGroupService,
                 taskResourceService: TaskResourceService,

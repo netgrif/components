@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {Observable, ReplaySubject} from 'rxjs';
-import {UserListItem, UserListService} from '../../../../user/services/user-list.service';
+import {UserListItem, UserListService} from '../../../../actor/services/user-list.service';
 import {UserValue} from '../../../../data-fields/user-field/models/user-value';
 import {AbstractBaseUserAssignListComponent} from "../base-user-assign-list/abstract-base-user-assign-list.component";
 
@@ -74,7 +74,7 @@ export abstract class AbstractUserAssignListComponent extends AbstractBaseUserAs
      * @param selectedUser [UserValue]{@link UserValue}
      */
     public select(selectedUser: UserListItem): void {
-        this.userSelected.emit(new UserValue(selectedUser.id, selectedUser.name, selectedUser.surname, selectedUser.email));
+        this.userSelected.emit(new UserValue(selectedUser.id, selectedUser.firstname, selectedUser.lastname, selectedUser.username));
         this._markSelectedUser(selectedUser);
     }
 

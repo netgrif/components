@@ -1,19 +1,24 @@
 /**
+ * todo doc
  * A generic representation of a User object. All User and User-like instances implement this interface that holds the most
  * basic User attributes.
  */
-export interface IUser {
+export interface IIdentity {
     id: string;
     /**
      * **Example:** example@netgrif.com
      */
-    email: string;
+    username: string;
     /**
      * **Example:** Example
      */
-    name: string;
+    firstname: string;
     /**
      * **Example:** Netgrif
      */
-    surname: string;
+    lastname: string;
+    /**
+     * todo doc
+     * */
+    activeActorId: string;
 }

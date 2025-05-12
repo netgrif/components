@@ -4,7 +4,7 @@ import {
     CaseViewService, DATA_FIELD_PORTAL_DATA, DataFieldPortalData, EnumerationField,
     LoggerService, MultichoiceField,
     OverflowService,
-    UserService
+    IdentityService
 } from '@netgrif/components-core';
 import {CaseResourceService, PermissionService} from '@netgrif/components-core';
 import {SnackBarService} from '@netgrif/components-core';
@@ -25,7 +25,7 @@ export class CasePanelComponent extends AbstractCasePanelComponent implements On
                 protected _snackBarService: SnackBarService,
                 protected _translateService: TranslateService,
                 protected _log: LoggerService,
-                protected _userService: UserService,
+                protected _userService: IdentityService,
                 protected _currencyPipe: CurrencyPipe,
                 public _permissionService: PermissionService,
                 @Optional() protected _overflowService: OverflowService,

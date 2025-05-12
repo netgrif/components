@@ -17,8 +17,8 @@ import {
 } from '../../routing/dynamic-navigation-route-provider/dynamic-navigation-route-provider.service';
 import {NAE_ROUTING_CONFIGURATION_PATH} from '../../routing/routing-builder/routing-builder.service';
 import {LanguageService} from '../../translate/language.service';
-import {User} from '../../user/models/user';
-import {UserService} from '../../user/services/user.service';
+import {Identity} from '../../identity/models/Identity';
+import {IdentityService} from '../../identity/services/identity.service';
 import {LoadingEmitter} from '../../utility/loading-emitter';
 import {UriNodeResource} from '../model/uri-resource';
 import {UriService} from '../service/uri.service';
@@ -123,7 +123,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                           protected _breakpoint: BreakpointObserver,
                           protected _languageService: LanguageService,
                           protected _translateService: TranslateService,
-                          protected _userService: UserService,
+                          protected _userService: IdentityService,
                           protected _accessService: AccessService,
                           protected _log: LoggerService,
                           protected _config: ConfigurationService,
@@ -292,8 +292,8 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         this._impersonation.cease();
     }
 
-    get user(): User {
-        return this._userService.user;
+    get user(): Identity {
+        return this._userService.identity;
     }
 
     get canGoBackLoading$(): Observable<boolean> {

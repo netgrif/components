@@ -25,7 +25,7 @@ import {AuthenticationService} from '../../authentication/services/authenticatio
 import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
 import {SignUpService} from '../../authentication/sign-up/services/sign-up.service';
 import {OverflowService} from '../../header/services/overflow.service';
-import {UserService} from '../../user/services/user.service';
+import {IdentityService} from '../../identity/services/identity.service';
 import {Case} from '../../resources/interface/case';
 import {NAE_BASE_FILTER} from '../../search/models/base-filter-injection-token';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
@@ -110,7 +110,7 @@ class TestCasePanelComponent extends AbstractCasePanelComponent {
                 protected _snackBarService: SnackBarService,
                 protected _translateService: TranslateService,
                 protected _log: LoggerService,
-                protected _userService: UserService,
+                protected _userService: IdentityService,
                 protected _currencyPipe: CurrencyPipe,
                 protected _permissionService: PermissionService,
                 @Optional() protected overflowService: OverflowService) {

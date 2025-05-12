@@ -9,8 +9,8 @@ import {NAE_CASE_REF_CREATE_CASE, NAE_CASE_REF_DATAFIELD, NAE_CASE_REF_SEARCH} f
 import {NAE_BASE_FILTER} from '../../../search/models/base-filter-injection-token';
 import {SimpleFilter} from '../../../filter/models/simple-filter';
 import {BaseFilter} from '../../../search/models/base-filter';
-import {NAE_VIEW_ID_SEGMENT} from '../../../user/models/view-id-injection-tokens';
-import {ViewIdService} from '../../../user/services/view-id.service';
+import {NAE_VIEW_ID_SEGMENT} from '../../../identity/models/view-id-injection-tokens';
+import {ViewIdService} from '../../../identity/services/view-id.service';
 import {DataField} from '../../models/abstract-data-field';
 
 export abstract class AbstractCaseRefBaseFieldComponent<T extends DataField<unknown>> extends AbstractBaseDataFieldComponent<T> {

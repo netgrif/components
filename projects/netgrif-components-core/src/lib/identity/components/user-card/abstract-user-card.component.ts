@@ -1,6 +1,6 @@
 import {Component, Injector, Input, OnDestroy, OnInit} from '@angular/core';
-import {User} from '../../models/user';
-import {UserService} from '../../services/user.service';
+import {Identity} from '../../models/Identity';
+import {IdentityService} from '../../services/identity.service';
 import {TooltipPosition} from '@angular/material/tooltip';
 import {Subscription} from 'rxjs';
 import {
@@ -16,7 +16,7 @@ export type IconStyle = 'large' | 'small';
 })
 export abstract class AbstractUserCardComponent extends AbstractNavigationResizableDrawerComponent implements OnInit, OnDestroy {
 
-    @Input() public user: User;
+    @Input() public user: Identity;
     @Input() public mode: Mode = 'horizontal';
     @Input() public tooltipPosition: TooltipPosition = 'below';
     @Input() public iconStyle: IconStyle = 'large';
@@ -30,10 +30,10 @@ export abstract class AbstractUserCardComponent extends AbstractNavigationResiza
     ngOnInit(): void {
         super.ngOnInit();
         if (!this.user) {
-            const userService: UserService = this._injector.get(UserService);
+            const userService: IdentityService = this._injector.get(IdentityService);
             if (userService) {
-                this.user = userService.user;
-                this.subUser = userService.user$.subscribe(user => this.user = user);
+                this.user = userService.identity;
+                this.subUser = userService.identity$.subscribe(user => this.user = user);
             }
         }
     }

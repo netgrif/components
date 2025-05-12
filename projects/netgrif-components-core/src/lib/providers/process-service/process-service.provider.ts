@@ -1,7 +1,7 @@
 
 import { Router } from '@angular/router';
 import { ProcessService } from '../../process/process.service';
-import { UserService } from '../../user/services/user.service';
+import { IdentityService } from '../../identity/services/identity.service';
 import { SessionService } from '../../authentication/session/services/session.service';
 import { AuthenticationService } from '../../authentication/services/authentication/authentication.service';
 import { PublicUrlResolverService } from '../../public/services/public-url-resolver.service';
@@ -14,7 +14,7 @@ import { PublicProcessService } from '../../process/public-process.service';
 
 export const ProcessServiceProvider = {
     provide: ProcessService,
-    useFactory: (userService: UserService,
+    useFactory: (userService: IdentityService,
                  sessionService: SessionService,
                  authService: AuthenticationService,
                  router: Router,
@@ -35,7 +35,7 @@ export const ProcessServiceProvider = {
         );
     },
     deps: [
-        UserService,
+        IdentityService,
         SessionService,
         AuthenticationService,
         Router,

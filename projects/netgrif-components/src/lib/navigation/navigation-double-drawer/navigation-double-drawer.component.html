@@ -36,7 +36,7 @@
                     <div class="large-menu-item" fxLayout="column" fxFlexAlign="start center" fxFlex>
                         <span *ngIf="!user.isImpersonating()"  class="large-menu-item-text" fxFlex="50">{{user.fullName}}</span>
                         <span *ngIf="user.isImpersonating()" class="large-menu-item-text" fxFlex="50">{{user.fullName}} ({{user.getSelfOrImpersonated().fullName}})</span>
-                        <span class="large-menu-item-text" style="font-size: 12px;" fxFlex="50">{{user.email}}</span>
+                        <span class="large-menu-item-text" style="font-size: 12px;" fxFlex="50">{{user.username}}</span>
                     </div>
                 </div>
                 <button *ngIf="includeImpersonation && !user.isImpersonating()" mat-menu-item (click)="impersonate()">

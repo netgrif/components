@@ -1,12 +1,13 @@
-import {IUser} from '../../user/models/iuser';
+import {IIdentity} from '../../identity/models/iidentity';
 
 /**
- * A "small" version of the {@link UserResource} interface, that represents
+ * todo doc
+ * A "small" version of the {@link IdentityResource} interface, that represents
  * User response in its compacted form without some of the attributes.
  *
  * This interface exists mostly to not give developers false hopes about contents of some backend responses.
  */
-export interface UserResourceSmall extends IUser {
+export interface IdentityResourceSmall extends IIdentity {
     fullName: string;
     avatar?: string;
 }

@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {FormSubmitEvent, HasForm} from '../has-form';
-import {UserService} from '../../user/services/user.service';
-import {User} from '../../user/models/user';
+import {IdentityService} from '../../identity/services/identity.service';
+import {Identity} from '../../identity/models/Identity';
 import {LoadingEmitter} from '../../utility/loading-emitter';
 import {take} from 'rxjs/operators';
 
@@ -18,17 +18,17 @@ export abstract class AbstractLoginFormComponent implements HasForm, OnDestroy {
 
     @Input() public showSignUpButton: boolean;
     @Input() public showForgottenPasswordButton: boolean;
-    @Output() public login: EventEmitter<User>;
+    @Output() public login: EventEmitter<Identity>;
     @Output() public resetPassword: EventEmitter<void>;
     @Output() public signUp: EventEmitter<void>;
     @Output() public formSubmit: EventEmitter<FormSubmitEvent>;
 
-    protected constructor(formBuilder: FormBuilder, protected _userService: UserService) {
+    protected constructor(formBuilder: FormBuilder, protected _identityService: IdentityService) {
         this.rootFormGroup = formBuilder.group({
             login: [''],
             password: ['']
         });
-        this.login = new EventEmitter<User>();
+        this.login = new EventEmitter<Identity>();
         this.resetPassword = new EventEmitter<void>();
         this.signUp = new EventEmitter<void>();
         this.formSubmit = new EventEmitter<FormSubmitEvent>();
@@ -51,7 +51,7 @@ export abstract class AbstractLoginFormComponent implements HasForm, OnDestroy {
 
         this.loading.on();
         this.formSubmit.emit(credential);
-        this._userService.login(credential).pipe(take(1)).subscribe((user: User) => {
+        this._identityService.login(credential).pipe(take(1)).subscribe((user: Identity) => {
             this.login.emit(user);
             this.loading.off();
         });

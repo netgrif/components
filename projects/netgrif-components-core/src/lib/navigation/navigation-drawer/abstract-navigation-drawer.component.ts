@@ -1,12 +1,12 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
-import {User} from '../../user/models/user';
+import {Identity} from '../../identity/models/Identity';
 import 'hammerjs';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {MatDrawerToggleResult, MatSidenav} from '@angular/material/sidenav';
 import {LoggerService} from '../../logger/services/logger.service';
 import {BehaviorSubject, Subscription} from 'rxjs';
 import {ResizeEvent} from 'angular-resizable-element';
-import {UserPreferenceService} from '../../user/services/user-preference.service';
+import {UserPreferenceService} from '../../identity/services/user-preference.service';
 
 const DRAWER_DEFAULT_MIN_WIDTH = 200;
 const DRAWER_MAX_WIDTH = 450;
@@ -19,7 +19,7 @@ export abstract class AbstractNavigationDrawerComponent implements OnInit, After
 
 
     @Input() public showUser: boolean;
-    @Input() public user: User;
+    @Input() public user: Identity;
     @Input() public showQuickPanel: boolean;
     @Input() public quickPanelItems: Array<any>; // QuickPanelItem
     @Input() public navigation: boolean;

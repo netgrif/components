@@ -12,7 +12,7 @@ import {AuthenticationService} from '../../../authentication/services/authentica
 import {AuthenticationMethodService} from '../../../authentication/services/authentication-method.service';
 import {MockAuthenticationService} from '../../../utility/tests/mocks/mock-authentication.service';
 import {ConfigurationService} from '../../../configuration/configuration.service';
-import {UserResourceService} from '../../../resources/engine-endpoint/user-resource.service';
+import {IdentityResourceService} from '../../../resources/engine-endpoint/identity-resource.service';
 import {MockUserResourceService} from '../../../utility/tests/mocks/mock-user-resource.service';
 import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
@@ -37,7 +37,7 @@ describe('AbstractTextareaFieldComponent', () => {
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
-                {provide: UserResourceService, useClass: MockUserResourceService},
+                {provide: IdentityResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: DATA_FIELD_PORTAL_DATA, useValue: {
                         dataField: new TextField('', '', 'text', {

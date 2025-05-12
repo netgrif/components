@@ -1,5 +1,5 @@
 import {Component, Input, OnDestroy, OnInit, ViewChild} from "@angular/core";
-import {RolesObject, UserListItem, UserListService} from "../../../../user/services/user-list.service";
+import {RolesObject, UserListItem, UserListService} from "../../../../actor/services/user-list.service";
 import {FormControl} from "@angular/forms";
 import {CdkVirtualScrollViewport} from "@angular/cdk/scrolling";
 import {debounceTime} from "rxjs/operators";
