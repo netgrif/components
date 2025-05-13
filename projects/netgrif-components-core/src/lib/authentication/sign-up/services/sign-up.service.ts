@@ -50,8 +50,8 @@ export class SignUpService {
         if (!invitation.groups) {
             invitation.groups = [];
         }
-        if (!invitation.processRoles) {
-            invitation.processRoles = [];
+        if (!invitation.roles) {
+            invitation.roles = [];
         }
         return this._http.post<MessageResource>(this._inviteUrl, invitation).pipe(
             switchMap(processMessageResponse)

@@ -4,11 +4,8 @@ import {Net} from './net';
 import {PetriNetResourceService} from '../resources/engine-endpoint/petri-net-resource.service';
 import {LoggerService} from '../logger/services/logger.service';
 import Transition from './transition';
-import Transaction from './transaction';
 import {catchError, map, switchMap, tap} from 'rxjs/operators';
-import RolesAndPermissions from './rolesAndPermissions';
 import {PetriNetReference} from '../resources/interface/petri-net-reference';
-import {PetriNetReferenceWithPermissions} from './petri-net-reference-with-permissions';
 
 export interface NetCache {
     [k: string]: Net;
@@ -26,7 +23,7 @@ export class ProcessService implements OnDestroy {
     protected _netsSubject: Subject<NetCache>;
     protected _netUpdate: Subject<Net>;
     protected _requestCache: Map<string, ReplaySubject<Net>>;
-    protected _referenceRequestCache: Map<string, ReplaySubject<PetriNetReferenceWithPermissions>>;
+    protected _referenceRequestCache: Map<string, ReplaySubject<PetriNetReference>>;
     public readonly LATEST = 'latest';
 
     constructor(private _petriNetResource: PetriNetResourceService, private _log: LoggerService) {
@@ -34,7 +31,7 @@ export class ProcessService implements OnDestroy {
         this._netsSubject = new Subject<NetCache>();
         this._netUpdate = new Subject<Net>();
         this._requestCache = new Map<string, ReplaySubject<Net>>();
-        this._referenceRequestCache = new Map<string, ReplaySubject<PetriNetReferenceWithPermissions>>();
+        this._referenceRequestCache = new Map<string, ReplaySubject<PetriNetReference>>();
     }
 
     ngOnDestroy(): void {
@@ -113,7 +110,7 @@ export class ProcessService implements OnDestroy {
      * @returns Observable of array of loaded processes. Array is emitted only when every process finished loading.
      * If any of the processes failed to load it is skipped from the result.
      */
-    public getNetReferences(identifiers: Array<string>): Observable<Array<PetriNetReferenceWithPermissions>> {
+    public getNetReferences(identifiers: Array<string>): Observable<Array<PetriNetReference>> {
         if (identifiers.length === 0) {
             return of([]);
         }
@@ -132,18 +129,14 @@ export class ProcessService implements OnDestroy {
      * @param identifier Identifier of the requested process. See {@link Net}
      * @returns Observable of [the process]{@link Net}. Process is loaded from a server or picked from the cache.
      */
-    public getNetReference(identifier: string): Observable<PetriNetReferenceWithPermissions> {
+    public getNetReference(identifier: string): Observable<PetriNetReference> {
         if (this._referenceRequestCache.has(identifier)) {
             return this._referenceRequestCache.get(identifier).asObservable();
         }
-        this._referenceRequestCache.set(identifier, new ReplaySubject<PetriNetReferenceWithPermissions>(1));
+        this._referenceRequestCache.set(identifier, new ReplaySubject<PetriNetReference>(1));
         return this.loadNetReference(identifier).pipe(
             switchMap(ref => {
-                if (ref !== null) {
-                    return forkJoin({net: of(ref), roles: this.loadRoles(ref.stringId)});
-                } else {
-                    return of({net: ref, roles: undefined});
-                }
+                return of({net: ref})
             }),
             map(result => {
                 if (result.net === null) {
@@ -151,8 +144,6 @@ export class ProcessService implements OnDestroy {
                 }
                 return {
                     ...result.net,
-                    roles: result.roles.processRoles,
-                    permissions: result.roles.permissions
                 };
             }),
             tap(reference => {
@@ -186,14 +177,11 @@ export class ProcessService implements OnDestroy {
         if (!this._nets[net.identifier]) {
             return;
         }
-        if (!net.transitions.length || !net.roles.length) {
+        if (!net.transitions.length) {
             forkJoin({
                 transitions: this.loadTransitions(net.stringId),
-                roles: this.loadRoles(net.stringId)
             }).subscribe(values => {
                 net.transitions = values.transitions;
-                net.roles = values.roles.processRoles;
-                net.permissions = values.roles.permissions;
                 this._nets[net.identifier] = net;
                 this.publishUpdate(net);
             }, error => {
@@ -244,12 +232,9 @@ export class ProcessService implements OnDestroy {
             this._log.debug(`loading net '${id}' transitions and roles`);
             forkJoin({
                 transitions: this.loadTransitions(net.stringId),
-                roles: this.loadRoles(net.stringId)
             }).subscribe(values => {
                 this._nets[net.identifier] = new Net(net);
                 this._nets[net.identifier].transitions = values.transitions;
-                this._nets[net.identifier].roles = values.roles.processRoles;
-                this._nets[net.identifier].permissions = values.roles.permissions;
                 returnNet.next(this._nets[net.identifier]);
                 returnNet.complete();
             }, error => {
@@ -291,20 +276,6 @@ export class ProcessService implements OnDestroy {
             }),
             catchError(err => {
                 this._log.error('References for transitions of net ' + id + ' failed to load!', err);
-                throw err;
-            })
-        );
-    }
-
-    protected loadRoles(id: string): Observable<RolesAndPermissions> {
-        return this._petriNetResource.getPetriNetRoles(id).pipe(
-            tap(rolesAndPerm => {
-                if (rolesAndPerm.processRoles.length === 0) {
-                    this._log.info('Roles reference of net ' + id + ' were not found!');
-                }
-            }),
-            catchError(err => {
-                this._log.error('Roles reference of net ' + id + ' failed to load!', err);
                 throw err;
             })
         );

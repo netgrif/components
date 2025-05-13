@@ -1,5 +1,4 @@
 import {Net} from '../../../process/net';
-import NetRole from '../../../process/netRole';
 import {ImmediateData} from '../../../resources/interface/immediate-data';
 import {Permissions} from '../../../process/permissions';
 
@@ -20,7 +19,6 @@ export interface MockTransition {
 export function createMockNet(stringId = 'stringId',
                               identifier = 'identifier',
                               title = 'title',
-                              roles: Array<NetRole> = [],
                               transitions: Array<MockTransition> = [],
                               immediateData: Array<ImmediateData> = [],
                               permissions: Permissions = {}): Net {
@@ -33,18 +31,15 @@ export function createMockNet(stringId = 'stringId',
         initials: 'NET',
         defaultCaseName: '',
         createdDate: [2021, 2, 4, 12, 50, 0, 1612443000],
-        author: {
-            email: '',
-            fullName: ''
-        },
-        immediateData
+        authorId: '',
+        immediateData,
+        processRolePermissions: {}
     });
-    net.roles = roles;
     net.transitions = transitions.map(t => ({
         ...t,
         petriNetId: '',
         immediateData: []
     }));
-    net.permissions = permissions;
+    net.processRolePermissions = permissions;
     return net;
 }

@@ -3,7 +3,7 @@ import {Injectable} from "@angular/core";
 @Injectable({
     providedIn: 'root'
 })
-export class ActorService implements OnDestroy {
+export class ActorService {
 
     // todo 2058
 

@@ -86,8 +86,9 @@ describe('CaseHeaderService', () => {
             initials: 'string',
             defaultCaseName: 'string',
             createdDate: [2020, 1, 1, 10, 0],
-            author: {email: 'email', fullName: 'fullName'},
-            immediateData: [{stringId: 'string', title: 'string', type: 'string'}]
+            authorId: 'authorId',
+            immediateData: [{stringId: 'string', title: 'string', type: 'string'}],
+            processRolePermissions: {}
         }]);
         expect(service.fieldsGroup.length).toEqual(2);
     });

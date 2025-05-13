@@ -69,8 +69,9 @@ export abstract class AbstractCasePanelComponent extends AbstractPanelWithImmedi
                 return {value: this.case_.visualId, icon: undefined, type: 'meta'};
             case CaseMetaField.TITLE:
                 return {value: this.case_.title, icon: undefined, type: 'meta'};
+            // todo 2058
             case CaseMetaField.AUTHOR:
-                return {value: this.case_.author.fullName, icon: 'account_circle', type: 'meta'};
+                return {value: this.case_.authorId, icon: 'account_circle', type: 'meta'};
             case CaseMetaField.CREATION_DATE:
                 return {
                     value: toMoment(this.case_.creationDate).format(DATE_TIME_FORMAT_STRING),

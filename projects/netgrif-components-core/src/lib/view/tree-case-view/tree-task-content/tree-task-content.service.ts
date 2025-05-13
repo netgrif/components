@@ -11,7 +11,7 @@ import {AssignPolicyService} from '../../../task/services/assign-policy.service'
 import {AssignPolicy} from '../../../task-content/model/policy';
 import {NAE_TASK_OPERATIONS} from '../../../task/models/task-operations-injection-token';
 import {SubjectTaskOperations} from '../../../task/models/subject-task-operations';
-import {UserComparatorService} from '../../../identity/services/user-comparator.service';
+import {ActorComparatorService} from '../../../actor/services/actor-comparator.service';
 import {TreePetriflowIdentifiers} from '../model/tree-petriflow-identifiers';
 import {CallChainService} from '../../../utility/call-chain/call-chain.service';
 import {LoadingEmitter} from '../../../utility/loading-emitter';
@@ -47,7 +47,7 @@ export class TreeTaskContentService implements OnDestroy {
                 protected _taskEventService: TaskEventService,
                 protected _assignPolicy: AssignPolicyService,
                 protected _cancel: CancelTaskService,
-                protected _userComparator: UserComparatorService,
+                protected _userComparator: ActorComparatorService,
                 protected _callchain: CallChainService,
                 protected _logger: LoggerService,
                 protected _selectedCaseService: SelectedCaseService,
@@ -260,8 +260,8 @@ export class TreeTaskContentService implements OnDestroy {
      */
     protected resolveTaskBlockState(): void {
         const taskShouldBeBlocked = !this._taskContentService.task
-            || this._taskContentService.task.user === undefined
-            || !this._userComparator.compareUsers(this._taskContentService.task.user);
+            || this._taskContentService.task.assigneeId === undefined
+            || !this._userComparator.compareActors(this._taskContentService.task.assigneeId);
         this._taskContentService.blockFields(taskShouldBeBlocked);
     }
 

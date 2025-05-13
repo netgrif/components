@@ -642,12 +642,10 @@ class TreeTestProcessService {
             initials: '',
             defaultCaseName: '',
             createdDate: [],
-            author: {
-                email: '',
-                fullName: ''
-            },
+            authorId: 'authorId',
             immediateData: [],
-            uriNodeId: ''
+            uriNodeId: '',
+            processRolePermissions: {}
         }));
     }
 }

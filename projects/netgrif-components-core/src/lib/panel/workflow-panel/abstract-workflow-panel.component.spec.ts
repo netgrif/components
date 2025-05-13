@@ -124,10 +124,7 @@ class TestWrapperComponent {
         new HeaderColumn(HeaderColumnType.META, WorkflowMetaField.VERSION, 'string', 'string'),
     ]);
     public workflow: PetriNetReference = {
-        author: {
-            email: '',
-            fullName: '',
-        },
+        authorId: 'authorId',
         createdDate: [2020, 4, 8],
         defaultCaseName: '',
         identifier: '',
@@ -136,6 +133,7 @@ class TestWrapperComponent {
         stringId: '',
         title: '',
         version: '',
-        uriNodeId: ''
+        uriNodeId: '',
+        processRolePermissions: {}
     };
 }

@@ -1,5 +1,5 @@
 import {TestBed} from '@angular/core/testing';
-import {UserComparatorService} from './user-comparator.service';
+import {ActorComparatorService} from './actor-comparator.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
@@ -10,7 +10,7 @@ import {AuthenticationService} from '../../authentication/services/authenticatio
 import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
 
 describe('UserComparatorService', () => {
-    let service: UserComparatorService;
+    let service: ActorComparatorService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -24,7 +24,7 @@ describe('UserComparatorService', () => {
                 {provide: ConfigurationService, useClass: TestConfigurationService}
             ]
         });
-        service = TestBed.inject(UserComparatorService);
+        service = TestBed.inject(ActorComparatorService);
     });
 
     it('should be created', () => {

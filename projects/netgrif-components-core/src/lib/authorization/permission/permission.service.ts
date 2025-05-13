@@ -1,18 +1,18 @@
 import {Injectable} from '@angular/core';
-import {UserComparatorService} from '../../identity/services/user-comparator.service';
+import {ActorComparatorService} from '../../actor/services/actor-comparator.service';
 import {AssignPolicy} from '../../task-content/model/policy';
 import {Task} from '../../resources/interface/task';
-import {IdentityService} from '../../identity/services/identity.service';
 import {Case} from '../../resources/interface/case';
-import {PetriNetReferenceWithPermissions} from '../../process/petri-net-reference-with-permissions';
-import {Permissions, PermissionType, UserPermissions} from '../../process/permissions';
+import {Permissions, PermissionType} from '../../process/permissions';
+import {PetriNetReference} from "../../resources/interface/petri-net-reference";
+import {ActorService} from "../../actor/services/actor.service";
 
 @Injectable({
     providedIn: 'root'
 })
 export class PermissionService {
 
-    constructor(protected userComparator: UserComparatorService, protected _userService: IdentityService) {
+    constructor(protected userComparator: ActorComparatorService, protected _actorService: ActorService) {
     }
 
     public hasTaskPermission(task: Task | undefined, permission: PermissionType): boolean {
@@ -27,11 +27,10 @@ export class PermissionService {
     }
 
     public hasCasePermission(case_: Case | undefined, permission: PermissionType): boolean {
-        return true;
-        // if (!case_) {
-        //     return false;
-        // }
-        //
+        if (!case_) {
+            return false;
+        }
+
         // const rolePermValue = this.checkRolePerms(case_.permissions, permission);
         // const userPermValue = this.checkUserPerms(case_.users, permission);
         // return this.resolvePermissions(rolePermValue, userPermValue);
@@ -41,7 +40,7 @@ export class PermissionService {
         return userPermValue === undefined ? (!!rolePermValue) : userPermValue;
     }
 
-    public hasNetPermission(action: PermissionType, net: PetriNetReferenceWithPermissions): boolean {
+    public hasNetPermission(action: PermissionType, net: PetriNetReference): boolean {
         return true;
         // if (!net
         //     || !net.permissions
@@ -60,39 +59,35 @@ export class PermissionService {
     }
 
     public canAssign(task: Task | undefined): boolean {
-        return true;
-        // return !!task
-        //     && (
-        //         (
-        //             task.assignPolicy === AssignPolicy.manual
-        //             && !task.user
-        //             && this.hasTaskPermission(task, PermissionType.ASSIGN)
-        //         )
-        //     );
+        return !!task
+            && (
+                (
+                    task.assignPolicy === AssignPolicy.manual
+                    && !task.assigneeId
+                    && this.hasTaskPermission(task, PermissionType.ASSIGN)
+                )
+            );
     }
 
     public canCancel(task: Task | undefined): boolean {
-        return true;
-        // return !!task && !!task.user
-        //     && this.hasTaskPermission(task, PermissionType.CANCEL)
-        //     && ((task.assignedUserPolicy === undefined || task.assignedUserPolicy.cancel === undefined)
-        //         || task.assignedUserPolicy.cancel);
+        return !!task && !!task.assigneeId
+            && this.hasTaskPermission(task, PermissionType.CANCEL)
+            && ((task.assignedUserPolicy === undefined || task.assignedUserPolicy.cancel === undefined)
+                || task.assignedUserPolicy.cancel);
     }
 
     public canReassign(task: Task | undefined): boolean {
-        return true;
-        // return !!task && !!task.user && this.userComparator.compareUsers(task.user)
-        //     && this.hasTaskPermission(task, PermissionType.DELEGATE)
-        //     && ((task.assignedUserPolicy === undefined || task.assignedUserPolicy.reassign === undefined)
-        //         || task.assignedUserPolicy.reassign);
+        return !!task && !!task.assigneeId && this.userComparator.compareActors(task.assigneeId)
+            && this.hasTaskPermission(task, PermissionType.DELEGATE)
+            && ((task.assignedUserPolicy === undefined || task.assignedUserPolicy.reassign === undefined)
+                || task.assignedUserPolicy.reassign);
     }
 
     public canFinish(task: Task | undefined): boolean {
-        return true;
-        // return !!task
-        //     && !!task.user
-        //     && this.userComparator.compareUsers(task.user)
-        //     && this.hasTaskPermission(task, PermissionType.FINISH);
+        return !!task
+            && !!task.assigneeId
+            && this.userComparator.compareActors(task.assigneeId)
+            && this.hasTaskPermission(task, PermissionType.FINISH);
     }
 
     public canCollapse(task: Task | undefined): boolean {
@@ -103,26 +98,25 @@ export class PermissionService {
     public checkRolePerms(roles: Permissions, permission: PermissionType): boolean | undefined {
         let rolePermValue: boolean;
         if (!!roles) {
-            Object.keys(roles).forEach(role => {
-                // todo 2058
-                // if (roles[role][permission] !== undefined && this._userService.hasRoleById(role)) {
-                //     rolePermValue = rolePermValue === undefined ? roles[role][permission] : rolePermValue && roles[role][permission];
-                // }
-            });
+            // Object.keys(roles).forEach(role => {
+            //     if (roles[role][permission] !== undefined && this._actorService.hasRoleById(role)) {
+            //         rolePermValue = rolePermValue === undefined ? roles[role][permission] : rolePermValue && roles[role][permission];
+            //     }
+            // });
         }
         return rolePermValue;
     }
 
-    public checkUserPerms(users: UserPermissions, permission: PermissionType): boolean | undefined {
+    public checkUserPerms(users: object, permission: PermissionType): boolean | undefined {
         let userPermValue: boolean;
         if (!!users) {
-            const loggedUserId = this._userService.identity.getSelfOrImpersonated().id;
-            Object.keys(users).forEach(user => {
-                if (user === loggedUserId && users[user][permission] !== undefined) {
-                    userPermValue = userPermValue === undefined ?
-                        users[user][permission] : userPermValue && users[user][permission];
-                }
-            });
+            // const loggedUserId = this._actorService.identity.getSelfOrImpersonated().id;
+            // Object.keys(users).forEach(user => {
+            //     if (user === loggedUserId && users[user][permission] !== undefined) {
+            //         userPermValue = userPermValue === undefined ?
+            //             users[user][permission] : userPermValue && users[user][permission];
+            //     }
+            // });
         }
         return userPermValue;
     }

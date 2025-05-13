@@ -39,82 +39,82 @@ export class FieldConverterService {
     public toClass(item: DataRefResource): DataField<any> {
         switch (item.field.type) {
             case FieldTypeResource.BOOLEAN:
-                return new BooleanField(item.fieldId, item.field.title, item.field.value.value as boolean, item.behavior,
+                return new BooleanField(item.fieldId, item.field.title, item.field.value?.value as boolean, item.behavior,
                     item.field.placeholder, item.field.description, item.layout, item.field.validations, item.component, item.parentTaskId);
             case FieldTypeResource.TEXT:
                 if (this.textFieldNames.includes(item.component?.name)) {
-                    return new TextAreaField(item.fieldId, item.field.title, this.resolveTextValue(item, item.field.value.value), item.behavior,
+                    return new TextAreaField(item.fieldId, item.field.title, this.resolveTextValue(item, item.field.value?.value), item.behavior,
                         item.field.placeholder, item.field.description, item.layout, item.field.validations, item.component, item.parentTaskId);
                 }
-                return new TextField(item.fieldId, item.field.title, this.resolveTextValue(item, item.field.value.value), item.behavior, item.field.placeholder,
+                return new TextField(item.fieldId, item.field.title, this.resolveTextValue(item, item.field.value?.value), item.behavior, item.field.placeholder,
                     item.field.description, item.layout, item.field.validations, item.component, item.parentTaskId);
             case FieldTypeResource.NUMBER:
-                return new NumberField(item.fieldId, item.field.title, item.field.value.value as number, item.behavior, item.field.validations, item.field.placeholder,
+                return new NumberField(item.fieldId, item.field.title, item.field.value?.value as number, item.behavior, item.field.validations, item.field.placeholder,
                     item.field.description, item.layout, item.field.formatFilter, this.resolveNumberComponent(item.field), item.parentTaskId);
             case FieldTypeResource.ENUMERATION:
             case FieldTypeResource.ENUMERATION_MAP:
                 return this.resolveEnumField(item);
             case FieldTypeResource.MULTICHOICE:
-                return new MultichoiceField(item.fieldId, item.field.title, item.field.value.value, this.resolveMultichoiceChoices(item.field),
+                return new MultichoiceField(item.fieldId, item.field.title, item.field.value?.value, this.resolveMultichoiceChoices(item.field),
                     item.behavior, item.field.placeholder, item.field.description, item.layout, item.field.type, item.field.validations,
                     item.component, item.parentTaskId);
             case FieldTypeResource.MULTICHOICE_MAP:
-                return new MultichoiceField(item.fieldId, item.field.title, item.field.value.value, this.resolveMultichoiceOptions(item.field),
+                return new MultichoiceField(item.fieldId, item.field.title, item.field.value?.value, this.resolveMultichoiceOptions(item.field),
                     item.behavior, item.field.placeholder, item.field.description, item.layout,
                     item.field.type, item.field.validations, item.component, item.parentTaskId);
             case FieldTypeResource.DATE:
                 let date;
-                if (item.field.value.value) {
+                if (item.field.value?.value) {
                     date = moment(new Date(item.field.value.value[0], item.field.value.value[1] - 1, item.field.value.value[2]));
                 }
                 return new DateField(item.fieldId, item.field.title, date, item.behavior, item.field.placeholder,
                     item.field.description, item.layout, item.field.validations, item.component, item.parentTaskId);
             case FieldTypeResource.DATE_TIME:
                 let dateTime;
-                if (item.field.value.value) {
+                if (item.field.value?.value) {
                     dateTime = moment(new Date(item.field.value.value[0], item.field.value.value[1] - 1, item.field.value.value[2], item.field.value.value[3], item.field.value.value[4]));
                 }
                 return new DateTimeField(item.fieldId, item.field.title, dateTime, item.behavior,
                     item.field.placeholder, item.field.description, item.layout, item.field.validations, item.component, item.parentTaskId);
             case FieldTypeResource.USER:
                 let user;
-                if (item.field.value.value) {
+                if (item.field.value?.value) {
                     user = new UserValue(item.field.value.value.id, item.field.value.value.name, item.field.value.value.surname, item.field.value.value.email);
                 }
                 return new UserField(item.fieldId, item.field.title, item.behavior, user,
                     item.field.roles, item.field.placeholder, item.field.description, item.layout, item.field.validations, item.component, item.parentTaskId);
             case FieldTypeResource.USER_LIST:
                 let userListValue = new UserListValue(new Map<string, UserValue>());
-                if (item.field.value.value) {
+                if (item.field.value?.value) {
                     item.field.value.value.userValues.forEach(u => userListValue.addUserValue(new UserValue(u.id, u.name, u.surname, u.email)));
                 }
                 return new UserListField(item.fieldId, item.field.title, item.behavior, userListValue, item.field.roles,
                     item.field.placeholder, item.field.description, item.layout, item.field.validations, item.component, item.parentTaskId);
             case FieldTypeResource.BUTTON:
-                return new ButtonField(item.fieldId, item.field.title, item.behavior, item.field.value.value as number,
+                return new ButtonField(item.fieldId, item.field.title, item.behavior, item.field.value?.value as number,
                     item.field.placeholder, item.field.description, item.layout, item.field.validations, item.component, item.parentTaskId);
             case FieldTypeResource.FILE:
-                return new FileField(item.fieldId, item.field.title, item.behavior, item.field.value.value ? item.field.value.value : {},
+                return new FileField(item.fieldId, item.field.title, item.behavior, item.field.value?.value ? item.field.value.value : {},
                     item.field.placeholder, item.field.description, item.layout, null, null, item.field.validations, item.component,
                     item.parentTaskId);
             case FieldTypeResource.FILE_LIST:
-                return new FileListField(item.fieldId, item.field.title, item.behavior, item.field.value.value ? item.field.value.value : {},
+                return new FileListField(item.fieldId, item.field.title, item.behavior, item.field.value?.value ? item.field.value.value : {},
                     item.field.placeholder, item.field.description, item.layout, item.field.validations, null, null, item.component,
                     item.parentTaskId);
             case FieldTypeResource.TASK_REF:
-                return new TaskRefField(item.fieldId, item.field.title, item.field.value.value ? item.field.value.value : [], item.behavior,
+                return new TaskRefField(item.fieldId, item.field.title, item.field.value?.value ? item.field.value?.value : [], item.behavior,
                     item.field.placeholder, item.field.description, item.layout, item.field.validations, item.component, item.parentTaskId);
             case FieldTypeResource.CASE_REF:
-                return new CaseRefField(item.fieldId, item.field.title, item.field.value.value ? item.field.value.value : [], item.behavior,
+                return new CaseRefField(item.fieldId, item.field.title, item.field.value?.value ? item.field.value?.value : [], item.behavior,
                     item.field.placeholder, item.field.description, item.layout, item.field.validations, item.component, item.parentTaskId);
             case FieldTypeResource.FILTER:
-                return new FilterField(item.fieldId, item.field.title, item.field.value.value ?? '', item.field.filterMetadata, item.field.allowedNets,
+                return new FilterField(item.fieldId, item.field.title, item.field.value?.value ?? '', item.field.filterMetadata, item.field.allowedNets,
                     item.behavior, item.field.placeholder, item.field.description, item.layout, item.field.validations, item.component, item.parentTaskId);
             case FieldTypeResource.I18N:
-                return new I18nField(item.fieldId, item.field.title, item.field.value.value ?? {defaultValue: ''}, item.behavior, item.field.placeholder,
+                return new I18nField(item.fieldId, item.field.title, item.field.value?.value ?? {defaultValue: ''}, item.behavior, item.field.placeholder,
                     item.field.description, item.layout, item.field.validations, item.component);
             case FieldTypeResource.STRING_COLLECTION:
-                return new StringCollectionField(item.fieldId, item.field.title, item.field.value.value ? item.field.value.value : [], item.behavior,
+                return new StringCollectionField(item.fieldId, item.field.title, item.field.value?.value ? item.field.value.value : [], item.behavior,
                     item.field.placeholder, item.field.description, item.layout, item.field.validations, item.component, item.parentTaskId);
         }
     }

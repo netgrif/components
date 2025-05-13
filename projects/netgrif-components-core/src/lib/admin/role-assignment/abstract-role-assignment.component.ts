@@ -2,7 +2,7 @@ import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/c
 import {MatSelectionList} from '@angular/material/list';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {UserListItem, UserListService} from '../../actor/services/user-list.service';
-import {ProcessList, ExtendedProcessRole, ProcessVersion} from './services/ProcessList';
+import {ProcessList, ProcessVersion} from './services/ProcessList';
 import {FormControl} from '@angular/forms';
 import {RoleAssignmentService} from './services/role-assignment.service';
 import {IdentityService} from '../../identity/services/identity.service';
@@ -73,12 +73,13 @@ export abstract class AbstractRoleAssignmentComponent implements OnInit, AfterVi
         this.nets.selectRoles(intersection);
     }
 
-    public update(role: ExtendedProcessRole): void {
-        this.nets.updateSelectedRoles(role);
-        const selected = this.userList.selectedOptions.selected.map(option => (option.value as UserListItem));
-        this.users.updateRoles(selected, this.nets.selectedRoles).subscribe(_ => {
-            this.autoSelectRoles();
-        });
+    public update(role: object): void {
+        // todo 2058
+        // this.nets.updateSelectedRoles(role);
+        // const selected = this.userList.selectedOptions.selected.map(option => (option.value as UserListItem));
+        // this.users.updateRoles(selected, this.nets.selectedRoles).subscribe(_ => {
+        //     this.autoSelectRoles();
+        // });
     }
 
     public selectAllUsers(select: boolean): void {
@@ -89,10 +90,10 @@ export abstract class AbstractRoleAssignmentComponent implements OnInit, AfterVi
     }
 
     public toggleAllRoles(net: ProcessVersion, select: boolean): void {
-        net.roles.forEach(r => {
-            r.selected = select;
-            this.nets.updateSelectedRoles(r);
-        });
+        // net.roles.forEach(r => {
+        //     r.selected = select;
+        //     this.nets.updateSelectedRoles(r);
+        // });
         const selected = this.userList.selectedOptions.selected.map(option => (option.value as UserListItem));
         this.users.updateRoles(selected, this.nets.selectedRoles).subscribe(_ => {
             this.autoSelectRoles();

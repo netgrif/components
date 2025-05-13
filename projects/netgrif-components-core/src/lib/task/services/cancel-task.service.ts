@@ -9,7 +9,7 @@ import {TaskRequestStateService} from './task-request-state.service';
 import {TaskHandlingService} from './task-handling-service';
 import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {TaskOperations} from '../interfaces/task-operations';
-import {UserComparatorService} from '../../identity/services/user-comparator.service';
+import {ActorComparatorService} from '../../actor/services/actor-comparator.service';
 import {SelectedCaseService} from './selected-case.service';
 import {createTaskEventNotification} from '../../task-content/model/task-event-notification';
 import {TaskEvent} from '../../task-content/model/task-event';
@@ -39,7 +39,7 @@ export class CancelTaskService extends TaskHandlingService {
                 protected _translate: TranslateService,
                 protected _snackBar: SnackBarService,
                 protected _taskState: TaskRequestStateService,
-                protected _userComparator: UserComparatorService,
+                protected _userComparator: ActorComparatorService,
                 protected _taskEvent: TaskEventService,
                 protected _taskDataService: TaskDataService,
                 protected _eventQueue: EventQueueService,

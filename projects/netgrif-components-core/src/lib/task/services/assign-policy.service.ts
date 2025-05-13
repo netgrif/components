@@ -10,7 +10,7 @@ import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {TaskOperations} from '../interfaces/task-operations';
 import {CallChainService} from '../../utility/call-chain/call-chain.service';
 import {race, Subject} from 'rxjs';
-import {UserComparatorService} from '../../identity/services/user-comparator.service';
+import {ActorComparatorService} from '../../actor/services/actor-comparator.service';
 import {AfterAction} from '../../utility/call-chain/after-action';
 import {PermissionService} from '../../authorization/permission/permission.service';
 import {PermissionType} from '../../process/permissions';
@@ -30,7 +30,7 @@ export class AssignPolicyService extends TaskHandlingService {
                 protected _cancelTaskService: CancelTaskService,
                 protected _finishPolicyService: FinishPolicyService,
                 protected _callchain: CallChainService,
-                protected _userComparatorService: UserComparatorService,
+                protected _userComparatorService: ActorComparatorService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
                 taskContentService: TaskContentService,
                 protected _permissionService: PermissionService,
@@ -134,7 +134,7 @@ export class AssignPolicyService extends TaskHandlingService {
      * @param afterAction the action that should be performed when the assign policy (and all following policies) finishes
      */
     protected autoAssignClosedPolicy(afterAction: Subject<boolean>): void {
-        if (!this._userComparatorService.compareUsers(this._task.user)) {
+        if (!this._userComparatorService.compareActors(this._task.assigneeId)) {
             this._taskOperations.close();
             afterAction.next(false);
             afterAction.complete();

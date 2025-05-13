@@ -2,18 +2,11 @@ export interface Permissions {
     [k: string]: Permission;
 }
 
-export interface UserPermissions {
-    [k: string]: Permission;
-}
-
-export interface UserRefs {
-    [k: string]: Permission;
-}
-
 export interface Permission {
     create?: boolean;
     delete?: boolean;
     view?: boolean;
+    viewDisabled?: boolean;
     assign?: boolean;
     assigned?: boolean;
     cancel?: boolean;
@@ -26,6 +19,7 @@ export enum PermissionType {
     CREATE = 'create',
     DELETE = 'delete',
     VIEW = 'view',
+    VIEW_DISABLED = 'view_disabled',
     ASSIGN = 'assign',
     CANCEL = 'cancel',
     FINISH = 'finish',

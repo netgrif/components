@@ -94,7 +94,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
     }
 
     /**
-     * Searches tasks trough the Elastic endpoint.
+     * Searches tasks through the Elastic endpoint.
      * POST
      * @param filterParam filter used to search the tasks. Must be of type `TASK`.
      * @param params Additional parameters

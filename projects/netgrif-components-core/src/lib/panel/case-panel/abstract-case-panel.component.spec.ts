@@ -136,13 +136,13 @@ class TestWrapperComponent {
     case_: Case = {
         stringId: 'string',
         title: 'string',
-        author: {email: 'email', fullName: 'fullName'},
-        permissions: {
+        authorId: 'authorId',
+        processRolePermissions: {
             default: {
                 delete: true
             }
         },
-        users: {},
+        caseRolePermissions: {},
         color: 'color',
         creationDate: [],
         lastModified: [],

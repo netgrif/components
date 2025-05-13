@@ -264,31 +264,32 @@ describe('PermissionService', () => {
             uriNodeId: '',
             stringId: '',
             immediateData: [],
-            author: {email: '', fullName: ''},
+            authorId: 'authorId',
             createdDate: [],
             defaultCaseName: '',
             initials: '',
             version: '',
-            title: ''
+            title: '',
+            processRolePermissions: {}
         });
-        net.permissions = {};
+        net.processRolePermissions = {};
         expect(permissionService.hasNetPermission(PermissionType.CREATE, net)).toBeFalse();
 
         (userService as unknown as MockUserService).user =
             new Identity('', '', '', '', [], [{stringId: 'role1', name: '', importId: ''}]);
-        net.permissions = {role1: {create: true}};
+        net.processRolePermissions = {role1: {create: true}};
         expect(permissionService.hasNetPermission(PermissionType.CREATE, net)).toBeTrue();
 
-        net.permissions = {role1: {create: false}};
+        net.processRolePermissions = {role1: {create: false}};
         expect(permissionService.hasNetPermission(PermissionType.CREATE, net)).toBeFalse();
 
-        net.permissions = {role1: {view: true}};
+        net.processRolePermissions = {role1: {view: true}};
         expect(permissionService.hasNetPermission(PermissionType.CREATE, net)).toBeFalse();
 
         (userService as unknown as MockUserService).user =
             new Identity('', '', '', '', [],
                 [{stringId: 'role1', name: '', importId: ''}, {stringId: 'role2', name: '', importId: ''}]);
-        net.permissions = {role1: {create: false}, role2: {create: true}};
+        net.processRolePermissions = {role1: {create: false}, role2: {create: true}};
         expect(permissionService.hasNetPermission(PermissionType.CREATE, net)).toBeFalse();
     });
 

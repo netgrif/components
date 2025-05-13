@@ -1,6 +1,6 @@
-import {Author} from './author';
 import {ImmediateData} from './immediate-data';
 import {NaeDate} from '../types/nae-date-type';
+import {Permissions} from '../../process/permissions'
 
 /**
  * Information Petri Net
@@ -41,12 +41,16 @@ export interface PetriNetReference {
      */
     createdDate: NaeDate;
     /**
-     * [Author]{@link Author}
+     * actor id of the author
      */
-    author: Author;
+    authorId: string;
     /**
      * [ImmediateData]{@link ImmediateData}
      */
     immediateData: Array<ImmediateData>;
+    /**
+     * **Example:** {}
+     */
+    processRolePermissions: Permissions;
 }
 

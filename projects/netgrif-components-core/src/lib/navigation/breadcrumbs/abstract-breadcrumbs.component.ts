@@ -80,14 +80,14 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
 
         this._caseResourceService.searchCases(SimpleFilter.fromCaseQuery(searchBody), httpParams).pipe(take(1)).subscribe(result => {
             const cases = result.content;
-            const filterCaseIndex = cases.findIndex(c => c.tasks.some(t => t.task === filterId) && !fullPath.includes(this.immediateValue(c, AbstractBreadcrumbsComponent.NODE_PATH)));
+            const filterCaseIndex = cases.findIndex(c => c.tasks.some(t => t.taskStringId === filterId) && !fullPath.includes(this.immediateValue(c, AbstractBreadcrumbsComponent.NODE_PATH)));
             if (filterCaseIndex >= 0) {
-                const filterCase = cases.splice(cases.findIndex(c => c.tasks.some(t => t.task === filterId) && !fullPath.includes(this.immediateValue(c, AbstractBreadcrumbsComponent.NODE_PATH))), 1)[0];
+                const filterCase = cases.splice(cases.findIndex(c => c.tasks.some(t => t.taskStringId === filterId) && !fullPath.includes(this.immediateValue(c, AbstractBreadcrumbsComponent.NODE_PATH))), 1)[0];
                 this.filterName = this.getTranslation(this.immediateValue(filterCase, 'menu_name'));
             }
             cases.sort((a, b) => fullPath.indexOf(this.immediateValue(a, AbstractBreadcrumbsComponent.NODE_PATH)) - fullPath.indexOf(this.immediateValue(b, AbstractBreadcrumbsComponent.NODE_PATH)));
             if (this.redirectOnClick) {
-                cases.forEach(c => this.redirectUrls.set(this.immediateValue(c, AbstractBreadcrumbsComponent.NODE_PATH), [this._dynamicRoutingService.route, c.tasks.find(t => t.transition === AbstractBreadcrumbsComponent.ITEM_SETTINGS).task]))
+                cases.forEach(c => this.redirectUrls.set(this.immediateValue(c, AbstractBreadcrumbsComponent.NODE_PATH), [this._dynamicRoutingService.route, c.tasks.find(t => t.transitionId === AbstractBreadcrumbsComponent.ITEM_SETTINGS).taskStringId]))
             }
             this.nicePath.next(["", ...cases.map(c => this.getTranslation(this.immediateValue(c, 'menu_name')))]);
         });

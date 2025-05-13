@@ -1,5 +1,7 @@
 
 export interface TaskPair {
-    task: string;
-    transition: string;
+    taskStringId: string;
+    transitionId: string;
+    state: string;
+    assigneeId: string;
 }

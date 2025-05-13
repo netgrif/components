@@ -5,7 +5,6 @@ import {
     HeaderColumnType,
     PetriNetReference,
     WorkflowMetaField,
-    Author,
     AllowedNetsServiceFactory,
     SimpleFilter,
     CaseViewService,
@@ -61,15 +60,12 @@ export class PanelsComponent implements OnInit {
             immediateData: [],
             color: 'purple',
             creationDate: [2020, 4, 6, 13, 37],
-            author: {
-                email: 'example@example.com',
-                fullName: 'Net Grif',
-            },
+            authorId: 'exampleId',
             resetArcTokens: null,
             stringId: null,
             petriNetId: null,
-            permissions: {},
-            users: {}
+            processRolePermissions: {},
+            caseRolePermissions: {},
         };
         this.workflow = {
             stringId: 'ID',
@@ -80,11 +76,9 @@ export class PanelsComponent implements OnInit {
             initials: 'NET',
             defaultCaseName: 'Nepoviem',
             createdDate: [2020, 5, 9, 10, 0],
-            author: {
-                email: 'test@netgrif.com',
-                fullName: 'Test Testovič'
-            },
-            immediateData: []
+            authorId: 'exampleId',
+            immediateData: [],
+            processRolePermissions: {}
         };
         this.featuredFields$ = new BehaviorSubject<Array<HeaderColumn>>([
             new HeaderColumn(HeaderColumnType.META, 'visualId', 'Visual ID', 'text'),

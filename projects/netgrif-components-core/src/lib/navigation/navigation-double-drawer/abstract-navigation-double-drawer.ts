@@ -545,7 +545,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
 
     protected getItemRoutingPath(itemCase: Case) {
         const transId = SETTINGS_TRANSITION_ID;
-        const taskId = itemCase.tasks.find(taskPair => taskPair.transition === transId).task;
+        const taskId = itemCase.tasks.find(taskPair => taskPair.transitionId === transId).taskStringId;
         const url = this._dynamicRoutingService.route;
         return `/${url}/${taskId}`;
     }

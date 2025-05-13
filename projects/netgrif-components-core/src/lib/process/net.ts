@@ -1,16 +1,12 @@
 import {PetriNetReference} from '../resources/interface/petri-net-reference';
-import {Author} from '../resources/interface/author';
 import {ImmediateData} from '../resources/interface/immediate-data';
 import Transition from './transition';
-import Transaction from './transaction';
-import NetRole from './netRole';
-import {Permissions} from './permissions';
-import {PetriNetReferenceWithPermissions} from './petri-net-reference-with-permissions';
+import {Permissions} from './permissions'
 
 /**
  * @ignore
  */
-export class Net implements PetriNetReferenceWithPermissions {
+export class Net implements PetriNetReference {
     /**
      * @ignore
      */
@@ -46,7 +42,7 @@ export class Net implements PetriNetReferenceWithPermissions {
     /**
      * @ignore
      */
-    private _author: Author;
+    private _authorId: string;
     /**
      * @ignore
      */
@@ -58,28 +54,25 @@ export class Net implements PetriNetReferenceWithPermissions {
     /**
      * @ignore
      */
-    private _roles: Array<NetRole>;
+    private _processRolePermissions: Permissions;
     /**
      * @ignore
      */
-    private _permissions: Permissions;
-    /**
-     * @ignore
-     */
-    constructor(net: PetriNetReference) {
-        this._stringId = net.stringId;
-        this._title = net.title;
-        this._identifier = net.identifier;
-        this._version = net.version;
-        this._initials = net.initials;
-        this._defaultCaseName = net.defaultCaseName;
-        this._createdDate = net.createdDate;
-        this._author = net.author;
-        this._immediateData = net.immediateData;
+    constructor(process: PetriNetReference) {
+        this._stringId = process.stringId;
+        this._title = process.title;
+        this._identifier = process.identifier;
+        this._version = process.version;
+        this._initials = process.initials;
+        this._defaultCaseName = process.defaultCaseName;
+        this._createdDate = process.createdDate;
+        this._authorId = process.authorId;
+        this._immediateData = process.immediateData;
         this._transitions = [];
-        this._roles = [];
-        this._uriNodeId = net.uriNodeId;
+        this._uriNodeId = process.uriNodeId;
+        this._processRolePermissions = process.processRolePermissions;
     }
+
 
     get stringId(): string {
         return this._stringId;
@@ -137,12 +130,12 @@ export class Net implements PetriNetReferenceWithPermissions {
         this._createdDate = value;
     }
 
-    get author(): Author {
-        return this._author;
+    get authorId(): string {
+        return this._authorId;
     }
 
-    set author(value: Author) {
-        this._author = value;
+    set authorId(value: string) {
+        this._authorId = value;
     }
 
     get immediateData(): Array<ImmediateData> {
@@ -161,20 +154,12 @@ export class Net implements PetriNetReferenceWithPermissions {
         this._transitions = value;
     }
 
-    get roles(): Array<NetRole> {
-        return this._roles;
+    get processRolePermissions(): Permissions {
+        return this._processRolePermissions;
     }
 
-    set roles(value: Array<NetRole>) {
-        this._roles = value;
-    }
-
-    get permissions(): Permissions {
-        return this._permissions;
-    }
-
-    set permissions(value: Permissions) {
-        this._permissions = value;
+    set processRolePermissions(value: Permissions) {
+        this._processRolePermissions = value;
     }
 
     get uriNodeId(): string {

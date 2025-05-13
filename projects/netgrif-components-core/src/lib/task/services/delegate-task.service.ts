@@ -73,35 +73,35 @@ export class DelegateTaskService extends TaskHandlingService {
         if (this._taskState.isLoading(delegatedTaskId)) {
             return;
         }
-        this._sideMenuService.open(this._userAssignComponent, SideMenuSize.MEDIUM,
-            {
-                roles: Object.keys(this._safeTask.roles).filter(role =>
-                    this._safeTask.roles[role]['assign'] !== undefined && this._safeTask.roles[role]['assign']),
-                value: !this._safeTask.user ? undefined : new UserValue(
-                    this._safeTask.user.id, this._safeTask.user.firstname, this._safeTask.user.lastname, this._safeTask.user.username
-                ),
-                negativeRoles: Object.keys(this._safeTask.roles).filter(role =>
-                    this._safeTask.roles[role]['assign'] !== undefined && !this._safeTask.roles[role]['assign'])
-            } as UserListInjectedData).onClose.subscribe(event => {
-
-            this._log.debug('Delegate sidemenu event:' + event);
-            if (event.data === undefined) {
-                return;
-            }
-
-            this._eventQueue.scheduleEvent(new QueuedEvent(
-                () => {
-                    const result = this.isTaskRelevant(delegatedTaskId);
-                    if (!result) {
-                        this._log.debug('current task changed before the delegate side menu data was received, discarding...');
-                    }
-                    return result;
-                },
-                nextEvent => {
-                    this.performDelegateRequest(afterAction, delegatedTaskId, event.data.id, nextEvent);
-                }
-            ));
-        });
+        // this._sideMenuService.open(this._userAssignComponent, SideMenuSize.MEDIUM,
+        //     {
+        //         roles: Object.keys(this._safeTask.roles).filter(role =>
+        //             this._safeTask.roles[role]['assign'] !== undefined && this._safeTask.roles[role]['assign']),
+        //         value: !this._safeTask.user ? undefined : new UserValue(
+        //             this._safeTask.user.id, this._safeTask.user.firstname, this._safeTask.user.lastname, this._safeTask.user.username
+        //         ),
+        //         negativeRoles: Object.keys(this._safeTask.roles).filter(role =>
+        //             this._safeTask.roles[role]['assign'] !== undefined && !this._safeTask.roles[role]['assign'])
+        //     } as UserListInjectedData).onClose.subscribe(event => {
+        //
+        //     this._log.debug('Delegate sidemenu event:' + event);
+        //     if (event.data === undefined) {
+        //         return;
+        //     }
+        //
+        //     this._eventQueue.scheduleEvent(new QueuedEvent(
+        //         () => {
+        //             const result = this.isTaskRelevant(delegatedTaskId);
+        //             if (!result) {
+        //                 this._log.debug('current task changed before the delegate side menu data was received, discarding...');
+        //             }
+        //             return result;
+        //         },
+        //         nextEvent => {
+        //             this.performDelegateRequest(afterAction, delegatedTaskId, event.data.id, nextEvent);
+        //         }
+        //     ));
+        // });
     }
 
     /**

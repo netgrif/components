@@ -27,14 +27,11 @@ export function createMockCase(stringId = 'stringId',
         color: '',
         creationDate: [],
         immediateData: [],
-        author: {
-            email: '',
-            fullName: ''
-        },
+        authorId: '',
         resetArcTokens: {},
         stringId,
         petriNetId,
-        permissions: {},
-        users: {}
+        processRolePermissions: {},
+        caseRolePermissions: {},
     };
 }

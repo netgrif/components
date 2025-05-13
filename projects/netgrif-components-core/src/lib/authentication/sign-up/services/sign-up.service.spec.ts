@@ -61,7 +61,7 @@ describe('SignUpService', () => {
         it('should invite', (done) => {
             inject([HttpTestingController],
                     (httpMock: HttpTestingController) => {
-                        service.invite({email: 'user@user.sk', groups: [], processRoles: []}).subscribe(res => {
+                        service.invite({username: 'user@user.sk', groups: [], roles: []}).subscribe(res => {
                             expect(res.success).toEqual('Done');
                             done();
                         });
@@ -99,7 +99,7 @@ describe('SignUpService', () => {
                 service.signup({token: '', name: '', surname: '', password: ''});
             }).toThrowError('SingUp URL is not set in authentication provider endpoints!');
             expect(() => {
-                service.invite({email: '', groups: [], processRoles: []});
+                service.invite({username: '', groups: [], roles: []});
             }).toThrowError('Invite URL is not set in authentication provider endpoints!');
             expect(() => {
                 service.resetPassword('');

@@ -277,7 +277,7 @@ export abstract class TaskContentService implements OnDestroy {
      */
     public updateStateData(eventOutcome: TaskEventOutcome): void {
         if (this._task) {
-            this._task.user = eventOutcome.task.user;
+            this._task.assigneeId = eventOutcome.task.assigneeId;
             this._task.startDate = eventOutcome.task.startDate;
             this._task.finishDate = eventOutcome.task.finishDate;
         }

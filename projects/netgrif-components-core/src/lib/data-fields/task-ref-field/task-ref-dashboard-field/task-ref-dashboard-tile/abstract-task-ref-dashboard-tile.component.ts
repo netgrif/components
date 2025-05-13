@@ -68,9 +68,9 @@ export abstract class AbstractTaskRefDashboardTileComponent implements OnDestroy
             const _case = (outcome.outcome as CreateCaseEventOutcome).case;
 
             // set tile info
-            this.assignSetData(_case.tasks[0].task, {
+            this.assignSetData(_case.tasks[0].taskStringId, {
                 body: {
-                    [_case.tasks[0].task]: {
+                    [_case.tasks[0].taskStringId]: {
                         fields: {
                             [TaskRefDashboardTileConstants.DASHBOARD_TILE_X]: {
                                 type: FieldTypeResource.NUMBER,
@@ -118,7 +118,7 @@ export abstract class AbstractTaskRefDashboardTileComponent implements OnDestroy
                                 [TaskRefDashboardConstants.DASHBOARD_TASK_REF]: {
                                     type: FieldTypeResource.TASK_REF,
                                     value: {
-                                        value: [...this.taskRef.value, _case.tasks[0].task]
+                                        value: [...this.taskRef.value, _case.tasks[0].taskStringId]
                                     } as DataFieldValue
                                 } as DataFieldResource
                             }

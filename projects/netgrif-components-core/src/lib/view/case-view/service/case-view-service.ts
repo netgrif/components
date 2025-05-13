@@ -21,7 +21,6 @@ import {PermissionType} from '../../../process/permissions';
 import {NAE_NEW_CASE_CONFIGURATION} from '../models/new-case-configuration-injection-token';
 import {NewCaseConfiguration} from '../models/new-case-configuration';
 import {ProcessService} from '../../../process/process.service';
-import {PetriNetReferenceWithPermissions} from '../../../process/petri-net-reference-with-permissions';
 import {SearchIndexResolverService} from '../../../search/search-keyword-resolver-service/search-index-resolver.service';
 import {AllowedNetsService} from '../../../allowed-nets/services/allowed-nets.service';
 import {AbstractSortableViewComponent} from '../../abstract/sortable-view';
@@ -33,6 +32,7 @@ import {PaginationParams} from '../../../utility/pagination/pagination-params';
 import {createSortParam, PaginationSort} from '../../../utility/pagination/pagination-sort';
 import {MatDialog} from '@angular/material/dialog';
 import {NAE_NEW_CASE_DIALOG_COMPONENT} from '../../../dialog/injection-tokens';
+import {PetriNetReference} from "../../../resources/interface/petri-net-reference";
 
 @Injectable()
 export class CaseViewService extends AbstractSortableViewComponent implements OnDestroy {
@@ -238,7 +238,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
         isCaseTitleRequired: true
     }): Observable<Case> {
         const myCase = new Subject<Case>();
-        this.getNewCaseAllowedNets(newCaseCreationConfiguration.blockNets).subscribe((nets: Array<PetriNetReferenceWithPermissions>) => {
+        this.getNewCaseAllowedNets(newCaseCreationConfiguration.blockNets).subscribe((nets: Array<PetriNetReference>) => {
             this._caseResourceService.createCase({
                 title: null,
                 color: 'panel-primary-icon',
@@ -254,7 +254,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
         return myCase;
     }
 
-    public getNewCaseAllowedNets(blockNets: string[] = []): Observable<Array<PetriNetReferenceWithPermissions>> {
+    public getNewCaseAllowedNets(blockNets: string[] = []): Observable<Array<PetriNetReference>> {
         if (this._newCaseConfiguration.useCachedProcesses) {
             return this._allowedNetsService.allowedNets$.pipe(
                 map(net => net.filter(n => blockNets.indexOf(n.identifier) === -1)),

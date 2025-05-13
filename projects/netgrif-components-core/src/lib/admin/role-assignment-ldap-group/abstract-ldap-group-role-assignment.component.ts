@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatSelectionList} from '@angular/material/list';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
-import {ProcessList, ExtendedProcessRole, ProcessVersion} from '../role-assignment/services/ProcessList';
+import {ProcessList, ProcessVersion} from '../role-assignment/services/ProcessList';
 import {FormControl} from '@angular/forms';
 import {debounceTime} from 'rxjs/operators';
 import {Subscription} from 'rxjs';
@@ -72,8 +72,8 @@ export abstract class AbstractLdapGroupRoleAssignmentComponent implements OnInit
         this.nets.selectRoles(intersection);
     }
 
-    public update(role: ExtendedProcessRole): void {
-        this.nets.updateSelectedRoles(role);
+    public update(role: object): void {
+        // this.nets.updateSelectedRoles(role);
         const selected = this.ldapGroupList.selectedOptions.selected.map(option => (option.value as LdapGroupListItem));
         this.ldapGroup.updateRoles(selected, this.nets.selectedRoles).subscribe(_ => {
             this.autoSelectRoles();
@@ -88,10 +88,10 @@ export abstract class AbstractLdapGroupRoleAssignmentComponent implements OnInit
     }
 
     public toggleAllRoles(net: ProcessVersion, select: boolean): void {
-        net.roles.forEach(r => {
-            r.selected = select;
-            this.nets.updateSelectedRoles(r);
-        });
+        // net.roles.forEach(r => {
+        //     r.selected = select;
+        //     this.nets.updateSelectedRoles(r);
+        // });
         const selected = this.ldapGroupList.selectedOptions.selected.map(option => (option.value as LdapGroupListItem));
         this.ldapGroup.updateRoles(selected, this.nets.selectedRoles).subscribe(_ => {
             this.autoSelectRoles();

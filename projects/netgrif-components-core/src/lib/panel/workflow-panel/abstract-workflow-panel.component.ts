@@ -137,8 +137,9 @@ export abstract class AbstractWorkflowPanelComponent extends AbstractPanelWithHe
                 this.workflow.title, this.dataFieldsBehaviour),
             version: new TextField('', this._translate.instant(this.TRANSLATION_VERSION),
                 this.workflow.version, this.dataFieldsBehaviour),
+            // todo 2058 value of author text field
             author: new TextField('', this._translate.instant(this.TRANSLATION_AUTHOR),
-                this.workflow.author.fullName, this.dataFieldsBehaviour),
+                this.workflow.authorId, this.dataFieldsBehaviour),
             uploaded: new DateTimeField('', this._translate.instant(this.TRANSLATION_UPLOAD),
                 toMoment(this.workflow.createdDate), this.dataFieldsBehaviour)
         };
@@ -165,8 +166,9 @@ export abstract class AbstractWorkflowPanelComponent extends AbstractPanelWithHe
                 return {value: this.workflow.stringId, icon: '', type: 'meta'};
             case WorkflowMetaField.VERSION:
                 return {value: this.workflow.version, icon: '', type: 'meta'};
-            case WorkflowMetaField.AUTHOR:
-                return {value: this.workflow.author.fullName, icon: 'account_circle', type: 'meta'};
+            // todo 2058
+            // case WorkflowMetaField.AUTHOR:
+            //     return {value: this.workflow.authorId.fullName, icon: 'account_circle', type: 'meta'};
             case WorkflowMetaField.CREATION_DATE:
                 return {value: toMoment(this.workflow.createdDate).format(DATE_TIME_FORMAT_STRING), icon: 'event', type: 'meta'};
         }

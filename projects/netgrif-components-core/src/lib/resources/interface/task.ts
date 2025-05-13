@@ -1,9 +1,8 @@
 import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../task-content/model/policy';
 import {NaeDate} from '../types/nae-date-type';
-import {IdentityResourceSmall} from './identity-resource-small';
 import {ImmediateData} from './immediate-data';
 import {AssignedUserPolicy} from './assigned-user-policy';
-import {Permissions, UserPermissions, UserRefs} from '../../process/permissions';
+import {Permissions} from '../../process/permissions';
 import {LayoutContainer} from './layout-container';
 
 /**
@@ -25,10 +24,7 @@ export interface Task {
     title: string;
     caseColor: string;
     caseTitle: string;
-    /**
-     * See [UserSmall]{@link IdentityResourceSmall#}
-     */
-    user: IdentityResourceSmall;
+    assigneeId: string;
     /**
      * ***Example:***
      *
@@ -36,7 +32,8 @@ export interface Task {
      *      "perform": true
      *    }
      */
-    roles: Permissions;
+    processRolePermissions: Permissions;
+    caseRolePermissions: Permissions;
     startDate: NaeDate;
     finishDate: NaeDate;
     /**
@@ -54,8 +51,6 @@ export interface Task {
     stringId: string;
     layoutContainer: LayoutContainer;
     _links: object;
-    users: UserPermissions;
-    userRefs: UserRefs;
     dataSize?: number;
     icon?: string;
     priority?: number;

@@ -48,7 +48,7 @@ export class PasswordFormComponent implements OnDestroy {
         event.loading.on();
         let endpoint: Observable<MessageResource>;
         if (this.endpointFormControl.value === 'signup') {
-            endpoint = this._signUpService.invite({email: event.email, groups: [], processRoles: []});
+            endpoint = this._signUpService.invite({username: event.email, groups: [], roles: []});
         } else {
             endpoint = this._signUpService.resetPassword(event.email);
         }

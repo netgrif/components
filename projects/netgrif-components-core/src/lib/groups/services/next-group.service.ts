@@ -43,7 +43,7 @@ export class NextGroupService implements OnDestroy {
                 return this._caseResourceService.searchCases(SimpleFilter.fromCaseQuery({stringId: (user as any).nextGroups}), params)
                     .pipe(
                         map(page => page.content ? page.content : []),
-                        map(groups => groups.filter(group => group.author.fullName !== 'application engine'))
+                        // map(groups => groups.filter(group => group.author.fullName !== 'application engine'))
                     );
             })
         ).subscribe(groups => {

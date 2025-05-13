@@ -25,7 +25,7 @@ import {DynamicEnumerationField} from '../../data-fields/enumeration-field/model
 import {EventQueueService} from '../../event-queue/services/event-queue.service';
 import {QueuedEvent} from '../../event-queue/model/queued-event';
 import {AfterAction} from '../../utility/call-chain/after-action';
-import {UserComparatorService} from '../../identity/services/user-comparator.service';
+import {ActorComparatorService} from '../../actor/services/actor-comparator.service';
 import {TaskSetDataRequestContext} from '../models/task-set-data-request-context';
 import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
 import {EventService} from '../../event/services/event.service';
@@ -70,7 +70,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
                 _taskContentService: TaskContentService,
                 protected _afterActionFactory: CallChainService,
                 protected _eventQueue: EventQueueService,
-                protected _userComparator: UserComparatorService,
+                protected _userComparator: ActorComparatorService,
                 protected _eventService: EventService,
                 protected _changedFieldsService: ChangedFieldsService,
                 protected _frontActionService: FrontActionService) {
@@ -337,7 +337,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
             return;
         }
 
-        if (this._safeTask.user === undefined) {
+        if (this._safeTask.assigneeId === undefined) {
             this._log.debug('current task is not assigned...');
             afterAction.resolve(false);
             return;
@@ -425,10 +425,10 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         if (!this.isTaskPresent()) {
             return false;
         }
-        if (this._safeTask.user === undefined) {
+        if (this._safeTask.assigneeId === undefined) {
             return false;
         }
-        if (!this._userComparator.compareUsers(this._safeTask.user)) {
+        if (!this._userComparator.compareActors(this._safeTask.assigneeId)) {
             return false;
         }
         const taskIdsInRequest: Array<string> = Object.keys(request.body);

@@ -23,7 +23,9 @@ export class CaseRole extends CaseNetAttributeAutocompleteCategory {
     }
 
     protected extractAttributes(petriNet: Net): Array<NameIdPair> {
-        return petriNet.roles.map(r => ({id: r.stringId, name: r.name}));
+        return []
+        // todo 2058
+        // return petriNet.roles.map(r => ({id: r.stringId, name: r.name}));
     }
 
     get inputPlaceholder(): string {

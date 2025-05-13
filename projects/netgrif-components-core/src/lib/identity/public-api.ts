@@ -4,7 +4,7 @@ export * from './models/public-api';
 /* SERVICES */
 export * from './services/identity.service';
 export * from './services/user-preference.service';
-export * from './services/user-comparator.service';
+export * from '../actor/services/actor-comparator.service';
 export * from '../actor/services/user-list.service';
 export * from './services/view-id.service';
 

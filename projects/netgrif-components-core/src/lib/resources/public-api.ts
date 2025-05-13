@@ -38,7 +38,6 @@ export * from './interface/group';
 export * from './interface/petri-net-request-body';
 export * from './interface/page';
 export * from './interface/preferences';
-export * from './interface/identity-resource-small';
 export * from './interface/identity-resource';
 export * from './interface/create-case-request-body';
 export * from './interface/ldapGroupResponseBody';
