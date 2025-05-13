@@ -1,4 +1,3 @@
-import {ProcessRole} from '../../resources/interface/process-role';
 import {IIdentity} from './iidentity';
 
 /**

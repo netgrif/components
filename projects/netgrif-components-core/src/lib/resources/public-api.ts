@@ -45,9 +45,9 @@ export * from './interface/layout-container';
 export * from './interface/layout-item';
 export * from './interface/layout-object-properties';
 export * from './interface/roles/role';
-export * from './interface/roles/processRole';
-export * from './interface/roles/caseRole';
-export * from './interface/roles/applicationRole';
+export * from './interface/roles/process-role';
+export * from './interface/roles/case-role';
+export * from './interface/roles/application-role';
 
 export * from './types/layout-object-type';
 export * from './types/nae-date-type';

@@ -2,7 +2,7 @@ import {DataField} from '../../models/abstract-data-field';
 import {UserValue} from './user-value';
 import {Behavior} from '../../models/behavior';
 import {Layout} from '../../models/layout';
-import {ProcessRole} from '../../../resources/interface/process-role';
+import {ProcessRole} from '../../../resources/interface/roles/process-role';
 import {Component, ComponentPrefixes} from '../../models/component';
 import {Validation} from '../../models/validation';
 

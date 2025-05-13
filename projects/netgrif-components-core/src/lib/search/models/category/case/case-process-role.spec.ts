@@ -1,4 +1,4 @@
-import {CaseRole} from './case-role';
+import {CaseProcessRole} from './case-process-role';
 import {OperatorService} from '../../../operator-service/operator.service';
 import {createMockDependencies} from '../../../../utility/tests/search-category-mock-dependencies';
 import {TestBed, waitForAsync} from '@angular/core/testing';
@@ -14,7 +14,7 @@ import {filter, take} from 'rxjs/operators';
 
 describe('CaseRole', () => {
     let operatorService: OperatorService;
-    let category: CaseRole;
+    let category: CaseProcessRole;
     let allowedNets$: ReplaySubject<Array<Net>>;
 
     beforeAll(() => {
@@ -23,7 +23,7 @@ describe('CaseRole', () => {
 
     beforeEach(waitForAsync(async () => {
         allowedNets$ = new ReplaySubject<Array<Net>>(1);
-        category = await new CaseRole(operatorService, null, createMockDependencies(allowedNets$, operatorService));
+        category = await new CaseProcessRole(operatorService, null, createMockDependencies(allowedNets$, operatorService));
     }));
 
     afterEach(() => {
@@ -113,7 +113,7 @@ describe('CaseRole', () => {
 
         const metadata = category.createMetadata();
         expect(metadata).toBeTruthy();
-        const deserialized = new CaseRole(operatorService, null, createMockDependencies(allowedNets$, operatorService));
+        const deserialized = new CaseProcessRole(operatorService, null, createMockDependencies(allowedNets$, operatorService));
 
         // wait for autocomplete options to initialize
         deserialized.options$.pipe(filter(o => o.length > 0), take(1)).subscribe(() => {

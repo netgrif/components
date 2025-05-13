@@ -5,7 +5,7 @@ import {CaseAuthor} from '../models/category/case/case-author';
 import {CaseCreationDate} from '../models/category/case/case-creation-date';
 import {CaseDataset} from '../models/category/case/case-dataset';
 import {CaseProcess} from '../models/category/case/case-process';
-import {CaseRole} from '../models/category/case/case-role';
+import {CaseProcessRole} from '../models/category/case/case-process-role';
 import {CaseSimpleDataset} from '../models/category/case/case-simple-dataset';
 import {CaseTask} from '../models/category/case/case-task';
 import {CaseTitle} from '../models/category/case/case-title';
@@ -57,7 +57,7 @@ export class CategoryResolverService {
                 classReference: CaseProcess,
                 serialized: Categories.CASE_PROCESS
             }, {
-                classReference: CaseRole,
+                classReference: CaseProcessRole,
                 serialized: Categories.CASE_ROLE
             }, {
                 classReference: CaseSimpleDataset,

@@ -41,7 +41,7 @@ export * from './models/category/case/case-title';
 export * from './models/category/case/case-visual-id';
 export * from './models/category/case/case-author';
 export * from './models/category/case/case-process';
-export * from './models/category/case/case-role';
+export * from './models/category/case/case-process-role';
 export * from './models/category/case/case-task';
 export * from './models/category/case/case-creation-date';
 export * from './models/category/case/case-creation-date-time';

@@ -5,7 +5,7 @@ import { Validation } from '../../models/validation';
 import {Component, ComponentPrefixes} from '../../models/component';
 import { UserListValue } from './user-list-value';
 import {AbstractControl, FormControl, ValidatorFn} from "@angular/forms";
-import {ProcessRole} from "../../../resources/interface/process-role";
+import {ProcessRole} from "../../../resources/interface/roles/process-role";
 
 export class UserListField extends DataField<UserListValue> {
 

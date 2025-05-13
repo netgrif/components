@@ -2,7 +2,7 @@ import {UserValue} from '../../../data-fields/user-field/models/user-value';
 import {FormControl} from '@angular/forms';
 import {SideMenuControl} from '../../models/side-menu-control';
 import {UserListInjectedData} from './model/user-list-injected-data';
-import {ProcessRole} from '../../../resources/interface/process-role';
+import {ProcessRole} from '../../../resources/interface/roles/process-role';
 import {Component} from '@angular/core';
 
 /**
