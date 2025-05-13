@@ -26,7 +26,6 @@ export * from './interface/fields';
 export * from './interface/authority';
 export * from './interface/link';
 export * from './interface/pagination';
-export * from './interface/process-role';
 export * from './interface/changed-field-container';
 export * from './interface/file-resource';
 export * from './interface/task-reference';
@@ -45,6 +44,10 @@ export * from './interface/task-pair';
 export * from './interface/layout-container';
 export * from './interface/layout-item';
 export * from './interface/layout-object-properties';
+export * from './interface/roles/role';
+export * from './interface/roles/processRole';
+export * from './interface/roles/caseRole';
+export * from './interface/roles/applicationRole';
 
 export * from './types/layout-object-type';
 export * from './types/nae-date-type';

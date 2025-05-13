@@ -48,6 +48,11 @@
                 "format": "json"
             },
             {
+                "name": "rbac",
+                "address": "http://localhost:8080/api/",
+                "format": "json"
+            },
+            {
                 "name": "dashboard",
                 "address": "http://localhost:8080/api/",
                 "format": "json"
