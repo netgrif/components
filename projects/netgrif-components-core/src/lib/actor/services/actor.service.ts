@@ -1,55 +1,31 @@
 import {Injectable} from "@angular/core";
+import {take, switchMap} from "rxjs/operators";
+import {RbacResourceService} from "../../resources/engine-endpoint/rbac-resource.service";
+import {IdentityService} from "../../identity/services/identity.service";
 
 @Injectable({
     providedIn: 'root'
 })
 export class ActorService {
 
+    protected currentRoleIds: Set<string>;
+
+    constructor(protected _rbacResourceService: RbacResourceService, protected _identityService: IdentityService) {
+        this._identityService.identity$.pipe(
+            switchMap(identity => this._rbacResourceService.findRoleIds(identity.activeActorId).pipe(take(1)))
+        ).subscribe(roleIds => {
+            this.currentRoleIds = roleIds;
+        })
+    }
+
     // todo 2058
 
-    // public hasRole(role: ProcessRole): boolean {
-    //     const user = this._identity.getSelfOrImpersonated();
-    //     if (!role || !user.roles) {
-    //         return false;
-    //     }
-    //     return user.roles.some(r => r === role);
-    // }
-    //
-    // /**
-    //  * Checks whether the user has role with a specific stringId
-    //  * @param roleStringId ID of the role we want to check
-    //  */
-    // public hasRoleById(roleStringId: string): boolean {
-    //     const user = this._identity.getSelfOrImpersonated();
-    //     if (!roleStringId || !user.roles) {
-    //         return false;
-    //     }
-    //     return user.roles.some(r => r.stringId === roleStringId);
-    // }
-    //
-    // /**
-    //  * Checks whether the user has role with the specified identifier in a process with the specified identifier (any version)
-    //  * @param roleIdentifier identifier (import ID) of the role we want to check
-    //  * @param netIdentifier identifier (import ID) of the process the role is defined in
-    //  */
-    // public hasRoleByIdentifier(roleIdentifier: string, netIdentifier: string): boolean {
-    //     const user = this._identity.getSelfOrImpersonated();
-    //     if (!roleIdentifier || !netIdentifier || !user.roles) {
-    //         return false;
-    //     }
-    //     return user.roles.some(r => r.netImportId === netIdentifier && r.importId === roleIdentifier);
-    // }
-    //
-    // /**
-    //  * Checks whether the user has role with the specified name in a process with the specified identifier (any version)
-    //  * @param roleName name of the role we want to check
-    //  * @param netIdentifier identifier (import ID) of the process the role is defined in
-    //  */
-    // public hasRoleByName(roleName: string, netIdentifier: string): boolean {
-    //     const user = this._identity.getSelfOrImpersonated();
-    //     if (!roleName || !netIdentifier || !user.roles) {
-    //         return false;
-    //     }
-    //     return user.roles.some(r => r.netImportId === netIdentifier && r.name === roleName);
-    // }
+    /**
+     * Checks if the current actor has a specific role.
+     * @param roleId - The ID of the role to check for.
+     * @returns True if the current actor has the specified role, false otherwise.
+     */
+    public hasRole(roleId: string): boolean {
+        return this.currentRoleIds.has(roleId);
+    }
 }

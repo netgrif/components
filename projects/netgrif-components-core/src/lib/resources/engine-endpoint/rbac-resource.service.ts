@@ -28,6 +28,8 @@ export class RbacResourceService extends AbstractResourceService {
         if (roleIds === undefined || roleIds.size === 0 || actorId === undefined) {
             return of([])
         }
+        // return this._resourceProvider.post$('authorization/' + actorId + '/assign', this.SERVER_URL, body, params)
+        //     .pipe(map(r => this.changeType(r, undefined)));
         // todo 2058
         return of([])
     }
@@ -36,6 +38,8 @@ export class RbacResourceService extends AbstractResourceService {
         if (roleIds === undefined || roleIds.size === 0 || actorId === undefined) {
             return of([])
         }
+        // return this._resourceProvider.post$('authorization/' + actorId + '/remove', this.SERVER_URL, body, params)
+        //     .pipe(map(r => this.changeType(r, undefined)));
         // todo 2058
         return of([])
     }
