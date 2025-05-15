@@ -96,6 +96,11 @@ export enum GroupNavigationConstants {
     ITEM_FIELD_ID_CASE_DEFAULT_HEADERS_MODE = 'case_headers_default_mode',
 
     /**
+     * Boolean field, that is true if table mode can be applied in case view
+     * */
+    ITEM_FIELD_ID_CASE_ALLOW_EXPORT = 'case_allow_export',
+
+    /**
      * Boolean field, that is true to make mode menu in case view visible
      * */
     ITEM_FIELD_ID_CASE_HEADERS_CHANGEABLE = 'case_is_header_mode_changeable',

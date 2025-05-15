@@ -21,6 +21,7 @@ export interface InjectedTabbedCaseViewDataWithNavigationItemTaskData extends In
     caseViewHeadersMode: string[];
     caseViewAllowTableMode: boolean;
     caseViewDefaultHeadersMode: string;
+    caseViewAllowExport: boolean;
 
     taskViewSearchTypeConfiguration: SearchComponentConfiguration;
     taskViewShowMoreMenu: boolean;
