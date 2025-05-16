@@ -1,7 +1,7 @@
 import {PetriNetObjectId} from './petri-net-object-id';
 import {ImmediateData} from './immediate-data';
 import {NaeDate} from '../types/nae-date-type';
-import {Permissions} from '../../process/permissions';
+import {PermissionsWrapper} from '../../process/permissions';
 import { TaskPair } from './task-pair';
 
 /**
@@ -108,11 +108,11 @@ export interface Case {
     /**
      * **Example:** {}
      */
-    processRolePermissions: Permissions;
+    processRolePermissions: PermissionsWrapper;
     /**
      * **Example:** {}
      */
-    caseRolePermissions: Permissions;
+    caseRolePermissions: PermissionsWrapper;
     /**
      * Set of TaskPair
      * */

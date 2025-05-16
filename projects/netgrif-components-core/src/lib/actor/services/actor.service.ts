@@ -15,11 +15,15 @@ export class ActorService {
 
     constructor(protected _rbacResourceService: RbacResourceService, protected _identityService: IdentityService) {
         this._rbacResourceService.findAppRoleId(ActorService.adminRoleImportId).pipe(take(1))
-            .subscribe(role => this.adminAppRoleId = role?.stringId)
+            .subscribe(role => {
+                this._isAdmin = undefined;
+                this.adminAppRoleId = role?.stringId
+            })
 
         this._identityService.identity$.pipe(
             switchMap(identity => this._rbacResourceService.findRoleIdsByActor(identity.activeActorId).pipe(take(1)))
         ).subscribe(roleIds => {
+            this._isAdmin = undefined;
             this.currentRoleIds = roleIds;
         })
     }

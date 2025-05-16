@@ -1,3 +1,7 @@
+export interface PermissionsWrapper {
+    permissions: Permissions;
+}
+
 export interface Permissions {
     [k: string]: Permission;
 }

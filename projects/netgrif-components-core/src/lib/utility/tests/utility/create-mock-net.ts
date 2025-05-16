@@ -1,6 +1,6 @@
 import {Net} from '../../../process/net';
 import {ImmediateData} from '../../../resources/interface/immediate-data';
-import {Permissions} from '../../../process/permissions';
+import {PermissionsWrapper} from '../../../process/permissions';
 
 /**
  * A mock transition representation used by the {@link createMockNet} function to populate the mock net with mock transition objects
@@ -21,7 +21,7 @@ export function createMockNet(stringId = 'stringId',
                               title = 'title',
                               transitions: Array<MockTransition> = [],
                               immediateData: Array<ImmediateData> = [],
-                              permissions: Permissions = {}): Net {
+                              permissions: PermissionsWrapper = { permissions: {}}): Net {
     const net = new Net({
         stringId,
         title,
@@ -33,7 +33,7 @@ export function createMockNet(stringId = 'stringId',
         createdDate: [2021, 2, 4, 12, 50, 0, 1612443000],
         authorId: '',
         immediateData,
-        processRolePermissions: {}
+        processRolePermissions: { permissions: {}}
     });
     net.transitions = transitions.map(t => ({
         ...t,

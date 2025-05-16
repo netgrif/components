@@ -64,8 +64,8 @@ export class PanelsComponent implements OnInit {
             resetArcTokens: null,
             stringId: null,
             petriNetId: null,
-            processRolePermissions: {},
-            caseRolePermissions: {},
+            processRolePermissions: { permissions: {}},
+            caseRolePermissions: { permissions: {}},
         };
         this.workflow = {
             stringId: 'ID',
@@ -78,7 +78,7 @@ export class PanelsComponent implements OnInit {
             createdDate: [2020, 5, 9, 10, 0],
             authorId: 'exampleId',
             immediateData: [],
-            processRolePermissions: {}
+            processRolePermissions: { permissions: {}}
         };
         this.featuredFields$ = new BehaviorSubject<Array<HeaderColumn>>([
             new HeaderColumn(HeaderColumnType.META, 'visualId', 'Visual ID', 'text'),

@@ -1,7 +1,7 @@
 import {PetriNetReference} from '../resources/interface/petri-net-reference';
 import {ImmediateData} from '../resources/interface/immediate-data';
 import Transition from './transition';
-import {Permissions} from './permissions'
+import {PermissionsWrapper} from './permissions'
 
 /**
  * @ignore
@@ -54,7 +54,7 @@ export class Net implements PetriNetReference {
     /**
      * @ignore
      */
-    private _processRolePermissions: Permissions;
+    private _processRolePermissions: PermissionsWrapper;
     /**
      * @ignore
      */
@@ -154,11 +154,11 @@ export class Net implements PetriNetReference {
         this._transitions = value;
     }
 
-    get processRolePermissions(): Permissions {
+    get processRolePermissions(): PermissionsWrapper {
         return this._processRolePermissions;
     }
 
-    set processRolePermissions(value: Permissions) {
+    set processRolePermissions(value: PermissionsWrapper) {
         this._processRolePermissions = value;
     }
 

@@ -31,7 +31,7 @@ export function createMockCase(stringId = 'stringId',
         resetArcTokens: {},
         stringId,
         petriNetId,
-        processRolePermissions: {},
-        caseRolePermissions: {},
+        processRolePermissions: { permissions: {}},
+        caseRolePermissions: { permissions: {}},
     };
 }

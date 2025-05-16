@@ -1,6 +1,6 @@
 import {ImmediateData} from './immediate-data';
 import {NaeDate} from '../types/nae-date-type';
-import {Permissions} from '../../process/permissions'
+import {PermissionsWrapper} from '../../process/permissions'
 
 /**
  * Information Petri Net
@@ -51,6 +51,6 @@ export interface PetriNetReference {
     /**
      * **Example:** {}
      */
-    processRolePermissions: Permissions;
+    processRolePermissions: PermissionsWrapper;
 }
 

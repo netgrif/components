@@ -2,7 +2,7 @@ import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../task-content/mo
 import {NaeDate} from '../types/nae-date-type';
 import {ImmediateData} from './immediate-data';
 import {AssignedUserPolicy} from './assigned-user-policy';
-import {Permissions} from '../../process/permissions';
+import {PermissionsWrapper} from '../../process/permissions';
 import {LayoutContainer} from './layout-container';
 
 /**
@@ -32,8 +32,8 @@ export interface Task {
      *      "perform": true
      *    }
      */
-    processRolePermissions: Permissions;
-    caseRolePermissions: Permissions;
+    processRolePermissions: PermissionsWrapper;
+    caseRolePermissions: PermissionsWrapper;
     startDate: NaeDate;
     finishDate: NaeDate;
     /**

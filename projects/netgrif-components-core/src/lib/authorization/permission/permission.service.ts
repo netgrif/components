@@ -3,7 +3,7 @@ import {ActorComparatorService} from '../../actor/services/actor-comparator.serv
 import {AssignPolicy} from '../../task-content/model/policy';
 import {Task} from '../../resources/interface/task';
 import {Case} from '../../resources/interface/case';
-import {Permissions, PermissionType} from '../../process/permissions';
+import {PermissionsWrapper, PermissionType} from '../../process/permissions';
 import {PetriNetReference} from "../../resources/interface/petri-net-reference";
 import {ActorService} from "../../actor/services/actor.service";
 
@@ -53,6 +53,10 @@ export class PermissionService {
         ) {
             return false;
         }
+        if (this._actorService.isAdmin) {
+            return true;
+        }
+
         const processRolePermissionValue = this.checkRolePerms(net.processRolePermissions, permissionType);
         return this.resolvePermissions(processRolePermissionValue, undefined);
     }
@@ -94,12 +98,13 @@ export class PermissionService {
             && task.assignPolicy === AssignPolicy.manual;
     }
 
-    public checkRolePerms(permissions: Permissions, permissionType: PermissionType): boolean | undefined {
+    public checkRolePerms(permissionsWrapper: PermissionsWrapper, permissionType: PermissionType): boolean | undefined {
         let permissionValue: boolean;
-        if (!!permissions) {
-            Object.keys(permissions).forEach(roleId => {
-                if (permissions[roleId][permissionType] !== undefined && this._actorService.hasRole(roleId)) {
-                    permissionValue = permissionValue === undefined ? permissions[roleId][permissionType] : permissionValue && permissions[roleId][permissionType];
+        if (!!permissionsWrapper && !! permissionsWrapper.permissions) {
+            Object.keys(permissionsWrapper.permissions).forEach(roleId => {
+                if (permissionsWrapper.permissions[roleId][permissionType] !== undefined && this._actorService.hasRole(roleId)) {
+                    permissionValue = permissionValue === undefined ? permissionsWrapper.permissions[roleId][permissionType]
+                        : permissionValue && permissionsWrapper.permissions[roleId][permissionType];
                 }
             });
         }

@@ -42,7 +42,7 @@ export class SidemenuExampleComponent implements OnInit {
                 initials: 'EX',
                 title: 'Example Dummy Process',
                 version: '1.0.0',
-                processRolePermissions: {}
+                processRolePermissions: { permissions: {}}
             }),
                 new Net({
                     stringId: '999',
@@ -55,7 +55,7 @@ export class SidemenuExampleComponent implements OnInit {
                     initials: 'EXX',
                     title: 'Other Example Dummy Process',
                     version: '1.0.0',
-                    processRolePermissions: {}
+                    processRolePermissions: { permissions: {}}
                 })])
         });
     }
