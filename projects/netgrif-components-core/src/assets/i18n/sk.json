@@ -479,8 +479,7 @@
     "publicView": {
         "resolving": "Verejné view sa načítava ...",
         "netNotExist": "Proces neexistuje",
-        "errorCreate": "Chyba pri vytváraní prípadu ",
-        "errorExportDownload": "Sťahovanie súboru zlyhalo!"
+        "errorCreate": "Chyba pri vytváraní prípadu "
     },
     "dynamicNavigation": {
         "couldNotResolveView": "Počas načítania zobrazenia sa vyskytla chyba. Zobrazenie nie je možné zobraziť",
@@ -514,5 +513,8 @@
         "previousPage": "Predchádzajúca strana",
         "pageOne": "Strana 1 z 1",
         "pageAmount": "Strana {{page}} z {{amountPages}}"
+    },
+    "export": {
+        "errorExportDownload": "File failed to download!"
     }
 }

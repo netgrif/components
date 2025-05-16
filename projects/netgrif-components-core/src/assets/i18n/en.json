@@ -480,8 +480,7 @@
     "publicView": {
         "resolving": "Public view is loading ...",
         "netNotExist": "The process does not exists",
-        "errorCreate": "Error while creating case ",
-        "errorExportDownload": "File failed to download!"
+        "errorCreate": "Error while creating case "
     },
     "dynamicNavigation": {
         "couldNotResolveView": "An error has occurred during the view resolution process. The view could not be displayed",
@@ -515,5 +514,8 @@
         "previousPage": "Previous page",
         "pageOne": "Page 1 of 1",
         "pageAmount": "Page {{page}} of {{amountPages}}"
+    },
+    "export": {
+        "errorExportDownload": "File failed to download!"
     }
 }

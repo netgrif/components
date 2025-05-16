@@ -228,7 +228,7 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
             this.loading$.off();
         },error => {
             this._loggerService.error('File download failed', error);
-            this._snackbar.openErrorSnackBar(this._translate.instant('publicView.errorExportDownload'));
+            this._snackbar.openErrorSnackBar(this._translate.instant('export.errorExportDownload'));
             this.loading$.off();
         });
     }
