@@ -179,7 +179,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             return;
         }
         if (node.parentId && !node.parent) {
-            if (node.parentId === this._uriService.root.id) {
+            if (node.parentId === this._uriService.root.stringId) {
                 node.parent = this._uriService.root;
             } else {
                 this.nodeLoading$.on();
@@ -567,7 +567,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     }
 
     uriNodeTrackBy(index: number, node: UriNodeResource) {
-        return node.id;
+        return node.stringId;
     }
 
     itemsTrackBy(index: number, item: NavigationItem) {

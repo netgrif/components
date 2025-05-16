@@ -48,6 +48,7 @@ export * from './interface/roles/role';
 export * from './interface/roles/process-role';
 export * from './interface/roles/case-role';
 export * from './interface/roles/application-role';
+export * from './interface/map-wrapper';
 
 export * from './types/layout-object-type';
 export * from './types/nae-date-type';

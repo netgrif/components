@@ -157,9 +157,13 @@ export abstract class AbstractWorkflowPanelComponent extends AbstractPanelWithHe
     }
 
     protected getFeaturedMetaValue(selectedHeader: HeaderColumn): FeaturedValue {
+        let initials: string
+        if (!!this.workflow.properties?.map) {
+            initials = this.workflow.properties.map["initials"]
+        }
         switch (selectedHeader.fieldIdentifier) {
             case WorkflowMetaField.INITIALS:
-                return {value: this.workflow.initials, icon: '', type: 'meta'};
+                return {value: initials, icon: '', type: 'meta'};
             case WorkflowMetaField.TITLE:
                 return {value: this.workflow.title, icon: '', type: 'meta'};
             case WorkflowMetaField.NET_ID:
@@ -167,8 +171,8 @@ export abstract class AbstractWorkflowPanelComponent extends AbstractPanelWithHe
             case WorkflowMetaField.VERSION:
                 return {value: this.workflow.version, icon: '', type: 'meta'};
             // todo 2058
-            // case WorkflowMetaField.AUTHOR:
-            //     return {value: this.workflow.authorId.fullName, icon: 'account_circle', type: 'meta'};
+            case WorkflowMetaField.AUTHOR:
+                return {value: this.workflow.authorId, icon: 'account_circle', type: 'meta'};
             case WorkflowMetaField.CREATION_DATE:
                 return {value: toMoment(this.workflow.createdDate).format(DATE_TIME_FORMAT_STRING), icon: 'event', type: 'meta'};
         }

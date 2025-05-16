@@ -1,6 +1,8 @@
 import {ImmediateData} from './immediate-data';
 import {NaeDate} from '../types/nae-date-type';
 import {PermissionsWrapper} from '../../process/permissions'
+import {MapWrapper} from "./map-wrapper";
+import {Properties} from "../../data-fields/models/properties";
 
 /**
  * Information Petri Net
@@ -27,12 +29,6 @@ export interface PetriNetReference {
      */
     version: string;
     /**
-     * Initials
-     *
-     * Max 3 Char
-     */
-    initials: string;
-    /**
      * Name new Case Default Name
      */
     defaultCaseName: string;
@@ -52,5 +48,8 @@ export interface PetriNetReference {
      * **Example:** {}
      */
     processRolePermissions: PermissionsWrapper;
+
+    // todo 2058 doc
+    properties: MapWrapper<Properties>
 }
 

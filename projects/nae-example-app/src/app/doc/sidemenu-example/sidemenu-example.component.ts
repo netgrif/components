@@ -39,10 +39,10 @@ export class SidemenuExampleComponent implements OnInit {
                 identifier: 'example',
                 uriNodeId: 'example',
                 immediateData: [],
-                initials: 'EX',
                 title: 'Example Dummy Process',
                 version: '1.0.0',
-                processRolePermissions: { permissions: {}}
+                processRolePermissions: { permissions: {}},
+                properties: {map: {"initials": "EXP"}}
             }),
                 new Net({
                     stringId: '999',
@@ -52,10 +52,10 @@ export class SidemenuExampleComponent implements OnInit {
                     identifier: 'example',
                     uriNodeId: 'example',
                     immediateData: [],
-                    initials: 'EXX',
                     title: 'Other Example Dummy Process',
                     version: '1.0.0',
-                    processRolePermissions: { permissions: {}}
+                    processRolePermissions: { permissions: {}},
+                    properties: {map: {"initials": "EXX"}}
                 })])
         });
     }

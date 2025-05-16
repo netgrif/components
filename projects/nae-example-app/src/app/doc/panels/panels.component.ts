@@ -73,12 +73,12 @@ export class PanelsComponent implements OnInit {
             identifier: 'NET',
             uriNodeId: 'NET',
             version: '1.0.0',
-            initials: 'NET',
             defaultCaseName: 'Nepoviem',
             createdDate: [2020, 5, 9, 10, 0],
             authorId: 'exampleId',
             immediateData: [],
-            processRolePermissions: { permissions: {}}
+            processRolePermissions: { permissions: {}},
+            properties: {map: {"initials": "NET"}}
         };
         this.featuredFields$ = new BehaviorSubject<Array<HeaderColumn>>([
             new HeaderColumn(HeaderColumnType.META, 'visualId', 'Visual ID', 'text'),

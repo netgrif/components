@@ -62,7 +62,7 @@ export class UriService implements OnDestroy {
     }
 
     public isRoot(node: UriNodeResource): boolean {
-        return node.id === this._rootNode.id && node.uriPath === this._rootNode.uriPath;
+        return node.stringId === this._rootNode.stringId && node.uriPath === this._rootNode.uriPath;
     }
 
     public get activeNode(): UriNodeResource {
@@ -71,7 +71,7 @@ export class UriService implements OnDestroy {
 
     public set activeNode(node: UriNodeResource) {
         if (node.parentId && !node.parent) {
-            if (node.parentId === this._rootNode.id) {
+            if (node.parentId === this._rootNode.stringId) {
                 node.parent = this._rootNode;
             } else {
                 this._parentLoading$.on();
@@ -137,7 +137,7 @@ export class UriService implements OnDestroy {
      */
     public getChildNodes(node?: UriNodeResource): Observable<Array<UriNodeResource>> {
         if (!node) node = this.activeNode;
-        return this._resourceService.getNodesByParent(node.id).pipe(
+        return this._resourceService.getNodesByParent(node.stringId).pipe(
             map(nodes => {
                 this.capitalizeNames(nodes);
                 return nodes;
@@ -155,7 +155,7 @@ export class UriService implements OnDestroy {
     public getCasesOfNode(node?: UriNodeResource, processIdentifiers?: Array<string>, pageNumber: number = 0, pageSize: string | number = this.pageSize): Observable<Page<Case>> {
         if (!node) node = this.activeNode;
         const searchBody: CaseSearchRequestBody = {
-            uriNodeId: node.id,
+            uriNodeId: node.stringId,
         };
         if (!!processIdentifiers) {
             searchBody.process = processIdentifiers.map(id => ({identifier: id} as PetriNetSearchRequest));
@@ -216,7 +216,7 @@ export class UriService implements OnDestroy {
         if (level === 0) return of([this.root]);
         return this._resourceService.getByLevel(level).pipe(
             map(nodes => {
-                const ns = !!parent?.id ? nodes.filter(n => n.parentId === parent.id) : nodes;
+                const ns = !!parent?.stringId ? nodes.filter(n => n.parentId === parent.stringId) : nodes;
                 this.capitalizeNames(ns);
                 return ns;
             }),

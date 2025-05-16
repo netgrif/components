@@ -76,11 +76,11 @@ describe('AbstractWorkflowPanelComponent', () => {
     it('should translate', (done) => {
         translate.onLangChange.pipe(take(2)).subscribe(() => {
             if (translate.currentLang === 'sk-SK') {
-                oldTitle = component.panelContent.netIdentifier.title;
+                oldTitle = component.panelContent.initials.title;
                 expect(oldTitle).toEqual('Identifikátor siete');
                 translate.use('en-US');
             } else {
-                expect(component.panelContent.netIdentifier.title).not.toEqual(oldTitle);
+                expect(component.panelContent.initials.title).not.toEqual(oldTitle);
                 done();
             }
         });

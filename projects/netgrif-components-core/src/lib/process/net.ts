@@ -2,6 +2,8 @@ import {PetriNetReference} from '../resources/interface/petri-net-reference';
 import {ImmediateData} from '../resources/interface/immediate-data';
 import Transition from './transition';
 import {PermissionsWrapper} from './permissions'
+import {MapWrapper} from "../resources/interface/map-wrapper";
+import {Properties} from "../data-fields/models/properties";
 
 /**
  * @ignore
@@ -30,10 +32,6 @@ export class Net implements PetriNetReference {
     /**
      * @ignore
      */
-    private _initials: string;
-    /**
-     * @ignore
-     */
     private _defaultCaseName: string;
     /**
      * @ignore
@@ -58,12 +56,15 @@ export class Net implements PetriNetReference {
     /**
      * @ignore
      */
+    private _properties: MapWrapper<Properties>
+    /**
+     * @ignore
+     */
     constructor(process: PetriNetReference) {
         this._stringId = process.stringId;
         this._title = process.title;
         this._identifier = process.identifier;
         this._version = process.version;
-        this._initials = process.initials;
         this._defaultCaseName = process.defaultCaseName;
         this._createdDate = process.createdDate;
         this._authorId = process.authorId;
@@ -71,6 +72,7 @@ export class Net implements PetriNetReference {
         this._transitions = [];
         this._uriNodeId = process.uriNodeId;
         this._processRolePermissions = process.processRolePermissions;
+        this._properties = process.properties
     }
 
 
@@ -104,14 +106,6 @@ export class Net implements PetriNetReference {
 
     set version(value: string) {
         this._version = value;
-    }
-
-    get initials(): string {
-        return this._initials;
-    }
-
-    set initials(value: string) {
-        this._initials = value;
     }
 
     get defaultCaseName(): string {
@@ -160,6 +154,14 @@ export class Net implements PetriNetReference {
 
     set processRolePermissions(value: PermissionsWrapper) {
         this._processRolePermissions = value;
+    }
+
+    get properties(): MapWrapper<Properties> {
+        return this._properties
+    }
+
+    set properties(value: MapWrapper<Properties>) {
+        this._properties = value;
     }
 
     get uriNodeId(): string {

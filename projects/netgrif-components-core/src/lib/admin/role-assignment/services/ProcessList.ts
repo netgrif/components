@@ -19,7 +19,6 @@ export interface ProcessVersion extends PetriNetReference {
 export interface ProcessListItem {
     identifier: string;
     title: string;
-    initials: string;
     newestVersion: string;
     processes: Array<ProcessVersion>;
     loading: boolean;
@@ -82,7 +81,6 @@ export class ProcessList {
                     cache[net.identifier] = {
                         identifier: net.identifier,
                         title: net.title,
-                        initials: net.initials,
                         newestVersion: undefined,
                         processes: [net],
                         loading: true,

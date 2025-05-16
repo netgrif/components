@@ -28,12 +28,12 @@ export function createMockNet(stringId = 'stringId',
         identifier,
         uriNodeId: identifier,
         version: '1.0.0',
-        initials: 'NET',
         defaultCaseName: '',
         createdDate: [2021, 2, 4, 12, 50, 0, 1612443000],
         authorId: '',
         immediateData,
-        processRolePermissions: { permissions: {}}
+        processRolePermissions: { permissions: {}},
+        properties: { map: {"initials": "NET"}}
     });
     net.transitions = transitions.map(t => ({
         ...t,
