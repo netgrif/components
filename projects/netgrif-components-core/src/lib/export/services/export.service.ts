@@ -26,7 +26,7 @@ export class ExportService {
     public downloadExcelFromCurrentSelection(activeFilter: Filter, currentHeaders: Array<HeaderColumn>): Observable<boolean> {
         const mergeOperation = activeFilter instanceof MergedFilter ? (activeFilter as any)._operator : MergeOperator.AND;
 
-        return this._httpClient.post(AbstractResourceProvider.sanitizeUrl(`/v2/export/filteredCases`, this.SERVER_URL), {
+        return this._httpClient.post(AbstractResourceProvider.sanitizeUrl(`/export/filteredCases`, this.SERVER_URL), {
             query: activeFilter.getRequestBody(),
             selectedDataFieldNames: currentHeaders.filter(header => header).map(header =>
                 header.type === HeaderColumnType.IMMEDIATE ? header.title : this._translate.instant(header.title)),

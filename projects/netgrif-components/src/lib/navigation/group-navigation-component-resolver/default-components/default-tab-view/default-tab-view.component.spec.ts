@@ -103,6 +103,10 @@ describe('DefaultTabViewComponent', () => {
                                     GroupNavigationConstants.ITEM_FIELD_ID_CASE_DEFAULT_HEADERS,
                                     '','', {visible: true}
                                 ),
+                                new BooleanField(
+                                    GroupNavigationConstants.ITEM_FIELD_ID_CASE_ALLOW_EXPORT,
+                                    '',true,{visible: true}
+                                ),
                                 new EnumerationField(
                                     GroupNavigationConstants.ITEM_FIELD_ID_TASK_VIEW_SEARCH_TYPE,
                                     '',"fulltext", [],{visible: true}
