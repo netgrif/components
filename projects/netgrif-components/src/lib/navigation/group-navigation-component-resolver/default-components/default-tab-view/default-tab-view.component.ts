@@ -83,6 +83,7 @@ export class DefaultTabViewComponent {
         const caseViewHeadersMode = extractFieldValueFromData<string[]>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_HEADERS_MODE);
         const caseViewAllowTableMode = extractFieldValueFromData<boolean>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_ALLOW_TABLE_MODE);
         const caseViewDefaultHeadersMode = extractFieldValueFromData<string[]>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_DEFAULT_HEADERS_MODE);
+        const caseViewAllowExport = extractFieldValueFromData<boolean[]>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_ALLOW_EXPORT);
 
         const taskSearchType = extractSearchTypeFromData(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_TASK_VIEW_SEARCH_TYPE);
         const taskShowMoreMenu = extractFieldValueFromData<boolean>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_TASK_SHOW_MORE_MENU);
@@ -116,6 +117,7 @@ export class DefaultTabViewComponent {
                     caseViewHeadersMode: caseViewHeadersMode,
                     caseViewAllowTableMode: caseViewAllowTableMode,
                     caseViewDefaultHeadersMode: caseViewDefaultHeadersMode,
+                    caseViewAllowExport: caseViewAllowExport,
 
                     taskViewSearchTypeConfiguration: taskSearchTypeConfig,
                     taskViewShowMoreMenu: taskShowMoreMenu,

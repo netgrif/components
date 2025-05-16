@@ -4,6 +4,20 @@
     overflow: auto
 }
 
+.button-icon {
+    padding-right: 4px;
+    padding-bottom: 2px;
+}
+
+.export-mat-mini-fab {
+    border-radius: 6px;
+    box-shadow: none;
+    height: 44px !important;
+    min-width: 44px;
+    margin-right: 8px;
+    margin-top: 2px;
+}
+
 .case-view-search-container {
     margin-top: 16px;
     margin-bottom: 2px;

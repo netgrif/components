@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnDestroy, ViewChild} from '@angular/core';
 import {
     AbstractTabbedCaseViewComponent,
     AllowedNetsService,
@@ -28,6 +28,10 @@ import {
     navigationItemCaseViewDefaultHeadersFactory,
     NAE_NAVIGATION_ITEM_TASK_DATA,
     OverflowService,
+    LoadingEmitter,
+    SnackBarService,
+    HeaderColumn,
+    ExportService
 } from '@netgrif/components-core';
 import {HeaderComponent} from '../../../../header/header.component';
 import {
@@ -38,6 +42,8 @@ import {
     filterCaseTabbedDataFilterFactory,
     filterCaseTabbedDataSearchCategoriesFactory
 } from '../model/factory-methods';
+import {Subscription} from "rxjs";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'nc-default-tabbed-case-view',
@@ -71,7 +77,7 @@ import {
         }
     ]
 })
-export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewComponent implements AfterViewInit {
+export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewComponent implements AfterViewInit, OnDestroy {
 
     @ViewChild('header') public caseHeaderComponent: HeaderComponent;
 
@@ -84,8 +90,16 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
     headersMode: string[];
     allowTableMode: boolean;
     defaultHeadersMode: HeaderMode;
+    allowExport: boolean;
+    loading$: LoadingEmitter;
+    private _currentHeaders: Array<HeaderColumn> = [];
+    private _headersSub: Subscription;
 
     constructor(caseViewService: CaseViewService,
+                protected _exportService: ExportService,
+                protected _searchService: SearchService,
+                protected _snackbar: SnackBarService,
+                protected _translate: TranslateService,
                 loggerService: LoggerService,
                 viewIdService: ViewIdService,
                 overflowService: OverflowService,
@@ -101,6 +115,11 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
         this.headersMode = _injectedTabData.caseViewHeadersMode ? _injectedTabData.caseViewHeadersMode : [];
         this.allowTableMode = this._injectedTabData.caseViewAllowTableMode;
         this.defaultHeadersMode = this.resolveHeaderMode(_injectedTabData.caseViewDefaultHeadersMode);
+        this.allowExport = this._injectedTabData.caseViewAllowExport;
+        this.loading$ = new LoadingEmitter();
+        this._headersSub = this.selectedHeaders$.subscribe(headers => {
+            this._currentHeaders = headers;
+        });
 
         if (!this.allowTableMode) {
             const viewId = viewIdService.viewId;
@@ -194,5 +213,27 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
             default:
                 return undefined;
         }
+    }
+
+    isLoading(): boolean {
+        return this.loading$.isActive;
+    }
+
+    export(): void {
+        if (this.loading$.isActive) {
+            return;
+        }
+        this.loading$.on();
+        this._exportService.downloadExcelFromCurrentSelection(this._searchService.activeFilter, this._currentHeaders).subscribe(() => {
+            this.loading$.off();
+        },error => {
+            this._loggerService.error('File download failed', error);
+            this._snackbar.openErrorSnackBar(this._translate.instant('export.errorExportDownload'));
+            this.loading$.off();
+        });
+    }
+
+    ngOnDestroy(): void {
+        this.loading$.complete()
     }
 }
