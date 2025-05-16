@@ -5,6 +5,7 @@ import {ResourceProvider} from '../resource-provider.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {AbstractResourceService} from '../abstract-endpoint/abstract-resource.service';
 import {Role} from "../interface/roles/role";
+import {ApplicationRole} from "../interface/roles/application-role";
 
 @Injectable({
     providedIn: 'root'
@@ -16,13 +17,22 @@ export class RbacResourceService extends AbstractResourceService {
     }
 
     // todo doc
-    public findRoleIds(actorId: string): Observable<Set<string>> {
+    public findRoleIdsByActor(actorId: string): Observable<Array<string>> {
         if (actorId === undefined) {
-            return of(new Set<string>())
+            return of(new Array<string>())
         }
-        return this._resourceProvider.get$('authorization/' + actorId + '/roles', this.SERVER_URL, filter.getRequestBody(),
-            filter.getRequestParams()).pipe(map(r => this.changeType(r, undefined)));
+        return this._resourceProvider.get$('authorization/' + actorId + '/roles', this.SERVER_URL)
+            .pipe(map(r => this.changeType(r, undefined)));
     }
+
+    public findAppRoleId(importId: string): Observable<ApplicationRole> {
+        if (importId === undefined) {
+            return of(undefined)
+        }
+        return this._resourceProvider.get$('authorization/appRole/' + importId, this.SERVER_URL)
+            .pipe(map(r => this.changeType(r, undefined)));
+    }
+
 
     public assignRoles(actorId: string, roleIds: Set<String>): Observable<Array<Role>> {
         if (roleIds === undefined || roleIds.size === 0 || actorId === undefined) {

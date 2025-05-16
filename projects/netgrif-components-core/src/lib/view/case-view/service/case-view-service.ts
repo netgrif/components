@@ -294,8 +294,6 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
         switch (this._lastHeaderSearchState.fieldIdentifier) {
             case CaseMetaField.TITLE:
                 return 'title.keyword';
-            case CaseMetaField.VISUAL_ID:
-                return 'visualId.keyword';
             case CaseMetaField.CREATION_DATE:
                 return 'creationDateSortable';
             default:

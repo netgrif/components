@@ -73,7 +73,6 @@ export class HeaderSearchService implements OnDestroy {
         this._columnToConfiguration = new Map<number, HeaderConfiguration>();
         this._typeToCategory = new Map<string, Category<any>>();
         [
-            {k: CaseMetaField.VISUAL_ID, v: CaseVisualId},
             {k: CaseMetaField.TITLE, v: CaseTitle},
             {k: CaseMetaField.CREATION_DATE, v: CaseCreationDate},
             {k: CaseMetaField.AUTHOR, v: CaseAuthor},

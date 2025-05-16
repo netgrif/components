@@ -15,47 +15,46 @@ export class PermissionService {
     constructor(protected userComparator: ActorComparatorService, protected _actorService: ActorService) {
     }
 
-    public hasTaskPermission(task: Task | undefined, permission: PermissionType): boolean {
-        return true;
-        // if (!task) {
-        //     return false;
-        // }
-        //
-        // const rolePermValue = this.checkRolePerms(task.roles, permission);
-        // const userPermValue = this.checkUserPerms(task.users, permission);
-        // return this.resolvePermissions(rolePermValue, userPermValue);
+    public hasTaskPermission(task: Task | undefined, permissionType: PermissionType): boolean {
+        if (!task) {
+            return false;
+        }
+        if (this._actorService.isAdmin) {
+            return true;
+        }
+
+        const processRolePermissionValue = this.checkRolePerms(task.processRolePermissions, permissionType);
+        const caseRolePermissionValue = this.checkRolePerms(task.caseRolePermissions, permissionType);
+        return this.resolvePermissions(processRolePermissionValue, caseRolePermissionValue);
     }
 
-    public hasCasePermission(case_: Case | undefined, permission: PermissionType): boolean {
+    public hasCasePermission(case_: Case | undefined, permissionType: PermissionType): boolean {
         if (!case_) {
             return false;
         }
+        if (this._actorService.isAdmin) {
+            return true;
+        }
 
-        // const rolePermValue = this.checkRolePerms(case_.permissions, permission);
-        // const userPermValue = this.checkUserPerms(case_.users, permission);
-        // return this.resolvePermissions(rolePermValue, userPermValue);
+        const processRolePermissionValue = this.checkRolePerms(case_.processRolePermissions, permissionType);
+        const caseRolePermissionValue = this.checkRolePerms(case_.caseRolePermissions, permissionType);
+        return this.resolvePermissions(processRolePermissionValue, caseRolePermissionValue);
     }
 
-    public resolvePermissions(rolePermValue: boolean | undefined, userPermValue: boolean | undefined): boolean {
-        return userPermValue === undefined ? (!!rolePermValue) : userPermValue;
+    public resolvePermissions(processRolePermissionValue: boolean | undefined, caseRolePermissionValue: boolean | undefined): boolean {
+        return caseRolePermissionValue === undefined ? (!!processRolePermissionValue) : caseRolePermissionValue;
     }
 
-    public hasNetPermission(action: PermissionType, net: PetriNetReference): boolean {
-        return true;
-        // if (!net
-        //     || !net.permissions
-        //     || !action
-        //     || !(net.permissions instanceof Object)
-        // ) {
-        //     return false;
-        // }
-        // if (Object.keys(net.permissions).some(role =>
-        //     this._userService.hasRoleById(role) ? net.permissions[role][action] === false : false)) {
-        //     return false;
-        // }
-        // return Object.keys(net.permissions).some(role =>
-        //     this._userService.hasRoleById(role) ? !!net.permissions[role][action] : false
-        // );
+    public hasNetPermission(permissionType: PermissionType, net: PetriNetReference): boolean {
+        if (!net
+            || !net.processRolePermissions
+            || !permissionType
+            || !(net.processRolePermissions instanceof Object)
+        ) {
+            return false;
+        }
+        const processRolePermissionValue = this.checkRolePerms(net.processRolePermissions, permissionType);
+        return this.resolvePermissions(processRolePermissionValue, undefined);
     }
 
     public canAssign(task: Task | undefined): boolean {
@@ -95,29 +94,15 @@ export class PermissionService {
             && task.assignPolicy === AssignPolicy.manual;
     }
 
-    public checkRolePerms(roles: Permissions, permission: PermissionType): boolean | undefined {
-        let rolePermValue: boolean;
-        if (!!roles) {
-            // Object.keys(roles).forEach(role => {
-            //     if (roles[role][permission] !== undefined && this._actorService.hasRoleById(role)) {
-            //         rolePermValue = rolePermValue === undefined ? roles[role][permission] : rolePermValue && roles[role][permission];
-            //     }
-            // });
+    public checkRolePerms(permissions: Permissions, permissionType: PermissionType): boolean | undefined {
+        let permissionValue: boolean;
+        if (!!permissions) {
+            Object.keys(permissions).forEach(roleId => {
+                if (permissions[roleId][permissionType] !== undefined && this._actorService.hasRole(roleId)) {
+                    permissionValue = permissionValue === undefined ? permissions[roleId][permissionType] : permissionValue && permissions[roleId][permissionType];
+                }
+            });
         }
-        return rolePermValue;
-    }
-
-    public checkUserPerms(users: object, permission: PermissionType): boolean | undefined {
-        let userPermValue: boolean;
-        if (!!users) {
-            // const loggedUserId = this._actorService.identity.getSelfOrImpersonated().id;
-            // Object.keys(users).forEach(user => {
-            //     if (user === loggedUserId && users[user][permission] !== undefined) {
-            //         userPermValue = userPermValue === undefined ?
-            //             users[user][permission] : userPermValue && users[user][permission];
-            //     }
-            // });
-        }
-        return userPermValue;
+        return permissionValue;
     }
 }

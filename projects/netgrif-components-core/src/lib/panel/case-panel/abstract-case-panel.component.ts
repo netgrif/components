@@ -65,8 +65,6 @@ export abstract class AbstractCasePanelComponent extends AbstractPanelWithImmedi
         switch (selectedHeader.fieldIdentifier) {
             case CaseMetaField.MONGO_ID:
                 return {value: this.case_.stringId, icon: undefined, type: 'meta'};
-            case CaseMetaField.VISUAL_ID:
-                return {value: this.case_.visualId, icon: undefined, type: 'meta'};
             case CaseMetaField.TITLE:
                 return {value: this.case_.title, icon: undefined, type: 'meta'};
             // todo 2058

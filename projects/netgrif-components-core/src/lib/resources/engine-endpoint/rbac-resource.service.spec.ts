@@ -23,7 +23,7 @@ describe('RbacResourceService', () => {
     it('should findRoleIds', (done) => {
             inject([HttpTestingController],
                 (httpMock: HttpTestingController) => {
-                    service.findRoleIds('actorId').subscribe(res => {
+                    service.findRoleIdsByActor('actorId').subscribe(res => {
                         expect(res.size).toEqual(0);
                         done();
                     });
