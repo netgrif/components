@@ -480,7 +480,8 @@
     "publicView": {
         "resolving": "Public view is loading ...",
         "netNotExist": "The process does not exists",
-        "errorCreate": "Error while creating case "
+        "errorCreate": "Error while creating case ",
+        "errorExportDownload": "File failed to download!"
     },
     "dynamicNavigation": {
         "couldNotResolveView": "An error has occurred during the view resolution process. The view could not be displayed",

@@ -479,7 +479,8 @@
     "publicView": {
         "resolving": "Verejné view sa načítava ...",
         "netNotExist": "Proces neexistuje",
-        "errorCreate": "Chyba pri vytváraní prípadu "
+        "errorCreate": "Chyba pri vytváraní prípadu ",
+        "errorExportDownload": "Sťahovanie súboru zlyhalo!"
     },
     "dynamicNavigation": {
         "couldNotResolveView": "Počas načítania zobrazenia sa vyskytla chyba. Zobrazenie nie je možné zobraziť",

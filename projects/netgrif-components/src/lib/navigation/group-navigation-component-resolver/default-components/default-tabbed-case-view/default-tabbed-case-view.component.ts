@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnDestroy, ViewChild} from '@angular/core';
 import {
     AbstractTabbedCaseViewComponent,
     AllowedNetsService,
@@ -43,6 +43,7 @@ import {
     filterCaseTabbedDataSearchCategoriesFactory
 } from '../model/factory-methods';
 import {Subscription} from "rxjs";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'nc-default-tabbed-case-view',
@@ -76,7 +77,7 @@ import {Subscription} from "rxjs";
         }
     ]
 })
-export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewComponent implements AfterViewInit {
+export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewComponent implements AfterViewInit, OnDestroy {
 
     @ViewChild('header') public caseHeaderComponent: HeaderComponent;
 
@@ -98,6 +99,7 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
                 protected _exportService: ExportService,
                 protected _searchService: SearchService,
                 protected _snackbar: SnackBarService,
+                protected _translate: TranslateService,
                 loggerService: LoggerService,
                 viewIdService: ViewIdService,
                 overflowService: OverflowService,
@@ -226,7 +228,7 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
             this.loading$.off();
         },error => {
             this._loggerService.error('File download failed', error);
-            this._snackbar.openErrorSnackBar('Sťahovanie súboru zlyhalo!');
+            this._snackbar.openErrorSnackBar(this._translate.instant('publicView.errorExportDownload'));
             this.loading$.off();
         });
     }

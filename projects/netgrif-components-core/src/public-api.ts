@@ -7,7 +7,6 @@ export * from './commons/schema';
 export * from './lib/material/material.module';
 export * from './lib/covalent/covalent.module';
 export * from './lib/currency/currency.module';
-export * from './lib/export/services/export.service';
 
 /* APIS */
 export * from './lib/logger/public-api';
@@ -49,3 +48,4 @@ export * from './lib/impersonation/public-api';
 export * from './lib/registry/public-api';
 export * from './lib/actions/public-api';
 export * from './lib/providers/public-api';
+export * from './lib/export/public-api'
