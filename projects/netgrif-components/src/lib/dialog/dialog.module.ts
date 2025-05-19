@@ -25,11 +25,6 @@ import {HotkeyModule} from 'angular2-hotkeys';
 import {ImportNetDialogComponent} from './import-net-dialog/import-net-dialog.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {UserAssignDialogComponent} from './user-assign-dialog/user-assign-dialog.component';
-import {AdminImpersonateDialogComponent} from './admin-impersonate-dialog/admin-impersonate-dialog.component';
-import {
-    SideMenuAdminImpersonateComponentModule
-} from '../side-menu/content-components/admin-impersonate/side-menu-admin-impersonate-component.module';
-import {UserImpersonateDialogComponent} from './user-impersonate-dialog/user-impersonate-dialog.component';
 import {CaseViewComponentModule} from '../view/case-view/case-view.module';
 import {HeaderComponentModule} from '../header/header.module';
 import {FilterSelectorDialogComponent} from './filter-selector-dialog/filter-selector-dialog.component';
@@ -57,8 +52,6 @@ import {openTaskDialog} from "./model/dialog-actions";
         NewCaseDialogComponent,
         ImportNetDialogComponent,
         UserAssignDialogComponent,
-        AdminImpersonateDialogComponent,
-        UserImpersonateDialogComponent,
         FilterSelectorDialogComponent,
         LoadFilterDialogComponent,
         SaveFilterDialogComponent,
@@ -69,8 +62,6 @@ import {openTaskDialog} from "./model/dialog-actions";
         NewCaseDialogComponent,
         ImportNetDialogComponent,
         UserAssignDialogComponent,
-        AdminImpersonateDialogComponent,
-        UserImpersonateDialogComponent,
         FilterSelectorDialogComponent,
         LoadFilterDialogComponent,
         SaveFilterDialogComponent,
@@ -91,7 +82,6 @@ import {openTaskDialog} from "./model/dialog-actions";
         SnackBarModule,
         TranslateLibModule,
         SideMenuUserAssignComponentModule,
-        SideMenuAdminImpersonateComponentModule,
         SideMenuFilterSelectorComponentModule,
         SideMenuLoadFilterComponentModule,
         SideMenuSaveFilterComponentModule,
@@ -106,8 +96,6 @@ import {openTaskDialog} from "./model/dialog-actions";
         {provide: NAE_USER_ASSIGN_DIALOG_COMPONENT, useValue: UserAssignDialogComponent},
         {provide: NAE_IMPORT_NET_DIALOG_COMPONENT, useValue: ImportNetDialogComponent},
         {provide: NAE_MULTI_USER_ASSIGN_DIALOG_COMPONENT, useValue: MultiUserAssignDialogComponent},
-        {provide: NAE_ADMIN_IMPERSONATE_DIALOG_COMPONENT, useValue: AdminImpersonateDialogComponent},
-        {provide: NAE_USER_IMPERSONATE_DIALOG_COMPONENT, useValue: UserImpersonateDialogComponent},
         {provide: NAE_NEW_CASE_DIALOG_COMPONENT, useValue: NewCaseDialogComponent},
         {provide: NAE_SAVE_FILTER_DIALOG_COMPONENT, useValue: SaveFilterDialogComponent},
         {provide: NAE_LOAD_FILTER_DIALOG_COMPONENT, useValue: LoadFilterDialogComponent},

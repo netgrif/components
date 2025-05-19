@@ -1,6 +1,5 @@
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {Component, Input, OnDestroy, OnInit, TemplateRef} from '@angular/core';
-import {MatDrawerMode} from '@angular/material/sidenav';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ResizeEvent} from 'angular-resizable-element';
 import {Observable, of, Subscription} from 'rxjs';
@@ -8,8 +7,6 @@ import {map} from 'rxjs/operators';
 import {RoleAccess, View} from '../../../commons/schema';
 import {AccessService} from '../../authorization/permission/access.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
-import {ImpersonationUserSelectService} from '../../impersonation/services/impersonation-user-select.service';
-import {ImpersonationService} from '../../impersonation/services/impersonation.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {Case} from '../../resources/interface/case';
 import {
@@ -60,7 +57,6 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     @Input() includeUser: boolean = true;
     @Input() includeLanguage: boolean = true;
     @Input() includeMoreMenu: boolean = true;
-    @Input() includeImpersonation: boolean = true;
     @Input() allClosable: boolean = true;
     @Input() folderIcon: string = 'folder';
     @Input() openedFolderIcon: string = 'folder_open';
@@ -129,8 +125,6 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                           protected _config: ConfigurationService,
                           protected _uriService: UriService,
                           protected _caseResourceService: CaseResourceService,
-                          protected _impersonationUserSelect: ImpersonationUserSelectService,
-                          protected _impersonation: ImpersonationService,
                           protected _dynamicRoutingService: DynamicNavigationRouteProviderService) {
         this.leftItems = new Array<NavigationItem>();
         this.rightItems = new Array<NavigationItem>();
@@ -282,14 +276,6 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                 this._router.navigate([redirectPath]);
             }
         });
-    }
-
-    impersonate(): void {
-        this._impersonationUserSelect.selectImpersonate();
-    }
-
-    stopImpersonating(): void {
-        this._impersonation.cease();
     }
 
     get user(): Identity {

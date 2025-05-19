@@ -127,7 +127,6 @@ import {
 import {
     SingleTabbedTaskViewComponent
 } from './doc/single-tabbed-view/single-tabbed-task-view/single-tabbed-task-view.component';
-import {ImpersonationDemoComponent} from './doc/impersonation-demo/impersonation-demo.component';
 import { ChangePasswordComponent } from './doc/forms/change-password/change-password.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 
@@ -162,7 +161,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         DashboardExampleComponent,
         FilterRepositoryExampleComponent,
         ProfileComponent,
-        ImpersonationDemoComponent,
         NavigationExampleComponent,
         ButtonsNavComponent,
         RolesAssignComponent,

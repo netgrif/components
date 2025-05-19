@@ -21,12 +21,6 @@ import {NewCaseComponent} from './new-case/new-case.component';
 import {OptionSelectorComponent} from './option-selector/option-selector.component';
 import {SaveFilterComponent} from './save-filter/save-filter.component';
 import {LoadFilterComponent} from './load-filter/load-filter.component';
-import {
-    SideMenuAdminImpersonateComponentModule
-} from './admin-impersonate/side-menu-admin-impersonate-component.module';
-import {AdminImpersonateComponent} from './admin-impersonate/admin-impersonate.component';
-import {UserImpersonateComponent} from './user-impersonate/user-impersonate.component';
-import {SideMenuUserImpersonateComponentModule} from './user-impersonate/side-menu-user-impersonate-component.module';
 import {SideMenuMultiUserAssignComponentModule} from "./multi-user-assign/side-menu-multi-user-assign-component.module";
 import {MultiUserAssignComponent} from './multi-user-assign/multi-user-assign.component';
 import {ImportNetComponent} from './import-net/import-net.component';
@@ -37,8 +31,6 @@ import {ImportNetComponent} from './import-net/import-net.component';
         CommonModule,
         SideMenuUserAssignComponentModule,
         SideMenuMultiUserAssignComponentModule,
-        SideMenuAdminImpersonateComponentModule,
-        SideMenuUserImpersonateComponentModule,
         SideMenuNewCaseComponentModule,
         SideMenuImportNetComponentModule,
         SideMenuFilterSelectorComponentModule,
@@ -49,8 +41,6 @@ import {ImportNetComponent} from './import-net/import-net.component';
     exports: [
         SideMenuUserAssignComponentModule,
         SideMenuMultiUserAssignComponentModule,
-        SideMenuAdminImpersonateComponentModule,
-        SideMenuUserImpersonateComponentModule,
         SideMenuNewCaseComponentModule,
         SideMenuImportNetComponentModule,
         SideMenuFilterSelectorComponentModule,
@@ -62,8 +52,6 @@ import {ImportNetComponent} from './import-net/import-net.component';
         {provide: NAE_USER_ASSIGN_COMPONENT, useValue: UserAssignComponent},
         {provide: NAE_IMPORT_NET_COMPONENT, useValue: ImportNetComponent },
         {provide: NAE_MULTI_USER_ASSIGN_COMPONENT, useValue: MultiUserAssignComponent},
-        {provide: NAE_ADMIN_IMPERSONATE_COMPONENT, useValue: AdminImpersonateComponent},
-        {provide: NAE_USER_IMPERSONATE_COMPONENT, useValue: UserImpersonateComponent},
         {provide: NAE_NEW_CASE_COMPONENT, useValue: NewCaseComponent},
         {provide: NAE_OPTION_SELECTOR_COMPONENT, useValue: OptionSelectorComponent},
         {provide: NAE_SAVE_FILTER_COMPONENT, useValue: SaveFilterComponent},

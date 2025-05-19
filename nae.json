@@ -61,11 +61,6 @@
                 "name": "filter",
                 "address": "http://localhost:8080/api/",
                 "format": "json"
-            },
-            {
-                "name": "impersonation",
-                "address": "http://localhost:8080/api/",
-                "format": "json"
             }
         ]
     },
@@ -204,17 +199,6 @@
             },
             "routing": {
                 "path": "changePassword"
-            }
-        },
-        "demo-impersonation": {
-            "component": {
-                "class": "ImpersonationDemoComponent",
-                "from": "./doc/impersonation-demo/impersonation-demo.component"
-            },
-            "access": "private",
-            "navigation": true,
-            "routing": {
-                "path": "impersonation-view"
             }
         },
         "demo-drawer": {
