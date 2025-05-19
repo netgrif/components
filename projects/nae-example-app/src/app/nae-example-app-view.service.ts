@@ -23,8 +23,6 @@ import {FilterRepositoryExampleComponent} from './doc/filter-repository-example/
 import {ProfileComponent} from './doc/profile/profile.component';
 import {NavigationExampleComponent} from './doc/navigation-example/navigation-example.component';
 import {ButtonsNavComponent} from './doc/navigation-example/buttons-nav/buttons-nav.component';
-import {RolesAssignComponent} from './doc/roles-assign/roles-assign.component';
-import {LdapGroupRolesAssignComponent} from './doc/ldap-group-roles-assign/ldap-group-roles-assign.component';
 import {TreeViewExampleComponent} from './doc/tree-view-example/tree-view-example.component';
 import {UserInviteComponent} from './doc/user-invite/user-invite.component';
 import {ResetPasswordFormComponent} from './doc/forms/reset-password-form/reset-password-form.component';
@@ -84,8 +82,6 @@ export class NaeExampleAppViewService extends ViewService {
             {id: 'PasswordFormComponent', class: PasswordFormComponent},
             {id: 'LoginFormComponent', class: LoginFormComponent},
             {id: 'AuthenticationComponent', class: AuthenticationComponent},
-            {id: 'RolesAssignComponent', class: RolesAssignComponent},
-            {id: 'LdapGroupRolesAssignComponent', class: LdapGroupRolesAssignComponent},
             {id: 'PublicTaskViewComponent', class: PublicTaskViewComponent},
             {id: 'PublicWorkflowViewComponent', class: PublicWorkflowViewComponent},
             {id: 'PublicResolverComponent', class: PublicResolverComponent},

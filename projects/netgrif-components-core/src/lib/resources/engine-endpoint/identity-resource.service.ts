@@ -59,19 +59,6 @@ export class IdentityResourceService extends AbstractResourceService {
     }
 
     /**
-     * Get logged user
-     *
-     * **Request Type:** GET
-     *
-     * **Request URL:** {{baseUrl}}/api/user/me
-     */
-    public getPublicLoggedUser(params?: Params): Observable<IdentityResource> {
-        // todo 2058 does not exist
-        return this._resourceProvider.get$('public/identity/me', this.SERVER_URL, params).pipe(
-            map(r => this.changeType(r, undefined)));
-    }
-
-    /**
      todo doc
      * Get user by id
      *

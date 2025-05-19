@@ -1,6 +1,5 @@
 import {FormControl, Validators} from '@angular/forms';
 import {TranslateService} from '@ngx-translate/core';
-import {ProcessList} from '../role-assignment/services/ProcessList';
 import {GroupInterface} from '../../resources/interface/group';
 import {LoadingEmitter} from '../../utility/loading-emitter';
 import {UserInviteService} from './services/user-invite.service';
@@ -20,7 +19,7 @@ export abstract class AbstractUserInviteComponent implements OnInit {
     public invitedEmailControl: FormControl<string>;
     public invitedGroups: Array<GroupInterface>;
     // public invitedRoles: Array<ExtendedProcessRole>;
-    public nets: ProcessList;
+    // public nets: ProcessList;
     public loading: LoadingEmitter;
 
     constructor(protected _userInviteService: UserInviteService,
@@ -28,7 +27,7 @@ export abstract class AbstractUserInviteComponent implements OnInit {
                 protected _signUpService: SignUpService,
                 protected _snackBar: SnackBarService,
                 protected _translate: TranslateService) {
-        this.nets = this._userInviteService.processList;
+        // this.nets = this._userInviteService.processList;
         this.loading = new LoadingEmitter();
         this.invitedEmailControl = new FormControl('', [Validators.email, Validators.required]);
         this.invitedGroups = [];
@@ -40,7 +39,7 @@ export abstract class AbstractUserInviteComponent implements OnInit {
     }
 
     ngOnInit(): void {
-            this.nets.loadProcesses();
+            // this.nets.loadProcesses();
             this._orgList.loadGroups();
     }
 

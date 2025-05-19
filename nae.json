@@ -111,28 +111,6 @@
                 "path": "user-invite"
             }
         },
-        "demo-roles": {
-            "component": {
-                "class": "RolesAssignComponent",
-                "from": "./doc/roles-assign/roles-assign.component"
-            },
-            "access": "private",
-            "navigation": true,
-            "routing": {
-                "path": "roles"
-            }
-        },
-        "demo-ldap-group-roles": {
-            "component": {
-                "class": "LdapGroupRolesAssignComponent",
-                "from": "./doc/ldap-group-roles-assign/ldap-group-roles-assign.component"
-            },
-            "access": "private",
-            "navigation": true,
-            "routing": {
-                "path": "ldap"
-            }
-        },
         "demo-login": {
             "component": {
                 "class": "LoginFormComponent",

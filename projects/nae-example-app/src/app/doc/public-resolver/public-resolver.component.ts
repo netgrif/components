@@ -17,16 +17,16 @@ import {Subscription} from 'rxjs';
 })
 export class PublicResolverComponent implements OnInit, OnDestroy {
 
-    private _userSub: Subscription;
+    private _identitySub: Subscription;
 
-    constructor(protected _userService: IdentityService, protected _sessionService: SessionService, protected _router: Router,
+    constructor(protected _identityService: IdentityService, protected _sessionService: SessionService, protected _router: Router,
                 protected _auth: AuthenticationService, protected _publicResolver: PublicUrlResolverService,
                 protected redirectService: RedirectService) {
     }
 
     ngOnInit(): void {
-        this._userSub = this._userService.identity$.subscribe(user => {
-            if (!!user && user.id !== '') {
+        this._identitySub = this._identityService.identity$.subscribe(identity => {
+            if (!!identity && identity.id !== '') {
                 this._router.navigate([this.redirectService.parseRedirectPath(this._publicResolver.url)],
                     { queryParams: this.redirectService.queryParams });
                 this._publicResolver.url = undefined;
@@ -42,6 +42,6 @@ export class PublicResolverComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this._userSub.unsubscribe();
+        this._identitySub.unsubscribe();
     }
 }

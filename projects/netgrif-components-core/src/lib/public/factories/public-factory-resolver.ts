@@ -5,7 +5,7 @@ import {AuthenticationService} from '../../authentication/services/authenticatio
 import {PublicUrlResolverService} from '../services/public-url-resolver.service';
 import { RedirectService } from '../../routing/redirect-service/redirect.service';
 
-export const publicFactoryResolver = (userService: IdentityService, sessionService: SessionService, authService: AuthenticationService,
+export const publicFactoryResolver = (identityService: IdentityService, sessionService: SessionService, authService: AuthenticationService,
                                       router: Router, publicResolverService: PublicUrlResolverService, privateService, publicService,
                                       redirectService: RedirectService, url?: string) => {
     if (!sessionService.isInitialized) {
@@ -15,7 +15,8 @@ export const publicFactoryResolver = (userService: IdentityService, sessionServi
         } else {
             router.navigate([url], {queryParams: redirectService.queryParams});
         }
-    } else if (authService.isAuthenticated && userService.identity.id !== '' && userService.identity.username !== 'anonymous@netgrif.com') {
+    } else if (authService.isAuthenticated && identityService.identity.id !== '' && identityService.identity.username !== 'anonymous@netgrif.com') {
+        // todo 2058 basic and advanced strategy won't work
         return privateService;
     } else {
         return publicService;

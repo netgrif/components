@@ -104,11 +104,11 @@
             <span>{{'admin.process-list.listTitle' | translate}}</span>
         </mat-toolbar>
 
-        <div *ngIf="nets.processes.length === 0" fxLayout="column"
-             fxLayoutAlign="center center" fxFlex class="margin-top-x2">
-            <mat-icon color="accent" class="margin-bottom-default no-user-icon">timeline</mat-icon>
-            <span class="font-size-20">{{ 'admin.process-list.noProcessesWereFound' | translate}}</span>
-        </div>
+<!--        <div *ngIf="nets.processes.length === 0" fxLayout="column"-->
+<!--             fxLayoutAlign="center center" fxFlex class="margin-top-x2">-->
+<!--            <mat-icon color="accent" class="margin-bottom-default no-user-icon">timeline</mat-icon>-->
+<!--            <span class="font-size-20">{{ 'admin.process-list.noProcessesWereFound' | translate}}</span>-->
+<!--        </div>-->
 
         <mat-accordion class="full-width margin-top-default process-list-accordion" multi fxFlex>
 
@@ -165,8 +165,8 @@
 
         </mat-accordion>
 
-        <div *ngIf="nets.loading$ | async" fxLayout="column" fxLayoutAlign="center center" fxFlex="100">
-            <mat-spinner color="primary" diameter="65"></mat-spinner>
-        </div>
+<!--        <div *ngIf="nets.loading$ | async" fxLayout="column" fxLayoutAlign="center center" fxFlex="100">-->
+<!--            <mat-spinner color="primary" diameter="65"></mat-spinner>-->
+<!--        </div>-->
     </div>
 </div>
