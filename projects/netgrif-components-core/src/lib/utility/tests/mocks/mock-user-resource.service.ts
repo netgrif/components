@@ -21,7 +21,7 @@ export class MockUserResourceService {
     }
 
     public getLoggedUser(): Observable<UserResource> {
-        return of({email: 'mail', id: 'id', name: 'name', surname: 'surname', fullName: 'name surname', workspaceId: '',
+        return of({email: 'mail', id: 'id', username: 'username', realmId: 'realmId', name: 'name', firstName: 'name', surname: 'surname', lastName: 'surname', fullName: 'name surname', workspaceId: '',
             groups: [], authorities: [], nextGroups: [], processRoles: []});
     }
 

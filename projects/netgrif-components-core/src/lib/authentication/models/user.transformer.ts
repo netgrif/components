@@ -18,7 +18,9 @@ export class UserTransformer implements Transformer<UserResource, User> {
 
         return new User(
             user.id,
+            user.username,
             user.email,
+            user.realmId,
             user.name,
             user.surname,
             user.workspaceId,

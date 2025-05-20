@@ -13,7 +13,7 @@ import {UserResource} from '../interface/user-resource';
 import {Workspace} from "../../user/models/workspace";
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class UserResourceService extends AbstractResourceService {
 
@@ -28,8 +28,8 @@ export class UserResourceService extends AbstractResourceService {
      *
      * **Request URL:** {{baseUrl}}/api/users/{id}/authority/assign
      */
-    public assignAuthority(userId: string, body: object, params?: Params): Observable<MessageResource> {
-        return this._resourceProvider.post$('users/' + userId + '/authority/assign', this.SERVER_URL, body, params,
+    public assignAuthority(userId: string, body: object, realmId: string = 'default', params?: Params): Observable<MessageResource> {
+        return this._resourceProvider.post$('users/' + realmId + '/' + userId + '/authority', this.SERVER_URL, body, params, // TODO 2025-05-08 refactor this for exact realm id
             {'Content-Type': 'text/plain'})
             .pipe(map(r => this.changeType(r, undefined)));
     }
@@ -41,8 +41,8 @@ export class UserResourceService extends AbstractResourceService {
      *
      * **Request URL:** {{baseUrl}}/api/users/{id}/role/assign
      */
-    public assignRoles(userId: string, body: object, params?: Params): Observable<MessageResource> {
-        return this._resourceProvider.post$('users/' + userId + '/role/assign', this.SERVER_URL, body, params)
+    public assignRoles(userId: string, realmId: string, body: object, params?: Params): Observable<MessageResource> {
+        return this._resourceProvider.put$('users/' + realmId + '/' + userId + '/roles', this.SERVER_URL, body, params)
             .pipe(map(r => this.changeType(r, undefined)));
     }
 
@@ -66,8 +66,8 @@ export class UserResourceService extends AbstractResourceService {
      * **Request URL:** {{baseUrl}}/api/user
      */
     public getAll(params?: Params): Observable<Page<UserResource>> {
-        return this._resourceProvider.get$('user', this.SERVER_URL, params)
-            .pipe(map(r => this.getResourcePage<UserResource>(r, 'users')));
+        return this._resourceProvider.get$('users', this.SERVER_URL, params)
+            .pipe(map(r => this.mapToPage<UserResource>(r)));
     }
 
     /**
@@ -103,7 +103,7 @@ export class UserResourceService extends AbstractResourceService {
      */
     public getLoggedUser(params?: Params): Observable<UserResource> {
         return this._resourceProvider.get$('users/me', this.SERVER_URL, params).pipe(
-                map(r => this.changeType(r, undefined)));
+            map(r => this.changeType(r, undefined)));
     }
 
     /**
@@ -125,8 +125,8 @@ export class UserResourceService extends AbstractResourceService {
      *
      * **Request URL:** {{baseUrl}}/api/users/{id}
      */
-    public getUser(userId: string, params?: Params): Observable<UserResource> {
-        return this._resourceProvider.get$('users/' + userId, this.SERVER_URL, params)
+    public getUser(userId: string, realmId: string = 'default', params?: Params): Observable<UserResource> {
+        return this._resourceProvider.get$('users/' + realmId + '/' + userId, this.SERVER_URL, params)
             .pipe(map(r => this.changeType(r, undefined)));
     }
 
@@ -187,7 +187,7 @@ export class UserResourceService extends AbstractResourceService {
      */
     public search(body: object, params?: Params): Observable<Page<UserResource>> {
         return this._resourceProvider.post$('users/search', this.SERVER_URL, body, params)
-            .pipe(map(r => this.getResourcePage<UserResource>(r, 'users')));
+            .pipe(map(r => this.mapToPage<UserResource>(r)));
     }
 
     /**
@@ -197,8 +197,8 @@ export class UserResourceService extends AbstractResourceService {
      *
      * **Request URL:** {{baseUrl}}/api/users/{id}
      */
-    public updateUser(userId: string, body: object, params?: Params): Observable<UserResource> {
-        return this._resourceProvider.post$('users/' + userId, this.SERVER_URL, body, params)
+    public updateUser(userId: string, body: object, realmId: string = 'default', params?: Params): Observable<UserResource> {
+        return this._resourceProvider.post$('users/' + realmId + '/' + userId, this.SERVER_URL, body, params) // TODO 2025-05-08 refactor this for exact realm id
             .pipe(map(r => this.changeType(r, undefined)));
     }
 

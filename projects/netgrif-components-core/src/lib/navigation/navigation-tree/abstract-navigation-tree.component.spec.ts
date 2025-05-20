@@ -155,7 +155,7 @@ xdescribe('AbstractNavigationTreeComponent', () => {
                 }
             }
         });
-        userService.setUser(new User('', '', '', '', [], [], [],[]));
+        userService.setUser(new User('', '', '', '', '', '', [], [], [],[]));
         initializeComponent();
 
         expect(component).toBeTruthy();
@@ -205,7 +205,7 @@ xdescribe('AbstractNavigationTreeComponent', () => {
                 }
             },
         });
-        userService.setUser(new User('user', '', '', '', [], [{
+        userService.setUser(new User('user', '', '', '', '', '', [], [{
             stringId: '',
             name: 'name',
             importId: 'id',
@@ -249,7 +249,7 @@ xdescribe('AbstractNavigationTreeComponent', () => {
                 }
             },
         });
-        userService.setUser(new User('user', '', '', '', ['AUTHORITY'], [],[],[]));
+        userService.setUser(new User('user', '', '', '', '', '', ['AUTHORITY'], [],[],[]));
         initializeComponent();
 
         expect(component).toBeTruthy();
@@ -275,7 +275,7 @@ xdescribe('AbstractNavigationTreeComponent', () => {
                 }
             },
         });
-        userService.setUser(new User('', '', '', '', [], [],[],[]));
+        userService.setUser(new User('', '', '', '', '', '', [], [],[],[]));
         initializeComponent();
 
         expect(component).toBeTruthy();
@@ -327,7 +327,7 @@ xdescribe('AbstractNavigationTreeComponent', () => {
                 }
             }
         });
-        userService.setUser(new User('user', '', '', '', ['AUTHORITY'], [{
+        userService.setUser(new User('user', '', '', '', '', '', ['AUTHORITY'], [{
             stringId: '',
             name: 'name',
             importId: 'id',

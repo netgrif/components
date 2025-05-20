@@ -27,14 +27,14 @@ describe('PermissionService', () => {
                 NoopAnimationsModule,
                 BrowserAnimationsModule,
                 TranslateLibModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
             ],
             providers: [
                 PermissionService,
                 {provide: UserService, useClass: MockUserService},
             ],
             declarations: [],
-            schemas: [NO_ERRORS_SCHEMA]
+            schemas: [NO_ERRORS_SCHEMA],
         });
         permissionService = TestBed.inject(PermissionService);
         userService = TestBed.inject(UserService);
@@ -42,7 +42,7 @@ describe('PermissionService', () => {
 
     it('should canAssign be true with role', () => {
         (userService as unknown as MockUserService).user =
-            new User('', '', '', '', [], [{stringId: 'assignRole', name: '', importId: ''}]);
+            new User('', '', '', '', '', '', [], [{stringId: 'assignRole', name: '', importId: ''}]);
         const task = {
             caseId: 'string',
             transitionId: 'string',
@@ -52,8 +52,8 @@ describe('PermissionService', () => {
             user: undefined,
             roles: {
                 assignRole: {
-                    assign: true
-                }
+                    assign: true,
+                },
             },
             startDate: undefined,
             finishDate: undefined,
@@ -64,19 +64,19 @@ describe('PermissionService', () => {
             layout: {
                 offset: 0,
                 cols: undefined,
-                rows: undefined
+                rows: undefined,
             },
             dataGroups: [],
             _links: {},
             users: {},
-            userRefs: {}
+            userRefs: {},
         };
         expect(permissionService.canAssign(task)).toBeTrue();
     });
 
     it('should canAssign be false with role', () => {
         (userService as unknown as MockUserService).user =
-            new User('', '', '', '', [], [{stringId: 'assignRole', name: '', importId: ''}]);
+            new User('', '', '', '', '', '', [], [{stringId: 'assignRole', name: '', importId: ''}]);
         const task = {
             caseId: 'string',
             transitionId: 'string',
@@ -86,8 +86,8 @@ describe('PermissionService', () => {
             user: undefined,
             roles: {
                 assignRole: {
-                    assign: false
-                }
+                    assign: false,
+                },
             },
             startDate: undefined,
             finishDate: undefined,
@@ -98,19 +98,19 @@ describe('PermissionService', () => {
             layout: {
                 offset: 0,
                 cols: undefined,
-                rows: undefined
+                rows: undefined,
             },
             dataGroups: [],
             _links: {},
             users: {},
-            userRefs: {}
+            userRefs: {},
         };
         expect(permissionService.canAssign(task)).toBeFalse();
     });
 
     it('should canAssign be true with userRef', () => {
         (userService as unknown as MockUserService).user =
-            new User('user123', '', '', '', [], [{stringId: 'assignRole', name: '', importId: ''}]);
+            new User('user123', '', '', '', '', '', [], [{stringId: 'assignRole', name: '', importId: ''}]);
         const task = {
             caseId: 'string',
             transitionId: 'string',
@@ -128,27 +128,27 @@ describe('PermissionService', () => {
             layout: {
                 offset: 0,
                 cols: undefined,
-                rows: undefined
+                rows: undefined,
             },
             dataGroups: [],
             _links: {},
             users: {
                 user123: {
-                    assign: true
-                }
+                    assign: true,
+                },
             },
             userRefs: {
                 userList1: {
-                    assign: true
-                }
-            }
+                    assign: true,
+                },
+            },
         };
         expect(permissionService.canAssign(task)).toBeTrue();
     });
 
     it('should canAssign be false with userRef', () => {
         (userService as unknown as MockUserService).user =
-            new User('', '', '', '', [], [{stringId: 'assignRole', name: '', importId: ''}]);
+            new User('', '', '', '', '', '', [], [{stringId: 'assignRole', name: '', importId: ''}]);
         const task = {
             caseId: 'string',
             transitionId: 'string',
@@ -166,31 +166,31 @@ describe('PermissionService', () => {
             layout: {
                 offset: 0,
                 cols: undefined,
-                rows: undefined
+                rows: undefined,
             },
             dataGroups: [],
             _links: {},
             users: {},
             userRefs: {
                 userList1: {
-                    assign: true
-                }
-            }
+                    assign: true,
+                },
+            },
         };
         expect(permissionService.canAssign(task)).toBeFalse();
     });
 
     it('should canDelete', () => {
         (userService as unknown as MockUserService).user =
-            new User('', '', '', '', [], [{stringId: 'deleteRole', name: '', importId: ''}]);
+            new User('', '', '', '', '', '', [], [{stringId: 'deleteRole', name: '', importId: ''}]);
         const case_ = {
             stringId: 'string',
             title: 'string',
             author: {email: 'email', fullName: 'fullName'},
             permissions: {
                 deleteRole: {
-                    delete: true
-                }
+                    delete: true,
+                },
             },
             users: {},
             color: 'color',
@@ -207,29 +207,29 @@ describe('PermissionService', () => {
                 processIdentifier: 0,
                 time: 0,
                 timeSecond: 0,
-                timestamp: 0
+                timestamp: 0,
             },
             immediateData: [
                 {stringId: 'date', title: 'string', type: 'date', value: [2020, 1, 1, 10, 10]},
                 {stringId: 'string', title: 'string', type: 'string', value: 'dasdsadsad'},
                 {stringId: 'dateTime', title: 'string', type: 'dateTime', value: [2020, 1, 1, 10, 10]},
                 {stringId: 'enum', title: 'string', type: 'enumeration', value: {defaultValue: 'dasd'}},
-            ]
+            ],
         };
         expect(permissionService.hasCasePermission(case_, PermissionType.DELETE)).toBeTrue();
     });
 
     it('should canDelete be false', () => {
         (userService as unknown as MockUserService).user =
-            new User('', '', '', '', [], [{stringId: 'deleteRole', name: '', importId: ''}]);
+            new User('', '', '', '', '', '', [], [{stringId: 'deleteRole', name: '', importId: ''}]);
         const case_ = {
             stringId: 'string',
             title: 'string',
             author: {email: 'email', fullName: 'fullName'},
             permissions: {
                 deleteRole: {
-                    delete: false
-                }
+                    delete: false,
+                },
             },
             users: {},
             color: 'color',
@@ -246,14 +246,14 @@ describe('PermissionService', () => {
                 processIdentifier: 0,
                 time: 0,
                 timeSecond: 0,
-                timestamp: 0
+                timestamp: 0,
             },
             immediateData: [
                 {stringId: 'date', title: 'string', type: 'date', value: [2020, 1, 1, 10, 10]},
                 {stringId: 'string', title: 'string', type: 'string', value: 'dasdsadsad'},
                 {stringId: 'dateTime', title: 'string', type: 'dateTime', value: [2020, 1, 1, 10, 10]},
                 {stringId: 'enum', title: 'string', type: 'enumeration', value: {defaultValue: 'dasd'}},
-            ]
+            ],
         };
         expect(permissionService.hasCasePermission(case_, PermissionType.DELEGATE)).toBeFalse();
     });
@@ -269,13 +269,13 @@ describe('PermissionService', () => {
             defaultCaseName: '',
             initials: '',
             version: '',
-            title: ''
+            title: '',
         });
         net.permissions = {};
         expect(permissionService.hasNetPermission(PermissionType.CREATE, net)).toBeFalse();
 
         (userService as unknown as MockUserService).user =
-            new User('', '', '', '', [], [{stringId: 'role1', name: '', importId: ''}]);
+            new User('', '', '', '', '', '', [], [{stringId: 'role1', name: '', importId: ''}]);
         net.permissions = {role1: {create: true}};
         expect(permissionService.hasNetPermission(PermissionType.CREATE, net)).toBeTrue();
 
@@ -286,7 +286,7 @@ describe('PermissionService', () => {
         expect(permissionService.hasNetPermission(PermissionType.CREATE, net)).toBeFalse();
 
         (userService as unknown as MockUserService).user =
-            new User('', '', '', '', [],
+            new User('', '', '', '', '', '', [],
                 [{stringId: 'role1', name: '', importId: ''}, {stringId: 'role2', name: '', importId: ''}]);
         net.permissions = {role1: {create: false}, role2: {create: true}};
         expect(permissionService.hasNetPermission(PermissionType.CREATE, net)).toBeFalse();
