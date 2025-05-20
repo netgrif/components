@@ -120,7 +120,7 @@ export class IdentityService implements OnDestroy {
     }
 
     public loadPublicIdentity(): void {
-        this._identityResource.getLoggedIdentity().pipe(take(1)).subscribe((identity: IdentityResource) => {
+        this._identityResource.getPublicLoggedIdentity().pipe(take(1)).subscribe((identity: IdentityResource) => {
             if (identity) {
                 const backendIdentity = {...identity, id: identity.id.toString()};
                 this._identity = this._identityTransform.transform(backendIdentity);

@@ -60,6 +60,19 @@ export class IdentityResourceService extends AbstractResourceService {
 
     /**
      todo doc
+     * Get logged user
+     *
+     * **Request Type:** GET
+     *
+     * **Request URL:** {{baseUrl}}/api/user/me
+     */
+    public getPublicLoggedIdentity(params?: Params): Observable<IdentityResource> {
+        return this._resourceProvider.get$('public/identity/me', this.SERVER_URL, params).pipe(
+                map(r => this.changeType(r, undefined)));
+    }
+
+    /**
+     todo doc
      * Get user by id
      *
      * **Request Type:** GET
