@@ -11,6 +11,7 @@ export class User implements IUser {
         public email: string,
         public firstName: string,
         public lastName: string,
+        public workspaceId: string,
         public authorities: Array<string>,
         public roles: Array<ProcessRole>,
         public groups?: Array<string>,

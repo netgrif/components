@@ -1,5 +1,5 @@
 import {Injectable, OnDestroy} from '@angular/core';
-import {Observable, ReplaySubject, Subscription} from 'rxjs';
+import {BehaviorSubject, Observable, ReplaySubject, Subscription} from 'rxjs';
 import {ProcessRole} from '../../resources/interface/process-role';
 import {User} from '../models/user';
 import {Credentials} from '../../authentication/models/credentials';
@@ -12,6 +12,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {SessionService} from '../../authentication/session/services/session.service';
 import {UserResource} from '../../resources/interface/user-resource';
 import {AnonymousService} from '../../authentication/anonymous/anonymous.service';
+import {Workspace} from "../models/workspace";
 
 @Injectable({
     providedIn: 'root'
@@ -25,6 +26,7 @@ export class UserService implements OnDestroy {
     protected _subAuth: Subscription;
     protected _subAnonym: Subscription;
     private _publicLoadCalled: boolean;
+    protected _workspaces: BehaviorSubject<Array<Workspace>>;
 
     public readonly GLOBAL_ROLE_PREFIX = 'global_';
 
@@ -64,6 +66,14 @@ export class UserService implements OnDestroy {
 
     get user$(): Observable<User> {
         return this._userChange$.asObservable();
+    }
+
+    get workspaces() {
+        return this._workspaces.getValue();
+    }
+
+    get workspaces$(): Observable<Array<Workspace>> {
+        return this._workspaces.asObservable();
     }
 
     get anonymousUser(): User {
@@ -177,7 +187,7 @@ export class UserService implements OnDestroy {
     }
 
     protected emptyUser() {
-        return new User('', '', '', '', [], [], [], []);
+        return new User('', '', '', '', '', [], [], [], []);
     }
 
     protected loadUser(): void {
@@ -186,6 +196,7 @@ export class UserService implements OnDestroy {
                 const backendUser = {...user, id: user.id.toString()};
                 this._user = this._userTransform.transform(backendUser);
                 this.publishUserChange();
+                this.loadWorkspaces();
             }
         }, error => {
             if (error instanceof HttpErrorResponse && error.status === 401) {
@@ -207,6 +218,26 @@ export class UserService implements OnDestroy {
         }, error => {
             this._log.error('Loading logged user has failed! Initialisation has not be completed successfully!', error);
             this._publicLoadCalled = false;
+        });
+    }
+
+    public loadWorkspaces() {
+        this._userResource.getAllWorkspaces().pipe(take(1)).subscribe(workspaces => {
+            if (workspaces) {
+                this._workspaces.next(workspaces)
+            }
+        }, error => {
+            this._log.error('Loading workspaces has failed!', error);
+        });
+    }
+
+    public changeWorkspace(workspaceId: string) {
+        this._userResource.updateUser(this.user.id, {workspaceId}).subscribe(user => {
+            if (user) {
+                const backendUser = {...user, id: user.id.toString()};
+                this._user = this._userTransform.transform(backendUser);
+                this.publishUserChange();
+            }
         });
     }
 

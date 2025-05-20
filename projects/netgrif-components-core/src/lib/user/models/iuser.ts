@@ -16,4 +16,6 @@ export interface IUser {
      * **Example:** Netgrif
      */
     surname: string;
+
+    workspaceId: string;
 }

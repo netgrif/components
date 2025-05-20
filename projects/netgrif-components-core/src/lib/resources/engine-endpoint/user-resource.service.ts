@@ -10,6 +10,7 @@ import {Page} from '../interface/page';
 import {GroupsInterface} from '../interface/group';
 import {AbstractResourceService} from '../abstract-endpoint/abstract-resource.service';
 import {UserResource} from '../interface/user-resource';
+import {Workspace} from "../../user/models/workspace";
 
 @Injectable({
     providedIn: 'root'
@@ -67,6 +68,18 @@ export class UserResourceService extends AbstractResourceService {
     public getAll(params?: Params): Observable<Page<UserResource>> {
         return this._resourceProvider.get$('user', this.SERVER_URL, params)
             .pipe(map(r => this.getResourcePage<UserResource>(r, 'users')));
+    }
+
+    /**
+     * Get all workspaces
+     *
+     * **Request Type:** GET
+     *
+     * **Request URL:** {{baseUrl}}/api/user/workspaces
+     */
+    public getAllWorkspaces(params?: Params): Observable<Array<Workspace>> {
+        return this._resourceProvider.get$('user/workspaces', this.SERVER_URL, params)
+            .pipe(map(r => this.changeType(r, undefined)));
     }
 
     /**

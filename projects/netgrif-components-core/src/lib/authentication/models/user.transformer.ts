@@ -21,6 +21,7 @@ export class UserTransformer implements Transformer<UserResource, User> {
             user.email,
             user.name,
             user.surname,
+            user.workspaceId,
             this.transformAuthorities(user.authorities),
             user.processRoles,
             groups,

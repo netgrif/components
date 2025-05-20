@@ -114,6 +114,21 @@
         </button>
     </div>
 
+    <mat-menu #activeWorkspaceMenu="matMenu" overlapTrigger="false" xPosition="after" yPosition="above">
+        <button *ngFor='let workspace of userWorkspaces$ | async' mat-menu-item (click)="setWorkspace(workspace)"
+                [ngClass]="{'menu-button-selected': workspace === activeWorkspace()}">
+            {{ workspace }}
+        </button>
+    </mat-menu>
+
+    <button mat-icon-button
+            [matMenuTriggerFor]="activeWorkspaceMenu"
+            class="menu-button mat-typography menu-font-color margin-top-default"
+            [matTooltip]="'drawer.selectedGroup' | translate"
+            matTooltipPosition="right">
+        <mat-icon>apps</mat-icon>
+    </button>
+
     <button mat-icon-button (click)="onHomeClick()" class="menu-button mat-typography menu-font-color margin-top-default"
             [matTooltip]="'toolbar.menu.home' | translate"
             matTooltipPosition="right">

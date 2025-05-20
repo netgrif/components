@@ -5,7 +5,7 @@ import {UserResource} from '../../../resources/interface/user-resource';
 
 export class MockAuthenticationMethodService extends AuthenticationMethodService {
     login(credentials: Credentials): Observable<UserResource> {
-        return of({email: 'mail', id: 'id', name: 'name', surname: 'surname', fullName: 'name surname',
+        return of({email: 'mail', id: 'id', name: 'name', surname: 'surname', fullName: 'name surname', workspaceId: '',
             groups: [], authorities: [], nextGroups: [], processRoles: []});
     }
 
