@@ -19,6 +19,10 @@
         }
     }
 
+    .menu-button-selected {
+        olor: mat.get-color-from-palette($primary) !important;
+    }
+
     .rail-color {
         background: #F8FAFC;
     }

@@ -115,13 +115,13 @@
     </div>
 
     <mat-menu #activeWorkspaceMenu="matMenu" overlapTrigger="false" xPosition="after" yPosition="above">
-        <button *ngFor='let workspace of userWorkspaces$ | async' mat-menu-item (click)="setWorkspace(workspace)"
-                [ngClass]="{'menu-button-selected': workspace === activeWorkspace()}">
-            {{ workspace }}
+        <button *ngFor='let workspace of userWorkspaces$ | async' mat-menu-item (click)="setWorkspace(workspace.id)"
+                [ngClass]="{'menu-button-selected': workspace.id === activeWorkspace()}">
+            {{ workspace.id + (workspace.defaultWorkspace ? " (D)" : "")}}
         </button>
     </mat-menu>
 
-    <button mat-icon-button
+    <button mat-icon-button *ngIf="userWorkspacesLength > 1"
             [matMenuTriggerFor]="activeWorkspaceMenu"
             class="menu-button mat-typography menu-font-color margin-top-default"
             [matTooltip]="'drawer.selectedGroup' | translate"

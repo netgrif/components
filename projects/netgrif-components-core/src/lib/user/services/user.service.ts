@@ -26,7 +26,7 @@ export class UserService implements OnDestroy {
     protected _subAuth: Subscription;
     protected _subAnonym: Subscription;
     private _publicLoadCalled: boolean;
-    protected _workspaces: BehaviorSubject<Array<Workspace>>;
+    protected _workspaces: ReplaySubject<Array<Workspace>>;
 
     public readonly GLOBAL_ROLE_PREFIX = 'global_';
 
@@ -39,11 +39,14 @@ export class UserService implements OnDestroy {
         this._user = this.emptyUser();
         this._loginCalled = false;
         this._userChange$ = new ReplaySubject<User>(1);
+        this._workspaces = new ReplaySubject<Array<Workspace>>(1);
         this._anonymousUserChange$ = new ReplaySubject<User>(1);
         setTimeout(() => {
             this._subAuth = this._authService.authenticated$.subscribe(auth => {
                 if (auth && !this._loginCalled) {
                     this.loadUser();
+                } else if (auth && this._loginCalled) {
+                    this.loadWorkspaces();
                 } else if (!auth) {
                     this.clearUser();
                     this.publishUserChange();
@@ -66,10 +69,6 @@ export class UserService implements OnDestroy {
 
     get user$(): Observable<User> {
         return this._userChange$.asObservable();
-    }
-
-    get workspaces() {
-        return this._workspaces.getValue();
     }
 
     get workspaces$(): Observable<Array<Workspace>> {
@@ -232,7 +231,7 @@ export class UserService implements OnDestroy {
     }
 
     public changeWorkspace(workspaceId: string) {
-        this._userResource.updateUser(this.user.id, {workspaceId}).subscribe(user => {
+        this._userResource.changeWorkspace(workspaceId).subscribe(user => {
             if (user) {
                 const backendUser = {...user, id: user.id.toString()};
                 this._user = this._userTransform.transform(backendUser);

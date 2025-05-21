@@ -78,7 +78,19 @@ export class UserResourceService extends AbstractResourceService {
      * **Request URL:** {{baseUrl}}/api/user/workspaces
      */
     public getAllWorkspaces(params?: Params): Observable<Array<Workspace>> {
-        return this._resourceProvider.get$('user/workspaces', this.SERVER_URL, params)
+        return this._resourceProvider.get$('users/workspaces', this.SERVER_URL, params)
+            .pipe(map(r => this.changeType(r, undefined)));
+    }
+
+    /**
+     * Get all workspaces
+     *
+     * **Request Type:** GET
+     *
+     * **Request URL:** {{baseUrl}}/api/user/workspaces
+     */
+    public changeWorkspace(workspaceId: string, params?: Params): Observable<UserResource> {
+        return this._resourceProvider.post$('users/workspace', this.SERVER_URL, {workspaceId}, params)
             .pipe(map(r => this.changeType(r, undefined)));
     }
 

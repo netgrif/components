@@ -4,7 +4,7 @@ import {MatDrawerMode} from '@angular/material/sidenav';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ResizeEvent} from 'angular-resizable-element';
 import {Observable, of, Subject, Subscription} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {map, tap} from 'rxjs/operators';
 import {RoleAccess, View} from '../../../commons/schema';
 import {AccessService} from '../../authorization/permission/access.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
@@ -43,6 +43,7 @@ import {
     RIGHT_SIDE_NEW_PAGE_SIZE,
     SETTINGS_TRANSITION_ID
 } from '../model/navigation-configs';
+import {Workspace} from "../../user/models/workspace";
 
 
 @Component({
@@ -117,7 +118,8 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     };
 
     protected _childCustomViews: { [uri: string]: { [key: string]: NavigationItem } };
-    public userWorkspaces$: Observable<Array<string>>;
+    public userWorkspaces$: Observable<Array<Workspace>>;
+    public userWorkspacesLength: number;
 
     protected constructor(protected _router: Router,
                           protected _activatedRoute: ActivatedRoute,
@@ -165,6 +167,10 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                 this.resolveHiddenMenuItemFromChildViews(viewConfigurationPath + '/' + key, childView);
             });
         }
+
+        this.userWorkspaces$ = this._userService.workspaces$.pipe(
+            tap(arr => this.userWorkspacesLength = arr.length)
+        );
     }
 
     get currentNode(): UriNodeResource {
