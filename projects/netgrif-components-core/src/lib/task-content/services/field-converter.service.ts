@@ -79,14 +79,14 @@ export class FieldConverterService {
             case FieldTypeResource.USER:
                 let user;
                 if (item.value) {
-                    user = new UserValue(item.value.id, item.value.firstName, item.value.lastName, item.value.email);
+                    user = new UserValue(item.value.id, item.value.realmId, item.value.firstName, item.value.lastName, item.value.username);
                 }
                 return new UserField(item.stringId, item.name, item.behavior, user,
                     item.roles, item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.USER_LIST:
                 let userListValue = new UserListValue(new Map<string, UserValue>());
                 if (item.value) {
-                    item.value.userValues.forEach(u => userListValue.addUserValue(new UserValue(u.id, u.firstName, u.lastName, u.email)));
+                    item.value.userValues.forEach(u => userListValue.addUserValue(new UserValue(u.id, u.realmId, u.firstName, u.lastName, u.username)));
                 }
                 return new UserListField(item.stringId, item.name, item.behavior, userListValue,
                     item.roles, item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
@@ -288,7 +288,7 @@ export class FieldConverterService {
             return moment(new Date(value[0], value[1] - 1, value[2]));
         }
         if (this.resolveType(field) === FieldTypeResource.USER) {
-            return new UserValue(value.id, value.firstName, value.lastName, value.email);
+            return new UserValue(value.id, value.realmId, value.firstName, value.lastName, value.username);
         }
         if (this.resolveType(field) === FieldTypeResource.DATE_TIME) {
             return moment(new Date(value[0], value[1] - 1, value[2], value[3], value[4]));

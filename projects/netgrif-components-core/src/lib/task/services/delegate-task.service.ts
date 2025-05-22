@@ -78,7 +78,7 @@ export class DelegateTaskService extends TaskHandlingService {
                 roles: Object.keys(this._safeTask.roles).filter(role =>
                     this._safeTask.roles[role]['assign'] !== undefined && this._safeTask.roles[role]['assign']),
                 value: !this._safeTask.user ? undefined : new UserValue(
-                    this._safeTask.user.id, this._safeTask.user.name, this._safeTask.user.surname, this._safeTask.user.email
+                    this._safeTask.user.id, this._safeTask.user.realmId, this._safeTask.user.firstName, this._safeTask.user.lastName, this._safeTask.user.username
                 ),
                 negativeRoles: Object.keys(this._safeTask.roles).filter(role =>
                     this._safeTask.roles[role]['assign'] !== undefined && !this._safeTask.roles[role]['assign'])
