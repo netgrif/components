@@ -21,7 +21,7 @@ export class ActorService {
             })
 
         this._identityService.identity$.pipe(
-            switchMap(identity => this._rbacResourceService.findRoleIdsByActor(identity.activeActorId).pipe(take(1)))
+            switchMap(identity => this._rbacResourceService.findRoleIdsByActor(identity?.activeActorId).pipe(take(1)))
         ).subscribe(roleIds => {
             this._isAdmin = undefined;
             this.currentRoleIds = roleIds;

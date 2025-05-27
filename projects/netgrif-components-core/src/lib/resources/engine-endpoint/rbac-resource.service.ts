@@ -18,7 +18,7 @@ export class RbacResourceService extends AbstractResourceService {
 
     // todo doc
     public findRoleIdsByActor(actorId: string): Observable<Array<string>> {
-        if (actorId === undefined) {
+        if (actorId === undefined || actorId === "") {
             return of(new Array<string>())
         }
         return this._resourceProvider.get$('authorization/' + actorId + '/roles', this.SERVER_URL)

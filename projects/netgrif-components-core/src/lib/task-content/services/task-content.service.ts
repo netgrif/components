@@ -135,8 +135,11 @@ export abstract class TaskContentService implements OnDestroy {
      * @returns whether the task is valid or not
      */
     public validateTaskData(taskId?: string): boolean {
-        if (!this._task || !this._task.layoutContainer) {
+        if (!this._task) {
             return false;
+        }
+        if (!this._task.layoutContainer) {
+            return true;
         }
         const validity = this.validateTaskDataRecursively(this._task.layoutContainer, taskId);
         if (!validity.valid) {

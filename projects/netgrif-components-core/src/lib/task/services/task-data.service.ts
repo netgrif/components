@@ -153,7 +153,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         this._taskState.startLoading(gottenTaskId);
 
         this._taskResourceService.getData(gottenTaskId).pipe(take(1)).subscribe(response => {
-            const layoutContainer = (response.outcome as GetDataLayoutsEventOutcome).layout;
+            const layoutContainer = (response.outcome as GetDataLayoutsEventOutcome)?.layout;
             this.processSuccessfulGetDataRequest(gottenTaskId, this.processLayoutContainerResponse(layoutContainer), afterAction, nextEvent);
             this.emitChangedFields(response);
         }, error => {

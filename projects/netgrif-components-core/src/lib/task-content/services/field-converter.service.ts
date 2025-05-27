@@ -208,11 +208,11 @@ export class FieldConverterService {
             ? this.resolveEnumChoices(enumField)
             : this.resolveEnumOptions(enumField);
         if (enumField.component && enumField.component.name === 'autocomplete_dynamic') {
-            return new DynamicEnumerationField(enumField.stringId, enumField.title, enumField.value.value, options,
+            return new DynamicEnumerationField(enumField.stringId, enumField.title, enumField.value?.value, options,
                 dataRef.behavior, enumField.placeholder, enumField.description, dataRef.layout,
                 enumField.type, enumField.validations, enumField.component, enumField.parentTaskId);
         } else {
-            return new EnumerationField(enumField.stringId, enumField.title, enumField.value.value, options,
+            return new EnumerationField(enumField.stringId, enumField.title, enumField.value?.value, options,
                 dataRef.behavior, enumField.placeholder, enumField.description, dataRef.layout,
                 enumField.type, enumField.validations, enumField.component, enumField.parentTaskId);
         }
@@ -243,6 +243,9 @@ export class FieldConverterService {
      * @returns the options for the enumeration field
      */
     protected resolveEnumOptions(enumField: DataFieldResource): Array<EnumerationFieldValue> {
+        if (enumField.options === undefined) {
+            return new Array<MultichoiceFieldValue>();
+        }
         return Object.entries(enumField.options).map(entry => ({key: entry[0], value: entry[1]}));
     }
 
@@ -271,6 +274,9 @@ export class FieldConverterService {
      * @returns the options for the multichoice field
      */
     protected resolveMultichoiceOptions(multiField: DataFieldResource): Array<MultichoiceFieldValue> {
+        if (multiField.options === undefined) {
+            return new Array<MultichoiceFieldValue>();
+        }
         return Object.entries(multiField.options).map(entry => ({key: entry[0], value: entry[1]}));
     }
 
