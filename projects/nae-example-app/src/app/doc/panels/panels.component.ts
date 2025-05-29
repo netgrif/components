@@ -5,7 +5,6 @@ import {
     HeaderColumnType,
     PetriNetReference,
     WorkflowMetaField,
-    Author,
     AllowedNetsServiceFactory,
     SimpleFilter,
     CaseViewService,
@@ -39,7 +38,8 @@ const baseFilterFactory = () => {
         {   provide: AllowedNetsService,
             useFactory: localAllowedNetsFactory,
             deps: [AllowedNetsServiceFactory]},
-    ]
+    ],
+    standalone: false
 })
 export class PanelsComponent implements OnInit {
     readonly TITLE = 'Case panel';
@@ -60,15 +60,12 @@ export class PanelsComponent implements OnInit {
             immediateData: [],
             color: 'purple',
             creationDate: [2020, 4, 6, 13, 37],
-            author: {
-                email: 'example@example.com',
-                fullName: 'Net Grif',
-            },
+            authorId: 'exampleId',
             resetArcTokens: null,
             stringId: null,
             petriNetId: null,
-            permissions: {},
-            users: {}
+            processRolePermissions: { permissions: {}},
+            caseRolePermissions: { permissions: {}},
         };
         this.workflow = {
             stringId: 'ID',
@@ -76,14 +73,12 @@ export class PanelsComponent implements OnInit {
             identifier: 'NET',
             uriNodeId: 'NET',
             version: '1.0.0',
-            initials: 'NET',
             defaultCaseName: 'Nepoviem',
             createdDate: [2020, 5, 9, 10, 0],
-            author: {
-                email: 'test@netgrif.com',
-                fullName: 'Test Testovič'
-            },
-            immediateData: []
+            authorId: 'exampleId',
+            immediateData: [],
+            processRolePermissions: { permissions: {}},
+            properties: {map: {"initials": "NET"}}
         };
         this.featuredFields$ = new BehaviorSubject<Array<HeaderColumn>>([
             new HeaderColumn(HeaderColumnType.META, 'visualId', 'Visual ID', 'text'),

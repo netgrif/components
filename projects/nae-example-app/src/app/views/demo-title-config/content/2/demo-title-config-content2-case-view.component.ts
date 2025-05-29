@@ -42,7 +42,8 @@ const baseFilterFactory = () => {
             deps: [AllowedNetsServiceFactory]},
         ViewIdService,
         {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
-    ]
+    ],
+    standalone: false
 })
 export class DemoTitleConfigContent2CaseViewComponent extends AbstractTabbedCaseViewComponent implements AfterViewInit {
 

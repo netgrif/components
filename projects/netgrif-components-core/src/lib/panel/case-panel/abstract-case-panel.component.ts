@@ -12,7 +12,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {LoggerService} from '../../logger/services/logger.service';
 import {OverflowService} from '../../header/services/overflow.service';
 import {AbstractPanelWithImmediateDataComponent} from '../abstract/panel-with-immediate-data';
-import {UserService} from '../../user/services/user.service';
+import {IdentityService} from '../../identity/services/identity.service';
 import {take} from 'rxjs/operators';
 import {getImmediateData} from '../../utility/get-immediate-data';
 import {FeaturedValue} from '../abstract/featured-value';
@@ -20,6 +20,7 @@ import {EventOutcomeMessageResource} from '../../resources/interface/message-res
 import {CurrencyPipe} from '@angular/common';
 import {PermissionService} from '../../authorization/permission/permission.service';
 import {PermissionType} from '../../process/permissions';
+import {FormControl} from '@angular/forms';
 
 @Component({
     selector: 'ncc-abstract-case-panel',
@@ -27,25 +28,32 @@ import {PermissionType} from '../../process/permissions';
 })
 export abstract class AbstractCasePanelComponent extends AbstractPanelWithImmediateDataComponent {
 
+
     @Input() public case_: Case;
-    @Input() public selectedHeaders$: Observable<Array<HeaderColumn>>;
+    @Input() public approval: boolean;
     @Input() responsiveBody = true;
     @Input() first: boolean;
     @Input() last: boolean;
     @Input() showCasePanelIcon = true;
     @Input() showDeleteMenu = false;
     @Input() textEllipsis = false;
+    protected _approvalFormControl: FormControl<boolean | string>;
 
     protected constructor(protected _caseResourceService: CaseResourceService,
                           protected _caseViewService: CaseViewService,
                           protected _snackBarService: SnackBarService,
                           protected _translateService: TranslateService,
                           protected _log: LoggerService,
-                          protected _userService: UserService,
+                          protected _userService: IdentityService,
                           protected _currencyPipe: CurrencyPipe,
                           protected _permissionService: PermissionService,
                           @Optional() protected _overflowService: OverflowService,) {
         super(_translateService, _currencyPipe, _overflowService);
+        this._approvalFormControl = new FormControl();
+    }
+
+    get approvalFormControl(): FormControl<boolean | string> {
+        return this._approvalFormControl;
     }
 
     public show(event: MouseEvent): boolean {
@@ -57,12 +65,11 @@ export abstract class AbstractCasePanelComponent extends AbstractPanelWithImmedi
         switch (selectedHeader.fieldIdentifier) {
             case CaseMetaField.MONGO_ID:
                 return {value: this.case_.stringId, icon: undefined, type: 'meta'};
-            case CaseMetaField.VISUAL_ID:
-                return {value: this.case_.visualId, icon: undefined, type: 'meta'};
             case CaseMetaField.TITLE:
                 return {value: this.case_.title, icon: undefined, type: 'meta'};
+            // todo 2058
             case CaseMetaField.AUTHOR:
-                return {value: this.case_.author.fullName, icon: 'account_circle', type: 'meta'};
+                return {value: this.case_.authorId, icon: 'account_circle', type: 'meta'};
             case CaseMetaField.CREATION_DATE:
                 return {
                     value: toMoment(this.case_.creationDate).format(DATE_TIME_FORMAT_STRING),

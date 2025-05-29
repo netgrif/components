@@ -16,7 +16,13 @@ import {DataGroup} from '../../../resources/public-api';
 import {getFieldFromDataGroups} from '../../../utility/get-field';
 import {FilterField} from '../../../data-fields/filter-field/models/filter-field';
 import {BaseAllowedNetsService} from '../base-allowed-nets.service';
+import {MultichoiceField} from "../../../data-fields/multichoice-field/models/multichoice-field";
 
+function addAllowedNets(allowedNets, existingAllowedNets) {
+    if (!!allowedNets && allowedNets.length > 0) {
+        existingAllowedNets.next([...allowedNets]);
+    }
+}
 
 /**
  * Convenience method that can be used as an allowed nets factory for tabbed task views.
@@ -36,17 +42,23 @@ export function navigationItemTaskAllowedNetsServiceFactory(factory: AllowedNets
                                                             baseAllowedNets: BaseAllowedNetsService,
                                                             navigationItemTaskData: Array<DataGroup>): AllowedNetsService {
     const filterField = getFieldFromDataGroups(navigationItemTaskData, UserFilterConstants.FILTER_FIELD_ID) as FilterField;
+    const allowedNetsField = getFieldFromDataGroups(navigationItemTaskData, UserFilterConstants.ALLOWED_NETS_FIELD_ID) as MultichoiceField;
 
     if (filterField === undefined) {
         throw new Error(`Provided navigation item task data does not contain a filter field with ID '${UserFilterConstants.FILTER_FIELD_ID
         }'! Allowed nets cannot be generated from it!`);
     }
     const nets = new BehaviorSubject<Array<string>>(Array.from(new Set<string>([...filterField.allowedNets])));
-
     if (filterField.filterMetadata.inheritAllowedNets) {
         baseAllowedNets.allowedNets$.subscribe(allowedNets => {
             const netSet = new Set<string>(allowedNets);
             nets.next(Array.from(netSet));
+        });
+    }
+    if (!!allowedNetsField) {
+        addAllowedNets(allowedNetsField.value, nets);
+        allowedNetsField.valueChanges().subscribe(allowedNets => {
+            addAllowedNets(allowedNetsField.value, nets);
         });
     }
     return factory.createFromObservable(nets.asObservable());

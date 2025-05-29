@@ -23,10 +23,14 @@ export function schematicEntryPoint(): Rule {
             const classDeclarations: Array<ts.Node> = findNodes(source, ts.SyntaxKind.ClassDeclaration);
 
             for (const declaration of classDeclarations) {
-                if (declaration.decorators?.length !== 1) {
+                if (!ts.canHaveDecorators(declaration)) {
+                    continue
+                }
+                if (ts.getDecorators(declaration)?.length !== 1) {
                     continue;
                 }
-                const decorator = declaration.decorators[0];
+                const decorators = ts.getDecorators(declaration);
+                const decorator = decorators !== undefined ? decorators[0] : undefined;
                 if (decorator?.expression?.getFirstToken()?.getText() !== 'Component') {
                     continue;
                 }
@@ -63,7 +67,7 @@ export function schematicEntryPoint(): Rule {
     };
 }
 
-function migrateCaseView(file: FileEntry, providersArrayContent: ts.Node[]): Array<Change> {
+function migrateCaseView(file: FileEntry, providersArrayContent: readonly ts.Node[]): Array<Change> {
     const searchServiceAlias = findProviderAlias(providersArrayContent, 'SearchService');
 
     if (searchServiceAlias === null) {
@@ -86,7 +90,7 @@ function migrateCaseView(file: FileEntry, providersArrayContent: ts.Node[]): Arr
     return changes;
 }
 
-function migrateTaskView(file: FileEntry, providersArrayContent: ts.Node[]): Array<Change> {
+function migrateTaskView(file: FileEntry, providersArrayContent: readonly ts.Node[]): Array<Change> {
     const searchServiceAlias = findProviderAlias(providersArrayContent, 'SearchService');
 
     if (searchServiceAlias === null) {
@@ -124,7 +128,7 @@ function migrateTaskView(file: FileEntry, providersArrayContent: ts.Node[]): Arr
     return changes;
 }
 
-function removeProvider(file: FileEntry, providersArrayContent: ts.Node[], providerName: string): Change {
+function removeProvider(file: FileEntry, providersArrayContent: readonly ts.Node[], providerName: string): Change {
     const index = findProviderIndex(providersArrayContent, providerName);
     if (index === -1) {
         return new NoopChange();
@@ -138,7 +142,7 @@ function removeProvider(file: FileEntry, providersArrayContent: ts.Node[], provi
     return new RemoveChange(file.path, providerNode.pos, textToRemove);
 }
 
-function findProviderAlias(providersArrayContent: ts.Node[], providerName: string): string | null {
+function findProviderAlias(providersArrayContent: readonly ts.Node[], providerName: string): string | null {
     const providerIndex = findProviderIndex(providersArrayContent, providerName);
 
     if (providerIndex === -1) {
@@ -162,7 +166,7 @@ function findProviderAlias(providersArrayContent: ts.Node[], providerName: strin
     return useExistingNode.getChildAt(2).getText();
 }
 
-function findProviderIndex(providersArrayContent: ts.Node[], providerName: string): number {
+function findProviderIndex(providersArrayContent: readonly ts.Node[], providerName: string): number {
     return providersArrayContent.findIndex(node => node.kind !== ts.SyntaxKind.CommaToken
         && (
             (node.kind === ts.SyntaxKind.Identifier && node.getText() === providerName)

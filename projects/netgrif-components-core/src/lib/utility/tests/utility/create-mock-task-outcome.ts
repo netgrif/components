@@ -17,7 +17,7 @@ export function createMockTaskOutcome(task: Task = createMockTask(), net: Net = 
     return {
         outcomes,
         task,
-        aCase,
+        case: aCase,
         net,
         message: 'Mock case event outcome'
     } as TaskEventOutcome;

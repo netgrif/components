@@ -41,7 +41,7 @@ describe('EnumerationStepperFieldComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-enumeration-stepper-field [showLargeLayout]="label" [enumerationField]="field" [formControlRef]="form">' +
+    template: '<nc-enumeration-stepper-field [showLargeLayout]="label" [dataField]="field" [formControlRef]="form">' +
         '</nc-enumeration-stepper-field>'
 })
 class TestWrapperComponent {

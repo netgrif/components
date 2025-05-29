@@ -88,6 +88,10 @@
                             </li>
                             <li>
                                     <span class="modifier">Protected</span>
+                                <a href="#resolveDefaultHeaders" >resolveDefaultHeaders</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
                                     <span class="modifier">Abstract</span>
                                 <a href="#resolveViewComponent" >resolveViewComponent</a>
                             </li>
@@ -115,7 +119,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/group-navigation-component-resolver/group-navigation-component-resolver.service.ts:10</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/group-navigation-component-resolver/group-navigation-component-resolver.service.ts:12</a></div>
                             </td>
                         </tr>
 
@@ -193,8 +197,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="18"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/group-navigation-component-resolver/group-navigation-component-resolver.service.ts:18</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="20"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/group-navigation-component-resolver/group-navigation-component-resolver.service.ts:20</a></div>
                 </td>
             </tr>
 
@@ -257,6 +261,76 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="resolveDefaultHeaders"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>resolveDefaultHeaders</b></span>
+                        <a href="#resolveDefaultHeaders"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resolveDefaultHeaders(caze: Array<DataGroup>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="46"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/group-navigation-component-resolver/group-navigation-component-resolver.service.ts:46</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>caze</td>
+                                    <td>
+                                            <code>Array&lt;DataGroup&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Array | undefined</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="resolveViewComponent"></a>
                     <span class="name">
                         <span class="modifier">Protected</span>
@@ -276,8 +350,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="16"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/group-navigation-component-resolver/group-navigation-component-resolver.service.ts:16</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="18"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/group-navigation-component-resolver/group-navigation-component-resolver.service.ts:18</a></div>
                 </td>
             </tr>
 
@@ -342,6 +416,8 @@ import {TaskResourceService} from &#x27;../../resources/engine-endpoint/task-res
 import {LoggerService} from &#x27;../../logger/services/logger.service&#x27;;
 import {DataGroup} from &#x27;../../resources/interface/data-groups&#x27;;
 import {HttpErrorResponse} from &#x27;@angular/common/http&#x27;;
+import {FILTER_DEFAULT_HEADERS_ID} from &quot;../navigation-double-drawer/abstract-navigation-double-drawer&quot;;
+import {NAE_DEFAULT_HEADERS} from &quot;../../header/models/default-headers-token&quot;;
 
 export abstract class GroupNavigationComponentResolverService {
 
@@ -359,7 +435,10 @@ export abstract class GroupNavigationComponentResolverService {
                     this.resolveViewComponent(taskData),
                     null,
                     Injector.create({
-                        providers: [{provide: NAE_NAVIGATION_ITEM_TASK_DATA, useValue: taskData}],
+                        providers: [
+                            {provide: NAE_NAVIGATION_ITEM_TASK_DATA, useValue: taskData},
+                            {provide: NAE_DEFAULT_HEADERS, useValue: this.resolveDefaultHeaders(taskData)},
+                        ],
                         parent: parentInjector
                     })
                 ));
@@ -372,6 +451,12 @@ export abstract class GroupNavigationComponentResolverService {
         });
 
         return result.asObservable();
+    }
+
+    protected resolveDefaultHeaders(caze: Array&lt;DataGroup&gt;): Array&lt;string&gt; | undefined {
+        const defaultHeadersResponse &#x3D; [].concat(...caze.map(dataGroup &#x3D;&gt; dataGroup.fields)).find(field &#x3D;&gt; field.stringId &#x3D;&#x3D;&#x3D; FILTER_DEFAULT_HEADERS_ID)?.value;  //ES2019
+        if (!defaultHeadersResponse || Object.keys(defaultHeadersResponse).length &#x3D;&#x3D;&#x3D; 0) return undefined;
+        return defaultHeadersResponse.split(&quot;,&quot;)
     }
 
     private forwardError(result: Subject&lt;any&gt;, error: Error): void {

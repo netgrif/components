@@ -20,10 +20,13 @@ export abstract class GroupNavigationComponentResolverService {
         this._taskResourceService.getData(taskId).subscribe(taskData => {
             try {
                 result.next(new ComponentPortal(
-                    this.resolveViewComponent(taskData),
+                    // TODO JOFO: resolve layout data
+                    this.resolveViewComponent([]),
                     null,
                     Injector.create({
-                        providers: [{provide: NAE_NAVIGATION_ITEM_TASK_DATA, useValue: taskData}],
+                        providers: [
+                            {provide: NAE_NAVIGATION_ITEM_TASK_DATA, useValue: taskData},
+                        ],
                         parent: parentInjector
                     })
                 ));

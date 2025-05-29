@@ -4,7 +4,7 @@ import {AuthorityGuardService} from "../authority/authority-guard.service";
 import {GroupGuardService} from "../group/group-guard.service";
 import {ConfigurationService} from "../../configuration/configuration.service";
 import {View} from "../../../commons/schema";
-import {UserService} from '../../user/services/user.service';
+import {IdentityService} from '../../identity/services/identity.service';
 
 @Injectable({
     providedIn: 'root'
@@ -13,7 +13,7 @@ export class AccessService {
 
     constructor(
         private _config: ConfigurationService,
-        private _userService: UserService,
+        private _userService: IdentityService,
         private _roleGuard: RoleGuardService,
         private _authorityGuard: AuthorityGuardService,
         private _groupGuard: GroupGuardService,
@@ -37,14 +37,14 @@ export class AccessService {
             if (view.access !== 'private') {
                 throw new Error(`Unknown access option '${view.access}'. Only 'public' or 'private' is allowed.`);
             }
-            return !this._userService.user.isEmpty();
+            return !this._userService.identity.isEmpty();
         }
 
         if (!url) {
             url = view?.routing?.path;
         }
 
-        return !this._userService.user.isEmpty() // AuthGuard
+        return !this._userService.identity.isEmpty() // AuthGuard
             && this.passesRoleGuard(view, url)
             && this.passesAuthorityGuard(view)
             && this.passesGroupGuard(view, url);

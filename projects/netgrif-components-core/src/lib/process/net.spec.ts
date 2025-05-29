@@ -11,9 +11,10 @@ describe('Net', () => {
             initials: 'string',
             defaultCaseName: 'string',
             createdDate: [2020, 1, 1, 1, 1],
-            author: {email: 'mail', fullName: 'name'},
+            authorId: 'authorId',
             immediateData: [],
-            uriNodeId: 'string'
+            uriNodeId: 'string',
+            processRolePermissions: {}
         })).toBeTruthy();
     });
 
@@ -26,9 +27,10 @@ describe('Net', () => {
             initials: 'string',
             defaultCaseName: 'string',
             createdDate: [2020, 1, 1, 1, 1],
-            author: {email: 'mail', fullName: 'name'},
+            authorId: 'authorId',
             immediateData: [],
-            uriNodeId: 'string'
+            uriNodeId: 'string',
+            processRolePermissions: {}
         });
         expect(net.stringId).toEqual('true');
         expect(net.title).toEqual('string');
@@ -37,11 +39,10 @@ describe('Net', () => {
         expect(net.initials).toEqual('string');
         expect(net.defaultCaseName).toEqual('string');
         expect(net.createdDate).toEqual([2020, 1, 1, 1, 1]);
-        expect(net.author).toEqual({email: 'mail', fullName: 'name'});
+        expect(net.authorId).toEqual('authorId');
         expect(net.immediateData).toEqual([]);
         expect(net.transitions).toEqual([]);
-        expect(net.transactions).toEqual([]);
-        expect(net.roles).toEqual([]);
+        expect(net.processRolePermissions).toEqual({});
     });
 
     afterEach(() => {

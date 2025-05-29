@@ -38,7 +38,7 @@ describe('HeaderComponent', () => {
                 TranslateLibModule,
                 HttpClientTestingModule,
                 MatIconModule,
-                RouterModule.forRoot([], { relativeLinkResolution: 'legacy' })
+                RouterModule.forRoot([])
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
@@ -54,13 +54,6 @@ describe('HeaderComponent', () => {
                 ErrorSnackBarComponent,
                 SuccessSnackBarComponent
             ]
-        }).overrideModule(BrowserDynamicTestingModule, {
-            set: {
-                entryComponents: [
-                    ErrorSnackBarComponent,
-                    SuccessSnackBarComponent
-                ]
-            }
         }).compileComponents();
     }));
 

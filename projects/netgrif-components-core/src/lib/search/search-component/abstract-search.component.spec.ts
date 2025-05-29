@@ -9,7 +9,7 @@ import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-au
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
-import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
+import {IdentityResourceService} from '../../resources/engine-endpoint/identity-resource.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
 import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
@@ -29,7 +29,7 @@ import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/all
 import {CategoryFactory} from '../category-factory/category-factory';
 import {NAE_FILTERS_FILTER} from '../../filter/models/filters-filter-injection-token';
 import {Filter} from '../../filter/models/filter';
-import {ViewIdService} from '../../user/services/view-id.service';
+import {ViewIdService} from '../../identity/services/view-id.service';
 import {DefaultSearchCategoriesModule} from '../category-factory/default-search-categories.module';
 
 describe('AbstractSearchComponent', () => {
@@ -49,7 +49,7 @@ describe('AbstractSearchComponent', () => {
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
-                {provide: UserResourceService, useClass: MockUserResourceService},
+                {provide: IdentityResourceService, useClass: MockUserResourceService},
                 {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
                 {provide: NAE_SEARCH_CATEGORIES, useExisting: NAE_DEFAULT_CASE_SEARCH_CATEGORIES},
                 CategoryFactory,

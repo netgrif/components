@@ -23,6 +23,7 @@ import {
     UserResourceService
 } from '@netgrif/components-core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {NgxMatMomentModule} from '@angular-material-components/moment-adapter';
 
 describe('DatetimeFieldComponent', () => {
     let component: DateTimeFieldComponent;
@@ -34,6 +35,7 @@ describe('DatetimeFieldComponent', () => {
                 MaterialModule,
                 AngularResizeEventModule,
                 NgxMatDatetimePickerModule,
+                NgxMatMomentModule,
                 TranslateLibModule, HttpClientTestingModule, NoopAnimationsModule
             ],
             providers: [

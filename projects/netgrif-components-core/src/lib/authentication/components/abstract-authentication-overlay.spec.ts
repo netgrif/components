@@ -14,7 +14,7 @@ import {AuthenticationMethodService} from '../services/authentication-method.ser
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {AuthenticationService} from '../services/authentication/authentication.service';
 import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
-import {UserService} from '../../user/services/user.service';
+import {IdentityService} from '../../identity/services/identity.service';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('AbstractAuthenticationOverlay', () => {
@@ -59,7 +59,7 @@ describe('AbstractAuthenticationOverlay', () => {
 })
 class TestAuthenticationOverlayComponent extends AbstractAuthenticationOverlayComponent {
     constructor(protected _session: SessionService, protected _spinnerOverlay: SpinnerOverlayService,
-                protected router: Router, protected redirectService: RedirectService, protected userService: UserService) {
+                protected router: Router, protected redirectService: RedirectService, protected userService: IdentityService) {
         super(_session, _spinnerOverlay, router, redirectService, userService);
     }
 }

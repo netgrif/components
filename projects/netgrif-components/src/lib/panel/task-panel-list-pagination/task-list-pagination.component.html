@@ -8,8 +8,8 @@
         </div>
 
         <mat-accordion [multi]="allowMultiOpen" class="full-width" >
-
-                <nc-task-panel
+            <div class="fix-padding">
+                <nc-task-panel #panel
                     [textEllipsis]="textEllipsis"
                     *ngFor="let task of tasks | slice: (pageIndex) * pageSize : (pageIndex + 1) * pageSize;
                                     let i = index;
@@ -21,15 +21,16 @@
                     [responsiveBody]="responsiveBody"
                     (taskEvent)="emitTaskEvent($event)"
                     (panelRefOutput)="addToPanelRefs(task, $event)"
-                    class="panel-expanded-spacing">
+                    [showMoreMenu]="showMoreMenu"
+                    class="panel-expanded-spacing" [ngClass]="{'single-task-fix': tasks.length === 1 && panel.isExpanded()}">
                 </nc-task-panel>
 
                 <div *ngIf="loading$ | async" fxLayout="column" fxLayoutAlign="center center">
                     <mat-spinner color="primary" diameter="52"></mat-spinner>
                 </div>
-
+            </div>
         </mat-accordion>
-        <mat-paginator [length]="length" [pageSize]="pageSize" [pageIndex]="pageIndex" color="primary"
+        <mat-paginator [length]="length" [pageSize]="pageSize" [pageIndex]="pageIndex" color="primary" [disabled]="disabled"
                        [pageSizeOptions]="pageSizeOptions" (page)="onPageChanged($event)" showFirstLastButtons>
         </mat-paginator>
     </ng-container>

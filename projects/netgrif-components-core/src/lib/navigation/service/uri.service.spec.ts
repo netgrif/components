@@ -1,6 +1,6 @@
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {TestBed} from '@angular/core/testing';
-import {expect} from '@angular/flex-layout/_private-utils/testing';
+import {expect} from '@ngbracket/ngx-layout/_private-utils/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
 import {AuthenticationModule} from '../../authentication/authentication.module';
@@ -42,7 +42,7 @@ describe('UriService', () => {
 
     it('should get root node', () => {
         const root = service.root;
-        expect(root.id).toEqual('root');
+        expect(root.stringId).toEqual('root');
         expect(service.isRoot(root)).toBeTruthy();
         expect(service.activeNode).toEqual(root);
     });
@@ -60,7 +60,7 @@ describe('UriService', () => {
     it('should get node by path', done => {
         service.getNodeByPath(MockUriResourceService.TEST1_PATH).subscribe(res => {
             expect(res.uriPath).toEqual(MockUriResourceService.TEST1_PATH);
-            expect(res.id).toEqual(MockUriResourceService.TEST1_ID);
+            expect(res.stringId).toEqual(MockUriResourceService.TEST1_ID);
             done();
         });
     });
@@ -69,7 +69,7 @@ describe('UriService', () => {
         service.getChildNodes(service.root).subscribe(res => {
             expect(res.length).toEqual(2);
             res.forEach(r => {
-                expect(r.id).toContain('test');
+                expect(r.stringId).toContain('test');
                 expect(r.parentId).toEqual('root');
             });
             done();
@@ -85,9 +85,9 @@ describe('UriService', () => {
 
     it('should get siblings of a node', done => {
         service.getNodeByPath(MockUriResourceService.TEST1_PATH).subscribe(node => {
-            expect(node.id).toEqual(MockUriResourceService.TEST1_ID);
+            expect(node.stringId).toEqual(MockUriResourceService.TEST1_ID);
             service.getSiblingsOfNode(node).subscribe(siblings => {
-                expect(siblings.find(n => n.id === MockUriResourceService.TEST2_ID)).not.toBeUndefined();
+                expect(siblings.find(n => n.stringId === MockUriResourceService.TEST2_ID)).not.toBeUndefined();
                 done();
             });
         });

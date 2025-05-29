@@ -1,14 +1,6 @@
 <nc-data-field-template *ngIf="!dataField.behavior.hidden"
                         [dataField]="dataField"
-                        [dataFieldTemplate]="i18nFieldTemplate"
                         [offset]="taskOffset">
 </nc-data-field-template>
 
-<ng-template #i18nFieldTemplate let-showLargeLayout="showLargeLayout">
-    <div [ngSwitch]="dataField.getComponentType()">
-        <nc-i18n-divider-field *ngSwitchCase="'divider'" [dividerI18nField]="dataField" [formControlRef]="formControl"
-                                [showLargeLayout]="showLargeLayout"></nc-i18n-divider-field>
-        <nc-i18n-text-field *ngSwitchDefault [textI18nField]="dataField" [formControlRef]="formControl"
-                                [showLargeLayout]="showLargeLayout"></nc-i18n-text-field>
-    </div>
-</ng-template>
+

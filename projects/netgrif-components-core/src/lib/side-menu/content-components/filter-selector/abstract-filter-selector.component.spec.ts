@@ -10,7 +10,7 @@ import {MockAuthenticationMethodService} from '../../../utility/tests/mocks/mock
 import {AuthenticationMethodService} from '../../../authentication/services/authentication-method.service';
 import {AuthenticationService} from '../../../authentication/services/authentication/authentication.service';
 import {MockAuthenticationService} from '../../../utility/tests/mocks/mock-authentication.service';
-import {UserResourceService} from '../../../resources/engine-endpoint/user-resource.service';
+import {IdentityResourceService} from '../../../resources/engine-endpoint/identity-resource.service';
 import {MockUserResourceService} from '../../../utility/tests/mocks/mock-user-resource.service';
 import {SideMenuControl} from '../../models/side-menu-control';
 import {ConfigurationService} from '../../../configuration/configuration.service';
@@ -34,7 +34,7 @@ describe('AbstractFilterSelectorComponent', () => {
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
-                {provide: UserResourceService, useClass: MockUserResourceService},
+                {provide: IdentityResourceService, useClass: MockUserResourceService},
                 {
                     provide: NAE_SIDE_MENU_CONTROL,
                     useValue: new SideMenuControl(() => {}, new Observable<boolean>(), null)

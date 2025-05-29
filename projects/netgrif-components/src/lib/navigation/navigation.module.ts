@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {NavigationDrawerComponent} from './navigation-drawer/navigation-drawer.component';
-import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
+import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
 import {RouterModule} from '@angular/router';
 import 'hammerjs';
 import {
@@ -43,6 +43,9 @@ import {CaseViewComponentModule} from '../view/case-view/case-view.module';
 import { NavigationDoubleDrawerComponent } from './navigation-double-drawer/navigation-double-drawer.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
+import { DefaultTaskViewComponent } from './group-navigation-component-resolver/default-components/default-task-view/default-task-view.component';
+import { DefaultCaseRefListViewComponent } from './group-navigation-component-resolver/default-components/default-case-ref-list-view/default-case-ref-list-view.component';
+import { DefaultNoFilterProvidedComponent } from './group-navigation-component-resolver/default-components/default-no-filter-provided/default-no-filter-provided.component';
 
 
 @NgModule({
@@ -56,7 +59,11 @@ import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
         DefaultTabbedCaseViewComponent,
         DefaultTabViewComponent,
         NavigationDoubleDrawerComponent,
-        BreadcrumbsComponent
+        BreadcrumbsComponent,
+        DefaultTaskViewComponent,
+        DefaultCaseRefListViewComponent,
+        BreadcrumbsComponent,
+        DefaultNoFilterProvidedComponent
     ],
 	imports: [
 		CommonModule,

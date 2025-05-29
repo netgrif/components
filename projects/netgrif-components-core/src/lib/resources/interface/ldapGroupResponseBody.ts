@@ -1,4 +1,4 @@
-import {ProcessRole} from './process-role';
+import {ProcessRole} from './roles/process-role';
 
 export interface LdapGroupResponseBody {
     ldapGroupResponseBodies: Array<LdapGroup>;

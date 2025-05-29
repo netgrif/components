@@ -34,4 +34,9 @@ export enum UserFilterConstants {
      * ID of the field containing the filter case ID of the parent filter (if the filter has a filter parent)
      */
     PARENT_FILTER_CASE_ID_FIELD_ID = 'parent_filter_id',
+
+    /**
+     * ID of allowed net field in filter and filter_preference_item processes
+     * */
+    ALLOWED_NETS_FIELD_ID = 'allowed_nets'
 }

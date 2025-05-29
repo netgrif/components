@@ -7,7 +7,6 @@ import {
     createMockTask,
     ConfigurationService,
     TestConfigurationService,
-    DatafieldGridLayoutElement,
     TaskElementType
 } from '@netgrif/components-core';
 import {Component} from '@angular/core';
@@ -44,8 +43,7 @@ describe('FieldComponentResolverComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-field-component-resolver [gridElement]="gridElement"></nc-field-component-resolver>'
+    template: '<nc-field-component-resolver></nc-field-component-resolver>'
 })
 class TestComponent {
-    gridElement: DatafieldGridLayoutElement = {gridAreaId: 'id', type: TaskElementType.BLANK};
 }

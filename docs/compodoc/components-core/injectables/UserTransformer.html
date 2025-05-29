@@ -275,7 +275,8 @@ export class UserTransformer implements Transformer&lt;UserResource, User&gt; {
             this.transformAuthorities(user.authorities),
             user.processRoles,
             groups,
-            user.nextGroups);
+            user.nextGroups,
+            user.impersonated ? this.transform(user.impersonated) : undefined);
 
     }
 

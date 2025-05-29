@@ -1,0 +1,21 @@
+.fill-available-space {
+    width: 100%;
+    height: 100%;
+}
+
+:host ::ng-deep .dashboard-workflow-view,
+:host ::ng-deep .dashboard-task-list,
+:host ::ng-deep .dashboard-case-list {
+    min-height: 320px !important;
+}
+
+:host ::ng-deep .dashboard-iframe-card {
+    min-height: 304px !important;
+}
+
+:host ::ng-deep .dashboard-bar-chart,
+:host ::ng-deep .dashboard-pie-chart,
+:host ::ng-deep .dashboard-line-chart {
+    height: 320px !important;
+    width: 200px !important;
+}

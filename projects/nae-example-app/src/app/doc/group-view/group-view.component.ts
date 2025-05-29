@@ -47,7 +47,8 @@ const baseFilterFactory = (nextGroupService: NextGroupService) => {
         {provide: NAE_VIEW_ID_SEGMENT, useValue: 'group'},
         ViewIdService,
         {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultTaskSearchCategoriesFactory, deps: [CategoryFactory]},
-    ]
+    ],
+    standalone: false
 })
 export class GroupViewComponent extends AbstractTaskViewComponent implements AfterViewInit {
 

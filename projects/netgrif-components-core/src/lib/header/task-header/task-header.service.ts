@@ -3,11 +3,11 @@ import {AbstractHeaderService} from '../abstract-header-service';
 import {HeaderType} from '../models/header-type';
 import {HeaderColumn, HeaderColumnType} from '../models/header-column';
 import {TaskMetaField} from './task-meta-enum';
-import {UserPreferenceService} from '../../user/services/user-preference.service';
+import {UserPreferenceService} from '../../identity/services/user-preference.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {Subscription} from 'rxjs';
 import {NAE_DEFAULT_HEADERS} from '../models/default-headers-token';
-import {ViewIdService} from '../../user/services/view-id.service';
+import {ViewIdService} from '../../identity/services/view-id.service';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 import {OverflowService} from '../services/overflow.service';
 

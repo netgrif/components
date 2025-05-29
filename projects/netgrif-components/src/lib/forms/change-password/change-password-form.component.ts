@@ -2,7 +2,7 @@ import {Component, Inject, OnDestroy, Optional} from "@angular/core";
 import {
     AbstractChangePasswordComponent,
     ProfileService,
-    UserService,
+    IdentityService,
     LoggerService,
     SnackBarService,
     NAE_MIN_PASSWORD_LENGTH
@@ -14,7 +14,8 @@ import {Subscription} from "rxjs";
 @Component({
     selector: 'nc-change-password-form',
     templateUrl: './change-password-form.component.html',
-    styleUrls: ['./change-password-form.component.scss']
+    styleUrls: ['./change-password-form.component.scss'],
+    standalone: false
 })
 export class ChangePasswordFormComponent extends AbstractChangePasswordComponent implements OnDestroy {
 
@@ -22,7 +23,7 @@ export class ChangePasswordFormComponent extends AbstractChangePasswordComponent
 
     constructor(formBuilder: FormBuilder,
                 profileService: ProfileService,
-                user: UserService,
+                user: IdentityService,
                 log: LoggerService,
                 translate: TranslateService,
                 @Optional() @Inject(NAE_MIN_PASSWORD_LENGTH) minPasswordLength,

@@ -86,7 +86,8 @@ export function searchCategoryConverter(categoryResolverService: CategoryResolve
                 [new Optional(), new SkipSelf(), NAE_SEARCH_CATEGORIES]
             ]
         }
-    ]
+    ],
+    standalone: false
 })
 export class SearchComponent extends AbstractSearchComponent {
 

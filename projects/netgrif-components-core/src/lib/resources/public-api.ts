@@ -3,7 +3,7 @@ export * from './resource-provider.service';
 export * from './engine-endpoint/case-resource.service';
 export * from './engine-endpoint/task-resource.service';
 export * from './engine-endpoint/petri-net-resource.service';
-export * from './engine-endpoint/user-resource.service';
+export * from './engine-endpoint/identity-resource.service';
 export * from './engine-endpoint/dashboard-resource.service';
 export * from './engine-endpoint/ldap-group-resource.service';
 
@@ -26,12 +26,10 @@ export * from './interface/fields';
 export * from './interface/authority';
 export * from './interface/link';
 export * from './interface/pagination';
-export * from './interface/user-process-role';
-export * from './interface/process-role';
 export * from './interface/changed-field-container';
 export * from './interface/file-resource';
 export * from './interface/task-reference';
-export * from './interface/task-set-data-request-body';
+export * from './interface/task-data-sets';
 export * from './interface/case-get-request-body';
 export * from './interface/field-alignment';
 export * from './interface/event-outcome';
@@ -39,12 +37,20 @@ export * from './interface/group';
 export * from './interface/petri-net-request-body';
 export * from './interface/page';
 export * from './interface/preferences';
-export * from './interface/user-resource-small';
-export * from './interface/user-resource';
+export * from './interface/identity-resource';
 export * from './interface/create-case-request-body';
 export * from './interface/ldapGroupResponseBody';
 export * from './interface/task-pair';
+export * from './interface/layout-container';
+export * from './interface/layout-item';
+export * from './interface/layout-object-properties';
+export * from './interface/roles/role';
+export * from './interface/roles/process-role';
+export * from './interface/roles/case-role';
+export * from './interface/roles/application-role';
+export * from './interface/map-wrapper';
 
+export * from './types/layout-object-type';
 export * from './types/nae-date-type';
 
 /* ABSTRACTIONS */

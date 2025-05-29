@@ -9,7 +9,7 @@ import {LoadingEmitter} from "../../utility/loading-emitter";
 import {take} from "rxjs/operators";
 import {UserChangePasswordRequest} from "../../authentication/profile/models/user-change-password-request";
 import {ProfileService} from "../../authentication/profile/services/profile.service";
-import {UserService} from "../../user/services/user.service";
+import {IdentityService} from "../../identity/services/identity.service";
 import {encodeBase64} from '../../utility/base64';
 import {NAE_DEFAULT_MIN_PASSWORD_LENGTH, NAE_MIN_PASSWORD_LENGTH} from "../min-password-length-token";
 
@@ -36,7 +36,7 @@ export abstract class AbstractChangePasswordComponent implements HasForm, OnDest
 
     protected constructor(protected formBuilder: FormBuilder,
                           protected profileService: ProfileService,
-                          protected user: UserService,
+                          protected user: IdentityService,
                           protected _log: LoggerService,
                           protected _translate: TranslateService,
                           @Optional() @Inject(NAE_MIN_PASSWORD_LENGTH) protected minPasswordLength: number | undefined) {
@@ -61,7 +61,7 @@ export abstract class AbstractChangePasswordComponent implements HasForm, OnDest
 
     protected createRequestBody(): UserChangePasswordRequest {
         return {
-            login: this.user.user.email,
+            login: this.user.identity.username,
             password: encodeBase64(this.rootFormGroup.controls[OLD_PASSWORD].value),
             newPassword: encodeBase64(this.rootFormGroup.controls[PASSWORD].value)
         };

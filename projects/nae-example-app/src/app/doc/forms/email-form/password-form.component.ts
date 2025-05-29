@@ -18,14 +18,15 @@ interface EndpointOption {
 @Component({
     selector: 'nae-app-password-card',
     templateUrl: './password-form.component.html',
-    styleUrls: ['./password-form.component.scss']
+    styleUrls: ['./password-form.component.scss'],
+    standalone: false
 })
-export class PasswordFormComponent implements OnInit, OnDestroy {
+export class PasswordFormComponent implements OnDestroy {
 
     readonly TITLE = 'Email submission form';
     readonly DESCRIPTION = 'Ukážka email submission form...';
 
-    public endpointFormControl: FormControl;
+    public endpointFormControl: FormControl<string>;
 
     public loading: LoadingEmitter;
 
@@ -35,11 +36,8 @@ export class PasswordFormComponent implements OnInit, OnDestroy {
     ];
 
     constructor(protected _signUpService: SignUpService, protected _snackBarService: SnackBarService, protected _log: LoggerService) {
-        this.endpointFormControl = new FormControl(this.endpointOptions[0].value);
+        this.endpointFormControl = new FormControl<string>(this.endpointOptions[0].value);
         this.loading = new LoadingEmitter();
-    }
-
-    ngOnInit(): void {
     }
 
     ngOnDestroy(): void {
@@ -50,7 +48,7 @@ export class PasswordFormComponent implements OnInit, OnDestroy {
         event.loading.on();
         let endpoint: Observable<MessageResource>;
         if (this.endpointFormControl.value === 'signup') {
-            endpoint = this._signUpService.invite({email: event.email, groups: [], processRoles: []});
+            endpoint = this._signUpService.invite({username: event.email, groups: [], roles: []});
         } else {
             endpoint = this._signUpService.resetPassword(event.email);
         }

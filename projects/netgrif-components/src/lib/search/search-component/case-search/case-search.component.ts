@@ -14,7 +14,8 @@ import {CategoryFactory, defaultCaseSearchCategoriesFactory, NAE_SEARCH_CATEGORI
     providers: [
         CategoryFactory,
         {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]}
-    ]
+    ],
+    standalone: false
 })
 export class CaseSearchComponent {
 }

@@ -8,20 +8,21 @@ import {
     LanguageService,
     LoggerService,
     TaskResourceService,
-    UserService
+    IdentityService
 } from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-navigation-tree',
     templateUrl: './navigation-tree.component.html',
-    styleUrls: ['./navigation-tree.component.scss']
+    styleUrls: ['./navigation-tree.component.scss'],
+    standalone: false
 })
 export class NavigationTreeComponent extends AbstractNavigationTreeComponent {
 
     constructor(config: ConfigurationService,
                 router: Router,
                 log: LoggerService,
-                userService: UserService,
+                userService: IdentityService,
                 accessService: AccessService,
                 activeGroupService: ActiveGroupService,
                 taskResourceService: TaskResourceService,

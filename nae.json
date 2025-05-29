@@ -38,7 +38,17 @@
                 "format": "json"
             },
             {
-                "name": "user",
+                "name": "identity",
+                "address": "http://localhost:8080/api/",
+                "format": "json"
+            },
+            {
+                "name": "actor",
+                "address": "http://localhost:8080/api/",
+                "format": "json"
+            },
+            {
+                "name": "rbac",
                 "address": "http://localhost:8080/api/",
                 "format": "json"
             },
@@ -49,11 +59,6 @@
             },
             {
                 "name": "filter",
-                "address": "http://localhost:8080/api/",
-                "format": "json"
-            },
-            {
-                "name": "impersonation",
                 "address": "http://localhost:8080/api/",
                 "format": "json"
             }
@@ -106,28 +111,6 @@
                 "path": "user-invite"
             }
         },
-        "demo-roles": {
-            "component": {
-                "class": "RolesAssignComponent",
-                "from": "./doc/roles-assign/roles-assign.component"
-            },
-            "access": "private",
-            "navigation": true,
-            "routing": {
-                "path": "roles"
-            }
-        },
-        "demo-ldap-group-roles": {
-            "component": {
-                "class": "LdapGroupRolesAssignComponent",
-                "from": "./doc/ldap-group-roles-assign/ldap-group-roles-assign.component"
-            },
-            "access": "private",
-            "navigation": true,
-            "routing": {
-                "path": "ldap"
-            }
-        },
         "demo-login": {
             "component": {
                 "class": "LoginFormComponent",
@@ -148,6 +131,17 @@
             "navigation": true,
             "routing": {
                 "path": "signup-or-reset"
+            }
+        },
+        "test-drag-drop": {
+            "component": {
+                "class": "TestDragDropComponent",
+                "from": "./doc/test-drag-drop/test-drag-drop.component"
+            },
+            "access": "public",
+            "navigation": true,
+            "routing": {
+                "path": "test-drag-drop"
             }
         },
         "demo-registration": {
@@ -183,17 +177,6 @@
             },
             "routing": {
                 "path": "changePassword"
-            }
-        },
-        "demo-impersonation": {
-            "component": {
-                "class": "ImpersonationDemoComponent",
-                "from": "./doc/impersonation-demo/impersonation-demo.component"
-            },
-            "access": "private",
-            "navigation": true,
-            "routing": {
-                "path": "impersonation-view"
             }
         },
         "demo-drawer": {
@@ -240,7 +223,7 @@
                     "routing": {
                         "path": "task-view"
                     },
-                    "processUri": "examples"
+                    "processUri": "/"
                 },
                 "hidden-workflow-view": {
                     "component": {
@@ -498,6 +481,17 @@
             "navigation": true,
             "routing": {
                 "path": "titleConfig"
+            }
+        },
+        "demo-dashboard-case-view": {
+            "component": {
+                "class": "DashboardCaseExampleComponent",
+                "from": "./doc/dashboard-case-example/dashboard-case-example.component"
+            },
+            "access": "private",
+            "navigation": true,
+            "routing": {
+                "path": "dashboard-cases"
             }
         },
         "demo-dashboard-view": {
@@ -1258,8 +1252,9 @@
         }
     },
     "i18n": [
-        "sk-SK",
-        "en-US"
+        "sk",
+        "en",
+        "de"
     ],
     "services": {
         "log": {

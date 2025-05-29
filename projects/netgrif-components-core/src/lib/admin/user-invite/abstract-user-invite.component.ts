@@ -1,6 +1,5 @@
 import {FormControl, Validators} from '@angular/forms';
 import {TranslateService} from '@ngx-translate/core';
-import {ExtendedProcessRole, ProcessList} from '../role-assignment/services/ProcessList';
 import {GroupInterface} from '../../resources/interface/group';
 import {LoadingEmitter} from '../../utility/loading-emitter';
 import {UserInviteService} from './services/user-invite.service';
@@ -17,10 +16,10 @@ import {take} from 'rxjs/operators';
 })
 export abstract class AbstractUserInviteComponent implements OnInit {
 
-    public invitedEmailControl: FormControl;
+    public invitedEmailControl: FormControl<string>;
     public invitedGroups: Array<GroupInterface>;
-    public invitedRoles: Array<ExtendedProcessRole>;
-    public nets: ProcessList;
+    // public invitedRoles: Array<ExtendedProcessRole>;
+    // public nets: ProcessList;
     public loading: LoadingEmitter;
 
     constructor(protected _userInviteService: UserInviteService,
@@ -28,11 +27,11 @@ export abstract class AbstractUserInviteComponent implements OnInit {
                 protected _signUpService: SignUpService,
                 protected _snackBar: SnackBarService,
                 protected _translate: TranslateService) {
-        this.nets = this._userInviteService.processList;
+        // this.nets = this._userInviteService.processList;
         this.loading = new LoadingEmitter();
         this.invitedEmailControl = new FormControl('', [Validators.email, Validators.required]);
         this.invitedGroups = [];
-        this.invitedRoles = [];
+        // this.invitedRoles = [];
     }
 
     public get groups() {
@@ -40,7 +39,7 @@ export abstract class AbstractUserInviteComponent implements OnInit {
     }
 
     ngOnInit(): void {
-            this.nets.loadProcesses();
+            // this.nets.loadProcesses();
             this._orgList.loadGroups();
     }
 
@@ -58,19 +57,20 @@ export abstract class AbstractUserInviteComponent implements OnInit {
         }
     }
 
-    public removeRole(role: ExtendedProcessRole): void {
-            const itemIndex = this.invitedRoles.findIndex(r => r.stringId === role.stringId);
-            if (itemIndex !== -1) {
-            this.invitedRoles.splice(itemIndex, 1);
-        }
-    }
-
-    public addRole(role: ExtendedProcessRole): void {
-            const itemIndex = this.invitedRoles.findIndex(r => r.stringId === role.stringId);
-            if (itemIndex === -1) {
-            this.invitedRoles.push(role);
-        }
-    }
+    // todo 2058
+    // public removeRole(role: ExtendedProcessRole): void {
+    //         const itemIndex = this.invitedRoles.findIndex(r => r.stringId === role.stringId);
+    //         if (itemIndex !== -1) {
+    //         this.invitedRoles.splice(itemIndex, 1);
+    //     }
+    // }
+    //
+    // public addRole(role: ExtendedProcessRole): void {
+    //         const itemIndex = this.invitedRoles.findIndex(r => r.stringId === role.stringId);
+    //         if (itemIndex === -1) {
+    //         this.invitedRoles.push(role);
+    //     }
+    // }
 
     public invite(): void {
         if (!this.invitedEmailControl.valid) {
@@ -83,9 +83,11 @@ export abstract class AbstractUserInviteComponent implements OnInit {
         }
 
         const invitation: UserInvitationRequest = {
-            email: this.invitedEmailControl.value,
+            username: this.invitedEmailControl.value,
             groups: this.invitedGroups.map(org => org.id),
-            processRoles: this.invitedRoles.map(role => role.stringId)
+            roles: []
+            // todo 2058
+            // processRoles: this.invitedRoles.map(role => role.stringId)
         };
 
         this.loading.on();
@@ -94,7 +96,7 @@ export abstract class AbstractUserInviteComponent implements OnInit {
                 this._snackBar.openSuccessSnackBar(this._translate.instant('admin.user-invite.inviteSent'));
                 this.invitedEmailControl.setValue('');
                 this.invitedGroups = [];
-                this.invitedRoles = [];
+                // this.invitedRoles = [];
             } else {
                 this._snackBar.openErrorSnackBar(this._translate.instant('admin.user-invite.inviteFailed'));
             }

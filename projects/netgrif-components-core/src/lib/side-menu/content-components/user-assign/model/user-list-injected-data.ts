@@ -1,5 +1,5 @@
 import {SideMenuInjectionData} from '../../../models/side-menu-injection-data';
-import {ProcessRole} from '../../../../resources/interface/process-role';
+import {ProcessRole} from '../../../../resources/interface/roles/process-role';
 import {UserValue} from '../../../../data-fields/user-field/models/user-value';
 import { UserListValue } from '../../../../data-fields/user-list-field/models/user-list-value';
 

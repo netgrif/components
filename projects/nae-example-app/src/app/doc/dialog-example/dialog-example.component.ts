@@ -4,7 +4,8 @@ import {DialogService} from '@netgrif/components-core';
 @Component({
     selector: 'nae-app-dialog-example',
     templateUrl: './dialog-example.component.html',
-    styleUrls: ['./dialog-example.component.scss']
+    styleUrls: ['./dialog-example.component.scss'],
+    standalone: false
 })
 export class DialogExampleComponent implements OnInit {
     readonly TITLE = 'Dialog';

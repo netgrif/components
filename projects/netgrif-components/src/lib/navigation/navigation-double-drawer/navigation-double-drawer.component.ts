@@ -6,11 +6,14 @@ import {
     LanguageService,
     UriService,
     LoggerService,
-    UserService,
+    IdentityService,
     AbstractNavigationDoubleDrawerComponent,
-    DynamicNavigationRouteProviderService, AccessService, ImpersonationUserSelectService, ImpersonationService
+    DynamicNavigationRouteProviderService,
+    AccessService,
+    CaseResourceService
 } from '@netgrif/components-core';
 import {animate, state, style, transition, trigger} from "@angular/animations";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'nc-navigation-double-drawer',
@@ -41,7 +44,8 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
                 animate('225ms cubic-bezier(0.4,0.0,0.2,1)')
             ])
         ])
-    ]
+    ],
+    standalone: false
 })
 export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDrawerComponent {
 
@@ -54,16 +58,16 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
                 _activatedRoute: ActivatedRoute,
                 _breakpoint: BreakpointObserver,
                 _languageService: LanguageService,
-                _userService: UserService,
+                _translateService: TranslateService,
+                _userService: IdentityService,
                 _accessService: AccessService,
                 _log: LoggerService,
                 _config: ConfigurationService,
                 _uriService: UriService,
-                _impersonationUserSelect: ImpersonationUserSelectService,
-                _impersonation: ImpersonationService,
+                _caseResourceService: CaseResourceService,
                 _dynamicRouteProviderService: DynamicNavigationRouteProviderService) {
-        super(_router, _activatedRoute, _breakpoint, _languageService, _userService, _accessService, _log, _config, _uriService,
-            _impersonationUserSelect, _impersonation, _dynamicRouteProviderService)
+        super(_router, _activatedRoute, _breakpoint, _languageService, _translateService, _userService, _accessService,
+            _log, _config, _uriService, _caseResourceService, _dynamicRouteProviderService)
     }
 
     public toggleSection(section: string): void {

@@ -1,10 +1,14 @@
 import {Component, Inject, Optional} from '@angular/core';
 import {AbstractMultichoiceFieldComponent, NAE_INFORM_ABOUT_INVALID_DATA} from '@netgrif/components-core';
 
+/**
+ * @deprecated
+ * */
 @Component({
     selector: 'nc-multichoice-field',
     templateUrl: './multichoice-field.component.html',
-    styleUrls: ['./multichoice-field.component.scss']
+    styleUrls: ['./multichoice-field.component.scss'],
+    standalone: false
 })
 export class MultichoiceFieldComponent extends AbstractMultichoiceFieldComponent {
 

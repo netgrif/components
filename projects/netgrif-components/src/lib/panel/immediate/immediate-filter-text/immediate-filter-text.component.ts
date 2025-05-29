@@ -6,7 +6,8 @@ import {ImmediateFilterTextContentComponent} from '../immediate-filter-text-cont
 @Component({
     selector: 'nc-immediate-filter-text',
     templateUrl: './immediate-filter-text.component.html',
-    styleUrls: ['./immediate-filter-text.component.scss']
+    styleUrls: ['./immediate-filter-text.component.scss'],
+    standalone: false
 })
 export class ImmediateFilterTextComponent extends AbstractImmediateFilterTextComponent {
 

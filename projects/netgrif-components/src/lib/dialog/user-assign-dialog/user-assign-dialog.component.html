@@ -1,0 +1,31 @@
+<div class="mat-dialog-title" fxLayout="column" fxLayoutAlign="center none">
+    {{ 'side-menu.user.assign' | translate  }}
+</div>
+<div mat-dialog-content fxLayoutAlign="start stretch" class="height-fix">
+    <div class="user-assign-container side-menu-root" fxFlex fxLayout="column">
+        <div fxLayout="row" fxLayoutAlign="start center" class="netgrif-input netgrif-input-fix">
+            <mat-form-field fxFlex="100" class="user-assign-search" color="primary" appearance="outline">
+                <mat-icon matPrefix class="prefix-icon">search</mat-icon>
+                <input matInput placeholder="{{ 'side-menu.user.choose' | translate }}"
+                       [formControl]="searchUserControl">
+                <button mat-stroked-button *ngIf="searchUserControl.value" matSuffix mat-icon-button
+                        (click)="searchUserControl.setValue('')">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
+
+        <nc-user-assign-list fxFlex class="height-100"
+                             [searchUserControl]="searchUserControl"
+                             [roles]="roles"
+                             [negativeRoles]="negativeRoles"
+                             [initiallySelectedUser]="initiallySelectedUser"
+                             (userSelected)="userWasSelected($event)">
+        </nc-user-assign-list>
+
+        <div fxLayout="row" fxLayoutAlign="end center">
+            <button mat-raised-button color="primary"
+                    (click)="assign()">{{ 'tasks.view.assign' | translate | uppercase }}</button>
+        </div>
+    </div>
+</div>

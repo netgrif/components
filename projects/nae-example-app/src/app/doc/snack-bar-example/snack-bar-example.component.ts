@@ -4,7 +4,8 @@ import {SnackBarService} from '@netgrif/components-core';
 @Component({
     selector: 'nae-app-snack-bar-example',
     templateUrl: './snack-bar-example.component.html',
-    styleUrls: ['./snack-bar-example.component.scss']
+    styleUrls: ['./snack-bar-example.component.scss'],
+    standalone: false
 })
 export class SnackBarExampleComponent implements OnInit {
     readonly TITLE = 'Snack bar';

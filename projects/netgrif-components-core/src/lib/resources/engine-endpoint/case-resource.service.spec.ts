@@ -7,6 +7,7 @@ import {SimpleFilter} from '../../filter/models/simple-filter';
 import {FilterType} from '../../filter/models/filter-type';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {CreateCaseEventOutcome} from '../../event/model/event-outcomes/case-outcomes/create-case-event-outcome';
+import {HttpParams} from "@angular/common/http";
 
 describe('CaseResourceService', () => {
     let service: CaseResourceService;
@@ -90,7 +91,7 @@ describe('CaseResourceService', () => {
     it('should getCaseFile', (done) => {
         inject([HttpTestingController],
                 (httpMock: HttpTestingController) => {
-                    service.getCaseFile('id', 'id').subscribe(res => {
+                    service.getCaseFile('id', new HttpParams()).subscribe(res => {
                         expect(res.description).toEqual('string');
                         expect(res.filename).toEqual('name');
                         expect(res.open).toBeFalse();
@@ -98,7 +99,7 @@ describe('CaseResourceService', () => {
                         done();
                     });
 
-                    const reqLog = httpMock.expectOne('http://localhost:8080/api/workflow/case/id/file/id');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/workflow/case/id/file');
                     expect(reqLog.request.method).toEqual('GET');
 
                     reqLog.flush({description: 'string', filename: 'name', open: false, readable: false});
@@ -113,7 +114,7 @@ describe('CaseResourceService', () => {
                         title: '',
                         netId: ''
                     }).subscribe(res => {
-                        expect((res.outcome as CreateCaseEventOutcome).aCase.stringId).toEqual('string');
+                        expect((res.outcome as CreateCaseEventOutcome).case.stringId).toEqual('string');
                         done();
                     });
 
@@ -122,7 +123,7 @@ describe('CaseResourceService', () => {
 
                     reqLog.flush({
                         outcome: {
-                            aCase: {
+                            case: {
                                 stringId: 'string'
                             }
                         }

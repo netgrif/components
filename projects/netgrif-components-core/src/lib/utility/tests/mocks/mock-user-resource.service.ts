@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {Preferences} from '../../../resources/interface/preferences';
 import {MessageResource} from '../../../resources/interface/message-resource';
-import {UserResource} from '../../../resources/interface/user-resource';
+import {IdentityResource} from '../../../resources/interface/identity-resource';
 
 @Injectable()
 export class MockUserResourceService {
@@ -20,9 +20,8 @@ export class MockUserResourceService {
         return of({success: ''});
     }
 
-    public getLoggedUser(): Observable<UserResource> {
-        return of({email: 'mail', id: 'id', name: 'name', surname: 'surname', fullName: 'name surname',
-            groups: [], authorities: [], nextGroups: [], processRoles: []});
+    public getLoggedUser(): Observable<IdentityResource> {
+        return of({username: 'mail', id: 'id', firstname: 'name', lastname: 'surname', fullName: 'name surname', activeActorId: 'actorId'});
     }
 
     // methods not yet mocked by this mock

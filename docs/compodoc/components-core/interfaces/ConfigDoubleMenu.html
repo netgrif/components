@@ -254,27 +254,30 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, Input, OnDestroy, OnInit, TemplateRef} from &#x27;@angular/core&#x27;;
-import {forkJoin, Observable, Subscription} from &#x27;rxjs&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {BreakpointObserver, Breakpoints} from &#x27;@angular/cdk/layout&#x27;;
+import {Component, Input, OnDestroy, OnInit, TemplateRef} from &#x27;@angular/core&#x27;;
+import {MatDrawerMode} from &#x27;@angular/material/sidenav&#x27;;
 import {ActivatedRoute, Router} from &#x27;@angular/router&#x27;;
-import {BreakpointObserver, Breakpoints} from &#x27;@angular/cdk/layout&#x27;;
-import {LanguageService} from &#x27;../../translate/language.service&#x27;;
-import {UserService} from &#x27;../../user/services/user.service&#x27;;
-import {LoggerService} from &#x27;../../logger/services/logger.service&#x27;;
+import {ResizeEvent} from &#x27;angular-resizable-element&#x27;;
+import {forkJoin, Observable, of, Subscription} from &#x27;rxjs&#x27;;
+import {map} from &#x27;rxjs/operators&#x27;;
+import {RoleAccess, View} from &#x27;../../../commons/schema&#x27;;
+import {AccessService} from &#x27;../../authorization/permission/access.service&#x27;;
 import {ConfigurationService} from &#x27;../../configuration/configuration.service&#x27;;
-import {UriService} from &#x27;../service/uri.service&#x27;;
-import {UriNodeResource} from &#x27;../model/uri-resource&#x27;;
+import {ImpersonationUserSelectService} from &#x27;../../impersonation/services/impersonation-user-select.service&#x27;;
+import {ImpersonationService} from &#x27;../../impersonation/services/impersonation.service&#x27;;
+import {LoggerService} from &#x27;../../logger/services/logger.service&#x27;;
 import {Case} from &#x27;../../resources/interface/case&#x27;;
 import {
-    DynamicNavigationRouteProviderService
+    DynamicNavigationRouteProviderService,
 } from &#x27;../../routing/dynamic-navigation-route-provider/dynamic-navigation-route-provider.service&#x27;;
-import {LoadingEmitter} from &quot;../../utility/loading-emitter&quot;;
-import {MatDrawerMode} from &quot;@angular/material/sidenav&quot;;
-import {ResizeEvent} from &quot;angular-resizable-element&quot;;
-import {User} from &quot;../../user/models/user&quot;;
-import {RoleAccess, View} from &quot;../../../commons/schema&quot;;
-import {NAE_ROUTING_CONFIGURATION_PATH} from &quot;../../routing/routing-builder/routing-builder.service&quot;;
-import {AccessService} from &quot;../../authorization/permission/access.service&quot;;
+import {NAE_ROUTING_CONFIGURATION_PATH} from &#x27;../../routing/routing-builder/routing-builder.service&#x27;;
+import {LanguageService} from &#x27;../../translate/language.service&#x27;;
+import {User} from &#x27;../../user/models/user&#x27;;
+import {UserService} from &#x27;../../user/services/user.service&#x27;;
+import {LoadingEmitter} from &#x27;../../utility/loading-emitter&#x27;;
+import {UriNodeResource} from &#x27;../model/uri-resource&#x27;;
+import {UriService} from &#x27;../service/uri.service&#x27;;
 
 export interface ConfigDoubleMenu {
     mode: MatDrawerMode;
@@ -285,13 +288,15 @@ export interface ConfigDoubleMenu {
 
 export interface ViewNavigationItem extends View {
     id: string;
-    resource?: Case
+    resource?: Case;
 }
 
 export const FILTER_IDENTIFIERS &#x3D; [
-    &quot;preference_filter_item&quot;
+    &#x27;preference_filter_item&#x27;,
 ];
 export const FILTER_VIEW_TASK_TRANSITION_ID &#x3D; &#x27;view&#x27;;
+
+export const FILTER_DEFAULT_HEADERS_ID &#x3D; &#x27;default_headers&#x27;;
 
 const LEFT_DRAWER_DEFAULT_WIDTH &#x3D; 60;
 const RIGHT_DRAWER_DEFAULT_WIDTH &#x3D; 240;
@@ -306,17 +311,18 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
 
     @Input() portalLeftMenu: TemplateRef&lt;any&gt;;
     @Input() portalRightMenu: TemplateRef&lt;any&gt;;
-    @Input() imageRouterLink: string &#x3D; &quot;/&quot;;
-    @Input() imageAlt: string &#x3D; &quot;Logo&quot;;
+    @Input() imageRouterLink: string &#x3D; &#x27;/&#x27;;
+    @Input() imageAlt: string &#x3D; &#x27;Logo&#x27;;
     @Input() image: string;
-    @Input() profileRouterLink: string &#x3D; &quot;/profile&quot;;
+    @Input() profileRouterLink: string &#x3D; &#x27;/profile&#x27;;
     @Input() includeUser: boolean &#x3D; true;
     @Input() includeLanguage: boolean &#x3D; true;
     @Input() includeMoreMenu: boolean &#x3D; true;
+    @Input() includeImpersonation: boolean &#x3D; true;
     @Input() allClosable: boolean &#x3D; true;
-    @Input() folderIcon: string &#x3D; &quot;folder&quot;;
-    @Input() openedFolderIcon: string &#x3D; &quot;folder_open&quot;;
-    @Input() filterIcon: string &#x3D; &quot;filter_alt&quot;;
+    @Input() folderIcon: string &#x3D; &#x27;folder&#x27;;
+    @Input() openedFolderIcon: string &#x3D; &#x27;folder_open&#x27;;
+    @Input() filterIcon: string &#x3D; &#x27;filter_alt&#x27;;
     @Input() foldersCategoryName: string &#x3D; &#x27;toolbar.menu.folders&#x27;;
     @Input() viewsCategoryName: string &#x3D; &#x27;toolbar.menu.views&#x27;;
 
@@ -348,25 +354,26 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
      * Currently display uri
      * Siblings of the node are on the left, children are on the right
      */
-    currentNode: UriNodeResource
+    private _currentNode: UriNodeResource;
 
     leftLoading$: LoadingEmitter;
     rightLoading$: LoadingEmitter;
+    nodeLoading$: LoadingEmitter;
 
     protected _configLeftMenu: ConfigDoubleMenu &#x3D; {
         mode: &#x27;side&#x27;,
         opened: true,
         disableClose: false,
-        width: LEFT_DRAWER_DEFAULT_WIDTH
+        width: LEFT_DRAWER_DEFAULT_WIDTH,
     };
     protected _configRightMenu: ConfigDoubleMenu &#x3D; {
         mode: &#x27;side&#x27;,
         opened: true,
         disableClose: false,
-        width: RIGHT_DRAWER_DEFAULT_WIDTH
+        width: RIGHT_DRAWER_DEFAULT_WIDTH,
     };
 
-    protected _childCustomViews: { [uri: string]: { [key: string]: ViewNavigationItem } }
+    protected _childCustomViews: { [uri: string]: { [key: string]: ViewNavigationItem } };
 
     protected constructor(protected _router: Router,
                           protected _activatedRoute: ActivatedRoute,
@@ -377,12 +384,15 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                           protected _log: LoggerService,
                           protected _config: ConfigurationService,
                           protected _uriService: UriService,
+                          protected _impersonationUserSelect: ImpersonationUserSelectService,
+                          protected _impersonation: ImpersonationService,
                           protected _dynamicRoutingService: DynamicNavigationRouteProviderService) {
         this.leftNodes &#x3D; new Array&lt;UriNodeResource&gt;();
         this.rightNodes &#x3D; new Array&lt;UriNodeResource&gt;();
         this.views &#x3D; new Array&lt;ViewNavigationItem&gt;();
         this.leftLoading$ &#x3D; new LoadingEmitter();
         this.rightLoading$ &#x3D; new LoadingEmitter();
+        this.nodeLoading$ &#x3D; new LoadingEmitter();
         this._childCustomViews &#x3D; {};
         this.moreMenuItems &#x3D; new Array&lt;ViewNavigationItem&gt;();
     }
@@ -395,26 +405,12 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                 this.resolveLayout(true);
             }
         });
-        if (!this.currentNode) {
+        if (!this._currentNode) {
             this.leftLoading$.on();
             this.rightLoading$.on();
         }
         this._currentNodeSubscription &#x3D; this._uriService.activeNode$.subscribe(node &#x3D;&gt; {
             this.currentNode &#x3D; node;
-            if (!node) return;
-            if (this.leftLoading$.isActive || this.rightLoading$.isActive) {
-                this.leftLoading$.off();
-                this.rightLoading$.off();
-            }
-            if (this._uriService.isRoot(node)) {
-                this.leftNodes &#x3D; [];
-                this.loadRightSide();
-                return;
-            }
-            if (!this.leftNodes.find(n &#x3D;&gt; n.id &#x3D;&#x3D;&#x3D; node.id)) {
-                this.loadLeftSide();
-            }
-            this.loadRightSide();
         });
 
         const viewConfigurationPath &#x3D; this._activatedRoute.snapshot.data[NAE_ROUTING_CONFIGURATION_PATH];
@@ -427,6 +423,44 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         }
     }
 
+    get currentNode(): UriNodeResource {
+        return this._currentNode;
+    }
+
+    set currentNode(node: UriNodeResource) {
+        if (node &#x3D;&#x3D;&#x3D; this._currentNode) return;
+        this._currentNode &#x3D; node;
+        if (!node) return;
+        if (node.parentId &amp;&amp; !node.parent) {
+            if (node.parentId &#x3D;&#x3D;&#x3D; this._uriService.root.id) {
+                node.parent &#x3D; this._uriService.root;
+            } else {
+                this.nodeLoading$.on();
+                this._uriService.getNodeByPath(this._uriService.resolveParentPath(node)).subscribe(n &#x3D;&gt; {
+                    node.parent &#x3D; !n ? this._uriService.root : n;
+                    this.nodeLoading$.off();
+                }, error &#x3D;&gt; {
+                    this._log.error(error);
+                    this.nodeLoading$.off();
+                });
+            }
+        }
+
+        if (this.leftLoading$.isActive || this.rightLoading$.isActive) {
+            this.leftLoading$.off();
+            this.rightLoading$.off();
+        }
+        if (this._uriService.isRoot(node)) {
+            this.leftNodes &#x3D; [];
+            this.loadRightSide();
+            return;
+        }
+        if (!this.leftNodes.find(n &#x3D;&gt; n.id &#x3D;&#x3D;&#x3D; node.id)) {
+            this.loadLeftSide();
+        }
+        this.loadRightSide();
+    }
+
     protected resolveUriForChildViews(configPath: string, childView: View): void {
         if (!childView.processUri) return;
         if (!this._accessService.canAccessView(childView, configPath)) return;
@@ -435,8 +469,8 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         }
         this._childCustomViews[childView.processUri][configPath] &#x3D; {
             id: configPath,
-            ...childView
-        }
+            ...childView,
+        };
     }
 
     protected resolveHiddenMenuItemFromChildViews(configPath: string, childView: View): void {
@@ -446,7 +480,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         if (!!(childView?.navigation?.hidden)) {
             this.moreMenuItems.push({
                 id: configPath,
-                ...childView
+                ...childView,
             });
         }
     }
@@ -460,6 +494,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         this._currentNodeSubscription?.unsubscribe();
         this.leftLoading$.complete();
         this.rightLoading$.complete();
+        this.nodeLoading$.complete();
     }
 
     get configLeftMenu() {
@@ -490,23 +525,23 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             mode: &#x27;side&#x27;,
             opened: true,
             disableClose: true,
-            width: this._configLeftMenu.width
+            width: this._configLeftMenu.width,
         } : {
             mode: &#x27;over&#x27;,
             opened: false,
             disableClose: false,
-            width: this._configLeftMenu.width
+            width: this._configLeftMenu.width,
         };
         this._configRightMenu &#x3D; isLargeScreen ? {
             mode: &#x27;side&#x27;,
             opened: true,
             disableClose: true,
-            width: this._configRightMenu.width
+            width: this._configRightMenu.width,
         } : {
             mode: &#x27;over&#x27;,
             opened: false,
             disableClose: false,
-            width: this._configRightMenu.width
+            width: this._configRightMenu.width,
         };
     }
 
@@ -525,12 +560,20 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         });
     }
 
+    impersonate(): void {
+        this._impersonationUserSelect.selectImpersonate();
+    }
+
+    stopImpersonating(): void {
+        this._impersonation.cease();
+    }
+
     get user(): User {
         return this._userService.user;
     }
 
     get canGoBackLoading$(): Observable&lt;boolean&gt; {
-        return this._uriService.parentNodeLoading$;
+        return this.nodeLoading$;
     }
 
     /**
@@ -538,7 +581,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
      * set to root node.
      * */
     onHomeClick(): void {
-        this._uriService.reset();
+        this.currentNode &#x3D; this._uriService.root;
     }
 
     /**
@@ -548,21 +591,25 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
      * Current level is set to a lower number in order to set the left side menu.
      * */
     onBackClick(): void {
-        if (this._uriService.isRoot(this.currentNode)) return;
-        this._uriService.activeNode &#x3D; this.currentNode.parent;
+        if (this._uriService.isRoot(this._currentNode)) return;
+        this.currentNode &#x3D; this._currentNode.parent;
     }
 
     onNodeClick(node: UriNodeResource): void {
-        this._uriService.activeNode &#x3D; node;
+        this.currentNode &#x3D; node;
+    }
+
+    onViewClick(view: ViewNavigationItem): void {
+        this._uriService.activeNode &#x3D; this._currentNode;
     }
 
     protected loadLeftSide() {
-        if (this._uriService.isRoot(this.currentNode)) {
+        if (this._uriService.isRoot(this._currentNode)) {
             this.leftNodes &#x3D; [];
             return;
         }
         this.leftLoading$.on();
-        this._leftNodesSubscription &#x3D; this._uriService.getSiblingsOfNode(this.currentNode).subscribe(nodes &#x3D;&gt; {
+        this._leftNodesSubscription &#x3D; this._uriService.getSiblingsOfNode(this._currentNode).subscribe(nodes &#x3D;&gt; {
             this.leftNodes &#x3D; nodes instanceof Array ? nodes : [];
             this.leftNodes.sort((a, b) &#x3D;&gt; this.compareStrings(a.name, b.name));
             this.leftLoading$.off();
@@ -574,20 +621,30 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     }
 
     protected loadRightSide() {
-        this.rightLoading$.on()
-        forkJoin({
-            folders: this._uriService.getChildNodes(this.currentNode),
-            filters: this._uriService.getCasesOfNode(this.currentNode, FILTER_IDENTIFIERS)
-        }).subscribe(result &#x3D;&gt; {
-            this.rightNodes &#x3D; result.folders instanceof Array ? result.folders : [];
-            this.rightNodes.sort((a, b) &#x3D;&gt; this.compareStrings(a.name, b.name));
-            this.views &#x3D; (result.filters instanceof Array ? result.filters : []).map(f &#x3D;&gt; this.resolveFilterCaseToViewNavigationItem(f)).filter(i &#x3D;&gt; !!i);
-            if (!!this._childCustomViews[this.currentNode.uriPath]) {
-                this.views.push(...Object.values(this._childCustomViews[this.currentNode.uriPath]))
-            }
-            // @ts-ignore
-            this.views.sort((a, b) &#x3D;&gt; this.compareStrings(a?.navigation?.title, b?.navigation?.title));
-            this.rightLoading$.off();
+        this.rightLoading$.on();
+        this._uriService.getCasesOfNode(this.currentNode, FILTER_IDENTIFIERS, 0, 1).subscribe(page &#x3D;&gt; {
+            this._log.debug(&#x27;Number of filters for uri &#x27; + this._currentNode.uriPath + &#x27;: &#x27; + page?.pagination?.totalElements);
+            forkJoin({
+                folders: this._uriService.getChildNodes(this._currentNode),
+                filters: page?.pagination?.totalElements &#x3D;&#x3D;&#x3D; 0 ? of([]) : this._uriService.getCasesOfNode(this._currentNode, FILTER_IDENTIFIERS, 0, page.pagination.totalElements).pipe(
+                    map(p &#x3D;&gt; p.content),
+                ),
+            }).subscribe(result &#x3D;&gt; {
+                this.rightNodes &#x3D; result.folders instanceof Array ? result.folders : [];
+                this.rightNodes.sort((a, b) &#x3D;&gt; this.compareStrings(a.name, b.name));
+                this.views &#x3D; (result.filters instanceof Array ? result.filters : []).map(f &#x3D;&gt; this.resolveFilterCaseToViewNavigationItem(f)).filter(i &#x3D;&gt; !!i);
+                if (!!this._childCustomViews[this._currentNode.uriPath]) {
+                    this.views.push(...Object.values(this._childCustomViews[this._currentNode.uriPath]));
+                }
+                // @ts-ignore
+                this.views.sort((a, b) &#x3D;&gt; this.compareStrings(a?.navigation?.title, b?.navigation?.title));
+                this.rightLoading$.off();
+            }, error &#x3D;&gt; {
+                this._log.error(error);
+                this.rightNodes &#x3D; [];
+                this.views &#x3D; [];
+                this.rightLoading$.off();
+            });
         }, error &#x3D;&gt; {
             this._log.error(error);
             this.rightNodes &#x3D; [];
@@ -601,18 +658,18 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             access: {},
             navigation: {
                 icon: filter.immediateData.find(f &#x3D;&gt; f.stringId &#x3D;&#x3D;&#x3D; &#x27;icon_name&#x27;)?.value || this.filterIcon,
-                title: filter.immediateData.find(f &#x3D;&gt; f.stringId &#x3D;&#x3D;&#x3D; &#x27;entry_name&#x27;)?.value?.defaultValue || filter.title
+                title: filter.immediateData.find(f &#x3D;&gt; f.stringId &#x3D;&#x3D;&#x3D; &#x27;entry_name&#x27;)?.value?.defaultValue || filter.title,
             },
             routing: {
-                path: this.getFilterRoutingPath(filter)
+                path: this.getFilterRoutingPath(filter),
             },
             id: filter.stringId,
-            resource: filter
+            resource: filter,
         };
         const resolvedRoles &#x3D; this.resolveAccessRoles(filter, &#x27;allowed_roles&#x27;);
         const resolvedBannedRoles &#x3D; this.resolveAccessRoles(filter, &#x27;banned_roles&#x27;);
-        if(!!resolvedRoles) item.access[&#x27;role&#x27;] &#x3D; resolvedRoles;
-        if(!!resolvedBannedRoles) item.access[&#x27;bannedRole&#x27;] &#x3D; resolvedBannedRoles;
+        if (!!resolvedRoles) item.access[&#x27;role&#x27;] &#x3D; resolvedRoles;
+        if (!!resolvedBannedRoles) item.access[&#x27;bannedRole&#x27;] &#x3D; resolvedBannedRoles;
         if (!this._accessService.canAccessView(item, item.routingPath)) return;
         return item;
     }
@@ -625,7 +682,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             const parts &#x3D; combined.split(&#x27;:&#x27;);
             roles.push({
                 processId: parts[1],
-                roleId: parts[0]
+                roleId: parts[0],
             });
         });
         return roles;
@@ -648,7 +705,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
      * @returns boolean if the back button should be displayed
      * */
     isOnZeroLevel(): boolean {
-        return !!this.currentNode?.level ? this.currentNode.level &#x3D;&#x3D; 0 : true;
+        return !!this._currentNode?.level ? this._currentNode.level &#x3D;&#x3D; 0 : true;
     }
 
     isLeftNodesEmpty(): boolean {

@@ -2,7 +2,7 @@ import {DataField} from '../../models/abstract-data-field';
 import {Behavior} from '../../models/behavior';
 import {Layout} from '../../models/layout';
 import {Validation} from '../../models/validation';
-import {Component} from '../../models/component';
+import {Component, ComponentPrefixes} from '../../models/component';
 import {I18nFieldTranslations, I18nFieldValue} from './i18n-field-value';
 import {Observable} from 'rxjs';
 import {FormControl, ValidatorFn} from '@angular/forms';
@@ -17,6 +17,9 @@ export const DEFAULT_LANGUAGE_CODE = 'xx';
 
 export class I18nField extends DataField<I18nFieldValue> {
 
+    public getTypedComponentType(): string {
+        return ComponentPrefixes.I18N + this.getComponentType();
+    }
     private static defaultValueNonEquality(a: I18nFieldValue, b: I18nFieldValue): boolean {
         return (!(!a.defaultValue && !b.defaultValue)
             && (
@@ -54,10 +57,12 @@ export class I18nField extends DataField<I18nFieldValue> {
 
     public static toObject(templateValue: I18nFieldValue): I18nFieldTranslations {
         const object = {};
-        object[DEFAULT_LANGUAGE_CODE] = templateValue.defaultValue;
-        for (const k in templateValue.translations) {
-            if (Object.prototype.hasOwnProperty.call(templateValue.translations, k)) {
-                object[k] = templateValue.translations[k];
+        object[DEFAULT_LANGUAGE_CODE] = templateValue?.defaultValue ?? "";
+        if (!!templateValue) {
+            for (const k in templateValue.translations) {
+                if (Object.prototype.hasOwnProperty.call(templateValue.translations, k)) {
+                    object[k] = templateValue.translations[k];
+                }
             }
         }
         return object;
@@ -178,7 +183,7 @@ export class I18nField extends DataField<I18nFieldValue> {
     }
 
     private validRequiredI18n(fc: FormControl): { [k: string]: boolean } {
-        return (fc.value.defaultValue === '' && Object.keys(fc.value.translations).length === 0)
+        return (fc.value.defaultValue === '' && !!fc.value?.translations && Object.keys(fc.value.translations).length === 0)
             ? ({requiredI18n: true}) : null;
     }
 }

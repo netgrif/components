@@ -3,7 +3,7 @@ import {AuthenticationModule} from '../../authentication/authentication.module';
 import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree} from '@angular/router';
 import {Observable} from 'rxjs';
 import {RedirectService} from '../../routing/redirect-service/redirect.service';
-import {UserService} from '../../user/services/user.service';
+import {IdentityService} from '../../identity/services/identity.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {View} from '../../../commons/schema';
@@ -17,7 +17,7 @@ export class GroupGuardService implements CanActivate {
     private readonly _loginUrl: string;
 
     constructor(protected _redirectService: RedirectService,
-                protected _userService: UserService,
+                protected _userService: IdentityService,
                 protected _nextGroupService: NextGroupService,
                 protected _configService: ConfigurationService,
                 protected _log: LoggerService) {

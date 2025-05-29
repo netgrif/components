@@ -56,13 +56,6 @@ describe('AbstractNewCaseComponent', () => {
             declarations: [
                 TestNewCaseComponent,
             ],
-        }).overrideModule(BrowserDynamicTestingModule, {
-            set: {
-                entryComponents: [
-                    ErrorSnackBarComponent,
-                    SuccessSnackBarComponent
-                ]
-            }
         }).compileComponents();
         allowedNetsTapCount = 0;
     }));

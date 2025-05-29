@@ -4,7 +4,8 @@ import {NavigationStart, Router} from '@angular/router';
 @Component({
     selector: 'nae-app-navigation-example',
     templateUrl: './navigation-example.component.html',
-    styleUrls: ['./navigation-example.component.scss']
+    styleUrls: ['./navigation-example.component.scss'],
+    standalone: false
 })
 export class NavigationExampleComponent implements OnInit {
     public viewPath: string;

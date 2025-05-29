@@ -6,14 +6,12 @@ import {Params, ProviderProgress, ResourceProvider} from '../resource-provider.s
 import {ConfigurationService} from '../../configuration/configuration.service';
 import Transition from '../../process/transition';
 import {HttpEventType, HttpParams} from '@angular/common/http';
-import Transaction from '../../process/transaction';
 import {EventOutcomeMessageResource, MessageResource} from '../interface/message-resource';
 import {PetriNetReference} from '../interface/petri-net-reference';
 import {PetriNetRequestBody} from '../interface/petri-net-request-body';
 import {Page} from '../interface/page';
 import {processMessageResponse} from '../../utility/process-message-response';
 import {AbstractResourceService} from '../abstract-endpoint/abstract-resource.service';
-import RolesAndPermissions from '../../process/rolesAndPermissions';
 
 @Injectable({
     providedIn: 'root'
@@ -58,30 +56,6 @@ export class PetriNetResourceService extends AbstractResourceService {
     public getPetriNetTransitions(netId: string): Observable<Array<Transition>> {
         return this._resourceProvider.get$('/petrinet/transitions', this.SERVER_URL, new HttpParams().set('ids', netId))
             .pipe(map(r => this.changeType(r, 'transitionReferences')));
-    }
-
-    /**
-     * Get Transaction References Using
-     *
-     * **Request Type:** GET
-     *
-     * **Request URL:** {{baseUrl}}/api/petrinet/{id}/transactions
-     */
-    public getPetriNetTransactions(netId: string, params?: Params): Observable<Array<Transaction>> {
-        return this._resourceProvider.get$('/petrinet/' + netId + '/transactions', this.SERVER_URL, params)
-            .pipe(map(r => this.changeType(r, 'transactions')));
-    }
-
-    /**
-     * Get Roles References Using
-     *
-     * **Request Type:** GET
-     *
-     * **Request URL:** {{baseUrl}}/api/petrinet/{id}/roles
-     */
-    public getPetriNetRoles(netId: string, params?: Params): Observable<RolesAndPermissions> {
-        return this._resourceProvider.get$('/petrinet/' + netId + '/roles', this.SERVER_URL, params)
-            .pipe(map(r => this.changeType(r, undefined)));
     }
 
     /**

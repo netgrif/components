@@ -43,7 +43,7 @@ describe('MultichoiceAutocompleteFieldComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-enumeration-autocomplete-select-field [showLargeLayout]="label" [enumerationField]="field" [formControlRef]="form">' +
+    template: '<nc-enumeration-autocomplete-select-field [showLargeLayout]="label" [dataField]="field" [formControlRef]="form">' +
         '</nc-enumeration-autocomplete-select-field>'
 })
 class TestWrapperComponent {

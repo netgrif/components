@@ -1,13 +1,4 @@
 <nc-data-field-template *ngIf="!dataField.behavior.hidden"
                         [dataField]="dataField"
-                        [dataFieldTemplate]="filterFieldTemplate"
                         [offset]="taskOffset">
 </nc-data-field-template>
-
-<ng-template #filterFieldTemplate let-showLargeLayout="showLargeLayout">
-    <!--  TODO: title based on large layout  -->
-    <ng-template [ngIf]="initialized">
-        <ng-template [cdkPortalOutlet]="portal"></ng-template>
-    </ng-template>
-    <!--  TODO: description?  -->
-</ng-template>

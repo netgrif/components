@@ -3,7 +3,7 @@
 @mixin user-profile($theme) {
     $primary: map-get($theme, primary);
     .card-title {
-        background: mat.get-color-from-palette($primary) !important;
+        background: mat.m2-get-color-from-palette($primary) !important;
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;
     }

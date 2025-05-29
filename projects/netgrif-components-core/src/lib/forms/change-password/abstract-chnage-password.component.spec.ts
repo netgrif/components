@@ -1,7 +1,7 @@
 import {AbstractChangePasswordComponent} from './abstract-change-password.component';
 import {waitForAsync, ComponentFixture, TestBed, inject} from '@angular/core/testing';
 import {MaterialModule} from '../../material/material.module';
-import {FlexLayoutModule} from '@angular/flex-layout';
+import {FlexLayoutModule} from '@ngbracket/ngx-layout';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
@@ -16,7 +16,7 @@ import {FormBuilder} from '@angular/forms';
 import {LoggerService} from '../../logger/services/logger.service';
 import {TranslateService} from '@ngx-translate/core';
 import {ProfileService} from "../../authentication/profile/services/profile.service";
-import {UserService} from "../../user/services/user.service";
+import {IdentityService} from "../../identity/services/identity.service";
 import {encodeBase64} from "../../utility/base64";
 import {MockProfileService} from "../../utility/tests/mocks/mock-profile.service";
 import {NAE_MIN_PASSWORD_LENGTH} from "../min-password-length-token";
@@ -86,7 +86,7 @@ describe('AbstractChangePasswordComponent', () => {
     template: ''
 })
 class TestRegFormComponent extends AbstractChangePasswordComponent {
-    constructor(formBuilder: FormBuilder, profileService: ProfileService, user: UserService, log: LoggerService, translate: TranslateService, @Optional() @Inject(NAE_MIN_PASSWORD_LENGTH)  minPasswordLength) {
+    constructor(formBuilder: FormBuilder, profileService: ProfileService, user: IdentityService, log: LoggerService, translate: TranslateService, @Optional() @Inject(NAE_MIN_PASSWORD_LENGTH)  minPasswordLength) {
         super(formBuilder, profileService, user, log, translate, minPasswordLength);
     }
 }

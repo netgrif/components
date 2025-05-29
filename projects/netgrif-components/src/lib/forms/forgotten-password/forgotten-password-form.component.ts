@@ -6,7 +6,8 @@ import {TranslateService} from '@ngx-translate/core';
 @Component({
     selector: 'nc-forgotten-password-form',
     templateUrl: './forgotten-password-form.component.html',
-    styleUrls: ['./forgotten-password-form.component.scss']
+    styleUrls: ['./forgotten-password-form.component.scss'],
+    standalone: false
 })
 export class ForgottenPasswordFormComponent extends AbstractForgottenPasswordComponent {
     constructor(formBuilder: FormBuilder,

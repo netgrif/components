@@ -1,5 +1,5 @@
 export interface UserInvitationRequest {
-    email: string;
+    username: string;
     groups: Array<number>;
-    processRoles: Array<string>;
+    roles: Array<string>;
 }

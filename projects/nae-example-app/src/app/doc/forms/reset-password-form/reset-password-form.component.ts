@@ -5,7 +5,8 @@ import {LoggerService, MessageResource, SnackBarService} from '@netgrif/componen
 @Component({
     selector: 'nae-app-reset-password-form',
     templateUrl: './reset-password-form.component.html',
-    styleUrls: ['./reset-password-form.component.scss']
+    styleUrls: ['./reset-password-form.component.scss'],
+    standalone: false
 })
 export class ResetPasswordFormComponent implements OnInit {
 

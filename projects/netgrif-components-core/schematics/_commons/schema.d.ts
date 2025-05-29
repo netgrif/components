@@ -216,7 +216,6 @@ export interface View {
         class: string;
         from: string;
     };
-    // layout: CaseLayout | TaskLayout;
     access:
         | 'public' | 'private'
         | Access;
@@ -267,11 +266,6 @@ export interface RoleAccess {
 
 export interface CaseLayout {
     name: 'caseView';
-    params: object;
-}
-
-export interface TaskLayout {
-    name: 'taskView';
     params: object;
 }
 

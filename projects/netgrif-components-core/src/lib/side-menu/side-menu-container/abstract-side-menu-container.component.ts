@@ -1,8 +1,7 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {PortalWrapper} from '../models/portal-wrapper';
 import {SideMenuService} from '../services/side-menu.service';
-import {Observable} from 'rxjs';
-import {fromPromise} from 'rxjs/internal-compatibility';
+import {from, Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
 import {MatDrawerToggleResult, MatSidenav} from '@angular/material/sidenav';
 
@@ -26,11 +25,11 @@ export abstract class AbstractSideMenuContainerComponent implements AfterViewIni
 
     public open(portalWrapper: PortalWrapper): Observable<MatDrawerToggleResult> {
         this.portalWrapper = portalWrapper;
-        return fromPromise(this.sideMenu.open());
+        return from(this.sideMenu.open());
     }
 
     public close(context: AbstractSideMenuContainerComponent): Observable<MatDrawerToggleResult> {
-        return fromPromise(context.sideMenu.close()).pipe(
+        return from(context.sideMenu.close()).pipe(
             tap((result) => {
                 if (result === 'close') {
                     context.portalWrapper = context.portalWrapper = new PortalWrapper<any>(null, null);

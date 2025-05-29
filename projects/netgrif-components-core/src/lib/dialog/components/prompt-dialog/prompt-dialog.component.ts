@@ -11,7 +11,8 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 @Component({
     selector: 'ncc-question-dialog-with-answer',
     templateUrl: './prompt-dialog.component.html',
-    styleUrls: ['./prompt-dialog.component.scss']
+    styleUrls: ['./prompt-dialog.component.scss'],
+    standalone: false
 })
 export class PromptDialogComponent extends AbstractDialogComponent<PromptDialogComponent> {
     /** Set submit button to disabled or enabled according to the user answer. */

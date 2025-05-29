@@ -5,7 +5,8 @@ import {TranslateService} from '@ngx-translate/core';
 @Component({
   selector: 'nc-redirect',
   templateUrl: './redirect.component.html',
-  styleUrls: ['./redirect.component.scss']
+  styleUrls: ['./redirect.component.scss'],
+    standalone: false
 })
 export class RedirectComponent implements OnInit {
 

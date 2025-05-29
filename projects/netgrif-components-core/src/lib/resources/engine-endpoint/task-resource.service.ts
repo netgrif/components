@@ -3,22 +3,20 @@ import {Injectable} from '@angular/core';
 import {Params, ProviderProgress, ResourceProvider} from '../resource-provider.service';
 import {Observable} from 'rxjs';
 import {Count} from '../interface/count';
-import {EventOutcomeMessageResource, MessageResource} from '../interface/message-resource';
+import {EventOutcomeMessageResource} from '../interface/message-resource';
 import {filter, map} from 'rxjs/operators';
 import {TaskReference} from '../interface/task-reference';
 import {Task} from '../interface/task';
 import {CountService} from '../abstract-endpoint/count-service';
 import {Filter} from '../../filter/models/filter';
 import {FilterType} from '../../filter/models/filter-type';
-import { HttpEventType, HttpParams } from '@angular/common/http';
+import {HttpEventType, HttpParams} from '@angular/common/http';
 import {Page} from '../interface/page';
 import {FieldConverterService} from '../../task-content/services/field-converter.service';
-import {TaskSetDataRequestBody} from '../interface/task-set-data-request-body';
 import {LoggerService} from '../../logger/services/logger.service';
 import {AbstractResourceService} from '../abstract-endpoint/abstract-resource.service';
-import {DataGroup} from '../interface/data-groups';
-import {DataField} from '../../data-fields/models/abstract-data-field';
-import {GetDataGroupsEventOutcome} from '../../event/model/event-outcomes/data-outcomes/get-data-groups-event-outcome';
+import {FileFieldRequest} from "../interface/file-field-request-body";
+import {TaskDataSets} from '../interface/task-data-sets';
 
 @Injectable({
     providedIn: 'root'
@@ -96,7 +94,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
     }
 
     /**
-     * Searches tasks trough the Elastic endpoint.
+     * Searches tasks through the Elastic endpoint.
      * POST
      * @param filterParam filter used to search the tasks. Must be of type `TASK`.
      * @param params Additional parameters
@@ -201,50 +199,8 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      * @param taskId ID of the task who's data should be retrieved from the server
      * @returns processed data groups of the given task. If the task has no data an empty array will be returned.
      */
-    public getData(taskId: string): Observable<Array<DataGroup>> {
-        return this.rawGetData(taskId).pipe(
-            map((responseOutcome: EventOutcomeMessageResource) => {
-                if (responseOutcome.error) {
-                    throw new Error(responseOutcome.error);
-                }
-
-                const dataGroupsArray = this.changeType((responseOutcome.outcome as GetDataGroupsEventOutcome).data, 'dataGroups');
-                if (!Array.isArray(dataGroupsArray)) {
-                    return [];
-                }
-                const result = [];
-                dataGroupsArray.forEach(dataGroupResource => {
-                    const dataFields: Array<DataField<any>> = [];
-                    if (!dataGroupResource.fields._embedded) {
-                        return; // continue
-                    }
-                    const fields = [];
-                    Object.keys(dataGroupResource.fields._embedded).forEach(localizedFields => {
-                        fields.push(...dataGroupResource.fields._embedded[localizedFields]);
-                    });
-                    fields.sort((a, b) => a.order - b.order);
-                    dataFields.push(...fields.map(dataFieldResource => this._fieldConverter.toClass(dataFieldResource)));
-                    const dataGroupObject: DataGroup = {
-                        fields: dataFields,
-                        stretch: dataGroupResource.stretch,
-                        title: dataGroupResource.title,
-                        layout: dataGroupResource.layout,
-                        alignment: dataGroupResource.alignment,
-                    };
-                    if (dataGroupResource.parentTaskId !== undefined) {
-                        dataGroupObject.parentTaskId = dataGroupResource.parentTaskId;
-                        dataGroupObject.parentTransitionId = dataGroupResource.parentTransitionId;
-                        dataGroupObject.parentTaskRefId = dataGroupResource.parentTaskRefId;
-                        dataGroupObject.nestingLevel = dataGroupResource.nestingLevel;
-                    }
-                    if (dataGroupResource.parentCaseId !== undefined) {
-                        dataGroupObject['parentCaseId'] = dataGroupResource.parentCaseId;
-                    }
-                    result.push(dataGroupObject);
-                });
-                return result;
-            })
-        );
+    public getData(taskId: string): Observable<EventOutcomeMessageResource> {
+        return this.rawGetData(taskId);
     }
 
     /**
@@ -252,7 +208,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      * POST
      */
     // {{baseUrl}}/api/task/:id/data
-    public setData(taskId: string, body: TaskSetDataRequestBody): Observable<EventOutcomeMessageResource> {
+    public setData(taskId: string, body: TaskDataSets): Observable<EventOutcomeMessageResource> {
         return this._resourceProvider.post$('task/' + taskId + '/data', this.SERVER_URL, body)
             .pipe(map(r => this.changeType(r, undefined)));
     }
@@ -264,9 +220,9 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      */
     // {{baseUrl}}/api/task/:id/file/:field         - for file field
     // {{baseUrl}}/api/task/:id/file/:field/:name   - for file list field
-    public downloadFile(taskId: string, fieldId: string, name?: string): Observable<ProviderProgress | Blob> {
-        const url = !!name ? 'task/' + taskId + '/file/' + fieldId + '/' + name : 'task/' + taskId + '/file/' + fieldId;
-        return this._resourceProvider.getBlob$(url, this.SERVER_URL).pipe(
+    public downloadFile(taskId: string, params: HttpParams): Observable<ProviderProgress | Blob> {
+        const url = `task/${taskId}/file${params?.has("fileName") ? '/named' : ''}`;
+        return this._resourceProvider.getBlob$(url, this.SERVER_URL, params).pipe(
             map(event => {
                 switch (event.type) {
                     case HttpEventType.DownloadProgress:
@@ -287,9 +243,9 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      */
     // {{baseUrl}}/api/task/:id/file/:field     - for file field
     // {{baseUrl}}/api/task/:id/files/:field    - for file list field
-    public uploadFile(taskId: string, fieldId: string, body: object, multipleFiles: boolean):
+    public uploadFile(taskId: string, body: object, multipleFiles: boolean):
         Observable<ProviderProgress | EventOutcomeMessageResource> {
-        const url = !multipleFiles ? 'task/' + taskId + '/file/' + fieldId : 'task/' + taskId + '/files/' + fieldId;
+        const url = `task/${taskId}/${multipleFiles ? 'files' : 'file'}`;
         return this._resourceProvider.postWithEvent$<EventOutcomeMessageResource>(url, this.SERVER_URL, body).pipe(
             map(event => {
                 switch (event.type) {
@@ -309,9 +265,9 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      * Delete file from the task
      * DELETE
      */
-    public deleteFile(taskId: string, fieldId: string, name?: string, param?: HttpParams): Observable<MessageResource> {
-        const url = !!name ? 'task/' + taskId + '/file/' + fieldId + '/' + name : 'task/' + taskId + '/file/' + fieldId;
-        return this._resourceProvider.delete$(url, this.SERVER_URL, param).pipe(
+    public deleteFile(taskId: string, body?: FileFieldRequest): Observable<ProviderProgress | EventOutcomeMessageResource> {
+        const url = `task/${taskId}/file${body?.fileName ? '/named' : ''}`;
+        return this._resourceProvider.delete$<EventOutcomeMessageResource>(url, this.SERVER_URL, {}, {}, 'json', body).pipe(
             map(r => this.changeType(r, undefined))
         );
     }
@@ -321,9 +277,9 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      * GET
      */
     // {{baseUrl}}/api/task/:id/file_preview/:field
-    public downloadFilePreview(taskId: string, fieldId: string): Observable<ProviderProgress | Blob> {
-        const url = 'task/' + taskId + '/file_preview/' + fieldId;
-        return this._resourceProvider.getBlob$(url, this.SERVER_URL).pipe(
+    public downloadFilePreview(taskId: string, params: HttpParams): Observable<ProviderProgress | Blob> {
+        const url = `task/${taskId}/file_preview`;
+        return this._resourceProvider.getBlob$(url, this.SERVER_URL, params).pipe(
             map(event => {
                 switch (event.type) {
                     case HttpEventType.DownloadProgress:

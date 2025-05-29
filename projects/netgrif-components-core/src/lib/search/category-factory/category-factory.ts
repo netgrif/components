@@ -3,7 +3,7 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {OperatorService} from '../operator-service/operator.service';
 import {Category} from '../models/category/category';
 import {OptionalDependencies} from './optional-dependencies';
-import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
+import {IdentityResourceService} from '../../resources/engine-endpoint/identity-resource.service';
 import {SearchIndexResolverService} from '../search-keyword-resolver-service/search-index-resolver.service';
 import {CategoryGeneratorMetadata} from '../models/persistance/generator-metadata';
 import {CategoryResolverService} from './category-resolver.service';
@@ -28,7 +28,7 @@ export class CategoryFactory {
                 protected _searchIndexResolverService: SearchIndexResolverService,
                 protected _categoryResolver: CategoryResolverService,
                 protected _allowedNetsService: AllowedNetsService,
-                @Optional() protected _userResourceService: UserResourceService) {
+                @Optional() protected _userResourceService: IdentityResourceService) {
         this._optionalDependencies = {
             categoryFactory: this,
             searchIndexResolver: this._searchIndexResolverService,

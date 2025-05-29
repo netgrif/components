@@ -15,7 +15,7 @@ import semver from 'semver';
 import {CreateCaseEventOutcome} from '../../../event/model/event-outcomes/case-outcomes/create-case-event-outcome';
 import {EventOutcomeMessageResource} from '../../../resources/interface/message-resource';
 import {MatOption} from '@angular/material/core';
-import { LoadingEmitter } from '../../../utility/loading-emitter';
+import {LoadingEmitter} from '../../../utility/loading-emitter';
 
 interface Form {
     value: string;
@@ -29,7 +29,7 @@ interface Form {
 })
 export abstract class AbstractNewCaseComponent implements OnDestroy {
 
-    processFormControl = new FormControl('', Validators.required);
+    processFormControl = new FormControl<string | Form>('', Validators.required);
     titleFormControl = new FormControl('', Validators.required);
     netVersion: string;
 
@@ -105,7 +105,7 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
             map(sources => {
                 const options = sources[0];
                 const input = typeof sources[1] === 'string' || sources[1] === null ? sources[1] : sources[1].viewValue;
-                return input ? this._filter(input, options) : options.slice();
+                return input ? this._filter(input as string, options) : options.slice();
             }),
             tap(filteredOptions => {
                 if (filteredOptions.length === 1) {
@@ -142,14 +142,20 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
     }
 
     public createNewCase(): void {
-        if(this.loadingSubmit.value){
-           return
+        if (this.loadingSubmit.value) {
+            return
         }
+
+        if (!this._sideMenuControl.isOpened()) {
+            return
+        }
+
         if (this.titleFormControl.valid || !this.isCaseTitleRequired()) {
             const newCase = {
                 title: this.titleFormControl.value === '' ? null : this.titleFormControl.value,
                 color: 'panel-primary-icon',
-                netId: this.options.length === 1 ? this.options[0].value : this.processFormControl.value.value
+                netId: this.options.length === 1 ? this.options[0].value :
+                    ( typeof this.processFormControl.value === 'string' ? this.processFormControl.value : this.processFormControl.value.value )
             };
             this.loadingSubmit.on();
             this._caseResourceService.createCase(newCase)
@@ -166,7 +172,7 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
                                     ? 'Confirm new case setup'
                                     : response.outcome.message
                                 ,
-                                data: (response.outcome as CreateCaseEventOutcome).aCase
+                                data: (response.outcome as CreateCaseEventOutcome).case
                             });
                         } else if (!!response.error) {
                             this._snackBarService.openWarningSnackBar(this._translate.instant('side-menu.new-case.createCaseError') + ' ' + newCase.title);
@@ -177,6 +183,8 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
                                     : response.error
                             });
                         }
+                        this.titleFormControl.markAsUntouched();
+                        this.titleFormControl.setValue(null);
                     },
                     error => {
                         this.loadingSubmit.off();
@@ -224,26 +232,7 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
     }
 
     titleShortening() {
-        let size;
-        if (this.toolbar && this.toolbar._elementRef && this.toolbar._elementRef.nativeElement &&
-            this.toolbar._elementRef.nativeElement.offsetWidth) {
-            switch (this.toolbar._elementRef.nativeElement.offsetWidth) {
-                case 296:
-                    size = 22;
-                    break;
-                case 496:
-                    size = 42;
-                    break;
-                case 246:
-                    size = 18;
-                    break;
-                default:
-                    size = 32;
-                    break;
-            }
-        } else {
-            size = 32;
-        }
+        let size = 32;
 
         const caze = this._translate.instant('side-menu.new-case.case');
         const name = typeof this.processFormControl.value === 'string' || this.processFormControl.value === null ?

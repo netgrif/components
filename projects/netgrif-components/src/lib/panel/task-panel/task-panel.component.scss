@@ -11,10 +11,6 @@
     padding: 10px 24px;
 }
 
-.paper-view {
-    margin: auto;
-}
-
 .width-100 {
     width: 100%;
 }
@@ -54,4 +50,14 @@
     height: 20px;
     display: inline;
     margin: auto 5px;
+}
+
+@media only screen and (max-width: 959.99px) {
+    .task-panel-body {
+        padding: 10px 0;
+    }
+
+    .task-panel-action-row {
+        padding: 8px
+    }
 }

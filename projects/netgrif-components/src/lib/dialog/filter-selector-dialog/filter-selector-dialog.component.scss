@@ -1,0 +1,26 @@
+.filter-selector-root {
+    width: calc(100% - 8px);
+    margin: 0;
+    padding-top: 4px;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+.header-padding {
+    padding: 0 0 0 16px
+}
+
+.submit-button-padding {
+    margin-right: 16px;
+}
+
+.input-margin {
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+.full-width-input {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+}

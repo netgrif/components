@@ -11,7 +11,7 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
-import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
+import {IdentityResourceService} from '../../resources/engine-endpoint/identity-resource.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
@@ -34,7 +34,7 @@ describe('AbstractTabViewComponent', () => {
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
-                {provide: UserResourceService, useClass: MockUserResourceService},
+                {provide: IdentityResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: ViewService, useClass: TestViewService}
             ],
@@ -43,12 +43,6 @@ describe('AbstractTabViewComponent', () => {
                 TestTabComponent,
                 TestWrapperComponent,
             ]
-        }).overrideModule(BrowserDynamicTestingModule, {
-            set: {
-                entryComponents: [
-                    TestComponent
-                ]
-            }
         }).compileComponents();
 
         fixture = TestBed.createComponent(TestWrapperComponent);

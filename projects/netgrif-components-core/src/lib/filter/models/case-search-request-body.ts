@@ -65,6 +65,10 @@ export interface CaseSearchRequestBody {
     group?: string | Array<string>;
 
     uriNodeId?: string;
+
+    tags?: {
+        [key: string]: string
+    };
 }
 
 /**

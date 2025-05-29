@@ -2,9 +2,9 @@ import {UserAutocomplete} from './user-autocomplete';
 import {createMockDependencies} from '../../../utility/tests/search-category-mock-dependencies';
 import {Observable, of} from 'rxjs';
 import {Page} from '../../../resources/interface/page';
-import {UserResource} from '../../../resources/interface/user-resource';
-import {UserResourceService} from '../../../resources/engine-endpoint/user-resource.service';
-import {IUser} from '../../../user/models/iuser';
+import {IdentityResource} from '../../../resources/interface/identity-resource';
+import {IdentityResourceService} from '../../../resources/engine-endpoint/identity-resource.service';
+import {IIdentity} from '../../../identity/models/iidentity';
 import {createMockPage} from '../../../utility/tests/utility/create-mock-page';
 import {OptionalDependencies} from '../../category-factory/optional-dependencies';
 import {FormControl} from '@angular/forms';
@@ -19,7 +19,7 @@ describe('UserAutocomplete', () => {
         deps = createMockDependencies(
             undefined,
             undefined,
-            userResourceService as unknown as UserResourceService
+            userResourceService as unknown as IdentityResourceService
         );
     });
 
@@ -36,10 +36,10 @@ describe('UserAutocomplete', () => {
         expect(userAutocomplete).toBeTruthy();
 
         userResourceService.setResponse([{
-            name: 'aaa',
-            surname: 'aaa',
+            firstname: 'aaa',
+            lastname: 'aaa',
             id: '1',
-            email: ''
+            username: ''
         }]);
 
         userAutocomplete.filterOptions(of('')).subscribe(options => {
@@ -55,10 +55,10 @@ describe('UserAutocomplete', () => {
         expect(userAutocomplete).toBeTruthy();
 
         userResourceService.setResponse([{
-            name: 'aaa',
-            surname: 'aaa',
+            firstname: 'aaa',
+            lastname: 'aaa',
             id: '1',
-            email: ''
+            username: ''
         }]);
 
         userAutocomplete.filterOptions(of('')).subscribe(options => {
@@ -132,16 +132,16 @@ describe('UserAutocomplete', () => {
 
 class MockUserResourceService {
 
-    private _response: Array<IUser>;
+    private _response: Array<IIdentity>;
 
-    public setResponse(response: Array<IUser>) {
+    public setResponse(response: Array<IIdentity>) {
         this._response = response;
     }
 
-    public search(): Observable<Page<UserResource>> {
+    public search(): Observable<Page<IdentityResource>> {
         return of(createMockPage(this._response.map( user => ({
             ...user,
-            fullName: `${user.name} ${user.surname}`,
+            fullName: `${user.firstname} ${user.lastname}`,
             groups: [],
             authorities: [],
             nextGroups: [],

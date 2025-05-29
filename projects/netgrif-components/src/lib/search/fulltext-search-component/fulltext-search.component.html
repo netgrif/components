@@ -1,6 +1,10 @@
-<mat-form-field appearance="outline" class="disable-error-margin">
-    <input type="text" matInput
-           [placeholder]="'search.fullText' | translate"
-           [formControl]="fullTextFormControl"
-           (keydown.enter)="$event.target.blur()">
-</mat-form-field>
+<div fxLayout="row" fxLayoutAlign="start center" class="full-size netgrif-input-primary-search-fix padding-top">
+    <mat-form-field appearance="outline" class="disable-error-margin fulltext-search">
+        <mat-label>{{'search.fullText' | translate}}</mat-label>
+        <mat-icon matPrefix class="prefix-icon">search</mat-icon>
+        <input type="text" matInput
+               [formControl]="fullTextFormControl"
+               (keydown.enter)="$event.target.blur()">
+    </mat-form-field>
+</div>
+

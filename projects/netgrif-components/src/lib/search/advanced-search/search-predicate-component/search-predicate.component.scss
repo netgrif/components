@@ -1,8 +1,6 @@
 .predicate-body {
     border-radius: 4px;
     padding-right: 4px;
-    margin-top: 2px;
-    margin-bottom: 2px;
     min-height: 32px;
 }
 
@@ -26,7 +24,32 @@
     background: #fafafa;
 }
 
-::ng-deep .mat-form-field-wrapper {
+::ng-deep .mat-mdc-form-field-wrapper {
     margin: 0;
     padding-bottom: 0;
 }
+
+.mat-mdc-form-field-wrapper-search {
+    margin: 0 !important;
+    border-radius: 5px;
+    background: #fafafa;
+    min-width: 250px;
+}
+
+.advanced-search-buttons {
+    min-height: 43px;
+    margin: 0 8px 0 4px;
+    min-width: 43px;
+    padding: 0;
+}
+
+.prefix-icon {
+    color: #64748B;
+}
+
+@media only screen and (max-width: 599px) {
+    .mat-mdc-form-field-wrapper-search {
+        min-width: unset;
+    }
+}
+

@@ -1932,7 +1932,7 @@ export class SearchService implements OnDestroy {
      * @param searchedSubstring value that should be searched on all full text fields
      */
     public setFullTextFilter(searchedSubstring: string): void {
-        const whiteSpacedSubstring &#x3D; searchedSubstring.replace(&#x27; &#x27;, &#x27;\\ &#x27;);
+        const whiteSpacedSubstring &#x3D; searchedSubstring.replace(/ /g, &#x27;\\ &#x27;);
         this._fullTextFilter &#x3D; new SimpleFilter(&#x27;&#x27;, this._baseFilter.type, {fullText: whiteSpacedSubstring});
         this.updateActiveFilter();
     }

@@ -7,7 +7,8 @@ import {AbstractUserAssignItemComponent} from '@netgrif/components-core';
 @Component({
     selector: 'nc-user-assign-item',
     templateUrl: './user-assign-item.component.html',
-    styleUrls: ['./user-assign-item.component.scss']
+    styleUrls: ['./user-assign-item.component.scss'],
+    standalone: false
 })
 export class UserAssignItemComponent extends AbstractUserAssignItemComponent {
 

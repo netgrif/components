@@ -8,7 +8,7 @@ import {MaterialModule} from '../../material/material.module';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
-import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
+import {IdentityResourceService} from '../../resources/engine-endpoint/identity-resource.service';
 import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
 import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
@@ -19,13 +19,8 @@ import {ErrorSnackBarComponent} from '../../snack-bar/components/error-snack-bar
 import {SuccessSnackBarComponent} from '../../snack-bar/components/success-snack-bar/success-snack-bar.component';
 import {FileField} from './models/file-field';
 import {AbstractFileFieldComponent} from './abstract-file-field.component';
-import {TranslateService} from '@ngx-translate/core';
-import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
-import {LoggerService} from '../../logger/services/logger.service';
-import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {SnackBarModule} from '../../snack-bar/snack-bar.module';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
-import {DomSanitizer} from '@angular/platform-browser';
 import {EventService} from '../../event/services/event.service';
 
 describe('AbstractFileFieldComponent', () => {
@@ -48,21 +43,14 @@ describe('AbstractFileFieldComponent', () => {
                 EventService,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
-                {provide: UserResourceService, useClass: MockUserResourceService},
+                {provide: IdentityResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService}
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA],
             declarations: [
                 TestWrapperComponent,
                 TestFileComponent
-            ],
-        }).overrideModule(BrowserDynamicTestingModule, {
-            set: {
-                entryComponents: [
-                    ErrorSnackBarComponent,
-                    SuccessSnackBarComponent
-                ]
-            }
+            ]
         }).compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
@@ -83,14 +71,8 @@ describe('AbstractFileFieldComponent', () => {
     template: ''
 })
 class TestFileComponent extends AbstractFileFieldComponent {
-    constructor(taskResourceService: TaskResourceService,
-                log: LoggerService,
-                snackbar: SnackBarService,
-                translate: TranslateService,
-                sanitizer: DomSanitizer,
-                eventService: EventService,
-                @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
-        super(taskResourceService, log, snackbar, translate, eventService, informAboutInvalidData, sanitizer);
+    constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+        super(informAboutInvalidData);
     }
 }
 

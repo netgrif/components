@@ -4,7 +4,7 @@ import {Observable, throwError} from 'rxjs';
 import {AuthenticationMethodService} from '../../authentication-method.service';
 import {Credentials} from '../../../models/credentials';
 import {ConfigurationService} from '../../../../configuration/configuration.service';
-import {UserResource} from '../../../../resources/interface/user-resource';
+import {IdentityResource} from '../../../../resources/interface/identity-resource';
 import {encodeBase64} from "../../../../utility/base64";
 
 
@@ -15,20 +15,20 @@ export class BasicAuthenticationService extends AuthenticationMethodService {
         super();
     }
 
-    login(credentials: Credentials = {username: '', password: ''}): Observable<UserResource> {
+    login(credentials: Credentials = {username: '', password: ''}): Observable<IdentityResource> {
         const url = this._config.get().providers.auth.address + this._config.get().providers.auth.endpoints['login'];
         if (!url) {
             return throwError(new Error('Login URL is not defined in the config [nae.providers.auth.endpoints.login]'));
         }
         if (!credentials.username || !credentials.password) {
-            return throwError(new Error('User\'s credentials are not defined!'));
+            return throwError(new Error('Identity\'s credentials are not defined!'));
         }
         credentials.username = credentials.username.trim();
         credentials.password = credentials.password.trim();
         if (credentials.username === '' || credentials.password === '') {
-            return throwError(new Error('User\'s credentials are empty!'));
+            return throwError(new Error('Identity\'s credentials are empty!'));
         }
-        return this._http.get<UserResource>(url, {
+        return this._http.get<IdentityResource>(url, {
             headers: new HttpHeaders().set('Authorization', 'Basic ' +
                 encodeBase64(`${credentials.username}:${credentials.password}`))
         });

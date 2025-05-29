@@ -14,7 +14,7 @@ export function createMockCaseOutcome(aCase: Case = createMockCase(), net: Net =
     return {
         net,
         outcomes,
-        aCase,
+        case: aCase,
         message: 'Mock case event outcome'
     } as CaseEventOutcome;
 }

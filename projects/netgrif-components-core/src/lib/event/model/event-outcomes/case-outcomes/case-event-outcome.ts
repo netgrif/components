@@ -3,5 +3,5 @@ import {Case} from '../../../../resources/interface/case';
 
 export interface CaseEventOutcome extends PetriNetEventOutcome {
 
-    aCase: Case;
+    case: Case;
 }

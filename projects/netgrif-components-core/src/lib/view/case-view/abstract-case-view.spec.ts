@@ -20,9 +20,9 @@ import {TestNoAllowedNetsFactory} from '../../utility/tests/test-factory-methods
 import {of} from 'rxjs';
 import {createMockNet} from '../../utility/tests/utility/create-mock-net';
 import {ProcessService} from '../../process/process.service';
-import {UserService} from '../../user/services/user.service';
+import {IdentityService} from '../../identity/services/identity.service';
 import {MockUserService} from '../../utility/tests/mocks/mock-user.service';
-import {User} from '../../user/models/user';
+import {Identity} from '../../identity/models/Identity';
 
 describe('AbstractCaseView', () => {
     let component: TestCaseViewComponent;
@@ -40,7 +40,7 @@ describe('AbstractCaseView', () => {
     const providers = [
         CaseViewService,
         {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-        {provide: UserService, useClass: MockUserService},
+        {provide: IdentityService, useClass: MockUserService},
         {provide: ConfigurationService, useClass: TestConfigurationService},
         SearchService,
         {provide: NAE_BASE_FILTER, useValue: {filter: SimpleFilter.emptyCaseFilter()}},
@@ -75,7 +75,7 @@ describe('AbstractCaseView', () => {
                         useClass: MockProcessService
                     },
                     {
-                        provide: UserService,
+                        provide: IdentityService,
                         useClass: CustomMockUserService
                     },
                 ],
@@ -171,7 +171,7 @@ class MockProcessService {
 class CustomMockUserService extends MockUserService {
     constructor() {
         super();
-        this._user = new User('123', 'test@netgrif.com', 'Test', 'User', ['ROLE_USER'], [{
+        this._user = new Identity('123', 'test@netgrif.com', 'Test', 'User', ['ROLE_USER'], [{
             stringId: 'id',
             name: 'id',
             description: '',

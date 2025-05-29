@@ -25,16 +25,14 @@ export class MockCaseResourceService {
                             stringId: 'objectid',
                             type: 'text',
                         }],
-                        author: {
-                            email: 'test@example.com',
-                            fullName: 'Test',
-                        },
+                        authorId: 'authorId',
                         resetArcTokens: {},
                         stringId: 'objectid',
                         petriNetId: 'objectid',
-                        permissions: {
+                        processRolePermissions: {
                             'objectid': {},
                         },
+                        caseRolePermissions: {}
                     },
                 ],
                 pagination: {

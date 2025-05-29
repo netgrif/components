@@ -7,7 +7,8 @@ import {filter, take} from 'rxjs/operators';
 @Component({
     selector: 'nae-app-active-group',
     templateUrl: './active-group.component.html',
-    styleUrls: ['./active-group.component.scss']
+    styleUrls: ['./active-group.component.scss'],
+    standalone: false
 })
 export class ActiveGroupComponent implements OnDestroy {
 
@@ -15,8 +16,8 @@ export class ActiveGroupComponent implements OnDestroy {
 
     activeGroups: Array<string>;
 
-    fcGroup: FormControl;
-    fcGroups: FormControl;
+    fcGroup: FormControl<string>;
+    fcGroups: FormControl<string[]>;
 
     private _subGroups: Subscription;
     private _subGroupFc: Subscription;

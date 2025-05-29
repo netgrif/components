@@ -8,17 +8,15 @@ import {AuthenticationMethodService} from '../../authentication/services/authent
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
 import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
-import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
+import {IdentityResourceService} from '../../resources/engine-endpoint/identity-resource.service';
 import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional} from '@angular/core';
-import {TranslateService} from '@ngx-translate/core';
 import {AbstractButtonFieldComponent} from './abstract-button-field.component';
 import {ButtonField} from './models/button-field';
 import {LanguageService} from '../../translate/language.service';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
-import {DialogService} from '../../dialog/services/dialog.service';
 
 describe('AbstractButtonFieldComponent', () => {
     let component: TestButtonComponent;
@@ -36,7 +34,7 @@ describe('AbstractButtonFieldComponent', () => {
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
-                {provide: UserResourceService, useClass: MockUserResourceService},
+                {provide: IdentityResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
             ],
             declarations: [
@@ -56,10 +54,6 @@ describe('AbstractButtonFieldComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should get error message', () => {
-        component.dataField.value = undefined;
-        expect(component.getErrorMessage()).toEqual('This field is required!');
-    });
 
     afterEach(() => {
         TestBed.resetTestingModule();
@@ -71,10 +65,8 @@ describe('AbstractButtonFieldComponent', () => {
     template: ''
 })
 class TestButtonComponent extends AbstractButtonFieldComponent {
-    constructor(translate: TranslateService,
-                dialog: DialogService,
-                @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
-        super(translate, dialog, informAboutInvalidData);
+    constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+        super(informAboutInvalidData);
     }
 }
 

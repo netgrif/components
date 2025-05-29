@@ -1,23 +1,24 @@
-<mat-label class="stepper-label netgrif-label" *ngIf="!showLargeLayout.value" matTooltipClass="stepper-tooltip-text" [matTooltip]="enumerationField.description" matTooltipPosition="right">
-    {{enumerationField.title}}
-    <nc-required-label *ngIf="enumerationField.behavior.required" [isIn]="!enumerationField.disabled" ></nc-required-label>
+<mat-label class="stepper-label netgrif-label" [ngClass]="{'netgrif-label-disabled': formControlRef.disabled}" *ngIf="!showLargeLayout.value && hasTitle()"
+           matTooltipClass="stepper-tooltip-text" [matTooltip]="dataField.description" matTooltipPosition="right">
+    {{dataField.title}}
+    <nc-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled" ></nc-required-label>
 </mat-label>
 
-<div *ngIf="!arrowStepper" [matTooltip]="enumerationField.description" [ngClass.lt-sm]="'touch-action-enabled'"
+<div *ngIf="!arrowStepper" [matTooltip]="dataField.description" [ngClass.lt-sm]="'touch-action-enabled'"
      class="horizontal-stepper" fxLayout="row" fxLayout.lt-sm="column" matTooltipPosition="above">
     <div class="horizontal-step" fxShow.gt-xs fxHide.lt-sm>
-        <ng-template ngFor let-option [ngForOf]="enumerationField.choices" let-i="index">
+        <ng-template ngFor let-option [ngForOf]="dataField.choices" let-i="index">
             <div class="horizontal-step-header" #oneStep>
                 <div class="horizontal-state" [ngClass]="{'horizontal-state-primary': canShowDoneIcon(i), 'horizontal-state-secondary': !canShowDoneIcon(i)}">
                     <mat-icon *ngIf="canShowDoneIcon(i + 1)">done</mat-icon>
                 </div>
                 <div class="horizontal-state-label">{{option.value}}</div>
             </div>
-            <div class="horizontal-line" fxFlex *ngIf="i < enumerationField.choices.length - 1"></div>
+            <div class="horizontal-line" fxFlex *ngIf="i < dataField.choices.length - 1"></div>
         </ng-template>
     </div>
     <div class="vertical-step" fxLayout="column" fxShow.lt-sm fxHide.gt-xs>
-        <ng-template ngFor let-option [ngForOf]="enumerationField.choices" let-i="index">
+        <ng-template ngFor let-option [ngForOf]="dataField.choices" let-i="index">
             <div class="vertical-step-header" fxFlex fxLayout="row">
                 <div class="vertical-state"
                      [ngClass]="{'horizontal-state-primary': canShowDoneIcon(i), 'horizontal-state-secondary': !canShowDoneIcon(i)}">
@@ -25,18 +26,20 @@
                 </div>
                 <div class="vertical-state-label">{{option.value}}</div>
             </div>
-            <div class="vertical-line" fxFlex *ngIf="i < enumerationField.choices.length - 1"></div>
+            <div class="vertical-line" fxFlex *ngIf="i < dataField.choices.length - 1"></div>
         </ng-template>
     </div>
 </div>
 
 <div *ngIf="arrowStepper" class="stepper-min-height" fxLayoutAlign="stretch center" fxLayout="row" fxLayout.lt-sm="column"
-     [matTooltip]="enumerationField.description" matTooltipPosition="above">
-    <ng-template ngFor let-option [ngForOf]="enumerationField.choices" let-i="index">
-        <span class="stepper-arrow-text" [ngClass]="{'stepper-arrow-selected': isSelected(option.key), 'stepper-disabled': enumerationField.disabled}"
-              (click)="setStepperValue(option.key)" fxFlex fxLayoutAlign="center center">{{option.value}}</span>
-        <span fxFlex *ngIf="i < enumerationField.choices.length - 1" fxLayoutAlign="center center">
-            <mat-icon>arrow_forward_ios</mat-icon>
-        </span>
+     [matTooltip]="dataField.description" matTooltipPosition="above" [ngClass]="{'stepper-disabled': formControlRef.disabled}">
+    <ng-template ngFor let-option [ngForOf]="dataField.choices" let-i="index">
+            <span class="stepper-arrow-text" [ngClass]="{'stepper-arrow-selected': isSelected(option.key)}"
+                  (click)="setStepperValue(option.key)" fxFlex fxLayoutAlign="center center" fxHide.lt-sm>{{option.value}}</span>
+        <span fxFlex.gt-sm class="stepper-arrow-text" *ngIf="i < dataField.choices.length - 1" fxLayoutAlign="center center" fxHide.lt-sm>
+                <mat-icon>arrow_forward_ios</mat-icon>
+            </span>
     </ng-template>
+    <span class="stepper-arrow-text stepper-arrow-selected" fxShow.lt-sm fxHide.gt-xs
+          fxFlex fxLayoutAlign="center center">{{resolveValue(dataField.value)}}</span>
 </div>

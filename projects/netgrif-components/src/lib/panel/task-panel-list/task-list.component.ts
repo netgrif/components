@@ -5,7 +5,8 @@ import {ActivatedRoute} from '@angular/router';
 @Component({
     selector: 'nc-task-list',
     templateUrl: './task-list.component.html',
-    styleUrls: ['./task-list.component.scss']
+    styleUrls: ['./task-list.component.scss'],
+    standalone: false
 })
 export class TaskListComponent extends AbstractTaskListComponent {
     constructor(protected _taskViewService: TaskViewService,

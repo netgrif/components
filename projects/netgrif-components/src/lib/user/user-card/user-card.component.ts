@@ -4,7 +4,8 @@ import {AbstractUserCardComponent} from '@netgrif/components-core';
 @Component({
     selector: 'nc-user-card',
     templateUrl: './user-card.component.html',
-    styleUrls: ['./user-card.component.scss']
+    styleUrls: ['./user-card.component.scss'],
+    standalone: false
 })
 export class UserCardComponent extends AbstractUserCardComponent {
 

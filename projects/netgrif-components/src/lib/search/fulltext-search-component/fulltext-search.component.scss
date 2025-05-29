@@ -1,0 +1,23 @@
+.prefix-icon {
+    color: #64748B;
+}
+
+.fulltext-search {
+    min-width: 360px;
+    border-radius: 6px;
+}
+
+.full-size{
+    width: 100%;
+    height: 100%;
+}
+
+.padding-top {
+    padding-top: 2px;
+}
+
+@media only screen and (max-width: 599px) {
+    .fulltext-search {
+        min-width: unset;
+    }
+}

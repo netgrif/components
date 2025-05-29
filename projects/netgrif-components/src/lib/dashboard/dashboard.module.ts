@@ -30,7 +30,8 @@ import {MatGridListModule} from "@angular/material/grid-list";
         PieChartCardComponent,
         LineChartCardComponent,
         BarchartCardComponent,
-        LinearGaugeCardComponent
+        LinearGaugeCardComponent,
+        PortalCardComponent
     ],
     imports: [
         CommonModule,

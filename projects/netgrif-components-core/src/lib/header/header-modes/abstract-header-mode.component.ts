@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core';
+import {FormControl} from '@angular/forms';
 
 @Component({
     selector: 'ncc-abstract-header-mode',
@@ -6,8 +7,11 @@ import {Component, Input} from '@angular/core';
 })
 export abstract class AbstractHeaderModeComponent {
 
-    @Input()
-    public overflowWidth: string;
+    @Input() public overflowWidth: string;
+    @Input() public approval: boolean;
+    @Input() public indeterminate: boolean;
+    @Input() public approvalFormControl: FormControl<boolean>;
+    @Input() public typeApproval: string;
 
     constructor() {
     }

@@ -42,7 +42,8 @@ export function filterTextCategoriesFactory(factory: CategoryFactory, configurat
         {provide: NAE_SEARCH_CATEGORIES, useFactory: filterTextCategoriesFactory, deps: [CategoryFactory, NAE_FILTER_TEXT]},
         CategoryFactory,
         SearchService,
-    ]
+    ],
+    standalone: false
 })
 export class ImmediateFilterTextContentComponent extends AbstractImmediateFilterTextContentComponent {
 

@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {Observable} from 'rxjs';
-import {UserListItem} from '../../../../../user/services/user-list.service';
+import {UserListItem} from '../../../../../actor/services/user-list.service';
 
 /**
  * Includes avatar user icon and full username in the side menu.

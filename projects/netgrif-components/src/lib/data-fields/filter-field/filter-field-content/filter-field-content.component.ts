@@ -32,7 +32,8 @@ export function filterFieldCategoriesFactory(factory: CategoryResolverService, f
         CategoryFactory,
         {provide: NAE_SEARCH_CATEGORIES, useFactory: filterFieldCategoriesFactory, deps: [CategoryResolverService, NAE_FILTER_FIELD]},
         SearchService
-    ]
+    ],
+    standalone: false
 })
 export class FilterFieldContentComponent extends AbstractFilterFieldContentComponent {
 

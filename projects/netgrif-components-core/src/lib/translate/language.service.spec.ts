@@ -6,7 +6,7 @@ import {TranslateLibModule} from './translate-lib.module';
 import {AuthenticationMethodService} from '../authentication/services/authentication-method.service';
 import {AuthenticationService} from '../authentication/services/authentication/authentication.service';
 import {MockAuthenticationService} from '../utility/tests/mocks/mock-authentication.service';
-import {UserResourceService} from '../resources/engine-endpoint/user-resource.service';
+import {IdentityResourceService} from '../resources/engine-endpoint/identity-resource.service';
 import {MockUserResourceService} from '../utility/tests/mocks/mock-user-resource.service';
 import {ConfigurationService} from '../configuration/configuration.service';
 import {TestConfigurationService} from '../utility/tests/test-config';
@@ -32,16 +32,9 @@ describe('LanguageService', () => {
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
-                {provide: UserResourceService, useClass: MockUserResourceService},
+                {provide: IdentityResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService}
             ]
-        }).overrideModule(BrowserDynamicTestingModule, {
-            set: {
-                entryComponents: [
-                    ErrorSnackBarComponent,
-                    SuccessSnackBarComponent
-                ]
-            }
         });
         service = TestBed.inject(LanguageService);
     });
@@ -52,7 +45,22 @@ describe('LanguageService', () => {
 
     it('should set lang', () => {
         service.setLanguage('en-US');
-        expect(localStorage.getItem('Language')).toEqual('en-US');
+        expect(localStorage.getItem('Language')).toEqual('en');
+    });
+
+    xit('should set slovak lang', () => {
+        service.setLanguage('sk');
+        expect(localStorage.getItem('Language')).toEqual('sk');
+    });
+
+    xit('should set german lang', () => {
+        service.setLanguage('de');
+        expect(localStorage.getItem('Language')).toEqual('de');
+    });
+
+    it('should set fake lang', () => {
+        service.setLanguage('fa-ke');
+        expect(localStorage.getItem('Language')).toEqual('en');
     });
 
     afterEach(() => {

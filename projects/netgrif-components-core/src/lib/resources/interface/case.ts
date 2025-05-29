@@ -1,8 +1,7 @@
-import {Author} from './author';
 import {PetriNetObjectId} from './petri-net-object-id';
 import {ImmediateData} from './immediate-data';
 import {NaeDate} from '../types/nae-date-type';
-import {Permissions, UserPermissions, UserRefs} from '../../process/permissions';
+import {PermissionsWrapper} from '../../process/permissions';
 import { TaskPair } from './task-pair';
 
 /**
@@ -89,16 +88,7 @@ export interface Case {
      *
      */
     immediateData: Array<ImmediateData>;
-    /**
-     * **Example:** {
-     *
-     * "email": "example@netgrif.com",
-     *
-     * "fullName": "Example Netgrif"
-     *
-     * }
-     */
-    author: Author;
+    authorId: string;
     /**
      * **Example:** {}
      */
@@ -118,16 +108,11 @@ export interface Case {
     /**
      * **Example:** {}
      */
-    permissions: Permissions;
+    processRolePermissions: PermissionsWrapper;
     /**
      * **Example:** {}
      */
-    users?: UserPermissions;
-    userRefs?: UserRefs;
-    /**
-     * **Example:** []
-     */
-    viewRoles?: Array<string>;
+    caseRolePermissions: PermissionsWrapper;
     /**
      * Set of TaskPair
      * */

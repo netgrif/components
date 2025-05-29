@@ -18,6 +18,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     ],
     exports: [
         FilterSelectorComponent,
+        FilterSelectorListItemComponent,
     ]
 })
 export class SideMenuFilterSelectorComponentModule {

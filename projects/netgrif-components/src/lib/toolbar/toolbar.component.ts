@@ -5,7 +5,8 @@ import {AbstractToolbarComponent, LanguageService} from '@netgrif/components-cor
 @Component({
     selector: 'nc-toolbar',
     templateUrl: './toolbar.component.html',
-    styleUrls: ['./toolbar.component.scss']
+    styleUrls: ['./toolbar.component.scss'],
+    standalone: false
 })
 export class ToolbarComponent extends AbstractToolbarComponent {
 

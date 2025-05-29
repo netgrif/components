@@ -1,6 +1,6 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CommonModule} from '@angular/common';
-import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
+import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {MaterialModule} from '../../material/material.module';
@@ -11,14 +11,14 @@ import {AbstractNavigationDrawerComponent} from './abstract-navigation-drawer.co
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {LoggerService} from '../../logger/services/logger.service';
 import {RouterTestingModule} from '@angular/router/testing';
-import {UserPreferenceService} from '../../user/services/user-preference.service';
+import {UserPreferenceService} from '../../identity/services/user-preference.service';
 import {MockUserPreferenceService} from '../../utility/tests/mocks/mock-user-preference.service';
 import {ResizableModule} from 'angular-resizable-element';
 import {TestLoggingConfigurationService} from '../../utility/tests/test-logging-config';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
-import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
+import {IdentityResourceService} from '../../resources/engine-endpoint/identity-resource.service';
 import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
 import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
 
@@ -44,7 +44,7 @@ describe('AbstractNavigationDrawerComponent', () => {
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: ConfigurationService, useClass: TestLoggingConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
-                {provide: UserResourceService, useClass: MockUserResourceService},
+                {provide: IdentityResourceService, useClass: MockUserResourceService},
                 {provide: UserPreferenceService, useClass: MockUserPreferenceService}
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]

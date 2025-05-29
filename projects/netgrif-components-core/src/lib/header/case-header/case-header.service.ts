@@ -3,12 +3,12 @@ import {AbstractHeaderService} from '../abstract-header-service';
 import {HeaderType} from '../models/header-type';
 import {HeaderColumn, HeaderColumnType} from '../models/header-column';
 import {CaseMetaField} from './case-menta-enum';
-import {UserPreferenceService} from '../../user/services/user-preference.service';
+import {UserPreferenceService} from '../../identity/services/user-preference.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {NAE_DEFAULT_HEADERS} from '../models/default-headers-token';
 import {Subscription} from 'rxjs';
 import {OverflowService} from '../services/overflow.service';
-import {ViewIdService} from '../../user/services/view-id.service';
+import {ViewIdService} from '../../identity/services/view-id.service';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 
 
@@ -37,10 +37,10 @@ export class CaseHeaderService extends AbstractHeaderService implements OnDestro
 
     protected createMetaHeaders(): Array<HeaderColumn> {
         return [
-            new HeaderColumn(HeaderColumnType.META, CaseMetaField.VISUAL_ID, 'headers.caseMeta.visualID', 'text'),
             new HeaderColumn(HeaderColumnType.META, CaseMetaField.MONGO_ID, 'headers.caseMeta.mongoID', 'text', false),
             new HeaderColumn(HeaderColumnType.META, CaseMetaField.TITLE, 'headers.caseMeta.title', 'text'),
-            new HeaderColumn(HeaderColumnType.META, CaseMetaField.AUTHOR, 'headers.caseMeta.author', 'user'),
+            // todo 2058
+            new HeaderColumn(HeaderColumnType.META, CaseMetaField.AUTHOR, 'headers.caseMeta.author', 'text'),
             new HeaderColumn(HeaderColumnType.META, CaseMetaField.CREATION_DATE, 'headers.caseMeta.creationDate', 'date'),
         ];
     }

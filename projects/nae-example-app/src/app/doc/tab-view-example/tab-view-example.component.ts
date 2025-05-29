@@ -5,7 +5,8 @@ import {ContentComponent} from './content/content.component';
 @Component({
     selector: 'nae-app-tab-view-example',
     templateUrl: './tab-view-example.component.html',
-    styleUrls: ['./tab-view-example.component.scss']
+    styleUrls: ['./tab-view-example.component.scss'],
+    standalone: false
 })
 export class TabViewExampleComponent implements OnInit {
     readonly TITLE = 'Tab View';

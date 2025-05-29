@@ -1,5 +1,6 @@
 import {Task} from '../../../resources/interface/task';
 import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../../task-content/model/policy';
+import {LayoutObjectType} from '../../../resources/types/layout-object-type';
 
 /**
  * Creates a mock Task instance with the given attributes.
@@ -17,22 +18,21 @@ export function createMockTask(stringId = 'stringId',
         title,
         caseColor: 'string',
         caseTitle: 'string',
-        user: undefined,
-        roles: {},
-        users: {},
-        userRefs: {},
+        assigneeId: undefined,
+        processRolePermissions: { permissions: {}},
+        caseRolePermissions: { permissions: {}},
         startDate: undefined,
         finishDate: undefined,
         assignPolicy: AssignPolicy.manual,
         dataFocusPolicy: DataFocusPolicy.manual,
         finishPolicy: FinishPolicy.manual,
         stringId,
-        layout: {
-            offset: 0,
-            rows: 0,
-            cols
+        layoutContainer: {
+            layoutType: LayoutObjectType.FLEX,
+            hasData: false,
+            items: [],
+            properties: {}
         },
-        dataGroups: [],
         _links: {}
     };
 }

@@ -4,7 +4,7 @@ import {
     ConfigurationService,
     LoggerService,
     SessionIdleTimerService,
-    UserService
+    IdentityService
 } from '@netgrif/components-core';
 import {MatDialog} from "@angular/material/dialog";
 import {Router} from "@angular/router";
@@ -14,7 +14,8 @@ import {take} from "rxjs/operators";
 @Component({
     selector: 'nc-session-idle',
     templateUrl: './session-idle.component.html',
-    styleUrls: []
+    styleUrls: [],
+    standalone: false
 })
 export class SessionIdleComponent extends AbstractSessionIdleComponent {
 
@@ -22,7 +23,7 @@ export class SessionIdleComponent extends AbstractSessionIdleComponent {
 
     constructor(protected dialog: MatDialog,
                 sessionTimer: SessionIdleTimerService,
-                _user: UserService,
+                _user: IdentityService,
                 _log: LoggerService,
                 _config: ConfigurationService,
                 _router: Router) {

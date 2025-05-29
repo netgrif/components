@@ -5,7 +5,7 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {SideMenuService} from '../services/side-menu.service';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {MaterialModule} from '../../material/material.module';
-import {Component, Inject} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject} from '@angular/core';
 import {AbstractSideMenuContainerComponent} from './abstract-side-menu-container.component';
 import {AbstractImportNetComponent} from '../content-components/import-net/abstract-import-net.component';
 import {NAE_SIDE_MENU_CONTROL} from '../side-menu-injection-token';
@@ -14,6 +14,7 @@ import {PetriNetResourceService} from '../../resources/engine-endpoint/petri-net
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
+import {UriService} from "../../navigation/service/uri.service";
 
 describe('AbstractSideMenuContainerComponent', () => {
     let component: TestSideMenuComponent;
@@ -32,7 +33,8 @@ describe('AbstractSideMenuContainerComponent', () => {
             declarations: [TestSideMenuComponent],
             providers: [
                 TranslateService
-            ]
+            ],
+            schemas: [ CUSTOM_ELEMENTS_SCHEMA]
         })
             .compileComponents();
     }));
@@ -86,9 +88,10 @@ class TestSideMenuComponent extends AbstractSideMenuContainerComponent {
 class TestImportComponent extends AbstractImportNetComponent {
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) protected _sideMenuControl: SideMenuControl,
                 protected _petriNetResource: PetriNetResourceService,
+                protected _uriService: UriService,
                 protected _log: LoggerService,
                 protected _snackbar: SnackBarService,
                 protected _translate: TranslateService) {
-        super(_sideMenuControl, _petriNetResource,  _log, _snackbar, _translate);
+        super(_sideMenuControl, _petriNetResource, _uriService, _log, _snackbar, _translate);
     }
 }

@@ -5,7 +5,7 @@ import {SessionIdleComponent} from './session-idle/session-idle.component';
 import {PopupSessionIdleComponent} from './session-idle/popup-session-idle/popup-session-idle.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
-import {FlexModule} from "@angular/flex-layout";
+import {FlexModule} from "@ngbracket/ngx-layout";
 import {TranslateLibModule} from '@netgrif/components-core';
 
 @NgModule({

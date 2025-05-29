@@ -1,6 +1,6 @@
 
 export interface UriNodeResource {
-    id: string;
+    stringId: string;
     uriPath: string;
     name: string;
     parentId: string;

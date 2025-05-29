@@ -9,8 +9,8 @@
     }
 
     .selected-tree-node {
-        color: mat.get-color-from-palette($primary);
-        background: mat.get-color-from-palette($primary, 50);
+        color: mat.m2-get-color-from-palette($primary);
+        background: mat.m2-get-color-from-palette($primary, 50);
     }
 }
 

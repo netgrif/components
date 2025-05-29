@@ -34,9 +34,10 @@ export interface WorkflowPanelContent {
 export abstract class AbstractWorkflowPanelComponent extends AbstractPanelWithHeaderBindingComponent implements OnInit, OnDestroy {
 
     @Input() public workflow: Net;
-    @Input() public selectedHeaders$: Observable<Array<HeaderColumn>>;
     @Input() responsiveBody = true;
     @Input() showDeleteMenu = false;
+    @Input() public first: boolean;
+    @Input() public last: boolean;
     public panelRef: MatExpansionPanel;
     public panelContent: WorkflowPanelContent;
     private _subscription: Subscription;
@@ -136,8 +137,9 @@ export abstract class AbstractWorkflowPanelComponent extends AbstractPanelWithHe
                 this.workflow.title, this.dataFieldsBehaviour),
             version: new TextField('', this._translate.instant(this.TRANSLATION_VERSION),
                 this.workflow.version, this.dataFieldsBehaviour),
+            // todo 2058 value of author text field
             author: new TextField('', this._translate.instant(this.TRANSLATION_AUTHOR),
-                this.workflow.author.fullName, this.dataFieldsBehaviour),
+                this.workflow.authorId, this.dataFieldsBehaviour),
             uploaded: new DateTimeField('', this._translate.instant(this.TRANSLATION_UPLOAD),
                 toMoment(this.workflow.createdDate), this.dataFieldsBehaviour)
         };
@@ -155,17 +157,22 @@ export abstract class AbstractWorkflowPanelComponent extends AbstractPanelWithHe
     }
 
     protected getFeaturedMetaValue(selectedHeader: HeaderColumn): FeaturedValue {
+        let initials: string
+        if (!!this.workflow.properties?.map) {
+            initials = this.workflow.properties.map["initials"]
+        }
         switch (selectedHeader.fieldIdentifier) {
             case WorkflowMetaField.INITIALS:
-                return {value: this.workflow.initials, icon: '', type: 'meta'};
+                return {value: initials, icon: '', type: 'meta'};
             case WorkflowMetaField.TITLE:
                 return {value: this.workflow.title, icon: '', type: 'meta'};
             case WorkflowMetaField.NET_ID:
                 return {value: this.workflow.stringId, icon: '', type: 'meta'};
             case WorkflowMetaField.VERSION:
                 return {value: this.workflow.version, icon: '', type: 'meta'};
+            // todo 2058
             case WorkflowMetaField.AUTHOR:
-                return {value: this.workflow.author.fullName, icon: 'account_circle', type: 'meta'};
+                return {value: this.workflow.authorId, icon: 'account_circle', type: 'meta'};
             case WorkflowMetaField.CREATION_DATE:
                 return {value: toMoment(this.workflow.createdDate).format(DATE_TIME_FORMAT_STRING), icon: 'event', type: 'meta'};
         }

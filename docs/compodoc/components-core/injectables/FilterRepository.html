@@ -123,6 +123,10 @@
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
+                                <a href="#removeAllFilters" >removeAllFilters</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#saveFilter" >saveFilter</a>
                             </li>
                             <li>
@@ -534,6 +538,47 @@ and the array will contain less elements than the input array.</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="removeAllFilters"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>removeAllFilters</b></span>
+                        <a href="#removeAllFilters"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>removeAllFilters()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="145"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/filter/filter.repository.ts:145</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Removes all stored filters from the repository</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="saveFilter"></a>
                     <span class="name">
                         <span class="modifier">Public</span>
@@ -875,6 +920,13 @@ export class FilterRepository {
             }
         });
         return result;
+    }
+
+    /**
+     * Removes all stored filters from the repository
+     */
+    public removeAllFilters(): void {
+        this._filters &#x3D; new Map&lt;string, Filter&gt;();
     }
 }
 </code></pre>

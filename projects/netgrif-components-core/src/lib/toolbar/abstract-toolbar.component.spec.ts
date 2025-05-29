@@ -12,7 +12,7 @@ import {AuthenticationService} from '../authentication/services/authentication/a
 import {MockUserResourceService} from '../utility/tests/mocks/mock-user-resource.service';
 import {MockAuthenticationService} from '../utility/tests/mocks/mock-authentication.service';
 import {TestConfigurationService} from '../utility/tests/test-config';
-import {UserResourceService} from '../resources/engine-endpoint/user-resource.service';
+import {IdentityResourceService} from '../resources/engine-endpoint/identity-resource.service';
 import {TranslateLibModule} from '../translate/translate-lib.module';
 import {MaterialModule} from '../material/material.module';
 
@@ -32,7 +32,7 @@ describe('AbstractToolbarComponent', () => {
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
-                {provide: UserResourceService, useClass: MockUserResourceService}
+                {provide: IdentityResourceService, useClass: MockUserResourceService}
             ],
             declarations: [TestToolbarComponent]
         }).compileComponents();

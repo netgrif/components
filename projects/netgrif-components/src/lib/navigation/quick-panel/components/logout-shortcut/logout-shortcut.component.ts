@@ -1,15 +1,16 @@
 import {Component} from '@angular/core';
 import {Router} from '@angular/router';
-import {AbstractLogoutShortcutComponent, ConfigurationService, LoggerService, UserService} from '@netgrif/components-core';
+import {AbstractLogoutShortcutComponent, ConfigurationService, LoggerService, IdentityService} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-logout-shortcut',
     templateUrl: './logout-shortcut.component.html',
-    styleUrls: ['./logout-shortcut.component.scss']
+    styleUrls: ['./logout-shortcut.component.scss'],
+    standalone: false
 })
 export class LogoutShortcutComponent extends AbstractLogoutShortcutComponent {
 
-    constructor(protected _user: UserService,
+    constructor(protected _user: IdentityService,
                 protected _log: LoggerService,
                 protected _config: ConfigurationService,
                 protected _router: Router) {

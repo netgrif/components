@@ -5,7 +5,8 @@ import {AbstractCountCardComponent} from '@netgrif/components-core';
 @Component({
     selector: 'nc-count-card',
     templateUrl: './count-card.component.html',
-    styleUrls: ['./count-card.component.scss']
+    styleUrls: ['./count-card.component.scss'],
+    standalone: false
 })
 export class CountCardComponent extends AbstractCountCardComponent {
 

@@ -10,7 +10,8 @@ import {NewCaseComponent, UserAssignComponent, FilterSelectorComponent} from '@n
 @Component({
     selector: 'nae-app-sidemenu-example',
     templateUrl: './sidemenu-example.component.html',
-    styleUrls: ['./sidemenu-example.component.scss']
+    styleUrls: ['./sidemenu-example.component.scss'],
+    standalone: false
 })
 export class SidemenuExampleComponent implements OnInit {
     readonly TITLE = 'SideMenu';
@@ -32,27 +33,29 @@ export class SidemenuExampleComponent implements OnInit {
         this.sideMenuService.open(NewCaseComponent, SideMenuSize.MEDIUM, {
             allowedNets$: of([new Net({
                 stringId: '666',
-                author: {email: 'test@test.com', fullName: 'TEST'},
+                authorId: 'testId',
                 createdDate: [],
                 defaultCaseName: 'test',
                 identifier: 'example',
                 uriNodeId: 'example',
                 immediateData: [],
-                initials: 'EX',
                 title: 'Example Dummy Process',
-                version: '1.0.0'
+                version: '1.0.0',
+                processRolePermissions: { permissions: {}},
+                properties: {map: {"initials": "EXP"}}
             }),
                 new Net({
                     stringId: '999',
-                    author: {email: 'test@test.com', fullName: 'TEST'},
+                    authorId: 'testId',
                     createdDate: [],
                     defaultCaseName: 'test',
                     identifier: 'example',
                     uriNodeId: 'example',
                     immediateData: [],
-                    initials: 'EXX',
                     title: 'Other Example Dummy Process',
-                    version: '1.0.0'
+                    version: '1.0.0',
+                    processRolePermissions: { permissions: {}},
+                    properties: {map: {"initials": "EXX"}}
                 })])
         });
     }

@@ -10,7 +10,7 @@ export interface NewCaseInjectionData extends SideMenuInjectionData {
 export const NAE_NEW_CASE_CREATION_CONFIGURATION_DATA = new InjectionToken<NewCaseCreationConfigurationData>('NewCaseCreationConfigurationData');
 
 /**
- * injection token used for new case title configuration
+ * injection token used for new case configuration
  */
 export interface NewCaseCreationConfigurationData {
 
@@ -20,6 +20,8 @@ export interface NewCaseCreationConfigurationData {
 
     newCaseButtonConfig?: NewCaseButtonConfiguration;
 
+    blockNets?: string[];
+
 }
 
 export interface NewCaseButtonConfiguration {
@@ -27,5 +29,7 @@ export interface NewCaseButtonConfiguration {
     createCaseButtonTitle?: string;
 
     createCaseButtonIcon?: string;
+
+    showCreateCaseButton?: boolean;
 
 }

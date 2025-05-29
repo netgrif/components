@@ -66,7 +66,7 @@ describe('HtmlTextareaFieldComponent', () => {
     template: `
         <nc-html-textarea-field [showLargeLayout]="label"
                                 [formControlRef]="formControl"
-                                [textAreaField]="dataField"></nc-html-textarea-field>`
+                                [dataField]="dataField"></nc-html-textarea-field>`
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();

@@ -5,7 +5,8 @@ import {ActivatedRoute} from '@angular/router';
 @Component({
     selector: 'nc-case-list',
     templateUrl: './case-list.component.html',
-    styleUrls: ['./case-list.component.scss']
+    styleUrls: ['./case-list.component.scss'],
+    standalone: false
 })
 export class CaseListComponent extends AbstractCaseListComponent {
 

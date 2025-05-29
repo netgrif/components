@@ -214,7 +214,6 @@ export interface View {
         class: string;
         from: string;
     };
-    // layout: CaseLayout | TaskLayout;
     access:
         | 'public' | 'private'
         | Access;
@@ -271,10 +270,6 @@ export interface CaseLayout {
     params: object;
 }
 
-export interface TaskLayout {
-    name: 'taskView';
-    params: object;
-}
 
 export interface Services {
     log?: {

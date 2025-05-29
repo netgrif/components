@@ -57,7 +57,7 @@ describe('ProcessService', () => {
         });
     });
 
-    it('get petri net errors - net without transitions/transactions/roles', (done) => {
+    it('get petri net errors - net without transitions/roles', (done) => {
         service.getNet('emptySecondaries').subscribe(() => {
             expect(logInfoSpy).toHaveBeenCalled();
             done();
@@ -66,13 +66,6 @@ describe('ProcessService', () => {
 
     it('get petri net errors - roles fail to load', (done) => {
         service.getNet('errorOnRoles').subscribe(() => {
-            expect(logSpy).toHaveBeenCalled();
-            done();
-        });
-    });
-
-    it('get petri net errors - transactions fail to load', (done) => {
-        service.getNet('errorOnTransactions').subscribe(() => {
             expect(logSpy).toHaveBeenCalled();
             done();
         });
@@ -146,7 +139,7 @@ describe('ProcessService', () => {
         });
     });
 
-    it('get petri net reference errors - net without transitions/transactions/roles', (done) => {
+    it('get petri net reference errors - net without transitions/roles', (done) => {
         service.getNetReference('emptySecondaries').subscribe(() => {
             expect(logInfoSpy).toHaveBeenCalled();
             done();
@@ -179,7 +172,6 @@ class MyPetriNetResource {
         if (identifier === 'correct' ||
             identifier === 'emptySecondaries' ||
             identifier === 'errorOnRoles' ||
-            identifier === 'errorOnTransactions' ||
             identifier === 'errorOnTransitions') {
             return of({
                 stringId: identifier,
@@ -206,21 +198,6 @@ class MyPetriNetResource {
                 title: '',
                 petriNetId: 'petriNetId',
                 immediateData: []
-            }]);
-        } else if (identifier === 'emptySecondaries' || identifier === 'errorOnRoles' || identifier === 'errorOnTransactions') {
-            return of([]);
-        } else {
-            return of({error: 'error'}).pipe(map(res => {
-                throw throwError(res);
-            }));
-        }
-    }
-
-    getPetriNetTransactions(identifier): Observable<Array<Transaction>> {
-        if (identifier === 'correct') {
-            return of([{
-                transitions: [],
-                title: ''
             }]);
         } else if (identifier === 'emptySecondaries' || identifier === 'errorOnRoles') {
             return of([]);

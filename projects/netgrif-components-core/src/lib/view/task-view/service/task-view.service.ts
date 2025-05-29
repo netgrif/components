@@ -2,9 +2,6 @@ import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
 import {BehaviorSubject, Observable, of, ReplaySubject, Subject, Subscription, timer} from 'rxjs';
 import {TaskPanelData} from '../../../panel/task-panel-list/task-panel-data/task-panel-data';
 import {TaskResourceService} from '../../../resources/engine-endpoint/task-resource.service';
-import {UserService} from '../../../user/services/user.service';
-import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
-import {TranslateService} from '@ngx-translate/core';
 import {catchError, concatMap, filter, map, mergeMap, scan, switchMap, take, tap} from 'rxjs/operators';
 import {HttpParams} from '@angular/common/http';
 import {Pagination} from '../../../resources/interface/pagination';
@@ -12,7 +9,7 @@ import {Task} from '../../../resources/interface/task';
 import {SearchService} from '../../../search/search-service/search.service';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {ListRange} from '@angular/cdk/collections';
-import {UserComparatorService} from '../../../user/services/user-comparator.service';
+import {ActorComparatorService} from '../../../actor/services/actor-comparator.service';
 import {TaskEndpoint} from '../models/task-endpoint';
 import {Page} from '../../../resources/interface/page';
 import {NAE_PREFERRED_TASK_ENDPOINT} from '../models/injection-token-task-endpoint';
@@ -21,13 +18,17 @@ import {Filter} from '../../../filter/models/filter';
 import {TaskPageLoadRequestResult} from '../models/task-page-load-request-result';
 import {LoadingWithFilterEmitter} from '../../../utility/loading-with-filter-emitter';
 import {arrayToObservable} from '../../../utility/array-to-observable';
-import {SearchIndexResolverService} from '../../../search/search-keyword-resolver-service/search-index-resolver.service';
+import {
+    SearchIndexResolverService
+} from '../../../search/search-keyword-resolver-service/search-index-resolver.service';
 import {AbstractSortableViewComponent} from '../../abstract/sortable-view';
 import {NAE_TASK_VIEW_CONFIGURATION} from '../models/task-view-configuration-injection-token';
 import {TaskViewConfiguration} from '../models/task-view-configuration';
 import {ChangedFieldsMap} from '../../../event/services/interfaces/changed-fields-map';
 import {PaginationParams} from '../../../utility/pagination/pagination-params';
 import {createSortParam, PaginationSort} from '../../../utility/pagination/pagination-sort';
+import {callActionRecursively} from '../../../utility/layout-operations';
+import {LayoutItem} from '../../../resources/interface/layout-item';
 
 
 @Injectable()
@@ -50,15 +51,10 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
     // Serializing assign after cancel
     protected _allowMultiOpen: boolean;
 
-    private readonly _initializing: boolean = true;
-
     constructor(protected _taskService: TaskResourceService,
-                private _userService: UserService,
-                private _snackBarService: SnackBarService,
-                private _translate: TranslateService,
                 protected _searchService: SearchService,
                 private _log: LoggerService,
-                private _userComparator: UserComparatorService,
+                private _userComparator: ActorComparatorService,
                 resolver: SearchIndexResolverService,
                 @Optional() @Inject(NAE_PREFERRED_TASK_ENDPOINT) protected readonly _preferredEndpoint: TaskEndpoint = null,
                 @Optional() @Inject(NAE_TASK_VIEW_CONFIGURATION) taskViewConfig: TaskViewConfiguration = null) {
@@ -80,8 +76,6 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
         this._panelUpdate$ = new BehaviorSubject<Array<TaskPanelData>>([]);
         this._closeTab$ = new ReplaySubject<void>(1);
         this._preferredEndpoint = taskViewConfig?.preferredEndpoint ?? (this._preferredEndpoint ?? TaskEndpoint.MONGO);
-
-        this._initializing = false;
 
         this._subSearch = this._searchService.activeFilter$.subscribe(() => {
             this.reload();
@@ -110,11 +104,11 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
                         if (!pageLoadResult.tasks[taskId]) {
                             delete acc[taskId];
                         } else {
-                            pageLoadResult.tasks[taskId].task.dataGroups = acc[taskId].task.dataGroups;
+                            pageLoadResult.tasks[taskId].task.layoutContainer = acc[taskId].task.layoutContainer;
                             pageLoadResult.tasks[taskId].initiallyExpanded = acc[taskId].initiallyExpanded;
                             this.updateTask(acc[taskId].task, pageLoadResult.tasks[taskId].task);
                             this.blockTaskFields(acc[taskId].task, !(acc[taskId].task.user
-                                && this._userComparator.compareUsers(acc[taskId].task.user)));
+                                && this._userComparator.compareActors(acc[taskId].task.user)));
                             delete pageLoadResult.tasks[taskId];
                         }
                     });
@@ -251,7 +245,7 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
             map(tasks => Array.isArray(tasks.content) ? tasks : {...tasks, content: []}),
             map(tasks => {
                 return tasks.content.reduce((acc, curr) => {
-                    this.blockTaskFields(curr, !(curr.user && this._userComparator.compareUsers(curr.user)));
+                    this.blockTaskFields(curr, !(curr.user && this._userComparator.compareActors(curr.user)));
                     return {
                         ...acc, [curr.stringId]: {
                             task: curr,
@@ -276,14 +270,22 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
                 old[key] = neww[key];
             }
         });
-        this.blockTaskFields(old, !(old.user && this._userComparator.compareUsers(old.user)));
+        this.blockTaskFields(old, !(old.assigneeId && this._userComparator.compareActors(old.assigneeId)));
     }
 
     private blockTaskFields(task: Task, block: boolean): void {
-        if (!task.dataGroups) {
+        if (!task.layoutContainer) {
             return;
         }
-        task.dataGroups.forEach(g => g.fields.forEach(f => f.block = block));
+        console.log("TASK VIEW BLOCK => " + block);
+        callActionRecursively(task.layoutContainer, {doParams: block, termParams: undefined},
+            (layoutItem: LayoutItem, params: boolean) => {
+                layoutItem.field.block = params;
+            },
+            () => {
+                return false;
+            }
+        )
     }
 
     public nextPage(renderedRange: ListRange, totalLoaded: number, requestContext?: PageLoadRequestContext): void {

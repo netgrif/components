@@ -6,7 +6,8 @@ export class LetContext<T> {
 }
 
 @Directive({
-    selector: '[nccLet]'
+    selector: '[nccLet]',
+    standalone: false
 })
 export class LetDirective<T = unknown> {
 

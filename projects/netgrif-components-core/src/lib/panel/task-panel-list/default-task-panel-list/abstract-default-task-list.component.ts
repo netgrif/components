@@ -3,7 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {filter} from 'rxjs/operators';
 import {TabbedVirtualScrollComponent} from '../../abstract/tabbed-virtual-scroll.component';
 import {AfterViewInit, Component, EventEmitter, Inject, Input, OnDestroy, Optional, Output} from '@angular/core';
-import {Observable, Subject} from 'rxjs';
+import {Observable, Subject, Subscription} from 'rxjs';
 import {TaskPanelData} from '../task-panel-data/task-panel-data';
 import {HeaderColumn} from '../../../header/models/header-column';
 import {TaskEventNotification} from '../../../task-content/model/task-event-notification';
@@ -29,6 +29,7 @@ export abstract class AbstractDefaultTaskListComponent extends TabbedVirtualScro
     @Input() responsiveBody = true;
     @Input() forceLoadDataOnOpen = false;
     @Input() textEllipsis = false;
+    @Input() showMoreMenu: boolean = true;
 
     @Input()
     set allowMultiOpen(bool: boolean) {
@@ -44,6 +45,8 @@ export abstract class AbstractDefaultTaskListComponent extends TabbedVirtualScro
      * Emits notifications about task events
      */
     @Output() taskEvent: EventEmitter<TaskEventNotification>;
+    protected _unsub: Subscription;
+    protected _canReload: boolean;
 
     constructor(protected _taskViewService: TaskViewService,
                 protected _log: LoggerService,
@@ -53,12 +56,26 @@ export abstract class AbstractDefaultTaskListComponent extends TabbedVirtualScro
         this.taskEvent = new EventEmitter<TaskEventNotification>();
         this._taskPanelRefs = new Map<string, MatExpansionPanel>();
         this._unsubscribe$ = new Subject<void>();
+        if (injectedTabData !== null) {
+            this._unsub = injectedTabData.tabSelected$.pipe(
+                filter(bool => bool)
+            ).subscribe( () => {
+                if (this._canReload) {
+                    this._taskViewService.reloadCurrentPage();
+                } else {
+                    this._canReload = true;
+                }
+            });
+        }
     }
 
     ngOnDestroy(): void {
         super.ngOnDestroy();
         this.taskEvent.complete();
         this._unsubscribe$.complete();
+        if (this._unsub) {
+            this._unsub.unsubscribe();
+        }
     }
 
     ngAfterViewInit() {

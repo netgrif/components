@@ -6,7 +6,8 @@ import {AggregationResult, LoggerService} from '@netgrif/components-core';
 @Component({
     selector: 'nae-app-example-portal-card',
     templateUrl: './example-portal-card.component.html',
-    styleUrls: ['./example-portal-card.component.scss']
+    styleUrls: ['./example-portal-card.component.scss'],
+    standalone: false
 })
 export class ExamplePortalCardComponent extends AbstractCustomCardComponent implements OnInit {
 

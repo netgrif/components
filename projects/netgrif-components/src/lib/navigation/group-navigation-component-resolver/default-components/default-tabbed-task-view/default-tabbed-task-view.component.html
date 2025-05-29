@@ -1,9 +1,15 @@
-<div class="task-tab-background full-height">
+<div class="task-tab-background full-height min-height-task-custom">
     <div fxLayout="column" fxLayoutAlign="start stretch" class="content-margin full-height" >
-        <mat-card class="search-panel">
-            <nc-search class="search-width"></nc-search>
-        </mat-card>
-        <nc-header #header type="task" class="task-panel-padding-mini"></nc-header>
-        <nc-task-list [tasks$]="tasks$" [loading$]="loading$" [allowMultiOpen]="false" [selectedHeaders$]="selectedHeaders$" [textEllipsis]="true" fxFlex></nc-task-list>
+        <div class="search-panel" *ngIf="(enableSearch)">
+            <nc-search class="search-width" [showSearchToggleButton]="showToggleButton"
+                       [initialSearchMode]="initialSearchMode"></nc-search>
+        </div>
+        <nc-header #header type="task" [hideHeaderMenu]="!headersChangeable"
+                   [showEditButton]="isMenuOptionEnabled('edit')"
+                   [showSortButton]="isMenuOptionEnabled('sort')" [showTableSection]="allowTableMode" class="task-panel-padding-mini"></nc-header>
+
+        <nc-task-list [tasks$]="tasks$" [loading$]="loading$" [allowMultiOpen]="false"
+                      [selectedHeaders$]="selectedHeaders$" [textEllipsis]="true" [showMoreMenu]="showMoreMenu"
+                      fxFlex></nc-task-list>
     </div>
 </div>

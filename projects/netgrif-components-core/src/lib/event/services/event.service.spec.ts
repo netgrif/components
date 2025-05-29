@@ -6,34 +6,42 @@ import {createMockTask} from '../../utility/tests/utility/create-mock-task';
 import {createMockCase} from '../../utility/tests/utility/create-mock-case';
 import {ChangedFieldsMap} from './interfaces/changed-fields-map';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {FieldTypeResource} from '../../task-content/model/field-type-resource';
+import {DataFieldResource} from '../../task-content/model/resource-interfaces';
 
 describe('EventService', () => {
     let service: EventService;
 
     const secondChildOutcome = createMockSetDataOutcome({
-        changedFields: {
+        fields: {
             secondChildOutcome: {
-                value: 'secondChildOutcomeValue',
-                type: 'text'
-            }
+                value: {
+                    value: 'secondChildOutcomeValue',
+                },
+                type: FieldTypeResource.TEXT
+            } as DataFieldResource
         }
     }, createMockTask('secondChildOutcomeTask'), undefined, createMockCase('secondChildOutcomeCase'));
 
     const firstChildOutcome = createMockSetDataOutcome({
-        changedFields: {
+        fields: {
             firstChildOutcome: {
-                value: 'firstChildOutcomeValue',
-                type: 'text'
-            }
+                value: {
+                    value: 'firstChildOutcomeValue',
+                },
+                type: FieldTypeResource.TEXT
+            } as DataFieldResource
         }
     }, createMockTask('firstChildOutcomeTask'), undefined, createMockCase('firstChildOutcomeCase'), [secondChildOutcome]);
 
     const mainOutcome = createMockSetDataOutcome({
-        changedFields: {
+        fields: {
             shouldNotBeIncluded: {
-                value: 'parentField',
-                type: 'text'
-            }
+                value: {
+                    value: 'parentField',
+                },
+                type: FieldTypeResource.TEXT
+            } as DataFieldResource
         }
     }, createMockTask('parentOutcomeTask'), undefined, createMockCase('parentOutcomeCase'), [firstChildOutcome]);
 
@@ -73,12 +81,12 @@ describe('EventService', () => {
         expect(Object.keys(result['firstChildOutcomeCase'])).toEqual(['firstChildOutcomeTask']);
         expect(Object.keys(result['firstChildOutcomeCase']['firstChildOutcomeTask']))
             .toEqual(['taskId', 'firstChildOutcome']);
-        expect(result['firstChildOutcomeCase']['firstChildOutcomeTask']['firstChildOutcome']['value'])
+        expect(result['firstChildOutcomeCase']['firstChildOutcomeTask']['firstChildOutcome']['value']['value'])
             .toEqual('firstChildOutcomeValue');
         expect(Object.keys(result['secondChildOutcomeCase'])).toEqual(['secondChildOutcomeTask']);
         expect(Object.keys(result['secondChildOutcomeCase']['secondChildOutcomeTask']))
             .toEqual(['taskId', 'secondChildOutcome']);
-        expect(result['secondChildOutcomeCase']['secondChildOutcomeTask']['secondChildOutcome']['value'])
+        expect(result['secondChildOutcomeCase']['secondChildOutcomeTask']['secondChildOutcome']['value']['value'])
             .toEqual('secondChildOutcomeValue');
     });
 

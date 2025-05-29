@@ -9,7 +9,7 @@
         background: rgba(0, 0, 0, .03);
 
         .highlight {
-            color: mat.get-color-from-palette(mat.$grey-palette, 900);
+            color: mat.m2-get-color-from-palette(mat.$grey-palette, 900);
         }
 
         .hljs-comment,

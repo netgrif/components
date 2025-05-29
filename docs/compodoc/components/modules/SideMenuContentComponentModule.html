@@ -86,19 +86,30 @@ import {
     NAE_OPTION_SELECTOR_COMPONENT,
     NAE_SAVE_FILTER_COMPONENT,
     NAE_USER_ASSIGN_COMPONENT,
-    NAE_LOAD_FILTER_COMPONENT
+    NAE_LOAD_FILTER_COMPONENT,
+    NAE_USER_IMPERSONATE_COMPONENT, NAE_ADMIN_IMPERSONATE_COMPONENT
 } from &#x27;@netgrif/components-core&#x27;;
 import {UserAssignComponent} from &#x27;./user-assign/user-assign.component&#x27;;
 import {NewCaseComponent} from &#x27;./new-case/new-case.component&#x27;;
 import {OptionSelectorComponent} from &#x27;./option-selector/option-selector.component&#x27;;
 import {SaveFilterComponent} from &#x27;./save-filter/save-filter.component&#x27;;
 import {LoadFilterComponent} from &#x27;./load-filter/load-filter.component&#x27;;
+import {
+    SideMenuAdminImpersonateComponentModule
+} from &#x27;./admin-impersonate/side-menu-admin-impersonate-component.module&#x27;;
+import {AdminImpersonateComponent} from &#x27;./admin-impersonate/admin-impersonate.component&#x27;;
+import {UserImpersonateComponent} from &#x27;./user-impersonate/user-impersonate.component&#x27;;
+import {SideMenuUserImpersonateComponentModule} from &#x27;./user-impersonate/side-menu-user-impersonate-component.module&#x27;;
+import {SideMenuMultiUserAssignComponentModule} from &quot;./multi-user-assign/side-menu-multi-user-assign-component.module&quot;;
 
 
 @NgModule({
     imports: [
         CommonModule,
         SideMenuUserAssignComponentModule,
+        SideMenuMultiUserAssignComponentModule,
+        SideMenuAdminImpersonateComponentModule,
+        SideMenuUserImpersonateComponentModule,
         SideMenuNewCaseComponentModule,
         SideMenuImportNetComponentModule,
         SideMenuFilterSelectorComponentModule,
@@ -108,6 +119,9 @@ import {LoadFilterComponent} from &#x27;./load-filter/load-filter.component&#x27
     ],
     exports: [
         SideMenuUserAssignComponentModule,
+        SideMenuMultiUserAssignComponentModule,
+        SideMenuAdminImpersonateComponentModule,
+        SideMenuUserImpersonateComponentModule,
         SideMenuNewCaseComponentModule,
         SideMenuImportNetComponentModule,
         SideMenuFilterSelectorComponentModule,
@@ -117,6 +131,8 @@ import {LoadFilterComponent} from &#x27;./load-filter/load-filter.component&#x27
     ],
     providers: [
         {provide: NAE_USER_ASSIGN_COMPONENT, useValue: UserAssignComponent},
+        {provide: NAE_ADMIN_IMPERSONATE_COMPONENT, useValue: AdminImpersonateComponent},
+        {provide: NAE_USER_IMPERSONATE_COMPONENT, useValue: UserImpersonateComponent},
         {provide: NAE_NEW_CASE_COMPONENT, useValue: NewCaseComponent},
         {provide: NAE_OPTION_SELECTOR_COMPONENT, useValue: OptionSelectorComponent},
         {provide: NAE_SAVE_FILTER_COMPONENT, useValue: SaveFilterComponent},

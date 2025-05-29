@@ -1,11 +1,10 @@
 import {waitForAsync, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
+import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {RouterTestingModule} from '@angular/router/testing';
 import {Component} from '@angular/core';
 import {AbstractSearchModeComponent} from './abstract-search-mode.component';
-import {SideMenuService} from '../../../side-menu/services/side-menu.service';
 import {CaseHeaderService} from '../../case-header/case-header.service';
 import {UserValue} from '../../../data-fields/user-field/models/user-value';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
@@ -20,12 +19,13 @@ import {MockAuthenticationService} from '../../../utility/tests/mocks/mock-authe
 import {MockUserResourceService} from '../../../utility/tests/mocks/mock-user-resource.service';
 import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {TestViewService} from '../../../utility/tests/test-view-service';
-import {UserResourceService} from '../../../resources/engine-endpoint/user-resource.service';
+import {IdentityResourceService} from '../../../resources/engine-endpoint/identity-resource.service';
 import {ViewService} from '../../../routing/view-service/view.service';
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {NAE_BASE_FILTER} from '../../../search/models/base-filter-injection-token';
 import {AllowedNetsService} from '../../../allowed-nets/services/allowed-nets.service';
 import {AllowedNetsServiceFactory} from '../../../allowed-nets/services/factory/allowed-nets-service-factory';
+import {MatDialog} from '@angular/material/dialog';
 
 describe('AbstractSearchModeComponent', () => {
     let component: TestSeaarchModeComponent;
@@ -52,7 +52,7 @@ describe('AbstractSearchModeComponent', () => {
                     useFactory: TestCaseBaseFilterProvider
                 },
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
-                {provide: UserResourceService, useClass: MockUserResourceService},
+                {provide: IdentityResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: ViewService, useClass: TestViewService},
                 CaseHeaderService,
@@ -96,8 +96,8 @@ describe('AbstractSearchModeComponent', () => {
     template: ''
 })
 class TestSeaarchModeComponent extends AbstractSearchModeComponent {
-    constructor(protected _sideMenuService: SideMenuService) {
-        super(_sideMenuService);
+    constructor(protected _dialog: MatDialog) {
+        super(_dialog);
     }
 }
 

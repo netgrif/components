@@ -1,0 +1,42 @@
+import {OperatorService} from '../../../operator-service/operator.service';
+import {LoggerService} from '../../../../logger/services/logger.service';
+import {Equals} from '../../operator/equals';
+import {OptionalDependencies} from '../../../category-factory/optional-dependencies';
+import {NotEquals} from '../../operator/not-equals';
+import {Net} from '../../../../process/net';
+import {NameIdPair} from '../name-id-pair';
+import {CaseNetAttributeAutocompleteCategory} from './case-net-attribute-autocomplete-category';
+import {Categories} from '../categories';
+import {CaseSearch} from './case-search.enum';
+
+export class CaseProcessRole extends CaseNetAttributeAutocompleteCategory {
+
+    private static readonly _i18n = 'search.category.case.role';
+
+    constructor(operators: OperatorService, logger: LoggerService, optionalDependencies: OptionalDependencies) {
+        super([CaseSearch.ENABLED_ROLES],
+            [operators.getOperator(Equals), operators.getOperator(NotEquals)],
+            `${CaseProcessRole._i18n}.name`,
+            logger,
+            operators,
+            optionalDependencies);
+    }
+
+    protected extractAttributes(petriNet: Net): Array<NameIdPair> {
+        return []
+        // todo 2058
+        // return petriNet.roles.map(r => ({id: r.stringId, name: r.name}));
+    }
+
+    get inputPlaceholder(): string {
+        return `${CaseProcessRole._i18n}.placeholder`;
+    }
+
+    duplicate(): CaseProcessRole {
+        return new CaseProcessRole(this._operatorService, this._log, this._optionalDependencies);
+    }
+
+    serializeClass(): Categories | string {
+        return Categories.CASE_ROLE;
+    }
+}

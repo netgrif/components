@@ -2,6 +2,7 @@ import {Component, Inject} from '@angular/core';
 import {AbstractUserAssignComponent, NAE_SIDE_MENU_CONTROL, SideMenuControl, UserListService} from '@netgrif/components-core';
 
 /**
+ * @deprecated
  * Is the main - parent component of the entire user assignment in the side menu.
  *
  * Holds logic link of the [UserAssignListComponent]{@link UserAssignListComponent}
@@ -11,7 +12,8 @@ import {AbstractUserAssignComponent, NAE_SIDE_MENU_CONTROL, SideMenuControl, Use
     selector: 'nc-user-assign',
     templateUrl: './user-assign.component.html',
     styleUrls: ['./user-assign.component.scss'],
-    providers: [UserListService]
+    providers: [UserListService],
+    standalone: false
 })
 export class UserAssignComponent extends AbstractUserAssignComponent {
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) protected _sideMenuControl: SideMenuControl) {

@@ -1,9 +1,9 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ImportNetComponent} from './import-net.component';
-import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
+import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
 import {FormsModule} from '@angular/forms';
-import {CovalentModule, MaterialModule, TranslateLibModule} from '@netgrif/components-core';
+import {CovalentModule, MaterialModule, NAE_IMPORT_NET_COMPONENT, TranslateLibModule} from '@netgrif/components-core';
 
 @NgModule({
     declarations: [
@@ -18,7 +18,10 @@ import {CovalentModule, MaterialModule, TranslateLibModule} from '@netgrif/compo
         FormsModule,
         TranslateLibModule
     ],
-    exports: [ImportNetComponent]
+    exports: [ImportNetComponent],
+    providers: [
+        { provide: NAE_IMPORT_NET_COMPONENT, useValue: ImportNetComponent }
+    ]
 })
 export class SideMenuImportNetComponentModule {
 }

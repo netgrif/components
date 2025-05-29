@@ -1,0 +1,110 @@
+.invisible-input {
+    display: none;
+}
+
+.margin-bottom-default {
+    margin-bottom: 8px;
+}
+
+.do-not-click:hover {
+    cursor: not-allowed;
+}
+
+.input-name-ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+.input-placeholder {
+    color: #64748B;
+}
+
+.button-icon-input {
+    padding: 2px !important;
+}
+
+.full-width {
+    width: 100%;
+    min-width: 100%;
+}
+
+.form-input {
+    background: #FFFFFF;
+    color: #64748B;
+    outline: none;
+    border: 1px solid #64748B;
+    text-align: left;
+    font-size: 14px;
+    line-height: 20px;
+    border-radius: 6px;
+    min-width: 5px;
+    box-sizing: border-box;
+    min-height: 43px;
+}
+
+.form-input:hover {
+    border-width: 2px;
+    padding: 1px !important;
+}
+
+.form-input-disabled {
+    background: transparent !important;
+    border-color: #CBD5E1 !important;
+}
+
+.form-input-disabled:hover {
+    border-width: 1px;
+    padding: 2px !important;
+}
+
+.placeholder {
+    color: rgba(0, 0, 0, .42) !important;
+}
+
+.file-hint-error {
+    padding: 0 1em;
+    width: unset;
+}
+
+.no-cursor {
+    cursor: default !important;
+    color: #64748B;
+}
+
+.border-default {
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+}
+
+@media only screen and (max-width: 959.99px) {
+    .input-name-ellipsis {
+        word-break: break-word;
+        white-space: normal;
+        overflow-y: auto;
+    }
+}
+
+.file-field-label {
+    transform: translate(0.4em,-0.45em) scale(.75);
+    transform-origin: left;
+    color: #64748B;
+    background: transparent;
+    width: fit-content;
+    padding: 0 0.5em;
+    z-index: 5;
+    height: 0;
+    position: relative;
+}
+
+.netgrif-file-padding{
+    padding-bottom: 22px;
+    position: relative;
+}
+
+.file-button-size {
+    height: 38px;
+    width: 38px;
+}

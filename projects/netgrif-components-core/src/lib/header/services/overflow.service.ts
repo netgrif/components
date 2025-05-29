@@ -1,5 +1,5 @@
 import {Injectable, Optional} from '@angular/core';
-import {ViewIdService} from '../../user/services/view-id.service';
+import {ViewIdService} from '../../identity/services/view-id.service';
 
 interface OverflowState {
     overflowMode: boolean;

@@ -12,7 +12,7 @@ import {MockAuthenticationService} from "../../utility/tests/mocks/mock-authenti
 import {AbstractSessionIdleComponent} from "./abstract-session-idle.component";
 import {Component} from "@angular/core";
 import {Router} from "@angular/router";
-import {UserService} from "../../user/services/user.service";
+import {IdentityService} from "../../identity/services/identity.service";
 import {SessionIdleTimerService} from "../session/services/session-idle-timer.service";
 import {LoggerService} from "../../logger/services/logger.service";
 
@@ -59,7 +59,7 @@ describe('AbstractSessionIdleComponent', () => {
 })
 class TestAbstractSessionIdleComponent extends AbstractSessionIdleComponent {
     constructor(protected sessionTimer: SessionIdleTimerService,
-                protected _user: UserService,
+                protected _user: IdentityService,
                 protected _log: LoggerService,
                 protected _config: ConfigurationService,
                 protected _router: Router) {

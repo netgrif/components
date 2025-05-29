@@ -1,5 +1,11 @@
-import {Component, ViewEncapsulation} from '@angular/core';
-import {AbstractI18nTextFieldComponent, LanguageIconsService} from '@netgrif/components-core';
+import {Component, Inject, Optional, ViewEncapsulation} from '@angular/core';
+import {
+    AbstractI18nTextFieldComponent,
+    LanguageIconsService,
+    DATA_FIELD_PORTAL_DATA,
+    DataFieldPortalData,
+    I18nField
+} from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 import {DomSanitizer} from '@angular/platform-browser';
 import {animate, state, style, transition, trigger} from '@angular/animations';
@@ -24,10 +30,12 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
                 animate('0.1s')
             ]),
         ])
-    ]
+    ],
+    standalone: false
 })
 export class I18nTextFieldComponent extends AbstractI18nTextFieldComponent {
-    constructor(languageIconsService: LanguageIconsService, translateService: TranslateService, domSanitizer: DomSanitizer) {
-        super(languageIconsService, translateService, domSanitizer);
+    constructor(languageIconsService: LanguageIconsService, translateService: TranslateService, domSanitizer: DomSanitizer,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<I18nField>) {
+        super(languageIconsService, translateService, domSanitizer, dataFieldPortalData);
     }
 }

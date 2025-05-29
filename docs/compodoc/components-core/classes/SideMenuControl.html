@@ -109,6 +109,10 @@
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
+                                <a href="#isOpened" >isOpened</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#publish" >publish</a>
                             </li>
                         </ul>
@@ -148,7 +152,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="9" class="link-to-prism">projects/netgrif-components-core/src/lib/side-menu/models/side-menu-control.ts:9</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">projects/netgrif-components-core/src/lib/side-menu/models/side-menu-control.ts:10</a></div>
                             </td>
                         </tr>
 
@@ -272,7 +276,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">projects/netgrif-components-core/src/lib/side-menu/models/side-menu-control.ts:16</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">projects/netgrif-components-core/src/lib/side-menu/models/side-menu-control.ts:17</a></div>
                         </td>
                     </tr>
 
@@ -300,7 +304,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">projects/netgrif-components-core/src/lib/side-menu/models/side-menu-control.ts:15</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">projects/netgrif-components-core/src/lib/side-menu/models/side-menu-control.ts:16</a></div>
                         </td>
                     </tr>
 
@@ -336,8 +340,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="35"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/side-menu/models/side-menu-control.ts:35</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="44"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/side-menu/models/side-menu-control.ts:44</a></div>
                 </td>
             </tr>
 
@@ -388,6 +392,45 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="isOpened"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>isOpened</b></span>
+                        <a href="#isOpened"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>isOpened()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="35"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/side-menu/models/side-menu-control.ts:35</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="publish"></a>
                     <span class="name">
                         <span class="modifier">Public</span>
@@ -406,8 +449,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="31"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/side-menu/models/side-menu-control.ts:31</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="39"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/side-menu/models/side-menu-control.ts:39</a></div>
                 </td>
             </tr>
 
@@ -480,7 +523,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">projects/netgrif-components-core/src/lib/side-menu/models/side-menu-control.ts:27</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">projects/netgrif-components-core/src/lib/side-menu/models/side-menu-control.ts:31</a></div>
                                 </td>
                             </tr>
 
@@ -491,7 +534,7 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Observable, of, Subject} from &#x27;rxjs&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {BehaviorSubject, Observable, of, Subject} from &#x27;rxjs&#x27;;
 import {SideMenuEvent} from &#x27;./side-menu-event&#x27;;
 import {SideMenuInjectionData} from &#x27;./side-menu-injection-data&#x27;;
 import {tap} from &#x27;rxjs/operators&#x27;;
@@ -500,6 +543,7 @@ import {MatDrawerToggleResult} from &#x27;@angular/material/sidenav&#x27;;
 export class SideMenuControl {
 
     private _event$: Subject&lt;SideMenuEvent&gt;;
+    private _isOpened: BehaviorSubject&lt;boolean&gt;;
 
     constructor(bindingsFunction: (event$: Subject&lt;SideMenuEvent&gt;) &#x3D;&gt; void &#x3D; () &#x3D;&gt; {},
                 sideMenuOpenedStateChange: Observable&lt;boolean&gt; &#x3D; of(true),
@@ -508,11 +552,14 @@ export class SideMenuControl {
                 public isVersionVisible?: boolean,
                 public allVersionEnabled?: boolean) {
         this._event$ &#x3D; new Subject&lt;SideMenuEvent&gt;();
+        this._isOpened &#x3D; new BehaviorSubject&lt;boolean&gt;(false);
         bindingsFunction(this._event$);
         sideMenuOpenedStateChange.subscribe((opened) &#x3D;&gt; {
+            this._isOpened.next(opened);
             if (!opened) {
                 this._event$.next({opened, message: &#x27;Side menu closed unexpectedly&#x27;});
                 this._event$.complete();
+                this._isOpened.complete();
             }
         });
     }
@@ -521,7 +568,12 @@ export class SideMenuControl {
         return this._injectionData;
     }
 
+    public isOpened(): boolean {
+        return this._isOpened.getValue();
+    }
+
     public publish(event: SideMenuEvent): void {
+        this._isOpened.next(event.opened);
         this._event$.next(event);
     }
 
@@ -530,6 +582,7 @@ export class SideMenuControl {
             event.message &#x3D; &#x27;Side menu is closing&#x27;;
         }
         this._event$.next({...event, opened: false});
+        this._isOpened.next(event.opened);
         return this.sideMenuCloseFunction().pipe(
             tap((closed) &#x3D;&gt; {
                 if (closed &#x3D;&#x3D;&#x3D; &#x27;close&#x27;) {

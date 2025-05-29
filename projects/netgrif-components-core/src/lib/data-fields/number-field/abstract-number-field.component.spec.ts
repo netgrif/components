@@ -9,7 +9,7 @@ import {NumberField} from './models/number-field';
 import {LanguageService} from '../../translate/language.service';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
-import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
+import {IdentityResourceService} from '../../resources/engine-endpoint/identity-resource.service';
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
@@ -35,7 +35,7 @@ describe('AbstractNumberFieldComponent', () => {
             providers: [
                 {provide: AuthenticationMethodService, useCLass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
-                {provide: UserResourceService, useClass: MockUserResourceService},
+                {provide: IdentityResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService}
             ],
             declarations: [

@@ -10,7 +10,8 @@ import {AbstractTabCreationDetectorComponent} from '@netgrif/components-core';
 @Component({
     selector: 'nc-tab-creation-detector',
     templateUrl: './tab-creation-detector.component.html',
-    styleUrls: ['./tab-creation-detector.component.scss']
+    styleUrls: ['./tab-creation-detector.component.scss'],
+    standalone: false
 })
 export class TabCreationDetectorComponent extends AbstractTabCreationDetectorComponent {
     constructor() {

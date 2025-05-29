@@ -1,4 +1,10 @@
-import {InjectedTabbedCaseViewData, DataGroup, NewCaseCreationConfigurationData } from '@netgrif/components-core';
+import {
+    InjectedTabbedCaseViewData,
+    DataGroup,
+    NewCaseCreationConfigurationData,
+    SearchComponentConfiguration,
+    SimpleFilter
+} from '@netgrif/components-core';
 
 /**
  * A variation of {@link InjectedTabbedCaseViewData} that contain the task data of a navigation item task.
@@ -7,5 +13,22 @@ import {InjectedTabbedCaseViewData, DataGroup, NewCaseCreationConfigurationData 
  */
 export interface InjectedTabbedCaseViewDataWithNavigationItemTaskData extends InjectedTabbedCaseViewData {
     navigationItemTaskData: Array<DataGroup>;
+
     newCaseButtonConfiguration: NewCaseCreationConfigurationData;
+    caseViewSearchTypeConfiguration: SearchComponentConfiguration;
+    caseViewShowMoreMenu: boolean;
+    caseViewHeadersChangeable: boolean;
+    caseViewHeadersMode: string[];
+    caseViewAllowTableMode: boolean;
+    caseViewDefaultHeadersMode: string;
+
+    taskViewSearchTypeConfiguration: SearchComponentConfiguration;
+    taskViewShowMoreMenu: boolean;
+    taskViewMergeWithBaseFilter: boolean;
+    taskViewAdditionalFilter: SimpleFilter;
+    taskViewAdditionalAllowedNets: string[];
+    taskViewHeadersChangeable: boolean;
+    taskViewHeadersMode: string[];
+    taskViewAllowTableMode: boolean;
+    taskViewDefaultHeadersMode: string;
 }

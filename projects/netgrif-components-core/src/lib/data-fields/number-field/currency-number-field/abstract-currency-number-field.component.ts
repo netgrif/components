@@ -1,7 +1,9 @@
-import { AfterViewInit, Component} from '@angular/core';
+import {AfterViewInit, Component, Inject, Optional} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {CurrencyPipe, getCurrencySymbol} from '@angular/common';
 import {AbstractNumberErrorsComponent} from '../abstract-number-errors.component';
+import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
+import {NumberField} from "../models/number-field";
 
 @Component({
     selector: 'ncc-abstract-currency-field',
@@ -15,22 +17,25 @@ export abstract class AbstractCurrencyNumberFieldComponent extends AbstractNumbe
     public readonly TEXT_TYPE = 'text';
     public readonly WHITESPACE = ' ';
 
-    protected constructor(protected _currencyPipe: CurrencyPipe, translateService: TranslateService) {
-        super(translateService);
+    protected constructor(protected _currencyPipe: CurrencyPipe, translateService: TranslateService,
+                          @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<NumberField>) {
+        super(translateService, dataFieldPortalData);
     }
 
     ngAfterViewInit() {
-        this.fieldType = this.TEXT_TYPE;
-        this.transformedValue = this.transformCurrency(this.numberField.value?.toString());
-        this.numberField.valueChanges().subscribe(value => {
-            if (value !== undefined && value !== null) {
-                if (this.fieldType === this.TEXT_TYPE) {
-                    this.transformedValue = this.transformCurrency(value.toString()) + this.WHITESPACE;
+        setTimeout(() => {
+            this.fieldType = this.TEXT_TYPE;
+            this.transformedValue = this.transformCurrency(this.dataField.value?.toString());
+            this.dataField.valueChanges().subscribe(value => {
+                if (value !== undefined && value !== null) {
+                    if (this.fieldType === this.TEXT_TYPE) {
+                        this.transformedValue = this.transformCurrency(value.toString()) + this.WHITESPACE;
+                    }
+                } else {
+                    this.transformedValue = '';
                 }
-            } else {
-                this.transformedValue = '';
-            }
-        });
+            });
+        })
     }
 
     transformToText(event: Event) {
@@ -41,15 +46,15 @@ export abstract class AbstractCurrencyNumberFieldComponent extends AbstractNumbe
 
     transformToNumber() {
         this.fieldType = this.NUMBER_TYPE;
-        this.transformedValue = !!this.numberField.value ? this.numberField.value.toString() : '0';
+        this.transformedValue = !!this.dataField.value ? this.dataField.value.toString() : '0';
     }
 
     getCurrencySymbol(): string {
-        if (this.numberField._formatFilter === undefined) {
-            return getCurrencySymbol(this.numberField.component.properties['code'],
-                'wide', this.numberField.component.properties['locale']);
+        if (this.dataField._formatFilter === undefined) {
+            return getCurrencySymbol(this.dataField.component.properties['code'],
+                'wide', this.dataField.component.properties['locale']);
         }
-        return getCurrencySymbol(this.numberField._formatFilter.code, 'wide', this.numberField._formatFilter.locale);
+        return getCurrencySymbol(this.dataField._formatFilter.code, 'wide', this.dataField._formatFilter.locale);
     }
 
     isNumberType(): boolean {
@@ -58,19 +63,19 @@ export abstract class AbstractCurrencyNumberFieldComponent extends AbstractNumbe
 
     private transformCurrency(value: string | undefined): string {
         value = !!value ? value : '0';
-        if (this.numberField._formatFilter === undefined) {
+        if (this.dataField._formatFilter === undefined) {
             return this._currencyPipe.transform(
                 parseFloat(value),
-                this.numberField.component.properties['code'],
+                this.dataField.component.properties['code'],
                 'symbol',
-                '1.' + this.numberField.component.properties['fractionSize'] + '-' + this.numberField.component.properties['fractionSize'],
-                this.numberField.component.properties['locale']);
+                '1.' + this.dataField.component.properties['fractionSize'] + '-' + this.dataField.component.properties['fractionSize'],
+                this.dataField.component.properties['locale']);
         }
         return this._currencyPipe.transform(
             parseFloat(value),
-            this.numberField._formatFilter.code,
+            this.dataField._formatFilter.code,
             'symbol',
-            '1.' + this.numberField._formatFilter.fractionSize + '-' + this.numberField._formatFilter.fractionSize,
-            this.numberField._formatFilter.locale);
+            '1.' + this.dataField._formatFilter.fractionSize + '-' + this.dataField._formatFilter.fractionSize,
+            this.dataField._formatFilter.locale);
     }
 }

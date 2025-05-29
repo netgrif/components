@@ -10,7 +10,8 @@ import {
 @Component({
     selector: 'nc-search-predicate',
     templateUrl: './search-predicate.component.html',
-    styleUrls: ['./search-predicate.component.scss']
+    styleUrls: ['./search-predicate.component.scss'],
+    standalone: false
 })
 export class SearchPredicateComponent extends AbstractSearchPredicateComponent {
 

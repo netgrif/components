@@ -29,6 +29,9 @@ export function localAllowedNetsFactory(factory: AllowedNetsServiceFactory): All
     return factory.createFromArray([UserFilterConstants.FILTER_NET_IDENTIFIER]);
 }
 
+/**
+ * @deprecated
+ * */
 @Component({
     selector: 'nc-load-filter',
     templateUrl: './load-filter.component.html',
@@ -44,7 +47,8 @@ export function localAllowedNetsFactory(factory: AllowedNetsServiceFactory): All
             deps: [AllowedNetsServiceFactory]},
         {   provide: NAE_DEFAULT_HEADERS,
             useValue: ['meta-title', `${UserFilterConstants.FILTER_NET_IDENTIFIER}-${UserFilterConstants.FILTER_FIELD_ID}`]}
-    ]
+    ],
+    standalone: false
 })
 export class LoadFilterComponent extends AbstractLoadFilterComponent implements AfterViewInit {
 

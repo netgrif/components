@@ -4,7 +4,8 @@ import {AbstractSearchClauseComponent} from '@netgrif/components-core';
 @Component({
     selector: 'nc-search-clause',
     templateUrl: './search-clause.component.html',
-    styleUrls: ['./search-clause.component.scss']
+    styleUrls: ['./search-clause.component.scss'],
+    standalone: false
 })
 export class SearchClauseComponent extends AbstractSearchClauseComponent {
     constructor() {

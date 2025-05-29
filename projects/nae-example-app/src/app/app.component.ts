@@ -9,14 +9,15 @@ import {
     RoutingBuilderService,
     BaseAllowedNetsService,
     AllowedNetsServiceFactory,
-    UserService
+    IdentityService
 } from '@netgrif/components-core';
 import {filter, take} from 'rxjs/operators';
 
 @Component({
     selector: 'nae-app-root',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+    styleUrls: ['./app.component.scss'],
+    standalone: false
 })
 export class AppComponent {
     title = 'nae-example-app';
@@ -24,11 +25,11 @@ export class AppComponent {
     constructor(private _languageService: LanguageService, private _naeRouting: RoutingBuilderService,
                 public routes: Router, private translate: TranslateService,
                 private baseAllowedNets: BaseAllowedNetsService, private allowedNetsFactory: AllowedNetsServiceFactory,
-                private userService: UserService) {
-        translate.setTranslation('en-US', en, true);
-        translate.setTranslation('sk-SK', sk, true);
+                private userService: IdentityService) {
+        translate.setTranslation('en', en, true);
+        translate.setTranslation('sk', sk, true);
 
-        this.userService.user$.pipe(filter(u => !!u && u.id !== ''), take(1)).subscribe(() => {
+        this.userService.identity$.pipe(filter(u => !!u && u.id !== ''), take(1)).subscribe(() => {
             const allNets = allowedNetsFactory.createWithAllNets();
             allNets.allowedNetsIdentifiers$.pipe(take(1)).subscribe(nets => {
                 if (this.baseAllowedNets.allowedNets.length !== 0) {

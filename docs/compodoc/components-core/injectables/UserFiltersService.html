@@ -717,8 +717,8 @@ If not set it implies this is a filter originating in an in-app view and its vie
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="368"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/filter/user-filters.service.ts:368</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="370"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/filter/user-filters.service.ts:370</a></div>
                 </td>
             </tr>
 
@@ -1683,6 +1683,7 @@ export class UserFiltersService implements OnDestroy {
             if (assignOutcome.error) {
                 this._log.error(&#x60;Could not assign task &#x27;${task.title}&#x27;&#x60;, task, assignOutcome.error);
                 callChain.next(false);
+                return;
             }
 
             this._taskService.setData(task.stringId, data).subscribe(() &#x3D;&gt; {
@@ -1690,6 +1691,7 @@ export class UserFiltersService implements OnDestroy {
                     if (finishOutcome.error) {
                         this._log.error(&#x60;Could not finish task &#x27;${task.title}&#x27;&#x60;, task, finishOutcome.error);
                         callChain.next(false);
+                        return;
                     }
 
                     callChain.next(true);

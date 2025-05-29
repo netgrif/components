@@ -8,14 +8,18 @@ import {
     LoggerService,
     NAE_TAB_DATA,
     TaskViewService,
+    NetgrifPaginatorIntl,
     AbstractTaskListPaginationComponent
 } from '@netgrif/components-core';
 import {ActivatedRoute} from '@angular/router';
+import {MatPaginatorIntl} from '@angular/material/paginator';
 
 @Component({
     selector: 'nc-task-list-pagination',
     templateUrl: './task-list-pagination.component.html',
-    styleUrls: ['./task-list-pagination.component.scss']
+    styleUrls: ['./task-list-pagination.component.scss'],
+    providers: [{provide: MatPaginatorIntl, useClass: NetgrifPaginatorIntl}],
+    standalone: false
 })
 export class TaskListPaginationComponent extends AbstractTaskListPaginationComponent {
     constructor(protected _taskViewService: TaskViewService,

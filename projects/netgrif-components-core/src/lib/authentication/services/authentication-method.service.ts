@@ -1,13 +1,13 @@
 import {Observable} from 'rxjs';
 import {Credentials} from '../models/credentials';
-import {UserResource} from '../../resources/interface/user-resource';
+import {IdentityResource} from '../../resources/interface/identity-resource';
 
 export abstract class AuthenticationMethodService {
 
     constructor() {
     }
 
-    abstract login(credentials: Credentials): Observable<UserResource>;
+    abstract login(credentials: Credentials): Observable<IdentityResource>;
 
     abstract logout(): Observable<object>;
 }

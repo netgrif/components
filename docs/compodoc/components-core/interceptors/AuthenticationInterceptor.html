@@ -98,12 +98,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(_session: <a href="../injectables/SessionService.html" target="_self">SessionService</a>, _redirect: <a href="../injectables/RedirectService.html" target="_self">RedirectService</a>, _anonymousService: <a href="../injectables/AnonymousService.html" target="_self">AnonymousService</a>)</code>
+<code>constructor(_session: <a href="../injectables/SessionService.html" target="_self">SessionService</a>, _redirect: <a href="../injectables/RedirectService.html" target="_self">RedirectService</a>, _anonymousService: <a href="../injectables/AnonymousService.html" target="_self">AnonymousService</a>, idleTimerService: <a href="../injectables/SessionIdleTimerService.html" target="_self">SessionIdleTimerService</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">projects/netgrif-components-core/src/lib/authentication/services/authentication-interceptor.ts:10</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">projects/netgrif-components-core/src/lib/authentication/services/authentication-interceptor.ts:18</a></div>
                             </td>
                         </tr>
 
@@ -156,6 +156,18 @@
                                                     </td>
                                                     
                                                 </tr>
+                                                <tr>
+                                                        <td>idleTimerService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/SessionIdleTimerService.html" target="_self" >SessionIdleTimerService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -190,8 +202,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="15"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/authentication/services/authentication-interceptor.ts:15</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="26"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/authentication/services/authentication-interceptor.ts:26</a></div>
                 </td>
             </tr>
 
@@ -257,17 +269,28 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Injectable} from &#x27;@angular/core&#x27;;
-import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse} from &#x27;@angular/common/http&#x27;;
+import {
+    HttpErrorResponse,
+    HttpEvent,
+    HttpHandler,
+    HttpInterceptor,
+    HttpRequest,
+    HttpResponse
+} from &#x27;@angular/common/http&#x27;;
 import {Observable, throwError} from &#x27;rxjs&#x27;;
 import {catchError, tap} from &#x27;rxjs/operators&#x27;;
 import {SessionService} from &#x27;../session/services/session.service&#x27;;
 import {RedirectService} from &#x27;../../routing/redirect-service/redirect.service&#x27;;
 import {AnonymousService} from &#x27;../anonymous/anonymous.service&#x27;;
+import {SessionIdleTimerService} from &quot;../session/services/session-idle-timer.service&quot;;
 
 @Injectable()
 export class AuthenticationInterceptor implements HttpInterceptor {
 
-    constructor(private _session: SessionService, private _redirect: RedirectService, private _anonymousService: AnonymousService) {
+    constructor(private _session: SessionService,
+                private _redirect: RedirectService,
+                private _anonymousService: AnonymousService,
+                private idleTimerService: SessionIdleTimerService) {
     }
 
     intercept(req: HttpRequest&lt;any&gt;, next: HttpHandler): Observable&lt;HttpEvent&lt;any&gt;&gt; {
@@ -279,6 +302,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
             req &#x3D; req.clone({
                 headers: req.headers.set(this._session.sessionHeader, this._session.sessionToken)
             });
+            this.idleTimerService.resetTimer();
         }
         return next.handle(req).pipe(
             tap(event &#x3D;&gt; {

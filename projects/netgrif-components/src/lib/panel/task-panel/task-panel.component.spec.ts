@@ -119,14 +119,6 @@ describe('TaskPanelComponent', () => {
                 TestWrapperComponent,
             ],
             schemas: [NO_ERRORS_SCHEMA]
-        }).overrideModule(BrowserDynamicTestingModule, {
-            set: {
-                entryComponents: [
-                    ErrorSnackBarComponent,
-                    SuccessSnackBarComponent,
-                    TaskContentComponent
-                ]
-            }
         }).overrideProvider(AssignPolicyService, {useValue: mockAssignPolicyService}
         ).compileComponents();
 
@@ -196,7 +188,6 @@ class MyTaskResources {
                 }
             },
             alignment: 'start',
-            stretch: true,
             layout: {
                 row: 2,
                 cols: 2

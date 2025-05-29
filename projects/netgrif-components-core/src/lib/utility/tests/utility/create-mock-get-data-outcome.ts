@@ -13,7 +13,7 @@ export function createMockGetDataOutcome(data: Array<DataField<any>> = [createMo
                                          net: Net = createMockNet(), aCase: Case = createMockCase(), outcomes: Array<EventOutcome> = []) {
     return {
         net,
-        aCase,
+        case: aCase,
         task,
         outcomes,
         message: 'Mock get data event outcome',

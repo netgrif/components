@@ -1,0 +1,54 @@
+<div class="mat-dialog-title" fxLayout="column" fxLayoutAlign="center none">
+    {{ 'side-menu.import-net.upload' | translate}}
+</div>
+
+<div mat-dialog-content fxLayout="column" class="netgrif-input">
+
+    <ul class="file-list">
+        <li *ngFor="let file of fileList" [@fadeInOut]="'in'">
+            <mat-progress-bar color="accent" [value]="file.progress"></mat-progress-bar>
+            <span class="file-list-label">
+                <mat-progress-spinner *ngIf="file.inProgress && file.uploaded" class="margin-right-default"
+                                      color="accent" mode="indeterminate" diameter="20"></mat-progress-spinner>
+                <mat-icon *ngIf="!file.inProgress && file.uploaded && file.completed"
+                          class="done-icon margin-right-default">
+                    done
+                </mat-icon>
+                <mat-icon *ngIf="!file.inProgress && !file.completed &&  file.error"
+                          class="done-icon margin-right-default">
+                    error
+                </mat-icon>
+                {{file.data.name}}
+                <a title="Retry" (click)="retryFile(file)" *ngIf="!file.inProgress && file.error">
+                    <mat-icon>refresh</mat-icon>
+                </a>
+                <a title="Cancel" (click)="cancelFile(file)" *ngIf="file.inProgress">
+                    <mat-icon>cancel</mat-icon>
+                </a>
+            </span>
+        </li>
+    </ul>
+
+    <input type="file" id="sidemenu-fileUpload" name="fileUpload" multiple="multiple"
+           accept="text/xml" class="display-none"/>
+
+    <mat-form-field class="cell-padding-fix" color="primary" appearance="outline">
+        <mat-label>Release</mat-label>
+        <mat-select [formControl]="releaseTypeControl">
+            <mat-option *ngFor="let type of releaseTypes" [value]="type">
+                {{type}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" class="margin-top" (click)="onProcessFileChosen()">
+        <mat-icon>file_upload</mat-icon>
+        {{ 'side-menu.import-net.choose' | translate}}
+    </button>
+
+    <button *ngIf="isAllFinished" mat-stroked-button class="margin-top" (click)="close()">
+        {{ 'side-menu.import-net.done' | translate}}
+    </button>
+
+</div>
+

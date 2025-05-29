@@ -7,7 +7,8 @@ import {AggregationResult, LoggerService} from '@netgrif/components-core';
 @Component({
     selector: 'nc-portal-card',
     templateUrl: './portal-card.component.html',
-    styleUrls: ['./portal-card.component.scss']
+    styleUrls: ['./portal-card.component.scss'],
+    standalone: false
 })
 export class PortalCardComponent extends AbstractCustomCardComponent implements OnInit {
 

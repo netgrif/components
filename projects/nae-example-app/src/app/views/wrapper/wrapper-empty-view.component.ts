@@ -9,7 +9,8 @@ import {NAE_VIEW_ID_SEGMENT, ViewIdService} from '@netgrif/components-core';
        {   provide: NAE_VIEW_ID_SEGMENT,
            useValue: 'wrapper'},
        ViewIdService,
-   ]
+   ],
+    standalone: false
 })
 export class WrapperEmptyViewComponent {
 

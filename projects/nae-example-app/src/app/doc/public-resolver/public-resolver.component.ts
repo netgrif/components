@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {
-    UserService,
+    IdentityService,
     SessionService,
     AuthenticationService,
     PublicUrlResolverService,
@@ -12,20 +12,21 @@ import {Subscription} from 'rxjs';
 @Component({
     selector: 'nae-app-public-resolver',
     templateUrl: './public-resolver.component.html',
-    styleUrls: ['./public-resolver.component.scss']
+    styleUrls: ['./public-resolver.component.scss'],
+    standalone: false
 })
 export class PublicResolverComponent implements OnInit, OnDestroy {
 
-    private _userSub: Subscription;
+    private _identitySub: Subscription;
 
-    constructor(protected _userService: UserService, protected _sessionService: SessionService, protected _router: Router,
+    constructor(protected _identityService: IdentityService, protected _sessionService: SessionService, protected _router: Router,
                 protected _auth: AuthenticationService, protected _publicResolver: PublicUrlResolverService,
                 protected redirectService: RedirectService) {
     }
 
     ngOnInit(): void {
-        this._userSub = this._userService.user$.subscribe(user => {
-            if (!!user && user.id !== '') {
+        this._identitySub = this._identityService.identity$.subscribe(identity => {
+            if (!!identity && identity.id !== '') {
                 this._router.navigate([this.redirectService.parseRedirectPath(this._publicResolver.url)],
                     { queryParams: this.redirectService.queryParams });
                 this._publicResolver.url = undefined;
@@ -41,6 +42,6 @@ export class PublicResolverComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this._userSub.unsubscribe();
+        this._identitySub.unsubscribe();
     }
 }

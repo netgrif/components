@@ -1,5 +1,5 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
-import {UserListService} from '../../../user/services/user-list.service';
+import {UserListService} from '../../../actor/services/user-list.service';
 import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token';
 import {Observable} from 'rxjs';
 import {SideMenuControl} from '../../models/side-menu-control';

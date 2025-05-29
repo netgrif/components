@@ -11,11 +11,11 @@ import {AssignPolicyService} from '../../../task/services/assign-policy.service'
 import {AssignPolicy} from '../../../task-content/model/policy';
 import {NAE_TASK_OPERATIONS} from '../../../task/models/task-operations-injection-token';
 import {SubjectTaskOperations} from '../../../task/models/subject-task-operations';
-import {UserComparatorService} from '../../../user/services/user-comparator.service';
+import {ActorComparatorService} from '../../../actor/services/actor-comparator.service';
 import {TreePetriflowIdentifiers} from '../model/tree-petriflow-identifiers';
 import {CallChainService} from '../../../utility/call-chain/call-chain.service';
 import {LoadingEmitter} from '../../../utility/loading-emitter';
-import {Observable, ReplaySubject, Subject} from 'rxjs';
+import {Observable, ReplaySubject} from 'rxjs';
 import {hasContent} from '../../../utility/pagination/page-has-content';
 import {getImmediateData} from '../../../utility/get-immediate-data';
 import {filter} from 'rxjs/operators';
@@ -32,7 +32,7 @@ import {ChangedFieldsMap} from '../../../event/services/interfaces/changed-field
 export class TreeTaskContentService implements OnDestroy {
 
     private _processingTaskChange: LoadingEmitter;
-    private _displayedTaskText$: Subject<string>;
+    private _displayedTaskText$: ReplaySubject<string>;
     /**
      * a unique identifier consisting of caseId and transition ID
      *
@@ -47,7 +47,7 @@ export class TreeTaskContentService implements OnDestroy {
                 protected _taskEventService: TaskEventService,
                 protected _assignPolicy: AssignPolicyService,
                 protected _cancel: CancelTaskService,
-                protected _userComparator: UserComparatorService,
+                protected _userComparator: ActorComparatorService,
                 protected _callchain: CallChainService,
                 protected _logger: LoggerService,
                 protected _selectedCaseService: SelectedCaseService,
@@ -86,9 +86,11 @@ export class TreeTaskContentService implements OnDestroy {
             this._treeCaseService.reloadCase$.next();
         });
         _taskOperations.open$.subscribe(() => {
+            console.log("OPEN OPERATION");
             this._taskContentService.blockFields(false);
         });
         _taskOperations.close$.subscribe(() => {
+            console.log("CLOSE OPERATION");
             this._taskContentService.blockFields(true);
         });
     }
@@ -102,7 +104,7 @@ export class TreeTaskContentService implements OnDestroy {
     }
 
     public displayEmptyTaskContent(): void {
-        this._taskContentService.$shouldCreate.next([]);
+        this._taskContentService.$shouldCreate.next(null);
         this._displayedTaskText$.next('caseTree.noTaskSelected');
     }
 
@@ -112,6 +114,7 @@ export class TreeTaskContentService implements OnDestroy {
      */
     protected cancelAndLoadFeaturedTask(selectedCase: Case | undefined) {
         this._processingTaskChange.on();
+        console.log("cancelAndLoadFeaturedTask BLOCK");
         this._taskContentService.blockFields(true);
         if (this.shouldCancelTask) {
             this._cancel.cancel(this._callchain.create(success => {
@@ -215,6 +218,7 @@ export class TreeTaskContentService implements OnDestroy {
 
         task.assignPolicy = AssignPolicy.auto;
         this._taskContentService.task = task;
+        console.log("switchToTask BLOCK");
         this._taskContentService.blockFields(true);
         this._assignPolicy.performAssignPolicy(true, this._callchain.create(() => {
             this._processingTaskChange.off();
@@ -256,8 +260,8 @@ export class TreeTaskContentService implements OnDestroy {
      */
     protected resolveTaskBlockState(): void {
         const taskShouldBeBlocked = !this._taskContentService.task
-                                    || this._taskContentService.task.user === undefined
-                                    || !this._userComparator.compareUsers(this._taskContentService.task.user);
+            || this._taskContentService.task.assigneeId === undefined
+            || !this._userComparator.compareActors(this._taskContentService.task.assigneeId);
         this._taskContentService.blockFields(taskShouldBeBlocked);
     }
 
@@ -265,7 +269,7 @@ export class TreeTaskContentService implements OnDestroy {
      * Sets the noData text in the task content to it's default value
      */
     protected setStandardTaskText(): void {
-        this._displayedTaskText$.next();
+        this._displayedTaskText$.next(undefined);
     }
 
     /**

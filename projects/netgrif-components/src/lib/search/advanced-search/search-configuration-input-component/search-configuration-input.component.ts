@@ -4,7 +4,8 @@ import {AbstractSearchConfigurationInputComponent, OperatorTemplatePartType, Sea
 @Component({
     selector: 'nc-search-configuration-input',
     templateUrl: './search-configuration-input.component.html',
-    styleUrls: ['./search-configuration-input.component.scss']
+    styleUrls: ['./search-configuration-input.component.scss'],
+    standalone: false
 })
 export class SearchConfigurationInputComponent extends AbstractSearchConfigurationInputComponent {
 

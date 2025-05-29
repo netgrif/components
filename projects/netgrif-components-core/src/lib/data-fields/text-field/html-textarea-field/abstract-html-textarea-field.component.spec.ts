@@ -1,4 +1,4 @@
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {AngularResizeEventModule} from 'angular-resize-event';
@@ -9,7 +9,7 @@ import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {MockAuthenticationMethodService} from '../../../utility/tests/mocks/mock-authentication-method-service';
 import {AuthenticationMethodService} from '../../../authentication/services/authentication-method.service';
 import {AuthenticationService} from '../../../authentication/services/authentication/authentication.service';
-import {UserResourceService} from '../../../resources/engine-endpoint/user-resource.service';
+import {IdentityResourceService} from '../../../resources/engine-endpoint/identity-resource.service';
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {MockAuthenticationService} from '../../../utility/tests/mocks/mock-authentication.service';
 import {MockUserResourceService} from '../../../utility/tests/mocks/mock-user-resource.service';
@@ -21,6 +21,7 @@ import {AbstractHtmlTextareaFieldComponent} from './abstract-html-textarea-field
 import {DomSanitizer} from '@angular/platform-browser';
 import {TextAreaField} from '../models/text-area-field';
 import {QuillModule} from 'ngx-quill';
+import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 
 describe('AbstractHtmlTextareaFieldComponent', () => {
     let component: TestTextComponent;
@@ -40,8 +41,16 @@ describe('AbstractHtmlTextareaFieldComponent', () => {
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
-                {provide: UserResourceService, useClass: MockUserResourceService},
-                {provide: ConfigurationService, useClass: TestConfigurationService}
+                {provide: IdentityResourceService, useClass: MockUserResourceService},
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: DATA_FIELD_PORTAL_DATA, useValue: {
+                        dataField: new TextAreaField('', '', 'text', {
+                            editable: true
+                        }, undefined, undefined, undefined, [{validationRule: 'regex 5', validationMessage: 'This is custom message!'}]),
+                        formControlRef: new FormControl(),
+                        showLargeLayout: new WrappedBoolean()
+                    } as DataFieldPortalData<TextAreaField>
+                }
             ],
             declarations: [TestTextComponent, TestWrapperComponent],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -70,26 +79,15 @@ describe('AbstractHtmlTextareaFieldComponent', () => {
     template: ''
 })
 class TestTextComponent extends AbstractHtmlTextareaFieldComponent {
-    constructor(protected _translate: TranslateService, protected _sanitizer: DomSanitizer) {
-        super(_translate, _sanitizer);
+    constructor(protected _translate: TranslateService, protected _sanitizer: DomSanitizer,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextAreaField>) {
+        super(_translate, _sanitizer, dataFieldPortalData);
     }
 }
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: `<ncc-test-text [showLargeLayout]="label"
-                                 [formControlRef]="formControl"
-                                 [textAreaField]="dataField"></ncc-test-text>`
+    template: `<ncc-test-text></ncc-test-text>`
 })
 class TestWrapperComponent {
-    label = new WrappedBoolean();
-    dataField = new TextAreaField('', '', 'text', {
-        editable: true
-    }, undefined, undefined, undefined, [{validationRule: 'regex 5', validationMessage: 'This is custom message!'}]);
-    formControl = new FormControl();
-
-    constructor() {
-        this.formControl.enable();
-        this.dataField.registerFormControl(this.formControl);
-    }
 }

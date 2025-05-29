@@ -12,7 +12,6 @@ import {
     NAE_NEW_CASE_CREATION_CONFIGURATION_DATA,
     NewCaseCreationConfigurationData
 } from '../../side-menu/content-components/new-case/model/new-case-injection-data';
-import {Observable} from 'rxjs';
 import {NAE_AUTOSWITCH_TAB_TOKEN} from './models/autoswitch-token';
 import {NAE_OPEN_EXISTING_TAB} from './models/open-existing-tab-token';
 import { ActivatedRoute } from '@angular/router';

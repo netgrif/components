@@ -20,7 +20,7 @@
         <div fxLayout="column" fxLayoutAlign="center center" class="full-width full-showcase-text padding-default">
             <span>{{user.fullName}}</span>
             <span class="impersonated-user-name" *ngIf="user.isImpersonating()">{{'side-menu.impersonation.impersonating' | translate }} {{user.getSelfOrImpersonated().fullName}}</span>
-            <span>{{user.email}}</span>
+            <span>{{user.username}}</span>
         </div>
     </div>
     <div *ngSwitchCase="'horizontal'" fxLayout="row" fxLayoutAlign="start center"
@@ -30,7 +30,7 @@
         </div>
         <div fxLayout="column" fxLayoutAlign="center center" class="full-width full-showcase-text">
             <span>{{user.fullName}}</span>
-            <span>{{user.email}}</span>
+            <span>{{user.username}}</span>
         </div>
     </div>
     <div *ngSwitchCase="'vertical'" fxLayout="column" fxLayoutAlign="start center"
@@ -41,13 +41,13 @@
         </div>
         <div fxLayout="column" fxLayoutAlign="center center" class="full-width full-showcase-text">
             <span>{{user.fullName}}</span>
-            <span>{{user.email}}</span>
+            <span>{{user.username}}</span>
         </div>
     </div>
     <div *ngSwitchCase="'icon'" [routerLink]="link">
         <div class="mat-elevation-z6 no-outline"
              [ngClass]="{'user-avatar-large':iconStyle === 'large', 'user-avatar-small':iconStyle==='small'}"
-             [matTooltip]="user.fullName+'\n'+user.email"
+             [matTooltip]="user.fullName+'\n'+user.username"
              matTooltipHideDelay="1000"
              [matTooltipPosition]="tooltipPosition"
              matRipple>

@@ -14,7 +14,8 @@ import { DemoTitleConfigContent3CaseViewComponent } from './content/3/demo-title
         {   provide: NAE_VIEW_ID_SEGMENT,
             useValue: 'demo-title-config'},
         ViewIdService,
-    ]
+    ],
+    standalone: false
 })
 export class TitleConfigComponent {
 

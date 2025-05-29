@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .attr("text-anchor", function(d) {
                 return "start";
             }).html(function(d) {
-                // if kind === module name + module
+                // if kind === model name + model
                 // if kind === component component + path
                 var _name = '';
                 if (d.kind === 'module') {

@@ -18,6 +18,7 @@ const noop: any = () => {
             multi: true,
         },
     ],
+    standalone: false
 })
 export class EasymdeWrapperComponent implements OnDestroy, AfterViewInit, ControlValueAccessor {
     private _easyMDE!: EasyMDE;

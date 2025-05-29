@@ -11,11 +11,12 @@ import {TranslateLibModule} from '../../../../translate/translate-lib.module';
 import {MockAuthenticationMethodService} from '../../../../utility/tests/mocks/mock-authentication-method-service';
 import {AuthenticationMethodService} from '../../../../authentication/services/authentication-method.service';
 import {AuthenticationService} from '../../../../authentication/services/authentication/authentication.service';
-import {UserResourceService} from '../../../../resources/engine-endpoint/user-resource.service';
+import {IdentityResourceService} from '../../../../resources/engine-endpoint/identity-resource.service';
 import {ConfigurationService} from '../../../../configuration/configuration.service';
 import {TestConfigurationService} from '../../../../utility/tests/test-config';
 import {MockUserResourceService} from '../../../../utility/tests/mocks/mock-user-resource.service';
 import {MockAuthenticationService} from '../../../../utility/tests/mocks/mock-authentication.service';
+import {LanguageIconsService} from "../../../../data-fields/i18n-field/language-icons.service";
 
 describe('AbstractLanguageSelectorComponent', () => {
     let component: TestLangComponent;
@@ -34,7 +35,7 @@ describe('AbstractLanguageSelectorComponent', () => {
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
-                {provide: UserResourceService, useClass: MockUserResourceService},
+                {provide: IdentityResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
             ],
             declarations: [TestLangComponent, TestWrapperComponent],
@@ -59,15 +60,15 @@ describe('AbstractLanguageSelectorComponent', () => {
     template: ''
 })
 class TestLangComponent extends AbstractLanguageSelectorComponent {
-    constructor(protected _select: LanguageService) {
-        super(_select);
+    constructor(protected _select: LanguageService,
+                protected _languageIconsService: LanguageIconsService) {
+        super(_select, _languageIconsService);
     }
 }
 
 @Component({
     selector: 'ncc-test-wrapper',
-    template: '<nae-test-lang language="sk"></nae-test-lang>'
+    template: '<ncc-test-lang></ncc-test-lang>'
 })
 class TestWrapperComponent {
-    lang = 'sk';
 }

@@ -21,7 +21,6 @@ import {Subject} from 'rxjs';
 
 interface ExampleInjectedData extends InjectedTabbedCaseViewData {
     exampleUseCache: boolean;
-    loadFilter?: Filter;
 }
 
 const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
@@ -67,7 +66,8 @@ const baseFilterFactory = (injectedData: ExampleInjectedData) => {
             deps: [AllowedNetsServiceFactory]},
         ViewIdService,
         {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
-    ]
+    ],
+    standalone: false
 })
 export class DemoTitleConfigContent3CaseViewComponent extends AbstractTabbedCaseViewComponent implements AfterViewInit {
 

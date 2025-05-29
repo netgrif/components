@@ -102,7 +102,19 @@
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
+                                <a href="#getConfigurationSubtreeByPath" >getConfigurationSubtreeByPath</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#getDatafieldConfiguration" >getDatafieldConfiguration</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#getOnLoginPath" >getOnLoginPath</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#getOnLogoutPath" >getOnLogoutPath</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
@@ -111,6 +123,10 @@
                             <li>
                                     <span class="modifier">Public</span>
                                 <a href="#getServicesConfiguration" >getServicesConfiguration</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#getToLoginPath" >getToLoginPath</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
@@ -123,6 +139,10 @@
                             <li>
                                     <span class="modifier">Protected</span>
                                 <a href="#resolveEndpointURLs" >resolveEndpointURLs</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#resolveProvidersEndpoint" >resolveProvidersEndpoint</a>
                             </li>
                             <li>
                                     <span class="modifier">Protected</span>
@@ -193,7 +213,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classes/ConfigurationService.html#source" target="_self" >ConfigurationService:20</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classes/ConfigurationService.html#source" target="_self" >ConfigurationService:22</a></code>
 </div>
                 </td>
             </tr>
@@ -201,6 +221,8 @@
 
             <tr>
                 <td class="col-md-4">
+                    <div class="io-description"><p>Calls to this method should be avoided as creating a deep copy of the configuration has a large overhead</p>
+</div>
 
                     <div>
                     </div>
@@ -289,7 +311,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classes/ConfigurationService.html#source" target="_self" >ConfigurationService:107</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classes/ConfigurationService.html#source" target="_self" >ConfigurationService:113</a></code>
 </div>
                 </td>
             </tr>
@@ -350,6 +372,82 @@ Calling this method with an empty array as argument is equivalent to calling the
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="getConfigurationSubtreeByPath"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>getConfigurationSubtreeByPath</b></span>
+                        <a href="#getConfigurationSubtreeByPath"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getConfigurationSubtreeByPath(path: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/ConfigurationService.html" target="_self" >ConfigurationService</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/ConfigurationService.html#source" target="_self" >ConfigurationService:104</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>path</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>any | undefined</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="getDatafieldConfiguration"></a>
                     <span class="name">
                         <span class="modifier">Public</span>
@@ -374,7 +472,7 @@ Calling this method with an empty array as argument is equivalent to calling the
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classes/ConfigurationService.html#source" target="_self" >ConfigurationService:121</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classes/ConfigurationService.html#source" target="_self" >ConfigurationService:127</a></code>
 </div>
                 </td>
             </tr>
@@ -391,6 +489,113 @@ Calling this method with an empty array as argument is equivalent to calling the
                     </div>
                     <div class="io-description">
                         <p>the appropriate template configuration for data fields, or <code>undefined</code> if such configuration is not present.</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getOnLoginPath"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>getOnLoginPath</b></span>
+                        <a href="#getOnLoginPath"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getOnLoginPath()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/ConfigurationService.html" target="_self" >ConfigurationService</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/ConfigurationService.html#source" target="_self" >ConfigurationService:215</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Otherwise, <code>undefined</code> is returned.</p>
+</div>
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>string | undefined</code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>the value stored in the [onLoginRedirect]{</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getOnLogoutPath"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>getOnLogoutPath</b></span>
+                        <a href="#getOnLogoutPath"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getOnLogoutPath()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/ConfigurationService.html" target="_self" >ConfigurationService</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/ConfigurationService.html#source" target="_self" >ConfigurationService:198</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>If not and the deprecated attribute <a href="../interfaces/Services.html#auth.logoutRedirect">logoutRedirect</a> is defined then its value is returned.
+Otherwise, <code>undefined</code> is returned.</p>
+</div>
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>string | undefined</code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>the value stored in the [onLogoutRedirect]{</p>
 
                     </div>
                 </td>
@@ -425,7 +630,7 @@ Calling this method with an empty array as argument is equivalent to calling the
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classes/ConfigurationService.html#source" target="_self" >ConfigurationService:89</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classes/ConfigurationService.html#source" target="_self" >ConfigurationService:91</a></code>
 </div>
                 </td>
             </tr>
@@ -509,7 +714,7 @@ Calling this method with an empty array as argument is equivalent to calling the
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classes/ConfigurationService.html#source" target="_self" >ConfigurationService:182</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classes/ConfigurationService.html#source" target="_self" >ConfigurationService:188</a></code>
 </div>
                 </td>
             </tr>
@@ -526,6 +731,60 @@ Calling this method with an empty array as argument is equivalent to calling the
                     </div>
                     <div class="io-description">
                         <p>the services configuration, or <code>undefined</code> if such configuration is not present.</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getToLoginPath"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>getToLoginPath</b></span>
+                        <a href="#getToLoginPath"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getToLoginPath()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/ConfigurationService.html" target="_self" >ConfigurationService</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/ConfigurationService.html#source" target="_self" >ConfigurationService:207</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>If not and the deprecated attribute <a href="../interfaces/Services.html#auth.loginRedirect">loginRedirect</a> is defined then its value is returned.
+Otherwise, <code>undefined</code> is returned.</p>
+</div>
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>string | undefined</code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>the value stored in the [toLoginRedirect]{</p>
 
                     </div>
                 </td>
@@ -560,7 +819,7 @@ Calling this method with an empty array as argument is equivalent to calling the
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classes/ConfigurationService.html#source" target="_self" >ConfigurationService:29</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classes/ConfigurationService.html#source" target="_self" >ConfigurationService:31</a></code>
 </div>
                 </td>
             </tr>
@@ -644,7 +903,7 @@ Calling this method with an empty array as argument is equivalent to calling the
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classes/ConfigurationService.html#source" target="_self" >ConfigurationService:46</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classes/ConfigurationService.html#source" target="_self" >ConfigurationService:48</a></code>
 </div>
                 </td>
             </tr>
@@ -728,7 +987,7 @@ Calling this method with an empty array as argument is equivalent to calling the
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classes/ConfigurationService.html#source" target="_self" >ConfigurationService:136</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classes/ConfigurationService.html#source" target="_self" >ConfigurationService:142</a></code>
 </div>
                 </td>
             </tr>
@@ -744,6 +1003,88 @@ as the base path. <code>/api</code> is appended automatically.</p>
 
                     <div class="io-description">
                         <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resolveProvidersEndpoint"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>resolveProvidersEndpoint</b></span>
+                        <a href="#resolveProvidersEndpoint"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resolveProvidersEndpoint(endpointKey: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/ConfigurationService.html" target="_self" >ConfigurationService</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/ConfigurationService.html#source" target="_self" >ConfigurationService:236</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>endpointKey</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the attribute name of the endpoint address in <code>nae.json</code></p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>the endpoint address or <code>undefined</code> if such endpoint is not defined in <code>nae.json</code></p>
 
                     </div>
                 </td>
@@ -778,7 +1119,7 @@ as the base path. <code>/api</code> is appended automatically.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classes/ConfigurationService.html#source" target="_self" >ConfigurationService:171</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classes/ConfigurationService.html#source" target="_self" >ConfigurationService:177</a></code>
 </div>
                 </td>
             </tr>

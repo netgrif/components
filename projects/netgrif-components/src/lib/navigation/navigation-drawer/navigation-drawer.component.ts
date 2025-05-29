@@ -6,7 +6,8 @@ import {AbstractNavigationDrawerComponent, LoggerService, UserPreferenceService}
 @Component({
     selector: 'nc-navigation-drawer',
     templateUrl: './navigation-drawer.component.html',
-    styleUrls: ['./navigation-drawer.component.scss']
+    styleUrls: ['./navigation-drawer.component.scss'],
+    standalone: false
 })
 export class NavigationDrawerComponent extends AbstractNavigationDrawerComponent {
 

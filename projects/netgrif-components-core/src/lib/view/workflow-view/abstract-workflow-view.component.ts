@@ -10,6 +10,7 @@ import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {LoggerService} from '../../logger/services/logger.service';
 import {ProcessService} from '../../process/process.service';
 import { ActivatedRoute } from '@angular/router';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
     selector: 'ncc-abstract-workflow-view',
@@ -27,7 +28,7 @@ export abstract class AbstractWorkflowViewComponent extends AbstractViewWithHead
 
     @ViewChild(CdkVirtualScrollViewport) public viewport: CdkVirtualScrollViewport;
 
-    protected constructor(protected _sideMenuService: SideMenuService,
+    protected constructor(protected _dialog: MatDialog,
                           protected _workflowViewService: WorkflowViewService,
                           protected _log: LoggerService,
                           protected _processService: ProcessService,
@@ -43,7 +44,12 @@ export abstract class AbstractWorkflowViewComponent extends AbstractViewWithHead
     }
 
     public importSidemenuNet(component) {
-        this._sideMenuService.open(component).onClose.subscribe(event => {
+        const dialogRef = this._dialog.open(component, {
+            width: '40%',
+            minWidth: '300px',
+            panelClass: "dialog-responsive",
+        });
+        dialogRef.afterClosed().subscribe(event => {
             if (event.data?.net !== undefined) {
                 this._workflowViewService.reload();
                 if (event.data?.net) {

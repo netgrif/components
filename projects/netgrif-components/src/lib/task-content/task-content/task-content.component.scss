@@ -2,12 +2,6 @@
     overflow-y: auto;
 }
 
-.paper-view-content {
-    padding: 20px;
-    width: 22cm;
-    border: 1px solid #dddddd;
-}
-
 .scrolling_data {
     overflow-y: auto !important;
 }
@@ -18,4 +12,11 @@
 
 .responsive-grid {
     display: block !important;
+}
+.width-100 {
+    width: 100%;
+}
+
+.height-100 {
+    height: 100%;
 }

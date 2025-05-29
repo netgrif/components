@@ -3,17 +3,22 @@ import {CommonModule} from '@angular/common';
 import {UserAssignComponent} from './user-assign.component';
 import {UserAssignItemComponent} from './user-assign-list/user-assign-item/user-assign-item.component';
 import {UserAssignListComponent} from './user-assign-list/user-assign-list.component';
-import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
+import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
 import {FormsModule} from '@angular/forms';
-import {CovalentModule, MaterialModule, NAE_USER_ASSIGN_COMPONENT, TranslateLibModule} from '@netgrif/components-core';
+import {
+    CovalentModule,
+    MaterialModule,
+    NAE_USER_ASSIGN_COMPONENT,
+    TranslateLibModule,
+    UtilityModule
+} from '@netgrif/components-core';
 import {MatFormFieldModule} from '@angular/material/form-field';
-
 
 @NgModule({
     declarations: [
         UserAssignComponent,
         UserAssignItemComponent,
-        UserAssignListComponent
+        UserAssignListComponent,
     ],
     imports: [
         CommonModule,
@@ -23,9 +28,10 @@ import {MatFormFieldModule} from '@angular/material/form-field';
         FlexModule,
         FormsModule,
         TranslateLibModule,
-        MatFormFieldModule
+        MatFormFieldModule,
+        UtilityModule
     ],
-    exports: [UserAssignComponent],
+    exports: [UserAssignComponent, UserAssignListComponent],
     providers: [
         { provide: NAE_USER_ASSIGN_COMPONENT, useValue: UserAssignComponent },
     ]
