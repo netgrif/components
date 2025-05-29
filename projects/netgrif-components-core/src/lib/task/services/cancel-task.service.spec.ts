@@ -76,7 +76,7 @@ describe('CancelTaskService', () => {
             title: '',
             caseColor: '',
             caseTitle: '',
-            userId: '',
+            userId: 'id',
             roles: {
                 role: {
                     assign: true,
@@ -111,7 +111,7 @@ describe('CancelTaskService', () => {
 
     it('should cancel successfully', done => {
         expect(testTask.startDate).toBeTruthy();
-        expect(testTask.userIdId).toBeTruthy();
+        expect(testTask.userId).toBeTruthy();
         resourceService.response = {
             success: 'success',
             outcome: {
@@ -123,7 +123,7 @@ describe('CancelTaskService', () => {
                     title: '',
                     caseColor: '',
                     caseTitle: '',
-                    userId: null,
+                    userId: '',
                     roles: {
                         role: {
                             assign: true,
@@ -171,7 +171,7 @@ describe('CancelTaskService', () => {
 
     it('should cancel unsuccessful', done => {
         expect(testTask.startDate).toBeTruthy();
-        expect(testTask.userIdId).toBeTruthy();
+        expect(testTask.userId).toBeTruthy();
         resourceService.response = {
             error: 'error',
             outcome: {}
