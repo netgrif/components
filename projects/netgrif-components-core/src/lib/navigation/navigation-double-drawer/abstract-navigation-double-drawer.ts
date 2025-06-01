@@ -526,7 +526,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
 
     protected getTranslation(value: I18nFieldValue): string {
         const locale = this._translateService.currentLang.split('-')[0];
-        return locale in value.translations ? value.translations[locale] : value.defaultValue;
+        return value.translations?.[locale] ?? value.defaultValue;
     }
 
     protected resolveAccessRoles(filter: Case, roleType: string): Array<RoleAccess> | undefined {
