@@ -46,8 +46,15 @@ export interface Auth {
     authentication: string;
     sessionBearer?: string;
     endpoints?: string | { [k: string]: string };
+    sso?: Sso;
 
     [k: string]: any;
+}
+
+export interface Sso {
+    enable: boolean;
+    redirectUrl: string;
+    scopes: Array<string>;
 }
 
 export interface Resource {

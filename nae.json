@@ -19,7 +19,11 @@
             "sessionBearer": "X-Auth-Token",
             "sessionTimeoutEnabled": false,
             "sessionTimeout": 900,
-            "jwtBearer": "X-Jwt-Token"
+            "jwtBearer": "X-Jwt-Token",
+            "sso": {
+                "enable": true,
+                "redirectUrl": "https://netgrif.com"
+            }
         },
         "resources": [
             {

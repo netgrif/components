@@ -40,6 +40,9 @@
                 <span *ngIf="(loading | async) === false" fxFlex>{{ 'forms.login.loginButton' | translate}}</span>
             </button>
         </div>
+        <div fxLayout="row" [fxLayoutAlign]="getButtonsFxLayoutAlign()" fxLayoutAlign.xs="center" class="margin-top-4">
+            <nc-login-sso *ngIf="showSsoButton"></nc-login-sso>
+        </div>
     </form>
 
     <div *ngIf="showSignUpButton && showForgottenPasswordButton" fxLayout="row" class="width-100" fxLayoutAlign="end">
