@@ -69,19 +69,18 @@ export abstract class AbstractLoginSsoComponent implements OnDestroy {
     }
 
     private getRedirectUrl(): string {
-        // const myQuery = this._ssoConfig['login'] + '?';
-        // const options: { [index: string]: string } = {
-        //     client_id: this._authConfig.sso['clientID'] as string,
-        //     redirect_uri: location.origin + '/' + this._config.getConfigurationSubtree(['services', 'auth', 'loginRedirect']),
-        //     response_type: 'code',
-        //     scope: this._config.getConfigurationSubtree(['providers', 'auth', 'sso', 'scopes']).join(' '),
-        // };
-        // return myQuery + Object.keys(options).map(
-        //     key => {
-        //         return encodeURIComponent(key) + '=' + encodeURIComponent(options[key]);
-        //     },
-        // ).join('&');
-        return 'https://google.com';
+        const myQuery = this._ssoConfig.redirectUrl + '?';
+        const options: { [index: string]: string } = {
+            client_id: this._ssoConfig.clientId,
+            redirect_uri: location.origin + '/' + this._config.getConfigurationSubtree(['services', 'auth', 'toLoginRedirect']),
+            response_type: 'code',
+            scope: this._ssoConfig.scopes.join(' '),
+        };
+        return myQuery + Object.keys(options).map(
+            key => {
+                return encodeURIComponent(key) + '=' + encodeURIComponent(options[key]);
+            },
+        ).join('&');
     }
 
     private getToken(body: any): Observable<any> {

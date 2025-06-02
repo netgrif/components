@@ -22,7 +22,9 @@
             "jwtBearer": "X-Jwt-Token",
             "sso": {
                 "enable": true,
-                "redirectUrl": "https://netgrif.com"
+                "clientId": "cluster-worker",
+                "redirectUrl": "https://iam.mudu.dev.netgrif.cloud/realms/netgrif-cloud-testing/protocol/openid-connect/auth",
+                "scopes": ["openid","email","profile","roles"]
             }
         },
         "resources": [
