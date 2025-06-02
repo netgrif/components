@@ -1,13 +1,14 @@
 import {Component, OnDestroy} from "@angular/core";
 import {ActivatedRoute, Params, Router} from "@angular/router";
-import {Observable, of, throwError} from "rxjs";
+import {Observable, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {ConfigurationService} from "../../../configuration/configuration.service";
 import {LoggerService} from '../../../logger/services/logger.service';
 import {LoadingEmitter} from '../../../utility/loading-emitter';
 import {SnackBarService} from "../../../snack-bar/services/snack-bar.service";
 import {Sso} from "../../../../commons/schema";
+import {TranslateService} from "@ngx-translate/core";
 
 
 @Component({
@@ -26,6 +27,7 @@ export abstract class AbstractLoginSsoComponent implements OnDestroy {
         protected _log: LoggerService,
         protected _router: Router,
         protected _activeRouter: ActivatedRoute,
+        protected _translate: TranslateService
     ) {
         this._ssoConfig = this._config.getConfigurationSubtree(['providers', 'auth', 'sso']);
         this.loading = new LoadingEmitter();
@@ -40,6 +42,12 @@ export abstract class AbstractLoginSsoComponent implements OnDestroy {
         this.loading.complete();
     }
 
+    public redirectToSso(): void {
+        let redirectUrl: string = this.getRedirectUrl();
+        this._log.info("Redirecting to " + redirectUrl)
+        window.location.href = redirectUrl;
+    }
+
     public loginFromCode(params: Params) {
         if (!params.code) {
             return;
@@ -47,25 +55,19 @@ export abstract class AbstractLoginSsoComponent implements OnDestroy {
 
         this.loading.on();
         this._log.debug('Handling access token: ' + params.code)
-        const refresh = this.getToken({
+        const token$ = this.getToken({
             grantType: 'authorization_code',
             code: params.code,
-            redirectUri: location.origin + '/' + this._config.getConfigurationSubtree(['services', 'auth', 'loginRedirect']),
+            redirectUri: location.origin + '/' + this._config.getConfigurationSubtree(['services', 'auth', 'toLoginRedirect']),
         });
-        refresh.subscribe(
-            it => {
+        token$.subscribe(
+            token => {
                 this.loading.off();
-                if (it) {
+                if (!!token) {
                     this.redirectToHome();
                 }
             },
         );
-    }
-
-    public redirectToSso(): void {
-        let redirectUrl: string = this.getRedirectUrl();
-        this._log.info("Redirecting to " + redirectUrl)
-        window.location.href = redirectUrl;
     }
 
     private getRedirectUrl(): string {
@@ -84,29 +86,22 @@ export abstract class AbstractLoginSsoComponent implements OnDestroy {
     }
 
     private getToken(body: any): Observable<any> {
-        // const url = this._authConfig.sso['refreshUrl'];
-        // if (!url) {
-        //     return throwError(new Error('Refresh URL is not defined in the config [nae.providers.auth.sso.refreshUrl]'));
-        // }
-        // return this._http.post(url, body,
-        //     {headers: {'Content-Type': 'application/json'}}).pipe(
-        //     catchError(error => {
-        //         this.loading.off();
-        //         this._snackbar.openErrorSnackBar('Pri pokuse o prihlásenie došlo k neočakávanej chybe.');
-        //         if (error instanceof HttpErrorResponse && (error.status === 401 || error.status === 400)) {
-        //             return throwError(error);
-        //         } else {
-        //             return throwError(error);
-        //         }
-        //     }),
-        // );
-        return of()
+        const url = this._ssoConfig.refreshUrl;
+        if (!url) {
+            return throwError(() => new Error('Refresh URL is not defined in the config [nae.providers.auth.sso.refreshUrl]'));
+        }
+        return this._http.post(url, body,
+            {headers: {'Content-Type': 'application/json'}}).pipe(
+            catchError(error => {
+                this.loading.off();
+                this._snackbar.openErrorSnackBar(this._translate.instant('forms.login.wrongCredentials'));
+                return throwError(() => error);
+            }),
+        );
     }
 
     private redirectToHome() {
-        this._router.navigate(['/portal']).then((value) => {
-            this._log.debug('Routed to ' + value);
-        });
+        this._router.navigate(['/' + this._config.getConfigurationSubtree(['services', 'auth', 'onLoginRedirect'])])
+            .then((value) => { this._log.debug('Routed to ' + value); });
     }
-
 }

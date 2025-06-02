@@ -54,6 +54,7 @@ export interface Auth {
 export interface Sso {
     enable: boolean;
     redirectUrl: string;
+    refreshUrl: string;
     clientId: string;
     scopes: Array<string>;
 }
