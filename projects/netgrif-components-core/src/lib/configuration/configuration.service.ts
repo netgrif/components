@@ -259,6 +259,13 @@ export abstract class ConfigurationService {
         return config.providers.auth.address + config.providers.auth.endpoints[endpointKey];
     }
 
+    /**
+     * Loads the configuration for the application by fetching data from the resource provider
+     * and initializes the application settings based on the fetched configuration.
+     *
+     * @return {Promise<any>} A promise that resolves with the fetched configuration or returns null
+     * if the configuration resolution is not enabled.
+     */
     public loadConfiguration(): Promise<any> {
         if (!this.APPLICATION_CONFIG.resolve_configuration) {
             return null;
