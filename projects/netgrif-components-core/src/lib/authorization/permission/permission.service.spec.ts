@@ -49,7 +49,7 @@ describe('PermissionService', () => {
             title: 'string',
             caseColor: 'string',
             caseTitle: 'string',
-            user: undefined,
+            userId: undefined,
             roles: {
                 assignRole: {
                     assign: true,
@@ -83,7 +83,7 @@ describe('PermissionService', () => {
             title: 'string',
             caseColor: 'string',
             caseTitle: 'string',
-            user: undefined,
+            userId: undefined,
             roles: {
                 assignRole: {
                     assign: false,
@@ -117,7 +117,7 @@ describe('PermissionService', () => {
             title: 'string',
             caseColor: 'string',
             caseTitle: 'string',
-            user: undefined,
+            userId: undefined,
             roles: {},
             startDate: undefined,
             finishDate: undefined,
@@ -155,7 +155,7 @@ describe('PermissionService', () => {
             title: 'string',
             caseColor: 'string',
             caseTitle: 'string',
-            user: undefined,
+            userId: undefined,
             roles: {},
             startDate: undefined,
             finishDate: undefined,
