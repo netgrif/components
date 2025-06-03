@@ -1,7 +1,10 @@
 import {ConfigurationService} from '../../configuration/configuration.service';
+import {ResourceProvider} from '../../resources/resource-provider.service';
+import {Injectable} from '@angular/core';
 
+@Injectable()
 export class TestConfigurationService extends ConfigurationService {
-    constructor() {
+    constructor(private resourceProvider: ResourceProvider) {
         super({
             extends: 'nae-default',
             providers: {
@@ -427,6 +430,12 @@ export class TestConfigurationService extends ConfigurationService {
                     groupNavigationRoute: 'config-route'
                 }
             }
-        });
+        },
+        resourceProvider,
+            {
+                application: 'nae',
+                type: 'default',
+                gateway_url: 'http://localhost:8888/api'
+            });
     }
 }

@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {Injector, NgModule} from '@angular/core';
+import {APP_INITIALIZER, Injector, NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {
@@ -19,7 +19,8 @@ import {
     ViewService,
     ProfileModule,
     Dashboard,
-    FrontActionModule, NAE_ASYNC_RENDERING_CONFIGURATION
+    FrontActionModule, NAE_ASYNC_RENDERING_CONFIGURATION,
+    loadConfiguration
 } from '@netgrif/components-core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
@@ -244,10 +245,18 @@ export function HttpLoaderFactory(http: HttpClient) {
         DialogComponentsModule,
         FrontActionModule
     ],
-    providers: [{
-        provide: ConfigurationService,
-        useClass: NaeExampleAppConfigurationService
-    },
+    providers: [
+        ResourceProvider,
+        {
+            provide: ConfigurationService,
+            useClass: NaeExampleAppConfigurationService
+        },
+        {
+            provide: APP_INITIALIZER,
+            useFactory: loadConfiguration,
+            deps: [ConfigurationService],
+            multi: true
+        },
         {provide: NAE_SNACKBAR_VERTICAL_POSITION, useValue: SnackBarVerticalPosition.TOP},
         {provide: NAE_SNACKBAR_HORIZONTAL_POSITION, useValue: SnackBarHorizontalPosition.LEFT},
         {provide: NAE_ASYNC_RENDERING_CONFIGURATION, useValue: {
@@ -257,7 +266,6 @@ export function HttpLoaderFactory(http: HttpClient) {
                 enableAsyncRenderingForNewFields: true,
                 enableAsyncRenderingOnTaskExpand: true
             }},
-        ResourceProvider,
         TranslateService,
         TranslatePipe,
         TranslateStore,

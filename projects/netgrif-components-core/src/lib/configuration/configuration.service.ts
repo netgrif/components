@@ -1,11 +1,24 @@
 import {NetgrifApplicationEngine, Services, View, Views} from '../../commons/schema';
 import {Observable, of} from 'rxjs';
+import {ResourceProvider} from '../resources/resource-provider.service';
+import {ApplicationConfiguration} from './application-configuration';
+
 
 export abstract class ConfigurationService {
 
-    private readonly _dataFieldConfiguration: Services['dataFields'];
+    private _dataFieldConfiguration: Services['dataFields'];
 
-    protected constructor(protected configuration: NetgrifApplicationEngine) {
+    private readonly APPLICATION_CONFIG: ApplicationConfiguration;
+
+    protected constructor(protected configuration: NetgrifApplicationEngine,
+                          protected _resourceProvider: ResourceProvider,
+                          protected _applicationConfiguration: ApplicationConfiguration) {
+        this.initialize();
+
+        this.APPLICATION_CONFIG = _applicationConfiguration;
+    }
+
+    private initialize(): void {
         this.resolveEndpointURLs();
         this._dataFieldConfiguration = this.getConfigurationSubtree(['services', 'dataFields']);
     }
@@ -244,6 +257,23 @@ export abstract class ConfigurationService {
             throw new Error('Authentication provider address is not set!');
         }
         return config.providers.auth.address + config.providers.auth.endpoints[endpointKey];
+    }
+
+    public loadConfiguration(): Promise<any> {
+        if (!this.APPLICATION_CONFIG.resolve_configuration) {
+            return null;
+        }
+        return this._resourceProvider.get$(
+                `/frontend-config/public/${this.APPLICATION_CONFIG.application}/${this.APPLICATION_CONFIG.type}`,
+                this.APPLICATION_CONFIG.gateway_url
+            ).toPromise()
+            .then((data: ApplicationConfiguration) => {
+                if (!data || !data.properties) {
+                    return;
+                }
+                this.configuration = data.properties as NetgrifApplicationEngine;
+                this.initialize();
+            });
     }
 
     private createConfigurationCopy(): any {
