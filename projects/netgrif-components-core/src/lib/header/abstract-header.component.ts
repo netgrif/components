@@ -1,4 +1,4 @@
-import {Component, Injector, Input, OnDestroy, OnInit, Optional} from '@angular/core';
+import {Component, Inject, Injector, Input, OnDestroy, OnInit, Optional} from '@angular/core';
 import {AbstractHeaderService} from './abstract-header-service';
 import {CaseHeaderService} from './case-header/case-header.service';
 import {TaskHeaderService} from './task-header/task-header.service';
@@ -12,6 +12,13 @@ import {OverflowService} from './services/overflow.service';
 import {stopPropagation} from '../utility/stop-propagation';
 import {Subscription} from 'rxjs';
 import {debounceTime} from "rxjs/operators";
+import {CaseViewService} from "../view/case-view/service/case-view-service";
+import {
+    DATA_FIELD_PORTAL_DATA,
+    DataFieldPortalData
+} from "../data-fields/models/data-field-portal-data-injection-token";
+import {MultichoiceField} from "../data-fields/multichoice-field/models/multichoice-field";
+import {EnumerationField} from "../data-fields/enumeration-field/models/enumeration-field";
 
 @Component({
     selector: 'ncc-abstract-header',
@@ -45,11 +52,16 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
     protected _initHeaderCount: number = undefined;
     protected _initResponsiveHeaders: boolean = undefined;
     protected _approvalFormControl: FormControl;
+    protected _changeValue: boolean;
+    protected _subCases: Subscription;
 
     constructor(protected _injector: Injector,
                 protected _translate: TranslateService,
-                @Optional() protected _overflowService: OverflowService) {
+                @Optional() protected _overflowService: OverflowService,
+                @Optional() protected _caseViewService: CaseViewService,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) protected _dataFieldPortalData: DataFieldPortalData<MultichoiceField | EnumerationField>) {
         this.initializeFormControls(this._overflowService !== null);
+        this._changeValue = true;
     }
 
     @Input()
@@ -93,6 +105,7 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
             this.headerService.responsiveHeaders = this._initResponsiveHeaders;
         }
         this.headerService.preferenceColumnCount$.subscribe(value => this.columnCountControl.setValue(value));
+        this.resolveApprovalDatafields();
     }
 
     ngOnDestroy(): void {
@@ -100,6 +113,9 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
             this.subColumnWidthControl.unsubscribe();
             this.subColumnCountControl.unsubscribe();
             this.subOverflowControl.unsubscribe();
+        }
+        if (this._subCases) {
+            this._subCases.unsubscribe();
         }
     }
 
@@ -198,5 +214,55 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
                 }
             }
         });
+    }
+
+    public indeterminate() {
+        if (this._caseViewService) {
+            return this._dataFieldPortalData?.dataField?.value?.length > 0 &&
+                this._caseViewService.cases.some(value => this._dataFieldPortalData?.dataField.value.includes(value.stringId)) &&
+                !this.resolveApprovalValue();
+        }
+        return this._dataFieldPortalData?.dataField?.value?.length > 0 &&
+            this._dataFieldPortalData?.dataField?.value?.length < this._dataFieldPortalData?.dataField?.choices?.length;
+    }
+
+    public typeApproval() {
+        return this._dataFieldPortalData?.dataField instanceof MultichoiceField ? 'multichoice' : 'enumeration';
+    }
+
+    protected resolveApprovalDatafields() {
+        if (this._dataFieldPortalData !== null && this._dataFieldPortalData.dataField instanceof MultichoiceField && this._caseViewService) {
+            this.approvalFormControl.setValue(this.resolveApprovalValue());
+            this.approvalFormControl.valueChanges.subscribe(value => {
+                if (this._changeValue) {
+                    if (value) {
+                        this._dataFieldPortalData.dataField.value = this._caseViewService.cases.map(caze => caze.stringId);
+                    } else {
+                        this._dataFieldPortalData.dataField.value = [];
+                    }
+                }
+                this._changeValue = true;
+            })
+            this._dataFieldPortalData.dataField.valueChanges().subscribe(() => {
+                this._changeValue = false;
+                this.approvalFormControl.setValue(this.resolveApprovalValue());
+            })
+            this._subCases = this._caseViewService.cases$.subscribe(() => {
+                this._changeValue = false;
+                this.approvalFormControl.setValue(this.resolveApprovalValue());
+            })
+        }
+        if (this._dataFieldPortalData !== null && this._dataFieldPortalData.dataField instanceof EnumerationField) {
+            this.approvalFormControl.valueChanges.subscribe(value => {
+                this._dataFieldPortalData.dataField.value = null;
+            })
+        }
+    }
+
+    protected resolveApprovalValue() {
+        if (this._caseViewService.cases.length === 0) {
+            return false;
+        }
+        return this._caseViewService.cases.every(value => this._dataFieldPortalData?.dataField.value.includes(value.stringId));
     }
 }
