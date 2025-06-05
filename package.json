@@ -144,7 +144,7 @@
         "karma-webpack": "^5.0.1",
         "ncp": "~2.0.0",
         "ng-packagr": "~17.3.0",
-        "puppeteer": "~22.0.0",
+        "puppeteer": "~23.0.0",
         "requirejs": "^2.3.6",
         "schematics-utilities": "~2.0.1",
         "sonarqube-scanner": "~2.5.0",

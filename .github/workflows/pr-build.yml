@@ -17,10 +17,6 @@ jobs:
                 name: Full Test on Node.js version ${{ matrix.node-version }}
                 with:
                     node-version: ${{ matrix.node-version }}
-            -   name: Install dependencies (bez Puppeteer)
-                run: npm install --legacy-peer-deps --verbose
-                env:
-                    PUPPETEER_SKIP_DOWNLOAD: 'true'
             -   name: Install dependencies
                 run: npm install --legacy-peer-deps
             -   name: Build & test components-core
