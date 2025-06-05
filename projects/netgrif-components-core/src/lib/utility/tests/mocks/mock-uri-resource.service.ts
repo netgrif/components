@@ -15,7 +15,7 @@ export class MockUriResourceService extends UriResourceService {
 
     private _root: UriNodeResource = {
         id: 'root',
-        uriPath: 'root',
+        path: 'root',
         name: 'root',
         parentId: null,
         parent: undefined,
@@ -26,7 +26,7 @@ export class MockUriResourceService extends UriResourceService {
     } as UriNodeResource;
     private _test1Node: UriNodeResource = {
         id: MockUriResourceService.TEST1_ID,
-        uriPath: MockUriResourceService.TEST1_PATH,
+        path: MockUriResourceService.TEST1_PATH,
         name: MockUriResourceService.TEST1_ID,
         parentId: 'root',
         parent: this._root,
@@ -37,7 +37,7 @@ export class MockUriResourceService extends UriResourceService {
     } as UriNodeResource;
     private _test2Node: UriNodeResource = {
         id: MockUriResourceService.TEST2_ID,
-        uriPath: MockUriResourceService.TEST2_PATH,
+        path: MockUriResourceService.TEST2_PATH,
         name: MockUriResourceService.TEST2_ID,
         parentId: 'root',
         parent: this._root,
