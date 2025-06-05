@@ -17,6 +17,10 @@ jobs:
                 name: Full Test on Node.js version ${{ matrix.node-version }}
                 with:
                     node-version: ${{ matrix.node-version }}
+            -   name: Install dependencies (bez Chromium)
+                run: npm install --legacy-peer-deps --verbose
+                env:
+                    PUPPETEER_SKIP_DOWNLOAD: 'true'
             -   name: Install dependencies with timeout and diagnostics
                 run: |
                     npm install --legacy-peer-deps --verbose &
