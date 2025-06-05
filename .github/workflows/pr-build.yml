@@ -17,7 +17,7 @@ jobs:
                 name: Full Test on Node.js version ${{ matrix.node-version }}
                 with:
                     node-version: ${{ matrix.node-version }}
-            -   name: Install dependencies
+            -   name: Install dependencies with status output
                 run: |
                     npm install --legacy-peer-deps --verbose &
                     pid=$!
@@ -25,6 +25,13 @@ jobs:
                       echo "Still installing..."; sleep 60
                     done
                     wait $pid
+                    exit_code=$?
+                    if [ $exit_code -eq 0 ]; then
+                      echo "npm install completed successfully (exit code: $exit_code)"
+                    else
+                      echo "npm install FAILED with exit code $exit_code"
+                    fi
+                    exit $exit_code
             -   name: Build & test components-core
                 run: |
                     npm run ncc:build
