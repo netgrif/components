@@ -5,7 +5,7 @@ on:
 jobs:
     matrix-test:
         name: Matrix Test
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-22.04
         strategy:
             matrix:
                 node-version: [ 20, 22, 24 ]
