@@ -17,7 +17,14 @@ jobs:
                 name: Full Test on Node.js version ${{ matrix.node-version }}
                 with:
                     node-version: ${{ matrix.node-version }}
-            -   run: npm install --legacy-peer-deps --verbose --force
+            -   name: Install dependencies
+                run: |
+                    npm install --legacy-peer-deps --verbose &
+                    pid=$!
+                    while kill -0 $pid 2> /dev/null; do
+                      echo "Still installing..."; sleep 60
+                    done
+                    wait $pid
             -   name: Build & test components-core
                 run: |
                     npm run ncc:build
