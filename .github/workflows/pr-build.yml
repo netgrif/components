@@ -5,7 +5,7 @@ on:
 jobs:
     matrix-test:
         name: Matrix Test
-        runs-on: ubuntu-22.04
+        runs-on: ubuntu-24.04
         strategy:
             matrix:
                 node-version: [ 20, 22, 24 ]
@@ -17,13 +17,24 @@ jobs:
                 name: Full Test on Node.js version ${{ matrix.node-version }}
                 with:
                     node-version: ${{ matrix.node-version }}
-            -   name: Install dependencies with status output
+            -   name: Install dependencies with timeout and diagnostics
                 run: |
                     npm install --legacy-peer-deps --verbose &
                     pid=$!
-                    while kill -0 $pid 2> /dev/null; do
-                      echo "Still installing..."; sleep 60
+                    for i in {1..5}; do
+                      if ! kill -0 $pid 2>/dev/null; then
+                        break
+                      fi
+                      echo "Still installing... ($i min)"
+                      sleep 60
                     done
+                    if kill -0 $pid 2>/dev/null; then
+                      echo "npm install is stuck, killing process..."
+                      ps aux
+                      pstree -p $pid || true
+                      kill -9 $pid
+                      exit 1
+                    fi
                     wait $pid
                     exit_code=$?
                     if [ $exit_code -eq 0 ]; then
@@ -32,6 +43,11 @@ jobs:
                       echo "npm install FAILED with exit code $exit_code"
                     fi
                     exit $exit_code
+            -   name: Debug
+                run: |
+                    ps aux
+                    pstree -p
+                    lsof -p $pid || true
             -   name: Build & test components-core
                 run: |
                     npm run ncc:build
