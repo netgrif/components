@@ -113,8 +113,8 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
                             pageLoadResult.tasks[taskId].task.dataGroups = acc[taskId].task.dataGroups;
                             pageLoadResult.tasks[taskId].initiallyExpanded = acc[taskId].initiallyExpanded;
                             this.updateTask(acc[taskId].task, pageLoadResult.tasks[taskId].task);
-                            this.blockTaskFields(acc[taskId].task, !(acc[taskId].task.user
-                                && this._userComparator.compareUsers(acc[taskId].task.user)));
+                            this.blockTaskFields(acc[taskId].task, !(acc[taskId].task.userId
+                                && this._userComparator.compareUsers(acc[taskId].task.userId)));
                             delete pageLoadResult.tasks[taskId];
                         }
                     });
@@ -251,7 +251,7 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
             map(tasks => Array.isArray(tasks.content) ? tasks : {...tasks, content: []}),
             map(tasks => {
                 return tasks.content.reduce((acc, curr) => {
-                    this.blockTaskFields(curr, !(curr.user && this._userComparator.compareUsers(curr.user)));
+                    this.blockTaskFields(curr, !(curr.userId && this._userComparator.compareUsers(curr.userId)));
                     return {
                         ...acc, [curr.stringId]: {
                             task: curr,
@@ -276,7 +276,7 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
                 old[key] = neww[key];
             }
         });
-        this.blockTaskFields(old, !(old.user && this._userComparator.compareUsers(old.user)));
+        this.blockTaskFields(old, !(old.userId && this._userComparator.compareUsers(old.userId)));
     }
 
     private blockTaskFields(task: Task, block: boolean): void {
