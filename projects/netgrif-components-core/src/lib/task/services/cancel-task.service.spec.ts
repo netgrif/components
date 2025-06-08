@@ -76,17 +76,7 @@ describe('CancelTaskService', () => {
             title: '',
             caseColor: '',
             caseTitle: '',
-            user: {
-                id: '',
-                username: '',
-                realmId: '',
-                email: 'mail',
-                name: '',
-                surname: '',
-                fullName: '',
-                firstName: '',
-                lastName: ''
-            },
+            userId: 'id',
             roles: {
                 role: {
                     assign: true,
@@ -121,7 +111,7 @@ describe('CancelTaskService', () => {
 
     it('should cancel successfully', done => {
         expect(testTask.startDate).toBeTruthy();
-        expect(testTask.user).toBeTruthy();
+        expect(testTask.userId).toBeTruthy();
         resourceService.response = {
             success: 'success',
             outcome: {
@@ -133,7 +123,7 @@ describe('CancelTaskService', () => {
                     title: '',
                     caseColor: '',
                     caseTitle: '',
-                    user: null,
+                    userId: '',
                     roles: {
                         role: {
                             assign: true,
@@ -168,7 +158,7 @@ describe('CancelTaskService', () => {
         service.cancel(callChainService.create((result) => {
             expect(result).toBeTrue();
             expect(testTask.startDate).toBeFalsy();
-            expect(testTask.user).toBeFalsy();
+            expect(testTask.userId).toBeFalsy();
 
             expect(taskEvent).toBeTruthy();
             expect(taskEvent.taskId).toEqual('taskId');
@@ -181,7 +171,7 @@ describe('CancelTaskService', () => {
 
     it('should cancel unsuccessful', done => {
         expect(testTask.startDate).toBeTruthy();
-        expect(testTask.user).toBeTruthy();
+        expect(testTask.userId).toBeTruthy();
         resourceService.response = {
             error: 'error',
             outcome: {}
@@ -195,7 +185,7 @@ describe('CancelTaskService', () => {
         service.cancel(callChainService.create((result) => {
             expect(result).toBeFalse();
             expect(testTask.startDate).toBeTruthy();
-            expect(testTask.user).toBeTruthy();
+            expect(testTask.userId).toBeTruthy();
 
             expect(taskEvent).toBeTruthy();
             expect(taskEvent.taskId).toEqual('taskId');
@@ -208,7 +198,7 @@ describe('CancelTaskService', () => {
 
     it('should cancel error', done => {
         expect(testTask.startDate).toBeTruthy();
-        expect(testTask.user).toBeTruthy();
+        expect(testTask.userId).toBeTruthy();
         resourceService.response = {error: 'throw'};
 
         let taskEvent: TaskEventNotification;
@@ -219,7 +209,7 @@ describe('CancelTaskService', () => {
         service.cancel(callChainService.create((result) => {
             expect(result).toBeFalse();
             expect(testTask.startDate).toBeTruthy();
-            expect(testTask.user).toBeTruthy();
+            expect(testTask.userId).toBeTruthy();
 
             expect(taskEvent).toBeTruthy();
             expect(taskEvent.taskId).toEqual('taskId');

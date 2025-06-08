@@ -151,17 +151,7 @@ describe('TaskDataService', () => {
                     done();
                 });
 
-                taskContentService.task.user = {
-                    email: '',
-                    id: '',
-                    username: '',
-                    realmId: '',
-                    name: '',
-                    surname: '',
-                    fullName: '',
-                    firstName: '',
-                    lastName: '',
-                };
+                taskContentService.task.userId = '';
 
                 mockField.value = !mockField.value;
             }
@@ -206,17 +196,7 @@ describe('TaskDataService', () => {
                     }
                 });
 
-                taskContentService.task.user = {
-                    email: '',
-                    id: '',
-                    username: '',
-                    realmId: '',
-                    name: '',
-                    surname: '',
-                    fullName: '',
-                    firstName: '',
-                    lastName: '',
-                };
+                taskContentService.task.userId = '';
 
                 mockField1.value = !mockField1.value;
                 mockField2.value = !mockField2.value;
