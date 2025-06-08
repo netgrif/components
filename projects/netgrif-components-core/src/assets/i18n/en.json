@@ -118,6 +118,9 @@
             "impersonating": "impersonating"
         }
     },
+    "navigation":{
+        "workspace": "Choose workspace"
+    },
     "search": {
         "category": {
             "case": {

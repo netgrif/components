@@ -118,6 +118,9 @@
             "impersonating": "v zastúpení"
         }
     },
+    "navigation":{
+        "workspace": "Výber workspacu"
+    },
     "search": {
         "category": {
             "case": {

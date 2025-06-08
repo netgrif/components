@@ -118,6 +118,9 @@
             "impersonating": "in Vertretung als"
         }
     },
+    "navigation":{
+        "workspace": "Arbeitsbereich auswählen"
+    },
     "search": {
         "category": {
             "case": {
