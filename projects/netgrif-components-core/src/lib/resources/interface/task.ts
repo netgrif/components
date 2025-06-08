@@ -70,4 +70,8 @@ export interface Task {
     delegateTitle?: string;
     immediateData?: Array<ImmediateData>;
     assignedUserPolicy?: AssignedUserPolicy;
+    /**
+     * Workspace id
+     * */
+    workspaceId: string;
 }

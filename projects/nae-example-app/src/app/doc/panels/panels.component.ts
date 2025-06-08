@@ -68,7 +68,8 @@ export class PanelsComponent implements OnInit {
             stringId: null,
             petriNetId: null,
             permissions: {},
-            users: {}
+            users: {},
+            workspaceId: ''
         };
         this.workflow = {
             stringId: 'ID',
@@ -83,7 +84,8 @@ export class PanelsComponent implements OnInit {
                 email: 'test@netgrif.com',
                 fullName: 'Test Testovič'
             },
-            immediateData: []
+            immediateData: [],
+            workspaceId: ''
         };
         this.featuredFields$ = new BehaviorSubject<Array<HeaderColumn>>([
             new HeaderColumn(HeaderColumnType.META, 'visualId', 'Visual ID', 'text'),

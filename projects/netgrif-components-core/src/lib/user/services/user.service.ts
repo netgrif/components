@@ -233,9 +233,7 @@ export class UserService implements OnDestroy {
     public changeWorkspace(workspaceId: string) {
         this._userResource.changeWorkspace(workspaceId).subscribe(user => {
             if (user) {
-                const backendUser = {...user, id: user.id.toString()};
-                this._user = this._userTransform.transform(backendUser);
-                this.publishUserChange();
+                window.location.reload();
             }
         });
     }

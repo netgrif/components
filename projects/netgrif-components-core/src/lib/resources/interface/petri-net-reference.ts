@@ -48,5 +48,9 @@ export interface PetriNetReference {
      * [ImmediateData]{@link ImmediateData}
      */
     immediateData: Array<ImmediateData>;
+    /**
+     * Workspace id
+     * */
+    workspaceId: string;
 }
 

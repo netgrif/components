@@ -40,7 +40,8 @@ export class SidemenuExampleComponent implements OnInit {
                 immediateData: [],
                 initials: 'EX',
                 title: 'Example Dummy Process',
-                version: '1.0.0'
+                version: '1.0.0',
+                workspaceId: ''
             }),
                 new Net({
                     stringId: '999',
@@ -52,7 +53,8 @@ export class SidemenuExampleComponent implements OnInit {
                     immediateData: [],
                     initials: 'EXX',
                     title: 'Other Example Dummy Process',
-                    version: '1.0.0'
+                    version: '1.0.0',
+                    workspaceId: ''
                 })])
         });
     }

@@ -31,6 +31,7 @@ export function createMockNet(stringId = 'stringId',
         uriNodeId: identifier,
         version: '1.0.0',
         initials: 'NET',
+        workspaceId: '',
         defaultCaseName: '',
         createdDate: [2021, 2, 4, 12, 50, 0, 1612443000],
         author: {
@@ -43,6 +44,7 @@ export function createMockNet(stringId = 'stringId',
     net.transitions = transitions.map(t => ({
         ...t,
         petriNetId: '',
+        workspaceId: '',
         immediateData: []
     }));
     net.permissions = permissions;

@@ -112,6 +112,10 @@ export interface Case {
      */
     petriNetId: string;
     /**
+     * Workspace id
+     * */
+    workspaceId: string;
+    /**
      * **Example:** home
      */
     icon?: string;

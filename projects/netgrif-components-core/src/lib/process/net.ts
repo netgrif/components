@@ -24,6 +24,10 @@ export class Net implements PetriNetReferenceWithPermissions {
      */
     private _identifier: string;
     /**
+     * Workspace id
+     * */
+    private _workspaceId: string;
+    /**
     * @ignore
     * */
     private _uriNodeId: string;
@@ -84,6 +88,7 @@ export class Net implements PetriNetReferenceWithPermissions {
         this._transactions = [];
         this._roles = [];
         this._uriNodeId = net.uriNodeId;
+        this._workspaceId = net.workspaceId
     }
 
     get stringId(): string {
@@ -196,5 +201,14 @@ export class Net implements PetriNetReferenceWithPermissions {
 
     set uriNodeId(uriNodeId: string) {
         this._uriNodeId = uriNodeId;
+    }
+
+
+    get workspaceId(): string {
+        return this._workspaceId;
+    }
+
+    set workspaceId(value: string) {
+        this._workspaceId = value;
     }
 }
