@@ -65,7 +65,7 @@ export class AssignTaskService extends TaskHandlingService {
     public assign(afterAction: AfterAction = new AfterAction()): void {
         this._eventQueue.scheduleEvent(new QueuedEvent(
             () => {
-                return !this._safeTask.user;
+                return !this._safeTask.userId;
             },
             nextEvent => {
                 this.performAssignRequest(afterAction, nextEvent, this._taskViewService !== null && !this._taskViewService.allowMultiOpen);

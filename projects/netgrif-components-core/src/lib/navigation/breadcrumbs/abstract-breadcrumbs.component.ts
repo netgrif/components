@@ -97,7 +97,7 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
         this.nicePathSubscription = this.nicePath.subscribe(np => {
             if (!!np) {
                 const path = np;
-                if (path?.length > this.partsAfterDots + 1 && this._uriService.activeNode?.uriPath.length > this.lengthOfPath && !this._showPaths) {
+                if (path?.length > this.partsAfterDots + 1 && this._uriService.activeNode?.path.length > this.lengthOfPath && !this._showPaths) {
                     const newPath = [path[0], AbstractBreadcrumbsComponent.DOTS];
                     for (let i = path.length - this.partsAfterDots; i < path.length; i++) {
                         newPath.push(path[i]);
@@ -114,7 +114,7 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
         if (!this.redirectOnClick) {
             return;
         }
-        this._router.navigate(this.redirectUrls.get(this._uriService.activeNode.uriPath)).then(r => {})
+        this._router.navigate(this.redirectUrls.get(this._uriService.activeNode.path)).then(r => {})
     }
 
     public reset(): void {
@@ -146,7 +146,7 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
     }
 
     private resultCounter(count: number, tmp: string[]): number {
-        if (tmp?.length > this.partsAfterDots + 1 && this._uriService.activeNode?.uriPath.length > this.lengthOfPath && !this._showPaths) {
+        if (tmp?.length > this.partsAfterDots + 1 && this._uriService.activeNode?.path.length > this.lengthOfPath && !this._showPaths) {
             return tmp.length - this.partsAfterDots + (count - 2);
         }
         return count;
