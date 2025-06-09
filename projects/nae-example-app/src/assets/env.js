@@ -5,4 +5,4 @@
     window['env']['gateway_url'] = 'http://localhost:8800/api';
     window['env']['application_identifier'] = 'nae';
     window['env']['type_identifier'] = 'default';
-})(this);
+})(window);

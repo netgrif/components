@@ -5,4 +5,4 @@
     window['env']['gateway_url'] = "${GATEWAY_URL}";
     window['env']['application_identifier'] = "${APPLICATION_IDENTIFIER}";
     window['env']['type_identifier'] = "${TYPE_IDENTIFIER}";
-})(this);
+})(window);

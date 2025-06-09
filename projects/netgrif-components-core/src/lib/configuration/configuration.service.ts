@@ -1,7 +1,8 @@
 import {NetgrifApplicationEngine, Services, View, Views} from '../../commons/schema';
 import {Observable, of} from 'rxjs';
-import {ResourceProvider} from '../resources/resource-provider.service';
 import {ApplicationConfiguration} from './application-configuration';
+import {ConfigurationResourceService} from '../resources/engine-endpoint/configuration-resource.service';
+import {tap} from 'rxjs/operators';
 
 
 export abstract class ConfigurationService {
@@ -11,7 +12,7 @@ export abstract class ConfigurationService {
     private readonly APPLICATION_CONFIG: ApplicationConfiguration;
 
     protected constructor(protected configuration: NetgrifApplicationEngine,
-                          protected _resourceProvider: ResourceProvider,
+                          protected _configurationResource: ConfigurationResourceService,
                           protected _applicationConfiguration: ApplicationConfiguration) {
         this.initialize();
 
@@ -260,27 +261,29 @@ export abstract class ConfigurationService {
     }
 
     /**
-     * Loads the configuration for the application by fetching data from the resource provider
-     * and initializes the application settings based on the fetched configuration.
+     * Loads and initializes application configuration from the backend.
+     * If configuration resolution is disabled in APPLICATION_CONFIG, returns null Observable.
+     * Otherwise fetches public configuration via ConfigurationResourceService.
      *
-     * @return {Promise<any>} A promise that resolves with the fetched configuration or returns null
-     * if the configuration resolution is not enabled.
+     * @returns Observable<any> that emits null if resolution is disabled, otherwise emits the loaded configuration
+     * @fires initialize() Upon successful configuration load to setup endpoints and data field configurations
+     * @see ApplicationConfiguration
+     * @see NetgrifApplicationEngine
      */
-    public loadConfiguration(): Promise<any> {
+    public loadConfiguration(): Observable<any> {
         if (!this.APPLICATION_CONFIG.resolve_configuration) {
-            return null;
+            return of(null);
         }
-        return this._resourceProvider.get$(
-                `/frontend-config/public/${this.APPLICATION_CONFIG.application}/${this.APPLICATION_CONFIG.type}`,
-                this.APPLICATION_CONFIG.gateway_url
-            ).toPromise()
-            .then((data: ApplicationConfiguration) => {
-                if (!data || !data.properties) {
-                    return;
-                }
-                this.configuration = data.properties as NetgrifApplicationEngine;
-                this.initialize();
-            });
+        return this._configurationResource.getPublicApplicationConfiguration(this.APPLICATION_CONFIG)
+            .pipe(
+                tap((data: ApplicationConfiguration) => {
+                    if (!data || !data.properties) {
+                        return;
+                    }
+                    this.configuration = data.properties as NetgrifApplicationEngine;
+                    this.initialize();
+                })
+            );
     }
 
     private createConfigurationCopy(): any {
