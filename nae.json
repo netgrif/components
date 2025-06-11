@@ -24,7 +24,7 @@
                 "enable": true,
                 "clientId": "cluster-worker",
                 "redirectUrl": "https://iam.mudu.dev.netgrif.cloud/realms/netgrif-cloud-testing/protocol/openid-connect/auth",
-                "refreshUrl": "http://localhost:8800/api/oidc/auth/login",
+                "refreshUrl": "http://localhost:8800/api/auth/login",
                 "scopes": ["openid","email","profile","roles"]
             }
         },

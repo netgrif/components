@@ -58,6 +58,7 @@ export abstract class AbstractLoginSsoComponent implements OnDestroy {
         const token$ = this.getToken({
             grantType: 'authorization_code',
             code: params.code,
+            realmId: '', // todo send realm id
             redirectUri: location.origin + '/' + this._config.getConfigurationSubtree(['services', 'auth', 'toLoginRedirect']),
         });
         token$.subscribe(
