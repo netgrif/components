@@ -2,7 +2,8 @@ import {NetgrifApplicationEngine, Services, View, Views} from '../../commons/sch
 import {Observable, of} from 'rxjs';
 import {ApplicationConfiguration} from './application-configuration';
 import {ConfigurationResourceService} from '../resources/engine-endpoint/configuration-resource.service';
-import {tap} from 'rxjs/operators';
+import {catchError, tap} from 'rxjs/operators';
+import {HttpErrorResponse} from '@angular/common/http';
 
 
 export abstract class ConfigurationService {
@@ -276,9 +277,16 @@ export abstract class ConfigurationService {
         }
         return this._configurationResource.getPublicApplicationConfiguration(this.APPLICATION_CONFIG)
             .pipe(
+                catchError((err: HttpErrorResponse) => {
+                    if (err.status === 404) {
+                        return of(null);
+                    }
+                    console.log(err.message);
+                    return of(null);
+                }),
                 tap((data: ApplicationConfiguration) => {
                     if (!data || !data.properties) {
-                        return;
+                        return of(null);
                     }
                     this.configuration = data.properties as NetgrifApplicationEngine;
                     this.initialize();
