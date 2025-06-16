@@ -59,7 +59,7 @@ describe('UriService', () => {
 
     it('should get node by path', done => {
         service.getNodeByPath(MockUriResourceService.TEST1_PATH).subscribe(res => {
-            expect(res.uriPath).toEqual(MockUriResourceService.TEST1_PATH);
+            expect(res.path).toEqual(MockUriResourceService.TEST1_PATH);
             expect(res.id).toEqual(MockUriResourceService.TEST1_ID);
             done();
         });
