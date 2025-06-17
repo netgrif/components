@@ -12,7 +12,7 @@ export * from './breadcrumbs/abstract-breadcrumbs.component';
 /* SERVICES */
 export * from './group-navigation-component-resolver/group-navigation-component-resolver.service';
 export * from './utility/filter-extraction.service';
-export * from './service/uri.service';
+export * from './service/path.service';
 export * from './service/uri-resource.service';
 
 /* MODELS */

@@ -133,7 +133,7 @@
 
     <button *ngFor='let folder of leftItems; trackBy: itemsTrackBy' mat-icon-button (click)="onItemClick(folder)"
             class="menu-button mat-typography menu-font-color" [matTooltip]="folder.navigation.title" [matTooltipPosition]="'right'"
-            [ngClass]="isItemAndNodeEqual(folder, currentNode) ? 'rail-selected-color' : 'menu-font-color'" [routerLink]='folder.routing.path'
+            [ngClass]="isItemAndPathEqual(folder, currentPath) ? 'rail-selected-color' : 'menu-font-color'" [routerLink]='folder.routing.path'
             routerLinkActive="active">
         <mat-icon>{{folder.navigation.icon}}</mat-icon>
     </button>

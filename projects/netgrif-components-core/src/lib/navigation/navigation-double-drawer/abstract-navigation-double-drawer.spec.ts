@@ -33,7 +33,7 @@ import {MockUserPreferenceService} from '../../utility/tests/mocks/mock-user-pre
 import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
 import {TestLoggingConfigurationService} from '../../utility/tests/test-logging-config';
 import {UriResourceService} from '../service/uri-resource.service';
-import {UriService} from '../service/uri.service';
+import {PathService} from '../service/path.service';
 import {AbstractNavigationDoubleDrawerComponent} from './abstract-navigation-double-drawer';
 import {TranslateService} from "@ngx-translate/core";
 import {CaseResourceService} from "../../resources/engine-endpoint/case-resource.service";
@@ -42,7 +42,6 @@ import {MockCaseResourceService} from "../../utility/tests/mocks/mock-case-resou
 xdescribe('AbstractNavigationDoubleDrawerComponent', () => {
     let component: TestDrawerComponent;
     let fixture: ComponentFixture<TestDrawerComponent>;
-    let uriService: UriService;
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
@@ -70,7 +69,6 @@ xdescribe('AbstractNavigationDoubleDrawerComponent', () => {
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA],
         }).compileComponents();
-        uriService = TestBed.inject(UriService);
         fixture = TestBed.createComponent(TestDrawerComponent);
         component = fixture.componentInstance;
         spyOn(component, 'toggleLeftMenu');
@@ -87,10 +85,10 @@ xdescribe('AbstractNavigationDoubleDrawerComponent', () => {
     });
 
     it('should check current node of navigation', (done) => {
-        expect(component.currentNode).toBeDefined();
-        component.currentNode = uriService.root;
+        expect(component.currentPath).toBeDefined();
+        component.currentPath = PathService.SEPARATOR;
         timer(1).subscribe(() => {
-            expect(component.currentNode).toEqual(uriService.root);
+            expect(component.currentPath).toEqual(PathService.SEPARATOR);
             expect(component.leftItems).toBeDefined();
             expect(component.leftItems.length).toEqual(0);
             expect(component.rightItems).toBeDefined();
@@ -113,16 +111,14 @@ xdescribe('AbstractNavigationDoubleDrawerComponent', () => {
 
     it('should go to home menu', () => {
         component.onHomeClick();
-        expect(component.currentNode).toEqual(uriService.root);
+        expect(component.currentPath).toEqual(PathService.SEPARATOR);
     });
 
     it('should go back in menu', (done) => {
-        uriService.getNodeByPath(MockUriResourceService.TEST1_PATH).subscribe(node => {
-            component.currentNode = node;
-            component.onBackClick();
-            expect(component.currentNode).toEqual(uriService.root);
-            done();
-        });
+        component.currentPath = MockUriResourceService.TEST1_PATH;
+        component.onBackClick();
+        expect(component.currentPath).toEqual(PathService.SEPARATOR);
+        done();
     });
 
     it('should check the menu state', () => {
@@ -147,7 +143,7 @@ class TestDrawerComponent extends AbstractNavigationDoubleDrawerComponent {
                 _accessService: AccessService,
                 _log: LoggerService,
                 _config: ConfigurationService,
-                _uriService: UriService,
+                _uriService: PathService,
                 _caseResourceService: CaseResourceService,
                 _impersonationUserSelect: ImpersonationUserSelectService,
                 _impersonation: ImpersonationService,

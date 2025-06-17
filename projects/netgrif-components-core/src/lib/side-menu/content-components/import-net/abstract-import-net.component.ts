@@ -10,7 +10,7 @@ import {FileUploadDataModel} from '../../../data-fields/file-field/models/file-f
 import {Subscription} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
 import {PetriNetEventOutcome} from '../../../event/model/event-outcomes/petrinet-outcomes/petri-net-event-outcome';
-import {UriService} from "../../../navigation/service/uri.service";
+import {PathService} from "../../../navigation/service/path.service";
 
 export class FileUploadModel {
     stringId: string;
@@ -43,7 +43,7 @@ export abstract class AbstractImportNetComponent implements AfterViewInit {
 
     constructor(protected _sideMenuControl: SideMenuControl,
                 protected _petriNetResource: PetriNetResourceService,
-                protected _uriService: UriService,
+                protected _uriService: PathService,
                 protected _log: LoggerService,
                 protected _snackbar: SnackBarService,
                 protected _translate: TranslateService) {
@@ -126,7 +126,6 @@ export abstract class AbstractImportNetComponent implements AfterViewInit {
     protected uploadFile(file: FileUploadModel) {
         const fileFormData = new FormData();
         fileFormData.append('file', file.data as File);
-        fileFormData.append('uriNodeId', this._uriService.activeNode.id);
         fileFormData.append('meta', this.releaseTypeControl.value.toString().toUpperCase());
 
         file.inProgress = true;
