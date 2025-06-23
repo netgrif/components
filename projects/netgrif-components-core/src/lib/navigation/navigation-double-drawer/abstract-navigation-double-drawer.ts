@@ -3,7 +3,7 @@ import {Component, Input, OnDestroy, OnInit, TemplateRef} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ResizeEvent} from 'angular-resizable-element';
 import {Observable, of, Subscription} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {map, switchMap, catchError, finalize} from 'rxjs/operators';
 import {RoleAccess, View} from '../../../commons/schema';
 import {AccessService} from '../../authorization/permission/access.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
@@ -42,7 +42,6 @@ import {
     RIGHT_SIDE_NEW_PAGE_SIZE,
     SETTINGS_TRANSITION_ID
 } from '../model/navigation-configs';
-
 
 @Component({
     selector: 'ncc-abstract-navigation-double-drawer',
@@ -215,7 +214,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     getItemCaseByPath(path?: string): Observable<Page<Case>> {
         const searchBody: CaseSearchRequestBody = {
             data: {
-                [GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH] : path
+                [GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH]: path
             },
             process: {identifier: "preference_item"}
         };
@@ -333,7 +332,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             const path = item.resource.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)?.value
             if (this.hasItemChildren(item) && !this.leftLoading$.isActive && !this.rightLoading$.isActive) {
                 this._pathService.activePath = path;
-            } else if (!path.includes(this.currentPath)){
+            } else if (!path.includes(this.currentPath)) {
                 this._pathService.activePath = this.extractParent(this.currentPath);
             } else {
                 this._pathService.activePath = this.currentPath;
@@ -355,98 +354,87 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             return;
         }
         this.leftLoading$.on();
-        this.getItemCaseByPath(this.extractParent(this.currentPath)).subscribe({
-            next: (page) => {
-                let childCases$: Observable<Case[]>, targetItem: Case, orderedChildCaseIds: string[];
 
-                if (page?.pagination?.totalElements === 0) {
-                    childCases$ = of([])
-                } else {
-                    targetItem = page.content[0]
-                    orderedChildCaseIds = this.extractChildCaseIds(targetItem)
-                    childCases$ = this.getItemCasesByIdsInOnePage(orderedChildCaseIds).pipe(
-                        map(p => p.content),
-                    )
-                }
-
-                childCases$.subscribe({
-                    next: (v) => {
-                        const result = v.map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i);
-                        this.leftItems = result.sort((a, b) => orderedChildCaseIds.indexOf(a.resource.stringId) - orderedChildCaseIds.indexOf(b.resource.stringId));
-                        this.resolveCustomViewsInLeftSide()
-                        this.leftLoading$.off();
-                    },
-                    error: (error) => {
-                        this._log.error(error);
-                        this.leftItems = [];
-                        this.resolveCustomViewsInLeftSide()
-                        this.leftLoading$.off();
-                    }
-                });
-            },
-            error: (error) => {
+        this.getItemCaseByPath(this.extractParent(this.currentPath)).pipe(
+            switchMap(page => this.getChildCasesFromPage(page)),
+            map(({cases, orderedIds}) => this.processLeftItems(cases, orderedIds)),
+            catchError((error) => {
                 this._log.error(error);
-                this.leftItems = [];
-                this.resolveCustomViewsInLeftSide()
+                return of([]);
+            }),
+            finalize(() => {
+                this.resolveCustomViewsInLeftSide();
                 this.leftLoading$.off();
-            }
+            })
+        ).subscribe(items => {
+            this.leftItems = items;
         });
+    }
+
+    private processLeftItems(cases: Case[], orderedChildCaseIds: string[]): NavigationItem[] {
+        const result = cases
+            .map(folder => this.resolveItemCaseToNavigationItem(folder))
+            .filter(i => !!i);
+        return result.sort((a, b) =>
+            orderedChildCaseIds.indexOf(a.resource.stringId) - orderedChildCaseIds.indexOf(b.resource.stringId)
+        );
     }
 
     protected loadRightSide() {
         this.rightLoading$.on();
         this.moreItems = [];
-        this.getItemCaseByPath(this.currentPath).subscribe({
-            next: (page) => {
-                let childCases$: Observable<Case[]>, targetItem: Case, orderedChildCaseIds: string[];
 
-                if (page?.pagination?.totalElements === 0) {
-                    childCases$ = of([])
-                } else {
-                    targetItem = page.content[0]
-                    orderedChildCaseIds = this.extractChildCaseIds(targetItem)
-                    childCases$ = this.getItemCasesByIdsInOnePage(orderedChildCaseIds).pipe(
-                        map(p => p.content),
-                    )
-                }
-
-                childCases$.subscribe({
-                    next: (result) => {
-                        result = (result as Case[]).sort((a, b) => orderedChildCaseIds.indexOf(a.stringId) - orderedChildCaseIds.indexOf(b.stringId));
-                        if (result.length > RIGHT_SIDE_INIT_PAGE_SIZE) {
-                            const rawRightItems: Case[] = result.splice(0, RIGHT_SIDE_INIT_PAGE_SIZE);
-                            this.rightItems = rawRightItems.map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i);
-                            this.moreItems = result.map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i);
-                        } else {
-                            this.rightItems = result.map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i);
-                        }
-                        this.resolveCustomViewsInRightSide()
-                        this.rightLoading$.off();
-                    },
-                    error: (error) => {
-                        this._log.error(error);
-                        this.rightItems = [];
-                        this.moreItems = [];
-                        this.resolveCustomViewsInRightSide()
-                        this.rightLoading$.off();
-                    }
-                });
-            },
-            error: (error) => {
+        this.getItemCaseByPath(this.currentPath).pipe(
+            switchMap(page => this.getChildCasesFromPage(page)),
+            map(({cases, orderedIds}) => this.processRightItems(cases, orderedIds)),
+            catchError((error) => {
                 this._log.error(error);
-                this.rightItems = [];
-                this.moreItems = [];
-                this.resolveCustomViewsInRightSide()
+                return of({right: [], more: []});
+            }),
+            finalize(() => {
+                this.resolveCustomViewsInRightSide();
                 this.rightLoading$.off();
-            }
+            })
+        ).subscribe(({right, more}) => {
+            this.rightItems = right;
+            this.moreItems = more;
         });
+    }
+
+    private processRightItems(cases: Case[], orderedChildCaseIds: string[]): {
+        right: NavigationItem[];
+        more: NavigationItem[]
+    } {
+        const result = cases
+            .sort((a, b) => orderedChildCaseIds.indexOf(a.stringId) - orderedChildCaseIds.indexOf(b.stringId));
+        let right: NavigationItem[], more: NavigationItem[];
+        if (result.length > RIGHT_SIDE_INIT_PAGE_SIZE) {
+            const rawRightItems: Case[] = result.splice(0, RIGHT_SIDE_INIT_PAGE_SIZE);
+            right = rawRightItems.map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i);
+            more = result.map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i);
+        } else {
+            right = result.map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i);
+            more = [];
+        }
+        return {right, more};
+    }
+
+    private getChildCasesFromPage(page: Page<Case>): Observable<{ cases: Case[]; orderedIds: string[] }> {
+        if (!page?.pagination?.totalElements) {
+            return of({cases: [], orderedIds: []});
+        }
+        const targetItem = page.content[0];
+        const orderedChildCaseIds = this.extractChildCaseIds(targetItem) ?? [];
+        return this.getItemCasesByIdsInOnePage(orderedChildCaseIds).pipe(
+            map(p => ({cases: p.content, orderedIds: orderedChildCaseIds}))
+        );
     }
 
     protected extractChildCaseIds(item: Case): string[] {
         return item.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_CHILD_ITEM_IDS)?.value
     }
 
-    protected getItemCasesByIdsInOnePage(caseIds: string[]): Observable<Page<Case>>  {
+    protected getItemCasesByIdsInOnePage(caseIds: string[]): Observable<Page<Case>> {
         return this.getItemCasesByIds(caseIds, 0, caseIds.length)
     }
 
@@ -620,5 +608,4 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         }
         return path.substring(0, path.lastIndexOf('/'));
     }
-
 }

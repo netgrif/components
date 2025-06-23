@@ -114,7 +114,12 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
         if (!this.redirectOnClick) {
             return;
         }
-        this._router.navigate(this.redirectUrls.get(this._pathService.activePath)).then(r => {})
+        const target = this.redirectUrls.get(this._pathService.activePath);
+        if (target) {
+            this._router.navigate(target).then(r => {});
+        } else {
+            this._log.error("Missing required data for redirecting breadcrumbs.")
+        }
     }
 
     public reset(): void {
