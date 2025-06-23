@@ -405,8 +405,9 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         right: NavigationItem[];
         more: NavigationItem[]
     } {
-        const result = cases
-            .sort((a, b) => orderedChildCaseIds.indexOf(a.stringId) - orderedChildCaseIds.indexOf(b.stringId));
+        const result = cases.slice().sort((a, b) =>
+            orderedChildCaseIds.indexOf(a.stringId) - orderedChildCaseIds.indexOf(b.stringId)
+        );
         let right: NavigationItem[], more: NavigationItem[];
         if (result.length > RIGHT_SIDE_INIT_PAGE_SIZE) {
             const rawRightItems: Case[] = result.splice(0, RIGHT_SIDE_INIT_PAGE_SIZE);
