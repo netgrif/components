@@ -52,6 +52,7 @@ export class MockUserService {
 
     logout() {
         this._user = this.emptyUser()
+        this._userChange$.next(this._user);
         return of({});
     }
 
