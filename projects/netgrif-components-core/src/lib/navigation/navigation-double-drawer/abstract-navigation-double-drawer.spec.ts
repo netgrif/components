@@ -38,8 +38,10 @@ import {AbstractNavigationDoubleDrawerComponent} from './abstract-navigation-dou
 import {TranslateService} from "@ngx-translate/core";
 import {CaseResourceService} from "../../resources/engine-endpoint/case-resource.service";
 import {MockCaseResourceService} from "../../utility/tests/mocks/mock-case-resource.service";
+import {MenuOrder} from "../model/navigation-configs";
+import {MockUserService} from "../../utility/tests/mocks/mock-user.service";
 
-xdescribe('AbstractNavigationDoubleDrawerComponent', () => {
+describe('AbstractNavigationDoubleDrawerComponent', () => {
     let component: TestDrawerComponent;
     let fixture: ComponentFixture<TestDrawerComponent>;
 
@@ -66,13 +68,14 @@ xdescribe('AbstractNavigationDoubleDrawerComponent', () => {
                 {provide: UserPreferenceService, useClass: MockUserPreferenceService},
                 {provide: CaseResourceService, useClass: MockCaseResourceService},
                 {provide: UriResourceService, useClass: MockUriResourceService},
+                {provide: UserService, useClass: MockUserService},
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA],
         }).compileComponents();
         fixture = TestBed.createComponent(TestDrawerComponent);
         component = fixture.componentInstance;
-        spyOn(component, 'toggleLeftMenu');
-        spyOn(component, 'toggleRightMenu');
+        spyOn(component, 'toggleLeftMenu').and.callThrough();
+        spyOn(component, 'toggleRightMenu').and.callThrough();
         fixture.detectChanges();
     }));
 
@@ -123,8 +126,45 @@ xdescribe('AbstractNavigationDoubleDrawerComponent', () => {
 
     it('should check the menu state', () => {
         expect(component.isOnZeroLevel()).toBeTruthy();
-        expect(component.isLeftItemsEmpty).toBeTruthy();
-        expect(component.isRightItemsEmpty).toBeTruthy();
+        expect(component.isLeftItemsEmpty()).toBeTruthy();
+        expect(component.isRightItemsEmpty()).toBeTruthy();
+    });
+
+    it('should load more items', () => {
+        component.moreItems = [{id: 'a'}, {id: 'b'}, {id: 'c'}] as any;
+        component.rightItems = [];
+        component.loadMoreItems();
+        expect(component.rightItems.length).toBeGreaterThan(0);
+    });
+
+    it('should switch order and change sorting', () => {
+        component.rightItems = [
+            {navigation: {title: 'Z'}, id: '1'} as any,
+            {navigation: {title: 'A'}, id: '2'} as any
+        ];
+        component.leftItems = [
+            {navigation: {title: 'B'}, id: '3'} as any,
+            {navigation: {title: 'C'}, id: '4'} as any
+        ];
+        component.itemsOrder = MenuOrder.Ascending;
+        component.switchOrder();
+        console.log(MenuOrder);
+        expect(component.itemsOrder).toBe(MenuOrder.Descending as any);
+    });
+
+
+    it('should return id in itemsTrackBy', () => {
+        expect(component.itemsTrackBy(1, {id: 'test'} as any)).toBe('test');
+    });
+
+    it('should return node path in uriNodeTrackBy', () => {
+        expect(component.uriNodeTrackBy(2, {path: '/test'} as any)).toBe('/test');
+    });
+
+    it('should handle resize event', () => {
+        const event = {rectangle: {width: 420}} as any;
+        component.onResizeEvent(event);
+        expect(component.configRightMenu.width).toBe(420);
     });
 
 });
@@ -152,5 +192,3 @@ class TestDrawerComponent extends AbstractNavigationDoubleDrawerComponent {
             _log, _config, _pathService, _caseResourceService, _impersonationUserSelect, _impersonation, _dynamicRouteProviderService);
     }
 }
-
-
