@@ -43,7 +43,7 @@ export abstract class AbstractImportNetComponent implements AfterViewInit {
 
     constructor(protected _sideMenuControl: SideMenuControl,
                 protected _petriNetResource: PetriNetResourceService,
-                protected _uriService: PathService,
+                protected _pathService: PathService,
                 protected _log: LoggerService,
                 protected _snackbar: SnackBarService,
                 protected _translate: TranslateService) {

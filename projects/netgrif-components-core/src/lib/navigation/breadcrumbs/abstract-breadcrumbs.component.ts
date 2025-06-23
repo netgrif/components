@@ -38,7 +38,7 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
     private redirectUrls: Map<string, Array<string>>;
     private nicePathSubscription: Subscription;
 
-    protected constructor(protected _uriService: PathService,
+    protected constructor(protected _pathService: PathService,
                           protected _caseResourceService: CaseResourceService,
                           protected _activatedRoute: ActivatedRoute,
                           protected _router: Router,
@@ -66,7 +66,7 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
             this._log.error("Missing required data for resolving breadcrumbs.")
             return;
         }
-        const splitPath = this._uriService.splitPath(this._uriService.activePath);
+        const splitPath = this._pathService.splitPath(this._pathService.activePath);
         const fullPath = this.createFullPath(splitPath);
         const fullPathQueries = fullPath.map(p => '(processIdentifier:preference_item AND dataSet.nodePath.textValue.keyword:\"' + p + '\")')
         fullPathQueries.push('(taskMongoIds:\"' + filterId + '\")')
@@ -97,7 +97,7 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
         this.nicePathSubscription = this.nicePath.subscribe(np => {
             if (!!np) {
                 const path = np;
-                if (path?.length > this.partsAfterDots + 1 && this._uriService.activePath.length > this.lengthOfPath && !this._showPaths) {
+                if (path?.length > this.partsAfterDots + 1 && this._pathService.activePath.length > this.lengthOfPath && !this._showPaths) {
                     const newPath = [path[0], AbstractBreadcrumbsComponent.DOTS];
                     for (let i = path.length - this.partsAfterDots; i < path.length; i++) {
                         newPath.push(path[i]);
@@ -114,12 +114,12 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
         if (!this.redirectOnClick) {
             return;
         }
-        this._router.navigate(this.redirectUrls.get(this._uriService.activePath)).then(r => {})
+        this._router.navigate(this.redirectUrls.get(this._pathService.activePath)).then(r => {})
     }
 
     public reset(): void {
         this.filterName = undefined;
-        this._uriService.reset();
+        this._pathService.reset();
         this.nicePath.next([""])
     }
 
@@ -130,21 +130,21 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
             return;
         }
         let fullPath: string = '';
-        const tmp = this._uriService.splitPath(this._uriService.activePath);
+        const tmp = this._pathService.splitPath(this._pathService.activePath);
         if (tmp === undefined) return;
         const control = this.resultCounter(count, tmp);
         for (let i = 0; i <= control; i++) {
             fullPath += tmp[i];
             if (i !== control) fullPath += AbstractBreadcrumbsComponent.DELIMETER;
         }
-        this._uriService.activePath = fullPath;
+        this._pathService.activePath = fullPath;
         this.filterName = undefined;
         this.nicePath.next(this.nicePath.value.slice(0, control + 1))
         this.redirect();
     }
 
     private resultCounter(count: number, tmp: string[]): number {
-        if (tmp?.length > this.partsAfterDots + 1 && this._uriService.activePath?.length > this.lengthOfPath && !this._showPaths) {
+        if (tmp?.length > this.partsAfterDots + 1 && this._pathService.activePath?.length > this.lengthOfPath && !this._showPaths) {
             return tmp.length - this.partsAfterDots + (count - 2);
         }
         return count;

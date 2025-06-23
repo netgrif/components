@@ -143,13 +143,13 @@ class TestDrawerComponent extends AbstractNavigationDoubleDrawerComponent {
                 _accessService: AccessService,
                 _log: LoggerService,
                 _config: ConfigurationService,
-                _uriService: PathService,
+                _pathService: PathService,
                 _caseResourceService: CaseResourceService,
                 _impersonationUserSelect: ImpersonationUserSelectService,
                 _impersonation: ImpersonationService,
                 _dynamicRouteProviderService: DynamicNavigationRouteProviderService) {
         super(_router, _activatedRoute, _breakpoint, _languageService, _translateService, _userService, _accessService,
-            _log, _config, _uriService, _caseResourceService, _impersonationUserSelect, _impersonation, _dynamicRouteProviderService);
+            _log, _config, _pathService, _caseResourceService, _impersonationUserSelect, _impersonation, _dynamicRouteProviderService);
     }
 }
 

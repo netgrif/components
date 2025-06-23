@@ -88,10 +88,10 @@ class TestSideMenuComponent extends AbstractSideMenuContainerComponent {
 class TestImportComponent extends AbstractImportNetComponent {
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) protected _sideMenuControl: SideMenuControl,
                 protected _petriNetResource: PetriNetResourceService,
-                protected _uriService: PathService,
+                protected _pathService: PathService,
                 protected _log: LoggerService,
                 protected _snackbar: SnackBarService,
                 protected _translate: TranslateService) {
-        super(_sideMenuControl, _petriNetResource, _uriService, _log, _snackbar, _translate);
+        super(_sideMenuControl, _petriNetResource, _pathService, _log, _snackbar, _translate);
     }
 }
