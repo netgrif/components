@@ -33,16 +33,17 @@ import {MockUserPreferenceService} from '../../utility/tests/mocks/mock-user-pre
 import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
 import {TestLoggingConfigurationService} from '../../utility/tests/test-logging-config';
 import {UriResourceService} from '../service/uri-resource.service';
-import {UriService} from '../service/uri.service';
+import {PathService} from '../service/path.service';
 import {AbstractNavigationDoubleDrawerComponent} from './abstract-navigation-double-drawer';
 import {TranslateService} from "@ngx-translate/core";
 import {CaseResourceService} from "../../resources/engine-endpoint/case-resource.service";
 import {MockCaseResourceService} from "../../utility/tests/mocks/mock-case-resource.service";
+import {MenuOrder} from "../model/navigation-configs";
+import {MockUserService} from "../../utility/tests/mocks/mock-user.service";
 
-xdescribe('AbstractNavigationDoubleDrawerComponent', () => {
+describe('AbstractNavigationDoubleDrawerComponent', () => {
     let component: TestDrawerComponent;
     let fixture: ComponentFixture<TestDrawerComponent>;
-    let uriService: UriService;
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
@@ -67,14 +68,14 @@ xdescribe('AbstractNavigationDoubleDrawerComponent', () => {
                 {provide: UserPreferenceService, useClass: MockUserPreferenceService},
                 {provide: CaseResourceService, useClass: MockCaseResourceService},
                 {provide: UriResourceService, useClass: MockUriResourceService},
+                {provide: UserService, useClass: MockUserService},
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA],
         }).compileComponents();
-        uriService = TestBed.inject(UriService);
         fixture = TestBed.createComponent(TestDrawerComponent);
         component = fixture.componentInstance;
-        spyOn(component, 'toggleLeftMenu');
-        spyOn(component, 'toggleRightMenu');
+        spyOn(component, 'toggleLeftMenu').and.callThrough();
+        spyOn(component, 'toggleRightMenu').and.callThrough();
         fixture.detectChanges();
     }));
 
@@ -87,10 +88,10 @@ xdescribe('AbstractNavigationDoubleDrawerComponent', () => {
     });
 
     it('should check current node of navigation', (done) => {
-        expect(component.currentNode).toBeDefined();
-        component.currentNode = uriService.root;
+        expect(component.currentPath).toBeDefined();
+        component.currentPath = PathService.SEPARATOR;
         timer(1).subscribe(() => {
-            expect(component.currentNode).toEqual(uriService.root);
+            expect(component.currentPath).toEqual(PathService.SEPARATOR);
             expect(component.leftItems).toBeDefined();
             expect(component.leftItems.length).toEqual(0);
             expect(component.rightItems).toBeDefined();
@@ -113,22 +114,57 @@ xdescribe('AbstractNavigationDoubleDrawerComponent', () => {
 
     it('should go to home menu', () => {
         component.onHomeClick();
-        expect(component.currentNode).toEqual(uriService.root);
+        expect(component.currentPath).toEqual(PathService.SEPARATOR);
     });
 
     it('should go back in menu', (done) => {
-        uriService.getNodeByPath(MockUriResourceService.TEST1_PATH).subscribe(node => {
-            component.currentNode = node;
-            component.onBackClick();
-            expect(component.currentNode).toEqual(uriService.root);
-            done();
-        });
+        component.currentPath = MockUriResourceService.TEST1_PATH;
+        component.onBackClick();
+        expect(component.currentPath).toEqual(PathService.SEPARATOR);
+        done();
     });
 
     it('should check the menu state', () => {
         expect(component.isOnZeroLevel()).toBeTruthy();
-        expect(component.isLeftItemsEmpty).toBeTruthy();
-        expect(component.isRightItemsEmpty).toBeTruthy();
+        expect(component.isLeftItemsEmpty()).toBeTruthy();
+        expect(component.isRightItemsEmpty()).toBeTruthy();
+    });
+
+    it('should load more items', () => {
+        component.moreItems = [{id: 'a'}, {id: 'b'}, {id: 'c'}] as any;
+        component.rightItems = [];
+        component.loadMoreItems();
+        expect(component.rightItems.length).toBeGreaterThan(0);
+    });
+
+    it('should switch order and change sorting', () => {
+        component.rightItems = [
+            {navigation: {title: 'Z'}, id: '1'} as any,
+            {navigation: {title: 'A'}, id: '2'} as any
+        ];
+        component.leftItems = [
+            {navigation: {title: 'B'}, id: '3'} as any,
+            {navigation: {title: 'C'}, id: '4'} as any
+        ];
+        component.itemsOrder = MenuOrder.Ascending;
+        component.switchOrder();
+        console.log(MenuOrder);
+        expect(component.itemsOrder).toBe(MenuOrder.Descending as any);
+    });
+
+
+    it('should return id in itemsTrackBy', () => {
+        expect(component.itemsTrackBy(1, {id: 'test'} as any)).toBe('test');
+    });
+
+    it('should return node path in uriNodeTrackBy', () => {
+        expect(component.uriNodeTrackBy(2, {path: '/test'} as any)).toBe('/test');
+    });
+
+    it('should handle resize event', () => {
+        const event = {rectangle: {width: 420}} as any;
+        component.onResizeEvent(event);
+        expect(component.configRightMenu.width).toBe(420);
     });
 
 });
@@ -147,14 +183,12 @@ class TestDrawerComponent extends AbstractNavigationDoubleDrawerComponent {
                 _accessService: AccessService,
                 _log: LoggerService,
                 _config: ConfigurationService,
-                _uriService: UriService,
+                _pathService: PathService,
                 _caseResourceService: CaseResourceService,
                 _impersonationUserSelect: ImpersonationUserSelectService,
                 _impersonation: ImpersonationService,
                 _dynamicRouteProviderService: DynamicNavigationRouteProviderService) {
         super(_router, _activatedRoute, _breakpoint, _languageService, _translateService, _userService, _accessService,
-            _log, _config, _uriService, _caseResourceService, _impersonationUserSelect, _impersonation, _dynamicRouteProviderService);
+            _log, _config, _pathService, _caseResourceService, _impersonationUserSelect, _impersonation, _dynamicRouteProviderService);
     }
 }
-
-

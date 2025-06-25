@@ -100,15 +100,15 @@
 
 <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item">
-            <a href="#info" 
+            <a href="#info"
                 class="nav-link"
                 class="nav-link active"
                 role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
         <li class="nav-item">
-            <a href="#source" 
+            <a href="#source"
                 class="nav-link"
-                
+
                 role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
@@ -184,7 +184,7 @@
 
 
             <section data-compodoc="block-properties">
-    
+
     <h3 id="inputs">
         Properties
     </h3>
@@ -449,7 +449,7 @@ import {FileUploadDataModel} from &#x27;../../../data-fields/file-field/models/f
 import {Subscription} from &#x27;rxjs&#x27;;
 import {TranslateService} from &#x27;@ngx-translate/core&#x27;;
 import {PetriNetEventOutcome} from &#x27;../../../event/model/event-outcomes/petrinet-outcomes/petri-net-event-outcome&#x27;;
-import {UriService} from &quot;../../../navigation/service/uri.service&quot;;
+import {PathService} from &quot;../../../navigation/service/uri.service&quot;;
 
 export class FileUploadModel {
     stringId: string;
@@ -482,7 +482,7 @@ export abstract class AbstractImportNetComponent implements AfterViewInit {
 
     constructor(protected _sideMenuControl: SideMenuControl,
                 protected _petriNetResource: PetriNetResourceService,
-                protected _uriService: UriService,
+                protected _uriService: PathService,
                 protected _log: LoggerService,
                 protected _snackbar: SnackBarService,
                 protected _translate: TranslateService) {

@@ -103,15 +103,15 @@
 
 <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item">
-            <a href="#info" 
+            <a href="#info"
                 class="nav-link"
                 class="nav-link active"
                 role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
         <li class="nav-item">
-            <a href="#source" 
+            <a href="#source"
                 class="nav-link"
-                
+
                 role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
@@ -160,7 +160,7 @@ import {
     FileUploadModel, LoggerService,
     PetriNetEventOutcome,
     PetriNetResourceService, ProgressType, ProviderProgress,
-    SnackBarService, UriService
+    SnackBarService, PathService
 } from &#x27;@netgrif/components-core&#x27;;
 import {TranslateService} from &#x27;@ngx-translate/core&#x27;;
 import {MatDialogRef} from &#x27;@angular/material/dialog&#x27;;
@@ -196,7 +196,7 @@ export class ImportNetDialogComponent implements AfterViewInit {
                 protected _petriNetResource: PetriNetResourceService,
                 protected _log: LoggerService,
                 protected _snackbar: SnackBarService,
-                protected _uriService: UriService,
+                protected _uriService: PathService,
                 protected _translate: TranslateService) {
         this._dialogRef.backdropClick().subscribe(event &#x3D;&gt; {
             this.close();
