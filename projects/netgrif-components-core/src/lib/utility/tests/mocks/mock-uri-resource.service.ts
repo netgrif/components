@@ -9,13 +9,13 @@ import {ResourceProvider} from '../../../resources/resource-provider.service';
 export class MockUriResourceService extends UriResourceService {
 
     static TEST1_ID = 'test1';
-    static TEST1_PATH = 'root/test1';
+    static TEST1_PATH = '/test1';
     static TEST2_ID = 'test2';
-    static TEST2_PATH = 'root/test2';
+    static TEST2_PATH = '/test2';
 
     private _root: UriNodeResource = {
-        id: 'root',
-        path: 'root',
+        id: '/',
+        path: '/',
         name: 'root',
         parentId: null,
         parent: undefined,
@@ -28,7 +28,7 @@ export class MockUriResourceService extends UriResourceService {
         id: MockUriResourceService.TEST1_ID,
         path: MockUriResourceService.TEST1_PATH,
         name: MockUriResourceService.TEST1_ID,
-        parentId: 'root',
+        parentId: '/',
         parent: this._root,
         childrenId: undefined,
         children: undefined,
@@ -39,7 +39,7 @@ export class MockUriResourceService extends UriResourceService {
         id: MockUriResourceService.TEST2_ID,
         path: MockUriResourceService.TEST2_PATH,
         name: MockUriResourceService.TEST2_ID,
-        parentId: 'root',
+        parentId: '/',
         parent: this._root,
         childrenId: undefined,
         children: undefined,
@@ -61,7 +61,7 @@ export class MockUriResourceService extends UriResourceService {
     }
 
     getNodesByParent(parentId: string): Observable<Array<UriNodeResource>> {
-        if (parentId === 'root') return of([this._test1Node, this._test2Node]);
+        if (parentId === '/') return of([this._test1Node, this._test2Node]);
         return of([this._root]);
     }
 
