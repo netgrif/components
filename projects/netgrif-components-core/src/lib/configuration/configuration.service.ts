@@ -272,7 +272,7 @@ export abstract class ConfigurationService {
      * @see NetgrifApplicationEngine
      */
     public loadConfiguration(): Observable<any> {
-        if (!this.APPLICATION_CONFIG.resolve_configuration) {
+        if (!this.APPLICATION_CONFIG?.resolve_configuration) {
             return of(null);
         }
         return this._configurationResource.getPublicApplicationConfiguration(this.APPLICATION_CONFIG)
