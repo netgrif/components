@@ -51,6 +51,7 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
     protected _allowMultiOpen: boolean;
 
     private readonly _initializing: boolean = true;
+    protected _paginationView: boolean = false;
 
     constructor(protected _taskService: TaskResourceService,
                 private _userService: UserService,
@@ -127,6 +128,9 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
                 if (pageLoadResult.requestContext !== null) {
                     this._loading$.off(pageLoadResult.requestContext.filter);
                 }
+                if (this._paginationView) {
+                    return pageLoadResult.tasks;
+                }
                 return result;
             }, {})
         );
@@ -200,6 +204,10 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
 
     public get allowMultiOpen(): boolean {
         return this._allowMultiOpen;
+    }
+
+    public set paginationView(value: boolean) {
+        this._paginationView = value;
     }
 
     public loadPage(requestContext: PageLoadRequestContext): Observable<TaskPageLoadRequestResult> {
