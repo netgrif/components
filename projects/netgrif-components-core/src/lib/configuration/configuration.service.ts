@@ -1,11 +1,26 @@
 import {NetgrifApplicationEngine, Services, View, Views} from '../../commons/schema';
 import {Observable, of} from 'rxjs';
+import {ApplicationConfiguration} from './application-configuration';
+import {ConfigurationResourceService} from '../resources/engine-endpoint/configuration-resource.service';
+import {catchError, tap} from 'rxjs/operators';
+import {HttpErrorResponse} from '@angular/common/http';
+
 
 export abstract class ConfigurationService {
 
-    private readonly _dataFieldConfiguration: Services['dataFields'];
+    private _dataFieldConfiguration: Services['dataFields'];
 
-    protected constructor(protected configuration: NetgrifApplicationEngine) {
+    private readonly APPLICATION_CONFIG: ApplicationConfiguration;
+
+    protected constructor(protected configuration: NetgrifApplicationEngine,
+                          protected _configurationResource: ConfigurationResourceService,
+                          protected _applicationConfiguration: ApplicationConfiguration) {
+        this.initialize();
+
+        this.APPLICATION_CONFIG = _applicationConfiguration;
+    }
+
+    private initialize(): void {
         this.resolveEndpointURLs();
         this._dataFieldConfiguration = this.getConfigurationSubtree(['services', 'dataFields']);
     }
@@ -244,6 +259,39 @@ export abstract class ConfigurationService {
             throw new Error('Authentication provider address is not set!');
         }
         return config.providers.auth.address + config.providers.auth.endpoints[endpointKey];
+    }
+
+    /**
+     * Loads and initializes application configuration from the backend.
+     * If configuration resolution is disabled in APPLICATION_CONFIG, returns null Observable.
+     * Otherwise fetches public configuration via ConfigurationResourceService.
+     *
+     * @returns Observable<any> that emits null if resolution is disabled, otherwise emits the loaded configuration
+     * @fires initialize() Upon successful configuration load to setup endpoints and data field configurations
+     * @see ApplicationConfiguration
+     * @see NetgrifApplicationEngine
+     */
+    public loadConfiguration(): Observable<any> {
+        if (!this.APPLICATION_CONFIG?.resolve_configuration) {
+            return of(null);
+        }
+        return this._configurationResource.getPublicApplicationConfiguration(this.APPLICATION_CONFIG)
+            .pipe(
+                catchError((err: HttpErrorResponse) => {
+                    if (err.status === 404) {
+                        return of(null);
+                    }
+                    console.log(err.message);
+                    return of(null);
+                }),
+                tap((data: ApplicationConfiguration) => {
+                    if (!data || !data.properties) {
+                        return of(null);
+                    }
+                    this.configuration = data.properties as NetgrifApplicationEngine;
+                    this.initialize();
+                })
+            );
     }
 
     private createConfigurationCopy(): any {

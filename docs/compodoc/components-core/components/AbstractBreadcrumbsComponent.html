@@ -266,7 +266,7 @@
                 <tr>
                     <td class="col-md-4">
                                 <span class="modifier">Protected</span>
-                        <code>constructor(_uriService: <a href="../injectables/UriService.html" target="_self">UriService</a>, _caseResourceService: <a href="../injectables/CaseResourceService.html" target="_self">CaseResourceService</a>, _activatedRoute: ActivatedRoute, _router: Router, _dynamicRoutingService: <a href="../injectables/DynamicNavigationRouteProviderService.html" target="_self">DynamicNavigationRouteProviderService</a>, _translateService: TranslateService, _log: <a href="../injectables/LoggerService.html" target="_self">LoggerService</a>)</code>
+                        <code>constructor(_uriService: <a href="../injectables/PathService.html" target="_self">PathService</a>, _caseResourceService: <a href="../injectables/CaseResourceService.html" target="_self">CaseResourceService</a>, _activatedRoute: ActivatedRoute, _router: Router, _dynamicRoutingService: <a href="../injectables/DynamicNavigationRouteProviderService.html" target="_self">DynamicNavigationRouteProviderService</a>, _translateService: TranslateService, _log: <a href="../injectables/LoggerService.html" target="_self">LoggerService</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -290,87 +290,87 @@
                                         <tbody>
                                                 <tr>
                                                         <td>_uriService</td>
-                                                  
+
                                                         <td>
-                                                                        <code><a href="../injectables/UriService.html" target="_self" >UriService</a></code>
+                                                                        <code><a href="../injectables/PathService.html" target="_self" >PathService</a></code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                 </tr>
                                                 <tr>
                                                         <td>_caseResourceService</td>
-                                                  
+
                                                         <td>
                                                                         <code><a href="../injectables/CaseResourceService.html" target="_self" >CaseResourceService</a></code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                 </tr>
                                                 <tr>
                                                         <td>_activatedRoute</td>
-                                                  
+
                                                         <td>
                                                                     <code>ActivatedRoute</code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                 </tr>
                                                 <tr>
                                                         <td>_router</td>
-                                                  
+
                                                         <td>
                                                                     <code>Router</code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                 </tr>
                                                 <tr>
                                                         <td>_dynamicRoutingService</td>
-                                                  
+
                                                         <td>
                                                                         <code><a href="../injectables/DynamicNavigationRouteProviderService.html" target="_self" >DynamicNavigationRouteProviderService</a></code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                 </tr>
                                                 <tr>
                                                         <td>_translateService</td>
-                                                  
+
                                                         <td>
                                                                     <code>TranslateService</code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                 </tr>
                                                 <tr>
                                                         <td>_log</td>
-                                                  
+
                                                         <td>
                                                                         <code><a href="../injectables/LoggerService.html" target="_self" >LoggerService</a></code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                 </tr>
                                         </tbody>
                                     </table>
@@ -518,7 +518,7 @@
 
 
     <section data-compodoc="block-methods">
-    
+
     <h3 id="methods">
         Methods
     </h3>
@@ -555,7 +555,7 @@
 
                             <div class="io-description">
                                 <b>Parameters :</b>
-                                
+
                                 <table class="params">
                                     <thead>
                                         <tr>
@@ -597,7 +597,7 @@
 
                         </div>
                             <div class="io-description">
-                                
+
                             </div>
                 </td>
             </tr>
@@ -835,7 +835,7 @@
     </table>
 </section>
     <section data-compodoc="block-properties">
-    
+
     <h3 id="inputs">
         Properties
     </h3>
@@ -898,7 +898,7 @@
 
     <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {AfterViewInit, Component, Input, OnDestroy} from &#x27;@angular/core&#x27;;
-import {UriService} from &#x27;../service/uri.service&#x27;;
+import {PathService} from &#x27;../service/uri.service&#x27;;
 import {CaseResourceService} from &quot;../../resources/engine-endpoint/case-resource.service&quot;;
 import {CaseSearchRequestBody} from &quot;../../filter/models/case-search-request-body&quot;;
 import {HttpParams} from &quot;@angular/common/http&quot;;
@@ -937,7 +937,7 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
     private redirectUrls: Map&lt;string, Array&lt;string&gt;&gt;;
     private nicePathSubscription: Subscription;
 
-    protected constructor(protected _uriService: UriService,
+    protected constructor(protected _uriService: PathService,
                           protected _caseResourceService: CaseResourceService,
                           protected _activatedRoute: ActivatedRoute,
                           protected _router: Router,
@@ -1091,7 +1091,7 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
         </div>
     </div>
 
-    
+
 </div>
 
 <script src="../js/libs/vis.min.js"></script>
