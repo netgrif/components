@@ -7,6 +7,10 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {ProfileService} from './profile.service';
 import {NetgrifApplicationEngine} from "../../../../commons/schema";
 import {UserChangePasswordRequest} from "../models/user-change-password-request";
+import {ConfigurationResourceService} from '../../../resources/engine-endpoint/configuration-resource.service';
+import {ResourceProvider} from '../../../resources/resource-provider.service';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
 
 describe('ProfileService', () => {
     let service: ProfileService;
@@ -56,6 +60,9 @@ describe('ProfileService', () => {
             TestBed.configureTestingModule({
                 imports: [HttpClientTestingModule, NoopAnimationsModule, RouterTestingModule.withRoutes([])],
                 providers: [
+                    HttpClient,
+                    ResourceProvider,
+                    ConfigurationResourceService,
                     ProfileService,
                     {provide: ConfigurationService, useClass: MissingEndpointsConfigurationService}
                 ]
@@ -74,8 +81,9 @@ describe('ProfileService', () => {
     });
 });
 
+@Injectable()
 class MissingEndpointsConfigurationService extends ConfigurationService {
-    constructor() {
+    constructor(protected configurationResource: ConfigurationResourceService) {
         super({
             extends: 'nae-default',
             providers: {
@@ -89,6 +97,13 @@ class MissingEndpointsConfigurationService extends ConfigurationService {
                 },
                 resources: []
             }
-        } as unknown as NetgrifApplicationEngine);
+        } as unknown as NetgrifApplicationEngine,
+            configurationResource,
+            {
+                application: 'nae',
+                type: 'default',
+                gateway_url: 'http://localhost:8888/api',
+                resolve_configuration: false
+            });
     }
 }

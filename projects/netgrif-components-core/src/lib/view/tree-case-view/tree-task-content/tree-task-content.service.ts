@@ -256,8 +256,8 @@ export class TreeTaskContentService implements OnDestroy {
      */
     protected resolveTaskBlockState(): void {
         const taskShouldBeBlocked = !this._taskContentService.task
-                                    || this._taskContentService.task.user === undefined
-                                    || !this._userComparator.compareUsers(this._taskContentService.task.user);
+                                    || this._taskContentService.task.userId === undefined
+                                    || !this._userComparator.compareUsers(this._taskContentService.task.userId);
         this._taskContentService.blockFields(taskShouldBeBlocked);
     }
 

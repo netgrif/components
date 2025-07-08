@@ -1473,7 +1473,7 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                     <a href="injectables/UriResourceService.html" data-type="entity-link" >UriResourceService</a>
                                 </li>
                                 <li class="link">
-                                    <a href="injectables/UriService.html" data-type="entity-link" >UriService</a>
+                                    <a href="injectables/PathService.html" data-type="entity-link" >PathService</a>
                                 </li>
                                 <li class="link">
                                     <a href="injectables/UserComparatorService.html" data-type="entity-link" >UserComparatorService</a>
