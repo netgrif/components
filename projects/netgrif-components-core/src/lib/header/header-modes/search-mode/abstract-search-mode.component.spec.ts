@@ -80,7 +80,7 @@ describe('AbstractSearchModeComponent', () => {
     }));
 
     it('should transform UserValue into id', fakeAsync(() => {
-        component.formControls[0].setValue(new UserValue('7', '', '', ''));
+        component.formControls[0].setValue(new UserValue('7',  'realmID0','', '', ''));
         tick(600);
         expect(headerSpy).toHaveBeenCalledWith(0, '7');
     }));

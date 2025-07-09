@@ -6,7 +6,7 @@ import {expect} from "@ngbracket/ngx-layout/_private-utils/testing";
 describe('UserListValue', () => {
     it('should create an instance', () => {
         let user: UserListValue;
-        user = new UserListValue(new Map([['0', new UserValue('0', 'name', 'surname', 'mail')]]));
+        user = new UserListValue(new Map([['0', new UserValue('0',  'realmID0','name', 'surname', 'mail')]]));
         expect(user.userValues.get('0').id).toEqual('0');
         expect(user.userValues.get('0').firstName).toEqual('name');
         expect(user.userValues.get('0').lastName).toEqual('surname');
@@ -16,13 +16,13 @@ describe('UserListValue', () => {
 
     it('should get last', () => {
         let user: UserListValue;
-        user = new UserListValue(new Map([['0', new UserValue('0', 'name', 'surname', 'mail')]]));
+        user = new UserListValue(new Map([['0', new UserValue('0',  'realmID0','name', 'surname', 'mail')]]));
         expect(user.getLast().id === '0').toBeTruthy();
     });
 
     it('should remove', () => {
         let user: UserListValue;
-        user = new UserListValue(new Map([['0', new UserValue('0', 'name', 'surname', 'mail')]]));
+        user = new UserListValue(new Map([['0', new UserValue('0',  'realmID0','name', 'surname', 'mail')]]));
         expect(user.userValues.size === 1).toBeTruthy();
         user.removeUserValue('0');
         expect(user.userValues.size === 0).toBeTruthy();
