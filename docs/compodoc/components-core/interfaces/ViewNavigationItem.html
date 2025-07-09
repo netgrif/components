@@ -89,14 +89,14 @@
                         <td class="col-md-4">
                             <ul class="index-list">
                                 <li>
-                                        <a href="#id" 
+                                        <a href="#id"
 >
                                             id
                                         </a>
                                 </li>
                                 <li>
                                             <span class="modifier">Optional</span>
-                                        <a href="#resource" 
+                                        <a href="#resource"
 >
                                             resource
                                         </a>
@@ -211,7 +211,7 @@ import {User} from &#x27;../../user/models/user&#x27;;
 import {UserService} from &#x27;../../user/services/user.service&#x27;;
 import {LoadingEmitter} from &#x27;../../utility/loading-emitter&#x27;;
 import {UriNodeResource} from &#x27;../model/uri-resource&#x27;;
-import {UriService} from &#x27;../service/uri.service&#x27;;
+import {PathService} from &#x27;../service/uri.service&#x27;;
 
 export interface ConfigDoubleMenu {
     mode: MatDrawerMode;
@@ -317,7 +317,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                           protected _accessService: AccessService,
                           protected _log: LoggerService,
                           protected _config: ConfigurationService,
-                          protected _uriService: UriService,
+                          protected _uriService: PathService,
                           protected _impersonationUserSelect: ImpersonationUserSelectService,
                           protected _impersonation: ImpersonationService,
                           protected _dynamicRoutingService: DynamicNavigationRouteProviderService) {
@@ -681,7 +681,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
 </div>
 
 
-                   
+
 
 
 
@@ -709,7 +709,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       
+
        <script type="module" src="../js/menu-wc.js" defer></script>
        <script nomodule src="../js/menu-wc_es5.js" defer></script>
 

@@ -77,7 +77,7 @@ describe('AssignTaskService', () => {
             title: '',
             caseColor: '',
             caseTitle: '',
-            user: undefined,
+            userId: undefined,
             userRefs: undefined,
             roles: {},
             startDate: [1],
@@ -123,7 +123,7 @@ describe('AssignTaskService', () => {
                     title: '',
                     caseColor: '',
                     caseTitle: '',
-                    user: null,
+                    userId: null,
                     roles: {
                         role: 'perform'
                     },

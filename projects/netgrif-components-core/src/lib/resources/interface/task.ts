@@ -29,7 +29,7 @@ export interface Task {
     /**
      * See [UserSmall]{@link UserResourceSmall#}
      */
-    user: UserResourceSmall;
+    userId: string;
     /**
      * ***Example:***
      *

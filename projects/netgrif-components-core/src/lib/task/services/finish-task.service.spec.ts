@@ -75,7 +75,7 @@ describe('FinishTaskService', () => {
             title: '',
             caseColor: '',
             caseTitle: '',
-            user: undefined,
+            userId: undefined,
             userRefs: undefined,
             roles: {},
             startDate: [1],
@@ -116,7 +116,7 @@ describe('FinishTaskService', () => {
                     title: '',
                     caseColor: '',
                     caseTitle: '',
-                    user: null,
+                    userId: null,
                     roles: {
                         role: {
                             assign: true,
