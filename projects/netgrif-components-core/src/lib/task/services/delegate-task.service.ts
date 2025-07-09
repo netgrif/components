@@ -81,7 +81,7 @@ export class DelegateTaskService extends TaskHandlingService {
                 //     this._safeTask.user.id, this._safeTask.user.realmId, this._safeTask.user.firstName, this._safeTask.user.lastName, this._safeTask.user.username
                 // ),
                 value: !this._safeTask.userId ? undefined : new UserValue(
-                    this._safeTask.userId,  '', '', '', ''
+                    this._safeTask.userId, '', '', '', ''
                 ),
                 negativeRoles: Object.keys(this._safeTask.roles).filter(role =>
                     this._safeTask.roles[role]['assign'] !== undefined && !this._safeTask.roles[role]['assign'])
@@ -118,39 +118,39 @@ export class DelegateTaskService extends TaskHandlingService {
         this._taskState.startLoading(delegatedTaskId);
         this._taskResourceService.delegateTask(this._safeTask.stringId, delegatedUserId).pipe(take(1)).subscribe(
             (outcomeResource: EventOutcomeMessageResource) => {
-            this._taskState.stopLoading(delegatedTaskId);
-            if (!this.isTaskRelevant(delegatedTaskId)) {
-                this._log.debug('current task changed before the delegate response could be received, discarding...');
-                nextEvent.resolve(false);
-                return;
-            }
-
-            if (outcomeResource.success) {
-                this._taskContentService.updateStateData(outcomeResource.outcome as DelegateTaskEventOutcome);
-                const changedFieldsMap: ChangedFieldsMap = this._eventService
-                    .parseChangedFieldsFromOutcomeTree(outcomeResource.outcome);
-                if (!!changedFieldsMap) {
-                    this._changedFieldsService.emitChangedFields(changedFieldsMap);
+                this._taskState.stopLoading(delegatedTaskId);
+                if (!this.isTaskRelevant(delegatedTaskId)) {
+                    this._log.debug('current task changed before the delegate response could be received, discarding...');
+                    nextEvent.resolve(false);
+                    return;
                 }
-                this.completeSuccess(afterAction, nextEvent, outcomeResource.outcome as DelegateTaskEventOutcome);
-            } else if (outcomeResource.error) {
-                this._snackBar.openErrorSnackBar(outcomeResource.error);
-                this.completeActions(afterAction, nextEvent, false);
-            }
-        }, error => {
-            this._taskState.stopLoading(delegatedTaskId);
-            this._log.debug('getting task data failed', error);
 
-            if (!this.isTaskRelevant(delegatedTaskId)) {
-                this._log.debug('current task changed before the delegate error could be received');
-                nextEvent.resolve(false);
-                return;
-            }
+                if (outcomeResource.success) {
+                    this._taskContentService.updateStateData(outcomeResource.outcome as DelegateTaskEventOutcome);
+                    const changedFieldsMap: ChangedFieldsMap = this._eventService
+                        .parseChangedFieldsFromOutcomeTree(outcomeResource.outcome);
+                    if (!!changedFieldsMap) {
+                        this._changedFieldsService.emitChangedFields(changedFieldsMap);
+                    }
+                    this.completeSuccess(afterAction, nextEvent, outcomeResource.outcome as DelegateTaskEventOutcome);
+                } else if (outcomeResource.error) {
+                    this._snackBar.openErrorSnackBar(outcomeResource.error);
+                    this.completeActions(afterAction, nextEvent, false);
+                }
+            }, error => {
+                this._taskState.stopLoading(delegatedTaskId);
+                this._log.debug('getting task data failed', error);
 
-            this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.assignTask')}
+                if (!this.isTaskRelevant(delegatedTaskId)) {
+                    this._log.debug('current task changed before the delegate error could be received');
+                    nextEvent.resolve(false);
+                    return;
+                }
+
+                this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.assignTask')}
                      ${this._task} ${this._translate.instant('tasks.snackbar.failed')}`);
-            this.completeActions(afterAction, nextEvent, false);
-        });
+                this.completeActions(afterAction, nextEvent, false);
+            });
     }
 
     /**
