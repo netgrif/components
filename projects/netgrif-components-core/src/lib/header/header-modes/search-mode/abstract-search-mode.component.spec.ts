@@ -56,7 +56,11 @@ describe('AbstractSearchModeComponent', () => {
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: ViewService, useClass: TestViewService},
                 CaseHeaderService,
-                {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
+                {
+                    provide: AllowedNetsService,
+                    useFactory: TestCaseViewAllowedNetsFactory,
+                    deps: [AllowedNetsServiceFactory]
+                }
             ],
             declarations: [TestSeaarchModeComponent, TestWrapperComponent],
         }).compileComponents();
@@ -80,7 +84,7 @@ describe('AbstractSearchModeComponent', () => {
     }));
 
     it('should transform UserValue into id', fakeAsync(() => {
-        component.formControls[0].setValue(new UserValue('7',  'realmID0','', '', ''));
+        component.formControls[0].setValue(new UserValue('7', 'realmID0', '', '', ''));
         tick(600);
         expect(headerSpy).toHaveBeenCalledWith(0, '7');
     }));

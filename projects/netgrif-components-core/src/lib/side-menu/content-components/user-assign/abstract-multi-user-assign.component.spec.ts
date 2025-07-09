@@ -30,8 +30,10 @@ describe('AbstractMultiUserAssignComponent', () => {
             ],
             providers: [
                 UserListService,
-                {provide: NAE_SIDE_MENU_CONTROL, useValue: new SideMenuControl(() => {
-                    }, new Observable<boolean>(), null)},
+                {
+                    provide: NAE_SIDE_MENU_CONTROL, useValue: new SideMenuControl(() => {
+                    }, new Observable<boolean>(), null)
+                },
                 {provide: ConfigurationService, useClass: TestConfigurationService}
             ],
             declarations: [
@@ -51,16 +53,16 @@ describe('AbstractMultiUserAssignComponent', () => {
     });
 
     it('should select', () => {
-        component.userWasSelected(new UserValue('0',  'realmID0','', '', ''));
+        component.userWasSelected(new UserValue('0', 'realmID0', '', '', ''));
         expect(component.currentUsers).toBeTruthy();
         expect(component.currentUsers.find(u => u.id === '0')).toBeTruthy()
     });
 
     it('should unselect', () => {
-        component.userWasSelected(new UserValue('0',  'realmID0','', '', ''));
+        component.userWasSelected(new UserValue('0', 'realmID0', '', '', ''));
         expect(component.currentUsers).toBeTruthy();
         expect(component.currentUsers.find(u => u.id === '0')).toBeTruthy()
-        component.userWasUnselected(new UserValue('0',  'realmID0', '', '', ''));
+        component.userWasUnselected(new UserValue('0', 'realmID0', '', '', ''));
         expect(component.currentUsers.length === 0).toBeTruthy();
     });
 
