@@ -21,9 +21,9 @@
             "sessionTimeout": 900,
             "jwtBearer": "X-Jwt-Token",
             "sso": {
-                "enable": true,
+                "enable": false,
                 "clientId": "dev-cluster-worker",
-                "redirectUrl": "https://iam.mudu.dev.netgrif.cloud/realms/netgrif-cloud-testing/protocol/openid-connect/auth",
+                "redirectUrl": "http://localhost:8081/realms/netgrif-cloud-testing/protocol/openid-connect/auth",
                 "refreshUrl": "http://localhost:8800/api/auth/login",
                 "scopes": ["openid","email","profile","roles"]
             }
