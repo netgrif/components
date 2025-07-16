@@ -91,6 +91,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     protected _breakpointSubscription: Subscription;
     protected _currentNodeSubscription: Subscription;
     protected _currentPathSubscription: Subscription;
+    protected _loggedUserSubscription: Subscription;
 
     protected _currentPath: string;
 
@@ -154,7 +155,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         const viewConfigurationPath = this._activatedRoute.snapshot.data[NAE_ROUTING_CONFIGURATION_PATH];
         if (!!viewConfigurationPath) {
             const viewConfiguration = this._config.getViewByPath(viewConfigurationPath)
-            this._userService.user$.subscribe(() => {
+            this._loggedUserSubscription  = this._userService.user$.subscribe(() => {
                 Object.entries(viewConfiguration.children).forEach(([key, childView]) => {
                     this.resolveUriForChildViews(viewConfigurationPath + '/' + key, childView);
                     this.resolveHiddenMenuItemFromChildViews(viewConfigurationPath + '/' + key, childView);
@@ -200,6 +201,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         this._breakpointSubscription?.unsubscribe();
         this._currentNodeSubscription?.unsubscribe();
         this._currentPathSubscription?.unsubscribe();
+        this._loggedUserSubscription?.unsubscribe();
         this.leftLoading$.complete();
         this.rightLoading$.complete();
         this.nodeLoading$.complete();
