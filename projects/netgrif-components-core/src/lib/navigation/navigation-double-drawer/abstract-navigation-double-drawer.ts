@@ -153,11 +153,13 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
 
         const viewConfigurationPath = this._activatedRoute.snapshot.data[NAE_ROUTING_CONFIGURATION_PATH];
         if (!!viewConfigurationPath) {
-            const viewConfiguration = this._config.getViewByPath(viewConfigurationPath);
-            Object.entries(viewConfiguration.children).forEach(([key, childView]) => {
-                this.resolveUriForChildViews(viewConfigurationPath + '/' + key, childView);
-                this.resolveHiddenMenuItemFromChildViews(viewConfigurationPath + '/' + key, childView);
-            });
+            const viewConfiguration = this._config.getViewByPath(viewConfigurationPath)
+            this._userService.user$.subscribe(() => {
+                Object.entries(viewConfiguration.children).forEach(([key, childView]) => {
+                    this.resolveUriForChildViews(viewConfigurationPath + '/' + key, childView);
+                    this.resolveHiddenMenuItemFromChildViews(viewConfigurationPath + '/' + key, childView);
+                });
+            })
         }
     }
 
