@@ -41,13 +41,14 @@ export class FieldConverterService {
             case FieldTypeResource.BOOLEAN:
                 return new BooleanField(item.stringId, item.name, item.value as boolean, item.behavior,
                     item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
-            case FieldTypeResource.TEXT:
+            case FieldTypeResource.TEXT: {
                 if (this.textFieldNames.includes(item.component?.name)) {
                     return new TextAreaField(item.stringId, item.name, this.resolveTextValue(item, item.value), item.behavior,
                         item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
                 }
                 return new TextField(item.stringId, item.name, this.resolveTextValue(item, item.value), item.behavior, item.placeholder,
                     item.description, item.layout, item.validations, item.component, item.parentTaskId);
+            }
             case FieldTypeResource.NUMBER:
                 return new NumberField(item.stringId, item.name, item.value as number, item.behavior, item.validations, item.placeholder,
                     item.description, item.layout, item.formatFilter, this.resolveNumberComponent(item), item.parentTaskId);
@@ -62,34 +63,38 @@ export class FieldConverterService {
                 return new MultichoiceField(item.stringId, item.name, item.value, this.resolveMultichoiceOptions(item),
                     item.behavior, item.placeholder, item.description, item.layout,
                     item.type, item.validations, item.component, item.parentTaskId);
-            case FieldTypeResource.DATE:
+            case FieldTypeResource.DATE: {
                 let date;
                 if (item.value) {
                     date = moment(new Date(item.value[0], item.value[1] - 1, item.value[2]));
                 }
                 return new DateField(item.stringId, item.name, date, item.behavior, item.placeholder,
                     item.description, item.layout, item.validations, item.component, item.parentTaskId);
-            case FieldTypeResource.DATE_TIME:
+            }
+            case FieldTypeResource.DATE_TIME: {
                 let dateTime;
                 if (item.value) {
                     dateTime = moment(new Date(item.value[0], item.value[1] - 1, item.value[2], item.value[3], item.value[4]));
                 }
                 return new DateTimeField(item.stringId, item.name, dateTime, item.behavior,
                     item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
-            case FieldTypeResource.USER:
+            }
+            case FieldTypeResource.USER: {
                 let user;
                 if (item.value) {
                     user = new UserValue(item.value.id, item.value.realmId, item.value.firstName, item.value.lastName, item.value.username);
                 }
                 return new UserField(item.stringId, item.name, item.behavior, user,
                     item.roles, item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
-            case FieldTypeResource.USER_LIST:
+            }
+            case FieldTypeResource.USER_LIST: {
                 let userListValue = new UserListValue(new Map<string, UserValue>());
                 if (item.value) {
                     item.value.userValues.forEach(u => userListValue.addUserValue(new UserValue(u.id, u.realmId, u.firstName, u.lastName, u.username)));
                 }
                 return new UserListField(item.stringId, item.name, item.behavior, userListValue,
                     item.roles, item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
+            }
             case FieldTypeResource.BUTTON:
                 return new ButtonField(item.stringId, item.name, item.behavior, item.value as number,
                     item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
