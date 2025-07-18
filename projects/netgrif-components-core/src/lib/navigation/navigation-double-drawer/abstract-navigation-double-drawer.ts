@@ -86,6 +86,8 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
      * */
     hiddenCustomItems: Array<NavigationItem>;
 
+    public hideMoreMenu;
+
     itemsOrder: MenuOrder;
 
     protected _breakpointSubscription: Subscription;
@@ -137,6 +139,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         this.hiddenCustomItems = [];
         this.moreItems = new Array<NavigationItem>();
         this._childCustomViews = {};
+        this.hideMoreMenu = true;
     }
 
     ngOnInit(): void {
@@ -159,6 +162,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                 Object.entries(viewConfiguration.children).forEach(([key, childView]) => {
                     this.resolveUriForChildViews(viewConfigurationPath + '/' + key, childView);
                     this.resolveHiddenMenuItemFromChildViews(viewConfigurationPath + '/' + key, childView);
+                    this.hideMoreMenu = !this.hiddenCustomItems?.length;
                 });
             })
         }
