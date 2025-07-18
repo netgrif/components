@@ -58,7 +58,7 @@
                 <mat-icon>account_circle</mat-icon>
             </button>
 
-            <div *ngIf="includeLanguage" [ngClass]="{'margin-bottom-x2 menu-button': isHiddenCustomItemsEmpty()}" fxLayout="row" class="icon-container" fxLayoutAlign="center center">
+            <div *ngIf="includeLanguage" [ngClass]="{'margin-bottom-x2 menu-button': hideMoreMenu}" fxLayout="row" class="icon-container" fxLayoutAlign="center center">
                 <nc-language-selector fxLayout="row" ></nc-language-selector>
             </div>
 
@@ -76,7 +76,7 @@
             <!--                    <mat-icon class="icon-large sidemenu-icon">more_vert</mat-icon>-->
             <!--                </button>-->
             <!--            </div>-->
-            <button *ngIf="!isHiddenCustomItemsEmpty()" mat-icon-button [matMenuTriggerFor]="railMenu"
+            <button *ngIf="!hideMoreMenu" mat-icon-button [matMenuTriggerFor]="railMenu"
                     class="menu-button mat-typography menu-font-color margin-bottom-x2"
                     [matTooltip]="'toolbar.menu.open' | translate"
                     matTooltipPosition="right">
