@@ -564,10 +564,6 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         return this.rightItems === undefined || this.rightItems.length === 0;
     }
 
-    isHiddenCustomItemsEmpty(): boolean {
-        return this.hiddenCustomItems === undefined || this.hiddenCustomItems.length === 0;
-    }
-
     uriNodeTrackBy(index: number, node: UriNodeResource) {
         return node.path;
     }
