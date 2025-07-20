@@ -74,7 +74,7 @@ export abstract class AbstractUserAssignListComponent extends AbstractBaseUserAs
      * @param selectedUser [UserValue]{@link UserValue}
      */
     public select(selectedUser: UserListItem): void {
-        this.userSelected.emit(new UserValue(selectedUser.id, selectedUser.name, selectedUser.surname, selectedUser.email));
+        this.userSelected.emit(new UserValue(selectedUser.id, selectedUser.realmId, selectedUser.firstName, selectedUser.lastName, selectedUser.username));
         this._markSelectedUser(selectedUser);
     }
 

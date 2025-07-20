@@ -21,6 +21,6 @@ export class UserField extends DataField<UserValue> {
     }
 
     protected valueEquality(a: UserValue, b: UserValue): boolean {
-        return (!a && !b) || (!!a && !!b && a.email === b.email);
+        return (!a && !b) || (!!a && !!b && a.username === b.username);
     }
 }

@@ -31,7 +31,7 @@ export class UserListValue {
 
     public getLast(): UserValue {
         if (this._userValues.size == 0) {
-            return new UserValue('', '', '', '');
+            return new UserValue('', '', '', '', '');
         }
         return Array.from(this._userValues.values()).pop();
     }
