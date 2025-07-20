@@ -39,5 +39,5 @@ describe('AdminImpersonateItemComponent', () => {
     template: '<nc-user-impersonate-item [user]="user"></nc-user-impersonate-item>'
 })
 class TestWrapperComponent {
-    user = new UserValue('0', '', '', '');
+    user = new UserValue('0', 'realmID0', '', '', '');
 }

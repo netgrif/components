@@ -61,6 +61,9 @@ describe('AdminImpersonateListComponent', () => {
     template: '<nc-user-impersonate-list [searchUserControl]="formControl" [roles]="injectedData.roles"></nc-user-impersonate-list>'
 })
 class TestWrapperComponent {
-    injectedData = {roles: [], value: new UserValue('5', 'admin', 'netgrif', 'super@netgrif.com')} as UserListInjectedData;
+    injectedData = {
+        roles: [],
+        value: new UserValue('5', 'realmID0', 'admin', 'netgrif', 'super@netgrif.com')
+    } as UserListInjectedData;
     formControl = new FormControl();
 }
