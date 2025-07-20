@@ -86,11 +86,14 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
      * */
     hiddenCustomItems: Array<NavigationItem>;
 
+    public hideMoreMenu;
+
     itemsOrder: MenuOrder;
 
     protected _breakpointSubscription: Subscription;
     protected _currentNodeSubscription: Subscription;
     protected _currentPathSubscription: Subscription;
+    protected _loggedUserSubscription: Subscription;
 
     protected _currentPath: string;
 
@@ -136,6 +139,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         this.hiddenCustomItems = [];
         this.moreItems = new Array<NavigationItem>();
         this._childCustomViews = {};
+        this.hideMoreMenu = true;
     }
 
     ngOnInit(): void {
@@ -153,11 +157,14 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
 
         const viewConfigurationPath = this._activatedRoute.snapshot.data[NAE_ROUTING_CONFIGURATION_PATH];
         if (!!viewConfigurationPath) {
-            const viewConfiguration = this._config.getViewByPath(viewConfigurationPath);
-            Object.entries(viewConfiguration.children).forEach(([key, childView]) => {
-                this.resolveUriForChildViews(viewConfigurationPath + '/' + key, childView);
-                this.resolveHiddenMenuItemFromChildViews(viewConfigurationPath + '/' + key, childView);
-            });
+            const viewConfiguration = this._config.getViewByPath(viewConfigurationPath)
+            this._loggedUserSubscription  = this._userService.user$.subscribe(() => {
+                Object.entries(viewConfiguration.children).forEach(([key, childView]) => {
+                    this.resolveUriForChildViews(viewConfigurationPath + '/' + key, childView);
+                    this.resolveHiddenMenuItemFromChildViews(viewConfigurationPath + '/' + key, childView);
+                    this.hideMoreMenu = !this.hiddenCustomItems?.length;
+                });
+            })
         }
     }
 
@@ -198,6 +205,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         this._breakpointSubscription?.unsubscribe();
         this._currentNodeSubscription?.unsubscribe();
         this._currentPathSubscription?.unsubscribe();
+        this._loggedUserSubscription?.unsubscribe();
         this.leftLoading$.complete();
         this.rightLoading$.complete();
         this.nodeLoading$.complete();
