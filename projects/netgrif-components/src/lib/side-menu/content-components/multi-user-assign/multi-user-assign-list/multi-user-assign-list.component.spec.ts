@@ -63,7 +63,7 @@ describe('MultiUserAssignListComponent', () => {
 class TestWrapperComponent {
     injectedData = {
         roles: [],
-        value: new UserListValue(new Map<string, UserValue>([['5', new UserValue('5', 'admin', 'netgrif', 'super@netgrif.com')]]))
+        value: new UserListValue(new Map<string, UserValue>([['5', new UserValue('5', 'realmID0', 'admin', 'netgrif', 'super@netgrif.com')]]))
     } as UserListInjectedData;
     formControl = new FormControl();
 }
