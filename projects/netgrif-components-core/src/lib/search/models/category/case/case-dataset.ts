@@ -320,7 +320,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
                     .filter(immediateData => {
                         return immediateData.title !== undefined
                             && immediateData.title.trim().length > 0
-                            && !CaseDataset.DISABLED_TYPES.includes(immediateData.type);
+                            && !CaseDataset.DISABLED_TYPES?.includes(immediateData.type);
                     })
                     .forEach(immediateData => {
                         let type = immediateData.type;

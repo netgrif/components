@@ -15,7 +15,7 @@ export abstract class AbstractViewWithHeadersComponent implements OnDestroy {
     public config: Params;
     protected _selectedHeaders$: ReplaySubject<Array<HeaderColumn>>;
 
-    protected constructor(private _sortableView?: AbstractSortableViewComponent, protected _activatedRoute?: ActivatedRoute) {
+    protected constructor(protected _sortableView?: AbstractSortableViewComponent, protected _activatedRoute?: ActivatedRoute) {
         this._selectedHeaders$ = new ReplaySubject<Array<HeaderColumn>>(1);
         if (!!_activatedRoute) {
             this._activatedRoute.queryParams.subscribe(paramMap => this.config = paramMap);

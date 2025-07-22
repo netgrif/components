@@ -18,9 +18,12 @@ import {FilterType} from '../filter/models/filter-type';
  * field, if the filter metadata allow it and the filter is a task filter
  */
 export function navigationItemTaskCategoryFactory(categoryResolverService: CategoryResolverService,
-                                                  navigationItemTaskData: Array<DataGroup>,
-                                                  defaultCaseSearchCategories: Array<Type<Category<any>>>,
-                                                  defaultTaskSearchCategories: Array<Type<Category<any>>>): Array<Type<Category<any>>> {
+                                                  navigationItemTaskData?: Array<DataGroup>,
+                                                  defaultCaseSearchCategories?: Array<Type<Category<any>>>,
+                                                  defaultTaskSearchCategories?: Array<Type<Category<any>>>): Array<Type<Category<any>>> {
+    if (!navigationItemTaskData) {
+        return [];
+    }
     const filterField = getFieldFromDataGroups(navigationItemTaskData, UserFilterConstants.FILTER_FIELD_ID) as FilterField;
 
     if (filterField === undefined) {

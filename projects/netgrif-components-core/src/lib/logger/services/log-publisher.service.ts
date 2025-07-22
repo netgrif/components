@@ -28,7 +28,7 @@ export class LogPublisherService implements OnDestroy {
         this._publishers = [];
         const serviceConfig = config.get().services;
         if (serviceConfig && serviceConfig.log && serviceConfig.log.publishers) {
-            Object.keys(PUBLISHERS).filter(p => serviceConfig.log.publishers.includes(p) && PUBLISHERS[p])
+            Object.keys(PUBLISHERS).filter(p => serviceConfig.log.publishers?.includes(p) && PUBLISHERS[p])
                 .forEach(key => new PUBLISHERS[key](this));
         }
     }

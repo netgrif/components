@@ -58,3 +58,4 @@ export * from './tree-case-view/tree-component/add-child-node/abstract-add-child
 export * from './tree-case-view/tree-component/remove-node/abstract-remove-node.component';
 export * from './tree-case-view/tree-task-content/abstract-tree-task-content.component';
 export * from './task-view/abstract-single-task-view.component';
+export * from './task-view/abstract-tabbed-single-task-view.component';

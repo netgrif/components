@@ -1,0 +1,17 @@
+<div class="task-tab-background full-height">
+    <div fxLayout="column" fxLayoutAlign="start stretch" class="content-margin full-height" >
+        <nc-single-task [task$]="task$" [loading$]="loading$" [selectedHeaders$]="selectedHeaders$"
+                        [actionRowJustifyContent]="actionRowJustifyContent"  [hideActionRow]="hideActionRow" [hidePanelHeader]="hidePanelHeader"
+                        [showPageHeader]="showPageHeader" [showPageFooter]="showPageFooter" [actionButtonTemplates]='[closeButton, finishButton]' fxFlex></nc-single-task>
+    </div>
+</div>
+
+<ng-template #closeButton >
+    <button *ngIf="showCloseButton" (click)="closeTab()" mat-stroked-button color="primary">
+        {{ 'tasks.view.closeTab' | translate | uppercase }}</button>
+</ng-template>
+
+<ng-template #finishButton let-finish="finish">
+    <button *ngIf="showFinishButton" (click)="finish()" mat-stroked-button color="primary" >
+        {{ getFinishTitle() | translate | uppercase }}</button>
+</ng-template>

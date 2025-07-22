@@ -19,11 +19,11 @@ and to create own library of Angular web components to incorporate your own pers
 * Documentation: [https://components.netgrif.com](https://components.netgrif.com)
 <!-- * Getting Started: [https://components.netgrif.com/get_started](https://components.netgrif.com/get_started) -->
 * Issue Tracker: [Github issues](https://github.com/netgrif/components/issues)
-* Compodoc: [@netgrif/components compodoc](https://components.netgrif.com/#/compodoc/components), 
-           [@netgrif/components-core compodoc](https://components.netgrif.com/#/compodoc/components-core)
-* Typedoc: [@netgrif/components typedoc](https://components.netgrif.com/#/typedoc/components),
-           [@netgrif/components-core typedoc](https://components.netgrif.com/#/typedoc/components-core)
-* License: [NETGRIF Community License](https://github.com/netgrif/components/blob/master/LICENSE)
+* Compodoc: [@netgrif/components compodoc](https://components.netgrif.com/compodoc/components/), 
+           [@netgrif/components-core compodoc](https://components.netgrif.com/compodoc/components-core)
+* Typedoc: [@netgrif/components typedoc](https://components.netgrif.com/typedoc/components),
+           [@netgrif/components-core typedoc](https://components.netgrif.com/typedoc/components-core)
+* License: [NETGRIF Community License](https://github.com/netgrif/components/blob/master/LICENSE.txt)
 
 In this repository are 3 projects:
 * [@netgrif/components-core](projects/netgrif-components-core/README.md) - Core library of services, factories and abstract classes of components.  

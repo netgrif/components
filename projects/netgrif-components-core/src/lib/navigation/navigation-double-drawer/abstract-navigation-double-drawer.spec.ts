@@ -40,6 +40,8 @@ import {CaseResourceService} from "../../resources/engine-endpoint/case-resource
 import {MockCaseResourceService} from "../../utility/tests/mocks/mock-case-resource.service";
 import {MenuOrder} from "../model/navigation-configs";
 import {MockUserService} from "../../utility/tests/mocks/mock-user.service";
+import {DoubleDrawerNavigationService} from "./service/double-drawer-navigation.service";
+import {RedirectService} from "../../routing/redirect-service/redirect.service";
 
 describe('AbstractNavigationDoubleDrawerComponent', () => {
     let component: TestDrawerComponent;
@@ -187,7 +189,9 @@ class TestDrawerComponent extends AbstractNavigationDoubleDrawerComponent {
                 _caseResourceService: CaseResourceService,
                 _impersonationUserSelect: ImpersonationUserSelectService,
                 _impersonation: ImpersonationService,
-                _dynamicRouteProviderService: DynamicNavigationRouteProviderService) {
+                _dynamicRouteProviderService: DynamicNavigationRouteProviderService,
+                _redirectService: RedirectService,
+                _navigationService: DoubleDrawerNavigationService) {
         super(_router, _activatedRoute, _breakpoint, _languageService, _translateService, _userService, _accessService,
             _log, _config, _pathService, _caseResourceService, _impersonationUserSelect, _impersonation, _dynamicRouteProviderService);
     }

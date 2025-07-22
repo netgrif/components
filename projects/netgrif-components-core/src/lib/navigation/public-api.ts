@@ -8,12 +8,15 @@ export * from './navigation-double-drawer/abstract-navigation-double-drawer';
 export * from './navigation-rail/abstract-navigation-rail.component';
 export * from './group-navigation-component-resolver/abstract-group-navigation-component-resolver.component';
 export * from './breadcrumbs/abstract-breadcrumbs.component';
+export * from './dashboard/abstract-dashboard.component';
 
 /* SERVICES */
 export * from './group-navigation-component-resolver/group-navigation-component-resolver.service';
 export * from './utility/filter-extraction.service';
 export * from './service/path.service';
 export * from './service/uri-resource.service';
+export * from './navigation-double-drawer/service/double-drawer-navigation.service';
+export * from './navigation-double-drawer/util/double-drawer-utils';
 
 /* MODELS */
 export * from './model/group-navigation-constants';
@@ -23,6 +26,7 @@ export * from './model/size-menu-injection-token'
 export * from './model/group-navigation-item-label';
 export * from './model/uri-resource';
 export * from './model/navigation-configs';
+export * from './model/navigation-menu-events';
 
 /* UTILITY METHODS */
 export * from './utility/navigation-item-task-utility-methods';
