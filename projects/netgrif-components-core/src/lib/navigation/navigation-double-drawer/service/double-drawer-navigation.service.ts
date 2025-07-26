@@ -1,8 +1,7 @@
 import {EventEmitter, Injectable, OnDestroy} from '@angular/core';
-import {BehaviorSubject, Observable, of, Subscription} from 'rxjs';
-import {UriService} from "../../service/uri.service";
+import {BehaviorSubject, finalize, Observable, of, Subscription} from 'rxjs';
 import {LoadingEmitter} from "../../../utility/loading-emitter";
-import {filter, map, take} from "rxjs/operators";
+import {catchError, filter, map, switchMap, take} from "rxjs/operators";
 import {Case} from "../../../resources/interface/case";
 import {LoggerService} from "../../../logger/services/logger.service";
 import {DoubleDrawerUtils} from "../util/double-drawer-utils";
@@ -29,9 +28,10 @@ import {
     RIGHT_SIDE_NEW_PAGE_SIZE,
     SETTINGS_TRANSITION_ID
 } from '../../model/navigation-configs';
-import { UriNodeResource } from '../../model/uri-resource';
+import {UriNodeResource} from '../../model/uri-resource';
 import {MenuItemClickEvent, MenuItemLoadedEvent} from '../../model/navigation-menu-events';
 import {GroupNavigationConstants} from "../../model/group-navigation-constants";
+import {PathService} from "../../service/path.service";
 
 /**
  * Service for managing navigation in double-drawer
@@ -65,12 +65,12 @@ export class DoubleDrawerNavigationService implements OnDestroy {
     protected _leftLoading$: LoadingEmitter;
     protected _rightLoading$: LoadingEmitter;
     protected _nodeLoading$: LoadingEmitter;
-    protected _currentNodeSubscription: Subscription;
+    protected _currentPathSubscription: Subscription;
     /**
      * Currently display uri
      * Siblings of the node are on the left, children are on the right
      */
-    protected _currentNode: UriNodeResource;
+    protected _currentPath: string;
     /**
      * Currently selected navigation item
      */
@@ -81,15 +81,16 @@ export class DoubleDrawerNavigationService implements OnDestroy {
     protected itemClicked: EventEmitter<MenuItemClickEvent>;
     protected itemLoaded: EventEmitter<MenuItemLoadedEvent>;
 
-    constructor(protected _uriService: UriService,
-                protected _log: LoggerService,
-                protected _config: ConfigurationService,
-                protected _activatedRoute: ActivatedRoute,
-                protected _caseResourceService: CaseResourceService,
-                protected _accessService: AccessService,
-                protected _translateService: TranslateService,
-                protected _dynamicRoutingService: DynamicNavigationRouteProviderService,
-                protected _redirectService: RedirectService) {
+    constructor(
+        protected _log: LoggerService,
+        protected _config: ConfigurationService,
+        protected _activatedRoute: ActivatedRoute,
+        protected _caseResourceService: CaseResourceService,
+        protected _accessService: AccessService,
+        protected _translateService: TranslateService,
+        protected _dynamicRoutingService: DynamicNavigationRouteProviderService,
+        protected _redirectService: RedirectService,
+        protected _pathService: PathService) {
         this._leftItems$ = new BehaviorSubject([]);
         this._rightItems$ = new BehaviorSubject([]);
         this._moreItems$ = new BehaviorSubject([]);
@@ -105,13 +106,13 @@ export class DoubleDrawerNavigationService implements OnDestroy {
         this.itemClicked = new EventEmitter<MenuItemClickEvent>();
         this.itemLoaded = new EventEmitter<MenuItemLoadedEvent>();
 
-        this._currentNodeSubscription = this._uriService.activeNode$.subscribe(node => {
-            this.currentNode = node;
-        });
+        // this._currentPathSubscription = this._pathService.activePath$.subscribe(path => {
+        //     this._currentPath = path;
+        // })
     }
 
     public ngOnDestroy(): void {
-        this._currentNodeSubscription?.unsubscribe();
+        this._currentPathSubscription?.unsubscribe();
         this._leftLoading$.complete();
         this._rightLoading$.complete();
         this._nodeLoading$.complete();
@@ -123,38 +124,36 @@ export class DoubleDrawerNavigationService implements OnDestroy {
         return this._nodeLoading$;
     }
 
-    public get currentNode(): UriNodeResource {
-        return this._currentNode;
+    public get currentPath(): string {
+        return this._currentPath;
     }
 
-    public set currentNode(node: UriNodeResource) {
-        if (node === this._currentNode || this._leftLoading$.isActive || this._rightLoading$.isActive) {
+    public set currentPath(path: string) {
+        if (path === this._currentPath || this.leftLoading$.isActive || this.rightLoading$.isActive) {
             return;
         }
-        this._currentNode = node;
-        if (!node) {
+        this._currentPath = path;
+        if (!path) {
             return;
         }
-        if (node.parentId && !node.parent) {
-            if (node.parentId === this._uriService.root.id) {
-                node.parent = this._uriService.root;
-            } else {
-                this._nodeLoading$.on();
-                this._uriService.getNodeByPath(this._uriService.resolveParentPath(node)).subscribe(n => {
-                    node.parent = !n ? this._uriService.root : n;
-                    this._nodeLoading$.off();
-                }, error => {
-                    this._log.error(error);
-                    this._nodeLoading$.off();
-                });
-            }
-        }
-        if (this._nodeLoading$.isActive) {
-            this._nodeLoading$.subscribe(() => {
-                this.loadNavigationItems(node);
+        if (this.nodeLoading$.isActive) {
+            this.nodeLoading$.subscribe(() => {
+                this.resolveMenuItems(path)
             });
         } else {
-            this.loadNavigationItems(node);
+            this.resolveMenuItems(path);
+        }
+    }
+
+    protected resolveMenuItems(path: string) {
+        if (path === PathService.SEPARATOR) {
+            this._leftItems$.next([])
+            this.loadRightSide();
+        } else {
+            if (!this.leftItems.find(item => item.resource?.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)?.value === path)) {
+                this.loadLeftSide();
+            }
+            this.loadRightSide();
         }
     }
 
@@ -211,7 +210,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
     }
 
     public loadNavigationItems(node: UriNodeResource) {
-        if (this._uriService.isRoot(node)) {
+        if (this.currentPath === PathService.SEPARATOR) {
             this._leftItems$.next([]);
             this.loadRightSide();
         } else {
@@ -227,11 +226,10 @@ export class DoubleDrawerNavigationService implements OnDestroy {
      * set to root node.
      * */
     public onHomeClick(): void {
-        if (this._leftLoading$.isActive || this._rightLoading$.isActive) {
-            return;
+        if (this.leftLoading$.isActive || this.rightLoading$.isActive) {
+            return
         }
-        this._uriService.activeNode = this._uriService.root;
-        this.itemClicked.emit({uriNode: this._uriService.activeNode, isHome: true});
+        this._pathService.activePath = PathService.SEPARATOR;
     }
 
     /**
@@ -241,11 +239,11 @@ export class DoubleDrawerNavigationService implements OnDestroy {
      * Current level is set to a lower number in order to set the left side menu.
      * */
     public onBackClick(): void {
-        if (this._leftLoading$.isActive || this._rightLoading$.isActive || this._uriService.isRoot(this._currentNode)) {
-            return;
+        if (this.leftLoading$.isActive || this.rightLoading$.isActive || this.currentPath === PathService.SEPARATOR) {
+            return
         }
-        this._uriService.activeNode = this._currentNode.parent;
-        this.itemClicked.emit({uriNode: this._uriService.activeNode, isHome: false});
+        this._pathService.activePath = this.extractParent(this.currentPath);
+        this.itemClicked.emit({path: this._pathService.activePath, isHome: false});
     }
 
     /**
@@ -254,39 +252,33 @@ export class DoubleDrawerNavigationService implements OnDestroy {
      * On second check if the clicked item has a view. On third, pick any other children's view, else show nothing.
      * */
     public onItemClick(item: NavigationItem): void {
-        this._currentNavigationItem = item;
         if (item.resource === undefined) {
             // custom view represented only in nae.json
-            if (item.processUri === this.currentNode.uriPath) {
-                this._uriService.activeNode = this._currentNode;
+            if (item.processUri === this.currentPath) {
+                this._pathService.activePath = this.currentPath;
             } else {
-                this._uriService.activeNode = this._currentNode.parent;
+                this._pathService.activePath = this.extractParent(this.currentPath);
             }
-            this.itemClicked.emit({uriNode: this._uriService.activeNode, isHome: false});
         } else {
-            const path = item.resource.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)?.value;
-            if (DoubleDrawerUtils.hasItemChildren(item) && !this._leftLoading$.isActive && !this._rightLoading$.isActive) {
-                this._uriService.getNodeByPath(path).subscribe(node => {
-                    this._uriService.activeNode = node;
-                    this.itemClicked.emit({uriNode: this._uriService.activeNode, isHome: false});
-                    this._rightLoading$.pipe(
-                        filter(isRightLoading => isRightLoading === false),
-                        take(1)
-                    ).subscribe(()=> {
-                        this.openAvailableView();
-                    })
-                }, error => {
-                    this._log.error(error);
-                });
-            } else if (!path.includes(this.currentNode.uriPath)) {
-                this._uriService.activeNode = this._currentNode.parent;
-                this.itemClicked.emit({uriNode: this._uriService.activeNode, isHome: false});
+            const path = item.resource.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)?.value
+
+            if (DoubleDrawerUtils.hasItemChildren(item) && !this.leftLoading$.isActive && !this.rightLoading$.isActive) {
+                this._pathService.activePath = path;
+                this._rightLoading$.pipe(
+                    filter(isRightLoading => isRightLoading === false),
+                    take(1)
+                ).subscribe(() => {
+                    this.openAvailableView();
+                })
+            } else if (!path.includes(this.currentPath)) {
+                this._pathService.activePath = this.extractParent(this.currentPath);
             } else {
-                this._uriService.activeNode = this._currentNode;
-                this.itemClicked.emit({uriNode: this._uriService.activeNode, isHome: false});
+                this._pathService.activePath = this.currentPath;
+                this._pathService.activePath = this.extractParent(this.currentPath);
             }
         }
     }
+
 
     /**
      * Opens a view of the current right items in the menu by defined rule. The rule is: On first check for default
@@ -363,12 +355,13 @@ export class DoubleDrawerNavigationService implements OnDestroy {
     }
 
     protected loadLeftSide() {
-        if (this._uriService.isRoot(this._currentNode)) {
+        if (this.currentPath === PathService.SEPARATOR) {
             this._leftItems$.next([])
             return;
         }
-        this._leftLoading$.on();
-        this._uriService.getItemCaseByNodePath(this.currentNode.parent).subscribe(page => {
+        this.leftLoading$.on();
+
+        this.getItemCaseByPath(this.extractParent(this.currentPath)).subscribe(page => {
             let childCases$;
             let targetItem;
             let orderedChildCaseIds;
@@ -378,9 +371,13 @@ export class DoubleDrawerNavigationService implements OnDestroy {
             } else {
                 targetItem = page.content[0];
                 orderedChildCaseIds = DoubleDrawerUtils.extractChildCaseIds(targetItem);
-                childCases$ = this.getItemCasesByIdsInOnePage(orderedChildCaseIds).pipe(
-                    map(p => p.content),
-                );
+                if(orderedChildCaseIds.length === 0) {
+                    childCases$ = of([]);
+                } else {
+                    childCases$ = this.getItemCasesByIdsInOnePage(orderedChildCaseIds).pipe(
+                        map(p => p.content),
+                    );
+                }
             }
 
             childCases$.subscribe(result => {
@@ -406,7 +403,8 @@ export class DoubleDrawerNavigationService implements OnDestroy {
     protected loadRightSide() {
         this._rightLoading$.on();
         this._moreItems$.next([])
-        this._uriService.getItemCaseByNodePath(this.currentNode).subscribe(page => {
+
+        this.getItemCaseByPath(this.currentPath).subscribe(page => {
             let childCases$;
             let targetItem;
             let orderedChildCaseIds;
@@ -416,9 +414,13 @@ export class DoubleDrawerNavigationService implements OnDestroy {
             } else {
                 targetItem = page.content[0];
                 orderedChildCaseIds = DoubleDrawerUtils.extractChildCaseIds(targetItem);
-                childCases$ = this.getItemCasesByIdsInOnePage(orderedChildCaseIds).pipe(
-                    map(p => p.content),
-                );
+                if(orderedChildCaseIds.length === 0) {
+                    childCases$ = of([]);
+                } else {
+                    childCases$ = this.getItemCasesByIdsInOnePage(orderedChildCaseIds).pipe(
+                        map(p => p.content),
+                    );
+                }
             }
 
             childCases$.subscribe(result => {
@@ -452,6 +454,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
     protected getItemCasesByIdsInOnePage(caseIds: string[]): Observable<Page<Case>> {
         return this.getItemCasesByIds(caseIds, 0, caseIds.length);
     }
+
 
     protected getItemCasesByIds(caseIds: string[], pageNumber: number, pageSize: string | number): Observable<Page<Case>> {
         const searchBody: CaseSearchRequestBody = {
@@ -490,17 +493,17 @@ export class DoubleDrawerNavigationService implements OnDestroy {
     }
 
     protected resolveCustomViewsInLeftSide() {
-        if (!!this._currentNode?.parent && !!this._childCustomViews[this._currentNode.parent.uriPath]) {
+        if (!!this.extractParent(this.currentPath) && !!this._childCustomViews[this.extractParent(this.currentPath)]) {
             let currentLeftItems = this._leftItems$.getValue();
-            currentLeftItems.push(...Object.values(this._childCustomViews[this._currentNode.parent.uriPath]));
+            currentLeftItems.push(...Object.values(this._childCustomViews[this.extractParent(this.currentPath)]));
             this._leftItems$.next(currentLeftItems);
         }
     }
 
     protected resolveCustomViewsInRightSide() {
-        if (!!this._currentNode && !!this._childCustomViews[this._currentNode.uriPath]) {
+        if (!!this._currentPath && !!this._childCustomViews[this._currentPath]) {
             let currentRightItems = this._rightItems$.getValue();
-            currentRightItems.push(...Object.values(this._childCustomViews[this._currentNode.uriPath]));
+            currentRightItems.push(...Object.values(this._childCustomViews[this._currentPath]));
             this._rightItems$.next(currentRightItems);
         }
     }
@@ -540,4 +543,44 @@ export class DoubleDrawerNavigationService implements OnDestroy {
         const url = this._dynamicRoutingService.route;
         return `/${url}/${taskId}`;
     }
+
+    private processLeftItems(cases: Case[], orderedChildCaseIds: string[]): NavigationItem[] {
+        const result = cases
+            .map(folder => this.resolveItemCaseToNavigationItem(folder))
+            .filter(i => !!i);
+        return result.sort((a, b) =>
+            orderedChildCaseIds.indexOf(a.resource.stringId) - orderedChildCaseIds.indexOf(b.resource.stringId)
+        );
+    }
+
+    /**
+     * Retrieves a case item based on the given path.
+     * @param {string} [path] - The identifier path to locate the specific case item. If undefined, it defaults to searching without a specific path.
+     * @return {Observable<Page<Case>>} An observable stream containing the page of case items which match the provided path.
+     */
+    getItemCaseByPath(path?: string): Observable<Page<Case>> {
+        const searchBody: CaseSearchRequestBody = {
+            data: {
+                [GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH]: path
+            },
+            process: {identifier: "menu_item"}
+        };
+
+        let httpParams = new HttpParams()
+            .set(PaginationParams.PAGE_SIZE, 1)
+            .set(PaginationParams.PAGE_NUMBER, 0);
+        return this._caseResourceService.searchCases(SimpleFilter.fromCaseQuery(searchBody), httpParams);
+    }
+
+    private extractParent(path: string): string {
+        if (path === '/') {
+            return path;
+        }
+        if (path.lastIndexOf('/') === 0) {
+            return '/';
+        }
+        return path.substring(0, path.lastIndexOf('/'));
+    }
+
+
 }

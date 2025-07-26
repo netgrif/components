@@ -159,10 +159,6 @@ describe('AbstractNavigationDoubleDrawerComponent', () => {
         expect(component.itemsTrackBy(1, {id: 'test'} as any)).toBe('test');
     });
 
-    it('should return node path in uriNodeTrackBy', () => {
-        expect(component.uriNodeTrackBy(2, {path: '/test'} as any)).toBe('/test');
-    });
-
     it('should handle resize event', () => {
         const event = {rectangle: {width: 420}} as any;
         component.onResizeEvent(event);

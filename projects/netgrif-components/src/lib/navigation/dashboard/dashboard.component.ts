@@ -5,8 +5,7 @@ import {
     CaseResourceService,
     DoubleDrawerNavigationService,
     LanguageService,
-    LoggerService,
-    UriService
+    LoggerService, PathService,
 } from '@netgrif/components-core';
 
 
@@ -21,11 +20,11 @@ export class DashboardComponent extends AbstractDashboardComponent {
     constructor(
         protected _caseResource: CaseResourceService,
         protected _log: LoggerService,
-        protected _uriService: UriService,
+        protected _pathService: PathService,
         protected _router: Router,
         protected _languageService: LanguageService,
         protected _doubleDrawerNavigationService: DoubleDrawerNavigationService
     ) {
-        super(_caseResource, _log, _uriService, _router, _languageService, _doubleDrawerNavigationService);
+        super(_caseResource, _log, _pathService, _router, _languageService, _doubleDrawerNavigationService);
     }
 }

@@ -7,7 +7,7 @@ export interface MenuStateChangeEvent {
 }
 
 export interface MenuItemClickEvent {
-    uriNode: UriNodeResource;
+    path: string;
     isHome: boolean;
 }
 

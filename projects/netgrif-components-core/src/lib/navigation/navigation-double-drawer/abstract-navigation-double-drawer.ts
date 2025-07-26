@@ -14,7 +14,7 @@ import {CaseResourceService} from '../../resources/engine-endpoint/case-resource
 import {
     DynamicNavigationRouteProviderService,
 } from '../../routing/dynamic-navigation-route-provider/dynamic-navigation-route-provider.service';
-import { RedirectService } from '../../routing/redirect-service/redirect.service';
+import {RedirectService} from '../../routing/redirect-service/redirect.service';
 import {NAE_ROUTING_CONFIGURATION_PATH} from '../../routing/routing-builder/routing-builder.service';
 import {LanguageService} from '../../translate/language.service';
 import {User} from '../../user/models/user';
@@ -35,6 +35,7 @@ import {
     MenuStateChangeEvent,
 } from '../model/navigation-menu-events';
 import {DoubleDrawerNavigationService} from "./service/double-drawer-navigation.service";
+import {GroupNavigationConstants} from "../model/group-navigation-constants";
 
 @Component({
     selector: 'ncc-abstract-navigation-double-drawer',
@@ -76,13 +77,6 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
      */
     protected _currentPath: string;
 
-
-    protected _currentNode: UriNodeResource;
-
-    leftLoading$: LoadingEmitter;
-    rightLoading$: LoadingEmitter;
-    nodeLoading$: LoadingEmitter;
-
     protected _configLeftMenu: ConfigDoubleMenu = {
         mode: 'side',
         opened: true,
@@ -104,15 +98,12 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                           protected _languageService: LanguageService,
                           protected _translateService: TranslateService,
                           protected _userService: UserService,
-                          protected _accessService: AccessService,
                           protected _log: LoggerService,
                           protected _config: ConfigurationService,
                           protected _pathService: PathService,
                           protected _caseResourceService: CaseResourceService,
                           protected _impersonationUserSelect: ImpersonationUserSelectService,
                           protected _impersonation: ImpersonationService,
-                          protected _dynamicRoutingService: DynamicNavigationRouteProviderService,
-                          protected _redirectService: RedirectService,
                           protected _navigationService: DoubleDrawerNavigationService) {
         let configUrl: string = this._config.getServicesConfiguration()?.doubleDrawer?.url;
         if (configUrl !== undefined && !configUrl.startsWith('/')) {
@@ -141,15 +132,11 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             this.currentPath = path;
         });
 
-        this._currentNodeSubscription = this._uriService.activeNode$.subscribe(node => {
-            this.currentNode = node;
-        });
-
         if (this.canApplyAutoSelect()) {
             this.rightItems$.pipe(
                 filter(rightItems => rightItems.length > 0),
                 take(1)
-            ).subscribe(()=> {
+            ).subscribe(() => {
                 this.openAvailableView();
             })
         }
@@ -159,10 +146,6 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             const viewConfiguration = this._config.getViewByPath(viewConfigurationPath);
             this._navigationService.initializeCustomViewsOfView(viewConfiguration, viewConfigurationPath);
         }
-    }
-
-    get currentPath(): string {
-        return this._currentPath;
     }
 
     public ngOnDestroy(): void {
@@ -177,15 +160,14 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         this._loggedUserSubscription?.unsubscribe();
         this.leftLoading$.complete();
         this.rightLoading$.complete();
-        this.nodeLoading$.complete();
     }
 
     public get currentPath(): string {
-        return this._navigationService.currentNode;
+        return this._navigationService.currentPath;
     }
 
     public set currentPath(node: string) {
-        this._navigationService.currentNode = node;
+        this._navigationService.currentPath = node;
     }
 
     public get configLeftMenu() {
@@ -194,20 +176,6 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
 
     public get configRightMenu() {
         return this._configRightMenu;
-    }
-
-    getItemCaseByPath(path?: string): Observable<Page<Case>> {
-        const searchBody: CaseSearchRequestBody = {
-            data: {
-                [GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH]: path
-            },
-            process: {identifier: "preference_item"}
-        };
-
-        let httpParams = new HttpParams()
-            .set(PaginationParams.PAGE_SIZE, 1)
-            .set(PaginationParams.PAGE_NUMBER, 0);
-        return this._caseResourceService.searchCases(SimpleFilter.fromCaseQuery(searchBody), httpParams);
     }
 
     public get leftItems$() {
@@ -304,7 +272,6 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
      * set to root node.
      * */
     public onHomeClick(): void {
-        // TODO doriesit v navigation service
         this._navigationService.onHomeClick();
     }
 
@@ -339,7 +306,11 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
      * @returns boolean if the back button should be displayed
      * */
     public isOnZeroLevel(): boolean {
-        return !!this._navigationService.currentNode?.level ? this._navigationService.currentNode.level == 0 : true;
+        return this.currentPath === PathService.SEPARATOR;
+    }
+
+    isItemAndPathEqual(item: NavigationItem, path: string): boolean {
+        return item.resource?.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)?.value === path
     }
 
     public isLeftItemsEmpty(): boolean {
@@ -348,10 +319,6 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
 
     public isRightItemsEmpty(): boolean {
         return this._navigationService.rightItems === undefined || this._navigationService.rightItems.length === 0;
-    }
-
-    uriNodeTrackBy(index: number, node: UriNodeResource) {
-        return node.path;
     }
 
     public itemsTrackBy(index: number, item: NavigationItem) {
@@ -370,10 +337,6 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         // TODO implement saving drawer width to user preferences
         // this.userPreferenceService._drawerWidthChanged$.next(this.width);
         // this.contentWidth.next(this.width);
-    }
-
-    public isItemAndNodeEqual(item: NavigationItem, node: UriNodeResource): boolean {
-        return DoubleDrawerUtils.isItemAndNodeEqual(item, node);
     }
 
     protected resolveLayout(isLargeScreen: boolean): void {

@@ -1,18 +1,18 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { HttpParams } from '@angular/common/http';
-import { PaginationParams } from '../../utility/pagination/pagination-params';
-import { ToolbarConfig } from '../../toolbar/toolbar-config';
-import { Case } from '../../resources/interface/case';
-import { CaseResourceService } from '../../resources/engine-endpoint/case-resource.service';
-import { LoggerService } from '../../logger/services/logger.service';
-import { UriService } from '../service/uri.service';
-import { DoubleDrawerNavigationService } from '../navigation-double-drawer/service/double-drawer-navigation.service';
-import { CaseSearchRequestBody } from '../../filter/models/case-search-request-body';
-import { SimpleFilter } from '../../filter/models/simple-filter';
-import { I18nFieldValue } from '../../data-fields/i18n-field/models/i18n-field-value';
-import { LanguageService } from '../../translate/language.service';
-import { LoadingEmitter } from '../../utility/loading-emitter';
+import {Component} from '@angular/core';
+import {Router} from '@angular/router';
+import {HttpParams} from '@angular/common/http';
+import {PaginationParams} from '../../utility/pagination/pagination-params';
+import {ToolbarConfig} from '../../toolbar/toolbar-config';
+import {Case} from '../../resources/interface/case';
+import {CaseResourceService} from '../../resources/engine-endpoint/case-resource.service';
+import {LoggerService} from '../../logger/services/logger.service';
+import {DoubleDrawerNavigationService} from '../navigation-double-drawer/service/double-drawer-navigation.service';
+import {CaseSearchRequestBody} from '../../filter/models/case-search-request-body';
+import {SimpleFilter} from '../../filter/models/simple-filter';
+import {I18nFieldValue} from '../../data-fields/i18n-field/models/i18n-field-value';
+import {LanguageService} from '../../translate/language.service';
+import {LoadingEmitter} from '../../utility/loading-emitter';
+import {PathService} from "../service/path.service";
 
 
 @Component({
@@ -73,7 +73,7 @@ export abstract class AbstractDashboardComponent {
     constructor(
         protected _caseResource: CaseResourceService,
         protected _log: LoggerService,
-        protected _uriService: UriService,
+        protected _pathService: PathService,
         protected _router: Router,
         protected _languageService: LanguageService,
         protected _doubleDrawerNavigationService: DoubleDrawerNavigationService
@@ -82,7 +82,7 @@ export abstract class AbstractDashboardComponent {
         this.dashboardItems = [];
         this.loading$.on();
         const dashboardManagementSearchBody: CaseSearchRequestBody = {
-            process: { identifier: AbstractDashboardComponent.DASHBOARD_MANAGEMENT_IDENTIFIER },
+            process: {identifier: AbstractDashboardComponent.DASHBOARD_MANAGEMENT_IDENTIFIER},
             data: {
                 [AbstractDashboardComponent.DASHBOARD_MANAGEMENT_ID_DATAFIELD]: this.dashboardId
             }
@@ -258,11 +258,8 @@ export abstract class AbstractDashboardComponent {
     public navigate(itemCase: Case) {
         if (this.getItemInternal(itemCase)) {
             const itemPath = this._doubleDrawerNavigationService.getItemRoutingPath(this.dashboardItemsMapping[itemCase.stringId]);
-            const nodePath = this.getFieldValue(this.dashboardItemsMapping[itemCase.stringId], 'nodePath');
-            this._uriService.getNodeByPath(nodePath).subscribe(uriResource => {
-                this._uriService.activeNode = uriResource;
-                this._router.navigate([itemPath]);
-            });
+            this._pathService.activePath = itemPath;
+            this._router.navigate([itemPath]);
         } else {
             window.open(this.getItemURL(itemCase), "_blank");
         }
