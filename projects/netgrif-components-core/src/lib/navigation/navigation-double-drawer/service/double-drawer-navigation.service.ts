@@ -375,7 +375,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
             } else {
                 targetItem = page.content[0];
                 orderedChildCaseIds = DoubleDrawerUtils.extractChildCaseIds(targetItem);
-                if(orderedChildCaseIds.length === 0) {
+                if(orderedChildCaseIds == undefined || orderedChildCaseIds.length === 0) {
                     childCases$ = of([]);
                 } else {
                     childCases$ = this.getItemCasesByIdsInOnePage(orderedChildCaseIds).pipe(
@@ -416,9 +416,9 @@ export class DoubleDrawerNavigationService implements OnDestroy {
             if (page?.pagination?.totalElements === 0) {
                 childCases$ = of([]);
             } else {
-                targetItem = page.content[0];
+                targetItem = page?.content[0];
                 orderedChildCaseIds = DoubleDrawerUtils.extractChildCaseIds(targetItem);
-                if(orderedChildCaseIds.length === 0) {
+                if(orderedChildCaseIds === undefined || orderedChildCaseIds.length === 0) {
                     childCases$ = of([]);
                 } else {
                     childCases$ = this.getItemCasesByIdsInOnePage(orderedChildCaseIds).pipe(

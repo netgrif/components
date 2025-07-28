@@ -13,7 +13,7 @@ export class DoubleDrawerUtils {
     }
 
     public static hasItemAutoOpenView(item: NavigationItem): boolean {
-        return item.resource?.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_IS_AUTO_SELECT)?.value;
+        return item?.resource?.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_IS_AUTO_SELECT)?.value;
     }
 
     public static hasItemView(item: NavigationItem): boolean {
@@ -25,11 +25,11 @@ export class DoubleDrawerUtils {
     }
 
     public static extractChildCaseIds(item: Case): string[] {
-        return item.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_CHILD_ITEM_IDS)?.value;
+        return item?.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_CHILD_ITEM_IDS)?.value;
     }
 
     public static representsRootNode(item: Case): boolean {
-        return item.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH).value === '/';
+        return item?.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH).value === '/';
     }
 
     public static resolveAccessRoles(filter: Case, roleType: string): Array<RoleAccess> | undefined {
