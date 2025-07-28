@@ -185,4 +185,9 @@ export enum GroupNavigationConstants {
      * */
     ITEM_FIELD_CONTAINS_FILTER = 'contains_filter',
 
+    /**
+     * Text field, that contains chained view id configuration.
+     * */
+    ITEM_CHAINED_VIEW_CONFIGURATION_TYPE = 'chained_view_configuration_type',
+
 }

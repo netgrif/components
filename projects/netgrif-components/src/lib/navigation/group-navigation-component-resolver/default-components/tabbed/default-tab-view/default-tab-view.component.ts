@@ -71,6 +71,8 @@ export class DefaultTabViewComponent {
         const createCaseButtonIcon: string = extractFieldValueFromData<string>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_CREATE_CASE_BUTTON_ICON);
         const requireTitle: boolean = extractFieldValueFromData<boolean>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_CASE_TITLE_IN_CREATION);
         const showCreateCaseButton: boolean = extractFieldValueFromData<boolean>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_SHOW_CREATE_CASE_BUTTON);
+        const chainedViewType: string = extractFieldValueFromData(viewDataGroups, GroupNavigationConstants.ITEM_CHAINED_VIEW_CONFIGURATION_TYPE);
+
         const newCaseButtonConfig: NewCaseCreationConfigurationData = {
             enableCaseTitle: requireTitle,
             isCaseTitleRequired: requireTitle,
@@ -109,7 +111,7 @@ export class DefaultTabViewComponent {
         const taskViewAllowTableMode = extractFieldValueFromData<boolean>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_TASK_ALLOW_TABLE_MODE);
         const taskViewDefaultHeadersMode = extractFieldValueFromData<string[]>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_TASK_DEFAULT_HEADERS_MODE);
         const taskViewAdditionalFilter = this.extractionService.extractCompleteAdditionalFilterFromData(viewDataGroups);
-        const mergeWithBaseFilter = extractFieldValueFromData<boolean>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_MERGE_FILTERS);
+        let mergeWithBaseFilter: boolean = (chainedViewType === "tabbed_task_view_configuration") ? extractFieldValueFromData<boolean>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_MERGE_FILTERS) : true;
         const additionalAllowedNets = this.extractionService.extractAdditionalFilterAllowedNets(viewDataGroups)?.allowedNetsIdentifiers;
 
         return [

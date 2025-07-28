@@ -259,11 +259,13 @@ export class DoubleDrawerNavigationService implements OnDestroy {
             } else {
                 this._pathService.activePath = this.extractParent(this.currentPath);
             }
+            this.itemClicked.emit({path: this._pathService.activePath, isHome: false});
         } else {
             const path = item.resource.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)?.value
 
             if (DoubleDrawerUtils.hasItemChildren(item) && !this.leftLoading$.isActive && !this.rightLoading$.isActive) {
                 this._pathService.activePath = path;
+                this.itemClicked.emit({path: this._pathService.activePath, isHome: false});
                 this._rightLoading$.pipe(
                     filter(isRightLoading => isRightLoading === false),
                     take(1)
@@ -272,9 +274,11 @@ export class DoubleDrawerNavigationService implements OnDestroy {
                 })
             } else if (!path.includes(this.currentPath)) {
                 this._pathService.activePath = this.extractParent(this.currentPath);
+                this.itemClicked.emit({path: this._pathService.activePath, isHome: false});
+
             } else {
                 this._pathService.activePath = this.currentPath;
-                this._pathService.activePath = this.extractParent(this.currentPath);
+                this.itemClicked.emit({path: this._pathService.activePath, isHome: false});
             }
         }
     }
