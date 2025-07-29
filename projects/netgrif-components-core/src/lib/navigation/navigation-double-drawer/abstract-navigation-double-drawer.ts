@@ -11,10 +11,6 @@ import {ImpersonationUserSelectService} from '../../impersonation/services/imper
 import {ImpersonationService} from '../../impersonation/services/impersonation.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {CaseResourceService} from '../../resources/engine-endpoint/case-resource.service';
-import {
-    DynamicNavigationRouteProviderService,
-} from '../../routing/dynamic-navigation-route-provider/dynamic-navigation-route-provider.service';
-import {RedirectService} from '../../routing/redirect-service/redirect.service';
 import {NAE_ROUTING_CONFIGURATION_PATH} from '../../routing/routing-builder/routing-builder.service';
 import {LanguageService} from '../../translate/language.service';
 import {User} from '../../user/models/user';
@@ -128,27 +124,31 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             }
         });
 
-        this._currentPathSubscription = this._pathService.activePath$.subscribe(path => {
-            this.currentPath = path;
+        this._userService.user$.pipe(filter(u => !!u && u.id !== ''), take(1)).subscribe(() => {
+            this._currentPathSubscription = this._pathService.activePath$.subscribe(path => {
+                this.currentPath = path;
+            });
+
+            if (this.canApplyAutoSelect()) {
+                this.rightItems$.pipe(
+                    filter(rightItems => rightItems.length > 0),
+                    take(1)
+                ).subscribe(() => {
+                    this.openAvailableView();
+                })
+            }
+
+            const viewConfigurationPath = this._activatedRoute.snapshot.data[NAE_ROUTING_CONFIGURATION_PATH];
+            if (!!viewConfigurationPath) {
+                const viewConfiguration = this._config.getViewByPath(viewConfigurationPath);
+                this._navigationService.initializeCustomViewsOfView(viewConfiguration, viewConfigurationPath);
+            }
+            this.hiddenCustomItems$.subscribe(hiddenCustomItems => {
+                this.hideMoreMenu = !hiddenCustomItems?.length;
+            })
         });
 
-        if (this.canApplyAutoSelect()) {
-            this.rightItems$.pipe(
-                filter(rightItems => rightItems.length > 0),
-                take(1)
-            ).subscribe(() => {
-                this.openAvailableView();
-            })
-        }
 
-        const viewConfigurationPath = this._activatedRoute.snapshot.data[NAE_ROUTING_CONFIGURATION_PATH];
-        if (!!viewConfigurationPath) {
-            const viewConfiguration = this._config.getViewByPath(viewConfigurationPath);
-            this._navigationService.initializeCustomViewsOfView(viewConfiguration, viewConfigurationPath);
-        }
-        this.hiddenCustomItems$.subscribe(hiddenCustomItems => {
-            this.hideMoreMenu = !hiddenCustomItems?.length;
-        })
     }
 
     public ngOnDestroy(): void {
@@ -164,6 +164,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         this.leftLoading$.complete();
         this.rightLoading$.complete();
         this.hiddenCustomItems$.unsubscribe();
+        this._userService.user$.subscribe();
     }
 
     public get currentPath(): string {

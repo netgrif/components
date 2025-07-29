@@ -33,6 +33,7 @@ import {UriNodeResource} from '../../model/uri-resource';
 import {MenuItemClickEvent, MenuItemLoadedEvent} from '../../model/navigation-menu-events';
 import {GroupNavigationConstants} from "../../model/group-navigation-constants";
 import {PathService} from "../../service/path.service";
+import {UserService} from "../../../user/services/user.service";
 
 /**
  * Service for managing navigation in double-drawer
@@ -91,7 +92,9 @@ export class DoubleDrawerNavigationService implements OnDestroy {
         protected _translateService: TranslateService,
         protected _dynamicRoutingService: DynamicNavigationRouteProviderService,
         protected _redirectService: RedirectService,
-        protected _pathService: PathService) {
+        protected _pathService: PathService,
+        protected _userService: UserService,
+        ) {
         this._leftItems$ = new BehaviorSubject([]);
         this._rightItems$ = new BehaviorSubject([]);
         this._moreItems$ = new BehaviorSubject([]);
@@ -106,10 +109,6 @@ export class DoubleDrawerNavigationService implements OnDestroy {
         this.hiddenCustomItemsInitialized = false;
         this.itemClicked = new EventEmitter<MenuItemClickEvent>();
         this.itemLoaded = new EventEmitter<MenuItemLoadedEvent>();
-
-        // this._currentPathSubscription = this._pathService.activePath$.subscribe(path => {
-        //     this._currentPath = path;
-        // })
     }
 
     public ngOnDestroy(): void {
