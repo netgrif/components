@@ -23,6 +23,8 @@ export abstract class AbstractTaskListPaginationComponent extends AbstractDefaul
     @Input() public disabled: boolean;
     @Input()
     set tasks$(tasks: Observable<Array<TaskPanelData>>) {
+        this._taskViewService.paginationView = true;
+        this._taskViewService.nextPagePagination(this.pageSize, this.pageIndex);
         this._tasks$ = tasks.pipe((tap(() => {
             this.length = this._taskViewService.pagination.totalElements;
             this.pageIndex = this._taskViewService.pagination.number;

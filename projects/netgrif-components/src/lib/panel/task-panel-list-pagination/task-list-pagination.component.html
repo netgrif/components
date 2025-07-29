@@ -11,8 +11,7 @@
             <div class="fix-padding">
                 <nc-task-panel #panel
                     [textEllipsis]="textEllipsis"
-                    *ngFor="let task of tasks | slice: (pageIndex) * pageSize : (pageIndex + 1) * pageSize;
-                                    let i = index;
+                    *ngFor="let task of tasks;
                                     let first = first;
                                     let last = last;
                                     trackBy: trackBy"
