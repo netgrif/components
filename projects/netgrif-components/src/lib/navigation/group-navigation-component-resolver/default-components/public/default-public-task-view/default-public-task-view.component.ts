@@ -1,10 +1,20 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {AbstractTaskViewComponent,
+import {
+    AbstractTaskViewComponent,
     AllowedNetsService,
-    AllowedNetsServiceFactory, BaseFilterFactoryProvider, CaseResourceServiceProvider, ChangedFieldsService,
+    AllowedNetsServiceFactory,
+    BaseFilterFactoryProvider,
+    CaseResourceServiceProvider,
+    ChangedFieldsService,
     NAE_VIEW_ID_SEGMENT,
-    ProcessServiceProvider, PublicTaskLoadingService, SearchService, TaskResourceServiceProvider, TaskViewService, ViewIdService} from '@netgrif/components-core';
+    ProcessServiceProvider,
+    PublicTaskLoadingService,
+    SearchService,
+    TaskResourceServiceProvider,
+    TaskViewService,
+    ViewIdService
+} from '@netgrif/components-core';
 import {combineLatest} from "rxjs";
 import {map} from "rxjs/operators";
 import {HeaderComponent} from "../../../../../header/header.component";

@@ -72,6 +72,10 @@ describe('DefaultTabViewComponent', () => {
                                     "view_configuration_form",
                                     '',["thisistaskid"],{visible: true}
                                 ),
+                                new TextField(
+                                  GroupNavigationConstants.ITEM_CHAINED_VIEW_CONFIGURATION_TYPE,
+                                  '',"tabbed_task_view_configuration",  {visible: true}
+                                ),
                                 new BooleanField(
                                     GroupNavigationConstants.NAVIGATION_ENTRY_ICON_ENABLED_FIELD_ID_SUFFIX,
                                     '',false,{visible: true}

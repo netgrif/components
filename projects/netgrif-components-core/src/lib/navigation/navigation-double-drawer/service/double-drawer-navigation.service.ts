@@ -1,7 +1,7 @@
 import {EventEmitter, Injectable, OnDestroy} from '@angular/core';
-import {BehaviorSubject, finalize, Observable, of, Subscription} from 'rxjs';
+import {BehaviorSubject, Observable, of, Subscription} from 'rxjs';
 import {LoadingEmitter} from "../../../utility/loading-emitter";
-import {catchError, filter, map, switchMap, take} from "rxjs/operators";
+import {filter, map, take} from "rxjs/operators";
 import {Case} from "../../../resources/interface/case";
 import {LoggerService} from "../../../logger/services/logger.service";
 import {DoubleDrawerUtils} from "../util/double-drawer-utils";
@@ -24,7 +24,8 @@ import {View} from "../../../../commons/schema";
 import {
     MENU_IDENTIFIERS,
     MenuOrder,
-    NavigationItem, RIGHT_SIDE_INIT_PAGE_SIZE,
+    NavigationItem,
+    RIGHT_SIDE_INIT_PAGE_SIZE,
     RIGHT_SIDE_NEW_PAGE_SIZE,
     SETTINGS_TRANSITION_ID
 } from '../../model/navigation-configs';
@@ -375,7 +376,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
             } else {
                 targetItem = page.content[0];
                 orderedChildCaseIds = DoubleDrawerUtils.extractChildCaseIds(targetItem);
-                if(orderedChildCaseIds == undefined || orderedChildCaseIds.length === 0) {
+                if (orderedChildCaseIds == undefined || orderedChildCaseIds.length === 0) {
                     childCases$ = of([]);
                 } else {
                     childCases$ = this.getItemCasesByIdsInOnePage(orderedChildCaseIds).pipe(
@@ -418,7 +419,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
             } else {
                 targetItem = page?.content[0];
                 orderedChildCaseIds = DoubleDrawerUtils.extractChildCaseIds(targetItem);
-                if(orderedChildCaseIds === undefined || orderedChildCaseIds.length === 0) {
+                if (orderedChildCaseIds === undefined || orderedChildCaseIds.length === 0) {
                     childCases$ = of([]);
                 } else {
                     childCases$ = this.getItemCasesByIdsInOnePage(orderedChildCaseIds).pipe(

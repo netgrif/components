@@ -3,7 +3,6 @@ import {HeaderComponent} from './header.component';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {of} from 'rxjs';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {MatIconModule} from '@angular/material/icon';
 import {HeaderComponentModule} from './header.module';
 import {
@@ -14,9 +13,9 @@ import {
     ConfigurationService,
     ErrorSnackBarComponent,
     MockAuthenticationMethodService,
-    MockAuthenticationService,
+    MockAuthenticationService, MockProcessService,
     MockUserResourceService,
-    OverflowService,
+    OverflowService, ProcessService,
     SuccessSnackBarComponent,
     TestConfigurationService, TestNoAllowedNetsFactory,
     TestViewService,
@@ -24,7 +23,8 @@ import {
     UserResourceService,
     ViewService
 } from '@netgrif/components-core';
-import {RouterTestingModule} from '@angular/router/testing';
+import {provideRouter} from "@angular/router";
+import {RouterTestingModule} from "@angular/router/testing";
 
 describe('HeaderComponent', () => {
     let component: HeaderComponent;
@@ -38,7 +38,7 @@ describe('HeaderComponent', () => {
                 TranslateLibModule,
                 HttpClientTestingModule,
                 MatIconModule,
-                RouterModule.forRoot([])
+                RouterTestingModule.withRoutes([])
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
@@ -48,6 +48,7 @@ describe('HeaderComponent', () => {
                 {provide: CaseViewService, useValue: {allowedNets$: of([])}},
                 {provide: ViewService, useClass: TestViewService},
                 {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
+                {provide: ProcessService, useClass: MockProcessService},
                 OverflowService
             ],
             declarations: [

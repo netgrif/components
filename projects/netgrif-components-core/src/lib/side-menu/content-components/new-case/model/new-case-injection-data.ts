@@ -7,7 +7,8 @@ export interface NewCaseInjectionData extends SideMenuInjectionData {
     allowedNets$: Observable<Array<PetriNetReference>>;
 }
 
-export const NAE_NEW_CASE_CREATION_CONFIGURATION_DATA = new InjectionToken<NewCaseCreationConfigurationData>('NewCaseCreationConfigurationData');
+export const
+    NAE_NEW_CASE_CREATION_CONFIGURATION_DATA = new InjectionToken<NewCaseCreationConfigurationData>('NewCaseCreationConfigurationData');
 
 /**
  * injection token used for new case configuration

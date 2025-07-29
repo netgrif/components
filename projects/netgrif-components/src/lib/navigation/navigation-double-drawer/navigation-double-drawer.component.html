@@ -29,8 +29,6 @@
 
             <div *ngTemplateOutlet="portalLeftMenu || defaultLeftSide"></div>
 
-            <div class="margin-top-x2"></div>
-
             <div fxFlex></div>
 
             <mat-menu #userRailMenu="matMenu">
@@ -66,10 +64,8 @@
                 <mat-icon>account_circle</mat-icon>
             </button>
 
-            <div *ngIf="includeLanguage" [ngClass]="{'margin-bottom-x2 menu-button': hideMoreMenu}" fxLayout="row" class="icon-container" fxLayoutAlign="center center">
-                <button mat-icon-button class="menu-button mat-typography menu-font-color">
+            <div *ngIf="includeLanguage" [ngClass]="{'margin-bottom-x2 menu-button': hideMoreMenu}" fxLayout="row" class="icon-container">
                     <nc-language-selector fxLayout="row" ></nc-language-selector>
-                </button>
             </div>
 
             <mat-menu #railMenu="matMenu">
@@ -92,8 +88,6 @@
                     matTooltipPosition="right">
                 <mat-icon>more_vert</mat-icon>
             </button>
-            <!-- TODO mozno bude navyse -->
-            <div class="margin-top-x2"></div>
         </div>
     </mat-sidenav>
 

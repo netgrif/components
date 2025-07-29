@@ -140,12 +140,15 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                 this.openAvailableView();
             })
         }
-        //TODO doriesit                     this.hideMoreMenu = !this.hiddenCustomItems?.length;
+
         const viewConfigurationPath = this._activatedRoute.snapshot.data[NAE_ROUTING_CONFIGURATION_PATH];
         if (!!viewConfigurationPath) {
             const viewConfiguration = this._config.getViewByPath(viewConfigurationPath);
             this._navigationService.initializeCustomViewsOfView(viewConfiguration, viewConfigurationPath);
         }
+        this.hiddenCustomItems$.subscribe(hiddenCustomItems => {
+            this.hideMoreMenu = !hiddenCustomItems?.length;
+        })
     }
 
     public ngOnDestroy(): void {
@@ -160,6 +163,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         this._loggedUserSubscription?.unsubscribe();
         this.leftLoading$.complete();
         this.rightLoading$.complete();
+        this.hiddenCustomItems$.unsubscribe();
     }
 
     public get currentPath(): string {

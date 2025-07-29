@@ -14,11 +14,7 @@ import {AuthenticationService} from '../../../authentication/services/authentica
 import {MockAuthenticationService} from '../../../utility/tests/mocks/mock-authentication.service';
 import {UserResourceService} from '../../../resources/engine-endpoint/user-resource.service';
 import {MockUserResourceService} from '../../../utility/tests/mocks/mock-user-resource.service';
-import {ErrorSnackBarComponent} from '../../../snack-bar/components/error-snack-bar/error-snack-bar.component';
-import {SuccessSnackBarComponent} from '../../../snack-bar/components/success-snack-bar/success-snack-bar.component';
-import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {WarningSnackBarComponent} from '../../../snack-bar/components/warning-snack-bar/warning-snack-bar.component';
 import {Task} from '../../../resources/interface/task';
 import {delay, tap} from 'rxjs/operators';
 import {createMockTask} from '../../../utility/tests/utility/create-mock-task';
@@ -58,7 +54,11 @@ describe('TaskViewService', () => {
                     useFactory: TestTaskBaseFilterProvider
                 },
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-                {provide: AllowedNetsService, useFactory: TestTaskViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
+                {
+                    provide: AllowedNetsService,
+                    useFactory: TestTaskViewAllowedNetsFactory,
+                    deps: [AllowedNetsServiceFactory]
+                },
             ],
             declarations: []
         });
@@ -138,9 +138,11 @@ class MyResources {
 
     private delay = 0;
     private result: Array<Task> = [];
-    private callback: () => void = () => {};
+    private callback: () => void = () => {
+    };
 
-    setResponse(_delay: number, tasks: Array<Task>, callback: () => void = () => {}) {
+    setResponse(_delay: number, tasks: Array<Task>, callback: () => void = () => {
+    }) {
         this.delay = _delay;
         this.result = tasks;
         this.callback = callback;
