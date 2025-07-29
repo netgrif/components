@@ -63,6 +63,8 @@ export abstract class AbstractPanelWithImmediateDataComponent extends AbstractPa
                         value: immediate.value?.namesPaths.map(obj => obj.name).join(', '),
                         icon: 'file_copy', type: immediate.type
                     };
+                case 'userList':
+                    return {value: immediate.value?.userValues.map(obj => obj.fullName).join(', '), icon: 'account_circle', type: immediate.type};
                 case 'user':
                     return {value: immediate.value.fullName, icon: 'account_circle', type: immediate.type};
                 case 'boolean':

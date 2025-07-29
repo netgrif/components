@@ -104,7 +104,7 @@ export abstract class Operator<T> {
      * @param forceWrap if set to `true` the value will be wrapped regardless of it's content
      */
     public static wrapInputWithQuotes(input: string, forceWrap = false): WrapResult {
-        if (typeof input === 'string' && (input.includes(' ') || forceWrap))
+        if (typeof input === 'string' && (input?.includes(' ') || forceWrap))
             return {value: `"${input}"`, wasWrapped: true};
         else
             return {value: input, wasWrapped: false};

@@ -17,7 +17,6 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {of} from 'rxjs';
 import {PanelComponentModule} from '../../../../panel/panel.module';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {RouterTestingModule} from '@angular/router/testing';
 import {RouterModule} from '@angular/router';
 
 
@@ -35,7 +34,6 @@ describe('CaseListComponent', () => {
                 BrowserAnimationsModule,
                 NoopAnimationsModule,
                 RouterModule.forRoot([]),
-                RouterTestingModule.withRoutes([])
             ],
             providers: [
                 {provide: CaseResourceService, useClass: MyResources},

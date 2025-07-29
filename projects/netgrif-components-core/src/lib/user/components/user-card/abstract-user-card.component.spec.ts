@@ -1,6 +1,5 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CommonModule} from '@angular/common';
-import {RouterModule} from '@angular/router';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {RouterTestingModule} from '@angular/router/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -26,7 +25,6 @@ describe('AbstractUserCardComponent', () => {
             declarations: [TestUserComponent],
             imports: [
                 CommonModule,
-                RouterModule,
                 MaterialModule,
                 HttpClientTestingModule,
                 RouterTestingModule.withRoutes([]),

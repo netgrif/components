@@ -49,14 +49,14 @@ export abstract class AbstractResourceProvider {
 
 
     public static sanitizeUrl(endpoint?: string, url?: string): string {
-        if (endpoint.includes('http://') || (endpoint.includes('https://'))) {
+        if (endpoint?.includes('http://') || (endpoint?.includes('https://'))) {
             if (url) {
-                if (endpoint.includes(url)) {
+                if (endpoint?.includes(url)) {
                     return endpoint;
                 } else {
-                    return url.includes('https://') ? 'https://' +
-                        endpoint.replace(/(^\w+:|^)\/\//, '') : 'http://' +
-                        endpoint.replace(/(^\w+:|^)\/\//, '');
+                    return url?.includes('https://') ? 'https://' +
+                        endpoint?.replace(/(^\w+:|^)\/\//, '') : 'http://' +
+                        endpoint?.replace(/(^\w+:|^)\/\//, '');
                 }
             } else {
                 return endpoint;

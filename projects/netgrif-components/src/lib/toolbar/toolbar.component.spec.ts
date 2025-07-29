@@ -14,6 +14,7 @@ import {
     TranslateLibModule,
     UserResourceService
 } from '@netgrif/components-core';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('ToolbarComponent', () => {
     let component: ToolbarComponent;
@@ -25,7 +26,8 @@ describe('ToolbarComponent', () => {
                 MaterialModule,
                 HttpClientTestingModule,
                 TranslateLibModule,
-                NoopAnimationsModule
+                NoopAnimationsModule,
+                RouterTestingModule.withRoutes([])
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},

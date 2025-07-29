@@ -154,7 +154,7 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
         });
         this._subTaskData = _changedFieldsService.changedFields$.subscribe((changedFieldsMap: ChangedFieldsMap) => {
             const filteredCaseIds: Array<string> = Object.keys(changedFieldsMap).filter(
-                caseId => Object.keys(this._taskContentService.referencedTaskAndCaseIds).includes(caseId)
+                caseId => Object.keys(this._taskContentService.referencedTaskAndCaseIds)?.includes(caseId)
             );
             const changedFields: Array<ChangedFields> = [];
             filteredCaseIds.forEach(caseId => {
@@ -169,7 +169,7 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
             this.expand();
         });
         _taskOperations.close$.subscribe(() => {
-            if (!this._taskForceOpen) {
+            if (!(this._taskForceOpen || this.preventCollapse)) {
                 this.collapse();
             }
         });

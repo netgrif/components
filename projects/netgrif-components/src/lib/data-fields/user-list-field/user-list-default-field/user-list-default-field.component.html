@@ -8,7 +8,7 @@
             [class.do-not-click]="formControlRef.disabled">
         <mat-icon>how_to_reg</mat-icon>
     </button>
-    <button mat-icon-button matPrefix
+    <button *ngIf="!formControlRef.disabled" mat-icon-button matPrefix
             [disabled]='formControlRef.disabled || !dataField.value || dataField?.value?.userValues?.size === 0'
             color='warn'
             (click)='removeAll()'
