@@ -40,7 +40,7 @@ describe('PublicWorkflowViewComponent', () => {
                 HttpClientTestingModule,
                 SideMenuContentComponentModule,
                 TranslateLibModule,
-                RouterTestingModule.withRoutes([], { relativeLinkResolution: 'legacy' }),
+                RouterTestingModule.withRoutes([]),
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
             providers: [
