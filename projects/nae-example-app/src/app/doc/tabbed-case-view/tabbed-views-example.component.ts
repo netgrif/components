@@ -37,7 +37,7 @@ export class TabbedViewsExampleComponent implements OnInit {
                 canBeClosed: false,
                 tabContentComponent: TabbedCaseViewComponent,
                 injectedObject: {
-                    tabViewComponent: DefaultTabbedSingleTaskViewComponent,
+                    tabViewComponent: TabbedTaskViewComponent,
                     tabViewOrder: 0,
                     exampleUseCache: true
                 }
