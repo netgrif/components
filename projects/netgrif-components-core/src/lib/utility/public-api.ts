@@ -60,3 +60,4 @@ export * from './tests/mocks/mock-profile.service';
 export * from './tests/mocks/mock-process.service';
 export * from './tests/mocks/mock-petrinet-resource.service';
 export * from './tests/mocks/mock-task-resource.service';
+export * from './tests/mocks/mock-case-resource.service';
