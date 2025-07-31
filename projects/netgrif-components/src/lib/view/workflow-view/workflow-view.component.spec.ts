@@ -4,7 +4,6 @@ import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {SideMenuContentComponentModule} from '../../side-menu/content-components/side-menu-content-component.module';
-import {provideRouter} from '@angular/router';
 import {
     AuthenticationMethodService,
     AuthenticationService,
@@ -12,9 +11,11 @@ import {
     LanguageService,
     MaterialModule,
     MockAuthenticationMethodService,
-    MockAuthenticationService, MockProcessService,
+    MockAuthenticationService,
+    MockProcessService,
     MockUserResourceService,
-    OverflowService, ProcessService,
+    OverflowService,
+    ProcessService,
     TestConfigurationService,
     TestViewService,
     TranslateLibModule,
