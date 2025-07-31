@@ -29,17 +29,17 @@ export class EventService {
                 const setDataOutcome: SetDataEventOutcome = childOutcome as SetDataEventOutcome;
                 const outcomeChangedFields: ChangedFields = (childOutcome as SetDataEventOutcome).changedFields.changedFields;
                 const caseId = setDataOutcome.aCase.stringId;
-                if (!Object.keys(changedFieldsMap).includes(caseId)) {
+                if (!Object.keys(changedFieldsMap)?.includes(caseId)) {
                     changedFieldsMap[caseId] = {};
                 }
                 const taskId = setDataOutcome.task.stringId;
-                if (!Object.keys(changedFieldsMap[caseId]).includes(taskId)) {
+                if (!Object.keys(changedFieldsMap[caseId])?.includes(taskId)) {
                     changedFieldsMap[caseId][taskId] = {
                         taskId
                     };
                 }
                 Object.keys(outcomeChangedFields).forEach(fieldId => {
-                    if (Object.keys(changedFieldsMap[caseId][taskId]).includes(fieldId)) {
+                    if (Object.keys(changedFieldsMap[caseId][taskId])?.includes(fieldId)) {
                         Object.keys(outcomeChangedFields[fieldId]).forEach(attribute => {
                             changedFieldsMap[caseId][taskId][fieldId][attribute] = outcomeChangedFields[fieldId][attribute];
                         });

@@ -61,9 +61,8 @@ export class TaskViewDialogComponent extends AbstractSingleTaskViewComponent imp
                 protected _userFilterService: UserFiltersService,
                 protected _log: LoggerService,
                 taskViewService: TaskViewService,
-                @Inject(NAE_BASE_FILTER) baseFilter: BaseFilter,
                 _activatedRoute?: ActivatedRoute) {
-        super(taskViewService, _activatedRoute, baseFilter);
+        super(taskViewService, _activatedRoute);
         if (this._data) {
             this._injectedData = this._data as TaskViewInjectionData;
         }

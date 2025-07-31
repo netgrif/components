@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {AbstractToolbarComponent, LanguageService} from '@netgrif/components-core';
+import {AbstractToolbarComponent, LanguageService, RedirectService, UserService} from '@netgrif/components-core';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'nc-toolbar',
@@ -9,7 +10,8 @@ import {AbstractToolbarComponent, LanguageService} from '@netgrif/components-cor
 })
 export class ToolbarComponent extends AbstractToolbarComponent {
 
-    constructor(protected translate: TranslateService, protected selectLangService: LanguageService) {
-        super(translate, selectLangService);
+    constructor(protected translate: TranslateService, protected selectLangService: LanguageService,
+                protected userService: UserService, protected router: Router, protected redirectService: RedirectService) {
+        super(translate, selectLangService, userService, router, redirectService);
     }
 }

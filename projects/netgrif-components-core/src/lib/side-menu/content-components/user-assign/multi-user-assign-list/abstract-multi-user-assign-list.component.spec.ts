@@ -48,7 +48,7 @@ describe('AbstractMultiUserAssignListComponent', () => {
 
     it('should select', () => {
         component.select({id: '0'} as UserListItem)
-        expect(component.currentlySelectedUsers.includes('0')).toBeTruthy();
+        expect(component.currentlySelectedUsers?.includes('0')).toBeTruthy();
     });
 
     it('should get loading', () => {

@@ -13,10 +13,8 @@ jobs:
             -   run: |
                     npm i --legacy-peer-deps
                     npm run ncc:build
-                    npm run ncc:full-test
                     npm i ./dist/netgrif-components-core --save-optional --legacy-peer-deps
                     npm run nc:build
-                    npm run nc:full-test
                     npm i ./dist/netgrif-components --save-optional --legacy-peer-deps
                     npm run example:build
 

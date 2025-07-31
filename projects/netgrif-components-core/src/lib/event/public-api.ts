@@ -1,5 +1,6 @@
 /* EVENT OUTCOMES */
 export * from './model/event-outcomes/case-outcomes/create-case-event-outcome';
+export * from './model/event-outcomes/case-outcomes/case-event-outcome';
 export * from './model/event-outcomes/case-outcomes/delete-case-event-outcome';
 export * from './model/event-outcomes/data-outcomes/get-data-event-outcome';
 export * from './model/event-outcomes/data-outcomes/get-data-groups-event-outcome';

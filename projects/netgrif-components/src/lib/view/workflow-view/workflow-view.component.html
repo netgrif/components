@@ -4,6 +4,19 @@
             <mat-icon>cloud_upload</mat-icon>
         </button>
     </div>
+
+    <div class="workflow-search-container">
+        <div fxLayout="row" class="max-height" fxLayoutAlign="space-between">
+            <div fxLayoutAlign="start center" fxFlex>
+                <div fxLayout="row" fxLayoutAlign="start center" class="full-size netgrif-input-primary-search-fix netgrif-input">
+                    <mat-form-field appearance="outline" class="disable-error-margin fulltext-search">
+                        <mat-icon matPrefix class="prefix-icon">search</mat-icon>
+                        <input type="text" matInput [formControl]="fullTextFormControl" [placeholder]="'search.fullText' | translate">
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
     <div fxLayout="row" fxLayoutAlign="center" class="workflow-header">
         <nc-header class="padding-mini" #header fxFlex="100" [type]="headerType"></nc-header>
     </div>

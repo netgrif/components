@@ -131,3 +131,16 @@ export function extractFieldValueFromData<T>(dataSection: Array<DataGroup>, fiel
     }
     return field.value;
 }
+
+/**
+ * Checks if the data groups contain view
+ * @returns true if the data contains filter
+ * @throws Error if filter field is not found
+ * */
+export function hasView(dataSection: Array<DataGroup>): boolean {
+    const field = getFieldFromDataGroups(dataSection, 'view_configuration_form');
+    if (field === undefined) {
+        throw new Error(`Field view_configuration_form could not be resolved`);
+    }
+    return field.value !== null && field.value !== undefined && field.value.length > 0;
+}

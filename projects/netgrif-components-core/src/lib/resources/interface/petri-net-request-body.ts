@@ -10,5 +10,6 @@ export interface PetriNetRequestBody {
      * If more than one ID is specified the returned processes belong to one of the groups.
      */
     group?: string | Array<string>;
+    title?: string;
     [k: string]: any;
 }

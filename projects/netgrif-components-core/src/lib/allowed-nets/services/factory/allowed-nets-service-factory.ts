@@ -40,7 +40,10 @@ export function tabbedAllowedNetsServiceFactory(factory: AllowedNetsServiceFacto
  */
 export function navigationItemTaskAllowedNetsServiceFactory(factory: AllowedNetsServiceFactory,
                                                             baseAllowedNets: BaseAllowedNetsService,
-                                                            navigationItemTaskData: Array<DataGroup>): AllowedNetsService {
+                                                            navigationItemTaskData?: Array<DataGroup>): AllowedNetsService {
+    if (!navigationItemTaskData) {
+        return factory.createWithAllNets();
+    }
     const filterField = getFieldFromDataGroups(navigationItemTaskData, UserFilterConstants.FILTER_FIELD_ID) as FilterField;
     const allowedNetsField = getFieldFromDataGroups(navigationItemTaskData, UserFilterConstants.ALLOWED_NETS_FIELD_ID) as MultichoiceField;
 
