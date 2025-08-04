@@ -17,7 +17,7 @@ import {TranslateService} from "@ngx-translate/core";
 })
 export abstract class AbstractLoginSsoComponent implements OnDestroy {
 
-    private _ssoConfig: Sso;
+    protected _ssoConfig: Sso;
     protected loading: LoadingEmitter;
 
     protected constructor(
@@ -71,7 +71,7 @@ export abstract class AbstractLoginSsoComponent implements OnDestroy {
         );
     }
 
-    private getRedirectUrl(): string {
+    protected getRedirectUrl(): string {
         const myQuery = this._ssoConfig.redirectUrl + '?';
         const options: { [index: string]: string } = {
             client_id: this._ssoConfig.clientId,
@@ -86,7 +86,7 @@ export abstract class AbstractLoginSsoComponent implements OnDestroy {
         ).join('&');
     }
 
-    private getToken(body: any): Observable<any> {
+    protected getToken(body: any): Observable<any> {
         const url = this._ssoConfig.refreshUrl;
         if (!url) {
             return throwError(() => new Error('Refresh URL is not defined in the config [nae.providers.auth.sso.refreshUrl]'));
@@ -101,7 +101,7 @@ export abstract class AbstractLoginSsoComponent implements OnDestroy {
         );
     }
 
-    private redirectToHome() {
+    protected redirectToHome() {
         this._router.navigate(['/' + this._config.getConfigurationSubtree(['services', 'auth', 'onLoginRedirect'])])
             .then((value) => { this._log.debug('Routed to ' + value); });
     }
