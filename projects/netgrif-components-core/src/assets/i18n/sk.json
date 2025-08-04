@@ -313,6 +313,7 @@
             "login": "Prihlasovacie meno",
             "wrongCredentials": "Nesprávne prihlasovacie údaje!",
             "loginButton": "Prihlásiť",
+            "ssoButton": "Prihlásiť sa pomocou SSO",
             "reset": "Obnova hesla",
             "sign": "Registrovať",
             "enterPass": "Zadajte svoje heslo"

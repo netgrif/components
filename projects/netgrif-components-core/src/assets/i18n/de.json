@@ -313,6 +313,7 @@
             "login": "Benutzername",
             "wrongCredentials": "Falsche Anmeldeinformationen!",
             "loginButton": "Anmelden",
+            "ssoButton": "SSO-Anmeldung",
             "reset": "Kennwort wiederherstellen",
             "sign": "Registrieren",
             "enterPass": "Ihre Kennwort eingeben"

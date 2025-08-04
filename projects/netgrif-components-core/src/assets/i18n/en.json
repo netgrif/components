@@ -313,6 +313,7 @@
             "login": "Username",
             "wrongCredentials": "Wrong credentials!",
             "loginButton": "Log in",
+            "ssoButton": "Log with SSO",
             "reset": "Reset password",
             "sign": "Sign Up",
             "enterPass": "Enter your password"

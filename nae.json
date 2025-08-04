@@ -4,7 +4,7 @@
     "providers": {
         "auth": {
             "address": "http://localhost:8080/api/",
-            "authentication": "Basic",
+            "authentication": "BasicWithRealm",
             "endpoints": {
                 "login": "auth/login",
                 "logout": "auth/logout",
@@ -14,12 +14,19 @@
                 "verify": "auth/token/verify",
                 "invite": "auth/invite",
                 "reset": "auth/reset",
-                "recover": "/auth/recover"
+                "recover": "auth/recover"
             },
             "sessionBearer": "X-Auth-Token",
             "sessionTimeoutEnabled": false,
             "sessionTimeout": 900,
-            "jwtBearer": "X-Jwt-Token"
+            "jwtBearer": "X-Jwt-Token",
+            "sso": {
+                "enable": false,
+                "clientId": "dev-cluster-worker",
+                "redirectUrl": "http://localhost:8081/realms/netgrif-cloud-testing/protocol/openid-connect/auth",
+                "refreshUrl": "http://localhost:8800/api/auth/login",
+                "scopes": ["openid","email","profile","roles"]
+            }
         },
         "resources": [
             {
