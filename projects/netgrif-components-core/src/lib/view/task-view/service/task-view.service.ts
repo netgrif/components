@@ -116,7 +116,9 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
                             this.updateTask(acc[taskId].task, pageLoadResult.tasks[taskId].task);
                             this.blockTaskFields(acc[taskId].task, !(acc[taskId].task.userId
                                 && this._userComparator.compareUsers(acc[taskId].task.userId)));
-                            delete pageLoadResult.tasks[taskId];
+                            if (!this._paginationView) {
+                                delete pageLoadResult.tasks[taskId];
+                            }
                         }
                     });
                     result = Object.assign(acc, pageLoadResult.tasks);
