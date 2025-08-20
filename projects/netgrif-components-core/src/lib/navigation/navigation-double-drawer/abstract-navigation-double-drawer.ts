@@ -161,10 +161,6 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         this._currentNodeSubscription?.unsubscribe();
         this._currentPathSubscription?.unsubscribe();
         this._loggedUserSubscription?.unsubscribe();
-        this.leftLoading$.complete();
-        this.rightLoading$.complete();
-        this.hiddenCustomItems$.unsubscribe();
-        this._userService.user$.subscribe();
     }
 
     public get currentPath(): string {
