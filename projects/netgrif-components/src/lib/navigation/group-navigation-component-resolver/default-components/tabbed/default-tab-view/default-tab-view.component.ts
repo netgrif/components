@@ -113,6 +113,7 @@ export class DefaultTabViewComponent {
         const taskViewAdditionalFilter = this.extractionService.extractCompleteAdditionalFilterFromData(viewDataGroups);
         let mergeWithBaseFilter: boolean = (chainedViewType === "tabbed_task_view_configuration") ? extractFieldValueFromData<boolean>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_MERGE_FILTERS) : true;
         const additionalAllowedNets = this.extractionService.extractAdditionalFilterAllowedNets(viewDataGroups)?.allowedNetsIdentifiers;
+        const chainedViewComponent = chainedViewType === "tabbed_single_task_view_configuration" ? DefaultTabbedSingleTaskViewComponent : DefaultTabbedTaskViewComponent;
 
         return [
             {
@@ -120,7 +121,7 @@ export class DefaultTabViewComponent {
                 canBeClosed: false,
                 tabContentComponent: DefaultTabbedCaseViewComponent,
                 injectedObject: {
-                    tabViewComponent: DefaultTabbedTaskViewComponent,
+                    tabViewComponent: chainedViewComponent,
                     tabViewOrder: 0,
                     navigationItemTaskData: this._navigationItemTaskData,
 
