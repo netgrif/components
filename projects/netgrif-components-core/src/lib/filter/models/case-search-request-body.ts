@@ -56,6 +56,10 @@ export interface CaseSearchRequestBody {
      * Returned cases must have the specified string ID.
      * If more than one string ID is specified, the returned cases must have one of them.
      */
+    id?: string | Array<string>;
+    /**
+     * @deprecated
+     */
     stringId?: string | Array<string>;
     /**
      * Returned cases must be instances of processes of the group with the specified ID.

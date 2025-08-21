@@ -156,7 +156,7 @@ export abstract class AbstractDashboardComponent {
     }, dashboardItemsParams: HttpParams) {
         const itemsOrder = this.getManagementItemsOrder(this.dashboardCase)?.split(",");
         let dashboardItemsSearchBody: CaseSearchRequestBody = {
-            stringId: Object.keys(dashboardItemsOptions)
+            id: Object.keys(dashboardItemsOptions)
         };
         this._caseResource.searchCases(SimpleFilter.fromCaseQuery(dashboardItemsSearchBody), dashboardItemsParams).subscribe(resultItems => {
             const itemsContent = resultItems.content;
