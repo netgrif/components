@@ -462,7 +462,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
 
     protected getItemCasesByIds(caseIds: string[], pageNumber: number, pageSize: string | number): Observable<Page<Case>> {
         const searchBody: CaseSearchRequestBody = {
-            stringId: caseIds,
+            id: caseIds,
             process: MENU_IDENTIFIERS.map(id => ({identifier: id} as PetriNetSearchRequest)),
         };
 
