@@ -42,7 +42,7 @@ export abstract class AbstractCaseRefBaseFieldComponent<T extends DataField<unkn
             },
             {
                 provide: NAE_BASE_FILTER,
-                useValue: { filter: SimpleFilter.fromCaseQuery((filterProperty && query ? query : {stringId: filterValue})) } as BaseFilter
+                useValue: { filter: SimpleFilter.fromCaseQuery((filterProperty && query ? query : {id: filterValue})) } as BaseFilter
             },
             {
                 provide: NAE_VIEW_ID_SEGMENT,
