@@ -131,7 +131,7 @@ export abstract class AbstractDashboardComponent {
 
     private getMenuItems(dashboardMenuToItems: {}, dashboardItemsParams: HttpParams) {
         let menuItemsSearchBody = {
-            stringId: Object.keys(dashboardMenuToItems)
+            id: Object.keys(dashboardMenuToItems)
         };
         this._caseResource.searchCases(SimpleFilter.fromCaseQuery(menuItemsSearchBody), dashboardItemsParams).subscribe(resultItems => {
             const itemsContent = resultItems.content;

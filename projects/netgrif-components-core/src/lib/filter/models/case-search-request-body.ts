@@ -53,12 +53,12 @@ export interface CaseSearchRequestBody {
      */
     query?: string;
     /**
-     * Returned cases must have the specified string ID.
-     * If more than one string ID is specified, the returned cases must have one of them.
+     * Returned cases must have the specified ID.
+     * If more than one ID is specified, the returned cases must have one of them.
      */
     id?: string | Array<string>;
     /**
-     * @deprecated
+     * @deprecated Use `id` instead. This field remains for backward compatibility and may be removed in a future major release.
      */
     stringId?: string | Array<string>;
     /**
