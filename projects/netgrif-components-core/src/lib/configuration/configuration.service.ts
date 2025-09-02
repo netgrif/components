@@ -15,9 +15,11 @@ export abstract class ConfigurationService {
     protected constructor(protected configuration: NetgrifApplicationEngine,
                           protected _configurationResource: ConfigurationResourceService,
                           protected _applicationConfiguration: ApplicationConfiguration) {
-        this.initialize();
-
         this.APPLICATION_CONFIG = _applicationConfiguration;
+        if (_applicationConfiguration.properties) {
+            this.configuration = _applicationConfiguration.properties as NetgrifApplicationEngine;
+        }
+        this.initialize();
     }
 
     private initialize(): void {
@@ -116,7 +118,7 @@ export abstract class ConfigurationService {
         return result;
     }
 
-    public getConfigurationSubtreeByPath(path: string) : any | undefined {
+    public getConfigurationSubtreeByPath(path: string): any | undefined {
         return this.getConfigurationSubtree(path.split('.'));
     }
 
@@ -275,6 +277,9 @@ export abstract class ConfigurationService {
         if (!this.APPLICATION_CONFIG?.resolve_configuration) {
             return of(null);
         }
+        if (!!this.APPLICATION_CONFIG?.properties) {
+            return of(null);
+        }
         return this._configurationResource.getPublicApplicationConfiguration(this.APPLICATION_CONFIG)
             .pipe(
                 catchError((err: HttpErrorResponse) => {
@@ -290,7 +295,7 @@ export abstract class ConfigurationService {
                     }
                     this.configuration = data.properties as NetgrifApplicationEngine;
                     this.initialize();
-                })
+                }),
             );
     }
 

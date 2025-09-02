@@ -12,7 +12,8 @@ export class NaeExampleAppConfigurationService extends ConfigurationService {
             application: environment.application_identifier,
             type: environment.type_identifier,
             gateway_url: environment.gateway_url,
-            resolve_configuration: environment.resolve_configuration
+            resolve_configuration: environment.resolve_configuration,
+            properties: environment.loaded_properties
         };
         super(naeConfig as unknown as NetgrifApplicationEngine, _configurationResource, applicationConfig);
     }
