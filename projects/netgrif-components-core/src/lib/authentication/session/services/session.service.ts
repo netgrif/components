@@ -35,18 +35,20 @@ export class SessionService implements OnDestroy {
         this.idleTimerService.stopTimer();
         this._verifying = new LoadingEmitter();
         this._initialized = new LoadingEmitter(false);
-        this._config.loaded$
-            .pipe(
-                filter(loaded => loaded),
-                take(1)
-            )
-            .subscribe(() => {
-                this._storage = this.resolveStorage(this._config.get().providers.auth['sessionStore']);
-                this._sessionHeader = this._config.get().providers.auth.sessionBearer ?
-                    this._config.get().providers.auth.sessionBearer : SessionService.SESSION_BEARER_HEADER_DEFAULT;
-                this.ensureConfigInitialized();
-                this.load();
-            });
+        setTimeout(() => {
+            this._config.loaded$
+                .pipe(
+                    filter(loaded => loaded),
+                    take(1)
+                )
+                .subscribe(() => {
+                    this._storage = this.resolveStorage(this._config.get().providers.auth['sessionStore']);
+                    this._sessionHeader = this._config.get().providers.auth.sessionBearer ?
+                        this._config.get().providers.auth.sessionBearer : SessionService.SESSION_BEARER_HEADER_DEFAULT;
+                    this.ensureConfigInitialized();
+                    this.load();
+                });
+        });
     }
 
     ngOnDestroy(): void {

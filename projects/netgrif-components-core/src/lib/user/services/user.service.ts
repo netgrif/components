@@ -1,4 +1,5 @@
 import {Injectable, OnDestroy} from '@angular/core';
+import {ConfigurationService} from "../../configuration/configuration.service";
 import {Observable, ReplaySubject, Subscription} from 'rxjs';
 import {ProcessRole} from '../../resources/interface/process-role';
 import {User} from '../models/user';
@@ -12,7 +13,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {SessionService} from '../../authentication/session/services/session.service';
 import {UserResource} from '../../resources/interface/user-resource';
 import {AnonymousService} from '../../authentication/anonymous/anonymous.service';
-import {ConfigurationService} from "../../configuration/configuration.service";
+
 
 @Injectable({
     providedIn: 'root'
