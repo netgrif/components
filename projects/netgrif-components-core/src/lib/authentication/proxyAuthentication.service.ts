@@ -1,13 +1,13 @@
 import {ConfigurationService} from '../configuration/configuration.service';
 import {NullAuthenticationService} from './services/methods/null-authentication/null-authentication.service';
 import {BasicAuthenticationService} from './services/methods/basic-authentication/basic-authentication.service';
-import {HttpBackend, HttpClient} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {BasicWithRealmAuthenticationService} from "./services/methods/basic-authentication/basic-with-realm-authentication.service";
 import {filter, take} from "rxjs/operators";
 import {UserResource} from "../resources/interface/user-resource";
 import {Credentials} from "./models/credentials";
 import {Observable} from 'rxjs';
-import {Injectable, Injector} from "@angular/core";
+import {Injectable} from "@angular/core";
 import {AuthenticationMethodService} from "./services/authentication-method.service";
 
 @Injectable()
