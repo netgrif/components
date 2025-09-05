@@ -1,5 +1,5 @@
 export enum CaseMetaField {
-    MONGO_ID = 'mongoId',
+    MONGO_ID = 'id.keyword',
     VISUAL_ID = 'visualId',
     TITLE = 'title',
     AUTHOR = 'author',
