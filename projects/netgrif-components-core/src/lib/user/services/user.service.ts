@@ -3,7 +3,7 @@ import {Observable, ReplaySubject, Subscription} from 'rxjs';
 import {ProcessRole} from '../../resources/interface/process-role';
 import {User} from '../models/user';
 import {Credentials} from '../../authentication/models/credentials';
-import {take, tap} from 'rxjs/operators';
+import {filter, take, tap} from 'rxjs/operators';
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
 import {UserTransformer} from '../../authentication/models/user.transformer';
@@ -12,6 +12,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {SessionService} from '../../authentication/session/services/session.service';
 import {UserResource} from '../../resources/interface/user-resource';
 import {AnonymousService} from '../../authentication/anonymous/anonymous.service';
+import {ConfigurationService} from "../../configuration/configuration.service";
 
 @Injectable({
     providedIn: 'root'
@@ -33,28 +34,35 @@ export class UserService implements OnDestroy {
                 protected _userTransform: UserTransformer,
                 protected _log: LoggerService,
                 protected _session: SessionService,
-                protected _anonymousService: AnonymousService) {
+                protected _anonymousService: AnonymousService,
+                protected _config: ConfigurationService) {
         this._user = this.emptyUser();
         this._loginCalled = false;
         this._userChange$ = new ReplaySubject<User>(1);
         this._anonymousUserChange$ = new ReplaySubject<User>(1);
-        setTimeout(() => {
-            this._subAuth = this._authService.authenticated$.subscribe(auth => {
-                if (auth && !this._loginCalled) {
-                    this.loadUser();
-                } else if (!auth) {
+        this._config.loaded$
+            .pipe(
+                filter(loaded => loaded),
+                take(1)
+            ).subscribe(() => {
+            setTimeout(() => {
+                this._subAuth = this._authService.authenticated$.subscribe(auth => {
+                    if (auth && !this._loginCalled) {
+                        this.loadUser();
+                    } else if (!auth) {
+                        this.clearUser();
+                        this.publishUserChange();
+                    }
+                });
+            });
+            this._subAnonym = this._anonymousService.tokenSet.subscribe(token => {
+                if (token) {
+                    this.loadPublicUser();
+                } else {
                     this.clearUser();
-                    this.publishUserChange();
+                    this.publishAnonymousUserChange();
                 }
             });
-        });
-        this._subAnonym = this._anonymousService.tokenSet.subscribe(token => {
-            if (token) {
-                this.loadPublicUser();
-            } else {
-                this.clearUser();
-                this.publishAnonymousUserChange();
-            }
         });
     }
 

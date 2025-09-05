@@ -1,8 +1,8 @@
 import {NetgrifApplicationEngine, Services, View, Views} from '../../commons/schema';
-import {Observable, of} from 'rxjs';
+import {BehaviorSubject, Observable, of} from 'rxjs';
 import {ApplicationConfiguration} from './application-configuration';
 import {ConfigurationResourceService} from '../resources/engine-endpoint/configuration-resource.service';
-import {catchError, tap} from 'rxjs/operators';
+import {catchError, take, tap, map, distinctUntilChanged} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 
 
@@ -12,19 +12,27 @@ export abstract class ConfigurationService {
 
     private readonly APPLICATION_CONFIG: ApplicationConfiguration;
 
+    private readonly _config$ = new BehaviorSubject<NetgrifApplicationEngine | null>(null);
+    public readonly config$: Observable<NetgrifApplicationEngine | null> = this._config$.asObservable();
+    public readonly loaded$: Observable<boolean> = this.config$.pipe(map(cfg => !!cfg), distinctUntilChanged());
+
     protected constructor(protected configuration: NetgrifApplicationEngine,
                           protected _configurationResource: ConfigurationResourceService,
                           protected _applicationConfiguration: ApplicationConfiguration) {
         this.APPLICATION_CONFIG = _applicationConfiguration;
-        if (_applicationConfiguration.properties) {
-            this.configuration = _applicationConfiguration.properties as NetgrifApplicationEngine;
+        if (!this._applicationConfiguration?.resolve_configuration) {
+            this.initialize();
         }
-        this.initialize();
+    }
+
+    public get snapshot(): NetgrifApplicationEngine | null {
+        return this.configuration ? (this.createConfigurationCopy() as NetgrifApplicationEngine) : null;
     }
 
     private initialize(): void {
         this.resolveEndpointURLs();
         this._dataFieldConfiguration = this.getConfigurationSubtree(['services', 'dataFields']);
+        this._config$.next(this.createConfigurationCopy() as NetgrifApplicationEngine);
     }
 
     public getAsync(): Observable<NetgrifApplicationEngine> {
@@ -273,30 +281,29 @@ export abstract class ConfigurationService {
      * @see ApplicationConfiguration
      * @see NetgrifApplicationEngine
      */
-    public loadConfiguration(): Observable<any> {
+    public loadConfiguration(): Observable<void> {
         if (!this.APPLICATION_CONFIG?.resolve_configuration) {
-            return of(null);
+            return of(void 0);
         }
-        if (!!this.APPLICATION_CONFIG?.properties) {
-            return of(null);
-        }
-        return this._configurationResource.getPublicApplicationConfiguration(this.APPLICATION_CONFIG)
-            .pipe(
-                catchError((err: HttpErrorResponse) => {
-                    if (err.status === 404) {
-                        return of(null);
-                    }
-                    console.log(err.message);
+
+        return this._configurationResource.getPublicApplicationConfiguration(this.APPLICATION_CONFIG).pipe(
+            catchError((err: HttpErrorResponse) => {
+                if (err.status === 404) {
                     return of(null);
-                }),
-                tap((data: ApplicationConfiguration) => {
-                    if (!data || !data.properties) {
-                        return of(null);
-                    }
-                    this.configuration = data.properties as NetgrifApplicationEngine;
-                    this.initialize();
-                }),
-            );
+                }
+                console.log(err.message);
+                return of(null);
+            }),
+            tap((data: ApplicationConfiguration | null) => {
+                if (!data?.properties) {
+                    return;
+                }
+                this.configuration = data.properties as NetgrifApplicationEngine;
+                this.initialize();
+            }),
+            take(1),
+            map(() => void 0)
+        );
     }
 
     private createConfigurationCopy(): any {

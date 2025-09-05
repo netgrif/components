@@ -11,21 +11,25 @@ import {PaginationParams} from '../../utility/pagination/pagination-params';
  */
 export abstract class AbstractResourceService {
 
-    private readonly _SERVER_URL: string;
+    private _SERVER_URL: string;
+    private readonly resourceName: string;
 
     /**
      * @param resourceName the identifier of the desired endpoint from configuration, found in
      * {@link SetAuthAndResourcesAddress}.[resources]{@link Resources}.
      * @param _resourceProvider `ResourceProvider` instance
-     * @param _configService `ConfigurationService` instance
+     * @param configurationService `ConfigurationService` instance
      */
     protected constructor(resourceName: string,
                           protected _resourceProvider: ResourceProvider,
-                          protected _configService: ConfigurationService) {
-        this._SERVER_URL = this.getResourceAddress(resourceName);
+                          protected configurationService: ConfigurationService) {
+        this.resourceName = resourceName;
     }
 
     protected get SERVER_URL(): string {
+        if (!this._SERVER_URL) {
+            this._SERVER_URL = this.getResourceAddress(this.resourceName);
+        }
         return this._SERVER_URL;
     }
 
@@ -36,7 +40,7 @@ export abstract class AbstractResourceService {
     protected getResourceAddress(name: string): string {
         let URL = '';
 
-        const resourcesArray = this._configService.getConfigurationSubtree(['providers', 'resources']);
+        const resourcesArray = this.configurationService.getConfigurationSubtree(['providers', 'resources']);
 
         if (resourcesArray instanceof Array) {
             resourcesArray.forEach(resource => {
@@ -44,22 +48,20 @@ export abstract class AbstractResourceService {
                     URL = resource.address;
                 }
             });
-        } else {
-            if (resourcesArray.name === name) {
-                URL = resourcesArray.address;
-            }
+        } else if (resourcesArray && resourcesArray.name === name) {
+            URL = resourcesArray.address;
         }
         return URL;
     }
 
     /**
-     * Parses a response `r` into a {@link Page} instance
-     * @param r - response object
+     * Parses a response `response` into a {@link Page} instance
+     * @param response - response object
      * @param propertiesParams - plural form of the resource name, that is used to extract the data. Eg. "cases".
      */
-    protected getResourcePage<T>(r: any, propertiesParams: string): Page<T> {
-        if (!r) {
-            return r;
+    protected getResourcePage<T>(response: any, propertiesParams: string): Page<T> {
+        if (!response) {
+            return response;
         }
         const defaultPage: Pagination = {
             number: -1,
@@ -69,24 +71,26 @@ export abstract class AbstractResourceService {
         };
 
         return {
-            content: this.changeType<Array<T>>(r, propertiesParams),
-            pagination: r.hasOwnProperty(PaginationParams.PAGE_NUMBER) ? r.page : defaultPage
+            content: this.changeType<Array<T>>(response, propertiesParams),
+            pagination: response.hasOwnProperty(PaginationParams.PAGE_NUMBER) ? response.page : defaultPage
         };
     }
 
     /**
-     * Extracts data from the response `r` into an object with better usability.
-     * @param r - response object
+     * Extracts data from the response `response` into an object with better usability.
+     * @param response - response object
      * @param propertiesParams - plural form of the resource name, that is used to extract the data. Eg. "cases".
      */
-    protected changeType<T>(r: any, propertiesParams: string): T {
-        if (!r) {
-            return r;
+    protected changeType<T>(response: any, propertiesParams: string): T {
+        if (!response) {
+            return response;
         }
-        if (r.hasOwnProperty('_embedded')) {
-            return propertiesParams && r._embedded.hasOwnProperty(propertiesParams) ? r._embedded[propertiesParams] : r._embedded;
+        if (response.hasOwnProperty('_embedded')) {
+            return propertiesParams && response._embedded.hasOwnProperty(propertiesParams)
+                ? response._embedded[propertiesParams]
+                : response._embedded;
         } else {
-            return r;
+            return response;
         }
     }
 
@@ -118,6 +122,4 @@ export abstract class AbstractResourceService {
             }
         };
     }
-
-
 }

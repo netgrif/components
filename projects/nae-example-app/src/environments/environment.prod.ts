@@ -4,5 +4,4 @@ export const environment = {
     gateway_url: window['env']['gateway_url'] || 'http://localhost:8800/api',
     application_identifier: window['env']['application_identifier'] || 'nae',
     type_identifier: window['env']['type_identifier'] || 'default',
-    loaded_properties: undefined as any,
 };

@@ -31,19 +31,3 @@ export interface ApplicationConfiguration {
     gateway_url?: string;
     properties?: NetgrifApplicationEngine;
 }
-
-export async function loadRemoteConfiguration(env: any): Promise<any> {
-    if (!window['env'] || !window['env']['resolve_configuration']) {
-        console.log('Remote configuration not enabled.');
-        return env;
-    }
-
-    const remoteConfigUrl = `${env.gateway_url}/frontend-config/public/${env.application_identifier}/${env.type_identifier}`;
-    const response = await fetch(remoteConfigUrl);
-    if (!response.ok) {
-        console.error('Error loading remote configuration configuration', response);
-    } else {
-        env.loaded_properties = await response.json();
-    }
-    return env;
-}
