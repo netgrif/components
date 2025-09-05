@@ -23,7 +23,6 @@ import {WrappedBoolean} from "../../data-field-template/models/wrapped-boolean";
 import {DateAdapter, MAT_DATE_LOCALE} from "@angular/material/core";
 import {LanguageService} from "../../../translate/language.service";
 import {CustomDateAdapter} from "../models/custom-date-adapter";
-import {NgxMatDateAdapter} from "@angular-material-components/datetime-picker";
 
 describe('AbstractDateDefaultFieldComponent', () => {
     let component: TestDateFieldComponent;

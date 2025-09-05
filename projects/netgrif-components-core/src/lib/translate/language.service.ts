@@ -1,7 +1,7 @@
-import {Injectable, OnDestroy} from '@angular/core';
 import en from '../../assets/i18n/en.json';
 import sk from '../../assets/i18n/sk.json';
 import de from '../../assets/i18n/de.json';
+import {Injectable, OnDestroy} from '@angular/core';
 import {TranslateService, TranslationChangeEvent} from '@ngx-translate/core';
 import {Observable, Subject, Subscription} from 'rxjs';
 import {UserPreferenceService} from '../user/services/user-preference.service';
