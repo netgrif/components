@@ -6,6 +6,7 @@ import {forkJoin, Observable, of, Subject, timer} from 'rxjs';
 import {catchError, map, tap} from 'rxjs/operators';
 import NetRole from '../../../process/netRole';
 import RolesAndPermissions from '../../../process/rolesAndPermissions';
+import {resolveI18n} from "../../../resources/interface/i18n-string";
 
 export interface ExtendedProcessRole extends NetRole {
     selected: boolean;
@@ -82,7 +83,7 @@ export class ProcessList {
                 } else {
                     cache[net.identifier] = {
                         identifier: net.identifier,
-                        title: net.title,
+                        title: resolveI18n(net.title),
                         initials: net.initials,
                         newestVersion: undefined,
                         processes: [net],

@@ -16,6 +16,7 @@ import {CreateCaseEventOutcome} from '../../../event/model/event-outcomes/case-o
 import {EventOutcomeMessageResource} from '../../../resources/interface/message-resource';
 import {MatOption} from '@angular/material/core';
 import {LoadingEmitter} from '../../../utility/loading-emitter';
+import {I18nString, resolveI18n} from "../../../resources/interface/i18n-string";
 
 interface Form {
     value: string;
@@ -76,7 +77,7 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
         this._allowedNetsSubscription = this._injectedData.allowedNets$.pipe(
             map(nets => nets.map(petriNet => ({
                 value: petriNet.stringId,
-                viewValue: petriNet.title,
+                viewValue: resolveI18n(petriNet.title),
                 version: petriNet.version
             }))),
             map(nets => {

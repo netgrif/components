@@ -45,6 +45,7 @@ export * from './interface/user-resource';
 export * from './interface/create-case-request-body';
 export * from './interface/ldapGroupResponseBody';
 export * from './interface/task-pair';
+export * from './interface/i18n-string'
 
 export * from './types/nae-date-type';
 

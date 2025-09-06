@@ -7,7 +7,8 @@ import {
     EventOutcomeMessageResource, LoadingEmitter,
     NAE_NET_ALL_VERSIONS, NAE_NET_VERSION_VISIBLE,
     NewCaseInjectionData, SideMenuInjectionData,
-    SnackBarService
+    SnackBarService,
+    resolveI18n
 } from '@netgrif/components-core';
 import {Hotkey, HotkeysService} from 'angular2-hotkeys';
 import {TranslateService} from '@ngx-translate/core';
@@ -83,7 +84,7 @@ export class NewCaseDialogComponent implements OnDestroy {
         this._allowedNetsSubscription = this._injectedData.allowedNets$.pipe(
             map(nets => nets.map(petriNet => ({
                 value: petriNet.stringId,
-                viewValue: petriNet.title,
+                viewValue: resolveI18n(petriNet.title),
                 version: petriNet.version
             }))),
             map(nets => {

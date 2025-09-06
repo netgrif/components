@@ -17,6 +17,7 @@ import {HeaderChangeType} from './models/user-changes/header-change-type';
 import {ViewIdService} from '../user/services/view-id.service';
 import {Net} from '../process/net';
 import {OverflowService} from './services/overflow.service';
+import {resolveI18n} from "../resources/interface/i18n-string";
 
 @Injectable()
 export abstract class AbstractHeaderService implements OnDestroy {
@@ -202,7 +203,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
         const fieldsGroups: Array<FieldsGroup> = [];
         allowedNets.forEach(allowedNet => {
             const fieldsGroup: FieldsGroup = {
-                groupTitle: allowedNet.title,
+                groupTitle: resolveI18n(allowedNet.title),
                 fields: []
             };
             allowedNet.immediateData.forEach(immediate => {
@@ -227,7 +228,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
         const fieldsGroups: Array<FieldsGroup> = [];
         allowedNets.forEach(allowedNet => {
             const fieldsGroup: FieldsGroup = {
-                groupTitle: allowedNet.title,
+                groupTitle: resolveI18n(allowedNet.title),
                 fields: []
             };
             const existing = new Set();

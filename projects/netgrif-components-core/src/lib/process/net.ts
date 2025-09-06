@@ -6,6 +6,7 @@ import Transaction from './transaction';
 import NetRole from './netRole';
 import {Permissions} from './permissions';
 import {PetriNetReferenceWithPermissions} from './petri-net-reference-with-permissions';
+import {I18nString} from "../resources/interface/i18n-string";
 
 /**
  * @ignore
@@ -18,7 +19,7 @@ export class Net implements PetriNetReferenceWithPermissions {
     /**
      * @ignore
      */
-    private _title: string;
+    private _title: string | I18nString;
     /**
      * @ignore
      */
@@ -94,7 +95,7 @@ export class Net implements PetriNetReferenceWithPermissions {
         this._stringId = value;
     }
 
-    get title(): string {
+    get title(): string | I18nString {
         return this._title;
     }
 

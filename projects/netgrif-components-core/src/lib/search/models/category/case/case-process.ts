@@ -9,6 +9,7 @@ import {NotEquals} from '../../operator/not-equals';
 import {Categories} from '../categories';
 import {Subscription} from 'rxjs';
 import {CaseSearch} from './case-search.enum';
+import {resolveI18n} from "../../../../resources/interface/i18n-string";
 
 export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
 
@@ -43,7 +44,7 @@ export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
         this._allowedNetsSub = this._optionalDependencies.allowedNetsService.allowedNets$.subscribe(allowedNets => {
             this._optionsMap.clear();
             allowedNets.forEach(petriNet => {
-                if (this.isUniqueOption(petriNet.title, petriNet.identifier)) {
+                if (this.isUniqueOption(resolveI18n(petriNet.title), petriNet.identifier)) {
                     this.addToMap(petriNet.title, petriNet.identifier);
                 }
             });

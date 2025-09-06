@@ -1,6 +1,7 @@
 import {Author} from './author';
 import {ImmediateData} from './immediate-data';
 import {NaeDate} from '../types/nae-date-type';
+import {I18nString} from "./i18n-string";
 
 /**
  * Information Petri Net
@@ -13,7 +14,7 @@ export interface PetriNetReference {
     /**
      * Title
      */
-    title: string;
+    title: string | I18nString;
     /**
      * Identifier
      */
