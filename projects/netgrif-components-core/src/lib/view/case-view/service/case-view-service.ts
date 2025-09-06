@@ -313,7 +313,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
     }
 
     protected getDefaultSortParam(): string {
-        return createSortParam('stringId', PaginationSort.DESCENDING);
+        return createSortParam('creationDateSortable', PaginationSort.DESCENDING);
     }
 
     protected getMetaFieldSortId(): string {
@@ -321,7 +321,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
             case CaseMetaField.TITLE:
                 return 'title.keyword';
             case CaseMetaField.VISUAL_ID:
-                return 'visualId.keyword';
+                return 'visualId';
             case CaseMetaField.CREATION_DATE:
                 return 'creationDateSortable';
             default:
