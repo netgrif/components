@@ -94,7 +94,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
         protected _redirectService: RedirectService,
         protected _pathService: PathService,
         protected _userService: UserService,
-        ) {
+    ) {
         this._leftItems$ = new BehaviorSubject([]);
         this._rightItems$ = new BehaviorSubject([]);
         this._moreItems$ = new BehaviorSubject([]);
@@ -545,7 +545,8 @@ export class DoubleDrawerNavigationService implements OnDestroy {
     public getItemRoutingPath(itemCase: Case) {
         const taskId = DoubleDrawerUtils.findTaskIdInCase(itemCase, SETTINGS_TRANSITION_ID);
         const url = this._dynamicRoutingService.route;
-        return `/${url}/${taskId}`;
+        const prefix = url.startsWith('/') ? '' : '/';
+        return `${prefix}${url}/${taskId}`;
     }
 
     private processLeftItems(cases: Case[], orderedChildCaseIds: string[]): NavigationItem[] {

@@ -2,7 +2,7 @@ import {Component, Input, OnDestroy, OnInit, Optional} from '@angular/core';
 import {MatExpansionPanel} from '@angular/material/expansion';
 import {AbstractPanelWithHeaderBindingComponent} from '../abstract/panel-with-header-binding';
 import {HeaderColumn} from '../../header/models/header-column';
-import {Observable, Subscription} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {LoggerService} from '../../logger/services/logger.service';
 import {toMoment} from '../../resources/types/nae-date-type';
 import {DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
@@ -17,7 +17,7 @@ import {FeaturedValue} from '../abstract/featured-value';
 import {PetriNetResourceService} from '../../resources/engine-endpoint/petri-net-resource.service';
 import {ProgressType, ProviderProgress} from '../../resources/resource-provider.service';
 import {OverflowService} from '../../header/services/overflow.service';
-import {resolveI18n} from "../../resources/interface/i18n-string";
+import {resolveI18n} from '../../resources/interface/i18n-string';
 
 
 export interface WorkflowPanelContent {
@@ -161,7 +161,7 @@ export abstract class AbstractWorkflowPanelComponent extends AbstractPanelWithHe
             case WorkflowMetaField.INITIALS:
                 return {value: this.workflow.initials, icon: '', type: 'meta'};
             case WorkflowMetaField.TITLE:
-                return {value: resolveI18n(this.workflow.title), icon: '', type: 'meta'};
+                return {value: resolveI18n(this.workflow.title) || this.workflow.identifier, icon: '', type: 'meta'};
             case WorkflowMetaField.NET_ID:
                 return {value: this.workflow.stringId, icon: '', type: 'meta'};
             case WorkflowMetaField.VERSION:
@@ -169,7 +169,11 @@ export abstract class AbstractWorkflowPanelComponent extends AbstractPanelWithHe
             case WorkflowMetaField.AUTHOR:
                 return {value: this.workflow.author.fullName, icon: 'account_circle', type: 'meta'};
             case WorkflowMetaField.CREATION_DATE:
-                return {value: toMoment(this.workflow.createdDate).format(DATE_TIME_FORMAT_STRING), icon: 'event', type: 'meta'};
+                return {
+                    value: toMoment(this.workflow.createdDate).format(DATE_TIME_FORMAT_STRING),
+                    icon: 'event',
+                    type: 'meta'
+                };
         }
     }
 

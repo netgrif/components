@@ -6,7 +6,7 @@ import Transaction from './transaction';
 import NetRole from './netRole';
 import {Permissions} from './permissions';
 import {PetriNetReferenceWithPermissions} from './petri-net-reference-with-permissions';
-import {I18nString} from "../resources/interface/i18n-string";
+import {I18nString} from '../resources/interface/i18n-string';
 
 /**
  * @ignore
