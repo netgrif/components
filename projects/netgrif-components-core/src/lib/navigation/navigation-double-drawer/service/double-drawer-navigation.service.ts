@@ -439,6 +439,8 @@ export class DoubleDrawerNavigationService implements OnDestroy {
                 this.resolveCustomViewsInRightSide();
                 this._rightLoading$.off();
                 this.itemLoaded.emit({menu: 'right', items: this.rightItems});
+
+                this.openAvailableView();
             }, error => {
                 this._log.error(error);
                 this._rightItems$.next([]);
@@ -492,7 +494,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
         const resolvedBannedRoles = DoubleDrawerUtils.resolveAccessRoles(itemCase, GroupNavigationConstants.ITEM_FIELD_ID_BANNED_ROLES);
         if (!!resolvedRoles) item.access['role'] = resolvedRoles;
         if (!!resolvedBannedRoles) item.access['bannedRole'] = resolvedBannedRoles;
-        if (!this._accessService.canAccessView(item, item.routingPath)) return;
+        if (!this._accessService.canAccessView(item, item.routingPath)) return;   //todo neni zle? routing?.path
         return item;
     }
 
