@@ -1,6 +1,6 @@
 {
     "name": "@netgrif/components-project",
-    "version": "6.5.0-beta.1",
+    "version": "8.0.0-rc.10",
     "description": "Netgrif Application Engine Frontend project. Project includes angular libraries as base for NAE applications.",
     "homepage": "https://components.netgrif.com",
     "license": "SEE LICENSE IN LICENSE",
@@ -65,7 +65,7 @@
         "project:sonar": "node scripts/sonar-scanner-analysis.js",
         "components:start": "npm run nc:local-build && ng serve",
         "example:start": "ng serve",
-        "example:build": "ng build --configuration production"
+        "example:build": "ng build nae-example-app --configuration production"
     },
     "dependencies": {
         "@angular/animations": "~19.2.2",

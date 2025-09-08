@@ -12,11 +12,12 @@ import {InjectedTabbedTaskViewData} from '../../../view/task-view/models/injecte
 import {Case} from '../../../resources/interface/case';
 import {getImmediateData} from '../../../utility/get-immediate-data';
 import {UserFilterConstants} from '../../../filter/models/user-filter-constants';
-import {DataGroup} from '../../../resources/public-api';
 import {getFieldFromDataGroups} from '../../../utility/get-field';
 import {FilterField} from '../../../data-fields/filter-field/models/filter-field';
 import {BaseAllowedNetsService} from '../base-allowed-nets.service';
 import {MultichoiceField} from "../../../data-fields/multichoice-field/models/multichoice-field";
+import {LayoutItemResource} from '../../../task-content/model/resource-interfaces';
+import {DataField} from '../../../data-fields/models/abstract-data-field';
 
 function addAllowedNets(allowedNets, existingAllowedNets) {
     if (!!allowedNets && allowedNets.length > 0) {
@@ -40,7 +41,7 @@ export function tabbedAllowedNetsServiceFactory(factory: AllowedNetsServiceFacto
  */
 export function navigationItemTaskAllowedNetsServiceFactory(factory: AllowedNetsServiceFactory,
                                                             baseAllowedNets: BaseAllowedNetsService,
-                                                            navigationItemTaskData: Array<DataGroup>): AllowedNetsService {
+                                                            navigationItemTaskData: Array<DataField<any>>): AllowedNetsService {
     const filterField = getFieldFromDataGroups(navigationItemTaskData, UserFilterConstants.FILTER_FIELD_ID) as FilterField;
     const allowedNetsField = getFieldFromDataGroups(navigationItemTaskData, UserFilterConstants.ALLOWED_NETS_FIELD_ID) as MultichoiceField;
 

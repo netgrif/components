@@ -1,11 +1,13 @@
 import {Component, Inject} from '@angular/core';
 import {
-    DataGroup,
+    DataField,
+    extractFieldValueFromData,
     extractFilterFromData,
     extractIconAndTitle,
     extractSearchTypeFromData,
-    extractFieldValueFromData,
+    FilterExtractionService,
     FilterType,
+    GroupNavigationConstants,
     groupNavigationViewIdSegmentFactory,
     NAE_NAVIGATION_ITEM_TASK_DATA,
     NAE_VIEW_ID_SEGMENT,
@@ -13,9 +15,7 @@ import {
     SearchComponentConfiguration,
     SearchMode,
     TabContent,
-    ViewIdService,
-    FilterExtractionService,
-    GroupNavigationConstants
+    ViewIdService
 } from '@netgrif/components-core';
 import {DefaultTabbedCaseViewComponent} from '../default-tabbed-case-view/default-tabbed-case-view.component';
 import {DefaultTabbedTaskViewComponent} from '../default-tabbed-task-view/default-tabbed-task-view.component';
@@ -36,10 +36,11 @@ export class DefaultTabViewComponent {
 
     tabs: Array<TabContent>;
 
-    constructor(@Inject(NAE_NAVIGATION_ITEM_TASK_DATA) protected _navigationItemTaskData: Array<DataGroup>,
+    constructor(@Inject(NAE_NAVIGATION_ITEM_TASK_DATA) protected _navigationItemTaskData: Array<DataField<any>>,
                 protected translationService: TranslateService,
                 protected extractionService: FilterExtractionService) {
-        const filter = extractFilterFromData(this._navigationItemTaskData);
+        // TODO: release/8.0.0 fix
+        const filter = extractFilterFromData(_navigationItemTaskData);
         this.tabs = this.getTabs(filter.type);
     }
 
@@ -58,7 +59,7 @@ export class DefaultTabViewComponent {
         const labelData = extractIconAndTitle(this._navigationItemTaskData, this.translationService);
 
         const blockNetsString = extractFieldValueFromData<string>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_BANNED_PROCESS_CREATION);
-        const blockNets = blockNetsString === undefined ? [] : blockNetsString.split(',')
+        const blockNets = (!!blockNetsString) ? blockNetsString.split(',') : [];
         const createCaseButtonTitle: string = extractFieldValueFromData<string>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CREATE_CASE_BUTTON_TITLE);
         const createCaseButtonIcon: string = extractFieldValueFromData<string>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CREATE_CASE_BUTTON_ICON);
         const requireTitle: boolean = extractFieldValueFromData<boolean>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_TITLE_IN_CREATION);

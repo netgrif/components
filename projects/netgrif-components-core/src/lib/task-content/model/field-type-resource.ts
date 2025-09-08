@@ -20,5 +20,6 @@ export enum FieldTypeResource {
     CASE_REF = 'CASE_REF',
     FILTER = 'FILTER',
     I18N = 'I18N',
+    I_18_N = 'I_18_N',
     STRING_COLLECTION = 'STRING_COLLECTION'
 }

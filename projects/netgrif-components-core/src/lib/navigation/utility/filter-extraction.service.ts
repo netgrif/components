@@ -1,16 +1,12 @@
 import {Injectable} from '@angular/core';
 import {Filter} from '../../filter/models/filter';
-import {DataGroup} from '../../resources/interface/data-groups';
 import {extractFilterFromFilterField} from './navigation-item-task-utility-methods';
 import {getFieldFromDataGroups, getFieldIndexFromDataGroups} from '../../utility/get-field';
 import {UserFilterConstants} from '../../filter/models/user-filter-constants';
 import {FilterRepository} from '../../filter/filter.repository';
-import {TextField} from '../../data-fields/text-field/models/text-field';
 import {LoggerService} from '../../logger/services/logger.service';
 import {MergeOperator} from '../../filter/models/merge-operator';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
-import {FilterField} from '../../data-fields/filter-field/models/filter-field';
-import {DataField} from '../../data-fields/models/abstract-data-field';
 import {GroupNavigationConstants} from "../model/group-navigation-constants";
 import {AllowedNetsService} from "../../allowed-nets/services/allowed-nets.service";
 import {
@@ -18,6 +14,10 @@ import {
     navigationItemTaskAllowedNetsServiceFactory
 } from "../../allowed-nets/services/factory/allowed-nets-service-factory";
 import {BaseAllowedNetsService} from "../../allowed-nets/services/base-allowed-nets.service";
+import {DataRefResource} from '../../task-content/model/resource-interfaces';
+import {DataField} from '../../data-fields/models/abstract-data-field';
+import {FilterField} from '../../data-fields/filter-field/models/filter-field';
+import {TextField} from '../../data-fields/text-field/models/text-field';
 
 /**
  * This service is able to load the full saved filter including all of its ancestor filters.
@@ -37,28 +37,32 @@ export class FilterExtractionService {
                 protected _log: LoggerService) {
     }
 
-    public extractAdditionalFilterAllowedNets(dataSection: Array<DataGroup>): AllowedNetsService {
-        const taskRefIndex = getFieldIndexFromDataGroups(dataSection, GroupNavigationConstants.ITEM_FIELD_ID_ADDITIONAL_FILTER_TASKREF);
-        if (taskRefIndex === undefined) {
-            return undefined;
-        }
-        const sliced = dataSection.slice(taskRefIndex.dataGroupIndex + 1)
-        if (sliced.length == 0) {
-            return undefined
-        }
-        return navigationItemTaskAllowedNetsServiceFactory(this._factory, this.baseAllowedNets, sliced)
+    public extractAdditionalFilterAllowedNets(dataSection: Array<DataField<any>>): AllowedNetsService {
+        // TODO: release/8.0.0 fix slice index +1
+        // const taskRefIndex = getFieldIndexFromDataGroups(dataSection, GroupNavigationConstants.ITEM_FIELD_ID_ADDITIONAL_FILTER_TASKREF);
+        // if (taskRefIndex === undefined) {
+        //     return undefined;
+        // }
+        // const sliced = dataSection.slice(taskRefIndex + 1)
+        // if (sliced.length == 0) {
+        //     return undefined
+        // }
+        // return navigationItemTaskAllowedNetsServiceFactory(this._factory, this.baseAllowedNets, sliced)
+        return undefined;
     }
 
-    public extractCompleteAdditionalFilterFromData(dataSection: Array<DataGroup>): Filter | undefined {
-        const taskRefIndex = getFieldIndexFromDataGroups(dataSection, GroupNavigationConstants.ITEM_FIELD_ID_ADDITIONAL_FILTER_TASKREF);
-        if (taskRefIndex === undefined) {
-            return undefined;
-        }
-
-        return this.extractCompleteFilterFromData(dataSection.slice(taskRefIndex.dataGroupIndex + 1));
+    public extractCompleteAdditionalFilterFromData(dataSection: Array<DataField<any>>): Filter | undefined {
+        // TODO: release/8.0.0
+        // const taskRefIndex = getFieldIndexFromDataGroups(dataSection, GroupNavigationConstants.ITEM_FIELD_ID_ADDITIONAL_FILTER_TASKREF);
+        // if (taskRefIndex === undefined) {
+        //     return undefined;
+        // }
+        //
+        // return this.extractCompleteFilterFromData(dataSection.slice(taskRefIndex.dataGroupIndex + 1));
+        return undefined;
     }
 
-    public extractCompleteFilterFromData(dataSection: Array<DataGroup>, fieldId: string = UserFilterConstants.FILTER_FIELD_ID): Filter | undefined {
+    public extractCompleteFilterFromData(dataSection: Array<DataField<any>>, fieldId: string = UserFilterConstants.FILTER_FIELD_ID): Filter | undefined {
         const filterIndex = getFieldIndexFromDataGroups(dataSection, fieldId);
 
         if (filterIndex === undefined) {
@@ -67,18 +71,17 @@ export class FilterExtractionService {
 
         let filterSegment: Filter;
         try {
-            filterSegment = extractFilterFromFilterField(
-                dataSection[filterIndex.dataGroupIndex].fields[filterIndex.fieldIndex] as FilterField
-            );
+            filterSegment = extractFilterFromFilterField(dataSection[filterIndex] as FilterField);
         } catch (e) {
             throw new Error('Filter segment could not be extracted from filter field');
         }
 
-        const parentFilter = this.extractCompleteFilterFromData(dataSection.slice(filterIndex.dataGroupIndex + 1));
-
-        if (parentFilter !== undefined && parentFilter.type === filterSegment.type) {
-            return filterSegment.merge(parentFilter, MergeOperator.AND);
-        }
+        // TODO: release/8.0.0 fix
+        // const parentFilter = this.extractCompleteFilterFromData(dataSection.slice(filterIndex + 1));
+        //
+        // if (parentFilter !== undefined && parentFilter.type === filterSegment.type) {
+        //     return filterSegment.merge(parentFilter, MergeOperator.AND);
+        // }
 
         // Is the filter view rooted?
         const rootViewIdField = getFieldFromDataGroups(dataSection, UserFilterConstants.ORIGIN_VIEW_ID_FIELD_ID);

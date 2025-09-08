@@ -19,7 +19,7 @@ import {NAE_TASK_OPERATIONS} from '../../../../task/models/task-operations-injec
 import {TaskDataService} from '../../../../task/services/task-data.service';
 import {AfterAction} from '../../../../utility/call-chain/after-action';
 import {DataSet, TaskDataSets} from '../../../../resources/interface/task-data-sets';
-import {DataFieldResource, DataFieldValue} from '../../../../task-content/model/resource-interfaces';
+import {DataFieldResource} from '../../../../task-content/model/resource-interfaces';
 
 @Component({
     selector: 'ncc-abstract-task-ref-dashboard-tile',
@@ -74,33 +74,23 @@ export abstract class AbstractTaskRefDashboardTileComponent implements OnDestroy
                         fields: {
                             [TaskRefDashboardTileConstants.DASHBOARD_TILE_X]: {
                                 type: FieldTypeResource.NUMBER,
-                                value: {
-                                    value: this.tile.x
-                                } as DataFieldValue
+                                value: this.tile.x
                             } as DataFieldResource,
                             [TaskRefDashboardTileConstants.DASHBOARD_TILE_Y]: {
                                 type: FieldTypeResource.NUMBER,
-                                value: {
-                                    value: this.tile.y
-                                } as DataFieldValue
+                                value: this.tile.y
                             } as DataFieldResource,
                             [TaskRefDashboardTileConstants.DASHBOARD_TILE_ROWS]: {
                                 type: FieldTypeResource.NUMBER,
-                                value: {
-                                    value: this.tile.rows
-                                } as DataFieldValue
+                                value: this.tile.rows
                             } as DataFieldResource,
                             [TaskRefDashboardTileConstants.DASHBOARD_TILE_COLS]: {
                                 type: FieldTypeResource.NUMBER,
-                                value: {
-                                    value: this.tile.cols
-                                } as DataFieldValue
+                                value: this.tile.cols
                             } as DataFieldResource,
                             [TaskRefDashboardTileConstants.DASHBOARD_TILE_PARENT_ID]: {
                                 type: FieldTypeResource.TEXT,
-                                value: {
-                                    value: this._parentTaskContentService.task.caseId
-                                } as DataFieldValue
+                                value: this._parentTaskContentService.task.caseId
                             } as DataFieldResource
                         }
                     } as DataSet
@@ -117,9 +107,7 @@ export abstract class AbstractTaskRefDashboardTileComponent implements OnDestroy
                             fields: {
                                 [TaskRefDashboardConstants.DASHBOARD_TASK_REF]: {
                                     type: FieldTypeResource.TASK_REF,
-                                    value: {
-                                        value: [...this.taskRef.value, _case.tasks[0].taskStringId]
-                                    } as DataFieldValue
+                                    value: [...this.taskRef.value, _case.tasks[0].taskStringId]
                                 } as DataFieldResource
                             }
                         } as DataSet

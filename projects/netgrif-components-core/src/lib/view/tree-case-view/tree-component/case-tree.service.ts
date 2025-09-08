@@ -35,7 +35,7 @@ import {NAE_TREE_CASE_VIEW_CONFIGURATION} from './model/tree-configuration-injec
 import {TreeCaseViewConfiguration} from './model/tree-case-view-configuration';
 import {PaginationParams} from '../../../utility/pagination/pagination-params';
 import {createSortParam, PaginationSort} from '../../../utility/pagination/pagination-sort';
-import {DataFieldResource, DataFieldValue} from '../../../task-content/model/resource-interfaces';
+import {DataFieldResource} from '../../../task-content/model/resource-interfaces';
 import {FieldTypeResource} from '../../../task-content/model/field-type-resource';
 import {DataSet, TaskDataSets} from '../../../resources/interface/task-data-sets';
 
@@ -710,14 +710,12 @@ export class CaseTreeService implements OnDestroy {
                 body.body[task.stringId].fields[TreePetriflowIdentifiers.CHILDREN_CASE_REF] = {} as DataFieldResource
                 body.body[task.stringId].fields[TreePetriflowIdentifiers.CHILDREN_CASE_REF] =  {
                     type: FieldTypeResource.CASE_REF,
-                    value: {
-                        value: newCaseRefValue
-                    } as DataFieldValue
+                    value: newCaseRefValue
                 } as DataFieldResource;
                 this._taskResourceService.setData(task.stringId, body).subscribe((outcomeResource: EventOutcomeMessageResource) => {
                     const changedFields = (outcomeResource.outcome as SetDataEventOutcome).changedFields;
                     const caseRefChanges = changedFields.fields[TreePetriflowIdentifiers.CHILDREN_CASE_REF];
-                    result$.next(caseRefChanges ? caseRefChanges.value.value : undefined);
+                    result$.next(caseRefChanges ? caseRefChanges.value : undefined);
                     result$.complete();
                     this._taskResourceService.finishTask(task.stringId).subscribe(finishResponse => {
                         if (finishResponse.success) {

@@ -1,5 +1,4 @@
 import {GroupNavigationItemLabel} from '../model/group-navigation-item-label';
-import {DataGroup} from '../../resources/interface/data-groups';
 import {getFieldFromDataGroups} from '../../utility/get-field';
 import {GroupNavigationConstants} from '../model/group-navigation-constants';
 import {Filter} from '../../filter/models/filter';
@@ -9,27 +8,29 @@ import {SimpleFilter} from '../../filter/models/simple-filter';
 import {MultichoiceField} from '../../data-fields/multichoice-field/models/multichoice-field';
 import {SearchMode} from "../../search/models/component-configuration/search-mode";
 import {TranslateService} from "@ngx-translate/core";
+import {DataField} from '../../data-fields/models/abstract-data-field';
+import {I18nField} from '../../data-fields/i18n-field/models/i18n-field';
 
 /**
  * Extracts the item name and item icon (if any) rom a section of the navigation item task data.
  * @param dataSection an array containing the data groups that correspond to a single navigation entry
  * @param translateService is a service to translate label name
  */
-export function extractIconAndTitle(dataSection: Array<DataGroup>, translateService: TranslateService): GroupNavigationItemLabel {
+export function extractIconAndTitle(dataSection: Array<DataField<any>>, translateService: TranslateService): GroupNavigationItemLabel {
     const result: GroupNavigationItemLabel = {name: ''};
 
     if (dataSection.length === 0) {
         throw new Error('The provided task data does not belong to a Navigation menu item task. Icon and title cannot be extracted');
     }
 
-    const nameField = getFieldFromDataGroups(dataSection, GroupNavigationConstants.NAVIGATION_ENTRY_TITLE_FIELD_ID_SUFFIX);
+    const nameField = getFieldFromDataGroups(dataSection, GroupNavigationConstants.NAVIGATION_ENTRY_TITLE_FIELD_ID_SUFFIX) as I18nField;
 
     if (nameField === undefined) {
         throw new Error('Navigation name could not be resolved');
     }
 
     const locale = translateService.currentLang.split('-')[0];
-    result.name = locale in nameField.value.translations ? nameField.value.translations[locale] : nameField.value.defaultValue;
+    result.name = nameField.getLocalizedValue(locale);
 
     const useIcon = getFieldFromDataGroups(dataSection, GroupNavigationConstants.NAVIGATION_ENTRY_ICON_ENABLED_FIELD_ID_SUFFIX);
     if (useIcon !== undefined && useIcon.value) {
@@ -50,7 +51,7 @@ export function extractIconAndTitle(dataSection: Array<DataGroup>, translateServ
  * @param roleFieldId ID of field containing banned or allowed role IDs
  * @returns an Array of string values representing role IDs
  */
-export function extractRoles(dataSection: Array<DataGroup>, roleFieldId: string): Array<string> {
+export function extractRoles(dataSection: Array<DataField<any>>, roleFieldId: string): Array<string> {
     if (dataSection.length === 0) {
         throw new Error('The provided task data does not belong to a Navigation menu item task. Role entries cannot be extracted');
     }
@@ -67,7 +68,7 @@ export function extractRoles(dataSection: Array<DataGroup>, roleFieldId: string)
  * Extracts the data and creates a filter object from the navigation item task data.
  * @param dataSection an array containing the data groups that correspond to a single navigation entry
  */
-export function extractFilterFromData(dataSection: Array<DataGroup>): Filter {
+export function extractFilterFromData(dataSection: Array<DataField<any>>): Filter {
     return extractFilterFromFilterField(extractFilterFieldFromData(dataSection));
 }
 
@@ -76,7 +77,7 @@ export function extractFilterFromData(dataSection: Array<DataGroup>): Filter {
  * @param dataSection an array containing the data groups that correspond to a single navigation entry
  * @returns The extracted {@link FilterField} or `undefined` if it could not be extracted.
  */
-export function extractFilterFieldFromData(dataSection: Array<DataGroup>): FilterField | undefined {
+export function extractFilterFieldFromData(dataSection: Array<DataField<any>>): FilterField | undefined {
     const filterField = getFieldFromDataGroups(dataSection, UserFilterConstants.FILTER_FIELD_ID);
 
     if (filterField === undefined || !(filterField instanceof FilterField)) {
@@ -103,7 +104,7 @@ export function extractFilterFromFilterField(filterField: FilterField): Filter {
  * @returns a {@link SearchMode} containing {@link SearchMode.ADVANCED} or {@link SearchMode.FULLTEXT} or {@link undefined}
  * if unexpected value is found
  * */
-export function extractSearchTypeFromData(dataSection: Array<DataGroup>, typeFieldId: string): SearchMode {
+export function extractSearchTypeFromData(dataSection: Array<DataField<any>>, typeFieldId: string): SearchMode {
     const typeField = getFieldFromDataGroups(dataSection, typeFieldId);
     if (typeField === undefined) {
         throw new Error('Navigation entry search type field could not be resolved');
@@ -124,7 +125,7 @@ export function extractSearchTypeFromData(dataSection: Array<DataGroup>, typeFie
  * @returns value of extracted field
  * @throws Error if no field is found
  * */
-export function extractFieldValueFromData<T>(dataSection: Array<DataGroup>, fieldId: string): T {
+export function extractFieldValueFromData<T>(dataSection: Array<DataField<any>>, fieldId: string): T {
     const field = getFieldFromDataGroups(dataSection, fieldId);
     if (field === undefined) {
         throw new Error(`Field ${fieldId} could not be resolved`);

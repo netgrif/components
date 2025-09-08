@@ -3,9 +3,9 @@ import {Category} from '../search/models/category/category';
 import {UserFilterConstants} from '../filter/models/user-filter-constants';
 import {getFieldFromDataGroups} from './get-field';
 import {FilterField} from '../data-fields/filter-field/models/filter-field';
-import {DataGroup} from '../resources/interface/data-groups';
 import {CategoryResolverService} from '../search/category-factory/category-resolver.service';
 import {FilterType} from '../filter/models/filter-type';
+import {DataField} from '../data-fields/models/abstract-data-field';
 
 /**
  * Creates search categories based on the metadata stored in the filter case
@@ -18,7 +18,7 @@ import {FilterType} from '../filter/models/filter-type';
  * field, if the filter metadata allow it and the filter is a task filter
  */
 export function navigationItemTaskCategoryFactory(categoryResolverService: CategoryResolverService,
-                                                  navigationItemTaskData: Array<DataGroup>,
+                                                  navigationItemTaskData: Array<DataField<any>>,
                                                   defaultCaseSearchCategories: Array<Type<Category<any>>>,
                                                   defaultTaskSearchCategories: Array<Type<Category<any>>>): Array<Type<Category<any>>> {
     const filterField = getFieldFromDataGroups(navigationItemTaskData, UserFilterConstants.FILTER_FIELD_ID) as FilterField;
@@ -28,7 +28,6 @@ export function navigationItemTaskCategoryFactory(categoryResolverService: Categ
             `Provided navigation item task data does not contain a filter field with ID '${UserFilterConstants.FILTER_FIELD_ID
             }'! Search categories cannot be generated from it!`);
     }
-
     const merge = new Set();
     const cats = filterField.filterMetadata.searchCategories.map(cat => {
         const category = categoryResolverService.toClass(cat);

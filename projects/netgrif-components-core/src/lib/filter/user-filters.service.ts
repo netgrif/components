@@ -25,13 +25,13 @@ import {SavedFilterMetadata} from '../search/models/persistance/saved-filter-met
 import {FilterMetadata} from '../search/models/persistance/filter-metadata';
 import {CreateCaseEventOutcome} from '../event/model/event-outcomes/case-outcomes/create-case-event-outcome';
 import {CategoryResolverService} from '../search/category-factory/category-resolver.service';
-import {DataGroup} from '../resources/interface/data-groups';
 import {getFieldFromDataGroups} from '../utility/get-field';
 import {EventOutcomeMessageResource} from '../resources/interface/message-resource';
 import {MatDialog} from '@angular/material/dialog';
 import {NAE_LOAD_FILTER_DIALOG_COMPONENT, NAE_SAVE_FILTER_DIALOG_COMPONENT} from '../dialog/injection-tokens';
 import {DataSet, TaskDataSets} from '../resources/interface/task-data-sets';
-import {DataFieldResource, DataFieldValue} from '../task-content/model/resource-interfaces';
+import {DataFieldResource} from '../task-content/model/resource-interfaces';
+import {DataField} from '../data-fields/models/abstract-data-field';
 
 /**
  * Service that manages filters created by users of the application.
@@ -172,10 +172,10 @@ export class UserFiltersService implements OnDestroy {
                 allowedNets: ReadonlyArray<string>,
                 searchCategories: ReadonlyArray<Type<Category<any>>>,
                 viewId?: string,
-                additionalData: DataSet = { fields: {} } as DataSet,
+                additionalData: DataSet = {fields: {}} as DataSet,
                 withDefaultCategories = true,
                 inheritAllowedNets = true,
-                navigationItemTaskData: Array<DataGroup> = null): Observable<SavedFilterMetadata> {
+                navigationItemTaskData: Array<DataField<any>> = null): Observable<SavedFilterMetadata> {
         if (!searchService.additionalFiltersApplied) {
             this._log.warn('The provided SearchService contains no filter besides the base filter. Nothing to save.');
             return of(undefined);
@@ -251,10 +251,10 @@ export class UserFiltersService implements OnDestroy {
                                       allowedNets: ReadonlyArray<string>,
                                       searchCategories: ReadonlyArray<Type<Category<any>>>,
                                       viewId?: string,
-                                      additionalData: DataSet = { fields: {} } as DataSet,
+                                      additionalData: DataSet = {fields: {}} as DataSet,
                                       withDefaultCategories = true,
                                       inheritAllowedNets = true,
-                                      navigationItemTaskData: Array<DataGroup> = null): Observable<string> {
+                                      navigationItemTaskData: Array<DataField<any>> = null): Observable<string> {
         const result = new ReplaySubject<string>(1);
         this.whenInitialized(() => {
             this._caseService.createCase({
@@ -281,15 +281,11 @@ export class UserFiltersService implements OnDestroy {
                             [UserFilterConstants.FILTER_TYPE_FIELD_ID]: {
                                 stringId: UserFilterConstants.FILTER_TYPE_FIELD_ID,
                                 type: FieldTypeResource.ENUMERATION_MAP,
-                                value: {
-                                    value: searchService.filterType
-                                } as DataFieldValue
+                                value: searchService.filterType
                             } as DataFieldResource,
                             [UserFilterConstants.FILTER_FIELD_ID]: {
                                 type: FieldTypeResource.FILTER,
-                                value: {
-                                    value: searchService.rootPredicate.query.value
-                                } as DataFieldValue,
+                                value: searchService.rootPredicate.query.value,
                                 allowedNets,
                                 filterMetadata: this.filterMetadataFromSearchService(
                                     searchService,
@@ -310,16 +306,12 @@ export class UserFiltersService implements OnDestroy {
                     if (parentFilterCaseIdField !== undefined) {
                         requestBody[UserFilterConstants.PARENT_FILTER_CASE_ID_FIELD_ID] = {
                             type: FieldTypeResource.TEXT,
-                            value: {
-                                value: parentFilterCaseIdField.value
-                            } as DataFieldValue
+                            value: parentFilterCaseIdField.value
                         } as DataFieldResource;
                     } else if (viewId !== undefined || viewId !== '') {
                         requestBody[UserFilterConstants.ORIGIN_VIEW_ID_FIELD_ID] = {
                             type: FieldTypeResource.TEXT,
-                            value: {
-                                value: viewId
-                            } as DataFieldValue
+                            value: viewId
                         } as DataFieldResource;
                     }
 

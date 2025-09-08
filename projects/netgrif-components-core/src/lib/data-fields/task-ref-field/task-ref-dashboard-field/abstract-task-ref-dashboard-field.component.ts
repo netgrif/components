@@ -62,51 +62,50 @@ export abstract class AbstractTaskRefDashboardFieldComponent extends AbstractBas
         const result: TaskRefDashboardTile = {
             dataGroups: tile.dataGroups
         };
-
-        for (const dg of tile.dataGroups) {
-            for (const field of dg.fields) {
-                switch (field.stringId) {
-                    case TaskRefDashboardTileConstants.DASHBOARD_TILE_X:
-                        result.x = field.value;
-                        break;
-                    case TaskRefDashboardTileConstants.DASHBOARD_TILE_Y:
-                        result.y = field.value;
-                        break;
-                    case TaskRefDashboardTileConstants.DASHBOARD_TILE_ROWS:
-                        result.rows = field.value;
-                        break;
-                    case TaskRefDashboardTileConstants.DASHBOARD_TILE_COLS:
-                        result.cols = field.value;
-                        break;
-
-                }
-            }
-        }
-
-        if (result.x === undefined) {
-            if (tile.dataGroups.length > 0) {
-                this._logger.error(`Task ref dashboard tile from task '${tile.dataGroups[0].parentTaskId}' transition '${tile.dataGroups[0].parentTransitionId}' case '${tile.dataGroups[0].parentCaseId}' does not specify tile grid X coordinate! Add a number field with ID '${TaskRefDashboardTileConstants.DASHBOARD_TILE_X}' to the referenced task to specify it.`);
-            }
-            result.x = 0;
-        }
-        if (result.y === undefined) {
-            if (tile.dataGroups.length > 0) {
-                this._logger.error(`Task ref dashboard tile from task '${tile.dataGroups[0].parentTaskId}' transition '${tile.dataGroups[0].parentTransitionId}' case '${tile.dataGroups[0].parentCaseId}' does not specify tile grid Y coordinate! Add a number field with ID '${TaskRefDashboardTileConstants.DASHBOARD_TILE_Y}' to the referenced task to specify it.`);
-            }
-            result.y = 0;
-        }
-        if (result.rows === undefined) {
-            if (tile.dataGroups.length > 0) {
-                this._logger.error(`Task ref dashboard tile from task '${tile.dataGroups[0].parentTaskId}' transition '${tile.dataGroups[0].parentTransitionId}' case '${tile.dataGroups[0].parentCaseId}' does not specify tile height coordinate! Add a number field with ID '${TaskRefDashboardTileConstants.DASHBOARD_TILE_ROWS}' to the referenced task to specify it.`);
-            }
-            result.rows = 1;
-        }
-        if (result.cols === undefined) {
-            if (tile.dataGroups.length > 0) {
-                this._logger.error(`Task ref dashboard tile from task '${tile.dataGroups[0].parentTaskId}' transition '${tile.dataGroups[0].parentTransitionId}' case '${tile.dataGroups[0].parentCaseId}' does not specify tile width coordinate! Add a number field with ID '${TaskRefDashboardTileConstants.DASHBOARD_TILE_COLS}' to the referenced task to specify it.`);
-            }
-            result.cols = 1;
-        }
+// TODO: release/8.0.0 fix
+        // for (const dg of tile.dataGroups) {
+        //     for (const field of dg.fields) {
+        //         switch (field.stringId) {
+        //             case TaskRefDashboardTileConstants.DASHBOARD_TILE_X:
+        //                 result.x = field.value;
+        //                 break;
+        //             case TaskRefDashboardTileConstants.DASHBOARD_TILE_Y:
+        //                 result.y = field.value;
+        //                 break;
+        //             case TaskRefDashboardTileConstants.DASHBOARD_TILE_ROWS:
+        //                 result.rows = field.value;
+        //                 break;
+        //             case TaskRefDashboardTileConstants.DASHBOARD_TILE_COLS:
+        //                 result.cols = field.value;
+        //                 break;
+        //
+        //         }
+        //     }
+        // }
+        // if (result.x === undefined) {
+        //     if (tile.dataGroups.length > 0) {
+        //         this._logger.error(`Task ref dashboard tile from task '${tile.dataGroups[0].parentTaskId}' transition '${tile.dataGroups[0].parentTransitionId}' case '${tile.dataGroups[0].parentCaseId}' does not specify tile grid X coordinate! Add a number field with ID '${TaskRefDashboardTileConstants.DASHBOARD_TILE_X}' to the referenced task to specify it.`);
+        //     }
+        //     result.x = 0;
+        // }
+        // if (result.y === undefined) {
+        //     if (tile.dataGroups.length > 0) {
+        //         this._logger.error(`Task ref dashboard tile from task '${tile.dataGroups[0].parentTaskId}' transition '${tile.dataGroups[0].parentTransitionId}' case '${tile.dataGroups[0].parentCaseId}' does not specify tile grid Y coordinate! Add a number field with ID '${TaskRefDashboardTileConstants.DASHBOARD_TILE_Y}' to the referenced task to specify it.`);
+        //     }
+        //     result.y = 0;
+        // }
+        // if (result.rows === undefined) {
+        //     if (tile.dataGroups.length > 0) {
+        //         this._logger.error(`Task ref dashboard tile from task '${tile.dataGroups[0].parentTaskId}' transition '${tile.dataGroups[0].parentTransitionId}' case '${tile.dataGroups[0].parentCaseId}' does not specify tile height coordinate! Add a number field with ID '${TaskRefDashboardTileConstants.DASHBOARD_TILE_ROWS}' to the referenced task to specify it.`);
+        //     }
+        //     result.rows = 1;
+        // }
+        // if (result.cols === undefined) {
+        //     if (tile.dataGroups.length > 0) {
+        //         this._logger.error(`Task ref dashboard tile from task '${tile.dataGroups[0].parentTaskId}' transition '${tile.dataGroups[0].parentTransitionId}' case '${tile.dataGroups[0].parentCaseId}' does not specify tile width coordinate! Add a number field with ID '${TaskRefDashboardTileConstants.DASHBOARD_TILE_COLS}' to the referenced task to specify it.`);
+        //     }
+        //     result.cols = 1;
+        // }
 
         return result;
     }
@@ -122,7 +121,8 @@ export abstract class AbstractTaskRefDashboardFieldComponent extends AbstractBas
 
     protected createEmptyDashboardTile(x: number, y: number): TaskRefDashboardTile {
         return {
-            dataGroups: [],
+            // TODO: release/8.0.0
+            dataGroups: undefined,
             x,
             y,
             rows: 1,

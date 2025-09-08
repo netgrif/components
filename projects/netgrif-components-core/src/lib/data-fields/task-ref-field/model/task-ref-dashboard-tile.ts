@@ -1,7 +1,7 @@
-import {DataGroup} from '../../../resources/interface/data-groups';
+import {LayoutContainer} from '../../../resources/interface/layout-container';
 
 export interface TaskRefDashboardTile {
-    dataGroups: Array<DataGroup>
+    dataGroups: LayoutContainer;
     x?: number;
     y?: number;
     rows?: number;

@@ -7,7 +7,6 @@ import {
     CaseViewService,
     CategoryFactory,
     DataFieldResource,
-    DataFieldValue,
     DataSet,
     defaultCaseSearchCategoriesFactory,
     FieldTypeResource,
@@ -71,9 +70,7 @@ export class CaseViewComponent extends AbstractCaseViewComponent {
                 {
                     [UserFilterConstants.ORIGIN_VIEW_ID_FIELD_ID]: {
                         type: FieldTypeResource.TEXT,
-                        value: {
-                            value: 'override'
-                        } as DataFieldValue
+                        value: 'override'
                     } as DataFieldResource
                 }
         } as DataSet;

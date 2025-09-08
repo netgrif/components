@@ -37,7 +37,6 @@ import {FrontActionService} from "../../actions/services/front-action.service";
 import {DataSet, TaskDataSets} from '../../resources/interface/task-data-sets';
 import {
     DataFieldResource,
-    DataFieldValue,
     LayoutContainerResource,
     LayoutItemResource
 } from '../../task-content/model/resource-interfaces';
@@ -397,9 +396,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
     protected addFieldToSetDataRequestBody(context: TaskSetDataRequestContext, taskId: string, field: DataField<any>): void {
         context.body.body[taskId].fields[field.stringId] = {
             type: this._fieldConverterService.resolveType(field),
-            value: {
-                value: this._fieldConverterService.formatValueForBackend(field, field.value)
-            } as DataFieldValue
+            value: this._fieldConverterService.formatValueForBackend(field, field.value)
         } as DataFieldResource;
         context.previousValues[field.stringId] = field.previousValue;
         field.changed = false;

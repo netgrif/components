@@ -490,7 +490,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
             access: {},
             navigation: {
                 icon: itemCase.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_MENU_ICON)?.value || this.filterIcon,
-                title: this.getTranslation(itemCase.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_MENU_NAME)?.value) || itemCase.title,
+                title: itemCase.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_MENU_NAME)?.value || itemCase.title,
             },
             routing: {
                 path: this.getItemRoutingPath(itemCase),
@@ -530,8 +530,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     }
 
     protected getItemRoutingPath(itemCase: Case) {
-        const transId = SETTINGS_TRANSITION_ID;
-        const taskId = itemCase.tasks.find(taskPair => taskPair.transitionId === transId).taskStringId;
+        const taskId = itemCase.tasks[SETTINGS_TRANSITION_ID].taskStringId;
         const url = this._dynamicRoutingService.route;
         return `/${url}/${taskId}`;
     }

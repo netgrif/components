@@ -2,7 +2,9 @@ import {SearchService} from '../search-service/search.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {DialogService} from '../../dialog/services/dialog.service';
 import {TranslateService} from '@ngx-translate/core';
-import {NAE_SEARCH_COMPONENT_CONFIGURATION} from '../models/component-configuration/search-component-configuration-injection-token';
+import {
+    NAE_SEARCH_COMPONENT_CONFIGURATION
+} from '../models/component-configuration/search-component-configuration-injection-token';
 import {Component, EventEmitter, Inject, Input, OnInit, Optional, Output, Type} from '@angular/core';
 import {SearchComponentConfiguration} from '../models/component-configuration/search-component-configuration';
 import {SearchMode} from '../models/component-configuration/search-mode';
@@ -15,8 +17,8 @@ import {ViewIdService} from '../../identity/services/view-id.service';
 import {NAE_FILTERS_FILTER} from '../../filter/models/filters-filter-injection-token';
 import {Filter} from '../../filter/models/filter';
 import {NAE_NAVIGATION_ITEM_TASK_DATA} from '../../navigation/model/filter-case-injection-token';
-import {DataGroup} from '../../resources/interface/data-groups';
 import {DataSet} from '../../resources/interface/task-data-sets';
+import {DataField} from '../../data-fields/models/abstract-data-field';
 
 /**
  * A universal search component that can be used to interactively create search predicates for anything with supported categories.
@@ -51,7 +53,7 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
      * Set data request body, that is sent to the filter in addition to the default body.
      * The default body is applied first and can be overridden by this argument.
      */
-    @Input() additionalFilterData: DataSet = { fields: {} } as DataSet;
+    @Input() additionalFilterData: DataSet = {fields: {}} as DataSet;
 
     /**
      * The emitted data contains the filter case object
@@ -72,7 +74,7 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
                           @Inject(NAE_SEARCH_CATEGORIES) protected _searchCategories: Array<Type<Category<any>>>,
                           @Optional() @Inject(NAE_SEARCH_COMPONENT_CONFIGURATION) protected _configuration: SearchComponentConfiguration,
                           @Optional() @Inject(NAE_FILTERS_FILTER) protected _filtersFilter: Filter = null,
-                          @Optional() @Inject(NAE_NAVIGATION_ITEM_TASK_DATA) protected _navigationItemTaskData: Array<DataGroup> = null) {
+                          @Optional() @Inject(NAE_NAVIGATION_ITEM_TASK_DATA) protected _navigationItemTaskData: Array<DataField<any>> = null) {
         if (this._configuration === null) {
             this._configuration = {};
         }
@@ -161,9 +163,9 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
             this._configuration.saveFilterWithDefaultCategories ?? true,
             this._configuration.inheritAllowedNets ?? true,
             this._navigationItemTaskData).subscribe(savedFilterData => {
-                if (savedFilterData) {
-                    this.filterSaved.emit(savedFilterData);
-                }
+            if (savedFilterData) {
+                this.filterSaved.emit(savedFilterData);
+            }
         });
     }
 

@@ -1,4 +1,5 @@
 import {FrontAction} from "../../data-fields/models/changed-fields";
+import {LayoutContainerResource} from '../../task-content/model/resource-interfaces';
 
 export interface EventOutcome {
     /**
@@ -15,4 +16,9 @@ export interface EventOutcome {
      * Array of front actions
      */
     frontActions?: Array<FrontAction>;
+
+    /**
+     * Task layout
+     */
+    layout?: LayoutContainerResource;
 }

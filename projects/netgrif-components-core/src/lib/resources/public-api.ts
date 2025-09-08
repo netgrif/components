@@ -20,7 +20,6 @@ export * from './interface/message-resource';
 export * from './interface/task';
 export * from './interface/count';
 export * from './interface/petri-net-object-id';
-export * from './interface/data-groups';
 export * from './interface/petri-net-reference';
 export * from './interface/fields';
 export * from './interface/authority';

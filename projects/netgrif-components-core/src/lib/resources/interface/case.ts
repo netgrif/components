@@ -116,7 +116,7 @@ export interface Case {
     /**
      * Set of TaskPair
      * */
-    tasks?: Array<TaskPair>;
+    tasks?: Map<string, TaskPair>;
 }
 
 

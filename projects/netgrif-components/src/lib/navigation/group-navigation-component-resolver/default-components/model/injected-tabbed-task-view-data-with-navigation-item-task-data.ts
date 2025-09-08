@@ -1,5 +1,5 @@
 import {
-    DataGroup,
+    DataField,
     InjectedTabbedTaskViewData,
     SearchComponentConfiguration
 } from '@netgrif/components-core';
@@ -10,7 +10,7 @@ import {
  * It is used to resolve filter and visual attributes of dynamic navigation views
  */
 export interface InjectedTabbedTaskViewDataWithNavigationItemTaskData extends InjectedTabbedTaskViewData {
-    navigationItemTaskData: Array<DataGroup>;
+    navigationItemTaskData: Array<DataField<any>>;
     searchTypeConfiguration: SearchComponentConfiguration;
     showMoreMenu: boolean,
     headersChangeable: boolean;

@@ -19,10 +19,6 @@ export interface DataRefResource {
     parentCaseId: string;
 }
 
-export interface DataFieldValue {
-    value: any;
-}
-
 export interface DataFieldResource {
     stringId: string;
     type: FieldTypeResource;
@@ -30,7 +26,7 @@ export interface DataFieldResource {
     description?: string;
     placeholder?: string;
     behavior?: Behavior;
-    value?: DataFieldValue;
+    value?: any;
     defaultValue?: unknown;
     choices?: Array<string>;
     minValue?: number;

@@ -186,4 +186,14 @@ export class I18nField extends DataField<I18nFieldValue> {
         return (fc.value.defaultValue === '' && !!fc.value?.translations && Object.keys(fc.value.translations).length === 0)
             ? ({requiredI18n: true}) : null;
     }
+
+    public getLocalizedValue(locale: string): string {
+        if (this.value === undefined) {
+            return '';
+        }
+        if (this.value.translations === undefined) {
+            return this.value.defaultValue;
+        }
+        return locale in this.value.translations ? this.value.translations[locale] : this.value.defaultValue;
+    }
 }

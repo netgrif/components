@@ -1,6 +1,6 @@
 import {
+    DataField,
     InjectedTabbedCaseViewData,
-    DataGroup,
     NewCaseCreationConfigurationData,
     SearchComponentConfiguration,
     SimpleFilter
@@ -12,7 +12,7 @@ import {
  * It is used to resolve filter and visual attributes of dynamic navigation views
  */
 export interface InjectedTabbedCaseViewDataWithNavigationItemTaskData extends InjectedTabbedCaseViewData {
-    navigationItemTaskData: Array<DataGroup>;
+    navigationItemTaskData: Array<DataField<any>>;
 
     newCaseButtonConfiguration: NewCaseCreationConfigurationData;
     caseViewSearchTypeConfiguration: SearchComponentConfiguration;

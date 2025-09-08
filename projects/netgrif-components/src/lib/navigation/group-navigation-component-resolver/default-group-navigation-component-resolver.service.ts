@@ -1,17 +1,18 @@
 import {Injectable, Type} from '@angular/core';
 import {
-    DataGroup,
+    ConfigurationService,
+    DataField,
+    extractFieldValueFromData,
     extractFilterFromData,
+    FieldConverterService,
     FilterType,
     GroupNavigationComponentResolverService,
+    GroupNavigationConstants,
     LoggerService,
-    TaskResourceService,
-    ConfigurationService,
-    View,
-    ViewService,
-    extractFieldValueFromData,
     RoutingBuilderService,
-    GroupNavigationConstants
+    TaskResourceService,
+    View,
+    ViewService
 } from '@netgrif/components-core';
 import {DefaultTabViewComponent} from './default-components/default-tab-view/default-tab-view.component';
 import {
@@ -21,11 +22,18 @@ import {
 @Injectable()
 export class DefaultGroupNavigationComponentResolverService extends GroupNavigationComponentResolverService {
 
-    constructor(taskResourceService: TaskResourceService, log: LoggerService, private _configService: ConfigurationService, private _viewService: ViewService,) {
-        super(taskResourceService, log);
+    constructor(
+        taskResourceService: TaskResourceService,
+        log: LoggerService,
+        fieldConverterService: FieldConverterService,
+        private _configService: ConfigurationService,
+        private _viewService: ViewService
+    ) {
+        super(taskResourceService, log, fieldConverterService);
     }
 
-    public resolveViewComponent(navItemData: Array<DataGroup>): Type<any> {
+    public resolveViewComponent(navItemData: Array<DataField<any>>): Type<any> {
+        // TODO: release/8.0.0 fix
         const useCustomRouting = extractFieldValueFromData<boolean>(navItemData, 'use_custom_view');
         if (useCustomRouting) {
             return this.resolveCustomComponent(navItemData);
@@ -34,7 +42,7 @@ export class DefaultGroupNavigationComponentResolverService extends GroupNavigat
         }
     }
 
-    protected resolveCustomComponent(navItemData: Array<DataGroup>): Type<any> {
+    protected resolveCustomComponent(navItemData: Array<DataField<any>>): Type<any> {
         const customSelector = extractFieldValueFromData<string>(navItemData, 'custom_view_selector');
         for (const [pathSegment, view] of Object.entries(this._configService.get().views)) {
             if (pathSegment === customSelector) {
@@ -63,7 +71,7 @@ export class DefaultGroupNavigationComponentResolverService extends GroupNavigat
         return this._viewService.resolveNameToClass(className);
     }
 
-    protected resolveDefaultComponent(navItemData: Array<DataGroup>): Type<any> {
+    protected resolveDefaultComponent(navItemData: Array<DataField<any>>): Type<any> {
         const filterTaskRefValue = extractFieldValueFromData<string[]>(navItemData, GroupNavigationConstants.ITEM_FIELD_ID_FILTER_TASKREF);
         if (filterTaskRefValue == undefined || filterTaskRefValue.length == 0) {
             return DefaultNoFilterProvidedComponent

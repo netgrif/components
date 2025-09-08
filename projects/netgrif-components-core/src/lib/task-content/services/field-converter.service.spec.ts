@@ -104,11 +104,11 @@ describe('FieldConvertorService', () => {
         expect(service.resolveType(service.toClass(dataRef))).toEqual('BOOLEAN');
 
         dataRef.field.type = FieldTypeResource.TEXT;
-        dataRef.field.value.value  = 'string' as any;
+        dataRef.field.value  = 'string' as any;
         expect(service.resolveType(service.toClass(dataRef))).toEqual('TEXT');
 
         dataRef.field.type = FieldTypeResource.NUMBER;
-        dataRef.field.value.value  = 5 as any;
+        dataRef.field.value  = 5 as any;
         expect(service.resolveType(service.toClass(dataRef))).toEqual('NUMBER');
 
         dataRef.field.type = FieldTypeResource.ENUMERATION;
@@ -125,15 +125,15 @@ describe('FieldConvertorService', () => {
         expect(service.resolveType(service.toClass(dataRef))).toEqual('MULTICHOICE');
 
         dataRef.field.type = FieldTypeResource.DATE;
-        dataRef.field.value.value  = [2020, 3, 3] as any;
+        dataRef.field.value  = [2020, 3, 3] as any;
         expect(service.resolveType(service.toClass(dataRef))).toEqual('DATE');
 
         dataRef.field.type = FieldTypeResource.DATE_TIME;
-        dataRef.field.value.value  = [2020, 3, 3, 3, 30] as any;
+        dataRef.field.value  = [2020, 3, 3, 3, 30] as any;
         expect(service.resolveType(service.toClass(dataRef))).toEqual('DATE_TIME');
 
         dataRef.field.type = FieldTypeResource.USER;
-        dataRef.field.value.value  = {id: 5, name: 'name', surname: 'surname', email: 'mail'} as any;
+        dataRef.field.value  = {id: 5, name: 'name', surname: 'surname', email: 'mail'} as any;
         expect(service.resolveType(service.toClass(dataRef))).toEqual('USER');
 
         dataRef.field.type = FieldTypeResource.BUTTON;
@@ -141,11 +141,11 @@ describe('FieldConvertorService', () => {
         expect(service.resolveType(service.toClass(dataRef))).toEqual('BUTTON');
 
         dataRef.field.type = FieldTypeResource.FILE;
-        dataRef.field.value.value = undefined;
+        dataRef.field.value = undefined;
         expect(service.resolveType(service.toClass(dataRef))).toEqual('FILE');
 
         dataRef.field.type = FieldTypeResource.FILE_LIST;
-        dataRef.field.value.value  = undefined;
+        dataRef.field.value  = undefined;
         expect(service.resolveType(service.toClass(dataRef))).toEqual('FILE_LIST');
     });
 

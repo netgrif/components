@@ -35,7 +35,7 @@ import {AssignTaskEventOutcome} from '../../../event/model/event-outcomes/task-o
 import {CreateCaseEventOutcome} from '../../../event/model/event-outcomes/case-outcomes/create-case-event-outcome';
 import {createMockNet} from '../../../utility/tests/utility/create-mock-net';
 import {DataSet, TaskDataSets} from '../../../resources/interface/task-data-sets';
-import {DataFieldResource, DataFieldValue} from '../../../task-content/model/resource-interfaces';
+import {DataFieldResource} from '../../../task-content/model/resource-interfaces';
 
 
 class MockTreeNode {
@@ -365,9 +365,7 @@ describe('CaseTreeService', () => {
         getImmediateData(caseResourceMock.mockCases.get('root'), TreePetriflowIdentifiers.CHILDREN_CASE_REF).value = [];
         taskResourceMock.changeNext = {fields: {}} as DataSet;
         taskResourceMock.changeNext.fields[TreePetriflowIdentifiers.CHILDREN_CASE_REF] = {
-            value: {
-                value: [subtreeToAdd.stringId, secondSubtree.stringId]
-            } as DataFieldValue
+            value: [subtreeToAdd.stringId, secondSubtree.stringId]
         } as DataFieldResource;
 
         treeService.treeRootLoaded$.subscribe(loaded => {
