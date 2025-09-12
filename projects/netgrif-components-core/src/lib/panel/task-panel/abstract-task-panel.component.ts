@@ -71,6 +71,7 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
     @Input() public first: boolean;
     @Input() public last: boolean;
     @Input() responsiveBody = true;
+    @Input() preventExpand = false;
     @Input() preventCollapse = false;
     @Input() hidePanelHeader = false;
     @Input() hideActionRow = false;
@@ -166,7 +167,9 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
             });
         });
         _taskOperations.open$.subscribe(() => {
-            this.expand();
+            if (!this.preventExpand) {
+                this.expand();
+            }
         });
         _taskOperations.close$.subscribe(() => {
             if (!(this._taskForceOpen || this.preventCollapse)) {
@@ -221,9 +224,11 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
 
     ngAfterViewInit() {
         this.panelRef.opened.subscribe(() => {
-            this._taskContentService.expansionStarted();
-            if (!this._taskState.isLoading()) {
-                this._assignPolicyService.performAssignPolicy(true);
+            if (!this.preventExpand) {
+                this._taskContentService.expansionStarted();
+                if (!this._taskState.isLoading()) {
+                    this._assignPolicyService.performAssignPolicy(true);
+                }
             }
         });
         this.panelRef.closed.subscribe(() => {
@@ -242,7 +247,7 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
             this._taskPanelData.initiallyExpanded = false;
         });
 
-        if (this._taskPanelData.initiallyExpanded || this._taskForceOpen) {
+        if ((this._taskPanelData.initiallyExpanded || this._taskForceOpen) && !this.preventExpand) {
             this.panelRef.expanded = true;
         }
     }
