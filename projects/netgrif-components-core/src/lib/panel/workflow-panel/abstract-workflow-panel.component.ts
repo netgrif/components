@@ -17,8 +17,6 @@ import {FeaturedValue} from '../abstract/featured-value';
 import {PetriNetResourceService} from '../../resources/engine-endpoint/petri-net-resource.service';
 import {ProgressType, ProviderProgress} from '../../resources/resource-provider.service';
 import {OverflowService} from '../../header/services/overflow.service';
-import {resolveI18n} from '../../resources/interface/i18n-string';
-
 
 export interface WorkflowPanelContent {
     netIdentifier: TextField;
@@ -135,7 +133,7 @@ export abstract class AbstractWorkflowPanelComponent extends AbstractPanelWithHe
             netIdentifier: new TextField('', this._translate.instant(this.TRANSLATION_NET),
                 this.workflow.identifier, this.dataFieldsBehaviour),
             title: new TextField('', this._translate.instant(this.TRANSLATION_TITLE),
-                resolveI18n(this.workflow.title), this.dataFieldsBehaviour),
+                this.workflow.title, this.dataFieldsBehaviour),
             version: new TextField('', this._translate.instant(this.TRANSLATION_VERSION),
                 this.workflow.version, this.dataFieldsBehaviour),
             author: new TextField('', this._translate.instant(this.TRANSLATION_AUTHOR),
@@ -161,7 +159,7 @@ export abstract class AbstractWorkflowPanelComponent extends AbstractPanelWithHe
             case WorkflowMetaField.INITIALS:
                 return {value: this.workflow.initials, icon: '', type: 'meta'};
             case WorkflowMetaField.TITLE:
-                return {value: resolveI18n(this.workflow.title) || this.workflow.identifier, icon: '', type: 'meta'};
+                return {value: this.workflow.title || this.workflow.identifier, icon: '', type: 'meta'};
             case WorkflowMetaField.NET_ID:
                 return {value: this.workflow.stringId, icon: '', type: 'meta'};
             case WorkflowMetaField.VERSION:
