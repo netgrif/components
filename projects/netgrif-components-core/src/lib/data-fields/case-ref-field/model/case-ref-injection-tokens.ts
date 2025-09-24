@@ -7,5 +7,5 @@ export const NAE_CASE_REF_DATAFIELD = new InjectionToken<CaseRefField>('NaeCaseR
 export const NAE_CLICKABLE_CASES = new InjectionToken<boolean>('NaeClickableCases');
 export const NAE_OPEN_SINGLE_TASK = new InjectionToken<boolean>('NaeOpenSingleTask');
 export const NAE_SINGLE_TASK_QUERY = new InjectionToken<string>('NaeSingleTaskQuery');
-export const NAE_DATAFIELD_ALLOWED_NETS = new InjectionToken<boolean>('NaeDatafieldAllowedNets');
+export const NAE_DATAFIELD_ALLOWED_NETS = new InjectionToken<string[]>('NaeDatafieldAllowedNets');
 
