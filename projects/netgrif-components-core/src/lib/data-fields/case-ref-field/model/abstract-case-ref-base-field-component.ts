@@ -17,6 +17,7 @@ import {BaseFilter} from '../../../search/models/base-filter';
 import {NAE_VIEW_ID_SEGMENT} from '../../../user/models/view-id-injection-tokens';
 import {ViewIdService} from '../../../user/services/view-id.service';
 import {DataField} from '../../models/abstract-data-field';
+import {TaskSearchRequestBody} from "../../../filter/models/task-search-request-body";
 
 export abstract class AbstractCaseRefBaseFieldComponent<T extends DataField<unknown>> extends AbstractBaseDataFieldComponent<T> {
 
@@ -33,7 +34,12 @@ export abstract class AbstractCaseRefBaseFieldComponent<T extends DataField<unkn
         const filterProperty: boolean = this.dataField?.component?.properties?.filter === 'true';
         let query: CaseSearchRequestBody;
         if (filterProperty) {
-            query = JSON.parse(this.dataField?.component?.properties?.filterQuery) as CaseSearchRequestBody;
+            try {
+                query = JSON.parse(this.dataField?.component?.properties?.filterQuery) as TaskSearchRequestBody;
+            } catch {
+                console.warn('Invalid filterQuery JSON on CaseRef field or component ', this.dataField?.stringId);
+                query = undefined;
+            }
         }
         let providers = [
             {

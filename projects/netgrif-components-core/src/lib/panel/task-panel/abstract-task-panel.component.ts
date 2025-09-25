@@ -328,6 +328,7 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
     }
 
     expand() {
+        if (this.preventExpand) { return; }
         this.panelRef.open();
         this.panelRef.expanded = true;
     }

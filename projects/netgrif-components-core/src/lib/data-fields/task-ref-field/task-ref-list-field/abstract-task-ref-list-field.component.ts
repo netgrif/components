@@ -49,7 +49,12 @@ export abstract class AbstractTaskRefListFieldComponent extends AbstractBaseData
         const filterProperty: boolean = this.dataField?.component?.properties?.filter === 'true';
         let query: TaskSearchRequestBody;
         if (filterProperty) {
-            query = JSON.parse(this.dataField?.component?.properties?.filterQuery) as TaskSearchRequestBody;
+            try {
+                query = JSON.parse(this.dataField?.component?.properties?.filterQuery) as TaskSearchRequestBody;
+            } catch {
+                console.warn('Invalid filterQuery JSON on TaskRef field ', this.dataField?.stringId);
+                query = undefined;
+            }
         }
         let providers = [
             {
@@ -89,6 +94,8 @@ export abstract class AbstractTaskRefListFieldComponent extends AbstractBaseData
         if (this._sub) {
             this._sub.unsubscribe();
         }
-        this._subComp.unsubscribe()
+        if (this._subComp) {
+            this._subComp.unsubscribe()
+        }
     }
 }

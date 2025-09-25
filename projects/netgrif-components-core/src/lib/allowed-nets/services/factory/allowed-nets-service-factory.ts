@@ -16,9 +16,9 @@ import {DataGroup} from '../../../resources/public-api';
 import {getFieldFromDataGroups} from '../../../utility/get-field';
 import {FilterField} from '../../../data-fields/filter-field/models/filter-field';
 import {BaseAllowedNetsService} from '../base-allowed-nets.service';
-import {MultichoiceField} from "../../../data-fields/multichoice-field/models/multichoice-field";
-import {HttpParams} from "@angular/common/http";
-import {PaginationParams} from "../../../utility/pagination/pagination-params";
+import {MultichoiceField} from '../../../data-fields/multichoice-field/models/multichoice-field';
+import {HttpParams} from '@angular/common/http';
+import {PaginationParams} from '../../../utility/pagination/pagination-params';
 
 function addAllowedNets(allowedNets, existingAllowedNets) {
     if (!!allowedNets && allowedNets.length > 0) {

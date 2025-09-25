@@ -54,14 +54,14 @@ export class DefaultTaskViewComponent extends AbstractTaskViewComponent implemen
 
     constructor(taskViewService: TaskViewService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) protected _dataFieldPortalData: DataFieldPortalData<TaskRefField>,
-                @Optional() @Inject(NAE_CLICKABLE_TASKS) protected _clickableTasks: boolean = true,
+                @Optional() @Inject(NAE_CLICKABLE_TASKS) public clickableTasks: boolean = true,
                 @Optional() @Inject(NAE_DEFAULT_HEADERS) protected _taskHeaders: string[]) {
         super(taskViewService);
         this.taskHeadersCount = this._taskHeaders?.length;
     }
 
     public disabled(): boolean {
-        return this._dataFieldPortalData?.dataField?.formControlRef.disabled;
+        return this._dataFieldPortalData?.dataField?.formControlRef?.disabled;
     }
 
     ngAfterViewInit(): void {

@@ -27,11 +27,7 @@ import {
     NAE_DATAFIELD_ALLOWED_NETS,
     NAE_DEFAULT_HEADERS,
     NAE_CLICKABLE_CASES,
-    SavedFilterMetadata,
-    MergeOperator,
     Filter,
-    NAE_BASE_FILTER,
-    BaseFilter,
     NAE_OPEN_SINGLE_TASK,
     NAE_SINGLE_TASK_QUERY
 } from '@netgrif/components-core';
@@ -45,7 +41,11 @@ import {
 } from "../../tabbed/default-tabbed-single-task-view/default-tabbed-single-task-view.component";
 
 const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory, allowedNets: Array<string>) => {
-    return factory.createFromArray(allowedNets);
+    if (allowedNets?.length > 0) {
+        return factory.createFromArray(allowedNets);
+    } else {
+        return factory.createWithAllNets();
+    }
 };
 
 @Component({
