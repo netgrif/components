@@ -5,7 +5,12 @@ import {ComponentPortal} from '@angular/cdk/portal';
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from '../../models/data-field-portal-data-injection-token';
 import {CaseSearchRequestBody} from '../../../filter/models/case-search-request-body';
 import {NAE_DEFAULT_HEADERS} from '../../../header/models/default-headers-token';
-import {NAE_CASE_REF_CREATE_CASE, NAE_CASE_REF_DATAFIELD, NAE_CASE_REF_SEARCH} from './case-ref-injection-tokens';
+import {
+    NAE_CASE_REF_CREATE_CASE,
+    NAE_CASE_REF_DATAFIELD,
+    NAE_CASE_REF_SEARCH, NAE_CLICKABLE_CASES, NAE_DATAFIELD_ALLOWED_NETS, NAE_OPEN_SINGLE_TASK,
+    NAE_SINGLE_TASK_QUERY
+} from './case-ref-injection-tokens';
 import {NAE_BASE_FILTER} from '../../../search/models/base-filter-injection-token';
 import {SimpleFilter} from '../../../filter/models/simple-filter';
 import {BaseFilter} from '../../../search/models/base-filter';
@@ -28,17 +33,43 @@ export abstract class AbstractCaseRefBaseFieldComponent<T extends DataField<unkn
         const filterProperty: boolean = this.dataField?.component?.properties?.filter === 'true';
         let query: CaseSearchRequestBody;
         if (filterProperty) {
-            query = JSON.parse(this.dataField?.component?.properties?.filterQuery) as CaseSearchRequestBody;
+            try {
+                query = JSON.parse(this.dataField?.component?.properties?.filterQuery) as CaseSearchRequestBody;
+            } catch {
+                console.warn('Invalid filterQuery JSON on CaseRef field or component ', this.dataField?.stringId);
+                query = undefined;
+            }
         }
         let providers = [
             {
-                provide: NAE_DEFAULT_HEADERS, useValue: this.dataField.component?.properties?.headers.split(',')
+                provide: NAE_DEFAULT_HEADERS, useValue: this.dataField.component?.properties?.headers?.split(',')
+            },
+            {
+                provide: NAE_CLICKABLE_CASES,
+                useValue: this.dataField.component?.properties?.clickable === undefined ?
+                    true : this.dataField.component?.properties?.clickable === "true"
             },
             {
                 provide: NAE_CASE_REF_CREATE_CASE, useValue: this.dataField.component?.properties?.createCase === 'true'
             },
             {
                 provide: NAE_CASE_REF_SEARCH, useValue: this.dataField.component?.properties?.search === 'true'
+            },
+            {
+                provide: NAE_DATAFIELD_ALLOWED_NETS,
+                useValue: this.dataField.component?.properties?.allowedNets === undefined ?
+                    [] : this.dataField.component?.properties?.allowedNets?.split(',')
+            },
+            {
+                provide: NAE_OPEN_SINGLE_TASK,
+                useValue: this.dataField.component?.properties?.singleTask === undefined ?
+                    false : this.dataField.component?.properties?.singleTask === "true"
+            },
+            {
+                provide: NAE_SINGLE_TASK_QUERY,
+                useValue: this.dataField.component?.properties?.singleTaskQuery !== undefined ?
+                    this.dataField?.component?.properties?.singleTaskQuery :
+                    undefined
             },
             {
                 provide: NAE_BASE_FILTER,

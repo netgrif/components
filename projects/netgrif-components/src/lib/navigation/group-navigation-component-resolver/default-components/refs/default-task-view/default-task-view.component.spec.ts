@@ -3,7 +3,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {DefaultTaskViewComponent} from './default-task-view.component';
 import {
     MockProcessService,
-    NAE_BASE_FILTER,
+    NAE_BASE_FILTER, NAE_DATAFIELD_ALLOWED_NETS,
     NAE_VIEW_ID_SEGMENT,
     ProcessService,
     SimpleFilter,
@@ -31,6 +31,7 @@ describe('DefaultTaskViewComponent', () => {
                     provide: NAE_BASE_FILTER,
                     useValue: {filter: SimpleFilter.emptyTaskFilter()}
                 },
+                { provide: NAE_DATAFIELD_ALLOWED_NETS, useValue: []},
                 {
                     provide: NAE_VIEW_ID_SEGMENT,
                     useValue: 'test-task-view'
