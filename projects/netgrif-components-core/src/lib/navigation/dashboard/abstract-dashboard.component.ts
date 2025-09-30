@@ -13,6 +13,7 @@ import {I18nFieldValue} from '../../data-fields/i18n-field/models/i18n-field-val
 import {LanguageService} from '../../translate/language.service';
 import {LoadingEmitter} from '../../utility/loading-emitter';
 import {PathService} from "../service/path.service";
+import {GroupNavigationConstants} from "../model/group-navigation-constants";
 
 
 @Component({
@@ -257,9 +258,18 @@ export abstract class AbstractDashboardComponent {
 
     public navigate(itemCase: Case) {
         if (this.getItemInternal(itemCase)) {
-            const itemPath = this._doubleDrawerNavigationService.getItemRoutingPath(this.dashboardItemsMapping[itemCase.stringId]);
-            this._pathService.activePath = itemPath;
-            this._router.navigate([itemPath]);
+            const menuItemCase = this.dashboardItemsMapping[itemCase.stringId];
+            if (!menuItemCase) {
+                this._log.warn(`No mapped menu item for dashboard item ${itemCase.stringId}`);
+                return;
+            }
+            const itemRoute = this._doubleDrawerNavigationService.getItemRoutingPath(menuItemCase);
+            this._pathService.activePath = this.getFieldValue(menuItemCase, GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH);
+            const nodePath = this.getFieldValue(menuItemCase, GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH);
+            if (nodePath) {
+                this._pathService.activePath = nodePath;
+            }
+            this._router.navigate([itemRoute]);
         } else {
             window.open(this.getItemURL(itemCase), "_blank");
         }

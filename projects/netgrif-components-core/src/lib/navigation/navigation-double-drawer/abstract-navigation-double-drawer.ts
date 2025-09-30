@@ -126,7 +126,11 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
 
         this._userService.user$.pipe(filter(u => !!u && u.id !== ''), take(1)).subscribe(() => {
             this._currentPathSubscription = this._pathService.activePath$.subscribe(path => {
-                this.currentPath = path;
+                if (path !== this.currentPath) {
+                    this.currentPath = path;
+                } else {
+                    this.openAvailableView();
+                }
             });
 
             if (this.canApplyAutoSelect()) {
