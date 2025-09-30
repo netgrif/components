@@ -64,6 +64,7 @@ export * from './task-ref-field/abstract-task-ref-field.component';
 export * from './task-ref-field/task-ref-dashboard-field/task-ref-dashboard-tile/abstract-task-ref-dashboard-tile.component';
 export * from './task-ref-field/task-ref-dashboard-field/abstract-task-ref-dashboard-field.component';
 export * from './task-ref-field/task-ref-list-field/abstract-task-ref-list-field.component';
+export * from './task-ref-field/model/task-ref-injection-tokens';
 export * from './case-ref-field/case-ref-default/case-ref-default.component';
 export * from './case-ref-field/model/case-ref-injection-tokens';
 export * from './string-collection-field/string-collection-default-field/abstract-string-collection-default-field.component';
