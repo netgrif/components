@@ -494,7 +494,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
         const resolvedBannedRoles = DoubleDrawerUtils.resolveAccessRoles(itemCase, GroupNavigationConstants.ITEM_FIELD_ID_BANNED_ROLES);
         if (!!resolvedRoles) item.access['role'] = resolvedRoles;
         if (!!resolvedBannedRoles) item.access['bannedRole'] = resolvedBannedRoles;
-        if (!this._accessService.canAccessView(item, item.routingPath)) return;   //todo neni zle? routing?.path
+        if (!this._accessService.canAccessView(item, item.routing?.path)) return;
         return item;
     }
 
