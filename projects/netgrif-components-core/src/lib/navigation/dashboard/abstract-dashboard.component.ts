@@ -259,8 +259,16 @@ export abstract class AbstractDashboardComponent {
     public navigate(itemCase: Case) {
         if (this.getItemInternal(itemCase)) {
             const menuItemCase = this.dashboardItemsMapping[itemCase.stringId];
+            if (!menuItemCase) {
+                this._log.warn(`No mapped menu item for dashboard item ${itemCase.stringId}`);
+                return;
+            }
             const itemRoute = this._doubleDrawerNavigationService.getItemRoutingPath(menuItemCase);
             this._pathService.activePath = this.getFieldValue(menuItemCase, GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH);
+            const nodePath = this.getFieldValue(menuItemCase, GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH);
+            if (nodePath) {
+                this._pathService.activePath = nodePath;
+            }
             this._router.navigate([itemRoute]);
         } else {
             window.open(this.getItemURL(itemCase), "_blank");
