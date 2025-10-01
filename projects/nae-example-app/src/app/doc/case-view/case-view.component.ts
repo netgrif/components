@@ -59,7 +59,9 @@ export class CaseViewComponent extends AbstractCaseViewComponent implements Afte
             enableCaseTitle: true,
             isCaseTitleRequired: false,
             newCaseButtonConfig: {
-                createCaseButtonTitle: 'test',
+                createCaseButtonTitle: {
+                    defaultValue: 'test'
+                },
                 createCaseButtonIcon: 'home'
             }
         });

@@ -8,6 +8,7 @@ import {
     LoadingEmitter
 } from '@netgrif/components-core';
 import {map} from "rxjs/operators";
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'nc-create-case-button',
@@ -24,7 +25,8 @@ export class CreateCaseButtonComponent implements OnInit {
     protected _resolvedCaseButtonIcon: string;
     protected _loading: LoadingEmitter;
 
-    constructor(protected _caseViewService: CaseViewService) {
+    constructor(protected _caseViewService: CaseViewService,
+                protected _translateService: TranslateService) {
         this._loading = new LoadingEmitter();
     }
 
@@ -44,8 +46,18 @@ export class CreateCaseButtonComponent implements OnInit {
         const config: NewCaseButtonConfiguration = this.newCaseCreationConfig['newCaseButtonConfig'];
         if (!!config) {
             this._resolvedCaseButtonIcon = config.createCaseButtonIcon;
-            this._resolvedCaseButtonTitle = config.createCaseButtonTitle;
+            this._resolvedCaseButtonTitle = this.resolveTranslation(config);
         }
+    }
+
+    public resolveTranslation(config: NewCaseButtonConfiguration): string {
+        const locale = this._translateService.currentLang;
+        if(!config.createCaseButtonTitle.defaultValue && !config.createCaseButtonTitle.translations) {
+            return "";
+        }
+        return locale in config.createCaseButtonTitle.translations
+            ? config.createCaseButtonTitle.translations[locale]
+            : config.createCaseButtonTitle.defaultValue;
     }
 
     public shouldShowCreateButton(): Observable<boolean> {
@@ -67,7 +79,8 @@ export class CreateCaseButtonComponent implements OnInit {
             if (this._caseViewService.viewEnabled(kaze)) {
                 this.caseCreatedEvent.next(kaze);
             }
-        }, error => {},() => this._loading.off());
+        }, error => {
+        }, () => this._loading.off());
 
         return myCase;
     }
