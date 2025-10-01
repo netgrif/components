@@ -14,7 +14,8 @@ import {
     ViewIdService,
     FilterExtractionService,
     GroupNavigationConstants,
-    hasView
+    hasView,
+    I18nFieldValue
 } from '@netgrif/components-core';
 import {DefaultTabbedCaseViewComponent} from '../default-tabbed-case-view/default-tabbed-case-view.component';
 import {DefaultTabbedTaskViewComponent} from '../default-tabbed-task-view/default-tabbed-task-view.component';
@@ -67,7 +68,7 @@ export class DefaultTabViewComponent {
 
         const blockNetsString = extractFieldValueFromData<string>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_CASE_BANNED_PROCESS_CREATION);
         const blockNets = blockNetsString === undefined ? [] : blockNetsString.split(',')
-        const createCaseButtonTitle: string = extractFieldValueFromData<string>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_CREATE_CASE_BUTTON_TITLE);
+        const createCaseButtonTitle: I18nFieldValue = extractFieldValueFromData<I18nFieldValue>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_CREATE_CASE_BUTTON_TITLE);
         const createCaseButtonIcon: string = extractFieldValueFromData<string>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_CREATE_CASE_BUTTON_ICON);
         const requireTitle: boolean = extractFieldValueFromData<boolean>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_CASE_TITLE_IN_CREATION);
         const showCreateCaseButton: boolean = extractFieldValueFromData<boolean>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_SHOW_CREATE_CASE_BUTTON);
