@@ -295,10 +295,12 @@ export class DoubleDrawerNavigationService implements OnDestroy {
     public openAvailableView() {
         let allItems: Array<NavigationItem> = this.rightItems.concat(this.moreItems);
 
-        let alreadyClickedItem: NavigationItem = allItems.find(item => item.id === this._currentNavigationItem.id);
-        if (!!alreadyClickedItem) {
-            // when the folder has not changed and a menu item is clicked.
-            return;
+        if (this._currentNavigationItem) {
+            let alreadyClickedItem: NavigationItem = allItems.find(item => item.id === this._currentNavigationItem.id);
+            if (!!alreadyClickedItem) {
+                // when the folder has not changed and a menu item is clicked.
+                return;
+            }
         }
 
         let autoOpenItems: Array<NavigationItem> = allItems.filter(item => DoubleDrawerUtils.hasItemAutoOpenView(item));
