@@ -253,6 +253,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
      * */
     public onItemClick(item: NavigationItem): void {
         if (item.resource === undefined) {
+            this._currentNavigationItem = null;
             // custom view represented only in nae.json
             if (item.processUri === this.currentPath) {
                 this._pathService.activePath = this.currentPath;
@@ -261,6 +262,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
             }
             this.itemClicked.emit({path: this._pathService.activePath, isHome: false});
         } else {
+            this._currentNavigationItem = item;
             const path = item.resource.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)?.value
 
             if (DoubleDrawerUtils.hasItemChildren(item) && !this.leftLoading$.isActive && !this.rightLoading$.isActive) {
@@ -285,12 +287,19 @@ export class DoubleDrawerNavigationService implements OnDestroy {
 
 
     /**
-     * Opens a view of the current right items in the menu by defined rule. The rule is: On first check for default
-     * view in children. On second check if the clicked item has a view. On third, pick any other children's view, else
+     * Opens a view of the current right items in the menu by defined rule. The rule is: First, it checks whether a navigation
+     * item was clicked, then check for default view in children.
+     * On third check if the clicked item has a view. On fourth, pick any other children's view, else
      * show nothing.
      * */
     public openAvailableView() {
         let allItems: Array<NavigationItem> = this.rightItems.concat(this.moreItems);
+
+        let alreadyClickedItem: NavigationItem = allItems.find(item => item.id === this._currentNavigationItem.id);
+        if (!!alreadyClickedItem) {
+            // when the folder has not changed and a menu item is clicked.
+            return;
+        }
 
         let autoOpenItems: Array<NavigationItem> = allItems.filter(item => DoubleDrawerUtils.hasItemAutoOpenView(item));
         if (autoOpenItems.length > 0) {
