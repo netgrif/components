@@ -288,8 +288,8 @@ export class DoubleDrawerNavigationService implements OnDestroy {
 
     /**
      * Opens a view of the current right items in the menu by defined rule. The rule is: First, it checks whether a navigation
-     * item was clicked, then check for default view in children.
-     * On third check if the clicked item has a view. On fourth, pick any other children's view, else
+     * item was clicked. Second, check for default view in children.
+     * Third check if the clicked item has a view. Fourth, pick any other children's view, else
      * show nothing.
      * */
     public openAvailableView() {
