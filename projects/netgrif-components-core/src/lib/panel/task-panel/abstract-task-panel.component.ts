@@ -257,9 +257,8 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
 
     @Input()
     public set taskPanelData(data: TaskPanelData) {
-        const taskId = this._taskPanelData?.task?.stringId;
         this._taskPanelData = data;
-        if (this._taskContentService instanceof UnlimitedTaskContentService && taskId !== this._taskPanelData.task.stringId && this.panelRef) {
+        if (this._taskContentService instanceof UnlimitedTaskContentService && this.panelRef) {
             this.collapse();
             this._taskContentService.task = this._taskPanelData.task;
             if (this._sub) {
