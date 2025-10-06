@@ -94,7 +94,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
         protected _redirectService: RedirectService,
         protected _pathService: PathService,
         protected _userService: UserService,
-        ) {
+    ) {
         this._leftItems$ = new BehaviorSubject([]);
         this._rightItems$ = new BehaviorSubject([]);
         this._moreItems$ = new BehaviorSubject([]);
@@ -439,6 +439,8 @@ export class DoubleDrawerNavigationService implements OnDestroy {
                 this.resolveCustomViewsInRightSide();
                 this._rightLoading$.off();
                 this.itemLoaded.emit({menu: 'right', items: this.rightItems});
+
+                this.openAvailableView();
             }, error => {
                 this._log.error(error);
                 this._rightItems$.next([]);
@@ -492,7 +494,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
         const resolvedBannedRoles = DoubleDrawerUtils.resolveAccessRoles(itemCase, GroupNavigationConstants.ITEM_FIELD_ID_BANNED_ROLES);
         if (!!resolvedRoles) item.access['role'] = resolvedRoles;
         if (!!resolvedBannedRoles) item.access['bannedRole'] = resolvedBannedRoles;
-        if (!this._accessService.canAccessView(item, item.routingPath)) return;
+        if (!this._accessService.canAccessView(item, item.routing?.path)) return;
         return item;
     }
 
@@ -545,7 +547,8 @@ export class DoubleDrawerNavigationService implements OnDestroy {
     public getItemRoutingPath(itemCase: Case) {
         const taskId = DoubleDrawerUtils.findTaskIdInCase(itemCase, SETTINGS_TRANSITION_ID);
         const url = this._dynamicRoutingService.route;
-        return `/${url}/${taskId}`;
+        const prefix = url.startsWith('/') ? '' : '/';
+        return `${prefix}${url}/${taskId}`;
     }
 
     private processLeftItems(cases: Case[], orderedChildCaseIds: string[]): NavigationItem[] {

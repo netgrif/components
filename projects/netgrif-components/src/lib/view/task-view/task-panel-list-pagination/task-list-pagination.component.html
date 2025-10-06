@@ -21,6 +21,7 @@
                     (taskEvent)="emitTaskEvent($event)"
                     (panelRefOutput)="addToPanelRefs(task, $event)"
                     [showMoreMenu]="showMoreMenu"
+                    [preventExpand]="preventExpand"
                     class="panel-expanded-spacing" [ngClass]="{'single-task-fix': tasks.length === 1 && panel.isExpanded()}">
                 </nc-task-panel>
 

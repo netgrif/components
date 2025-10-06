@@ -30,6 +30,7 @@ export abstract class AbstractDefaultTaskListComponent extends TabbedVirtualScro
     @Input() forceLoadDataOnOpen = false;
     @Input() textEllipsis = false;
     @Input() showMoreMenu: boolean = true;
+    @Input() preventExpand = false;
 
     @Input()
     set allowMultiOpen(bool: boolean) {
