@@ -59,3 +59,5 @@ export * from './tree-case-view/tree-component/remove-node/abstract-remove-node.
 export * from './tree-case-view/tree-task-content/abstract-tree-task-content.component';
 export * from './task-view/abstract-single-task-view.component';
 export * from './task-view/abstract-tabbed-single-task-view.component';
+export * from './task-view/components/task-panel-list/abstract-task-list.component';
+export * from './task-view/components/task-panel-list-pagination/abstract-task-list-pagination.component';

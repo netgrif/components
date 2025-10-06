@@ -1,16 +1,16 @@
 import {MatExpansionPanel} from '@angular/material/expansion';
 import {ActivatedRoute} from '@angular/router';
 import {filter} from 'rxjs/operators';
-import {TabbedVirtualScrollComponent} from '../../abstract/tabbed-virtual-scroll.component';
+import {TabbedVirtualScrollComponent} from '../../../../panel/abstract/tabbed-virtual-scroll.component';
 import {AfterViewInit, Component, EventEmitter, Inject, Input, OnDestroy, Optional, Output} from '@angular/core';
 import {Observable, Subject, Subscription} from 'rxjs';
-import {TaskPanelData} from '../task-panel-data/task-panel-data';
-import {HeaderColumn} from '../../../header/models/header-column';
-import {TaskEventNotification} from '../../../task-content/model/task-event-notification';
-import {TaskViewService} from '../../../view/task-view/service/task-view.service';
-import {LoggerService} from '../../../logger/services/logger.service';
-import {NAE_TAB_DATA} from '../../../tabs/tab-data-injection-token/tab-data-injection-token';
-import {InjectedTabData} from '../../../tabs/interfaces';
+import {TaskPanelData} from '../../../../panel/task-panel-data/task-panel-data';
+import {HeaderColumn} from '../../../../header/models/header-column';
+import {TaskEventNotification} from '../../../../task-content/model/task-event-notification';
+import {TaskViewService} from '../../service/task-view.service';
+import {LoggerService} from '../../../../logger/services/logger.service';
+import {NAE_TAB_DATA} from '../../../../tabs/tab-data-injection-token/tab-data-injection-token';
+import {InjectedTabData} from '../../../../tabs/interfaces';
 
 
 @Component({

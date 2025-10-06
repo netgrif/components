@@ -19,6 +19,12 @@ import {
     TaskRequestStateService,
     TaskViewService,
     ViewIdService,
+    TaskSearchRequestBody,
+    DataGroup,
+    extractFieldValueFromData,
+    SimpleFilter,
+    FilterType,
+    MergeOperator
 } from '@netgrif/components-core';
 import {AsyncPipe} from "@angular/common";
 import {
@@ -26,6 +32,18 @@ import {
 } from "../../model/injected-tabbed-task-view-data-with-navigation-item-task-data";
 
 function baseFilterFactory(injectedTabData: InjectedTabbedTaskViewDataWithNavigationItemTaskData) {
+    const requestBody = injectedTabData.baseFilter.getRequestBody() as TaskSearchRequestBody
+    if (requestBody.transitionId === undefined) {
+        const viewDataGroups: Array<DataGroup> = injectedTabData.navigationItemTaskData?.slice(4, injectedTabData.navigationItemTaskData.length);
+        if (viewDataGroups !== undefined) {
+            const viewTransitionId = extractFieldValueFromData<string>(viewDataGroups, "transition_id");
+            if (viewTransitionId !== undefined) {
+                return {
+                    filter: injectedTabData.baseFilter.merge(new SimpleFilter('', FilterType.TASK, {transitionId: viewTransitionId?.split(",")}), MergeOperator.AND)
+                };
+            }
+        }
+    }
     return {
         filter: injectedTabData.baseFilter
     };

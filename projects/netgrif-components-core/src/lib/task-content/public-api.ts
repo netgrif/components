@@ -4,6 +4,7 @@ export * from './services/field-converter.service';
 export * from './services/task-content.service';
 export * from './services/single-task-content.service';
 export * from './services/unlimited-task-content.service';
+export * from './services/task-content-service-factory';
 
 /* MODELS */
 export * from './model/policy';
@@ -17,6 +18,8 @@ export * from './model/async-rendering-configuration-injection-token';
 export * from './model/subgrid';
 export * from './model/split-data-group';
 export * from './model/task-fields';
+export * from './model/task-content-service-type';
+export * from './model/task-content-injection-token';
 
 /* MODULES */
 export * from './task-content/abstract-task-content.component';

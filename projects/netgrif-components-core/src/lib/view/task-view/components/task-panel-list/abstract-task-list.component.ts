@@ -1,13 +1,13 @@
 import {Component, Inject, Input, Optional, ViewChild} from '@angular/core';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
-import {TaskViewService} from '../../view/task-view/service/task-view.service';
-import {LoggerService} from '../../logger/services/logger.service';
-import {NAE_TAB_DATA} from '../../tabs/tab-data-injection-token/tab-data-injection-token';
-import {InjectedTabData} from '../../tabs/interfaces';
+import {TaskViewService} from '../../service/task-view.service';
+import {LoggerService} from '../../../../logger/services/logger.service';
+import {NAE_TAB_DATA} from '../../../../tabs/tab-data-injection-token/tab-data-injection-token';
+import {InjectedTabData} from '../../../../tabs/interfaces';
 import {ActivatedRoute} from '@angular/router';
-import {AbstractDefaultTaskListComponent} from './default-task-panel-list/abstract-default-task-list.component';
+import {AbstractDefaultTaskListComponent} from '../default-task-panel-list/abstract-default-task-list.component';
 import {Observable} from 'rxjs';
-import {TaskPanelData} from './task-panel-data/task-panel-data';
+import {TaskPanelData} from '../../../../panel/task-panel-data/task-panel-data';
 
 @Component({
     selector: 'ncc-abstract-task-list',
