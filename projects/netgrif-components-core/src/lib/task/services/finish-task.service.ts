@@ -138,7 +138,6 @@ export class FinishTaskService extends TaskHandlingService {
                 this._taskContentService.updateStateData(outcomeResource.outcome as FinishTaskEventOutcome);
                 const changedFieldsMap: ChangedFieldsMap = this._eventService
                     .parseChangedFieldsFromOutcomeTree(outcomeResource.outcome);
-
                 const frontActions: Array<FrontAction> = this._eventService.parseFrontActionsFromOutcomeTree(outcomeResource.outcome);
                 
                 if (!!changedFieldsMap) {

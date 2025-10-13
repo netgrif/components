@@ -129,7 +129,7 @@ export class AssignTaskService extends TaskHandlingService {
                     if (!!changedFieldsMap) {
                         this._changedFieldsService.emitChangedFields(changedFieldsMap);
                     }
-                    if (!!frontActions && frontActions.length > 0) {
+                    if (frontActions?.length > 0) {
                         this._frontActionService.runAll(frontActions);
                     }
 

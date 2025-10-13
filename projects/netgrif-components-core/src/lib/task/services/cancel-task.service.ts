@@ -127,13 +127,12 @@ export class CancelTaskService extends TaskHandlingService {
                 const changedFieldsMap: ChangedFieldsMap = this._eventService
                     .parseChangedFieldsFromOutcomeTree(outcomeResource.outcome);
                 const frontActions: Array<FrontAction> = this._eventService.parseFrontActionsFromOutcomeTree(outcomeResource.outcome);
-        
 
                 if (!!changedFieldsMap) {
                     this._changedFieldsService.emitChangedFields(changedFieldsMap);
                 }
 
-                if (!!frontActions && frontActions.length > 0) {
+                if (frontActions?.length > 0) {
                     this._frontActionService.runAll(frontActions);
                 }
 
