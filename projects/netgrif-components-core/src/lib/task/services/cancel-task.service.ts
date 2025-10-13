@@ -131,7 +131,6 @@ export class CancelTaskService extends TaskHandlingService {
                 if (!!changedFieldsMap) {
                     this._changedFieldsService.emitChangedFields(changedFieldsMap);
                 }
-
                 if (frontActions?.length > 0) {
                     this._frontActionService.runAll(frontActions);
                 }
