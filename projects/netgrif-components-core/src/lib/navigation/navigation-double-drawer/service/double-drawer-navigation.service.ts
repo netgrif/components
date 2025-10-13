@@ -103,7 +103,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
         this._leftLoading$ = new LoadingEmitter();
         this._rightLoading$ = new LoadingEmitter();
         this._nodeLoading$ = new LoadingEmitter();
-        this._currentNavigationItem = null;
+        this._currentNavigationItem = undefined;
         this.itemsOrder = MenuOrder.Ascending;
         this.customItemsInitialized = false;
         this.hiddenCustomItemsInitialized = false;
@@ -143,6 +143,10 @@ export class DoubleDrawerNavigationService implements OnDestroy {
         } else {
             this.resolveMenuItems(path);
         }
+    }
+
+    public set currentNavigationItem(item: NavigationItem) {
+        this._currentNavigationItem = item;
     }
 
     protected resolveMenuItems(path: string) {
@@ -253,7 +257,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
      * */
     public onItemClick(item: NavigationItem): void {
         if (item.resource === undefined) {
-            this._currentNavigationItem = null;
+            this._currentNavigationItem = undefined;
             // custom view represented only in nae.json
             if (item.processUri === this.currentPath) {
                 this._pathService.activePath = this.currentPath;

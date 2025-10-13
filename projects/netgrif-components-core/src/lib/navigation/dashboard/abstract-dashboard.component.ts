@@ -264,14 +264,30 @@ export abstract class AbstractDashboardComponent {
                 return;
             }
             const itemRoute = this._doubleDrawerNavigationService.getItemRoutingPath(menuItemCase);
-            this._pathService.activePath = this.getFieldValue(menuItemCase, GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH);
             const nodePath = this.getFieldValue(menuItemCase, GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH);
-            if (nodePath) {
+            if (menuItemCase.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_HAS_CHILDREN)?.value && nodePath) {
+                this._doubleDrawerNavigationService.currentNavigationItem = undefined;
                 this._pathService.activePath = nodePath;
+            } else if (nodePath) {
+                const menuItem = this._doubleDrawerNavigationService.resolveItemCaseToNavigationItem(menuItemCase);
+                if (menuItem) {
+                    this._doubleDrawerNavigationService.currentNavigationItem = menuItem;
+                }
+                this._pathService.activePath = this.extractParent(nodePath);
             }
             this._router.navigate([itemRoute]);
         } else {
             window.open(this.getItemURL(itemCase), "_blank");
         }
+    }
+
+    private extractParent(path: string): string {
+        if (path === '/') {
+            return path;
+        }
+        if (path.lastIndexOf('/') === 0) {
+            return '/';
+        }
+        return path.substring(0, path.lastIndexOf('/'));
     }
 }
