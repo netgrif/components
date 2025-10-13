@@ -24,7 +24,8 @@ import {ChangedFieldsService} from '../../changed-fields/services/changed-fields
 import {EventService} from '../../event/services/event.service';
 import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
 import {TaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/task-event-outcome';
-
+import {FrontActionService} from '../../actions/services/front-action.service';
+import {FrontAction} from '../../data-fields/models/changed-fields';
 
 /**
  * Service that handles the logic of finishing a task.
@@ -45,7 +46,8 @@ export class FinishTaskService extends TaskHandlingService {
                 protected _changedFieldsService: ChangedFieldsService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
                 @Optional() _selectedCaseService: SelectedCaseService,
-                _taskContentService: TaskContentService) {
+                _taskContentService: TaskContentService,
+                protected _frontActionService: FrontActionService) {
         super(_taskContentService, _selectedCaseService);
     }
 
@@ -136,9 +138,16 @@ export class FinishTaskService extends TaskHandlingService {
                 this._taskContentService.updateStateData(outcomeResource.outcome as FinishTaskEventOutcome);
                 const changedFieldsMap: ChangedFieldsMap = this._eventService
                     .parseChangedFieldsFromOutcomeTree(outcomeResource.outcome);
+
+                const frontActions: Array<FrontAction> = this._eventService.parseFrontActionsFromOutcomeTree(outcomeResource.outcome);
+                
                 if (!!changedFieldsMap) {
                     this._changedFieldsService.emitChangedFields(changedFieldsMap);
                 }
+                if (!!frontActions && frontActions.length > 0) {
+                    this._frontActionService.runAll(frontActions);
+                }
+
                 this._taskOperations.reload();
                 this.completeActions(afterAction, nextEvent, true, outcomeResource.outcome as FinishTaskEventOutcome);
                 this._taskOperations.close();
