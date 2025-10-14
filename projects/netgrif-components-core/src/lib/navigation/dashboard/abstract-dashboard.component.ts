@@ -273,21 +273,11 @@ export abstract class AbstractDashboardComponent {
                 if (menuItem) {
                     this._doubleDrawerNavigationService.currentNavigationItem = menuItem;
                 }
-                this._pathService.activePath = this.extractParent(nodePath);
+                this._pathService.activePath = this._doubleDrawerNavigationService.extractParentPath(nodePath);
             }
             this._router.navigate([itemRoute]);
         } else {
             window.open(this.getItemURL(itemCase), "_blank");
         }
-    }
-
-    private extractParent(path: string): string {
-        if (path === '/') {
-            return path;
-        }
-        if (path.lastIndexOf('/') === 0) {
-            return '/';
-        }
-        return path.substring(0, path.lastIndexOf('/'));
     }
 }
