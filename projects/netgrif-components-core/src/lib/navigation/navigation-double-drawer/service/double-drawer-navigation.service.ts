@@ -76,7 +76,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
     /**
      * Currently selected navigation item
      */
-    protected _currentNavigationItem: NavigationItem;
+    protected _currentNavigationItem: NavigationItem | undefined;
     protected defaultViewIcon: string = 'filter_alt';
     protected customItemsInitialized: boolean;
     protected hiddenCustomItemsInitialized: boolean;
@@ -103,7 +103,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
         this._leftLoading$ = new LoadingEmitter();
         this._rightLoading$ = new LoadingEmitter();
         this._nodeLoading$ = new LoadingEmitter();
-        this._currentNavigationItem = null;
+        this._currentNavigationItem = undefined;
         this.itemsOrder = MenuOrder.Ascending;
         this.customItemsInitialized = false;
         this.hiddenCustomItemsInitialized = false;
@@ -143,6 +143,10 @@ export class DoubleDrawerNavigationService implements OnDestroy {
         } else {
             this.resolveMenuItems(path);
         }
+    }
+
+    public set currentNavigationItem(item: NavigationItem | undefined) {
+        this._currentNavigationItem = item;
     }
 
     protected resolveMenuItems(path: string) {
@@ -242,7 +246,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
         if (this.leftLoading$.isActive || this.rightLoading$.isActive || this.currentPath === PathService.SEPARATOR) {
             return
         }
-        this._pathService.activePath = this.extractParent(this.currentPath);
+        this._pathService.activePath = this.extractParentPath(this.currentPath);
         this.itemClicked.emit({path: this._pathService.activePath, isHome: false});
     }
 
@@ -253,12 +257,12 @@ export class DoubleDrawerNavigationService implements OnDestroy {
      * */
     public onItemClick(item: NavigationItem): void {
         if (item.resource === undefined) {
-            this._currentNavigationItem = null;
+            this._currentNavigationItem = undefined;
             // custom view represented only in nae.json
             if (item.processUri === this.currentPath) {
                 this._pathService.activePath = this.currentPath;
             } else {
-                this._pathService.activePath = this.extractParent(this.currentPath);
+                this._pathService.activePath = this.extractParentPath(this.currentPath);
             }
             this.itemClicked.emit({path: this._pathService.activePath, isHome: false});
         } else {
@@ -275,7 +279,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
                     this.openAvailableView();
                 })
             } else if (!path.includes(this.currentPath)) {
-                this._pathService.activePath = this.extractParent(this.currentPath);
+                this._pathService.activePath = this.extractParentPath(this.currentPath);
                 this.itemClicked.emit({path: this._pathService.activePath, isHome: false});
 
             } else {
@@ -376,7 +380,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
         }
         this.leftLoading$.on();
 
-        this.getItemCaseByPath(this.extractParent(this.currentPath)).subscribe(page => {
+        this.getItemCaseByPath(this.extractParentPath(this.currentPath)).subscribe(page => {
             let childCases$;
             let targetItem;
             let orderedChildCaseIds;
@@ -510,9 +514,9 @@ export class DoubleDrawerNavigationService implements OnDestroy {
     }
 
     protected resolveCustomViewsInLeftSide() {
-        if (!!this.extractParent(this.currentPath) && !!this._childCustomViews[this.extractParent(this.currentPath)]) {
+        if (!!this.extractParentPath(this.currentPath) && !!this._childCustomViews[this.extractParentPath(this.currentPath)]) {
             let currentLeftItems = this._leftItems$.getValue();
-            currentLeftItems.push(...Object.values(this._childCustomViews[this.extractParent(this.currentPath)]));
+            currentLeftItems.push(...Object.values(this._childCustomViews[this.extractParentPath(this.currentPath)]));
             this._leftItems$.next(currentLeftItems);
         }
     }
@@ -590,7 +594,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
         return this._caseResourceService.searchCases(SimpleFilter.fromCaseQuery(searchBody), httpParams);
     }
 
-    private extractParent(path: string): string {
+    public extractParentPath(path: string): string {
         if (path === '/') {
             return path;
         }
