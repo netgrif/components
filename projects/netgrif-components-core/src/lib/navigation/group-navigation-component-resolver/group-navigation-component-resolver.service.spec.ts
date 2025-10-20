@@ -6,7 +6,7 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {TestMockDependenciesModule} from '../../utility/tests/test-mock-dependencies.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {PathService} from "../service/path.service";
+import {PathService} from '../service/path.service';
 
 describe('GroupNavigationComponentResolverService', () => {
     let service: GroupNavigationComponentResolverService;
