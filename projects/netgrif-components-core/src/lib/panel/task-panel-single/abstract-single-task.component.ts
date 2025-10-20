@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Inject, Input, OnDestroy, Optional, Output, TemplateRef } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { TaskPanelData } from '../task-panel-list/task-panel-data/task-panel-data';
+import { TaskPanelData } from '../task-panel-data/task-panel-data';
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { HeaderColumn } from '../../header/models/header-column';
 import { TaskEventNotification } from '../../task-content/model/task-event-notification';

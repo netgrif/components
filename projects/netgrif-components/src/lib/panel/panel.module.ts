@@ -4,7 +4,7 @@ import {PanelComponent} from './panel.component';
 import {FlexModule} from '@ngbracket/ngx-layout';
 import {TaskPanelComponent} from './task-panel/task-panel.component';
 import {CasePanelComponent} from './case-panel/case-panel.component';
-import {TaskListComponent} from './task-panel-list/task-list.component';
+import {TaskListComponent} from '../view/task-view/task-panel-list/task-list.component';
 import {WorkflowPanelComponent} from './workflow-panel/workflow-panel.component';
 import {DataFieldsComponentModule} from '../data-fields/data-fields.module';
 import {
@@ -24,7 +24,7 @@ import {
     ImmediateFilterTextContentComponent
 } from './immediate/immediate-filter-text-content/immediate-filter-text-content.component';
 import {PanelItemComponent} from './panel-item/panel-item.component';
-import {TaskListPaginationComponent} from './task-panel-list-pagination/task-list-pagination.component';
+import {TaskListPaginationComponent} from '../view/task-view/task-panel-list-pagination/task-list-pagination.component';
 import { SingleTaskComponent } from './task-panel-single/single-task.component';
 import {
     SideMenuMultiUserAssignComponentModule

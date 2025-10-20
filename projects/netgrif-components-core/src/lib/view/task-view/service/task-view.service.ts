@@ -1,6 +1,6 @@
 import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
 import {BehaviorSubject, Observable, of, ReplaySubject, Subject, Subscription, timer} from 'rxjs';
-import {TaskPanelData} from '../../../panel/task-panel-list/task-panel-data/task-panel-data';
+import {TaskPanelData} from '../../../panel/task-panel-data/task-panel-data';
 import {TaskResourceService} from '../../../resources/engine-endpoint/task-resource.service';
 import {UserService} from '../../../user/services/user.service';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';

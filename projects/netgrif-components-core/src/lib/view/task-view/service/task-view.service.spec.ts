@@ -21,7 +21,7 @@ import {createMockTask} from '../../../utility/tests/utility/create-mock-task';
 import {ElementaryPredicate} from '../../../search/models/predicate/elementary-predicate';
 import {Query} from '../../../search/models/query/query';
 import {Page} from '../../../resources/interface/page';
-import {TaskPanelData} from '../../../panel/task-panel-list/task-panel-data/task-panel-data';
+import {TaskPanelData} from '../../../panel/task-panel-data/task-panel-data';
 import {SnackBarModule} from '../../../snack-bar/snack-bar.module';
 import {MockAuthenticationMethodService} from '../../../utility/tests/mocks/mock-authentication-method-service';
 import {NAE_BASE_FILTER} from '../../../search/models/base-filter-injection-token';

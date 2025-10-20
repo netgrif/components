@@ -15,7 +15,7 @@ import {MatExpansionPanel} from '@angular/material/expansion';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {TaskContentService} from '../../task-content/services/task-content.service';
 import {LoggerService} from '../../logger/services/logger.service';
-import {TaskPanelData} from '../task-panel-list/task-panel-data/task-panel-data';
+import {TaskPanelData} from '../task-panel-data/task-panel-data';
 import {Observable, Subscription} from 'rxjs';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {filter, map, take} from 'rxjs/operators';
@@ -53,6 +53,7 @@ import { FinishPolicyService } from '../../task/services/finish-policy.service';
 import {NAE_TAB_DATA} from '../../tabs/tab-data-injection-token/tab-data-injection-token';
 import {InjectedTabData} from '../../tabs/interfaces';
 import {AfterAction} from '../../utility/call-chain/after-action';
+import {UnlimitedTaskContentService} from "../../task-content/services/unlimited-task-content.service";
 
 @Component({
     selector: 'ncc-abstract-legal-notice',
@@ -257,6 +258,17 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
     @Input()
     public set taskPanelData(data: TaskPanelData) {
         this._taskPanelData = data;
+        if (this._taskContentService instanceof UnlimitedTaskContentService && this.panelRef) {
+            this.collapse();
+            this._taskContentService.task = this._taskPanelData.task;
+            if (this._sub) {
+                this._sub.unsubscribe();
+            }
+            this._sub = this._taskPanelData.changedFields.subscribe(chFields => {
+                this._taskContentService.updateFromChangedFields(chFields);
+            });
+            this.expand();
+        }
         this.resolveFeaturedFieldsValues();
     }
 

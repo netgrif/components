@@ -20,7 +20,6 @@ import {
     OverflowService,
     PaperViewService,
     PermissionService,
-    SingleTaskContentService,
     SubjectTaskOperations,
     TaskContentService,
     TaskDataService,
@@ -29,18 +28,28 @@ import {
     TaskViewService,
     FrontActionService,
     NAE_TAB_DATA,
-    InjectedTabData
+    InjectedTabData, SimpleFilter,
+    TaskContentServiceFactory,
+    NAE_TASK_CONTENT_SERVICE_TYPE,
+    TaskContentServiceType
 } from '@netgrif/components-core';
 import {TaskContentComponent} from '../../task-content/task-content/task-content.component';
 import {TranslateService} from '@ngx-translate/core';
 import {CurrencyPipe} from '@angular/common';
+
+const taskContentServiceFactory = (serviceFactory: TaskContentServiceFactory, serviceType: TaskContentServiceType) => {
+    if (serviceType === TaskContentServiceType.SINGLE) {
+        return serviceFactory.createSingleTaskContentService();
+    }
+    return serviceFactory.createUnlimitedTaskContentService();
+};
 
 @Component({
     selector: 'nc-task-panel',
     templateUrl: './task-panel.component.html',
     styleUrls: ['./task-panel.component.scss'],
     providers: [
-        {provide: TaskContentService, useClass: SingleTaskContentService},
+        {provide: TaskContentService, useFactory: taskContentServiceFactory, deps: [TaskContentServiceFactory, NAE_TASK_CONTENT_SERVICE_TYPE]},
         TaskDataService,
         FrontActionService,
         TaskEventService,

@@ -3,11 +3,11 @@ import {Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
 import {ActivatedRoute} from '@angular/router';
 import {AbstractDefaultTaskListComponent} from '../default-task-panel-list/abstract-default-task-list.component';
-import {TaskPanelData} from '../task-panel-data/task-panel-data';
-import {TaskViewService} from '../../../view/task-view/service/task-view.service';
-import {LoggerService} from '../../../logger/services/logger.service';
-import {NAE_TAB_DATA} from '../../../tabs/tab-data-injection-token/tab-data-injection-token';
-import {InjectedTabData} from '../../../tabs/interfaces';
+import {TaskPanelData} from '../../../../panel/task-panel-data/task-panel-data';
+import {TaskViewService} from '../../service/task-view.service';
+import {LoggerService} from '../../../../logger/services/logger.service';
+import {NAE_TAB_DATA} from '../../../../tabs/tab-data-injection-token/tab-data-injection-token';
+import {InjectedTabData} from '../../../../tabs/interfaces';
 
 @Component({
     selector: 'ncc-abstract-task-list-pagination-component',
