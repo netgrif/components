@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, Optional, ViewChild} from '@angular/core';
 import {
     AbstractTabbedCaseViewComponent,
     AllowedNetsService,
@@ -85,12 +85,14 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
     headersMode: string[];
     allowTableMode: boolean;
     defaultHeadersMode: HeaderMode;
+    headersCount: number
 
     constructor(caseViewService: CaseViewService,
                 loggerService: LoggerService,
                 viewIdService: ViewIdService,
                 overflowService: OverflowService,
-                @Inject(NAE_TAB_DATA) protected _injectedTabData: InjectedTabbedCaseViewDataWithNavigationItemTaskData) {
+                @Inject(NAE_TAB_DATA) protected _injectedTabData: InjectedTabbedCaseViewDataWithNavigationItemTaskData,
+                @Optional() @Inject(NAE_DEFAULT_HEADERS) protected _defaultHeaders: Array<string> | undefined) {
         super(caseViewService, loggerService, _injectedTabData, overflowService, undefined, undefined, _injectedTabData.newCaseButtonConfiguration);
 
         this.initialSearchMode = _injectedTabData.caseViewSearchTypeConfiguration.initialSearchMode;
@@ -106,6 +108,11 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
         if (!this.allowTableMode) {
             const viewId = viewIdService.viewId;
             localStorage.setItem(viewId + '-overflowMode', 'false');
+        }
+        if (this._defaultHeaders) {
+            this.headersCount = this._defaultHeaders.length;
+        } else {
+            this.headersCount = 5; // 5 meta headers
         }
     }
 

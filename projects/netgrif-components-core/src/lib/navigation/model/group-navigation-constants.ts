@@ -123,7 +123,7 @@ export enum GroupNavigationConstants {
     /**
      * Boolean field, that is true to use default headers configuration for case view
      * */
-    ITEM_FIELD_ID_USE_CASE_DEFAULT_HEADERS = 'use_default_headers',
+    ITEM_FIELD_ID_USE_CASE_DEFAULT_HEADERS = 'use_case_default_headers',
 
     /**
      * Text field, that contains default header metadata separated by comma for case view as a value
