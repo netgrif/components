@@ -73,6 +73,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
      * Siblings of the node are on the left, children are on the right
      */
     protected _currentPath: string;
+    private _fromResolver: boolean;
     /**
      * Currently selected navigation item
      */
@@ -213,6 +214,10 @@ export class DoubleDrawerNavigationService implements OnDestroy {
         return this._nodeLoading$;
     }
 
+    set fromResolver(value: boolean) {
+        this._fromResolver = value;
+    }
+
     public loadNavigationItems(node: UriNodeResource) {
         if (this.currentPath === PathService.SEPARATOR) {
             this._leftItems$.next([]);
@@ -256,8 +261,8 @@ export class DoubleDrawerNavigationService implements OnDestroy {
      * On second check if the clicked item has a view. On third, pick any other children's view, else show nothing.
      * */
     public onItemClick(item: NavigationItem): void {
+        this._currentNavigationItem = item;
         if (item.resource === undefined) {
-            this._currentNavigationItem = undefined;
             // custom view represented only in nae.json
             if (item.processUri === this.currentPath) {
                 this._pathService.activePath = this.currentPath;
@@ -266,7 +271,6 @@ export class DoubleDrawerNavigationService implements OnDestroy {
             }
             this.itemClicked.emit({path: this._pathService.activePath, isHome: false});
         } else {
-            this._currentNavigationItem = item;
             const path = item.resource.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)?.value
 
             if (DoubleDrawerUtils.hasItemChildren(item) && !this.leftLoading$.isActive && !this.rightLoading$.isActive) {
@@ -305,6 +309,11 @@ export class DoubleDrawerNavigationService implements OnDestroy {
                 // when the folder has not changed and a menu item is clicked.
                 return;
             }
+        }
+
+        if (this._fromResolver) {
+            this._fromResolver = false;
+            return;
         }
 
         let autoOpenItems: Array<NavigationItem> = allItems.filter(item => DoubleDrawerUtils.hasItemAutoOpenView(item));
@@ -598,10 +607,10 @@ export class DoubleDrawerNavigationService implements OnDestroy {
         if (path === '/') {
             return path;
         }
-        if (path.lastIndexOf('/') === 0) {
+        if (path?.lastIndexOf('/') === 0) {
             return '/';
         }
-        return path.substring(0, path.lastIndexOf('/'));
+        return path?.substring(0, path?.lastIndexOf('/'));
     }
 
 

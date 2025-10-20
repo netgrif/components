@@ -154,7 +154,7 @@
         <img *ngIf="image !== undefined" [alt]="imageAlt" [src]="image" class="logoimg"
              [routerLink]="imageRouterLink !== undefined ? imageRouterLink : []">
     </div>
-    <div *ngIf="(rightLoading$ | async) === false">
+    <div *ngIf="(rightLoading$ | async) === false && (pathResolverLoading$ | async) === false">
         <div fxLayout="column" fxLayoutAlign="end end" class="order-icon-wrapper">
             <button mat-icon-button fxLayout="column" fxLayoutAlign="center center"
                     class="mat-button mat-typography menu-font-color order-icon" (click)="switchOrder()"
@@ -175,7 +175,7 @@
             </button>
         </div>
     </div>
-    <div *ngIf="(rightLoading$ | async)" fxLayout="column" fxLayoutAlign="center center" class="margin-top-default">
+    <div *ngIf="(rightLoading$ | async) || (pathResolverLoading$ | async)" fxLayout="column" fxLayoutAlign="center center" class="margin-top-default">
         <mat-spinner color="primary" diameter="40" mode="indeterminate"></mat-spinner>
     </div>
 </ng-template>

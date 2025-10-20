@@ -265,14 +265,13 @@ export abstract class AbstractDashboardComponent {
             }
             const itemRoute = this._doubleDrawerNavigationService.getItemRoutingPath(menuItemCase);
             const nodePath = this.getFieldValue(menuItemCase, GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH);
+            const menuItem = this._doubleDrawerNavigationService.resolveItemCaseToNavigationItem(menuItemCase);
+            if (menuItem) {
+                this._doubleDrawerNavigationService.currentNavigationItem = menuItem;
+            }
             if (menuItemCase.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_HAS_CHILDREN)?.value && nodePath) {
-                this._doubleDrawerNavigationService.currentNavigationItem = undefined;
                 this._pathService.activePath = nodePath;
             } else if (nodePath) {
-                const menuItem = this._doubleDrawerNavigationService.resolveItemCaseToNavigationItem(menuItemCase);
-                if (menuItem) {
-                    this._doubleDrawerNavigationService.currentNavigationItem = menuItem;
-                }
                 this._pathService.activePath = this._doubleDrawerNavigationService.extractParentPath(nodePath);
             }
             this._router.navigate([itemRoute]);
