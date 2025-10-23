@@ -16,7 +16,7 @@
     <div class="full-height transform-div custom-scrollbar"
          [ngClass]="{'overflow-div': getOverflowStatus()}" fxLayout="column" fxLayoutAlign="start stretch">
         <div class="full-height transform-div max-width-fix" fxLayout="column" fxLayoutAlign="start stretch">
-            <nc-header #header [type]="headerType" [maxHeaderColumns]="6" [responsiveHeaders]="true" [ngStyle]="{'width': getWidth()}" [hideHeaderMenu]="!headersChangeable" [showEditButton]="isMenuOptionEnabled('edit')"
+            <nc-header #header [type]="headerType" [maxHeaderColumns]="headersCount" [responsiveHeaders]="true" [ngStyle]="{'width': getWidth()}" [hideHeaderMenu]="!headersChangeable" [showEditButton]="isMenuOptionEnabled('edit')"
                        [showSortButton]="isMenuOptionEnabled('sort')" [showSearchButton]="isMenuOptionEnabled('search')"
                        [showTableSection]="allowTableMode" class="case-header-padding"></nc-header>
 

@@ -36,7 +36,7 @@ import {SearchService} from '../../search/search-service/search.service';
 import {TestTaskBaseFilterProvider, TestTaskViewAllowedNetsFactory} from '../../utility/tests/test-factory-methods';
 import {ErrorSnackBarComponent} from '../../snack-bar/components/error-snack-bar/error-snack-bar.component';
 import {SuccessSnackBarComponent} from '../../snack-bar/components/success-snack-bar/success-snack-bar.component';
-import {TaskPanelData} from '../task-panel-list/task-panel-data/task-panel-data';
+import {TaskPanelData} from '../task-panel-data/task-panel-data';
 import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../task-content/model/policy';
 import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {HeaderColumn, HeaderColumnType} from '../../header/models/header-column';

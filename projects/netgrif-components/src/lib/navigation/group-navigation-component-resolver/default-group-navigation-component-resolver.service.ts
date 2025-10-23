@@ -9,7 +9,7 @@ import {
     ViewService,
     extractFieldValueFromData,
     hasView,
-    RoutingBuilderService
+    RoutingBuilderService, PathService
 } from '@netgrif/components-core';
 import {DefaultTabViewComponent} from './default-components/tabbed/default-tab-view/default-tab-view.component';
 import {
@@ -19,8 +19,8 @@ import {
 @Injectable()
 export class DefaultGroupNavigationComponentResolverService extends GroupNavigationComponentResolverService {
 
-    constructor(taskResourceService: TaskResourceService, log: LoggerService, private _configService: ConfigurationService, private _viewService: ViewService,) {
-        super(taskResourceService, log);
+    constructor(taskResourceService: TaskResourceService, log: LoggerService, protected _configService: ConfigurationService, protected _viewService: ViewService, protected _pathService: PathService) {
+        super(taskResourceService, _pathService, log);
     }
 
     public resolveViewComponent(navItemData: Array<DataGroup>): Type<any> {

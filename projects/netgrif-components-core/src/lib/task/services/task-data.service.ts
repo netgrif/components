@@ -489,7 +489,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         if (Object.keys(changedFieldsMap).length > 0) {
             this._changedFieldsService.emitChangedFields(changedFieldsMap);
         }
-        if (!!frontActions && frontActions.length > 0) {
+        if (frontActions?.length > 0) {
             this._frontActionService.runAll(frontActions);
         }
         this.clearWaitingForResponseFlag(context.body);
