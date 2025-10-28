@@ -53,6 +53,10 @@ export interface CaseSearchRequestBody {
      */
     query?: string;
     /**
+     * A switch for resolving query the old way or by Groovy compiler for dynamic code in queries.
+     */
+    dynamicQuery?: boolean;
+    /**
      * Returned cases must have the specified ID.
      * If more than one ID is specified, the returned cases must have one of them.
      */
