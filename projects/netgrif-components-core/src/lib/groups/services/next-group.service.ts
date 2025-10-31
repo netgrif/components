@@ -25,35 +25,16 @@ export class NextGroupService implements OnDestroy {
     protected _memberGroups$: BehaviorSubject<Array<Case>>;
     protected _ownerGroups$: BehaviorSubject<Array<Case>>;
 
-    private _userSub: Subscription;
+    // private _userSub: Subscription;
 
     constructor(protected _userService: UserService, protected _caseResourceService: CaseResourceService) {
         this._ownerGroups$ = new BehaviorSubject<Array<Case>>([]);
         this._memberGroups$ = new BehaviorSubject<Array<Case>>([]);
 
-        this._userSub = this._userService.user$.pipe(
-            switchMap(user => {
-                if (!user || user.id === '') {
-                    return of([]);
-                }
-
-                const params = new HttpParams().set(PaginationParams.PAGE_SIZE, `${(user as any).nextGroups.length}`);
-
-                return this._caseResourceService.searchCases(SimpleFilter.fromCaseQuery({id: (user as any).nextGroups}), params)
-                    .pipe(
-                        map(page => page.content ? page.content : []),
-                        map(groups => groups.filter(group => group.author.fullName !== 'application engine'))
-                    );
-            })
-        ).subscribe(groups => {
-            const ownerGroups = groups.filter(g => g.author.email === this._userService.user.email);
-            this._ownerGroups$.next(ownerGroups);
-            this._memberGroups$.next(groups);
-        });
     }
 
     ngOnDestroy(): void {
-        this._userSub.unsubscribe();
+        // this._userSub.unsubscribe();
         this._memberGroups$.complete();
         this._ownerGroups$.complete();
     }

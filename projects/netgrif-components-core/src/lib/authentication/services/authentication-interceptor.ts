@@ -37,7 +37,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
         return next.handle(req).pipe(
             tap(event => {
                 if (event instanceof HttpResponse) {
-                    if (event.headers.has(this._session.sessionHeader) && !event.headers.has(this._anonymousService.jwtHeader)) {
+                    if (event.headers.has(this._session.sessionHeader) && !event.headers.has(this._anonymousService.anonymousTokenHeader)) {
                         this._session.setVerifiedToken(event.headers.get(this._session.sessionHeader));
                     }
                 }

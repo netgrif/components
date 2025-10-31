@@ -9,20 +9,20 @@ import {BehaviorSubject, Observable} from 'rxjs';
 })
 export class AnonymousService implements OnDestroy {
 
-    public static readonly JWT_BEARER_HEADER_DEFAULT = 'X-Jwt-Token';
-    protected readonly _jwtHeader: string;
+    public static readonly X_ANONYMOUS_TOKEN = 'X-Anonymous-Token';
+    protected readonly _anonymousTokenHeader: string;
     protected _storage: Storage;
     protected _tokenSet: BehaviorSubject<boolean>;
 
     constructor(protected _config: ConfigurationService) {
-        this._jwtHeader = this._config.get().providers.auth.jwtBearer ?
-            this._config.get().providers.auth.jwtBearer : AnonymousService.JWT_BEARER_HEADER_DEFAULT;
+        this._anonymousTokenHeader = this._config.get().providers.auth.anonymous ?
+            this._config.get().providers.auth.anonymous : AnonymousService.X_ANONYMOUS_TOKEN;
         this._storage = this.resolveStorage(this._config.get().providers.auth['local']);
         this._tokenSet = new BehaviorSubject<boolean>(false);
     }
 
-    get jwtHeader(): string {
-        return this._jwtHeader;
+    get anonymousTokenHeader(): string {
+        return this._anonymousTokenHeader;
     }
 
     get tokenSet(): Observable<boolean> {
@@ -30,22 +30,22 @@ export class AnonymousService implements OnDestroy {
     }
 
     public getToken(): string {
-        return this._storage.getItem(this._jwtHeader);
+        return this._storage.getItem(this._anonymousTokenHeader);
     }
 
     public setToken(token: string): void {
-        this._storage.setItem(this._jwtHeader, token);
+        this._storage.setItem(this._anonymousTokenHeader, token);
         if (!this._tokenSet.getValue())
             this._tokenSet.next(true);
     }
 
     public removeToken(): void {
-        this._storage.removeItem(this._jwtHeader);
+        this._storage.removeItem(this._anonymousTokenHeader);
         this._tokenSet.next(false);
     }
 
     ngOnDestroy(): void {
-        localStorage.removeItem(this._jwtHeader);
+        localStorage.removeItem(this._anonymousTokenHeader);
         this._tokenSet.complete();
     }
 
