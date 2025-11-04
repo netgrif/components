@@ -82,7 +82,11 @@ export interface PetriNetSearchRequest {
     /**
      * Queried PetriNet identifier
      */
-    identifier: string;
+    identifier?: string;
+    /**
+     * Queried PetriNet mongo ID
+     */
+    processId?: string;
 }
 
 /**
