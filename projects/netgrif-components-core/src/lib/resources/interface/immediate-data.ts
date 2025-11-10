@@ -49,8 +49,10 @@ export interface ImmediateData {
      * Only for enumeration_map and multichoice_map
      */
     options?: {
-        defaultValue?: string,
-        key?: string;
-        translations?: I18nFieldTranslations;
+        [k: string]: {
+            defaultValue?: string,
+            key?: string;
+            translations?: I18nFieldTranslations;
+        }
     };
 }
