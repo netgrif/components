@@ -1,7 +1,7 @@
 import {FilterMetadata} from '../../search/models/persistance/filter-metadata';
 import {FormatFilter} from '../../data-fields/models/format-filter';
 import {Component} from '../../data-fields/models/component';
-import {I18nFieldTranslations} from "../../data-fields/i18n-field/models/i18n-field-value";
+import {I18nFieldValue} from "../../data-fields/i18n-field/models/i18n-field-value";
 
 /**
  * @ignore
@@ -49,10 +49,6 @@ export interface ImmediateData {
      * Only for enumeration_map and multichoice_map
      */
     options?: {
-        [k: string]: {
-            defaultValue?: string,
-            key?: string;
-            translations?: I18nFieldTranslations;
-        }
+        [k: string]: I18nFieldValue
     };
 }
