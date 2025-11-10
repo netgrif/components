@@ -78,15 +78,18 @@ export abstract class AbstractPanelWithImmediateDataComponent extends AbstractPa
                         icon: undefined, type: immediate.type
                     };
                 case 'button':
+                    let buttonValue: string;
+                    if ((immediate as any).placeholder?.defaultValue !== undefined) {
+                        buttonValue = this.getTranslation((immediate as any).placeholder);
+                    } else if (immediate.name?.defaultValue !== undefined) {
+                        buttonValue = this.getTranslation(immediate.name);
+                    } else {
+                        buttonValue = this._translate.instant('dialog.submit');
+                    }
                     return {
-                        value: (immediate as any).placeholder?.defaultValue !== undefined
-                            ? this.getTranslation((immediate as any).placeholder)
-                            : (
-                                immediate.name?.defaultValue !== undefined
-                                ? this.getTranslation(immediate.name)
-                                : this._translate.instant('dialog.submit')
-                            ),
-                        icon: undefined, type: immediate.type
+                        value: buttonValue,
+                        icon: undefined,
+                        type: immediate.type
                     };
                 case 'filter':
                     return {
@@ -110,11 +113,11 @@ export abstract class AbstractPanelWithImmediateDataComponent extends AbstractPa
         }
     }
 
-    protected getTranslation(i18n: I18nFieldValue): string {
+    protected getTranslation(i18n: I18nFieldValue | undefined): string {
         const locale = this._translate.currentLang;
-        return (i18n && locale in i18n.translations)
+        return (i18n && i18n.translations && locale in i18n.translations)
             ? i18n.translations[locale]
-            : i18n?.defaultValue;
+            : (i18n?.defaultValue ?? '');
     }
 
     protected formatCurrencyPipe(value: any, code: string, fraction: number, locale: string, type: string) {
