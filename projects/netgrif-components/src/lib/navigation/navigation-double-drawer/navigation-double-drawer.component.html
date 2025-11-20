@@ -20,7 +20,7 @@
     </mat-toolbar-row>
 </mat-toolbar>
 <mat-spinner *ngIf="!logo"></mat-spinner>
-<mat-sidenav-container class="rail-container deny-select">
+<mat-sidenav-container class="rail-container">
     <mat-sidenav mode="side" [(opened)]="configLeftMenu.opened" position="start"
                  [disableClose]="configLeftMenu.disableClose"
                  class="rail-content">
@@ -95,7 +95,7 @@
         <mat-sidenav-container class="drawer-container"  (backdropClick)="toggleLeftMenu()">
             <mat-sidenav [mode]="configRightMenu.mode" [(opened)]="configRightMenu.opened" position="start"
                          [disableClose]="configRightMenu.disableClose"
-                         class="drawer-content"
+                         class="drawer-content deny-select"
                          mwlResizable
                          (resizing)="onResizeEvent($event)"
                          [style.width.px]="configRightMenu.width">
@@ -104,7 +104,7 @@
 
             </mat-sidenav>
 
-            <mat-sidenav-content class="content-color">
+            <mat-sidenav-content class="content-color ">
                 <ng-content></ng-content>
             </mat-sidenav-content>
         </mat-sidenav-container>
