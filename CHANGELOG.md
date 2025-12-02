@@ -12,6 +12,7 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.4.2](https://g
 ### Fixed
 - [NAE-2231] Unable to change behavior of taskRef on finish event without error message
 - [NAE-2268] Fix resolving of referenced taskId on frontend
+- [NAE-2290] Couldn't find referenced task in a taskref incoming from event outcome
 
 ### Added
 - [NAE-2100] Case view export button as NAE feature
