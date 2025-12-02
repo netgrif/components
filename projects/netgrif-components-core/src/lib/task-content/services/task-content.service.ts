@@ -314,12 +314,12 @@ export abstract class TaskContentService implements OnDestroy {
         let taskRefId = Object.values(fields).find(f => f instanceof TaskRefField && f.value.includes(taskId));
         if (!taskRefId) {
             const referencedTaskIds = Array.prototype.concat.apply([], Object.values(fields).filter(f => f instanceof TaskRefField).map(tr => tr.value));
-            referencedTaskIds.forEach(id => {
+            for (const id of referencedTaskIds) {
                 taskRefId = this.findTaskRefId(taskId, this.taskFieldsIndex[id].fields);
                 if (!!taskRefId) {
                     return taskRefId;
                 }
-            });
+            }
         }
         return taskRefId
     }
