@@ -133,7 +133,8 @@ export class FinishTaskService extends TaskHandlingService {
             }
 
             if (outcomeResource.success) {
-                this._taskContentService.updateStateData(outcomeResource.outcome as FinishTaskEventOutcome);
+                const outcome = outcomeResource.outcome as FinishTaskEventOutcome
+                this._taskContentService.updateStateData(outcome, outcome.isTaskStillExecutable);
                 const changedFieldsMap: ChangedFieldsMap = this._eventService
                     .parseChangedFieldsFromOutcomeTree(outcomeResource.outcome);
                 if (!!changedFieldsMap) {
