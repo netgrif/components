@@ -75,6 +75,6 @@ class TestUserComponent extends AbstractMultiUserAssignListComponent {
     template: '<ncc-test-user [searchUserControl]="formControl"></ncc-test-user>'
 })
 class TestWrapperComponent {
-    injectedData = {roles: [], value: new UserValue('5', 'realmID0', 'admin', 'netgrif', 'super@netgrif.com')} as UserListInjectedData;
+    injectedData = {roles: [], value: new UserValue('5', 'realmID0', 'admin', 'netgrif', 'admin netgrif', 'super@netgrif.com')} as UserListInjectedData;
     formControl = new FormControl();
 }

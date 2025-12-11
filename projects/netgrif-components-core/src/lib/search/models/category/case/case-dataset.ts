@@ -173,8 +173,8 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
                     this._operatorService.getOperator(Equals),
                     this._operatorService.getOperator(NotEquals)
                 ];
-            case 'user':
-            case 'userList':
+            case 'actor':
+            case 'actorList':
                 return [
                     this._operatorService.getOperator(Equals),
                     this._operatorService.getOperator(NotEquals),
@@ -261,7 +261,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
                     || this.isSelectedOperator(IsNull));
             case 'user':
             case 'userList':
-                return resolver.getIndex(datafield.fieldId, SearchIndex.USER_ID);
+                return resolver.getIndex(datafield.fieldId, SearchIndex.ACTOR_ID);
             case 'i18n':
                 return resolver.getIndex(datafield.fieldId, SearchIndex.TEXT, this.isSelectedOperator(Equals) || this.isSelectedOperator(NotEquals) || this.isSelectedOperator(Substring)
                     || this.isSelectedOperator(IsNull));

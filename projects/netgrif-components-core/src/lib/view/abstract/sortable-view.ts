@@ -69,8 +69,8 @@ export abstract class AbstractSortableViewComponent implements OnDestroy {
                 case 'date':
                 case 'dateTime':
                     return this._resolver.getIndex(this._lastHeaderSearchState.fieldIdentifier, SearchIndex.TIMESTAMP);
-                case 'user':
-                case 'userList':
+                case 'actor':
+                case 'actorList':
                     return this._resolver.getIndex(this._lastHeaderSearchState.fieldIdentifier, SearchIndex.FULL_NAME, true);
                 default:
                     return this._resolver.getIndex(this._lastHeaderSearchState.fieldIdentifier, SearchIndex.FULLTEXT, true);

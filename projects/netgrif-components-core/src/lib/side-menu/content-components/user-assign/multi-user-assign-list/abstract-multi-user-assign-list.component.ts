@@ -59,10 +59,10 @@ export abstract class AbstractMultiUserAssignListComponent extends AbstractBaseU
         const index = this._currentlySelectedUsers.indexOf(selectedUser.id);
         if (index > -1) {
             this._currentlySelectedUsers.splice(index, 1);
-            this.userUnselected.emit(new UserValue(selectedUser.id, selectedUser.realmId, selectedUser.firstName, selectedUser.lastName, selectedUser.username));
+            this.userUnselected.emit(new UserValue(selectedUser.id, selectedUser.realmId, selectedUser.firstName, selectedUser.lastName, selectedUser.fullName, selectedUser.username));
         } else {
             this._currentlySelectedUsers.push(selectedUser.id);
-            this.userSelected.emit(new UserValue(selectedUser.id, selectedUser.realmId, selectedUser.firstName, selectedUser.lastName, selectedUser.username));
+            this.userSelected.emit(new UserValue(selectedUser.id, selectedUser.realmId, selectedUser.firstName, selectedUser.lastName, selectedUser.fullName, selectedUser.username));
         }
         this._selectedUsers$.next([...this._currentlySelectedUsers]);
     }

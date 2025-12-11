@@ -89,9 +89,9 @@ export class CaseSimpleDataset extends NoConfigurationCategory<string> {
             case 'fileList':
                 this._elasticKeyword = resolver.getIndex(this._fieldId, SearchIndex.FILE_NAME, this.isSelectedOperator(Substring));
                 break;
-            case 'user':
-            case 'userList':
-                this._elasticKeyword = resolver.getIndex(this._fieldId, SearchIndex.USER_ID);
+            case 'actor':
+            case 'actorList':
+                this._elasticKeyword = resolver.getIndex(this._fieldId, SearchIndex.ACTOR_ID);
                 break;
             case 'i18n':
                 this._elasticKeyword = resolver.getIndex(this._fieldId, SearchIndex.TEXT, this.isSelectedOperator(Equals) || this.isSelectedOperator(NotEquals) || this.isSelectedOperator(Substring))

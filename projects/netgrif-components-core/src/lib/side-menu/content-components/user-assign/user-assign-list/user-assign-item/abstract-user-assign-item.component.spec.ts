@@ -53,5 +53,5 @@ class TestUserComponent extends AbstractUserAssignItemComponent {
     template: '<ncc-test-user [user]="user"></ncc-test-user>'
 })
 class TestWrapperComponent {
-    user = new UserValue('0',  'realmID0', '', '', '');
+    user = new UserValue('0',  'realmID0', '', '', '','');
 }
