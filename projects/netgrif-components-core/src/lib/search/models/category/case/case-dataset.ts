@@ -78,7 +78,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
                 return SearchInputType.NUMBER;
             case 'boolean':
                 return SearchInputType.BOOLEAN;
-            case 'user':
+            case 'actor':
                 return SearchInputType.AUTOCOMPLETE;
             default:
                 return SearchInputType.TEXT;
@@ -259,8 +259,8 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
                 return resolver.getIndex(datafield.fieldId, SearchIndex.FILE_NAME,
                     this.isSelectedOperator(Equals) || this.isSelectedOperator(NotEquals) || this.isSelectedOperator(Substring)
                     || this.isSelectedOperator(IsNull));
-            case 'user':
-            case 'userList':
+            case 'actor':
+            case 'actorList':
                 return resolver.getIndex(datafield.fieldId, SearchIndex.ACTOR_ID);
             case 'i18n':
                 return resolver.getIndex(datafield.fieldId, SearchIndex.TEXT, this.isSelectedOperator(Equals) || this.isSelectedOperator(NotEquals) || this.isSelectedOperator(Substring)

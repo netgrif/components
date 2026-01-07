@@ -115,7 +115,7 @@ export class CaseSimpleDataset extends NoConfigurationCategory<string> {
                 return this._operatorService.getOperator(Equals);
             case 'boolean':
                 return this._operatorService.getOperator(Equals);
-            case 'user':
+            case 'actor':
                 return this._operatorService.getOperator(Equals);
             case 'date':
                 return this._operatorService.getOperator(EqualsDate);
