@@ -6,7 +6,7 @@
 import { UserValue } from '../../user-field/models/user-value';
 
 export class UserListValue {
-    // todo rebranding to actor-list-field
+    // TODO: rebranding to actor-list-field
 
     private _userValues: Map<string, UserValue>;
 
