@@ -30,6 +30,7 @@ export interface Task {
      * See [UserSmall]{@link UserResourceSmall#}
      */
     userId: string;
+    userRealmId?: string;
     /**
      * ***Example:***
      *
