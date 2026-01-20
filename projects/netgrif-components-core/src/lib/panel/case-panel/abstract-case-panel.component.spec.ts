@@ -163,7 +163,7 @@ class TestWrapperComponent {
             {stringId: 'date', title: 'string', type: 'date', value: [2020, 1, 1, 10, 10]},
             {stringId: 'string', title: 'string', type: 'string', value: 'dasdsadsad'},
             {stringId: 'dateTime', title: 'string', type: 'dateTime', value: [2020, 1, 1, 10, 10]},
-            {stringId: 'enum', title: 'string', type: 'enumeration', value: {defaultValue: 'dasd'}},
+            {stringId: 'enum', title: 'string', type: 'enumeration', value: {defaultValue: 'dasd', translations: {}}},
         ]
     };
 }

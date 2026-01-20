@@ -9,7 +9,7 @@ import {
     NAE_TAB_DATA,
     TaskViewService,
     NetgrifPaginatorIntl,
-    AbstractTaskListPaginationComponent
+    AbstractTaskListPaginationComponent, NAE_TASK_CONTENT_SERVICE_TYPE, TaskContentServiceType
 } from '@netgrif/components-core';
 import {ActivatedRoute} from '@angular/router';
 import {MatPaginatorIntl} from '@angular/material/paginator';
@@ -18,7 +18,10 @@ import {MatPaginatorIntl} from '@angular/material/paginator';
     selector: 'nc-task-list-pagination',
     templateUrl: './task-list-pagination.component.html',
     styleUrls: ['./task-list-pagination.component.scss'],
-    providers: [{provide: MatPaginatorIntl, useClass: NetgrifPaginatorIntl}]
+    providers: [
+        {provide: MatPaginatorIntl, useClass: NetgrifPaginatorIntl},
+        {provide: NAE_TASK_CONTENT_SERVICE_TYPE, useValue: TaskContentServiceType.SINGLE}
+    ]
 })
 export class TaskListPaginationComponent extends AbstractTaskListPaginationComponent {
     constructor(protected _taskViewService: TaskViewService,

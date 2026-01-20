@@ -5,7 +5,6 @@ import {TranslateService} from '@ngx-translate/core';
 import {ResizeEvent} from 'angular-resizable-element';
 import {Observable, Subscription} from 'rxjs';
 import {filter, take} from 'rxjs/operators';
-import {AccessService} from '../../authorization/permission/access.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {ImpersonationUserSelectService} from '../../impersonation/services/impersonation-user-select.service';
 import {ImpersonationService} from '../../impersonation/services/impersonation.service';
@@ -32,6 +31,8 @@ import {
 } from '../model/navigation-menu-events';
 import {DoubleDrawerNavigationService} from "./service/double-drawer-navigation.service";
 import {GroupNavigationConstants} from "../model/group-navigation-constants";
+import {extractFieldValueFromData} from "../utility/navigation-item-task-utility-methods";
+import {LoadingEmitter} from "../../utility/loading-emitter";
 
 @Component({
     selector: 'ncc-abstract-navigation-double-drawer',
@@ -72,6 +73,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
      * Siblings of the node are on the left, children are on the right
      */
     protected _currentPath: string;
+    protected _pathResolverLoading$: LoadingEmitter;
 
     protected _configLeftMenu: ConfigDoubleMenu = {
         mode: 'side',
@@ -113,6 +115,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         this._navigationService.itemLoaded$.subscribe((itemLoadedEvent: MenuItemLoadedEvent) => {
             this.itemLoaded.emit(itemLoadedEvent);
         })
+        this._pathResolverLoading$ = new LoadingEmitter();
     }
 
     public ngOnInit(): void {
@@ -125,10 +128,12 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         });
 
         this._userService.user$.pipe(filter(u => !!u && u.id !== ''), take(1)).subscribe(() => {
+            this.resolveInitialValueOfPath();
+
             this._currentPathSubscription = this._pathService.activePath$.subscribe(path => {
-                if (path !== this.currentPath) {
+                if (path !== this.currentPath && !this._pathResolverLoading$.isActive) {
                     this.currentPath = path;
-                } else {
+                } else if (!this._pathResolverLoading$.isActive) {
                     this.openAvailableView();
                 }
             });
@@ -151,8 +156,6 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                 this.hideMoreMenu = !hiddenCustomItems?.length;
             })
         });
-
-
     }
 
     public ngOnDestroy(): void {
@@ -221,6 +224,10 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
 
     public get rightLoading$() {
         return this._navigationService.rightLoading$;
+    }
+
+    public get pathResolverLoading$() {
+        return this._pathResolverLoading$;
     }
 
     public toggleMenu() {
@@ -375,5 +382,41 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
 
     protected openAvailableView() {
         this._navigationService.openAvailableView();
+    }
+
+    protected resolveInitialValueOfPath() {
+        if (this.currentPath === undefined) {
+            const groupNavigationRoute = this._config.getServicesConfiguration()?.groupNavigation?.groupNavigationRoute;
+            if (this._router.url.includes(groupNavigationRoute)) {
+                this._pathResolverLoading$.on();
+                this._pathService.datafieldsForMenuResolver.pipe(take(1)).subscribe(data => {
+                    this._pathResolverLoading$.off();
+                    let nodePath;
+                    let hasChildren;
+                    try {
+                        nodePath = extractFieldValueFromData<string>(data, GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH);
+                        hasChildren = extractFieldValueFromData<boolean>(data, GroupNavigationConstants.ITEM_FIELD_ID_HAS_CHILDREN);
+                    } catch (e) {
+                        this._log.info("Couldn't resolve menu, skipping...")
+                    }
+                    if (hasChildren && nodePath) {
+                        this._navigationService.fromResolver = true;
+                        this._pathService.activePath = nodePath;
+                    } else if (nodePath) {
+                        this._navigationService.fromResolver = true;
+                        this._pathService.activePath = this._navigationService.extractParentPath(nodePath);
+                    }
+                }, error => {
+                    this._pathResolverLoading$.off();
+                    this.currentPath = this._pathService.activePath;
+                });
+            } else {
+                const viewConfiguration = this._config.getViewByUrl(this._router.url)
+                if (viewConfiguration?.processUri) {
+                    this._navigationService.fromResolver = true;
+                    this._pathService.activePath = viewConfiguration.processUri;
+                }
+            }
+        }
     }
 }

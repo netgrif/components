@@ -53,7 +53,7 @@ import {
     AllowedNetsService,
     TestTaskViewAllowedNetsFactory,
     AllowedNetsServiceFactory,
-    CurrencyModule, ChangedFieldsService, OverflowService
+    CurrencyModule, ChangedFieldsService, OverflowService, TaskContentServiceType, NAE_TASK_CONTENT_SERVICE_TYPE
 } from '@netgrif/components-core';
 import {of, Subject, throwError} from 'rxjs';
 import {map} from 'rxjs/operators';
@@ -111,7 +111,8 @@ describe('TaskPanelComponent', () => {
                 AssignPolicyService,
                 FinishPolicyService,
                 {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
-                {provide: AllowedNetsService, useFactory: TestTaskViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
+                {provide: AllowedNetsService, useFactory: TestTaskViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
+                {provide: NAE_TASK_CONTENT_SERVICE_TYPE, useValue: TaskContentServiceType.SINGLE}
             ],
             declarations: [
                 PanelComponent,

@@ -1,7 +1,7 @@
 import {Component, EventEmitter,  Input, Output} from '@angular/core';
 import {AbstractViewWithHeadersComponent} from '../abstract/view-with-headers';
 import {Observable} from 'rxjs';
-import {TaskPanelData} from '../../panel/task-panel-list/task-panel-data/task-panel-data';
+import {TaskPanelData} from '../../panel/task-panel-data/task-panel-data';
 import {TaskViewService} from './service/task-view.service';
 import {ActivatedRoute} from '@angular/router';
 import {map, tap} from "rxjs/operators";

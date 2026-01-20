@@ -1,7 +1,7 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {TaskListPaginationComponent} from './task-list-pagination.component';
 import {MatExpansionModule} from '@angular/material/expansion';
-import {PanelComponentModule} from '../panel.module';
+import {PanelComponentModule} from '../../../panel/panel.module';
 import {
     AllowedNetsService, AllowedNetsServiceFactory, AssignPolicy,
     AuthenticationMethodService,
@@ -22,7 +22,7 @@ import {
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {CommonModule} from '@angular/common';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {AuthenticationComponentModule} from '../../authentication/auth.module';
+import {AuthenticationComponentModule} from '../../../authentication/auth.module';
 import {RouterTestingModule} from '@angular/router/testing';
 import {Component} from '@angular/core';
 import {of} from 'rxjs';

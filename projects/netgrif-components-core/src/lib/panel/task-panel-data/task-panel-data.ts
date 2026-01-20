@@ -1,6 +1,6 @@
-import {Task} from '../../../resources/interface/task';
+import {Task} from '../../resources/interface/task';
 import {Subject} from 'rxjs';
-import {ChangedFields} from '../../../data-fields/models/changed-fields';
+import {ChangedFields} from '../../data-fields/models/changed-fields';
 
 
 export interface TaskPanelData {

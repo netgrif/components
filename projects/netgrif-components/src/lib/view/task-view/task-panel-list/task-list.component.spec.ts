@@ -25,8 +25,8 @@ import {
     NAE_BASE_FILTER, TestTaskBaseFilterProvider, AllowedNetsService, TestTaskViewAllowedNetsFactory, AllowedNetsServiceFactory
 } from '@netgrif/components-core';
 import {RouterTestingModule} from '@angular/router/testing';
-import {PanelComponentModule} from '../panel.module';
-import {AuthenticationComponentModule} from '../../authentication/auth.module';
+import {PanelComponentModule} from '../../../panel/panel.module';
+import {AuthenticationComponentModule} from '../../../authentication/auth.module';
 
 describe('TaskListComponent', () => {
     let component: TaskListComponent;
