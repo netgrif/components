@@ -61,7 +61,7 @@ export class User implements IUser {
     }
 
     public isAnonymous(): boolean {
-        return this.authorities.some(a => a === 'ANONYMOUS_USER');
+        return this.authorities.length === 1 && this.authorities[0] === 'ANONYMOUS_USER';
     }
 
 }

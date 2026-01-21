@@ -15,13 +15,16 @@ import {AbstractResourceService} from '../abstract-endpoint/abstract-resource.se
 import {EventOutcomeMessageResource} from '../interface/message-resource';
 import {CreateCaseRequestBody} from '../interface/create-case-request-body';
 import {HttpParams} from "@angular/common/http";
+import {UserService} from "../../user/services/user.service";
 
 @Injectable({
     providedIn: 'root'
 })
 export class CaseResourceService extends AbstractResourceService implements CountService {
 
-    constructor(provider: ResourceProvider, configService: ConfigurationService) {
+    constructor(provider: ResourceProvider,
+                configService: ConfigurationService,
+                protected userService: UserService) {
         super('case', provider, configService);
     }
 

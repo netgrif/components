@@ -122,4 +122,8 @@ export abstract class AbstractResourceService {
             }
         };
     }
+
+    protected resolvePublicUrl(baseUrl: string, isUserAnonymous: boolean): string {
+        return isUserAnonymous ? baseUrl : baseUrl + '/public';
+    }
 }

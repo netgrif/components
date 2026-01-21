@@ -20,6 +20,7 @@ import {DataGroup} from '../interface/data-groups';
 import {DataField} from '../../data-fields/models/abstract-data-field';
 import {GetDataGroupsEventOutcome} from '../../event/model/event-outcomes/data-outcomes/get-data-groups-event-outcome';
 import {FileFieldRequest} from "../interface/file-field-request-body";
+import {UserService} from "../../user/services/user.service";
 
 @Injectable({
     providedIn: 'root'
@@ -29,7 +30,8 @@ export class TaskResourceService extends AbstractResourceService implements Coun
     constructor(provider: ResourceProvider,
                 configService: ConfigurationService,
                 protected _fieldConverter: FieldConverterService,
-                protected _logger: LoggerService) {
+                protected _logger: LoggerService,
+                protected userService: UserService) {
         super('task', provider, configService);
     }
 
