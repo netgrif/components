@@ -98,7 +98,7 @@ export class CaseResourceService extends AbstractResourceService implements Coun
      * {{baseUrl}}/api/workflow/case
      */
     public createCase(body: CreateCaseRequestBody): Observable<EventOutcomeMessageResource> {
-        return this._resourceProvider.post$('workflow/case/', this.SERVER_URL, body).pipe(map(r => this.changeType(r, undefined)));
+        return this._resourceProvider.post$(this.resolvePublicEndpoint('workflow/case/', this.userService.user), this.SERVER_URL, body).pipe(map(r => this.changeType(r, undefined)));
     }
 
     /**

@@ -22,10 +22,10 @@ export class UserService implements OnDestroy {
 
     protected _user: User;
     protected _userChange$: ReplaySubject<User>;
-    protected _anonymousUserChange$: ReplaySubject<User>;
+    // protected _anonymousUserChange$: ReplaySubject<User>;
     protected _loginCalled: boolean;
     protected _subAuth: Subscription;
-    protected _subAnonym: Subscription;
+    // protected _subAnonym: Subscription;
     private _publicLoadCalled: boolean;
 
     public readonly GLOBAL_ROLE_PREFIX = 'global_';
@@ -35,12 +35,12 @@ export class UserService implements OnDestroy {
                 protected _userTransform: UserTransformer,
                 protected _log: LoggerService,
                 protected _session: SessionService,
-                protected _anonymousService: AnonymousService,
+                // protected _anonymousService: AnonymousService,
                 protected _config: ConfigurationService) {
         this._user = this.emptyUser();
         this._loginCalled = false;
         this._userChange$ = new ReplaySubject<User>(1);
-        this._anonymousUserChange$ = new ReplaySubject<User>(1);
+        // this._anonymousUserChange$ = new ReplaySubject<User>(1);
         this._config.loaded$
             .pipe(
                 filter(loaded => loaded),
@@ -56,14 +56,14 @@ export class UserService implements OnDestroy {
                     }
                 });
             });
-            this._subAnonym = this._anonymousService.tokenSet.subscribe(token => {
-                if (token) {
-                    this.loadPublicUser();
-                } else {
-                    this.clearUser();
-                    this.publishAnonymousUserChange();
-                }
-            });
+            // this._subAnonym = this._anonymousService.tokenSet.subscribe(token => {
+            //     if (token) {
+            //         this.loadPublicUser();
+            //     } else {
+            //         this.clearUser();
+            //         this.publishAnonymousUserChange();
+            //     }
+            // });
         });
     }
 
@@ -79,15 +79,15 @@ export class UserService implements OnDestroy {
         return this.anonymousUser;
     }
 
-    get anonymousUser$(): Observable<User> {
-        return this._anonymousUserChange$.asObservable();
-    }
+    // get anonymousUser$(): Observable<User> {
+    //     return this._anonymousUserChange$.asObservable();
+    // }
 
     ngOnDestroy(): void {
         this._userChange$.complete();
-        this._anonymousUserChange$.complete();
+        // this._anonymousUserChange$.complete();
         this._subAuth.unsubscribe();
-        this._subAnonym.unsubscribe();
+        // this._subAnonym.unsubscribe();
     }
 
     /**
@@ -186,7 +186,7 @@ export class UserService implements OnDestroy {
     }
 
     protected emptyUser() {
-        return new User('', '', '', '', '', '', [], [], [], []);
+        return new User('', '', '', '', '', '', ['ANONYMOUS_USER'], [], [], []);
     }
 
     protected loadUser(): void {
@@ -206,18 +206,18 @@ export class UserService implements OnDestroy {
         });
     }
 
-    public loadPublicUser(): void {
-        this._userResource.getPublicLoggedUser().pipe(take(1)).subscribe((user: UserResource) => {
-            if (user) {
-                const backendUser = {...user, id: user.id.toString()};
-                this._user = this._userTransform.transform(backendUser);
-                this.publishAnonymousUserChange();
-            }
-        }, error => {
-            this._log.error('Loading logged user has failed! Initialisation has not be completed successfully!', error);
-            this._publicLoadCalled = false;
-        });
-    }
+    // public loadPublicUser(): void {
+    //     this._userResource.getPublicLoggedUser().pipe(take(1)).subscribe((user: UserResource) => {
+    //         if (user) {
+    //             const backendUser = {...user, id: user.id.toString()};
+    //             this._user = this._userTransform.transform(backendUser);
+    //             // this.publishAnonymousUserChange();
+    //         }
+    //     }, error => {
+    //         this._log.error('Loading logged user has failed! Initialisation has not be completed successfully!', error);
+    //         this._publicLoadCalled = false;
+    //     });
+    // }
 
     public clearUser() {
         this._user = this.emptyUser();
@@ -235,7 +235,7 @@ export class UserService implements OnDestroy {
         this._userChange$.next(this.user);
     }
 
-    protected publishAnonymousUserChange(): void {
-        this._anonymousUserChange$.next(this.user);
-    }
+    // protected publishAnonymousUserChange(): void {
+    //     this._anonymousUserChange$.next(this.user);
+    // }
 }

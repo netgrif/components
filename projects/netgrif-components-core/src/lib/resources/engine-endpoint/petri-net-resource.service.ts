@@ -23,7 +23,7 @@ export class PetriNetResourceService extends AbstractResourceService {
 
     constructor(provider: ResourceProvider,
                 configService: ConfigurationService,
-                protected userService: UserService) {
+                protected userService: UserService,) {
         super('petrinet', provider, configService);
     }
 
@@ -48,7 +48,7 @@ export class PetriNetResourceService extends AbstractResourceService {
      * **Request URL:** {{baseUrl}}/api/petrinet/data
      */
     public getDataPetriNet(body: object): Observable<any> {  // TODO: response
-        return this._resourceProvider.post$(this.resolvePublicUrl('petrinet', this.userService.user.isAnonymous()) + '/data', this.SERVER_URL, body)
+        return this._resourceProvider.post$(this.resolvePublicEndpoint('petrinet', this.userService.user) + '/data', this.SERVER_URL, body)
             .pipe(map(r => this.changeType(r, undefined)));
     }
 
@@ -60,7 +60,7 @@ export class PetriNetResourceService extends AbstractResourceService {
      * **Request URL:** {{baseUrl}}/api/petrinet/transitions
      */
     public getPetriNetTransitions(netId: string): Observable<Array<Transition>> {
-        return this._resourceProvider.get$(this.resolvePublicUrl('petrinet', this.userService.user.isAnonymous()) + '/transitions', this.SERVER_URL, new HttpParams().set('ids', netId))
+        return this._resourceProvider.get$(this.resolvePublicEndpoint('petrinet/transitions', this.userService.user), this.SERVER_URL, new HttpParams().set('ids', netId))
             .pipe(map(r => this.changeType(r, 'transitionReferences')));
     }
 
@@ -72,7 +72,7 @@ export class PetriNetResourceService extends AbstractResourceService {
      * **Request URL:** {{baseUrl}}/api/petrinet/{id}/transactions
      */
     public getPetriNetTransactions(netId: string, params?: Params): Observable<Array<Transaction>> {
-        return this._resourceProvider.get$(this.resolvePublicUrl('petrinet', this.userService.user.isAnonymous()) + netId + '/transactions', this.SERVER_URL, params)
+        return this._resourceProvider.get$(this.resolvePublicEndpoint('petrinet/' + netId + '/transactions', this.userService.user), this.SERVER_URL, params)
             .pipe(map(r => this.changeType(r, 'transactions')));
     }
 
@@ -84,7 +84,7 @@ export class PetriNetResourceService extends AbstractResourceService {
      * **Request URL:** {{baseUrl}}/api/petrinet/{id}/roles
      */
     public getPetriNetRoles(netId: string, params?: Params): Observable<RolesAndPermissions> {
-        return this._resourceProvider.get$('/petrinet/' + netId + '/roles', this.SERVER_URL, params)
+        return this._resourceProvider.get$(this.resolvePublicEndpoint('petrinet/' + netId + '/roles', this.userService.user), this.SERVER_URL, params)
             .pipe(map(r => this.changeType(r, undefined)));
     }
 
@@ -119,7 +119,7 @@ export class PetriNetResourceService extends AbstractResourceService {
      * **Request URL:** {{baseUrl}}/api/petrinet/{identifier}/{version}
      */
     public getOne(identifier: string, version: string, params?: Params): Observable<PetriNetReference> {
-        return this._resourceProvider.get$('petrinet/' + btoa(identifier) + '/' + version, this.SERVER_URL, params)
+        return this._resourceProvider.get$(this.resolvePublicEndpoint('petrinet/' + btoa(identifier) + '/' + version, this.userService.user), this.SERVER_URL, params)
             .pipe(map(r => this.changeType(r, 'petriNetReferences')));
     }
 
@@ -131,7 +131,7 @@ export class PetriNetResourceService extends AbstractResourceService {
      * **Request URL:** {{baseUrl}}/api/petrinet/{id}
      */
     public getOneById(netId: string, params?: Params): Observable<PetriNet> {
-        return this._resourceProvider.get$('petrinet/' + netId, this.SERVER_URL, params)
+        return this._resourceProvider.get$(this.resolvePublicEndpoint('petrinet/' + netId, this.userService.user), this.SERVER_URL, params)
             .pipe(map(r => this.changeType(r, undefined)));
     }
 
@@ -168,7 +168,7 @@ export class PetriNetResourceService extends AbstractResourceService {
      * **Request URL:** {{baseUrl}}/api/petrinet/search
      */
     public searchPetriNets(body: PetriNetRequestBody, params?: Params): Observable<Page<PetriNetReference>> {
-        return this._resourceProvider.post$('petrinet/search', this.SERVER_URL, body, params)
+        return this._resourceProvider.post$(this.resolvePublicEndpoint('petrinet/search', this.userService.user), this.SERVER_URL, body, params)
             // .pipe(map(r => this.getResourcePage<PetriNetReference>(r, 'petriNetReferences')));
             .pipe(map(r => this.mapToPage<PetriNetReference>(r)));
     }

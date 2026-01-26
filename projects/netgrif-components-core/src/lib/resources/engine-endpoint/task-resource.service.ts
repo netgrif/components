@@ -64,7 +64,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      */
     // {{baseUrl}}/api/task/assign/:id
     public assignTask(taskId: string): Observable<EventOutcomeMessageResource> {
-        return this._resourceProvider.get$('task/assign/' + taskId, this.SERVER_URL)
+        return this._resourceProvider.get$(this.resolvePublicEndpoint('task/assign/' + taskId, this.userService.user), this.SERVER_URL)
             .pipe(map(r => this.changeType(r, undefined)));
     }
 
@@ -74,7 +74,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      */
     // {{baseUrl}}/api/task/cancel/:id
     public cancelTask(taskId: string): Observable<EventOutcomeMessageResource> {
-        return this._resourceProvider.get$('task/cancel/' + taskId, this.SERVER_URL)
+        return this._resourceProvider.get$(this.resolvePublicEndpoint( 'task/cancel/' + taskId, this.userService.user), this.SERVER_URL)
             .pipe(map(r => this.changeType(r, undefined)));
     }
 
@@ -94,7 +94,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      */
     // {{baseUrl}}/api/task/finish/:id
     public finishTask(taskId: string): Observable<EventOutcomeMessageResource> {
-        return this._resourceProvider.get$('task/finish/' + taskId, this.SERVER_URL)
+        return this._resourceProvider.get$(this.resolvePublicEndpoint('task/finish/' + taskId, this.userService.user), this.SERVER_URL)
             .pipe(map(r => this.changeType(r, undefined)));
     }
 
@@ -143,9 +143,9 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      * POST
      */
     // {{baseUrl}}/api/task/case
-    public getAllTasksByCases(body: object): Observable<Array<Task>> { // TODO: ??
-        return this._resourceProvider.post$('task/case', this.SERVER_URL, body)
-            .pipe(map(r => this.changeType(r, 'tasks')));
+    public getAllTasksByCases(caseIds: string[]): Observable<Page<Task>> {
+        return this._resourceProvider.post$(this.resolvePublicEndpoint('task/case', this.userService.user), this.SERVER_URL, caseIds)
+            .pipe(map(r => this.getResourcePage<Task>(r, 'tasks')));
     }
 
     /**
@@ -154,7 +154,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      */
     // {{baseUrl}}/api/task/case/:id
     public getAllTasksByCase(caseId: string): Observable<Array<TaskReference>> {
-        return this._resourceProvider.get$('task/case/' + caseId, this.SERVER_URL)
+        return this._resourceProvider.get$(this.resolvePublicEndpoint('task/case/' + caseId, this.userService.user), this.SERVER_URL)
             .pipe(map(r => this.changeType(r, undefined)));
     }
 
@@ -190,7 +190,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      */
     // {{baseUrl}}/api/task/:id/data
     public rawGetData(taskId: string): Observable<EventOutcomeMessageResource> {
-        return this._resourceProvider.get$('task/' + taskId + '/data', this.SERVER_URL)
+        return this._resourceProvider.get$(this.resolvePublicEndpoint('task/' + taskId + '/data', this.userService.user), this.SERVER_URL)
             .pipe(map(r => this.changeType(r, undefined)));
     }
 
@@ -256,7 +256,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      */
     // {{baseUrl}}/api/task/:id/data
     public setData(taskId: string, body: TaskSetDataRequestBody): Observable<EventOutcomeMessageResource> {
-        return this._resourceProvider.post$('task/' + taskId + '/data', this.SERVER_URL, body)
+        return this._resourceProvider.post$(this.resolvePublicEndpoint('task/' + taskId + '/data', this.userService.user), this.SERVER_URL, body)
             .pipe(map(r => this.changeType(r, undefined)));
     }
 
@@ -268,7 +268,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
     // {{baseUrl}}/api/task/:id/file/:field         - for file field
     // {{baseUrl}}/api/task/:id/file/:field/:name   - for file list field
     public downloadFile(taskId: string, params: HttpParams): Observable<ProviderProgress | Blob> {
-        const url = `task/${taskId}/file${params?.has("fileName") ? '/named' : ''}`;
+        const url = this.resolvePublicEndpoint(`task/${taskId}/file${params?.has("fileName") ? '/named' : ''}`, this.userService.user);
         return this._resourceProvider.getBlob$(url, this.SERVER_URL, params).pipe(
             map(event => {
                 switch (event.type) {
@@ -292,7 +292,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
     // {{baseUrl}}/api/task/:id/files/:field    - for file list field
     public uploadFile(taskId: string, body: object, multipleFiles: boolean):
         Observable<ProviderProgress | EventOutcomeMessageResource> {
-        const url = `task/${taskId}/${multipleFiles ? 'files' : 'file'}`;
+        const url = this.resolvePublicEndpoint(`task/${taskId}/${multipleFiles ? 'files' : 'file'}`, this.userService.user);
         return this._resourceProvider.postWithEvent$<EventOutcomeMessageResource>(url, this.SERVER_URL, body).pipe(
             map(event => {
                 switch (event.type) {
@@ -313,8 +313,8 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      * DELETE
      */
     public deleteFile(taskId: string, body?: FileFieldRequest): Observable<MessageResource> {
-        const url = `task/${taskId}/file${body?.fileName ? '/named' : ''}`;
-        return this._resourceProvider.delete$(url, this.SERVER_URL, {}, {}, 'json', body).pipe(
+        const url = this.resolvePublicEndpoint(`task/${taskId}/file${body?.fileName ? '/named' : ''}`, this.userService.user);
+        return this._resourceProvider.delete$(url , this.SERVER_URL, {}, {}, 'json', body).pipe(
             map(r => this.changeType(r, undefined))
         );
     }

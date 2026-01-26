@@ -3,6 +3,7 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {Page} from '../interface/page';
 import {Pagination} from '../interface/pagination';
 import {PaginationParams} from '../../utility/pagination/pagination-params';
+import {User} from "../../user/models/user";
 
 /**
  * The class that contains behavior common to all resource services.
@@ -123,7 +124,14 @@ export abstract class AbstractResourceService {
         };
     }
 
-    protected resolvePublicUrl(baseUrl: string, isUserAnonymous: boolean): string {
-        return isUserAnonymous ? baseUrl : baseUrl + '/public';
+    protected resolvePublicEndpoint(endpoint: string, user: User): string {
+        if (!!user && user.isAnonymous()) {
+            if (endpoint.includes('/')) {
+                const slashIndex = endpoint.indexOf('/');
+                return endpoint.replace(endpoint.substring(slashIndex, slashIndex + 1), '/public/');
+            }
+            return endpoint + '/public';
+        }
+        return endpoint;
     }
 }

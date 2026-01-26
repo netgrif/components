@@ -396,9 +396,9 @@ class TestUserService extends UserService {
                 userTransform: UserTransformer,
                 log: LoggerService,
                 session: SessionService,
-                anonymousService: AnonymousService,
+                // anonymousService: AnonymousService,
                 config: ConfigurationService) {
-        super(authService, userResource, userTransform, log, session, anonymousService, config);
+        super(authService, userResource, userTransform, log, session, config);
     }
 
     public setUser(user: User) {

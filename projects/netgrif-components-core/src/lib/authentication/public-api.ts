@@ -10,7 +10,7 @@ export * from './authentication.module';
 
 /* SERVICES */
 export * from './anonymous/anonymous.service';
-export * from './services/anonymous-authentication-interceptor'
+// export * from './services/anonymous-authentication-interceptor'
 export * from './services/authentication-interceptor'
 export * from './proxyAuthentication.service'
 
