@@ -25,7 +25,6 @@ export class NextGroupService implements OnDestroy {
     protected _memberGroups$: BehaviorSubject<Array<Case>>;
     protected _ownerGroups$: BehaviorSubject<Array<Case>>;
 
-    // private _userSub: Subscription;
 
     constructor(protected _userService: UserService, protected _caseResourceService: CaseResourceService) {
         this._ownerGroups$ = new BehaviorSubject<Array<Case>>([]);
@@ -34,7 +33,6 @@ export class NextGroupService implements OnDestroy {
     }
 
     ngOnDestroy(): void {
-        // this._userSub.unsubscribe();
         this._memberGroups$.complete();
         this._ownerGroups$.complete();
     }

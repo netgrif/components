@@ -22,7 +22,6 @@ import {UserResourceService} from '../../resources/engine-endpoint/user-resource
 import {UserTransformer} from '../../authentication/models/user.transformer';
 import {SessionService} from '../../authentication/session/services/session.service';
 import {User} from '../../user/models/user';
-import {AnonymousService} from '../../authentication/anonymous/anonymous.service';
 import {ActiveGroupService} from '../../groups/services/active-group.service';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {LanguageService} from '../../translate/language.service';
