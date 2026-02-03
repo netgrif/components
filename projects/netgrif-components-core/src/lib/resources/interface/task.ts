@@ -6,6 +6,7 @@ import {UserResourceSmall} from './user-resource-small';
 import {ImmediateData} from './immediate-data';
 import {AssignedUserPolicy} from './assigned-user-policy';
 import {Permissions, UserPermissions, UserRefs} from '../../process/permissions';
+import {Assignee} from "./assignee";
 
 /**
  * Object from Backend
@@ -27,10 +28,9 @@ export interface Task {
     caseColor: string;
     caseTitle: string;
     /**
-     * See [UserSmall]{@link UserResourceSmall#}
+     * Assignee of task if task is assigned, otherwise undefined
      */
-    userId: string;
-    userRealmId?: string;
+    assignee: Assignee;
     /**
      * ***Example:***
      *
