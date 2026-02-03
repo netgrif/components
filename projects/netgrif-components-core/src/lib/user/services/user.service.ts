@@ -186,7 +186,7 @@ export class UserService implements OnDestroy {
     }
 
     protected emptyUser() {
-        return new User('', '', '', '', '', '', ['ANONYMOUS_USER'], [], [], []);
+        return new User('', '', '', '', '', '', ['ANONYMOUS'], [], [], []);
     }
 
     protected loadUser(): void {
