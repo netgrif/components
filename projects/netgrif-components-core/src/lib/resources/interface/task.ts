@@ -30,7 +30,7 @@ export interface Task {
     /**
      * Assignee of task if task is assigned, otherwise undefined
      */
-    assignee: Assignee;
+    assignee?: Assignee;
     /**
      * ***Example:***
      *
