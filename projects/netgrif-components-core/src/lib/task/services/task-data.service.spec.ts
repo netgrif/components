@@ -151,7 +151,12 @@ describe('TaskDataService', () => {
                     done();
                 });
 
-                taskContentService.task.assignee = null;
+                taskContentService.task.assignee = {
+                    id: '',
+                    realmId: '',
+                    username: '',
+                    fullName: ''
+                };
 
                 mockField.value = !mockField.value;
             }
@@ -196,7 +201,12 @@ describe('TaskDataService', () => {
                     }
                 });
 
-                taskContentService.task.assignee = null;
+                taskContentService.task.assignee = {
+                    id: '',
+                    realmId: '',
+                    username: '',
+                    fullName: ''
+                };
 
                 mockField1.value = !mockField1.value;
                 mockField2.value = !mockField2.value;
