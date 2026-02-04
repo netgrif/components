@@ -15,7 +15,7 @@ export const publicFactoryResolver = (userService: UserService, sessionService: 
         } else {
             router.navigate([url], {queryParams: redirectService.queryParams});
         }
-    } else if (authService.isAuthenticated && userService.user.id !== '' && userService.user.email !== 'anonymous@netgrif.com') {
+    } else if (authService.isAuthenticated && !!userService.user && !userService.user.isAnonymous()) {
         return privateService;
     } else {
         return publicService;

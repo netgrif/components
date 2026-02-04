@@ -223,7 +223,7 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
 
         let request: Observable<Page<Task>>;
         if (this._userService.user.isAnonymous()) {
-            const caseIds = Array.isArray(requestContext.filter.getRequestBody()['case']) ? requestContext.filter.getRequestBody()['case'][0].id : [requestContext.filter.getRequestBody()['case'].id];
+            const caseIds = Array.isArray(requestContext.filter.getRequestBody()['case']) ? requestContext.filter.getRequestBody()['case'][0].id : [requestContext.filter.getRequestBody()['case']?.id ?? ''];
             request = this._taskService.getAllTasksByCases(caseIds).pipe(take(1));
         } else if (requestContext.filter.bodyContainsQuery() || this._preferredEndpoint === TaskEndpoint.ELASTIC) {
             request = timer(200).pipe(

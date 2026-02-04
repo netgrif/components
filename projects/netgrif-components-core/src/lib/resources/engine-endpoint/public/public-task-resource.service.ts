@@ -62,6 +62,15 @@ export class PublicTaskResourceService extends TaskResourceService {
      * Get tasks of the case
      * GET
      */
+    public getAllTasksByCases(caseIds: string[]): Observable<Page<Task>> {
+        return this._resourceProvider.post$('task/public/case', this.SERVER_URL, caseIds)
+            .pipe(map(r => this.getResourcePage<Task>(r, 'tasks')));
+    }
+
+    /**
+     * Get tasks of the case
+     * GET
+     */
     // {{baseUrl}}/api/task/public/case/:id
     public getAllTasksByCase(caseId: string): Observable<Array<TaskReference>> {
         return this._provider.get$('task/public/case/' + caseId, this.SERVER_URL)
