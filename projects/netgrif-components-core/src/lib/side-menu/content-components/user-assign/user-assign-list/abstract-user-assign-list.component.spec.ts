@@ -70,7 +70,7 @@ class TestUserComponent extends AbstractUserAssignListComponent {
 class TestWrapperComponent {
     injectedData = {
         roles: [],
-        value: new UserValue('5', 'realmID0', 'admin', 'netgrif', 'super@netgrif.com')
+        value: new UserValue('5', 'realmID0', 'admin', 'netgrif', 'admin netgrif','super@netgrif.com')
     } as UserListInjectedData;
     formControl = new FormControl();
 }

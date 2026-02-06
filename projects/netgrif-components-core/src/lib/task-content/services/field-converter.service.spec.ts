@@ -56,7 +56,7 @@ describe('FieldConvertorService', () => {
         expect(service.formatValueForBackend(service.toClass(dataField), date))
             .toEqual(date.format('YYYY-MM-DD'));
 
-        dataField.type = FieldTypeResource.USER;
+        dataField.type = FieldTypeResource.ACTOR;
         expect(service.formatValueForBackend(service.toClass(dataField), {id: 5})).toEqual(5);
 
         dataField.type = FieldTypeResource.DATE_TIME;
@@ -122,9 +122,9 @@ describe('FieldConvertorService', () => {
         dataField.value = [2020, 3, 3, 3, 30] as any;
         expect(service.resolveType(service.toClass(dataField))).toEqual('dateTime');
 
-        dataField.type = FieldTypeResource.USER;
+        dataField.type = FieldTypeResource.ACTOR;
         dataField.value = {id: 5, name: 'name', surname: 'surname', email: 'mail'} as any;
-        expect(service.resolveType(service.toClass(dataField))).toEqual('user');
+        expect(service.resolveType(service.toClass(dataField))).toEqual('actor');
 
         dataField.type = FieldTypeResource.BUTTON;
         dataField.value = 0 as any;
