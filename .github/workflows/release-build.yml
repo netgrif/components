@@ -33,18 +33,37 @@ jobs:
                 with:
                     node-version: 24
                     registry-url: https://registry.npmjs.org/
+            -   name: Read version
+                uses: zvonimirsun/read-package-version-actions@v2
+                id: get_version
             -   run: npm i --legacy-peer-deps
-            -   name: Publish components-core
+            -   name: Build components-core
                 run: |
                     npm run ncc:build
                     npm i ./dist/netgrif-components-core --save-optional --legacy-peer-deps
+            -   name: Publish components-core pre-release
+                if: ${{ contains(steps.get_version.outputs.version,'-') }}
+                run: |
                     cd dist/netgrif-components-core
-                    npm publish --access public
-            -   name: Publish components
+                    npm publish --access public --tag next
+            -   name: Publish components-core latest release
+                if: ${{ !contains(steps.get_version.outputs.version,'-') }}
+                run: |
+                    cd dist/netgrif-components-core
+                    npm publish --access public --tag latest
+            -   name: Build components
                 run: |
                     npm run nc:build
+            -   name: Publish components pre-release
+                if: ${{ contains(steps.get_version.outputs.version,'-') }}
+                run: |
                     cd dist/netgrif-components
-                    npm publish --access public
+                    npm publish --access public --tag next
+            -   name: Publish components latest release
+                if: ${{ !contains(steps.get_version.outputs.version,'-') }}
+                run: |
+                    cd dist/netgrif-components
+                    npm publish --access public --tag latest
 
     publish-gpr:
         needs: build

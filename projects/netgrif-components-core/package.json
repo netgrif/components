@@ -6,7 +6,7 @@
     "license": "SEE LICENSE IN LICENSE",
     "repository": {
         "type": "git",
-        "url": "https://github.com/netgrif/components.git"
+        "url": "git+https://github.com/netgrif/components.git"
     },
     "bugs": {
         "url": "https://github.com/netgrif/components/issues"
