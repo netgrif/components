@@ -6,6 +6,7 @@ import {UserService} from '../../user/services/user.service';
 import {Case} from '../../resources/interface/case';
 import {PetriNetReferenceWithPermissions} from '../../process/petri-net-reference-with-permissions';
 import {Permissions, PermissionType, UserPermissions} from '../../process/permissions';
+import {User} from "../../user/models/user";
 
 @Injectable({
     providedIn: 'root'
@@ -31,7 +32,7 @@ export class PermissionService {
         }
 
         const rolePermValue = this.checkRolePerms(case_.permissions, permission);
-        const userPermValue = this.checkUserPerms(case_.users, permission);
+        const userPermValue = this.checkUserPerms(case_.actors, permission);
         return this.resolvePermissions(rolePermValue, userPermValue);
     }
 
@@ -108,14 +109,34 @@ export class PermissionService {
     public checkUserPerms(users: UserPermissions, permission): boolean | undefined {
         let userPermValue: boolean;
         if (!!users) {
-            const loggedUserId = this._userService.user.getSelfOrImpersonated().id;
-            Object.keys(users).forEach(user => {
-                if (user === loggedUserId && users[user][permission] !== undefined) {
-                    userPermValue = userPermValue === undefined ?
-                        users[user][permission] : userPermValue && users[user][permission];
+            const loggedUser: User = this._userService.user.getSelfOrImpersonated();
+            Object.keys(users).forEach(actorId => {
+                if (actorId !== loggedUser.id && !loggedUser.nextGroups?.includes(actorId)) {
+                    return;
+                }
+                let currentUserPermission: boolean = this.getPermissionByUserOrGroup(users, permission, loggedUser)
+                if (currentUserPermission !== undefined) {
+                    userPermValue = userPermValue === undefined ? currentUserPermission : userPermValue && currentUserPermission;
                 }
             });
         }
+        return userPermValue;
+    }
+
+    protected getPermissionByUserOrGroup(permissions: UserPermissions, permission, loggedUser: User): boolean | undefined {
+        let userPermValue: boolean;
+        if (permissions[loggedUser.id] !== undefined) {
+            userPermValue = permissions[loggedUser.id][permission];
+        }
+        if (loggedUser.nextGroups === undefined || loggedUser.nextGroups.length === 0) {
+            return userPermValue;
+        }
+        loggedUser.nextGroups.forEach(function(groupId) {
+            if (permissions[groupId] !== undefined && permissions[groupId][permission] !== undefined) {
+                userPermValue = userPermValue === undefined ?
+                    permissions[groupId][permission] : userPermValue && permissions[groupId][permission];
+            }
+        })
         return userPermValue;
     }
 }
