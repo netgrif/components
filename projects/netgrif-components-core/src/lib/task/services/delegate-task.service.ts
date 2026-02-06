@@ -82,6 +82,7 @@ export class DelegateTaskService extends TaskHandlingService {
                     this._safeTask.assignee.realmId,
                     this._safeTask.assignee.fullName?.split(' ')[0] ?? '',
                     this._safeTask.assignee.fullName?.split(' ').slice(1).join(' ') ?? '',
+                    this._safeTask.assignee.fullName,
                     this._safeTask.assignee.username
                 ),
                 negativeRoles: Object.keys(this._safeTask.roles).filter(role =>
