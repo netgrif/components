@@ -35,6 +35,6 @@ export function createMockCase(stringId = 'stringId',
         stringId,
         petriNetId,
         permissions: {},
-        users: {}
+        actors: {}
     };
 }
