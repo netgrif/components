@@ -425,7 +425,7 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
                 return {value: 'low', icon: 'south', type: 'meta'};
             case TaskMetaField.USER:
                 //TODO: refactor after User refactor PR is merged
-                return {value: task.userId ? task.userId : '', icon: 'account_circle', type: 'meta'};
+                return {value: task.assignee ? task.assignee.fullName : '', icon: 'account_circle', type: 'meta'};
             case TaskMetaField.ASSIGN_DATE:
                 return {
                     value: task.startDate ? toMoment(task.startDate).format(DATE_TIME_FORMAT_STRING) : '',

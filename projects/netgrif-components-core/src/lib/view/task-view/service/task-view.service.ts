@@ -114,8 +114,8 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
                             pageLoadResult.tasks[taskId].task.dataGroups = acc[taskId].task.dataGroups;
                             pageLoadResult.tasks[taskId].initiallyExpanded = acc[taskId].initiallyExpanded;
                             this.updateTask(acc[taskId].task, pageLoadResult.tasks[taskId].task);
-                            this.blockTaskFields(acc[taskId].task, !(acc[taskId].task.userId
-                                && this._userComparator.compareUsers(acc[taskId].task.userId)));
+                            this.blockTaskFields(acc[taskId].task, !(acc[taskId].task.assignee
+                                && this._userComparator.compareUsers(acc[taskId].task.assignee.id)));
                             if (!this._paginationView) {
                                 delete pageLoadResult.tasks[taskId];
                             }
@@ -261,7 +261,7 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
             map(tasks => Array.isArray(tasks.content) ? tasks : {...tasks, content: []}),
             map(tasks => {
                 return tasks.content.reduce((acc, curr) => {
-                    this.blockTaskFields(curr, !(curr.userId && this._userComparator.compareUsers(curr.userId)));
+                    this.blockTaskFields(curr, !(curr.assignee && this._userComparator.compareUsers(curr.assignee.id)));
                     return {
                         ...acc, [curr.stringId]: {
                             task: curr,
@@ -286,7 +286,7 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
                 old[key] = neww[key];
             }
         });
-        this.blockTaskFields(old, !(old.userId && this._userComparator.compareUsers(old.userId)));
+        this.blockTaskFields(old, !(old.assignee && this._userComparator.compareUsers(old.assignee.id)));
     }
 
     private blockTaskFields(task: Task, block: boolean): void {

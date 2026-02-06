@@ -62,21 +62,21 @@ export class PermissionService {
             && (
                 (
                     task.assignPolicy === AssignPolicy.manual
-                    && !task.userId
+                    && !task.assignee
                     && this.hasTaskPermission(task, PermissionType.ASSIGN)
                 )
             );
     }
 
     public canCancel(task: Task | undefined): boolean {
-        return !!task && !!task.userId
+        return !!task && !!task.assignee
             && this.hasTaskPermission(task, PermissionType.CANCEL)
             && ((task.assignedUserPolicy === undefined || task.assignedUserPolicy.cancel === undefined)
                 || task.assignedUserPolicy.cancel);
     }
 
     public canReassign(task: Task | undefined): boolean {
-        return !!task && !!task.userId && this.userComparator.compareUsers(task.userId)
+        return !!task && !!task.assignee && this.userComparator.compareUsers(task.assignee.id)
             && this.hasTaskPermission(task, PermissionType.DELEGATE)
             && ((task.assignedUserPolicy === undefined || task.assignedUserPolicy.reassign === undefined)
                 || task.assignedUserPolicy.reassign);
@@ -84,8 +84,8 @@ export class PermissionService {
 
     public canFinish(task: Task | undefined): boolean {
         return !!task
-            && !!task.userId
-            && this.userComparator.compareUsers(task.userId)
+            && !!task.assignee
+            && this.userComparator.compareUsers(task.assignee.id)
             && this.hasTaskPermission(task, PermissionType.FINISH);
     }
 
