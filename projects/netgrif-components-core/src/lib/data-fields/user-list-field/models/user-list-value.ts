@@ -6,6 +6,7 @@
 import { UserValue } from '../../user-field/models/user-value';
 
 export class UserListValue {
+    // TODO: rebranding to actor-list-field
 
     private _userValues: Map<string, UserValue>;
 
@@ -31,7 +32,7 @@ export class UserListValue {
 
     public getLast(): UserValue {
         if (this._userValues.size == 0) {
-            return new UserValue('', '', '', '', '');
+            return new UserValue('', '', '', '', '', '');
         }
         return Array.from(this._userValues.values()).pop();
     }

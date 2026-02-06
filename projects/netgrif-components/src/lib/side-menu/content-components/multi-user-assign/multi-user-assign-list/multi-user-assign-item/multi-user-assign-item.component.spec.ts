@@ -42,5 +42,5 @@ describe('MultiUserAssignItemComponent', () => {
     template: '<nc-user-assign-item [user]="user"></nc-user-assign-item>'
 })
 class TestWrapperComponent {
-    user = new UserValue('0', 'realmID0', '', '', '');
+    user = new UserValue('0', 'realmID0', '', '', '', '');
 }
