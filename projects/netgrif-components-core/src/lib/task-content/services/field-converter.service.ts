@@ -23,15 +23,15 @@ import {FilterField} from '../../data-fields/filter-field/models/filter-field';
 import {I18nField} from '../../data-fields/i18n-field/models/i18n-field';
 import {UserListField} from '../../data-fields/user-list-field/models/user-list-field';
 import {UserListValue} from '../../data-fields/user-list-field/models/user-list-value';
-import {decodeBase64, encodeBase64} from "../../utility/base64";
+import {decodeBase64, encodeBase64} from '../../utility/base64';
 import {CaseRefField} from '../../data-fields/case-ref-field/model/case-ref-field';
 import {StringCollectionField} from '../../data-fields/string-collection-field/models/string-collection-field';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class FieldConverterService {
-    private textFieldNames = [ 'richtextarea', 'htmltextarea', 'editor', 'htmlEditor' ]
+    private textFieldNames = ['richtextarea', 'htmltextarea', 'editor', 'htmlEditor'];
 
     constructor() {
     }
@@ -101,11 +101,11 @@ export class FieldConverterService {
             case FieldTypeResource.FILE:
                 return new FileField(item.stringId, item.name, item.behavior, item.value ? item.value : {},
                     item.placeholder, item.description, item.layout, this.resolveByteSize(item.component?.properties?.maxSize),
-                    this.resolveAllowedTypes(item.component?.properties?.allowTypes?.split(",")), item.validations, item.component, item.parentTaskId);
+                    this.resolveAllowedTypes(item.component?.properties?.allowTypes?.split(',')), item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.FILE_LIST:
                 return new FileListField(item.stringId, item.name, item.behavior, item.value ? item.value : {},
                     item.placeholder, item.description, item.layout, item.validations, this.resolveByteSize(item.component?.properties?.maxSize),
-                    this.resolveAllowedTypes(item.component?.properties?.allowTypes?.split(",")), item.component,
+                    this.resolveAllowedTypes(item.component?.properties?.allowTypes?.split(',')), item.component,
                     item.parentTaskId);
             case FieldTypeResource.TASK_REF:
                 return new TaskRefField(item.stringId, item.name, item.value ? item.value : [], item.behavior,
@@ -198,7 +198,7 @@ export class FieldConverterService {
         if (numberField.component !== undefined) {
             numberComponent = {
                 name: numberField.component.name,
-                properties: numberField.component.properties
+                properties: numberField.component.properties,
             };
         }
         return numberComponent;
@@ -310,7 +310,8 @@ export class FieldConverterService {
             return array;
         }
         if (this.resolveType(field) === FieldTypeResource.ACTOR_LIST && !!value) {
-            return new UserListValue(new Map(value.userValues.map(v => [v.id, v])));
+            const userValues = !!value.actorValues ? value.actorValues : (!!value.userValues ? value.userValues : []);
+            return new UserListValue(new Map(userValues.map(v => [v.id, v])));
         }
         return value;
     }
@@ -323,7 +324,7 @@ export class FieldConverterService {
     }
 
     protected resolveAllowedTypes(allowTypes: string[]) {
-        return allowTypes?.length > 0 ? (allowTypes.length > 1 ? allowTypes as FileUploadMIMEType[] : allowTypes[0]) : null
+        return allowTypes?.length > 0 ? (allowTypes.length > 1 ? allowTypes as FileUploadMIMEType[] : allowTypes[0]) : null;
     }
 
     protected resolveByteSize(bytesSize) {
