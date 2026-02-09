@@ -89,7 +89,7 @@ describe('TaskViewService', () => {
     // NAE-968
     it('should process second filter change before first filter call returns', fakeAsync(() => {
         let tasks: Array<TaskPanelData>;
-
+        console.log(service);
         service.tasks$.subscribe(receivedTasks => {
             tasks = receivedTasks;
         });
@@ -171,6 +171,10 @@ class MyResources {
     }
 
     getTasks(): Observable<Page<Task>> {
+        return this.returnResponse();
+    }
+
+    public getAllTasksByCases(caseIds: string[]): Observable<Page<Task>> {
         return this.returnResponse();
     }
 }

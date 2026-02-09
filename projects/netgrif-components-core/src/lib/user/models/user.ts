@@ -60,4 +60,8 @@ export class User implements IUser {
         return !!this.impersonated;
     }
 
+    public isAnonymous(): boolean {
+        return this.authorities.length === 1 && this.authorities[0].includes('ANONYMOUS');
+    }
+
 }

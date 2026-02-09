@@ -122,6 +122,13 @@ export class MergedFilter extends Filter {
     }
 
     /**
+     * See [Filter.bodyContainsCaseId()]{@link Filter#bodyContainsCaseId}
+     */
+    bodyContainsCaseId(): boolean {
+        return false;
+    }
+
+    /**
      * Returns the necessary request params for the filter.
      * @returns params with `operation` set to either `AND` or `OR` based on this object's `_operator` property.
      *

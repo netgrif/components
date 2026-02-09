@@ -6,7 +6,7 @@ import {ProxyAuthenticationService} from './proxyAuthentication.service';
 import {AuthenticationMethodService} from './services/authentication-method.service';
 import {OverlayModule} from '@angular/cdk/overlay';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {AnonymousAuthenticationInterceptor} from './services/anonymous-authentication-interceptor';
+// import {AnonymousAuthenticationInterceptor} from './services/anonymous-authentication-interceptor';
 
 
 @NgModule({
@@ -22,7 +22,7 @@ import {AnonymousAuthenticationInterceptor} from './services/anonymous-authentic
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },
-        { provide: HTTP_INTERCEPTORS, useClass: AnonymousAuthenticationInterceptor, multi: true },
+        // { provide: HTTP_INTERCEPTORS, useClass: AnonymousAuthenticationInterceptor, multi: true },
         { provide: AuthenticationMethodService, useClass: ProxyAuthenticationService},
         // AuthenticationEffects
     ]

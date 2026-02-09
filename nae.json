@@ -24,7 +24,7 @@
                 "enable": false,
                 "clientId": "dev-cluster-worker",
                 "redirectUrl": "http://localhost:8081/realms/netgrif-cloud-testing/protocol/openid-connect/auth",
-                "refreshUrl": "http://localhost:8800/api/auth/login",
+                "refreshUrl": "http://localhost:8080/api/auth/login",
                 "scopes": ["openid","email","profile","roles"]
             }
         },
