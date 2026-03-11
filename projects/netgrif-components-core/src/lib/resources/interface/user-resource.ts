@@ -11,7 +11,7 @@ export interface UserResource extends UserResourceSmall {
     telNumber?: string;
     groups: Array<Group>;
     authorities: Array<Authority>;
-    nextGroups: Array<string>;
+    groupIds: Array<string>;
     processRoles: Array<ProcessRole>;
     impersonated?: UserResource;
     _links?: any;

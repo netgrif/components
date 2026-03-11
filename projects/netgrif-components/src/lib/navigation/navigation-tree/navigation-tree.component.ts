@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 import {Router} from '@angular/router';
 import {
     AbstractNavigationTreeComponent, AccessService,
-    ActiveGroupService,
     ConfigurationService,
     DynamicNavigationRouteProviderService,
     LanguageService,
@@ -23,7 +22,6 @@ export class NavigationTreeComponent extends AbstractNavigationTreeComponent {
                 log: LoggerService,
                 userService: UserService,
                 accessService: AccessService,
-                activeGroupService: ActiveGroupService,
                 taskResourceService: TaskResourceService,
                 languageService: LanguageService,
                 navigationRouteProvider: DynamicNavigationRouteProviderService) {
@@ -33,7 +31,6 @@ export class NavigationTreeComponent extends AbstractNavigationTreeComponent {
             log,
             userService,
             accessService,
-            activeGroupService,
             taskResourceService,
             languageService,
             navigationRouteProvider
