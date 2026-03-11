@@ -25,8 +25,8 @@ export class UserTransformer implements Transformer<UserResource, User> {
             user.lastName,
             this.transformAuthorities(user.authorities),
             user.processRoles,
-            groups,
-            user.nextGroups,
+            user.groupIds,
+            user.groups,
             user.impersonated ? this.transform(user.impersonated) : undefined);
 
     }

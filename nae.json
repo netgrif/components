@@ -303,21 +303,6 @@
                     },
                     "processUri": "/test"
                 },
-                "hidden-active-group": {
-                    "component": {
-                        "class": "ActiveGroupComponent",
-                        "from": "./doc/active-group/active-group.component"
-                    },
-                    "access": "private",
-                    "navigation": {
-                        "title": "Active group view",
-                        "icon": "coronavirus",
-                        "hidden": false
-                    },
-                    "routing": {
-                        "path": "active-group"
-                    }
-                },
                 "demo-breadcrumbs": {
                     "component": {
                         "class": "BreadcrumbsExampleComponent",
@@ -850,17 +835,6 @@
                 }
             }
         },
-        "demo-active-group": {
-            "component": {
-                "class": "ActiveGroupComponent",
-                "from": "./doc/active-group/active-group.component"
-            },
-            "access": "private",
-            "navigation": true,
-            "routing": {
-                "path": "active-group"
-            }
-        },
         "dashboard": {
             "layout": {
                 "name": "dashboard",
@@ -1158,21 +1132,6 @@
             },
             "routing": {
                 "path": "comp-task"
-            }
-        },
-        "group-view": {
-            "component": {
-                "class": "GroupViewComponent",
-                "from": "./doc/group-view/group-view.component"
-            },
-            "layout": {
-                "name": "groupView",
-                "params": {}
-            },
-            "access": "private",
-            "navigation": true,
-            "routing": {
-                "path": "group-view"
             }
         }
     },

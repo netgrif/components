@@ -7,7 +7,6 @@ import {UserService} from '../../user/services/user.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {View} from '../../../commons/schema';
-import {NextGroupService} from '../../groups/services/next-group.service';
 
 @Injectable({
         providedIn: AuthenticationModule
@@ -18,7 +17,6 @@ export class GroupGuardService implements CanActivate {
 
     constructor(protected _redirectService: RedirectService,
                 protected _userService: UserService,
-                protected _nextGroupService: NextGroupService,
                 protected _configService: ConfigurationService,
                 protected _log: LoggerService) {
         this._loginUrl = this._redirectService.resolveLoginPath();
@@ -39,7 +37,7 @@ export class GroupGuardService implements CanActivate {
             } else {
                 allowedGroups = [view.access.group];
             }
-            const groupOfUser = this._nextGroupService.groupOfUser.map(group => group.title);
+            const groupOfUser = this._userService.user.groups.map(group => group.displayName);
 
             return allowedGroups.some(groupTitle => {
                 return groupOfUser.includes(groupTitle);

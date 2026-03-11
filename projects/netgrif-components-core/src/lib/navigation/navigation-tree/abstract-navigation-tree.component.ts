@@ -10,7 +10,6 @@ import {UserService} from '../../user/services/user.service';
 import {
     AbstractNavigationResizableDrawerComponent
 } from '../navigation-drawer/abstract-navigation-resizable-drawer.component';
-import {ActiveGroupService} from '../../groups/services/active-group.service';
 import {debounceTime, filter} from 'rxjs/operators';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {LanguageService} from '../../translate/language.service';
@@ -52,7 +51,6 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
                           protected _log: LoggerService,
                           protected _userService: UserService,
                           protected _accessService: AccessService,
-                          protected _activeGroupService: ActiveGroupService,
                           protected _taskResourceService: TaskResourceService,
                           protected _languageService: LanguageService,
                           protected _navigationRouteProvider: DynamicNavigationRouteProviderService) {
@@ -74,7 +72,6 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
             this._router.events.pipe(filter(event => event instanceof NavigationEnd && this.routerChange))
                 .subscribe(() => this._reloadNavigation.next()),
             this._userService.user$.subscribe(() => this._reloadNavigation.next()),
-            this._activeGroupService.activeGroups$.subscribe(() => this._reloadNavigation.next())
         ];
 
         this._subscriptions.push(
