@@ -28,7 +28,6 @@ import {LdapGroupRolesAssignComponent} from './doc/ldap-group-roles-assign/ldap-
 import {TreeViewExampleComponent} from './doc/tree-view-example/tree-view-example.component';
 import {UserInviteComponent} from './doc/user-invite/user-invite.component';
 import {ResetPasswordFormComponent} from './doc/forms/reset-password-form/reset-password-form.component';
-import {GroupViewComponent} from './doc/group-view/group-view.component';
 import {TitleConfigComponent} from './doc/demo-title-config/title-config.component';
 import {ExampleRedirectComponent} from './doc/redirect/example-redirect.component';
 import {WrapperEmptyViewComponent} from './views/wrapper/wrapper-empty-view.component';
@@ -63,7 +62,6 @@ export class NaeExampleAppViewService extends ViewService {
             {id: 'PublicSingleTaskViewComponent', class: DefaultPublicSingleTaskViewComponent},
             {id: 'WrapperEmptyViewComponent', class: WrapperEmptyViewComponent},
             {id: 'ExampleRedirectComponent', class: ExampleRedirectComponent},
-            {id: 'GroupViewComponent', class: GroupViewComponent},
             {id: 'UserInviteComponent', class: UserInviteComponent},
             {id: 'TreeViewExampleComponent', class: TreeViewExampleComponent},
             {id: 'ButtonsNavComponent', class: ButtonsNavComponent},

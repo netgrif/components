@@ -100,7 +100,6 @@ import {ResetPasswordFormComponent} from './doc/forms/reset-password-form/reset-
 import {PublicTaskViewComponent} from './doc/public-task-view/public-task-view.component';
 import {PublicWorkflowViewComponent} from './doc/public-workflow-view/public-workflow-view.component';
 import {PublicResolverComponent} from './doc/public-resolver/public-resolver.component';
-import {GroupViewComponent} from './doc/group-view/group-view.component';
 import {
     DemoTitleConfigContent0TaskViewComponent
 } from './doc/demo-title-config/content/0/demo-title-config-content0-task-view.component';
@@ -178,7 +177,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         PublicTaskViewComponent,
         PublicWorkflowViewComponent,
         PublicResolverComponent,
-        GroupViewComponent,
         ExampleRedirectComponent,
         DemoTitleConfigContent0TaskViewComponent,
         DemoTitleConfigContent1CaseViewComponent,
