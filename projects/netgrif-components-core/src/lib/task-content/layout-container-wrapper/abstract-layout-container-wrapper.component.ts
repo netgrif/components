@@ -22,6 +22,11 @@ export abstract class AbstractLayoutContainerWrapperComponent {
         Object.entries(layoutObject.properties).forEach(([key, value]) => {
             cssStyle += `${key}: ${value};`;
         });
+        if (layoutObject.layoutType === LayoutObjectType.FLEX) {
+            cssStyle += `display: flex;`;
+        } else if (layoutObject.layoutType === LayoutObjectType.GRID) {
+            cssStyle += `display: grid;`;
+        }
         return cssStyle;
     }
 
