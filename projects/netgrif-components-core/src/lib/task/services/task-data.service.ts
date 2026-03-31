@@ -56,7 +56,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
                 protected _taskEvent: TaskEventService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
                 @Optional() _selectedCaseService: SelectedCaseService,
-                _taskContentService: TaskContentService,
+                protected _taskContentService: TaskContentService,
                 protected _afterActionFactory: CallChainService,
                 protected _eventQueue: EventQueueService,
                 protected _userComparator: UserComparatorService,
@@ -200,6 +200,12 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
                     this._taskContentService.taskFieldsIndex[parentTaskId].fields[field.stringId] = field;
                     field.valueChanges().subscribe(() => {
                         if (this.wasFieldUpdated(field)) {
+                            if (field.component?.properties?.validateData === 'true') {
+                                if (!this._taskContentService.validateTaskData()) {
+                                    field.waitingForResponse = false;
+                                    return;
+                                }
+                            }
                             if (field instanceof DynamicEnumerationField) {
                                 field.loading = true;
                                 this.updateTaskDataFields(this._afterActionFactory.create(bool => {
