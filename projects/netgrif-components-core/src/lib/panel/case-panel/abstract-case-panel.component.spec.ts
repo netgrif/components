@@ -146,6 +146,7 @@ class TestWrapperComponent {
         color: 'color',
         creationDate: [],
         lastModified: [],
+        lastModifiedDataSet: [],
         visualId: '',
         resetArcTokens: {},
         processIdentifier: '',
