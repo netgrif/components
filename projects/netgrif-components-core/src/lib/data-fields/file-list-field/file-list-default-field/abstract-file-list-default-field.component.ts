@@ -155,10 +155,8 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractFile
         if (!this.checkAllowedTypes()) {
             return;
         }
-        if (this.dataField.component?.properties?.validateData === 'true' && this._taskContentService) {
-            if (!this._taskContentService.validateTaskData()) {
-                return;
-            }
+        if (this.dataField.component?.properties?.validateData === 'true' && this._taskContentService && !this._taskContentService.validateTaskData()) {
+            return;
         }
 
         this.state = this.defaultState;
