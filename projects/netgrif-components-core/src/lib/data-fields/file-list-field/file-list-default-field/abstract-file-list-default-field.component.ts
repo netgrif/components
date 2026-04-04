@@ -156,6 +156,7 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractFile
             return;
         }
         if (this.dataField.component?.properties?.validateData === 'true' && this._taskContentService && !this._taskContentService.validateTaskData()) {
+            this.fileUploadEl.nativeElement.value = '';
             return;
         }
 

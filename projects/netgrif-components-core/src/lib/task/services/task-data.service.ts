@@ -325,17 +325,17 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
 
         this._safeTask.dataGroups.filter(dataGroup => dataGroup.parentTaskId === undefined).forEach(dataGroup => {
             dataGroup.fields.filter(field => this.wasFieldUpdated(field)).forEach(field => {
-                context.body[this._task.stringId] = {};
+                if (typeof context.body[this._task.stringId] == "undefined") {
+                    context.body[this._task.stringId] = {};
+                }
                 this.addFieldToSetDataRequestBody(context, this._task.stringId, field);
             });
         });
         this._safeTask.dataGroups.filter(dataGroup => dataGroup.parentTaskId !== undefined).forEach(dataGroup => {
-            if (dataGroup.fields.some(field => this.wasFieldUpdated(field))) {
-                context.body[dataGroup.parentTaskId] = {};
-            } else {
-                return;
-            }
             dataGroup.fields.filter(field => this.wasFieldUpdated(field)).forEach(field => {
+                if (typeof context.body[dataGroup.parentTaskId] == "undefined") {
+                    context.body[dataGroup.parentTaskId] = {};
+                }
                 this.addFieldToSetDataRequestBody(context, dataGroup.parentTaskId, field);
             });
         });
