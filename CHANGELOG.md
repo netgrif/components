@@ -5,7 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres
 to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-Full Changelog: [https://github.com/netgrif/components/commits/v6.4.1](https://github.com/netgrif/components/commits/v6.4.1)
+Full Changelog: [https://github.com/netgrif/components/commits/v6.4.2](https://github.com/netgrif/components/commits/v6.4.2)
+
+## [6.4.2](https://github.com/netgrif/components/releases/tag/v6.4.2) (2026-04-02)
+
+### Fixed
+
+- [NAE-2231] Unable to change behavior of taskRef on finish event without error message
+- [NAE-2268] Fix resolving of referenced taskId on frontend
+- [NAE-2290] Couldn't find referenced task in a taskref incoming from event outcome
+- [NAE-2394] Fields looks editable when switching tabs
+
+### Added
+
+- [NAE-2100] Case view export button as NAE feature
+- [NAE-2393] Validation property on set data event
+- [NAE-2401] Timestamp of case dataSet change
 
 ## [6.4.1](https://github.com/netgrif/components/releases/tag/v6.4.1) (2025-03-19)
 

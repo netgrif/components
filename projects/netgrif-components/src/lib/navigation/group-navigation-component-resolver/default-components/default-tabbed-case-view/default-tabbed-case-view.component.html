@@ -7,6 +7,13 @@
                 <nc-search class="search-width search-fix" *ngIf="(enableSearch)" [showSearchToggleButton]="showToggleButton"
                            [initialSearchMode]="initialSearchMode" (filterLoaded)="loadFilter($event)"></nc-search>
             </div>
+            <div fxLayoutAlign="end center" *ngIf="allowExport">
+                <button mat-mini-fab color="primary" class="export-mat-mini-fab" (click)="export()"
+                        [disabled]="isLoading()">
+                    <mat-icon class="net-upload" *ngIf="(isLoading()) === false" aria-hidden="false" >save_alt</mat-icon>
+                    <mat-icon class="net-upload" *ngIf="isLoading()" aria-hidden="false">schedule</mat-icon>
+                </button>
+            </div>
             <div fxLayoutAlign="end center" *ngIf="showCreateCaseButton">
                 <nc-create-case-button [newCaseCreationConfig]="newCaseCreationConfig" (caseCreatedEvent)="handleCaseClick($event)"></nc-create-case-button>
             </div>

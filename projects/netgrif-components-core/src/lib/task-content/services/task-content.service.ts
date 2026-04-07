@@ -206,11 +206,12 @@ export abstract class TaskContentService implements OnDestroy {
     /**
      * Clears the assignee, start date and finish date from the managed Task.
      */
-    public updateStateData(eventOutcome: TaskEventOutcome): void {
+    public updateStateData(eventOutcome: TaskEventOutcome, isStillExecutable: boolean = true): void {
         if (this._task) {
             this._task.user = eventOutcome.task.user;
             this._task.startDate = eventOutcome.task.startDate;
             this._task.finishDate = eventOutcome.task.finishDate;
+            this._task.isStillExecutable = isStillExecutable;
         }
     }
 
@@ -235,7 +236,7 @@ export abstract class TaskContentService implements OnDestroy {
     }
 
     protected updateField(chFields: ChangedFields, field: DataField<any>, frontendActions: Change, referenced: boolean = false): void {
-        if (this._fieldConverterService.resolveType(field) === FieldTypeResource.TASK_REF) {
+        if (this._fieldConverterService.resolveType(field) === FieldTypeResource.TASK_REF && (!!this._task?.isStillExecutable || this._task?.isStillExecutable === undefined)) {
             this._taskDataReloadRequest$.next(frontendActions ? frontendActions : undefined);
             return;
         }
@@ -312,13 +313,13 @@ export abstract class TaskContentService implements OnDestroy {
     protected findTaskRefId(taskId: string, fields: { [fieldId: string]: DataField<any>}): DataField<any> {
         let taskRefId = Object.values(fields).find(f => f instanceof TaskRefField && f.value.includes(taskId));
         if (!taskRefId) {
-            const referencedTaskIds = Object.values(fields).filter(f => f instanceof TaskRefField).map(tr => tr.value);
-            referencedTaskIds.forEach(id => {
+            const referencedTaskIds = Array.prototype.concat.apply([], Object.values(fields).filter(f => f instanceof TaskRefField).map(tr => tr.value));
+            for (const id of referencedTaskIds) {
                 taskRefId = this.findTaskRefId(taskId, this.taskFieldsIndex[id].fields);
                 if (!!taskRefId) {
                     return taskRefId;
                 }
-            });
+            }
         }
         return taskRefId
     }
