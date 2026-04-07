@@ -234,6 +234,8 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
     }
 
     ngOnDestroy(): void {
+        super.ngOnDestroy();
+        this._headersSub?.unsubscribe();
         this.loading$.complete()
     }
 }

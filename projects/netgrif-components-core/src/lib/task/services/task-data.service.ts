@@ -36,6 +36,7 @@ import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-m
 import {TaskFields} from '../../task-content/model/task-fields';
 import {EnumerationField} from "../../data-fields/enumeration-field/models/enumeration-field";
 import {FrontActionService} from "../../actions/services/front-action.service";
+import {ButtonField} from "../../data-fields/button-field/models/button-field";
 
 /**
  * Handles the loading and updating of data fields and behaviour of
@@ -200,8 +201,9 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
                     this._taskContentService.taskFieldsIndex[parentTaskId].fields[field.stringId] = field;
                     field.valueChanges().subscribe(() => {
                         if (this.wasFieldUpdated(field)) {
-                            if (field.component?.properties?.validateData === 'true' && !this._taskContentService.validateTaskData()) {
+                            if (field instanceof ButtonField && field.component?.properties?.validateData === 'true' && !this._taskContentService.validateTaskData()) {
                                 field.waitingForResponse = false;
+                                field.changed = false;
                                 return;
                             }
                             if (field instanceof DynamicEnumerationField) {
