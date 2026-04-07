@@ -1,13 +1,10 @@
 import {
     AfterViewInit,
     Component,
-    ElementRef,
     Inject,
-    Input,
     OnDestroy,
     OnInit,
     Optional,
-    ViewChild
 } from "@angular/core";
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {FileListField, FileListFieldValidation} from "../models/file-list-field";
@@ -17,16 +14,15 @@ import {LoggerService} from "../../../logger/services/logger.service";
 import {SnackBarService} from "../../../snack-bar/services/snack-bar.service";
 import {TranslateService} from "@ngx-translate/core";
 import {EventService} from "../../../event/services/event.service";
-import {FileFieldIdBody} from "../../models/file-field-id-body";
 import {EventOutcomeMessageResource} from "../../../resources/interface/message-resource";
 import {ProgressType, ProviderProgress} from "../../../resources/resource-provider.service";
 import {ChangedFieldsMap} from "../../../event/services/interfaces/changed-fields-map";
 import {HttpParams} from "@angular/common/http";
 import {take} from "rxjs/operators";
 import {FileFieldValue} from "../../file-field/models/file-field-value";
-import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base-data-field.component";
 import {FileFieldRequest} from "../../../resources/interface/file-field-request-body";
 import {AbstractFileFieldDefaultComponent} from '../../models/abstract-file-field-default-component';
+import {TaskContentService} from "../../../task-content/services/task-content.service";
 
 export interface FilesState {
     progress: number;
@@ -60,6 +56,7 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractFile
                           protected _snackbar: SnackBarService,
                           protected _translate: TranslateService,
                           protected _eventService: EventService,
+                          @Optional() protected _taskContentService: TaskContentService,
                           @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<FileListField>) {
         super(_log, _snackbar, _translate, dataFieldPortalData);
         this.state = this.defaultState;
@@ -156,6 +153,9 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractFile
         }
 
         if (!this.checkAllowedTypes()) {
+            return;
+        }
+        if (this.dataField.component?.properties?.validateData === 'true' && this._taskContentService && !this._taskContentService.validateTaskData()) {
             return;
         }
 

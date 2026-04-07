@@ -53,6 +53,7 @@ import { FinishPolicyService } from '../../task/services/finish-policy.service';
 import {NAE_TAB_DATA} from '../../tabs/tab-data-injection-token/tab-data-injection-token';
 import {InjectedTabData} from '../../tabs/interfaces';
 import {AfterAction} from '../../utility/call-chain/after-action';
+import {UserComparatorService} from "../../user/services/user-comparator.service";
 
 @Component({
     selector: 'ncc-abstract-legal-notice',
@@ -144,6 +145,7 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
                           protected _currencyPipe: CurrencyPipe,
                           protected _changedFieldsService: ChangedFieldsService,
                           protected _permissionService: PermissionService,
+                          protected _userComparator: UserComparatorService,
                           @Optional() overflowService: OverflowService,
                           @Optional() @Inject(NAE_TASK_FORCE_OPEN) protected _taskForceOpen: boolean,
                           @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData) {
@@ -195,7 +197,12 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
                 filter(bool => bool && this.isExpanded())
             ).subscribe( () => {
                 if (this._canReload) {
-                    this._taskDataService.initializeTaskDataFields(new AfterAction(), true)
+                    this._taskDataService.initializeTaskDataFields(this._callChain.create(() => {
+                        const taskShouldBeBlocked = !this._taskContentService.task
+                            || this._taskContentService.task.user === undefined
+                            || !this._userComparator.compareUsers(this._taskContentService.task.user);
+                        this._taskContentService.blockFields(taskShouldBeBlocked);
+                    }), true)
                 } else {
                     this._canReload = true;
                 }

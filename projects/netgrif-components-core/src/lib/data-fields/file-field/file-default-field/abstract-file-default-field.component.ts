@@ -26,6 +26,7 @@ import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-fie
 import {FILE_FIELD_HEIGHT, FILE_FIELD_PADDING, PREVIEW, PREVIEW_BUTTON} from '../models/file-field-constants';
 import {FileFieldRequest} from "../../../resources/interface/file-field-request-body";
 import {AbstractFileFieldDefaultComponent} from '../../models/abstract-file-field-default-component';
+import {TaskContentService} from "../../../task-content/services/task-content.service";
 
 export interface FileState {
     progress: number;
@@ -106,6 +107,7 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractFileFiel
      * @param _eventService used for parsing of backend response
      * Option injected trough `NAE_INFORM_ABOUT_INVALID_DATA` InjectionToken
      * @param _sanitizer Sanitize url of image preview
+     * @param _taskContentService for validating datafields on setData, optional dependency
      * @param dataFieldPortalData Field and form control data if field is provided with portal
      */
     protected constructor(protected _taskResourceService: TaskResourceService,
@@ -114,6 +116,7 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractFileFiel
                           protected _translate: TranslateService,
                           protected _eventService: EventService,
                           protected _sanitizer: DomSanitizer,
+                          @Optional() protected _taskContentService: TaskContentService,
                           @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<FileField>) {
         super(_log, _snackbar, _translate, dataFieldPortalData);
         this.state = this.defaultState;
@@ -208,6 +211,9 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractFileFiel
             return;
         }
         if (!this.checkAllowedTypes()) {
+            return;
+        }
+        if (this.dataField.component?.properties?.validateData === 'true' && this._taskContentService && !this._taskContentService.validateTaskData()) {
             return;
         }
         this.state = this.defaultState;
