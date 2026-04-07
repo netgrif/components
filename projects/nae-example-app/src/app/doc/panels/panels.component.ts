@@ -52,7 +52,7 @@ export class PanelsComponent implements OnInit {
     constructor() {
         this.case_ = {
             lastModified: null,
-            lastModifiedDataSet: null,
+            lastModifiedDataSet: undefined,
             visualId: 'ABC-123456789',
             petriNetObjectId: null,
             processIdentifier: 'net',
