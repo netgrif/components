@@ -515,6 +515,6 @@
         "pageAmount": "Strana {{page}} z {{amountPages}}"
     },
     "export": {
-        "errorExportDownload": "File failed to download!"
+        "errorExportDownload": "Stiahnutie súboru zlyhalo!"
     }
 }

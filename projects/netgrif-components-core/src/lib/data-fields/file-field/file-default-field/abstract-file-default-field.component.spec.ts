@@ -105,9 +105,8 @@ class TestFileComponent extends AbstractFileDefaultFieldComponent {
                 translate: TranslateService,
                 sanitizer: DomSanitizer,
                 eventService: EventService,
-                @Optional() protected _taskContentService: TaskContentService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<FileField>) {
-        super(taskResourceService, log, snackbar, translate, eventService, sanitizer, _taskContentService, dataFieldPortalData);
+        super(taskResourceService, log, snackbar, translate, eventService, sanitizer, dataFieldPortalData);
     }
 }
 
