@@ -15,6 +15,7 @@ export class MockCaseResourceService {
                 content: [
                     {
                         lastModified: [2022, 11, 28],
+                        lastModifiedDataSet: [],
                         visualId: 'TST-123548',
                         petriNetObjectId: undefined,
                         processIdentifier: 'test-process',

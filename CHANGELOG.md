@@ -20,6 +20,7 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.4.2](https://g
 
 - [NAE-2100] Case view export button as NAE feature
 - [NAE-2393] Validation property on set data event
+- [NAE-2401] Timestamp of case dataSet change
 
 ## [6.4.1](https://github.com/netgrif/components/releases/tag/v6.4.1) (2025-03-19)
 
