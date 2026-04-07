@@ -21,7 +21,7 @@ export interface Case {
      *  ]
      */
     lastModified: NaeDate;
-    lastModifiedDataSet: NaeDate | undefined;
+    lastModifiedDataSet?: NaeDate | undefined;
     /**
      * **Example:** PER-1669965980
      */
