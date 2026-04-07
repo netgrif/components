@@ -36,6 +36,7 @@ import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-m
 import {TaskFields} from '../../task-content/model/task-fields';
 import {EnumerationField} from "../../data-fields/enumeration-field/models/enumeration-field";
 import {FrontActionService} from "../../actions/services/front-action.service";
+import {ButtonField} from "../../data-fields/button-field/models/button-field";
 
 /**
  * Handles the loading and updating of data fields and behaviour of
@@ -200,8 +201,9 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
                     this._taskContentService.taskFieldsIndex[parentTaskId].fields[field.stringId] = field;
                     field.valueChanges().subscribe(() => {
                         if (this.wasFieldUpdated(field)) {
-                            if (field.component?.properties?.validateData === 'true' && !this._taskContentService.validateTaskData()) {
+                            if (field instanceof ButtonField && field.component?.properties?.validateData === 'true' && !this._taskContentService.validateTaskData()) {
                                 field.waitingForResponse = false;
+                                field.changed = false;
                                 return;
                             }
                             if (field instanceof DynamicEnumerationField) {
@@ -325,17 +327,17 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
 
         this._safeTask.dataGroups.filter(dataGroup => dataGroup.parentTaskId === undefined).forEach(dataGroup => {
             dataGroup.fields.filter(field => this.wasFieldUpdated(field)).forEach(field => {
-                if (typeof context.body[this._task.stringId] == "undefined") {
-                    context.body[this._task.stringId] = {};
-                }
+                context.body[this._task.stringId] = {};
                 this.addFieldToSetDataRequestBody(context, this._task.stringId, field);
             });
         });
         this._safeTask.dataGroups.filter(dataGroup => dataGroup.parentTaskId !== undefined).forEach(dataGroup => {
+            if (dataGroup.fields.some(field => this.wasFieldUpdated(field))) {
+                context.body[dataGroup.parentTaskId] = {};
+            } else {
+                return;
+            }
             dataGroup.fields.filter(field => this.wasFieldUpdated(field)).forEach(field => {
-                if (typeof context.body[dataGroup.parentTaskId] == "undefined") {
-                    context.body[dataGroup.parentTaskId] = {};
-                }
                 this.addFieldToSetDataRequestBody(context, dataGroup.parentTaskId, field);
             });
         });

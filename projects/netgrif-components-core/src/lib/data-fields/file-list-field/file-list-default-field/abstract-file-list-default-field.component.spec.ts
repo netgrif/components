@@ -28,7 +28,6 @@ import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-fie
 import {AbstractFileListDefaultFieldComponent} from "./abstract-file-list-default-field.component";
 import {FormControl} from "@angular/forms";
 import {WrappedBoolean} from "../../data-field-template/models/wrapped-boolean";
-import {TaskContentService} from "../../../task-content/services/task-content.service";
 
 describe('AbstractFileListDefaultFieldComponent', () => {
     let component: TestFileListComponent;
@@ -102,9 +101,8 @@ class TestFileListComponent extends AbstractFileListDefaultFieldComponent {
                 snackbar: SnackBarService,
                 translate: TranslateService,
                 eventService: EventService,
-                @Optional() protected _taskContentService: TaskContentService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<FileListField>) {
-        super(taskResourceService, log, snackbar, translate, eventService, _taskContentService, dataFieldPortalData);
+        super(taskResourceService, log, snackbar, translate, eventService, dataFieldPortalData);
     }
 }
 
