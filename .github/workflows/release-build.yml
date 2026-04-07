@@ -12,9 +12,9 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             -   uses: actions/checkout@v4
-            -   uses: actions/setup-node@v4
+            -   uses: actions/setup-node@v6
                 with:
-                    node-version: 24
+                    node-version: 22
                     registry-url: https://registry.npmjs.org/
             -   run: |
                     npm i --legacy-peer-deps
@@ -31,10 +31,12 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             -   uses: actions/checkout@v4
-            -   uses: actions/setup-node@v4
+            -   uses: actions/setup-node@v6
                 with:
-                    node-version: 24
+                    node-version: 22
                     registry-url: https://registry.npmjs.org/
+            -   run: npm install -g npm@^11.5.1
+            -   run: npm --version
             -   name: Read version
                 uses: zvonimirsun/read-package-version-actions@v2
                 id: get_version
@@ -75,9 +77,9 @@ jobs:
             packages: write
         steps:
             -   uses: actions/checkout@v4
-            -   uses: actions/setup-node@v4
+            -   uses: actions/setup-node@v6
                 with:
-                    node-version: 24
+                    node-version: 22
                     registry-url: https://npm.pkg.github.com
             -   run: npm i --legacy-peer-deps
             -   name: Publish components-core
