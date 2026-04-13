@@ -362,8 +362,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="177"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/finish-task.service.ts:177</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="178"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/finish-task.service.ts:178</a></div>
                 </td>
             </tr>
 
@@ -648,8 +648,8 @@ otherwise <code>false</code> will be emitted</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="188"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/finish-task.service.ts:188</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="189"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/finish-task.service.ts:189</a></div>
                 </td>
             </tr>
 
@@ -1085,7 +1085,8 @@ export class FinishTaskService extends TaskHandlingService {
             }
 
             if (outcomeResource.success) {
-                this._taskContentService.updateStateData(outcomeResource.outcome as FinishTaskEventOutcome);
+                const outcome &#x3D; outcomeResource.outcome as FinishTaskEventOutcome
+                this._taskContentService.updateStateData(outcome, outcome.isTaskStillExecutable);
                 const changedFieldsMap: ChangedFieldsMap &#x3D; this._eventService
                     .parseChangedFieldsFromOutcomeTree(outcomeResource.outcome);
                 if (!!changedFieldsMap) {

@@ -24,23 +24,23 @@
 <title>cluster_ConfirmDialogModule</title>
 <polygon fill="none" stroke="black" stroke-dasharray="1,5" points="84,-70 84,-268 412,-268 412,-70 84,-70"/>
 </g>
-<g id="clust2" class="cluster">
-<title>cluster_ConfirmDialogModule_declarations</title>
-<polygon fill="none" stroke="black" points="222,-78 222,-130 404,-130 404,-78 222,-78"/>
-</g>
 <g id="clust5" class="cluster">
 <title>cluster_ConfirmDialogModule_exports</title>
 <polygon fill="none" stroke="black" points="155,-208 155,-260 341,-260 341,-208 155,-208"/>
 </g>
 <g id="clust4" class="cluster">
 <title>cluster_ConfirmDialogModule_imports</title>
-<polygon fill="none" stroke="black" points="92,-78 92,-130 214,-130 214,-78 92,-78"/>
+<polygon fill="none" stroke="black" points="282,-78 282,-130 404,-130 404,-78 282,-78"/>
+</g>
+<g id="clust2" class="cluster">
+<title>cluster_ConfirmDialogModule_declarations</title>
+<polygon fill="none" stroke="black" points="92,-78 92,-130 274,-130 274,-78 92,-78"/>
 </g>
 <!-- ConfirmDialogComponent -->
 <g id="node1" class="node">
 <title>ConfirmDialogComponent</title>
-<polygon fill="#ffffb3" stroke="black" points="396.37,-122 229.63,-122 229.63,-86 396.37,-86 396.37,-122"/>
-<text text-anchor="middle" x="313" y="-99.8" font-family="Times,serif" font-size="14.00">ConfirmDialogComponent</text>
+<polygon fill="#ffffb3" stroke="black" points="266.37,-122 99.63,-122 99.63,-86 266.37,-86 266.37,-122"/>
+<text text-anchor="middle" x="183" y="-99.8" font-family="Times,serif" font-size="14.00">ConfirmDialogComponent</text>
 </g>
 <!-- ConfirmDialogModule -->
 <g id="node2" class="node">
@@ -51,8 +51,8 @@
 <!-- ConfirmDialogComponent&#45;&gt;ConfirmDialogModule -->
 <g id="edge1" class="edge">
 <title>ConfirmDialogComponent&#45;&gt;ConfirmDialogModule</title>
-<path fill="none" stroke="black" d="M275.05,-122.11C275.05,-122.11 275.05,-140.99 275.05,-140.99"/>
-<polygon fill="black" stroke="black" points="271.55,-140.99 275.05,-150.99 278.55,-140.99 271.55,-140.99"/>
+<path fill="none" stroke="black" d="M220.95,-122.11C220.95,-122.11 220.95,-140.99 220.95,-140.99"/>
+<polygon fill="black" stroke="black" points="217.45,-140.99 220.95,-150.99 224.45,-140.99 217.45,-140.99"/>
 </g>
 <!-- ConfirmDialogComponent  -->
 <g id="node4" class="node">
@@ -69,14 +69,14 @@
 <!-- MaterialModule -->
 <g id="node3" class="node">
 <title>MaterialModule</title>
-<polygon fill="#8dd3c7" stroke="black" points="206.47,-122 203.47,-126 182.47,-126 179.47,-122 99.53,-122 99.53,-86 206.47,-86 206.47,-122"/>
-<text text-anchor="middle" x="153" y="-99.8" font-family="Times,serif" font-size="14.00">MaterialModule</text>
+<polygon fill="#8dd3c7" stroke="black" points="396.47,-122 393.47,-126 372.47,-126 369.47,-122 289.53,-122 289.53,-86 396.47,-86 396.47,-122"/>
+<text text-anchor="middle" x="343" y="-99.8" font-family="Times,serif" font-size="14.00">MaterialModule</text>
 </g>
 <!-- MaterialModule&#45;&gt;ConfirmDialogModule -->
 <g id="edge2" class="edge">
 <title>MaterialModule&#45;&gt;ConfirmDialogModule</title>
-<path fill="none" stroke="black" d="M190.97,-122.11C190.97,-122.11 190.97,-140.99 190.97,-140.99"/>
-<polygon fill="black" stroke="black" points="187.47,-140.99 190.97,-150.99 194.47,-140.99 187.47,-140.99"/>
+<path fill="none" stroke="black" d="M305.03,-122.11C305.03,-122.11 305.03,-140.99 305.03,-140.99"/>
+<polygon fill="black" stroke="black" points="301.53,-140.99 305.03,-150.99 308.53,-140.99 301.53,-140.99"/>
 </g>
 </g>
 </svg>

@@ -175,12 +175,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(_taskContentService: TaskContentService, _log: LoggerService, _taskViewService: TaskViewService, _paperView: PaperViewService, _taskEventService: TaskEventService, _assignTaskService: AssignTaskService, _delegateTaskService: DelegateTaskService, _cancelTaskService: CancelTaskService, _finishTaskService: FinishTaskService, _taskState: TaskRequestStateService, _taskDataService: TaskDataService, _assignPolicyService: AssignPolicyService, _finishPolicyService: FinishPolicyService, _callChain: CallChainService, _translate: TranslateService, _taskOperations: SubjectTaskOperations, _disableFunctions: DisableButtonFuntions, isEnabled: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>, _parentInjector: <a href="https://angular.io/api/core/Injector" target="_blank">Injector</a>, _currencyPipe: <a href="https://angular.io/api/common/CurrencyPipe" target="_blank">CurrencyPipe</a>, _changedFieldsService: ChangedFieldsService, _permissionService: PermissionService, overflowService: OverflowService, _taskForceOpen: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>, injectedTabData: InjectedTabData)</code>
+<code>constructor(_taskContentService: TaskContentService, _log: LoggerService, _taskViewService: TaskViewService, _paperView: PaperViewService, _taskEventService: TaskEventService, _assignTaskService: AssignTaskService, _delegateTaskService: DelegateTaskService, _cancelTaskService: CancelTaskService, _finishTaskService: FinishTaskService, _taskState: TaskRequestStateService, _taskDataService: TaskDataService, _assignPolicyService: AssignPolicyService, _finishPolicyService: FinishPolicyService, _callChain: CallChainService, _translate: TranslateService, _taskOperations: SubjectTaskOperations, _disableFunctions: DisableButtonFuntions, isEnabled: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>, _parentInjector: <a href="https://angular.io/api/core/Injector" target="_blank">Injector</a>, _currencyPipe: <a href="https://angular.io/api/common/CurrencyPipe" target="_blank">CurrencyPipe</a>, _changedFieldsService: ChangedFieldsService, _permissionService: PermissionService, _userComparator: UserComparatorService, overflowService: OverflowService, _taskForceOpen: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>, injectedTabData: InjectedTabData)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">projects/netgrif-components/src/lib/panel/task-panel/task-panel.component.ts:59</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">projects/netgrif-components/src/lib/panel/task-panel/task-panel.component.ts:60</a></div>
                             </td>
                         </tr>
 
@@ -462,6 +462,18 @@
                                                     
                                                 </tr>
                                                 <tr>
+                                                        <td>_userComparator</td>
+                                                  
+                                                        <td>
+                                                                    <code>UserComparatorService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
                                                         <td>overflowService</td>
                                                   
                                                         <td>
@@ -537,8 +549,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="95"
-                            class="link-to-prism">projects/netgrif-components/src/lib/panel/task-panel/task-panel.component.ts:95</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="97"
+                            class="link-to-prism">projects/netgrif-components/src/lib/panel/task-panel/task-panel.component.ts:97</a></div>
                 </td>
             </tr>
 
@@ -591,7 +603,8 @@ import {
     TaskViewService,
     FrontActionService,
     NAE_TAB_DATA,
-    InjectedTabData
+    InjectedTabData,
+    UserComparatorService
 } from &#x27;@netgrif/components-core&#x27;;
 import {TaskContentComponent} from &#x27;../../task-content/task-content/task-content.component&#x27;;
 import {TranslateService} from &#x27;@ngx-translate/core&#x27;;
@@ -642,13 +655,14 @@ export class TaskPanelComponent extends AbstractTaskPanelComponent {
                 protected _currencyPipe: CurrencyPipe,
                 protected _changedFieldsService: ChangedFieldsService,
                 protected _permissionService: PermissionService,
+                protected _userComparator: UserComparatorService,
                 @Optional() overflowService: OverflowService,
                 @Optional() @Inject(NAE_TASK_FORCE_OPEN) protected _taskForceOpen: boolean,
                 @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData) {
         super(_taskContentService, _log, _taskViewService, _paperView, _taskEventService, _assignTaskService,
             _delegateTaskService, _cancelTaskService, _finishTaskService, _taskState, _taskDataService,
             _assignPolicyService, _finishPolicyService, _callChain, _taskOperations, _disableFunctions, _translate, _currencyPipe, _changedFieldsService,
-            _permissionService, overflowService, _taskForceOpen, injectedTabData);
+            _permissionService, _userComparator, overflowService, _taskForceOpen, injectedTabData);
         if (_taskForceOpen) {
             this.hidePanelHeader &#x3D; true;
         }

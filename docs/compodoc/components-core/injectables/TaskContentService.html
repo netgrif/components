@@ -498,8 +498,8 @@ Also provides some general functionality that is needed when working with task c
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="312"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/services/task-content.service.ts:312</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="313"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/services/task-content.service.ts:313</a></div>
                 </td>
             </tr>
 
@@ -627,8 +627,8 @@ Also provides some general functionality that is needed when working with task c
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="306"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/services/task-content.service.ts:306</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="307"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/services/task-content.service.ts:307</a></div>
                 </td>
             </tr>
 
@@ -709,8 +709,8 @@ Also provides some general functionality that is needed when working with task c
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="299"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/services/task-content.service.ts:299</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="300"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/services/task-content.service.ts:300</a></div>
                 </td>
             </tr>
 
@@ -828,8 +828,8 @@ Also provides some general functionality that is needed when working with task c
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="237"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/services/task-content.service.ts:237</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="238"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/services/task-content.service.ts:238</a></div>
                 </td>
             </tr>
 
@@ -944,8 +944,8 @@ Also provides some general functionality that is needed when working with task c
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="221"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/services/task-content.service.ts:221</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="222"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/services/task-content.service.ts:222</a></div>
                 </td>
             </tr>
 
@@ -1014,7 +1014,7 @@ Also provides some general functionality that is needed when working with task c
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>updateStateData(eventOutcome: <a href="../interfaces/TaskEventOutcome.html" target="_self">TaskEventOutcome</a>)</code>
+                    <code>updateStateData(eventOutcome: <a href="../interfaces/TaskEventOutcome.html" target="_self">TaskEventOutcome</a>, isStillExecutable: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>)</code>
                 </td>
             </tr>
 
@@ -1040,6 +1040,7 @@ Also provides some general functionality that is needed when working with task c
                                     <td>Name</td>
                                     <td>Type</td>
                                     <td>Optional</td>
+                                    <td>Default value</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -1053,6 +1054,23 @@ Also provides some general functionality that is needed when working with task c
                                         No
                                     </td>
 
+                                    <td>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td>isStillExecutable</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>true</code>
+                                    </td>
 
                                 </tr>
                             </tbody>
@@ -1999,11 +2017,12 @@ export abstract class TaskContentService implements OnDestroy {
     /**
      * Clears the assignee, start date and finish date from the managed Task.
      */
-    public updateStateData(eventOutcome: TaskEventOutcome): void {
+    public updateStateData(eventOutcome: TaskEventOutcome, isStillExecutable: boolean &#x3D; true): void {
         if (this._task) {
             this._task.user &#x3D; eventOutcome.task.user;
             this._task.startDate &#x3D; eventOutcome.task.startDate;
             this._task.finishDate &#x3D; eventOutcome.task.finishDate;
+            this._task.isStillExecutable &#x3D; isStillExecutable;
         }
     }
 
@@ -2028,7 +2047,7 @@ export abstract class TaskContentService implements OnDestroy {
     }
 
     protected updateField(chFields: ChangedFields, field: DataField&lt;any&gt;, frontendActions: Change, referenced: boolean &#x3D; false): void {
-        if (this._fieldConverterService.resolveType(field) &#x3D;&#x3D;&#x3D; FieldTypeResource.TASK_REF) {
+        if (this._fieldConverterService.resolveType(field) &#x3D;&#x3D;&#x3D; FieldTypeResource.TASK_REF &amp;&amp; (!!this._task?.isStillExecutable || this._task?.isStillExecutable &#x3D;&#x3D;&#x3D; undefined)) {
             this._taskDataReloadRequest$.next(frontendActions ? frontendActions : undefined);
             return;
         }
@@ -2105,13 +2124,13 @@ export abstract class TaskContentService implements OnDestroy {
     protected findTaskRefId(taskId: string, fields: { [fieldId: string]: DataField&lt;any&gt;}): DataField&lt;any&gt; {
         let taskRefId &#x3D; Object.values(fields).find(f &#x3D;&gt; f instanceof TaskRefField &amp;&amp; f.value.includes(taskId));
         if (!taskRefId) {
-            const referencedTaskIds &#x3D; Object.values(fields).filter(f &#x3D;&gt; f instanceof TaskRefField).map(tr &#x3D;&gt; tr.value);
-            referencedTaskIds.forEach(id &#x3D;&gt; {
+            const referencedTaskIds &#x3D; Array.prototype.concat.apply([], Object.values(fields).filter(f &#x3D;&gt; f instanceof TaskRefField).map(tr &#x3D;&gt; tr.value));
+            for (const id of referencedTaskIds) {
                 taskRefId &#x3D; this.findTaskRefId(taskId, this.taskFieldsIndex[id].fields);
                 if (!!taskRefId) {
                     return taskRefId;
                 }
-            });
+            }
         }
         return taskRefId
     }

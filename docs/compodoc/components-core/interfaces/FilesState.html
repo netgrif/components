@@ -296,13 +296,10 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
     AfterViewInit,
     Component,
-    ElementRef,
     Inject,
-    Input,
     OnDestroy,
     OnInit,
     Optional,
-    ViewChild
 } from &quot;@angular/core&quot;;
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from &quot;../../models/data-field-portal-data-injection-token&quot;;
 import {FileListField, FileListFieldValidation} from &quot;../models/file-list-field&quot;;
@@ -312,14 +309,12 @@ import {LoggerService} from &quot;../../../logger/services/logger.service&quot;;
 import {SnackBarService} from &quot;../../../snack-bar/services/snack-bar.service&quot;;
 import {TranslateService} from &quot;@ngx-translate/core&quot;;
 import {EventService} from &quot;../../../event/services/event.service&quot;;
-import {FileFieldIdBody} from &quot;../../models/file-field-id-body&quot;;
 import {EventOutcomeMessageResource} from &quot;../../../resources/interface/message-resource&quot;;
 import {ProgressType, ProviderProgress} from &quot;../../../resources/resource-provider.service&quot;;
 import {ChangedFieldsMap} from &quot;../../../event/services/interfaces/changed-fields-map&quot;;
 import {HttpParams} from &quot;@angular/common/http&quot;;
 import {take} from &quot;rxjs/operators&quot;;
 import {FileFieldValue} from &quot;../../file-field/models/file-field-value&quot;;
-import {AbstractBaseDataFieldComponent} from &quot;../../base-component/abstract-base-data-field.component&quot;;
 import {FileFieldRequest} from &quot;../../../resources/interface/file-field-request-body&quot;;
 import {AbstractFileFieldDefaultComponent} from &#x27;../../models/abstract-file-field-default-component&#x27;;
 

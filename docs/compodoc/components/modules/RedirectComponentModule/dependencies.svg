@@ -24,13 +24,13 @@
 <title>cluster_RedirectComponentModule</title>
 <polygon fill="none" stroke="black" stroke-dasharray="1,5" points="154,-70 154,-268 342,-268 342,-70 154,-70"/>
 </g>
-<g id="clust5" class="cluster">
-<title>cluster_RedirectComponentModule_exports</title>
-<polygon fill="none" stroke="black" points="174,-208 174,-260 322,-260 322,-208 174,-208"/>
-</g>
 <g id="clust2" class="cluster">
 <title>cluster_RedirectComponentModule_declarations</title>
 <polygon fill="none" stroke="black" points="176,-78 176,-130 320,-130 320,-78 176,-78"/>
+</g>
+<g id="clust5" class="cluster">
+<title>cluster_RedirectComponentModule_exports</title>
+<polygon fill="none" stroke="black" points="174,-208 174,-260 322,-260 322,-208 174,-208"/>
 </g>
 <!-- RedirectComponent -->
 <g id="node1" class="node">
