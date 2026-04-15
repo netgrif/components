@@ -14,7 +14,8 @@ import {DomSanitizer} from '@angular/platform-browser';
     styleUrls: ['./html-textarea-field.component.scss']
 })
 export class HtmlTextareaFieldComponent extends AbstractHtmlTextareaFieldComponent implements AfterViewInit {
-    constructor(protected _translate: TranslateService, protected _sanitizer: DomSanitizer,
+    constructor(protected _translate: TranslateService,
+                protected _sanitizer: DomSanitizer,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<TextAreaField>) {
         super(_translate, _sanitizer, dataFieldPortalData);
     }
@@ -24,6 +25,6 @@ export class HtmlTextareaFieldComponent extends AbstractHtmlTextareaFieldCompone
             if (!this.dataField?.placeholder) {
                 this.dataField.placeholder = this._translate.instant('dataField.textarea.insertText');
             }
-        })
+        });
     }
 }
