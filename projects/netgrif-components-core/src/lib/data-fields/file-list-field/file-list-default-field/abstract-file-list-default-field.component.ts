@@ -1,13 +1,10 @@
 import {
     AfterViewInit,
     Component,
-    ElementRef,
     Inject,
-    Input,
     OnDestroy,
     OnInit,
     Optional,
-    ViewChild
 } from "@angular/core";
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {FileListField, FileListFieldValidation} from "../models/file-list-field";
@@ -17,16 +14,16 @@ import {LoggerService} from "../../../logger/services/logger.service";
 import {SnackBarService} from "../../../snack-bar/services/snack-bar.service";
 import {TranslateService} from "@ngx-translate/core";
 import {EventService} from "../../../event/services/event.service";
-import {FileFieldIdBody} from "../../models/file-field-id-body";
 import {EventOutcomeMessageResource} from "../../../resources/interface/message-resource";
 import {ProgressType, ProviderProgress} from "../../../resources/resource-provider.service";
 import {ChangedFieldsMap} from "../../../event/services/interfaces/changed-fields-map";
 import {HttpParams} from "@angular/common/http";
 import {take} from "rxjs/operators";
 import {FileFieldValue} from "../../file-field/models/file-field-value";
-import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base-data-field.component";
 import {FileFieldRequest} from "../../../resources/interface/file-field-request-body";
 import {AbstractFileFieldDefaultComponent} from '../../models/abstract-file-field-default-component';
+import {FrontAction} from "../../models/changed-fields";
+import {FrontActionService} from "../../../actions/services/front-action.service";
 
 export interface FilesState {
     progress: number;
@@ -60,6 +57,7 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractFile
                           protected _snackbar: SnackBarService,
                           protected _translate: TranslateService,
                           protected _eventService: EventService,
+                          protected _frontActionService: FrontActionService,
                           @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<FileListField>) {
         super(_log, _snackbar, _translate, dataFieldPortalData);
         this.state = this.defaultState;
@@ -171,58 +169,66 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractFile
             fieldId: this.dataField.stringId,
         }
         fileFormData.append('data', new Blob([JSON.stringify(requestBody)], {type: 'application/json'}));
-        this._taskResourceService.uploadFile(this.taskId, fileFormData, true).subscribe((response: EventOutcomeMessageResource) => {
-                if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.UPLOAD) {
-                    this.state.progress = (response as ProviderProgress).progress;
-                } else {
-                    this.state.completed = true;
-                    this.state.uploading = false;
-                    this.state.progress = 0;
-                    this._log.debug(
-                        `Files [${this.dataField.stringId}] were successfully uploaded`
-                    );
-                    if (response.error) {
-                        this.state.error = true;
-                        this._log.error(
-                            `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)} uploading has failed!`, response.error
+        this._taskResourceService.uploadFile(this.taskId, fileFormData, true)
+            .subscribe({
+                next: (response: EventOutcomeMessageResource) => {
+                    if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.UPLOAD) {
+                        this.state.progress = (response as ProviderProgress).progress;
+                    } else {
+                        this.state.completed = true;
+                        this.state.uploading = false;
+                        this.state.progress = 0;
+                        this._log.debug(
+                            `Files [${this.dataField.stringId}] were successfully uploaded`
                         );
                         if (response.error) {
-                            this._snackbar.openErrorSnackBar(this._translate.instant(response.error));
+                            this.state.error = true;
+                            this._log.error(
+                                `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)} uploading has failed!`, response.error
+                            );
+                            if (response.error) {
+                                this._snackbar.openErrorSnackBar(this._translate.instant(response.error));
+                            } else {
+                                this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.fileUploadFailed'));
+                            }
                         } else {
-                            this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.fileUploadFailed'));
+                            const changedFieldsMap: ChangedFieldsMap = this._eventService.parseChangedFieldsFromOutcomeTree(response.outcome);
+                            this.dataField.emitChangedFields(changedFieldsMap);
+                            this.state.error = false;
+                            filesToUpload.forEach(fileToUpload => {
+                                this.uploadedFiles.push(fileToUpload.name);
+                                this.dataField.value.namesPaths.push({name: fileToUpload.name});
+                                this.formControlRef.setValue(this.dataField.value.namesPaths.map(namePath => {
+                                    return namePath['name'];
+                                }).join('/'));
+                            });
+                            this._snackbar.openSuccessSnackBar(!!response.outcome.message ? response.outcome.message : this._translate.instant('tasks.snackbar.dataSaved'));
+                            const frontActions: Array<FrontAction> = this._eventService.parseFrontActionsFromOutcomeTree(response.outcome);
+                            if (frontActions?.length > 0) {
+                                this._frontActionService.runAll(frontActions);
+                            }
                         }
-                    } else {
-                        const changedFieldsMap: ChangedFieldsMap = this._eventService.parseChangedFieldsFromOutcomeTree(response.outcome);
-                        this.dataField.emitChangedFields(changedFieldsMap);
-                        this.state.error = false;
-                        filesToUpload.forEach(fileToUpload => {
-                            this.uploadedFiles.push(fileToUpload.name);
-                            this.dataField.value.namesPaths.push({name: fileToUpload.name});
-                            this.formControlRef.setValue(this.dataField.value.namesPaths.map(namePath => {
-                                return namePath['name'];
-                            }).join('/'));
-                        });
+                        this.dataField.touch = true;
+                        this.dataField.update();
+                        this.fileUploadEl.nativeElement.value = '';
                     }
+                }, error: (error) => {
+                    this.state.completed = true;
+                    this.state.error = true;
+                    this.state.uploading = false;
+                    this.state.progress = 0;
+                    if (error?.error?.message) {
+                        this._snackbar.openErrorSnackBar(this._translate.instant(error.error.message));
+                    } else {
+                        this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.fileUploadFailed'));
+                    }
+                    this._log.error(
+                        `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)} uploading has failed!`, error
+                    );
                     this.dataField.touch = true;
                     this.dataField.update();
                     this.fileUploadEl.nativeElement.value = '';
                 }
-            }, error => {
-                this.state.completed = true;
-                this.state.error = true;
-                this.state.uploading = false;
-                this.state.progress = 0;
-                if (error?.error?.message) {
-                    this._snackbar.openErrorSnackBar(this._translate.instant(error.error.message));
-                } else {
-                    this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.fileUploadFailed'));
-                }
-                this._log.error(
-                    `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)} uploading has failed!`, error
-                );
-                this.dataField.touch = true;
-                this.dataField.update();
-                this.fileUploadEl.nativeElement.value = '';
             });
     }
 

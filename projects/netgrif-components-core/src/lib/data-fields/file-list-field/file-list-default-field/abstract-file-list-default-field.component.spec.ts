@@ -16,9 +16,6 @@ import {MockUserResourceService} from "../../../utility/tests/mocks/mock-user-re
 import {ConfigurationService} from "../../../configuration/configuration.service";
 import {TestConfigurationService} from "../../../utility/tests/test-config";
 import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional} from "@angular/core";
-import {BrowserDynamicTestingModule} from "@angular/platform-browser-dynamic/testing";
-import {ErrorSnackBarComponent} from "../../../snack-bar/components/error-snack-bar/error-snack-bar.component";
-import {SuccessSnackBarComponent} from "../../../snack-bar/components/success-snack-bar/success-snack-bar.component";
 import {TaskResourceService} from "../../../resources/engine-endpoint/task-resource.service";
 import {LoggerService} from "../../../logger/services/logger.service";
 import {SnackBarService} from "../../../snack-bar/services/snack-bar.service";
@@ -28,6 +25,7 @@ import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-fie
 import {AbstractFileListDefaultFieldComponent} from "./abstract-file-list-default-field.component";
 import {FormControl} from "@angular/forms";
 import {WrappedBoolean} from "../../data-field-template/models/wrapped-boolean";
+import {FrontActionService} from "../../../actions/services/front-action.service";
 
 describe('AbstractFileListDefaultFieldComponent', () => {
     let component: TestFileListComponent;
@@ -46,6 +44,7 @@ describe('AbstractFileListDefaultFieldComponent', () => {
             providers: [
                 SideMenuService,
                 EventService,
+                FrontActionService,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
@@ -94,8 +93,9 @@ class TestFileListComponent extends AbstractFileListDefaultFieldComponent {
                 snackbar: SnackBarService,
                 translate: TranslateService,
                 eventService: EventService,
+                frontActionService: FrontActionService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<FileListField>) {
-        super(taskResourceService, log, snackbar, translate, eventService, dataFieldPortalData);
+        super(taskResourceService, log, snackbar, translate, eventService, frontActionService, dataFieldPortalData);
     }
 }
 

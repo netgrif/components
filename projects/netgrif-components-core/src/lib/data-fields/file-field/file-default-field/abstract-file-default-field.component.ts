@@ -26,6 +26,8 @@ import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-fie
 import {FILE_FIELD_HEIGHT, FILE_FIELD_PADDING, PREVIEW, PREVIEW_BUTTON} from '../models/file-field-constants';
 import {FileFieldRequest} from "../../../resources/interface/file-field-request-body";
 import {AbstractFileFieldDefaultComponent} from '../../models/abstract-file-field-default-component';
+import {FrontAction} from "../../models/changed-fields";
+import {FrontActionService} from "../../../actions/services/front-action.service";
 
 export interface FileState {
     progress: number;
@@ -114,6 +116,7 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractFileFiel
                           protected _translate: TranslateService,
                           protected _eventService: EventService,
                           protected _sanitizer: DomSanitizer,
+                          protected _frontActionService: FrontActionService,
                           @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<FileField>) {
         super(_log, _snackbar, _translate, dataFieldPortalData);
         this.state = this.defaultState;
@@ -217,60 +220,68 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractFileFiel
         fileFormData.append('file', fileToUpload);
         fileFormData.append('data', new Blob([JSON.stringify(this.createRequestBody())], {type: 'application/json'}));
         this._taskResourceService.uploadFile(this.taskId, fileFormData, false)
-            .subscribe((response: EventOutcomeMessageResource) => {
-                if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.UPLOAD) {
-                    this.state.progress = (response as ProviderProgress).progress;
-                } else {
+            .subscribe({
+                next: (response: EventOutcomeMessageResource) => {
+                    if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.UPLOAD) {
+                        this.state.progress = (response as ProviderProgress).progress;
+                    } else {
+                        this.state.completed = true;
+                        this.state.uploading = false;
+                        this.state.progress = 0;
+
+                        if (response.error) {
+                            this.state.error = true;
+                            this._log.error(
+                                `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)} uploading has failed!`, response.error
+                            );
+                            if (response.error) {
+                                this._snackbar.openErrorSnackBar(this._translate.instant(response.error));
+                            } else {
+                                this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.fileUploadFailed'));
+                            }
+                        } else {
+                            const changedFieldsMap: ChangedFieldsMap = this._eventService.parseChangedFieldsFromOutcomeTree(response.outcome);
+                            this.dataField.emitChangedFields(changedFieldsMap);
+                            this._log.debug(
+                                `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0).name} was successfully uploaded`
+                            );
+                            this.state.error = false;
+                            this.dataField.downloaded = false;
+                            this.dataField.value.name = fileToUpload.name;
+                            if (this.isFilePreview) {
+                                this.initializePreviewIfDisplayable();
+                            }
+                            this.fullSource.next(undefined);
+                            this.fileForDownload = undefined;
+                            this.formControlRef.setValue(this.dataField.value.name);
+                            this._snackbar.openSuccessSnackBar(!!response.outcome.message ? response.outcome.message : this._translate.instant('tasks.snackbar.dataSaved'));
+                            const frontActions: Array<FrontAction> = this._eventService.parseFrontActionsFromOutcomeTree(response.outcome);
+                            if (frontActions?.length > 0) {
+                                this._frontActionService.runAll(frontActions);
+                            }
+                        }
+                        this.dataField.touch = true;
+                        this.dataField.update();
+                        this.fileUploadEl.nativeElement.value = '';
+                    }
+                },
+                error: (error) => {
                     this.state.completed = true;
+                    this.state.error = true;
                     this.state.uploading = false;
                     this.state.progress = 0;
-
-                    if (response.error) {
-                        this.state.error = true;
-                        this._log.error(
-                            `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)} uploading has failed!`, response.error
-                        );
-                        if (response.error) {
-                            this._snackbar.openErrorSnackBar(this._translate.instant(response.error));
-                        } else {
-                            this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.fileUploadFailed'));
-                        }
+                    this._log.error(
+                        `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)} uploading has failed!`, error
+                    );
+                    if (error?.error?.message) {
+                        this._snackbar.openErrorSnackBar(this._translate.instant(error.error.message));
                     } else {
-                        const changedFieldsMap: ChangedFieldsMap = this._eventService.parseChangedFieldsFromOutcomeTree(response.outcome);
-                        this.dataField.emitChangedFields(changedFieldsMap);
-                        this._log.debug(
-                            `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0).name} was successfully uploaded`
-                        );
-                        this.state.error = false;
-                        this.dataField.downloaded = false;
-                        this.dataField.value.name = fileToUpload.name;
-                        if (this.isFilePreview) {
-                            this.initializePreviewIfDisplayable();
-                        }
-                        this.fullSource.next(undefined);
-                        this.fileForDownload = undefined;
-                        this.formControlRef.setValue(this.dataField.value.name);
+                        this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.fileUploadFailed'));
                     }
                     this.dataField.touch = true;
                     this.dataField.update();
                     this.fileUploadEl.nativeElement.value = '';
                 }
-            }, error => {
-                this.state.completed = true;
-                this.state.error = true;
-                this.state.uploading = false;
-                this.state.progress = 0;
-                this._log.error(
-                    `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)} uploading has failed!`, error
-                );
-                if (error?.error?.message) {
-                    this._snackbar.openErrorSnackBar(this._translate.instant(error.error.message));
-                } else {
-                    this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.fileUploadFailed'));
-                }
-                this.dataField.touch = true;
-                this.dataField.update();
-                this.fileUploadEl.nativeElement.value = '';
             });
     }
 
@@ -410,7 +421,8 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractFileFiel
         this.state.downloading = true;
         let params = new HttpParams()
         params = params.set("fieldId", this.dataField.stringId);
-        this._taskResourceService.downloadFilePreview(this.resolveParentTaskId(), params).subscribe(response => {            if (response instanceof Blob) {
+        this._taskResourceService.downloadFilePreview(this.resolveParentTaskId(), params).subscribe(response => {
+            if (response instanceof Blob) {
                 this._log.debug(`Preview of file [${this.dataField.stringId}] ${this.dataField.value.name} was successfully downloaded`);
                 this.fileForPreview = new Blob([response], {type: 'application/octet-stream'});
                 this.previewSource = this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.fileForPreview));
@@ -445,7 +457,8 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractFileFiel
         }
         let params = new HttpParams();
         params = params.set("fieldId", this.dataField.stringId);
-        this._taskResourceService.downloadFile(this.resolveParentTaskId(), params).subscribe(response => {            if (!(response as ProviderProgress).type || (response as ProviderProgress).type !== ProgressType.DOWNLOAD) {
+        this._taskResourceService.downloadFile(this.resolveParentTaskId(), params).subscribe(response => {
+            if (!(response as ProviderProgress).type || (response as ProviderProgress).type !== ProgressType.DOWNLOAD) {
                 this._log.debug(`File [${this.dataField.stringId}] ${this.dataField.value.name} was successfully downloaded`);
                 this.initDownloadFile(response);
             }
