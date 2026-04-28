@@ -99,7 +99,7 @@ describe('AbstractFileDefaultFieldComponent', () => {
 
 @Component({
     selector: 'ncc-test-file',
-    template: ''
+    template: '<input type="file" #fileUploadInput name="fileUpload" [multiple]="true" accept="{{dataField.allowTypes}}" class="invisible-input"/>'
 })
 class TestFileComponent extends AbstractFileDefaultFieldComponent {
     constructor(taskResourceService: TaskResourceService,
