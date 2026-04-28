@@ -26,6 +26,8 @@ import {AbstractFileListDefaultFieldComponent} from "./abstract-file-list-defaul
 import {FormControl} from "@angular/forms";
 import {WrappedBoolean} from "../../data-field-template/models/wrapped-boolean";
 import {FrontActionService} from "../../../actions/services/front-action.service";
+import {AbstractFileListFieldComponent} from "../abstract-file-list-field.component";
+import {NAE_INFORM_ABOUT_INVALID_DATA} from "../../models/invalid-data-policy-token";
 
 describe('AbstractFileListDefaultFieldComponent', () => {
     let component: TestFileListComponent;
@@ -97,7 +99,7 @@ describe('AbstractFileListDefaultFieldComponent', () => {
 
 @Component({
     selector: 'ncc-test-filelist',
-    template: ''
+    template: '<input type="file" #fileUploadInput name="fileUpload" [multiple]="true" accept="{{dataField.allowTypes}}" class="invisible-input"/>'
 })
 class TestFileListComponent extends AbstractFileListDefaultFieldComponent {
     constructor(taskResourceService: TaskResourceService,
