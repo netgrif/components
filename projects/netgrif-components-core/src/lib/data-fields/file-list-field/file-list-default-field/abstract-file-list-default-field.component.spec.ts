@@ -1,8 +1,8 @@
-import {ComponentFixture, TestBed, waitForAsync} from "@angular/core/testing";
+import {ComponentFixture, inject, TestBed, waitForAsync} from "@angular/core/testing";
 import {MaterialModule} from "../../../material/material.module";
 import {AngularResizeEventModule} from "angular-resize-event";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
 import {TranslateLibModule} from "../../../translate/translate-lib.module";
 import {SnackBarModule} from "../../../snack-bar/snack-bar.module";
 import {SideMenuService} from "../../../side-menu/services/side-menu.service";
@@ -76,6 +76,18 @@ describe('AbstractFileListDefaultFieldComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
+    });
+
+    it('should call download method successfully', () => {
+        spyOn(component, 'download').and.callThrough(); // Spy on the method
+        component.download("test"); // Call the method
+        expect(component.download).toHaveBeenCalled(); // Assert that it was called
+    });
+
+    it('should call upload method successfully', () => {
+        spyOn(component, 'upload').and.callThrough(); // Spy on the method
+        component.upload(); // Call the method
+        expect(component.upload).toHaveBeenCalled(); // Assert that it was called
     });
 
     afterEach(() => {

@@ -221,7 +221,7 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractFile
                         this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.fileUploadFailed'));
                     }
                     this._log.error(
-                        `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)} uploading has failed!`, error
+                        `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)?.name} uploading has failed!`, error
                     );
                     this.dataField.touch = true;
                     this.dataField.update();
