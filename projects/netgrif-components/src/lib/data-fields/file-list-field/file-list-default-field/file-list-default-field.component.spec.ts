@@ -7,7 +7,7 @@ import {
     ConfigurationService,
     DATA_FIELD_PORTAL_DATA,
     DataFieldPortalData,
-    FileListField,
+    FileListField, FrontActionService,
     MaterialModule,
     MockAuthenticationMethodService,
     MockAuthenticationService,
@@ -42,6 +42,7 @@ describe('FileListDefaultFieldComponent', () => {
         ],
         providers: [
             SideMenuService,
+            FrontActionService,
             {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
             {provide: AuthenticationService, useClass: MockAuthenticationService},
             {provide: UserResourceService, useClass: MockUserResourceService},
