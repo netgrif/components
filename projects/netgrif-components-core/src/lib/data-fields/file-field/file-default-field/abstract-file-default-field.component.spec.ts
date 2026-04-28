@@ -80,6 +80,18 @@ describe('AbstractFileDefaultFieldComponent', () => {
         expect(component).toBeTruthy();
     });
 
+    it('should call download method successfully', () => {
+        spyOn(component, 'download').and.callThrough(); // Spy on the method
+        component.download(); // Call the method
+        expect(component.download).toHaveBeenCalled(); // Assert that it was called
+    });
+
+    it('should call upload method successfully', () => {
+        spyOn(component, 'upload').and.callThrough(); // Spy on the method
+        component.upload(); // Call the method
+        expect(component.upload).toHaveBeenCalled(); // Assert that it was called
+    });
+
     afterEach(() => {
         TestBed.resetTestingModule();
     });
