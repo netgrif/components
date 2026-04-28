@@ -178,20 +178,18 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractFile
                         this.state.completed = true;
                         this.state.uploading = false;
                         this.state.progress = 0;
-                        this._log.debug(
-                            `Files [${this.dataField.stringId}] were successfully uploaded`
-                        );
                         if (response.error) {
                             this.state.error = true;
                             this._log.error(
-                                `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)} uploading has failed!`, response.error
+                                `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0).name} uploading has failed!`, response.error
                             );
                             if (response.error) {
                                 this._snackbar.openErrorSnackBar(this._translate.instant(response.error));
-                            } else {
-                                this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.fileUploadFailed'));
                             }
                         } else {
+                            this._log.debug(
+                                `Files [${this.dataField.stringId}] were successfully uploaded`
+                            );
                             const changedFieldsMap: ChangedFieldsMap = this._eventService.parseChangedFieldsFromOutcomeTree(response.outcome);
                             this.dataField.emitChangedFields(changedFieldsMap);
                             this.state.error = false;

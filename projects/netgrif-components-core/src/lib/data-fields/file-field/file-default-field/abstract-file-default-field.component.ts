@@ -232,18 +232,15 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractFileFiel
                         if (response.error) {
                             this.state.error = true;
                             this._log.error(
-                                `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)} uploading has failed!`, response.error
+                                `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)?.name} uploading has failed!`, response.error
                             );
-                            if (response.error) {
-                                this._snackbar.openErrorSnackBar(this._translate.instant(response.error));
-                            } else {
-                                this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.fileUploadFailed'));
-                            }
+                            this._snackbar.openErrorSnackBar(this._translate.instant(response.error));
+
                         } else {
                             const changedFieldsMap: ChangedFieldsMap = this._eventService.parseChangedFieldsFromOutcomeTree(response.outcome);
                             this.dataField.emitChangedFields(changedFieldsMap);
                             this._log.debug(
-                                `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0).name} was successfully uploaded`
+                                `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)?.name} was successfully uploaded`
                             );
                             this.state.error = false;
                             this.dataField.downloaded = false;
@@ -271,7 +268,7 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractFileFiel
                     this.state.uploading = false;
                     this.state.progress = 0;
                     this._log.error(
-                        `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)} uploading has failed!`, error
+                        `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)?.name} uploading has failed!`, error
                     );
                     if (error?.error?.message) {
                         this._snackbar.openErrorSnackBar(this._translate.instant(error.error.message));

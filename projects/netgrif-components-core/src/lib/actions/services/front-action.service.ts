@@ -16,6 +16,7 @@ export class FrontActionService {
         const fn = this._frontActionRegistry.get(frontAction.id)
         if (!fn) {
             this._log.error("Frontend action is not defined for ID [" + frontAction.id +"]")
+            return;
         }
         fn.call(this._injector, frontAction)
     }
