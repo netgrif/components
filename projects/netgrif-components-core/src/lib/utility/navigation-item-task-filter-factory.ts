@@ -1,7 +1,8 @@
 import {BaseFilter} from '../search/models/base-filter';
-import {NAE_NAVIGATION_ITEM_TASK_DATA} from '../navigation/model/filter-case-injection-token';
 import {DataGroup} from '../resources/interface/data-groups';
+import {NAE_NAVIGATION_ITEM_TASK_DATA} from '../navigation/model/filter-case-injection-token';
 import {FilterExtractionService} from '../navigation/utility/filter-extraction.service';
+import {Filter} from '../filter/models/filter';
 import {ActivatedRoute} from '@angular/router';
 
 /**
@@ -12,8 +13,9 @@ import {ActivatedRoute} from '@angular/router';
  */
 export function navigationItemTaskFilterFactory(extractionService: FilterExtractionService,
                                                 activatedRoute?: ActivatedRoute,
-                                                navigationItemTaskData?: Array<DataGroup>): BaseFilter {
+                                                navigationItemTaskData?: Array<DataGroup>,
+                                                filterData?: Filter): BaseFilter {
     return {
-        filter: extractionService.extractCompleteFilterFromData(navigationItemTaskData, activatedRoute)
+        filter: extractionService.extractCompleteFilterFromData(navigationItemTaskData, activatedRoute, filterData)
     };
 }

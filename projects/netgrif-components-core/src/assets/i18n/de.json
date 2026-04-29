@@ -515,5 +515,8 @@
         "previousPage": "Vorherige Seite",
         "pageOne": "Seite 1 von 1",
         "pageAmount": "Seite {{page}} von {{amountPages}}"
+    },
+    "export": {
+        "errorExportDownload": "Datei konnte nicht heruntergeladen werden!"
     }
 }

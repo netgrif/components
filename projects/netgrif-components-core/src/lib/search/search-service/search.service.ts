@@ -305,6 +305,14 @@ export class SearchService implements OnDestroy {
     }
 
     /**
+     * Loads whole new filter and search cases/tasks based on this filter
+     * @param newFilter whole new filter that should be used for search
+     */
+    public updateWithFullFilter(newFilter: Filter): void {
+        this._activeFilter.next(newFilter);
+    }
+
+    /**
      * @returns `undefined` if the predicate tree contains no complete query.
      * Otherwise returns the serialized form of the completed queries in the predicate tree.
      */
