@@ -90,7 +90,7 @@ export class FilterExtractionService {
             filterSegment = filterSegment.merge(filterData, MergeOperator.AND);
         }
 
-        const parentFilter = this.extractCompleteFilterFromData(dataSection.slice(filterIndex.dataGroupIndex + 1), activatedRoute, filterData));
+        const parentFilter = this.extractCompleteFilterFromData(dataSection.slice(filterIndex.dataGroupIndex + 1), activatedRoute, filterData);
 
         if (parentFilter !== undefined && parentFilter.type === filterSegment.type) {
             return filterSegment.merge(parentFilter, MergeOperator.AND);
