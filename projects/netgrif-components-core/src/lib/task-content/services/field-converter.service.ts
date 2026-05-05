@@ -11,7 +11,7 @@ import {DateTimeField} from '../../data-fields/date-time-field/models/date-time-
 import {UserField} from '../../data-fields/user-field/models/user-field';
 import {ButtonField} from '../../data-fields/button-field/models/button-field';
 import {FileField, FileUploadMIMEType} from '../../data-fields/file-field/models/file-field';
-import moment from 'moment';
+import moment, {Moment} from 'moment';
 import {UserValue} from '../../data-fields/user-field/models/user-value';
 import {FieldTypeResource} from '../model/field-type-resource';
 import {FileListField} from '../../data-fields/file-list-field/models/file-list-field';
@@ -23,7 +23,7 @@ import {FilterField} from '../../data-fields/filter-field/models/filter-field';
 import {I18nField} from '../../data-fields/i18n-field/models/i18n-field';
 import {UserListField} from '../../data-fields/user-list-field/models/user-list-field';
 import {UserListValue} from '../../data-fields/user-list-field/models/user-list-value';
-import {decodeBase64, encodeBase64} from "../../utility/base64";
+import {decodeBase64, encodeBase64} from '../../utility/base64';
 import {CaseRefField} from '../../data-fields/case-ref-field/model/case-ref-field';
 import {StringCollectionField} from '../../data-fields/string-collection-field/models/string-collection-field';
 
@@ -31,7 +31,8 @@ import {StringCollectionField} from '../../data-fields/string-collection-field/m
     providedIn: 'root'
 })
 export class FieldConverterService {
-    private textFieldNames = [ 'richtextarea', 'htmltextarea', 'editor', 'htmlEditor' ]
+
+    private textFieldNames = ['richtextarea', 'htmltextarea', 'editor', 'htmlEditor'];
 
     constructor() {
     }
@@ -41,6 +42,7 @@ export class FieldConverterService {
             case FieldTypeResource.BOOLEAN:
                 return new BooleanField(item.stringId, item.name, item.value as boolean, item.behavior,
                     item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
+
             case FieldTypeResource.TEXT:
                 if (this.textFieldNames.includes(item.component?.name)) {
                     return new TextAreaField(item.stringId, item.name, this.resolveTextValue(item, item.value), item.behavior,
@@ -70,12 +72,7 @@ export class FieldConverterService {
                 return new DateField(item.stringId, item.name, date, item.behavior, item.placeholder,
                     item.description, item.layout, item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.DATE_TIME:
-                let dateTime;
-                if (item.value) {
-                    dateTime = moment(new Date(item.value[0], item.value[1] - 1, item.value[2], item.value[3], item.value[4]));
-                }
-                return new DateTimeField(item.stringId, item.name, dateTime, item.behavior,
-                    item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
+                return new DateTimeField(item.stringId, item.name, this.resolveDateTime(item.value), item.behavior, item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.USER:
                 let user;
                 if (item.value) {
@@ -291,7 +288,7 @@ export class FieldConverterService {
             return new UserValue(value.id, value.name, value.surname, value.email);
         }
         if (this.resolveType(field) === FieldTypeResource.DATE_TIME) {
-            return moment(new Date(value[0], value[1] - 1, value[2], value[3], value[4]));
+            return this.resolveDateTime(value);
         }
         if (this.resolveType(field) === FieldTypeResource.MULTICHOICE) {
             const array = [];
@@ -317,8 +314,33 @@ export class FieldConverterService {
         return value;
     }
 
+    protected resolveDateTime(value: any): Moment | undefined {
+        if (!value) {
+            return undefined;
+        }
+        if (moment.isMoment(value)) {
+            return value;
+        }
+        if (value instanceof Date) {
+            return moment(value);
+        }
+        if (Array.isArray(value)) {
+            const [year, month, day, hour = 0, minute = 0, second = 0, millisecond = 0] = value;
+            return moment({
+                year,
+                month: month - 1,
+                date: day,
+                hour,
+                minute,
+                second,
+                millisecond
+            });
+        }
+        return moment(value);
+    }
+
     protected resolveAllowedTypes(allowTypes: string[]) {
-        return allowTypes?.length > 0 ? (allowTypes.length > 1 ? allowTypes as FileUploadMIMEType[] : allowTypes[0]) : null
+        return allowTypes?.length > 0 ? (allowTypes.length > 1 ? allowTypes as FileUploadMIMEType[] : allowTypes[0]) : null;
     }
 
     protected resolveByteSize(bytesSize) {
