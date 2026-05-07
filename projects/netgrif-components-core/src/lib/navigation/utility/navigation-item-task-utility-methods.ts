@@ -138,7 +138,10 @@ export function extractFieldValueFromData<T>(dataSection: Array<DataGroup>, fiel
  * @throws Error if filter field is not found
  * */
 export function hasView(dataSection: Array<DataGroup>): boolean {
-    const field = getFieldFromDataGroups(dataSection, 'view_configuration_form');
+    let field = getFieldFromDataGroups(dataSection, 'view_configuration_form');
+    if (field === undefined) {
+        field = getFieldFromDataGroups(dataSection, 'view_configuration_all_data_form');
+    }
     if (field === undefined) {
         throw new Error(`Field view_configuration_form could not be resolved`);
     }

@@ -47,10 +47,10 @@ export class DefaultTabViewComponent {
     }
 
     protected getTabs(): TabContent[] {
-        const menuItemDataGroups: Array<DataGroup> = this._navigationItemTaskData.slice(0, 4)
-        const viewDataGroups: Array<DataGroup> = this._navigationItemTaskData.slice(4, this._navigationItemTaskData.length);
+        const menuItemDataGroups: Array<DataGroup> = this._navigationItemTaskData.slice(0, 1);
+        const viewDataGroups: Array<DataGroup> = this._navigationItemTaskData.slice(1, this._navigationItemTaskData.length);
 
-        const viewType: string = extractFieldValueFromData(menuItemDataGroups, "view_configuration_type")
+        const viewType: string = extractFieldValueFromData(menuItemDataGroups, "view_configuration_type");
         switch (viewType) {
             case "tabbed_case_view":
                 return this.getCaseTabs(menuItemDataGroups, viewDataGroups);

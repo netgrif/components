@@ -22,6 +22,7 @@ import {AccessService} from "../../../authorization/permission/access.service";
 import {ActivatedRoute} from "@angular/router";
 import {ConfigurationService} from "../../../configuration/configuration.service";
 import {View} from "../../../../commons/schema";
+import {encodeBase64} from "../../../utility/base64";
 import {
     MENU_IDENTIFIERS,
     MenuOrder,
@@ -536,8 +537,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
     }
 
     public getItemRoutingPath(itemCase: Case) {
-        const taskId = DoubleDrawerUtils.findTaskIdInCase(itemCase, SETTINGS_TRANSITION_ID);
         const url = this._dynamicRoutingService.route;
-        return `/${url}/${taskId}`;
+        return `/${url}/${encodeBase64(itemCase.stringId)}`;
     }
 }

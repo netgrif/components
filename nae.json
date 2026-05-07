@@ -56,6 +56,11 @@
                 "name": "impersonation",
                 "address": "http://localhost:8080/api/",
                 "format": "json"
+            },
+            {
+                "name": "menu",
+                "address": "http://localhost:8080/api/",
+                "format": "json"
             }
         ]
     },
