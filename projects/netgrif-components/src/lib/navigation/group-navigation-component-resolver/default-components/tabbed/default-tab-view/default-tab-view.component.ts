@@ -52,6 +52,8 @@ export class DefaultTabViewComponent {
 
         const viewType: string = extractFieldValueFromData(menuItemDataGroups, "view_configuration_type");
         switch (viewType) {
+            case "tabbed_single_task_view":
+                return this.getSingleTaskTabs(menuItemDataGroups, viewDataGroups);
             case "tabbed_case_view":
                 return this.getCaseTabs(menuItemDataGroups, viewDataGroups);
             case "tabbed_task_view":
@@ -109,9 +111,9 @@ export class DefaultTabViewComponent {
         const taskViewHeadersMode = extractFieldValueFromData<string[]>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_TASK_HEADERS_MODE);
         const taskViewAllowTableMode = extractFieldValueFromData<boolean>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_TASK_ALLOW_TABLE_MODE);
         const taskViewDefaultHeadersMode = extractFieldValueFromData<string[]>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_TASK_DEFAULT_HEADERS_MODE);
-        const taskViewAdditionalFilter = this.extractionService.extractCompleteAdditionalFilterFromData(viewDataGroups);
+        const taskViewFilter = this.extractionService.extractCompleteTaskFilterFromData(viewDataGroups);
         const mergeWithBaseFilter = extractFieldValueFromData<boolean>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_MERGE_FILTERS);
-        const additionalAllowedNets = this.extractionService.extractAdditionalFilterAllowedNets(viewDataGroups)?.allowedNetsIdentifiers;
+        const taskViewAllowedNets = this.extractionService.extractTaskFilterAllowedNets(viewDataGroups)?.allowedNetsIdentifiers;
 
         return [
             {
@@ -138,8 +140,8 @@ export class DefaultTabViewComponent {
                     taskViewAllowTableMode: taskViewAllowTableMode,
                     taskViewDefaultHeadersMode: taskViewDefaultHeadersMode,
                     taskViewMergeWithBaseFilter: mergeWithBaseFilter,
-                    taskViewAdditionalFilter: taskViewAdditionalFilter,
-                    taskViewAdditionalAllowedNets: additionalAllowedNets
+                    taskViewFilter: taskViewFilter,
+                    taskViewAllowedNets: taskViewAllowedNets
                 }
             }
         ];
@@ -181,12 +183,12 @@ export class DefaultTabViewComponent {
     }
 
     protected getTicketTabs(menuItemDataGroups: Array<DataGroup>, viewDataGroups: Array<DataGroup>): TabContent[] {
-        const labelData = extractIconAndTitle(menuItemDataGroups, this.translationService);
-
         if (!hasView(viewDataGroups)) {
             throw new Error(`Ticket view has missing configuration for single task view.`);
         }
 
+        const labelData = extractIconAndTitle(menuItemDataGroups, this.translationService);
+        const taskViewFilter = this.extractionService.extractCompleteTaskFilterFromData(viewDataGroups);
         return [
             {
                 label: {text: labelData.name, icon: labelData.icon},
@@ -194,8 +196,27 @@ export class DefaultTabViewComponent {
                 tabContentComponent: DefaultTicketViewComponent,
                 injectedObject: {
                     navigationItemTaskData: this._navigationItemTaskData,
+                    taskViewFilter: taskViewFilter,
                     tabViewComponent: DefaultTabbedSingleTaskViewComponent,
                     tabViewOrder: 0,
+                }
+            }
+        ];
+    }
+
+    protected getSingleTaskTabs(menuItemDataGroups: Array<DataGroup>, viewDataGroups: Array<DataGroup>): TabContent[] {
+        const labelData = extractIconAndTitle(menuItemDataGroups, this.translationService);
+        const taskViewFilter = this.extractionService.extractCompleteTaskFilterFromData(viewDataGroups);
+        const taskViewAllowedNets = this.extractionService.extractTaskFilterAllowedNets(viewDataGroups)?.allowedNetsIdentifiers;
+        return [
+            {
+                label: {text: labelData.name, icon: labelData.icon},
+                canBeClosed: false,
+                tabContentComponent: DefaultTabbedSingleTaskViewComponent,
+                injectedObject: {
+                    navigationItemTaskData: this._navigationItemTaskData,
+                    baseFilter: taskViewFilter,
+                    taskViewAllowedNets: taskViewAllowedNets
                 }
             }
         ];

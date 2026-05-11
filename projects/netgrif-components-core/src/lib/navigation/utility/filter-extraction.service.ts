@@ -39,8 +39,8 @@ export class FilterExtractionService {
                 protected _log: LoggerService) {
     }
 
-    public extractAdditionalFilterAllowedNets(dataSection: Array<DataGroup>): AllowedNetsService {
-        const taskRefIndex = getFieldIndexFromDataGroups(dataSection, GroupNavigationConstants.ITEM_FIELD_ID_ADDITIONAL_FILTER_TASKREF);
+    public extractTaskFilterAllowedNets(dataSection: Array<DataGroup>): AllowedNetsService {
+        const taskRefIndex = getFieldIndexFromDataGroups(dataSection, GroupNavigationConstants.ITEM_FIELD_ID_TASK_FILTER_TASKREF);
         if (taskRefIndex === undefined) {
             return undefined;
         }
@@ -51,8 +51,8 @@ export class FilterExtractionService {
         return navigationItemTaskAllowedNetsServiceFactory(this._factory, this.baseAllowedNets, sliced)
     }
 
-    public extractCompleteAdditionalFilterFromData(dataSection: Array<DataGroup>, activatedRoute?: ActivatedRoute): Filter | undefined {
-        const taskRefIndex = getFieldIndexFromDataGroups(dataSection, GroupNavigationConstants.ITEM_FIELD_ID_ADDITIONAL_FILTER_TASKREF);
+    public extractCompleteTaskFilterFromData(dataSection: Array<DataGroup>, activatedRoute?: ActivatedRoute): Filter | undefined {
+        const taskRefIndex = getFieldIndexFromDataGroups(dataSection, GroupNavigationConstants.ITEM_FIELD_ID_TASK_FILTER_TASKREF);
         if (taskRefIndex === undefined) {
             return undefined;
         }

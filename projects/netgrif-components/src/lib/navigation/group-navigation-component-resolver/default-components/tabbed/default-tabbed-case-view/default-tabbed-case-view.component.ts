@@ -152,7 +152,7 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
     }
 
     protected resolveFilter(openCase: Case): Filter {
-        const additionalFilter = this._injectedTabData.taskViewAdditionalFilter;
+        const additionalFilter = this._injectedTabData.taskViewFilter;
         const mergeFilters = this._injectedTabData.taskViewMergeWithBaseFilter;
         const baseFilter = new SimpleFilter('', FilterType.TASK, {case: {id: `${openCase.stringId}`}});
 
@@ -169,13 +169,13 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
     }
 
     protected resolveAllowedNets(openCase: Case): string[] {
-        const additionalFilter = this._injectedTabData.taskViewAdditionalFilter;
+        const additionalFilter = this._injectedTabData.taskViewFilter;
         if (additionalFilter == undefined) {
             return [openCase.processIdentifier];
         }
 
         const mergeFilters = this._injectedTabData.taskViewMergeWithBaseFilter;
-        const additionalAllowedNets = this._injectedTabData.taskViewAdditionalAllowedNets ? this._injectedTabData.taskViewAdditionalAllowedNets : [];
+        const additionalAllowedNets = this._injectedTabData.taskViewAllowedNets ? this._injectedTabData.taskViewAllowedNets : [];
 
         return mergeFilters ? [openCase.processIdentifier, ...additionalAllowedNets] : additionalAllowedNets
     }

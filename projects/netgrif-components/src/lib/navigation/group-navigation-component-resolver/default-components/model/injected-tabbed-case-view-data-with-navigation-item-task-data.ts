@@ -25,8 +25,8 @@ export interface InjectedTabbedCaseViewDataWithNavigationItemTaskData extends In
     taskViewSearchTypeConfiguration: SearchComponentConfiguration;
     taskViewShowMoreMenu: boolean;
     taskViewMergeWithBaseFilter: boolean;
-    taskViewAdditionalFilter: SimpleFilter;
-    taskViewAdditionalAllowedNets: string[];
+    taskViewFilter: SimpleFilter;
+    taskViewAllowedNets: string[];
     taskViewHeadersChangeable: boolean;
     taskViewHeadersMode: string[];
     taskViewAllowTableMode: boolean;

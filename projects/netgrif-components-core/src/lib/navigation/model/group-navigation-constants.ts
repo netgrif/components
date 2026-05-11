@@ -58,7 +58,7 @@ export enum GroupNavigationConstants {
     /**
      * TaskRef field, that contains taskId of custom filter for task view
      * */
-    ITEM_FIELD_ID_ADDITIONAL_FILTER_TASKREF = 'current_additional_filter_preview',
+    ITEM_FIELD_ID_TASK_FILTER_TASKREF = 'current_task_filter_preview',
 
     /**
      * Boolean field, that is true if the user wants to see more menu for case item in case view
@@ -184,5 +184,15 @@ export enum GroupNavigationConstants {
      * Boolean field, that is true if item contains view.
      * */
     ITEM_FIELD_CONTAINS_FILTER = 'contains_filter',
+
+    /**
+     * Boolean field, that is true if single task view should show header.
+     * */
+    ITEM_FIELD_SHOW_PAGE_HEADER = 'show_page_header',
+
+    /**
+     * Boolean field, that is true if single task view should show footer.
+     * */
+    ITEM_FIELD_SHOW_PAGE_FOOTER = 'show_page_footer',
 
 }

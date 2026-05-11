@@ -10,15 +10,14 @@ import {
     UriService,
     DoubleDrawerNavigationService,
     NavigationItem,
-    TaskResourceService,
-    SETTINGS_TRANSITION_ID,
     extractFilterFieldFromData,
-    DoubleDrawerUtils,
     DataGroup,
     NAE_TAB_DATA,
     SimpleFilter,
     FilterType, CaseEventOutcome,
-    NAE_AUTOSWITCH_TAB_TOKEN, NAE_OPEN_EXISTING_TAB, LoggerService, ProcessService, extractFieldValueFromData
+    encodeBase64,
+    NAE_AUTOSWITCH_TAB_TOKEN, NAE_OPEN_EXISTING_TAB, LoggerService, ProcessService, Filter,
+    MergeOperator, MenuResourceService
 } from '@netgrif/components-core';
 import {TranslateService} from "@ngx-translate/core";
 import {FormControl} from "@angular/forms";
@@ -63,7 +62,7 @@ export class DefaultTicketViewComponent implements OnInit {
                 protected _uriService: UriService,
                 protected _translateService: TranslateService,
                 protected _navigationService: DoubleDrawerNavigationService,
-                protected _taskResourceService: TaskResourceService,
+                protected _menuResourceService: MenuResourceService,
                 protected _processService: ProcessService,
                 @Inject(NAE_TAB_DATA) protected _injectedTabData: InjectedTabbedTicketViewDataWithNavigationItemTaskData,
                 @Optional() @Inject(NAE_AUTOSWITCH_TAB_TOKEN) protected _autoswitchToTaskTab = true,
@@ -88,11 +87,9 @@ export class DefaultTicketViewComponent implements OnInit {
             map(navItems => this.transformItemCases(navItems).filter(itm => !!itm && !!itm.resource))
         ).subscribe(items => {
             forkJoin(items.map(item => {
-                const taskId = DoubleDrawerUtils.findTaskIdInCase(item.resource, SETTINGS_TRANSITION_ID);
-                if (taskId === undefined) {
-                    return;
-                }
-                return this._taskResourceService.getData(taskId).pipe(map(dataGroups => {return {caseId: item.resource.stringId, dataGroups} as DataGroupCaseIdPair}));
+                const encodedCaseId = encodeBase64(item.resource.stringId);
+                return this._menuResourceService.getItemData(encodedCaseId)
+                    .pipe(map(dataGroups => {return {caseId: item.resource.stringId, dataGroups} as DataGroupCaseIdPair}));
             })).subscribe(dataGroups => {
                 dataGroups.forEach(dataGroupPair => {
                     if (dataGroupPair.dataGroups === undefined) {
@@ -170,7 +167,6 @@ export class DefaultTicketViewComponent implements OnInit {
     }
 
     protected openTab(openCase: Case) {
-        const transId: string = extractFieldValueFromData(this._injectedTabData.navigationItemTaskData, "transition_id")
         this._injectedTabData.tabViewRef.openTab({
             label: {
                 text: openCase.title,
@@ -179,11 +175,26 @@ export class DefaultTicketViewComponent implements OnInit {
             canBeClosed: true,
             tabContentComponent: this._injectedTabData.tabViewComponent,
             injectedObject: {
-                baseFilter: new SimpleFilter('', FilterType.TASK, {case: {id: `${openCase.stringId}`}, transitionId: transId}),
+                navigationItemTaskData: this._injectedTabData.navigationItemTaskData,
+                baseFilter: this.resolveFilter(openCase),
                 allowedNets: [openCase.processIdentifier]
             },
             order: this._injectedTabData.tabViewOrder,
             parentUniqueId: this._injectedTabData.tabUniqueId
         }, this._autoswitchToTaskTab, this._openExistingTab);
+    }
+
+    protected resolveFilter(openCase: Case): Filter {
+        const singleTaskViewFilter = this._injectedTabData.taskViewFilter;
+        const baseFilter = new SimpleFilter('', FilterType.TASK, {case: {id: `${openCase.stringId}`}});
+
+        let filter;
+        if (singleTaskViewFilter === undefined) {
+            filter = baseFilter;
+        } else {
+            filter = singleTaskViewFilter.merge(baseFilter, MergeOperator.AND);
+        }
+
+        return filter;
     }
 }

@@ -1,6 +1,6 @@
 import {
     InjectedTabbedCaseViewData,
-    DataGroup
+    DataGroup, SimpleFilter
 } from '@netgrif/components-core';
 
 /**
@@ -10,4 +10,5 @@ import {
  */
 export interface InjectedTabbedTicketViewDataWithNavigationItemTaskData extends InjectedTabbedCaseViewData {
     navigationItemTaskData: Array<DataGroup>;
+    taskViewFilter: SimpleFilter;
 }
