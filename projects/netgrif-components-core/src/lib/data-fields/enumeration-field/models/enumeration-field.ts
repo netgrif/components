@@ -80,12 +80,12 @@ export class EnumerationField extends DataField<string> {
     }
 
     private checkKey(control: AbstractControl): ValidationErrors | null {
-        if (control.value === '' || control.value === undefined) {
-            return null
+        if (control.value === '' || control.value === undefined || control.value === null) {
+            return null;
         }
         if (this._choices === undefined || this._choices.length === 0) {
             return {wrongValue: true};
         }
-        return this._choices.find(choice => choice.key === control.value || control.value === null) ? null : {wrongValue: true};
+        return this._choices.find(choice => choice.key === control.value) ? null : {wrongValue: true};
     }
 }
