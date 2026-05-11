@@ -50,9 +50,9 @@ export class DefaultTabViewComponent {
         const menuItemDataGroups: Array<DataGroup> = this._navigationItemTaskData.slice(0, 1);
         const viewDataGroups: Array<DataGroup> = this._navigationItemTaskData.slice(1, this._navigationItemTaskData.length);
 
-        const viewType: string = extractFieldValueFromData(menuItemDataGroups, "view_configuration_type");
+        const viewType: string = extractFieldValueFromData<string>(menuItemDataGroups, "view_configuration_type");
         switch (viewType) {
-            case "tabbed_single_task_view":
+            case "single_task_view":
                 return this.getSingleTaskTabs(menuItemDataGroups, viewDataGroups);
             case "tabbed_case_view":
                 return this.getCaseTabs(menuItemDataGroups, viewDataGroups);

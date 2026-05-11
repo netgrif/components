@@ -1,11 +1,11 @@
-import {Component, Optional} from '@angular/core';
+import {Component, Inject, Optional} from '@angular/core';
 import {
     AbstractSingleTaskViewComponent,
     AllowedNetsService,
     AllowedNetsServiceFactory, BaseAllowedNetsService,
-    ChangedFieldsService, FilterExtractionService,
+    ChangedFieldsService, DataGroup, extractFieldValueFromData, FilterExtractionService,
     FinishTaskService,
-    FrontActionService,
+    FrontActionService, GroupNavigationConstants,
     NAE_BASE_FILTER, NAE_NAVIGATION_ITEM_TASK_DATA,
     NAE_TASK_OPERATIONS,
     NAE_VIEW_ID_SEGMENT, navigationItemTaskAllowedNetsServiceFactory, navigationItemTaskFilterFactory,
@@ -62,8 +62,11 @@ export class DefaultSingleTaskViewComponent extends AbstractSingleTaskViewCompon
     showFinishButton: boolean = true;
 
     constructor(taskViewService: TaskViewService,
+                @Inject(NAE_NAVIGATION_ITEM_TASK_DATA) protected _navigationItemTaskData: Array<DataGroup>,
                 activatedRoute: ActivatedRoute) {
         super(taskViewService, activatedRoute);
+        this.showPageHeader = extractFieldValueFromData<boolean>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_SHOW_PAGE_HEADER);
+        this.showPageFooter = extractFieldValueFromData<boolean>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_SHOW_PAGE_FOOTER);
     }
 
     public getFinishTitle(): string {
