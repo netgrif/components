@@ -86,6 +86,6 @@ export class EnumerationField extends DataField<string> {
         if (this._choices === undefined || this._choices.length === 0) {
             return {wrongValue: true};
         }
-        return this._choices.find(choice => choice.key === control.value) ? null : {wrongValue: true};
+        return this._choices.some(choice => choice.key === control.value) ? null : {wrongValue: true};
     }
 }
