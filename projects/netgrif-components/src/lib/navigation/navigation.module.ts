@@ -27,6 +27,9 @@ import {
     DefaultSimpleTaskViewComponent
 } from './group-navigation-component-resolver/default-components/simple-views/default-simple-task-view/default-simple-task-view.component';
 import {
+    DefaultSimpleCaseViewComponent
+} from './group-navigation-component-resolver/default-components/simple-views/default-simple-case-view/default-simple-case-view.component';
+import {
     DefaultTabbedTaskViewComponent
 } from './group-navigation-component-resolver/default-components/tabbed/default-tabbed-task-view/default-tabbed-task-view.component';
 import {
@@ -65,6 +68,7 @@ import { DefaultTicketViewComponent } from './group-navigation-component-resolve
         NavigationTreeComponent,
         GroupNavigationComponentResolverComponent,
         DefaultSimpleTaskViewComponent,
+        DefaultSimpleCaseViewComponent,
         DefaultTabbedTaskViewComponent,
         DefaultTabbedCaseViewComponent,
         DefaultTabViewComponent,
@@ -111,6 +115,7 @@ import { DefaultTicketViewComponent } from './group-navigation-component-resolve
         NavigationTreeComponent,
         GroupNavigationComponentResolverComponent,
         DefaultSimpleTaskViewComponent,
+        DefaultSimpleCaseViewComponent,
         DefaultTabbedTaskViewComponent,
         DefaultTabbedCaseViewComponent,
         DefaultTabViewComponent,

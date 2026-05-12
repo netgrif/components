@@ -47,7 +47,7 @@ describe('DefaultTabViewComponent', () => {
                             fields: [
                                 new EnumerationField(
                                     "view_configuration_type",
-                                    '',"tabbed_case_view",[],{visible: true}
+                                    '',"case_view",[],{visible: true}
                                 ),
                                 new I18nField(
                                     GroupNavigationConstants.NAVIGATION_ENTRY_TITLE_FIELD_ID_SUFFIX,

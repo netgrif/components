@@ -11,6 +11,7 @@ export * from './navigation-double-drawer/navigation-double-drawer.component';
 export * from './navigation-rail/navigation-rail.component';
 export * from './group-navigation-component-resolver/group-navigation-component-resolver.component';
 export * from './group-navigation-component-resolver/default-components/simple-views/default-simple-task-view/default-simple-task-view.component';
+export * from './group-navigation-component-resolver/default-components/simple-views/default-simple-case-view/default-simple-case-view.component';
 export * from './group-navigation-component-resolver/default-components/tabbed/default-tab-view/default-tab-view.component';
 export * from './group-navigation-component-resolver/default-components/tabbed/default-tabbed-case-view/default-tabbed-case-view.component';
 export * from './group-navigation-component-resolver/default-components/tabbed/default-tabbed-task-view/default-tabbed-task-view.component';

@@ -1,0 +1,27 @@
+<div class="case-view-container" fxLayout="column" fxLayoutAlign="start stretch">
+    <nc-breadcrumbs></nc-breadcrumbs>
+
+    <div class="case-view-search-container">
+        <div fxLayout="row" fxLayoutAlign="space-between">
+            <div fxLayoutAlign="start center" fxFlex>
+                <nc-search class="search-width" *ngIf="(enableSearch)" [showSearchToggleButton]="showToggleButton"
+                           [initialSearchMode]="initialSearchMode" [additionalFilterData]="additionalFilterData"></nc-search>
+            </div>
+            <div fxLayoutAlign="end center" *ngIf="showCreateCaseButton">
+                <nc-create-case-button [newCaseCreationConfig]="newCaseCreationConfig" (caseCreatedEvent)="handleCaseClick($event)"></nc-create-case-button>
+            </div>
+        </div>
+    </div>
+
+    <div class="full-height transform-div custom-scrollbar" [ngClass]="{'overflow-div': getOverflowStatus()}" fxLayout="column" fxLayoutAlign="start stretch">
+        <div class="full-height transform-div max-width-fix" fxLayout="column" fxLayoutAlign="start stretch">
+            <nc-header #header [type]="headerType" [responsiveHeaders]="true" class="case-header-padding" [ngStyle]="{'width': getWidth()}"
+                       [hideHeaderMenu]="!headersChangeable" [showEditButton]="isMenuOptionEnabled('edit')"
+                       [showSortButton]="isMenuOptionEnabled('sort')" [showSearchButton]="isMenuOptionEnabled('search')"
+                       [showTableSection]="allowTableMode"></nc-header>
+
+            <nc-case-list-paginator [selectedHeaders$]="selectedHeaders$" [showDeleteMenu]="showDeleteMenu" [width]="getWidth()"
+                          [responsiveBody]="true" fxFlex [textEllipsis]="true"></nc-case-list-paginator>
+        </div>
+    </div>
+</div>

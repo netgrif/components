@@ -19,6 +19,9 @@ import {
 import {
     DefaultSimpleTaskViewComponent
 } from "./default-components/simple-views/default-simple-task-view/default-simple-task-view.component";
+import {
+    DefaultSimpleCaseViewComponent
+} from "./default-components/simple-views/default-simple-case-view/default-simple-case-view.component";
 
 @Injectable()
 export class DefaultGroupNavigationComponentResolverService extends GroupNavigationComponentResolverService {
@@ -84,6 +87,8 @@ export class DefaultGroupNavigationComponentResolverService extends GroupNavigat
         switch (viewType) {
             case "single_task_view":
                 return DefaultSingleTaskViewComponent;
+            case "case_view":
+                return DefaultSimpleCaseViewComponent;
             case "task_view":
                 return DefaultSimpleTaskViewComponent;
             default:

@@ -54,9 +54,9 @@ export class DefaultTabViewComponent {
         switch (viewType) {
             case "single_task_view":
                 return this.getSingleTaskTabs(menuItemDataGroups, viewDataGroups);
-            case "tabbed_case_view":
+            case "case_view":
                 return this.getCaseTabs(menuItemDataGroups, viewDataGroups);
-            case "tabbed_task_view":
+            case "task_view":
                 return this.getTaskTabs(menuItemDataGroups, viewDataGroups);
             case "tabbed_ticket_view":
                 return this.getTicketTabs(menuItemDataGroups, viewDataGroups);
