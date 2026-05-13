@@ -14,6 +14,7 @@ import {
 import {Case} from "../../resources/interface/case";
 import {I18nFieldValue} from "../../data-fields/i18n-field/models/i18n-field-value";
 import {TranslateService} from "@ngx-translate/core";
+import {encodeBase64} from "../../utility/base64";
 import {LoggerService} from "../../logger/services/logger.service";
 
 @Component({
@@ -34,7 +35,6 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
     private static DOTS: string = '...';
     private static DELIMETER: string = '/';
     private static NODE_PATH: string = 'nodePath';
-    private static ITEM_SETTINGS: string = 'item_settings';
     private _showPaths: boolean = false;
     private nicePath: BehaviorSubject<Array<string>>;
     private redirectUrls: Map<string, Array<string>>;
@@ -89,7 +89,7 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
             }
             cases.sort((a, b) => fullPath.indexOf(this.immediateValue(a, AbstractBreadcrumbsComponent.NODE_PATH)) - fullPath.indexOf(this.immediateValue(b, AbstractBreadcrumbsComponent.NODE_PATH)));
             if (this.redirectOnClick) {
-                cases.forEach(c => this.redirectUrls.set(this.immediateValue(c, AbstractBreadcrumbsComponent.NODE_PATH), [this._dynamicRoutingService.route, c.tasks.find(t => t.transition === AbstractBreadcrumbsComponent.ITEM_SETTINGS).task]))
+                cases.forEach(c => this.redirectUrls.set(this.immediateValue(c, AbstractBreadcrumbsComponent.NODE_PATH), [this._dynamicRoutingService.route, encodeBase64(c.stringId)]));
             }
             this.nicePath.next(["", ...cases.map(c => this.getTranslation(this.immediateValue(c, 'menu_name')))]);
         });

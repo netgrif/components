@@ -27,8 +27,7 @@ import {
     MENU_IDENTIFIERS,
     MenuOrder,
     NavigationItem, RIGHT_SIDE_INIT_PAGE_SIZE,
-    RIGHT_SIDE_NEW_PAGE_SIZE,
-    SETTINGS_TRANSITION_ID
+    RIGHT_SIDE_NEW_PAGE_SIZE
 } from '../../model/navigation-configs';
 import { UriNodeResource } from '../../model/uri-resource';
 import {MenuItemClickEvent, MenuItemLoadedEvent} from '../../model/navigation-menu-events';
