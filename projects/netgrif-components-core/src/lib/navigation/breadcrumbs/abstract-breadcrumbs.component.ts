@@ -16,6 +16,7 @@ import {I18nFieldValue} from "../../data-fields/i18n-field/models/i18n-field-val
 import {TranslateService} from "@ngx-translate/core";
 import {encodeBase64} from "../../utility/base64";
 import {LoggerService} from "../../logger/services/logger.service";
+import {DoubleDrawerNavigationService} from "../navigation-double-drawer/service/double-drawer-navigation.service";
 
 @Component({
     selector: 'ncc-breadcrumbs-component',
@@ -46,6 +47,7 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
                           protected _router: Router,
                           protected _dynamicRoutingService: DynamicNavigationRouteProviderService,
                           protected _translateService: TranslateService,
+                          protected _navigationService: DoubleDrawerNavigationService,
                           protected _log: LoggerService) {
         this.nicePath = new BehaviorSubject<Array<string>>(undefined);
         this.redirectUrls = new Map<string, Array<string>>();
@@ -144,6 +146,9 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
             this.filterName = undefined;
             this.nicePath.next(this.nicePath.value.slice(0, control + 1))
             this.redirect();
+            if (!!this.redirectOnClick) {
+                this._navigationService.openAvailableView();
+            }
         })
     }
 
