@@ -69,7 +69,7 @@ export class DefaultTabViewComponent {
         const labelData = extractIconAndTitle(menuItemDataGroups, this.translationService);
 
         const blockNetsString = extractFieldValueFromData<string>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_CASE_BANNED_PROCESS_CREATION);
-        const blockNets = blockNetsString === undefined ? [] : blockNetsString.split(',')
+        const blockNets = blockNetsString === undefined ? [] : blockNetsString.split(',');
         const createCaseButtonTitle: I18nFieldValue = extractFieldValueFromData<I18nFieldValue>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_CREATE_CASE_BUTTON_TITLE);
         const createCaseButtonIcon: string = extractFieldValueFromData<string>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_CREATE_CASE_BUTTON_ICON);
         const requireTitle: boolean = extractFieldValueFromData<boolean>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_CASE_TITLE_IN_CREATION);
