@@ -348,7 +348,9 @@
             "visualID": "Vizuálne ID",
             "title": "Názov",
             "author": "Autor",
-            "creationDate": "Dátum vytvorenia"
+            "creationDate": "Dátum vytvorenia",
+            "processIdentifier": "Identifikátor procesu",
+            "petriNetId": "Proces ID"
         },
         "taskMeta": {
             "case": "Prípad",

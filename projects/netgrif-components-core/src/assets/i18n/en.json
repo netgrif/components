@@ -348,7 +348,9 @@
             "visualID": "Visual ID",
             "title": "Title",
             "author": "Author",
-            "creationDate": "Creation date"
+            "creationDate": "Creation date",
+            "processIdentifier": "Process identifier",
+            "petriNetId": "Petri net ID"
         },
         "taskMeta": {
             "case": "Case",
