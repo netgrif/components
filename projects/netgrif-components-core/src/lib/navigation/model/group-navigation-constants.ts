@@ -101,9 +101,30 @@ export enum GroupNavigationConstants {
     ITEM_FIELD_ID_CASE_HEADERS_CHANGEABLE = 'case_is_header_mode_changeable',
 
     /**
+    * I18nString field containing text about empty case-view's content
+    */
+    ITEM_FIELD_ID_CASE_EMPTY_CONTENT_TEXT = 'case_empty_content_text',
+
+    /**
+     * Text field with icon for empty case-view's content
+     */
+    ITEM_FIELD_ID_CASE_EMPTY_CONTENT_ICON = 'case_empty_content_icon',
+
+
+    /**
      * MultichoiceMap field, that contains selected header modes for task view as a value
      * */
     ITEM_FIELD_ID_TASK_HEADERS_MODE = 'task_headers_mode',
+
+    /**
+     * I18nString field containing text about empty task-view's content
+     */
+    ITEM_FIELD_ID_TASK_EMPTY_CONTENT_TEXT = 'task_empty_content_text',
+
+    /**
+     * Text field with icon for empty task-view's content
+     */
+    ITEM_FIELD_ID_TASK_EMPTY_CONTENT_ICON = 'task_empty_content_icon',
 
     /**
      * Boolean field, that is true if table mode can be applied in task view

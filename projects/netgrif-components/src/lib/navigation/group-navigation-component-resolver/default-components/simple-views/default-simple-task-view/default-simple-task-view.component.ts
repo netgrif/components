@@ -22,7 +22,7 @@ import {
     FilterExtractionService,
     ChangedFieldsService,
     SearchMode, extractSearchTypeFromData, extractFieldValueFromData, SearchComponentConfiguration,
-    GroupNavigationConstants, HeaderMode, DataGroup, NAE_DEFAULT_HEADERS, navigationItemCaseViewDefaultHeadersFactory,
+    GroupNavigationConstants, HeaderMode, DataGroup, NAE_DEFAULT_HEADERS, I18nFieldValue,
     navigationItemTaskViewDefaultHeadersFactory
 } from '@netgrif/components-core';
 import {HeaderComponent} from '../../../../../header/header.component';
@@ -77,6 +77,8 @@ export class DefaultSimpleTaskViewComponent extends AbstractTaskViewComponent im
     allowTableMode: boolean;
     defaultHeadersMode: HeaderMode;
     showMoreMenu: boolean;
+    emptyContentText: I18nFieldValue;
+    emptyContentIcon: string;
 
     constructor(taskViewService: TaskViewService,
                 @Inject(NAE_NAVIGATION_ITEM_TASK_DATA) protected _navigationItemTaskData: Array<DataGroup>,
@@ -108,6 +110,8 @@ export class DefaultSimpleTaskViewComponent extends AbstractTaskViewComponent im
         this.allowTableMode = allowTableMode;
         this.defaultHeadersMode = this.resolveHeaderMode(defaultHeadersMode);
         this.showMoreMenu = showMoreMenu;
+        this.emptyContentText = extractFieldValueFromData<I18nFieldValue>(_navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_TASK_EMPTY_CONTENT_TEXT);
+        this.emptyContentIcon = extractFieldValueFromData<string>(_navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_TASK_EMPTY_CONTENT_ICON);
     }
 
     private resolveHeaderMode(mode: string): HeaderMode {

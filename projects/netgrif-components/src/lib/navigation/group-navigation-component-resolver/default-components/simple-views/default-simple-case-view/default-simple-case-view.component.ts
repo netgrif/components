@@ -81,6 +81,8 @@ export class DefaultSimpleCaseViewComponent extends AbstractCaseViewComponent im
     headersMode: string[];
     allowTableMode: boolean;
     defaultHeadersMode: HeaderMode;
+    emptyContentText: I18nFieldValue;
+    emptyContentIcon: string;
 
     constructor(caseViewService: CaseViewService,
                 @Inject(NAE_NAVIGATION_ITEM_TASK_DATA) protected _navigationItemTaskData: Array<DataGroup>,
@@ -111,6 +113,8 @@ export class DefaultSimpleCaseViewComponent extends AbstractCaseViewComponent im
                 value: 'override'
             }
         };
+        this.emptyContentText = extractFieldValueFromData<I18nFieldValue>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_EMPTY_CONTENT_TEXT);
+        this.emptyContentIcon = extractFieldValueFromData<string>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_EMPTY_CONTENT_ICON);
     }
 
     protected resolveHeaderMode(mode: string): HeaderMode {

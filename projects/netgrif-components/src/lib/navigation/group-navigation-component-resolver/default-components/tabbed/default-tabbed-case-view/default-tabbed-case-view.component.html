@@ -21,7 +21,8 @@
                        [showTableSection]="allowTableMode" class="case-header-padding"></nc-header>
 
             <nc-case-list [selectedHeaders$]="selectedHeaders$" [textEllipsis]="true" [showDeleteMenu]="showDeleteMenu" [width]="getWidth()"
-                          (caseClick)="handleCaseClick($event)" [responsiveBody]="true" fxFlex></nc-case-list>
+                          (caseClick)="handleCaseClick($event)" [responsiveBody]="true" [emptyContentText]="emptyContentText"
+                          [emptyContentIcon]="emptyContentIcon" fxFlex></nc-case-list>
         </div>
     </div>
 </div>

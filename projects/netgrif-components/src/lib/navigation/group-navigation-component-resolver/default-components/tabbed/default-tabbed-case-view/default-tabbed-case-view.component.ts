@@ -27,7 +27,7 @@ import {
     ViewIdService,
     navigationItemCaseViewDefaultHeadersFactory,
     NAE_NAVIGATION_ITEM_TASK_DATA,
-    OverflowService,
+    OverflowService, I18nFieldValue, extractFieldValueFromData, GroupNavigationConstants,
 } from '@netgrif/components-core';
 import {HeaderComponent} from '../../../../../header/header.component';
 import {
@@ -85,6 +85,8 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
     headersMode: string[];
     allowTableMode: boolean;
     defaultHeadersMode: HeaderMode;
+    emptyContentText: I18nFieldValue;
+    emptyContentIcon: string;
 
     constructor(caseViewService: CaseViewService,
                 loggerService: LoggerService,
@@ -107,6 +109,8 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
             const viewId = viewIdService.viewId;
             localStorage.setItem(viewId + '-overflowMode', 'false');
         }
+        this.emptyContentText = extractFieldValueFromData<I18nFieldValue>(_injectedTabData.navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_EMPTY_CONTENT_TEXT);
+        this.emptyContentIcon = extractFieldValueFromData<string>(_injectedTabData.navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_EMPTY_CONTENT_ICON);
     }
 
     ngAfterViewInit(): void {

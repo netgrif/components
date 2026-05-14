@@ -3,8 +3,9 @@
 
         <div *ngIf="(loading$ | async) === false && cases.length === 0" fxLayout="column"
              fxLayoutAlign="center center" fxFlex>
-            <mat-icon color="accent" class="margin-bottom-default">storage</mat-icon>
-            <span class="font-size-20">{{ 'view-list.noCasesSatisfyingThisFilter' | translate}}</span>
+            <mat-icon color="accent" class="margin-bottom-default">{{ getEmptyContentIcon() }}</mat-icon>
+            <span *ngIf="!hasEmptyContentText()" class="font-size-20">{{ 'view-list.noCasesSatisfyingThisFilter' | translate}}</span>
+            <span *ngIf="hasEmptyContentText()" class="font-size-20">{{ getEmptyContentText() }}</span>
         </div>
 
         <mat-accordion multi="true" class="full-width" >

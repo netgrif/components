@@ -21,7 +21,8 @@
                        [showTableSection]="allowTableMode"></nc-header>
 
             <nc-case-list-paginator [selectedHeaders$]="selectedHeaders$" [showDeleteMenu]="showDeleteMenu" [width]="getWidth()"
-                          [responsiveBody]="true" fxFlex [textEllipsis]="true"></nc-case-list-paginator>
+                          [responsiveBody]="true" fxFlex [textEllipsis]="true" [emptyContentText]="emptyContentText"
+                                    [emptyContentIcon]="emptyContentIcon"></nc-case-list-paginator>
         </div>
     </div>
 </div>
