@@ -93,8 +93,10 @@ export class DefaultTabbedTaskViewComponent extends AbstractTabbedTaskViewCompon
         this.allowTableMode = injectedTabData.allowTableMode;
         this.defaultHeadersMode = this.resolveHeaderMode(injectedTabData.defaultHeadersMode);
         this.showMoreMenu = injectedTabData.showMoreMenu;
-        this.emptyContentText = extractFieldValueFromData<I18nFieldValue>(injectedTabData.navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_TASK_EMPTY_CONTENT_TEXT);
-        this.emptyContentIcon = extractFieldValueFromData<string>(injectedTabData.navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_TASK_EMPTY_CONTENT_ICON);
+        if (!!injectedTabData.navigationItemTaskData) {
+            this.emptyContentText = extractFieldValueFromData<I18nFieldValue>(injectedTabData.navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_TASK_EMPTY_CONTENT_TEXT);
+            this.emptyContentIcon = extractFieldValueFromData<string>(injectedTabData.navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_TASK_EMPTY_CONTENT_ICON);
+        }
     }
 
     ngAfterViewInit(): void {

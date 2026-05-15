@@ -55,7 +55,10 @@ export abstract class AbstractCaseListComponent extends AbstractDefaultCaseListC
         return text !== undefined && text !== '';
     }
 
-    public getEmptyContentText(): string {
+    public getEmptyContentText(): string | undefined {
+        if (!this.emptyContentText) {
+            return undefined;
+        }
         const lang: string = this._selectLangService.getLanguage();
         let resultText: string = this.emptyContentText.translations[lang];
         if (!resultText) {

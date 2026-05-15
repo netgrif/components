@@ -109,8 +109,10 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
             const viewId = viewIdService.viewId;
             localStorage.setItem(viewId + '-overflowMode', 'false');
         }
-        this.emptyContentText = extractFieldValueFromData<I18nFieldValue>(_injectedTabData.navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_EMPTY_CONTENT_TEXT);
-        this.emptyContentIcon = extractFieldValueFromData<string>(_injectedTabData.navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_EMPTY_CONTENT_ICON);
+        if (!!_injectedTabData.navigationItemTaskData) {
+            this.emptyContentText = extractFieldValueFromData<I18nFieldValue>(_injectedTabData.navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_EMPTY_CONTENT_TEXT);
+            this.emptyContentIcon = extractFieldValueFromData<string>(_injectedTabData.navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_EMPTY_CONTENT_ICON);
+        }
     }
 
     ngAfterViewInit(): void {

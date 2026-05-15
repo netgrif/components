@@ -62,11 +62,13 @@ export class DefaultSingleTaskViewComponent extends AbstractSingleTaskViewCompon
     showFinishButton: boolean = true;
 
     constructor(taskViewService: TaskViewService,
-                @Inject(NAE_NAVIGATION_ITEM_TASK_DATA) protected _navigationItemTaskData: Array<DataGroup>,
+                @Optional() @Inject(NAE_NAVIGATION_ITEM_TASK_DATA) protected _navigationItemTaskData: Array<DataGroup>,
                 activatedRoute: ActivatedRoute) {
         super(taskViewService, activatedRoute);
-        this.showPageHeader = extractFieldValueFromData<boolean>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_SHOW_PAGE_HEADER);
-        this.showPageFooter = extractFieldValueFromData<boolean>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_SHOW_PAGE_FOOTER);
+        if (!!this._navigationItemTaskData) {
+            this.showPageHeader = extractFieldValueFromData<boolean>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_SHOW_PAGE_HEADER);
+            this.showPageFooter = extractFieldValueFromData<boolean>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_SHOW_PAGE_FOOTER);
+        }
     }
 
     public getFinishTitle(): string {

@@ -56,6 +56,9 @@ export abstract class AbstractCaseListPaginatorComponent extends AbstractDefault
     }
 
     public getEmptyContentText(): string | undefined {
+        if (!this.emptyContentText) {
+            return undefined;
+        }
         const lang: string = this._selectLangService.getLanguage();
         let resultText: string = this.emptyContentText.translations[lang];
         if (!resultText) {
