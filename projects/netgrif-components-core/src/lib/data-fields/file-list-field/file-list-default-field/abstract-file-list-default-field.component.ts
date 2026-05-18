@@ -183,9 +183,7 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractFile
                             this._log.error(
                                 `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)?.name} uploading has failed!`, response.error
                             );
-                            if (response.error) {
-                                this._snackbar.openErrorSnackBar(this._translate.instant(response.error));
-                            }
+                            this._snackbar.openErrorSnackBar(this._translate.instant(response.error));
                         } else {
                             this._log.debug(
                                 `Files [${this.dataField.stringId}] were successfully uploaded`
