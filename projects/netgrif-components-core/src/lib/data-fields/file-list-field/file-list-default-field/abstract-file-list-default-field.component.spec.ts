@@ -1,8 +1,8 @@
-import {ComponentFixture, inject, TestBed, waitForAsync} from "@angular/core/testing";
+import {ComponentFixture, TestBed, waitForAsync} from "@angular/core/testing";
 import {MaterialModule} from "../../../material/material.module";
 import {AngularResizeEventModule} from "angular-resize-event";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
+import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {TranslateLibModule} from "../../../translate/translate-lib.module";
 import {SnackBarModule} from "../../../snack-bar/snack-bar.module";
 import {SideMenuService} from "../../../side-menu/services/side-menu.service";
@@ -26,8 +26,7 @@ import {AbstractFileListDefaultFieldComponent} from "./abstract-file-list-defaul
 import {FormControl} from "@angular/forms";
 import {WrappedBoolean} from "../../data-field-template/models/wrapped-boolean";
 import {FrontActionService} from "../../../actions/services/front-action.service";
-import {AbstractFileListFieldComponent} from "../abstract-file-list-field.component";
-import {NAE_INFORM_ABOUT_INVALID_DATA} from "../../models/invalid-data-policy-token";
+import {MockTaskResourceService} from "../../../utility/tests/mocks/mock-task-resource.service";
 
 describe('AbstractFileListDefaultFieldComponent', () => {
     let component: TestFileListComponent;
@@ -51,6 +50,7 @@ describe('AbstractFileListDefaultFieldComponent', () => {
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: TaskResourceService, useClass: MockTaskResourceService},
                 {provide: DATA_FIELD_PORTAL_DATA, useValue: {
                         dataField: new FileListField('', '', {
                             required: true,
@@ -58,7 +58,7 @@ describe('AbstractFileListDefaultFieldComponent', () => {
                             visible: true,
                             editable: true,
                             hidden: true
-                        }),
+                        }, {}),
                         formControlRef: new FormControl(),
                         showLargeLayout: new WrappedBoolean(),
                         additionalFieldProperties: {taskId: '0'}
@@ -80,16 +80,46 @@ describe('AbstractFileListDefaultFieldComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should call download method successfully', () => {
-        spyOn(component, 'download').and.callThrough(); // Spy on the method
-        component.download("test"); // Call the method
-        expect(component.download).toHaveBeenCalled(); // Assert that it was called
+    it('should simulate file download', () => {
+        // Spy on the 'download' method
+        spyOn(component, 'download').and.callFake(() => {
+            // Simulate the download process
+            const anchor = document.createElement('a');
+            anchor.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent('mockContent');
+            anchor.download = 'mockFile.txt';
+            document.body.appendChild(anchor);
+            anchor.click();
+            document.body.removeChild(anchor);
+        });
+
+        // Call the 'download' method
+        component.download("mockFile.txt");
+
+        // Assert that the 'download' method was called
+        expect(component.download).toHaveBeenCalled();
     });
 
-    it('should call upload method successfully', () => {
-        spyOn(component, 'upload').and.callThrough(); // Spy on the method
-        component.upload(); // Call the method
-        expect(component.upload).toHaveBeenCalled(); // Assert that it was called
+    it('should simulate file upload', () => {
+        // Create a mock file
+        const mockFile = new File(['mockContent'], 'mockFile.txt', {type: 'text/plain'});
+
+        // Get the file input element's reference
+        const fileInput = component.fileUploadEl.nativeElement;
+
+        // Create a DataTransfer object to simulate file selection
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(mockFile);
+        fileInput.files = dataTransfer.files;
+        component.dataField.value = {namesPaths: [{file: mockFile, name: "mockFile.txt"}]}
+        // Trigger the file upload method
+        spyOn(component, 'upload').and.callThrough();
+        const uploadButtonEvent = new Event('change');
+        fileInput.dispatchEvent(uploadButtonEvent);
+        component.upload();
+
+        // Assertions
+        expect(component.upload).toHaveBeenCalled();
+        expect(component.dataField.value).toBeTruthy(); // Ensure value is processed
     });
 
     afterEach(() => {

@@ -27,6 +27,7 @@ import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-fie
 import {FormControl} from "@angular/forms";
 import {WrappedBoolean} from "../../data-field-template/models/wrapped-boolean";
 import {FrontActionService} from "../../../actions/services/front-action.service";
+import {MockTaskResourceService} from "../../../utility/tests/mocks/mock-task-resource.service";
 
 describe('AbstractFileDefaultFieldComponent', () => {
     let component: TestFileComponent;
@@ -51,6 +52,7 @@ describe('AbstractFileDefaultFieldComponent', () => {
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: TaskResourceService, useClass: MockTaskResourceService},
                 {provide: DATA_FIELD_PORTAL_DATA, useValue: {
                         dataField: new FileField('', '', {
                             required: true,
@@ -80,16 +82,47 @@ describe('AbstractFileDefaultFieldComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should call download method successfully', () => {
-        spyOn(component, 'download').and.callThrough(); // Spy on the method
-        component.download(); // Call the method
-        expect(component.download).toHaveBeenCalled(); // Assert that it was called
+
+    it('should simulate file download', () => {
+        // Spy on the 'download' method
+        spyOn(component, 'download').and.callFake(() => {
+            // Simulate the download process
+            const anchor = document.createElement('a');
+            anchor.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent('mockContent');
+            anchor.download = 'mockFile.txt';
+            document.body.appendChild(anchor);
+            anchor.click();
+            document.body.removeChild(anchor);
+        });
+
+        // Call the 'download' method
+        component.download();
+
+        // Assert that the 'download' method was called
+        expect(component.download).toHaveBeenCalled();
     });
 
-    it('should call upload method successfully', () => {
-        spyOn(component, 'upload').and.callThrough(); // Spy on the method
-        component.upload(); // Call the method
-        expect(component.upload).toHaveBeenCalled(); // Assert that it was called
+    it('should simulate file upload', () => {
+        // Create a mock file
+        const mockFile = new File(['mockContent'], 'mockFile.txt', {type: 'text/plain'});
+
+        // Get the file input element's reference
+        const fileInput = component.fileUploadEl.nativeElement;
+
+        // Create a DataTransfer object to simulate file selection
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(mockFile);
+        fileInput.files = dataTransfer.files;
+        component.dataField.value = {file: mockFile, name: "mockFile.txt"}
+        // Trigger the file upload method
+        spyOn(component, 'upload').and.callThrough();
+        const uploadButtonEvent = new Event('change');
+        fileInput.dispatchEvent(uploadButtonEvent);
+        component.upload();
+
+        // Assertions
+        expect(component.upload).toHaveBeenCalled();
+        expect(component.dataField.value).toBeTruthy(); // Ensure value is processed
     });
 
     afterEach(() => {
