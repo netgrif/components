@@ -51,6 +51,9 @@ export function navigationItemTaskAllowedNetsServiceFactory(factory: AllowedNets
         throw new Error(`Provided navigation item task data does not contain a filter field with ID '${UserFilterConstants.FILTER_FIELD_ID
         }'! Allowed nets cannot be generated from it!`);
     }
+    if (filterField.allowedNets === undefined) {
+        return factory.createWithAllNets();
+    }
     const nets = new BehaviorSubject<Array<string>>(Array.from(new Set<string>([...filterField.allowedNets])));
     if (filterField.filterMetadata.inheritAllowedNets) {
         baseAllowedNets.allowedNets$.subscribe(allowedNets => {
