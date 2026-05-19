@@ -1,13 +1,64 @@
-name: Publish package to GitHub Packages
+name: Publish package to npm and GitHub Packages
+
 on:
     release:
         types: [ published ]
+
+permissions:
+    contents: read
+    id-token: write
+
 jobs:
+    resolve-version-tag:
+        name: Resolve package version and npm tag
+        runs-on: ubuntu-latest
+        outputs:
+            version: ${{ steps.resolve.outputs.version }}
+            tag: ${{ steps.resolve.outputs.tag }}
+        steps:
+            -   uses: actions/checkout@v4
+
+            -   uses: actions/setup-node@v6
+                with:
+                    node-version: 18
+                    check-latest: false
+
+            -   id: resolve
+                name: Resolve version and tag
+                run: |
+                    VERSION=$(node -p "require('./package.json').version")
+
+                    if [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+                      TAG="latest"
+                    elif [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+-rc\.[0-9]+$ ]]; then
+                      TAG="rc"
+                    elif [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+-beta\.[0-9]+$ ]]; then
+                      TAG="beta"
+                    elif [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+-alpha\.[0-9]+$ ]]; then
+                      TAG="alpha"
+                    else
+                      echo "Invalid package version: $VERSION"
+                      echo "Allowed versions:"
+                      echo "  x.xx.xx"
+                      echo "  x.xx.xx-rc.1"
+                      echo "  x.xx.xx-beta.1"
+                      echo "  x.xx.xx-alpha.1"
+                      exit 1
+                    fi
+
+                    echo "Resolved version: $VERSION"
+                    echo "Resolved npm tag: $TAG"
+
+                    echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+                    echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+
     build:
+        needs: resolve-version-tag
         runs-on: ubuntu-latest
         steps:
-            -   uses: actions/checkout@v3
-            -   uses: actions/setup-node@v3
+            -   uses: actions/checkout@v4
+
+            -   uses: actions/setup-node@v6
                 with:
                     node-version: 18
             -   run: |
@@ -20,58 +71,133 @@ jobs:
                     npm i ./dist/netgrif-components --save-optional --legacy-peer-deps
                     npm run example:build
 
-    publish-npm:
-        needs: build
-        runs-on: ubuntu-latest
-        steps:
-            -   uses: actions/checkout@v3
-            -   uses: actions/setup-node@v3
+            -   name: Upload built packages
+                uses: actions/upload-artifact@v4
                 with:
-                    node-version: 18
-                    registry-url: https://registry.npmjs.org/
-            -   run: npm i --legacy-peer-deps
-            -   name: Publish components-core
-                run: |
-                    npm run ncc:build
-                    npm i ./dist/netgrif-components-core --save-optional --legacy-peer-deps
-                    cd dist/netgrif-components-core
-                    npm publish --access public
-                env:
-                    NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-            -   name: Publish components
-                run: |
-                    npm run nc:build
-                    cd dist/netgrif-components
-                    npm publish --access public
-                env:
-                    NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+                    name: dist-packages
+                    path: dist
+                    if-no-files-found: error
 
+    publish-npm:
+        needs: [ build, resolve-version-tag ]
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            id-token: write
+        steps:
+            -   uses: actions/checkout@v4
+
+            -   uses: actions/setup-node@v6
+                with:
+                    node-version: 22.21.1
+                    registry-url: https://registry.npmjs.org/
+                    scope: '@netgrif'
+
+            -   run: npm install -g npm@^11.5.1
+
+            -   run: |
+                    node --version
+                    npm --version
+
+            -   name: Download built packages
+                uses: actions/download-artifact@v4
+                with:
+                    name: dist-packages
+                    path: dist
+
+            -   name: Publish components-core to npm
+                run: |
+                    cd dist/netgrif-components-core
+
+                    PACKAGE_VERSION=$(node -p "require('./package.json').version")
+                    EXPECTED_VERSION="${{ needs.resolve-version-tag.outputs.version }}"
+                    TAG="${{ needs.resolve-version-tag.outputs.tag }}"
+
+                    if [[ "$PACKAGE_VERSION" != "$EXPECTED_VERSION" ]]; then
+                      echo "Version mismatch for @netgrif/components-core"
+                      echo "Root version: $EXPECTED_VERSION"
+                      echo "Package version: $PACKAGE_VERSION"
+                      exit 1
+                    fi
+
+                    echo "Publishing @netgrif/components-core@$PACKAGE_VERSION to npm with tag $TAG"
+                    npm publish --access public --tag "$TAG"
+
+            -   name: Publish components to npm
+                run: |
+                    cd dist/netgrif-components
+
+                    PACKAGE_VERSION=$(node -p "require('./package.json').version")
+                    EXPECTED_VERSION="${{ needs.resolve-version-tag.outputs.version }}"
+                    TAG="${{ needs.resolve-version-tag.outputs.tag }}"
+
+                    if [[ "$PACKAGE_VERSION" != "$EXPECTED_VERSION" ]]; then
+                      echo "Version mismatch for @netgrif/components"
+                      echo "Root version: $EXPECTED_VERSION"
+                      echo "Package version: $PACKAGE_VERSION"
+                      exit 1
+                    fi
+
+                    echo "Publishing @netgrif/components@$PACKAGE_VERSION to npm with tag $TAG"
+                    npm publish --access public --tag "$TAG"
 
     publish-gpr:
-        needs: build
+        needs: [ build, resolve-version-tag ]
         runs-on: ubuntu-latest
         permissions:
             contents: read
             packages: write
         steps:
-            -   uses: actions/checkout@v3
-            -   uses: actions/setup-node@v3
+            -   uses: actions/checkout@v4
+
+            -   uses: actions/setup-node@v6
                 with:
                     node-version: 18
                     registry-url: https://npm.pkg.github.com
-            -   run: npm i --legacy-peer-deps
-            -   name: Publish components-core
+                    scope: '@netgrif'
+
+            -   name: Download built packages
+                uses: actions/download-artifact@v4
+                with:
+                    name: dist-packages
+                    path: dist
+
+            -   name: Publish components-core to GitHub Packages
                 run: |
-                    npm run ncc:build
-                    npm i ./dist/netgrif-components-core --save-optional --legacy-peer-deps
                     cd dist/netgrif-components-core
-                    npm publish --access public
+
+                    PACKAGE_VERSION=$(node -p "require('./package.json').version")
+                    EXPECTED_VERSION="${{ needs.resolve-version-tag.outputs.version }}"
+                    TAG="${{ needs.resolve-version-tag.outputs.tag }}"
+
+                    if [[ "$PACKAGE_VERSION" != "$EXPECTED_VERSION" ]]; then
+                      echo "Version mismatch for @netgrif/components-core"
+                      echo "Root version: $EXPECTED_VERSION"
+                      echo "Package version: $PACKAGE_VERSION"
+                      exit 1
+                    fi
+
+                    echo "Publishing @netgrif/components-core@$PACKAGE_VERSION to GitHub Packages with tag $TAG"
+                    npm publish --tag "$TAG"
                 env:
-                    NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-            -   name: Publish components
+                    NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            -   name: Publish components to GitHub Packages
                 run: |
-                    npm run nc:build
                     cd dist/netgrif-components
-                    npm publish --access public
+
+                    PACKAGE_VERSION=$(node -p "require('./package.json').version")
+                    EXPECTED_VERSION="${{ needs.resolve-version-tag.outputs.version }}"
+                    TAG="${{ needs.resolve-version-tag.outputs.tag }}"
+
+                    if [[ "$PACKAGE_VERSION" != "$EXPECTED_VERSION" ]]; then
+                      echo "Version mismatch for @netgrif/components"
+                      echo "Root version: $EXPECTED_VERSION"
+                      echo "Package version: $PACKAGE_VERSION"
+                      exit 1
+                    fi
+
+                    echo "Publishing @netgrif/components@$PACKAGE_VERSION to GitHub Packages with tag $TAG"
+                    npm publish --tag "$TAG"
                 env:
-                    NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+                    NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
