@@ -57,6 +57,9 @@ export class EventService {
 
     public parseFrontActionsFromOutcomeTree(outcome: EventOutcome): Array<FrontAction> {
         const frontActions: Array<FrontAction> = [];
+        if (!!outcome.frontActions) {
+            frontActions.push(...outcome.frontActions);
+        }
         if (!!outcome.outcomes && outcome.outcomes.length > 0) {
             return this.parseFrontActionsFromOutcomeTreeRecursive(outcome.outcomes, frontActions);
         } else return frontActions;
