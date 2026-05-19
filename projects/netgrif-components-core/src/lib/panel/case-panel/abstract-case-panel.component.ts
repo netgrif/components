@@ -1,4 +1,4 @@
-import {Component, Input, Optional} from '@angular/core';
+import { Component, EventEmitter, Input, Optional, Output } from "@angular/core";
 import {Observable} from 'rxjs';
 import {Case} from '../../resources/interface/case';
 import {toMoment} from '../../resources/types/nae-date-type';
@@ -38,6 +38,7 @@ export abstract class AbstractCasePanelComponent extends AbstractPanelWithImmedi
     @Input() showCasePanelIcon = true;
     @Input() showDeleteMenu = false;
     @Input() textEllipsis = false;
+    @Input() public disabled: boolean = false;
     protected _approvalFormControl: FormControl;
 
     protected constructor(protected _caseResourceService: CaseResourceService,

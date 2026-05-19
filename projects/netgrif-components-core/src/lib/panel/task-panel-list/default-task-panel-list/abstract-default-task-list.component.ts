@@ -14,11 +14,12 @@ import {InjectedTabData} from '../../../tabs/interfaces';
 
 
 @Component({
-    selector: 'ncc-abstract-default-task-list',
-    template: ''
+    selector: "ncc-abstract-default-task-list",
+    template: ""
 })
-export abstract class AbstractDefaultTaskListComponent extends TabbedVirtualScrollComponent implements AfterViewInit, OnDestroy {
-
+export abstract class AbstractDefaultTaskListComponent
+    extends TabbedVirtualScrollComponent
+    implements AfterViewInit, OnDestroy {
     protected _tasks$: Observable<Array<TaskPanelData>>;
     protected _redirectTaskId: string;
     protected _unsubscribe$: Subject<void>;
@@ -30,6 +31,7 @@ export abstract class AbstractDefaultTaskListComponent extends TabbedVirtualScro
     @Input() forceLoadDataOnOpen = false;
     @Input() textEllipsis = false;
     @Input() showMoreMenu: boolean = true;
+    @Input() public disabled: boolean = false;
 
     @Input()
     set allowMultiOpen(bool: boolean) {
@@ -48,24 +50,26 @@ export abstract class AbstractDefaultTaskListComponent extends TabbedVirtualScro
     protected _unsub: Subscription;
     protected _canReload: boolean;
 
-    constructor(protected _taskViewService: TaskViewService,
-                protected _log: LoggerService,
-                @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData,
-                protected route?: ActivatedRoute) {
+    constructor(
+        protected _taskViewService: TaskViewService,
+        protected _log: LoggerService,
+        @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData,
+        protected route?: ActivatedRoute
+    ) {
         super(injectedTabData);
         this.taskEvent = new EventEmitter<TaskEventNotification>();
         this._taskPanelRefs = new Map<string, MatExpansionPanel>();
         this._unsubscribe$ = new Subject<void>();
         if (injectedTabData !== null) {
-            this._unsub = injectedTabData.tabSelected$.pipe(
-                filter(bool => bool)
-            ).subscribe( () => {
-                if (this._canReload) {
-                    this._taskViewService.reloadCurrentPage();
-                } else {
-                    this._canReload = true;
-                }
-            });
+            this._unsub = injectedTabData.tabSelected$
+                .pipe(filter(bool => bool))
+                .subscribe(() => {
+                    if (this._canReload) {
+                        this._taskViewService.reloadCurrentPage();
+                    } else {
+                        this._canReload = true;
+                    }
+                });
         }
     }
 
@@ -99,16 +103,22 @@ export abstract class AbstractDefaultTaskListComponent extends TabbedVirtualScro
     }
 
     public onRedirect() {
-        this.route.queryParams.pipe(filter(pm => !!pm['taskId'])).subscribe(pm => {
-            this._redirectTaskId = pm['taskId'];
-            this._tasks$.pipe().subscribe(tasks => {
-                const task = tasks.find(t => t.task.stringId === this._redirectTaskId);
-                if (!!task && !task.initiallyExpanded) {
-                    this._taskPanelRefs.get(this._redirectTaskId).open();
-                    this._taskPanelRefs.get(this._redirectTaskId).expanded = true;
-                    this._unsubscribe$.next();
-                }
+        this.route.queryParams
+            .pipe(filter(pm => !!pm["taskId"]))
+            .subscribe(pm => {
+                this._redirectTaskId = pm["taskId"];
+                this._tasks$.pipe().subscribe(tasks => {
+                    const task = tasks.find(
+                        t => t.task.stringId === this._redirectTaskId
+                    );
+                    if (!!task && !task.initiallyExpanded) {
+                        this._taskPanelRefs.get(this._redirectTaskId).open();
+                        this._taskPanelRefs.get(
+                            this._redirectTaskId
+                        ).expanded = true;
+                        this._unsubscribe$.next();
+                    }
+                });
             });
-        });
     }
 }

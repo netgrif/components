@@ -1,10 +1,10 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import { AfterViewInit, Component, Inject, Optional, ViewChild } from "@angular/core";
 import {
     AbstractTaskViewComponent,
     AllowedNetsService,
-    AllowedNetsServiceFactory,
+    AllowedNetsServiceFactory, CaseRefField,
     CategoryFactory,
-    ChangedFieldsService,
+    ChangedFieldsService, DATA_FIELD_PORTAL_DATA, DataFieldPortalData, EnumerationField, MultichoiceField,
     NAE_ASYNC_RENDERING_CONFIGURATION,
     NAE_TASK_FORCE_OPEN,
     SearchService,
@@ -43,7 +43,9 @@ export class DefaultTaskViewComponent extends AbstractTaskViewComponent implemen
 
     @ViewChild('header') public taskHeaderComponent: HeaderComponent;
 
-    constructor(taskViewService: TaskViewService) {
+    constructor(taskViewService: TaskViewService,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA)
+                protected _dataFieldPortalData: DataFieldPortalData<MultichoiceField | CaseRefField | EnumerationField>) {
         super(taskViewService);
     }
 
@@ -55,4 +57,7 @@ export class DefaultTaskViewComponent extends AbstractTaskViewComponent implemen
         console.log(event);
     }
 
+    public disabled(): boolean {
+        return this._dataFieldPortalData?.dataField?.formControlRef.disabled;
+    }
 }

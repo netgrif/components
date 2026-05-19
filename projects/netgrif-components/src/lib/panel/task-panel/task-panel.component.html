@@ -21,6 +21,7 @@
         <div fxLayout="row" fxLayoutAlign="end center" fxFlex="5">
             <button mat-icon-button (click)="preventPanelOpen($event)"
                     *ngIf="!isLoading && showMoreMenu && (canAssign() || canDo('delegate') || canReassign() || canCancel() || canFinish())"
+                    [disabled]="disabled"
                     [matMenuTriggerFor]="menu">
                 <mat-icon>more_vert</mat-icon>
             </button>
@@ -70,27 +71,27 @@
 </nc-app-panel>
 
 <ng-template #assignButton>
-    <button *ngIf="canAssign() && getAssignTitle()?.length > 0" (click)="assign()" mat-stroked-button color="primary" [disabled]="canDisable('assign')">
+    <button *ngIf="canAssign() && getAssignTitle()?.length > 0" (click)="assign()" mat-stroked-button color="primary" [disabled]="canDisable('assign') || disabled">
         {{ getAssignTitle() | translate | uppercase }}</button>
 </ng-template>
 
 <ng-template #delegateButton>
-    <button *ngIf="canDo('delegate') && getDelegateTitle()?.length > 0" (click)="delegate()" mat-stroked-button color="primary" [disabled]="canDisable('delegate')">
+    <button *ngIf="canDo('delegate') && getDelegateTitle()?.length > 0" (click)="delegate()" mat-stroked-button color="primary" [disabled]="canDisable('delegate') || disabled">
         {{ getDelegateTitle() | translate | uppercase }}</button>
 </ng-template>
 
 <ng-template #reassignButton>
-    <button *ngIf="canReassign()" (click)="delegate()" mat-stroked-button color="primary" [disabled]="canDisable('reassign')">
+    <button *ngIf="canReassign()" (click)="delegate()" mat-stroked-button color="primary" [disabled]="canDisable('reassign') || disabled">
         {{ 'tasks.view.reassign' | translate | uppercase }}</button>
 </ng-template>
 
 <ng-template #cancelButton>
-    <button *ngIf="canCancel() && getCancelTitle()?.length > 0" (click)="cancel()" mat-stroked-button color="primary" [disabled]="canDisable('cancel')">
+    <button *ngIf="canCancel() && getCancelTitle()?.length > 0" (click)="cancel()" mat-stroked-button color="primary" [disabled]="canDisable('cancel') || disabled">
         {{ getCancelTitle() | translate | uppercase }}</button>
 </ng-template>
 
 <ng-template #finishButton>
-    <button *ngIf="canFinish() && getFinishTitle()?.length > 0" (click)="finish()" mat-stroked-button color="primary" [disabled]="canDisable('finish')">
+    <button *ngIf="canFinish() && getFinishTitle()?.length > 0" (click)="finish()" mat-stroked-button color="primary" [disabled]="canDisable('finish') || disabled">
         {{ getFinishTitle() | translate | uppercase }}</button>
 </ng-template>
 

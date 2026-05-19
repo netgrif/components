@@ -9,6 +9,7 @@
                               [indeterminate]="indeterminate()"
                               [approval]="approval"
                               [typeApproval]="typeApproval()"
+                              [disabled]="disabled"
                 ></nc-sort-mode>
             </div>
             <div *ngSwitchCase="headerModeEnum.SEARCH" fxFlex="100" fxLayout="row">
@@ -18,6 +19,7 @@
                                 [indeterminate]="indeterminate()"
                                 [approval]="approval"
                                 [typeApproval]="typeApproval()"
+                                [disabled]="disabled"
                 ></nc-search-mode>
             </div>
             <div *ngSwitchCase="headerModeEnum.EDIT" fxFlex="100" fxLayout="row">
@@ -27,6 +29,7 @@
                               [indeterminate]="indeterminate()"
                               [approval]="approval"
                               [typeApproval]="typeApproval()"
+                              [disabled]="disabled"
                 ></nc-edit-mode>
             </div>
         </div>

@@ -24,6 +24,7 @@ export abstract class AbstractDefaultCaseListComponent extends TabbedVirtualScro
     @Input() textEllipsis = false;
     @Input() width: string;
     @Input() redirectEnabled = true;
+    @Input() public disabled: boolean;
 
     public cases$: Observable<Array<Case>>;
     public loading$: Observable<boolean>;

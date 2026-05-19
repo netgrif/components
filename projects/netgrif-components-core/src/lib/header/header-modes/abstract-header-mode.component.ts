@@ -12,6 +12,7 @@ export abstract class AbstractHeaderModeComponent {
     @Input() public indeterminate: boolean;
     @Input() public approvalFormControl: FormControl;
     @Input() public typeApproval: string;
+    @Input() public disabled: boolean = false;
 
     constructor() {
     }

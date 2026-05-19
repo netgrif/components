@@ -29,6 +29,7 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
     @Input() showSearchButton = true;
     @Input() showTableSection = true;
     @Input() public approval: boolean;
+    @Input() public disabled: boolean = false;
 
     public headerService: AbstractHeaderService;
     protected _headerSearch: HeaderSearchService;

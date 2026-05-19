@@ -17,7 +17,9 @@
                                 trackBy: trackById"
                                [showCasePanelIcon]="showCasePanelIcon" [approval]="approval"
                                [showDeleteMenu]="showDeleteMenu" [first]="first" [last]="last"
-                               [case_]="case_" [selectedHeaders$]="selectedHeaders$" (click)="onCaseClick(case_)">
+                               [case_]="case_" [selectedHeaders$]="selectedHeaders$" (click)="onCaseClick(case_)"
+                               [disabled]="disabled"
+                >
                 </nc-case-panel>
 
                 <div *ngIf="loading$ | async" fxLayout="column" fxLayoutAlign="center center"
