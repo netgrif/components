@@ -64,6 +64,7 @@ class TestComponent {
         creationDate: undefined,
         icon: '',
         lastModified: undefined,
+        lastModifiedDataSet: undefined,
         petriNetId: '',
         petriNetObjectId: undefined,
         processIdentifier: '',
