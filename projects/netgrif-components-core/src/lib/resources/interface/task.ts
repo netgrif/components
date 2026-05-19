@@ -70,4 +70,6 @@ export interface Task {
     delegateTitle?: string;
     immediateData?: Array<ImmediateData>;
     assignedUserPolicy?: AssignedUserPolicy;
+
+    isStillExecutable?: boolean;
 }

@@ -515,5 +515,8 @@
         "previousPage": "Predchádzajúca strana",
         "pageOne": "Strana 1 z 1",
         "pageAmount": "Strana {{page}} z {{amountPages}}"
+    },
+    "export": {
+        "errorExportDownload": "Stiahnutie súboru zlyhalo!"
     }
 }
