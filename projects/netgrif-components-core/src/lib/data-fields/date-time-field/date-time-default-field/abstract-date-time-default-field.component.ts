@@ -20,7 +20,27 @@ export abstract class AbstractDateTimeDefaultFieldComponent extends AbstractTime
                 @Inject(MAT_DATE_LOCALE) protected _locale: string,
                 protected _languageService: LanguageService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<DateTimeField>) {
-        super(_translate, _adapter, _locale, _languageService, dataFieldPortalData)
+        super(_translate, _adapter, _locale, _languageService, dataFieldPortalData);
+    }
+
+    public get showSeconds(): boolean {
+        return this.dataField?.showSeconds ?? false;
+    }
+
+    public get stepHour(): number {
+        return this.dataField?.stepHour ?? 1;
+    }
+
+    public get stepMinute(): number {
+        return this.dataField?.stepMinute ?? 5;
+    }
+
+    public get stepSecond(): number {
+        return this.dataField?.stepSecond ?? 1;
+    }
+
+    public get enableMeridian(): boolean {
+        return this.dataField?.enableMeridian ?? false;
     }
 
     getErrorMessage() {

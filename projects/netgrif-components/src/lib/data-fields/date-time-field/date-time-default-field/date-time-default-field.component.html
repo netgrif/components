@@ -11,11 +11,12 @@
     <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
     <ngx-mat-datetime-picker #picker
                              [showSpinners]="true"
-                             [showSeconds]="false"
-                             [stepHour]="1"
-                             [stepMinute]="5"
+                             [showSeconds]="showSeconds"
+                             [stepHour]="stepHour"
+                             [stepMinute]="stepMinute"
+                             [stepSecond]="stepSecond"
                              [color]="'primary'"
-                             [enableMeridian]="false">
+                             [enableMeridian]="enableMeridian">
     </ngx-mat-datetime-picker>
     <mat-hint [ngClass]="{'mat-hint-disabled': formControlRef.disabled}">{{dataField.description}}</mat-hint>
     <mat-error *ngIf="dataField.isInvalid(formControlRef)">{{getErrorMessage()}}</mat-error>
