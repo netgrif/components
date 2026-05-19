@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Optional, Output } from "@angular/core";
+import {Component,EventEmitter,Input,Optional,Output} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Case} from '../../resources/interface/case';
 import {toMoment} from '../../resources/types/nae-date-type';

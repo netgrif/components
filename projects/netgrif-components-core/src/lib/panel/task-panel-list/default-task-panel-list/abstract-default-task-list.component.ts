@@ -14,8 +14,8 @@ import {InjectedTabData} from '../../../tabs/interfaces';
 
 
 @Component({
-    selector: "ncc-abstract-default-task-list",
-    template: ""
+    selector: 'ncc-abstract-default-task-list',
+    template: ''
 })
 export abstract class AbstractDefaultTaskListComponent
     extends TabbedVirtualScrollComponent
