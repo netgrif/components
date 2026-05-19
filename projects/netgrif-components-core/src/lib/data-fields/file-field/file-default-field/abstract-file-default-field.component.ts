@@ -237,11 +237,11 @@ export abstract class AbstractFileDefaultFieldComponent extends AbstractFileFiel
                             this._snackbar.openErrorSnackBar(this._translate.instant(response.error));
 
                         } else {
-                            const changedFieldsMap: ChangedFieldsMap = this._eventService.parseChangedFieldsFromOutcomeTree(response.outcome);
-                            this.dataField.emitChangedFields(changedFieldsMap);
                             this._log.debug(
                                 `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)?.name} was successfully uploaded`
                             );
+                            const changedFieldsMap: ChangedFieldsMap = this._eventService.parseChangedFieldsFromOutcomeTree(response.outcome);
+                            this.dataField.emitChangedFields(changedFieldsMap);
                             this.state.error = false;
                             this.dataField.downloaded = false;
                             this.dataField.value.name = fileToUpload.name;
