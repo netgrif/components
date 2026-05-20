@@ -27,10 +27,17 @@ function addAllowedNets(allowedNets, existingAllowedNets) {
 /**
  * Convenience method that can be used as an allowed nets factory for tabbed task views.
  * If no allowed nets are provided in the injected data then an {@link AllowedNetsService} with no allowed nets is created.
- * It has a dependency on this class and {@link NAE_TAB_DATA} injection token.
+ * It has a dependency on this class, {@link NAE_TAB_DATA} and {@link NAE_NAVIGATION_ITEM_TASK_DATA} injection tokens.
  */
 export function tabbedAllowedNetsServiceFactory(factory: AllowedNetsServiceFactory,
-                                                tabData: InjectedTabbedTaskViewData): AllowedNetsService {
+                                                tabData: InjectedTabbedTaskViewData,
+                                                navigationItemTaskData?: Array<DataGroup>): AllowedNetsService {
+    if (!!navigationItemTaskData && (!tabData?.allowedNets || tabData.allowedNets.length === 0)) {
+        const filterField: FilterField = getFieldFromDataGroups(navigationItemTaskData, UserFilterConstants.FILTER_FIELD_ID) as FilterField;
+        if (!!filterField && filterField.filterMetadata.allAllowedNets) {
+            return factory.createWithAllNets();
+        }
+    }
     return factory.createFromArray(tabData?.allowedNets ?? []);
 }
 
@@ -45,8 +52,6 @@ export function navigationItemTaskAllowedNetsServiceFactory(factory: AllowedNets
         return factory.createWithAllNets();
     }
     const filterField = getFieldFromDataGroups(navigationItemTaskData, UserFilterConstants.FILTER_FIELD_ID) as FilterField;
-    const allowedNetsField = getFieldFromDataGroups(navigationItemTaskData, UserFilterConstants.ALLOWED_NETS_FIELD_ID) as MultichoiceField;
-
     if (filterField === undefined) {
         throw new Error(`Provided navigation item task data does not contain a filter field with ID '${UserFilterConstants.FILTER_FIELD_ID
         }'! Allowed nets cannot be generated from it!`);
@@ -61,6 +66,7 @@ export function navigationItemTaskAllowedNetsServiceFactory(factory: AllowedNets
             nets.next(Array.from(netSet));
         });
     }
+    const allowedNetsField = getFieldFromDataGroups(navigationItemTaskData, UserFilterConstants.ALLOWED_NETS_FIELD_ID) as MultichoiceField;
     if (!!allowedNetsField) {
         addAllowedNets(allowedNetsField.value, nets);
         allowedNetsField.valueChanges().subscribe(allowedNets => {

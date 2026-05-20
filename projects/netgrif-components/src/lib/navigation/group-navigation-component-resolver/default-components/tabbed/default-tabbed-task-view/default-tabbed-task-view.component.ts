@@ -53,7 +53,7 @@ export function baseFilterFactory(injectedTabData: InjectedTabbedTaskViewDataWit
         {
             provide: AllowedNetsService,
             useFactory: tabbedAllowedNetsServiceFactory,
-            deps: [AllowedNetsServiceFactory, NAE_TAB_DATA]
+            deps: [AllowedNetsServiceFactory, NAE_TAB_DATA, NAE_NAVIGATION_ITEM_TASK_DATA]
         },
         {
             provide: NAE_TASK_VIEW_CONFIGURATION,
