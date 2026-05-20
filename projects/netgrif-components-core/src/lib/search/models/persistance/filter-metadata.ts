@@ -27,4 +27,13 @@ export interface FilterMetadata {
      * If falsy, only the allowed nets stored in the filter data field will be used to generate category metadata.
      */
     inheritAllowedNets?: boolean;
+    /**
+     * Whether all available nets should be used when generating category metadata.
+     *
+     * Defaults to a falsy value.
+     *
+     * If truthy, all nets available in the system will be used to generate category metadata,
+     * ignoring both the allowed nets stored in the filter data field and inherited allowed nets.
+     */
+    allAllowedNets?: boolean;
 }
