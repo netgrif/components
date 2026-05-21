@@ -2,8 +2,8 @@
               [caseColor]=case_.color>
     <ng-template #casePanelHeader>
         <div fxLayoutAlign="start center" fxLayout="row" fxFlex="95" (click)="preventSelectionClick($event)">
-            <mat-checkbox *ngIf="approval && typeApproval() === 'multichoice'" [formControl]="approvalFormControl" (click)="$event.stopPropagation();" color='primary' class="checkbox-padding" [disabled]="disabled"></mat-checkbox>
-            <mat-radio-group *ngIf="approval && typeApproval() === 'enumeration'" [formControl]="approvalFormControl" (click)="$event.stopPropagation();" class="radio-padding" color='primary' [disabled]="disabled">
+            <mat-checkbox *ngIf="isInSelectionMode() && typeApproval() === 'multichoice'" [formControl]="approvalFormControl" (click)="$event.stopPropagation();" color='primary' class="checkbox-padding" [disabled]="isSelectionDisabled()"></mat-checkbox>
+            <mat-radio-group *ngIf="isInSelectionMode() && typeApproval() === 'enumeration'" [formControl]="approvalFormControl" (click)="$event.stopPropagation();" class="radio-padding" color='primary' [disabled]="isSelectionDisabled()">
                 <mat-radio-button [value]="caseValue()"></mat-radio-button>
             </mat-radio-group>
             <div *ngFor="let field of featuredFieldsValues; let i = index" fxFlex

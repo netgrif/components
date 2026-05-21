@@ -58,6 +58,6 @@ export class DefaultTaskViewComponent extends AbstractTaskViewComponent implemen
     }
 
     public disabled(): boolean {
-        return this._dataFieldPortalData?.dataField?.formControlRef.disabled;
+        return this._dataFieldPortalData?.dataField?.formControlRef.disabled ?? false;
     }
 }

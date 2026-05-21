@@ -9,6 +9,7 @@ import {InjectedTabData} from '../../../../tabs/interfaces';
 import {ActivatedRoute} from '@angular/router';
 import {filter, takeUntil} from 'rxjs/operators';
 import {TabbedVirtualScrollComponent} from '../../../../panel/abstract/tabbed-virtual-scroll.component';
+import {SelectionBehavior} from '../../../../panel/configuration/selection-behavior';
 
 @Component({
     selector: 'ncc-abstract-default-case-list',
@@ -24,7 +25,7 @@ export abstract class AbstractDefaultCaseListComponent extends TabbedVirtualScro
     @Input() textEllipsis = false;
     @Input() width: string;
     @Input() redirectEnabled = true;
-    @Input() public disabled: boolean;
+    @Input() public showSelection: SelectionBehavior = SelectionBehavior.HIDDEN;
 
     public cases$: Observable<Array<Case>>;
     public loading$: Observable<boolean>;
@@ -84,5 +85,9 @@ export abstract class AbstractDefaultCaseListComponent extends TabbedVirtualScro
                 }
             });
         });
+    }
+
+    public isSelectionDisabled(): boolean {
+        return this.showSelection !== SelectionBehavior.EDITABLE;
     }
 }

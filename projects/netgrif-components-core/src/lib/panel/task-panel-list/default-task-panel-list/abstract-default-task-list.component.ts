@@ -1,6 +1,6 @@
 import {MatExpansionPanel} from '@angular/material/expansion';
 import {ActivatedRoute} from '@angular/router';
-import {filter} from 'rxjs/operators';
+import {filter, takeUntil} from 'rxjs/operators';
 import {TabbedVirtualScrollComponent} from '../../abstract/tabbed-virtual-scroll.component';
 import {AfterViewInit, Component, EventEmitter, Inject, Input, OnDestroy, Optional, Output} from '@angular/core';
 import {Observable, Subject, Subscription} from 'rxjs';
@@ -12,14 +12,11 @@ import {LoggerService} from '../../../logger/services/logger.service';
 import {NAE_TAB_DATA} from '../../../tabs/tab-data-injection-token/tab-data-injection-token';
 import {InjectedTabData} from '../../../tabs/interfaces';
 
-
 @Component({
     selector: 'ncc-abstract-default-task-list',
     template: ''
 })
-export abstract class AbstractDefaultTaskListComponent
-    extends TabbedVirtualScrollComponent
-    implements AfterViewInit, OnDestroy {
+export abstract class AbstractDefaultTaskListComponent extends TabbedVirtualScrollComponent implements AfterViewInit, OnDestroy {
     protected _tasks$: Observable<Array<TaskPanelData>>;
     protected _redirectTaskId: string;
     protected _unsubscribe$: Subject<void>;
@@ -50,12 +47,10 @@ export abstract class AbstractDefaultTaskListComponent
     protected _unsub: Subscription;
     protected _canReload: boolean;
 
-    constructor(
-        protected _taskViewService: TaskViewService,
-        protected _log: LoggerService,
-        @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData,
-        protected route?: ActivatedRoute
-    ) {
+    constructor(protected _taskViewService: TaskViewService,
+                protected _log: LoggerService,
+                @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData,
+                protected route?: ActivatedRoute) {
         super(injectedTabData);
         this.taskEvent = new EventEmitter<TaskEventNotification>();
         this._taskPanelRefs = new Map<string, MatExpansionPanel>();
@@ -103,19 +98,19 @@ export abstract class AbstractDefaultTaskListComponent
     }
 
     public onRedirect() {
+        if (!this.route) {
+            return;
+        }
         this.route.queryParams
-            .pipe(filter(pm => !!pm["taskId"]))
+            .pipe(filter(pm => !!pm['taskId']), takeUntil(this._unsubscribe$))
             .subscribe(pm => {
-                this._redirectTaskId = pm["taskId"];
-                this._tasks$.pipe().subscribe(tasks => {
-                    const task = tasks.find(
-                        t => t.task.stringId === this._redirectTaskId
-                    );
-                    if (!!task && !task.initiallyExpanded) {
-                        this._taskPanelRefs.get(this._redirectTaskId).open();
-                        this._taskPanelRefs.get(
-                            this._redirectTaskId
-                        ).expanded = true;
+                this._redirectTaskId = pm['taskId'];
+                this._tasks$.pipe(takeUntil(this._unsubscribe$)).subscribe(tasks => {
+                    const task = tasks.find(t => t.task.stringId === this._redirectTaskId);
+                    const panelRef = this._taskPanelRefs.get(this._redirectTaskId);
+                    if (!!task && !task.initiallyExpanded && !!panelRef) {
+                        panelRef.open();
+                        panelRef.expanded = true;
                         this._unsubscribe$.next();
                     }
                 });

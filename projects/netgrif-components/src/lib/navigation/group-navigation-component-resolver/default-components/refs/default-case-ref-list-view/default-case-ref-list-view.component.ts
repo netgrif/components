@@ -26,15 +26,16 @@ import {
     SavedFilterMetadata,
     SearchMode,
     SearchService,
+    SelectionBehavior,
     SimpleFilter,
     TaskSetDataRequestFields,
     ViewIdService
 } from '@netgrif/components-core';
-import {HeaderComponent} from '../../../../../header/header.component'
+import {HeaderComponent} from '../../../../../header/header.component';
 import {DefaultTabbedTaskViewComponent} from '../../tabbed/default-tabbed-task-view/default-tabbed-task-view.component';
 import {
     InjectedTabbedTaskViewDataWithNavigationItemTaskData
-} from "../../model/injected-tabbed-task-view-data-with-navigation-item-task-data";
+} from '../../model/injected-tabbed-task-view-data-with-navigation-item-task-data';
 
 const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
     return factory.createWithAllNets();
@@ -87,7 +88,7 @@ export class DefaultCaseRefListViewComponent extends AbstractCaseViewComponent i
             return;
         }
         if (this._baseFilter.filter instanceof Filter) {
-            this.initFilter = this._baseFilter.filter
+            this.initFilter = this._baseFilter.filter;
         } else {
             this._baseFilter.filter.subscribe(observableFilter => {
                 this.initFilter = observableFilter;
@@ -99,14 +100,28 @@ export class DefaultCaseRefListViewComponent extends AbstractCaseViewComponent i
         this.initializeHeader(this.caseHeaderComponent);
     }
 
-    public isApproval() {
-        return this._dataFieldPortalData?.dataField instanceof MultichoiceField || this._dataFieldPortalData?.dataField instanceof EnumerationField;
-    }
-
     public handleCaseClick(clickedCase: Case): void {
         if (this._injectedTabData !== null) {
             this.openTab(clickedCase);
         }
+    }
+
+    public resolveSelectionBehavior(): SelectionBehavior {
+        if (!this.isApproval()) {
+            return SelectionBehavior.HIDDEN;
+        }
+
+        if (this.disabled()) {
+            return SelectionBehavior.VISIBLE;
+        }
+        return SelectionBehavior.EDITABLE;
+    }
+
+    public isApproval() {
+        return (
+            this._dataFieldPortalData?.dataField instanceof MultichoiceField ||
+            this._dataFieldPortalData?.dataField instanceof EnumerationField
+        );
     }
 
     public disabled(): boolean {

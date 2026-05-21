@@ -1,4 +1,4 @@
-import {Component,EventEmitter,Input,Optional,Output} from '@angular/core';
+import {Component,Input,Optional} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Case} from '../../resources/interface/case';
 import {toMoment} from '../../resources/types/nae-date-type';
@@ -21,6 +21,7 @@ import {CurrencyPipe} from '@angular/common';
 import {PermissionService} from '../../authorization/permission/permission.service';
 import {PermissionType} from '../../process/permissions';
 import {FormControl} from '@angular/forms';
+import {SelectionBehavior} from '../configuration/selection-behavior';
 
 @Component({
     selector: 'ncc-abstract-case-panel',
@@ -30,7 +31,6 @@ export abstract class AbstractCasePanelComponent extends AbstractPanelWithImmedi
 
 
     @Input() public case_: Case;
-    @Input() public approval: boolean;
     @Input() public selectedHeaders$: Observable<Array<HeaderColumn>>;
     @Input() responsiveBody = true;
     @Input() first: boolean;
@@ -38,7 +38,7 @@ export abstract class AbstractCasePanelComponent extends AbstractPanelWithImmedi
     @Input() showCasePanelIcon = true;
     @Input() showDeleteMenu = false;
     @Input() textEllipsis = false;
-    @Input() public disabled: boolean = false;
+    @Input() public showSelection: SelectionBehavior = SelectionBehavior.HIDDEN;
     protected _approvalFormControl: FormControl;
 
     protected constructor(protected _caseResourceService: CaseResourceService,
@@ -49,7 +49,7 @@ export abstract class AbstractCasePanelComponent extends AbstractPanelWithImmedi
                           protected _userService: UserService,
                           protected _currencyPipe: CurrencyPipe,
                           protected _permissionService: PermissionService,
-                          @Optional() protected _overflowService: OverflowService,) {
+                          @Optional() protected _overflowService: OverflowService) {
         super(_translateService, _currencyPipe, _overflowService);
         this._approvalFormControl = new FormControl();
     }
@@ -113,5 +113,13 @@ export abstract class AbstractCasePanelComponent extends AbstractPanelWithImmedi
 
     public getMinWidth() {
         return (this._overflowService && this._overflowService.overflowMode) ? `${this._overflowService.columnWidth}px` : '0';
+    }
+
+    public isInSelectionMode(): boolean {
+        return this.showSelection !== SelectionBehavior.HIDDEN;
+    }
+
+    public isSelectionDisabled(): boolean {
+        return this.showSelection !== SelectionBehavior.EDITABLE;
     }
 }

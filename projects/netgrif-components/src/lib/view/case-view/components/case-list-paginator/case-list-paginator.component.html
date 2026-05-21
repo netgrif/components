@@ -15,10 +15,10 @@
                                 let first = first;
                                 let last = last;
                                 trackBy: trackById"
-                               [showCasePanelIcon]="showCasePanelIcon" [approval]="approval"
+                               [showCasePanelIcon]="showCasePanelIcon"
                                [showDeleteMenu]="showDeleteMenu" [first]="first" [last]="last"
                                [case_]="case_" [selectedHeaders$]="selectedHeaders$" (click)="onCaseClick(case_)"
-                               [disabled]="disabled"
+                               [showSelection]="showSelection"
                 >
                 </nc-case-panel>
 
@@ -28,7 +28,7 @@
                 </div>
             </div>
         </mat-accordion>
-        <mat-paginator [length]="length" [pageSize]="pageSize" [pageIndex]="pageIndex" color="primary" [disabled]="disabled"
+        <mat-paginator [length]="length" [pageSize]="pageSize" [pageIndex]="pageIndex" color="primary" [disabled]="isSelectionDisabled()"
                        [pageSizeOptions]="pageSizeOptions" (page)="onPageChanged($event)" showFirstLastButtons>
         </mat-paginator>
     </ng-container>
