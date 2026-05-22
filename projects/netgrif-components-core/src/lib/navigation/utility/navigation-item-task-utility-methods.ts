@@ -3,7 +3,6 @@ import {DataGroup} from '../../resources/interface/data-groups';
 import {getFieldFromDataGroups} from '../../utility/get-field';
 import {GroupNavigationConstants} from '../model/group-navigation-constants';
 import {Filter} from '../../filter/models/filter';
-import {UserFilterConstants} from '../../filter/models/user-filter-constants';
 import {FilterField} from '../../data-fields/filter-field/models/filter-field';
 import {SimpleFilter} from '../../filter/models/simple-filter';
 import {MultichoiceField} from '../../data-fields/multichoice-field/models/multichoice-field';

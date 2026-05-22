@@ -14,8 +14,6 @@ import {
     NAE_BASE_FILTER,
     AllowedNetsServiceFactory,
     AllowedNetsService,
-    UserFilterConstants,
-    TaskSetDataRequestFields
 } from '@netgrif/components-core';
 import {HeaderComponent} from '@netgrif/components';
 
@@ -52,8 +50,6 @@ export class CaseViewComponent extends AbstractCaseViewComponent implements Afte
 
     @ViewChild('header') public caseHeaderComponent: HeaderComponent;
 
-    additionalFilterData: TaskSetDataRequestFields;
-
     constructor(caseViewService: CaseViewService, @Optional() overflowService: OverflowService) {
         super(caseViewService, overflowService, undefined, {
             enableCaseTitle: true,
@@ -63,12 +59,6 @@ export class CaseViewComponent extends AbstractCaseViewComponent implements Afte
                 createCaseButtonIcon: 'home'
             }
         });
-        this.additionalFilterData = {
-            [UserFilterConstants.ORIGIN_VIEW_ID_FIELD_ID]: {
-                type: 'text',
-                value: 'override'
-            }
-        };
     }
 
     ngAfterViewInit(): void {

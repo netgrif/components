@@ -12,10 +12,9 @@ import {
     NAE_BASE_FILTER,
     AllowedNetsServiceFactory,
     AllowedNetsService,
-    UserFilterConstants,
     BaseFilter,
     Category,
-    TaskSetDataRequestFields, navigationItemTaskFilterFactory, FilterExtractionService, NAE_NAVIGATION_ITEM_TASK_DATA,
+    navigationItemTaskFilterFactory, FilterExtractionService, NAE_NAVIGATION_ITEM_TASK_DATA,
     navigationItemTaskAllowedNetsServiceFactory, BaseAllowedNetsService, NAE_DEFAULT_HEADERS,
     navigationItemCaseViewDefaultHeadersFactory, navigationItemTaskCategoryFactory, CategoryResolverService,
     NAE_DEFAULT_CASE_SEARCH_CATEGORIES, NAE_DEFAULT_TASK_SEARCH_CATEGORIES, groupNavigationViewIdSegmentFactory,
@@ -94,7 +93,6 @@ export class DefaultSimpleCaseViewComponent extends AbstractCaseViewComponent im
 
     @ViewChild('header') public caseHeaderComponent: HeaderComponent;
 
-    additionalFilterData: TaskSetDataRequestFields;
     initialSearchMode: SearchMode;
     showToggleButton: boolean;
     enableSearch: boolean;
@@ -130,12 +128,6 @@ export class DefaultSimpleCaseViewComponent extends AbstractCaseViewComponent im
         this.headersMode = viewHeadersMode ? viewHeadersMode : [];
         this.allowTableMode = extractFieldValueFromData<boolean>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_ALLOW_TABLE_MODE);
         this.defaultHeadersMode = this.resolveHeaderMode(viewDefaultHeadersMode)
-        this.additionalFilterData = {
-            [UserFilterConstants.ORIGIN_VIEW_ID_FIELD_ID]: {
-                type: 'text',
-                value: 'override'
-            }
-        };
         this.emptyContentText = extractFieldValueFromData<I18nFieldValue>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_EMPTY_CONTENT_TEXT);
         this.emptyContentIcon = extractFieldValueFromData<string>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_EMPTY_CONTENT_ICON);
     }

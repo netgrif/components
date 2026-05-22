@@ -18,7 +18,6 @@ import {
     SearchMode,
     SearchService,
     SimpleFilter,
-    TaskSetDataRequestFields,
     ViewIdService, DATA_FIELD_PORTAL_DATA, DataFieldPortalData, MultichoiceField, EnumerationField
 } from '@netgrif/components-core';
 import {HeaderComponent} from '../../../../../header/header.component'
@@ -54,7 +53,6 @@ export class DefaultCaseRefListViewComponent extends AbstractCaseViewComponent i
 
     @ViewChild('header') public caseHeaderComponent: HeaderComponent;
 
-    public additionalFilterData: TaskSetDataRequestFields;
     public search: boolean;
     public createCase: boolean;
 

@@ -1,6 +1,5 @@
 import {Type} from '@angular/core';
 import {Category} from '../search/models/category/category';
-import {UserFilterConstants} from '../filter/models/user-filter-constants';
 import {getFieldFromDataGroups} from './get-field';
 import {FilterField} from '../data-fields/filter-field/models/filter-field';
 import {DataGroup} from '../resources/interface/data-groups';
@@ -12,6 +11,7 @@ import {FilterType} from '../filter/models/filter-type';
  * @param categoryResolverService
  * @param navigationItemTaskData task data of a navigation item task, the data must contain a filter field, that is used
  * to generate the categories
+ * @param filterFieldId field id of the filter
  * @param defaultCaseSearchCategories the default case search categories that should be merged with the categories provided by the filter
  * field, if the filter metadata allow it and the filter is a case filter
  * @param defaultTaskSearchCategories the default task search categories that should be merged with the categories provided by the filter
