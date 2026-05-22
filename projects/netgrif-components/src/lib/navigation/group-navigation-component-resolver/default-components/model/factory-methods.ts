@@ -6,7 +6,7 @@ import {
     Category,
     navigationItemTaskAllowedNetsServiceFactory,
     navigationItemTaskFilterFactory,
-    navigationItemTaskCategoryFactory, CategoryResolverService, FilterExtractionService
+    navigationItemTaskCategoryFactory, CategoryResolverService, FilterExtractionService, GroupNavigationConstants
 } from '@netgrif/components-core';
 import {InjectedTabbedCaseViewDataWithNavigationItemTaskData} from './injected-tabbed-case-view-data-with-navigation-item-task-data';
 import {Type} from '@angular/core';
@@ -17,11 +17,12 @@ import {ActivatedRoute} from '@angular/router';
  * @param extractionService
  * @param tabData the injected data containing the navigation item case task data
  * @param activatedRoute
+ * @param filterFieldId id of the filter field
  */
 export function filterCaseTabbedDataFilterFactory(extractionService: FilterExtractionService,
                                                   tabData: InjectedTabbedCaseViewDataWithNavigationItemTaskData,
                                                   activatedRoute: ActivatedRoute): BaseFilter {
-    return navigationItemTaskFilterFactory(extractionService, activatedRoute, tabData.navigationItemTaskData);
+    return navigationItemTaskFilterFactory(extractionService, GroupNavigationConstants.ITEM_FIELD_CASE_FILTER, activatedRoute, tabData.navigationItemTaskData);
 }
 
 /**
@@ -36,7 +37,7 @@ export function filterCaseTabbedDataAllowedNetsServiceFactory(allowedNetsService
                                                               tabData: InjectedTabbedCaseViewDataWithNavigationItemTaskData)
     : AllowedNetsService {
 
-    return navigationItemTaskAllowedNetsServiceFactory(allowedNetsServiceFactory, baseAllowedNets, tabData.navigationItemTaskData);
+    return navigationItemTaskAllowedNetsServiceFactory(allowedNetsServiceFactory, baseAllowedNets, tabData.navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_CASE_FILTER);
 }
 
 /**
@@ -54,6 +55,7 @@ export function filterCaseTabbedDataSearchCategoriesFactory(categoryResolverServ
 
     return navigationItemTaskCategoryFactory(categoryResolverService,
         tabData.navigationItemTaskData,
+        GroupNavigationConstants.ITEM_FIELD_CASE_FILTER,
         defaultCaseSearchCategories,
         defaultTaskSearchCategories);
 }

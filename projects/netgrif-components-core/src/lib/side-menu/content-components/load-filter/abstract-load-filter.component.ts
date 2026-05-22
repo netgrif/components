@@ -29,6 +29,7 @@ export abstract class AbstractLoadFilterComponent extends AbstractCaseViewCompon
     }
 
     handleCaseClick(clickedCase: Case) {
+        // todo 23 remove
         const immediate = getImmediateData(clickedCase, UserFilterConstants.FILTER_FIELD_ID);
         this._sideMenuControl.close({
             opened: false,

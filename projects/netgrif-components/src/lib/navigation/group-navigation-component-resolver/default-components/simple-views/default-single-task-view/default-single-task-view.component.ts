@@ -1,4 +1,4 @@
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional, Type} from '@angular/core';
 import {
     AbstractSingleTaskViewComponent,
     AllowedNetsService,
@@ -16,10 +16,23 @@ import {
     TaskEventService,
     TaskRequestStateService,
     TaskViewService,
-    ViewIdService
+    ViewIdService,
+    BaseFilter
 } from "@netgrif/components-core";
 import {ActivatedRoute} from "@angular/router";
 import {AsyncPipe} from "@angular/common";
+
+function baseFilterFactory(extractionService: FilterExtractionService,
+                           activatedRoute?: ActivatedRoute,
+                           navigationItemTaskData?: Array<DataGroup>): BaseFilter {
+    return navigationItemTaskFilterFactory(extractionService, GroupNavigationConstants.ITEM_FIELD_TASK_FILTER, activatedRoute, navigationItemTaskData);
+}
+
+function allowedNetsFactory(factory: AllowedNetsServiceFactory,
+                            baseAllowedNets: BaseAllowedNetsService,
+                            navigationItemTaskData?: Array<DataGroup>): AllowedNetsService {
+    return navigationItemTaskAllowedNetsServiceFactory(factory, baseAllowedNets, navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_TASK_FILTER);
+}
 
 @Component({
     selector: 'nc-default-single-task-view',
@@ -32,14 +45,14 @@ import {AsyncPipe} from "@angular/common";
         ChangedFieldsService,
         {
             provide: NAE_BASE_FILTER,
-            useFactory: navigationItemTaskFilterFactory,
+            useFactory: baseFilterFactory,
             deps: [FilterExtractionService, ActivatedRoute, [new Optional(), NAE_NAVIGATION_ITEM_TASK_DATA]]
         },
         {provide: NAE_VIEW_ID_SEGMENT, useValue: 'publicTaskView'},
         {provide: AllowedNetsServiceFactory, useClass: AllowedNetsServiceFactory},
         {
             provide: AllowedNetsService,
-            useFactory: navigationItemTaskAllowedNetsServiceFactory,
+            useFactory: allowedNetsFactory,
             deps: [AllowedNetsServiceFactory, BaseAllowedNetsService, NAE_NAVIGATION_ITEM_TASK_DATA]
         },
         ViewIdService,

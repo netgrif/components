@@ -65,6 +65,7 @@ export class LoadFilterDialogComponent extends AbstractCaseViewComponent impleme
     }
 
     handleCaseClick(clickedCase: Case) {
+        // todo 23 remove
         const immediate = getImmediateData(clickedCase, UserFilterConstants.FILTER_FIELD_ID);
         this._dialogRef.close({
             opened: false,

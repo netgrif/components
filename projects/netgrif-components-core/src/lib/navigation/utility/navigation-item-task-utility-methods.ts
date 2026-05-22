@@ -66,22 +66,23 @@ export function extractRoles(dataSection: Array<DataGroup>, roleFieldId: string)
 /**
  * Extracts the data and creates a filter object from the navigation item task data.
  * @param dataSection an array containing the data groups that correspond to a single navigation entry
+ * @param filterFieldId id of filter field
  */
-export function extractFilterFromData(dataSection: Array<DataGroup>): Filter {
-    return extractFilterFromFilterField(extractFilterFieldFromData(dataSection));
+export function extractFilterFromData(dataSection: Array<DataGroup>, filterFieldId: string): Filter {
+    return extractFilterFromFilterField(extractFilterFieldFromData(dataSection, filterFieldId));
 }
 
 /**
  * Extracts the filter field from the navigation item task data.
  * @param dataSection an array containing the data groups that correspond to a single navigation entry
+ * @param filterFieldId id of filter field
  * @returns The extracted {@link FilterField} or `undefined` if it could not be extracted.
  */
-export function extractFilterFieldFromData(dataSection: Array<DataGroup>): FilterField | undefined {
-    const filterField = getFieldFromDataGroups(dataSection, UserFilterConstants.FILTER_FIELD_ID);
+export function extractFilterFieldFromData(dataSection: Array<DataGroup>, filterFieldId: string): FilterField | undefined {
+    const filterField = getFieldFromDataGroups(dataSection, filterFieldId);
 
     if (filterField === undefined || !(filterField instanceof FilterField)) {
-        throw new Error(`Filter could not be extracted. The provided datagroups do not contain a filter field with ID '${
-            UserFilterConstants.FILTER_FIELD_ID}'`);
+        throw new Error(`Filter could not be extracted. The provided datagroups do not contain a filter field with ID '${filterFieldId}'`);
     }
 
     return filterField;

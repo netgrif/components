@@ -21,11 +21,6 @@ export enum GroupNavigationConstants {
     NAVIGATION_ENTRY_ICON_FIELD_ID_SUFFIX = 'tab_icon',
 
     /**
-     * TaskRef field, that contains taskId of filter task
-     * */
-    ITEM_FIELD_ID_FILTER_TASKREF = 'current_filter_preview',
-
-    /**
      * Text field id, that contains title of create case button
      * */
     ITEM_FIELD_ID_CREATE_CASE_BUTTON_TITLE = 'create_case_button_title',
@@ -54,11 +49,6 @@ export enum GroupNavigationConstants {
      * Boolean field, that is true if user wants to merge base filter and custom filter
      * */
     ITEM_FIELD_ID_MERGE_FILTERS = 'merge_filters',
-
-    /**
-     * TaskRef field, that contains taskId of custom filter for task view
-     * */
-    ITEM_FIELD_ID_TASK_FILTER_TASKREF = 'current_task_filter_preview',
 
     /**
      * Boolean field, that is true if the user wants to see more menu for case item in case view
@@ -202,11 +192,6 @@ export enum GroupNavigationConstants {
     ITEM_FIELD_ID_IS_AUTO_SELECT = 'is_auto_select',
 
     /**
-     * Boolean field, that is true if item contains view.
-     * */
-    ITEM_FIELD_CONTAINS_FILTER = 'contains_filter',
-
-    /**
      * Boolean field, that is true if single task view should show header.
      * */
     ITEM_FIELD_SHOW_PAGE_HEADER = 'show_page_header',
@@ -215,5 +200,15 @@ export enum GroupNavigationConstants {
      * Boolean field, that is true if single task view should show footer.
      * */
     ITEM_FIELD_SHOW_PAGE_FOOTER = 'show_page_footer',
+
+    /**
+     * Filter field for case view
+     */
+    ITEM_FIELD_CASE_FILTER = "case_filter",
+
+    /**
+     * Filter field for task view
+     */
+    ITEM_FIELD_TASK_FILTER = "task_filter"
 
 }

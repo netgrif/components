@@ -2,6 +2,7 @@
  * Holds all identifiers of the Filter process in an accessible manner
  */
 export enum UserFilterConstants {
+    // todo 23 remove
     /**
      * Identifier of the filter process
      */

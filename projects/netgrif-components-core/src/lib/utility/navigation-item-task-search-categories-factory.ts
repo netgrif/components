@@ -19,16 +19,17 @@ import {FilterType} from '../filter/models/filter-type';
  */
 export function navigationItemTaskCategoryFactory(categoryResolverService: CategoryResolverService,
                                                   navigationItemTaskData?: Array<DataGroup>,
+                                                  filterFieldId?: string,
                                                   defaultCaseSearchCategories?: Array<Type<Category<any>>>,
                                                   defaultTaskSearchCategories?: Array<Type<Category<any>>>): Array<Type<Category<any>>> {
     if (!navigationItemTaskData) {
         return [];
     }
-    const filterField = getFieldFromDataGroups(navigationItemTaskData, UserFilterConstants.FILTER_FIELD_ID) as FilterField;
+    const filterField = getFieldFromDataGroups(navigationItemTaskData, filterFieldId) as FilterField;
 
     if (filterField === undefined) {
         throw new Error(
-            `Provided navigation item task data does not contain a filter field with ID '${UserFilterConstants.FILTER_FIELD_ID
+            `Provided navigation item task data does not contain a filter field with ID '${filterFieldId
             }'! Search categories cannot be generated from it!`);
     }
 

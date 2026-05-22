@@ -7,13 +7,15 @@ import {ActivatedRoute} from '@angular/router';
 /**
  * Converts an {@link NAE_NAVIGATION_ITEM_TASK_DATA} injection token into {@link NAE_BASE_FILTER}
  * @param extractionService
+ * @param filterFieldId id of the filter field
  * @param activatedRoute
  * @param navigationItemTaskData a navigation item task containing the aggregated data representing a navigation item
  */
 export function navigationItemTaskFilterFactory(extractionService: FilterExtractionService,
+                                                filterFieldId?: string,
                                                 activatedRoute?: ActivatedRoute,
                                                 navigationItemTaskData?: Array<DataGroup>): BaseFilter {
     return {
-        filter: extractionService.extractCompleteFilterFromData(navigationItemTaskData, activatedRoute)
+        filter: extractionService.extractCompleteFilterFromData(navigationItemTaskData, activatedRoute, filterFieldId)
     };
 }

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, Optional, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, Optional, Type, ViewChild} from '@angular/core';
 import {
     SearchService,
     AllowedNetsService,
@@ -21,12 +21,34 @@ import {
     BaseAllowedNetsService,
     FilterExtractionService,
     ChangedFieldsService,
+    BaseFilter,
+    Category,
     SearchMode, extractSearchTypeFromData, extractFieldValueFromData, SearchComponentConfiguration,
     GroupNavigationConstants, HeaderMode, DataGroup, NAE_DEFAULT_HEADERS, I18nFieldValue,
     navigationItemTaskViewDefaultHeadersFactory
 } from '@netgrif/components-core';
 import {HeaderComponent} from '../../../../../header/header.component';
 import {ActivatedRoute} from '@angular/router';
+
+function baseFilterFactory(extractionService: FilterExtractionService,
+                           activatedRoute?: ActivatedRoute,
+                           navigationItemTaskData?: Array<DataGroup>): BaseFilter {
+    return navigationItemTaskFilterFactory(extractionService, GroupNavigationConstants.ITEM_FIELD_TASK_FILTER, activatedRoute, navigationItemTaskData);
+}
+
+function allowedNetsFactory(factory: AllowedNetsServiceFactory,
+                            baseAllowedNets: BaseAllowedNetsService,
+                            navigationItemTaskData?: Array<DataGroup>): AllowedNetsService {
+    return navigationItemTaskAllowedNetsServiceFactory(factory, baseAllowedNets, navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_TASK_FILTER);
+}
+
+function searchCategoryFactory(categoryResolverService: CategoryResolverService,
+                               navigationItemTaskData?: Array<DataGroup>,
+                               defaultCaseSearchCategories?: Array<Type<Category<any>>>,
+                               defaultTaskSearchCategories?: Array<Type<Category<any>>>): Array<Type<Category<any>>> {
+    return navigationItemTaskCategoryFactory(categoryResolverService, navigationItemTaskData,
+        GroupNavigationConstants.ITEM_FIELD_TASK_FILTER, defaultCaseSearchCategories, defaultTaskSearchCategories);
+}
 
 @Component({
     selector: 'nc-default-simple-task-view',
@@ -41,12 +63,12 @@ import {ActivatedRoute} from '@angular/router';
         {   provide: NAE_VIEW_ID_SEGMENT, useFactory: groupNavigationViewIdSegmentFactory, deps: [ActivatedRoute]},
         {
             provide: NAE_BASE_FILTER,
-            useFactory: navigationItemTaskFilterFactory,
+            useFactory: baseFilterFactory,
             deps: [FilterExtractionService, ActivatedRoute, [new Optional(), NAE_NAVIGATION_ITEM_TASK_DATA]]
         },
         {
             provide: AllowedNetsService,
-            useFactory: navigationItemTaskAllowedNetsServiceFactory,
+            useFactory: allowedNetsFactory,
             deps: [AllowedNetsServiceFactory, BaseAllowedNetsService, [new Optional(), NAE_NAVIGATION_ITEM_TASK_DATA]]
         },
         {
@@ -55,7 +77,7 @@ import {ActivatedRoute} from '@angular/router';
             deps: [NAE_NAVIGATION_ITEM_TASK_DATA]
         },
         {   provide: NAE_SEARCH_CATEGORIES,
-            useFactory: navigationItemTaskCategoryFactory,
+            useFactory: searchCategoryFactory,
             deps: [
                 CategoryResolverService,
                 [new Optional(), NAE_NAVIGATION_ITEM_TASK_DATA],

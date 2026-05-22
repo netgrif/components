@@ -17,6 +17,7 @@ import {getFieldFromDataGroups} from '../../../utility/get-field';
 import {FilterField} from '../../../data-fields/filter-field/models/filter-field';
 import {BaseAllowedNetsService} from '../base-allowed-nets.service';
 import {MultichoiceField} from "../../../data-fields/multichoice-field/models/multichoice-field";
+import {GroupNavigationConstants} from "../../../navigation/model/group-navigation-constants";
 
 function addAllowedNets(allowedNets, existingAllowedNets) {
     if (!!allowedNets && allowedNets.length > 0) {
@@ -33,7 +34,7 @@ export function tabbedAllowedNetsServiceFactory(factory: AllowedNetsServiceFacto
                                                 tabData: InjectedTabbedTaskViewData,
                                                 navigationItemTaskData?: Array<DataGroup>): AllowedNetsService {
     if (!!navigationItemTaskData && (!tabData?.allowedNets || tabData.allowedNets.length === 0)) {
-        const filterField: FilterField = getFieldFromDataGroups(navigationItemTaskData, UserFilterConstants.FILTER_FIELD_ID) as FilterField;
+        const filterField: FilterField = getFieldFromDataGroups(navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_TASK_FILTER) as FilterField;
         if (!!filterField && filterField.filterMetadata.allAllowedNets) {
             return factory.createWithAllNets();
         }
@@ -47,14 +48,14 @@ export function tabbedAllowedNetsServiceFactory(factory: AllowedNetsServiceFacto
  */
 export function navigationItemTaskAllowedNetsServiceFactory(factory: AllowedNetsServiceFactory,
                                                             baseAllowedNets: BaseAllowedNetsService,
-                                                            navigationItemTaskData?: Array<DataGroup>): AllowedNetsService {
+                                                            navigationItemTaskData?: Array<DataGroup>,
+                                                            filterFieldId?: string): AllowedNetsService {
     if (!navigationItemTaskData) {
         return factory.createWithAllNets();
     }
-    const filterField = getFieldFromDataGroups(navigationItemTaskData, UserFilterConstants.FILTER_FIELD_ID) as FilterField;
+    const filterField = getFieldFromDataGroups(navigationItemTaskData, filterFieldId) as FilterField;
     if (filterField === undefined) {
-        throw new Error(`Provided navigation item task data does not contain a filter field with ID '${UserFilterConstants.FILTER_FIELD_ID
-        }'! Allowed nets cannot be generated from it!`);
+        throw new Error(`Provided navigation item task data does not contain a filter field with ID '${filterFieldId}'! Allowed nets cannot be generated from it!`);
     }
     if (filterField.filterMetadata.allAllowedNets) {
         return factory.createWithAllNets();
@@ -158,6 +159,7 @@ export class AllowedNetsServiceFactory {
      * Allowed nets are set from filter process immediate data
      */
     public createFromFilterCase(filterCase: Case): AllowedNetsService {
+        // todo 23 remove
         const filterData = getImmediateData(filterCase, UserFilterConstants.FILTER_FIELD_ID);
         if (filterData === undefined) {
             throw new Error(`Cannot get filter from case '${filterCase.title}' with id '${filterCase.stringId}'`);

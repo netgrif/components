@@ -40,27 +40,10 @@ export class FilterExtractionService {
     }
 
     public extractTaskFilterAllowedNets(dataSection: Array<DataGroup>): AllowedNetsService {
-        const taskRefIndex = getFieldIndexFromDataGroups(dataSection, GroupNavigationConstants.ITEM_FIELD_ID_TASK_FILTER_TASKREF);
-        if (taskRefIndex === undefined) {
-            return undefined;
-        }
-        const sliced = dataSection.slice(taskRefIndex.dataGroupIndex + 1)
-        if (sliced.length == 0) {
-            return undefined
-        }
-        return navigationItemTaskAllowedNetsServiceFactory(this._factory, this.baseAllowedNets, sliced)
+        return navigationItemTaskAllowedNetsServiceFactory(this._factory, this.baseAllowedNets, dataSection, GroupNavigationConstants.ITEM_FIELD_TASK_FILTER)
     }
 
-    public extractCompleteTaskFilterFromData(dataSection: Array<DataGroup>, activatedRoute?: ActivatedRoute): Filter | undefined {
-        const taskRefIndex = getFieldIndexFromDataGroups(dataSection, GroupNavigationConstants.ITEM_FIELD_ID_TASK_FILTER_TASKREF);
-        if (taskRefIndex === undefined) {
-            return undefined;
-        }
-
-        return this.extractCompleteFilterFromData(dataSection.slice(taskRefIndex.dataGroupIndex + 1), activatedRoute);
-    }
-
-    public extractCompleteFilterFromData(dataSection?: Array<DataGroup>, activatedRoute?: ActivatedRoute, fieldId: string = UserFilterConstants.FILTER_FIELD_ID): Filter | undefined {
+    public extractCompleteFilterFromData(dataSection?: Array<DataGroup>, activatedRoute?: ActivatedRoute, fieldId?: string): Filter | undefined {
         if (!dataSection) {
             if (!activatedRoute) {
                 throw new Error('ActivatedRoute not provided.');

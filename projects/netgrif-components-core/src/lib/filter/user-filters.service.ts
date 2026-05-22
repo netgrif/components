@@ -254,6 +254,7 @@ export class UserFiltersService implements OnDestroy {
                                       withDefaultCategories = true,
                                       inheritAllowedNets = true,
                                       navigationItemTaskData: Array<DataGroup> = null): Observable<string> {
+        // todo 23 remove
         const result = new ReplaySubject<string>(1);
         this.whenInitialized(() => {
             this._caseService.createCase({

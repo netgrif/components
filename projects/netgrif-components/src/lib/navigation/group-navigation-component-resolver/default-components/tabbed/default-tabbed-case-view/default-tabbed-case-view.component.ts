@@ -163,7 +163,7 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
         const baseFilter = new SimpleFilter('', FilterType.TASK, {case: {id: `${openCase.stringId}`}});
 
         let filter;
-        if (additionalFilter === undefined) {
+        if (additionalFilter === undefined || additionalFilter.type === undefined) {
             filter = baseFilter;
         } else if (mergeFilters) {
             filter = additionalFilter.merge(baseFilter, MergeOperator.AND);

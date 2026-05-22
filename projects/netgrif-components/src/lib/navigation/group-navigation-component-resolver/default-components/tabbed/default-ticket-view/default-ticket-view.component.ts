@@ -97,7 +97,7 @@ export class DefaultTicketViewComponent implements OnInit {
                     }
                     let net = undefined;
                     try {
-                        net = extractFilterFieldFromData(dataGroupPair.dataGroups)?.allowedNets[0];
+                        net = extractFilterFieldFromData(dataGroupPair.dataGroups, GroupNavigationConstants.ITEM_FIELD_TASK_FILTER)?.allowedNets[0];
                     } catch (error) {
                         this._log.warn("View doesn't have a filter, skipping...");
                     }
@@ -189,7 +189,7 @@ export class DefaultTicketViewComponent implements OnInit {
         const baseFilter = new SimpleFilter('', FilterType.TASK, {case: {id: `${openCase.stringId}`}});
 
         let filter;
-        if (singleTaskViewFilter === undefined) {
+        if (singleTaskViewFilter === undefined || singleTaskViewFilter.type === undefined) {
             filter = baseFilter;
         } else {
             filter = singleTaskViewFilter.merge(baseFilter, MergeOperator.AND);
