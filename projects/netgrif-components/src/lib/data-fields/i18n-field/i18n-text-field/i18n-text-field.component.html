@@ -23,7 +23,7 @@
     </ng-template>
 </ng-template>
 <ng-template [ngIf]="!formControlRef.disabled">
-    <div class="full-width">
+    <div class="full-width" [ngClass]="{'padding-bottom-fix': !dataField.isInvalid(formControlRef) && !hasHint()}">
         <div #i18nLabel class="i18n-label" [ngClass]="{'invalid-form-label': dataField.isInvalid(formControlRef)}">
             {{dataField.title}}
             <nc-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nc-required-label>
@@ -75,8 +75,10 @@
                 </button>
             </div>
         </div>
-        <mat-hint class="i18n-hint-error" [ngClass]="{'mat-hint-disabled': formControlRef.disabled}"
-                  *ngIf="!dataField.isInvalid(formControlRef) && hasHint()">{{dataField.description}}</mat-hint>
-        <mat-error class="i18n-hint-error" *ngIf="dataField.isInvalid(formControlRef)">{{getErrorMessage()}}</mat-error>
+        <div class="i18n-hint-wrapper" *ngIf="!dataField.isInvalid(formControlRef) && hasHint() || dataField.isInvalid(formControlRef)">
+            <mat-hint class="i18n-hint-error" [ngClass]="{'mat-hint-disabled': formControlRef.disabled}"
+                      *ngIf="!dataField.isInvalid(formControlRef) && hasHint()">{{dataField.description}}</mat-hint>
+            <mat-error class="i18n-hint-error" *ngIf="dataField.isInvalid(formControlRef)">{{getErrorMessage()}}</mat-error>
+        </div>
     </div>
 </ng-template>

@@ -321,6 +321,34 @@
                     "routing": {
                         "path": "breadcrumbs"
                     }
+                },
+                "double-menu-tabbed-views": {
+                    "component": {
+                        "class": "TabbedViewsExampleComponent",
+                        "from": "./doc/tabbed-case-view/tabbed-views-example.component"
+                    },
+                    "access": "private",
+                    "navigation": {
+                        "title": "Custom Tabbed View",
+                        "icon": "tab"
+                    },
+                    "routing": {
+                        "path": "double-menu-tabbed-views"
+                    },
+                    "children": {
+                        "custom-redirect": {
+                            "component": {
+                                "class": "TabbedViewsExampleComponent",
+                                "from": "./doc/tabbed-case-view/tabbed-views-example.component"
+                            },
+                            "access": "private",
+                            "navigation": false,
+                            "routing": {
+                                "path": "**"
+                            }
+                        }
+                    },
+                    "processUri": "/"
                 }
             }
         },

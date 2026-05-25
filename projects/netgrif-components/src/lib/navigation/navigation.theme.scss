@@ -38,6 +38,7 @@
 
     .active-tree-node {
         color: mat.get-color-from-palette($primary) !important;
+        background-color: rgba(mat.get-color-from-palette($primary), 0.25);
     }
 
     .tree-node {

@@ -49,6 +49,7 @@
     padding: 0 1em;
     font-size: 75%;
     width: auto !important;
+    display: block;
 }
 
 .language-svg-wrapper {
@@ -148,4 +149,13 @@
 
 .i18n-bold-text {
     font-weight: bold;
+}
+
+.padding-bottom-fix {
+    padding-bottom: 1em;
+}
+
+.i18n-hint-wrapper {
+    height: 18px;
+    margin-top: -3px;
 }

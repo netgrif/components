@@ -1,4 +1,4 @@
-<mat-form-field [appearance]="dataField.materialAppearance" class="full-width" color="primary">
+<mat-form-field [appearance]="dataField.materialAppearance" class="full-width" [ngClass]="{'netgrif-chip-fix' : dataField.value?.length > 0}" color="primary">
     <mat-label *ngIf="!showLargeLayout.value">{{dataField.title}}</mat-label>
     <mat-chip-list #chipList aria-label="Autocomplete" [formControl]="formControlRef">
         <mat-chip
