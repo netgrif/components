@@ -65,8 +65,7 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
     }
 
     public resolveBreadcrumbs() {
-        // todo 23 check breadcrumbs (changed filterCaseId to itemCaseId)
-        const filterId = this._activatedRoute.snapshot.params.filterCaseId
+        const filterId = this._activatedRoute.snapshot.params.itemCaseId
         if (!filterId) {
             this._log.error("Missing required data for resolving breadcrumbs.")
             return;

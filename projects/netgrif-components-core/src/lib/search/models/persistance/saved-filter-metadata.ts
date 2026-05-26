@@ -23,5 +23,5 @@ export interface SavedFilterMetadata extends FilterMetadataAllowedNets {
     /**
      * ID of the filter's case.
      */
-    filterCaseId: string; // todo 23 remove?
+    filterCaseId: string;
 }

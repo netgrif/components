@@ -3,6 +3,7 @@ import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import { CaseViewComponent } from './case-view.component';
 
 describe('CaseViewComponent', () => {
+    // todo 23 fix
   let component: CaseViewComponent;
   let fixture: ComponentFixture<CaseViewComponent>;
 
