@@ -17,7 +17,7 @@ import {
     TestViewService,
     TextField,
     TranslateLibModule,
-    UserFilterConstants,
+    AuthenticationModule,
     ViewService
 } from '@netgrif/components-core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -36,6 +36,7 @@ describe('DefaultTabViewComponent', () => {
                 RouterTestingModule.withRoutes([], { relativeLinkResolution: 'legacy' }),
                 NoopAnimationsModule,
                 TranslateLibModule,
+                AuthenticationModule
             ],
             providers: [
                 {   provide: ViewService, useClass: TestViewService},
@@ -56,15 +57,6 @@ describe('DefaultTabViewComponent', () => {
                                     {visible: true}
                                 ),
                             ]
-                        },
-                        {
-                            fields: []
-                        },
-                        {
-                            fields: []
-                        },
-                        {
-                            fields: []
                         },
                         {
                             fields: [
@@ -152,20 +144,26 @@ describe('DefaultTabViewComponent', () => {
                                     GroupNavigationConstants.ITEM_FIELD_ID_MERGE_FILTERS,
                                     '',false,{visible: true}
                                 ),
-                                new TaskRefField(
-                                    GroupNavigationConstants.ITEM_FIELD_ID_ADDITIONAL_FILTER_TASKREF,
-                                    '',[],{visible: true}
+                                new FilterField(
+                                    GroupNavigationConstants.ITEM_FIELD_TASK_FILTER,
+                                    '',
+                                    '',
+                                    {
+                                        filterType: FilterType.TASK,
+                                        predicateMetadata: [],
+                                        searchCategories: []
+                                    },
+                                    [],
+                                    {visible: true},
+                                    '',
+                                    ''
                                 ),
                                 new BooleanField(
                                     GroupNavigationConstants.ITEM_FIELD_ID_SHOW_CREATE_CASE_BUTTON,
                                     '',true,{visible: true}
                                 ),
-                            ]
-                        },
-                        {
-                            fields: [
                                 new FilterField(
-                                    UserFilterConstants.FILTER_FIELD_ID,
+                                    GroupNavigationConstants.ITEM_FIELD_CASE_FILTER,
                                     '',
                                     '',
                                     {
@@ -177,6 +175,18 @@ describe('DefaultTabViewComponent', () => {
                                     {visible: true},
                                     '',
                                     ''
+                                ),
+                                new I18nField(
+                                    GroupNavigationConstants.ITEM_FIELD_ID_CASE_EMPTY_CONTENT_TEXT,
+                                    '',
+                                    '',
+                                    {visible: true}
+                                ),
+                                new TextField(
+                                    GroupNavigationConstants.ITEM_FIELD_ID_CASE_EMPTY_CONTENT_ICON,
+                                    '',
+                                    '',
+                                    {visible: true}
                                 )
                             ]
                         }

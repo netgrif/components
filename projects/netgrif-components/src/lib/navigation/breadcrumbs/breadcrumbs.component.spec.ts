@@ -8,7 +8,7 @@ import {
     ConfigurationService,
     MaterialModule,
     MockAuthenticationMethodService,
-    TestConfigurationService, TranslateLibModule,
+    TestConfigurationService, TranslateLibModule, AuthenticationModule
 } from '@netgrif/components-core';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
@@ -28,7 +28,8 @@ describe('BreadcrumbsComponent', () => {
                 FlexModule,
                 FlexLayoutModule,
                 HttpClientTestingModule,
-                TranslateLibModule
+                TranslateLibModule,
+                AuthenticationModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},

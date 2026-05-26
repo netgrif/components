@@ -222,7 +222,10 @@ export class DefaultTabViewComponent {
         ];
     }
 
-    protected getTranslation(i18nValue: I18nFieldValue): string {
+    protected getTranslation(i18nValue: I18nFieldValue): string | undefined {
+        if (!i18nValue) {
+            return undefined;
+        }
         const locale = this.translateService.currentLang;
         return locale in i18nValue.translations ? i18nValue.translations[locale] : i18nValue.defaultValue;
     }

@@ -4,9 +4,9 @@ export enum GroupNavigationConstants {
      */
     GROUP_NAVIGATION_OUTLET = 'groupNavigation',
     /**
-     * Name of the router param that is used to provide information about the selected filter to the group navigation view component
+     * Name of the router param that is used to provide information about the selected item to the group navigation view component
      */
-    GROUP_NAVIGATION_ROUTER_PARAM = 'filterCaseId',
+    GROUP_NAVIGATION_ROUTER_PARAM = 'itemCaseId',
     /**
      * Field id, that contains the tab name of the navigation item.
      */

@@ -1,6 +1,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {GroupNavigationComponentResolverComponent} from './group-navigation-component-resolver.component';
 import {NavigationComponentModule} from '../navigation.module';
+import {GroupNavigationComponentResolverService} from '@netgrif/components-core';
 import {
     ConfigurationService,
     TestConfigurationService,
@@ -9,6 +10,7 @@ import {
     ViewService
 } from '@netgrif/components-core';
 import {RouterTestingModule} from '@angular/router/testing';
+import {of} from "rxjs";
 
 describe('GroupNavigationComponentResolverComponent', () => {
     let component: GroupNavigationComponentResolverComponent;
@@ -23,7 +25,13 @@ describe('GroupNavigationComponentResolverComponent', () => {
             ],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: ViewService, useClass: TestViewService}
+                {provide: ViewService, useClass: TestViewService},
+                {
+                    provide: GroupNavigationComponentResolverService,
+                    useValue: {
+                        createResolvedViewComponentPortal: () => of(null)
+                    }
+                }
             ]
         })
             .compileComponents();

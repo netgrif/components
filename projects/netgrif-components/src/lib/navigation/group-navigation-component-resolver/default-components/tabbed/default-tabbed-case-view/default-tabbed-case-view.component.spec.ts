@@ -13,7 +13,8 @@ import {
     OverflowService,
     TestMockDependenciesModule,
     TextField,
-    UserFilterConstants
+    I18nField,
+    AuthenticationModule,
 } from '@netgrif/components-core';
 import {of} from 'rxjs';
 import {DefaultTabbedTaskViewComponent} from '../default-tabbed-task-view/default-tabbed-task-view.component';
@@ -31,6 +32,7 @@ describe('DefaultTabbedCaseViewComponent', () => {
                 TestMockDependenciesModule,
                 NoopAnimationsModule,
                 RouterTestingModule.withRoutes([]),
+                AuthenticationModule
             ],
             providers: [
                 {   provide: NAE_VIEW_ID_SEGMENT, useValue: 'id'},
@@ -56,7 +58,7 @@ describe('DefaultTabbedCaseViewComponent', () => {
                         navigationItemTaskData: [{fields: []}, {
                             fields: [
                                 new FilterField(
-                                    `${UserFilterConstants.FILTER_FIELD_ID}`,
+                                    `${GroupNavigationConstants.ITEM_FIELD_CASE_FILTER}`,
                                     '',
                                     '',
                                     {
@@ -68,6 +70,18 @@ describe('DefaultTabbedCaseViewComponent', () => {
                                     {visible: true},
                                     '',
                                     ''
+                                ),
+                                new I18nField(
+                                    GroupNavigationConstants.ITEM_FIELD_ID_CASE_EMPTY_CONTENT_TEXT,
+                                    '',
+                                    '',
+                                    {visible: true}
+                                ),
+                                new TextField(
+                                    GroupNavigationConstants.ITEM_FIELD_ID_CASE_EMPTY_CONTENT_ICON,
+                                    '',
+                                    '',
+                                    {visible: true}
                                 )
                             ]
                         }]
@@ -86,6 +100,18 @@ describe('DefaultTabbedCaseViewComponent', () => {
                                 ),
                                 new TextField(
                                     GroupNavigationConstants.ITEM_FIELD_ID_CASE_DEFAULT_HEADERS,
+                                    '',
+                                    '',
+                                    {visible: true}
+                                ),
+                                new I18nField(
+                                    GroupNavigationConstants.ITEM_FIELD_ID_CASE_EMPTY_CONTENT_TEXT,
+                                    '',
+                                    '',
+                                    {visible: true}
+                                ),
+                                new TextField(
+                                    GroupNavigationConstants.ITEM_FIELD_ID_CASE_EMPTY_CONTENT_ICON,
                                     '',
                                     '',
                                     {visible: true}
