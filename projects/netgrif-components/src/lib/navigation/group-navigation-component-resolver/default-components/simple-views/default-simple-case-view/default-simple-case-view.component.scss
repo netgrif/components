@@ -8,7 +8,15 @@
     .case-view-container {
         margin: 12px 12px;
     }
+}
 
+.export-mat-mini-fab {
+    border-radius: 6px;
+    box-shadow: none;
+    height: 44px !important;
+    min-width: 44px;
+    margin-right: 8px;
+    margin-top: 2px;
 }
 
 .case-view-search-container {
