@@ -27,7 +27,7 @@ import {
     SearchMode,
     SearchService,
     SimpleFilter,
-    ViewIdService, DATA_FIELD_PORTAL_DATA, DataFieldPortalData, TaskSetDataRequestFields,
+    ViewIdService,
 } from '@netgrif/components-core';
 import {HeaderComponent} from '../../../../../header/header.component'
 import {DefaultTabbedTaskViewComponent} from '../../tabbed/default-tabbed-task-view/default-tabbed-task-view.component';

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, Optional, Type, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnDestroy, Optional, Type, ViewChild} from '@angular/core';
 import {
     AbstractCaseViewComponent,
     Case,
@@ -20,10 +20,17 @@ import {
     NAE_DEFAULT_CASE_SEARCH_CATEGORIES, NAE_DEFAULT_TASK_SEARCH_CATEGORIES, groupNavigationViewIdSegmentFactory,
     DataGroup, SearchMode, HeaderMode, extractFieldValueFromData, GroupNavigationConstants, I18nFieldValue,
     extractSearchTypeFromData, SearchComponentConfiguration, NAE_NEW_CASE_CREATION_CONFIGURATION_DATA,
-    navigationItemNewCaseConfigurationFactory, NewCaseCreationConfigurationData
+    navigationItemNewCaseConfigurationFactory, NewCaseCreationConfigurationData,
+    ExportService,
+    LoadingEmitter,
+    HeaderColumn,
+    LoggerService,
+    SnackBarService
 } from '@netgrif/components-core';
 import {HeaderComponent} from '../../../../../header/header.component';
 import {ActivatedRoute} from "@angular/router";
+import {Subscription} from "rxjs";
+import {TranslateService} from "@ngx-translate/core";
 
 
 function baseFilterFactory(extractionService: FilterExtractionService,
@@ -89,7 +96,7 @@ function searchCategoryFactory(categoryResolverService: CategoryResolverService,
         }
     ],
 })
-export class DefaultSimpleCaseViewComponent extends AbstractCaseViewComponent implements AfterViewInit {
+export class DefaultSimpleCaseViewComponent extends AbstractCaseViewComponent implements AfterViewInit, OnDestroy {
 
     @ViewChild('header') public caseHeaderComponent: HeaderComponent;
 
@@ -104,8 +111,17 @@ export class DefaultSimpleCaseViewComponent extends AbstractCaseViewComponent im
     defaultHeadersMode: HeaderMode;
     emptyContentText: I18nFieldValue;
     emptyContentIcon: string;
+    allowExport: boolean;
+    loading$: LoadingEmitter;
+    private _currentHeaders: Array<HeaderColumn> = [];
+    private _headersSub: Subscription;
 
-    constructor(caseViewService: CaseViewService,
+    constructor(protected caseViewService: CaseViewService,
+                protected _searchService: SearchService,
+                protected loggerService: LoggerService,
+                protected _snackbar: SnackBarService,
+                protected _translate: TranslateService,
+                protected _exportService: ExportService,
                 @Inject(NAE_NAVIGATION_ITEM_TASK_DATA) protected _navigationItemTaskData: Array<DataGroup>,
                 @Inject(NAE_NEW_CASE_CREATION_CONFIGURATION_DATA) protected _newCaseCreationConfigurationData: NewCaseCreationConfigurationData,
                 @Optional() overflowService: OverflowService) {
@@ -130,6 +146,12 @@ export class DefaultSimpleCaseViewComponent extends AbstractCaseViewComponent im
         this.defaultHeadersMode = this.resolveHeaderMode(viewDefaultHeadersMode)
         this.emptyContentText = extractFieldValueFromData<I18nFieldValue>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_EMPTY_CONTENT_TEXT);
         this.emptyContentIcon = extractFieldValueFromData<string>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_EMPTY_CONTENT_ICON);
+        this.allowExport = extractFieldValueFromData<boolean>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_ALLOW_EXPORT);
+
+        this.loading$ = new LoadingEmitter();
+        this._headersSub = this.selectedHeaders$.subscribe(headers => {
+            this._currentHeaders = headers;
+        });
     }
 
     protected resolveHeaderMode(mode: string): HeaderMode {
@@ -149,9 +171,33 @@ export class DefaultSimpleCaseViewComponent extends AbstractCaseViewComponent im
         return this.headersMode.some(e => e === option);
     }
 
+    isLoading(): boolean {
+        return this.loading$.isActive;
+    }
+
+    export(): void {
+        if (this.loading$.isActive) {
+            return;
+        }
+        this.loading$.on();
+        this._exportService.downloadExcelFromCurrentSelection(this._searchService.activeFilter, this._currentHeaders).subscribe(() => {
+            this.loading$.off();
+        },error => {
+            this.loggerService.error('File download failed', error);
+            this._snackbar.openErrorSnackBar(this._translate.instant('export.errorExportDownload'));
+            this.loading$.off();
+        });
+    }
+
     ngAfterViewInit(): void {
         this.initializeHeader(this.caseHeaderComponent);
         this.caseHeaderComponent.changeHeadersMode(this.defaultHeadersMode, false);
+    }
+
+    ngOnDestroy(): void {
+        super.ngOnDestroy();
+        this._headersSub?.unsubscribe();
+        this.loading$.complete()
     }
 
     public handleCaseClick(clickedCase: Case): void {

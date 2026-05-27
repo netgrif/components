@@ -125,6 +125,12 @@ describe('SimpleCaseViewComponent', () => {
                                     '',
                                     '',
                                     {visible: true}
+                                ),
+                                new BooleanField(
+                                    GroupNavigationConstants.ITEM_FIELD_ID_CASE_ALLOW_EXPORT,
+                                    '',
+                                    true,
+                                    {visible: true}
                                 )
                             ]
                         }

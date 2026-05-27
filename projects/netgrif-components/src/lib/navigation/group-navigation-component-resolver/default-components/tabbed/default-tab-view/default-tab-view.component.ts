@@ -112,7 +112,7 @@ export class DefaultTabViewComponent {
         const taskViewHeadersMode = extractFieldValueFromData<string[]>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_TASK_HEADERS_MODE);
         const taskViewAllowTableMode = extractFieldValueFromData<boolean>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_TASK_ALLOW_TABLE_MODE);
         const taskViewDefaultHeadersMode = extractFieldValueFromData<string[]>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_TASK_DEFAULT_HEADERS_MODE);
-        const taskViewFilter = this.extractionService.extractCompleteFilterFromData(viewDataGroups, undefined, GroupNavigationConstants.ITEM_FIELD_TASK_FILTER);
+        const taskViewFilter = this.extractionService.extractCompleteFilterFromData(viewDataGroups, undefined, undefined, GroupNavigationConstants.ITEM_FIELD_TASK_FILTER);
         const mergeWithBaseFilter = extractFieldValueFromData<boolean>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_MERGE_FILTERS);
         const taskViewAllowedNets = this.extractionService.extractTaskFilterAllowedNets(viewDataGroups)?.allowedNetsIdentifiers;
 
@@ -164,7 +164,7 @@ export class DefaultTabViewComponent {
         }
         const showMoreMenu = extractFieldValueFromData<boolean>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_TASK_SHOW_MORE_MENU);
 
-        const filter = this.extractionService.extractCompleteFilterFromData(viewDataGroups, undefined, GroupNavigationConstants.ITEM_FIELD_TASK_FILTER);
+        const filter = this.extractionService.extractCompleteFilterFromData(viewDataGroups, undefined, undefined, GroupNavigationConstants.ITEM_FIELD_TASK_FILTER);
         return [
             {
                 label: {text: labelData.name, icon: labelData.icon},
@@ -190,7 +190,7 @@ export class DefaultTabViewComponent {
         }
 
         const labelData = extractIconAndTitle(menuItemDataGroups, this.translateService);
-        const taskViewFilter = this.extractionService.extractCompleteFilterFromData(viewDataGroups, undefined, GroupNavigationConstants.ITEM_FIELD_TASK_FILTER);
+        const taskViewFilter = this.extractionService.extractCompleteFilterFromData(viewDataGroups, undefined, undefined, GroupNavigationConstants.ITEM_FIELD_TASK_FILTER);
         return [
             {
                 label: {text: labelData.name, icon: labelData.icon},
@@ -208,7 +208,7 @@ export class DefaultTabViewComponent {
 
     protected getSingleTaskTabs(menuItemDataGroups: Array<DataGroup>, viewDataGroups: Array<DataGroup>): TabContent[] {
         const labelData = extractIconAndTitle(menuItemDataGroups, this.translateService);
-        const taskViewFilter = this.extractionService.extractCompleteFilterFromData(viewDataGroups, undefined, GroupNavigationConstants.ITEM_FIELD_TASK_FILTER);
+        const taskViewFilter = this.extractionService.extractCompleteFilterFromData(viewDataGroups, undefined, undefined, GroupNavigationConstants.ITEM_FIELD_TASK_FILTER);
         const taskViewAllowedNets = this.extractionService.extractTaskFilterAllowedNets(viewDataGroups)?.allowedNetsIdentifiers;
         return [
             {
