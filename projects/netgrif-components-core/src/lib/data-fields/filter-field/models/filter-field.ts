@@ -5,6 +5,10 @@ import {Component, ComponentPrefixes} from '../../models/component';
 import {FilterMetadata} from '../../../search/models/persistance/filter-metadata';
 import {Validation} from '../../models/validation';
 
+export enum FilterFieldValidation {
+    REQUIRED = 'required'
+}
+
 export class FilterField extends DataField<string> {
 
     constructor(stringId: string, title: string,
