@@ -1,11 +1,11 @@
 import {TestBed} from '@angular/core/testing';
 import {GroupNavigationComponentResolverService} from './group-navigation-component-resolver.service';
 import {Component, Injectable, Type} from '@angular/core';
-import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {TestMockDependenciesModule} from '../../utility/tests/test-mock-dependencies.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {MenuResourceService} from "../../resources/engine-endpoint/menu-resource.service";
 
 describe('GroupNavigationComponentResolverService', () => {
     let service: GroupNavigationComponentResolverService;
@@ -18,7 +18,7 @@ describe('GroupNavigationComponentResolverService', () => {
                 TestMockDependenciesModule
             ],
             providers: [
-                {provide: GroupNavigationComponentResolverService, useClass: TestGroupNavigationComponentResolverService}
+                {provide: GroupNavigationComponentResolverService, useClass: TestGroupNavigationComponentResolverService},
             ]
         });
         service = TestBed.inject(GroupNavigationComponentResolverService);
@@ -45,9 +45,9 @@ class TestPortalComponent {
 @Injectable()
 export class TestGroupNavigationComponentResolverService extends GroupNavigationComponentResolverService {
 
-    constructor(taskResourceService: TaskResourceService,
+    constructor(menuResourceService: MenuResourceService,
                 log: LoggerService) {
-        super(taskResourceService, log);
+        super(menuResourceService, log);
     }
 
     protected resolveViewComponent(navigationItemTaskData: any): Type<any> {

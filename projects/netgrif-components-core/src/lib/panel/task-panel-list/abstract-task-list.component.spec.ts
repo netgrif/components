@@ -29,6 +29,7 @@ import {NAE_BASE_FILTER} from '../../search/models/base-filter-injection-token';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
 import {ActivatedRoute} from '@angular/router';
+import {LanguageService} from "../../translate/language.service";
 
 
 describe('AbstractTaskListComponent', () => {
@@ -86,8 +87,9 @@ class TestTaskListComponent extends AbstractTaskListComponent {
     constructor(protected _taskViewService: TaskViewService,
                 protected _log: LoggerService,
                 @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData,
+                protected _selectLangService: LanguageService,
                 protected _route: ActivatedRoute) {
-        super(_taskViewService, _log, injectedTabData, _route);
+        super(_taskViewService, _log, injectedTabData, _selectLangService, _route);
     }
 }
 

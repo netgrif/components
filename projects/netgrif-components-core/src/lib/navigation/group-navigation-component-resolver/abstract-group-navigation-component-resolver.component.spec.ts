@@ -2,7 +2,7 @@ import {AbstractGroupNavigationComponentResolverComponent} from './abstract-grou
 import {Component, Injector} from '@angular/core';
 import {LoggerService} from '../../logger/services/logger.service';
 import {GroupNavigationComponentResolverService} from './group-navigation-component-resolver.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, convertToParamMap, Router} from '@angular/router';
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {MaterialModule} from '../../material/material.module';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
@@ -12,6 +12,9 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {TestGroupNavigationComponentResolverService} from './group-navigation-component-resolver.service.spec';
 import {RouterTestingModule} from '@angular/router/testing';
+import {MenuResourceService} from "../../resources/engine-endpoint/menu-resource.service";
+import {DataGroup} from "../../resources/interface/data-groups";
+import {of, Observable} from "rxjs";
 
 describe('AbstractGroupNavigationComponentResolverComponent', () => {
     let component: TestAbstractGroupNavigationComponentResolverComponent;
@@ -28,7 +31,16 @@ describe('AbstractGroupNavigationComponentResolverComponent', () => {
             ],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: GroupNavigationComponentResolverService, useClass: TestGroupNavigationComponentResolverService}
+                {provide: GroupNavigationComponentResolverService, useClass: TestGroupNavigationComponentResolverService},
+                {
+                    provide: ActivatedRoute,
+                    useValue: {
+                        snapshot: {
+                            paramMap: convertToParamMap({itemCaseId: 'thisIsEncodedCaseId'})
+                        }
+                    }
+                },
+                {provide: MenuResourceService, useClass: MenuResource}
             ],
             declarations: [
                 TestAbstractGroupNavigationComponentResolverComponent,
@@ -51,6 +63,11 @@ describe('AbstractGroupNavigationComponentResolverComponent', () => {
     });
 });
 
+export class MenuResource {
+    public getItemData(encodedCaseId: string): Observable<Array<DataGroup>> {
+        return of([]);
+    }
+}
 
 @Component({
     selector: 'ncc-test-group-navigation',
