@@ -1,7 +1,8 @@
 import {BaseFilter} from '../search/models/base-filter';
-import {NAE_NAVIGATION_ITEM_TASK_DATA} from '../navigation/model/filter-case-injection-token';
 import {DataGroup} from '../resources/interface/data-groups';
+import {NAE_NAVIGATION_ITEM_TASK_DATA} from '../navigation/model/filter-case-injection-token';
 import {FilterExtractionService} from '../navigation/utility/filter-extraction.service';
+import {Filter} from '../filter/models/filter';
 import {ActivatedRoute} from '@angular/router';
 
 /**
@@ -10,12 +11,14 @@ import {ActivatedRoute} from '@angular/router';
  * @param filterFieldId id of the filter field
  * @param activatedRoute
  * @param navigationItemTaskData a navigation item task containing the aggregated data representing a navigation item
+ * @param filterData filter to be merged with
  */
 export function navigationItemTaskFilterFactory(extractionService: FilterExtractionService,
                                                 filterFieldId?: string,
                                                 activatedRoute?: ActivatedRoute,
-                                                navigationItemTaskData?: Array<DataGroup>): BaseFilter {
+                                                navigationItemTaskData?: Array<DataGroup>,
+                                                filterData?: Filter): BaseFilter {
     return {
-        filter: extractionService.extractCompleteFilterFromData(navigationItemTaskData, activatedRoute, filterFieldId)
+        filter: extractionService.extractCompleteFilterFromData(navigationItemTaskData, activatedRoute, filterData, filterFieldId)
     };
 }

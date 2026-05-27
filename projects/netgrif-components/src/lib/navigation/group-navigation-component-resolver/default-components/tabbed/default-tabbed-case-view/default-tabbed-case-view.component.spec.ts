@@ -55,6 +55,7 @@ describe('DefaultTabbedCaseViewComponent', () => {
                         caseViewAllowTableMode: true,
                         caseViewDefaultHeadersMode: HeaderMode.SORT,
                         caseViewShowMoreMenu: true,
+                        caseViewAllowExport: true,
                         navigationItemTaskData: [{fields: []}, {
                             fields: [
                                 new FilterField(

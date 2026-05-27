@@ -32,7 +32,7 @@ export abstract class AbstractCaseRefBaseFieldComponent<T extends DataField<unkn
         }
         let providers = [
             {
-                provide: NAE_DEFAULT_HEADERS, useValue: this.dataField.component?.properties?.headers.split(',')
+                provide: NAE_DEFAULT_HEADERS, useValue: this.dataField.component?.properties?.headers?.split(',')
             },
             {
                 provide: NAE_CASE_REF_CREATE_CASE, useValue: this.dataField.component?.properties?.createCase === 'true'

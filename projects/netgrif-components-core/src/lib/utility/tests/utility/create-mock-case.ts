@@ -12,6 +12,7 @@ export function createMockCase(stringId = 'stringId',
                                petriNetId = 'petriNetId'): Case {
     return {
         lastModified: [],
+        lastModifiedDataSet: [],
         visualId: '',
         petriNetObjectId: {
             timestamp: 0,

@@ -95,6 +95,7 @@ export class DefaultTabViewComponent {
         const caseViewHeadersMode = extractFieldValueFromData<string[]>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_CASE_HEADERS_MODE);
         const caseViewAllowTableMode = extractFieldValueFromData<boolean>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_CASE_ALLOW_TABLE_MODE);
         const caseViewDefaultHeadersMode = extractFieldValueFromData<string[]>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_CASE_DEFAULT_HEADERS_MODE);
+        const caseViewAllowExport = extractFieldValueFromData<boolean[]>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_CASE_ALLOW_EXPORT);
 
         if (!hasView(viewDataGroups)) {
             throw new Error(`Case view has missing configuration for task view.`);
@@ -132,6 +133,7 @@ export class DefaultTabViewComponent {
                     caseViewHeadersMode: caseViewHeadersMode,
                     caseViewAllowTableMode: caseViewAllowTableMode,
                     caseViewDefaultHeadersMode: caseViewDefaultHeadersMode,
+                    caseViewAllowExport: caseViewAllowExport,
 
                     taskViewSearchTypeConfiguration: taskSearchTypeConfig,
                     taskViewShowMoreMenu: taskShowMoreMenu,

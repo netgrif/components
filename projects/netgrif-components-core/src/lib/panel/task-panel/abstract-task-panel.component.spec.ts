@@ -65,6 +65,7 @@ import {NAE_TASK_FORCE_OPEN} from '../../view/task-view/models/injection-token-t
 import {FrontActionService} from "../../actions/services/front-action.service";
 import {NAE_TAB_DATA} from '../../tabs/tab-data-injection-token/tab-data-injection-token';
 import {InjectedTabData} from '../../tabs/interfaces';
+import { UserComparatorService } from "../../user/services/user-comparator.service";
 
 describe('AbtsractTaskPanelComponent', () => {
     let component: TestTaskPanelComponent;
@@ -215,13 +216,14 @@ class TestTaskPanelComponent extends AbstractTaskPanelComponent implements After
                 protected _currencyPipe: CurrencyPipe,
                 protected _changedFieldsService: ChangedFieldsService,
                 protected _permissionService: PermissionService,
+                protected _userComparator: UserComparatorService,
                 @Optional() overflowService: OverflowService,
                 @Optional() @Inject(NAE_TASK_FORCE_OPEN) protected _taskForceOpen: boolean,
                 @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData) {
         super(_taskContentService, _log, _taskViewService, _paperView, _taskEventService, _assignTaskService,
             _delegateTaskService, _cancelTaskService, _finishTaskService, _taskState, _taskDataService,
             _assignPolicyService, _finishPolicyService, _callChain, _taskOperations, undefined, _translate,
-            _currencyPipe, _changedFieldsService, _permissionService, overflowService, _taskForceOpen, injectedTabData);
+            _currencyPipe, _changedFieldsService, _permissionService, _userComparator, overflowService, _taskForceOpen, injectedTabData);
     }
 
     ngAfterViewInit() {

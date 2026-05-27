@@ -17,12 +17,11 @@ import {ActivatedRoute} from '@angular/router';
  * @param extractionService
  * @param tabData the injected data containing the navigation item case task data
  * @param activatedRoute
- * @param filterFieldId id of the filter field
  */
 export function filterCaseTabbedDataFilterFactory(extractionService: FilterExtractionService,
                                                   tabData: InjectedTabbedCaseViewDataWithNavigationItemTaskData,
                                                   activatedRoute: ActivatedRoute): BaseFilter {
-    return navigationItemTaskFilterFactory(extractionService, GroupNavigationConstants.ITEM_FIELD_CASE_FILTER, activatedRoute, tabData.navigationItemTaskData);
+    return navigationItemTaskFilterFactory(extractionService, GroupNavigationConstants.ITEM_FIELD_CASE_FILTER, activatedRoute, tabData.navigationItemTaskData, tabData.loadFilter);
 }
 
 /**

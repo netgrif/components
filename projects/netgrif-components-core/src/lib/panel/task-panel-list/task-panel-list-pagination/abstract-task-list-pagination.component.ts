@@ -18,7 +18,7 @@ export abstract class AbstractTaskListPaginationComponent extends AbstractDefaul
     public length: number;
     public pageSize = 20;
     public pageIndex = 0;
-    public pageSizeOptions: Array<number> = [10, 20, 50];
+    public pageSizeOptions: Array<number> = [10, 20, 50, 100];
 
     @Input() public disabled: boolean;
     @Input()

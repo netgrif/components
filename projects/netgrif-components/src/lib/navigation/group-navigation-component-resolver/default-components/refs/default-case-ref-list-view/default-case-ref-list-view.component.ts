@@ -3,22 +3,31 @@ import {
     AbstractCaseViewComponent,
     AllowedNetsService,
     AllowedNetsServiceFactory,
+    BaseFilter,
     Case,
+    CaseRefField,
     CaseViewService,
     CategoryFactory,
+    DATA_FIELD_PORTAL_DATA,
+    DataFieldPortalData,
     defaultCaseSearchCategoriesFactory,
+    EnumerationField,
+    Filter,
     FilterType,
+    MergeOperator,
+    MultichoiceField,
+    NAE_BASE_FILTER,
     NAE_CASE_REF_CREATE_CASE,
     NAE_CASE_REF_SEARCH,
-    CaseRefField,
     NAE_SEARCH_CATEGORIES,
     NAE_TAB_DATA,
     NAE_VIEW_ID_SEGMENT,
     OverflowService,
+    SavedFilterMetadata,
     SearchMode,
     SearchService,
     SimpleFilter,
-    ViewIdService, DATA_FIELD_PORTAL_DATA, DataFieldPortalData, MultichoiceField, EnumerationField
+    ViewIdService, DATA_FIELD_PORTAL_DATA, DataFieldPortalData, TaskSetDataRequestFields,
 } from '@netgrif/components-core';
 import {HeaderComponent} from '../../../../../header/header.component'
 import {DefaultTabbedTaskViewComponent} from '../../tabbed/default-tabbed-task-view/default-tabbed-task-view.component';
@@ -56,8 +65,12 @@ export class DefaultCaseRefListViewComponent extends AbstractCaseViewComponent i
     public search: boolean;
     public createCase: boolean;
 
+    private initFilter: Filter;
+
     constructor(caseViewService: CaseViewService,
+                protected searchService: SearchService,
                 @Optional() overflowService: OverflowService,
+                @Optional() @Inject(NAE_BASE_FILTER) protected _baseFilter: BaseFilter,
                 @Optional() @Inject(NAE_TAB_DATA) protected _injectedTabData: InjectedTabbedTaskViewDataWithNavigationItemTaskData,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) protected _dataFieldPortalData: DataFieldPortalData<MultichoiceField | CaseRefField | EnumerationField>,
                 @Optional() @Inject(NAE_CASE_REF_CREATE_CASE) protected _caseRefCreateCase: boolean = false,
@@ -68,6 +81,16 @@ export class DefaultCaseRefListViewComponent extends AbstractCaseViewComponent i
         });
         this.search = !!_caseRefSearch;
         this.createCase = !!_caseRefCreateCase;
+        if (!this._baseFilter || !this._baseFilter.filter) {
+            return;
+        }
+        if (this._baseFilter.filter instanceof Filter) {
+            this.initFilter = this._baseFilter.filter
+        } else {
+            this._baseFilter.filter.subscribe(observableFilter => {
+                this.initFilter = observableFilter;
+            });
+        }
     }
 
     ngAfterViewInit(): void {
@@ -117,5 +140,10 @@ export class DefaultCaseRefListViewComponent extends AbstractCaseViewComponent i
 
     createdCase(caze: Case) {
         this.handleCaseClick(caze);
+    }
+
+    loadFilter(filterData: SavedFilterMetadata) {
+        // todo 23 review
+        this.searchService.updateWithFullFilter(this.initFilter.merge(filterData.filter, MergeOperator.AND));
     }
 }
