@@ -1,8 +1,7 @@
-import {Component, Inject, Injector, OnInit, Optional} from "@angular/core";
+import {Component, Inject, Optional} from "@angular/core";
 import {FilterField, FilterFieldValidation} from "../models/filter-field";
 import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base-data-field.component";
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
-import {FormControl} from "@angular/forms";
 import {TranslateService} from "@ngx-translate/core";
 
 @Component({
