@@ -13,11 +13,11 @@ import {
     AllowedNetsServiceFactory,
     AllowedNetsService,
     BaseFilter,
-    Category,
+    FilterType,
     navigationItemTaskFilterFactory, FilterExtractionService, NAE_NAVIGATION_ITEM_TASK_DATA,
     navigationItemTaskAllowedNetsServiceFactory, BaseAllowedNetsService, NAE_DEFAULT_HEADERS,
-    navigationItemCaseViewDefaultHeadersFactory, navigationItemTaskCategoryFactory, CategoryResolverService,
-    NAE_DEFAULT_CASE_SEARCH_CATEGORIES, NAE_DEFAULT_TASK_SEARCH_CATEGORIES, groupNavigationViewIdSegmentFactory,
+    navigationItemCaseViewDefaultHeadersFactory,
+    NAE_DEFAULT_CASE_SEARCH_CATEGORIES, groupNavigationViewIdSegmentFactory,
     DataGroup, SearchMode, HeaderMode, extractFieldValueFromData, GroupNavigationConstants, I18nFieldValue,
     extractSearchTypeFromData, SearchComponentConfiguration, NAE_NEW_CASE_CREATION_CONFIGURATION_DATA,
     navigationItemNewCaseConfigurationFactory, NewCaseCreationConfigurationData,
@@ -36,21 +36,14 @@ import {TranslateService} from "@ngx-translate/core";
 function baseFilterFactory(extractionService: FilterExtractionService,
                           activatedRoute?: ActivatedRoute,
                           navigationItemTaskData?: Array<DataGroup>): BaseFilter {
-    return navigationItemTaskFilterFactory(extractionService, GroupNavigationConstants.ITEM_FIELD_CASE_FILTER, activatedRoute, navigationItemTaskData);
+    return navigationItemTaskFilterFactory(extractionService, GroupNavigationConstants.ITEM_FIELD_CASE_FILTER, activatedRoute,
+        navigationItemTaskData, undefined, FilterType.CASE);
 }
 
 function allowedNetsFactory(factory: AllowedNetsServiceFactory,
                             baseAllowedNets: BaseAllowedNetsService,
                             navigationItemTaskData?: Array<DataGroup>): AllowedNetsService {
-    return navigationItemTaskAllowedNetsServiceFactory(factory, baseAllowedNets, navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_CASE_FILTER);
-}
-
-function searchCategoryFactory(categoryResolverService: CategoryResolverService,
-                               navigationItemTaskData?: Array<DataGroup>,
-                               defaultCaseSearchCategories?: Array<Type<Category<any>>>,
-                               defaultTaskSearchCategories?: Array<Type<Category<any>>>): Array<Type<Category<any>>> {
-    return navigationItemTaskCategoryFactory(categoryResolverService, navigationItemTaskData,
-        GroupNavigationConstants.ITEM_FIELD_CASE_FILTER, defaultCaseSearchCategories, defaultTaskSearchCategories);
+    return navigationItemTaskAllowedNetsServiceFactory(factory, baseAllowedNets, true, navigationItemTaskData);
 }
 
 @Component({
@@ -76,13 +69,7 @@ function searchCategoryFactory(categoryResolverService: CategoryResolverService,
         ViewIdService,
         {
             provide: NAE_SEARCH_CATEGORIES,
-            useFactory: searchCategoryFactory,
-            deps: [
-                CategoryResolverService,
-                [new Optional(), NAE_NAVIGATION_ITEM_TASK_DATA],
-                [new Optional(), NAE_DEFAULT_CASE_SEARCH_CATEGORIES],
-                [new Optional(), NAE_DEFAULT_TASK_SEARCH_CATEGORIES]
-            ]
+            useExisting: NAE_DEFAULT_CASE_SEARCH_CATEGORIES
         },
         {
             provide: NAE_DEFAULT_HEADERS,

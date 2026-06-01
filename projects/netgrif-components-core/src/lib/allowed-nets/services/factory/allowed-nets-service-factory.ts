@@ -11,9 +11,10 @@ import {TaskViewParams} from '../../../view/task-view/models/task-view-params';
 import {InjectedTabbedTaskViewData} from '../../../view/task-view/models/injected-tabbed-task-view-data';
 import {DataGroup} from '../../../resources/public-api';
 import {getFieldFromDataGroups} from '../../../utility/get-field';
-import {FilterField} from '../../../data-fields/filter-field/models/filter-field';
 import {BaseAllowedNetsService} from '../base-allowed-nets.service';
 import {GroupNavigationConstants} from "../../../navigation/model/group-navigation-constants";
+import {BooleanField} from "../../../data-fields/boolean-field/models/boolean-field";
+import {StringCollectionField} from "../../../data-fields/string-collection-field/models/string-collection-field";
 
 /**
  * Convenience method that can be used as an allowed nets factory for tabbed task views.
@@ -24,8 +25,8 @@ export function tabbedAllowedNetsServiceFactory(factory: AllowedNetsServiceFacto
                                                 tabData: InjectedTabbedTaskViewData,
                                                 navigationItemTaskData?: Array<DataGroup>): AllowedNetsService {
     if (!!navigationItemTaskData && (!tabData?.allowedNets || tabData.allowedNets.length === 0)) {
-        const filterField: FilterField = getFieldFromDataGroups(navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_TASK_FILTER) as FilterField;
-        if (!!filterField && filterField.filterMetadata.allAllowedNets) {
+        const allAllowedNetsField: BooleanField = getFieldFromDataGroups(navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_TASK_ALL_ALLOWED_NETS) as BooleanField;
+        if (!!allAllowedNetsField && !!allAllowedNetsField.value) {
             return factory.createWithAllNets();
         }
     }
@@ -38,20 +39,24 @@ export function tabbedAllowedNetsServiceFactory(factory: AllowedNetsServiceFacto
  */
 export function navigationItemTaskAllowedNetsServiceFactory(factory: AllowedNetsServiceFactory,
                                                             baseAllowedNets: BaseAllowedNetsService,
-                                                            navigationItemTaskData?: Array<DataGroup>,
-                                                            filterFieldId?: string): AllowedNetsService {
+                                                            isCaseConstants: boolean,
+                                                            navigationItemTaskData?: Array<DataGroup>): AllowedNetsService {
     if (!navigationItemTaskData) {
         return factory.createWithAllNets();
     }
-    const filterField = getFieldFromDataGroups(navigationItemTaskData, filterFieldId) as FilterField;
-    if (filterField === undefined) {
-        throw new Error(`Provided navigation item task data does not contain a filter field with ID '${filterFieldId}'! Allowed nets cannot be generated from it!`);
-    }
-    if (filterField.filterMetadata.allAllowedNets) {
+    const allAllowedNetsField: BooleanField = getFieldFromDataGroups(navigationItemTaskData,
+        isCaseConstants ? GroupNavigationConstants.ITEM_FIELD_CASE_ALL_ALLOWED_NETS : GroupNavigationConstants.ITEM_FIELD_TASK_ALL_ALLOWED_NETS) as BooleanField;
+    if (!!allAllowedNetsField && !!allAllowedNetsField.value) {
         return factory.createWithAllNets();
     }
-    const nets = new BehaviorSubject<Array<string>>(Array.from(new Set<string>([...filterField.allowedNets])));
-    if (filterField.filterMetadata.inheritAllowedNets) {
+
+    const allowedNetsField: StringCollectionField = getFieldFromDataGroups(navigationItemTaskData,
+        isCaseConstants ? GroupNavigationConstants.ITEM_FIELD_CASE_ALLOWED_NETS : GroupNavigationConstants.ITEM_FIELD_TASK_ALLOWED_NETS) as StringCollectionField;
+    const nets = new BehaviorSubject<Array<string>>(Array.from(new Set<string>([...allowedNetsField.value])));
+
+    const inheritAllowedNetsField: BooleanField = getFieldFromDataGroups(navigationItemTaskData,
+        isCaseConstants ? GroupNavigationConstants.ITEM_FIELD_CASE_INHERIT_ALLOWED_NETS : GroupNavigationConstants.ITEM_FIELD_TASK_INHERIT_ALLOWED_NETS) as BooleanField;
+    if (!!inheritAllowedNetsField.value) {
         baseAllowedNets.allowedNets$.subscribe(allowedNets => {
             const netSet = new Set<string>(allowedNets);
             nets.next(Array.from(netSet));

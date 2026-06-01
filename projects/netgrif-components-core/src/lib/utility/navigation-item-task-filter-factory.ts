@@ -1,9 +1,9 @@
 import {BaseFilter} from '../search/models/base-filter';
 import {DataGroup} from '../resources/interface/data-groups';
-import {NAE_NAVIGATION_ITEM_TASK_DATA} from '../navigation/model/filter-case-injection-token';
 import {FilterExtractionService} from '../navigation/utility/filter-extraction.service';
 import {Filter} from '../filter/models/filter';
 import {ActivatedRoute} from '@angular/router';
+import {FilterType} from "../filter/models/filter-type";
 
 /**
  * Converts an {@link NAE_NAVIGATION_ITEM_TASK_DATA} injection token into {@link NAE_BASE_FILTER}
@@ -17,8 +17,9 @@ export function navigationItemTaskFilterFactory(extractionService: FilterExtract
                                                 filterFieldId?: string,
                                                 activatedRoute?: ActivatedRoute,
                                                 navigationItemTaskData?: Array<DataGroup>,
-                                                filterData?: Filter): BaseFilter {
+                                                filterData?: Filter,
+                                                filterType?: FilterType): BaseFilter {
     return {
-        filter: extractionService.extractCompleteFilterFromData(navigationItemTaskData, activatedRoute, filterData, filterFieldId)
+        filter: extractionService.extractCompleteFilterFromData(navigationItemTaskData, activatedRoute, filterData, filterFieldId, filterType)
     };
 }

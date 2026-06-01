@@ -214,6 +214,36 @@ export enum GroupNavigationConstants {
     /**
      * Filter field for task view
      */
-    ITEM_FIELD_TASK_FILTER = "task_filter"
+    ITEM_FIELD_TASK_FILTER = "task_filter",
+
+    /**
+     * String collection field, that contains allowed nets
+     */
+    ITEM_FIELD_CASE_ALLOWED_NETS = "case_allowed_nets",
+
+    /**
+     * Boolean field, that is true if all nets are allowed
+     */
+    ITEM_FIELD_CASE_ALL_ALLOWED_NETS = "case_all_allowed_nets",
+
+    /**
+     * Boolean field, that is true when the allowed nets are inherited from base view
+     */
+    ITEM_FIELD_CASE_INHERIT_ALLOWED_NETS = "case_inherit_allowed_nets",
+
+    /**
+     * String collection field, that contains allowed nets
+     */
+    ITEM_FIELD_TASK_ALLOWED_NETS = "task_allowed_nets",
+
+    /**
+     * Boolean field, that is true if all nets are allowed
+     */
+    ITEM_FIELD_TASK_ALL_ALLOWED_NETS = "task_all_allowed_nets",
+
+    /**
+     * Boolean field, that is true when the allowed nets are inherited from base view
+     */
+    ITEM_FIELD_TASK_INHERIT_ALLOWED_NETS = "task_inherit_allowed_nets",
 
 }

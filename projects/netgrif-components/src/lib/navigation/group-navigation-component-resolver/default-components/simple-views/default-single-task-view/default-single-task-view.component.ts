@@ -17,6 +17,7 @@ import {
     TaskRequestStateService,
     TaskViewService,
     ViewIdService,
+    FilterType,
     BaseFilter
 } from "@netgrif/components-core";
 import {ActivatedRoute} from "@angular/router";
@@ -25,13 +26,14 @@ import {AsyncPipe} from "@angular/common";
 function baseFilterFactory(extractionService: FilterExtractionService,
                            activatedRoute?: ActivatedRoute,
                            navigationItemTaskData?: Array<DataGroup>): BaseFilter {
-    return navigationItemTaskFilterFactory(extractionService, GroupNavigationConstants.ITEM_FIELD_TASK_FILTER, activatedRoute, navigationItemTaskData);
+    return navigationItemTaskFilterFactory(extractionService, GroupNavigationConstants.ITEM_FIELD_TASK_FILTER, activatedRoute,
+        navigationItemTaskData, undefined, FilterType.TASK);
 }
 
 function allowedNetsFactory(factory: AllowedNetsServiceFactory,
                             baseAllowedNets: BaseAllowedNetsService,
                             navigationItemTaskData?: Array<DataGroup>): AllowedNetsService {
-    return navigationItemTaskAllowedNetsServiceFactory(factory, baseAllowedNets, navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_TASK_FILTER);
+    return navigationItemTaskAllowedNetsServiceFactory(factory, baseAllowedNets, false, navigationItemTaskData);
 }
 
 @Component({

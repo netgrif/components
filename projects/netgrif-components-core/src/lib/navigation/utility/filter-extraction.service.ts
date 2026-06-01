@@ -17,6 +17,7 @@ import {
 import {BaseAllowedNetsService} from "../../allowed-nets/services/base-allowed-nets.service";
 import {ActivatedRoute} from '@angular/router';
 import {SimpleFilter} from '../../filter/models/simple-filter';
+import {FilterType} from "../../filter/models/filter-type";
 
 /**
  * This service is able to load the full saved filter including all of its ancestor filters.
@@ -37,10 +38,10 @@ export class FilterExtractionService {
     }
 
     public extractTaskFilterAllowedNets(dataSection: Array<DataGroup>): AllowedNetsService {
-        return navigationItemTaskAllowedNetsServiceFactory(this._factory, this.baseAllowedNets, dataSection, GroupNavigationConstants.ITEM_FIELD_TASK_FILTER)
+        return navigationItemTaskAllowedNetsServiceFactory(this._factory, this.baseAllowedNets, false, dataSection);
     }
 
-    public extractCompleteFilterFromData(dataSection?: Array<DataGroup>, activatedRoute?: ActivatedRoute, filterData?: Filter, fieldId?: string): Filter | undefined {
+    public extractCompleteFilterFromData(dataSection?: Array<DataGroup>, activatedRoute?: ActivatedRoute, filterData?: Filter, fieldId?: string, filterType?: FilterType): Filter | undefined {
         if (!dataSection) {
             if (!activatedRoute) {
                 throw new Error('ActivatedRoute not provided.');
@@ -60,7 +61,8 @@ export class FilterExtractionService {
         let filterSegment: Filter;
         try {
             filterSegment = extractFilterFromFilterField(
-                dataSection[filterIndex.dataGroupIndex].fields[filterIndex.fieldIndex] as FilterField
+                dataSection[filterIndex.dataGroupIndex].fields[filterIndex.fieldIndex] as FilterField,
+                filterType
             );
         } catch (e) {
             throw new Error('Filter segment could not be extracted from filter field');
@@ -70,7 +72,7 @@ export class FilterExtractionService {
             filterSegment = filterSegment.merge(filterData, MergeOperator.AND);
         }
 
-        const parentFilter = this.extractCompleteFilterFromData(dataSection.slice(filterIndex.dataGroupIndex + 1), activatedRoute, filterData, fieldId);
+        const parentFilter = this.extractCompleteFilterFromData(dataSection.slice(filterIndex.dataGroupIndex + 1), activatedRoute, filterData, fieldId, filterType);
 
         if (parentFilter !== undefined && parentFilter.type === filterSegment.type) {
             return filterSegment.merge(parentFilter, MergeOperator.AND);

@@ -3,6 +3,7 @@ import {DataGroup} from '../../resources/interface/data-groups';
 import {getFieldFromDataGroups} from '../../utility/get-field';
 import {GroupNavigationConstants} from '../model/group-navigation-constants';
 import {Filter} from '../../filter/models/filter';
+import {FilterType} from '../../filter/models/filter-type';
 import {FilterField} from '../../data-fields/filter-field/models/filter-field';
 import {SimpleFilter} from '../../filter/models/simple-filter';
 import {MultichoiceField} from '../../data-fields/multichoice-field/models/multichoice-field';
@@ -63,15 +64,6 @@ export function extractRoles(dataSection: Array<DataGroup>, roleFieldId: string)
 }
 
 /**
- * Extracts the data and creates a filter object from the navigation item task data.
- * @param dataSection an array containing the data groups that correspond to a single navigation entry
- * @param filterFieldId id of filter field
- */
-export function extractFilterFromData(dataSection: Array<DataGroup>, filterFieldId: string): Filter {
-    return extractFilterFromFilterField(extractFilterFieldFromData(dataSection, filterFieldId));
-}
-
-/**
  * Extracts the filter field from the navigation item task data.
  * @param dataSection an array containing the data groups that correspond to a single navigation entry
  * @param filterFieldId id of filter field
@@ -91,11 +83,11 @@ export function extractFilterFieldFromData(dataSection: Array<DataGroup>, filter
  * @returns a {@link SimpleFilter} containing the filter stored in the provided {@link FilterField}.
  * Throws an error if this is not possible.
  */
-export function extractFilterFromFilterField(filterField: FilterField): Filter {
+export function extractFilterFromFilterField(filterField: FilterField, filterType: FilterType): Filter {
     if (filterField === undefined || !(filterField instanceof FilterField)) {
         throw new Error('Filter could not be resolved');
     }
-    return SimpleFilter.fromQuery({query: filterField.value}, filterField.filterMetadata.filterType);
+    return SimpleFilter.fromQuery({query: filterField.value}, filterType);
 }
 
 /**

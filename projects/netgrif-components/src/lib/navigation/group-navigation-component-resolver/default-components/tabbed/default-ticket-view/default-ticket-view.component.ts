@@ -10,7 +10,7 @@ import {
     UriService,
     DoubleDrawerNavigationService,
     NavigationItem,
-    extractFilterFieldFromData,
+    extractFieldValueFromData,
     DataGroup,
     NAE_TAB_DATA,
     SimpleFilter,
@@ -97,7 +97,8 @@ export class DefaultTicketViewComponent implements OnInit {
                     }
                     let net = undefined;
                     try {
-                        net = extractFilterFieldFromData(dataGroupPair.dataGroups, GroupNavigationConstants.ITEM_FIELD_TASK_FILTER)?.allowedNets[0];
+                        const allowedNets: string[] = extractFieldValueFromData<string[]>(dataGroupPair.dataGroups, GroupNavigationConstants.ITEM_FIELD_TASK_ALLOWED_NETS);
+                        net = allowedNets[0];
                     } catch (error) {
                         this._log.warn("View doesn't have a filter, skipping...");
                     }

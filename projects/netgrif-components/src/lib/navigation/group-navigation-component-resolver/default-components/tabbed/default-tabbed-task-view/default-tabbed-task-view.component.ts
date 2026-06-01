@@ -18,6 +18,8 @@ import {
     HeaderMode,
     NAE_DEFAULT_HEADERS,
     NAE_NAVIGATION_ITEM_TASK_DATA,
+    NAE_DEFAULT_TASK_SEARCH_CATEGORIES,
+    NAE_SEARCH_CATEGORIES,
     OverflowService,
     extractFieldValueFromData,
     I18nFieldValue,
@@ -59,6 +61,9 @@ export function baseFilterFactory(injectedTabData: InjectedTabbedTaskViewDataWit
             provide: NAE_TASK_VIEW_CONFIGURATION,
             useFactory: tabbedTaskViewConfigurationFactory,
             deps: [NAE_TAB_DATA]
+        },
+        {
+            provide: NAE_SEARCH_CATEGORIES, useExisting: NAE_DEFAULT_TASK_SEARCH_CATEGORIES
         },
         {
             provide: NAE_DEFAULT_HEADERS,

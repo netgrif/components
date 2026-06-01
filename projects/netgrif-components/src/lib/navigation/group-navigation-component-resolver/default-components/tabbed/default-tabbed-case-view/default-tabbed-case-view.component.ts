@@ -7,7 +7,6 @@ import {
     Case,
     CaseViewService,
     CategoryFactory,
-    CategoryResolverService,
     Filter,
     FilterExtractionService,
     FilterType,
@@ -17,7 +16,6 @@ import {
     NAE_BASE_FILTER,
     NAE_DEFAULT_CASE_SEARCH_CATEGORIES,
     NAE_DEFAULT_HEADERS,
-    NAE_DEFAULT_TASK_SEARCH_CATEGORIES,
     NAE_SEARCH_CATEGORIES,
     NAE_TAB_DATA,
     SavedFilterMetadata,
@@ -42,8 +40,7 @@ import {
 } from '../../model/injected-tabbed-case-view-data-with-navigation-item-task-data';
 import {
     filterCaseTabbedDataAllowedNetsServiceFactory,
-    filterCaseTabbedDataFilterFactory,
-    filterCaseTabbedDataSearchCategoriesFactory
+    filterCaseTabbedDataFilterFactory
 } from '../../model/factory-methods';
 import {ActivatedRoute} from '@angular/router';
 import {Subscription} from "rxjs";
@@ -70,9 +67,7 @@ import {TranslateService} from "@ngx-translate/core";
             deps: [AllowedNetsServiceFactory, BaseAllowedNetsService, NAE_TAB_DATA]
         },
         {
-            provide: NAE_SEARCH_CATEGORIES,
-            useFactory: filterCaseTabbedDataSearchCategoriesFactory,
-            deps: [CategoryResolverService, NAE_TAB_DATA, NAE_DEFAULT_CASE_SEARCH_CATEGORIES, NAE_DEFAULT_TASK_SEARCH_CATEGORIES]
+            provide: NAE_SEARCH_CATEGORIES, useExisting: NAE_DEFAULT_CASE_SEARCH_CATEGORIES
         },
         {
             provide: NAE_DEFAULT_HEADERS,
