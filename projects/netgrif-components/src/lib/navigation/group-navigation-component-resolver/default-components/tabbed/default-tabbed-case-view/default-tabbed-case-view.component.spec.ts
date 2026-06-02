@@ -15,6 +15,7 @@ import {
     TextField,
     I18nField,
     AuthenticationModule,
+    StringCollectionField,
 } from '@netgrif/components-core';
 import {of} from 'rxjs';
 import {DefaultTabbedTaskViewComponent} from '../default-tabbed-task-view/default-tabbed-task-view.component';
@@ -83,6 +84,18 @@ describe('DefaultTabbedCaseViewComponent', () => {
                                     '',
                                     '',
                                     {visible: true}
+                                ),
+                                new StringCollectionField(
+                                    GroupNavigationConstants.ITEM_FIELD_CASE_ALLOWED_NETS,
+                                    '',
+                                    [],
+                                    {visible: true}
+                                ),
+                                new StringCollectionField(
+                                    GroupNavigationConstants.ITEM_FIELD_TASK_ALLOWED_NETS,
+                                    '',
+                                    [],
+                                    {visible: true}
                                 )
                             ]
                         }]
@@ -115,6 +128,18 @@ describe('DefaultTabbedCaseViewComponent', () => {
                                     GroupNavigationConstants.ITEM_FIELD_ID_CASE_EMPTY_CONTENT_ICON,
                                     '',
                                     '',
+                                    {visible: true}
+                                ),
+                                new StringCollectionField(
+                                    GroupNavigationConstants.ITEM_FIELD_CASE_ALLOWED_NETS,
+                                    '',
+                                    [],
+                                    {visible: true}
+                                ),
+                                new StringCollectionField(
+                                    GroupNavigationConstants.ITEM_FIELD_TASK_ALLOWED_NETS,
+                                    '',
+                                    [],
                                     {visible: true}
                                 )
                             ]

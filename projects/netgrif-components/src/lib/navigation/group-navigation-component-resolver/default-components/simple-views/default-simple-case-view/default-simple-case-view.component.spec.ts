@@ -18,6 +18,7 @@ import {
     I18nField,
     FilterType,
     AuthenticationModule,
+    StringCollectionField,
 } from '@netgrif/components-core';
 
 describe('SimpleCaseViewComponent', () => {
@@ -130,6 +131,12 @@ describe('SimpleCaseViewComponent', () => {
                                     GroupNavigationConstants.ITEM_FIELD_ID_CASE_ALLOW_EXPORT,
                                     '',
                                     true,
+                                    {visible: true}
+                                ),
+                                new StringCollectionField(
+                                    GroupNavigationConstants.ITEM_FIELD_CASE_ALLOWED_NETS,
+                                    '',
+                                    [],
                                     {visible: true}
                                 )
                             ]

@@ -7,6 +7,7 @@ import {
     OverflowService,
     TestMockDependenciesModule,
     GroupNavigationConstants,
+    StringCollectionField,
 } from '@netgrif/components-core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
@@ -91,6 +92,12 @@ describe('DefaultSimpleTaskViewComponent', () => {
                                     GroupNavigationConstants.ITEM_FIELD_ID_TASK_EMPTY_CONTENT_ICON,
                                     '',
                                     '',
+                                    {visible: true}
+                                ),
+                                new StringCollectionField(
+                                    GroupNavigationConstants.ITEM_FIELD_TASK_ALLOWED_NETS,
+                                    '',
+                                    [],
                                     {visible: true}
                                 )
                             ]

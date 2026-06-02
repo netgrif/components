@@ -56,7 +56,7 @@ export function navigationItemTaskAllowedNetsServiceFactory(factory: AllowedNets
 
     const inheritAllowedNetsField: BooleanField = getFieldFromDataGroups(navigationItemTaskData,
         isCaseConstants ? GroupNavigationConstants.ITEM_FIELD_CASE_INHERIT_ALLOWED_NETS : GroupNavigationConstants.ITEM_FIELD_TASK_INHERIT_ALLOWED_NETS) as BooleanField;
-    if (!!inheritAllowedNetsField.value) {
+    if (!!inheritAllowedNetsField && !!inheritAllowedNetsField.value) {
         baseAllowedNets.allowedNets$.subscribe(allowedNets => {
             const netSet = new Set<string>(allowedNets);
             nets.next(Array.from(netSet));

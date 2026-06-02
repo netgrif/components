@@ -18,7 +18,8 @@ import {
     TextField,
     TranslateLibModule,
     AuthenticationModule,
-    ViewService
+    ViewService,
+    StringCollectionField
 } from '@netgrif/components-core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
@@ -190,6 +191,18 @@ describe('DefaultTabViewComponent', () => {
                                     GroupNavigationConstants.ITEM_FIELD_ID_CASE_EMPTY_CONTENT_ICON,
                                     '',
                                     '',
+                                    {visible: true}
+                                ),
+                                new StringCollectionField(
+                                    GroupNavigationConstants.ITEM_FIELD_CASE_ALLOWED_NETS,
+                                    '',
+                                    [],
+                                    {visible: true}
+                                ),
+                                new StringCollectionField(
+                                    GroupNavigationConstants.ITEM_FIELD_TASK_ALLOWED_NETS,
+                                    '',
+                                    [],
                                     {visible: true}
                                 )
                             ]
