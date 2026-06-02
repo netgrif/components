@@ -14,9 +14,10 @@ import {
 import {Case} from "../../resources/interface/case";
 import {I18nFieldValue} from "../../data-fields/i18n-field/models/i18n-field-value";
 import {TranslateService} from "@ngx-translate/core";
-import {encodeBase64} from "../../utility/base64";
+import {encodeBase64, decodeBase64} from "../../utility/base64";
 import {LoggerService} from "../../logger/services/logger.service";
 import {DoubleDrawerNavigationService} from "../navigation-double-drawer/service/double-drawer-navigation.service";
+import {GroupNavigationConstants} from "../model/group-navigation-constants";
 
 @Component({
     selector: 'ncc-breadcrumbs-component',
@@ -30,12 +31,11 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
     @Input() lengthOfPath: number = 30;
     @Input() partsAfterDots: number = 2;
 
-    filterName: string;
+    itemName: string;
     breadcrumbsParts: Array<string>;
 
     private static DOTS: string = '...';
     private static DELIMETER: string = '/';
-    private static NODE_PATH: string = 'nodePath';
     private _showPaths: boolean = false;
     private nicePath: BehaviorSubject<Array<string>>;
     private redirectUrls: Map<string, Array<string>>;
@@ -65,15 +65,16 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
     }
 
     public resolveBreadcrumbs() {
-        const filterId = this._activatedRoute.snapshot.params.itemCaseId
-        if (!filterId) {
+        const encodedItemCaseId = this._activatedRoute.snapshot.params.itemCaseId
+        if (!encodedItemCaseId) {
             this._log.error("Missing required data for resolving breadcrumbs.")
             return;
         }
+        const decodedItemCaseId = decodeBase64(encodedItemCaseId);
         const splitPath = this._uriService.splitNodePath(this._uriService.activeNode);
         const fullPath = this.createFullPath(splitPath);
         const fullPathQueries = fullPath.map(p => '(processIdentifier:menu_item AND dataSet.nodePath.textValue.keyword:\"' + p + '\")')
-        fullPathQueries.push('(taskMongoIds:\"' + filterId + '\")')
+        fullPathQueries.push('(stringId:\"' + decodedItemCaseId + '\")')
 
         const searchBody: CaseSearchRequestBody = {
             query: fullPathQueries.join(" OR ")
@@ -84,16 +85,16 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
 
         this._caseResourceService.searchCases(SimpleFilter.fromCaseQuery(searchBody), httpParams).pipe(take(1)).subscribe(result => {
             const cases = result.content;
-            const filterCaseIndex = cases.findIndex(c => c.tasks.some(t => t.task === filterId) && !fullPath.includes(this.immediateValue(c, AbstractBreadcrumbsComponent.NODE_PATH)));
-            if (filterCaseIndex >= 0) {
-                const filterCase = cases.splice(cases.findIndex(c => c.tasks.some(t => t.task === filterId) && !fullPath.includes(this.immediateValue(c, AbstractBreadcrumbsComponent.NODE_PATH))), 1)[0];
-                this.filterName = this.getTranslation(this.immediateValue(filterCase, 'menu_name'));
+            const itemCaseIndex = cases.findIndex(c => c.stringId === decodedItemCaseId && !fullPath.includes(this.immediateValue(c, GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)));
+            if (itemCaseIndex >= 0) {
+                const itemCase = cases.splice(cases.findIndex(c => c.stringId === decodedItemCaseId && !fullPath.includes(this.immediateValue(c, GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH))), 1)[0];
+                this.itemName = this.getTranslation(this.immediateValue(itemCase, GroupNavigationConstants.ITEM_FIELD_ID_MENU_NAME));
             }
-            cases.sort((a, b) => fullPath.indexOf(this.immediateValue(a, AbstractBreadcrumbsComponent.NODE_PATH)) - fullPath.indexOf(this.immediateValue(b, AbstractBreadcrumbsComponent.NODE_PATH)));
+            cases.sort((a, b) => fullPath.indexOf(this.immediateValue(a, GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)) - fullPath.indexOf(this.immediateValue(b, GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)));
             if (this.redirectOnClick) {
-                cases.forEach(c => this.redirectUrls.set(this.immediateValue(c, AbstractBreadcrumbsComponent.NODE_PATH), [this._dynamicRoutingService.route, encodeBase64(c.stringId)]));
+                cases.forEach(c => this.redirectUrls.set(this.immediateValue(c, GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH), [this._dynamicRoutingService.route, encodeBase64(c.stringId)]));
             }
-            this.nicePath.next(["", ...cases.map(c => this.getTranslation(this.immediateValue(c, 'menu_name')))]);
+            this.nicePath.next(["", ...cases.map(c => this.getTranslation(this.immediateValue(c, GroupNavigationConstants.ITEM_FIELD_ID_MENU_NAME)))]);
         });
     }
 
@@ -122,7 +123,7 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
     }
 
     public reset(): void {
-        this.filterName = undefined;
+        this.itemName = undefined;
         this._uriService.reset();
         this.nicePath.next([""])
     }
@@ -143,7 +144,7 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
         }
         this._uriService.getNodeByPath(fullPath).subscribe(node => {
             this._uriService.activeNode = node;
-            this.filterName = undefined;
+            this.itemName = undefined;
             this.nicePath.next(this.nicePath.value.slice(0, control + 1))
             this.redirect();
             if (!!this.redirectOnClick) {

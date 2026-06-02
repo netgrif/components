@@ -8,6 +8,7 @@ import {ViewIdService} from "../../../user/services/view-id.service";
 import {AbstractBaseDataFieldComponent} from "../../base-component/abstract-base-data-field.component";
 import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-field-portal-data-injection-token";
 import {ComponentPortal} from "@angular/cdk/portal";
+import {NAE_DEFAULT_HEADERS} from "../../../header/models/default-headers-token";
 
 @Component({
     selector: 'ncc-abstract-task-ref-list-field',
@@ -28,6 +29,9 @@ export abstract class AbstractTaskRefListFieldComponent extends AbstractBaseData
         this.dataField.valueChanges().subscribe(() => {
             this.createFilter();
         });
+        this.dataField.componentChange$().subscribe(() => {
+            this.createFilter();
+        });
     }
 
     createFilter() {
@@ -36,6 +40,9 @@ export abstract class AbstractTaskRefListFieldComponent extends AbstractBaseData
                 {
                     provide: NAE_BASE_FILTER,
                     useValue: { filter: SimpleFilter.fromTaskQuery({stringId: this.dataField.value}) } as BaseFilter
+                },
+                {
+                    provide: NAE_DEFAULT_HEADERS, useValue: this.dataField.component?.properties?.headers?.split(',')
                 },
                 {
                     provide: NAE_VIEW_ID_SEGMENT,
