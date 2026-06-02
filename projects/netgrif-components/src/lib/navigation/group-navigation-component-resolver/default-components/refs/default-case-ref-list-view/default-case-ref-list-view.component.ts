@@ -143,7 +143,6 @@ export class DefaultCaseRefListViewComponent extends AbstractCaseViewComponent i
     }
 
     loadFilter(filterData: SavedFilterMetadata) {
-        // todo 23 review
         this.searchService.updateWithFullFilter(this.initFilter.merge(filterData.filter, MergeOperator.AND));
     }
 }
