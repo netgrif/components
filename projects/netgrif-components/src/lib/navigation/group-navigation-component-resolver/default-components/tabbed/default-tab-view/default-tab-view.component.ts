@@ -229,8 +229,14 @@ export class DefaultTabViewComponent {
         if (!i18nValue) {
             return undefined;
         }
+        if (typeof i18nValue === 'string') {
+            return i18nValue;
+        }
         const locale = this.translateService.currentLang;
-        return locale in i18nValue.translations ? i18nValue.translations[locale] : i18nValue.defaultValue;
+        const language = locale?.split('-')[0];
+        return i18nValue.translations?.[locale]
+            ?? (language ? i18nValue.translations?.[language] : undefined)
+            ?? i18nValue.defaultValue;
     }
 
 }

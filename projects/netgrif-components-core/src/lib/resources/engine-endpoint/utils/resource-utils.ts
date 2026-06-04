@@ -27,7 +27,7 @@ export function handleDataGroups(rawDataGroups: unknown, fieldConverter: FieldCo
     const result: Array<DataGroup> = [];
     rawDataGroups.forEach(dataGroupResource => {
         const dataFields: Array<DataField<any>> = [];
-        if (!dataGroupResource.fields._embedded) {
+        if (!dataGroupResource.fields?._embedded) {
             return; // continue
         }
         const fields = [];

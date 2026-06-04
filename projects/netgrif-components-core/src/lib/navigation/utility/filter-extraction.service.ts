@@ -8,7 +8,6 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {MergeOperator} from '../../filter/models/merge-operator';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {FilterField} from '../../data-fields/filter-field/models/filter-field';
-import {GroupNavigationConstants} from "../model/group-navigation-constants";
 import {AllowedNetsService} from "../../allowed-nets/services/allowed-nets.service";
 import {
     AllowedNetsServiceFactory,

@@ -52,17 +52,20 @@ export function navigationItemTaskAllowedNetsServiceFactory(factory: AllowedNets
 
     const allowedNetsField: StringCollectionField = getFieldFromDataGroups(navigationItemTaskData,
         isCaseConstants ? GroupNavigationConstants.ITEM_FIELD_CASE_ALLOWED_NETS : GroupNavigationConstants.ITEM_FIELD_TASK_ALLOWED_NETS) as StringCollectionField;
-    const nets = new BehaviorSubject<Array<string>>(Array.from(new Set<string>([...allowedNetsField.value])));
+    const staticNets: Array<string> = !!allowedNetsField ? [...allowedNetsField.value] : [];
 
     const inheritAllowedNetsField: BooleanField = getFieldFromDataGroups(navigationItemTaskData,
         isCaseConstants ? GroupNavigationConstants.ITEM_FIELD_CASE_INHERIT_ALLOWED_NETS : GroupNavigationConstants.ITEM_FIELD_TASK_INHERIT_ALLOWED_NETS) as BooleanField;
-    if (!!inheritAllowedNetsField && !!inheritAllowedNetsField.value) {
-        baseAllowedNets.allowedNets$.subscribe(allowedNets => {
-            const netSet = new Set<string>(allowedNets);
-            nets.next(Array.from(netSet));
-        });
-    }
-    return factory.createFromObservable(nets.asObservable());
+
+    const nets$: Observable<Array<string>> = (!!inheritAllowedNetsField && !!inheritAllowedNetsField.value)
+        ? combineLatest([of(staticNets), baseAllowedNets.allowedNets$]).pipe(
+            map(([staticPart, inheritedPart]) =>
+                Array.from(new Set<string>([...staticPart, ...inheritedPart]))
+            )
+        )
+        : of(Array.from(new Set<string>(staticNets)));
+
+    return factory.createFromObservable(nets$);
 }
 
 /**

@@ -82,8 +82,10 @@ export class DefaultTabbedSingleTaskViewComponent extends AbstractTabbedSingleTa
                 protected _router: Router) {
         super(taskViewService, injectedTabData, activatedRoute);
         if (!!injectedTabData?.navigationItemTaskData) {
-            this.showPageHeader = extractFieldValueFromData<boolean>(injectedTabData.navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_SHOW_PAGE_HEADER);
-            this.showPageFooter = extractFieldValueFromData<boolean>(injectedTabData.navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_SHOW_PAGE_FOOTER);
+            this.showPageHeader = extractFieldValueFromData<boolean>(injectedTabData.navigationItemTaskData,
+                GroupNavigationConstants.ITEM_FIELD_SHOW_PAGE_HEADER) ?? this.showPageHeader;
+            this.showPageFooter = extractFieldValueFromData<boolean>(injectedTabData.navigationItemTaskData,
+                GroupNavigationConstants.ITEM_FIELD_SHOW_PAGE_FOOTER) ?? this.showPageFooter;
         }
     }
 

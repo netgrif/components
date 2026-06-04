@@ -42,7 +42,10 @@ export abstract class AbstractTaskRefListFieldComponent extends AbstractBaseData
                     useValue: { filter: SimpleFilter.fromTaskQuery({stringId: this.dataField.value}) } as BaseFilter
                 },
                 {
-                    provide: NAE_DEFAULT_HEADERS, useValue: this.dataField.component?.properties?.headers?.split(',')
+                    provide: NAE_DEFAULT_HEADERS,
+                    useValue: this.dataField.component?.properties?.headers?.split(',')
+                        ?.map(header => header.trim())
+                        ?.filter(header => header.length > 0)
                 },
                 {
                     provide: NAE_VIEW_ID_SEGMENT,

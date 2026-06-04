@@ -55,7 +55,7 @@ function allowedNetsFactory(factory: AllowedNetsServiceFactory,
         {
             provide: AllowedNetsService,
             useFactory: allowedNetsFactory,
-            deps: [AllowedNetsServiceFactory, BaseAllowedNetsService, NAE_NAVIGATION_ITEM_TASK_DATA]
+            deps: [AllowedNetsServiceFactory, BaseAllowedNetsService, [new Optional(), NAE_NAVIGATION_ITEM_TASK_DATA]]
         },
         ViewIdService,
         TaskDataService,
@@ -81,8 +81,10 @@ export class DefaultSingleTaskViewComponent extends AbstractSingleTaskViewCompon
                 activatedRoute: ActivatedRoute) {
         super(taskViewService, activatedRoute);
         if (!!this._navigationItemTaskData) {
-            this.showPageHeader = extractFieldValueFromData<boolean>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_SHOW_PAGE_HEADER);
-            this.showPageFooter = extractFieldValueFromData<boolean>(this._navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_SHOW_PAGE_FOOTER);
+            this.showPageHeader = extractFieldValueFromData<boolean>(this._navigationItemTaskData,
+                GroupNavigationConstants.ITEM_FIELD_SHOW_PAGE_HEADER) ?? this.showPageHeader;
+            this.showPageFooter = extractFieldValueFromData<boolean>(this._navigationItemTaskData,
+                GroupNavigationConstants.ITEM_FIELD_SHOW_PAGE_FOOTER) ?? this.showPageFooter;
         }
     }
 

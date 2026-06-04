@@ -5,7 +5,6 @@ import {ConfigurationService} from "../../configuration/configuration.service";
 import {Observable} from "rxjs";
 import {map} from 'rxjs/operators';
 import {MenuItemData} from "../interface/menu-item-data";
-import {DataField} from "../../data-fields/models/abstract-data-field";
 import {DataGroup} from "../interface/data-groups";
 import {FieldConverterService} from "../../task-content/services/field-converter.service";
 import {handleDataGroups} from "./utils/resource-utils";
@@ -31,8 +30,8 @@ export class MenuResourceService extends AbstractResourceService {
      *
      * @param encodedCaseId - The encoded identifier of the case for which to retrieve menu item data.
      *                        Must not be null or undefined.
-     * @returns An Observable that emits the {@link MenuItemData} object containing the menu item information
-     *          for the specified case.
+     * @returns An Observable that emits an array of {@link DataGroup} objects containing the processed
+     *          menu item data for the specified case.
      * @throws {Error} Throws an error if encodedCaseId is null or undefined.
      */
     public getItemData(encodedCaseId: string): Observable<Array<DataGroup>> {

@@ -86,6 +86,12 @@ export class DefaultTicketViewComponent implements OnInit {
         this._navigationService.rightItems$.pipe(
             map(navItems => this.transformItemCases(navItems).filter(itm => !!itm && !!itm.resource))
         ).subscribe(items => {
+            if (items.length === 0) {
+                this.dashboardItems = [];
+                this.filteredDashboardItems = [];
+                this.loading$.off();
+                return;
+            }
             forkJoin(items.map(item => {
                 const encodedCaseId = encodeBase64(item.resource.stringId);
                 return this._menuResourceService.getItemData(encodedCaseId)

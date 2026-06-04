@@ -147,7 +147,7 @@ export abstract class AbstractBreadcrumbsComponent implements OnDestroy, AfterVi
             this.itemName = undefined;
             this.nicePath.next(this.nicePath.value.slice(0, control + 1))
             this.redirect();
-            if (!!this.redirectOnClick) {
+            if (this.redirectOnClick) {
                 this._navigationService.openAvailableView();
             }
         })

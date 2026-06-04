@@ -26,7 +26,6 @@ export * from './group-navigation-component-resolver/default-components/public/d
 export * from './group-navigation-component-resolver/default-components/public/default-public-workflow-view/default-public-workflow-view.component';
 export * from './group-navigation-component-resolver/default-components/public/default-public-single-task-view/default-public-single-task-view.component';
 export * from './group-navigation-component-resolver/default-components/refs/default-case-ref-list-view/default-case-ref-list-view.component';
-export * from './group-navigation-component-resolver/default-components/refs/default-task-view/default-task-view.component';
 export * from './dashboard/dashboard.component';
 
 /* FUNCTIONS */
