@@ -11,7 +11,7 @@
     font-size: 14px;
     border: 0;
     margin-left: 8px;
-    color: #64748B;
+    //color: #64748B;
     background: transparent;
 }
 
@@ -49,6 +49,7 @@
     padding: 0 1em;
     font-size: 75%;
     width: auto !important;
+    display: block;
 }
 
 .language-svg-wrapper {
@@ -157,4 +158,9 @@
 
 .padding-bottom-3px {
     padding-bottom: 3px;
+}
+
+.i18n-hint-wrapper {
+    height: 18px;
+    margin-top: -3px;
 }

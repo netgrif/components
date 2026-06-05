@@ -1,4 +1,4 @@
-<mat-form-field [appearance]="dataField.materialAppearance" class="full-width chip-fix" [ngClass]="{'netgrif-chip-fix' : dataField.value?.userValues?.size > 0}" color="primary">
+<mat-form-field [appearance]="dataField.materialAppearance" class="full-width chip-fix netgrif-chip-button-fix" [ngClass]="{'netgrif-chip-fix' : dataField.value?.userValues?.size > 0}" color="primary">
     <mat-label class="netgrif-label" [ngClass]="{'netgrif-label-disabled': formControlRef.disabled}" *ngIf="!showLargeLayout.value">{{dataField.title}}</mat-label>
     <button mat-icon-button matPrefix
             [disabled]="formControlRef.disabled"
@@ -27,6 +27,7 @@
             aria-label="Autocomplete"
             matInput
             #input
+            disabled="true"
             [placeholder]="dataField.placeholder"
             [required]="dataField.behavior.required"
             [matChipInputFor]="chipList">
