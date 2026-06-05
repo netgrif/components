@@ -22,14 +22,14 @@ export class MultiUserAssignDialogComponent {
         this._currentUsers = [];
         if (this._data) {
             this.injectedData = this._data as UserListInjectedData;
-            if (!!this.injectedData.value) {
-                this._currentUsers.push(...(this.injectedData.value as UserListValue).userValues.values());
+            if (!!(this.injectedData?.value as UserListValue)?.userValues?.values()) {
+                this._currentUsers.push(...(this.injectedData.value as UserListValue).userValues?.values());
             }
         }
     }
 
     public get initiallySelectedUsers(): Array<UserValue> | undefined {
-        return this.injectedData?.value ? [...(this.injectedData.value as UserListValue).userValues.values()] : undefined;
+        return this.injectedData?.value ? [...(this.injectedData.value as UserListValue).userValues?.values()] : undefined;
     }
 
     public get roles(): Array<string> | Array<ProcessRole> {

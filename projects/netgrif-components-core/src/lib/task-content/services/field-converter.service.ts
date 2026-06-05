@@ -178,7 +178,10 @@ export class FieldConverterService {
             return value.id;
         }
         if (this.resolveType(field) === FieldTypeResource.USER_LIST) {
-            return [...value.userValues.keys()];
+            if (value?.userValues?.keys()) {
+                return [...value?.userValues?.keys()];
+            }
+            return [];
         }
         if (this.resolveType(field) === FieldTypeResource.DATE_TIME) {
             if (moment.isMoment(value)) {

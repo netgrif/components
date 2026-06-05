@@ -46,7 +46,7 @@
 }
 
 .i18n-hint-error {
-    padding: 0 1em;
+    padding: 0 16px;
     font-size: 75%;
     width: auto !important;
     display: block;
@@ -55,6 +55,10 @@
 .language-svg-wrapper {
     height: 20px;
     line-height: normal;
+
+    .language-svg-icon {
+        border: solid 1px #64748B;
+    }
 }
 
 .language-svg-wrapper>svg {
@@ -71,9 +75,7 @@
     margin: 0 8px;
 }
 
-.language-svg-icon {
-    border: solid 1px #64748B;
-}
+
 
 .filled-language-row {
     min-height: 28px;
@@ -160,7 +162,11 @@
     padding-bottom: 3px;
 }
 
+.padding-bottom-fix {
+    padding-bottom: 1.5em;
+}
+
 .i18n-hint-wrapper {
-    height: 18px;
+    height: 24px;
     margin-top: -3px;
 }

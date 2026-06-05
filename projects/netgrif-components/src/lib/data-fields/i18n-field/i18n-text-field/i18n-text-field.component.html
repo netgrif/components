@@ -23,7 +23,7 @@
     </ng-template>
 </ng-template>
 <ng-template [ngIf]="!formControlRef.disabled">
-    <div class="full-width" [ngClass]="{'padding-bottom-3px': filledShown}">
+    <div class="full-width" [ngClass]="{'padding-bottom-3px': filledShown, 'padding-bottom-fix': !dataField.isInvalid(formControlRef) && !hasHint()}">
         <div #i18nLabel class="i18n-label" [ngClass]="{'invalid-form-label': dataField.isInvalid(formControlRef)}">
             {{dataField.title}}
             <nc-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nc-required-label>
