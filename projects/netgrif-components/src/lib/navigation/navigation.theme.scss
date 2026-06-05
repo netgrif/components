@@ -56,6 +56,12 @@
         color: mat.get-color-from-palette($primary) !important;
     }
 
+    .menu-button {
+        .mat-mdc-button-persistent-ripple {
+            border-radius: 8px !important;
+        }
+    }
+
     .quick-panel-menu {
         .mat-mdc-menu-item-text {
             flex-direction: row;

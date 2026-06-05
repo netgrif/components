@@ -66,10 +66,8 @@
                 <mat-icon>account_circle</mat-icon>
             </button>
 
-            <div *ngIf="includeLanguage" fxLayout="row" class="icon-container">
-                <button mat-icon-button class="menu-button mat-typography menu-font-color">
-                    <nc-language-selector fxLayout="row"></nc-language-selector>
-                </button>
+            <div *ngIf="includeLanguage" [ngClass]="{'margin-bottom-x2 menu-button': !(hiddenCustomItems?.length > 0)}" fxLayout="row" class="icon-container">
+                <nc-language-selector fxLayout="row" ></nc-language-selector>
             </div>
 
             <mat-menu #railMenu="matMenu">
@@ -88,13 +86,11 @@
             <!--            </div>-->
             <button mat-icon-button *ngIf="hiddenCustomItems && hiddenCustomItems.length > 0"
                     [matMenuTriggerFor]="railMenu"
-                    class="menu-button mat-typography menu-font-color"
+                    class="menu-button mat-typography menu-font-color margin-bottom-x2"
                     [matTooltip]="'toolbar.menu.open' | translate"
                     matTooltipPosition="right">
                 <mat-icon>more_vert</mat-icon>
             </button>
-
-            <div class="margin-top-x2"></div>
         </div>
     </mat-sidenav>
 
