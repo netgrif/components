@@ -63,7 +63,7 @@ describe('AbstractGroupNavigationComponentResolverComponent', () => {
     });
 });
 
-export class MenuResource {
+class MenuResource {
     public getItemData(encodedCaseId: string): Observable<Array<DataGroup>> {
         return of([]);
     }
