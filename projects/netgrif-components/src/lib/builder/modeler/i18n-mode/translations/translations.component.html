@@ -1,0 +1,48 @@
+<div fxLayout="column" fxLayoutAlign="space-around none">
+    <div fxFlexFill class="netgrif-input">
+        <mat-form-field fxFlex="25">
+            <mat-label>{{noLocales() ? 'No language available, please add new language' : 'Select language'}}</mat-label>
+            <mat-select [(value)]="locale" [disabled]="noLocales()" (selectionChange)="selectLocale()">
+                <mat-option *ngFor="let locale of usedLocales()" [value]="locale">{{locale.prettyName}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <mat-tab-group *ngIf="!noLocales() && locale" class="mat-tab-group-height">
+        <mat-tab [disabled]="modelMetadataConfig.disabled()">
+            <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon">{{modelMetadataConfig.icon}}</mat-icon>
+                {{modelMetadataConfig.title}}
+            </ng-template>
+            <ng-template matTabContent>
+                <nc-builder-model-translation [translation]="translation"></nc-builder-model-translation>
+            </ng-template>
+        </mat-tab>
+        <mat-tab [disabled]="taskMetadataConfig.disabled()">
+            <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon">{{taskMetadataConfig.icon}}</mat-icon>
+                {{taskMetadataConfig.title}}
+            </ng-template>
+            <ng-template matTabContent>
+                <nc-builder-task-translation  [translation]="translation"></nc-builder-task-translation>
+            </ng-template>
+        </mat-tab>
+        <mat-tab [disabled]="dataMetadataConfig.disabled()">
+            <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon">{{dataMetadataConfig.icon}}</mat-icon>
+                {{dataMetadataConfig.title}}
+            </ng-template>
+            <ng-template matTabContent>
+                <nc-builder-data-translation [translation]="translation"></nc-builder-data-translation>
+            </ng-template>
+        </mat-tab>
+        <mat-tab [disabled]="roleMetadataConfig.disabled()">
+            <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon">{{roleMetadataConfig.icon}}</mat-icon>
+                {{roleMetadataConfig.title}}
+            </ng-template>
+            <ng-template matTabContent>
+                <nc-builder-role-translation  [translation]="translation"></nc-builder-role-translation>
+            </ng-template>
+        </mat-tab>
+    </mat-tab-group>
+</div>

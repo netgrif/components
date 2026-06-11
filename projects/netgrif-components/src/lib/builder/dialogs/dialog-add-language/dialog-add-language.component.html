@@ -1,0 +1,18 @@
+<div>
+  <h2 mat-dialog-title>Add language</h2>
+  <mat-dialog-content class="mat-typography" class="netgrif-input">
+    <mat-form-field class="add-language-dialog">
+      <mat-label>Language</mat-label>
+      <mat-select [(ngModel)]="selectedLanguage" fxFlex="100">
+        <mat-option *ngFor="let language of i18nModeService.locales" [value]="language.languageCode">
+          {{ language.language }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button [mat-dialog-close]="false" mat-button>Cancel</button>
+    <button [mat-dialog-close]="selectedLanguage" cdkFocusInitial mat-button>Add</button>
+  </mat-dialog-actions>
+</div>
+

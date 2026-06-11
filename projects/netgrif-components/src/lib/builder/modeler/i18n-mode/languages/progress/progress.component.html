@@ -1,0 +1,7 @@
+<div class="card" fxLayout="row" fxLayoutAlign="start center">
+    <nc-builder-flag class="select" [locale]="locale" (click)="emitSelectLocale()"></nc-builder-flag>
+    <span class="select" fxFlex (click)="emitSelectLocale()">{{locale.prettyName}}</span>
+    <button mat-icon-button class="button-line" matTooltip="Remove locale" (click)="removeLocale()">
+        <mat-icon>delete</mat-icon>
+    </button>
+</div>

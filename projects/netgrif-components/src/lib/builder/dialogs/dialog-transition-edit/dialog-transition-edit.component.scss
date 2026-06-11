@@ -1,0 +1,32 @@
+mat-dialog-content {
+    display: flex;
+    flex-direction: column;
+}
+
+mat-dialog-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.icon-select {
+    align-items: center;
+}
+
+.icon-preview {
+    padding-left: 8px;
+    padding-right: 8px;
+    overflow: hidden;
+}
+
+.loading-text {
+    height: 65px;
+}
+
+.margin-right8px {
+    margin-right: 6px;
+}
+
+.margin-html {
+    margin-top: 6px;
+}

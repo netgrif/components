@@ -1,0 +1,81 @@
+<div class="no-overflow" *ngIf="!isFunctionsModeSelected()" fxFlex>
+    <mat-tree class="tree overflow-hidden" [dataSource]="dataSource" [treeControl]="treeControl"
+              >
+        <!--  Leaf node template  -->
+        <mat-tree-node *matTreeNodeDef="let node; when isLeafNode" #actionNode>
+            <div class="mat-tree-node tree-offset">
+                <nc-builder-action-editor-list [leafNode]="node"
+                                        (actionChanged)="actionChangedListener($event, node)"
+                                        class="full-width editor-list-area-padding"></nc-builder-action-editor-list>
+            </div>
+        </mat-tree-node>
+        <!--  Inner node template  -->
+        <mat-nested-tree-node *matTreeNodeDef="let node; when: isInnerNode" matTreeNodePadding #eventNode>
+            <div class="mat-tree-node">
+                <button mat-icon-button matTreeNodeToggle
+                        [attr.aria-label]="'toggle ' + node.name">
+                    <mat-icon class="mat-icon-rtl-mirror">
+                        {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
+                    </mat-icon>
+                </button>
+                <span>{{ node.title }} ({{ node.actionCount.getValue() }})</span>
+            </div>
+            <div class="tree-offset" [class.tree-node-invisible]="!treeControl.isExpanded(node)">
+                <ng-container matTreeNodeOutlet></ng-container>
+            </div>
+        </mat-nested-tree-node>
+        <!--  + node template  -->
+        <mat-nested-tree-node *matTreeNodeDef="let node; when: isAddNode" matTreeNodePadding #phaseNode>
+            <div class="mat-tree-node">
+                <button mat-icon-button matTreeNodeToggle
+                        [attr.aria-label]="'toggle ' + node.name"
+                        [disabled]="!actionsExpandable(node)">
+                    <mat-icon class="mat-icon-rtl-mirror">
+                        {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
+                    </mat-icon>
+                </button>
+                <span>{{ node.title }} ({{ node.actionCount.getValue() }})</span>
+                <button mat-icon-button (click)="newAction(node)">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </div>
+            <div class="tree-offset" [class.tree-node-invisible]="!treeControl.isExpanded(node)">
+                <ng-container matTreeNodeOutlet></ng-container>
+            </div>
+        </mat-nested-tree-node>
+    </mat-tree>
+</div>
+<div fxFlex class="no-overflow" *ngIf="isFunctionsModeSelected()">
+    <div *ngIf="this.selectedFn && isFunctionSelected()" class="scroll-vertical netgrif-input builder-field-input">
+        <div fxLayout="row wrap" fxLayoutAlign="start center" class="margin-top6px">
+            <div fxFlex="2.5"></div>
+            <div fxFlex="46.5" fxLayoutAlign="start center">
+                <mat-form-field fxFlex>
+                    <mat-label>Name</mat-label>
+                    <input matInput [(ngModel)]="this.selectedFn.name" (change)="updateFunctions()">
+                </mat-form-field>
+            </div>
+            <div fxFlex="2"></div>
+            <div fxFlex="46.5">
+                <mat-form-field fxFlex>
+                    <mat-label>Scope</mat-label>
+                    <mat-select [(value)]="this.selectedFn.scope">
+                        <mat-option *ngFor="let opt of functionScopes"
+                                    [value]="opt.value">{{ opt.viewValue }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div fxFlex="2.5"></div>
+        </div>
+        <div fxLayout="row wrap" fxLayoutAlign="start center" class="margin-top6px">
+            <div fxFlex="2.5"></div>
+            <nc-builder-function-editor fxFlex="95" [fn]="this.selectedFn"></nc-builder-function-editor>
+            <div fxFlex="2.5"></div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="this.selectedFn === undefined" fxLayoutAlign="center center" class="no-overflow full-width">
+    <span>No action selected</span>
+</div>

@@ -1,0 +1,54 @@
+<h2 mat-dialog-title>Edit arc</h2>
+<mat-dialog-content class="netgrif-input">
+    <mat-form-field fxFlex>
+        <mat-label>Id</mat-label>
+        <input type="text" matInput [(ngModel)]="arc.arc.id" disabled>
+    </mat-form-field>
+    <mat-form-field fxFlex>
+        <mat-label>Type</mat-label>
+        <mat-select [(ngModel)]="arcType" [disabled]="isTPArc()" (ngModelChange)="onTypeChange($event)">
+            <mat-select-trigger>
+                {{arcType}}
+            </mat-select-trigger>
+            <mat-option *ngFor="let arcType of arcTypes" [value]="arcType">
+                <mat-icon>{{arcTypeIcons.get(arcType)}}</mat-icon><span>{{arcType}}</span>
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field fxFlex>
+        <mat-label>Multiplicity</mat-label>
+        <input type="number" min="1" step="1" matInput [(ngModel)]="arc.arc.multiplicity" [formControl]="multiplicityCtrl">
+        <mat-error *ngIf="multiplicityCtrl.errors && multiplicityCtrl.errors.required">Id is required</mat-error>
+        <mat-error *ngIf="multiplicityCtrl.errors && multiplicityCtrl.errors.validMultiplicity">Multiplicity must be a positive integer</mat-error>
+    </mat-form-field>
+    <mat-form-field fxFlex>
+        <mat-label>Reference</mat-label>
+        <input type="text"
+               matInput
+               [formControl]="formControlRef"
+               [(ngModel)]="arc.arc.reference"
+               [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete">
+            <mat-option>-- None --</mat-option>
+            <mat-optgroup *ngFor="let referenceGroup of filteredReferences | async" [label]="referenceGroup.name">
+                <mat-option *ngFor="let reference of referenceGroup.references" [value]="reference.id">
+                    {{reference.label}} [{{reference.id}}]
+                </mat-option>
+            </mat-optgroup>
+        </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field fxFlex>
+        <mat-label>Source</mat-label>
+        <input type="text" matInput value="{{arc.arc.source.label?.value}} [{{arc.arc.source.id}}]" disabled>
+    </mat-form-field>
+    <mat-form-field fxFlex>
+        <mat-label>Destination</mat-label>
+        <input type="text" matInput value="{{arc.arc.destination.label?.value}} [{{arc.arc.destination.id}}]" disabled>
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-flat-button color="primary" [mat-dialog-close]="arc" [disabled]="multiplicityCtrl.invalid">
+        <mat-icon>done</mat-icon>
+        <span>Save</span>
+    </button>
+</mat-dialog-actions>

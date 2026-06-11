@@ -1,0 +1,37 @@
+
+.margin-top32px {
+    margin-top: 32px;
+}
+
+.no-overflow {
+    height: calc(100vh - 42px);
+    overflow: auto;
+}
+
+.tree-node-invisible {
+    display: none;
+}
+
+.tree-offset {
+    margin-left: 16px;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.editor-list-area-padding {
+    padding: 8px;
+}
+
+.tree {
+    background-color: #fafafa;
+}
+
+.mat-tree-node {
+    overflow-x: hidden !important;
+}
+
+.margin-top6px {
+    margin-top: 6px;
+}

@@ -1,0 +1,21 @@
+<div fxLayout="column" *ngFor="let role of model.getRoles(); let i = index">
+<!--    @defer (on viewport) {-->
+        <div>
+            <h3 class="margin-none">{{role.title.value}} [{{role.id}}]</h3>
+            <nc-builder-i18n-field [field]="role.title" [name]="'Title'" [translation]="translation"></nc-builder-i18n-field>
+            <div *ngIf="role.getEvents?.length > 0">
+                <h4>Events:</h4>
+                <div *ngFor="let event of role.getEvents()">
+                    <nc-builder-i18n-field [field]="event.title" [name]="'Title'" class="events" [translation]="translation"></nc-builder-i18n-field>
+                    <nc-builder-i18n-field [field]="event.message" [name]="'Message'" class="events" [translation]="translation"></nc-builder-i18n-field>
+                </div>
+            </div>
+            <mat-divider *ngIf="notLast(i)"></mat-divider>
+        </div>
+<!--    } @placeholder {-->
+<!--        <div>-->
+<!--            <h3 class="margin-none">{{role.title.value}} [{{role.id}}]</h3>-->
+<!--            <mat-spinner></mat-spinner>-->
+<!--        </div>-->
+<!--    }-->
+</div>

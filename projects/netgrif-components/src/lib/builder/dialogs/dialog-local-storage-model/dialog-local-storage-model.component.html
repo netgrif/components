@@ -1,0 +1,14 @@
+<h2 mat-dialog-title>Continue previous work</h2>
+<mat-dialog-content class="mat-typography">
+    <span>Do you wish to continue work on "{{data.title}}" [{{data.id}}] from {{data.timestamp}}</span>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="false" color="warn">
+        <mat-icon>delete</mat-icon>
+        <span>Delete old work</span>
+    </button>
+    <button mat-button [mat-dialog-close]="true" color="primary">
+        <mat-icon>done</mat-icon>
+        <span>Load</span>
+    </button>
+</mat-dialog-actions>

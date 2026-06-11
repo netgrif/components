@@ -43,7 +43,8 @@ import {
     DefaultPublicTaskViewComponent,
     DefaultPublicWorkflowViewComponent,
     DefaultSimpleTaskViewComponent,
-    DefaultPublicSingleTaskViewComponent
+    DefaultPublicSingleTaskViewComponent,
+    BuilderComponent
 } from "@netgrif/components";
 import {
     NavigationDashboardExampleComponent
@@ -101,9 +102,8 @@ export class NaeExampleAppViewService extends ViewService {
             {id: 'PublicResolverComponent', class: DefaultPublicResolverComponent},
             {id: 'DefaultSimpleTaskViewComponent', class: DefaultSimpleTaskViewComponent},
             {id: 'TabbedTicketView', class: TabbedTicketViewComponent},
-            {
-                id: 'ResetPasswordFormComponent',
-                class: ResetPasswordFormComponent
-            }], configurationService, router, loggerService);
+            {id: 'ResetPasswordFormComponent', class: ResetPasswordFormComponent},
+            {id: 'BuilderComponent', class: BuilderComponent},
+            ], configurationService, router, loggerService);
     }
 }

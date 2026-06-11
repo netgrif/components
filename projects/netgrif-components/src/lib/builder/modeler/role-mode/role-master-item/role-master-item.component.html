@@ -1,0 +1,24 @@
+<mat-list-item class="item-bottom-border" [ngClass]="{'item-selected': selected && selected.id === item.id}"
+               (click)="select()" (mouseenter)="showIcons = true" (mouseleave)="showIcons = false">
+    <div fxFlex="40" fxLayoutAlign="start center" >
+        <span class="text-ellipsis" matTooltip="{{item.id}}">
+            <strong>{{ item.id }}</strong>
+        </span>
+    </div>
+    <div fxFlex="40" fxLayoutAlign="start center">
+        <span  class="text-ellipsis"  matTooltip="{{item.title.value}}">{{ item.title.value }}</span>
+    </div>
+    <div fxFlex="10">
+        <button mat-icon-button matTooltip="Delete role" (click)="onDelete($event, item)"
+                [ngClass]="{'role-edit-list-icon-hidden': !showIcons}">
+            <mat-icon>delete</mat-icon>
+        </button>
+    </div>
+    <div fxFlex="10">
+        <button mat-icon-button matTooltip="Duplicate role" (click)="onDuplicate($event, item)"
+                [ngClass]="{'role-edit-list-icon-hidden': !showIcons}">
+            <mat-icon>add_to_photos</mat-icon>
+        </button>
+    </div>
+</mat-list-item>
+

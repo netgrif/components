@@ -1,0 +1,21 @@
+<button
+    mat-icon-button
+    id="tool_{{tool.id}}"
+    class="button-line"
+    matTooltip="{{tool.tooltip}}"
+    [ngClass]="{'button-highlight': isActive()}"
+    (click)="activate(); tool.onClick()"
+    [disabled]="tool.disabled.value">
+
+    <mat-icon *ngIf="tool.icon.isSvg" svgIcon="{{tool.icon.name}}" [ngClass]="{'active-custom-svg': isActive(), 'inactive-custom-svg': !isActive()}"></mat-icon>
+    <mat-icon *ngIf="!tool.icon.isSvg" [ngClass]="{'fill-svg': isActive(), 'material-icons-outlined': isOutlined()}">{{tool.icon.name}}</mat-icon>
+
+<!--    <div *ngIf="tool.tutorialStep" class="tutorial"-->
+<!--         joyrideStep="{{tool.tutorialStep?.step}}"-->
+<!--         title="{{tool.tutorialStep?.title}}"-->
+<!--         text="{{tool.tutorialStep?.text}}"-->
+<!--         stepPosition="{{tool.tutorialStep?.position}}"-->
+<!--         (done)="tutorialService.onClose()"-->
+<!--         (next)="tool.tutorialStep?.onNext()"-->
+<!--         (prev)="tool.tutorialStep?.onPrev()"></div>-->
+</button>

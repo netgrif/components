@@ -15,6 +15,7 @@
 @import "src/lib/search/advanced-search/advanced-search-component/advanced-search.component.theme";
 @import "src/lib/search/search-component/search.component-theme.scss";
 @import "src/lib/dialog/dialog.theme";
+@import "src/lib/builder/builder.theme";
 
 @mixin nae-lib-theme($app-theme, $app-typography-config) {
     @include nae-typography($app-typography-config);
@@ -35,6 +36,7 @@
     @include advanced-search-theme($app-theme);
     @include advanced-search-icon($app-theme);
     @include dialog-theme($app-theme);
+    @include netgrif-builder-theme($app-theme);
 }
 
 .mat-mdc-tab-group.nae-tab-fill-height .mat-mdc-tab-body-wrapper {

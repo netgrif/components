@@ -1,0 +1,50 @@
+.not-resizable {
+    resize: none;
+}
+
+.editor-area-height-constraints {
+    height: 600px;
+}
+
+.full-size-editor {
+    .editor-container {
+        height: calc(100vh - 100px);
+    }
+    height: 420px;
+    border: 1px solid #0000001f;
+    border-radius: 4px;
+}
+
+#description {
+    position: fixed;
+    z-index: 999;
+    max-height: 100vh;
+    min-width: 112px;
+    left: 43px;
+    top: 90px;
+    max-width: calc(35% - 15px);
+    min-height: 64px;
+}
+
+#description-content {
+    position: relative;
+}
+
+
+.mat-action-row {
+    padding: 0 16px 4px 16px;
+    border: none;
+}
+
+.header {
+    height: 48px !important;
+}
+
+.panel-fix {
+    margin: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+.full-menu-width{
+    height: 5px;
+    width: 100%;
+}

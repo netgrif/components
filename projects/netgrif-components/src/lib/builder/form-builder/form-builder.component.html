@@ -1,0 +1,20 @@
+<mat-sidenav class="app-mat-sidenav" mode="side" fixedInViewport=true disableClose="true" opened>
+    <nc-builder-field-list></nc-builder-field-list>
+</mat-sidenav>
+
+<nc-builder-info-label></nc-builder-info-label>
+<nc-builder-paper-component>
+</nc-builder-paper-component>
+
+<mat-sidenav mwlResizable
+             (resizing)="onResizeEvent($event)"
+             [style.width.px]="width"
+             fixedInViewport=true
+             disableClose="true"
+             style="max-width: 450px;"
+             class="app-mat-sidenav-right" mode="side" position="end" opened>
+    <div fxLayout="row">
+        <div class="handle" mwlResizeHandle [resizeEdges]="{ left: true }"></div>
+        <nc-builder-edit-panel fxFlex></nc-builder-edit-panel>
+    </div>
+</mat-sidenav>

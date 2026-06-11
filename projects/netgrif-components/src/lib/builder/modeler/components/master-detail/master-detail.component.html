@@ -1,0 +1,18 @@
+<div class="container">
+    <div [fxFlex]="defaultWidth" fxLayout="column"  class="master">
+        <nc-builder-main-master *ngIf="masterPortal === undefined"
+                         fxFlex
+                         [masterService]="masterService"
+                         [masterItemComponent]="masterItemComponent"
+                         [firstColName]="firstColName"
+                         [secondColName]="secondColName"
+                         [showAddButton]="showAddButton"
+                         [buttonTooltip]="buttonTooltip"
+        ></nc-builder-main-master>
+        <ng-template *ngIf="masterPortal !== undefined" [cdkPortalOutlet]="masterPortal"></ng-template>
+    </div>
+    <div class="border"></div>
+    <div [fxFlex]="100-defaultWidth" fxLayout="column"  class="detail">
+        <ng-template [cdkPortalOutlet]="detailPortal"></ng-template>
+    </div>
+</div>

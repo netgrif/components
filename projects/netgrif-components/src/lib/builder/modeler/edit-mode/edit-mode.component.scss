@@ -1,0 +1,22 @@
+.outer {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    border: 0;
+}
+
+nab-context-menu {
+    position: fixed;
+    z-index: 9999;
+    visibility: hidden;
+    min-width: 112px;
+    max-width: 280px;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    max-height: calc(100vh - 48px);
+    border-radius: 4px;
+    outline: 0;
+    min-height: 64px;
+    background: #fff;
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2), 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12);
+}

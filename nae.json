@@ -238,6 +238,21 @@
                         "path": "group-nav"
                     }
                 },
+                "builder-example": {
+                    "component": {
+                        "class": "BuilderComponent",
+                        "from": "@netgrif/components"
+                    },
+                    "navigation": {
+                        "title": "Builder",
+                        "icon": "device_hub"
+                    },
+                    "access": "private",
+                    "routing": {
+                        "path": "builder"
+                    },
+                    "processUri": "/"
+                },
                 "custom-view": {
                     "component": {
                         "class": "TaskViewComponent",

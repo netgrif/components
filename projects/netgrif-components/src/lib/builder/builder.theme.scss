@@ -1,0 +1,330 @@
+@use '@angular/material' as mat;
+
+@mixin netgrif-builder-theme($theme) {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+
+    // BUILDER
+    .svg-active-stroke {
+        stroke:  mat.get-color-from-palette($accent, 500) !important;
+    }
+
+    .svg-active-fill {
+        fill: mat.get-color-from-palette($accent, 500) !important;
+    }
+
+    .builder-fix {
+        .app-mat-viewnav {
+            background-color: mat.get-color-from-palette($primary, 600) !important;
+
+            .selected {
+                border-left: mat.get-color-from-palette($accent, 500);
+                background-color: mat.get-color-from-palette($primary, 700);
+            }
+
+            mat-icon {
+                color: mat.get-color-from-palette($primary, 200);
+            }
+        }
+
+        .active-item {
+            background: mat.get-color-from-palette($accent, 500) !important;
+        }
+
+        .button-highlight {
+            background: rgba(mat.get-color-from-palette($accent, 300), .3) !important;
+        }
+
+        .active-item-gridster {
+            background: mat.get-color-from-palette($accent, 500) !important;
+        }
+
+        .field-list-mat-list-item:hover {
+            .field-list-mat-list-item-title {
+                color: mat.get-color-from-palette($primary, 500);
+            }
+        }
+
+        .field-list-mat-list-item-disabled-title {
+            height: 40px;
+            color: #bbbbbb;
+        }
+
+        .field-list-expansion-header:hover {
+            color: mat.get-color-from-palette($primary, 500);
+
+            .field-list-expansion-title {
+                color: mat.get-color-from-palette($primary, 500);
+            }
+        }
+
+        .clear-search-icon {
+            &:hover {
+                background-color: mat.get-color-from-palette($accent, 500);
+            }
+        }
+
+        .active-card {
+            background: mat.get-color-from-palette($primary, 200);
+        }
+
+        .mat-tab-label:hover {
+            background: mat.get-color-from-palette($primary, 50);
+        }
+
+        .mat-tab-label-active {
+            color: mat.get-color-from-palette($primary, 500);
+            border-bottom: 2px solid mat.get-color-from-palette($primary, 500);
+            opacity: 1;
+        }
+
+        .fill-svg {
+            color: mat.get-color-from-palette($accent, 500) !important;
+            fill: mat.get-color-from-palette($accent, 500) !important;
+            opacity: 1;
+        }
+
+        .active-custom-svg {
+            stroke: mat.get-color-from-palette($accent, 500) !important;
+            color: mat.get-color-from-palette($accent, 500) !important;
+            fill: mat.get-color-from-palette($accent, 500) !important;
+            opacity: 1;
+        }
+
+        .inactive-custom-svg {
+            stroke: black;
+            color: black;
+            fill: black;
+        }
+        nab-tool, nab-control-panel-mode, nab-import-tool-button {
+            .mat-mdc-icon-button .mat-mdc-button-persistent-ripple {
+                border-radius: 5px;
+            }
+        }
+
+        .button-line:hover {
+            background: rgba(mat.get-color-from-palette($accent, 300), .50) !important;
+        }
+
+        .item-selected {
+            background: rgba(mat.get-color-from-palette($accent, 300), .3) !important;
+        }
+
+        .item-actual {
+            background: rgba(mat.get-color-from-palette($accent, 300), .3) !important;
+        }
+
+        .checkbox-background-warn {
+            .mdc-checkbox .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background, .mdc-checkbox .mdc-checkbox__native-control:enabled:indeterminate~.mdc-checkbox__background, .mdc-checkbox .mdc-checkbox__native-control[data-indeterminate=true]:enabled~.mdc-checkbox__background {
+                border-color: mat.get-color-from-palette($warn, 500) !important;
+                background-color: mat.get-color-from-palette($warn, 500) !important;
+            }
+
+            .mdc-checkbox .mdc-checkbox__native-control:enabled~.mdc-checkbox__background .mdc-checkbox__mixedmark {
+                border-color: white;
+                color: white;
+            }
+        }
+
+        .checkbox-background-green {
+            .mdc-checkbox .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background, .mdc-checkbox .mdc-checkbox__native-control:enabled:indeterminate~.mdc-checkbox__background, .mdc-checkbox .mdc-checkbox__native-control[data-indeterminate=true]:enabled~.mdc-checkbox__background {
+                border-color:#008800 !important;
+                background-color: #008800 !important;
+            }
+
+            .mdc-checkbox .mdc-checkbox__native-control:enabled~.mdc-checkbox__background .mdc-checkbox__checkmark {
+                color: white;
+            }
+        }
+
+        .lasso-selection {
+            stroke: mat.get-color-from-palette($accent, 500);
+            fill: mat.get-color-from-palette($accent,500);
+            fill-opacity: 10%;
+            stroke-width: 1;
+        }
+
+        .expansion-panel-compact {
+            .mat-expansion-panel-body {
+                padding: 0 8px 8px !important;
+            }
+        }
+
+        .mat-list-item-compact {
+            height: 40px;
+
+            .mat-list-item-content {
+                padding-left: 0 !important;
+            }
+        }
+
+        .flexRow {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .flexColumn {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dialog-width-50 {
+            width: 50% !important;
+        }
+
+        .dialog-width-60 {
+            width: 60% !important;
+        }
+
+        .mat-mdc-dialog-container .mat-mdc-dialog-title+.mat-mdc-dialog-content {
+            padding-top: 8px !important;
+        }
+
+        .builder-field-input {
+            margin-top: 6px;
+            .mat-mdc-form-field-subscript-wrapper {
+                position: absolute;
+                width: auto;
+            }
+        }
+
+        .netgrif-input {
+            .properties {
+                .mat-mdc-form-field-infix {
+                    min-width: 80px !important;
+                }
+            }
+
+            .drag-box {
+                .mat-mdc-form-field-infix {
+                    min-width: 80px !important;
+                }
+            }
+        }
+
+        .list-accordion {
+
+            .mat-expansion-panel-body {
+                padding: 0 12px 0;
+            }
+        }
+
+        .field-list-expansion-panel {
+            .mat-expansion-panel-header {
+                padding-left: 8px;
+                padding-right: 4px;
+            }
+            .mat-expansion-panel-body {
+                padding-left: 8px;
+                padding-right: 4px;
+            }
+            .mat-expanded {
+                margin-bottom: 0;
+                margin-top: 0;
+            }
+            .mat-expansion-panel-header.mat-expanded {
+                height: 40px;
+            }
+        }
+
+        .app-loading {
+            @keyframes fadeInFromNone {
+                0% {
+                    display: none;
+                    opacity: 0;
+                }
+
+                1% {
+                    display: block;
+                    opacity: 0;
+                }
+
+                100% {
+                    display: block;
+                    opacity: 1;
+                }
+            }
+
+            .logo {
+                width: 100px;
+                height: 100px;
+                animation: 1s ease-out 0s 1 fadeInFromNone;
+                // this way asset gets processed by webpack
+                //background: url(assets/netgrif_logo.svg) center center no-repeat;
+                background-size: contain;
+            }
+        }
+
+        .app-version-text {
+            font-size: 9px;
+            color: mat.get-color-from-palette($primary, 200);
+        }
+    }
+
+    .svg-inactive-stroke {
+        stroke: black !important;
+    }
+
+    .svg-inactive-fill {
+        fill: black !important;
+    }
+
+    .svg-invisible-fill {
+        fill: none !important;
+    }
+
+    .svg-transition-enabled {
+        stroke: green;
+        fill: yellowgreen;
+    }
+
+    .svg-transition-disabled {
+        stroke: red;
+        fill: white;
+    }
+
+    .svg-transition-firing {
+        stroke: green;
+        fill: none;
+    }
+
+    .svg-fire-arrow-cancel-active {
+        fill: coral;
+        stroke: red;
+    }
+
+    .svg-fire-arrow-cancel-inactive {
+        fill: none;
+        stroke: none;
+    }
+
+    .svg-fire-arrow-finish-active {
+        stroke: green;
+        fill: yellowgreen;
+    }
+
+    .svg-fire-arrow-finish-inactive {
+        fill: none;
+        stroke: none;
+    }
+
+    .svg-icon-active {
+        display: block;
+    }
+
+    .svg-icon-inactive {
+        display: none;
+    }
+
+    .pag-density {
+        @include mat.paginator-density(0);
+    }
+
+    .icon-dimensions {
+        .language-svg-icon {
+            transform: scale(1.6);
+            transform-origin: top left;
+        }
+    }
+}

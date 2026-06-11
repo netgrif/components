@@ -1,0 +1,31 @@
+<div *ngIf="getSelected() !== undefined; else elseBlock" fxFlex fxLayout="column" fxLayoutAlign="start start"
+     class="height-fix netgrif-input">
+    <div fxFlex fxLayout="row" class="full-width top-padding-8">
+        <mat-form-field appearance="outline" fxFlex>
+            <mat-label>Render type</mat-label>
+            <mat-select [(ngModel)]="editorOptions.renderSideBySide" (selectionChange)="updateEditor()">
+                <mat-option [value]="true">Side by side</mat-option>
+                <mat-option [value]="false">Inline</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <button mat-button (click)="download()">
+            <mat-icon>download</mat-icon>
+            <span>Download</span>
+        </button>
+        <button mat-button (click)="revert()">
+            <mat-icon>restore</mat-icon>
+            <span>Restore</span>
+        </button>
+        <div fxFlex fxFill></div>
+    </div>
+    <ngx-monaco-diff-editor class="full-height-monaco" fxFill (onInit)="onEditorInit($event)"
+                            [options]="editorOptions" [originalModel]="originalModel"
+                            [modifiedModel]="modifiedModel"></ngx-monaco-diff-editor>
+</div>
+
+<ng-template #elseBlock>
+    <div fxLayoutAlign="center center" class="height-fix full-width">
+        <span><strong>No history is selected</strong></span>
+    </div>
+</ng-template>

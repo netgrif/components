@@ -1,0 +1,23 @@
+table {
+  width: 100%;
+}
+
+.padding-table {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.padding-table-header {
+  padding-top: 21px;
+  padding-bottom: 21px;
+}
+
+.height-row {
+  height: 24px;
+}
+
+.table-right-padding {
+  th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type {
+    padding-right: 0 !important;
+  }
+}

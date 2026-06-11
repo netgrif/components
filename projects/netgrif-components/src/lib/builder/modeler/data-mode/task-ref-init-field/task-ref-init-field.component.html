@@ -1,0 +1,26 @@
+<mat-form-field class="full-width">
+    <mat-label>Initial value</mat-label>
+    <mat-chip-grid #chipGrid>
+        @for (init of taskRef.inits; track $index) {
+            <mat-chip-row (removed)="removeInit($index)">
+                {{ prettyTask(init?.value) }}
+                <button matChipRemove>
+                    <mat-icon>cancel</mat-icon>
+                </button>
+            </mat-chip-row>
+        }
+    </mat-chip-grid>
+    <input
+        #taskRefInput
+        name="Inits"
+        [formControl]="taskRefFormControl"
+        [matChipInputFor]="chipGrid"
+        [matAutocomplete]="auto"
+        (matChipInputTokenEnd)="addInit($event)"
+    />
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectInit($event)">
+        @for (task of tasks; track task) {
+            <mat-option [value]="task.id" [disabled]="isReferenced(task)">{{ task.label?.value }} [{{ task.id }}]</mat-option>
+        }
+    </mat-autocomplete>
+</mat-form-field>

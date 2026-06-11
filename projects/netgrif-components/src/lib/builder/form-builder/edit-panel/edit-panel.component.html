@@ -1,0 +1,401 @@
+<div class="form netgrif-input builder-field-input">
+    <div *ngIf="!isSomeGridsterFieldSelected()">
+        <mat-form-field class="full-width margin-html">
+            <mat-label>Number of columns</mat-label>
+            <input matInput type="number" [min]="minOfCols" [(ngModel)]="numOfCols" (change)="changeCols($event)">
+        </mat-form-field>
+
+        <button mat-stroked-button color="primary" class="action-button margin-html" (click)="openTransitionActions()">
+            <mat-icon>code</mat-icon>
+            Edit Actions ({{numberOfActions()}})
+        </button>
+
+        <h5 class="full-width margin-html">Assign event</h5>
+        <mat-form-field class="full-width margin-html">
+            <mat-label>Title</mat-label>
+            <input matInput type="text" [(ngModel)]="assignEvent.title.value" (change)="registerChange()">
+        </mat-form-field>
+        <mat-form-field class="full-width margin-html">
+            <mat-label>Message</mat-label>
+            <input matInput type="text" [(ngModel)]="assignEvent.message.value" (change)="registerChange()">
+        </mat-form-field>
+
+        <h5 class="full-width margin-html">Finish event</h5>
+        <mat-form-field class="full-width margin-html">
+            <mat-label>Title</mat-label>
+            <input matInput type="text" [(ngModel)]="finishEvent.title.value" (change)="registerChange()">
+        </mat-form-field>
+        <mat-form-field class="full-width margin-html">
+            <mat-label>Message</mat-label>
+            <input matInput type="text" [(ngModel)]="finishEvent.message.value" (change)="registerChange()">
+        </mat-form-field>
+
+        <h5 class="full-width margin-html">Cancel event</h5>
+        <mat-form-field class="full-width margin-html">
+            <mat-label>Title</mat-label>
+            <input matInput type="text" [(ngModel)]="cancelEvent.title.value" (change)="registerChange()">
+        </mat-form-field>
+        <mat-form-field class="full-width margin-html">
+            <mat-label>Message</mat-label>
+            <input matInput type="text" [(ngModel)]="cancelEvent.message.value" (change)="registerChange()">
+        </mat-form-field>
+
+        <h5 class="full-width margin-html">Delegate event</h5>
+        <mat-form-field class="full-width margin-html">
+            <mat-label>Title</mat-label>
+            <input matInput type="text" [(ngModel)]="delegateEvent.title.value" (change)="registerChange()">
+        </mat-form-field>
+        <mat-form-field class="full-width margin-html">
+            <mat-label>Message</mat-label>
+            <input matInput type="text" [(ngModel)]="delegateEvent.message.value" (change)="registerChange()">
+        </mat-form-field>
+    </div>
+    <div *ngIf="isSomeGridsterFieldSelected()">
+        <h4 class="full-width margin-html">
+            Id: {{ dataVariable.id }}
+            <button mat-icon-button matTooltip="Refactor field ID"
+                    (click)="openRefactorDialog($event, dataVariable)">
+                <mat-icon>edit</mat-icon>
+            </button>
+        </h4>
+
+        <div>
+            <mat-slide-toggle [(ngModel)]="dataRef.logic.required" class="full-width margin-html"
+                              (change)="notifyGridster()">
+                Required
+            </mat-slide-toggle>
+            <mat-slide-toggle [(ngModel)]="dataRef.logic.immediate" class="full-width margin-html"
+                              (change)="notifyGridster()">
+                Immediate
+            </mat-slide-toggle>
+            <mat-form-field class="full-width margin-html">
+                <mat-label>Behavior</mat-label>
+                <mat-select [(value)]="dataRef.logic.behavior" (selectionChange)="notifyGridster()">
+                    <mat-option *ngFor="let opt of behaviorOptions" [value]="opt.key">
+                        {{ opt.value }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div>
+            <mat-form-field class="full-width margin-html">
+                <mat-label>Title</mat-label>
+                <input matInput type="text" [(ngModel)]="dataVariable.title.value" (change)="notifyGridster()">
+            </mat-form-field>
+            <mat-form-field class="full-width margin-html">
+                <mat-label>Placeholder</mat-label>
+                <input matInput type="text" [(ngModel)]="dataVariable.placeholder.value" (change)="notifyGridster()">
+            </mat-form-field>
+            <mat-form-field class="full-width margin-html">
+                <mat-label>Description</mat-label>
+                <textarea matInput [(ngModel)]="dataVariable.desc.value" (change)="notifyGridster()"></textarea>
+            </mat-form-field>
+            <!--  VALUES  -->
+            <mat-form-field *ngIf="hasTextValue()" class="full-width margin-html">
+                <mat-label>Initial value</mat-label>
+                <input matInput type="text" placeholder="" [(ngModel)]="dataVariable.init.value"
+                       (change)="notifyGridster()">
+            </mat-form-field>
+            <mat-form-field *ngIf="hasOptions()" class="full-width margin-html">
+                <mat-label>Initial value</mat-label>
+                <mat-select *ngIf="!hasInits(); else hasInitsItems" [(ngModel)]="dataVariable.init.value"
+                            (selectionChange)="notifyGridster()">
+                    <mat-option>None</mat-option>
+                    <mat-option *ngFor="let opt of dataVariable.options" [value]="opt.key">
+                        {{ opt.value?.value }}
+                    </mat-option>
+                </mat-select>
+                <ng-template #hasInitsItems>
+                    <mat-select (valueChange)="changeInitsValue($event)" [value]="getInitsValue()"
+                                (selectionChange)="notifyGridster()" multiple>
+                        <mat-option *ngFor="let opt of dataVariable.options" [value]="opt.key">
+                            {{ opt.value?.value }}
+                        </mat-option>
+                    </mat-select>
+                </ng-template>
+            </mat-form-field>
+            <mat-slide-toggle *ngIf="isBoolean()" [checked]="dataVariable.init.value === 'true'"
+                              (change)="setBooleanValue($event); notifyGridster()">
+                Initial value
+            </mat-slide-toggle>
+            <mat-form-field *ngIf="isNumber()" class="full-width margin-html">
+                <mat-label>Initial value</mat-label>
+                <input matInput type="number" [(ngModel)]="dataVariable.init.value" (change)="notifyGridster()">
+            </mat-form-field>
+            <mat-form-field *ngIf="isDate()" class="full-width margin-html">
+                <mat-label>Initial value</mat-label>
+                <mat-datepicker-toggle matPrefix [for]="datepicker"></mat-datepicker-toggle>
+                <input matInput (dateChange)="notifyGridster(); formatDate();"
+                       [matDatepicker]="datepicker"
+                       [(ngModel)]="dataVariable.init.value"
+                       (click)="datepicker.open()"
+                       (keydown.enter)="datepicker.close()">
+                <mat-datepicker #datepicker>
+                </mat-datepicker>
+            </mat-form-field>
+            <mat-form-field *ngIf="isDatetime()" class="full-width margin-html">
+                <mat-label>Initial value</mat-label>
+                <input matInput
+                       [ngxMatDatetimePicker]="picker"
+                       [(ngModel)]="dataVariable.init.value"
+                       (ngModelChange)="notifyGridster()">
+                <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
+                <ngx-mat-datetime-picker #picker
+                                         [showSpinners]="true"
+                                         [showSeconds]="false"
+                                         [stepHour]="1"
+                                         [stepMinute]="5"
+                                         [color]="'primary'"
+                                         [enableMeridian]="false"
+                                         class="full-width">
+                </ngx-mat-datetime-picker>
+            </mat-form-field>
+            <div class="margin-html" *ngIf="isTaskRef()">
+                <nc-builder-task-ref-init-field [taskRef]="dataVariable"></nc-builder-task-ref-init-field>
+            </div>
+            <!--  OPTIONS MANAGEMENT IF APPLICABLE  -->
+            <div *ngIf="hasOptions()">
+                <mat-divider></mat-divider>
+                <div cdkDropList class="drag-list margin-html" (cdkDropListDropped)="drop($event)">
+                    <div *ngIf="dataVariable.options.length > 0">
+                        <div class="drag-box" *ngFor="let item of dataVariable.options; let i = index" cdkDrag>
+                            <mat-icon class="icon-color" cdkDragHandle>drag_indicator</mat-icon>
+                            <mat-form-field class="margin-right8px" *ngIf="!hasSimpleOptions()">
+                                <input matInput type="text" placeholder="Key" [value]="item.key"
+                                       (change)="setOptionsKey($event, i) ;notifyGridster()">
+                            </mat-form-field>
+                            <mat-form-field class="margin-right8px">
+                                <input matInput type="text" placeholder="Value" [value]="item.value?.value"
+                                       (change)="setOptionsValue($event, i) ;notifyGridster()">
+                            </mat-form-field>
+                            <button mat-icon-button (click)="deleteOption(i); notifyGridster()">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                    <div fxLayoutAlign="center center" *ngIf="dataVariable.options.length === 0"
+                         class="no-options">
+                        <span>No options</span>
+                    </div>
+                </div>
+                <button mat-stroked-button color="primary" class="save-button"
+                        (click)="addOption(); notifyGridster()">
+                    <mat-icon>add</mat-icon>
+                    Add option
+                </button>
+            </div>
+
+            <mat-divider></mat-divider>
+
+            <div class="full-width">
+                <button mat-stroked-button color="primary" (click)="createOrDeleteComponent();notifyGridster()"
+                        class="full-width save-button">
+                    <mat-icon *ngIf="dataVariable.component === undefined">add</mat-icon>
+                    <mat-icon *ngIf="dataVariable.component !== undefined">delete</mat-icon>
+                    {{ dataVariable.component === undefined ? 'Add component' : 'Delete component' }}
+                </button>
+            </div>
+            <div *ngIf="dataVariable.component !== undefined" class="full-width">
+                <mat-form-field class="full-width margin-html">
+                    <mat-label>Component Name</mat-label>
+                    <input matInput [(ngModel)]="dataVariable.component.name" (change)="setComponent($event);notifyGridster()"
+                           [formControl]="componentNameFormCtrl" [matAutocomplete]="componentAutocomplete">
+                    <mat-autocomplete #componentAutocomplete="matAutocomplete" (optionSelected)="setComponent($event);notifyGridster()">
+                        <mat-option *ngFor="let componentDef of filteredComponents(dataVariable.component)" [value]="componentDef.name">
+                            {{componentDef.title}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+                <div>
+                    <div *ngIf="dataVariable.component.properties.length > 0">
+                        <div *ngFor="let property of dataVariable.component.properties; let i = index" class="margin-html properties">
+                            <mat-form-field class="margin-right8px">
+                                <input matInput type="text" placeholder="Key" [value]="property.key" [matAutocomplete]="propertyAutocomplete"
+                                       (change)="setPropertyKey($event, i, dataVariable.component) ;notifyGridster()">
+                                <mat-autocomplete #propertyAutocomplete="matAutocomplete" (optionSelected)="setPropertyKey($event, i, dataVariable.component);notifyGridster()">
+                                    <mat-option *ngFor="let propertyDef of filteredProperties(dataVariable.component, property.key)" [value]="propertyDef.name">
+                                        {{propertyDef.name}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                            <mat-form-field class="margin-right8px">
+                                <input matInput type="text" placeholder="Value" [value]="property.value"
+                                       (change)="setPropertyValue($event, i, dataVariable.component) ;notifyGridster()">
+                            </mat-form-field>
+                            <button mat-icon-button
+                                    (click)="deleteProperty(i, dataVariable.component); notifyGridster()">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                    <div fxLayoutAlign="center center" *ngIf="dataVariable.component?.properties?.length === 0"
+                         class="no-options">
+                        <span>No properties</span>
+                    </div>
+                </div>
+                <button mat-stroked-button color="primary" class="button-text save-button"
+                        (click)="addProperty(dataVariable.component); notifyGridster()">
+                    <mat-icon>add</mat-icon>
+                    Add property
+                </button>
+                <button mat-stroked-button color="primary" class="button-text save-button"
+                        (click)="cloneProperty(dataVariable, dataRef, 'component')">
+                    <mat-icon>move_down</mat-icon>
+                    Copy to DataRef
+                </button>
+                <div *ngIf="isIconEnumeration(dataVariable.type, dataVariable?.component)">
+                    <div *ngIf="dataVariable.component.icons.length > 0; else noIcons">
+                        <div *ngFor="let icon of dataVariable.component.icons; let i = index" class="margin-html properties">
+                            <mat-form-field class="margin-right8px">
+                                <input matInput type="text" placeholder="Key" [value]="icon.key"
+                                       (change)="setIconKey($event, i, dataVariable.component) ;notifyGridster()">
+                            </mat-form-field>
+                            <mat-form-field class="margin-right8px">
+                                <input matInput type="text" placeholder="Icon" [value]="icon.icon"
+                                       (change)="setIconValue($event, i, dataVariable.component) ;notifyGridster()">
+                            </mat-form-field>
+                            <button mat-icon-button
+                                    (click)="deleteIcon(i, dataVariable.component); notifyGridster()">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                    <ng-template #noIcons>
+                        <div fxLayoutAlign="center center"
+                             class="no-options">
+                            <span>No Icons</span>
+                        </div>
+                    </ng-template>
+                    <button mat-stroked-button color="primary" class="button-text save-button"
+                            (click)="addIcon(gridsterService.selectedDataField.dataVariable.component); notifyGridster()">
+                        <mat-icon>add</mat-icon>
+                        Add Icon
+                    </button>
+                </div>
+            </div>
+
+            <mat-divider></mat-divider>
+
+            <div class="full-width">
+                <button mat-stroked-button color="primary" (click)="createOrDeleteDataRefComponent();notifyGridster()"
+                        class="full-width save-button">
+                    <mat-icon *ngIf="dataRef.component === undefined">add</mat-icon>
+                    <mat-icon *ngIf="dataRef.component !== undefined">delete</mat-icon>
+                    {{ dataRef.component === undefined ? 'Add DataRef component' : 'Delete DataRef component' }}
+                </button>
+            </div>
+            <div *ngIf="dataRef.component !== undefined" class="full-width">
+                <mat-form-field class="full-width">
+                    <mat-label>Component Name</mat-label>
+                    <input matInput [(ngModel)]="dataRef.component.name" (change)="setDataRefComponent($event);notifyGridster()"
+                           [formControl]="dataRefComponentNameFormCtrl" [matAutocomplete]="dataRefComponentAutocomplete">
+                    <mat-autocomplete #dataRefComponentAutocomplete="matAutocomplete" (optionSelected)="setComponent($event);notifyGridster()">
+                        <mat-option *ngFor="let componentDef of filteredComponents(dataRef.component)" [value]="componentDef.name">
+                            {{componentDef.title}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+                <div>
+                    <div *ngIf="dataRef.component.properties.length > 0">
+                        <div *ngFor="let property of dataRef.component.properties; let i = index" class="margin-html properties">
+                            <mat-form-field class="margin-right8px">
+                                <input matInput type="text" placeholder="Key" [value]="property.key" [matAutocomplete]="dataRefPropertyAutocomplete"
+                                       (change)="setPropertyKey($event, i, dataRef.component) ;notifyGridster()">
+                                <mat-autocomplete #dataRefPropertyAutocomplete="matAutocomplete" (optionSelected)="setPropertyKey($event, i, dataRef.component);notifyGridster()">
+                                    <mat-option *ngFor="let propertyDef of filteredProperties(dataRef.component, property.key)" [value]="propertyDef.name">
+                                        {{propertyDef.name}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                            <mat-form-field class="margin-right8px">
+                                <input matInput type="text" placeholder="Value" [value]="property.value"
+                                       (change)="setPropertyValue($event, i, dataRef.component) ;notifyGridster()">
+                            </mat-form-field>
+                            <button mat-icon-button
+                                    (click)="deleteProperty(i, dataRef.component); notifyGridster()">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                    <div fxLayoutAlign="center center"
+                         *ngIf="dataRef.component?.properties?.length === 0"
+                         class="no-options">
+                        <span>No properties</span>
+                    </div>
+                </div>
+                <button mat-stroked-button color="primary" class="button-text save-button"
+                        (click)="addProperty(gridsterService.selectedDataField.dataRef.component); notifyGridster()">
+                    <mat-icon>add</mat-icon>
+                    Add property
+                </button>
+                <button mat-stroked-button color="primary" class="button-text save-button"
+                        (click)="cloneProperty(dataRef, dataVariable, 'component')">
+                    <mat-icon>move_up</mat-icon>
+                    Copy to DataField
+                </button>
+                <div *ngIf="isIconEnumeration(dataVariable.type, dataRef.component)" >
+                    <div *ngIf="dataRef.component.icons.length > 0; else noIcons">
+                        <div *ngFor="let icon of dataRef.component.icons; let i = index" class="margin-html properties">
+                            <mat-form-field class="margin-right8px">
+                                <input matInput type="text" placeholder="Key" [value]="icon.key"
+                                       (change)="setIconKey($event, i, dataRef.component) ;notifyGridster()">
+                            </mat-form-field>
+                            <mat-form-field class="margin-right8px">
+                                <input matInput type="text" placeholder="Icon" [value]="icon.icon"
+                                       (change)="setIconValue($event, i, dataRef.component) ;notifyGridster()">
+                            </mat-form-field>
+                            <button mat-icon-button
+                                    (click)="deleteIcon(i, dataRef.component); notifyGridster()">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                    <ng-template #noIcons>
+                        <div fxLayoutAlign="center center"
+                             class="no-options">
+                            <span>No Icons</span>
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+
+            <div class="full-width">
+                <button mat-stroked-button color="primary" (click)="openActions()"
+                        class="full-width save-button">
+                    <mat-icon>code</mat-icon>
+                    Datafield Actions
+                </button>
+            </div>
+
+            <mat-divider></mat-divider>
+
+            <!--  FIELD OFFSET MANAGEMENT  -->
+            <mat-form-field class="full-width margin-html">
+                <mat-label>Template</mat-label>
+                <mat-select [(value)]="dataRef.layout.template" (selectionChange)="notifyGridster()">
+                    <mat-option *ngFor="let opt of templates" [value]="opt">
+                        {{ opt }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field *ngIf="!isBoolean() && !isListOptionsDisplay() && !isFile() && !isFileList()"
+                            class="full-width margin-html">
+                <mat-label>Appearance</mat-label>
+                <mat-select [(value)]="dataRef.layout.appearance" (selectionChange)="notifyGridster()">
+                    <mat-option *ngFor="let opt of appearances" [value]="opt">
+                        {{ opt }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div>
+                <mat-form-field class="full-width margin-html">
+                    <mat-label>Field offset</mat-label>
+                    <input matInput type="number"
+                           [(ngModel)]="gridsterService.selectedDataField.dataRef.layout.offset"
+                           (change)="notifyGridster()">
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+</div>

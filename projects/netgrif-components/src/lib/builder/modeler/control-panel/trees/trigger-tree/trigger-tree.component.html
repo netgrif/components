@@ -1,0 +1,93 @@
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="tree">
+    <mat-tree-node *matTreeNodeDef="let node;">
+        <div class="tree-offset netgrif-input">
+            <mat-form-field>
+                <mat-label>Set trigger type</mat-label>
+                <mat-select [(ngModel)]="node.type" (selectionChange)="emitChanges()">
+                    <mat-option *ngFor="let opt of typeOptions" [value]="opt.key">
+                        {{opt.value}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <br *ngIf="node.type === 'time'">
+            <mat-form-field *ngIf="node.type === 'time'">
+                <mat-label>Set time type</mat-label>
+                <mat-select [(ngModel)]="node.option" (selectionChange)="makeChangeOption($event, node)">
+                    <mat-option *ngFor="let opt of optionOptions" [value]="opt.key">
+                        {{opt.value}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <br *ngIf="node.type === 'time'">
+            <mat-form-field *ngIf="node.option === 'delay' && node.type === 'time'">
+                <mat-label>Set delay</mat-label>
+                <input matInput type="text" [(ngModel)]="node.delay" (change)="emitChanges()" placeholder="Ex. PT5D">
+            </mat-form-field>
+            <div *ngIf="node.option === 'exact' && node.type === 'time'">
+                <mat-form-field>
+                    <input matInput
+                           [ngxMatDatetimePicker]="picker"
+                           placeholder="Set exact"
+                           [(ngModel)]="node.exact"
+                           (ngModelChange)="emitChanges()">
+                    <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
+                    <ngx-mat-datetime-picker #picker
+                                             [showSpinners]="true"
+                                             [showSeconds]="true"
+                                             [stepHour]="1"
+                                             [stepMinute]="5"
+                                             [stepSecond]="5"
+                                             [color]="'primary'"
+                                             [enableMeridian]="false"
+                                             class="full-width">
+                    </ngx-mat-datetime-picker>
+                </mat-form-field>
+            </div>
+        </div>
+    </mat-tree-node>
+
+    <!-- This is the tree node template for expandable nodes -->
+
+    <mat-nested-tree-node *matTreeNodeDef="let node;when: isRoot">
+        <li class="shift-left">
+            <div fxLayout="row">
+                <button mat-icon-button matTreeNodeToggle
+                        [attr.aria-label]="'toggle ' + node.name">
+                    <mat-icon class="mat-icon-rtl-mirror">
+                        {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                    </mat-icon>
+                </button>
+                <div fxLayoutAlign="start center" class="height-tree">
+                    <span>{{node.name}}</span>
+                </div>
+                <button mat-icon-button (click)="addNewItem(node)">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </div>
+            <ul [class.tree-invisible]="!treeControl.isExpanded(node)">
+                <ng-container matTreeNodeOutlet></ng-container>
+            </ul>
+        </li>
+    </mat-nested-tree-node>
+
+    <mat-nested-tree-node *matTreeNodeDef="let node;when: hasChildAndNotRoot">
+        <li fxLayout="row">
+            <button mat-icon-button matTreeNodeToggle
+                    [attr.aria-label]="'toggle ' + node.name">
+                <mat-icon class="mat-icon-rtl-mirror">
+                    {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                </mat-icon>
+            </button>
+            <div fxLayoutAlign="start center" class="height-tree">
+                <span>{{node.name}}</span>
+            </div>
+            <button mat-icon-button (click)="removeItem(node)">
+                <mat-icon>remove</mat-icon>
+            </button>
+            <ul [class.tree-invisible]="!treeControl.isExpanded(node)">
+                <ng-container matTreeNodeOutlet></ng-container>
+            </ul>
+        </li>
+    </mat-nested-tree-node>
+</mat-tree>
+

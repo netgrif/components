@@ -90,7 +90,8 @@ import {
     FilterFieldTabViewComponent,
     FilterFieldTabbedCaseViewComponent,
     FilterFieldTabbedTaskViewComponent,
-    DialogComponentsModule
+    DialogComponentsModule,
+    BuilderModule
 } from '@netgrif/components';
 import {UserInviteComponent} from './doc/user-invite/user-invite.component';
 import {ExamplePortalCardComponent} from './doc/dashboard-example/piechart-card/example-portal-card.component';
@@ -252,7 +253,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         FrontActionModule,
         LayoutModule,
         MatToolbarModule,
-        MatListModule
+        MatListModule,
+        BuilderModule
     ],
     providers: [{
         provide: ConfigurationService,

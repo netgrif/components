@@ -1,0 +1,28 @@
+<h2 mat-dialog-title>Edit place</h2>
+<mat-dialog-content class="netgrif-input">
+    <mat-form-field fxFlex>
+        <mat-label>Id</mat-label>
+        <input type="text" matInput [(ngModel)]="place.place.id" [formControl]="idCtrl">
+        <mat-error *ngIf="idCtrl.errors && idCtrl.errors.required">Id is required</mat-error>
+        <mat-error *ngIf="idCtrl.errors && idCtrl.errors.validUnique">Place with given id already exists</mat-error>
+    </mat-form-field>
+    <mat-form-field fxFlex>
+        <mat-label>Label</mat-label>
+        <input type="text" matInput [(ngModel)]="place.place.label.value">
+    </mat-form-field>
+    <mat-form-field fxFlex>
+        <mat-label>Tokens</mat-label>
+        <input type="number" min="0" step="1" matInput [(ngModel)]="place.place.marking" [formControl]="markingCtrl">
+        <mat-error *ngIf="markingCtrl.errors && markingCtrl.errors.required">Number of tokens is required</mat-error>
+        <mat-error *ngIf="markingCtrl.errors && markingCtrl.errors.validMarking">
+            Number of tokens must be a non-negative integer
+        </mat-error>
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-flat-button color="primary" [mat-dialog-close]="place"
+            [disabled]="markingCtrl.invalid || idCtrl.invalid">
+        <mat-icon>done</mat-icon>
+        <span>Save</span>
+    </button>
+</mat-dialog-actions>

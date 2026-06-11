@@ -1,0 +1,17 @@
+
+.height-fix {
+    height: calc(100vh - 50px);
+}
+
+.full-width {
+    width: 100%;
+}
+
+.full-height-monaco {
+    height: calc(100% - 65px) !important;
+    min-height: calc(100% - 65px) !important;
+}
+
+.top-padding-8 {
+    padding-top: 8px;
+}

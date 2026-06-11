@@ -1,0 +1,4 @@
+<div class="height-builder">
+    <nc-builder-modeler class="builder-fix" *ngIf="builderModeService.mode !== typeMode.FORM_BUILDER"></nc-builder-modeler>
+    <nc-builder-form-builder class="builder-fix" *ngIf="builderModeService.mode === typeMode.FORM_BUILDER"></nc-builder-form-builder>
+</div>
