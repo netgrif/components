@@ -1,48 +1,25 @@
-import {MatDialog} from '@angular/material/dialog';
-import {Router} from '@angular/router';
 import {RegularTransitionPlaceArc as SvgArc} from '@netgrif/petri.svg';
 import {ArcType} from '@netgrif/petriflow';
-import {ActionsMasterDetailService} from '../../../actions-mode/actions-master-detail.service';
-import {ActionsModeService} from '../../../actions-mode/actions-mode.service';
 import {ControlPanelButton} from '../../../control-panel/control-panel-button';
 import {ControlPanelIcon} from '../../../control-panel/control-panel-icon';
-import {SelectedTransitionService} from '../../../selected-transition.service';
-import {ModelService} from '../../../services/model/model.service';
 import {CanvasArc} from '../../domain/canvas-arc';
 import {CanvasPlace} from '../../domain/canvas-place';
 import {CanvasTransition} from '../../domain/canvas-transition';
-import {EditModeService} from '../../edit-mode.service';
 import {CreateArcTool} from './create-arc-tool';
-import {BuilderModeService} from "../../../../builder-mode.service";
+import {CanvasToolContext} from './canvas-tool-context';
 
 export class CreateRegularArcTool extends CreateArcTool<CanvasPlace | CanvasTransition> {
 
     public static ID = 'CreateRegularArcTool';
 
-    constructor(
-        modelService: ModelService,
-        dialog: MatDialog,
-        editModeService: EditModeService,
-        router: Router,
-        transitionService: SelectedTransitionService,
-        actionMode: ActionsModeService,
-        actionsMasterDetail: ActionsMasterDetailService,
-        builderModeService: BuilderModeService
-    ) {
+    constructor(context: CanvasToolContext) {
         super(
             CreateRegularArcTool.ID,
             new ControlPanelButton(
                 new ControlPanelIcon('arc', true),
                 'Arc',
             ),
-            modelService,
-            dialog,
-            editModeService,
-            router,
-            transitionService,
-            actionMode,
-            actionsMasterDetail,
-            builderModeService
+            context
         );
     }
 

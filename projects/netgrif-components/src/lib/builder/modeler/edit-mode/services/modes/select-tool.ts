@@ -1,17 +1,10 @@
-import {MatDialog} from '@angular/material/dialog';
-import {Router} from '@angular/router';
 import {
     DialogPlaceRefDeleteComponent,
     PlaceRefDeleteData,
 } from '../../../../dialogs/dialog-place-ref-delete/dialog-place-ref-delete.component';
-import {ActionsMasterDetailService} from '../../../actions-mode/actions-master-detail.service';
-import {ActionsModeService} from '../../../actions-mode/actions-mode.service';
 import {ControlPanelButton} from '../../../control-panel/control-panel-button';
 import {ControlPanelIcon} from '../../../control-panel/control-panel-icon';
 import {ModelerConfig} from '../../../modeler-config';
-import {SelectedTransitionService} from '../../../selected-transition.service';
-import {HistoryService} from '../../../services/history/history.service';
-import {ModelService} from '../../../services/model/model.service';
 import {ContextMenu} from '../../context-menu/context-menu';
 import {DeleteMenuItem} from '../../context-menu/menu-items/delete-menu-item';
 import {DeleteSelectedMenuItem} from '../../context-menu/menu-items/delete-selected-menu-item';
@@ -22,10 +15,10 @@ import {CanvasNodeElement} from '../../domain/canvas-node-element';
 import {CanvasObject} from '../../domain/canvas-object';
 import {CanvasPlace} from '../../domain/canvas-place';
 import {CanvasTransition} from '../../domain/canvas-transition';
-import {EditModeService} from '../../edit-mode.service';
 import {CanvasTool} from './canvas-tool';
+import {CanvasToolContext} from './canvas-tool-context';
 import {Hotkey} from './domain/hotkey';
-import {BuilderMode, BuilderModeService} from "../../../../builder-mode.service";
+import {BuilderMode} from '../../../../builder-mode.service';
 
 export class SelectTool extends CanvasTool {
 
@@ -40,31 +33,14 @@ export class SelectTool extends CanvasTool {
     private arcPointIndex: number;
     private lastClickTimestamp: number = 0;
 
-    constructor(
-        modelService: ModelService,
-        dialog: MatDialog,
-        editModeService: EditModeService,
-        router: Router,
-        transitionService: SelectedTransitionService,
-        actionMode: ActionsModeService,
-        actionsMasterDetail: ActionsMasterDetailService,
-        private _historyService: HistoryService,
-        private _builderModeService: BuilderModeService
-    ) {
+    constructor(context: CanvasToolContext) {
         super(
             SelectTool.ID,
             new ControlPanelButton(
                 new ControlPanelIcon('cursor-default-outline', true),
                 'Select tool',
             ),
-            modelService,
-            dialog,
-            editModeService,
-            router,
-            transitionService,
-            actionMode,
-            actionsMasterDetail,
-            _builderModeService
+            context
         );
         this._selectedElements = new CanvasElementCollection();
         this._clipboardElements = new CanvasElementCollection();
@@ -211,11 +187,11 @@ export class SelectTool extends CanvasTool {
     }
 
     undo(): void {
-        this._historyService.undo();
+        this.historyService.undo();
     }
 
     redo(): void {
-        this._historyService.redo();
+        this.historyService.redo();
     }
 
     onPlaceDown(event: PointerEvent, place: CanvasPlace) {
@@ -242,7 +218,7 @@ export class SelectTool extends CanvasTool {
         super.onTransitionUp(event, transition);
         if (this.isDoubleClick(event) && this.isLeftButtonClick(event)) {
             this.transitionService.id = transition.id;
-            this._builderModeService.mode = BuilderMode.FORM_BUILDER;
+            this.builderModeService.mode = BuilderMode.FORM_BUILDER;
             return;
         }
         this.lastClickTimestamp = event.timeStamp;

@@ -41,7 +41,8 @@ import {RemoveTokenTool} from './services/modes/remove-token-tool';
 import {ResetPositionAndZoomTool} from './services/modes/reset-position-and-zoom-tool';
 import {SelectTool} from './services/modes/select-tool';
 import {SwitchLabelTool} from './services/modes/switch-label-tool';
-import {BuilderModeService} from "../../builder-mode.service";
+import {BuilderModeService} from '../../builder-mode.service';
+import {CanvasToolContext} from './services/modes/canvas-tool-context';
 
 @Injectable()
 export class EditModeService extends CanvasModeService<CanvasTool> {
@@ -85,26 +86,27 @@ export class EditModeService extends CanvasModeService<CanvasTool> {
             this._tutorialService.modeler,
             this._parentInjector
         );
+        const context = new CanvasToolContext(modelService, dialog, this, router, transitionService, _actionMode, _actionsMasterDetail, _builderModeService);
         this.switchTools = new ToolGroup<CanvasTool>(
-            new ClearModelTool(modelService, dialog, this, router, transitionService, _actionMode, _actionsMasterDetail, _builderModeService),
-            new ResetPositionAndZoomTool(modelService, dialog, this, router, transitionService, _actionMode, _actionsMasterDetail, _builderModeService),
-            new GridTool(modelService, dialog, this, router, transitionService, _actionMode, _actionsMasterDetail, _builderModeService),
-            new SwitchLabelTool(modelService, dialog, this, router, transitionService, _actionMode, _actionsMasterDetail, _builderModeService)
+            new ClearModelTool(context),
+            new ResetPositionAndZoomTool(context),
+            new GridTool(context),
+            new SwitchLabelTool(context)
         );
         this.tools = [
             new ToolGroup<CanvasTool>(
-                new SelectTool(modelService, dialog, this, router, transitionService, _actionMode, _actionsMasterDetail, _historyService, _builderModeService),
-                new QuickDrawTool(modelService, dialog, this, router, transitionService, _actionMode, _actionsMasterDetail, _builderModeService),
-                new CreateTransitionTool(modelService, dialog, this, router, transitionService, _actionMode, _actionsMasterDetail, _builderModeService),
-                new CreatePlaceTool(modelService, dialog, this, router, transitionService, _actionMode, _actionsMasterDetail, _builderModeService),
-                new AddTokenTool(modelService, dialog, this, router, transitionService, _actionMode, _actionsMasterDetail, _builderModeService),
-                new RemoveTokenTool(modelService, dialog, this, router, transitionService, _actionMode, _actionsMasterDetail, _builderModeService)
+                new SelectTool(context),
+                new QuickDrawTool(context),
+                new CreateTransitionTool(context),
+                new CreatePlaceTool(context),
+                new AddTokenTool(context),
+                new RemoveTokenTool(context)
             ),
             new ToolGroup<CanvasTool>(
-                new CreateRegularArcTool(modelService, dialog, this, router, transitionService, _actionMode, _actionsMasterDetail, _builderModeService),
-                new CreateResetArcTool(modelService, dialog, this, router, transitionService, _actionMode, _actionsMasterDetail, _builderModeService),
-                new CreateInhibitorArcTool(modelService, dialog, this, router, transitionService, _actionMode, _actionsMasterDetail, _builderModeService),
-                new CreateReadArcTool(modelService, dialog, this, router, transitionService, _actionMode, _actionsMasterDetail, _builderModeService)
+                new CreateRegularArcTool(context),
+                new CreateResetArcTool(context),
+                new CreateInhibitorArcTool(context),
+                new CreateReadArcTool(context)
             ),
             this.switchTools
         ];

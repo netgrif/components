@@ -1,30 +1,21 @@
-import {MatDialog} from '@angular/material/dialog';
-import {Router} from '@angular/router';
 import {NodeElement as SvgNodeElement} from '@netgrif/petri.svg';
 import {ArcType, NodeElement} from '@netgrif/petriflow';
 import {PetriflowNode} from '@netgrif/petriflow.svg';
-import {ActionsMasterDetailService} from '../../../actions-mode/actions-master-detail.service';
-import {ActionsModeService} from '../../../actions-mode/actions-mode.service';
 import {ControlPanelButton} from '../../../control-panel/control-panel-button';
-import {SelectedTransitionService} from '../../../selected-transition.service';
-import {ModelService} from '../../../services/model/model.service';
 import {CanvasArc} from '../../domain/canvas-arc';
 import {CanvasNodeElement} from '../../domain/canvas-node-element';
 import {CanvasPlace} from '../../domain/canvas-place';
 import {CanvasTransition} from '../../domain/canvas-transition';
-import {EditModeService} from '../../edit-mode.service';
 import {CanvasTool} from './canvas-tool';
-import {BuilderModeService} from "../../../../builder-mode.service";
+import {CanvasToolContext} from './canvas-tool-context';
 
 export abstract class CreateArcTool<T extends CanvasNodeElement<NodeElement, PetriflowNode<SvgNodeElement>>> extends CanvasTool {
 
     private _source: T;
     private _arcLine: SVGElement;
 
-    constructor(_id: string, button: ControlPanelButton, modelService: ModelService, dialog: MatDialog,
-                editModeService: EditModeService, router: Router, transitionService: SelectedTransitionService,
-                actionMode: ActionsModeService, actionsMasterDetail: ActionsMasterDetailService, builderModeService: BuilderModeService) {
-        super(_id, button, modelService, dialog, editModeService, router, transitionService, actionMode, actionsMasterDetail, builderModeService);
+    constructor(_id: string, button: ControlPanelButton, context: CanvasToolContext) {
+        super(_id, button, context);
     }
 
     abstract startDrawingArc(node: CanvasPlace | CanvasTransition): void;

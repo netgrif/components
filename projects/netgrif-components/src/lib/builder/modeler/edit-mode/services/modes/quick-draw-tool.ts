@@ -1,25 +1,18 @@
-import {MatDialog} from '@angular/material/dialog';
-import {Router} from '@angular/router';
 import {
-  NodeElement as SvgNodeElement,
-  RegularPlaceTransitionArc as SvgRegularPlaceTransitionArc,
-  RegularTransitionPlaceArc as SvgRegularTransitionPlaceArc,
+    NodeElement as SvgNodeElement,
+    RegularPlaceTransitionArc as SvgRegularPlaceTransitionArc,
+    RegularTransitionPlaceArc as SvgRegularTransitionPlaceArc,
 } from '@netgrif/petri.svg';
 import {NodeElement} from '@netgrif/petriflow';
 import {PetriflowNode} from '@netgrif/petriflow.svg';
-import {ActionsMasterDetailService} from '../../../actions-mode/actions-master-detail.service';
-import {ActionsModeService} from '../../../actions-mode/actions-mode.service';
 import {ControlPanelButton} from '../../../control-panel/control-panel-button';
 import {ControlPanelIcon} from '../../../control-panel/control-panel-icon';
-import {SelectedTransitionService} from '../../../selected-transition.service';
-import {ModelService} from '../../../services/model/model.service';
 import {CanvasArc} from '../../domain/canvas-arc';
 import {CanvasNodeElement} from '../../domain/canvas-node-element';
 import {CanvasPlace} from '../../domain/canvas-place';
 import {CanvasTransition} from '../../domain/canvas-transition';
-import {EditModeService} from '../../edit-mode.service';
 import {CanvasTool} from './canvas-tool';
-import {BuilderModeService} from "../../../../builder-mode.service";
+import {CanvasToolContext} from './canvas-tool-context';
 
 enum Step {
     PLACE,
@@ -35,30 +28,14 @@ export class QuickDrawTool extends CanvasTool {
     private source: CanvasNodeElement<NodeElement, PetriflowNode<SvgNodeElement>>;
     private arcLine: SVGElement;
 
-    constructor(
-        modelService: ModelService,
-        dialog: MatDialog,
-        editModeService: EditModeService,
-        router: Router,
-        transitionService: SelectedTransitionService,
-        actionMode: ActionsModeService,
-        actionsMasterDetail: ActionsMasterDetailService,
-        builderModeService: BuilderModeService
-    ) {
+    constructor(context: CanvasToolContext) {
         super(
             QuickDrawTool.ID,
             new ControlPanelButton(
                 new ControlPanelIcon('bolt'),
                 'Fast PN',
             ),
-            modelService,
-            dialog,
-            editModeService,
-            router,
-            transitionService,
-            actionMode,
-            actionsMasterDetail,
-            builderModeService
+            context
         );
     }
 

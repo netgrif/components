@@ -1,14 +1,7 @@
-import {MatDialog} from '@angular/material/dialog';
-import {Router} from '@angular/router';
-import {ActionsMasterDetailService} from '../../../actions-mode/actions-master-detail.service';
-import {ActionsModeService} from '../../../actions-mode/actions-mode.service';
 import {ControlPanelButton} from '../../../control-panel/control-panel-button';
 import {ControlPanelIcon} from '../../../control-panel/control-panel-icon';
-import {SelectedTransitionService} from '../../../selected-transition.service';
-import {ModelService} from '../../../services/model/model.service';
-import {EditModeService} from '../../edit-mode.service';
 import {CanvasTool} from './canvas-tool';
-import {BuilderModeService} from "../../../../builder-mode.service";
+import {CanvasToolContext} from './canvas-tool-context';
 
 export class GridTool extends CanvasTool {
 
@@ -18,30 +11,14 @@ export class GridTool extends CanvasTool {
     public static readonly ICON_OFF = 'grid_off';
     public static readonly TOOLTIP_OFF = 'Show grid';
 
-    constructor(
-        modelService: ModelService,
-        dialog: MatDialog,
-        editModeService: EditModeService,
-        router: Router,
-        transitionService: SelectedTransitionService,
-        actionMode: ActionsModeService,
-        actionsMasterDetail: ActionsMasterDetailService,
-        builderModeService: BuilderModeService,
-    ) {
+    constructor(context: CanvasToolContext) {
         super(
             GridTool.ID,
             new ControlPanelButton(
                 new ControlPanelIcon(GridTool.ICON_ON, false, true),
                 GridTool.TOOLTIP_ON,
             ),
-            modelService,
-            dialog,
-            editModeService,
-            router,
-            transitionService,
-            actionMode,
-            actionsMasterDetail,
-            builderModeService
+            context
         );
     }
 

@@ -1,14 +1,10 @@
-import {MatDialog} from '@angular/material/dialog';
-import {Router} from '@angular/router';
 import {PetriflowCanvasService} from '@netgrif/petriflow.svg';
 import {ActionsMasterDetailService} from '../../../actions-mode/actions-master-detail.service';
 import {ActionsModeService} from '../../../actions-mode/actions-mode.service';
 import {ControlPanelButton} from '../../../control-panel/control-panel-button';
-import {SelectedTransitionService} from '../../../selected-transition.service';
 import {CanvasListenerTool} from '../../../services/canvas/canvas-listener-tool';
 import {ContextMenuInterruptionError} from '../../../services/canvas/listeners/context-menu-interruption-error';
 import {HistoryService} from '../../../services/history/history.service';
-import {ModelService} from '../../../services/model/model.service';
 import {ContextMenu} from '../../context-menu/context-menu';
 import {DeleteArcMenuItem} from '../../context-menu/menu-items/arc/delete-arc-menu-item';
 import {DeleteBreakpointMenuItem} from '../../context-menu/menu-items/arc/delete-breakpoint-menu-item';
@@ -20,11 +16,11 @@ import {EditPlaceMenuItem} from '../../context-menu/menu-items/place/edit-place-
 import {DeleteTransitionMenuItem} from '../../context-menu/menu-items/transition/delete-transition-menu-item';
 import {EditFormMenuItem} from '../../context-menu/menu-items/transition/edit-form-menu-item';
 import {
-  EditTransitionActionsMenuItem,
+    EditTransitionActionsMenuItem,
 } from '../../context-menu/menu-items/transition/edit-transition-actions-menu-item';
 import {EditTransitionMenuItem} from '../../context-menu/menu-items/transition/edit-transition-menu-item';
 import {
-  EditTransitionPermissionsMenuItem,
+    EditTransitionPermissionsMenuItem,
 } from '../../context-menu/menu-items/transition/edit-transition-permissions-menu-item';
 import {CanvasArc} from '../../domain/canvas-arc';
 import {CanvasElementCollection} from '../../domain/canvas-element-collection';
@@ -32,26 +28,26 @@ import {CanvasPlace} from '../../domain/canvas-place';
 import {CanvasTransition} from '../../domain/canvas-transition';
 import {EditModeService} from '../../edit-mode.service';
 import {Hotkey} from './domain/hotkey';
-import {BuilderModeService} from "../../../../builder-mode.service";
+import {BuilderModeService} from '../../../../builder-mode.service';
+import {CanvasToolContext} from './canvas-tool-context';
 
 export abstract class CanvasTool extends CanvasListenerTool {
 
     private readonly _editModeService: EditModeService;
+    public actionMode: ActionsModeService;
+    public actionsMasterDetail: ActionsMasterDetailService;
+    public builderModeService: BuilderModeService;
 
     protected constructor(
         id: string,
         button: ControlPanelButton,
-        modelService: ModelService,
-        dialog: MatDialog,
-        editModeService: EditModeService,
-        router: Router,
-        transitionService: SelectedTransitionService,
-        public actionMode: ActionsModeService,
-        public actionsMasterDetail: ActionsMasterDetailService,
-        public builderModeService: BuilderModeService,
+        context: CanvasToolContext,
     ) {
-        super(id, button, modelService, dialog, router, transitionService);
-        this._editModeService = editModeService;
+        super(id, button, context.modelService, context.dialog, context.router, context.transitionService);
+        this._editModeService = context.editModeService;
+        this.actionMode = context.actionMode;
+        this.actionsMasterDetail = context.actionsMasterDetail;
+        this.builderModeService = context.builderModeService;
         this.hotkeys.push(new Hotkey('Escape', false, false, false, () => {
             this.closeContextMenu();
             this.reset();
