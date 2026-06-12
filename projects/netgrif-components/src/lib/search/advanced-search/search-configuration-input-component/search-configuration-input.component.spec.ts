@@ -21,6 +21,7 @@ import {
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {AdvancedSearchComponentModule} from '../advanced-search.module';
+import {RouterTestingModule} from "@angular/router/testing";
 
 describe('SearchConfigurationInputComponent', () => {
     let component: SearchConfigurationInputComponent;
@@ -31,7 +32,8 @@ describe('SearchConfigurationInputComponent', () => {
             imports: [
                 AdvancedSearchComponentModule,
                 HttpClientTestingModule,
-                NoopAnimationsModule
+                NoopAnimationsModule,
+                RouterTestingModule.withRoutes([])
             ],
             declarations: [
                 TestWrapperComponent

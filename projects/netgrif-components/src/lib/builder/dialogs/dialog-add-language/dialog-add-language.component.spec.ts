@@ -1,28 +1,21 @@
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {MaterialImportModule} from '../../material-import/material-import.module';
-
+import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {TestBed} from '@angular/core/testing';
+import {I18nControlService} from '../../modeler/i18n-mode/i18n-control.service';
 import {DialogAddLanguageComponent} from './dialog-add-language.component';
 
 describe('DialogAddLanguageComponent', () => {
-  let component: DialogAddLanguageComponent;
-  let fixture: ComponentFixture<DialogAddLanguageComponent>;
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            declarations: [DialogAddLanguageComponent],
+            providers: [{provide: I18nControlService, useValue: {}}],
+            schemas: [NO_ERRORS_SCHEMA],
+        });
+    });
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [DialogAddLanguageComponent],
-      imports: [MaterialImportModule, HttpClientTestingModule, NoopAnimationsModule],
-    }).compileComponents();
-  }));
+    afterEach(() => TestBed.resetTestingModule());
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(DialogAddLanguageComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        const fixture = TestBed.createComponent(DialogAddLanguageComponent);
+        expect(fixture.componentInstance).toBeTruthy();
+    });
 });

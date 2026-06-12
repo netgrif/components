@@ -1,25 +1,24 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-
+import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {TestBed} from '@angular/core/testing';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {DialogLocalStorageModelComponent} from './dialog-local-storage-model.component';
 
 describe('DialogLocalStorageModelComponent', () => {
-  let component: DialogLocalStorageModelComponent;
-  let fixture: ComponentFixture<DialogLocalStorageModelComponent>;
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            declarations: [DialogLocalStorageModelComponent],
+            providers: [
+                {provide: MatDialogRef, useValue: {}},
+                {provide: MAT_DIALOG_DATA, useValue: {}},
+            ],
+            schemas: [NO_ERRORS_SCHEMA],
+        });
+    });
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ DialogLocalStorageModelComponent ]
-    })
-    .compileComponents();
-  });
+    afterEach(() => TestBed.resetTestingModule());
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(DialogLocalStorageModelComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        const fixture = TestBed.createComponent(DialogLocalStorageModelComponent);
+        expect(fixture.componentInstance).toBeTruthy();
+    });
 });

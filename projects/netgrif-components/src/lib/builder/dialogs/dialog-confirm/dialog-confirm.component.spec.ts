@@ -1,26 +1,24 @@
-import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
-import {MaterialImportModule} from '../../material-import/material-import.module';
-
+import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {TestBed} from '@angular/core/testing';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {DialogConfirmComponent} from './dialog-confirm.component';
 
 describe('DialogConfirmComponent', () => {
-  let component: DialogConfirmComponent;
-  let fixture: ComponentFixture<DialogConfirmComponent>;
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            declarations: [DialogConfirmComponent],
+            providers: [
+                {provide: MatDialogRef, useValue: {}},
+                {provide: MAT_DIALOG_DATA, useValue: {}},
+            ],
+            schemas: [NO_ERRORS_SCHEMA],
+        });
+    });
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [DialogConfirmComponent],
-      imports: [MaterialImportModule],
-    }).compileComponents();
-  }));
+    afterEach(() => TestBed.resetTestingModule());
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(DialogConfirmComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        const fixture = TestBed.createComponent(DialogConfirmComponent);
+        expect(fixture.componentInstance).toBeTruthy();
+    });
 });

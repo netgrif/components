@@ -1,27 +1,30 @@
-import {HttpClientModule} from '@angular/common/http';
 import {TestBed} from '@angular/core/testing';
-import {MatDialogModule} from '@angular/material/dialog';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {MaterialImportModule} from '../../material-import/material-import.module';
-
+import {ArcFactory} from '../../modeler/edit-mode/domain/arc-builders/arc-factory.service';
+import {ModelService} from '../../modeler/services/model/model.service';
+import {SelectedTransitionService} from '../../modeler/selected-transition.service';
 import {GridsterService} from './gridster.service';
 
 describe('GridsterService', () => {
-  let service: GridsterService;
+    let service: GridsterService;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        HttpClientModule,
-        MatSnackBarModule,
-        MaterialImportModule,
-        MatDialogModule,
-      ],
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            providers: [GridsterService, ModelService, ArcFactory, SelectedTransitionService],
+        });
+        service = TestBed.inject(GridsterService);
     });
-    service = TestBed.inject(GridsterService);
-  });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+    afterEach(() => TestBed.resetTestingModule());
+
+    it('should create', () => {
+        expect(service).toBeTruthy();
+    });
+
+    it('should initialize with empty placedDataFields', () => {
+        expect(service.placedDataFields).toEqual([]);
+    });
+
+    it('should have options configured', () => {
+        expect(service.options).toBeTruthy();
+    });
 });

@@ -1,25 +1,21 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-
+import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {TestBed} from '@angular/core/testing';
+import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {DialogErrorsComponent} from './dialog-errors.component';
 
 describe('DialogErrorsComponent', () => {
-  let component: DialogErrorsComponent;
-  let fixture: ComponentFixture<DialogErrorsComponent>;
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            declarations: [DialogErrorsComponent],
+            providers: [{provide: MAT_DIALOG_DATA, useValue: {errors: []}}],
+            schemas: [NO_ERRORS_SCHEMA],
+        });
+    });
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [DialogErrorsComponent],
-    })
-      .compileComponents();
-  });
+    afterEach(() => TestBed.resetTestingModule());
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(DialogErrorsComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        const fixture = TestBed.createComponent(DialogErrorsComponent);
+        expect(fixture.componentInstance).toBeTruthy();
+    });
 });

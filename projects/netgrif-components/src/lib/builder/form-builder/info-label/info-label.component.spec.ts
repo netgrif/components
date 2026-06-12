@@ -1,31 +1,24 @@
-import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
-import {RouterTestingModule} from '@angular/router/testing';
-import {MaterialImportModule} from '../../material-import/material-import.module';
-
+import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {TestBed} from '@angular/core/testing';
+import {BuilderModeService} from '../../builder-mode.service';
+import {ArcFactory} from '../../modeler/edit-mode/domain/arc-builders/arc-factory.service';
+import {ModelService} from '../../modeler/services/model/model.service';
+import {SelectedTransitionService} from '../../modeler/selected-transition.service';
 import {InfoLabelComponent} from './info-label.component';
 
 describe('InfoLabelComponent', () => {
-  let component: InfoLabelComponent;
-  let fixture: ComponentFixture<InfoLabelComponent>;
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            declarations: [InfoLabelComponent],
+            providers: [ModelService, ArcFactory, BuilderModeService, SelectedTransitionService],
+            schemas: [NO_ERRORS_SCHEMA],
+        });
+    });
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [InfoLabelComponent],
-      imports: [
-        MaterialImportModule,
-        RouterTestingModule.withRoutes([]),
-      ],
-    })
-      .compileComponents();
-  }));
+    afterEach(() => TestBed.resetTestingModule());
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(InfoLabelComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        const fixture = TestBed.createComponent(InfoLabelComponent);
+        expect(fixture.componentInstance).toBeTruthy();
+    });
 });

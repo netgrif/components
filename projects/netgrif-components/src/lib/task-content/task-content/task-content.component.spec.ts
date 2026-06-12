@@ -12,6 +12,7 @@ import {
     TaskViewService,
     TaskContentService,
 } from '@netgrif/components-core';
+import {RouterTestingModule} from "@angular/router/testing";
 
 describe('TaskContentComponent', () => {
     let component: TaskContentComponent;
@@ -25,7 +26,8 @@ describe('TaskContentComponent', () => {
                 MaterialModule,
                 NoopAnimationsModule,
                 CommonModule,
-                TranslateLibModule
+                TranslateLibModule,
+                RouterTestingModule.withRoutes([])
             ],
             providers: [
                 TaskViewService,

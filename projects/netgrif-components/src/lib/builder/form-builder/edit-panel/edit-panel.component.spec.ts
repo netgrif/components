@@ -1,47 +1,41 @@
-import {DragDropModule} from '@angular/cdk/drag-drop';
-import {CommonModule} from '@angular/common';
-import {HttpClientModule} from '@angular/common/http';
-import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
-import {FlexLayoutModule} from '@angular/flex-layout';
-import {FormsModule} from '@angular/forms';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {GridsterModule} from 'angular-gridster2';
-import {ResizableModule} from 'angular-resizable-element';
-import {AngularResizedEventModule} from 'angular-resize-event';
-import {MaterialImportModule} from '../../material-import/material-import.module';
-
+import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {TestBed} from '@angular/core/testing';
+import {MatDialog} from '@angular/material/dialog';
+import {Router} from '@angular/router';
+import {BuilderModeService} from '../../builder-mode.service';
+import {ArcFactory} from '../../modeler/edit-mode/domain/arc-builders/arc-factory.service';
+import {ModelService} from '../../modeler/services/model/model.service';
+import {SelectedTransitionService} from '../../modeler/selected-transition.service';
+import {ActionsMasterDetailService} from '../../modeler/actions-mode/actions-master-detail.setvice';
+import {ActionsModeService} from '../../modeler/actions-mode/actions-mode.service';
+import {GridsterService} from '../gridster/gridster.service';
+import {FieldListService} from '../field-list/field-list.service';
 import {EditPanelComponent} from './edit-panel.component';
 
 describe('EditPanelComponent', () => {
-  let component: EditPanelComponent;
-  let fixture: ComponentFixture<EditPanelComponent>;
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            declarations: [EditPanelComponent],
+            providers: [
+                GridsterService,
+                FieldListService,
+                ModelService,
+                ArcFactory,
+                SelectedTransitionService,
+                BuilderModeService,
+                {provide: ActionsModeService, useValue: {}},
+                {provide: ActionsMasterDetailService, useValue: {}},
+                {provide: MatDialog, useValue: {}},
+                {provide: Router, useValue: {}},
+            ],
+            schemas: [NO_ERRORS_SCHEMA],
+        });
+    });
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [EditPanelComponent],
-      imports: [
-        CommonModule,
-        DragDropModule,
-        GridsterModule,
-        FormsModule,
-        HttpClientModule,
-        MaterialImportModule,
-        FlexLayoutModule,
-        AngularResizedEventModule,
-        ResizableModule,
-        BrowserAnimationsModule,
-      ],
-    })
-      .compileComponents();
-  }));
+    afterEach(() => TestBed.resetTestingModule());
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(EditPanelComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        const fixture = TestBed.createComponent(EditPanelComponent);
+        expect(fixture.componentInstance).toBeTruthy();
+    });
 });

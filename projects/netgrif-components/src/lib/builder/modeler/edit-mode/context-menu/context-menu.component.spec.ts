@@ -1,25 +1,21 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-
+import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {TestBed} from '@angular/core/testing';
+import {EditModeService} from '../edit-mode.service';
 import {ContextMenuComponent} from './context-menu.component';
 
 describe('ContextMenuComponent', () => {
-  let component: ContextMenuComponent;
-  let fixture: ComponentFixture<ContextMenuComponent>;
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            declarations: [ContextMenuComponent],
+            providers: [{provide: EditModeService, useValue: {contextMenuItems: {subscribe: () => {}}}}],
+            schemas: [NO_ERRORS_SCHEMA],
+        });
+    });
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ ContextMenuComponent ]
-    })
-    .compileComponents();
-  });
+    afterEach(() => TestBed.resetTestingModule());
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ContextMenuComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        const fixture = TestBed.createComponent(ContextMenuComponent);
+        expect(fixture.componentInstance).toBeTruthy();
+    });
 });

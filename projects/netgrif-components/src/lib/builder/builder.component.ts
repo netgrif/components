@@ -10,7 +10,7 @@ import {HistoryService} from "./modeler/services/history/history.service";
 import {ControlPanelService} from "./modeler/control-panel/control-panel.service";
 
 @Component({
-  selector: 'app-builder',
+  selector: 'nc-builder',
   templateUrl: './builder.component.html',
   styleUrl: './builder.component.scss'
 })

@@ -1,6 +1,6 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {DefaultTabViewComponent} from './default-tab-view.component';
-import {NavigationComponentModule} from '../../../navigation.module';
+import {NavigationComponentModule} from '../../../../navigation.module';
 import {
     BooleanField,
     EnumerationField,
@@ -20,8 +20,8 @@ import {
     UserFilterConstants,
     ViewService
 } from '@netgrif/components-core';
-import {RouterModule} from '@angular/router';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {RouterTestingModule} from "@angular/router/testing";
 
 describe('DefaultTabViewComponent', () => {
     let component: DefaultTabViewComponent;
@@ -33,7 +33,7 @@ describe('DefaultTabViewComponent', () => {
             imports: [
                 NavigationComponentModule,
                 TestMockDependenciesModule,
-                RouterModule.forRoot([]),
+                RouterTestingModule.withRoutes([]),
                 NoopAnimationsModule,
                 TranslateLibModule,
             ],
@@ -45,11 +45,40 @@ describe('DefaultTabViewComponent', () => {
                     useValue: [
                         {
                             fields: [
+                                new EnumerationField(
+                                    "view_configuration_type",
+                                    '',"tabbed_case_view",[],{visible: true}
+                                ),
                                 new I18nField(
                                     GroupNavigationConstants.NAVIGATION_ENTRY_TITLE_FIELD_ID_SUFFIX,
                                     '',
                                     {defaultValue: 'Default translation', translations: {en: 'English translation'}},
                                     {visible: true}
+                                ),
+                            ]
+                        },
+                        {
+                            fields: []
+                        },
+                        {
+                            fields: []
+                        },
+                        {
+                            fields: []
+                        },
+                        {
+                            fields: [
+                                new TaskRefField(
+                                    "view_configuration_form",
+                                    '',["thisistaskid"],{visible: true}
+                                ),
+                                new TextField(
+                                    "chained_view_configuration_type",
+                                    '',"tabbed_task_view_configuration",  {visible: true}
+                                ),
+                                new BooleanField(
+                                    GroupNavigationConstants.ITEM_FIELD_ID_CASE_ALLOW_EXPORT,
+                                    '',false,{visible: true}
                                 ),
                                 new BooleanField(
                                     GroupNavigationConstants.NAVIGATION_ENTRY_ICON_ENABLED_FIELD_ID_SUFFIX,

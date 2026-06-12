@@ -20,6 +20,7 @@ import {
 } from '@netgrif/components-core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {RouterTestingModule} from "@angular/router/testing";
 
 describe('TaskSearchComponent', () => {
     let component: TaskSearchComponent;
@@ -31,6 +32,7 @@ describe('TaskSearchComponent', () => {
                 SearchComponentModule,
                 HttpClientTestingModule,
                 NoopAnimationsModule,
+                RouterTestingModule.withRoutes([])
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},

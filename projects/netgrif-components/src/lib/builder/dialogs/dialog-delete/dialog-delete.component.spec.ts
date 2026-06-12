@@ -1,27 +1,24 @@
-import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
-import {MaterialImportModule} from '../../material-import/material-import.module';
-
+import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {TestBed} from '@angular/core/testing';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {DialogDeleteComponent} from './dialog-delete.component';
 
 describe('DialogDeleteComponent', () => {
-  let component: DialogDeleteComponent;
-  let fixture: ComponentFixture<DialogDeleteComponent>;
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            declarations: [DialogDeleteComponent],
+            providers: [
+                {provide: MatDialogRef, useValue: {}},
+                {provide: MAT_DIALOG_DATA, useValue: {}},
+            ],
+            schemas: [NO_ERRORS_SCHEMA],
+        });
+    });
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [DialogDeleteComponent],
-      imports: [MaterialImportModule],
-    })
-      .compileComponents();
-  }));
+    afterEach(() => TestBed.resetTestingModule());
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(DialogDeleteComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        const fixture = TestBed.createComponent(DialogDeleteComponent);
+        expect(fixture.componentInstance).toBeTruthy();
+    });
 });

@@ -1,25 +1,23 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-
+import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
+import {TestBed} from '@angular/core/testing';
+import {MatMenuModule} from '@angular/material/menu';
+import {ActionItemProviderService} from '../../action-item-provider.service';
 import {ActionEditorMenuItemComponent} from './action-editor-menu-item.component';
 
 describe('ActionEditorMenuItemComponent', () => {
-  let component: ActionEditorMenuItemComponent;
-  let fixture: ComponentFixture<ActionEditorMenuItemComponent>;
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            declarations: [ActionEditorMenuItemComponent],
+            imports: [MatMenuModule],
+            providers: [{provide: ActionItemProviderService, useValue: {actionsKeywordsListen: () => {}}}],
+            schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
+        });
+    });
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ActionEditorMenuItemComponent],
-    })
-      .compileComponents();
-  });
+    afterEach(() => TestBed.resetTestingModule());
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ActionEditorMenuItemComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        const fixture = TestBed.createComponent(ActionEditorMenuItemComponent);
+        expect(fixture.componentInstance).toBeTruthy();
+    });
 });

@@ -1,25 +1,21 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-
+import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {TestBed} from '@angular/core/testing';
+import {HistoryMasterDetailService} from './history-master-detail.service';
 import {HistoryModeComponent} from './history-mode.component';
 
 describe('HistoryModeComponent', () => {
-  let component: HistoryModeComponent;
-  let fixture: ComponentFixture<HistoryModeComponent>;
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            declarations: [HistoryModeComponent],
+            providers: [{provide: HistoryMasterDetailService, useValue: {}}],
+            schemas: [NO_ERRORS_SCHEMA],
+        });
+    });
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ HistoryModeComponent ]
-    })
-    .compileComponents();
-  });
+    afterEach(() => TestBed.resetTestingModule());
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(HistoryModeComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        const fixture = TestBed.createComponent(HistoryModeComponent);
+        expect(fixture.componentInstance).toBeTruthy();
+    });
 });

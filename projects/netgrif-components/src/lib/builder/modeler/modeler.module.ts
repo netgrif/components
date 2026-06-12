@@ -44,7 +44,6 @@ import {HistoryDetailComponent} from './history-mode/history-detail/history-deta
 import {HistoryMasterItemComponent} from './history-mode/history-master-item/history-master-item.component';
 import {HistoryModeComponent} from './history-mode/history-mode.component';
 import {I18nModeComponent} from './i18n-mode/i18n-mode.component';
-import {FlagFallbackDirective} from './i18n-mode/languages/flag/flag-fallback.directive';
 import {FlagComponent} from './i18n-mode/languages/flag/flag.component';
 import {LanguagesComponent} from './i18n-mode/languages/languages.component';
 import {ProgressComponent} from './i18n-mode/languages/progress/progress.component';
@@ -98,7 +97,6 @@ import {MaterialIconPickerComponent} from "./components/material-icon-picker/mat
         TranslationsComponent,
         ProgressComponent,
         FlagComponent,
-        FlagFallbackDirective,
         ModelTranslationComponent,
         DataTranslationComponent,
         RoleTranslationComponent,

@@ -1,25 +1,23 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-
+import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {TestBed} from '@angular/core/testing';
+import {ArcFactory} from '../../../edit-mode/domain/arc-builders/arc-factory.service';
+import {ModelService} from '../../../services/model/model.service';
+import {ActionItemProviderService} from '../action-item-provider.service';
 import {ActionEditorMenuComponent} from './action-editor-menu.component';
 
 describe('ActionEditorMenuComponent', () => {
-  let component: ActionEditorMenuComponent;
-  let fixture: ComponentFixture<ActionEditorMenuComponent>;
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            declarations: [ActionEditorMenuComponent],
+            providers: [ActionItemProviderService, ModelService, ArcFactory],
+            schemas: [NO_ERRORS_SCHEMA],
+        });
+    });
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ActionEditorMenuComponent],
-    })
-      .compileComponents();
-  });
+    afterEach(() => TestBed.resetTestingModule());
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ActionEditorMenuComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        const fixture = TestBed.createComponent(ActionEditorMenuComponent);
+        expect(fixture.componentInstance).toBeTruthy();
+    });
 });
