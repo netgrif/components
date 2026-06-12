@@ -20,3 +20,4 @@ export * from './task-panel/models/task-panel-context';
 
 /* ENUM */
 export * from './configuration/config-params';
+export * from './configuration/selection-behavior';

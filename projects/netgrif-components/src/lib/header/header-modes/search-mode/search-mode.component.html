@@ -1,7 +1,10 @@
 <div fxFlex="100" fxLayout="row" fxLayoutAlign=" center">
-    <mat-checkbox *ngIf="approval && typeApproval === 'multichoice'" [formControl]="approvalFormControl" [indeterminate]="indeterminate"
-                  (click)="$event.stopPropagation();" color='primary' class="checkbox-padding"></mat-checkbox>
-    <mat-icon *ngIf="approval && typeApproval === 'enumeration'" color="warn" (click)="setValue();$event.stopPropagation();" class="checkbox-padding cursor-fix">close</mat-icon>
+    <mat-checkbox *ngIf="isInSelectionMode() && typeApproval === 'multichoice'" [formControl]="approvalFormControl" [indeterminate]="indeterminate"
+                  (click)="$event.stopPropagation();" color='primary' class="checkbox-padding" [disabled]="isSelectionDisabled()"></mat-checkbox>
+    <button *ngIf="isInSelectionMode() && typeApproval === 'enumeration'" mat-icon-button  type="button" aria-label="Clear selected"
+            class="checkbox-padding cursor-fix" [disabled]="isSelectionDisabled()" (click)="setValue(); $event.stopPropagation();" [disableRipple]="true">
+        <mat-icon color="warn">close</mat-icon>
+    </button>
     <div *ngFor="let header of this.headerService.selectedHeaders$ | async; let i = index"
          [fxHide.lt-xl]="i >= 4 && this.headerService.responsiveHeaders && !this.headerService.overflowMode"
          [fxHide.lt-lg]="i >= 3 && this.headerService.responsiveHeaders && !this.headerService.overflowMode"

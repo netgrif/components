@@ -7,8 +7,8 @@
                               [overflowWidth]="getMinWidth()"
                               [approvalFormControl]="approvalFormControl"
                               [indeterminate]="indeterminate()"
-                              [approval]="approval"
                               [typeApproval]="typeApproval()"
+                              [showSelection]="showSelection"
                 ></nc-sort-mode>
             </div>
             <div *ngSwitchCase="headerModeEnum.SEARCH" fxFlex="100" fxLayout="row">
@@ -16,8 +16,8 @@
                                 [overflowWidth]="getMinWidth()"
                                 [approvalFormControl]="approvalFormControl"
                                 [indeterminate]="indeterminate()"
-                                [approval]="approval"
                                 [typeApproval]="typeApproval()"
+                                [showSelection]="showSelection"
                 ></nc-search-mode>
             </div>
             <div *ngSwitchCase="headerModeEnum.EDIT" fxFlex="100" fxLayout="row">
@@ -25,8 +25,8 @@
                               [overflowWidth]="getMinWidth()"
                               [approvalFormControl]="approvalFormControl"
                               [indeterminate]="indeterminate()"
-                              [approval]="approval"
                               [typeApproval]="typeApproval()"
+                              [showSelection]="showSelection"
                 ></nc-edit-mode>
             </div>
         </div>

@@ -19,6 +19,7 @@ import {
 } from "../data-fields/models/data-field-portal-data-injection-token";
 import {MultichoiceField} from "../data-fields/multichoice-field/models/multichoice-field";
 import {EnumerationField} from "../data-fields/enumeration-field/models/enumeration-field";
+import {SelectionBehavior} from '../panel/configuration/selection-behavior';
 
 @Component({
     selector: 'ncc-abstract-header',
@@ -35,7 +36,7 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
     @Input() showSortButton = true;
     @Input() showSearchButton = true;
     @Input() showTableSection = true;
-    @Input() public approval: boolean;
+    @Input() public showSelection: SelectionBehavior = SelectionBehavior.HIDDEN;
 
     public headerService: AbstractHeaderService;
     protected _headerSearch: HeaderSearchService;

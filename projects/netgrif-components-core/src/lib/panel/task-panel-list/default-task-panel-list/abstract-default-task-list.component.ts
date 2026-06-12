@@ -1,6 +1,6 @@
 import {MatExpansionPanel} from '@angular/material/expansion';
 import {ActivatedRoute} from '@angular/router';
-import {filter} from 'rxjs/operators';
+import {filter, takeUntil} from 'rxjs/operators';
 import {TabbedVirtualScrollComponent} from '../../abstract/tabbed-virtual-scroll.component';
 import {AfterViewInit, Component, EventEmitter, Inject, Input, OnDestroy, Optional, Output} from '@angular/core';
 import {Observable, Subject, Subscription} from 'rxjs';
@@ -12,13 +12,11 @@ import {LoggerService} from '../../../logger/services/logger.service';
 import {NAE_TAB_DATA} from '../../../tabs/tab-data-injection-token/tab-data-injection-token';
 import {InjectedTabData} from '../../../tabs/interfaces';
 
-
 @Component({
     selector: 'ncc-abstract-default-task-list',
     template: ''
 })
 export abstract class AbstractDefaultTaskListComponent extends TabbedVirtualScrollComponent implements AfterViewInit, OnDestroy {
-
     protected _tasks$: Observable<Array<TaskPanelData>>;
     protected _redirectTaskId: string;
     protected _unsubscribe$: Subject<void>;
@@ -30,6 +28,7 @@ export abstract class AbstractDefaultTaskListComponent extends TabbedVirtualScro
     @Input() forceLoadDataOnOpen = false;
     @Input() textEllipsis = false;
     @Input() showMoreMenu: boolean = true;
+    @Input() public disabled: boolean = false;
 
     @Input()
     set allowMultiOpen(bool: boolean) {
@@ -57,15 +56,15 @@ export abstract class AbstractDefaultTaskListComponent extends TabbedVirtualScro
         this._taskPanelRefs = new Map<string, MatExpansionPanel>();
         this._unsubscribe$ = new Subject<void>();
         if (injectedTabData !== null) {
-            this._unsub = injectedTabData.tabSelected$.pipe(
-                filter(bool => bool)
-            ).subscribe( () => {
-                if (this._canReload) {
-                    this._taskViewService.reloadCurrentPage();
-                } else {
-                    this._canReload = true;
-                }
-            });
+            this._unsub = injectedTabData.tabSelected$
+                .pipe(filter(bool => bool))
+                .subscribe(() => {
+                    if (this._canReload) {
+                        this._taskViewService.reloadCurrentPage();
+                    } else {
+                        this._canReload = true;
+                    }
+                });
         }
     }
 
@@ -99,16 +98,22 @@ export abstract class AbstractDefaultTaskListComponent extends TabbedVirtualScro
     }
 
     public onRedirect() {
-        this.route.queryParams.pipe(filter(pm => !!pm['taskId'])).subscribe(pm => {
-            this._redirectTaskId = pm['taskId'];
-            this._tasks$.pipe().subscribe(tasks => {
-                const task = tasks.find(t => t.task.stringId === this._redirectTaskId);
-                if (!!task && !task.initiallyExpanded) {
-                    this._taskPanelRefs.get(this._redirectTaskId).open();
-                    this._taskPanelRefs.get(this._redirectTaskId).expanded = true;
-                    this._unsubscribe$.next();
-                }
+        if (!this.route) {
+            return;
+        }
+        this.route.queryParams
+            .pipe(filter(pm => !!pm['taskId']), takeUntil(this._unsubscribe$))
+            .subscribe(pm => {
+                this._redirectTaskId = pm['taskId'];
+                this._tasks$.pipe(takeUntil(this._unsubscribe$)).subscribe(tasks => {
+                    const task = tasks.find(t => t.task.stringId === this._redirectTaskId);
+                    const panelRef = this._taskPanelRefs.get(this._redirectTaskId);
+                    if (!!task && !task.initiallyExpanded && !!panelRef) {
+                        panelRef.open();
+                        panelRef.expanded = true;
+                        this._unsubscribe$.next();
+                    }
+                });
             });
-        });
     }
 }

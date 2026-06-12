@@ -23,7 +23,9 @@
                                [showCasePanelIcon]="showCasePanelIcon"
                                [showDeleteMenu]="showDeleteMenu"
                                [case_]="case_" [selectedHeaders$]="selectedHeaders$" (click)="onCaseClick(case_)"
-                               [first]="first" [last]="last">
+                               [first]="first" [last]="last"
+                               [showSelection]="showSelection"
+                >
                 </nc-case-panel>
 
                 <div *ngIf="loading$ | async" fxLayout="column" fxLayoutAlign="center center"
