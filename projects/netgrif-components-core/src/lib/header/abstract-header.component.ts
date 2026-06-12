@@ -41,9 +41,9 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
     protected _headerSearch: HeaderSearchService;
     public readonly headerModeEnum = HeaderMode;
     public readonly headerTypeEnum = HeaderType;
-    public overflowControl: FormControl;
-    public columnCountControl: FormControl;
-    public columnWidthControl: FormControl;
+    public overflowControl: FormControl<boolean>;
+    public columnCountControl: FormControl<number>;
+    public columnWidthControl: FormControl<number>;
     public canOverflow: boolean;
     public subOverflowControl: Subscription;
     public subColumnCountControl: Subscription;
@@ -51,7 +51,7 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
 
     protected _initHeaderCount: number = undefined;
     protected _initResponsiveHeaders: boolean = undefined;
-    protected _approvalFormControl: FormControl;
+    protected _approvalFormControl: FormControl<boolean>;
     protected _changeValue: boolean;
     protected _subCases: Subscription;
 
@@ -85,7 +85,7 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
         }
     }
 
-    get approvalFormControl(): FormControl {
+    get approvalFormControl(): FormControl<boolean> {
         return this._approvalFormControl;
     }
 
@@ -168,7 +168,7 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
         return this.buildErrorMessage(this.columnCountControl, 1);
     }
 
-    buildErrorMessage(formControlRef: FormControl, minNumber) {
+    buildErrorMessage(formControlRef: FormControl<any>, minNumber) {
         if (formControlRef.hasError('required')) {
             return this._translate.instant('dataField.validations.required');
         }

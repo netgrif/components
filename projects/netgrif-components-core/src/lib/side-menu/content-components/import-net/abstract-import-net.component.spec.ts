@@ -53,13 +53,6 @@ describe('AbstractImportNetComponent', () => {
                 TranslateService
             ],
             declarations: [TestImportComponent],
-        }).overrideModule(BrowserDynamicTestingModule, {
-            set: {
-                entryComponents: [
-                    ErrorSnackBarComponent,
-                    SuccessSnackBarComponent
-                ]
-            }
         }).compileComponents();
     }));
 

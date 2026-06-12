@@ -1,6 +1,7 @@
 <mat-tab-group [selectedIndex]="tabView.selectedIndex.value"
                [class.center-tabs]="align === 'center'"
                [class.end-tabs]="align === 'end'"
+               mat-stretch-tabs="false"
                (selectedTabChange)="tabView.tabChange($event)" class="tab-group"
                [class.nae-tab-fill-height]="stretch" fxFlex>
     <mat-tab *ngFor="let tab of tabView.openedTabs; let i=index" [ngClass]="{'label-opacity': i === tabView.selectedIndex.value}">

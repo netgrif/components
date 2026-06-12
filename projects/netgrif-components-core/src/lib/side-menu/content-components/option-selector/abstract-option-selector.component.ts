@@ -12,7 +12,7 @@ import {Component} from '@angular/core';
 export abstract class AbstractOptionSelectorComponent {
 
     data: OptionSelectorInjectionData;
-    selectorFormControl = new FormControl('', Validators.required);
+    selectorFormControl = new FormControl<string | Option>('', Validators.required);
     filteredOptions: Observable<Array<Option>>;
 
     constructor(protected _sideMenuControl: SideMenuControl) {

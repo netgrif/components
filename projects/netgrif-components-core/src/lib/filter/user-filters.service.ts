@@ -129,7 +129,7 @@ export class UserFiltersService implements OnDestroy {
         });
         ref.afterClosed().subscribe(event => {
             if (event.message === 'Side menu closed unexpectedly') {
-                result.next();
+                result.next(undefined);
             } else {
                 result.next(event.data);
             }
@@ -200,7 +200,7 @@ export class UserFiltersService implements OnDestroy {
             ref.afterClosed().subscribe(event => {
                 if (event.message === 'Side menu closed unexpectedly') {
                     this.delete(filterCaseId);
-                    result.next();
+                    result.next(undefined);
                 } else {
                     result.next({
                         filterCaseId,

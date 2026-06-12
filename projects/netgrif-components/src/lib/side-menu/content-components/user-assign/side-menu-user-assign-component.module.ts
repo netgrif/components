@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {UserAssignComponent} from './user-assign.component';
 import {UserAssignItemComponent} from './user-assign-list/user-assign-item/user-assign-item.component';
 import {UserAssignListComponent} from './user-assign-list/user-assign-list.component';
-import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
+import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
 import {FormsModule} from '@angular/forms';
 import {
     CovalentModule,

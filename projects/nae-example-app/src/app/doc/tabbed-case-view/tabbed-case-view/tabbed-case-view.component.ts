@@ -78,7 +78,11 @@ export class TabbedCaseViewComponent extends AbstractTabbedCaseViewComponent imp
                 @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedCaseViewData) {
         super(caseViewService, loggerService, injectedTabData, overflowService, undefined, undefined, {
             enableCaseTitle: true,
-            isCaseTitleRequired: true
+            isCaseTitleRequired: true,
+            newCaseButtonConfig: {
+                createCaseButtonTitle: 'My custom create case button',
+                createCaseButtonIcon: 'home'
+            }
         });
     }
 

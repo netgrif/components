@@ -8,7 +8,7 @@ import {
     TestViewService,
     ViewService
 } from '@netgrif/components-core';
-import {RouterTestingModule} from '@angular/router/testing';
+import {RouterModule} from '@angular/router';
 
 describe('GroupNavigationComponentResolverComponent', () => {
     let component: GroupNavigationComponentResolverComponent;
@@ -19,7 +19,7 @@ describe('GroupNavigationComponentResolverComponent', () => {
             imports: [
                 NavigationComponentModule,
                 TestMockDependenciesModule,
-                RouterTestingModule.withRoutes([], { relativeLinkResolution: 'legacy' }),
+                RouterModule.forRoot([]),
             ],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},

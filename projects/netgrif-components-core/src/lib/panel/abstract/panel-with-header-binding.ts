@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, Optional} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, Optional} from '@angular/core';
 import {Observable, Subscription} from 'rxjs';
 import {HeaderColumn, HeaderColumnType} from '../../header/models/header-column';
 import {FeaturedValue} from './featured-value';
@@ -9,7 +9,7 @@ import {OverflowService} from '../../header/services/overflow.service';
     template: ''
 })
 export abstract class AbstractPanelWithHeaderBindingComponent implements OnInit, OnDestroy {
-    public selectedHeaders$: Observable<Array<HeaderColumn>>;
+    @Input() public selectedHeaders$: Observable<Array<HeaderColumn>>;
     public firstFeaturedValue: string;
     public featuredFieldsValues: Array<FeaturedValue> = [];
     protected _lastSelectedHeaders: Array<HeaderColumn>;

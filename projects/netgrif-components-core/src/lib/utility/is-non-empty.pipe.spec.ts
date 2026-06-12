@@ -1,4 +1,4 @@
-import {expect} from '@angular/flex-layout/_private-utils/testing';
+import {expect} from '@ngbracket/ngx-layout/_private-utils/testing';
 import {IsNonEmptyPipe} from './is-non-empty.pipe';
 
 describe('IsNonEmptyPipe', () => {

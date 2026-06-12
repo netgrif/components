@@ -10,7 +10,7 @@ import {
     MockAuthenticationMethodService,
     TestConfigurationService, TranslateLibModule,
 } from '@netgrif/components-core';
-import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
+import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 

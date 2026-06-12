@@ -40,7 +40,6 @@ export class RoutingBuilderService {
                 private _dynamicNavigationRouteService: DynamicNavigationRouteProviderService,
                 @Optional() @Inject(NAE_GROUP_NAVIGATION_COMPONENT_RESOLVER_COMPONENT)
                 private _groupNavigationComponentResolverComponent: Type<AbstractGroupNavigationComponentResolverComponent>) {
-        router.relativeLinkResolution = 'legacy';
         router.config.splice(0, router.config.length);
         for (const [pathSegment, view] of Object.entries(_configService.get().views)) {
             const route = this.constructRouteObject(view, pathSegment);
