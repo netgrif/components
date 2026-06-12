@@ -18,7 +18,7 @@ import {Subscription} from "rxjs";
 })
 export abstract class AbstractUserInviteComponent implements OnInit, OnDestroy {
 
-    public invitedEmailControl: FormControl;
+    public invitedEmailControl: FormControl<string>;
     public invitedGroups: Array<GroupInterface>;
     public invitedRoles: Array<ExtendedProcessRole>;
     public nets: ProcessList;

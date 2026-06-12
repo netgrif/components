@@ -1,5 +1,5 @@
 <mat-card [ngClass]="{'padding-custom': headerService.headerState.mode === headerModeEnum.SORT}" class="header-color header-card">
-    <div fxLayout="row">
+    <div fxLayout="row" class="header-content-container">
         <div fxLayout="row" fxFlex="95" class="header-content-container flex-95" fxLayoutAlign="start center"
              [ngSwitch]="headerService.headerState.mode" *ngIf="!headerService.loading.isActive">
             <div *ngSwitchCase="headerModeEnum.SORT" fxFlex="100" fxLayout="row">

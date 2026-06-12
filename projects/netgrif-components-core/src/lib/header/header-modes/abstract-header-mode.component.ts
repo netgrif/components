@@ -10,7 +10,7 @@ export abstract class AbstractHeaderModeComponent {
 
     @Input() public overflowWidth: string;
     @Input() public indeterminate: boolean;
-    @Input() public approvalFormControl: FormControl;
+    @Input() public approvalFormControl: FormControl<boolean>;
     @Input() public typeApproval: string;
     @Input() public showSelection: SelectionBehavior = SelectionBehavior.HIDDEN;
 

@@ -25,6 +25,8 @@ export class TabbedViewsExampleComponent implements OnInit {
 
     constructor() {
         const stream = new ReplaySubject<number>(1);
+        const streamTest = new ReplaySubject<number>(1);
+        streamTest.next(255)
         this.tabs = [
             {
                 label: {
@@ -43,7 +45,8 @@ export class TabbedViewsExampleComponent implements OnInit {
             {
                 label: {
                     text: 'process cache disabled',
-                    icon: 'storage'
+                    icon: 'storage',
+                    count: streamTest
                 },
                 canBeClosed: false,
                 tabContentComponent: TabbedCaseViewComponent,

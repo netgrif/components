@@ -6,12 +6,11 @@ import {AbstractCaseRefBaseFieldComponent} from '../../case-ref-field/model/abst
 import {Subscription} from 'rxjs';
 
 @Component({
-    selector: 'ncc-abstract-case-ref-default',
+    selector: 'ncc-abstract-multi-case-ref-default',
     template: ''
 })
 export abstract class AbstractMultichoiceCaseRefComponent extends AbstractCaseRefBaseFieldComponent<MultichoiceField> implements AfterViewInit, OnDestroy {
 
-    public componentPortal: ComponentPortal<any>;
     protected _sub: Subscription;
     protected _subComp: Subscription;
 

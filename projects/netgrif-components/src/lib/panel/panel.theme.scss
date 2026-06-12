@@ -73,7 +73,7 @@
     .panel-body {
         .mat-expansion-panel-body {
             padding: 0 !important;
-            background-color: #F8FAFC;
+            background-color: #ffffff;
         }
     }
 
@@ -81,6 +81,10 @@
         .mat-expansion-panel-content {
             height: 100% !important;
         }
+    }
+
+    .mat-content.mat-content-hide-toggle {
+        margin-right: 0 !important;
     }
 }
 

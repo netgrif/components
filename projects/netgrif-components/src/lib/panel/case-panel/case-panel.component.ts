@@ -76,7 +76,7 @@ export class CasePanelComponent extends AbstractCasePanelComponent implements On
             })
             this._dataFieldPortalData.dataField.valueChanges().subscribe(() => {
                 this._changeValue = false;
-                this.approvalFormControl.setValue(this._dataFieldPortalData.dataField.value);
+                this.approvalFormControl.setValue(this._dataFieldPortalData.dataField.value as string);
             })
         }
     }

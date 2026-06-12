@@ -2,6 +2,7 @@ import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {TabCreationDetectorComponent} from './tab-creation-detector.component';
 import {Component, Injector, NgModule, OnInit} from '@angular/core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {RouterModule} from '@angular/router';
 import {
     AuthenticationMethodService,
     AuthenticationService,
@@ -18,7 +19,6 @@ import {
     UserResourceService,
     ViewService
 } from '@netgrif/components-core';
-import {RouterTestingModule} from '@angular/router/testing';
 
 describe('TabCreationDetectorComponent', () => {
     let component: TabCreationDetectorComponent;
@@ -30,7 +30,7 @@ describe('TabCreationDetectorComponent', () => {
                 MaterialModule,
                 TabTestModule,
                 NoopAnimationsModule,
-                RouterTestingModule.withRoutes([], { relativeLinkResolution: 'legacy' }),
+                RouterModule.forRoot([])
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},

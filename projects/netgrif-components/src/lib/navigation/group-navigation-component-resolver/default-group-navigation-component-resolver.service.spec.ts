@@ -7,7 +7,7 @@ import {
     TestViewService,
     ViewService
 } from '@netgrif/components-core';
-import {RouterTestingModule} from '@angular/router/testing';
+import {RouterModule} from "@angular/router";
 
 describe('DefaultGroupNavigationComponentResolverService', () => {
     let service: DefaultGroupNavigationComponentResolverService;
@@ -16,7 +16,7 @@ describe('DefaultGroupNavigationComponentResolverService', () => {
         TestBed.configureTestingModule({
             imports: [
                 TestMockDependenciesModule,
-                RouterTestingModule.withRoutes([], { relativeLinkResolution: 'legacy' }),
+                RouterModule.forRoot([])
             ],
             providers: [
                 DefaultGroupNavigationComponentResolverService,
