@@ -108,7 +108,9 @@ export class FieldConverterService {
             case FieldTypeResource.CASE_REF:
                 return new CaseRefField(item.stringId, item.name, item.value ? item.value : [], item.behavior,
                     item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
-            case FieldTypeResource.FILTER:
+            case FieldTypeResource.CASE_FILTER:
+            case FieldTypeResource.TASK_FILTER:
+            case FieldTypeResource.PROCESS_FILTER:
                 return new FilterField(item.stringId, item.name, item.value ?? '', item.filterMetadata, item.allowedNets,
                     item.behavior, item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.I18N:
@@ -146,7 +148,7 @@ export class FieldConverterService {
         } else if (item instanceof EnumerationField || item instanceof MultichoiceField) {
             return item.fieldType;
         } else if (item instanceof FilterField) {
-            return FieldTypeResource.FILTER;
+            return FieldTypeResource.CASE_FILTER;
         } else if (item instanceof I18nField) {
             return FieldTypeResource.I18N;
         } else if (item instanceof CaseRefField) {
