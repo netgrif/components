@@ -9,7 +9,7 @@ import {BehaviorSubject} from 'rxjs';
 import {ChangedArc} from '../../dialogs/dialog-arc-edit/changed-arc';
 import {ChangedTransition} from '../../dialogs/dialog-transition-edit/changed-transition';
 import {TutorialService} from '../../tutorial/tutorial-service';
-import {ActionsMasterDetailService} from '../actions-mode/actions-master-detail.setvice';
+import {ActionsMasterDetailService} from '../actions-mode/actions-master-detail.service';
 import {ActionsModeService} from '../actions-mode/actions-mode.service';
 import {ControlPanelButton} from '../control-panel/control-panel-button';
 import {ControlPanelIcon} from '../control-panel/control-panel-icon';
@@ -108,7 +108,7 @@ export class EditModeService extends CanvasModeService<CanvasTool> {
             ),
             this.switchTools
         ];
-        this.modelService.modelSubject.subscribe(_ => this.renderModel());
+        this.modelService.model$().subscribe(_ => this.renderModel());
         this.modelService.placeChange.subscribe(value => this.updatePlace(value));
         this.modelService.transitionChange.subscribe(value => this.updateTransition(value));
         this.modelService.arcChange.subscribe(arc => this.updateArc(arc));

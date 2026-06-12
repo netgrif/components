@@ -48,7 +48,7 @@ export class FieldListComponent implements OnInit, AfterViewInit {
 
     ngOnInit(): void {
         this.gridsterService.selectedDataField = undefined;
-        this.gridsterService.onNewFieldPlaced.subscribe(value => {
+        this.gridsterService.onNewFieldPlaced$().subscribe(value => {
             this.updateExistingFields();
         });
         this.updateExistingFields();

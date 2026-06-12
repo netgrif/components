@@ -3,7 +3,7 @@ import {Component, Injector, OnInit} from '@angular/core';
 import {Sort} from '@angular/material/sort';
 import {PageMasterComponent} from '../../components/master-detail/page-master.component';
 import {MasterItem} from '../action-editor/classes/master-item';
-import {ActionsMasterDetailService} from '../actions-master-detail.setvice';
+import {ActionsMasterDetailService} from '../actions-master-detail.service';
 import {ActionsModeService} from '../actions-mode.service';
 import {FunctionsTool} from '../tools/functions-tool';
 import {ProcessActionsTool} from '../tools/process-actions-tool';

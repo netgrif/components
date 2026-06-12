@@ -1,12 +1,16 @@
 import {Injectable} from '@angular/core';
 import {PetriNet} from '@netgrif/petriflow';
-import {Subject} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 
 @Injectable()
 export class ModelerTabsService {
-  openTab: Subject<PetriNet>;
+    private _openTab = new Subject<PetriNet>();
 
-  constructor() {
-    this.openTab = new Subject<PetriNet>();
-  }
+    openTab$(): Observable<PetriNet> {
+        return this._openTab.asObservable();
+    }
+
+    openTab(model: PetriNet): void {
+        this._openTab.next(model);
+    }
 }

@@ -2,7 +2,7 @@ import {Component, OnDestroy} from '@angular/core';
 import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {Role} from '@netgrif/petriflow';
-import {ActionsMasterDetailService} from '../../actions-mode/actions-master-detail.setvice';
+import {ActionsMasterDetailService} from '../../actions-mode/actions-master-detail.service';
 import {ActionsModeService} from '../../actions-mode/actions-mode.service';
 import {ModelerUtils} from '../../modeler-utils';
 import {HistoryService} from '../../services/history/history.service';

@@ -5,9 +5,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
 import {HttpClient} from "@angular/common/http";
 import {ImportService} from "@netgrif/petriflow";
-import {EditModeService} from "./modeler/edit-mode/edit-mode.service";
 import {HistoryService} from "./modeler/services/history/history.service";
-import {ControlPanelService} from "./modeler/control-panel/control-panel.service";
 
 @Component({
   selector: 'nc-builder',
@@ -22,7 +20,6 @@ export class BuilderComponent {
                 private route: ActivatedRoute,
                 private httpClient: HttpClient,
                 private _importService: ImportService,
-                private _petriflowCanvasService: EditModeService,
                 private historyService: HistoryService,
                 public builderModeService: BuilderModeService) {
         this.route.queryParams.subscribe(params => {

@@ -6,7 +6,7 @@ import {BuilderModeService} from '../../builder-mode.service';
 import {ArcFactory} from '../../modeler/edit-mode/domain/arc-builders/arc-factory.service';
 import {ModelService} from '../../modeler/services/model/model.service';
 import {SelectedTransitionService} from '../../modeler/selected-transition.service';
-import {ActionsMasterDetailService} from '../../modeler/actions-mode/actions-master-detail.setvice';
+import {ActionsMasterDetailService} from '../../modeler/actions-mode/actions-master-detail.service';
 import {ActionsModeService} from '../../modeler/actions-mode/actions-mode.service';
 import {GridsterService} from '../gridster/gridster.service';
 import {FieldListService} from '../field-list/field-list.service';

@@ -3,7 +3,7 @@ import {Component} from '@angular/core';
 import {FunctionScope} from '@netgrif/petriflow';
 import {ActionDetailComponent} from './action-detail/action-detail.component';
 import {ActionMasterComponent} from './action-master/action-master.component';
-import {ActionsMasterDetailService} from './actions-master-detail.setvice';
+import {ActionsMasterDetailService} from './actions-master-detail.service';
 
 export interface Scope {
     viewValue: string;

@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 import {NodeElement as SvgNodeElement} from '@netgrif/petri.svg';
 import {ArcType, NodeElement} from '@netgrif/petriflow';
 import {PetriflowNode} from '@netgrif/petriflow.svg';
-import {ActionsMasterDetailService} from '../../../actions-mode/actions-master-detail.setvice';
+import {ActionsMasterDetailService} from '../../../actions-mode/actions-master-detail.service';
 import {ActionsModeService} from '../../../actions-mode/actions-mode.service';
 import {ControlPanelButton} from '../../../control-panel/control-panel-button';
 import {SelectedTransitionService} from '../../../selected-transition.service';

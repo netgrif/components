@@ -3,7 +3,7 @@ import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {AssignPolicy, DataType, FinishPolicy} from '@netgrif/petriflow';
-import {ActionsMasterDetailService} from '../../modeler/actions-mode/actions-master-detail.setvice';
+import {ActionsMasterDetailService} from '../../modeler/actions-mode/actions-master-detail.service';
 import {ActionsModeService} from '../../modeler/actions-mode/actions-mode.service';
 import {SelectedTransitionService} from '../../modeler/selected-transition.service';
 import {ModelService} from '../../modeler/services/model/model.service';

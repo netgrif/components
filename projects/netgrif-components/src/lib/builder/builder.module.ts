@@ -16,8 +16,6 @@ import {
     DialogLocalStorageModelComponent
 } from "./dialogs/dialog-local-storage-model/dialog-local-storage-model.component";
 import {DialogMarkingChangeComponent} from "./dialogs/dialog-marking-change/dialog-marking-change.component";
-import {BrowserModule} from "@angular/platform-browser";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MaterialModule} from "@netgrif/components-core";
 import {FormBuilderModule} from "./form-builder/form-builder.module";
 import {ModelerModule} from "./modeler/modeler.module";
@@ -32,7 +30,7 @@ import {FunctionsTool} from "./modeler/actions-mode/tools/functions-tool";
 import {ProcessActionsTool} from "./modeler/actions-mode/tools/process-actions-tool";
 import {RoleActionsTool} from "./modeler/actions-mode/tools/role-actions-tool";
 import {TransitionActionsTool} from "./modeler/actions-mode/tools/transition-actions-tool";
-import {ActionsMasterDetailService} from "./modeler/actions-mode/actions-master-detail.setvice";
+import {ActionsMasterDetailService} from "./modeler/actions-mode/actions-master-detail.service";
 import {ActionsModeService} from "./modeler/actions-mode/actions-mode.service";
 import {ExportTool} from "./modeler/control-panel/modes/export-tool";
 import {ImportTool} from "./modeler/control-panel/modes/import-tool";
@@ -95,8 +93,6 @@ import {MaterialIconPickerComponent} from "./modeler/components/material-icon-pi
     ],
     imports: [
         CommonModule,
-        BrowserModule,
-        BrowserAnimationsModule,
         MaterialModule,
         FormBuilderModule,
         ModelerModule,

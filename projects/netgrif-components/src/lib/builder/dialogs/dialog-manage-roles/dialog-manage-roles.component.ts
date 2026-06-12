@@ -25,7 +25,7 @@ export interface ManagePermissionData {
 }
 
 @Component({
-    selector: 'nc-builder-dialog.manage-roles',
+    selector: 'nc-builder-dialog-manage-roles',
     templateUrl: './dialog-manage-roles.component.html',
     styleUrls: ['./dialog-manage-roles.component.scss'],
     providers: [

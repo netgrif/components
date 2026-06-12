@@ -10,7 +10,7 @@ import {actions} from '../action-editor/classes/command-action';
 import {ActionType, ChangeType} from '../action-editor/classes/editable-action';
 import {LeafNode, TreeNode} from '../action-editor/classes/leaf-node';
 import {MasterItem} from '../action-editor/classes/master-item';
-import {ActionsMasterDetailService} from '../actions-master-detail.setvice';
+import {ActionsMasterDetailService} from '../actions-master-detail.service';
 import {Scope} from '../actions-mode.component';
 import {ActionsModeService} from '../actions-mode.service';
 import {ActionChangedEvent} from "../action-editor/action-editor-list/action-changed-event";

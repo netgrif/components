@@ -1,6 +1,6 @@
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {TestBed} from '@angular/core/testing';
-import {ActionsMasterDetailService} from './actions-master-detail.setvice';
+import {ActionsMasterDetailService} from './actions-master-detail.service';
 import {ActionsModeComponent} from './actions-mode.component';
 
 describe('ActionsModeComponent', () => {

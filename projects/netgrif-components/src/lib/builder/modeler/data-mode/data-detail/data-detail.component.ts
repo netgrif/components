@@ -26,7 +26,7 @@ import {
   FieldListService,
   PropertyDef,
 } from '../../../form-builder/field-list/field-list.service';
-import {ActionsMasterDetailService} from '../../actions-mode/actions-master-detail.setvice';
+import {ActionsMasterDetailService} from '../../actions-mode/actions-master-detail.service';
 import {ActionsModeService} from '../../actions-mode/actions-mode.service';
 import {ModelerUtils} from '../../modeler-utils';
 import {HistoryService} from '../../services/history/history.service';

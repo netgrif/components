@@ -6,7 +6,6 @@ import {FormControl} from '@angular/forms';
 import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 import {MAT_DATE_FORMATS} from '@angular/material/core';
 import {MatDialog} from '@angular/material/dialog';
-import {Router} from '@angular/router';
 import {DATE_FORMAT, DATE_TIME_FORMAT, EnumerationFieldValue} from '@netgrif/components-core';
 import {
   Appearance,
@@ -29,7 +28,7 @@ import {
 import {Observable} from 'rxjs';
 import {map, startWith, tap} from 'rxjs/operators';
 import {DialogRefactorComponent} from '../../dialogs/dialog-refactor/dialog-refactor.component';
-import {ActionsMasterDetailService} from '../../modeler/actions-mode/actions-master-detail.setvice';
+import {ActionsMasterDetailService} from '../../modeler/actions-mode/actions-master-detail.service';
 import {ActionsModeService} from '../../modeler/actions-mode/actions-mode.service';
 import {ModelerConfig} from '../../modeler/modeler-config';
 import {SelectedTransitionService} from '../../modeler/selected-transition.service';
@@ -84,7 +83,6 @@ export class EditPanelComponent implements OnInit, AfterViewInit {
                 public modelService: ModelService,
                 private dialog: MatDialog,
                 private transitionService: SelectedTransitionService,
-                private _router: Router,
                 private _actionMode: ActionsModeService,
                 private _fieldListService: FieldListService,
                 private _actionsMasterDetail: ActionsMasterDetailService,
@@ -124,7 +122,7 @@ export class EditPanelComponent implements OnInit, AfterViewInit {
             this.gridsterService.options.maxItemCols = this.numOfCols;
         }
 
-        this.gridsterService.selectedDataFieldStream.subscribe(value => {
+        this.gridsterService.selectedDataFieldStream$().subscribe(value => {
             if (this.gridsterService.selectedDataField?.dataVariable?.init?.value) {
                 this.formControlRef.patchValue(this.gridsterService.selectedDataField.dataVariable.init.value);
             } else {
@@ -330,7 +328,7 @@ export class EditPanelComponent implements OnInit, AfterViewInit {
         if (this.gridsterService.options.api) {
             this.gridsterService.options.api.optionsChanged();
         }
-        this.gridsterService.selectedDataFieldChangeStream.next();
+        this.gridsterService.notifySelectedDataFieldChange();
         this.registerChange();
     }
 
@@ -368,7 +366,7 @@ export class EditPanelComponent implements OnInit, AfterViewInit {
         dialogRef.afterClosed().subscribe(result => {
             if (result !== undefined) {
                 this.gridsterService.selectedDataField = this.gridsterService.placedDataFields.find(f => f.dataVariable.id === result);
-                this.gridsterService.selectedDataFieldStream.next(this.gridsterService.selectedDataField);
+                this.gridsterService.notifySelectedDataField(this.gridsterService.selectedDataField);
                 this.registerChange();
             }
         });

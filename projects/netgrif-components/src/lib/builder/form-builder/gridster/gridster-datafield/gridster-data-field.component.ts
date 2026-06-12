@@ -32,7 +32,7 @@ export class GridsterDataFieldComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.engineField = this._transformService.transformDataField(this.dataField);
-        this._gridsterSubscription = this._gridsterService.selectedDataFieldChangeStream.subscribe(this.updateEngineField.bind(this));
+        this._gridsterSubscription = this._gridsterService.selectedDataFieldChangeStream$().subscribe(this.updateEngineField.bind(this));
         this.engineField.valueChanges().subscribe(value => {
             if (value && value instanceof Array) {
                 this.dataField.dataVariable.inits = value.map(init => new I18nWithDynamic(init as string));

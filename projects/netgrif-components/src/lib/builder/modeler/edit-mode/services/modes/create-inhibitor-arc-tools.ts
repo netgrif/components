@@ -2,7 +2,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {InhibitorArc as SvgInhibitorArc} from '@netgrif/petri.svg';
 import {ArcType} from '@netgrif/petriflow';
-import {ActionsMasterDetailService} from '../../../actions-mode/actions-master-detail.setvice';
+import {ActionsMasterDetailService} from '../../../actions-mode/actions-master-detail.service';
 import {ActionsModeService} from '../../../actions-mode/actions-mode.service';
 import {ControlPanelButton} from '../../../control-panel/control-panel-button';
 import {ControlPanelIcon} from '../../../control-panel/control-panel-icon';

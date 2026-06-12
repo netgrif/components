@@ -16,7 +16,7 @@ import {
   Transition,
   XmlArcType,
 } from '@netgrif/petriflow';
-import {BehaviorSubject, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {ChangedTransition} from '../../../dialogs/dialog-transition-edit/changed-transition';
 import {ChangedArc} from '../../../dialogs/dialog-arc-edit/changed-arc';
 import {ArcFactory} from '../../edit-mode/domain/arc-builders/arc-factory.service';
@@ -33,7 +33,6 @@ import {SequenceGenerator} from './sequence-generator';
 @Injectable()
 export class ModelService {
     private readonly _model: BehaviorSubject<PetriNet>;
-    private readonly _modelChange: Subject<ModelChange>;
     private readonly _placeChange: Subject<PlaceChange>;
     private readonly _transitionChange: Subject<ChangedTransition>;
     private readonly _arcChange: Subject<ChangedArc>;
@@ -83,8 +82,8 @@ export class ModelService {
         return this._model.value;
     }
 
-    get modelSubject(): BehaviorSubject<PetriNet> {
-        return this._model;
+    model$(): Observable<PetriNet> {
+        return this._model.asObservable();
     }
 
     public newModel(): PetriNet {

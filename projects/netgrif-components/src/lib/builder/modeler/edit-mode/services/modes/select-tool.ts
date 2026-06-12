@@ -4,7 +4,7 @@ import {
     DialogPlaceRefDeleteComponent,
     PlaceRefDeleteData,
 } from '../../../../dialogs/dialog-place-ref-delete/dialog-place-ref-delete.component';
-import {ActionsMasterDetailService} from '../../../actions-mode/actions-master-detail.setvice';
+import {ActionsMasterDetailService} from '../../../actions-mode/actions-master-detail.service';
 import {ActionsModeService} from '../../../actions-mode/actions-mode.service';
 import {ControlPanelButton} from '../../../control-panel/control-panel-button';
 import {ControlPanelIcon} from '../../../control-panel/control-panel-icon';

@@ -32,9 +32,9 @@ describe('ModelService', () => {
         expect(service.model.id).toBe('test-net');
     });
 
-    it('setting model should emit via modelSubject', () => {
+    it('setting model should emit via model$()', () => {
         const emitted: PetriNet[] = [];
-        service.modelSubject.subscribe(m => emitted.push(m));
+        service.model$().subscribe(m => emitted.push(m));
         const net = service.newModel();
         service.model = net;
         expect(emitted.length).toBeGreaterThanOrEqual(1);

@@ -63,13 +63,13 @@ export class GridsterComponent implements OnInit, OnDestroy {
 
     deselect() {
         this.gridsterService.selectedDataField = undefined;
-        this.gridsterService.selectedDataFieldStream.next(undefined);
+        this.gridsterService.notifySelectedDataField(undefined);
     }
 
     select($event: MouseEvent, field: GridsterDataField) {
         $event.stopPropagation();
         this.gridsterService.selectedDataField = field;
-        this.gridsterService.selectedDataFieldStream.next(field);
+        this.gridsterService.notifySelectedDataField(field);
     }
 
     isActive(item: GridsterDataField): boolean {
@@ -80,6 +80,6 @@ export class GridsterComponent implements OnInit, OnDestroy {
         $event.preventDefault();
         $event.stopPropagation();
         this.gridsterService.selectedDataField = item;
-        this.gridsterService.selectedDataFieldStream.next(this.gridsterService.selectedDataField);
+        this.gridsterService.notifySelectedDataField(this.gridsterService.selectedDataField);
     }
 }

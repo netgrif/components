@@ -22,7 +22,7 @@ import {
   GridsterItemComponentInterface,
   GridType,
 } from 'angular-gridster2';
-import {BehaviorSubject, ReplaySubject, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, ReplaySubject, Subject} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
 import {ModelerConfig} from '../../modeler/modeler-config';
 import {SelectedTransitionService} from '../../modeler/selected-transition.service';
@@ -35,18 +35,18 @@ import {GridsterDataField} from './classes/gridster-data-field';
 export class GridsterService {
     public static readonly EXISTING_FIELD = 'existingField';
 
-    options: GridsterConfig;
-    mapCounter: Map<string, number>;
-    placedDataFields: Array<GridsterDataField>;
-    selectedDataField: GridsterDataField;
-    selectedDataFieldStream: ReplaySubject<GridsterDataField>;
-    selectedDataFieldChangeStream: BehaviorSubject<void>;
-    onNewFieldPlaced: ReplaySubject<DataVariable>;
-    optionChanged: Subject<void>;
-    historySave: boolean;
+    private _options: GridsterConfig;
+    private _mapCounter: Map<string, number>;
+    private _placedDataFields: Array<GridsterDataField>;
+    private _selectedDataField: GridsterDataField;
+    private _selectedDataFieldStream: ReplaySubject<GridsterDataField>;
+    private _selectedDataFieldChangeStream: BehaviorSubject<void>;
+    private _onNewFieldPlaced: ReplaySubject<DataVariable>;
+    private _optionChanged: Subject<void>;
+    private _historySave: boolean;
 
     constructor(private modelService: ModelService, private transitionService: SelectedTransitionService) {
-        this.options = {
+        this._options = {
             gridType: GridType.VerticalFixed,
             compactType: CompactType.None,
             margin: 0,
@@ -102,16 +102,35 @@ export class GridsterService {
             ignoreContentClass: 'gridster-item-content',
             dragHandleClass: 'drag-handler'
         };
-        this.placedDataFields = new Array<GridsterDataField>();
-        this.mapCounter = new Map<string, number>();
-        this.selectedDataFieldChangeStream = new BehaviorSubject<void>(undefined);
-        this.onNewFieldPlaced = new ReplaySubject();
-        this.selectedDataFieldStream = new ReplaySubject();
-        this.optionChanged = new Subject<void>();
-        this.optionChanged.pipe(debounceTime(300)).subscribe(() => {
-            this.options?.api?.optionsChanged();
+        this._placedDataFields = new Array<GridsterDataField>();
+        this._mapCounter = new Map<string, number>();
+        this._selectedDataFieldChangeStream = new BehaviorSubject<void>(undefined);
+        this._onNewFieldPlaced = new ReplaySubject();
+        this._selectedDataFieldStream = new ReplaySubject();
+        this._optionChanged = new Subject<void>();
+        this._optionChanged.pipe(debounceTime(300)).subscribe(() => {
+            this._options?.api?.optionsChanged();
         });
     }
+
+    get options(): GridsterConfig { return this._options; }
+
+    get placedDataFields(): Array<GridsterDataField> { return this._placedDataFields; }
+    set placedDataFields(value: Array<GridsterDataField>) { this._placedDataFields = value; }
+
+    get selectedDataField(): GridsterDataField { return this._selectedDataField; }
+    set selectedDataField(value: GridsterDataField) { this._selectedDataField = value; }
+
+    get historySave(): boolean { return this._historySave; }
+    set historySave(value: boolean) { this._historySave = value; }
+
+    selectedDataFieldStream$(): Observable<GridsterDataField> { return this._selectedDataFieldStream.asObservable(); }
+    notifySelectedDataField(field: GridsterDataField | undefined): void { this._selectedDataFieldStream.next(field); }
+
+    selectedDataFieldChangeStream$(): Observable<void> { return this._selectedDataFieldChangeStream.asObservable(); }
+    notifySelectedDataFieldChange(): void { this._selectedDataFieldChangeStream.next(); }
+
+    onNewFieldPlaced$(): Observable<DataVariable> { return this._onNewFieldPlaced.asObservable(); }
 
     get transition(): Transition {
         const transition = this.modelService.model.getTransition(this.transitionId);
@@ -145,38 +164,38 @@ export class GridsterService {
         item.y = item.dataRef.layout.y = resized.$item.y;
         item.rows = item.dataRef.layout.rows = resized.$item.rows;
         item.cols = item.dataRef.layout.cols = resized.$item.cols;
-        this.historySave = true;
+        this._historySave = true;
         this.updateGridsterRows();
     }
 
     updatePlacedDataFields() {
         const refs = this.transition.dataGroups[0]?.getDataRefs();
         if (refs) {
-            this.placedDataFields = refs.map(ref => new GridsterDataField(ref, this.modelService.model.getData(ref.id)));
+            this._placedDataFields = refs.map(ref => new GridsterDataField(ref, this.modelService.model.getData(ref.id)));
         } else {
-            this.placedDataFields = [];
+            this._placedDataFields = [];
         }
     }
 
     updateGridsterRows() {
         let min = 1;
-        this.placedDataFields.forEach(ref => {
+        this._placedDataFields.forEach(ref => {
             const end = ref.y + ref.rows;
             if (end > min) {
                 min = end;
             }
         });
-        this.options.minRows = min + 1;
-        this.optionChanged.next();
+        this._options.minRows = min + 1;
+        this._optionChanged.next();
     }
 
     removeDataRef(item: GridsterDataField) {
         const id = item.dataRef.id;
         (this.transition.dataGroups[0] as DataGroup).removeDataRef(id);
-        this.placedDataFields.splice(this.placedDataFields.findIndex(field => field.dataVariable.id === id), 1);
-        this.selectedDataField = undefined;
-        this.selectedDataFieldStream.next(this.selectedDataField);
-        this.historySave = true;
+        this._placedDataFields.splice(this._placedDataFields.findIndex(field => field.dataVariable.id === id), 1);
+        this._selectedDataField = undefined;
+        this._selectedDataFieldStream.next(this._selectedDataField);
+        this._historySave = true;
     }
 
     public addNewDataVariable(type: DataType): DataVariable {
@@ -191,7 +210,7 @@ export class GridsterService {
             dataVariable.init = new I18nWithDynamic('', '', false);
         }
         this.modelService.model.addData(dataVariable);
-        this.historySave = true;
+        this._historySave = true;
         return dataVariable;
     }
 
@@ -207,8 +226,8 @@ export class GridsterService {
         if (componentCols) {
             item.cols = +componentCols;
         }
-        if (item.cols > this.options.maxCols) {
-            item.cols = this.options.maxCols;
+        if (item.cols > this._options.maxCols) {
+            item.cols = this._options.maxCols;
         }
         dataRef.layout.rows = item.rows;
         dataRef.layout.cols = item.cols;
@@ -224,12 +243,12 @@ export class GridsterService {
         if (dataVariable.type === DataType.TASK_REF && dataVariable.init?.value === this.transitionId) {
             dataVariable.init.value = undefined;
         }
-        this.selectedDataField = new GridsterDataField(dataRef, dataVariable);
-        this.selectedDataFieldStream.next(this.selectedDataField);
-        this.placedDataFields.push(this.selectedDataField);
-        this.onNewFieldPlaced.next(dataVariable);
+        this._selectedDataField = new GridsterDataField(dataRef, dataVariable);
+        this._selectedDataFieldStream.next(this._selectedDataField);
+        this._placedDataFields.push(this._selectedDataField);
+        this._onNewFieldPlaced.next(dataVariable);
         this.updateGridsterRows();
-        this.historySave = true;
+        this._historySave = true;
         return dataRef;
     }
 
@@ -246,19 +265,19 @@ export class GridsterService {
                 newDataRef.component.properties.push(new Property(property.name, property.defaultValue));
             }
         }
-        this.options.api?.optionsChanged();
+        this._options.api?.optionsChanged();
         return newDataRef;
     }
 
     private createId(type: string) {
         // TODO: release/4.0.0 update with model service logic
         let counter: number;
-        if (this.mapCounter.has(type)) {
-            counter = this.mapCounter.get(type);
-            this.mapCounter.set(type, counter + 1);
+        if (this._mapCounter.has(type)) {
+            counter = this._mapCounter.get(type);
+            this._mapCounter.set(type, counter + 1);
         } else {
             counter = 0;
-            this.mapCounter.set(type, counter + 1);
+            this._mapCounter.set(type, counter + 1);
         }
         try {
             if (this.modelService.model.getData(type + '_' + counter)) {
