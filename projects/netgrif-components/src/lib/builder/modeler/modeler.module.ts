@@ -12,10 +12,7 @@ import {GridsterModule} from 'angular-gridster2';
 import {ResizableModule} from 'angular-resizable-element';
 import {NgxDropzoneModule} from 'ngx-dropzone';
 import {MonacoEditorModule} from 'ngx-monaco-editor-v2';
-import {DialogAddLanguageComponent} from '../dialogs/dialog-add-language/dialog-add-language.component';
-import {DialogArcAttachComponent} from '../dialogs/dialog-arc-attach/dialog-arc-attach.component';
-import {DialogDeleteComponent} from '../dialogs/dialog-delete/dialog-delete.component';
-import {DialogManageRolesComponent} from '../dialogs/dialog-manage-roles/dialog-manage-roles.component';
+import {BuilderDialogsModule} from '../dialogs/dialogs.module';
 import {ActionDetailComponent} from './actions-mode/action-detail/action-detail.component';
 import {ActionEditorModule} from './actions-mode/action-editor/action-editor.module';
 import {ActionMasterItemComponent} from './actions-mode/action-master/action-master-item/action-master-item.component';
@@ -33,7 +30,6 @@ import {ImportToolButtonComponent} from './control-panel/modes/import-tool-butto
 import {ModeComponent} from './control-panel/modes/mode-component/mode.component';
 import {FileToolComponent} from './control-panel/tools/file-tool-component/file-tool.component';
 import {ToolComponent} from './control-panel/tools/tool-component/tool.component';
-import {TriggerTreeComponent} from './control-panel/trees/trigger-tree/trigger-tree.component';
 import {DataDetailComponent} from './data-mode/data-detail/data-detail.component';
 import {DataMasterItemComponent} from './data-mode/data-master-item/data-master-item.component';
 import {DataModeComponent} from './data-mode/data-mode.component';
@@ -81,17 +77,12 @@ import {MaterialIconPickerComponent} from "./components/material-icon-picker/mat
         DataDetailComponent,
         ModelerComponent,
         ControlPanelComponent,
-        DialogManageRolesComponent,
-        TriggerTreeComponent,
         SimulationModeComponent,
         EditModeComponent,
         DataModeComponent,
         RoleModeComponent,
         ActionsModeComponent,
-        DialogArcAttachComponent,
         I18nModeComponent,
-        DialogDeleteComponent,
-        DialogAddLanguageComponent,
         ImportSuccessfulComponent,
         LanguagesComponent,
         TranslationsComponent,
@@ -123,12 +114,12 @@ import {MaterialIconPickerComponent} from "./components/material-icon-picker/mat
     ],
     exports: [
         ActionEditorModule,
-        TriggerTreeComponent,
         TaskRefInitFieldComponent,
         ModelerComponent,
     ],
     imports: [
         ActionEditorModule,
+        BuilderDialogsModule,
         CommonModule,
         DataFieldsComponentModule,
         FlexLayoutModule,
