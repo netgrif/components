@@ -246,4 +246,9 @@ export enum GroupNavigationConstants {
      */
     ITEM_FIELD_TASK_INHERIT_ALLOWED_NETS = "task_inherit_allowed_nets",
 
+    /**
+     * Transition ID, which contains all configuration data
+     */
+    ITEM_TRANS_ID_ALL_DATA = "all_menu_data",
+
 }

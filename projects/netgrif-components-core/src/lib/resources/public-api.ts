@@ -2,7 +2,6 @@
 export * from './resource-provider.service';
 export * from './engine-endpoint/case-resource.service';
 export * from './engine-endpoint/task-resource.service';
-export * from './engine-endpoint/menu-resource.service';
 export * from './engine-endpoint/petri-net-resource.service';
 export * from './engine-endpoint/user-resource.service';
 export * from './engine-endpoint/dashboard-resource.service';

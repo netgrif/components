@@ -12,7 +12,6 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {TestGroupNavigationComponentResolverService} from './group-navigation-component-resolver.service.spec';
 import {RouterTestingModule} from '@angular/router/testing';
-import {MenuResourceService} from "../../resources/engine-endpoint/menu-resource.service";
 import {DataGroup} from "../../resources/interface/data-groups";
 import {of, Observable} from "rxjs";
 
@@ -39,8 +38,7 @@ describe('AbstractGroupNavigationComponentResolverComponent', () => {
                             paramMap: convertToParamMap({itemCaseId: 'thisIsEncodedCaseId'})
                         }
                     }
-                },
-                {provide: MenuResourceService, useClass: MenuResource}
+                }
             ],
             declarations: [
                 TestAbstractGroupNavigationComponentResolverComponent,
@@ -62,12 +60,6 @@ describe('AbstractGroupNavigationComponentResolverComponent', () => {
         expect(component).toBeTruthy();
     });
 });
-
-class MenuResource {
-    public getItemData(encodedCaseId: string): Observable<Array<DataGroup>> {
-        return of([]);
-    }
-}
 
 @Component({
     selector: 'ncc-test-group-navigation',

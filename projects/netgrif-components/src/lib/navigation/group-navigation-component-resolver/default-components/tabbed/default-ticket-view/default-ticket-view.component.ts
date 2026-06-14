@@ -15,9 +15,8 @@ import {
     NAE_TAB_DATA,
     SimpleFilter,
     FilterType, CaseEventOutcome,
-    encodeBase64,
     NAE_AUTOSWITCH_TAB_TOKEN, NAE_OPEN_EXISTING_TAB, LoggerService, ProcessService, Filter,
-    MergeOperator, MenuResourceService
+    MergeOperator, TaskResourceService, DoubleDrawerUtils
 } from '@netgrif/components-core';
 import {TranslateService} from "@ngx-translate/core";
 import {FormControl} from "@angular/forms";
@@ -62,7 +61,7 @@ export class DefaultTicketViewComponent implements OnInit {
                 protected _uriService: UriService,
                 protected _translateService: TranslateService,
                 protected _navigationService: DoubleDrawerNavigationService,
-                protected _menuResourceService: MenuResourceService,
+                protected _taskResourceService: TaskResourceService,
                 protected _processService: ProcessService,
                 @Inject(NAE_TAB_DATA) protected _injectedTabData: InjectedTabbedTicketViewDataWithNavigationItemTaskData,
                 @Optional() @Inject(NAE_AUTOSWITCH_TAB_TOKEN) protected _autoswitchToTaskTab = true,
@@ -93,8 +92,11 @@ export class DefaultTicketViewComponent implements OnInit {
                 return;
             }
             forkJoin(items.map(item => {
-                const encodedCaseId = encodeBase64(item.resource.stringId);
-                return this._menuResourceService.getItemData(encodedCaseId)
+                const taskId = DoubleDrawerUtils.findTaskIdInCase(item.resource, GroupNavigationConstants.ITEM_TRANS_ID_ALL_DATA);
+                if (taskId === undefined) {
+                    return;
+                }
+                return this._taskResourceService.getData(taskId)
                     .pipe(map(dataGroups => {return {caseId: item.resource.stringId, dataGroups} as DataGroupCaseIdPair}));
             })).subscribe(dataGroups => {
                 dataGroups.forEach(dataGroupPair => {

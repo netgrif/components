@@ -3,7 +3,8 @@ import {
     DataGroup,
     GroupNavigationComponentResolverService,
     LoggerService,
-    MenuResourceService,
+    TaskResourceService,
+    CaseResourceService,
     ConfigurationService,
     View,
     ViewService,
@@ -26,8 +27,9 @@ import {
 @Injectable()
 export class DefaultGroupNavigationComponentResolverService extends GroupNavigationComponentResolverService {
 
-    constructor(menuResourceService: MenuResourceService, log: LoggerService, private _configService: ConfigurationService, private _viewService: ViewService,) {
-        super(menuResourceService, log);
+    constructor(taskResourceService: TaskResourceService, caseResourceService: CaseResourceService, log: LoggerService,
+                private _configService: ConfigurationService, private _viewService: ViewService,) {
+        super(taskResourceService, caseResourceService, log);
     }
 
     public resolveViewComponent(navItemData: Array<DataGroup>): Type<any> {

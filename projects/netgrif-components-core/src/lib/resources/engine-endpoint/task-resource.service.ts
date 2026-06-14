@@ -19,7 +19,7 @@ import {AbstractResourceService} from '../abstract-endpoint/abstract-resource.se
 import {DataGroup} from '../interface/data-groups';
 import {GetDataGroupsEventOutcome} from '../../event/model/event-outcomes/data-outcomes/get-data-groups-event-outcome';
 import {FileFieldRequest} from "../interface/file-field-request-body";
-import {handleDataGroups} from "./utils/resource-utils";
+import {DataField} from '../../data-fields/models/abstract-data-field';
 
 @Injectable({
     providedIn: 'root'
@@ -210,7 +210,40 @@ export class TaskResourceService extends AbstractResourceService implements Coun
                 }
 
                 const dataGroupsArray = this.changeType((responseOutcome.outcome as GetDataGroupsEventOutcome).data, 'dataGroups');
-                return handleDataGroups(dataGroupsArray, this._fieldConverter);
+                if (!Array.isArray(dataGroupsArray)) {
+                    return [];
+                }
+                const result = [];
+                dataGroupsArray.forEach(dataGroupResource => {
+                    const dataFields: Array<DataField<any>> = [];
+                    if (!dataGroupResource.fields._embedded) {
+                        return; // continue
+                    }
+                    const fields = [];
+                    Object.keys(dataGroupResource.fields._embedded).forEach(localizedFields => {
+                        fields.push(...dataGroupResource.fields._embedded[localizedFields]);
+                    });
+                    fields.sort((a, b) => a.order - b.order);
+                    dataFields.push(...fields.map(dataFieldResource => this._fieldConverter.toClass(dataFieldResource)));
+                    const dataGroupObject: DataGroup = {
+                        fields: dataFields,
+                        stretch: dataGroupResource.stretch,
+                        title: dataGroupResource.title,
+                        layout: dataGroupResource.layout,
+                        alignment: dataGroupResource.alignment,
+                    };
+                    if (dataGroupResource.parentTaskId !== undefined) {
+                        dataGroupObject.parentTaskId = dataGroupResource.parentTaskId;
+                        dataGroupObject.parentTransitionId = dataGroupResource.parentTransitionId;
+                        dataGroupObject.parentTaskRefId = dataGroupResource.parentTaskRefId;
+                        dataGroupObject.nestingLevel = dataGroupResource.nestingLevel;
+                    }
+                    if (dataGroupResource.parentCaseId !== undefined) {
+                        dataGroupObject['parentCaseId'] = dataGroupResource.parentCaseId;
+                    }
+                    result.push(dataGroupObject);
+                });
+                return result;
             })
         );
     }
