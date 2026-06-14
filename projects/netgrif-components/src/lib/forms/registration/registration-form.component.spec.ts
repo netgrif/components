@@ -1,7 +1,7 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {RegistrationFormComponent} from './registration-form.component';
-import {FlexLayoutModule} from '@angular/flex-layout';
+import {FlexLayoutModule} from '@ngbracket/ngx-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';

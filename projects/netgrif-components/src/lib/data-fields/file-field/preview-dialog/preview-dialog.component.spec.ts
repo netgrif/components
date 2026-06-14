@@ -13,7 +13,7 @@ import {
 import {AngularResizeEventModule} from 'angular-resize-event';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {FlexLayoutModule} from '@angular/flex-layout';
+import {FlexLayoutModule} from '@ngbracket/ngx-layout';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {of} from 'rxjs';

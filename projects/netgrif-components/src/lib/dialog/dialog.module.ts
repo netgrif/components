@@ -19,7 +19,7 @@ import {A11yModule} from '@angular/cdk/a11y';
 import {
     SideMenuUserAssignComponentModule
 } from '../side-menu/content-components/user-assign/side-menu-user-assign-component.module';
-import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
+import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
 import {FormsModule} from '@angular/forms';
 import {HotkeyModule} from 'angular2-hotkeys';
 import {ImportNetDialogComponent} from './import-net-dialog/import-net-dialog.component';

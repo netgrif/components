@@ -1,6 +1,6 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {DefaultTabViewComponent} from './default-tab-view.component';
-import {NavigationComponentModule} from '../../../../navigation.module';
+import {NavigationComponentModule} from '../../../navigation.module';
 import {
     BooleanField,
     EnumerationField,
@@ -21,8 +21,8 @@ import {
     ViewService,
     StringCollectionField
 } from '@netgrif/components-core';
+import {RouterModule} from '@angular/router';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {RouterTestingModule} from '@angular/router/testing';
 
 describe('DefaultTabViewComponent', () => {
     let component: DefaultTabViewComponent;
@@ -34,7 +34,7 @@ describe('DefaultTabViewComponent', () => {
             imports: [
                 NavigationComponentModule,
                 TestMockDependenciesModule,
-                RouterTestingModule.withRoutes([], { relativeLinkResolution: 'legacy' }),
+                RouterModule.forRoot([]),
                 NoopAnimationsModule,
                 TranslateLibModule,
                 AuthenticationModule
@@ -116,10 +116,6 @@ describe('DefaultTabViewComponent', () => {
                                 new TextField(
                                     GroupNavigationConstants.ITEM_FIELD_ID_CASE_DEFAULT_HEADERS,
                                     '','', {visible: true}
-                                ),
-                                new BooleanField(
-                                    GroupNavigationConstants.ITEM_FIELD_ID_CASE_ALLOW_EXPORT,
-                                    '',true,{visible: true}
                                 ),
                                 new EnumerationField(
                                     GroupNavigationConstants.ITEM_FIELD_ID_TASK_VIEW_SEARCH_TYPE,

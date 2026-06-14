@@ -68,12 +68,6 @@ describe('CancelTaskService', () => {
                 {provide: TaskResourceService, useClass: TestTaskResourceService},
                 {provide: UserService, useClass: TestUserService}
             ]
-        }).overrideModule(BrowserDynamicTestingModule, {
-            set: {
-                entryComponents: [
-                    ErrorSnackBarComponent,
-                ]
-            }
         }).compileComponents();
         service = TestBed.inject(CancelTaskService);
         testTask = {

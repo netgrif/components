@@ -5,6 +5,7 @@ import {
 } from '@angular/core';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
+import {FileField} from "./models/file-field";
 
 /**
  * @deprecated
@@ -17,6 +18,10 @@ import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token
     template: ''
 })
 export abstract class AbstractFileFieldComponent extends AbstractDataFieldComponent  {
+
+
+    @Input() declare dataField: FileField;
+
 
     @Input() taskId: string;
 

@@ -20,7 +20,7 @@ import {
     WorkflowViewService
 } from '@netgrif/components-core';
 import {CommonModule} from '@angular/common';
-import {FlexModule} from '@angular/flex-layout';
+import {FlexModule} from '@ngbracket/ngx-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {DataFieldsComponentModule} from '../../data-fields/data-fields.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';

@@ -12,7 +12,7 @@ import {AbstractDataFieldComponent} from "../models/abstract-data-field-componen
 })
 export abstract class AbstractDateFieldComponent extends AbstractDataFieldComponent{
 
-    @Input() public dataField: DateField;
+    @Input() declare public dataField: DateField;
 
     protected constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
         super(informAboutInvalidData);

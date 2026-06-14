@@ -44,12 +44,6 @@ describe('AbstractTabCreationDetectorComponent', () => {
                 TestTabComponent,
                 TestWrapperComponent,
             ]
-        }).overrideModule(BrowserDynamicTestingModule, {
-            set: {
-                entryComponents: [
-                    TestComponent
-                ]
-            }
         }).compileComponents();
 
         fixture = TestBed.createComponent(TestWrapperComponent);

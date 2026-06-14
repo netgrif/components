@@ -34,7 +34,6 @@ export interface WorkflowPanelContent {
 export abstract class AbstractWorkflowPanelComponent extends AbstractPanelWithHeaderBindingComponent implements OnInit, OnDestroy {
 
     @Input() public workflow: Net;
-    @Input() public selectedHeaders$: Observable<Array<HeaderColumn>>;
     @Input() responsiveBody = true;
     @Input() showDeleteMenu = false;
     @Input() public first: boolean;
