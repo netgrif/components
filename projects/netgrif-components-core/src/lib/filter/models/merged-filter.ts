@@ -55,10 +55,11 @@ export class MergedFilter extends Filter {
      * @param filterBodies `Array` of search requests matching this filter's type
      * @param _operator boolean operator that is used to combine the filters
      * @param title human readable filter name
+     * @param isPfql true if the Filter should cooperate with PFQL API
      */
     constructor(id: string, type: FilterType, filterBodies: Array<CaseSearchRequestBody> | Array<TaskSearchRequestBody>,
-                protected _operator: MergeOperator, title?: string) {
-        super(id, type, title);
+                protected _operator: MergeOperator, title?: string, isPfql: boolean = false) {
+        super(id, type, title, isPfql);
         this._filters = [];
         filterBodies.forEach(body => {
             this._filters.push(this.deepCopy(body));
@@ -77,7 +78,7 @@ export class MergedFilter extends Filter {
      * See [Filter.clone()]{@link Filter#clone}
      */
     clone(): Filter {
-        return new MergedFilter(this.id, this.type, this._filters, this._operator, this.title);
+        return new MergedFilter(this.id, this.type, this._filters, this._operator, this.title, this.isPfql);
     }
 
     /**
@@ -104,7 +105,7 @@ export class MergedFilter extends Filter {
             combinedFilters.push(otherFilters);
         }
 
-        return new MergedFilter(id, this.type, combinedFilters, this._operator);
+        return new MergedFilter(id, this.type, combinedFilters, this._operator, undefined, this.isPfql);
     }
 
     /**

@@ -97,7 +97,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
     }
 
     /**
-     * Searches tasks trough the Elastic endpoint.
+     * Searches tasks through the Elastic or PFQL endpoint.
      * POST
      * @param filterParam filter used to search the tasks. Must be of type `TASK`.
      * @param params Additional parameters
@@ -108,7 +108,11 @@ export class TaskResourceService extends AbstractResourceService implements Coun
             throw new Error('Provided filter doesn\'t have type TASK');
         }
         params = ResourceProvider.combineParams(filterParam.getRequestParams(), params);
-        return this._resourceProvider.post$('task/search_es', this.SERVER_URL, filterParam.getRequestBody(), params)
+        let endpoint: string = 'task/search_es';
+        if (filterParam.isPfql) {
+            endpoint = 'task/search_pfql'
+        }
+        return this._resourceProvider.post$(endpoint, this.SERVER_URL, filterParam.getRequestBody(), params)
             .pipe(map(r => this.getResourcePage<Task>(r, 'tasks')));
     }
 
