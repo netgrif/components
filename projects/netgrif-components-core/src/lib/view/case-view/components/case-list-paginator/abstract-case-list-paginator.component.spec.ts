@@ -25,6 +25,7 @@ import {Component, Inject, Optional} from '@angular/core';
 import {LoggerService} from '../../../../logger/services/logger.service';
 import {NAE_TAB_DATA} from '../../../../tabs/tab-data-injection-token/tab-data-injection-token';
 import {InjectedTabData} from '../../../../tabs/interfaces';
+import {LanguageService} from "../../../../translate/language.service";
 
 
 describe('AbstractCaseListPaginatorComponent', () => {
@@ -79,8 +80,9 @@ class TestCaseComponent extends AbstractCaseListPaginatorComponent {
     constructor(protected _caseViewService: CaseViewService,
                 protected _log: LoggerService,
                 @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData,
+                protected _selectLangService: LanguageService,
                 protected _route: ActivatedRoute) {
-        super(_caseViewService, _log, injectedTabData, _route);
+        super(_caseViewService, _log, injectedTabData, _selectLangService, _route);
     }
 }
 

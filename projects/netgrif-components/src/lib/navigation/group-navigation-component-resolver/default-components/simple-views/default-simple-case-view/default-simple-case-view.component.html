@@ -2,10 +2,10 @@
     <nc-breadcrumbs></nc-breadcrumbs>
 
     <div class="case-view-search-container">
-        <div fxLayout="row" class="max-height" fxLayoutAlign="space-between">
+        <div fxLayout="row" fxLayoutAlign="space-between">
             <div fxLayoutAlign="start center" fxFlex>
-                <nc-search class="search-width search-fix" *ngIf="(enableSearch)" [showSearchToggleButton]="showToggleButton"
-                           [initialSearchMode]="initialSearchMode" (filterLoaded)="loadFilter($event)"></nc-search>
+                <nc-search class="search-width" *ngIf="(enableSearch)" [showSearchToggleButton]="showToggleButton"
+                           [initialSearchMode]="initialSearchMode"></nc-search>
             </div>
             <div fxLayoutAlign="end center" *ngIf="allowExport">
                 <button mat-mini-fab color="primary" class="export-mat-mini-fab" (click)="export()"
@@ -20,16 +20,16 @@
         </div>
     </div>
 
-    <div class="full-height transform-div custom-scrollbar"
-         [ngClass]="{'overflow-div': getOverflowStatus()}" fxLayout="column" fxLayoutAlign="start stretch">
+    <div class="full-height transform-div custom-scrollbar" [ngClass]="{'overflow-div': getOverflowStatus()}" fxLayout="column" fxLayoutAlign="start stretch">
         <div class="full-height transform-div max-width-fix" fxLayout="column" fxLayoutAlign="start stretch">
-            <nc-header #header [type]="headerType" [responsiveHeaders]="true" [ngStyle]="{'width': getWidth()}" [hideHeaderMenu]="!headersChangeable" [showEditButton]="isMenuOptionEnabled('edit')"
+            <nc-header #header [type]="headerType" [responsiveHeaders]="true" class="case-header-padding" [ngStyle]="{'width': getWidth()}"
+                       [hideHeaderMenu]="!headersChangeable" [showEditButton]="isMenuOptionEnabled('edit')"
                        [showSortButton]="isMenuOptionEnabled('sort')" [showSearchButton]="isMenuOptionEnabled('search')"
-                       [showTableSection]="allowTableMode" class="case-header-padding"></nc-header>
+                       [showTableSection]="allowTableMode"></nc-header>
 
-            <nc-case-list [selectedHeaders$]="selectedHeaders$" [textEllipsis]="true" [showDeleteMenu]="showDeleteMenu" [width]="getWidth()"
-                          (caseClick)="handleCaseClick($event)" [responsiveBody]="true" [emptyContentText]="emptyContentText"
-                          [emptyContentIcon]="emptyContentIcon" fxFlex></nc-case-list>
+            <nc-case-list-paginator [selectedHeaders$]="selectedHeaders$" [showDeleteMenu]="showDeleteMenu" [width]="getWidth()"
+                          [responsiveBody]="true" fxFlex [textEllipsis]="true" [emptyContentText]="emptyContentText"
+                                    [emptyContentIcon]="emptyContentIcon"></nc-case-list-paginator>
         </div>
     </div>
 </div>

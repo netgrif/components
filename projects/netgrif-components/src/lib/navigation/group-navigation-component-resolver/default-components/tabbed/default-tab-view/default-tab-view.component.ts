@@ -2,6 +2,7 @@ import {Component, Inject} from '@angular/core';
 import {
     DataGroup,
     extractIconAndTitle,
+    FilterType,
     extractSearchTypeFromData,
     extractFieldValueFromData,
     groupNavigationViewIdSegmentFactory,
@@ -14,7 +15,8 @@ import {
     ViewIdService,
     FilterExtractionService,
     GroupNavigationConstants,
-    hasView
+    hasView,
+    I18nFieldValue
 } from '@netgrif/components-core';
 import {DefaultTabbedCaseViewComponent} from '../default-tabbed-case-view/default-tabbed-case-view.component';
 import {DefaultTabbedTaskViewComponent} from '../default-tabbed-task-view/default-tabbed-task-view.component';
@@ -39,21 +41,23 @@ export class DefaultTabViewComponent {
     tabs: Array<TabContent>;
 
     constructor(@Inject(NAE_NAVIGATION_ITEM_TASK_DATA) protected _navigationItemTaskData: Array<DataGroup>,
-                protected translationService: TranslateService,
+                protected translateService: TranslateService,
                 protected extractionService: FilterExtractionService,
                 protected activatedRoute: ActivatedRoute) {
         this.tabs = this.getTabs();
     }
 
     protected getTabs(): TabContent[] {
-        const menuItemDataGroups: Array<DataGroup> = this._navigationItemTaskData.slice(0, 4)
-        const viewDataGroups: Array<DataGroup> = this._navigationItemTaskData.slice(4, this._navigationItemTaskData.length);
+        const menuItemDataGroups: Array<DataGroup> = this._navigationItemTaskData.slice(0, 1);
+        const viewDataGroups: Array<DataGroup> = this._navigationItemTaskData.slice(1, this._navigationItemTaskData.length);
 
-        const viewType: string = extractFieldValueFromData(menuItemDataGroups, "view_configuration_type")
+        const viewType: string = extractFieldValueFromData<string>(menuItemDataGroups, "view_configuration_type");
         switch (viewType) {
-            case "tabbed_case_view":
+            case "single_task_view":
+                return this.getSingleTaskTabs(menuItemDataGroups, viewDataGroups);
+            case "case_view":
                 return this.getCaseTabs(menuItemDataGroups, viewDataGroups);
-            case "tabbed_task_view":
+            case "task_view":
                 return this.getTaskTabs(menuItemDataGroups, viewDataGroups);
             case "tabbed_ticket_view":
                 return this.getTicketTabs(menuItemDataGroups, viewDataGroups);
@@ -63,11 +67,11 @@ export class DefaultTabViewComponent {
     }
 
     protected getCaseTabs(menuItemDataGroups: Array<DataGroup>, viewDataGroups: Array<DataGroup>): TabContent[] {
-        const labelData = extractIconAndTitle(menuItemDataGroups, this.translationService);
+        const labelData = extractIconAndTitle(menuItemDataGroups, this.translateService);
 
         const blockNetsString = extractFieldValueFromData<string>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_CASE_BANNED_PROCESS_CREATION);
-        const blockNets = blockNetsString === undefined ? [] : blockNetsString.split(',')
-        const createCaseButtonTitle: string = extractFieldValueFromData<string>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_CREATE_CASE_BUTTON_TITLE);
+        const blockNets = blockNetsString === undefined ? [] : blockNetsString.split(',');
+        const createCaseButtonTitle: I18nFieldValue = extractFieldValueFromData<I18nFieldValue>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_CREATE_CASE_BUTTON_TITLE);
         const createCaseButtonIcon: string = extractFieldValueFromData<string>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_CREATE_CASE_BUTTON_ICON);
         const requireTitle: boolean = extractFieldValueFromData<boolean>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_CASE_TITLE_IN_CREATION);
         const showCreateCaseButton: boolean = extractFieldValueFromData<boolean>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_SHOW_CREATE_CASE_BUTTON);
@@ -75,8 +79,8 @@ export class DefaultTabViewComponent {
             enableCaseTitle: requireTitle,
             isCaseTitleRequired: requireTitle,
             newCaseButtonConfig: {
-                createCaseButtonTitle,
-                createCaseButtonIcon,
+                createCaseButtonTitle: this.getTranslation(createCaseButtonTitle),
+                createCaseButtonIcon: createCaseButtonIcon,
                 showCreateCaseButton: showCreateCaseButton,
             },
             blockNets: blockNets
@@ -109,9 +113,9 @@ export class DefaultTabViewComponent {
         const taskViewHeadersMode = extractFieldValueFromData<string[]>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_TASK_HEADERS_MODE);
         const taskViewAllowTableMode = extractFieldValueFromData<boolean>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_TASK_ALLOW_TABLE_MODE);
         const taskViewDefaultHeadersMode = extractFieldValueFromData<string[]>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_TASK_DEFAULT_HEADERS_MODE);
-        const taskViewAdditionalFilter = this.extractionService.extractCompleteAdditionalFilterFromData(viewDataGroups);
+        const taskViewFilter = this.extractionService.extractCompleteFilterFromData(viewDataGroups, undefined, undefined, GroupNavigationConstants.ITEM_FIELD_TASK_FILTER, FilterType.TASK);
         const mergeWithBaseFilter = extractFieldValueFromData<boolean>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_MERGE_FILTERS);
-        const additionalAllowedNets = this.extractionService.extractAdditionalFilterAllowedNets(viewDataGroups)?.allowedNetsIdentifiers;
+        const taskViewAllowedNets = this.extractionService.extractTaskFilterAllowedNets(viewDataGroups)?.allowedNetsIdentifiers;
 
         return [
             {
@@ -139,15 +143,15 @@ export class DefaultTabViewComponent {
                     taskViewAllowTableMode: taskViewAllowTableMode,
                     taskViewDefaultHeadersMode: taskViewDefaultHeadersMode,
                     taskViewMergeWithBaseFilter: mergeWithBaseFilter,
-                    taskViewAdditionalFilter: taskViewAdditionalFilter,
-                    taskViewAdditionalAllowedNets: additionalAllowedNets
+                    taskViewFilter: taskViewFilter,
+                    taskViewAllowedNets: taskViewAllowedNets
                 }
             }
         ];
     }
 
     protected getTaskTabs(menuItemDataGroups: Array<DataGroup>, viewDataGroups: Array<DataGroup>): TabContent[] {
-        const labelData = extractIconAndTitle(menuItemDataGroups, this.translationService);
+        const labelData = extractIconAndTitle(menuItemDataGroups, this.translateService);
         const taskSearchType = extractSearchTypeFromData(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_TASK_VIEW_SEARCH_TYPE);
         const headersChangeable = extractFieldValueFromData<boolean>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_TASK_HEADERS_CHANGEABLE);
         const headersMode = extractFieldValueFromData<string[]>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_TASK_HEADERS_MODE);
@@ -161,7 +165,7 @@ export class DefaultTabViewComponent {
         }
         const showMoreMenu = extractFieldValueFromData<boolean>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_TASK_SHOW_MORE_MENU);
 
-        const filter = this.extractionService.extractCompleteFilterFromData(viewDataGroups);
+        const filter = this.extractionService.extractCompleteFilterFromData(viewDataGroups, undefined, undefined, GroupNavigationConstants.ITEM_FIELD_TASK_FILTER, FilterType.TASK);
         return [
             {
                 label: {text: labelData.name, icon: labelData.icon},
@@ -182,12 +186,12 @@ export class DefaultTabViewComponent {
     }
 
     protected getTicketTabs(menuItemDataGroups: Array<DataGroup>, viewDataGroups: Array<DataGroup>): TabContent[] {
-        const labelData = extractIconAndTitle(menuItemDataGroups, this.translationService);
-
         if (!hasView(viewDataGroups)) {
             throw new Error(`Ticket view has missing configuration for single task view.`);
         }
 
+        const labelData = extractIconAndTitle(menuItemDataGroups, this.translateService);
+        const taskViewFilter = this.extractionService.extractCompleteFilterFromData(viewDataGroups, undefined, undefined, GroupNavigationConstants.ITEM_FIELD_TASK_FILTER, FilterType.TASK);
         return [
             {
                 label: {text: labelData.name, icon: labelData.icon},
@@ -195,11 +199,44 @@ export class DefaultTabViewComponent {
                 tabContentComponent: DefaultTicketViewComponent,
                 injectedObject: {
                     navigationItemTaskData: this._navigationItemTaskData,
+                    taskViewFilter: taskViewFilter,
                     tabViewComponent: DefaultTabbedSingleTaskViewComponent,
                     tabViewOrder: 0,
                 }
             }
         ];
+    }
+
+    protected getSingleTaskTabs(menuItemDataGroups: Array<DataGroup>, viewDataGroups: Array<DataGroup>): TabContent[] {
+        const labelData = extractIconAndTitle(menuItemDataGroups, this.translateService);
+        const taskViewFilter = this.extractionService.extractCompleteFilterFromData(viewDataGroups, undefined, undefined, GroupNavigationConstants.ITEM_FIELD_TASK_FILTER, FilterType.TASK);
+        const taskViewAllowedNets = this.extractionService.extractTaskFilterAllowedNets(viewDataGroups)?.allowedNetsIdentifiers;
+        return [
+            {
+                label: {text: labelData.name, icon: labelData.icon},
+                canBeClosed: false,
+                tabContentComponent: DefaultTabbedSingleTaskViewComponent,
+                injectedObject: {
+                    navigationItemTaskData: this._navigationItemTaskData,
+                    baseFilter: taskViewFilter,
+                    taskViewAllowedNets: taskViewAllowedNets
+                }
+            }
+        ];
+    }
+
+    protected getTranslation(i18nValue: I18nFieldValue): string | undefined {
+        if (!i18nValue) {
+            return undefined;
+        }
+        if (typeof i18nValue === 'string') {
+            return i18nValue;
+        }
+        const locale = this.translateService.currentLang;
+        const language = locale?.split('-')[0];
+        return i18nValue.translations?.[locale]
+            ?? (language ? i18nValue.translations?.[language] : undefined)
+            ?? i18nValue.defaultValue;
     }
 
 }

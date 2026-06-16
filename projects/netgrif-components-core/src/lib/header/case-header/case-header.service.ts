@@ -42,6 +42,8 @@ export class CaseHeaderService extends AbstractHeaderService implements OnDestro
             new HeaderColumn(HeaderColumnType.META, CaseMetaField.TITLE, 'headers.caseMeta.title', 'text'),
             new HeaderColumn(HeaderColumnType.META, CaseMetaField.AUTHOR, 'headers.caseMeta.author', 'user'),
             new HeaderColumn(HeaderColumnType.META, CaseMetaField.CREATION_DATE, 'headers.caseMeta.creationDate', 'date'),
+            new HeaderColumn(HeaderColumnType.META, CaseMetaField.PROCESS_IDENTIFIER, 'headers.caseMeta.processIdentifier', 'text'),
+            new HeaderColumn(HeaderColumnType.META, CaseMetaField.PETRI_NET_ID, 'headers.caseMeta.petriNetId', 'text'),
         ];
     }
 

@@ -15,11 +15,11 @@ function navigationItemDefaultHeadersFactory(navigationItemTaskData: DataGroup[]
     try {
         const isUse = extractFieldValueFromData<boolean>(navigationItemTaskData, useFieldId);
         if (isUse) {
-            const defaultHeaders = extractFieldValueFromData<string>(navigationItemTaskData, defaultHeadersFieldId);
-            if (defaultHeaders === undefined || defaultHeaders === "") {
+            const defaultHeaders = extractFieldValueFromData<string[]>(navigationItemTaskData, defaultHeadersFieldId);
+            if (defaultHeaders === undefined || defaultHeaders.length === 0) {
                 return undefined;
             }
-            return defaultHeaders.split(',');
+            return defaultHeaders;
         } else {
             return undefined;
         }

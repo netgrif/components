@@ -10,14 +10,15 @@ import {
     TaskEventNotification,
     TaskViewService,
     TaskViewInjectionData,
-    UserFiltersService,
     AbstractSingleTaskViewComponent,
     TaskEvent
 } from '@netgrif/components-core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {localAllowedNetsFactory} from "../../side-menu/content-components/save-filter/save-filter.component";
 import {ActivatedRoute} from "@angular/router";
 import {HeaderComponent} from "../../header/header.component";
+import {
+    localAllowedNetsFactory
+} from "../../filter-field-content/filter-field-tabbed-case-view/filter-field-tabbed-case-view.component";
 
 export function taskViewFilterFactory(dialogControl: TaskViewInjectionData): BaseFilter {
     if (!dialogControl) {
@@ -58,7 +59,6 @@ export class TaskViewDialogComponent extends AbstractSingleTaskViewComponent imp
 
     constructor(protected _dialogRef: MatDialogRef<TaskViewDialogComponent>,
                 @Inject(MAT_DIALOG_DATA) protected _data: TaskViewInjectionData,
-                protected _userFilterService: UserFiltersService,
                 protected _log: LoggerService,
                 taskViewService: TaskViewService,
                 _activatedRoute?: ActivatedRoute) {

@@ -77,6 +77,10 @@ export abstract class AbstractCasePanelComponent extends AbstractPanelWithImmedi
                     icon: 'event',
                     type: 'meta'
                 };
+            case CaseMetaField.PROCESS_IDENTIFIER:
+                return {value: this.case_.processIdentifier, icon: undefined, type: 'meta'};
+            case CaseMetaField.PETRI_NET_ID:
+                return {value: this.case_.petriNetId, icon: undefined, type: 'meta'};
         }
     }
 

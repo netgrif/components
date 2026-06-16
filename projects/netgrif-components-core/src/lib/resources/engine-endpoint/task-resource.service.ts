@@ -17,9 +17,9 @@ import {TaskSetDataRequestBody} from '../interface/task-set-data-request-body';
 import {LoggerService} from '../../logger/services/logger.service';
 import {AbstractResourceService} from '../abstract-endpoint/abstract-resource.service';
 import {DataGroup} from '../interface/data-groups';
-import {DataField} from '../../data-fields/models/abstract-data-field';
 import {GetDataGroupsEventOutcome} from '../../event/model/event-outcomes/data-outcomes/get-data-groups-event-outcome';
 import {FileFieldRequest} from "../interface/file-field-request-body";
+import {DataField} from '../../data-fields/models/abstract-data-field';
 
 @Injectable({
     providedIn: 'root'

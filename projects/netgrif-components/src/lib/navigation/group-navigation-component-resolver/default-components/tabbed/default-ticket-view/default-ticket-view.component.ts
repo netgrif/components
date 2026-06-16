@@ -10,15 +10,13 @@ import {
     UriService,
     DoubleDrawerNavigationService,
     NavigationItem,
-    TaskResourceService,
-    SETTINGS_TRANSITION_ID,
-    extractFilterFieldFromData,
-    DoubleDrawerUtils,
+    extractFieldValueFromData,
     DataGroup,
     NAE_TAB_DATA,
     SimpleFilter,
     FilterType, CaseEventOutcome,
-    NAE_AUTOSWITCH_TAB_TOKEN, NAE_OPEN_EXISTING_TAB, LoggerService, ProcessService, extractFieldValueFromData
+    NAE_AUTOSWITCH_TAB_TOKEN, NAE_OPEN_EXISTING_TAB, LoggerService, ProcessService, Filter,
+    MergeOperator, TaskResourceService, DoubleDrawerUtils
 } from '@netgrif/components-core';
 import {TranslateService} from "@ngx-translate/core";
 import {FormControl} from "@angular/forms";
@@ -87,12 +85,19 @@ export class DefaultTicketViewComponent implements OnInit {
         this._navigationService.rightItems$.pipe(
             map(navItems => this.transformItemCases(navItems).filter(itm => !!itm && !!itm.resource))
         ).subscribe(items => {
+            if (items.length === 0) {
+                this.dashboardItems = [];
+                this.filteredDashboardItems = [];
+                this.loading$.off();
+                return;
+            }
             forkJoin(items.map(item => {
-                const taskId = DoubleDrawerUtils.findTaskIdInCase(item.resource, SETTINGS_TRANSITION_ID);
+                const taskId = DoubleDrawerUtils.findTaskIdInCase(item.resource, GroupNavigationConstants.ITEM_TRANS_ID_ALL_DATA);
                 if (taskId === undefined) {
                     return;
                 }
-                return this._taskResourceService.getData(taskId).pipe(map(dataGroups => {return {caseId: item.resource.stringId, dataGroups} as DataGroupCaseIdPair}));
+                return this._taskResourceService.getData(taskId)
+                    .pipe(map(dataGroups => {return {caseId: item.resource.stringId, dataGroups} as DataGroupCaseIdPair}));
             })).subscribe(dataGroups => {
                 dataGroups.forEach(dataGroupPair => {
                     if (dataGroupPair.dataGroups === undefined) {
@@ -100,7 +105,8 @@ export class DefaultTicketViewComponent implements OnInit {
                     }
                     let net = undefined;
                     try {
-                        net = extractFilterFieldFromData(dataGroupPair.dataGroups)?.allowedNets[0];
+                        const allowedNets: string[] = extractFieldValueFromData<string[]>(dataGroupPair.dataGroups, GroupNavigationConstants.ITEM_FIELD_TASK_ALLOWED_NETS);
+                        net = allowedNets[0];
                     } catch (error) {
                         this._log.warn("View doesn't have a filter, skipping...");
                     }
@@ -170,7 +176,6 @@ export class DefaultTicketViewComponent implements OnInit {
     }
 
     protected openTab(openCase: Case) {
-        const transId: string = extractFieldValueFromData(this._injectedTabData.navigationItemTaskData, "transition_id")
         this._injectedTabData.tabViewRef.openTab({
             label: {
                 text: openCase.title,
@@ -179,11 +184,26 @@ export class DefaultTicketViewComponent implements OnInit {
             canBeClosed: true,
             tabContentComponent: this._injectedTabData.tabViewComponent,
             injectedObject: {
-                baseFilter: new SimpleFilter('', FilterType.TASK, {case: {id: `${openCase.stringId}`}, transitionId: transId}),
+                navigationItemTaskData: this._injectedTabData.navigationItemTaskData,
+                baseFilter: this.resolveFilter(openCase),
                 allowedNets: [openCase.processIdentifier]
             },
             order: this._injectedTabData.tabViewOrder,
             parentUniqueId: this._injectedTabData.tabUniqueId
         }, this._autoswitchToTaskTab, this._openExistingTab);
+    }
+
+    protected resolveFilter(openCase: Case): Filter {
+        const singleTaskViewFilter = this._injectedTabData.taskViewFilter;
+        const baseFilter = new SimpleFilter('', FilterType.TASK, {case: {id: `${openCase.stringId}`}});
+
+        let filter;
+        if (singleTaskViewFilter === undefined || singleTaskViewFilter.type === undefined) {
+            filter = baseFilter;
+        } else {
+            filter = singleTaskViewFilter.merge(baseFilter, MergeOperator.AND);
+        }
+
+        return filter;
     }
 }

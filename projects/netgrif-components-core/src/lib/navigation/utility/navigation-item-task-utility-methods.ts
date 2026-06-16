@@ -3,7 +3,7 @@ import {DataGroup} from '../../resources/interface/data-groups';
 import {getFieldFromDataGroups} from '../../utility/get-field';
 import {GroupNavigationConstants} from '../model/group-navigation-constants';
 import {Filter} from '../../filter/models/filter';
-import {UserFilterConstants} from '../../filter/models/user-filter-constants';
+import {FilterType} from '../../filter/models/filter-type';
 import {FilterField} from '../../data-fields/filter-field/models/filter-field';
 import {SimpleFilter} from '../../filter/models/simple-filter';
 import {MultichoiceField} from '../../data-fields/multichoice-field/models/multichoice-field';
@@ -64,24 +64,16 @@ export function extractRoles(dataSection: Array<DataGroup>, roleFieldId: string)
 }
 
 /**
- * Extracts the data and creates a filter object from the navigation item task data.
- * @param dataSection an array containing the data groups that correspond to a single navigation entry
- */
-export function extractFilterFromData(dataSection: Array<DataGroup>): Filter {
-    return extractFilterFromFilterField(extractFilterFieldFromData(dataSection));
-}
-
-/**
  * Extracts the filter field from the navigation item task data.
  * @param dataSection an array containing the data groups that correspond to a single navigation entry
+ * @param filterFieldId id of filter field
  * @returns The extracted {@link FilterField} or `undefined` if it could not be extracted.
  */
-export function extractFilterFieldFromData(dataSection: Array<DataGroup>): FilterField | undefined {
-    const filterField = getFieldFromDataGroups(dataSection, UserFilterConstants.FILTER_FIELD_ID);
+export function extractFilterFieldFromData(dataSection: Array<DataGroup>, filterFieldId: string): FilterField | undefined {
+    const filterField = getFieldFromDataGroups(dataSection, filterFieldId);
 
     if (filterField === undefined || !(filterField instanceof FilterField)) {
-        throw new Error(`Filter could not be extracted. The provided datagroups do not contain a filter field with ID '${
-            UserFilterConstants.FILTER_FIELD_ID}'`);
+        throw new Error(`Filter could not be extracted. The provided datagroups do not contain a filter field with ID '${filterFieldId}'`);
     }
 
     return filterField;
@@ -91,11 +83,11 @@ export function extractFilterFieldFromData(dataSection: Array<DataGroup>): Filte
  * @returns a {@link SimpleFilter} containing the filter stored in the provided {@link FilterField}.
  * Throws an error if this is not possible.
  */
-export function extractFilterFromFilterField(filterField: FilterField): Filter {
+export function extractFilterFromFilterField(filterField: FilterField, filterType: FilterType): Filter {
     if (filterField === undefined || !(filterField instanceof FilterField)) {
         throw new Error('Filter could not be resolved');
     }
-    return SimpleFilter.fromQuery({query: filterField.value}, filterField.filterMetadata.filterType);
+    return SimpleFilter.fromQuery({query: filterField.value}, filterType);
 }
 
 /**
@@ -138,7 +130,10 @@ export function extractFieldValueFromData<T>(dataSection: Array<DataGroup>, fiel
  * @throws Error if filter field is not found
  * */
 export function hasView(dataSection: Array<DataGroup>): boolean {
-    const field = getFieldFromDataGroups(dataSection, 'view_configuration_form');
+    let field = getFieldFromDataGroups(dataSection, 'view_configuration_form');
+    if (field === undefined) {
+        field = getFieldFromDataGroups(dataSection, 'view_configuration_all_data_form');
+    }
     if (field === undefined) {
         throw new Error(`Field view_configuration_form could not be resolved`);
     }

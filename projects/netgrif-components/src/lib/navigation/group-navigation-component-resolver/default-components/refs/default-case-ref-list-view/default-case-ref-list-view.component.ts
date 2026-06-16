@@ -27,8 +27,7 @@ import {
     SearchMode,
     SearchService,
     SimpleFilter,
-    TaskSetDataRequestFields,
-    ViewIdService
+    ViewIdService,
 } from '@netgrif/components-core';
 import {HeaderComponent} from '../../../../../header/header.component'
 import {DefaultTabbedTaskViewComponent} from '../../tabbed/default-tabbed-task-view/default-tabbed-task-view.component';
@@ -63,7 +62,6 @@ export class DefaultCaseRefListViewComponent extends AbstractCaseViewComponent i
 
     @ViewChild('header') public caseHeaderComponent: HeaderComponent;
 
-    public additionalFilterData: TaskSetDataRequestFields;
     public search: boolean;
     public createCase: boolean;
 

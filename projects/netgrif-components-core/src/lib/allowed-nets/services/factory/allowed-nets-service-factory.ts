@@ -2,35 +2,35 @@ import {Injectable} from '@angular/core';
 import {ProcessService} from '../../../process/process.service';
 import {AllowedNetsService} from '../allowed-nets.service';
 import {switchMap} from 'rxjs/operators';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { combineLatest, Observable, of } from 'rxjs';
+import {map} from 'rxjs/operators';
 import {PetriNetResourceService} from '../../../resources/engine-endpoint/petri-net-resource.service';
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {CaseViewParams} from '../../../view/case-view/models/case-view-params';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {TaskViewParams} from '../../../view/task-view/models/task-view-params';
 import {InjectedTabbedTaskViewData} from '../../../view/task-view/models/injected-tabbed-task-view-data';
-import {Case} from '../../../resources/interface/case';
-import {getImmediateData} from '../../../utility/get-immediate-data';
-import {UserFilterConstants} from '../../../filter/models/user-filter-constants';
 import {DataGroup} from '../../../resources/public-api';
 import {getFieldFromDataGroups} from '../../../utility/get-field';
-import {FilterField} from '../../../data-fields/filter-field/models/filter-field';
 import {BaseAllowedNetsService} from '../base-allowed-nets.service';
-import {MultichoiceField} from "../../../data-fields/multichoice-field/models/multichoice-field";
-
-function addAllowedNets(allowedNets, existingAllowedNets) {
-    if (!!allowedNets && allowedNets.length > 0) {
-        existingAllowedNets.next([...allowedNets]);
-    }
-}
+import {GroupNavigationConstants} from "../../../navigation/model/group-navigation-constants";
+import {BooleanField} from "../../../data-fields/boolean-field/models/boolean-field";
+import {StringCollectionField} from "../../../data-fields/string-collection-field/models/string-collection-field";
 
 /**
  * Convenience method that can be used as an allowed nets factory for tabbed task views.
  * If no allowed nets are provided in the injected data then an {@link AllowedNetsService} with no allowed nets is created.
- * It has a dependency on this class and {@link NAE_TAB_DATA} injection token.
+ * It has a dependency on this class, {@link NAE_TAB_DATA} and {@link NAE_NAVIGATION_ITEM_TASK_DATA} injection tokens.
  */
 export function tabbedAllowedNetsServiceFactory(factory: AllowedNetsServiceFactory,
-                                                tabData: InjectedTabbedTaskViewData): AllowedNetsService {
+                                                tabData: InjectedTabbedTaskViewData,
+                                                navigationItemTaskData?: Array<DataGroup>): AllowedNetsService {
+    if (!!navigationItemTaskData && (!tabData?.allowedNets || tabData.allowedNets.length === 0)) {
+        const allAllowedNetsField: BooleanField = getFieldFromDataGroups(navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_TASK_ALL_ALLOWED_NETS) as BooleanField;
+        if (!!allAllowedNetsField && !!allAllowedNetsField.value) {
+            return factory.createWithAllNets();
+        }
+    }
     return factory.createFromArray(tabData?.allowedNets ?? []);
 }
 
@@ -40,31 +40,33 @@ export function tabbedAllowedNetsServiceFactory(factory: AllowedNetsServiceFacto
  */
 export function navigationItemTaskAllowedNetsServiceFactory(factory: AllowedNetsServiceFactory,
                                                             baseAllowedNets: BaseAllowedNetsService,
+                                                            isCaseConstants: boolean,
                                                             navigationItemTaskData?: Array<DataGroup>): AllowedNetsService {
     if (!navigationItemTaskData) {
         return factory.createWithAllNets();
     }
-    const filterField = getFieldFromDataGroups(navigationItemTaskData, UserFilterConstants.FILTER_FIELD_ID) as FilterField;
-    const allowedNetsField = getFieldFromDataGroups(navigationItemTaskData, UserFilterConstants.ALLOWED_NETS_FIELD_ID) as MultichoiceField;
+    const allAllowedNetsField: BooleanField = getFieldFromDataGroups(navigationItemTaskData,
+        isCaseConstants ? GroupNavigationConstants.ITEM_FIELD_CASE_ALL_ALLOWED_NETS : GroupNavigationConstants.ITEM_FIELD_TASK_ALL_ALLOWED_NETS) as BooleanField;
+    if (!!allAllowedNetsField && !!allAllowedNetsField.value) {
+        return factory.createWithAllNets();
+    }
 
-    if (filterField === undefined) {
-        throw new Error(`Provided navigation item task data does not contain a filter field with ID '${UserFilterConstants.FILTER_FIELD_ID
-        }'! Allowed nets cannot be generated from it!`);
-    }
-    const nets = new BehaviorSubject<Array<string>>(Array.from(new Set<string>([...filterField.allowedNets])));
-    if (filterField.filterMetadata.inheritAllowedNets) {
-        baseAllowedNets.allowedNets$.subscribe(allowedNets => {
-            const netSet = new Set<string>(allowedNets);
-            nets.next(Array.from(netSet));
-        });
-    }
-    if (!!allowedNetsField) {
-        addAllowedNets(allowedNetsField.value, nets);
-        allowedNetsField.valueChanges().subscribe(allowedNets => {
-            addAllowedNets(allowedNetsField.value, nets);
-        });
-    }
-    return factory.createFromObservable(nets.asObservable());
+    const allowedNetsField: StringCollectionField = getFieldFromDataGroups(navigationItemTaskData,
+        isCaseConstants ? GroupNavigationConstants.ITEM_FIELD_CASE_ALLOWED_NETS : GroupNavigationConstants.ITEM_FIELD_TASK_ALLOWED_NETS) as StringCollectionField;
+    const staticNets: Array<string> = !!allowedNetsField ? [...allowedNetsField.value] : [];
+
+    const inheritAllowedNetsField: BooleanField = getFieldFromDataGroups(navigationItemTaskData,
+        isCaseConstants ? GroupNavigationConstants.ITEM_FIELD_CASE_INHERIT_ALLOWED_NETS : GroupNavigationConstants.ITEM_FIELD_TASK_INHERIT_ALLOWED_NETS) as BooleanField;
+
+    const nets$: Observable<Array<string>> = (!!inheritAllowedNetsField && !!inheritAllowedNetsField.value)
+        ? combineLatest([of(staticNets), baseAllowedNets.allowedNets$]).pipe(
+            map(([staticPart, inheritedPart]) =>
+                Array.from(new Set<string>([...staticPart, ...inheritedPart]))
+            )
+        )
+        : of(Array.from(new Set<string>(staticNets)));
+
+    return factory.createFromObservable(nets$);
 }
 
 /**
@@ -139,22 +141,6 @@ export class AllowedNetsServiceFactory {
     public createFromObservable(netIdentifiers$: Observable<Array<string>>): AllowedNetsService {
         return new AllowedNetsService(
             netIdentifiers$,
-            this._processService
-        );
-    }
-
-    /**
-     * Creates an instance of {@link AllowedNetsService} without having to provide all the dependencies yourself.
-     * @param filterCase a filter process instance
-     * Allowed nets are set from filter process immediate data
-     */
-    public createFromFilterCase(filterCase: Case): AllowedNetsService {
-        const filterData = getImmediateData(filterCase, UserFilterConstants.FILTER_FIELD_ID);
-        if (filterData === undefined) {
-            throw new Error(`Cannot get filter from case '${filterCase.title}' with id '${filterCase.stringId}'`);
-        }
-        return new AllowedNetsService(
-            of(filterData.allowedNets),
             this._processService
         );
     }
