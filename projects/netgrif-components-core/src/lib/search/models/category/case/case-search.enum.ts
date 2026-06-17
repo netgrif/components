@@ -9,5 +9,5 @@ export enum CaseSearch {
     VISUAL_ID = 'visualId',
     ENABLED_ROLES = 'enabledRoles',
     AUTHOR = 'author',
-    STRING_ID = 'stringId',
+    STRING_ID = 'id',
 }
