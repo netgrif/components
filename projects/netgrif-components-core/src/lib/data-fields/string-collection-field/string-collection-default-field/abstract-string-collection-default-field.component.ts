@@ -43,6 +43,10 @@ export abstract class AbstractStringCollectionDefaultFieldComponent extends Abst
     }
 
     remove(value: string): void {
+        if (this.formControlRef.disabled) {
+            return;
+        }
+
         const index = this.dataField.value.indexOf(value);
 
         if (index >= 0) {
@@ -53,6 +57,11 @@ export abstract class AbstractStringCollectionDefaultFieldComponent extends Abst
     }
 
     add(event: MatChipInputEvent | FocusEvent): void {
+        if (this.formControlRef.disabled) {
+            this.input.nativeElement.value = '';
+            return;
+        }
+
         const value = event['value'] ?? (event['target']?.['value'] ?? '');
 
         if (value?.trim()) {

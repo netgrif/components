@@ -8,7 +8,7 @@ import {AngularResizeEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, Inject, Optional} from '@angular/core';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {FormControl} from '@angular/forms';
 import {MultichoiceField} from '../models/multichoice-field';
@@ -52,6 +52,20 @@ describe('AbstractMultichoiceAutocompleteFieldComponentComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
+    });
+
+    it('should not add or remove values when disabled', () => {
+        component.input = new ElementRef({value: 'new value'});
+        component.formControlRef.disable();
+        const originalValue = [...component.dataField.value];
+
+        component.add({key: 'new'} as any);
+        component.remove(originalValue[0]);
+        component.change();
+
+        expect(component.dataField.value).toEqual(originalValue);
+        expect(component.input.nativeElement.value).toBe('');
+        component.filteredOptions.subscribe(options => expect(options).toEqual([]));
     });
 
     afterEach(() => {
