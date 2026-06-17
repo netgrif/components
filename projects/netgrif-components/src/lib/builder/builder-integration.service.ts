@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HistoryService} from "./modeler/services/history/history.service";
-import {Case, LoggerService, TaskResourceService, extractFieldValueFromData} from "@netgrif/components-core";
+import {Case, LoggerService, TaskResourceService, extractFieldValueFromData, TaskEventOutcome} from "@netgrif/components-core";
 import {ExportService, PetriNet} from "@netgrif/petriflow";
 import {HistoryChange} from "./modeler/services/history/history-change";
 import {Observable, of, Subject} from "rxjs";
@@ -26,8 +26,8 @@ export class BuilderIntegrationService {
                     this._taskResourceService.assignTask(this._editTaskId).subscribe(result => {
                         if (result.success) {
                             this._isAssigned = true;
-                            this.setData(history);
                         }
+                        this.setData(history);
                     });
                 } else {
                    this.setData(history);
@@ -91,7 +91,10 @@ export class BuilderIntegrationService {
             type: 'text',
             value: this._exportService.exportXml(history.record)
         };
-        this._taskResourceService.setData(this._editTaskId, body).subscribe(() => {
+        this._taskResourceService.setData(this._editTaskId, body).subscribe(outcome => {
+            if ((outcome.outcome as TaskEventOutcome)?.task?.user?.email !== undefined) {
+                this._isAssigned = true;
+            }
             this._log.debug('Data set successfully');
         });
     }

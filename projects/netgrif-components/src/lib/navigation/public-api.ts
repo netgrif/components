@@ -28,3 +28,6 @@ export * from './dashboard/dashboard.component';
 /* FUNCTIONS */
 export * from './group-navigation-component-resolver/default-components/model/factory-methods';
 export * from './group-navigation-component-resolver/default-components/model/injected-tabbed-case-view-data-with-navigation-item-task-data';
+
+/* SERVICES */
+export * from './group-navigation-component-resolver/default-group-navigation-component-resolver.service';

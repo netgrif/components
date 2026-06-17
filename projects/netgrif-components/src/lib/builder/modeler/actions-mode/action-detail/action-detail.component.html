@@ -50,14 +50,14 @@
         <div fxLayout="row wrap" fxLayoutAlign="start center" class="margin-top6px">
             <div fxFlex="2.5"></div>
             <div fxFlex="46.5" fxLayoutAlign="start center">
-                <mat-form-field fxFlex>
+                <mat-form-field appearance="outline" fxFlex>
                     <mat-label>Name</mat-label>
                     <input matInput [(ngModel)]="this.selectedFn.name" (change)="updateFunctions()">
                 </mat-form-field>
             </div>
             <div fxFlex="2"></div>
             <div fxFlex="46.5">
-                <mat-form-field fxFlex>
+                <mat-form-field appearance="outline" fxFlex>
                     <mat-label>Scope</mat-label>
                     <mat-select [(value)]="this.selectedFn.scope">
                         <mat-option *ngFor="let opt of functionScopes"

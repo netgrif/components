@@ -105,6 +105,7 @@ export class ModelService {
         this.model.anonymousRole = changedModel.model.anonymousRole;
         this.model.caseName = changedModel.model.caseName;
         this.model.tags = changedModel.model.tags;
+        this.model.version = changedModel.model.version;
     }
 
     // PLACE

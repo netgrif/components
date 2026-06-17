@@ -1,6 +1,6 @@
 <div fxLayout="col wrap">
     <div fxFlex="100" class="netgrif-input" fxLayout="row">
-        <mat-form-field fxFlex="25">
+        <mat-form-field appearance="outline" fxFlex="25">
             <mat-label>Add new language</mat-label>
             <input type="text" matInput [formControl]="newLocaleFormControl" [matAutocomplete]="auto">
             <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">

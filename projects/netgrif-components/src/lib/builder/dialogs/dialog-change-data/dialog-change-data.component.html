@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>Change referenced data value{{dataSet.length > 1 ? 's' : ''}}</h2>
 <mat-dialog-content class="netgrif-input">
-    <mat-form-field fxFlex *ngFor="let data of dataSet">
+    <mat-form-field fxFlex appearance="outline" *ngFor="let data of dataSet">
         <mat-label>{{data.id}}</mat-label>
         <input type="number" step="1" min="0" matInput [(ngModel)]="data.value" [formControl]="valueCtrl">
         <mat-error *ngIf="valueCtrl.errors && valueCtrl.errors.required">Value is required</mat-error>

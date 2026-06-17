@@ -1,10 +1,10 @@
 <h2 mat-dialog-title>Refactor Id</h2>
 <mat-dialog-content fxLayout="column" fxLayoutAlign="start stretch" class="netgrif-input">
-    <mat-form-field>
+    <mat-form-field appearance="outline">
         <mat-label>Original Id</mat-label>
         <input matInput disabled [(ngModel)]="data.originalId">
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field appearance="outline">
         <mat-label>New Id</mat-label>
         <input autocomplete="off" matInput [formControl]="formControl">
         <mat-error *ngIf="formControl.errors && formControl.errors.required">New Id is required!</mat-error>

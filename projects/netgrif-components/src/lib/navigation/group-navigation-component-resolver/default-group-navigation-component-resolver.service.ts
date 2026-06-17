@@ -19,7 +19,7 @@ import {
 @Injectable()
 export class DefaultGroupNavigationComponentResolverService extends GroupNavigationComponentResolverService {
 
-    constructor(taskResourceService: TaskResourceService, log: LoggerService, private _configService: ConfigurationService, private _viewService: ViewService,) {
+    constructor(taskResourceService: TaskResourceService, log: LoggerService, protected _configService: ConfigurationService, protected _viewService: ViewService,) {
         super(taskResourceService, log);
     }
 

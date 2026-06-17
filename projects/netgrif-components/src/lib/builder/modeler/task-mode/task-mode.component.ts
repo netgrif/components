@@ -23,7 +23,7 @@ import {BuilderIntegrationService} from "../../builder-integration.service";
 
 const baseFilterFactory = (injectedData: InjectedTabbedBuilderViewData) => {
     const caseId = injectedData?.processCase?.stringId ?? "__EMPTY__"
-    return {filter: SimpleFilter.fromTaskQuery({case: {id: caseId}})};
+    return {filter: SimpleFilter.fromTaskQuery({case: {id: caseId}, transitionId: ['deploy', 't10', 't11', 't4', 't6', 't9', 'view']})};
 };
 
 const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {

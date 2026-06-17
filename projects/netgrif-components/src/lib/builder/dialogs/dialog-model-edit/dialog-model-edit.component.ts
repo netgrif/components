@@ -10,6 +10,12 @@ import {ModelService} from '../../modeler/services/model/model.service';
 import {DialogManageRolesComponent, RoleRefType} from '../dialog-manage-roles/dialog-manage-roles.component';
 import {BuilderModeService, BuilderMode} from "../../builder-mode.service";
 import {HistoryService} from "../../modeler/services/history/history.service";
+import {CanvasToolContext} from "../../modeler/edit-mode/services/modes/canvas-tool-context";
+
+export interface ModelEditData {
+    model: ModelChange;
+    context: CanvasToolContext
+}
 
 @Component({
     selector: 'nc-builder-dialog-model-edit',
@@ -25,17 +31,23 @@ export class DialogModelEditComponent {
     public initialsCtrl: FormControl;
     protected counterTags = 0;
 
+    public modelService: ModelService;
+    private _actionMode: ActionsModeService;
+    private _processTool: ProcessActionsTool;
+    private _builderModeService: BuilderModeService;
+    private historyService: HistoryService;
+
     constructor(
-        @Inject(MAT_DIALOG_DATA) public data: ModelChange,
-        public modelService: ModelService,
-        private router: Router,
+        @Inject(MAT_DIALOG_DATA) public data: ModelEditData,
         private dialog: MatDialog,
-        private _actionMode: ActionsModeService,
-        private _processTool: ProcessActionsTool,
-        private _builderModeService: BuilderModeService,
-        private historyService: HistoryService
     ) {
-        this.model = data;
+        this.model = data.model;
+        this.modelService = data.context.modelService;
+        this._actionMode = data.context.actionMode;
+        this._processTool = data.context.processTool;
+        this._builderModeService = data.context.builderModeService;
+        this.historyService = data.context.editModeService.historyService;
+
         this.idCtrl = new FormControl('', [Validators.required]);
         this.versionCtrl = new FormControl('', [
             // Validators.required,

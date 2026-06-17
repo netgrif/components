@@ -1,7 +1,7 @@
 <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="tree">
     <mat-tree-node *matTreeNodeDef="let node;">
         <div class="tree-offset netgrif-input">
-            <mat-form-field>
+            <mat-form-field appearance="outline">
                 <mat-label>Set trigger type</mat-label>
                 <mat-select [(ngModel)]="node.type" (selectionChange)="emitChanges()">
                     <mat-option *ngFor="let opt of typeOptions" [value]="opt.key">
@@ -10,7 +10,7 @@
                 </mat-select>
             </mat-form-field>
             <br *ngIf="node.type === 'time'">
-            <mat-form-field *ngIf="node.type === 'time'">
+            <mat-form-field appearance="outline" *ngIf="node.type === 'time'">
                 <mat-label>Set time type</mat-label>
                 <mat-select [(ngModel)]="node.option" (selectionChange)="makeChangeOption($event, node)">
                     <mat-option *ngFor="let opt of optionOptions" [value]="opt.key">
@@ -19,12 +19,12 @@
                 </mat-select>
             </mat-form-field>
             <br *ngIf="node.type === 'time'">
-            <mat-form-field *ngIf="node.option === 'delay' && node.type === 'time'">
+            <mat-form-field appearance="outline" *ngIf="node.option === 'delay' && node.type === 'time'">
                 <mat-label>Set delay</mat-label>
                 <input matInput type="text" [(ngModel)]="node.delay" (change)="emitChanges()" placeholder="Ex. PT5D">
             </mat-form-field>
             <div *ngIf="node.option === 'exact' && node.type === 'time'">
-                <mat-form-field>
+                <mat-form-field appearance="outline">
                     <input matInput
                            [ngxMatDatetimePicker]="picker"
                            placeholder="Set exact"

@@ -2,7 +2,7 @@
     <div fxLayout="row wrap" fxLayoutAlign="start center" class="margin-top32px">
         <div fxFlex="2.5"></div>
 
-        <mat-form-field fxFlex="45">
+        <mat-form-field appearance="outline" fxFlex="45">
             <mat-label>Id</mat-label>
             <input matInput [(ngModel)]="role.role.id" (change)="changeId($event)" [formControl]="roleIdForm">
             <mat-error *ngIf="roleIdForm.errors && roleIdForm.errors.required">Id is required</mat-error>
@@ -13,7 +13,7 @@
 
         <div fxFlex="2.5"></div>
 
-        <mat-form-field fxFlex="45">
+        <mat-form-field appearance="outline" fxFlex="45">
             <mat-label>Title</mat-label>
             <input matInput [ngModel]="role.role.title.value" (change)="changeTitle($event)">
         </mat-form-field>

@@ -1,13 +1,13 @@
 <h2 mat-dialog-title>Edit task</h2>
 <mat-dialog-content>
     <div class="netgrif-input " fxLayout="column">
-        <mat-form-field fxFlex>
+        <mat-form-field fxFlex appearance="outline">
             <mat-label>Id</mat-label>
             <input type="text" matInput [(ngModel)]="transition.transition.id" [formControl]="form">
             <mat-error *ngIf="form.errors && form.errors.required">Id is required</mat-error>
             <mat-error *ngIf="form.errors && form.errors.validUnique">Transition with given id already exists</mat-error>
         </mat-form-field>
-        <mat-form-field fxFlex>
+        <mat-form-field fxFlex appearance="outline">
             <mat-label>Label</mat-label>
             <input type="text" matInput [(ngModel)]="transition.transition.label.value">
         </mat-form-field>
@@ -18,7 +18,7 @@
 <!--                <span>...loading</span>-->
 <!--            </div>-->
 <!--        }-->
-        <mat-form-field fxFlex>
+        <mat-form-field fxFlex appearance="outline">
             <mat-label>Assign policy</mat-label>
             <mat-select [(value)]="transition.transition.assignPolicy">
                 <mat-option *ngFor="let opt of assignPolicies" [value]="opt">
@@ -26,7 +26,7 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field fxFlex>
+        <mat-form-field fxFlex appearance="outline">
             <mat-label>Finish policy</mat-label>
             <mat-select [(value)]="transition.transition.finishPolicy">
                 <mat-option *ngFor="let opt of finishPolicies" [value]="opt">
@@ -45,11 +45,11 @@
             <div >
                 <div *ngIf="transition.transition?.tags?.size > 0">
                     <div *ngFor="let tag of getTags(); let i = index; trackBy:trackByFn" class="margin-html">
-                        <mat-form-field fxFlex="50" class="margin-right8px">
+                        <mat-form-field fxFlex="50" appearance="outline" class="margin-right8px">
                             <mat-label>Key</mat-label>
                             <input matInput (change)="setKey($event, tag.key)" type="text" [value]="tag.key">
                         </mat-form-field>
-                        <mat-form-field fxFlex="50" class="margin-right8px">
+                        <mat-form-field fxFlex="50" appearance="outline" class="margin-right8px">
                             <mat-label>Value</mat-label>
                             <input matInput type="text" (change)="setValue($event, tag.key)" [value]="tag.value">
                         </mat-form-field>

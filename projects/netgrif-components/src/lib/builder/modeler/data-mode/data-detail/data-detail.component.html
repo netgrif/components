@@ -4,7 +4,7 @@
         <div fxFlex="2.5"></div>
 
         <div fxFlex="45" fxLayoutAlign="start start">
-            <mat-form-field fxFlex>
+            <mat-form-field appearance="outline" fxFlex>
                 <mat-label>Id</mat-label>
                 <input matInput disabled [(ngModel)]="item.id">
             </mat-form-field>
@@ -19,7 +19,7 @@
 
         <div fxFlex="2.5"></div>
 
-        <mat-form-field fxFlex="45">
+        <mat-form-field appearance="outline" fxFlex="45">
             <mat-label>Title</mat-label>
             <input matInput [ngModel]="item?.title?.value" (change)="setValue($event,'name')">
         </mat-form-field>
@@ -30,7 +30,7 @@
 
         <div fxFlex="2.5"></div>
 
-        <mat-form-field fxFlex="45">
+        <mat-form-field appearance="outline" fxFlex="45">
             <mat-label>Type</mat-label>
             <mat-select [(value)]="item.type" (selectionChange)="setValue($event,'type')">
                 <mat-option *ngFor="let opt of typeArray" [value]="opt.value">{{ opt.viewValue }}</mat-option>
@@ -52,7 +52,7 @@
 
         <div fxFlex="2.5"></div>
 
-        <mat-form-field fxFlex="45">
+        <mat-form-field appearance="outline" fxFlex="45">
             <mat-label>Placeholder</mat-label>
             <input matInput [ngModel]="item?.placeholder?.value"
                    (change)="setValue($event,'placeholder')">
@@ -60,7 +60,7 @@
 
         <div fxFlex="2.5"></div>
 
-        <mat-form-field fxFlex="45">
+        <mat-form-field appearance="outline" fxFlex="45">
             <mat-label>Description</mat-label>
             <textarea matInput [ngModel]="item?.desc.value"
                       (change)="setValue($event,'desc')"></textarea>
@@ -83,7 +83,7 @@
 
         <div fxFlex="2.5"></div>
 
-        <mat-form-field fxFlex="45">
+        <mat-form-field appearance="outline" fxFlex="45">
             <mat-label>Encryption</mat-label>
             <input matInput [(ngModel)]="item.encryption"
                    (change)="setValue($event,'encryption')">
@@ -96,7 +96,7 @@
 
         <div fxFlex="2.5"></div>
 
-        <mat-form-field fxFlex="45">
+        <mat-form-field appearance="outline" fxFlex="45">
             <mat-label>Component Name</mat-label>
             <input matInput [(ngModel)]="item.component.name" (change)="setValue($event,'component-name')"
                     [formControl]="componentNameFormCtrl" [matAutocomplete]="componentAutocomplete">
@@ -113,7 +113,7 @@
             <div class="margin-html">
                 <div *ngIf="item.component.properties.length > 0">
                     <div *ngFor="let property of item.component.properties; let i = index" class="margin-html">
-                        <mat-form-field fxFlex="50" class="margin-right8px">
+                        <mat-form-field appearance="outline" fxFlex="50" class="margin-right8px">
                             <mat-label>Key</mat-label>
                             <input matInput (change)="setValue($event,'property_key', i)" type="text"
                                    [value]="property.key" [matAutocomplete]="propertyAutocomplete">
@@ -123,7 +123,7 @@
                                 </mat-option>
                             </mat-autocomplete>
                         </mat-form-field>
-                        <mat-form-field fxFlex="50" class="margin-right8px">
+                        <mat-form-field appearance="outline" fxFlex="50" class="margin-right8px">
                             <mat-label>Value</mat-label>
                             <input matInput (change)="setValue($event,'property_value', i)"
                                    type="text" [value]="property.value">
@@ -152,7 +152,7 @@
 
         <div fxFlex="2.5"></div>
 
-        <mat-form-field fxFlex="45" *ngIf="isItemInitDynamic();else static_init">
+        <mat-form-field appearance="outline" fxFlex="45" *ngIf="isItemInitDynamic();else static_init">
             <mat-label>Initial value</mat-label>
             <input matInput [ngModel]="item?.init?.value" (change)="setValue($event, 'init')">
         </mat-form-field>
@@ -168,13 +168,13 @@
                     </div>
                 }
                 @case (DataType.NUMBER) {
-                    <mat-form-field fxFlex="45" class="full-width">
+                    <mat-form-field appearance="outline" fxFlex="45" class="full-width">
                         <mat-label>Initial value</mat-label>
                         <input matInput type="number" [(ngModel)]="item.init.value" (change)="setNumberValue($event)">
                     </mat-form-field>
                 }
                 @case (DataType.DATE) {
-                    <mat-form-field fxFlex="45" class="full-width">
+                    <mat-form-field appearance="outline" fxFlex="45" class="full-width">
                         <mat-label>Initial value</mat-label>
                         <mat-datepicker-toggle matPrefix [for]="datepicker"></mat-datepicker-toggle>
                         <input matInput (dateChange)="formatDate($event);"
@@ -187,7 +187,7 @@
                     </mat-form-field>
                 }
                 @case (DataType.DATETIME) {
-                    <mat-form-field fxFlex="45" class="full-width">
+                    <mat-form-field appearance="outline" fxFlex="45" class="full-width">
                         <mat-label>Initial value</mat-label>
                         <input matInput
                                [ngxMatDatetimePicker]="picker"
@@ -209,7 +209,7 @@
                     <nc-builder-task-ref-init-field [taskRef]="item" fxFlex="45" class="full-width"></nc-builder-task-ref-init-field>
                 }
                 @case ((item.type === DataType.ENUMERATION || item.type === DataType.ENUMERATION_MAP) ? item.type : '') {
-                    <mat-form-field fxFlex="45" class="full-width">
+                    <mat-form-field appearance="outline" fxFlex="45" class="full-width">
                         <mat-label>Initial value</mat-label>
                         <mat-select [(ngModel)]="item.init.value">
                             <mat-option>None</mat-option>
@@ -220,7 +220,7 @@
                     </mat-form-field>
                 }
                 @case ((item.type === DataType.MULTICHOICE || item.type === DataType.MULTICHOICE_MAP) ? item.type : '') {
-                    <mat-form-field fxFlex="45" class="full-width">
+                    <mat-form-field appearance="outline" fxFlex="45" class="full-width">
                         <mat-label>Initial value</mat-label>
                         <mat-select (valueChange)="changeInitsValue($event)"
                                     [value]="getInitsValue()" multiple>
@@ -231,7 +231,7 @@
                     </mat-form-field>
                 }
                 @default {
-                    <mat-form-field fxFlex="45">
+                    <mat-form-field appearance="outline" fxFlex="45">
                         <mat-label>Initial value</mat-label>
                         <input matInput [ngModel]="item?.init?.value"
                                (change)="setValue($event, 'init')">
@@ -263,7 +263,7 @@
             <div class="margin-html">
                 <div *ngIf="item.allowedNets?.length > 0">
                     <div *ngFor="let net of item.allowedNets; let i = index; trackBy:trackByFn">
-                        <mat-form-field class=" margin-right8px margin-html" fxFlex="100">
+                        <mat-form-field appearance="outline" class=" margin-right8px margin-html" fxFlex="100">
                             <mat-label>Process identifier</mat-label>
                             <input matInput  type="text"
                                    [(ngModel)]="item.allowedNets[i]">
@@ -296,11 +296,11 @@
             <div class="margin-html">
                 <div *ngIf="item.validations?.length > 0">
                     <div *ngFor="let validation of item.validations; let i = index" class="builder-field-input">
-                        <mat-form-field fxFlex="50" class="margin-right8px">
+                        <mat-form-field appearance="outline" fxFlex="50" class="margin-right8px">
                             <mat-label>Expression</mat-label>
                             <input matInput type="text" [(ngModel)]="validation.expression.expression">
                         </mat-form-field>
-                        <mat-form-field fxFlex="50" class="margin-right8px">
+                        <mat-form-field appearance="outline" fxFlex="50" class="margin-right8px">
                             <mat-label>Message</mat-label>
                             <input matInput type="text"
                                    [(ngModel)]="validation.message.value">
@@ -334,12 +334,12 @@
                 <div *ngIf="item.options.length > 0">
                     <div class="drag-box" *ngFor="let item of item.options; let i = index" cdkDrag>
                         <mat-icon class="icon-color" cdkDragHandle>drag_indicator</mat-icon>
-                        <mat-form-field class=" margin-right8px option-input"
+                        <mat-form-field appearance="outline" class=" margin-right8px option-input"
                                         *ngIf="!hasSimpleOptions()">
                             <input matInput (change)="setValue($event,'options-key', i)" type="text"
                                    placeholder="Option key" [value]="item.key">
                         </mat-form-field>
-                        <mat-form-field class=" margin-right8px option-input">
+                        <mat-form-field appearance="outline" class=" margin-right8px option-input">
                             <input matInput (change)="setValue($event,'options-value', i)"
                                    type="text" placeholder="Option value" [value]="item.value?.value">
                         </mat-form-field>
@@ -368,7 +368,7 @@
 
         <div fxFlex="20">Options Init</div>
 
-        <mat-form-field fxFlex="75">
+        <mat-form-field appearance="outline" fxFlex="75">
             <input matInput [ngModel]="getItemOptionsInitExpression()"
                    (change)="setValue($event,'options-init')">
         </mat-form-field>

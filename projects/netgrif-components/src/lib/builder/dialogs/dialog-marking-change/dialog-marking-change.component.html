@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>Change marking of place {{CanvasNodeElement.pretty(place)}}</h2>
 <mat-dialog-content class="netgrif-input">
-    <mat-form-field fxFlex>
+    <mat-form-field fxFlex appearance="outline">
         <mat-label>Tokens</mat-label>
         <input type="number" min="0" step="1" matInput [(ngModel)]="place.marking" [formControl]="markingCtrl">
         <mat-error *ngIf="markingCtrl.errors && markingCtrl.errors.required">Number of tokens is required</mat-error>

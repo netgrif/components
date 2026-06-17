@@ -6,6 +6,7 @@ import {SelectedTransitionService} from '../../../selected-transition.service';
 import {ModelService} from '../../../services/model/model.service';
 import {EditModeService} from '../../edit-mode.service';
 import {BuilderModeService} from '../../../../builder-mode.service';
+import {ProcessActionsTool} from "../../../actions-mode/tools/process-actions-tool";
 
 export class CanvasToolContext {
     constructor(
@@ -17,5 +18,6 @@ export class CanvasToolContext {
         public readonly actionMode: ActionsModeService,
         public readonly actionsMasterDetail: ActionsMasterDetailService,
         public readonly builderModeService: BuilderModeService,
+        public readonly processTool: ProcessActionsTool
     ) {}
 }

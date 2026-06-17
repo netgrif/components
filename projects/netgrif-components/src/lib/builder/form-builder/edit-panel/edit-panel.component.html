@@ -1,6 +1,6 @@
 <div class="form netgrif-input builder-field-input">
     <div *ngIf="!isSomeGridsterFieldSelected()">
-        <mat-form-field class="full-width margin-html">
+        <mat-form-field appearance="outline" class="full-width margin-html">
             <mat-label>Number of columns</mat-label>
             <input matInput type="number" [min]="minOfCols" [(ngModel)]="numOfCols" (change)="changeCols($event)">
         </mat-form-field>
@@ -11,41 +11,41 @@
         </button>
 
         <h5 class="full-width margin-html">Assign event</h5>
-        <mat-form-field class="full-width margin-html">
+        <mat-form-field appearance="outline" class="full-width margin-html">
             <mat-label>Title</mat-label>
             <input matInput type="text" [(ngModel)]="assignEvent.title.value" (change)="registerChange()">
         </mat-form-field>
-        <mat-form-field class="full-width margin-html">
+        <mat-form-field appearance="outline" class="full-width margin-html">
             <mat-label>Message</mat-label>
             <input matInput type="text" [(ngModel)]="assignEvent.message.value" (change)="registerChange()">
         </mat-form-field>
 
         <h5 class="full-width margin-html">Finish event</h5>
-        <mat-form-field class="full-width margin-html">
+        <mat-form-field appearance="outline" class="full-width margin-html">
             <mat-label>Title</mat-label>
             <input matInput type="text" [(ngModel)]="finishEvent.title.value" (change)="registerChange()">
         </mat-form-field>
-        <mat-form-field class="full-width margin-html">
+        <mat-form-field appearance="outline" class="full-width margin-html">
             <mat-label>Message</mat-label>
             <input matInput type="text" [(ngModel)]="finishEvent.message.value" (change)="registerChange()">
         </mat-form-field>
 
         <h5 class="full-width margin-html">Cancel event</h5>
-        <mat-form-field class="full-width margin-html">
+        <mat-form-field appearance="outline" class="full-width margin-html">
             <mat-label>Title</mat-label>
             <input matInput type="text" [(ngModel)]="cancelEvent.title.value" (change)="registerChange()">
         </mat-form-field>
-        <mat-form-field class="full-width margin-html">
+        <mat-form-field appearance="outline" class="full-width margin-html">
             <mat-label>Message</mat-label>
             <input matInput type="text" [(ngModel)]="cancelEvent.message.value" (change)="registerChange()">
         </mat-form-field>
 
         <h5 class="full-width margin-html">Delegate event</h5>
-        <mat-form-field class="full-width margin-html">
+        <mat-form-field appearance="outline" class="full-width margin-html">
             <mat-label>Title</mat-label>
             <input matInput type="text" [(ngModel)]="delegateEvent.title.value" (change)="registerChange()">
         </mat-form-field>
-        <mat-form-field class="full-width margin-html">
+        <mat-form-field appearance="outline" class="full-width margin-html">
             <mat-label>Message</mat-label>
             <input matInput type="text" [(ngModel)]="delegateEvent.message.value" (change)="registerChange()">
         </mat-form-field>
@@ -68,7 +68,7 @@
                               (change)="notifyGridster()">
                 Immediate
             </mat-slide-toggle>
-            <mat-form-field class="full-width margin-html">
+            <mat-form-field appearance="outline" class="full-width margin-html">
                 <mat-label>Behavior</mat-label>
                 <mat-select [(value)]="dataRef.logic.behavior" (selectionChange)="notifyGridster()">
                     <mat-option *ngFor="let opt of behaviorOptions" [value]="opt.key">
@@ -79,25 +79,25 @@
         </div>
 
         <div>
-            <mat-form-field class="full-width margin-html">
+            <mat-form-field appearance="outline" class="full-width margin-html">
                 <mat-label>Title</mat-label>
                 <input matInput type="text" [(ngModel)]="dataVariable.title.value" (change)="notifyGridster()">
             </mat-form-field>
-            <mat-form-field class="full-width margin-html">
+            <mat-form-field appearance="outline" class="full-width margin-html">
                 <mat-label>Placeholder</mat-label>
                 <input matInput type="text" [(ngModel)]="dataVariable.placeholder.value" (change)="notifyGridster()">
             </mat-form-field>
-            <mat-form-field class="full-width margin-html">
+            <mat-form-field appearance="outline" class="full-width margin-html">
                 <mat-label>Description</mat-label>
                 <textarea matInput [(ngModel)]="dataVariable.desc.value" (change)="notifyGridster()"></textarea>
             </mat-form-field>
             <!--  VALUES  -->
-            <mat-form-field *ngIf="hasTextValue()" class="full-width margin-html">
+            <mat-form-field appearance="outline" *ngIf="hasTextValue()" class="full-width margin-html">
                 <mat-label>Initial value</mat-label>
                 <input matInput type="text" placeholder="" [(ngModel)]="dataVariable.init.value"
                        (change)="notifyGridster()">
             </mat-form-field>
-            <mat-form-field *ngIf="hasOptions()" class="full-width margin-html">
+            <mat-form-field appearance="outline" *ngIf="hasOptions()" class="full-width margin-html">
                 <mat-label>Initial value</mat-label>
                 <mat-select *ngIf="!hasInits(); else hasInitsItems" [(ngModel)]="dataVariable.init.value"
                             (selectionChange)="notifyGridster()">
@@ -119,11 +119,11 @@
                               (change)="setBooleanValue($event); notifyGridster()">
                 Initial value
             </mat-slide-toggle>
-            <mat-form-field *ngIf="isNumber()" class="full-width margin-html">
+            <mat-form-field appearance="outline" *ngIf="isNumber()" class="full-width margin-html">
                 <mat-label>Initial value</mat-label>
                 <input matInput type="number" [(ngModel)]="dataVariable.init.value" (change)="notifyGridster()">
             </mat-form-field>
-            <mat-form-field *ngIf="isDate()" class="full-width margin-html">
+            <mat-form-field appearance="outline" *ngIf="isDate()" class="full-width margin-html">
                 <mat-label>Initial value</mat-label>
                 <mat-datepicker-toggle matPrefix [for]="datepicker"></mat-datepicker-toggle>
                 <input matInput (dateChange)="notifyGridster(); formatDate();"
@@ -134,7 +134,7 @@
                 <mat-datepicker #datepicker>
                 </mat-datepicker>
             </mat-form-field>
-            <mat-form-field *ngIf="isDatetime()" class="full-width margin-html">
+            <mat-form-field appearance="outline" *ngIf="isDatetime()" class="full-width margin-html">
                 <mat-label>Initial value</mat-label>
                 <input matInput
                        [ngxMatDatetimePicker]="picker"
@@ -161,11 +161,11 @@
                     <div *ngIf="dataVariable.options.length > 0">
                         <div class="drag-box" *ngFor="let item of dataVariable.options; let i = index" cdkDrag>
                             <mat-icon class="icon-color" cdkDragHandle>drag_indicator</mat-icon>
-                            <mat-form-field class="margin-right8px" *ngIf="!hasSimpleOptions()">
+                            <mat-form-field appearance="outline" class="margin-right8px" *ngIf="!hasSimpleOptions()">
                                 <input matInput type="text" placeholder="Key" [value]="item.key"
                                        (change)="setOptionsKey($event, i) ;notifyGridster()">
                             </mat-form-field>
-                            <mat-form-field class="margin-right8px">
+                            <mat-form-field appearance="outline" class="margin-right8px">
                                 <input matInput type="text" placeholder="Value" [value]="item.value?.value"
                                        (change)="setOptionsValue($event, i) ;notifyGridster()">
                             </mat-form-field>
@@ -197,7 +197,7 @@
                 </button>
             </div>
             <div *ngIf="dataVariable.component !== undefined" class="full-width">
-                <mat-form-field class="full-width margin-html">
+                <mat-form-field appearance="outline" class="full-width margin-html">
                     <mat-label>Component Name</mat-label>
                     <input matInput [(ngModel)]="dataVariable.component.name" (change)="setComponent($event);notifyGridster()"
                            [formControl]="componentNameFormCtrl" [matAutocomplete]="componentAutocomplete">
@@ -210,7 +210,7 @@
                 <div>
                     <div *ngIf="dataVariable.component.properties.length > 0">
                         <div *ngFor="let property of dataVariable.component.properties; let i = index" class="margin-html properties">
-                            <mat-form-field class="margin-right8px">
+                            <mat-form-field appearance="outline" class="margin-right8px">
                                 <input matInput type="text" placeholder="Key" [value]="property.key" [matAutocomplete]="propertyAutocomplete"
                                        (change)="setPropertyKey($event, i, dataVariable.component) ;notifyGridster()">
                                 <mat-autocomplete #propertyAutocomplete="matAutocomplete" (optionSelected)="setPropertyKey($event, i, dataVariable.component);notifyGridster()">
@@ -219,7 +219,7 @@
                                     </mat-option>
                                 </mat-autocomplete>
                             </mat-form-field>
-                            <mat-form-field class="margin-right8px">
+                            <mat-form-field appearance="outline" class="margin-right8px">
                                 <input matInput type="text" placeholder="Value" [value]="property.value"
                                        (change)="setPropertyValue($event, i, dataVariable.component) ;notifyGridster()">
                             </mat-form-field>
@@ -247,11 +247,11 @@
                 <div *ngIf="isIconEnumeration(dataVariable.type, dataVariable?.component)">
                     <div *ngIf="dataVariable.component.icons.length > 0; else noIcons">
                         <div *ngFor="let icon of dataVariable.component.icons; let i = index" class="margin-html properties">
-                            <mat-form-field class="margin-right8px">
+                            <mat-form-field appearance="outline" class="margin-right8px">
                                 <input matInput type="text" placeholder="Key" [value]="icon.key"
                                        (change)="setIconKey($event, i, dataVariable.component) ;notifyGridster()">
                             </mat-form-field>
-                            <mat-form-field class="margin-right8px">
+                            <mat-form-field appearance="outline" class="margin-right8px">
                                 <input matInput type="text" placeholder="Icon" [value]="icon.icon"
                                        (change)="setIconValue($event, i, dataVariable.component) ;notifyGridster()">
                             </mat-form-field>
@@ -286,7 +286,7 @@
                 </button>
             </div>
             <div *ngIf="dataRef.component !== undefined" class="full-width">
-                <mat-form-field class="full-width">
+                <mat-form-field appearance="outline" class="full-width">
                     <mat-label>Component Name</mat-label>
                     <input matInput [(ngModel)]="dataRef.component.name" (change)="setDataRefComponent($event);notifyGridster()"
                            [formControl]="dataRefComponentNameFormCtrl" [matAutocomplete]="dataRefComponentAutocomplete">
@@ -299,7 +299,7 @@
                 <div>
                     <div *ngIf="dataRef.component.properties.length > 0">
                         <div *ngFor="let property of dataRef.component.properties; let i = index" class="margin-html properties">
-                            <mat-form-field class="margin-right8px">
+                            <mat-form-field appearance="outline" class="margin-right8px">
                                 <input matInput type="text" placeholder="Key" [value]="property.key" [matAutocomplete]="dataRefPropertyAutocomplete"
                                        (change)="setPropertyKey($event, i, dataRef.component) ;notifyGridster()">
                                 <mat-autocomplete #dataRefPropertyAutocomplete="matAutocomplete" (optionSelected)="setPropertyKey($event, i, dataRef.component);notifyGridster()">
@@ -308,7 +308,7 @@
                                     </mat-option>
                                 </mat-autocomplete>
                             </mat-form-field>
-                            <mat-form-field class="margin-right8px">
+                            <mat-form-field appearance="outline" class="margin-right8px">
                                 <input matInput type="text" placeholder="Value" [value]="property.value"
                                        (change)="setPropertyValue($event, i, dataRef.component) ;notifyGridster()">
                             </mat-form-field>
@@ -337,11 +337,11 @@
                 <div *ngIf="isIconEnumeration(dataVariable.type, dataRef.component)" >
                     <div *ngIf="dataRef.component.icons.length > 0; else noIcons">
                         <div *ngFor="let icon of dataRef.component.icons; let i = index" class="margin-html properties">
-                            <mat-form-field class="margin-right8px">
+                            <mat-form-field appearance="outline" class="margin-right8px">
                                 <input matInput type="text" placeholder="Key" [value]="icon.key"
                                        (change)="setIconKey($event, i, dataRef.component) ;notifyGridster()">
                             </mat-form-field>
-                            <mat-form-field class="margin-right8px">
+                            <mat-form-field appearance="outline" class="margin-right8px">
                                 <input matInput type="text" placeholder="Icon" [value]="icon.icon"
                                        (change)="setIconValue($event, i, dataRef.component) ;notifyGridster()">
                             </mat-form-field>
@@ -371,7 +371,7 @@
             <mat-divider></mat-divider>
 
             <!--  FIELD OFFSET MANAGEMENT  -->
-            <mat-form-field class="full-width margin-html">
+            <mat-form-field appearance="outline" class="full-width margin-html">
                 <mat-label>Template</mat-label>
                 <mat-select [(value)]="dataRef.layout.template" (selectionChange)="notifyGridster()">
                     <mat-option *ngFor="let opt of templates" [value]="opt">
@@ -379,7 +379,7 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-            <mat-form-field *ngIf="!isBoolean() && !isListOptionsDisplay() && !isFile() && !isFileList()"
+            <mat-form-field appearance="outline" *ngIf="!isBoolean() && !isListOptionsDisplay() && !isFile() && !isFileList()"
                             class="full-width margin-html">
                 <mat-label>Appearance</mat-label>
                 <mat-select [(value)]="dataRef.layout.appearance" (selectionChange)="notifyGridster()">
@@ -389,7 +389,7 @@
                 </mat-select>
             </mat-form-field>
             <div>
-                <mat-form-field class="full-width margin-html">
+                <mat-form-field appearance="outline" class="full-width margin-html">
                     <mat-label>Field offset</mat-label>
                     <input matInput type="number"
                            [(ngModel)]="gridsterService.selectedDataField.dataRef.layout.offset"

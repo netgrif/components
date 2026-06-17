@@ -13,7 +13,10 @@ export class EditModelMenuItem extends MenuItem {
                 tool.openDialog(DialogModelEditComponent, {
                     width: '50%',
                     panelClass: "dialog-width-50",
-                    data: new ModelChange(tool.model, tool.model.clone())
+                    data: {
+                        model: new ModelChange(tool.model, tool.model.clone()),
+                        context: tool.context
+                    }
                 }, (changedModel: ModelChange) => {
                     if (changedModel != undefined) {
                         tool.modelService.updateModel(changedModel);

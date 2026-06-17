@@ -1,6 +1,6 @@
 <div fxLayout="column" fxLayoutAlign="space-around none">
     <div fxFlexFill class="netgrif-input">
-        <mat-form-field fxFlex="25">
+        <mat-form-field appearance="outline" fxFlex="25">
             <mat-label>{{noLocales() ? 'No language available, please add new language' : 'Select language'}}</mat-label>
             <mat-select [(value)]="locale" [disabled]="noLocales()" (selectionChange)="selectLocale()">
                 <mat-option *ngFor="let locale of usedLocales()" [value]="locale">{{locale.prettyName}}</mat-option>

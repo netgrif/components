@@ -1,17 +1,17 @@
 <div fxLayout="row" fxLayoutAlign="start center" class="netgrif-input builder-field-input">
     <span fxFlex="20">{{name}}</span>
     <div fxFlex="1"></div>
-    <mat-form-field fxFlex="19">
+    <mat-form-field appearance="outline" fxFlex="19">
         <mat-label>String Id</mat-label>
         <input matInput [(ngModel)]="field.name" disabled>
     </mat-form-field>
     <div fxFlex="1"></div>
-    <mat-form-field fxFlex="29">
+    <mat-form-field appearance="outline" fxFlex="29">
         <mat-label *ngIf="field.value">Default value</mat-label>
         <input matInput [(ngModel)]="field.value" disabled>
     </mat-form-field>
     <div fxFlex="1"></div>
-    <mat-form-field fxFlex="29" *ngIf="translationField">
+    <mat-form-field appearance="outline" fxFlex="29" *ngIf="translationField">
         <mat-label>Translation</mat-label>
         <input matInput [(ngModel)]="translationField.value" (change)="changeTranslation()">
     </mat-form-field>
