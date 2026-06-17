@@ -48,7 +48,7 @@ describe('AbstractMultiUserAssignListComponent', () => {
 
     it('should select', () => {
         component.select({id: '0'} as UserListItem)
-        expect(component.currentlySelectedUsers.includes('0')).toBeTruthy();
+        expect(component.currentlySelectedUsers?.includes('0')).toBeTruthy();
     });
 
     it('should get loading', () => {
@@ -75,6 +75,6 @@ class TestUserComponent extends AbstractMultiUserAssignListComponent {
     template: '<ncc-test-user [searchUserControl]="formControl"></ncc-test-user>'
 })
 class TestWrapperComponent {
-    injectedData = {roles: [], value: new UserValue('5', 'admin', 'netgrif', 'super@netgrif.com')} as UserListInjectedData;
+    injectedData = {roles: [], value: new UserValue('5', 'realmID0', 'admin', 'netgrif', 'admin netgrif', 'super@netgrif.com')} as UserListInjectedData;
     formControl = new FormControl();
 }

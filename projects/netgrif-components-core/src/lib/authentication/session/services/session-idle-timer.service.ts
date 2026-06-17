@@ -1,6 +1,7 @@
 import {Injectable, OnDestroy} from "@angular/core";
 import {interval, Observable, ReplaySubject, Subscription} from "rxjs";
 import {ConfigurationService} from "../../../configuration/configuration.service";
+import {filter, take} from "rxjs/operators";
 
 @Injectable({
     providedIn: 'root'
@@ -9,8 +10,8 @@ export class SessionIdleTimerService implements OnDestroy {
 
     public static readonly DEFAULT_SESSION_TIMEOUTTIME = 900;
 
-    private readonly _enableService: boolean;
-    private readonly _timeoutSeconds: number;
+    private _enableService: boolean;
+    private _timeoutSeconds: number;
     private _count: number = 0;
     private timerSubscription!: Subscription;
     private timer: Observable<number> = interval(1000);
@@ -19,8 +20,16 @@ export class SessionIdleTimerService implements OnDestroy {
     public remainSeconds$ = this._remainSeconds.asObservable();
 
     constructor(protected _config: ConfigurationService) {
-        this._enableService = this._config.getConfigurationSubtreeByPath('providers.auth.sessionTimeoutEnabled') ?? false;
-        this._timeoutSeconds = this._config.getConfigurationSubtreeByPath('providers.auth.sessionTimeout') ?? SessionIdleTimerService.DEFAULT_SESSION_TIMEOUTTIME;
+        this._config.loaded$
+            .pipe(
+                filter(loaded => loaded),
+                take(1)
+            )
+            .subscribe(() => {
+                this._enableService = this._config.getConfigurationSubtreeByPath('providers.auth.sessionTimeoutEnabled') ?? false;
+                this._timeoutSeconds = this._config.getConfigurationSubtreeByPath('providers.auth.sessionTimeout') ?? SessionIdleTimerService.DEFAULT_SESSION_TIMEOUTTIME;
+            });
+
     }
 
     startTimer() {

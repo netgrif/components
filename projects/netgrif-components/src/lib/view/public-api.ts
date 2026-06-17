@@ -5,6 +5,8 @@ export * from './case-view/components/create-case-button/create-case-button.comp
 export * from './case-view/components/case-list-paginator/case-list-paginator.component';
 export * from './tree-case-view/tree-component/tree.component';
 export * from './tree-case-view/tree-task-content/tree-task-content.component';
+export * from './task-view/task-panel-list-pagination/task-list-pagination.component';
+export * from './task-view/task-panel-list/task-list.component';
 
 /* MODULES */
 export * from './workflow-view.module';

@@ -1,6 +1,6 @@
 import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
 import {BehaviorSubject, Observable, of, ReplaySubject, Subject, Subscription, timer} from 'rxjs';
-import {TaskPanelData} from '../../../panel/task-panel-list/task-panel-data/task-panel-data';
+import {TaskPanelData} from '../../../panel/task-panel-data/task-panel-data';
 import {TaskResourceService} from '../../../resources/engine-endpoint/task-resource.service';
 import {UserService} from '../../../user/services/user.service';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
@@ -51,6 +51,7 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
     protected _allowMultiOpen: boolean;
 
     private readonly _initializing: boolean = true;
+    protected _paginationView: boolean = false;
 
     constructor(protected _taskService: TaskResourceService,
                 private _userService: UserService,
@@ -113,9 +114,11 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
                             pageLoadResult.tasks[taskId].task.dataGroups = acc[taskId].task.dataGroups;
                             pageLoadResult.tasks[taskId].initiallyExpanded = acc[taskId].initiallyExpanded;
                             this.updateTask(acc[taskId].task, pageLoadResult.tasks[taskId].task);
-                            this.blockTaskFields(acc[taskId].task, !(acc[taskId].task.user
-                                && this._userComparator.compareUsers(acc[taskId].task.user)));
-                            delete pageLoadResult.tasks[taskId];
+                            this.blockTaskFields(acc[taskId].task, !(acc[taskId].task.assignee
+                                && this._userComparator.compareUsers(acc[taskId].task.assignee.id)));
+                            if (!this._paginationView) {
+                                delete pageLoadResult.tasks[taskId];
+                            }
                         }
                     });
                     result = Object.assign(acc, pageLoadResult.tasks);
@@ -126,6 +129,9 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
                 Object.assign(this._pagination, pageLoadResult.requestContext.pagination);
                 if (pageLoadResult.requestContext !== null) {
                     this._loading$.off(pageLoadResult.requestContext.filter);
+                }
+                if (this._paginationView) {
+                    return pageLoadResult.tasks;
                 }
                 return result;
             }, {})
@@ -202,6 +208,10 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
         return this._allowMultiOpen;
     }
 
+    public set paginationView(value: boolean) {
+        this._paginationView = value;
+    }
+
     public loadPage(requestContext: PageLoadRequestContext): Observable<TaskPageLoadRequestResult> {
         if (requestContext === null || requestContext.pageNumber < 0) {
             return of({tasks: {}, requestContext});
@@ -251,7 +261,7 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
             map(tasks => Array.isArray(tasks.content) ? tasks : {...tasks, content: []}),
             map(tasks => {
                 return tasks.content.reduce((acc, curr) => {
-                    this.blockTaskFields(curr, !(curr.user && this._userComparator.compareUsers(curr.user)));
+                    this.blockTaskFields(curr, !(curr.assignee && this._userComparator.compareUsers(curr.assignee.id)));
                     return {
                         ...acc, [curr.stringId]: {
                             task: curr,
@@ -276,7 +286,7 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
                 old[key] = neww[key];
             }
         });
-        this.blockTaskFields(old, !(old.user && this._userComparator.compareUsers(old.user)));
+        this.blockTaskFields(old, !(old.assignee && this._userComparator.compareUsers(old.assignee.id)));
     }
 
     private blockTaskFields(task: Task, block: boolean): void {

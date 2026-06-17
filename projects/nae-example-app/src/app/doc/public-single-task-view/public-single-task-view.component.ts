@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {
     AbstractSingleTaskViewComponent,
     AllowedNetsService,
@@ -22,9 +22,7 @@ import {
     TaskRequestStateService,
     TaskResourceServiceProvider,
     TaskViewService,
-    ViewIdService,
-    BaseFilter,
-    NAE_BASE_FILTER
+    ViewIdService
 } from '@netgrif/components-core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {combineLatest} from 'rxjs';
@@ -60,7 +58,6 @@ const localAllowedNetsServiceFactory = (factory: AllowedNetsServiceFactory, rout
             deps: [AllowedNetsServiceFactory, ActivatedRoute]
         },
         {provide: NAE_VIEW_ID_SEGMENT, useValue: 'publicTaskView'},
-        {provide: AllowedNetsServiceFactory, useClass: AllowedNetsServiceFactory},
         ViewIdService,
         {provide: TaskContentService, useClass: SingleTaskContentService},
         TaskDataService,
@@ -81,9 +78,8 @@ export class PublicSingleTaskViewComponent extends AbstractSingleTaskViewCompone
     constructor(taskViewService: TaskViewService,
                 publicTaskLoadingService: PublicTaskLoadingService,
                 activatedRoute: ActivatedRoute,
-                protected _router: Router,
-                @Inject(NAE_BASE_FILTER) baseFilter: BaseFilter) {
-        super(taskViewService, activatedRoute, baseFilter);
+                protected _router: Router) {
+        super(taskViewService, activatedRoute);
         this.hidden = false;
         this.loading$ = combineLatest(taskViewService.loading$, publicTaskLoadingService.loading$).pipe(
             map(sources => {

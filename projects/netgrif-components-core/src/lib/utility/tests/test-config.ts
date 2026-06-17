@@ -1,7 +1,16 @@
 import {ConfigurationService} from '../../configuration/configuration.service';
+import {Injectable} from '@angular/core';
+import {ConfigurationResourceService} from '../../resources/engine-endpoint/configuration-resource.service';
+import {HttpClient, HttpEvent, HttpHandler, HttpRequest} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {ResourceProvider} from '../../resources/resource-provider.service';
 
+@Injectable()
 export class TestConfigurationService extends ConfigurationService {
     constructor() {
+        const http = new HttpClient(new TestHttp());
+        const resourceProvider = new ResourceProvider(http);
+        const configurationResource = new ConfigurationResourceService(resourceProvider);
         super({
             extends: 'nae-default',
             providers: {
@@ -427,6 +436,19 @@ export class TestConfigurationService extends ConfigurationService {
                     groupNavigationRoute: 'config-route'
                 }
             }
-        });
+        },
+        configurationResource,
+            {
+                application: 'nae',
+                type: 'default',
+                gateway_url: 'http://localhost:8888/api',
+                resolve_configuration: false
+            });
+    }
+}
+
+class TestHttp extends HttpHandler {
+    handle(req: HttpRequest<any>): Observable<HttpEvent<any>> {
+        return undefined;
     }
 }

@@ -6,7 +6,7 @@ import {
     AuthenticationService,
     ConfigurationService,
     DATA_FIELD_PORTAL_DATA, DataFieldPortalData,
-    ErrorSnackBarComponent, FileField,
+    ErrorSnackBarComponent, FileField, FrontActionService,
     MaterialModule,
     MockAuthenticationMethodService,
     MockAuthenticationService,
@@ -39,6 +39,7 @@ describe('FileDefaultFieldComponent', () => {
         ],
         providers: [
             SideMenuService,
+            FrontActionService,
             {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
             {provide: AuthenticationService, useClass: MockAuthenticationService},
             {provide: UserResourceService, useClass: MockUserResourceService},

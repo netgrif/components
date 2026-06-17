@@ -1,0 +1,19 @@
+<div class="height-100" fxLayout="column" >
+    <nc-toolbar [toolbarConfig]="toolbarConfig"></nc-toolbar>
+    <div fxLayout="column" fxFlex="100" fxLayoutAlign="center center" class="background-dashboard">
+        <div class="cards-container" fxLayout="row wrap" fxLayoutAlign="center center" fxFlex="100">
+            <div *ngIf="loading$ | async" fxLayout="column" fxLayoutAlign="center center" class="margin-top-default">
+                <mat-spinner color="primary" diameter="60" mode="indeterminate"></mat-spinner>
+            </div>
+            <ng-template ngFor let-item [ngForOf]="dashboardItems">
+                <div fxLayout="column" fxLayoutAlign="end center" class="dashboard-card" (click)="navigate(item)">
+                    <mat-card-content fxLayout="column" fxLayoutAlign="center center" class="card-content">
+                        <mat-icon *ngIf="!getItemExternalIcon(item)" class="card-icon" [ngStyle]="{'color': getItemIconColor(item)}">{{ getItemIcon(item) }}</mat-icon>
+                        <img *ngIf="getItemExternalIcon(item)" class="card-icon" src="{{getItemIcon(item)}}" alt="{{getItemName(item)}}">
+                        <div class="card-main-text" [ngStyle]="{'color': getItemFontColor(item), 'font-weight': getItemFontWeight(item)}">{{ getItemName(item) }}</div>
+                    </mat-card-content>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</div>

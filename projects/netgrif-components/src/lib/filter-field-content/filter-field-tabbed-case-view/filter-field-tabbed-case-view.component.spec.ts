@@ -99,7 +99,7 @@ class TestWrapperComponent {
 class CustomMockUserService extends MockUserService {
     constructor() {
         super();
-        this._user = new User('123', 'test@netgrif.com', 'Test', 'User', ['ROLE_USER'], [{
+        this._user = new User('123', 'test@netgrif.com', 'test@netgrif.com','realm','Test', 'User', ['ROLE_USER'], [{
             stringId: 'id',
             name: 'id',
             description: '',

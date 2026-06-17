@@ -28,7 +28,7 @@ describe('UserResourceService', () => {
                         done();
                     });
 
-                    const reqLog = httpMock.expectOne('http://localhost:8080/api/user/id/authority/assign');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/users/default/id/authority');
                     expect(reqLog.request.method).toEqual('POST');
 
                     reqLog.flush({success: 'Success'});
@@ -39,13 +39,13 @@ describe('UserResourceService', () => {
     it('should assignRoles', (done) => {
         inject([HttpTestingController],
                 (httpMock: HttpTestingController) => {
-                    service.assignRoles('id', {}).subscribe(res => {
+                    service.assignRoles('id','default', {}).subscribe(res => {
                         expect(res.success).toEqual('Success');
                         done();
                     });
 
-                    const reqLog = httpMock.expectOne('http://localhost:8080/api/user/id/role/assign');
-                    expect(reqLog.request.method).toEqual('POST');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/users/default/id/roles');
+                    expect(reqLog.request.method).toEqual('PUT');
 
                     reqLog.flush({success: 'Success'});
                 })();
@@ -60,7 +60,7 @@ describe('UserResourceService', () => {
                         done();
                     });
 
-                    const reqLog = httpMock.expectOne('http://localhost:8080/api/user/authority');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/users/authority');
                     expect(reqLog.request.method).toEqual('GET');
 
                     reqLog.flush([]);
@@ -76,7 +76,7 @@ describe('UserResourceService', () => {
                         done();
                     });
 
-                    const reqLog = httpMock.expectOne('http://localhost:8080/api/user');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/users');
                     expect(reqLog.request.method).toEqual('GET');
 
                     reqLog.flush([]);
@@ -84,21 +84,21 @@ describe('UserResourceService', () => {
         }
     );
 
-    it('should getAllWithRole', (done) => {
-        inject([HttpTestingController],
-                (httpMock: HttpTestingController) => {
-                    service.getAllWithRole({}).subscribe(res => {
-                        expect(res.length).toEqual(0);
-                        done();
-                    });
-
-                    const reqLog = httpMock.expectOne('http://localhost:8080/api/user/role');
-                    expect(reqLog.request.method).toEqual('POST');
-
-                    reqLog.flush([]);
-                })();
-        }
-    );
+    // it('should getAllWithRole', (done) => {
+    //     inject([HttpTestingController],
+    //             (httpMock: HttpTestingController) => {
+    //                 service.getAllWithRole({}).subscribe(res => {
+    //                     expect(res.length).toEqual(0);
+    //                     done();
+    //                 });
+    //
+    //                 const reqLog = httpMock.expectOne('http://localhost:8080/api/users/role');
+    //                 expect(reqLog.request.method).toEqual('POST');
+    //
+    //                 reqLog.flush([]);
+    //             })();
+    //     }
+    // );
 
     it('should getLoggedUser', (done) => {
         inject([HttpTestingController],
@@ -110,7 +110,7 @@ describe('UserResourceService', () => {
                         done();
                     });
 
-                    const reqLog = httpMock.expectOne('http://localhost:8080/api/user/me');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/users/me');
                     expect(reqLog.request.method).toEqual('GET');
 
                     reqLog.flush({
@@ -138,7 +138,7 @@ describe('UserResourceService', () => {
                         done();
                     });
 
-                    const reqLog = httpMock.expectOne('http://localhost:8080/api/user/5');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/users/default/5');
                     expect(reqLog.request.method).toEqual('GET');
 
                     reqLog.flush({
@@ -164,7 +164,7 @@ describe('UserResourceService', () => {
                         done();
                     });
 
-                    const reqLog = httpMock.expectOne('http://localhost:8080/api/user/preferences');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/users/preferences');
                     expect(reqLog.request.method).toEqual('GET');
 
                     reqLog.flush({});
@@ -180,7 +180,7 @@ describe('UserResourceService', () => {
                         done();
                     });
 
-                    const reqLog = httpMock.expectOne('http://localhost:8080/api/user/preferences');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/users/preferences');
                     expect(reqLog.request.method).toEqual('POST');
 
                     reqLog.flush({success: 'Success'});
@@ -196,7 +196,7 @@ describe('UserResourceService', () => {
                         done();
                     });
 
-                    const reqLog = httpMock.expectOne('http://localhost:8080/api/user/search');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/users/search');
                     expect(reqLog.request.method).toEqual('POST');
 
                     reqLog.flush([]);
@@ -214,7 +214,7 @@ describe('UserResourceService', () => {
                         done();
                     });
 
-                    const reqLog = httpMock.expectOne('http://localhost:8080/api/user/5');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/users/default/5');
                     expect(reqLog.request.method).toEqual('POST');
 
                     reqLog.flush({

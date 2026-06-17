@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres
 to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-Full Changelog: [https://github.com/netgrif/components/commits/v6.4.0](https://github.com/netgrif/components/commits/v6.4.0)
+Full Changelog: [https://github.com/netgrif/components/commits/v6.5.0](https://github.com/netgrif/components/commits/v6.5.0)
 
 ## [7.0.0](https://github.com/netgrif/components/releases/tag/v7.0.0) (2024-11-22)
 
@@ -16,9 +16,27 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.4.0](https://g
 ### Changed
 - [NAE- 1940] Update to new Angular
 
-## [6.4.0](https://github.com/netgrif/components/releases/tag/v6.4.0) (2024-11-07)
+## [6.5.0](https://github.com/netgrif/components/releases/tag/v6.5.0) (2025-02-18)
+### Added
+
+- [NAE-2033] Welcome dashboard
+- [NAE-2041] Implementing Ticket View
+
+### Changed
+
+- [NAE-2051] Implement configurable view in menu items
+- [NAE-2034] Open first view
+- [NAE-2038] Public View
+- [NAE-2035] Implement Single-Task-View
+- [NAE-2036] Task-List-View to open Case by link
+- [NAE-2040] Search in role management
+- [NAE-2052] Integrate ticket view with menu items
+- [NAE-2039] Search in workflow view
+
+## [6.4.0](https://github.com/netgrif/components/releases/tag/v6.4.0) (2024-12-24)
 
 ### Fixed
+
 - [NAE-1915] TaskRef behaviour handling for multiple level
 - [NAE-1908] NAE-1906 Improvements
 - [NAE-1925] Panel is not opening
@@ -32,8 +50,11 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.4.0](https://g
 - [NAE-2005] Field behavior change does not work correctly with multiple references using taskRef
 - [NAE-2013] Autocomplete options are set to the first dropdown
 - [NAE-2020] Create case error when allowed net blocks are present
+- [NAE-1948] Bugs after merge to 6.4.0
+- [NAE-2022] UI Design Fixes and Improvements
 
 ### Added
+
 - [NAE-1890] Data field component register
 - [NAE-1901] Taskref rendering update
 - [NAE-1904] CaseRef list component
@@ -57,14 +78,13 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.4.0](https://g
 - [NAE-1958] Make component properties changeable
 - [NAE-1949] Allowed Types for Filefield
 - [NAE-2016] Global roles for menu items permissions
-
+- [NAE-2021] Outputs for navigation components
 
 ## [6.3.3](https://github.com/netgrif/components/releases/tag/v6.3.3) (2024-01-19)
 
 ### Added
 
 - [NAE-1933] UserList deleteAll button
-
 
 ## [6.3.2](https://github.com/netgrif/components/releases/tag/v6.3.2) (2023-07-25)
 

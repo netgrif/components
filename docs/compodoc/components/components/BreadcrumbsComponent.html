@@ -187,7 +187,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(_uriService: UriService, _caseResourceService: CaseResourceService, _activatedRoute: ActivatedRoute, _router: Router, _dynamicRoutingService: DynamicNavigationRouteProviderService, _translateService: TranslateService, _log: LoggerService)</code>
+<code>constructor(_uriService: PathService, _caseResourceService: CaseResourceService, _activatedRoute: ActivatedRoute, _router: Router, _dynamicRoutingService: DynamicNavigationRouteProviderService, _translateService: TranslateService, _log: LoggerService)</code>
                     </td>
                 </tr>
                         <tr>
@@ -211,87 +211,87 @@
                                         <tbody>
                                                 <tr>
                                                         <td>_uriService</td>
-                                                  
+
                                                         <td>
-                                                                    <code>UriService</code>
+                                                                    <code>PathService</code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                 </tr>
                                                 <tr>
                                                         <td>_caseResourceService</td>
-                                                  
+
                                                         <td>
                                                                     <code>CaseResourceService</code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                 </tr>
                                                 <tr>
                                                         <td>_activatedRoute</td>
-                                                  
+
                                                         <td>
                                                                     <code>ActivatedRoute</code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                 </tr>
                                                 <tr>
                                                         <td>_router</td>
-                                                  
+
                                                         <td>
                                                                     <code>Router</code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                 </tr>
                                                 <tr>
                                                         <td>_dynamicRoutingService</td>
-                                                  
+
                                                         <td>
                                                                     <code>DynamicNavigationRouteProviderService</code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                 </tr>
                                                 <tr>
                                                         <td>_translateService</td>
-                                                  
+
                                                         <td>
                                                                     <code>TranslateService</code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                 </tr>
                                                 <tr>
                                                         <td>_log</td>
-                                                  
+
                                                         <td>
                                                                     <code>LoggerService</code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                 </tr>
                                         </tbody>
                                     </table>
@@ -314,7 +314,7 @@
     <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component} from &#x27;@angular/core&#x27;;
 import {
-    UriService,
+    PathService,
     AbstractBreadcrumbsComponent, CaseResourceService, DynamicNavigationRouteProviderService, LoggerService
 } from &#x27;@netgrif/components-core&#x27;;
 import {ActivatedRoute, Router} from &quot;@angular/router&quot;;
@@ -327,7 +327,7 @@ import {TranslateService} from &quot;@ngx-translate/core&quot;;
 })
 export class BreadcrumbsComponent extends AbstractBreadcrumbsComponent {
 
-    constructor(protected _uriService: UriService,
+    constructor(protected _uriService: PathService,
                 _caseResourceService: CaseResourceService,
                 _activatedRoute: ActivatedRoute,
                 _router: Router,
@@ -406,7 +406,7 @@ export class BreadcrumbsComponent extends AbstractBreadcrumbsComponent {
         </div>
     </div>
 
-    
+
 </div>
 
 <script src="../js/libs/vis.min.js"></script>

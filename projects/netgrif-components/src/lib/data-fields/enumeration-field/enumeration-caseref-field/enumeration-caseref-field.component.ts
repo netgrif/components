@@ -6,7 +6,7 @@ import {
 } from '@netgrif/components-core';
 import {
     DefaultCaseRefListViewComponent
-} from '../../../navigation/group-navigation-component-resolver/default-components/default-case-ref-list-view/default-case-ref-list-view.component';
+} from '../../../navigation/group-navigation-component-resolver/default-components/refs/default-case-ref-list-view/default-case-ref-list-view.component';
 
 @Component({
   selector: 'nc-enumeration-caseref-field',

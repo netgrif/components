@@ -6,10 +6,12 @@ import {TaskResourceService} from '../../resources/engine-endpoint/task-resource
 import {LoggerService} from '../../logger/services/logger.service';
 import {DataGroup} from '../../resources/interface/data-groups';
 import {HttpErrorResponse} from '@angular/common/http';
+import { PathService } from '../service/path.service';
 
 export abstract class GroupNavigationComponentResolverService {
 
     protected constructor(protected _taskResourceService: TaskResourceService,
+                          protected _pathService: PathService,
                           protected _log: LoggerService) {
     }
 
@@ -19,6 +21,9 @@ export abstract class GroupNavigationComponentResolverService {
         const result = new ReplaySubject<ComponentPortal<any>>(1);
         this._taskResourceService.getData(taskId).subscribe(taskData => {
             try {
+                if (!this._pathService.isMenuResolverClosed) {
+                    this._pathService.datafieldsForMenuResolver = taskData;
+                }
                 result.next(new ComponentPortal(
                     this.resolveViewComponent(taskData),
                     null,
@@ -41,6 +46,9 @@ export abstract class GroupNavigationComponentResolverService {
     }
 
     private forwardError(result: Subject<any>, error: Error): void {
+        if (!this._pathService.isMenuResolverClosed) {
+            this._pathService.datafieldsForMenuResolverError = error;
+        }
         result.error(error instanceof HttpErrorResponse ? error.error.message : error.message);
         result.complete();
     }

@@ -186,7 +186,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
                     }
                 } else if (dataGroupParentCaseId === this._safeTask.caseId
                     && parentTaskId !== this._safeTask.stringId
-                    && !this._taskContentService.referencedTaskAndCaseIds[dataGroupParentCaseId].includes(parentTaskId)) {
+                    && !this._taskContentService.referencedTaskAndCaseIds[dataGroupParentCaseId]?.includes(parentTaskId)) {
                     this._taskContentService.referencedTaskAndCaseIds[dataGroupParentCaseId].push(group.parentTaskId);
                 }
                 if (group.fields.length > 0 && !this._taskContentService.taskFieldsIndex[parentTaskId]) {
@@ -282,7 +282,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
             return;
         }
 
-        if (this._safeTask.user === undefined) {
+        if (this._safeTask.assignee === undefined) {
             this._log.debug('current task is not assigned...');
             afterAction.resolve(false);
             return;
@@ -367,15 +367,15 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         if (!this.isTaskPresent()) {
             return false;
         }
-        if (this._safeTask.user === undefined) {
+        if (this._safeTask.assignee === undefined) {
             return false;
         }
-        if (!this._userComparator.compareUsers(this._safeTask.user)) {
+        if (!this._userComparator.compareUsers(this._safeTask.assignee.id)) {
             return false;
         }
         const taskIdsInRequest: Array<string> = Object.keys(request);
         for (const taskId of taskIdsInRequest) {
-            if (!Object.keys(this._taskContentService.taskFieldsIndex).includes(taskId)) {
+            if (!Object.keys(this._taskContentService.taskFieldsIndex)?.includes(taskId)) {
                 this._log.error(`Task id ${taskId} is not present in task fields index`);
                 return false;
             }
@@ -489,7 +489,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         if (Object.keys(changedFieldsMap).length > 0) {
             this._changedFieldsService.emitChangedFields(changedFieldsMap);
         }
-        if (!!frontActions && frontActions.length > 0) {
+        if (frontActions?.length > 0) {
             this._frontActionService.runAll(frontActions);
         }
         this.clearWaitingForResponseFlag(context.body);
@@ -617,7 +617,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
     protected revertToPreviousValue(context: TaskSetDataRequestContext): void {
         this._safeTask.dataGroups.forEach(dataGroup => {
             dataGroup.fields.forEach(field => {
-                if (field.initialized && field.valid && Object.keys(context.previousValues).includes(field.stringId)) {
+                if (field.initialized && field.valid && Object.keys(context.previousValues)?.includes(field.stringId)) {
                     field.revertToPreviousValue();
                 }
             });

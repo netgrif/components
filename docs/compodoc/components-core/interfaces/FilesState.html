@@ -491,9 +491,7 @@ export abstract class AbstractFileListDefaultFieldComponent extends AbstractFile
         if (this.dataField.maxUploadSizeInBytes &amp;&amp;
             this.dataField.maxUploadSizeInBytes &lt; sum) {
             this._log.error(&#x27;Files cannot be uploaded. Maximum size of files exceeded.&#x27;);
-            this._snackbar.openErrorSnackBar(
-                this._translate.instant(&#x27;dataField.snackBar.maxFilesSizeExceeded&#x27;) + this.dataField.maxUploadSizeInBytes
-            );
+            this.resolveMaxSizeMessage();
             this.fileUploadEl.nativeElement.value &#x3D; &#x27;&#x27;;
             return;
         }

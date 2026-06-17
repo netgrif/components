@@ -1,0 +1,9 @@
+<button color="primary" (click)="redirectToSso()" [disabled]="(loading | async)" mat-raised-button fxLayout="row"
+        fxLayoutAlign="center center">
+    <mat-spinner *ngIf="loading | async"
+                 mode="indeterminate"
+                 diameter="36"
+                 color="accent"
+                 fxFlex></mat-spinner>
+    <span *ngIf="(loading | async) === false" fxFlex>{{ 'forms.login.ssoButton' | translate }}</span>
+</button>

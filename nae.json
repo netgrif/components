@@ -14,12 +14,19 @@
                 "verify": "auth/token/verify",
                 "invite": "auth/invite",
                 "reset": "auth/reset",
-                "recover": "/auth/recover"
+                "recover": "auth/recover"
             },
             "sessionBearer": "X-Auth-Token",
             "sessionTimeoutEnabled": false,
             "sessionTimeout": 900,
-            "jwtBearer": "X-Jwt-Token"
+            "jwtBearer": "X-Jwt-Token",
+            "sso": {
+                "enable": false,
+                "clientId": "dev-cluster-worker",
+                "redirectUrl": "http://localhost:8081/realms/netgrif-cloud-testing/protocol/openid-connect/auth",
+                "refreshUrl": "http://localhost:8800/api/auth/login",
+                "scopes": ["openid","email","profile","roles"]
+            }
         },
         "resources": [
             {
@@ -207,6 +214,17 @@
                 "path": "drawer"
             }
         },
+        "demo-dashboard": {
+            "component": {
+                "class": "NavigationDashboardExampleComponent",
+                "from": "./doc/navigation-dashboard-example/navigation-dashboard-example.component"
+            },
+            "access": "private",
+            "navigation": true,
+            "routing": {
+                "path": "dashboard"
+            }
+        },
         "demo-double-drawer": {
             "component": {
                 "class": "DoubleDrawerExampleComponent",
@@ -242,6 +260,15 @@
                     },
                     "processUri": "/"
                 },
+                "task-list-view": {
+                    "component": {
+                        "class": "DefaultSimpleTaskViewComponent"
+                    },
+                    "access": "private",
+                    "routing": {
+                        "path": "task-list/:singleCaseId"
+                    }
+                },
                 "hidden-workflow-view": {
                     "component": {
                         "class": "WorkflowViewExampleComponent",
@@ -249,17 +276,32 @@
                     },
                     "access": {
                         "authority": [
-                            "ROLE_ADMIN"
+                            "ADMIN"
                         ]
                     },
                     "navigation": {
                         "title": "Workflow view",
                         "icon": "insights",
-                        "hidden": true
+                        "hidden": false
                     },
                     "routing": {
                         "path": "workflow-view"
                     }
+                },
+                "ticket-view": {
+                    "component": {
+                        "class": "TabbedTicketView",
+                        "from": "@netgrif/components"
+                    },
+                    "access": "private",
+                    "navigation": {
+                        "title": "Custom ticket view",
+                        "icon": "add"
+                    },
+                    "routing": {
+                        "path": "ticket-view"
+                    },
+                    "processUri": "/test"
                 },
                 "hidden-active-group": {
                     "component": {
@@ -270,7 +312,7 @@
                     "navigation": {
                         "title": "Active group view",
                         "icon": "coronavirus",
-                        "hidden": true
+                        "hidden": false
                     },
                     "routing": {
                         "path": "active-group"
@@ -555,7 +597,7 @@
                 ],
                 "group": [],
                 "authority": [
-                    "ROLE_ADMIN"
+                    "ADMIN"
                 ]
             },
             "navigation": false,
@@ -796,7 +838,7 @@
                         "from": "./doc/navigation-example/buttons-nav/buttons-nav.component"
                     },
                     "access": {
-                        "authority": "ROLE_ADMIN"
+                        "authority": "ADMIN"
                     },
                     "navigation": {
                         "title": "authority check",
@@ -1302,6 +1344,9 @@
         },
         "groupNavigation": {
             "groupNavigationRoute": "group-nav"
+        },
+        "doubleDrawer": {
+            "url": "drawer-double"
         }
     }
 }

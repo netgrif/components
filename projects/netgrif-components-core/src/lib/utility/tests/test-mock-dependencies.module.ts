@@ -4,6 +4,7 @@ import {AuthenticationMethodService} from '../../authentication/services/authent
 import {MockAuthenticationMethodService} from './mocks/mock-authentication-method-service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from './test-config';
+import {ResourceProvider} from '../../resources/resource-provider.service';
 
 
 /**
@@ -23,6 +24,7 @@ import {TestConfigurationService} from './test-config';
     ],
     providers: [
         {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+        ResourceProvider,
         {provide: ConfigurationService, useClass: TestConfigurationService}
     ]
 })

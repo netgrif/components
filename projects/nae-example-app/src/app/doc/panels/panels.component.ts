@@ -68,7 +68,7 @@ export class PanelsComponent implements OnInit {
             stringId: null,
             petriNetId: null,
             permissions: {},
-            users: {}
+            actors: {}
         };
         this.workflow = {
             stringId: 'ID',

@@ -128,7 +128,7 @@
         <h3 class="deprecated">Deprecated</h3>
     </p>
     <p class="comment">
-        
+
     </p>
 
 
@@ -194,7 +194,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(_sideMenuControl: SideMenuControl, _petriNetResource: PetriNetResourceService, _uriService: UriService, _log: LoggerService, _snackbar: SnackBarService, _translate: TranslateService)</code>
+<code>constructor(_sideMenuControl: SideMenuControl, _petriNetResource: PetriNetResourceService, _uriService: PathService, _log: LoggerService, _snackbar: SnackBarService, _translate: TranslateService)</code>
                     </td>
                 </tr>
                         <tr>
@@ -218,75 +218,75 @@
                                         <tbody>
                                                 <tr>
                                                         <td>_sideMenuControl</td>
-                                                  
+
                                                         <td>
                                                                     <code>SideMenuControl</code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                 </tr>
                                                 <tr>
                                                         <td>_petriNetResource</td>
-                                                  
+
                                                         <td>
                                                                     <code>PetriNetResourceService</code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                 </tr>
                                                 <tr>
                                                         <td>_uriService</td>
-                                                  
+
                                                         <td>
-                                                                    <code>UriService</code>
+                                                                    <code>PathService</code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                 </tr>
                                                 <tr>
                                                         <td>_log</td>
-                                                  
+
                                                         <td>
                                                                     <code>LoggerService</code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                 </tr>
                                                 <tr>
                                                         <td>_snackbar</td>
-                                                  
+
                                                         <td>
                                                                     <code>SnackBarService</code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                 </tr>
                                                 <tr>
                                                         <td>_translate</td>
-                                                  
+
                                                         <td>
                                                                     <code>TranslateService</code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                 </tr>
                                         </tbody>
                                     </table>
@@ -316,7 +316,7 @@ import {
     PetriNetResourceService,
     SideMenuControl,
     SnackBarService,
-    UriService
+    PathService
 } from &#x27;@netgrif/components-core&#x27;;
 import {TranslateService} from &#x27;@ngx-translate/core&#x27;;
 
@@ -340,7 +340,7 @@ export class ImportNetComponent extends AbstractImportNetComponent {
 
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) protected _sideMenuControl: SideMenuControl,
                 protected _petriNetResource: PetriNetResourceService,
-                protected _uriService: UriService,
+                protected _uriService: PathService,
                 protected _log: LoggerService,
                 protected _snackbar: SnackBarService,
                 protected _translate: TranslateService) {
@@ -475,7 +475,7 @@ export class ImportNetComponent extends AbstractImportNetComponent {
         </div>
     </div>
 
-    
+
 </div>
 
 <script src="../js/libs/vis.min.js"></script>

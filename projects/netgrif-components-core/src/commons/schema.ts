@@ -46,8 +46,17 @@ export interface Auth {
     authentication: string;
     sessionBearer?: string;
     endpoints?: string | { [k: string]: string };
+    sso?: Sso;
 
     [k: string]: any;
+}
+
+export interface Sso {
+    enable: boolean;
+    redirectUrl: string;
+    refreshUrl: string;
+    clientId: string;
+    scopes: Array<string>;
 }
 
 export interface Resource {
@@ -341,6 +350,9 @@ export interface Services {
     groupNavigation?: {
         groupNavigationRoute: string,
     };
+    doubleDrawer?: {
+        url: string,
+    }
 
     [k: string]: any;
 }

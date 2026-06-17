@@ -4,7 +4,7 @@ import {ConfigurationService} from '../../../configuration/configuration.service
 import {NullStorage} from '../null-storage';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {LoggerService} from '../../../logger/services/logger.service';
-import {catchError, map, take, tap} from 'rxjs/operators';
+import {catchError, filter, map, take, tap} from 'rxjs/operators';
 import {MessageResource} from '../../../resources/interface/message-resource';
 import {LoadingEmitter} from '../../../utility/loading-emitter';
 import {SessionIdleTimerService} from "./session-idle-timer.service";
@@ -19,8 +19,8 @@ export class SessionService implements OnDestroy {
     public static readonly SESSION_BEARER_HEADER_DEFAULT = 'X-Auth-Token';
 
     private _session$: BehaviorSubject<string>;
-    private _storage: Storage;
-    private readonly _sessionHeader: string;
+    private _storage: Storage | NullStorage = new NullStorage();
+    private _sessionHeader: string | null = null;
     private _verified: boolean;
     private _verifying: LoadingEmitter;
     private _initialized: LoadingEmitter;
@@ -29,16 +29,25 @@ export class SessionService implements OnDestroy {
                 private _log: LoggerService,
                 private _http: HttpClient,
                 private idleTimerService: SessionIdleTimerService) {
-        this._storage = this.resolveStorage(this._config.get().providers.auth['sessionStore']);
-        this._sessionHeader = this._config.get().providers.auth.sessionBearer ?
-            this._config.get().providers.auth.sessionBearer : SessionService.SESSION_BEARER_HEADER_DEFAULT;
+
         this._session$ = new BehaviorSubject<string>(null);
         this._verified = false;
-        this.idleTimerService.stopTimer()
+        this.idleTimerService.stopTimer();
         this._verifying = new LoadingEmitter();
         this._initialized = new LoadingEmitter(false);
         setTimeout(() => {
-            this.load();
+            this._config.loaded$
+                .pipe(
+                    filter(loaded => loaded),
+                    take(1)
+                )
+                .subscribe(() => {
+                    this._storage = this.resolveStorage(this._config.get().providers.auth['sessionStore']);
+                    this._sessionHeader = this._config.get().providers.auth.sessionBearer ?
+                        this._config.get().providers.auth.sessionBearer : SessionService.SESSION_BEARER_HEADER_DEFAULT;
+                    this.ensureConfigInitialized();
+                    this.load();
+                });
         });
     }
 
@@ -62,7 +71,8 @@ export class SessionService implements OnDestroy {
     }
 
     get sessionHeader(): string {
-        return this._sessionHeader;
+        this.ensureConfigInitialized();
+        return this._sessionHeader!;
     }
 
     get verified(): boolean {
@@ -87,19 +97,21 @@ export class SessionService implements OnDestroy {
 
     public setVerifiedToken(sessionToken: string) {
         this._log.warn('Session token without explicit verification was set');
-        this.idleTimerService.resetTimer()
+        this.idleTimerService.resetTimer();
         this._verified = true;
         this.sessionToken = sessionToken;
     }
 
     public clear(): void {
-        this.idleTimerService.stopTimer()
+        this.idleTimerService.stopTimer();
         this._verified = false;
         this.sessionToken = '';
         this._storage.removeItem(SessionService.SESSION_TOKEN_STORAGE_KEY);
     }
 
     public verify(token?: string): Observable<boolean> {
+        this.ensureConfigInitialized();
+
         this._verifying.on();
         token = !!token ? token : this.sessionToken;
 
@@ -115,7 +127,7 @@ export class SessionService implements OnDestroy {
                 'Login URL is not defined in the config [nae.providers.auth.endpoints.login].'));
         } else {
             return this._http.get<MessageResource>(url, {
-                headers: new HttpHeaders().set(this._sessionHeader, token),
+                headers: new HttpHeaders().set(this.sessionHeader, token),
                 observe: 'response'
             }).pipe(
                 catchError(error => {
@@ -124,14 +136,14 @@ export class SessionService implements OnDestroy {
                         this.clear();
                     }
                     this._verifying.off();
-                    this.idleTimerService.stopTimer()
+                    this.idleTimerService.stopTimer();
                     this._initialized.on();
                     return throwError(error);
                 }),
                 map(response => {
                     this._log.debug(response.body.success);
                     this._verified = true;
-                    this.idleTimerService.resetTimer()
+                    this.idleTimerService.resetTimer();
                     this._initialized.on();
                     this.sessionToken = token;
                     return true;
@@ -142,9 +154,11 @@ export class SessionService implements OnDestroy {
     }
 
     protected load(): string {
+        this.ensureConfigInitialized();
+
         let token = this._storage.getItem(SessionService.SESSION_TOKEN_STORAGE_KEY);
         this._verified = false;
-        this.idleTimerService.stopTimer()
+        this.idleTimerService.stopTimer();
         if (token) {
             token = this.resolveToken(token);
             this.sessionToken = token;
@@ -155,6 +169,18 @@ export class SessionService implements OnDestroy {
             this._initialized.on();
         }
         return '';
+    }
+
+    private ensureConfigInitialized(): void {
+        if (this._sessionHeader && !(this._storage instanceof NullStorage)) {
+            return;
+        }
+        const cfg = this._config.get();
+        const sessionStore = cfg.providers.auth['sessionStore'];
+        this._storage = this.resolveStorage(sessionStore);
+        this._sessionHeader = cfg.providers.auth.sessionBearer
+            ? cfg.providers.auth.sessionBearer
+            : SessionService.SESSION_BEARER_HEADER_DEFAULT;
     }
 
     private resolveToken(raw: string): string {

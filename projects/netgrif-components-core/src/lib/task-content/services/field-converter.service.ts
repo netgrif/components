@@ -23,15 +23,15 @@ import {FilterField} from '../../data-fields/filter-field/models/filter-field';
 import {I18nField} from '../../data-fields/i18n-field/models/i18n-field';
 import {UserListField} from '../../data-fields/user-list-field/models/user-list-field';
 import {UserListValue} from '../../data-fields/user-list-field/models/user-list-value';
-import {decodeBase64, encodeBase64} from "../../utility/base64";
+import {decodeBase64, encodeBase64} from '../../utility/base64';
 import {CaseRefField} from '../../data-fields/case-ref-field/model/case-ref-field';
 import {StringCollectionField} from '../../data-fields/string-collection-field/models/string-collection-field';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class FieldConverterService {
-    private textFieldNames = [ 'richtextarea', 'htmltextarea', 'editor', 'htmlEditor' ]
+    private textFieldNames = ['richtextarea', 'htmltextarea', 'editor', 'htmlEditor'];
 
     constructor() {
     }
@@ -41,13 +41,14 @@ export class FieldConverterService {
             case FieldTypeResource.BOOLEAN:
                 return new BooleanField(item.stringId, item.name, item.value as boolean, item.behavior,
                     item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
-            case FieldTypeResource.TEXT:
-                if (this.textFieldNames.includes(item.component?.name)) {
+            case FieldTypeResource.TEXT: {
+                if (this.textFieldNames?.includes(item.component?.name)) {
                     return new TextAreaField(item.stringId, item.name, this.resolveTextValue(item, item.value), item.behavior,
                         item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
                 }
                 return new TextField(item.stringId, item.name, this.resolveTextValue(item, item.value), item.behavior, item.placeholder,
                     item.description, item.layout, item.validations, item.component, item.parentTaskId);
+            }
             case FieldTypeResource.NUMBER:
                 return new NumberField(item.stringId, item.name, item.value as number, item.behavior, item.validations, item.placeholder,
                     item.description, item.layout, item.formatFilter, this.resolveNumberComponent(item), item.parentTaskId);
@@ -62,45 +63,49 @@ export class FieldConverterService {
                 return new MultichoiceField(item.stringId, item.name, item.value, this.resolveMultichoiceOptions(item),
                     item.behavior, item.placeholder, item.description, item.layout,
                     item.type, item.validations, item.component, item.parentTaskId);
-            case FieldTypeResource.DATE:
+            case FieldTypeResource.DATE: {
                 let date;
                 if (item.value) {
                     date = moment(new Date(item.value[0], item.value[1] - 1, item.value[2]));
                 }
                 return new DateField(item.stringId, item.name, date, item.behavior, item.placeholder,
                     item.description, item.layout, item.validations, item.component, item.parentTaskId);
-            case FieldTypeResource.DATE_TIME:
+            }
+            case FieldTypeResource.DATE_TIME: {
                 let dateTime;
                 if (item.value) {
                     dateTime = moment(new Date(item.value[0], item.value[1] - 1, item.value[2], item.value[3], item.value[4]));
                 }
                 return new DateTimeField(item.stringId, item.name, dateTime, item.behavior,
                     item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
-            case FieldTypeResource.USER:
+            }
+            case FieldTypeResource.ACTOR: {
                 let user;
                 if (item.value) {
-                    user = new UserValue(item.value.id, item.value.name, item.value.surname, item.value.email);
+                    user = new UserValue(item.value.id, item.value.realmId, item.value.firstName, item.value.lastName, item.value.fullName, item.value.username);
                 }
                 return new UserField(item.stringId, item.name, item.behavior, user,
                     item.roles, item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
-            case FieldTypeResource.USER_LIST:
+            }
+            case FieldTypeResource.ACTOR_LIST: {
                 let userListValue = new UserListValue(new Map<string, UserValue>());
                 if (item.value) {
-                    item.value.userValues.forEach(u => userListValue.addUserValue(new UserValue(u.id, u.name, u.surname, u.email)));
+                    item.value.actorValues.forEach(u => userListValue.addUserValue(new UserValue(u.id, u.realmId, u.firstName, u.lastName, u.fullName, u.username)));
                 }
                 return new UserListField(item.stringId, item.name, item.behavior, userListValue,
                     item.roles, item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
+            }
             case FieldTypeResource.BUTTON:
                 return new ButtonField(item.stringId, item.name, item.behavior, item.value as number,
                     item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.FILE:
                 return new FileField(item.stringId, item.name, item.behavior, item.value ? item.value : {},
                     item.placeholder, item.description, item.layout, this.resolveByteSize(item.component?.properties?.maxSize),
-                    this.resolveAllowedTypes(item.component?.properties?.allowTypes?.split(",")), item.validations, item.component, item.parentTaskId);
+                    this.resolveAllowedTypes(item.component?.properties?.allowTypes?.split(',')), item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.FILE_LIST:
                 return new FileListField(item.stringId, item.name, item.behavior, item.value ? item.value : {},
                     item.placeholder, item.description, item.layout, item.validations, this.resolveByteSize(item.component?.properties?.maxSize),
-                    this.resolveAllowedTypes(item.component?.properties?.allowTypes?.split(",")), item.component,
+                    this.resolveAllowedTypes(item.component?.properties?.allowTypes?.split(',')), item.component,
                     item.parentTaskId);
             case FieldTypeResource.TASK_REF:
                 return new TaskRefField(item.stringId, item.name, item.value ? item.value : [], item.behavior,
@@ -138,9 +143,9 @@ export class FieldConverterService {
         } else if (item instanceof FileListField) {
             return FieldTypeResource.FILE_LIST;
         } else if (item instanceof UserField) {
-            return FieldTypeResource.USER;
+            return FieldTypeResource.ACTOR;
         } else if (item instanceof UserListField) {
-            return FieldTypeResource.USER_LIST;
+            return FieldTypeResource.ACTOR_LIST;
         } else if (item instanceof TaskRefField) {
             return FieldTypeResource.TASK_REF;
         } else if (item instanceof EnumerationField || item instanceof MultichoiceField) {
@@ -174,10 +179,10 @@ export class FieldConverterService {
                 return value.format('YYYY-MM-DD');
             }
         }
-        if (this.resolveType(field) === FieldTypeResource.USER) {
+        if (this.resolveType(field) === FieldTypeResource.ACTOR) {
             return value.id;
         }
-        if (this.resolveType(field) === FieldTypeResource.USER_LIST) {
+        if (this.resolveType(field) === FieldTypeResource.ACTOR_LIST) {
             return [...value.userValues.keys()];
         }
         if (this.resolveType(field) === FieldTypeResource.DATE_TIME) {
@@ -193,7 +198,7 @@ export class FieldConverterService {
         if (numberField.component !== undefined) {
             numberComponent = {
                 name: numberField.component.name,
-                properties: numberField.component.properties
+                properties: numberField.component.properties,
             };
         }
         return numberComponent;
@@ -287,8 +292,8 @@ export class FieldConverterService {
         if (this.resolveType(field) === FieldTypeResource.DATE) {
             return moment(new Date(value[0], value[1] - 1, value[2]));
         }
-        if (this.resolveType(field) === FieldTypeResource.USER) {
-            return new UserValue(value.id, value.name, value.surname, value.email);
+        if (this.resolveType(field) === FieldTypeResource.ACTOR) {
+            return new UserValue(value.id, value.realmId, value.firstName, value.lastName, value.fullName, value.username);
         }
         if (this.resolveType(field) === FieldTypeResource.DATE_TIME) {
             return moment(new Date(value[0], value[1] - 1, value[2], value[3], value[4]));
@@ -304,8 +309,9 @@ export class FieldConverterService {
             });
             return array;
         }
-        if (this.resolveType(field) === FieldTypeResource.USER_LIST && !!value) {
-            return new UserListValue(new Map(value.userValues.map(v => [v.id, v])));
+        if (this.resolveType(field) === FieldTypeResource.ACTOR_LIST && !!value) {
+            const userValues = !!value.actorValues ? value.actorValues : (!!value.userValues ? value.userValues : []);
+            return new UserListValue(new Map(userValues.map(v => [v.id, v])));
         }
         return value;
     }
@@ -318,7 +324,7 @@ export class FieldConverterService {
     }
 
     protected resolveAllowedTypes(allowTypes: string[]) {
-        return allowTypes?.length > 0 ? (allowTypes.length > 1 ? allowTypes as FileUploadMIMEType[] : allowTypes[0]) : null
+        return allowTypes?.length > 0 ? (allowTypes.length > 1 ? allowTypes as FileUploadMIMEType[] : allowTypes[0]) : null;
     }
 
     protected resolveByteSize(bytesSize) {

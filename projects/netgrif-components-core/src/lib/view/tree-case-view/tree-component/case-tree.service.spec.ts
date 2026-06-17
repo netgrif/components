@@ -91,7 +91,7 @@ describe('CaseTreeService', () => {
             }
         });
 
-        treeService.rootFilter = SimpleFilter.fromCaseQuery({stringId: 'root'});
+        treeService.rootFilter = SimpleFilter.fromCaseQuery({id: 'root'});
     });
 
     it('should initialize with root node hidden', (done) => {
@@ -108,7 +108,7 @@ describe('CaseTreeService', () => {
             }
         });
 
-        treeService.rootFilter = SimpleFilter.fromCaseQuery({stringId: 'root'});
+        treeService.rootFilter = SimpleFilter.fromCaseQuery({id: 'root'});
     });
 
     it('should initialize lazy-loaded tree with root node shown', (done) => {
@@ -137,7 +137,7 @@ describe('CaseTreeService', () => {
             }
         });
 
-        treeService.rootFilter = SimpleFilter.fromCaseQuery({stringId: 'root'});
+        treeService.rootFilter = SimpleFilter.fromCaseQuery({id: 'root'});
     });
 
     it('should initialize lazy-loaded tree with root node hidden', (done) => {
@@ -168,7 +168,7 @@ describe('CaseTreeService', () => {
             }
         });
 
-        treeService.rootFilter = SimpleFilter.fromCaseQuery({stringId: 'root'});
+        treeService.rootFilter = SimpleFilter.fromCaseQuery({id: 'root'});
     });
 
     it('should initialize eager-loaded tree with root node shown', (done) => {
@@ -210,7 +210,7 @@ describe('CaseTreeService', () => {
         });
 
         treeService.isEagerLoaded = true;
-        treeService.rootFilter = SimpleFilter.fromCaseQuery({stringId: 'root'});
+        treeService.rootFilter = SimpleFilter.fromCaseQuery({id: 'root'});
     });
 
     it('should initialize eager-loaded tree with root node hidden', (done) => {
@@ -250,7 +250,7 @@ describe('CaseTreeService', () => {
         });
 
         treeService.isEagerLoaded = true;
-        treeService.rootFilter = SimpleFilter.fromCaseQuery({stringId: 'root'});
+        treeService.rootFilter = SimpleFilter.fromCaseQuery({id: 'root'});
     });
 
     it('should add root child with root node shown', (done) => {
@@ -281,7 +281,7 @@ describe('CaseTreeService', () => {
             }
         });
 
-        treeService.rootFilter = SimpleFilter.fromCaseQuery({stringId: 'root'});
+        treeService.rootFilter = SimpleFilter.fromCaseQuery({id: 'root'});
     });
 
     it('should add root child with root node hidden', (done) => {
@@ -307,7 +307,7 @@ describe('CaseTreeService', () => {
             }
         });
 
-        treeService.rootFilter = SimpleFilter.fromCaseQuery({stringId: 'root'});
+        treeService.rootFilter = SimpleFilter.fromCaseQuery({id: 'root'});
     });
 
     // NAE-1185
@@ -346,7 +346,7 @@ describe('CaseTreeService', () => {
         });
 
         treeService.isEagerLoaded = true;
-        treeService.rootFilter = SimpleFilter.fromCaseQuery({stringId: 'root'});
+        treeService.rootFilter = SimpleFilter.fromCaseQuery({id: 'root'});
     });
 
     // NAE-1185 similar to the reported bug but in combination with changed fields response adding multiple sibling branches
@@ -395,7 +395,7 @@ describe('CaseTreeService', () => {
         });
 
         treeService.isEagerLoaded = true;
-        treeService.rootFilter = SimpleFilter.fromCaseQuery({stringId: 'root'});
+        treeService.rootFilter = SimpleFilter.fromCaseQuery({id: 'root'});
     });
 });
 
@@ -452,11 +452,11 @@ class TreeTestCaseResourceService {
     public searchCases(filter: Filter, params?: Params): Observable<Page<Case>> {
         if (filter.type === FilterType.CASE
             && !Array.isArray(filter.getRequestBody())
-            && (filter.getRequestBody() as CaseSearchRequestBody).stringId
-            && !Array.isArray((filter.getRequestBody() as CaseSearchRequestBody).stringId)) {
+            && (filter.getRequestBody() as CaseSearchRequestBody).id
+            && !Array.isArray((filter.getRequestBody() as CaseSearchRequestBody).id)) {
             const content: Array<Case> = [];
-            if (this.mockCases.has((filter.getRequestBody() as CaseSearchRequestBody).stringId as string)) {
-                content.push(this.mockCases.get((filter.getRequestBody() as CaseSearchRequestBody).stringId as string));
+            if (this.mockCases.has((filter.getRequestBody() as CaseSearchRequestBody).id as string)) {
+                content.push(this.mockCases.get((filter.getRequestBody() as CaseSearchRequestBody).id as string));
             }
             return of(createMockPage(content));
         } else {

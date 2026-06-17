@@ -29,7 +29,7 @@ import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.servi
 import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
 import {ActivatedRoute} from '@angular/router';
 import { AbstractSingleTaskComponent } from './abstract-single-task.component';
-import { TaskPanelData } from '../task-panel-list/task-panel-data/task-panel-data';
+import { TaskPanelData } from '../task-panel-data/task-panel-data';
 
 
 describe('AbstractSingleTaskComponent', () => {

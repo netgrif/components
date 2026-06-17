@@ -34,7 +34,7 @@ describe('AbstractCaseView', () => {
         MaterialModule,
         NoopAnimationsModule,
         HttpClientTestingModule,
-        TranslateLibModule
+        TranslateLibModule,
     ];
 
     const providers = [
@@ -47,8 +47,8 @@ describe('AbstractCaseView', () => {
         {
             provide: AllowedNetsService,
             useFactory: TestNoAllowedNetsFactory,
-            deps: [AllowedNetsServiceFactory]
-        }
+            deps: [AllowedNetsServiceFactory],
+        },
     ];
 
     const createComponent = () => {
@@ -72,14 +72,14 @@ describe('AbstractCaseView', () => {
                     ...providers,
                     {
                         provide: ProcessService,
-                        useClass: MockProcessService
+                        useClass: MockProcessService,
                     },
                     {
                         provide: UserService,
-                        useClass: CustomMockUserService
+                        useClass: CustomMockUserService,
                     },
                 ],
-                declarations: [TestCaseViewComponent]
+                declarations: [TestCaseViewComponent],
             }).compileComponents();
         }));
 
@@ -112,7 +112,7 @@ describe('AbstractCaseView', () => {
                     ...providers,
                     {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 ],
-                declarations: [TestCaseViewComponent]
+                declarations: [TestCaseViewComponent],
             }).compileComponents();
         }));
 
@@ -136,7 +136,7 @@ describe('AbstractCaseView', () => {
 
 @Component({
     selector: 'ncc-test-case-view',
-    template: ''
+    template: '',
 })
 class TestCaseViewComponent extends AbstractCaseViewComponent {
     constructor(caseViewService: CaseViewService) {
@@ -157,12 +157,12 @@ class MockProcessService {
             'title',
             [{
                 stringId: 'id',
-                name: 'id'
+                name: 'id',
             }], [], [], {
                 id: {
-                    create: true
-                }
-            }
+                    create: true,
+                },
+            },
         )]);
     }
 }
@@ -171,7 +171,7 @@ class MockProcessService {
 class CustomMockUserService extends MockUserService {
     constructor() {
         super();
-        this._user = new User('123', 'test@netgrif.com', 'Test', 'User', ['ROLE_USER'], [{
+        this._user = new User('123', 'test@netgrif.com', 'test@netgrif.com', 'realm', 'Test', 'User', ['ROLE_USER'], [{
             stringId: 'id',
             name: 'id',
             description: '',

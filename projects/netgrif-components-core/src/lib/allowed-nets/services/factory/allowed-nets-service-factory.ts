@@ -16,7 +16,9 @@ import {DataGroup} from '../../../resources/public-api';
 import {getFieldFromDataGroups} from '../../../utility/get-field';
 import {FilterField} from '../../../data-fields/filter-field/models/filter-field';
 import {BaseAllowedNetsService} from '../base-allowed-nets.service';
-import {MultichoiceField} from "../../../data-fields/multichoice-field/models/multichoice-field";
+import {MultichoiceField} from '../../../data-fields/multichoice-field/models/multichoice-field';
+import {HttpParams} from '@angular/common/http';
+import {PaginationParams} from '../../../utility/pagination/pagination-params';
 
 function addAllowedNets(allowedNets, existingAllowedNets) {
     if (!!allowedNets && allowedNets.length > 0) {
@@ -40,7 +42,10 @@ export function tabbedAllowedNetsServiceFactory(factory: AllowedNetsServiceFacto
  */
 export function navigationItemTaskAllowedNetsServiceFactory(factory: AllowedNetsServiceFactory,
                                                             baseAllowedNets: BaseAllowedNetsService,
-                                                            navigationItemTaskData: Array<DataGroup>): AllowedNetsService {
+                                                            navigationItemTaskData?: Array<DataGroup>): AllowedNetsService {
+    if (!navigationItemTaskData) {
+        return factory.createWithAllNets();
+    }
     const filterField = getFieldFromDataGroups(navigationItemTaskData, UserFilterConstants.FILTER_FIELD_ID) as FilterField;
     const allowedNetsField = getFieldFromDataGroups(navigationItemTaskData, UserFilterConstants.ALLOWED_NETS_FIELD_ID) as MultichoiceField;
 
@@ -83,8 +88,10 @@ export class AllowedNetsServiceFactory {
      * @returns an instance of {@link AllowedNetsService} with all nets set as the `allowedNets`
      */
     public createWithAllNets(): AllowedNetsService {
+        let httpParams = new HttpParams()
+            .set(PaginationParams.PAGE_SIZE, 10000)
         return new AllowedNetsService(
-            this._petriNetResource.getAll().pipe(
+            this._petriNetResource.getAll(httpParams).pipe(
                 switchMap(nets => {
                     if (nets && Array.isArray(nets)) {
                         return of(nets.map(n => n.identifier));

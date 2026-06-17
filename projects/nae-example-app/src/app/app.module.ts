@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {Injector, NgModule} from '@angular/core';
+import {APP_INITIALIZER, Injector, NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {
@@ -19,7 +19,8 @@ import {
     ViewService,
     ProfileModule,
     Dashboard,
-    FrontActionModule, NAE_ASYNC_RENDERING_CONFIGURATION
+    FrontActionModule, NAE_ASYNC_RENDERING_CONFIGURATION,
+    loadConfiguration
 } from '@netgrif/components-core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
@@ -129,6 +130,11 @@ import {
 } from './doc/single-tabbed-view/single-tabbed-task-view/single-tabbed-task-view.component';
 import {ImpersonationDemoComponent} from './doc/impersonation-demo/impersonation-demo.component';
 import { ChangePasswordComponent } from './doc/forms/change-password/change-password.component';
+import { NavigationDashboardExampleComponent } from './doc/navigation-dashboard-example/navigation-dashboard-example.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatListModule } from '@angular/material/list';
+import { TabbedTicketViewComponent } from './doc/tabbed-ticket-view/tabbed-ticket-view.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -189,7 +195,9 @@ export function HttpLoaderFactory(http: HttpClient) {
         SingleTabbedCaseViewComponent,
         SingleTabbedTaskViewComponent,
         BreadcrumbsExampleComponent,
-        ChangePasswordComponent
+        ChangePasswordComponent,
+        NavigationDashboardExampleComponent,
+        TabbedTicketViewComponent
     ],
     imports: [
         BrowserModule,
@@ -242,12 +250,23 @@ export function HttpLoaderFactory(http: HttpClient) {
         RedirectComponentModule,
         FilterFieldContentModule,
         DialogComponentsModule,
-        FrontActionModule
+        FrontActionModule,
+        LayoutModule,
+        MatToolbarModule,
+        MatListModule
     ],
-    providers: [{
-        provide: ConfigurationService,
-        useClass: NaeExampleAppConfigurationService
-    },
+    providers: [
+        ResourceProvider,
+        {
+            provide: ConfigurationService,
+            useClass: NaeExampleAppConfigurationService
+        },
+        {
+            provide: APP_INITIALIZER,
+            useFactory: loadConfiguration,
+            deps: [ConfigurationService],
+            multi: true
+        },
         {provide: NAE_SNACKBAR_VERTICAL_POSITION, useValue: SnackBarVerticalPosition.TOP},
         {provide: NAE_SNACKBAR_HORIZONTAL_POSITION, useValue: SnackBarHorizontalPosition.LEFT},
         {provide: NAE_ASYNC_RENDERING_CONFIGURATION, useValue: {
@@ -257,7 +276,6 @@ export function HttpLoaderFactory(http: HttpClient) {
                 enableAsyncRenderingForNewFields: true,
                 enableAsyncRenderingOnTaskExpand: true
             }},
-        ResourceProvider,
         TranslateService,
         TranslatePipe,
         TranslateStore,

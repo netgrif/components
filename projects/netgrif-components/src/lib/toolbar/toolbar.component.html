@@ -2,55 +2,85 @@
     <mat-toolbar-row fxLayout="row">
         <div class="main-toolbar-logo" fxFlex fxLayout="row">
             <a href="/">
-                <img [src]="logoSrc" [alt]="logoAlt">
+                <img [src]="toolbarConfig.toolbarLogo" [alt]="getToolbarTitle()">
             </a>
         </div>
         <div fxFlex fxHide.gt-xs="false" fxHide.lt-md="true" fxLayout="row" fxLayoutAlign="center">
-            {{appName}}
+            {{getToolbarTitle()}}
         </div>
-        <div class="main-toolbar-menu" fxFlex fxLayout="row" fxLayoutAlign="end">
-            <button mat-button [matMenuTriggerFor]="mainMenu" class="main-toolbar-menu-button" fxLayout="row" fxLayoutAlign="center center">
-                <span class="main-toolbar-logged-user" fxHide.xs="true">{{loggedUser}}</span>
-                <mat-icon class="main-toolbar-icon" aria-hidden="false" aria-label="Example home icon">account_circle
-                </mat-icon>
-                <mat-menu #mainMenu="matMenu" class="main-toolbar-opened-menu">
-                    <button mat-menu-item [matMenuTriggerFor]="languages">
-                        <mat-icon class="main-toolbar-menu-icon" aria-hidden="false" aria-label="Example home icon">
-                            language
-                        </mat-icon>
-                        {{ 'toolbar.menu.lang' | translate }}
+
+        <ng-template [ngIf]="toolbarConfig.simpleToolbar">
+            <div class="main-toolbar-menu" fxFlex fxLayout="row" fxLayoutAlign="end center">
+                <ng-template [ngIf]="!isImpersonating()">
+                    <span class="main-toolbar-logged-user" fxHide.xs="true">{{loggedUser.fullName}}</span>
+                </ng-template>
+                <ng-template [ngIf]="isImpersonating()">
+                    <span class="main-toolbar-logged-user" fxHide.xs="true">{{loggedUser.fullName}}</span>
+                    <span
+                        class="info-text">({{ 'side-menu.impersonation.impersonating' | translate }}</span> {{ loggedUser.getSelfOrImpersonated().fullName }}
+                    <span class="info-text">)</span>
+                </ng-template>
+                <div fxLayoutAlign="end" *ngIf="toolbarConfig.logoutEnabled">
+                    <button class="menu-item-focus-overlay" mat-button (click)="logout()">
+                        <mat-icon>exit_to_app</mat-icon>
+                        <span>{{ 'toolbar.menu.logout' | translate }}</span>
                     </button>
-                    <button mat-menu-item>
-                        <mat-icon class="main-toolbar-menu-icon" aria-hidden="false" aria-label="Example home icon">
-                            account_circle
-                        </mat-icon>
-                        {{ 'toolbar.menu.profile' | translate }}
-                    </button>
-                    <button mat-menu-item>
-                        <mat-icon class="main-toolbar-menu-icon" aria-hidden="false" aria-label="Example home icon">
-                            exit_to_app
-                        </mat-icon>
-                        {{ 'toolbar.menu.logout' | translate }}
-                    </button>
-                </mat-menu>
-                <mat-menu #languages="matMenu">
-                    <button mat-menu-item (click)="setLang('en')">{{ 'toolbar.menu.en' | translate }}
-                        <mat-icon *ngIf="activeLang('en')" class="main-toolbar-menu-icon"
-                                  aria-hidden="false" aria-label="Example home icon">keyboard_arrow_left
-                        </mat-icon>
-                    </button>
-                    <button mat-menu-item (click)="setLang('sk')">{{ 'toolbar.menu.sk' | translate }}
-                        <mat-icon *ngIf="activeLang('sk')" class="main-toolbar-menu-icon"
-                                  aria-hidden="false" aria-label="Example home icon">keyboard_arrow_left
-                        </mat-icon>
-                    </button>
-                    <button mat-menu-item (click)="setLang('de')">{{ 'toolbar.menu.de' | translate }}
-                        <mat-icon *ngIf="activeLang('de')" class="main-toolbar-menu-icon"
-                                  aria-hidden="false" aria-label="Example home icon">keyboard_arrow_left
-                        </mat-icon>
-                    </button>
-                </mat-menu>
-            </button>
-        </div>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template [ngIf]="!toolbarConfig.simpleToolbar">
+            <div class="main-toolbar-menu" fxFlex fxLayout="row" fxLayoutAlign="end">
+                <button mat-button [matMenuTriggerFor]="mainMenu" class="main-toolbar-menu-button" fxLayout="row" fxLayoutAlign="center center">
+                    <ng-template [ngIf]="!isImpersonating()">
+                        <span class="main-toolbar-logged-user" fxHide.xs="true">{{loggedUser.fullName}}</span>
+                    </ng-template>
+                    <ng-template [ngIf]="isImpersonating()">
+                        <span class="main-toolbar-logged-user" fxHide.xs="true">{{loggedUser.fullName}}</span>
+                        <span
+                            class="info-text">({{ 'side-menu.impersonation.impersonating' | translate }}</span> {{ loggedUser.getSelfOrImpersonated().fullName }}
+                        <span class="info-text">)</span>
+                    </ng-template>
+                    <mat-icon class="main-toolbar-icon" aria-hidden="false" aria-label="Example home icon">account_circle
+                    </mat-icon>
+                    <mat-menu #mainMenu="matMenu" class="main-toolbar-opened-menu">
+                        <button mat-menu-item [matMenuTriggerFor]="languages" *ngIf="toolbarConfig.languageEnabled">
+                            <mat-icon class="main-toolbar-menu-icon" aria-hidden="false" aria-label="Application language select">
+                                language
+                            </mat-icon>
+                            {{ 'toolbar.menu.lang' | translate }}
+                        </button>
+                        <button mat-menu-item (click)="profile()" *ngIf="toolbarConfig.profileEnabled">
+                            <mat-icon class="main-toolbar-menu-icon" aria-hidden="false" aria-label="Go to profile">
+                                account_circle
+                            </mat-icon>
+                            {{ 'toolbar.menu.profile' | translate }}
+                        </button>
+                        <button mat-menu-item (click)="logout()" *ngIf="toolbarConfig.logoutEnabled">
+                            <mat-icon class="main-toolbar-menu-icon" aria-hidden="false" aria-label="Logout">
+                                exit_to_app
+                            </mat-icon>
+                            {{ 'toolbar.menu.logout' | translate }}
+                        </button>
+                    </mat-menu>
+                    <mat-menu #languages="matMenu">
+                        <button mat-menu-item (click)="setLang('en')">{{ 'toolbar.menu.en' | translate }}
+                            <mat-icon *ngIf="activeLang('en')" class="main-toolbar-menu-icon"
+                                      aria-hidden="false" aria-label="English">keyboard_arrow_left
+                            </mat-icon>
+                        </button>
+                        <button mat-menu-item (click)="setLang('sk')">{{ 'toolbar.menu.sk' | translate }}
+                            <mat-icon *ngIf="activeLang('sk')" class="main-toolbar-menu-icon"
+                                      aria-hidden="false" aria-label="Slovak">keyboard_arrow_left
+                            </mat-icon>
+                        </button>
+                        <button mat-menu-item (click)="setLang('de')">{{ 'toolbar.menu.de' | translate }}
+                            <mat-icon *ngIf="activeLang('de')" class="main-toolbar-menu-icon"
+                                      aria-hidden="false" aria-label="Deutsch">keyboard_arrow_left
+                            </mat-icon>
+                        </button>
+                    </mat-menu>
+                </button>
+            </div>
+        </ng-template>
     </mat-toolbar-row>
 </mat-toolbar>

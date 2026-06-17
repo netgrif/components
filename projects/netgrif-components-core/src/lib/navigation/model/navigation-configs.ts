@@ -11,11 +11,12 @@ export interface ConfigDoubleMenu {
 
 export interface NavigationItem extends View {
     id: string;
+    showCounter?: boolean;
     resource?: Case;
 }
 
 export const MENU_IDENTIFIERS = [
-    'preference_item',
+    'menu_item',
 ];
 export const SETTINGS_TRANSITION_ID = 'item_settings';
 

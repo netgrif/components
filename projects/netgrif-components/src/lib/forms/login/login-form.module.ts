@@ -4,11 +4,12 @@ import {FlexLayoutModule} from '@ngbracket/ngx-layout';
 import {ReactiveFormsModule} from '@angular/forms';
 import {LoginFormComponent} from './login-form.component';
 import {MaterialModule, TranslateLibModule} from '@netgrif/components-core';
+import {LoginSsoComponent} from "./login-sso/login-sso.component";
 
 
 @NgModule({
-    declarations: [LoginFormComponent],
-    exports: [LoginFormComponent],
+    declarations: [LoginFormComponent, LoginSsoComponent],
+    exports: [LoginFormComponent, LoginSsoComponent],
     imports: [
         CommonModule,
         MaterialModule,

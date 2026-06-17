@@ -386,6 +386,45 @@
             </tr>
         </tbody>
     </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setValue"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>setValue</b></span>
+                        <a href="#setValue"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>setValue()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="26"
+                            class="link-to-prism">projects/netgrif-components/src/lib/header/header-modes/search-mode/search-mode.component.ts:26</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </section>
 
 </div>
@@ -416,6 +455,10 @@ export class SearchModeComponent extends AbstractSearchModeComponent {
 
     public selectUser(column: number): void {
         this.selectAbstractUser(column, UserAssignDialogComponent);
+    }
+
+    public setValue() {
+        this.approvalFormControl.setValue(true);
     }
 
     public setValue() {

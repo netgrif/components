@@ -155,7 +155,7 @@ xdescribe('AbstractNavigationTreeComponent', () => {
                 }
             }
         });
-        userService.setUser(new User('', '', '', '', [], [], [],[]));
+        userService.setUser(new User('', '', '', '', '', '', [], [], [],[]));
         initializeComponent();
 
         expect(component).toBeTruthy();
@@ -205,7 +205,7 @@ xdescribe('AbstractNavigationTreeComponent', () => {
                 }
             },
         });
-        userService.setUser(new User('user', '', '', '', [], [{
+        userService.setUser(new User('user', '', '', '', '', '', [], [{
             stringId: '',
             name: 'name',
             importId: 'id',
@@ -249,7 +249,7 @@ xdescribe('AbstractNavigationTreeComponent', () => {
                 }
             },
         });
-        userService.setUser(new User('user', '', '', '', ['AUTHORITY'], [],[],[]));
+        userService.setUser(new User('user', '', '', '', '', '', ['AUTHORITY'], [],[],[]));
         initializeComponent();
 
         expect(component).toBeTruthy();
@@ -275,7 +275,7 @@ xdescribe('AbstractNavigationTreeComponent', () => {
                 }
             },
         });
-        userService.setUser(new User('', '', '', '', [], [],[],[]));
+        userService.setUser(new User('', '', '', '', '', '', [], [],[],[]));
         initializeComponent();
 
         expect(component).toBeTruthy();
@@ -327,7 +327,7 @@ xdescribe('AbstractNavigationTreeComponent', () => {
                 }
             }
         });
-        userService.setUser(new User('user', '', '', '', ['AUTHORITY'], [{
+        userService.setUser(new User('user', '', '', '', '', '', ['AUTHORITY'], [{
             stringId: '',
             name: 'name',
             importId: 'id',
@@ -396,8 +396,9 @@ class TestUserService extends UserService {
                 userTransform: UserTransformer,
                 log: LoggerService,
                 session: SessionService,
-                anonymousService: AnonymousService) {
-        super(authService, userResource, userTransform, log, session, anonymousService);
+                anonymousService: AnonymousService,
+                config: ConfigurationService) {
+        super(authService, userResource, userTransform, log, session, anonymousService, config);
     }
 
     public setUser(user: User) {

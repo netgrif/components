@@ -10,15 +10,19 @@ describe('UserTransformer', () => {
         const userTransformer = new UserTransformer();
         expect(userTransformer.transform({
             id: 'string',
+            username: 'string',
+            realmId: 'string',
             email: 'string',
             name: 'string',
+            firstName: 'string',
             surname: 'string',
+            lastName: 'string',
             fullName: 'string string',
             groups: [],
             authorities: [{authority: 'ADMIN'}],
             processRoles: [{stringId: 'string', description: 'desc', name: 'name', importId: 'importId'}],
             nextGroups: [],
-            _links: {}
+            _links: {},
         }).fullName).toEqual('string string');
     });
 

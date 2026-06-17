@@ -3,7 +3,7 @@ import { SideMenuControl } from '../../side-menu/models/side-menu-control';
 import { NAE_SIDE_MENU_CONTROL } from '../../side-menu/side-menu-injection-token';
 import {Component, Inject} from '@angular/core';
 import { TaskViewService } from './service/task-view.service';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MaterialModule } from '../../material/material.module';
 import { TranslateLibModule } from '../../translate/translate-lib.module';
@@ -24,6 +24,7 @@ import { NAE_BASE_FILTER } from '../../search/models/base-filter-injection-token
 import { SimpleFilter } from '../../filter/models/simple-filter';
 import {AsyncPipe} from "@angular/common";
 import {BaseFilter} from "../../search/models/base-filter";
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('AbstractSingleTaskViewComponent', () => {
     let component: TestAbstractSingleTaskViewComponent;
@@ -36,7 +37,7 @@ describe('AbstractSingleTaskViewComponent', () => {
                 TranslateLibModule,
                 HttpClientTestingModule,
                 NoopAnimationsModule,
-                RouterModule.forRoot([])
+                RouterTestingModule.withRoutes([]),
             ],
             providers: [
                 {
@@ -79,8 +80,7 @@ describe('AbstractSingleTaskViewComponent', () => {
 })
 class TestAbstractSingleTaskViewComponent extends AbstractSingleTaskViewComponent {
     constructor(taskViewService: TaskViewService,
-                activatedRoute: ActivatedRoute,
-                @Inject(NAE_BASE_FILTER) baseFilter: BaseFilter){
-        super(taskViewService, activatedRoute, baseFilter);
+                activatedRoute: ActivatedRoute){
+        super(taskViewService, activatedRoute);
     }
 }

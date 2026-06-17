@@ -1,14 +1,15 @@
 
 export interface UriNodeResource {
-    id: string;
-    uriPath: string;
+    id?: string;
+    uriPath?: string;
+    path: string;
     name: string;
     parentId: string;
-    parent: UriNodeResource;
+    parent?: UriNodeResource;
     childrenId: Set<string>;
-    children: Set<UriNodeResource>;
+    children?: Set<UriNodeResource>;
     level: number;
-    contentTypes: Set<UriContentType>
+    contentTypes?: Set<UriContentType>
 }
 
 export enum UriContentType {

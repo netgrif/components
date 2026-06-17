@@ -1,8 +1,6 @@
 import {Injectable, Type} from '@angular/core';
 import {
     DataGroup,
-    extractFilterFromData,
-    FilterType,
     GroupNavigationComponentResolverService,
     LoggerService,
     TaskResourceService,
@@ -10,10 +8,10 @@ import {
     View,
     ViewService,
     extractFieldValueFromData,
-    RoutingBuilderService,
-    GroupNavigationConstants
+    hasView,
+    RoutingBuilderService, PathService
 } from '@netgrif/components-core';
-import {DefaultTabViewComponent} from './default-components/default-tab-view/default-tab-view.component';
+import {DefaultTabViewComponent} from './default-components/tabbed/default-tab-view/default-tab-view.component';
 import {
     DefaultNoFilterProvidedComponent
 } from "./default-components/default-no-filter-provided/default-no-filter-provided.component";
@@ -21,8 +19,8 @@ import {
 @Injectable()
 export class DefaultGroupNavigationComponentResolverService extends GroupNavigationComponentResolverService {
 
-    constructor(taskResourceService: TaskResourceService, log: LoggerService, private _configService: ConfigurationService, private _viewService: ViewService,) {
-        super(taskResourceService, log);
+    constructor(taskResourceService: TaskResourceService, log: LoggerService, protected _configService: ConfigurationService, protected _viewService: ViewService, protected _pathService: PathService) {
+        super(taskResourceService, _pathService, log);
     }
 
     public resolveViewComponent(navItemData: Array<DataGroup>): Type<any> {
@@ -44,7 +42,7 @@ export class DefaultGroupNavigationComponentResolverService extends GroupNavigat
     }
 
     protected resolveComponentClass(view: View, configPath: string): Type<any> | undefined {
-        let result;
+        let result: Type<any>;
         if (!!view.component) {
             result = this._viewService.resolveNameToClass(view.component.class);
         } else if (!!view.layout) {
@@ -64,22 +62,15 @@ export class DefaultGroupNavigationComponentResolverService extends GroupNavigat
     }
 
     protected resolveDefaultComponent(navItemData: Array<DataGroup>): Type<any> {
-        const filterTaskRefValue = extractFieldValueFromData<string[]>(navItemData, GroupNavigationConstants.ITEM_FIELD_ID_FILTER_TASKREF);
-        if (filterTaskRefValue == undefined || filterTaskRefValue.length == 0) {
-            return DefaultNoFilterProvidedComponent
+        if (!hasView(navItemData)) {
+            return DefaultNoFilterProvidedComponent;
         }
 
-        const filter = extractFilterFromData(navItemData);
-        if (filter === undefined) {
-            throw new Error('Provided navigation item task data does not contain a filter field');
-        }
-
-        switch (filter.type) {
-            case FilterType.CASE:
-            case FilterType.TASK:
-                return DefaultTabViewComponent;
-            default:
-                throw new Error(`Cannot resolve navigation component from '${filter.type}' filter type`);
+        const isTabbed: boolean = extractFieldValueFromData(navItemData, 'use_tabbed_view');
+        if (!!isTabbed) {
+            return DefaultTabViewComponent;
+        } else {
+            throw new Error(`Cannot resolve navigation component`);
         }
     }
 }

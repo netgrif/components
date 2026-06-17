@@ -2,6 +2,7 @@ import {SideMenuInjectionData} from '../../../models/side-menu-injection-data';
 import {Observable} from 'rxjs';
 import {PetriNetReference} from '../../../../resources/interface/petri-net-reference';
 import {InjectionToken} from '@angular/core';
+import {I18nFieldValue} from "../../../../data-fields/i18n-field/models/i18n-field-value";
 
 export interface NewCaseInjectionData extends SideMenuInjectionData {
     allowedNets$: Observable<Array<PetriNetReference>>;
@@ -26,7 +27,7 @@ export interface NewCaseCreationConfigurationData {
 
 export interface NewCaseButtonConfiguration {
 
-    createCaseButtonTitle?: string;
+    createCaseButtonTitle?: I18nFieldValue;
 
     createCaseButtonIcon?: string;
 

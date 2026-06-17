@@ -37,10 +37,9 @@ export class NextGroupService implements OnDestroy {
                     return of([]);
                 }
 
-                const params = new HttpParams();
-                params.set(PaginationParams.PAGE_SIZE, `${(user as any).nextGroups.length}`);
+                const params = new HttpParams().set(PaginationParams.PAGE_SIZE, `${(user as any).nextGroups.length}`);
 
-                return this._caseResourceService.searchCases(SimpleFilter.fromCaseQuery({stringId: (user as any).nextGroups}), params)
+                return this._caseResourceService.searchCases(SimpleFilter.fromCaseQuery({id: (user as any).nextGroups}), params)
                     .pipe(
                         map(page => page.content ? page.content : []),
                         map(groups => groups.filter(group => group.author.fullName !== 'application engine'))

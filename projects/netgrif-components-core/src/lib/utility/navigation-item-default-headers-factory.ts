@@ -24,6 +24,7 @@ function navigationItemDefaultHeadersFactory(navigationItemTaskData: DataGroup[]
             return undefined;
         }
     } catch (e) {
+        console.log('Error during resolving default headers', e)
         return undefined;
     }
 }

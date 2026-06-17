@@ -61,7 +61,7 @@ export abstract class AbstractChangePasswordComponent implements HasForm, OnDest
 
     protected createRequestBody(): UserChangePasswordRequest {
         return {
-            login: this.user.user.email,
+            login: this.user.user.username,
             password: encodeBase64(this.rootFormGroup.controls[OLD_PASSWORD].value),
             newPassword: encodeBase64(this.rootFormGroup.controls[PASSWORD].value)
         };

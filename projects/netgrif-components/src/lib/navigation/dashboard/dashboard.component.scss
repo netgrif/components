@@ -1,0 +1,49 @@
+.height-100 {
+    height: 100%;
+    min-height: 935px;
+
+}
+
+.background-dashboard {
+    background: #f2f2f2;
+}
+
+.cards-container {
+    max-width: 1050px;
+}
+
+.dashboard-card {
+    width: 300px;
+    height: 250px;
+    background: #FFFFFF;
+    margin: 16px;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1), 0px 2px 6px 2px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+    gap: 16px;
+    cursor: pointer;
+}
+
+.card-content {
+    text-align: center;
+    margin-bottom: 0 !important;
+}
+
+.card-icon {
+    max-height: 80px;
+    max-width: 80px;
+    height: auto;
+    width: auto;
+    margin-bottom: 20px;
+    font-size: 75px;
+}
+
+.card-main-text {
+    font-weight: 400;
+    font-size: 44px;
+    line-height: 50px;
+    letter-spacing: 1px;
+    text-align: center;
+    margin-bottom: 20px !important;
+    margin-top: 10px !important;
+}

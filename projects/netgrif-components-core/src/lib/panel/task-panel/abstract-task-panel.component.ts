@@ -15,7 +15,7 @@ import {MatExpansionPanel} from '@angular/material/expansion';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {TaskContentService} from '../../task-content/services/task-content.service';
 import {LoggerService} from '../../logger/services/logger.service';
-import {TaskPanelData} from '../task-panel-list/task-panel-data/task-panel-data';
+import {TaskPanelData} from '../task-panel-data/task-panel-data';
 import {Observable, Subscription} from 'rxjs';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {filter, map, take} from 'rxjs/operators';
@@ -52,7 +52,8 @@ import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import { FinishPolicyService } from '../../task/services/finish-policy.service';
 import {NAE_TAB_DATA} from '../../tabs/tab-data-injection-token/tab-data-injection-token';
 import {InjectedTabData} from '../../tabs/interfaces';
-import {AfterAction} from '../../utility/call-chain/after-action';
+import {UnlimitedTaskContentService} from "../../task-content/services/unlimited-task-content.service";
+import {UserComparatorService} from '../../user/services/user-comparator.service';
 
 @Component({
     selector: 'ncc-abstract-legal-notice',
@@ -71,6 +72,7 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
     @Input() public first: boolean;
     @Input() public last: boolean;
     @Input() responsiveBody = true;
+    @Input() preventExpand = false;
     @Input() preventCollapse = false;
     @Input() hidePanelHeader = false;
     @Input() hideActionRow = false;
@@ -143,6 +145,7 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
                           protected _currencyPipe: CurrencyPipe,
                           protected _changedFieldsService: ChangedFieldsService,
                           protected _permissionService: PermissionService,
+                          protected _userComparator: UserComparatorService,
                           @Optional() overflowService: OverflowService,
                           @Optional() @Inject(NAE_TASK_FORCE_OPEN) protected _taskForceOpen: boolean,
                           @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData) {
@@ -154,7 +157,7 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
         });
         this._subTaskData = _changedFieldsService.changedFields$.subscribe((changedFieldsMap: ChangedFieldsMap) => {
             const filteredCaseIds: Array<string> = Object.keys(changedFieldsMap).filter(
-                caseId => Object.keys(this._taskContentService.referencedTaskAndCaseIds).includes(caseId)
+                caseId => Object.keys(this._taskContentService.referencedTaskAndCaseIds)?.includes(caseId)
             );
             const changedFields: Array<ChangedFields> = [];
             filteredCaseIds.forEach(caseId => {
@@ -166,10 +169,12 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
             });
         });
         _taskOperations.open$.subscribe(() => {
-            this.expand();
+            if (!this.preventExpand) {
+                this.expand();
+            }
         });
         _taskOperations.close$.subscribe(() => {
-            if (!this._taskForceOpen) {
+            if (!(this._taskForceOpen || this.preventCollapse)) {
                 this.collapse();
             }
         });
@@ -194,7 +199,12 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
                 filter(bool => bool && this.isExpanded())
             ).subscribe( () => {
                 if (this._canReload) {
-                    this._taskDataService.initializeTaskDataFields(new AfterAction(), true)
+                    this._taskDataService.initializeTaskDataFields(this._callChain.create(() => {
+                        const task = this._taskContentService.task;
+                        const taskShouldBeBlocked = !task?.assignee
+                            || !this._userComparator.compareUsers(task.assignee.id);
+                        this._taskContentService.blockFields(taskShouldBeBlocked);
+                    }), true);
                 } else {
                     this._canReload = true;
                 }
@@ -221,9 +231,11 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
 
     ngAfterViewInit() {
         this.panelRef.opened.subscribe(() => {
-            this._taskContentService.expansionStarted();
-            if (!this._taskState.isLoading()) {
-                this._assignPolicyService.performAssignPolicy(true);
+            if (!this.preventExpand) {
+                this._taskContentService.expansionStarted();
+                if (!this._taskState.isLoading()) {
+                    this._assignPolicyService.performAssignPolicy(true);
+                }
             }
         });
         this.panelRef.closed.subscribe(() => {
@@ -242,7 +254,7 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
             this._taskPanelData.initiallyExpanded = false;
         });
 
-        if (this._taskPanelData.initiallyExpanded || this._taskForceOpen) {
+        if ((this._taskPanelData.initiallyExpanded || this._taskForceOpen) && !this.preventExpand) {
             this.panelRef.expanded = true;
         }
     }
@@ -252,6 +264,17 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
     @Input()
     public set taskPanelData(data: TaskPanelData) {
         this._taskPanelData = data;
+        if (this._taskContentService instanceof UnlimitedTaskContentService && this.panelRef) {
+            this.collapse();
+            this._taskContentService.task = this._taskPanelData.task;
+            if (this._sub) {
+                this._sub.unsubscribe();
+            }
+            this._sub = this._taskPanelData.changedFields.subscribe(chFields => {
+                this._taskContentService.updateFromChangedFields(chFields);
+            });
+            this.expand();
+        }
         this.resolveFeaturedFieldsValues();
     }
 
@@ -323,6 +346,7 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
     }
 
     expand() {
+        if (this.preventExpand) { return; }
         this.panelRef.open();
         this.panelRef.expanded = true;
     }
@@ -406,7 +430,8 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
                 }
                 return {value: 'low', icon: 'south', type: 'meta'};
             case TaskMetaField.USER:
-                return {value: task.user ? task.user.fullName : '', icon: 'account_circle', type: 'meta'};
+                //TODO: refactor after User refactor PR is merged
+                return {value: task.assignee ? task.assignee.fullName : '', icon: 'account_circle', type: 'meta'};
             case TaskMetaField.ASSIGN_DATE:
                 return {
                     value: task.startDate ? toMoment(task.startDate).format(DATE_TIME_FORMAT_STRING) : '',

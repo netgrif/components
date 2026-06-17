@@ -70,7 +70,7 @@ describe('AbstractLoginFormComponent', () => {
     template: ''
 })
 class TestLoginFormComponent extends AbstractLoginFormComponent {
-    constructor(formBuilder: FormBuilder, protected _userService: UserService) {
-        super(formBuilder, _userService);
+    constructor(formBuilder: FormBuilder, protected _userService: UserService, protected _configService: ConfigurationService) {
+        super(formBuilder, _userService, _configService);
     }
 }

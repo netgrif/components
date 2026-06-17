@@ -13,7 +13,9 @@ import {
     defaultCaseSearchCategoriesFactory,
     NAE_BASE_FILTER,
     AllowedNetsServiceFactory,
-    AllowedNetsService, UserFilterConstants, TaskSetDataRequestFields
+    AllowedNetsService,
+    UserFilterConstants,
+    TaskSetDataRequestFields
 } from '@netgrif/components-core';
 import {HeaderComponent} from '@netgrif/components';
 
@@ -57,7 +59,9 @@ export class CaseViewComponent extends AbstractCaseViewComponent implements Afte
             enableCaseTitle: true,
             isCaseTitleRequired: false,
             newCaseButtonConfig: {
-                createCaseButtonTitle: 'test',
+                createCaseButtonTitle: {
+                    defaultValue: 'test'
+                },
                 createCaseButtonIcon: 'home'
             }
         });

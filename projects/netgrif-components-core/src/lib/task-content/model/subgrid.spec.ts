@@ -26,12 +26,12 @@ describe('Subgrid', () => {
 
         expect(titleElement.title).toBe('title');
         expect(titleElement.type).toBe(TaskElementType.DATA_GROUP_TITLE);
-        expect(titleElement.gridAreaId.includes('group')).toBeTrue();
+        expect(titleElement.gridAreaId?.includes('group')).toBeTrue();
 
         const field = createMockField(true, {x: 0, y: 0, rows: 1, cols: 2}, 'field');
         const fieldElement = subgrid.addField(field, FieldTypeResource.BOOLEAN);
 
-        expect(fieldElement.gridAreaId.includes('field')).toBeTrue();
+        expect(fieldElement.gridAreaId?.includes('field')).toBeTrue();
         expect(fieldElement.item).toBe(field);
     });
 
@@ -77,7 +77,7 @@ describe('Subgrid', () => {
             subgrid.addRow(['', '', '']);
         } catch (e) {
             thrown = true;
-            expect(e.message.includes(JSON.stringify(['', '', '']))).toBeTrue();
+            expect(e.message?.includes(JSON.stringify(['', '', '']))).toBeTrue();
         }
         expect(thrown).toBeTrue();
 

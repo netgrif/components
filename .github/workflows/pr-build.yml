@@ -5,10 +5,10 @@ on:
 jobs:
     matrix-test:
         name: Matrix Test
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-24.04
         strategy:
             matrix:
-                node-version: [ 18, 20 ]
+                node-version: [ 20, 22, 24 ]
         steps:
             -   uses: actions/checkout@v4
                 with:
@@ -17,7 +17,8 @@ jobs:
                 name: Full Test on Node.js version ${{ matrix.node-version }}
                 with:
                     node-version: ${{ matrix.node-version }}
-            -   run: npm i --legacy-peer-deps
+            -   name: Install dependencies
+                run: npm install --legacy-peer-deps
             -   name: Build & test components-core
                 run: |
                     npm run ncc:build

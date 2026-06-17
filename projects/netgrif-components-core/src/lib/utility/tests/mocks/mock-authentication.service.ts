@@ -20,7 +20,7 @@ export class MockAuthenticationService extends AuthenticationService {
 
 
     login(credentials: Credentials): Observable<User> {
-        return of(new User('id', 'mail', 'name', 'surname', ['ADMIN'], [{stringId: 'id', name: 'id', importId: 'id'}]));
+        return of(new User('id', 'username', 'mail', 'realmId', 'name', 'surname', ['ADMIN'], [{stringId: 'id', name: 'id', importId: 'id'}]));
     }
 
     logout(): Observable<object> {

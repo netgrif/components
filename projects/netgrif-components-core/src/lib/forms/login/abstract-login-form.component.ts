@@ -5,6 +5,8 @@ import {UserService} from '../../user/services/user.service';
 import {User} from '../../user/models/user';
 import {LoadingEmitter} from '../../utility/loading-emitter';
 import {take} from 'rxjs/operators';
+import {ConfigurationService} from "../../configuration/configuration.service";
+import {Sso} from "../../../commons/schema";
 
 @Component({
     selector: 'ncc-abstract-login-field',
@@ -15,6 +17,7 @@ export abstract class AbstractLoginFormComponent implements HasForm, OnDestroy {
     public rootFormGroup: FormGroup;
     public hidePassword = true;
     public loading: LoadingEmitter;
+    protected showSsoButton: boolean;
 
     @Input() public showSignUpButton: boolean;
     @Input() public showForgottenPasswordButton: boolean;
@@ -23,7 +26,7 @@ export abstract class AbstractLoginFormComponent implements HasForm, OnDestroy {
     @Output() public signUp: EventEmitter<void>;
     @Output() public formSubmit: EventEmitter<FormSubmitEvent>;
 
-    protected constructor(formBuilder: FormBuilder, protected _userService: UserService) {
+    protected constructor(formBuilder: FormBuilder, protected _userService: UserService, protected _config: ConfigurationService) {
         this.rootFormGroup = formBuilder.group({
             login: [''],
             password: ['']
@@ -33,6 +36,8 @@ export abstract class AbstractLoginFormComponent implements HasForm, OnDestroy {
         this.signUp = new EventEmitter<void>();
         this.formSubmit = new EventEmitter<FormSubmitEvent>();
         this.loading = new LoadingEmitter();
+        let ssoConfig: Sso = this._config.getConfigurationSubtree(['providers', 'auth', 'sso'])
+        this.showSsoButton = ssoConfig?.enable
     }
 
     ngOnDestroy(): void {

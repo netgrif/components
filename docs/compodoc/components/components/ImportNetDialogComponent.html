@@ -294,7 +294,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(_dialogRef: <a href="../components/ImportNetDialogComponent.html" target="_self">MatDialogRef&lt;ImportNetDialogComponent&gt;</a>, _petriNetResource: PetriNetResourceService, _log: LoggerService, _snackbar: SnackBarService, _uriService: UriService, _translate: TranslateService)</code>
+<code>constructor(_dialogRef: <a href="../components/ImportNetDialogComponent.html" target="_self">MatDialogRef&lt;ImportNetDialogComponent&gt;</a>, _petriNetResource: PetriNetResourceService, _log: LoggerService, _snackbar: SnackBarService, _uriService: PathService, _translate: TranslateService)</code>
                     </td>
                 </tr>
                         <tr>
@@ -318,75 +318,75 @@
                                         <tbody>
                                                 <tr>
                                                         <td>_dialogRef</td>
-                                                  
+
                                                         <td>
                                                                         <code><a href="../components/ImportNetDialogComponent.html" target="_self" >MatDialogRef&lt;ImportNetDialogComponent&gt;</a></code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                 </tr>
                                                 <tr>
                                                         <td>_petriNetResource</td>
-                                                  
+
                                                         <td>
                                                                     <code>PetriNetResourceService</code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                 </tr>
                                                 <tr>
                                                         <td>_log</td>
-                                                  
+
                                                         <td>
                                                                     <code>LoggerService</code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                 </tr>
                                                 <tr>
                                                         <td>_snackbar</td>
-                                                  
+
                                                         <td>
                                                                     <code>SnackBarService</code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                 </tr>
                                                 <tr>
                                                         <td>_uriService</td>
-                                                  
+
                                                         <td>
-                                                                    <code>UriService</code>
+                                                                    <code>PathService</code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                 </tr>
                                                 <tr>
                                                         <td>_translate</td>
-                                                  
+
                                                         <td>
                                                                     <code>TranslateService</code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                 </tr>
                                         </tbody>
                                     </table>
@@ -402,7 +402,7 @@
 
 
     <section data-compodoc="block-methods">
-    
+
     <h3 id="methods">
         Methods
     </h3>
@@ -439,7 +439,7 @@
 
                             <div class="io-description">
                                 <b>Parameters :</b>
-                                
+
                                 <table class="params">
                                     <thead>
                                         <tr>
@@ -469,7 +469,7 @@
 
                         </div>
                             <div class="io-description">
-                                
+
                             </div>
                 </td>
             </tr>
@@ -623,7 +623,7 @@
 
                             <div class="io-description">
                                 <b>Parameters :</b>
-                                
+
                                 <table class="params">
                                     <thead>
                                         <tr>
@@ -653,7 +653,7 @@
 
                         </div>
                             <div class="io-description">
-                                
+
                             </div>
                 </td>
             </tr>
@@ -692,7 +692,7 @@
 
                             <div class="io-description">
                                 <b>Parameters :</b>
-                                
+
                                 <table class="params">
                                     <thead>
                                         <tr>
@@ -722,7 +722,7 @@
 
                         </div>
                             <div class="io-description">
-                                
+
                             </div>
                 </td>
             </tr>
@@ -761,7 +761,7 @@
 
                             <div class="io-description">
                                 <b>Parameters :</b>
-                                
+
                                 <table class="params">
                                     <thead>
                                         <tr>
@@ -791,7 +791,7 @@
 
                         </div>
                             <div class="io-description">
-                                
+
                             </div>
                 </td>
             </tr>
@@ -830,7 +830,7 @@
 
                             <div class="io-description">
                                 <b>Parameters :</b>
-                                
+
                                 <table class="params">
                                     <thead>
                                         <tr>
@@ -860,7 +860,7 @@
 
                         </div>
                             <div class="io-description">
-                                
+
                             </div>
                 </td>
             </tr>
@@ -907,7 +907,7 @@
     </table>
 </section>
     <section data-compodoc="block-properties">
-    
+
     <h3 id="inputs">
         Properties
     </h3>
@@ -1122,7 +1122,7 @@ import {
     FileUploadModel, LoggerService,
     PetriNetEventOutcome,
     PetriNetResourceService, ProgressType, ProviderProgress,
-    SnackBarService, UriService
+    SnackBarService, PathService
 } from &#x27;@netgrif/components-core&#x27;;
 import {TranslateService} from &#x27;@ngx-translate/core&#x27;;
 import {MatDialogRef} from &#x27;@angular/material/dialog&#x27;;
@@ -1158,7 +1158,7 @@ export class ImportNetDialogComponent implements AfterViewInit {
                 protected _petriNetResource: PetriNetResourceService,
                 protected _log: LoggerService,
                 protected _snackbar: SnackBarService,
-                protected _uriService: UriService,
+                protected _uriService: PathService,
                 protected _translate: TranslateService) {
         this._dialogRef.backdropClick().subscribe(event &#x3D;&gt; {
             this.close();
@@ -1411,7 +1411,7 @@ export class ImportNetDialogComponent implements AfterViewInit {
         </div>
     </div>
 
-    
+
 </div>
 
 <script src="../js/libs/vis.min.js"></script>
