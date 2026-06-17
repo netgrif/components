@@ -7,6 +7,7 @@ import {ModelService} from '../../modeler/services/model/model.service';
 
 export interface DialogRefactorData {
     originalId: string;
+    modelService: ModelService;
 }
 
 @Component({
@@ -18,12 +19,13 @@ export class DialogRefactorComponent {
 
     formControl: FormControl;
     result: string;
+    protected modelService: ModelService
 
     constructor(
         public dialogRef: MatDialogRef<DialogRefactorComponent>,
         @Inject(MAT_DIALOG_DATA) public data: DialogRefactorData,
-        protected modelService: ModelService
     ) {
+        this.modelService = data.modelService;
         this.formControl = new FormControl('', [
             Validators.required,
             Validators.pattern('^[a-zA-Z0-9-_]+$'),

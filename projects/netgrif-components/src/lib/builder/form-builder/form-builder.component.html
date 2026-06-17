@@ -1,4 +1,4 @@
-<mat-sidenav class="app-mat-sidenav" mode="side" fixedInViewport=true disableClose="true" opened>
+<mat-sidenav class="app-mat-sidenav" mode="side" fixedInViewport=true disableClose="true" opened [ngClass]="{'integrated-top': isIntegrated()}">
     <nc-builder-field-list></nc-builder-field-list>
 </mat-sidenav>
 
@@ -12,7 +12,8 @@
              fixedInViewport=true
              disableClose="true"
              style="max-width: 450px;"
-             class="app-mat-sidenav-right" mode="side" position="end" opened>
+             class="app-mat-sidenav-right" mode="side" position="end" opened
+             [ngClass]="{'integrated-top': isIntegrated()}">
     <div fxLayout="row">
         <div class="handle" mwlResizeHandle [resizeEdges]="{ left: true }"></div>
         <nc-builder-edit-panel fxFlex></nc-builder-edit-panel>

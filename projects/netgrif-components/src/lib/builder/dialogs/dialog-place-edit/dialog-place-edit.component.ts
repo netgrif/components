@@ -3,9 +3,12 @@ import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {PlaceChange} from '../../modeler/history-mode/model/place/place-change';
 import {ModelService} from '../../modeler/services/model/model.service';
+import {SimulationModeService} from "../../modeler/simulation-mode/simulation-mode.service";
 
 export interface PlaceEditData {
     placeId: string;
+    modelService: ModelService,
+    simulationService: SimulationModeService
 }
 
 @Component({
@@ -19,10 +22,12 @@ export class DialogPlaceEditComponent {
     public idCtrl: FormControl;
     public markingCtrl: FormControl;
 
+    protected modelService: ModelService;
+
     constructor(
-        @Inject(MAT_DIALOG_DATA) public data: PlaceEditData,
-        public modelService: ModelService
+        @Inject(MAT_DIALOG_DATA) public data: PlaceEditData
     ) {
+        this.modelService = data.modelService;
         const modelPlace = this.modelService.model.getPlace(data.placeId);
         this.place = new PlaceChange(modelPlace.clone(), modelPlace.clone(), undefined);
         this.idCtrl = new FormControl('', [

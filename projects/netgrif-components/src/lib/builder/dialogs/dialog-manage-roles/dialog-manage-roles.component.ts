@@ -8,6 +8,7 @@ import {DataVariable, ProcessPermissionRef, Role, TransitionPermissionRef} from 
 import {ModelerConfig} from '../../modeler/modeler-config';
 import {HistoryService} from '../../modeler/services/history/history.service';
 import {ModelService} from '../../modeler/services/model/model.service';
+import {CanvasToolContext} from "../../modeler/edit-mode/services/modes/canvas-tool-context";
 
 export enum RoleRefType {
     TRANSITION = 'transition',
@@ -22,6 +23,8 @@ export interface ManagePermissionData {
     processRolesRefs?: Array<ProcessPermissionRef>;
     userRefs?: Array<TransitionPermissionRef>;
     processUserRefs?: Array<ProcessPermissionRef>;
+    modelService: ModelService;
+    historyService: HistoryService;
 }
 
 @Component({
@@ -45,11 +48,14 @@ export class DialogManageRolesComponent implements OnInit, OnDestroy {
     @ViewChild('secondTableSort', {static: true}) userSort: MatSort;
     private historyChange: boolean;
 
+    private modelService: ModelService;
+    private historyService: HistoryService;
+
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: ManagePermissionData,
-        private modelService: ModelService,
-        private historyService: HistoryService
     ) {
+        this.modelService = data.modelService;
+        this.historyService = data.historyService;
         if (this.data.type === RoleRefType.TRANSITION) {
             const arrayRoleRefs = [...this.data.rolesRefs];
             this.addDefaultRoleRefs(arrayRoleRefs);

@@ -22,7 +22,9 @@ export class EditTransitionPermissionsMenuItem extends MenuItem {
                         roles: tool.modelService.model.getRoles(),
                         rolesRefs: transition.modelTransition.roleRefs,
                         userRefs: transition.modelTransition.userRefs,
-                        userLists: tool.modelService.model.getDataSet().filter(item => item.type === DataType.USER_LIST)
+                        userLists: tool.modelService.model.getDataSet().filter(item => item.type === DataType.USER_LIST),
+                        modelService: tool.modelService,
+                        historyService: tool.editModeService.historyService
                     }
                 });
             }

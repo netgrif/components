@@ -9,6 +9,7 @@ import {ModelChange} from '../../modeler/history-mode/model/model/model-change';
 import {ModelService} from '../../modeler/services/model/model.service';
 import {DialogManageRolesComponent, RoleRefType} from '../dialog-manage-roles/dialog-manage-roles.component';
 import {BuilderModeService, BuilderMode} from "../../builder-mode.service";
+import {HistoryService} from "../../modeler/services/history/history.service";
 
 @Component({
     selector: 'nc-builder-dialog-model-edit',
@@ -31,7 +32,8 @@ export class DialogModelEditComponent {
         private dialog: MatDialog,
         private _actionMode: ActionsModeService,
         private _processTool: ProcessActionsTool,
-        private _builderModeService: BuilderModeService
+        private _builderModeService: BuilderModeService,
+        private historyService: HistoryService
     ) {
         this.model = data;
         this.idCtrl = new FormControl('', [Validators.required]);
@@ -52,7 +54,9 @@ export class DialogModelEditComponent {
                 roles: this.modelService.model.getRoles(),
                 processRolesRefs: this.modelService.model.getRoleRefs(),
                 processUserRefs: this.modelService.model.getUserRefs(),
-                userLists: this.modelService.model.getDataSet().filter(item => item.type === DataType.USER_LIST)
+                userLists: this.modelService.model.getDataSet().filter(item => item.type === DataType.USER_LIST),
+                modelService: this.modelService,
+                historyService: this.historyService
             }
         });
     }

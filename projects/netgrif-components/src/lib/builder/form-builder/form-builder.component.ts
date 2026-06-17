@@ -6,6 +6,7 @@ import {ModelerUtils} from '../modeler/modeler-utils';
 import {SelectedTransitionService} from '../modeler/selected-transition.service';
 import {ModelService} from '../modeler/services/model/model.service';
 import {BuilderMode, BuilderModeService} from "../builder-mode.service";
+import {BuilderIntegrationService} from "../builder-integration.service";
 
 @Component({
     selector: 'nc-builder-form-builder',
@@ -19,7 +20,8 @@ export class FormBuilderComponent implements AfterViewInit {
     constructor(private router: Router,
                 private modelService: ModelService,
                 private transitionService: SelectedTransitionService,
-                private _builderModeService: BuilderModeService) {
+                private _builderModeService: BuilderModeService,
+                protected _builderInterationService: BuilderIntegrationService) {
         if (!this.modelService.model) {
             this._builderModeService.mode = BuilderMode.MODELER;
         }
@@ -43,5 +45,9 @@ export class FormBuilderComponent implements AfterViewInit {
         } else {
             this.width = event.rectangle.width;
         }
+    }
+
+    isIntegrated(): boolean {
+        return this._builderInterationService.isIntegrated;
     }
 }

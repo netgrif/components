@@ -16,14 +16,16 @@ import {SvgExportTool} from './modes/svg-export-tool';
 import {UndoTool} from './modes/undo-tool';
 import {GlobalToolRegistry} from './tools/global-tool-registry';
 import {Tool} from './tools/tool';
-import {BuilderMode, BuilderModeService} from "../../builder-mode.service";
+import {BuilderModeService} from "../../builder-mode.service";
+import {TaskModeService} from "../task-mode/task-mode.service";
+import {BuilderIntegrationService} from "../../builder-integration.service";
 
 @Injectable()
 export class ControlPanelService {
 
-    private readonly _modeRegistry: ModeRegistry;
+    private _modeRegistry: ModeRegistry;
     private _activeMode: Mode;
-    private readonly _defaultMode: Mode;
+    private _defaultMode: Mode;
 
     constructor(
         private _editModeService: EditModeService,
@@ -33,41 +35,72 @@ export class ControlPanelService {
         private _actionModeService: ActionsModeService,
         private _i18nModeService: I18nModeService,
         private _historyModeService: HistoryModeService,
+        private _taskModeService: TaskModeService,
         private _globalToolRegistry: GlobalToolRegistry,
         private _importModelTool: ImportTool,
         private _exportModelTool: ExportTool,
         private _exportSvgTool: SvgExportTool,
         private _redoTool: RedoTool,
         private _undoTool: UndoTool,
-        private _builderModeService: BuilderModeService
+        private _builderModeService: BuilderModeService,
+        private _builderIntegrationService: BuilderIntegrationService
     ) {
-        this._modeRegistry = new ModeRegistry();
-        this.registerMode(_editModeService);
-        this.registerMode(_simulationModeService);
-        this.registerMode(_dataModeService);
-        this.registerMode(_roleModeService);
-        this.registerMode(_actionModeService);
-        this.registerMode(_i18nModeService);
-        this.registerMode(_historyModeService);
-        this._defaultMode = _editModeService.mode;
-        this.activate();
-        this._globalToolRegistry.registerItem(_importModelTool);
-        this._globalToolRegistry.registerItem(_exportModelTool);
-        this._globalToolRegistry.registerItem(_exportSvgTool);
-        this._globalToolRegistry.registerItem(_undoTool);
-        this._globalToolRegistry.registerItem(_redoTool);
+        this.initialize();
         this._builderModeService.mode$().subscribe(mode => {
             const navigatedMode = this._modeRegistry.getItem(mode);
             if (!!navigatedMode) {
                 this.activate(navigatedMode);
             }
         });
+        this._builderIntegrationService.reloadModes.subscribe(() => {
+            this.initialize();
+        })
+    }
+
+    protected initialize() {
+        this._modeRegistry = new ModeRegistry();
+        this._globalToolRegistry.reset();
+        if (this._builderIntegrationService.isIntegrated && this._builderIntegrationService.onlyTaskView) {
+            this.initializeOnlyTaskMode();
+        } else {
+            this.initializeNormalMode();
+        }
+        this._defaultMode = this._builderIntegrationService.isIntegrated ? this._taskModeService.mode : this._editModeService.mode;
+
+        this.activate();
+        if (!this._builderIntegrationService.isIntegrated || !this._builderIntegrationService.onlyTaskView) {
+            this._globalToolRegistry.registerItem(this._importModelTool);
+            this._globalToolRegistry.registerItem(this._exportModelTool);
+            this._globalToolRegistry.registerItem(this._exportSvgTool);
+            this._globalToolRegistry.registerItem(this._undoTool);
+            this._globalToolRegistry.registerItem(this._redoTool);
+        }
+    }
+
+    protected initializeNormalMode() {
+        if (this._builderIntegrationService.isIntegrated) {
+            this.registerMode(this._taskModeService);
+        }
+        this.registerMode(this._editModeService);
+        this.registerMode(this._simulationModeService);
+        this.registerMode(this._dataModeService);
+        this.registerMode(this._roleModeService);
+        this.registerMode(this._actionModeService);
+        this.registerMode(this._i18nModeService);
+        this.registerMode(this._historyModeService);
+    }
+
+    protected initializeOnlyTaskMode() {
+        this.registerMode(this._taskModeService);
+        this.registerMode(this._simulationModeService);
     }
 
     // TODO: NAB-326 fix tool vs toolgroup and dividers problem
     private registerMode(modeService: ModeService<Tool>) {
         const mode = modeService.mode;
-        modeService.tools.forEach(g => g.tools.forEach(t => mode.tools.registerItem(t, modeService)));
+        if (!(mode.tools.getToolPortals()?.length > 0)) {
+            modeService.tools.forEach(g => g.tools.forEach(t => mode.tools.registerItem(t, modeService)));
+        }
         this._modeRegistry.registerItem(mode);
     }
 

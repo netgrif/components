@@ -95,7 +95,8 @@ export abstract class SimulationTool extends CanvasListenerTool {
             width: '50%',
             panelClass: "dialog-width-50",
             data: {
-                placeId: place.id
+                placeId: place.id,
+                simulationService: this.simulationModeService
             } as PlaceEditData
         }, (data: number) => {
             if (data !== undefined) {

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {ChangeDetectorRef, Component} from '@angular/core';
 import {EditModeService} from '../edit-mode.service';
 import {MenuItem} from './menu-items/menu-item';
 
@@ -9,15 +9,23 @@ import {MenuItem} from './menu-items/menu-item';
 })
 export class ContextMenuComponent {
 
-    public menuItems: Array<MenuItem>;
+    private _menuItems: Array<MenuItem>;
 
-    constructor(
-        private editModeService: EditModeService
-    ) {
+    constructor(private _editModeService: EditModeService,
+                private _cdr: ChangeDetectorRef) {
+    }
+
+    get menuItems(): Array<MenuItem> {
+        return this._menuItems;
+    }
+
+    set menuItems(value: Array<MenuItem>) {
+        this._menuItems = value;
+        this._cdr.detectChanges();
     }
 
     itemClick(item: MenuItem) {
         item.onClick();
-        this.editModeService.contextMenuItems.next(undefined);
+        this._editModeService.contextMenuItems.next(undefined);
     }
 }

@@ -50,6 +50,7 @@ import {
     NavigationDashboardExampleComponent
 } from './doc/navigation-dashboard-example/navigation-dashboard-example.component';
 import {TabbedTicketViewComponent} from "./doc/tabbed-ticket-view/tabbed-ticket-view.component";
+import {BuilderTabsExampleComponent} from "./doc/builder-example/builder-tabs-example.component";
 
 @Injectable({
     providedIn: 'root'
@@ -104,6 +105,7 @@ export class NaeExampleAppViewService extends ViewService {
             {id: 'TabbedTicketView', class: TabbedTicketViewComponent},
             {id: 'ResetPasswordFormComponent', class: ResetPasswordFormComponent},
             {id: 'BuilderComponent', class: BuilderComponent},
+            {id: 'BuilderTabsExampleComponent', class: BuilderTabsExampleComponent}
             ], configurationService, router, loggerService);
     }
 }

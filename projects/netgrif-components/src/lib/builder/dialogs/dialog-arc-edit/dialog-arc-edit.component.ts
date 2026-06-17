@@ -6,8 +6,10 @@ import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {ModelService} from '../../modeler/services/model/model.service';
 import {ChangedArc} from './changed-arc';
+import {CanvasToolContext} from "../../modeler/edit-mode/services/modes/canvas-tool-context";
 
 export interface ArcEditData {
+    context: CanvasToolContext
     arcId: string;
 }
 
@@ -44,11 +46,12 @@ export class DialogArcEditComponent implements OnInit {
         [XmlArcType.RESET, 'fast_forward'],
         [XmlArcType.INHIBITOR, 'radio_button_unchecked'],
     ]);
+    private modelService: ModelService;
 
     constructor(
-        @Inject(MAT_DIALOG_DATA) public data: ArcEditData,
-        public modelService: ModelService
+        @Inject(MAT_DIALOG_DATA) public data: ArcEditData
     ) {
+        this.modelService = data.context.modelService;
         this.arc = new ChangedArc(undefined, this.modelService.model.getArc(data.arcId).clone());
         this.formControlRef = new FormControl('');
         this.multiplicityCtrl = new FormControl('', [

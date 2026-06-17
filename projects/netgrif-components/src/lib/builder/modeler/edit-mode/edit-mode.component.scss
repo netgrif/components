@@ -5,8 +5,8 @@
     border: 0;
 }
 
-nab-context-menu {
-    position: fixed;
+.nab-menu {
+    position: fixed !important;
     z-index: 9999;
     visibility: hidden;
     min-width: 112px;

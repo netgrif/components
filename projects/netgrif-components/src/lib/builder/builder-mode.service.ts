@@ -9,6 +9,7 @@ export enum BuilderMode {
     ACTION_MODE = 'actions',
     I18N_MODE = 'i18n',
     HISTORY_MODE = 'history',
+    TASK_MODE = 'task',
     FORM_BUILDER = 'form-builder'
 }
 

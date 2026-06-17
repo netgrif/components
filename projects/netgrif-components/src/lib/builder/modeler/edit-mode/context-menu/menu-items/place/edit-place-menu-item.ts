@@ -21,7 +21,8 @@ export class EditPlaceMenuItem extends MenuItem {
                     width: '50%',
                     panelClass: "dialog-width-50",
                     data: {
-                        placeId: place.modelPlace.id
+                        placeId: place.modelPlace.id,
+                        modelService: tool.modelService
                     } as PlaceEditData
                 }, (editedPlace: PlaceChange) => {
                     tool.modelService.updatePlace(editedPlace);

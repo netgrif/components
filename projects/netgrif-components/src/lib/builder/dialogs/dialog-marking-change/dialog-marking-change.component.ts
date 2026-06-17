@@ -15,11 +15,12 @@ export class DialogMarkingChangeComponent {
 
     public markingCtrl: FormControl;
     public place: Place;
+    public simulationService: SimulationModeService;
 
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: PlaceEditData,
-        public simulationService: SimulationModeService
     ) {
+        this.simulationService = data.simulationService;
         this.place = this.simulationService.model.getPlace(data.placeId);
         this.markingCtrl = new FormControl('', [
             Validators.required,

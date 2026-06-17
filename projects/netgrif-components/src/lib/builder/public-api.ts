@@ -14,6 +14,7 @@ export * from './modeler/gridster-field-to-engine-field.service';
 export * from './modeler/model-import-service';
 export * from './modeler/mortgage.service';
 export * from './modeler/selected-transition.service';
+export * from './injected-builder-data';
 
 // MODULES
 export * from './builder.module';

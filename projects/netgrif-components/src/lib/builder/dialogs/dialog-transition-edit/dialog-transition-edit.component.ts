@@ -10,9 +10,12 @@ import {ModelService} from '../../modeler/services/model/model.service';
 import {DialogManageRolesComponent, RoleRefType} from '../dialog-manage-roles/dialog-manage-roles.component';
 import {ChangedTransition} from './changed-transition';
 import {BuilderModeService, BuilderMode} from '../../builder-mode.service';
+import {HistoryService} from "../../modeler/services/history/history.service";
+import {CanvasToolContext} from "../../modeler/edit-mode/services/modes/canvas-tool-context";
 
 export interface TransitionEditData {
     transitionId: string;
+    context: CanvasToolContext;
 }
 
 @Component({
@@ -28,17 +31,26 @@ export class DialogTransitionEditComponent implements OnInit {
     public form: FormControl;
     protected counterTags = 0;
 
+    protected _modelService: ModelService;
+    private _transitionService: SelectedTransitionService;
+    private _actionMode: ActionsModeService;
+    private _actionsMasterDetail: ActionsMasterDetailService;
+    private _builderModeService: BuilderModeService;
+    private _historyService: HistoryService;
+
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: TransitionEditData,
-        public modelService: ModelService,
         private router: Router,
-        private transitionService: SelectedTransitionService,
-        private dialog: MatDialog,
-        private _actionMode: ActionsModeService,
-        private _actionsMasterDetail: ActionsMasterDetailService,
-        private _builderModeService: BuilderModeService
+        private dialog: MatDialog
     ) {
-        this.transition = new ChangedTransition(undefined, this.modelService.model.getTransition(data.transitionId).clone());
+        this._modelService = data.context.modelService;
+        this._transitionService = data.context.transitionService;
+        this._actionMode = data.context.actionMode;
+        this._actionsMasterDetail = data.context.actionsMasterDetail;
+        this._builderModeService = data.context.builderModeService;
+        this._historyService = data.context.editModeService.historyService;
+
+        this.transition = new ChangedTransition(undefined, this._modelService.model.getTransition(data.transitionId).clone());
         this.form = new FormControl('', [
             Validators.required,
             this.validUnique()
@@ -52,20 +64,20 @@ export class DialogTransitionEditComponent implements OnInit {
 
     openFormBuilder() {
         // TODO: NAB-326 refactor SelectedTransitionService
-        this.transitionService.id = this.transition.id;
+        this._transitionService.id = this.transition.id;
         this._builderModeService.mode = BuilderMode.FORM_BUILDER;
     }
 
     openActions() {
         this._actionMode.activate(this._actionMode.transitionActionsTool);
         this._actionsMasterDetail.select(this.transition.transition);
-        this.transitionService.id = this.transition.id;
+        this._transitionService.id = this.transition.id;
         this._builderModeService.mode = BuilderMode.ACTION_MODE;
     }
 
     private validUnique(): ValidatorFn {
         return (fc: FormControl): { [key: string]: any } | null => {
-            if (this.modelService.model.getTransition(fc.value) !== undefined && fc.value !== this.transition.id) {
+            if (this._modelService.model.getTransition(fc.value) !== undefined && fc.value !== this.transition.id) {
                 return ({validUnique: true});
             } else {
                 return null;
@@ -79,10 +91,12 @@ export class DialogTransitionEditComponent implements OnInit {
             panelClass: "dialog-width-60",
             data: {
                 type: RoleRefType.TRANSITION,
-                roles: this.modelService.model.getRoles(),
+                roles: this._modelService.model.getRoles(),
                 rolesRefs: this.transition.transition.roleRefs,
                 userRefs: this.transition.transition.userRefs,
-                userLists: this.modelService.model.getDataSet().filter(item => item.type === DataType.USER_LIST)
+                userLists: this._modelService.model.getDataSet().filter(item => item.type === DataType.USER_LIST),
+                modelService: this._modelService,
+                historyService: this._historyService
             }
         });
     }

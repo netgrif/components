@@ -41,13 +41,13 @@ export abstract class CanvasTool extends CanvasListenerTool {
     protected constructor(
         id: string,
         button: ControlPanelButton,
-        context: CanvasToolContext,
+        protected _context: CanvasToolContext,
     ) {
-        super(id, button, context.modelService, context.dialog, context.router, context.transitionService);
-        this._editModeService = context.editModeService;
-        this.actionMode = context.actionMode;
-        this.actionsMasterDetail = context.actionsMasterDetail;
-        this.builderModeService = context.builderModeService;
+        super(id, button, _context.modelService, _context.dialog, _context.router, _context.transitionService);
+        this._editModeService = _context.editModeService;
+        this.actionMode = _context.actionMode;
+        this.actionsMasterDetail = _context.actionsMasterDetail;
+        this.builderModeService = _context.builderModeService;
         this.hotkeys.push(new Hotkey('Escape', false, false, false, () => {
             this.closeContextMenu();
             this.reset();
@@ -219,5 +219,9 @@ export abstract class CanvasTool extends CanvasListenerTool {
 
     get historyService(): HistoryService {
         return this.editModeService.historyService;
+    }
+
+    get context(): CanvasToolContext {
+        return this._context;
     }
 }

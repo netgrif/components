@@ -361,7 +361,10 @@ export class EditPanelComponent implements OnInit, AfterViewInit {
         const dialogRef = this.dialog.open(DialogRefactorComponent, {
             width: '50%',
             panelClass: "dialog-width-50",
-            data: {originalId: item.id}
+            data: {
+                originalId: item.id,
+                modelService: this.modelService,
+            }
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result !== undefined) {

@@ -70,6 +70,7 @@ import {MatNativeDateModule} from "@angular/material/core";
 import { DataFieldsComponentModule } from "../../data-fields/data-fields.module";
 import {TaskContentComponentModule} from "../../task-content/task-content.module";
 import {MaterialIconPickerComponent} from "./components/material-icon-picker/material-icon-picker.component";
+import {TaskModeComponent} from "./task-mode/task-mode.component";
 
 @NgModule({
     declarations: [
@@ -140,7 +141,8 @@ import {MaterialIconPickerComponent} from "./components/material-icon-picker/mat
         NgxMatDatetimePickerModule,
         NgxMatMomentModule,
         MatNativeDateModule,
-        MaterialIconPickerComponent
+        MaterialIconPickerComponent,
+        TaskModeComponent
     ]
 })
 export class ModelerModule {

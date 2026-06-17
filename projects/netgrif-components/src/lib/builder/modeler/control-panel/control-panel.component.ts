@@ -14,4 +14,8 @@ export class ControlPanelComponent {
         public controlPanelService: ControlPanelService,
     ) {
     }
+
+    protected getRegistryItems() {
+        return this.controlPanelService.modeRegistry.getItems();
+    }
 }

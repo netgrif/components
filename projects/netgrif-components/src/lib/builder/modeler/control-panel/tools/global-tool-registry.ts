@@ -13,6 +13,10 @@ export class GlobalToolRegistry {
         this.toolRegistry = new ToolRegistry(_parentInjector);
     }
 
+    reset(): void {
+        this.toolRegistry = new ToolRegistry(this._parentInjector);
+    }
+
     registerItem(tool: Tool) {
         this.toolRegistry.registerItem(tool);
     }

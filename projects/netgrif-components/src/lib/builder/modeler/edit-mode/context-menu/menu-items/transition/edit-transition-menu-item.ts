@@ -18,7 +18,8 @@ export class EditTransitionMenuItem extends MenuItem {
                     width: '50%',
                     panelClass: "dialog-width-50",
                     data: {
-                        transitionId: transition.id
+                        transitionId: transition.id,
+                        context: tool.context
                     } as TransitionEditData
                 }, (editedTransition: ChangedTransition) => {
                     tool.modelService.updateTransition(editedTransition);

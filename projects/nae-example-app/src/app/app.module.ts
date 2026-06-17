@@ -135,6 +135,10 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { TabbedTicketViewComponent } from './doc/tabbed-ticket-view/tabbed-ticket-view.component';
+import {BuilderTabsExampleComponent} from "./doc/builder-example/builder-tabs-example.component";
+import {
+    BuilderTabbedCaseViewComponent
+} from "./doc/builder-example/builder-tabbed-case-view/builder-tabbed-case-view.component";
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -197,7 +201,9 @@ export function HttpLoaderFactory(http: HttpClient) {
         BreadcrumbsExampleComponent,
         ChangePasswordComponent,
         NavigationDashboardExampleComponent,
-        TabbedTicketViewComponent
+        TabbedTicketViewComponent,
+        BuilderTabsExampleComponent,
+        BuilderTabbedCaseViewComponent
     ],
     imports: [
         BrowserModule,

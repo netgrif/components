@@ -146,7 +146,10 @@ export class DataDetailComponent implements OnDestroy {
         const dialogRef = this.dialog.open(DialogRefactorComponent, {
             width: '50%',
             panelClass: "dialog-width-50",
-            data: {originalId: this.item.id}
+            data: {
+                originalId: this.item.id,
+                modelService: this._modelService
+            }
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result !== undefined) {

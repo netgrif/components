@@ -21,7 +21,9 @@ export class ManageModelPermissionsMenuItem extends MenuItem {
                         roles: tool.model.getRoles(),
                         processRolesRefs: tool.model.getRoleRefs(),
                         processUserRefs: tool.model.getUserRefs(),
-                        userLists: tool.model.getDataSet().filter(item => item.type === DataType.USER_LIST)
+                        userLists: tool.model.getDataSet().filter(item => item.type === DataType.USER_LIST),
+                        modelService: tool.modelService,
+                        historyService: tool.editModeService.historyService
                     }
                 });
             }

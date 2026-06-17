@@ -3,11 +3,8 @@ import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MaterialModule} from '@netgrif/components-core';
 import {FlexLayoutModule} from '@ngbracket/ngx-layout';
-import {DialogAddLanguageComponent} from './dialog-add-language/dialog-add-language.component';
-import {DialogArcAttachComponent} from './dialog-arc-attach/dialog-arc-attach.component';
 import {DialogArcEditComponent} from './dialog-arc-edit/dialog-arc-edit.component';
 import {DialogChangeDataComponent} from './dialog-change-data/dialog-change-data.component';
-import {DialogConfirmComponent} from './dialog-confirm/dialog-confirm.component';
 import {DialogDeadNetComponent} from './dialog-dead-net/dialog-dead-net.component';
 import {DialogDeleteComponent} from './dialog-delete/dialog-delete.component';
 import {DialogDeleteModelComponent} from './dialog-delete-model/dialog-delete-model.component';
@@ -26,11 +23,8 @@ import {NgxMatDatetimePickerModule} from "@angular-material-components/datetime-
 import {NgxMatMomentModule} from "@angular-material-components/moment-adapter";
 
 const DIALOG_COMPONENTS = [
-    DialogAddLanguageComponent,
-    DialogArcAttachComponent,
     DialogArcEditComponent,
     DialogChangeDataComponent,
-    DialogConfirmComponent,
     DialogDeadNetComponent,
     DialogDeleteComponent,
     DialogDeleteModelComponent,

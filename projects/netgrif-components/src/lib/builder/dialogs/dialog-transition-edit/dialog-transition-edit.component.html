@@ -79,11 +79,11 @@
     </button>
     <button mat-stroked-button color="primary" (click)="openActions()" mat-dialog-close>
         <mat-icon>code</mat-icon>
-        <span>Actions ({{this.modelService.numberOfTransitionActions(transition.transition)}})</span>
+        <span>Actions ({{this._modelService.numberOfTransitionActions(transition.transition)}})</span>
     </button>
     <button mat-stroked-button color="primary" (click)="openPermissions()" mat-dialog-close>
         <mat-icon>code</mat-icon>
-        <span>Permissions ({{this.modelService.numberOfTransitionPermissions(transition.transition)}})</span>
+        <span>Permissions ({{this._modelService.numberOfTransitionPermissions(transition.transition)}})</span>
     </button>
     <button mat-flat-button color="primary" [mat-dialog-close]="transition" [disabled]="form.invalid">
         <mat-icon>done</mat-icon>

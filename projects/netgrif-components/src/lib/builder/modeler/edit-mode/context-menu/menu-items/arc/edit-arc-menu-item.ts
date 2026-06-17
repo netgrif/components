@@ -15,6 +15,7 @@ export class EditArcMenuItem extends MenuItem {
                     width: '50%',
                     panelClass: "dialog-width-50",
                     data: {
+                        context: tool.context,
                         arcId: arc.modelArc.id
                     } as ArcEditData
                 }, (editedArc: ChangedArc) => {
