@@ -19,9 +19,6 @@ jobs:
                     node-version: ${{ matrix.node-version }}
             -   name: Install dependencies
                 run: npm install --legacy-peer-deps
-            -   name: Install Puppeteer browser
-                if: matrix.node-version == 24
-                run: npx puppeteer browsers install chrome
             -   name: Build & test components-core
                 run: |
                     npm run ncc:build
