@@ -13,6 +13,7 @@
             aria-label="Autocomplete"
             matInput
             #input
+            [disabled]="formControlRef.disabled"
             [placeholder]="dataField.placeholder"
             [required]="dataField.behavior.required"
             [matAutocomplete]="auto"
