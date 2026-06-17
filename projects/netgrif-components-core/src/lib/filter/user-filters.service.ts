@@ -281,7 +281,7 @@ export class UserFiltersService implements OnDestroy {
                             value: searchService.filterType
                         },
                         [UserFilterConstants.FILTER_FIELD_ID]: {
-                            type: FieldTypeResource.FILTER,
+                            type: FieldTypeResource.CASE_FILTER,
                             value: searchService.rootPredicate.query.value,
                             allowedNets,
                             filterMetadata: this.filterMetadataFromSearchService(

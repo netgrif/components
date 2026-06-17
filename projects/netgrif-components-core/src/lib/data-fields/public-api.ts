@@ -54,6 +54,7 @@ export * from './filter-field/abstract-filter-field-content.component';
 export * from './filter-field/abstract-filter-field-tab-view.component';
 export * from './filter-field/abstract-filter-field-tab-view-content.component';
 export * from './filter-field/filter-default-field/abstract-filter-default-field.component';
+export * from './filter-field/filter-string-query-field/abstract-filter-string-query-field.component';
 export * from './i18n-field/abstract-i18n-field.component';
 export * from './i18n-field/i18n-text-field/abstract-i18n-text-field.component';
 export * from './i18n-field/i18n-divider-field/abstract-i18n-divider-field.component';
