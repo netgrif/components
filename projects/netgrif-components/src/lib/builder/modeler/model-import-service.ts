@@ -8,6 +8,7 @@ import {ImportSuccessfulComponent} from './control-panel/import-successful/impor
 import {HistoryService} from './services/history/history.service';
 import {ModelService} from './services/model/model.service';
 import {BuilderMode, BuilderModeService} from "../builder-mode.service";
+import {BuilderIntegrationService} from "../builder-integration.service";
 
 @Injectable()
 export class ModelImportService {
@@ -19,7 +20,8 @@ export class ModelImportService {
         private dialog: MatDialog,
         private router: Router,
         private historyService: HistoryService,
-        private _builderModeService: BuilderModeService
+        private _builderModeService: BuilderModeService,
+        protected _builderIntegrationService: BuilderIntegrationService
     ) {
     }
 
@@ -46,6 +48,7 @@ export class ModelImportService {
         if (petriNetResult.model !== undefined) {
             this.modelService.model = petriNetResult.model;
             this.historyService.save(`Model ${this.modelService.model.id} has been imported.`)
+            this._builderIntegrationService.setModelData(this.modelService.model);
         }
         this._builderModeService.mode = BuilderMode.MODELER;
     }

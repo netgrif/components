@@ -17,11 +17,12 @@ export class EditModelMenuItem extends MenuItem {
                         model: new ModelChange(tool.model, tool.model.clone()),
                         context: tool.context
                     }
-                }, (changedModel: ModelChange) => {
-                    if (changedModel != undefined) {
-                        tool.modelService.updateModel(changedModel);
-                        if (changedModel) {
+                }, (changedModel: {model: ModelChange}) => {
+                    if (changedModel?.model != undefined) {
+                        tool.modelService.updateModel(changedModel?.model);
+                        if (changedModel?.model) {
                             tool.historyService.save(`Model has been changed.`);
+                            tool.context.builderIntegrationService.setModelData(tool.modelService.model);
                         }
                     }
                 });

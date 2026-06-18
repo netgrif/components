@@ -44,6 +44,7 @@ import {SwitchLabelTool} from './services/modes/switch-label-tool';
 import {BuilderModeService} from '../../builder-mode.service';
 import {CanvasToolContext} from './services/modes/canvas-tool-context';
 import {ProcessActionsTool} from "../actions-mode/tools/process-actions-tool";
+import {BuilderIntegrationService} from "../../builder-integration.service";
 
 @Injectable()
 export class EditModeService extends CanvasModeService<CanvasTool> {
@@ -74,7 +75,8 @@ export class EditModeService extends CanvasModeService<CanvasTool> {
         private _historyService: HistoryService,
         protected _actionMode: ActionsModeService,
         protected _actionsMasterDetail: ActionsMasterDetailService,
-        protected _processActionsTool: ProcessActionsTool
+        protected _processActionsTool: ProcessActionsTool,
+        protected _builderIntegrationService: BuilderIntegrationService
     ) {
         super(_arcFactory, modelService, _canvasService);
         this.mode = new Mode(
@@ -88,7 +90,7 @@ export class EditModeService extends CanvasModeService<CanvasTool> {
             this._tutorialService.modeler,
             this._parentInjector
         );
-        const context = new CanvasToolContext(modelService, dialog, this, router, transitionService, _actionMode, _actionsMasterDetail, _builderModeService, _processActionsTool);
+        const context = new CanvasToolContext(modelService, dialog, this, router, transitionService, _actionMode, _actionsMasterDetail, _builderModeService, _processActionsTool, _builderIntegrationService);
         this.switchTools = new ToolGroup<CanvasTool>(
             new ClearModelTool(context),
             new ResetPositionAndZoomTool(context),

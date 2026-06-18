@@ -1,7 +1,6 @@
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {BrowserModule} from '@angular/platform-browser';
 import {FlexModule} from '@ngbracket/ngx-layout';
 import {ResizableModule} from 'angular-resizable-element';
 import {MonacoEditorModule, NgxMonacoEditorConfig} from 'ngx-monaco-editor-v2';
@@ -55,7 +54,6 @@ const monacoConfig: NgxMonacoEditorConfig = {
     ],
     imports: [
         CommonModule,
-        BrowserModule,
         FormsModule,
         FlexModule,
         MaterialModule,

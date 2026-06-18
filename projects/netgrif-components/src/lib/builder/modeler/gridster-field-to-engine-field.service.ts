@@ -77,7 +77,9 @@ export class GridsterFieldToEngineFieldService {
                 return this.toFileListField(dataField);
             case DataType.TASK_REF:
                 return this.toTaskRefField(dataField);
-            case DataType.FILTER:
+            case DataType.CASE_FILTER:
+            case DataType.TASK_FILTER:
+            case DataType.PROCESS_FILTER:
                 return this.toFilterField(dataField);
             case DataType.TEXT:
             default:
@@ -295,13 +297,11 @@ export class GridsterFieldToEngineFieldService {
         );
     }
 
-    private toFilterField(dataField: GridsterDataField): FilterField {
-        return new FilterField(
+    private toFilterField(dataField: GridsterDataField): TextField {
+        return new TextField(
             dataField.dataVariable.id,
             dataField.dataVariable.title?.value,
             dataField.dataVariable.init?.value,
-            undefined,
-            undefined,
             this.buildBehavior(dataField),
             dataField.dataVariable.placeholder?.value,
             dataField.dataVariable.desc?.value,

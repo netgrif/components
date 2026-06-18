@@ -74,6 +74,9 @@ export class ControlPanelService {
             this._globalToolRegistry.registerItem(this._exportSvgTool);
             this._globalToolRegistry.registerItem(this._undoTool);
             this._globalToolRegistry.registerItem(this._redoTool);
+        } else {
+            this._globalToolRegistry.registerItem(this._exportModelTool);
+            this._globalToolRegistry.registerItem(this._exportSvgTool);
         }
     }
 

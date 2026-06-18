@@ -12,12 +12,14 @@ import {ExportService} from '@netgrif/petriflow';
 import {HistoryService} from './modeler/services/history/history.service';
 import {ModelService} from './modeler/services/model/model.service';
 import {BuilderComponent} from './builder.component';
+import {ConfigurationService, TestConfigurationService} from '@netgrif/components-core';
+import {CommonModule} from "@angular/common";
 
 describe('BuilderComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [BuilderComponent],
-            imports: [HttpClientTestingModule],
+            imports: [HttpClientTestingModule, CommonModule],
             providers: [
                 ModelService,
                 ArcFactory,
@@ -29,6 +31,7 @@ describe('BuilderComponent', () => {
                 {provide: MatDialog, useValue: {}},
                 {provide: Router, useValue: {navigate: () => {}}},
                 {provide: ActivatedRoute, useValue: {queryParams: of({})}},
+                {provide: ConfigurationService, useClass: TestConfigurationService},
             ],
             schemas: [NO_ERRORS_SCHEMA],
         });

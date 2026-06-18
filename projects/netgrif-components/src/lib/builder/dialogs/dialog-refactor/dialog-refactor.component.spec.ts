@@ -14,8 +14,7 @@ describe('DialogRefactorComponent', () => {
             imports: [NoopAnimationsModule],
             providers: [
                 {provide: MatDialogRef, useValue: {beforeClosed() { return new Subject(); }}},
-                {provide: MAT_DIALOG_DATA, useValue: []},
-                {provide: ModelService, useClass: MockModelService},
+                {provide: MAT_DIALOG_DATA, useValue: {originalId: 'originalId', modelService: new MockModelService()}}
             ],
             schemas: [NO_ERRORS_SCHEMA],
         });

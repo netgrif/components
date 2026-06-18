@@ -27,7 +27,7 @@ export class MaterialIconPickerComponent implements OnInit {
     @Output() iconChange: EventEmitter<string> = new EventEmitter<string>();
 
     constructor() {
-        this.formControlRef = new FormControl('');
+        this.formControlRef = new FormControl(this._icon);
     }
 
     @Input()
@@ -42,13 +42,13 @@ export class MaterialIconPickerComponent implements OnInit {
 
     ngOnInit(): void {
         this.filteredIcons = this.formControlRef.valueChanges.pipe(
-            startWith(''),
             tap(value => {
                 if (value !== this._icon) {
                     this._icon = value;
                     this.iconChange.next(this._icon);
                 }
             }),
+            startWith(''),
             map(value => this._filter(value || '')),
             map(value => {
                 if (value.length > 20) {

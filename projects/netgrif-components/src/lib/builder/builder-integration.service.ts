@@ -112,4 +112,33 @@ export class BuilderIntegrationService {
         })
         return xml.asObservable();
     }
+
+    public setModelData(model: PetriNet) {
+        if (this._isIntegrated && this._editTaskId) {
+            const body = {};
+            body[this._editTaskId] = {};
+            body[this._editTaskId]['id'] = {
+                type: 'text',
+                value: model.id
+            };
+            body[this._editTaskId]['version'] = {
+                type: 'text',
+                value: model.version
+            };
+            body[this._editTaskId]['icon'] = {
+                type: 'text',
+                value: model.icon
+            };
+            body[this._editTaskId]['title'] = {
+                type: 'text',
+                value: model.title?.value
+            };
+            this._taskResourceService.setData(this._editTaskId, body).subscribe(outcome => {
+                if ((outcome.outcome as TaskEventOutcome)?.task?.user?.email !== undefined) {
+                    this._isAssigned = true;
+                }
+                this._log.debug('Data set successfully');
+            });
+        }
+    }
 }

@@ -306,11 +306,21 @@ export class FieldListService {
             ]
         },
         {
-            type: DataType.FILTER,
-            showPlaceholder: true,
+            type: DataType.CASE_FILTER,
             components: [
                 {title: 'Simple'},
-                {title: 'Tab view', name: 'filter-tab-view'}
+            ]
+        },
+        {
+            type: DataType.TASK_FILTER,
+            components: [
+                {title: 'Simple'},
+            ]
+        },
+        {
+            type: DataType.PROCESS_FILTER,
+            components: [
+                {title: 'Simple'},
             ]
         },
         {

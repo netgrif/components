@@ -4,6 +4,7 @@ import {BuilderTabbedCaseViewComponent} from './builder-tabbed-case-view/builder
 import {
     BuilderComponent
 } from "@netgrif/components";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'nae-tabbed-builder-view-example',
@@ -20,11 +21,11 @@ export class BuilderTabsExampleComponent implements OnInit {
 
     tabs: Array<TabContent>;
 
-    constructor() {
+    constructor(translate: TranslateService) {
         this.tabs = [
             {
                 label: {
-                    text: 'Processes',
+                    text: translate.instant('admin.process-list.listTitle'),
                     icon: 'device_hub'
                 },
                 canBeClosed: false,

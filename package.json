@@ -1,6 +1,6 @@
 {
     "name": "@netgrif/components-project",
-    "version": "6.5.0-beta.1",
+    "version": "6.5.0-rc.3",
     "description": "Netgrif Application Engine Frontend project. Project includes angular libraries as base for NAE applications.",
     "homepage": "https://components.netgrif.com",
     "license": "SEE LICENSE IN LICENSE",
@@ -85,7 +85,7 @@
         "@mdi/angular-material": "^7.2.96",
         "@mdi/font": "^7.4.47",
         "@netgrif/petri.svg": "1.1.1",
-        "@netgrif/petriflow": "2.2.2",
+        "@netgrif/petriflow": "2.2.3",
         "@netgrif/petriflow.svg": "1.1.1",
         "@ngbracket/ngx-layout": "^17.0.1",
         "@ngx-translate/core": "~15.0.0",

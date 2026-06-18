@@ -16,7 +16,9 @@ import {
     ViewIdService,
     NAE_BASE_FILTER,
     AllowedNetsService,
-    TaskEventNotification, TaskEvent
+    TaskEventNotification,
+    TaskEvent,
+    NAE_DEFAULT_HEADERS
 } from "@netgrif/components-core";
 import {InjectedTabbedBuilderViewData} from "../../injected-builder-data";
 import {BuilderIntegrationService} from "../../builder-integration.service";
@@ -56,7 +58,8 @@ const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
             provide: AllowedNetsService,
             useFactory: localAllowedNetsFactory,
             deps: [AllowedNetsServiceFactory]
-        }
+        },
+        {provide: NAE_DEFAULT_HEADERS, useValue: ['meta-title', 'meta-user', 'meta-assign-date']}
     ]
 })
 export class TaskModeComponent extends AbstractTaskViewComponent implements AfterViewInit {

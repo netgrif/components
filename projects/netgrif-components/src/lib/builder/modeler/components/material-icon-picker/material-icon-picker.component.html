@@ -7,9 +7,9 @@
                [matAutocomplete]="auto">
         <mat-autocomplete #auto="matAutocomplete">
             <mat-option>-- None --</mat-option>
-            <mat-option *ngFor="let icon of filteredIcons | async" [value]="icon">
-                <mat-icon>{{icon}}</mat-icon>
-                {{icon}}
+            <mat-option *ngFor="let icona of filteredIcons | async" [value]="icona">
+                <mat-icon>{{icona}}</mat-icon>
+                {{icona}}
             </mat-option>
         </mat-autocomplete>
     </mat-form-field>

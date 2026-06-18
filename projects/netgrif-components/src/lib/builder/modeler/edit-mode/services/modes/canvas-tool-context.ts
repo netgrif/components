@@ -7,6 +7,7 @@ import {ModelService} from '../../../services/model/model.service';
 import {EditModeService} from '../../edit-mode.service';
 import {BuilderModeService} from '../../../../builder-mode.service';
 import {ProcessActionsTool} from "../../../actions-mode/tools/process-actions-tool";
+import {BuilderIntegrationService} from "../../../../builder-integration.service";
 
 export class CanvasToolContext {
     constructor(
@@ -18,6 +19,7 @@ export class CanvasToolContext {
         public readonly actionMode: ActionsModeService,
         public readonly actionsMasterDetail: ActionsMasterDetailService,
         public readonly builderModeService: BuilderModeService,
-        public readonly processTool: ProcessActionsTool
+        public readonly processTool: ProcessActionsTool,
+        public readonly builderIntegrationService: BuilderIntegrationService
     ) {}
 }

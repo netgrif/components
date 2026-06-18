@@ -10,11 +10,12 @@ import {
     SearchService,
     SimpleFilter,
     AbstractTabbedCaseViewComponent,
-    ViewIdService,
+    ViewIdService, NAE_DEFAULT_HEADERS,
     NAE_BASE_FILTER, AllowedNetsServiceFactory, AllowedNetsService,  OverflowService
 } from '@netgrif/components-core';
 import {HeaderComponent} from '@netgrif/components';
 import {Case} from "../../../../../../netgrif-components-core/src/lib/resources/interface/case";
+import {TranslateService} from "@ngx-translate/core";
 
 const baseFilterFactory = (injectedData: InjectedTabbedCaseViewData) => {
     return {filter: SimpleFilter.fromCaseQuery({process: {identifier: 'process'}})};
@@ -40,7 +41,8 @@ const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
         {   provide: AllowedNetsService,
             useFactory: localAllowedNetsFactory,
             deps: [AllowedNetsServiceFactory]},
-        {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]}
+        {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
+        {provide: NAE_DEFAULT_HEADERS, useValue: ['process-title', 'process-id', 'process-version', 'process-state']}
     ]
 })
 export class BuilderTabbedCaseViewComponent extends AbstractTabbedCaseViewComponent implements AfterViewInit {
@@ -50,13 +52,14 @@ export class BuilderTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
     constructor(caseViewService: CaseViewService,
                 loggerService: LoggerService,
                 @Optional() overflowService: OverflowService,
-                @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedCaseViewData) {
+                @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedCaseViewData,
+                translateService: TranslateService) {
         super(caseViewService, loggerService, injectedTabData, overflowService, undefined, undefined, {
             enableCaseTitle: false,
             isCaseTitleRequired: true,
             newCaseButtonConfig: {
-                createCaseButtonTitle: 'New process',
-                createCaseButtonIcon: 'home'
+                createCaseButtonTitle: translateService.instant('workflow.new-process'),
+                createCaseButtonIcon: 'add'
             }
         });
     }

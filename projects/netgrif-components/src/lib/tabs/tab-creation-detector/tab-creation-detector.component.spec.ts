@@ -89,7 +89,7 @@ class TestWrapperComponent implements OnInit {
 }
 
 @Component({
-    selector: 'nc-test-div',
+    selector: 'nc-test-div-test',
     template: '<div></div>'
 })
 class TestComponent {
