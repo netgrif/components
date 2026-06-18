@@ -20,15 +20,6 @@
         <mat-icon class="advanced-search-icon">more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu" class="mat-menu-border-radius mat-menu-padding">
-        <button mat-menu-item *ngIf="showSaveFilterButton" (click)="saveFilter()">
-            <mat-icon class="prefix-icon">save</mat-icon>
-            <span>{{'search.tooltip.save' | translate}}</span>
-        </button>
-        <button mat-menu-item *ngIf="showLoadFilterButton" (click)="loadFilter()">
-            <mat-icon class="prefix-icon">open_in_browser</mat-icon>
-            <span>{{'search.tooltip.load' | translate}}</span>
-        </button>
-
         <button mat-menu-item *ngIf="showAdvancedSearchHelp" (click)="showHelp()">
             <mat-icon class="prefix-icon">help</mat-icon>
             <span>{{'search.tooltip.help' | translate}}</span>

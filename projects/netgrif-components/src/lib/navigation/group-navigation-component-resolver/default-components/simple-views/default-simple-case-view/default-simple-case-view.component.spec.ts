@@ -1,74 +1,54 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {DefaultTabViewComponent} from './default-tab-view.component';
-import {NavigationComponentModule} from '../../../../navigation.module';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+
+import {DefaultSimpleCaseViewComponent} from './default-simple-case-view.component';
+import {NavigationComponentModule} from "../../../../navigation.module";
+import {NoopAnimationsModule} from "@angular/platform-browser/animations";
+import {RouterTestingModule} from "@angular/router/testing";
 import {
     BooleanField,
-    EnumerationField,
     FilterField,
-    FilterType,
-    GroupNavigationConstants,
-    I18nField,
-    LanguageService,
+    EnumerationField,
     MultichoiceField,
+    GroupNavigationConstants,
     NAE_NAVIGATION_ITEM_TASK_DATA,
+    NAE_VIEW_ID_SEGMENT,
     OverflowService,
-    TaskRefField,
     TestMockDependenciesModule,
-    TestViewService,
     TextField,
-    TranslateLibModule,
+    I18nField,
+    FilterType,
     AuthenticationModule,
-    ViewService,
-    StringCollectionField
+    StringCollectionField,
 } from '@netgrif/components-core';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {RouterTestingModule} from "@angular/router/testing";
 
-describe('DefaultTabViewComponent', () => {
-    let component: DefaultTabViewComponent;
-    let fixture: ComponentFixture<DefaultTabViewComponent>;
-    let service: LanguageService;
+describe('SimpleCaseViewComponent', () => {
+    let component: DefaultSimpleCaseViewComponent;
+    let fixture: ComponentFixture<DefaultSimpleCaseViewComponent>;
 
+    beforeEach(waitForAsync(() => {
+        TestBed.configureTestingModule({
+            declarations: [DefaultSimpleCaseViewComponent]
+        })
+            .compileComponents();
+    }));
     beforeEach(async () => {
         await TestBed.configureTestingModule({
+            declarations: [DefaultSimpleCaseViewComponent],
             imports: [
                 NavigationComponentModule,
                 TestMockDependenciesModule,
-                RouterTestingModule.withRoutes([]),
                 NoopAnimationsModule,
-                TranslateLibModule,
+                RouterTestingModule.withRoutes([]),
                 AuthenticationModule
             ],
             providers: [
-                {   provide: ViewService, useClass: TestViewService},
+                {provide: NAE_VIEW_ID_SEGMENT, useValue: 'id'},
                 OverflowService,
                 {
                     provide: NAE_NAVIGATION_ITEM_TASK_DATA,
                     useValue: [
                         {
                             fields: [
-                                new EnumerationField(
-                                    "view_configuration_type",
-                                    '',"case_view",[],{visible: true}
-                                ),
-                                new I18nField(
-                                    GroupNavigationConstants.NAVIGATION_ENTRY_TITLE_FIELD_ID_SUFFIX,
-                                    '',
-                                    {defaultValue: 'Default translation', translations: {en: 'English translation'}},
-                                    {visible: true}
-                                ),
-                            ]
-                        },
-                        {
-                            fields: [
-                                new TaskRefField(
-                                    "view_configuration_form",
-                                    '',["thisistaskid"],{visible: true}
-                                ),
-                                new BooleanField(
-                                    GroupNavigationConstants.NAVIGATION_ENTRY_ICON_ENABLED_FIELD_ID_SUFFIX,
-                                    '',false,{visible: true}
-                                ),
                                 new TextField(
                                     GroupNavigationConstants.ITEM_FIELD_ID_CASE_BANNED_PROCESS_CREATION,
                                     '',"",{visible: true}
@@ -117,48 +97,6 @@ describe('DefaultTabViewComponent', () => {
                                     GroupNavigationConstants.ITEM_FIELD_ID_CASE_DEFAULT_HEADERS,
                                     '','', {visible: true}
                                 ),
-                                new EnumerationField(
-                                    GroupNavigationConstants.ITEM_FIELD_ID_TASK_VIEW_SEARCH_TYPE,
-                                    '',"fulltext", [],{visible: true}
-                                ),
-                                new BooleanField(
-                                    GroupNavigationConstants.ITEM_FIELD_ID_TASK_SHOW_MORE_MENU,
-                                    '',true,{visible: true}
-                                ),
-                                new BooleanField(
-                                    GroupNavigationConstants.ITEM_FIELD_ID_TASK_HEADERS_CHANGEABLE,
-                                    '',true,{visible: true}
-                                ),
-                                new MultichoiceField(
-                                    GroupNavigationConstants.ITEM_FIELD_ID_TASK_HEADERS_MODE,
-                                    '',["sort"], [],{visible: true}
-                                ),
-                                new BooleanField(
-                                    GroupNavigationConstants.ITEM_FIELD_ID_TASK_ALLOW_TABLE_MODE,
-                                    '',true,{visible: true}
-                                ),
-                                new EnumerationField(
-                                    GroupNavigationConstants.ITEM_FIELD_ID_TASK_DEFAULT_HEADERS_MODE,
-                                    '',"sort", [],{visible: true}
-                                ),
-                                new BooleanField(
-                                    GroupNavigationConstants.ITEM_FIELD_ID_MERGE_FILTERS,
-                                    '',false,{visible: true}
-                                ),
-                                new FilterField(
-                                    GroupNavigationConstants.ITEM_FIELD_TASK_FILTER,
-                                    '',
-                                    '',
-                                    {
-                                        filterType: FilterType.TASK,
-                                        predicateMetadata: [],
-                                        searchCategories: []
-                                    },
-                                    [],
-                                    {visible: true},
-                                    '',
-                                    ''
-                                ),
                                 new BooleanField(
                                     GroupNavigationConstants.ITEM_FIELD_ID_SHOW_CREATE_CASE_BUTTON,
                                     '',true,{visible: true}
@@ -189,14 +127,14 @@ describe('DefaultTabViewComponent', () => {
                                     '',
                                     {visible: true}
                                 ),
-                                new StringCollectionField(
-                                    GroupNavigationConstants.ITEM_FIELD_CASE_ALLOWED_NETS,
+                                new BooleanField(
+                                    GroupNavigationConstants.ITEM_FIELD_ID_CASE_ALLOW_EXPORT,
                                     '',
-                                    [],
+                                    true,
                                     {visible: true}
                                 ),
                                 new StringCollectionField(
-                                    GroupNavigationConstants.ITEM_FIELD_TASK_ALLOWED_NETS,
+                                    GroupNavigationConstants.ITEM_FIELD_CASE_ALLOWED_NETS,
                                     '',
                                     [],
                                     {visible: true}
@@ -208,12 +146,10 @@ describe('DefaultTabViewComponent', () => {
             ]
         })
             .compileComponents();
-        service = TestBed.inject(LanguageService);
-        service.setLanguage('en-US');
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(DefaultTabViewComponent);
+        fixture = TestBed.createComponent(DefaultSimpleCaseViewComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

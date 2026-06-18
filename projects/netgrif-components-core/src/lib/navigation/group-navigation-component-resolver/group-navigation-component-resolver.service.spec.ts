@@ -1,11 +1,12 @@
 import {TestBed} from '@angular/core/testing';
 import {GroupNavigationComponentResolverService} from './group-navigation-component-resolver.service';
 import {Component, Injectable, Type} from '@angular/core';
-import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {TestMockDependenciesModule} from '../../utility/tests/test-mock-dependencies.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {TaskResourceService} from "../../resources/engine-endpoint/task-resource.service";
+import {CaseResourceService} from "../../resources/engine-endpoint/case-resource.service";
 
 describe('GroupNavigationComponentResolverService', () => {
     let service: GroupNavigationComponentResolverService;
@@ -18,7 +19,7 @@ describe('GroupNavigationComponentResolverService', () => {
                 TestMockDependenciesModule
             ],
             providers: [
-                {provide: GroupNavigationComponentResolverService, useClass: TestGroupNavigationComponentResolverService}
+                {provide: GroupNavigationComponentResolverService, useClass: TestGroupNavigationComponentResolverService},
             ]
         });
         service = TestBed.inject(GroupNavigationComponentResolverService);
@@ -45,9 +46,11 @@ class TestPortalComponent {
 @Injectable()
 export class TestGroupNavigationComponentResolverService extends GroupNavigationComponentResolverService {
 
-    constructor(taskResourceService: TaskResourceService,
-                log: LoggerService) {
-        super(taskResourceService, log);
+    constructor(
+        taskResourceService: TaskResourceService,
+        caseResourceService: CaseResourceService,
+        log: LoggerService) {
+        super(taskResourceService, caseResourceService, log);
     }
 
     protected resolveViewComponent(navigationItemTaskData: any): Type<any> {

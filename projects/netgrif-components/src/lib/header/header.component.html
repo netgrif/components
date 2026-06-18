@@ -43,8 +43,8 @@
                     <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu  #headerMenu="matMenu" class="mat-menu-border-radius mat-menu-padding">
-                    <div *ngIf="headerService.headerState.mode !== headerModeEnum.EDIT && showSortButton">
-                        <button mat-menu-item
+                    <div *ngIf="headerService.headerState.mode !== headerModeEnum.EDIT">
+                        <button *ngIf="showSortButton" mat-menu-item
                                 [ngClass]="{'active-header-item': headerService.headerState.mode === headerModeEnum.SORT}"
                                 (click)="headerService.changeMode(headerModeEnum.SORT, false)">
                             <mat-icon>sort</mat-icon>

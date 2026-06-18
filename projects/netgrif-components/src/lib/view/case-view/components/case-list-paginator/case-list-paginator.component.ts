@@ -6,7 +6,8 @@ import {
     LoggerService,
     NAE_TAB_DATA,
     NetgrifPaginatorIntl,
-    AbstractCaseListPaginatorComponent
+    AbstractCaseListPaginatorComponent,
+    LanguageService
 } from '@netgrif/components-core';
 import {MatPaginatorIntl} from '@angular/material/paginator';
 
@@ -21,8 +22,9 @@ export class CaseListPaginatorComponent extends AbstractCaseListPaginatorCompone
     constructor(protected _caseViewService: CaseViewService,
                 protected _log: LoggerService,
                 @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData,
+                protected _selectLangService: LanguageService,
                 protected route?: ActivatedRoute) {
-        super(_caseViewService, _log, injectedTabData, route);
+        super(_caseViewService, _log, injectedTabData, _selectLangService, route);
     }
 
     ngOnDestroy(): void {

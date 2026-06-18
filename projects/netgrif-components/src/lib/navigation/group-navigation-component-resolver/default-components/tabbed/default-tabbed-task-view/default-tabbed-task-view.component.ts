@@ -18,7 +18,12 @@ import {
     HeaderMode,
     NAE_DEFAULT_HEADERS,
     NAE_NAVIGATION_ITEM_TASK_DATA,
+    NAE_DEFAULT_TASK_SEARCH_CATEGORIES,
+    NAE_SEARCH_CATEGORIES,
     OverflowService,
+    extractFieldValueFromData,
+    I18nFieldValue,
+    GroupNavigationConstants
 } from '@netgrif/components-core';
 import {HeaderComponent} from '../../../../../header/header.component';
 import {
@@ -50,12 +55,15 @@ export function baseFilterFactory(injectedTabData: InjectedTabbedTaskViewDataWit
         {
             provide: AllowedNetsService,
             useFactory: tabbedAllowedNetsServiceFactory,
-            deps: [AllowedNetsServiceFactory, NAE_TAB_DATA]
+            deps: [AllowedNetsServiceFactory, NAE_TAB_DATA, NAE_NAVIGATION_ITEM_TASK_DATA]
         },
         {
             provide: NAE_TASK_VIEW_CONFIGURATION,
             useFactory: tabbedTaskViewConfigurationFactory,
             deps: [NAE_TAB_DATA]
+        },
+        {
+            provide: NAE_SEARCH_CATEGORIES, useExisting: NAE_DEFAULT_TASK_SEARCH_CATEGORIES
         },
         {
             provide: NAE_DEFAULT_HEADERS,
@@ -76,6 +84,8 @@ export class DefaultTabbedTaskViewComponent extends AbstractTabbedTaskViewCompon
     allowTableMode: boolean;
     defaultHeadersMode: HeaderMode;
     showMoreMenu: boolean;
+    emptyContentText: I18nFieldValue;
+    emptyContentIcon: string;
 
     constructor(taskViewService: TaskViewService, @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedTaskViewDataWithNavigationItemTaskData) {
         super(taskViewService, injectedTabData);
@@ -88,6 +98,10 @@ export class DefaultTabbedTaskViewComponent extends AbstractTabbedTaskViewCompon
         this.allowTableMode = injectedTabData.allowTableMode;
         this.defaultHeadersMode = this.resolveHeaderMode(injectedTabData.defaultHeadersMode);
         this.showMoreMenu = injectedTabData.showMoreMenu;
+        if (!!injectedTabData.navigationItemTaskData) {
+            this.emptyContentText = extractFieldValueFromData<I18nFieldValue>(injectedTabData.navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_TASK_EMPTY_CONTENT_TEXT);
+            this.emptyContentIcon = extractFieldValueFromData<string>(injectedTabData.navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_TASK_EMPTY_CONTENT_ICON);
+        }
     }
 
     ngAfterViewInit(): void {

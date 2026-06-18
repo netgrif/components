@@ -348,7 +348,9 @@
             "visualID": "Visuelle ID",
             "title": "Fallname",
             "author": "Fallautor",
-            "creationDate": "Erstellungsdatum"
+            "creationDate": "Erstellungsdatum",
+            "processIdentifier": "Netzidentifikator",
+            "petriNetId": "Prozess ID"
         },
         "taskMeta": {
             "case": "Fall",

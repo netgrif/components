@@ -17,7 +17,8 @@ export class DoubleDrawerUtils {
     }
 
     public static hasItemView(item: NavigationItem): boolean {
-        return item?.resource?.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_CONTAINS_FILTER)?.value;
+        return item?.resource?.immediateData
+            .find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_CASE_FILTER || f.stringId === GroupNavigationConstants.ITEM_FIELD_TASK_FILTER)?.value;
     }
 
     public static isItemAndNodeEqual(item: NavigationItem, node: UriNodeResource): boolean {

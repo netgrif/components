@@ -3,8 +3,9 @@
 
         <div *ngIf="(loading$ | async) === false && tasks.length === 0" fxLayout="column" fxLayoutAlign="center center"
              fxFlex>
-            <mat-icon color="accent">check_box</mat-icon>
-            <span class="font-size-20">{{ 'tasks.view.noTasksSatisfyingThisFilter' | translate }}</span>
+            <mat-icon color="accent">{{ getEmptyContentIcon() }}</mat-icon>
+            <span *ngIf="!hasEmptyContentText()" class="font-size-20">{{ 'tasks.view.noTasksSatisfyingThisFilter' | translate}}</span>
+            <span *ngIf="hasEmptyContentText()" class="font-size-20">{{ getEmptyContentText() }}</span>
         </div>
 
         <mat-accordion [multi]="allowMultiOpen" class="full-width panel-list-content" fxFlex="100">

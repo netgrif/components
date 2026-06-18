@@ -2,7 +2,8 @@ import {
     Component,
     Inject,
     Optional,
-    ViewChild
+    ViewChild,
+    Input
 } from '@angular/core';
 import {CaseViewService} from '../../service/case-view-service';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
@@ -11,6 +12,8 @@ import {NAE_TAB_DATA} from '../../../../tabs/tab-data-injection-token/tab-data-i
 import {InjectedTabData} from '../../../../tabs/interfaces';
 import {ActivatedRoute} from '@angular/router';
 import {AbstractDefaultCaseListComponent} from '../default-case-list/abstract-default-case-list.component';
+import {I18nFieldValue} from "../../../../data-fields/i18n-field/models/i18n-field-value";
+import {LanguageService} from "../../../../translate/language.service";
 
 @Component({
     selector: 'ncc-abstract-case-list',
@@ -19,10 +22,13 @@ import {AbstractDefaultCaseListComponent} from '../default-case-list/abstract-de
 export abstract class AbstractCaseListComponent extends AbstractDefaultCaseListComponent {
 
     @ViewChild(CdkVirtualScrollViewport) public viewport: CdkVirtualScrollViewport;
+    @Input() emptyContentText: I18nFieldValue | undefined;
+    @Input() emptyContentIcon: string = 'storage';
 
     protected constructor(protected _caseViewService: CaseViewService,
                           protected _log: LoggerService,
                           @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData,
+                          protected _selectLangService: LanguageService,
                           protected route?: ActivatedRoute) {
         super(_caseViewService, _log, injectedTabData, route);
         this.cases$ = this._caseViewService.cases$;
@@ -42,5 +48,27 @@ export abstract class AbstractCaseListComponent extends AbstractDefaultCaseListC
             return;
         }
         this._caseViewService.nextPage(this.viewport.getRenderedRange(), this.viewport.getDataLength());
+    }
+
+    public hasEmptyContentText(): boolean {
+        const text: string = this.getEmptyContentText();
+        return text !== undefined && text !== '';
+    }
+
+    public getEmptyContentText(): string | undefined {
+        if (!this.emptyContentText) {
+            return undefined;
+        }
+        const lang: string = this._selectLangService.getLanguage();
+        const translations = this.emptyContentText.translations ?? {};
+        let resultText: string | undefined = translations[lang];
+        if (!resultText) {
+            resultText = this.emptyContentText.defaultValue;
+        }
+        return resultText;
+    }
+
+    public getEmptyContentIcon(): string {
+        return !!this.emptyContentIcon && this.emptyContentIcon !== '' ? this.emptyContentIcon : 'storage';
     }
 }

@@ -18,7 +18,7 @@ import {
     TaskEventService,
     TaskRequestStateService,
     TaskViewService,
-    ViewIdService,
+    ViewIdService, extractFieldValueFromData, GroupNavigationConstants,
 } from '@netgrif/components-core';
 import {AsyncPipe} from "@angular/common";
 import {
@@ -81,6 +81,12 @@ export class DefaultTabbedSingleTaskViewComponent extends AbstractTabbedSingleTa
                 activatedRoute: ActivatedRoute,
                 protected _router: Router) {
         super(taskViewService, injectedTabData, activatedRoute);
+        if (!!injectedTabData?.navigationItemTaskData) {
+            this.showPageHeader = extractFieldValueFromData<boolean>(injectedTabData.navigationItemTaskData,
+                GroupNavigationConstants.ITEM_FIELD_SHOW_PAGE_HEADER) ?? this.showPageHeader;
+            this.showPageFooter = extractFieldValueFromData<boolean>(injectedTabData.navigationItemTaskData,
+                GroupNavigationConstants.ITEM_FIELD_SHOW_PAGE_FOOTER) ?? this.showPageFooter;
+        }
     }
 
     ngOnInit(): void {

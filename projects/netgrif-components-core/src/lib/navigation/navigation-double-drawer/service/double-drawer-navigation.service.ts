@@ -22,12 +22,12 @@ import {AccessService} from "../../../authorization/permission/access.service";
 import {ActivatedRoute} from "@angular/router";
 import {ConfigurationService} from "../../../configuration/configuration.service";
 import {View} from "../../../../commons/schema";
+import {encodeBase64} from "../../../utility/base64";
 import {
     MENU_IDENTIFIERS,
     MenuOrder,
     NavigationItem, RIGHT_SIDE_INIT_PAGE_SIZE,
-    RIGHT_SIDE_NEW_PAGE_SIZE,
-    SETTINGS_TRANSITION_ID
+    RIGHT_SIDE_NEW_PAGE_SIZE
 } from '../../model/navigation-configs';
 import { UriNodeResource } from '../../model/uri-resource';
 import {MenuItemClickEvent, MenuItemLoadedEvent} from '../../model/navigation-menu-events';
@@ -536,8 +536,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
     }
 
     public getItemRoutingPath(itemCase: Case) {
-        const taskId = DoubleDrawerUtils.findTaskIdInCase(itemCase, SETTINGS_TRANSITION_ID);
         const url = this._dynamicRoutingService.route;
-        return `/${url}/${taskId}`;
+        return `/${url}/${encodeBase64(itemCase.stringId)}`;
     }
 }

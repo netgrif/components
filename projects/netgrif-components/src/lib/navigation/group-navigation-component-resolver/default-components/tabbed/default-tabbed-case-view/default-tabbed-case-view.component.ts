@@ -7,7 +7,6 @@ import {
     Case,
     CaseViewService,
     CategoryFactory,
-    CategoryResolverService,
     Filter,
     FilterExtractionService,
     FilterType,
@@ -17,7 +16,6 @@ import {
     NAE_BASE_FILTER,
     NAE_DEFAULT_CASE_SEARCH_CATEGORIES,
     NAE_DEFAULT_HEADERS,
-    NAE_DEFAULT_TASK_SEARCH_CATEGORIES,
     NAE_SEARCH_CATEGORIES,
     NAE_TAB_DATA,
     SavedFilterMetadata,
@@ -28,6 +26,9 @@ import {
     navigationItemCaseViewDefaultHeadersFactory,
     NAE_NAVIGATION_ITEM_TASK_DATA,
     OverflowService,
+    I18nFieldValue,
+    extractFieldValueFromData,
+    GroupNavigationConstants,
     LoadingEmitter,
     SnackBarService,
     HeaderColumn,
@@ -39,8 +40,7 @@ import {
 } from '../../model/injected-tabbed-case-view-data-with-navigation-item-task-data';
 import {
     filterCaseTabbedDataAllowedNetsServiceFactory,
-    filterCaseTabbedDataFilterFactory,
-    filterCaseTabbedDataSearchCategoriesFactory
+    filterCaseTabbedDataFilterFactory
 } from '../../model/factory-methods';
 import {ActivatedRoute} from '@angular/router';
 import {Subscription} from "rxjs";
@@ -67,9 +67,7 @@ import {TranslateService} from "@ngx-translate/core";
             deps: [AllowedNetsServiceFactory, BaseAllowedNetsService, NAE_TAB_DATA]
         },
         {
-            provide: NAE_SEARCH_CATEGORIES,
-            useFactory: filterCaseTabbedDataSearchCategoriesFactory,
-            deps: [CategoryResolverService, NAE_TAB_DATA, NAE_DEFAULT_CASE_SEARCH_CATEGORIES, NAE_DEFAULT_TASK_SEARCH_CATEGORIES]
+            provide: NAE_SEARCH_CATEGORIES, useExisting: NAE_DEFAULT_CASE_SEARCH_CATEGORIES
         },
         {
             provide: NAE_DEFAULT_HEADERS,
@@ -91,6 +89,8 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
     headersMode: string[];
     allowTableMode: boolean;
     defaultHeadersMode: HeaderMode;
+    emptyContentText: I18nFieldValue;
+    emptyContentIcon: string;
     allowExport: boolean;
     loading$: LoadingEmitter;
     private _currentHeaders: Array<HeaderColumn> = [];
@@ -125,6 +125,10 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
         if (!this.allowTableMode) {
             const viewId = viewIdService.viewId;
             localStorage.setItem(viewId + '-overflowMode', 'false');
+        }
+        if (!!_injectedTabData.navigationItemTaskData) {
+            this.emptyContentText = extractFieldValueFromData<I18nFieldValue>(_injectedTabData.navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_EMPTY_CONTENT_TEXT);
+            this.emptyContentIcon = extractFieldValueFromData<string>(_injectedTabData.navigationItemTaskData, GroupNavigationConstants.ITEM_FIELD_ID_CASE_EMPTY_CONTENT_ICON);
         }
     }
 
@@ -171,12 +175,12 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
     }
 
     protected resolveFilter(openCase: Case): Filter {
-        const additionalFilter = this._injectedTabData.taskViewAdditionalFilter;
+        const additionalFilter = this._injectedTabData.taskViewFilter;
         const mergeFilters = this._injectedTabData.taskViewMergeWithBaseFilter;
         const baseFilter = new SimpleFilter('', FilterType.TASK, {case: {id: `${openCase.stringId}`}});
 
         let filter;
-        if (additionalFilter === undefined) {
+        if (additionalFilter === undefined || additionalFilter.type === undefined) {
             filter = baseFilter;
         } else if (mergeFilters) {
             filter = additionalFilter.merge(baseFilter, MergeOperator.AND);
@@ -188,13 +192,13 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
     }
 
     protected resolveAllowedNets(openCase: Case): string[] {
-        const additionalFilter = this._injectedTabData.taskViewAdditionalFilter;
+        const additionalFilter = this._injectedTabData.taskViewFilter;
         if (additionalFilter == undefined) {
             return [openCase.processIdentifier];
         }
 
         const mergeFilters = this._injectedTabData.taskViewMergeWithBaseFilter;
-        const additionalAllowedNets = this._injectedTabData.taskViewAdditionalAllowedNets ? this._injectedTabData.taskViewAdditionalAllowedNets : [];
+        const additionalAllowedNets = this._injectedTabData.taskViewAllowedNets ? this._injectedTabData.taskViewAllowedNets : [];
 
         return mergeFilters ? [openCase.processIdentifier, ...additionalAllowedNets] : additionalAllowedNets
     }

@@ -4,6 +4,7 @@ import {
     GroupNavigationComponentResolverService,
     LoggerService,
     TaskResourceService,
+    CaseResourceService,
     ConfigurationService,
     View,
     ViewService,
@@ -12,15 +13,23 @@ import {
     RoutingBuilderService
 } from '@netgrif/components-core';
 import {DefaultTabViewComponent} from './default-components/tabbed/default-tab-view/default-tab-view.component';
+import {DefaultSingleTaskViewComponent} from './default-components/simple-views/default-single-task-view/default-single-task-view.component';
 import {
     DefaultNoFilterProvidedComponent
 } from "./default-components/default-no-filter-provided/default-no-filter-provided.component";
+import {
+    DefaultSimpleTaskViewComponent
+} from "./default-components/simple-views/default-simple-task-view/default-simple-task-view.component";
+import {
+    DefaultSimpleCaseViewComponent
+} from "./default-components/simple-views/default-simple-case-view/default-simple-case-view.component";
 
 @Injectable()
 export class DefaultGroupNavigationComponentResolverService extends GroupNavigationComponentResolverService {
 
-    constructor(taskResourceService: TaskResourceService, log: LoggerService, protected _configService: ConfigurationService, protected _viewService: ViewService,) {
-        super(taskResourceService, log);
+    constructor(taskResourceService: TaskResourceService, caseResourceService: CaseResourceService, log: LoggerService,
+                protected _configService: ConfigurationService, protected _viewService: ViewService,) {
+        super(taskResourceService, caseResourceService, log);
     }
 
     public resolveViewComponent(navItemData: Array<DataGroup>): Type<any> {
@@ -70,7 +79,22 @@ export class DefaultGroupNavigationComponentResolverService extends GroupNavigat
         if (!!isTabbed) {
             return DefaultTabViewComponent;
         } else {
-            throw new Error(`Cannot resolve navigation component`);
+            return this.getUntabbedDefaultComponent(navItemData);
+        }
+    }
+
+    protected getUntabbedDefaultComponent(navItemData: Array<DataGroup>): Type<any> {
+        const menuItemDataGroups: Array<DataGroup> = navItemData.slice(0, 1);
+        const viewType: string = extractFieldValueFromData<string>(menuItemDataGroups, "view_configuration_type");
+        switch (viewType) {
+            case "single_task_view":
+                return DefaultSingleTaskViewComponent;
+            case "case_view":
+                return DefaultSimpleCaseViewComponent;
+            case "task_view":
+                return DefaultSimpleTaskViewComponent;
+            default:
+                return DefaultNoFilterProvidedComponent;
         }
     }
 }

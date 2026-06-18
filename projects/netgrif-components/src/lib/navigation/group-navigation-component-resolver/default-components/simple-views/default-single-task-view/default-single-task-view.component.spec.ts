@@ -12,7 +12,8 @@ import {
     MaterialModule,
     NAE_TAB_DATA, SimpleFilter,
     TestConfigurationService,
-    FilterField, NAE_NAVIGATION_ITEM_TASK_DATA, UserFilterConstants
+    GroupNavigationConstants,
+    FilterField, NAE_NAVIGATION_ITEM_TASK_DATA, BooleanField
 } from "@netgrif/components-core";
 
 describe('DefaultSingleTaskViewComponent', () => {
@@ -42,7 +43,7 @@ describe('DefaultSingleTaskViewComponent', () => {
                       {
                           fields: [
                               new FilterField(
-                                  UserFilterConstants.FILTER_FIELD_ID,
+                                  GroupNavigationConstants.ITEM_FIELD_TASK_FILTER,
                                   '',
                                   '',
                                   {
@@ -54,6 +55,18 @@ describe('DefaultSingleTaskViewComponent', () => {
                                   {visible: true},
                                   '',
                                   ''
+                              ),
+                              new BooleanField(
+                                  GroupNavigationConstants.ITEM_FIELD_SHOW_PAGE_FOOTER,
+                                  '',
+                                  true,
+                                  {visible: true}
+                              ),
+                              new BooleanField(
+                                  GroupNavigationConstants.ITEM_FIELD_SHOW_PAGE_HEADER,
+                                  '',
+                                  true,
+                                  {visible: true}
                               )
                           ]
                       }

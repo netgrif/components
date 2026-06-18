@@ -6,7 +6,8 @@ import {
     NAE_TAB_DATA,
     NAE_VIEW_ID_SEGMENT,
     OverflowService,
-    TestMockDependenciesModule, UserFilterConstants
+    TestMockDependenciesModule,
+    GroupNavigationConstants,
 } from '@netgrif/components-core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
@@ -43,7 +44,7 @@ describe('EnumerationCaserefFieldComponent', () => {
                         navigationItemTaskData: [{fields: []}, {
                             fields: [
                                 new FilterField(
-                                    `${UserFilterConstants.FILTER_FIELD_ID}`,
+                                    `${GroupNavigationConstants.ITEM_FIELD_CASE_FILTER}`,
                                     '',
                                     '',
                                     {
