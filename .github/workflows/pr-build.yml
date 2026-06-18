@@ -8,7 +8,7 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                node-version: [ 14, 16, 18 ]
+                node-version: [ 20, 22, 24 ]
         steps:
             -   uses: actions/checkout@v3
                 with:
@@ -17,17 +17,18 @@ jobs:
                 name: Full Test on Node.js version ${{ matrix.node-version }}
                 with:
                     node-version: ${{ matrix.node-version }}
-            -   run: npm i --legacy-peer-deps
+            -   name: Install dependencies
+                run: npm install --legacy-peer-deps
             -   name: Build & test components-core
                 run: |
                     npm run ncc:build
                     npm run ncc:full-test
-                    npm i ./dist/netgrif-components-core --save-optional
+                    npm i ./dist/netgrif-components-core --save-optional --legacy-peer-deps
             -   name: Build & test components
                 run: |
                     npm run nc:build
                     npm run nc:full-test
-                    npm i ./dist/netgrif-components --save-optional
+                    npm i ./dist/netgrif-components --save-optional --legacy-peer-deps
             -   name: Build examples
                 run: npm run example:build
     test:
@@ -40,7 +41,7 @@ jobs:
             -   uses: actions/setup-node@v3
                 name: Full Test
                 with:
-                    node-version: 16
+                    node-version: 20
             -   run: npm i --legacy-peer-deps
             -   name: Build & test components-core
                 run: |
