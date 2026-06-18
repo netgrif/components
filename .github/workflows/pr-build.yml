@@ -10,10 +10,10 @@ jobs:
             matrix:
                 node-version: [ 20, 22, 24 ]
         steps:
-            -   uses: actions/checkout@v3
+            -   uses: actions/checkout@v4
                 with:
                     fetch-depth: 0
-            -   uses: actions/setup-node@v3
+            -   uses: actions/setup-node@v4
                 name: Full Test on Node.js version ${{ matrix.node-version }}
                 with:
                     node-version: ${{ matrix.node-version }}
@@ -35,13 +35,13 @@ jobs:
         name: Test with SonarCloud
         runs-on: ubuntu-latest
         steps:
-            -   uses: actions/checkout@v3
+            -   uses: actions/checkout@v4
                 with:
                     fetch-depth: 0
-            -   uses: actions/setup-node@v3
+            -   uses: actions/setup-node@v4
                 name: Full Test
                 with:
-                    node-version: 20
+                    node-version: 24
             -   run: npm i --legacy-peer-deps
             -   name: Build & test components-core
                 run: |
