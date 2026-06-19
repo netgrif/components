@@ -6,7 +6,7 @@
     "license": "SEE LICENSE IN LICENSE",
     "repository": {
         "type": "git",
-        "url": "https://github.com/netgrif/components.git"
+        "url": "git+https://github.com/netgrif/components.git"
     },
     "bugs": {
         "url": "https://github.com/netgrif/components/issues"
@@ -131,7 +131,7 @@
         "@angular/cli": "~17.3.8",
         "@angular/compiler-cli": "~17.3.11",
         "@angular/language-service": "~17.3.11",
-        "@compodoc/compodoc": "1.1.23",
+        "@compodoc/compodoc": "1.1.25",
         "@types/jasmine": "~3.10.0",
         "@types/jasminewd2": "~2.0.10",
         "@types/moment": "~2.13.0",
@@ -157,12 +157,12 @@
         "karma-webpack": "^5.0.1",
         "ncp": "~2.0.0",
         "ng-packagr": "~17.3.0",
-        "puppeteer": "~22.0.0",
+        "puppeteer": "~24.43.1",
         "requirejs": "^2.3.6",
         "schematics-utilities": "~2.0.1",
         "sonarqube-scanner": "~2.5.0",
         "ts-node": "~10.2.1",
-        "typedoc": "~0.22.11",
+        "typedoc": "~0.26.5",
         "typescript": "~5.2.0",
         "typescript-json-schema": "~0.60.0",
         "unique-names-generator": "~4.2.0"
