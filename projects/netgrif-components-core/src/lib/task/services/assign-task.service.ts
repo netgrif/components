@@ -24,8 +24,8 @@ import {ChangedFieldsService} from '../../changed-fields/services/changed-fields
 import {EventService} from '../../event/services/event.service';
 import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
 import {TaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/task-event-outcome';
-import {FrontActionService} from "../../actions/services/front-action.service";
-import {FrontAction} from "../../data-fields/models/changed-fields";
+import {FrontActionService} from '../../actions/services/front-action.service';
+import {FrontAction} from '../../data-fields/models/changed-fields';
 
 
 /**
