@@ -42,6 +42,10 @@ describe('AccessService', () => {
         service = TestBed.inject(AccessService);
     });
 
+    afterEach(() => {
+        TestBed.resetTestingModule();
+    });
+
     it('should be created', () => {
         expect(service).toBeTruthy();
     });

@@ -3,6 +3,10 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {SafeHtmlPipe} from './safe-html.pipe';
 
 describe('SafeHtmlPipe', () => {
+    afterEach(() => {
+        TestBed.resetTestingModule();
+    });
+
     it('should create an instance', () => {
         const sanitizer = TestBed.inject(DomSanitizer);
         const pipe = new SafeHtmlPipe(sanitizer);

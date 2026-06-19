@@ -10,6 +10,10 @@ describe('FrontActionsRegistryService', () => {
     service = TestBed.inject(FrontActionRegistryService);
   });
 
+  afterEach(() => {
+    TestBed.resetTestingModule();
+  });
+
   it('should be created', () => {
     expect(service).toBeTruthy();
   });

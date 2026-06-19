@@ -27,6 +27,10 @@ describe('DefaultGroupNavigationComponentResolverService', () => {
         service = TestBed.inject(DefaultGroupNavigationComponentResolverService);
     });
 
+    afterEach(() => {
+        TestBed.resetTestingModule();
+    });
+
     it('should be created', () => {
         expect(service).toBeTruthy();
     });

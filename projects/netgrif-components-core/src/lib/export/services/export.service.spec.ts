@@ -38,6 +38,7 @@ describe('ExportService', () => {
 
     afterEach(() => {
         httpMock.verify();
+        TestBed.resetTestingModule();
     });
 
     it('should be created', () => {
