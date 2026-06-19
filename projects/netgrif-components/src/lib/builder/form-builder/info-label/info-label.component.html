@@ -1,0 +1,19 @@
+<mat-toolbar *ngIf="selectedTransition" color="primary">
+  <mat-toolbar-row class="margins-sides">
+    <mat-icon *ngIf="selectedTransition.icon" aria-label="Transition icon"
+              class="icon">{{ selectedTransition.icon }}
+    </mat-icon>
+    <span>ID: {{ selectedTransition.id }}</span>
+    <span fxFlex></span>
+    <span class="spacer">Label: {{ selectedTransition.label?.value }}</span>
+  </mat-toolbar-row>
+</mat-toolbar>
+<mat-toolbar *ngIf="!selectedTransition" color="primary">
+  <mat-toolbar-row class="margins-sides">
+    <span>You have no selected transition!</span>
+    <div fxFlex></div>
+    <button (click)="redirect()" aria-label="Close form builder" mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>

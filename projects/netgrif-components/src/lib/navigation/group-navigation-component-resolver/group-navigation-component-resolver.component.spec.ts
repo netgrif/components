@@ -10,7 +10,7 @@ import {
     ViewService
 } from '@netgrif/components-core';
 import {of} from "rxjs";
-import {RouterModule} from '@angular/router';
+import {RouterTestingModule} from "@angular/router/testing";
 
 describe('GroupNavigationComponentResolverComponent', () => {
     let component: GroupNavigationComponentResolverComponent;
@@ -21,7 +21,7 @@ describe('GroupNavigationComponentResolverComponent', () => {
             imports: [
                 NavigationComponentModule,
                 TestMockDependenciesModule,
-                RouterModule.forRoot([]),
+                RouterTestingModule.withRoutes([]),
             ],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},

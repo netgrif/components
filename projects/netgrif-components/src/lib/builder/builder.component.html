@@ -1,0 +1,7 @@
+<div class="height-builder">
+    <nc-builder-modeler class="builder-fix" *ngIf="builderModeService.mode !== typeMode.FORM_BUILDER && (loading | async) === false"></nc-builder-modeler>
+    <nc-builder-form-builder class="builder-fix" *ngIf="builderModeService.mode === typeMode.FORM_BUILDER && !onlyTaskMode() && (loading | async) === false"></nc-builder-form-builder>
+    <div *ngIf="(loading | async)" fxFill fxLayoutAlign="center center">
+        <mat-spinner ></mat-spinner>
+    </div>
+</div>

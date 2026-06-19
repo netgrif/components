@@ -74,7 +74,6 @@ import {I18nFieldComponent} from './i18n-field/i18n-field.component';
 import {I18nDividerFieldComponent} from './i18n-field/i18n-divider-field/i18n-divider-field.component';
 import {I18nTextFieldComponent} from './i18n-field/i18n-text-field/i18n-text-field.component';
 import {EasymdeWrapperComponent} from './text-field/rich-textarea-field/easymde-wrapper/easymde-wrapper.component';
-import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
     MultichoiceAutocompleteFieldComponent
@@ -217,7 +216,6 @@ import { FilterStringQueryFieldComponent } from './filter-field/filter-string-qu
         AdvancedSearchComponentModule,
         MatProgressSpinnerModule,
         CurrencyModule,
-        BrowserModule,
         BrowserAnimationsModule,
         DashboardComponentModule,
         RouterModule,

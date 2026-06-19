@@ -43,12 +43,14 @@ import {
     DefaultPublicTaskViewComponent,
     DefaultPublicWorkflowViewComponent,
     DefaultSimpleTaskViewComponent,
-    DefaultPublicSingleTaskViewComponent
+    DefaultPublicSingleTaskViewComponent,
+    BuilderComponent
 } from "@netgrif/components";
 import {
     NavigationDashboardExampleComponent
 } from './doc/navigation-dashboard-example/navigation-dashboard-example.component';
 import {TabbedTicketViewComponent} from "./doc/tabbed-ticket-view/tabbed-ticket-view.component";
+import {BuilderTabsExampleComponent} from "./doc/builder-example/builder-tabs-example.component";
 
 @Injectable({
     providedIn: 'root'
@@ -101,9 +103,9 @@ export class NaeExampleAppViewService extends ViewService {
             {id: 'PublicResolverComponent', class: DefaultPublicResolverComponent},
             {id: 'DefaultSimpleTaskViewComponent', class: DefaultSimpleTaskViewComponent},
             {id: 'TabbedTicketView', class: TabbedTicketViewComponent},
-            {
-                id: 'ResetPasswordFormComponent',
-                class: ResetPasswordFormComponent
-            }], configurationService, router, loggerService);
+            {id: 'ResetPasswordFormComponent', class: ResetPasswordFormComponent},
+            {id: 'BuilderComponent', class: BuilderComponent},
+            {id: 'BuilderTabsExampleComponent', class: BuilderTabsExampleComponent}
+            ], configurationService, router, loggerService);
     }
 }

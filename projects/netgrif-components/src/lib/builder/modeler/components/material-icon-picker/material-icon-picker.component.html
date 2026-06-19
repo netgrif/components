@@ -1,0 +1,17 @@
+<div class="icon-select">
+    <mat-form-field appearance="outline" fxFlex>
+        <mat-label>Icon</mat-label>
+        <input type="text"
+               matInput
+               [formControl]="formControlRef"
+               [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete">
+            <mat-option>-- None --</mat-option>
+            <mat-option *ngFor="let icona of filteredIcons | async" [value]="icona">
+                <mat-icon>{{icona}}</mat-icon>
+                {{icona}}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+    <mat-icon class="icon-preview">{{icon}}</mat-icon>
+</div>

@@ -18,7 +18,6 @@ import {of} from 'rxjs';
 import {PanelComponentModule} from '../../../../panel/panel.module';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
-import {RouterModule} from '@angular/router';
 
 
 describe('CaseListComponent', () => {
@@ -34,7 +33,6 @@ describe('CaseListComponent', () => {
                 PanelComponentModule,
                 BrowserAnimationsModule,
                 NoopAnimationsModule,
-                RouterModule.forRoot([]),
                 RouterTestingModule.withRoutes([])
             ],
             providers: [

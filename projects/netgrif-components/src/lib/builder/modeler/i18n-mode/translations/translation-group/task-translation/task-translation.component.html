@@ -1,0 +1,22 @@
+<div fxLayout="column" *ngFor="let task of model.getTransitions(); let i = index">
+
+<!--    @defer (on viewport) {-->
+        <div>
+            <h3 class="margin-none">{{task.label.value}} [{{task.id}}]</h3>
+            <nc-builder-i18n-field [field]="task.label" [name]="'Title'" [translation]="translation"></nc-builder-i18n-field>
+            <div *ngIf="task.getEvents?.length > 0">
+                <h4>Events:</h4>
+                <div *ngFor="let event of task.getEvents()">
+                    <nc-builder-i18n-field [field]="event.title" [name]="'Title'" class="events" [translation]="translation"></nc-builder-i18n-field>
+                    <nc-builder-i18n-field [field]="event.message" [name]="'Message'" class="events" [translation]="translation"></nc-builder-i18n-field>
+                </div>
+            </div>
+            <mat-divider *ngIf="notLast(i)"></mat-divider>
+        </div>
+<!--    } @placeholder {-->
+<!--        <div>-->
+<!--            <h3 class="margin-none">{{task.label.value}} [{{task.id}}]</h3>-->
+<!--            <mat-spinner></mat-spinner>-->
+<!--        </div>-->
+<!--    }-->
+</div>

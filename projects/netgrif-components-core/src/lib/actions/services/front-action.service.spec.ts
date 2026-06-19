@@ -17,6 +17,10 @@ describe('FrontActionService', () => {
     service = TestBed.inject(FrontActionService);
   });
 
+  afterEach(() => {
+    TestBed.resetTestingModule();
+  });
+
   it('should be created', () => {
     expect(service).toBeTruthy();
   });

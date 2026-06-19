@@ -471,7 +471,8 @@
             "deleteError": "Process could not be deleted",
             "uploadFailed": "Process file could not be uploaded.",
             "uploadSuccess": "Process file uploaded successfully"
-        }
+        },
+        "new-process": "Create new Process"
     },
     "legal": {
         "byClicking": "By clicking '{{buttonName}}',",

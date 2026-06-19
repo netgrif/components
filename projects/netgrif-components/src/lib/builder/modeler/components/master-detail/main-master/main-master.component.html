@@ -1,0 +1,20 @@
+<div fxLayout="column" class="height-fix pag-density" matSort (matSortChange)="sortData($event)">
+    <div mat-subheader class="header">
+        <p fxFlex="40" mat-sort-header="{{firstColName | lowercase}}"><strong>{{firstColName}}</strong></p>
+        <p fxFlex mat-sort-header="{{secondColName | lowercase}}">{{secondColName}}</p>
+        <div class="button-wrap" *ngIf="showAddButton">
+            <button mat-icon-button class="button-line" matTooltip="{{buttonTooltip !== undefined ? buttonTooltip : 'Add'}}" (click)="create()">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+    </div>
+    <mat-action-list class="height-max" >
+        <nc-builder-main-master-item *ngFor="let item of pageData"
+                              [item]="item"
+                              [masterItemComponent]="masterItemComponent"
+                              [masterService]="masterService" ></nc-builder-main-master-item>
+    </mat-action-list>
+    <mat-paginator fxFlex class="footer" [length]="totalSize" [pageSize]="pageSize" [pageIndex]="pageIndex"
+                   [pageSizeOptions]="pageSizeOptions" (page)="onPageChanged($event)" showFirstLastButtons="false">
+    </mat-paginator>
+</div>

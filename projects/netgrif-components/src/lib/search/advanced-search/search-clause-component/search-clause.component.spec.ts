@@ -25,6 +25,7 @@ import {
 } from '@netgrif/components-core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {AdvancedSearchComponentModule} from '../advanced-search.module';
+import {RouterTestingModule} from "@angular/router/testing";
 
 describe('SearchClauseComponent', () => {
     let component: SearchClauseComponent;
@@ -39,6 +40,7 @@ describe('SearchClauseComponent', () => {
                 TranslateLibModule,
                 NoopAnimationsModule,
                 DefaultSearchCategoriesModule,
+                RouterTestingModule.withRoutes([])
             ],
             declarations: [
                 TestWrapperComponent

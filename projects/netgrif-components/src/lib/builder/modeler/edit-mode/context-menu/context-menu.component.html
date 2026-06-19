@@ -1,0 +1,8 @@
+<div class="menu" #menu>
+    <div class="content">
+        <button *ngFor="let item of menuItems" mat-menu-item class="menuItem" (click)="itemClick(item)">
+            <mat-icon>{{item.icon}}</mat-icon>
+            <span>{{item.title}}</span>
+        </button>
+    </div>
+</div>

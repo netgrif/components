@@ -1,0 +1,36 @@
+<h2 mat-dialog-title>Import result</h2>
+<mat-dialog-content class="mat-typography padding-top-4px">
+  <div *ngIf="data.errors.length > 0">
+    <h3 class="error">
+      <mat-icon>error</mat-icon>
+      <span>Errors:</span>
+    </h3>
+    <p *ngFor="let error of data.errors" class="paragraph">
+      {{ error }}<br>
+    </p>
+  </div>
+
+  <div *ngIf="data.warnings.length > 0">
+    <h3 class="warning">
+      <mat-icon>warning_amber</mat-icon>
+      <span>Warnings:</span>
+    </h3>
+    <p *ngFor="let warning of data.warnings" class="paragraph">
+      {{ warning }}<br>
+    </p>
+  </div>
+
+  <div *ngIf="data.info.length > 0">
+    <h3 class="info">
+      <mat-icon>info_outline</mat-icon>
+      <span>Info:</span>
+    </h3>
+    <p *ngFor="let info of data.info" class="paragraph">
+      {{ info }}<br>
+    </p>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button cdkFocusInitial mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>
+

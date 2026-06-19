@@ -1,0 +1,87 @@
+.border-right {
+  border-right: 2px solid #DDDDDD;
+  overflow: auto;
+}
+
+.height-100 {
+  height: 100%;
+}
+
+.height-56 {
+  height: calc(100% - 57px);
+}
+
+.margin-top32px {
+  margin-top: 32px;
+}
+
+.no-overflow {
+  height: 100%;
+  overflow: auto;
+}
+
+.footer {
+  box-sizing: border-box;
+  border-top: 1px solid #DDDDDD;
+}
+
+.item-bottom-border {
+  border-bottom: 0.5px solid #DDDDDD;
+}
+
+.header-bottom-border {
+  border-bottom: 1.5px solid #DDDDDD;
+}
+
+.right-margin {
+  margin-right: 10px;
+}
+
+.large-icon {
+  font-size: 36px;
+  min-height: 36px;
+  min-width: 36px;
+}
+
+.bottom-padding {
+  padding-bottom: 5px;
+}
+
+.tree-node-invisible {
+  display: none;
+}
+
+.tree-offset {
+  margin-left: 16px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.editor-list-area-padding {
+  padding: 8px;
+}
+
+.tree {
+  background-color: #fafafa;
+}
+
+.mat-tree-node {
+  overflow-x: hidden !important;
+}
+
+.text-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.function-list-icon-hidden {
+  visibility: hidden;
+}
+
+.function-icon {
+
+}

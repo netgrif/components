@@ -37,7 +37,8 @@ describe('PublicTaskViewComponent', () => {
                     useValue: {baseFilter: new SimpleFilter('id', FilterType.TASK, {}), tabSelected$: new Observable()}
                 },
                 AuthenticationMethodService,
-                {provide: ConfigurationService, useClass: NaeExampleAppConfigurationService}
+                {provide: ConfigurationService, useClass: NaeExampleAppConfigurationService},
+                TaskResourceService
             ],
             declarations: [PublicTaskViewComponent]
         })

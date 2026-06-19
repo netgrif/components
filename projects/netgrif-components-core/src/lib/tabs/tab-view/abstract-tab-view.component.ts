@@ -25,6 +25,10 @@ export abstract class AbstractTabViewComponent implements OnInit, OnDestroy {
      * Flag if the height of the content has to stretch to fill the available window
      */
     @Input() public stretch: boolean;
+    /**
+     * Animation duration in milliseconds.
+     */
+    @Input() public animationDuration: number;
     public tabView: TabView;
 
     @Input() public align = 'start';

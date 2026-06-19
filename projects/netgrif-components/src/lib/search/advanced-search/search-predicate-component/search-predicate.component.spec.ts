@@ -23,6 +23,7 @@ import {Subject} from 'rxjs';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {AdvancedSearchComponentModule} from '../advanced-search.module';
+import {RouterTestingModule} from "@angular/router/testing";
 
 describe('SearchPredicateComponent', () => {
     let component: SearchPredicateComponent;
@@ -37,6 +38,7 @@ describe('SearchPredicateComponent', () => {
                 TranslateLibModule,
                 NoopAnimationsModule,
                 DefaultSearchCategoriesModule,
+                RouterTestingModule.withRoutes([])
             ],
             declarations: [
                 TestWrapperComponent

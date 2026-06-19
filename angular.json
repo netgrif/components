@@ -118,7 +118,8 @@
                             "buffer",
                             "easymde",
                             "semver",
-                            "rfdc"
+                            "rfdc",
+                            "escape-string-regexp"
                         ],
                         "outputPath": "dist/nae-example-app",
                         "index": "projects/nae-example-app/src/index.html",
@@ -127,7 +128,17 @@
                         "tsConfig": "projects/nae-example-app/tsconfig.app.json",
                         "assets": [
                             "projects/nae-example-app/src/favicon.ico",
-                            "projects/nae-example-app/src/assets"
+                            "projects/nae-example-app/src/assets",
+                            {
+                                "glob": "**/*",
+                                "input": "node_modules/monaco-editor/min-maps",
+                                "output": "assets/monaco/min-maps"
+                            },
+                            {
+                                "glob": "**/*",
+                                "input": "node_modules/monaco-editor/min",
+                                "output": "assets/monaco/min"
+                            }
                         ],
                         "styles": [
                             "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
