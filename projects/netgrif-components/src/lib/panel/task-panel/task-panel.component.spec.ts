@@ -5,7 +5,6 @@ import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TaskPanelComponent} from './task-panel.component';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {RouterTestingModule} from '@angular/router/testing';
 import {
     AssignPolicy,
@@ -58,7 +57,6 @@ import {
 import {of, Subject, throwError} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {PanelComponent} from '../panel.component';
-import {TaskContentComponent} from '../../task-content/task-content/task-content.component';
 import {TaskContentComponentModule} from '../../task-content/task-content.module';
 
 describe('TaskPanelComponent', () => {

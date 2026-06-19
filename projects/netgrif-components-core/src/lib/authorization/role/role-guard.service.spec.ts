@@ -44,6 +44,10 @@ describe('RoleGuardService', () => {
         service = TestBed.inject(RoleGuardService);
     });
 
+    afterEach(() => {
+        TestBed.resetTestingModule();
+    });
+
     it('should be created', () => {
         expect(service).toBeTruthy();
     });

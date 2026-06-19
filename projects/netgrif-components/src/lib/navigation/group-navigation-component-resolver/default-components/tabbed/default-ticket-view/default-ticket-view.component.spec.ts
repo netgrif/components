@@ -26,7 +26,7 @@ import {
 import {of} from "rxjs";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {CommonModule} from "@angular/common";
-import {FlexLayoutModule, FlexModule} from "@angular/flex-layout";
+import {FlexLayoutModule, FlexModule} from "@ngbracket/ngx-layout";
 
 describe('DefaultTicketViewComponent', () => {
     let component: DefaultTicketViewComponent;
@@ -82,6 +82,10 @@ describe('DefaultTicketViewComponent', () => {
         fixture = TestBed.createComponent(DefaultTicketViewComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 
     it('should create', () => {

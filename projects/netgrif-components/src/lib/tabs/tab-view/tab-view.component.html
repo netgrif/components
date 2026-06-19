@@ -2,6 +2,7 @@
                [class.center-tabs]="align === 'center'"
                [class.end-tabs]="align === 'end'"
                mat-stretch-tabs="false"
+               [animationDuration]="animationDuration ?? 500"
                (selectedTabChange)="tabView.tabChange($event)" class="tab-group"
                [class.nae-tab-fill-height]="stretch" fxFlex>
     <mat-tab *ngFor="let tab of tabView.openedTabs; let i=index" [ngClass]="{'label-opacity': i === tabView.selectedIndex.value}">
@@ -23,7 +24,7 @@
         <nc-tab-creation-detector [initializeTabFunction]="initializeTabLambda"
                                   [tabIndex]="i"></nc-tab-creation-detector>
         <ng-template [ngIf]="tab.isTabInitialized" class="full-height">
-            <ng-template [cdkPortalOutlet]="tab.portal" class="full-height"></ng-template>
+            <ng-template matTabContent [cdkPortalOutlet]="tab.portal" class="full-height"></ng-template>
         </ng-template>
     </mat-tab>
 </mat-tab-group>

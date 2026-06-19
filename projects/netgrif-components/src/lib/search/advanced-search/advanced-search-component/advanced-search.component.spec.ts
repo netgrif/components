@@ -12,6 +12,7 @@ import {
 import {SearchComponentModule} from '../../search.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {RouterTestingModule} from "@angular/router/testing";
 
 describe('AdvancedSearchComponent', () => {
     let component: AdvancedSearchComponent;
@@ -24,6 +25,7 @@ describe('AdvancedSearchComponent', () => {
                 SearchComponentModule,
                 NoopAnimationsModule,
                 HttpClientTestingModule,
+                RouterTestingModule.withRoutes([])
             ],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
@@ -44,6 +46,10 @@ describe('AdvancedSearchComponent', () => {
         fixture = TestBed.createComponent(AdvancedSearchComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 
     it('should create', () => {

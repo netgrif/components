@@ -90,7 +90,8 @@ import {
     FilterFieldTabViewComponent,
     FilterFieldTabbedCaseViewComponent,
     FilterFieldTabbedTaskViewComponent,
-    DialogComponentsModule
+    DialogComponentsModule,
+    BuilderModule
 } from '@netgrif/components';
 import {UserInviteComponent} from './doc/user-invite/user-invite.component';
 import {ExamplePortalCardComponent} from './doc/dashboard-example/piechart-card/example-portal-card.component';
@@ -134,6 +135,10 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { TabbedTicketViewComponent } from './doc/tabbed-ticket-view/tabbed-ticket-view.component';
+import {BuilderTabsExampleComponent} from "./doc/builder-example/builder-tabs-example.component";
+import {
+    BuilderTabbedCaseViewComponent
+} from "./doc/builder-example/builder-tabbed-case-view/builder-tabbed-case-view.component";
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -196,7 +201,9 @@ export function HttpLoaderFactory(http: HttpClient) {
         BreadcrumbsExampleComponent,
         ChangePasswordComponent,
         NavigationDashboardExampleComponent,
-        TabbedTicketViewComponent
+        TabbedTicketViewComponent,
+        BuilderTabsExampleComponent,
+        BuilderTabbedCaseViewComponent
     ],
     imports: [
         BrowserModule,
@@ -252,7 +259,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         FrontActionModule,
         LayoutModule,
         MatToolbarModule,
-        MatListModule
+        MatListModule,
+        BuilderModule
     ],
     providers: [{
         provide: ConfigurationService,

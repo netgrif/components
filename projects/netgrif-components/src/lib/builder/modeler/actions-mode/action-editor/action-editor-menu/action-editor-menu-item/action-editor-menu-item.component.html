@@ -1,0 +1,11 @@
+<mat-menu #appMenu="matMenu">
+  <ng-template matMenuContent>
+    <ng-container *ngIf="items.length > 0; else noItems">
+      <button (click)="addTextToEditor(item.id)" *ngFor="let item of items"
+              [innerHTML]="item.title | safeHtml" mat-menu-item></button>
+    </ng-container>
+    <ng-template #noItems>
+      <button [disabled]="true" mat-menu-item>No {{ configuration.title }}</button>
+    </ng-template>
+  </ng-template>
+</mat-menu>

@@ -470,7 +470,8 @@
             "deleteError": "Prozess konnte nicht gelöscht werden",
             "uploadFailed": "Prozessdatei konnte nicht hochgeladen werden.",
             "uploadSuccess": "Prozessdatei erfolgreich hochgeladen"
-        }
+        },
+        "new-process": "Neuen Prozess erstellen"
     },
     "legal": {
         "byClicking": "Indem Sie auf '{{buttonName}}' klicken,",

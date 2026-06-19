@@ -28,7 +28,7 @@ import {
 export class DefaultGroupNavigationComponentResolverService extends GroupNavigationComponentResolverService {
 
     constructor(taskResourceService: TaskResourceService, caseResourceService: CaseResourceService, log: LoggerService,
-                private _configService: ConfigurationService, private _viewService: ViewService,) {
+                protected _configService: ConfigurationService, protected _viewService: ViewService,) {
         super(taskResourceService, caseResourceService, log);
     }
 

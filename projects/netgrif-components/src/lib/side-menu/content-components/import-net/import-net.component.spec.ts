@@ -7,17 +7,15 @@ import {ImportNetComponent} from './import-net.component';
 import {
     AuthenticationModule,
     ConfigurationService,
-    ErrorSnackBarComponent,
     NAE_SIDE_MENU_CONTROL,
     PetriNetResourceService,
     SideMenuControl,
     SnackBarModule,
-    SuccessSnackBarComponent,
     TestConfigurationService,
     TranslateLibModule
 } from '@netgrif/components-core';
-import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {MatIconModule} from '@angular/material/icon';
+import {RouterTestingModule} from "@angular/router/testing";
 
 describe('ImportNetComponent', () => {
     let component: ImportNetComponent;
@@ -33,7 +31,8 @@ describe('ImportNetComponent', () => {
                 AuthenticationModule,
                 TranslateLibModule,
                 MatIconModule,
-                SnackBarModule
+                SnackBarModule,
+                RouterTestingModule.withRoutes([])
             ],
             providers: [{
                 provide: NAE_SIDE_MENU_CONTROL,

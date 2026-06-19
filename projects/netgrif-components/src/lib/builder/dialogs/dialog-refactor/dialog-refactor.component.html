@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>Refactor Id</h2>
+<mat-dialog-content fxLayout="column" fxLayoutAlign="start stretch" class="netgrif-input padding-top-4px">
+    <mat-form-field appearance="outline">
+        <mat-label>Original Id</mat-label>
+        <input matInput disabled [(ngModel)]="data.originalId">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>New Id</mat-label>
+        <input autocomplete="off" matInput [formControl]="formControl">
+        <mat-error *ngIf="formControl.errors && formControl.errors.required">New Id is required!</mat-error>
+        <mat-error *ngIf="formControl.errors && formControl.errors.pattern">Id can contain only alphanumeric characters, dash or underscore!</mat-error>
+        <mat-error *ngIf="formControl.errors && formControl.errors.validUnique">Id must be unique! Selected Id already exists!</mat-error>
+    </mat-form-field>
+    <br>
+    <span class="warning"> WARNING! In actions, field Id will be changed only in the declaration part,
+        Id used as string in the actions statement will not be changed.</span>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button (click)="close()">Close</button>
+    <button mat-flat-button color="primary" (click)="refactor()">Refactor</button>
+</mat-dialog-actions>
+

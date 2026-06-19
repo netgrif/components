@@ -1,0 +1,20 @@
+<button
+    mat-icon-button
+    id="tool_{{tool.id}}"
+    class="button-line"
+    matTooltip="{{tool.tooltip}}"
+    (click)="xmlFileInput.click()">
+<!--    joyrideStep="{{tool.tutorialStep.step}}"-->
+<!--    title="{{tool.tutorialStep.title}}"-->
+<!--    text="{{tool.tutorialStep.text}}"-->
+<!--    stepPosition="{{tool.tutorialStep.position}}"-->
+<!--    (done)="tutorialService.onClose()"-->
+<!--    (next)="tool.tutorialStep.onNext()"-->
+<!--    (prev)="tool.tutorialStep.onPrev()"-->
+
+
+    <input #xmlFileInput type="file" accept=".xml, .bpmn" class="hidden-button" (change)="onClick($event)"/>
+
+    <mat-icon *ngIf="tool.icon.isSvg" svgIcon="{{tool.icon.name}}"></mat-icon>
+    <mat-icon *ngIf="!tool.icon.isSvg" [ngClass]="{'material-icons-outlined': tool.icon.isOutlined}">{{tool.icon.name}}</mat-icon>
+</button>

@@ -1,0 +1,13 @@
+.button-line {
+    line-height: 0;
+    border-radius: 5px !important;
+    width: 40px !important;
+    height: 40px !important;
+    padding: 0;
+
+    mat-icon {
+        cursor: pointer;
+        width: 24px;
+        height: 24px;
+    }
+}

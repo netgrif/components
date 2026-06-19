@@ -1,0 +1,147 @@
+.field-list-heading {
+    padding: 16px 16px 0;
+    margin: 0;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    width: 80%;
+    background: white;
+    display: flex;
+    z-index: 1;
+}
+
+.field-list-expansion-header {
+    height: 40px;
+}
+
+.field-list-mat-list-item {
+    height: 40px;
+    padding-left: 8px;
+    padding-right: 4px;
+}
+
+.field-list-mat-list-item:hover {
+    cursor: move !important;
+
+    .field-list-mat-list-item-title {
+        text-shadow: 0 0 5px #fff;
+        cursor: move !important;
+    }
+}
+
+.field-list-mat-list-item-disabled-title {
+    text-shadow: 0 0 5px #fff;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.field-list-mat-list-item-title {
+    height: 40px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.field-list-expansion-panel {
+    box-shadow: none !important;
+}
+
+.field-list-expansion-title {
+    font-weight: 500;
+}
+
+.half-button {
+    position: fixed;
+    top: 18px;
+    left: 317px;
+    z-index: 1;
+}
+
+.remove-mat-icon {
+    position: absolute;
+    right: -10px;
+    top: 12px;
+    color: rgba(0, 0, 0, 0.54);
+}
+
+.save-button {
+    margin-top: 20px;
+    margin-left: 5.5%;
+    margin-right: 5.5%;
+    width: 89%;
+}
+
+.back-button {
+    margin-top: 8px;
+    margin-left: 5.5%;
+    margin-right: 5.5%;
+    width: 89%;
+}
+
+.save-back-div {
+    position: sticky;
+    z-index: 1;
+    bottom: 0;
+    background: white;
+    padding-bottom: 10px;
+}
+
+.button-text {
+    color: black !important;
+}
+
+.clear-search-icon {
+    border-radius: 12px;
+    min-width: 24px;
+    min-height: 24px;
+
+    &:hover {
+        //background-color: map-get($netgrif-blue, A200); GLOBAL STYLE
+    }
+}
+
+.icon-color {
+    position: relative;
+    top: 5px;
+    padding-right: 4px;
+    color: #bbbbbb;
+}
+
+.icon-delete {
+    cursor: pointer !important;
+}
+
+.mat-list {
+    padding: 0;
+}
+
+.noselect {
+    padding-top: 0;
+}
+
+.noselect * {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently
+                                     supported by Chrome and Opera */
+}
+
+.noselect > * {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently
+                                     supported by Chrome and Opera */
+}
+
+.existing-field-search {
+    margin-top: 0;
+}

@@ -4,6 +4,7 @@
 process = require('process');
 process.env.CHROME_BIN = require('puppeteer').executablePath();
 process.setMaxListeners(0);
+require('events').EventEmitter.defaultMaxListeners = 20;
 
 module.exports = function (config) {
     config.set({

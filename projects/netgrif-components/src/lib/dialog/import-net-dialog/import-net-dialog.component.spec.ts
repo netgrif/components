@@ -1,5 +1,4 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
-
 import {ImportNetDialogComponent} from './import-net-dialog.component';
 import {
     SideMenuImportNetComponentModule
@@ -7,18 +6,18 @@ import {
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {
-    ConfigurationService, ErrorSnackBarComponent,
-    NAE_SIDE_MENU_CONTROL, PetriNetResourceService,
-    SideMenuControl,
-    SnackBarModule, SuccessSnackBarComponent, TestConfigurationService,
+    ConfigurationService,
+    PetriNetResourceService,
+    SnackBarModule,
+    TestConfigurationService,
     TranslateLibModule
 } from '@netgrif/components-core';
 import {MatIconModule} from '@angular/material/icon';
 import {Observable, of} from 'rxjs';
-import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {NO_ERRORS_SCHEMA} from "@angular/core";
 import {AuthenticationModule} from "@netgrif/components-core";
+import {RouterTestingModule} from "@angular/router/testing";
 
 describe('ImportNetDialogComponent', () => {
     let component: ImportNetDialogComponent;
@@ -39,7 +38,8 @@ describe('ImportNetDialogComponent', () => {
                 TranslateLibModule,
                 MatIconModule,
                 SnackBarModule,
-                MatDialogModule
+                MatDialogModule,
+                RouterTestingModule.withRoutes([]),
             ],
             providers: [
                 {provide: MAT_DIALOG_DATA, useValue: {}},
@@ -55,6 +55,10 @@ describe('ImportNetDialogComponent', () => {
         fixture = TestBed.createComponent(ImportNetDialogComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 
     it('should create', () => {

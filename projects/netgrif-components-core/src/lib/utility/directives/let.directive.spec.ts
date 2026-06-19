@@ -11,6 +11,10 @@ describe('LetDirective', () => {
         component = fixture.componentInstance;
     })
 
+    afterEach(() => {
+        TestBed.resetTestingModule();
+    });
+
     it('should create an instance', () => {
         const directive = new LetDirective();
         expect(directive).toBeTruthy();

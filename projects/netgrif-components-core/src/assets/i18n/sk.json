@@ -470,7 +470,8 @@
             "deleteError": "Proces sa nepodarilo zmazať",
             "uploadFailed": "Súbor procesu sa nepodarilo nahrať.",
             "uploadSuccess": "Súbor procesu bol úspešne nahraný"
-        }
+        },
+        "new-process": "Vytvor nový proces"
     },
     "legal": {
         "byClicking": "Kliknutím na tlačidlo '{{buttonName}}'",

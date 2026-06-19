@@ -18,7 +18,7 @@ import {
     UserResourceService,
     ViewService,
     OverflowService,
-    WorkflowHeaderService
+    WorkflowHeaderService, PetriNetResourceService, ProcessService
 } from '@netgrif/components-core';
 import {PanelComponentModule, SideMenuContentComponentModule, HeaderComponentModule} from '@netgrif/components';
 import {RouterTestingModule} from '@angular/router/testing';
@@ -40,7 +40,7 @@ describe('PublicWorkflowViewComponent', () => {
                 HttpClientTestingModule,
                 SideMenuContentComponentModule,
                 TranslateLibModule,
-                RouterTestingModule.withRoutes([], { relativeLinkResolution: 'legacy' }),
+                RouterTestingModule.withRoutes([]),
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
             providers: [
@@ -48,6 +48,8 @@ describe('PublicWorkflowViewComponent', () => {
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
+                PetriNetResourceService,
+                ProcessService,
                 {provide: ViewService, useClass: TestViewService},
                 WorkflowHeaderService,
                 OverflowService

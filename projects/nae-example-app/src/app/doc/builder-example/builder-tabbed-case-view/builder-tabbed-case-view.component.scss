@@ -1,0 +1,70 @@
+.case-view-container {
+    margin: 16px 24px;
+    height: calc(100% - 32px);
+    overflow: auto
+}
+
+@media screen and (max-width: 599.99px) {
+    .case-view-container {
+        margin: 12px 12px;
+    }
+
+}
+
+.case-view-search-container {
+    margin-top: 16px;
+    margin-bottom: 2px;
+    padding: 0;
+    max-height: 50%;
+}
+
+.case-header-padding {
+    padding-top: 16px;
+    padding-left: 1px;
+    padding-right: 1px;
+}
+
+.font-size-20 {
+    font-size: 20px;
+}
+
+.search-width {
+    width: 100%;
+}
+
+.search-fix {
+    min-height: calc(100% + 2px);
+    max-height: 100%;
+    overflow-y: auto;
+}
+
+.full-height {
+    height: 100%;
+}
+
+.overflow-div {
+    overflow-x: scroll;
+}
+
+.transform-div {
+    transform: rotateX(180deg);
+    -ms-transform: rotateX(180deg); /* IE 9 */
+    -webkit-transform: rotateX(180deg);
+}
+
+.custom-scrollbar {
+
+    &::-webkit-scrollbar {
+        width: 15px;
+        height: 15px;
+        cursor: pointer;
+    }
+}
+
+.max-width-fix {
+    max-width: calc(100% - 8px) !important;
+}
+
+.max-height {
+    max-height: 100%
+}

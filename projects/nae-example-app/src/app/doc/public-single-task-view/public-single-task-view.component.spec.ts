@@ -7,7 +7,7 @@ import {
     AuthenticationMethodService,
     NAE_TAB_DATA,
     SimpleFilter,
-    FilterType
+    FilterType, TaskResourceService
 } from '@netgrif/components-core';
 import {
     HeaderComponentModule,
@@ -37,7 +37,8 @@ describe('PublicSingleTaskViewComponent', () => {
                     useValue: {baseFilter: new SimpleFilter('id', FilterType.TASK, {}), tabSelected$: new Observable()}
                 },
                 AuthenticationMethodService,
-                {provide: ConfigurationService, useClass: NaeExampleAppConfigurationService}
+                {provide: ConfigurationService, useClass: NaeExampleAppConfigurationService},
+                TaskResourceService
             ],
             declarations: [PublicSingleTaskViewComponent]
         })

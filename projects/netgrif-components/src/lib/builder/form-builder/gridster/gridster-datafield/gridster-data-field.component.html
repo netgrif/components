@@ -1,0 +1,12 @@
+<div fxLayout="row" fxLayoutAlign="start center" class="gridster-item-content min-row-height netgrif-input" *ngIf="!isHidden()">
+    <span *ngIf="fieldListService.isPlaceholderField(dataField)"
+          class="placeholder-text">Placeholder for {{dataField.dataVariable.type}} with id '{{dataField.dataVariable?.id}}'</span>
+
+    <nc-data-field-template *ngIf="!fieldListService.isPlaceholderField(dataField)"
+                            [additionalFieldProperties]="{taskId: ''}" [dataField]="engineField" [offset]="0" fxFlex >
+    </nc-data-field-template>
+</div>
+<div *ngIf="isHidden()" fxLayout="row" fxLayoutAlign="center center" class="gridster-item-content min-row-height hidden-field">
+    <mat-icon>visibility_off</mat-icon>
+    <span>{{name()}}</span>
+</div>

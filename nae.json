@@ -238,6 +238,36 @@
                         "path": "group-nav"
                     }
                 },
+                "builder-example": {
+                    "component": {
+                        "class": "BuilderComponent",
+                        "from": "@netgrif/components"
+                    },
+                    "navigation": {
+                        "title": "Builder",
+                        "icon": "device_hub"
+                    },
+                    "access": "private",
+                    "routing": {
+                        "path": "builder"
+                    },
+                    "processUri": "/"
+                },
+                "demo-builder-tabs-view": {
+                    "component": {
+                        "class": "BuilderTabsExampleComponent",
+                        "from": ""
+                    },
+                    "access": "private",
+                    "navigation": {
+                        "title": "Builder tabs",
+                        "icon": "device_hub"
+                    },
+                    "routing": {
+                        "path": "builder-tabs-view"
+                    },
+                    "processUri": "/"
+                },
                 "custom-view": {
                     "component": {
                         "class": "TaskViewComponent",

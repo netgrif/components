@@ -37,6 +37,10 @@ describe('FieldComponentResolverComponent', () => {
         taskContentService.task = createMockTask();
     });
 
+    afterEach(() => {
+        TestBed.resetTestingModule();
+    });
+
     it('should create', () => {
         expect(component).toBeTruthy();
     });

@@ -1,0 +1,36 @@
+.nab-role-mode-wrapper {
+  height: 100%;
+  overflow: auto;
+}
+
+mat-panel-title {
+  max-width: 25%;
+}
+
+.p-width {
+  max-width: 25%;
+}
+
+.padding24px {
+  padding: 0 24px;
+}
+
+.padding15px {
+  padding: 0 15px;
+}
+
+.margin-top10px {
+  margin-top: 10px;
+}
+
+// TODO: probably redundant
+.width80 {
+  width: 80%;
+  margin: 50px auto;
+}
+
+.role-mode-card {
+  width: 80%;
+  margin: 8px auto;
+  padding: 8px;
+}

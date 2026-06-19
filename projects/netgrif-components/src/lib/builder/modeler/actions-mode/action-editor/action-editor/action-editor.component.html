@@ -1,0 +1,75 @@
+<div class="description" id="description">
+    <nc-builder-action-editor-menu-description id="description-content"
+                                        #descriptionComponent></nc-builder-action-editor-menu-description>
+</div>
+<mat-sidenav-container autosize>
+    <mat-sidenav mode="side" #drawer>
+        <nc-builder-action-editor-menu [descriptionComponent]="descriptionComponent"
+                                [editor]="editor"></nc-builder-action-editor-menu>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <mat-expansion-panel (closed)="setHeightOnClose(index, action); closeDrawer()"
+                             id="{{action.event + '_' + action.phase + '_' + index}}"
+                             class="panel-fix">
+            <mat-expansion-panel-header class="header">
+                Action: {{action.id}}
+            </mat-expansion-panel-header>
+            <ng-template matExpansionPanelContent>
+                <div fxLayout="row">
+                    <div fxFlex fxLayoutGap="3em" fxLayoutAlign="start center">
+                        <button type="button" mat-button (click)="openDrawer()">
+                            <mat-icon *ngIf="drawer.opened; else closed">
+                                keyboard_arrow_left
+                            </mat-icon>
+                            <ng-template #closed>
+                                <mat-icon>
+                                    keyboard_arrow_right
+                                </mat-icon>
+                            </ng-template>
+                            <mat-icon>
+                                functions
+                            </mat-icon>
+                            Functions
+                        </button>
+                    </div>
+
+                    <div fxFlex="50" fxLayoutGap="3em" fxLayoutAlign="end center">
+                        <mat-menu #referencesMenu="matMenu">
+                            <ng-container *ngFor="let configuration of editorConfigurations">
+                                <nc-builder-action-editor-menu-item [parentTrigger]="referencesTrigger" [trigger]="referenceItemTrigger" #referenceItem="menuInOtherComponent" [configuration]="configuration" [hidden]="!referencesOpened"></nc-builder-action-editor-menu-item>
+                                <button mat-menu-item #referenceItemTrigger="matMenuTrigger" [matMenuTriggerFor]="referenceItem.menu">
+                                    {{configuration.title}}
+                                </button>
+                            </ng-container>
+                        </mat-menu>
+                        <button #matButton fxFlexAlign="end center" type="button" mat-button
+                                #referencesTrigger="matMenuTrigger"
+                                [matMenuTriggerFor]="referencesMenu">
+                            <mat-icon>
+                                link
+                            </mat-icon>
+                            References
+                            <mat-icon *ngIf="referencesTrigger.menuOpen; else closedMenu">
+                                keyboard_arrow_up
+                            </mat-icon>
+                            <ng-template #closedMenu>
+                                <mat-icon>
+                                    keyboard_arrow_down
+                                </mat-icon>
+                            </ng-template>
+                        </button>
+                    </div>
+                </div>
+                <div fxLayout="column" fxLayoutAlign="start stretch" id="{{name + '_div'}}">
+                    <ngx-monaco-editor class="full-size-editor" id="{{name + '_editor'}}" [options]="editorOptions"
+                                       [formControl]="formControl" (onInit)="onInit($event)"></ngx-monaco-editor>
+                </div>
+            </ng-template>
+            <mat-action-row>
+                <button mat-icon-button (click)="openDialog(index)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </mat-action-row>
+        </mat-expansion-panel>
+    </mat-sidenav-content>
+</mat-sidenav-container>

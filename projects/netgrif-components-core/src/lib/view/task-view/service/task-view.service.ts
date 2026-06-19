@@ -355,7 +355,7 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
     }
 
     protected getDefaultSortParam(): string {
-        return createSortParam('priority', PaginationSort.DESCENDING);
+        return createSortParam('stringId', PaginationSort.DESCENDING);
     }
 
     protected addPageParams(params: HttpParams, pagination: Pagination): HttpParams {
