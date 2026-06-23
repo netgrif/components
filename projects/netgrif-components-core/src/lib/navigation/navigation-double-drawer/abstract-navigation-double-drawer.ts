@@ -4,13 +4,14 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {ResizeEvent} from 'angular-resizable-element';
 import {Observable, Subscription} from 'rxjs';
-import {filter, take} from 'rxjs/operators';
+import {filter, take, switchMap} from 'rxjs/operators';
 import {AccessService} from '../../authorization/permission/access.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {ImpersonationUserSelectService} from '../../impersonation/services/impersonation-user-select.service';
 import {ImpersonationService} from '../../impersonation/services/impersonation.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {CaseResourceService} from '../../resources/engine-endpoint/case-resource.service';
+import {Case} from '../../resources/interface/case';
 import {
     DynamicNavigationRouteProviderService,
 } from '../../routing/dynamic-navigation-route-provider/dynamic-navigation-route-provider.service';
@@ -37,6 +38,9 @@ import {UriNodeResource} from '../model/uri-resource';
 import {UriService} from '../service/uri.service';
 import {DoubleDrawerNavigationService} from "./service/double-drawer-navigation.service";
 import {DoubleDrawerUtils} from "./util/double-drawer-utils";
+import {ProcessService} from "../../process/process.service";
+import {CreateCaseEventOutcome} from "../../event/model/event-outcomes/case-outcomes/create-case-event-outcome";
+import {SnackBarService} from "../../snack-bar/services/snack-bar.service";
 
 @Component({
     selector: 'ncc-abstract-navigation-double-drawer',
@@ -67,6 +71,8 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     @Output() resized = new EventEmitter<MenuResizeEvent>(true); // on menu resize
     @Output() itemLoaded = new EventEmitter<MenuItemLoadedEvent>(true); // on item loaded
 
+    public editModeEnabled: boolean = false;
+
     protected _breakpointSubscription: Subscription;
 
     protected _configLeftMenu: ConfigDoubleMenu = {
@@ -83,6 +89,9 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     };
 
     protected configUrl: string;
+    protected itemClickedSub: Subscription;
+    protected itemLoadedSub: Subscription;
+    protected rightItemsSub: Subscription;
 
     protected constructor(protected _router: Router,
                           protected _activatedRoute: ActivatedRoute,
@@ -94,11 +103,13 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                           protected _log: LoggerService,
                           protected _config: ConfigurationService,
                           protected _uriService: UriService,
+                          protected _processService: ProcessService,
                           protected _caseResourceService: CaseResourceService,
                           protected _impersonationUserSelect: ImpersonationUserSelectService,
                           protected _impersonation: ImpersonationService,
                           protected _dynamicRoutingService: DynamicNavigationRouteProviderService,
                           protected _redirectService: RedirectService,
+                          protected _snackBarService: SnackBarService,
                           protected _navigationService: DoubleDrawerNavigationService) {
         let configUrl: string = this._config.getServicesConfiguration()?.doubleDrawer?.url;
         if (configUrl !== undefined && !configUrl.startsWith('/')) {
@@ -106,10 +117,10 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         }
         this.configUrl = configUrl;
 
-        this._navigationService.itemClicked$.subscribe((itemClickEvent: MenuItemClickEvent) => {
+        this.itemClickedSub = this._navigationService.itemClicked$.subscribe((itemClickEvent: MenuItemClickEvent) => {
             this.itemClicked.emit(itemClickEvent);
         })
-        this._navigationService.itemLoaded$.subscribe((itemLoadedEvent: MenuItemLoadedEvent) => {
+        this.itemLoadedSub = this._navigationService.itemLoaded$.subscribe((itemLoadedEvent: MenuItemLoadedEvent) => {
             this.itemLoaded.emit(itemLoadedEvent);
         })
     }
@@ -124,7 +135,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         });
 
         if (this.canApplyAutoSelect()) {
-            this.rightItems$.pipe(
+            this.rightItemsSub = this.rightItems$.pipe(
                 filter(rightItems => rightItems.length > 0),
                 take(1)
             ).subscribe(()=> {
@@ -146,6 +157,9 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         this.itemClicked.complete();
         this.resized.complete();
         this.itemLoaded.complete();
+        this.itemClickedSub.unsubscribe();
+        this.itemLoadedSub.unsubscribe();
+        this.rightItemsSub.unsubscribe();
     }
 
     public get currentNode(): UriNodeResource {
@@ -327,6 +341,42 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
 
     public isItemAndNodeEqual(item: NavigationItem, node: UriNodeResource): boolean {
         return DoubleDrawerUtils.isItemAndNodeEqual(item, node);
+    }
+
+    public setMenuEditMode(newVal: boolean): void {
+        this.editModeEnabled = newVal;
+    }
+
+    public editMenuItem(menuItemCase: Case) {
+        // todo 2454
+    }
+
+    public createMenuItem() {
+        this._processService.getNet('menu_item').pipe(
+            switchMap(net => {
+                return this._caseResourceService.createCase({
+                    netId: net.stringId,
+                    title: 'New menu item',
+                    params: { "dest_uri_path": this.currentNode.uriPath }
+                });
+            }),
+            take(1)
+        ).subscribe(outcome => {
+            if (outcome.error) {
+                this._log.error(`Could not create menu item case`, outcome.error);
+                this._snackBarService.openErrorSnackBar(this._translateService.instant('dynamicNavigation.snackbar.failedItemCreation'))
+                return;
+            }
+            const _case = (outcome.outcome as CreateCaseEventOutcome).aCase;
+            // todo 2454 redirect
+        }, error => {
+            this._log.error(`Could not create menu item case`, error);
+            this._snackBarService.openErrorSnackBar(this._translateService.instant('dynamicNavigation.snackbar.failedItemCreation'));
+        });
+    }
+
+    public canEditMenu(): boolean {
+        return this._userService.hasRoleByIdentifier('admin', 'menu_item')
     }
 
     protected resolveLayout(isLargeScreen: boolean): void {

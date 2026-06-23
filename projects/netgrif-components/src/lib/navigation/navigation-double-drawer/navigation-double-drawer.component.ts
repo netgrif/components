@@ -7,6 +7,8 @@ import {
     UriService,
     LoggerService,
     UserService,
+    ProcessService,
+    SnackBarService,
     AbstractNavigationDoubleDrawerComponent,
     DynamicNavigationRouteProviderService,
     AccessService,
@@ -67,15 +69,17 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
                 _log: LoggerService,
                 _config: ConfigurationService,
                 _uriService: UriService,
+                _processService: ProcessService,
                 _caseResourceService: CaseResourceService,
                 _impersonationUserSelect: ImpersonationUserSelectService,
                 _impersonation: ImpersonationService,
                 _dynamicRouteProviderService: DynamicNavigationRouteProviderService,
                 _redirectService: RedirectService,
+                _snackBarService: SnackBarService,
                 _navigationService: DoubleDrawerNavigationService) {
         super(_router, _activatedRoute, _breakpoint, _languageService, _translateService, _userService, _accessService,
-            _log, _config, _uriService, _caseResourceService, _impersonationUserSelect, _impersonation,
-            _dynamicRouteProviderService, _redirectService, _navigationService)
+            _log, _config, _uriService, _processService, _caseResourceService, _impersonationUserSelect, _impersonation,
+            _dynamicRouteProviderService, _redirectService, _snackBarService, _navigationService)
     }
 
     public toggleSection(section: string): void {
