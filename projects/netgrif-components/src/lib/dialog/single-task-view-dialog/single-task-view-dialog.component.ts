@@ -7,10 +7,11 @@ import {
     NAE_BASE_FILTER,
     SearchService,
     SimpleFilter,
+    TaskEventNotification,
     TaskViewService,
     TaskViewInjectionData,
-    TaskEventNotification,
-    AbstractTaskViewComponent, TaskEvent,
+    AbstractSingleTaskViewComponent,
+    TaskEvent
 } from '@netgrif/components-core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {ActivatedRoute} from "@angular/router";
@@ -19,7 +20,7 @@ import {
     localAllowedNetsFactory
 } from "../../filter-field-content/filter-field-tabbed-case-view/filter-field-tabbed-case-view.component";
 
-export function taskViewFilterFactory(dialogControl: TaskViewInjectionData): BaseFilter {
+export function singleTaskViewFilterFactory(dialogControl: TaskViewInjectionData): BaseFilter {
     if (!dialogControl) {
         throw new Error('NewFilterCaseId was not provided in the side menu injection data');
     }
@@ -31,15 +32,15 @@ export function taskViewFilterFactory(dialogControl: TaskViewInjectionData): Bas
 }
 
 @Component({
-    selector: 'nc-task-view-dialog',
-    templateUrl: './task-view-dialog.component.html',
-    styleUrls: ['./task-view-dialog.component.scss'],
+    selector: 'nc-single-task-view-dialog',
+    templateUrl: './single-task-view-dialog.component.html',
+    styleUrls: ['./single-task-view-dialog.component.scss'],
     providers: [
         TaskViewService,
         SearchService,
         {
             provide: NAE_BASE_FILTER,
-            useFactory: taskViewFilterFactory,
+            useFactory: singleTaskViewFilterFactory,
             deps: [MAT_DIALOG_DATA]
         },
         {
@@ -49,12 +50,12 @@ export function taskViewFilterFactory(dialogControl: TaskViewInjectionData): Bas
         }
     ]
 })
-export class TaskViewDialogComponent extends AbstractTaskViewComponent implements AfterViewInit {
+export class SingleTaskViewDialogComponent extends AbstractSingleTaskViewComponent implements AfterViewInit {
 
     @ViewChild('header') public taskHeaderComponent: HeaderComponent;
     protected _injectedData: TaskViewInjectionData;
 
-    constructor(protected _dialogRef: MatDialogRef<TaskViewDialogComponent>,
+    constructor(protected _dialogRef: MatDialogRef<SingleTaskViewDialogComponent>,
                 @Inject(MAT_DIALOG_DATA) protected _data: TaskViewInjectionData,
                 protected _log: LoggerService,
                 taskViewService: TaskViewService,
@@ -70,7 +71,7 @@ export class TaskViewDialogComponent extends AbstractTaskViewComponent implement
     }
 
     public processTaskEvents(notification: TaskEventNotification): void {
-        if (!notification.success || !this._injectedData['autoCloseOnEvent']) {
+        if (!notification.success) {
             return;
         }
 

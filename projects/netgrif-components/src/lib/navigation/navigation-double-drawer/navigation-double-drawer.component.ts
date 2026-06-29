@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Injector} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {
@@ -20,6 +20,7 @@ import {
 } from '@netgrif/components-core';
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {TranslateService} from "@ngx-translate/core";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
     selector: 'nc-navigation-double-drawer',
@@ -76,10 +77,12 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
                 _dynamicRouteProviderService: DynamicNavigationRouteProviderService,
                 _redirectService: RedirectService,
                 _snackBarService: SnackBarService,
+                _dialog: MatDialog,
+                _injector: Injector,
                 _navigationService: DoubleDrawerNavigationService) {
         super(_router, _activatedRoute, _breakpoint, _languageService, _translateService, _userService, _accessService,
             _log, _config, _uriService, _processService, _caseResourceService, _impersonationUserSelect, _impersonation,
-            _dynamicRouteProviderService, _redirectService, _snackBarService, _navigationService)
+            _dynamicRouteProviderService, _redirectService, _snackBarService, _dialog, _injector, _navigationService)
     }
 
     public toggleSection(section: string): void {

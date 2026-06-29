@@ -6,4 +6,5 @@ export * from './multi-user-assign-dialog/multi-user-assign-dialog.component';
 export * from './admin-impersonate-dialog/admin-impersonate-dialog.component';
 export * from './user-impersonate-dialog/user-impersonate-dialog.component';
 export * from './filter-selector-dialog/filter-selector-dialog.component';
+export * from './single-task-view-dialog/single-task-view-dialog.component';
 export * from './task-view-dialog/task-view-dialog.component';

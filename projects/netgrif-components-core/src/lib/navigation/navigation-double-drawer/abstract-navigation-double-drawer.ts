@@ -1,5 +1,5 @@
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, TemplateRef} from '@angular/core';
+import {Component, EventEmitter, Injector, Input, OnDestroy, OnInit, Output, TemplateRef} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {ResizeEvent} from 'angular-resizable-element';
@@ -41,6 +41,9 @@ import {DoubleDrawerUtils} from "./util/double-drawer-utils";
 import {ProcessService} from "../../process/process.service";
 import {CreateCaseEventOutcome} from "../../event/model/event-outcomes/case-outcomes/create-case-event-outcome";
 import {SnackBarService} from "../../snack-bar/services/snack-bar.service";
+import {MatDialog} from "@angular/material/dialog";
+import {NAE_TASK_VIEW_COMPONENT} from "../../side-menu/content-components/injection-tokens";
+import {TaskViewInjectionData} from "../../side-menu/content-components/task-view/model/task-view-injection-data";
 
 @Component({
     selector: 'ncc-abstract-navigation-double-drawer',
@@ -110,6 +113,8 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                           protected _dynamicRoutingService: DynamicNavigationRouteProviderService,
                           protected _redirectService: RedirectService,
                           protected _snackBarService: SnackBarService,
+                          protected _dialog: MatDialog,
+                          protected _injector: Injector,
                           protected _navigationService: DoubleDrawerNavigationService) {
         let configUrl: string = this._config.getServicesConfiguration()?.doubleDrawer?.url;
         if (configUrl !== undefined && !configUrl.startsWith('/')) {
@@ -348,7 +353,17 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     }
 
     public editMenuItem(menuItemCase: Case) {
-        // todo 2454
+        const taskView = this._injector.get(NAE_TASK_VIEW_COMPONENT);
+        this._dialog.open(taskView, {
+            panelClass: "dialog-task-responsive",
+            data: {
+                autoCloseOnEvent: false,
+                searchBody: {
+                    transitionId: ["item_settings", "move_item", "duplicate_item", "children_order"],
+                    case: { id: menuItemCase.stringId }
+                }
+            } as TaskViewInjectionData,
+        });
     }
 
     public createMenuItem() {
@@ -368,7 +383,17 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                 return;
             }
             const _case = (outcome.outcome as CreateCaseEventOutcome).aCase;
-            // todo 2454 redirect
+            const taskView = this._injector.get(NAE_TASK_VIEW_COMPONENT);
+            this._dialog.open(taskView, {
+                panelClass: "dialog-task-responsive",
+                data: {
+                    autoCloseOnEvent: true,
+                    searchBody: {
+                        transitionId: "initialize",
+                        case: { id: _case.stringId }
+                    }
+                } as TaskViewInjectionData,
+            });
         }, error => {
             this._log.error(`Could not create menu item case`, error);
             this._snackBarService.openErrorSnackBar(this._translateService.instant('dynamicNavigation.snackbar.failedItemCreation'));

@@ -14,7 +14,7 @@ export const openTaskDialog: FrontActionDefinition = {
         const ref = dialog.open(dialogComponent, {
             panelClass: "dialog-task-responsive",
             data: {
-                taskIds: frontAction.args[0]
+                searchBody: { stringId: frontAction.args[0] }
             } as TaskViewInjectionData,
         });
         ref.afterClosed().subscribe(event => {
