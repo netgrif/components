@@ -2,7 +2,7 @@ import {EventEmitter, Injectable, OnDestroy} from '@angular/core';
 import {BehaviorSubject, Observable, of, Subscription} from 'rxjs';
 import {UriService} from "../../service/uri.service";
 import {LoadingEmitter} from "../../../utility/loading-emitter";
-import {filter, map, take} from "rxjs/operators";
+import {filter, map, take, switchMap} from "rxjs/operators";
 import {Case} from "../../../resources/interface/case";
 import {LoggerService} from "../../../logger/services/logger.service";
 import {DoubleDrawerUtils} from "../util/double-drawer-utils";
@@ -32,6 +32,7 @@ import {
 import { UriNodeResource } from '../../model/uri-resource';
 import {MenuItemClickEvent, MenuItemLoadedEvent} from '../../model/navigation-menu-events';
 import {GroupNavigationConstants} from "../../model/group-navigation-constants";
+import {UserService} from "../../../user/services/user.service";
 
 /**
  * Service for managing navigation in double-drawer
@@ -66,6 +67,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
     protected _rightLoading$: LoadingEmitter;
     protected _nodeLoading$: LoadingEmitter;
     protected _currentNodeSubscription: Subscription;
+    protected _userSubscription: Subscription;
     /**
      * Currently display uri
      * Siblings of the node are on the left, children are on the right
@@ -83,6 +85,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
 
     constructor(protected _uriService: UriService,
                 protected _log: LoggerService,
+                protected _userService: UserService,
                 protected _config: ConfigurationService,
                 protected _activatedRoute: ActivatedRoute,
                 protected _caseResourceService: CaseResourceService,
@@ -105,13 +108,17 @@ export class DoubleDrawerNavigationService implements OnDestroy {
         this.itemClicked = new EventEmitter<MenuItemClickEvent>();
         this.itemLoaded = new EventEmitter<MenuItemLoadedEvent>();
 
-        this._currentNodeSubscription = this._uriService.activeNode$.subscribe(node => {
+        this._currentNodeSubscription = this._userService.user$.pipe(
+            filter(user => !!user && user.id !== ''),
+            switchMap(() => this._uriService.activeNode$)
+        ).subscribe(node => {
             this.currentNode = node;
         });
     }
 
     public ngOnDestroy(): void {
         this._currentNodeSubscription?.unsubscribe();
+        this._userSubscription?.unsubscribe();
         this._leftLoading$.complete();
         this._rightLoading$.complete();
         this._nodeLoading$.complete();
@@ -334,17 +341,19 @@ export class DoubleDrawerNavigationService implements OnDestroy {
     public initializeCustomViewsOfView(view: View, viewConfigPath: string): void {
         if (!view || this.customItemsInitialized || this.hiddenCustomItemsInitialized) return;
 
-        Object.entries(view.children).forEach(([key, childView]) => {
-            const childViewConfigPath: string = viewConfigPath + '/' + key;
-            this.resolveUriForChildViews(childViewConfigPath, childView);
-            this.resolveHiddenMenuItemFromChildViews(childViewConfigPath, childView);
+        this._userSubscription = this._userService.user$.pipe(filter(user => !!user && user.id !== '')).subscribe(user => {
+            Object.entries(view.children).forEach(([key, childView]) => {
+                const childViewConfigPath: string = viewConfigPath + '/' + key;
+                this.resolveUriForChildViews(childViewConfigPath, childView);
+                this.resolveHiddenMenuItemFromChildViews(childViewConfigPath, childView);
+            });
+
+            this.resolveCustomViewsInRightSide();
+            this.resolveCustomViewsInLeftSide();
+
+            this.customItemsInitialized = true;
+            this.hiddenCustomItemsInitialized = true;
         });
-
-        this.resolveCustomViewsInRightSide();
-        this.resolveCustomViewsInLeftSide();
-
-        this.customItemsInitialized = true;
-        this.hiddenCustomItemsInitialized = true;
     }
 
     public switchOrder(): void {
