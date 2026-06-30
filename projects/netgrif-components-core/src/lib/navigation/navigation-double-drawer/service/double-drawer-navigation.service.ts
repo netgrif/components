@@ -265,7 +265,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
             this.itemClicked.emit({uriNode: this._uriService.activeNode, isHome: false});
         } else {
             const path = item.resource.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)?.value;
-            if (DoubleDrawerUtils.hasItemChildren(item) && !this._leftLoading$.isActive && !this._rightLoading$.isActive) {
+            if (DoubleDrawerUtils.isFolder(item) && !this._leftLoading$.isActive && !this._rightLoading$.isActive) {
                 this._uriService.getNodeByPath(path).subscribe(node => {
                     this._uriService.activeNode = node;
                     this.itemClicked.emit({uriNode: this._uriService.activeNode, isHome: false});
@@ -454,6 +454,16 @@ export class DoubleDrawerNavigationService implements OnDestroy {
     }
 
     protected getItemCasesByIds(caseIds: string[], pageNumber: number, pageSize: string | number): Observable<Page<Case>> {
+        if (!caseIds || caseIds.length === 0) {
+            return of({
+                content: [], pagination: {
+                    number: -1,
+                    size: 0,
+                    totalPages: 0,
+                    totalElements: 0
+                }
+            });
+        }
         const searchBody: CaseSearchRequestBody = {
             stringId: caseIds,
             process: MENU_IDENTIFIERS.map(id => ({identifier: id} as PetriNetSearchRequest)),

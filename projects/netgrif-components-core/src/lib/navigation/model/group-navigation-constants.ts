@@ -182,9 +182,9 @@ export enum GroupNavigationConstants {
     ITEM_FIELD_ID_NODE_PATH = 'nodePath',
 
     /**
-     * Boolean field, that is true if item contains child items
+     * Boolean field, that is true if the item represents a folder
      * */
-    ITEM_FIELD_ID_HAS_CHILDREN = 'hasChildren',
+    ITEM_FIELD_ID_IS_FOLDER = 'is_folder',
 
     /**
      * CaseField containing stringIds of child instances of process preference_item
