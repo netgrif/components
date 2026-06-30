@@ -140,7 +140,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
                 node.parent = this._uriService.root;
             } else {
                 this._nodeLoading$.on();
-                this._uriService.getNodeByPath(this._uriService.resolveParentPath(node)).subscribe(n => {
+                this._uriService.getNodeByPath(this._uriService.resolveParentPath(node)).pipe(take(1)).subscribe(n => {
                     node.parent = !n ? this._uriService.root : n;
                     this._nodeLoading$.off();
                 }, error => {
@@ -150,7 +150,10 @@ export class DoubleDrawerNavigationService implements OnDestroy {
             }
         }
         if (this._nodeLoading$.isActive) {
-            this._nodeLoading$.subscribe(() => {
+            this._nodeLoading$.pipe(
+                filter(isActive => !isActive),
+                take(1)
+            ).subscribe(() => {
                 this.loadNavigationItems(node);
             });
         } else {
@@ -266,7 +269,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
         } else {
             const path = item.resource.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)?.value;
             if (DoubleDrawerUtils.isFolder(item) && !this._leftLoading$.isActive && !this._rightLoading$.isActive) {
-                this._uriService.getNodeByPath(path).subscribe(node => {
+                this._uriService.getNodeByPath(path).pipe(take(1)).subscribe(node => {
                     this._uriService.activeNode = node;
                     this.itemClicked.emit({uriNode: this._uriService.activeNode, isHome: false});
                     this._rightLoading$.pipe(
@@ -368,7 +371,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
             return;
         }
         this._leftLoading$.on();
-        this._uriService.getItemCaseByNodePath(this.currentNode.parent).subscribe(page => {
+        this._uriService.getItemCaseByNodePath(this.currentNode.parent).pipe(take(1)).subscribe(page => {
             let childCases$;
             let targetItem;
             let orderedChildCaseIds;
@@ -383,7 +386,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
                 );
             }
 
-            childCases$.subscribe(result => {
+            childCases$.pipe(take(1)).subscribe(result => {
                 result = result.map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i);
                 this._leftItems$.next(result.sort((a, b) => orderedChildCaseIds.indexOf(a.resource.stringId) - orderedChildCaseIds.indexOf(b.resource.stringId)));
                 this.resolveCustomViewsInLeftSide();
@@ -406,7 +409,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
     protected loadRightSide() {
         this._rightLoading$.on();
         this._moreItems$.next([])
-        this._uriService.getItemCaseByNodePath(this.currentNode).subscribe(page => {
+        this._uriService.getItemCaseByNodePath(this.currentNode).pipe(take(1)).subscribe(page => {
             let childCases$;
             let targetItem;
             let orderedChildCaseIds;
@@ -421,7 +424,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
                 );
             }
 
-            childCases$.subscribe(result => {
+            childCases$.pipe(take(1)).subscribe(result => {
                 result = (result as Case[]).sort((a, b) => orderedChildCaseIds.indexOf(a.stringId) - orderedChildCaseIds.indexOf(b.stringId));
                 if (result.length > RIGHT_SIDE_INIT_PAGE_SIZE) {
                     const rawRightItems: Case[] = result.splice(0, RIGHT_SIDE_INIT_PAGE_SIZE);

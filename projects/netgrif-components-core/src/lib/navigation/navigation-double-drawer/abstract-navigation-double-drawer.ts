@@ -245,7 +245,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     }
 
     public logout(): void {
-        this._userService.logout().subscribe(response => {
+        this._userService.logout().pipe(take(1)).subscribe(response => {
             this._log.debug('User is logged out');
             this.loggedOut.emit(response);
             if (this._config.get().services && this._config.get().services.auth && this._config.getOnLogoutPath()) {
