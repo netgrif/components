@@ -50,7 +50,7 @@ export class CaseResourceService extends AbstractResourceService implements Coun
     /**
      * Generic case search
      * POST
-     * {{baseUrl}}/api/workflow/case/search
+     * {{baseUrl}}/api/workflow/case/search OR {{baseUrl}}/api/workflow/case/search_pfql
      * @param filter filter used to search cases. Must be of type `CASE`.
      * @param params request parameters, that can be used for sorting of results.
      */
@@ -59,7 +59,11 @@ export class CaseResourceService extends AbstractResourceService implements Coun
             throw new Error('Provided filter doesn\'t have type CASE');
         }
         params = ResourceProvider.combineParams(filter.getRequestParams(), params);
-        return this._resourceProvider.post$('workflow/case/search', this.SERVER_URL, filter.getRequestBody(), params)
+        let endpoint: string = 'workflow/case/search';
+        if (filter.isPfql) {
+            endpoint = 'workflow/case/search_pfql'
+        }
+        return this._resourceProvider.post$(endpoint, this.SERVER_URL, filter.getRequestBody(), params)
             .pipe(map(r => this.getResourcePage<Case>(r, 'cases')));
     }
 

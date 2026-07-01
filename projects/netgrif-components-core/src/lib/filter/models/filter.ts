@@ -14,8 +14,10 @@ export abstract class Filter {
      * @param _id identifier of the filter
      * @param _type type of resources that the filter can query
      * @param _title human readable filter name
+     * @param _isPfql true if the Filter should cooperate with PFQL API
      */
-    protected constructor(protected _id: string, protected readonly _type: FilterType, protected readonly _title: string = '') {
+    protected constructor(protected _id: string, protected readonly _type: FilterType, protected readonly _title: string = '',
+                          protected _isPfql: boolean = false) {
     }
 
     /**
@@ -27,6 +29,14 @@ export abstract class Filter {
 
     public set id(id: string) {
         this._id = id;
+    }
+
+    public get isPfql(): boolean {
+        return this._isPfql;
+    }
+
+    public set isPfql(isPfql: boolean) {
+        this._isPfql = isPfql;
     }
 
     /**

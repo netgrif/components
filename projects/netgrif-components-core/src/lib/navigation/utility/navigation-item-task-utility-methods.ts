@@ -87,7 +87,9 @@ export function extractFilterFromFilterField(filterField: FilterField, filterTyp
     if (filterField === undefined || !(filterField instanceof FilterField)) {
         throw new Error('Filter could not be resolved');
     }
-    return SimpleFilter.fromQuery({query: filterField.value}, filterType);
+    const filter = SimpleFilter.fromQuery({query: filterField.value}, filterType);
+    filter.isPfql = true;
+    return filter;
 }
 
 /**

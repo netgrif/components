@@ -74,9 +74,10 @@ export class SimpleFilter extends Filter {
      * @param type type of resources that the filter can query
      * @param filterBody search request matching this filter's `type`
      * @param title human readable filter name
+     * @param isPfql true if the Filter should cooperate with PFQL API
      */
-    constructor(id: string, type: FilterType, filterBody: CaseSearchRequestBody | TaskSearchRequestBody, title?: string) {
-        super(id, type, title);
+    constructor(id: string, type: FilterType, filterBody: CaseSearchRequestBody | TaskSearchRequestBody, title?: string, isPfql: boolean = false) {
+        super(id, type, title, isPfql);
         this._filter = this.deepCopy(filterBody);
     }
 
@@ -84,14 +85,14 @@ export class SimpleFilter extends Filter {
      * See [Filter.clone()]{@link Filter#clone}
      */
     clone(): Filter {
-        return new SimpleFilter(this.id, this.type, this._filter, this.title);
+        return new SimpleFilter(this.id, this.type, this._filter, this.title, this.isPfql);
     }
 
     /**
      * See [Filter.merge()]{@link Filter#merge}
      */
     merge(filter: Filter, operator: MergeOperator): MergedFilter {
-        const temp = new MergedFilter(this.id, this.type, [this._filter], operator, this.title);
+        const temp = new MergedFilter(this.id, this.type, [this._filter], operator, this.title, this.isPfql);
         return temp.merge(filter, operator);
     }
 
