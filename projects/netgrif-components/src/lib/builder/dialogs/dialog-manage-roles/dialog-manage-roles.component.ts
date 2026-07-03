@@ -9,6 +9,7 @@ import {ModelerConfig} from '../../modeler/modeler-config';
 import {HistoryService} from '../../modeler/services/history/history.service';
 import {ModelService} from '../../modeler/services/model/model.service';
 import {CanvasToolContext} from "../../modeler/edit-mode/services/modes/canvas-tool-context";
+import {LocalStorageService} from "../../services/local-storage.service";
 
 export enum RoleRefType {
     TRANSITION = 'transition',
@@ -53,6 +54,7 @@ export class DialogManageRolesComponent implements OnInit, OnDestroy {
 
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: ManagePermissionData,
+        protected _localStorageService: LocalStorageService
     ) {
         this.modelService = data.modelService;
         this.historyService = data.historyService;
@@ -127,12 +129,12 @@ export class DialogManageRolesComponent implements OnInit, OnDestroy {
         this.dataSource.sort = this.sort;
         this.usersDataSource.sort = this.userSort;
         this.sort.sort(({
-            id: localStorage.getItem(ModelerConfig.LOCALSTORAGE.PERMISSION_DIALOG.ROLE_SORT),
-            start: localStorage.getItem(ModelerConfig.LOCALSTORAGE.PERMISSION_DIALOG.ROLE_DIRECTION)
+            id: this._localStorageService.getItem(ModelerConfig.LOCALSTORAGE.PERMISSION_DIALOG.ROLE_SORT),
+            start: this._localStorageService.getItem(ModelerConfig.LOCALSTORAGE.PERMISSION_DIALOG.ROLE_DIRECTION)
         }) as MatSortable);
         this.userSort.sort(({
-            id: localStorage.getItem(ModelerConfig.LOCALSTORAGE.PERMISSION_DIALOG.USER_REF_SORT),
-            start: localStorage.getItem(ModelerConfig.LOCALSTORAGE.PERMISSION_DIALOG.USER_REF_DIRECTION)
+            id: this._localStorageService.getItem(ModelerConfig.LOCALSTORAGE.PERMISSION_DIALOG.USER_REF_SORT),
+            start: this._localStorageService.getItem(ModelerConfig.LOCALSTORAGE.PERMISSION_DIALOG.USER_REF_DIRECTION)
         }) as MatSortable);
     }
 
@@ -250,13 +252,13 @@ export class DialogManageRolesComponent implements OnInit, OnDestroy {
     }
 
     sortRoleRefs(sort: Sort): void {
-        localStorage.setItem(ModelerConfig.LOCALSTORAGE.PERMISSION_DIALOG.ROLE_SORT, sort.active);
-        localStorage.setItem(ModelerConfig.LOCALSTORAGE.PERMISSION_DIALOG.ROLE_DIRECTION, sort.direction);
+        this._localStorageService.setItem(ModelerConfig.LOCALSTORAGE.PERMISSION_DIALOG.ROLE_SORT, sort.active);
+        this._localStorageService.setItem(ModelerConfig.LOCALSTORAGE.PERMISSION_DIALOG.ROLE_DIRECTION, sort.direction);
     }
 
     sortUserRefs(sort: Sort): void {
-        localStorage.setItem(ModelerConfig.LOCALSTORAGE.PERMISSION_DIALOG.USER_REF_SORT, sort.active);
-        localStorage.setItem(ModelerConfig.LOCALSTORAGE.PERMISSION_DIALOG.USER_REF_DIRECTION, sort.direction);
+        this._localStorageService.setItem(ModelerConfig.LOCALSTORAGE.PERMISSION_DIALOG.USER_REF_SORT, sort.active);
+        this._localStorageService.setItem(ModelerConfig.LOCALSTORAGE.PERMISSION_DIALOG.USER_REF_DIRECTION, sort.direction);
     }
 
     ngOnDestroy(): void {

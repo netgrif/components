@@ -41,10 +41,10 @@ import {RemoveTokenTool} from './services/modes/remove-token-tool';
 import {ResetPositionAndZoomTool} from './services/modes/reset-position-and-zoom-tool';
 import {SelectTool} from './services/modes/select-tool';
 import {SwitchLabelTool} from './services/modes/switch-label-tool';
-import {BuilderModeService} from '../../builder-mode.service';
+import {BuilderModeService} from '../../services/builder-mode.service';
 import {CanvasToolContext} from './services/modes/canvas-tool-context';
 import {ProcessActionsTool} from "../actions-mode/tools/process-actions-tool";
-import {BuilderIntegrationService} from "../../builder-integration.service";
+import {BuilderIntegrationService} from "../../services/builder-integration.service";
 
 @Injectable()
 export class EditModeService extends CanvasModeService<CanvasTool> {
@@ -343,7 +343,7 @@ export class EditModeService extends CanvasModeService<CanvasTool> {
         const arcRatio = arcLengthOffset / arcLength;
         const finalX = intersect.x + xLineLength * arcRatio;
         const finalY = intersect.y + yLineLength * arcRatio;
-        arcLine.setAttributeNS(null, 'points', `${intersect.x},${intersect.y} ${finalX},${finalY}`);
+        arcLine.setAttributeNS(null, 'points', `${intersect.x},${intersect.y} ${finalX ?? 0},${finalY ?? 0}`);
     }
 
     // OTHER

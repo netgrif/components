@@ -5,9 +5,9 @@ import {ActionsModeService} from '../../../actions-mode/actions-mode.service';
 import {SelectedTransitionService} from '../../../selected-transition.service';
 import {ModelService} from '../../../services/model/model.service';
 import {EditModeService} from '../../edit-mode.service';
-import {BuilderModeService} from '../../../../builder-mode.service';
+import {BuilderModeService} from '../../../../services/builder-mode.service';
 import {ProcessActionsTool} from "../../../actions-mode/tools/process-actions-tool";
-import {BuilderIntegrationService} from "../../../../builder-integration.service";
+import {BuilderIntegrationService} from "../../../../services/builder-integration.service";
 
 export class CanvasToolContext {
     constructor(

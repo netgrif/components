@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Optional, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {FlexModule} from "@ngbracket/ngx-layout";
 import {HeaderComponentModule} from "../../../header/header.module";
 import {PanelComponentModule} from "../../../panel/panel.module";
@@ -21,7 +21,7 @@ import {
     NAE_DEFAULT_HEADERS
 } from "@netgrif/components-core";
 import {InjectedTabbedBuilderViewData} from "../../injected-builder-data";
-import {BuilderIntegrationService} from "../../builder-integration.service";
+import {BuilderIntegrationService} from "../../services/builder-integration.service";
 
 const baseFilterFactory = (injectedData: InjectedTabbedBuilderViewData) => {
     const caseId = injectedData?.processCase?.stringId ?? "__EMPTY__"

@@ -7,7 +7,7 @@ import {ModelService} from '../../modeler/services/model/model.service';
 import {FieldListService} from '../field-list/field-list.service';
 import {GridsterDataField} from './classes/gridster-data-field';
 import {GridsterService} from './gridster.service';
-import {BuilderModeService, BuilderMode} from "../../builder-mode.service";
+import {BuilderModeService, BuilderMode} from "../../services/builder-mode.service";
 
 @Component({
     selector: 'nc-builder-gridster-component',

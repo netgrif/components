@@ -9,7 +9,7 @@ import {SelectedTransitionService} from '../../modeler/selected-transition.servi
 import {ModelService} from '../../modeler/services/model/model.service';
 import {DialogManageRolesComponent, RoleRefType} from '../dialog-manage-roles/dialog-manage-roles.component';
 import {ChangedTransition} from './changed-transition';
-import {BuilderModeService, BuilderMode} from '../../builder-mode.service';
+import {BuilderModeService, BuilderMode} from '../../services/builder-mode.service';
 import {HistoryService} from "../../modeler/services/history/history.service";
 import {CanvasToolContext} from "../../modeler/edit-mode/services/modes/canvas-tool-context";
 

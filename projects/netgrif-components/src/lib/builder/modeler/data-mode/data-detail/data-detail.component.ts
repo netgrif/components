@@ -32,7 +32,7 @@ import {ModelerUtils} from '../../modeler-utils';
 import {HistoryService} from '../../services/history/history.service';
 import {ModelService} from '../../services/model/model.service';
 import {DataMasterDetailService} from '../data-master-detail.service';
-import {BuilderModeService, BuilderMode} from "../../../builder-mode.service";
+import {BuilderModeService, BuilderMode} from "../../../services/builder-mode.service";
 
 export interface TypeArray {
     viewValue: string;
