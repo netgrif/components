@@ -37,6 +37,8 @@ import {PaginationParams} from '../../../utility/pagination/pagination-params';
 import {createSortParam, PaginationSort} from '../../../utility/pagination/pagination-sort';
 import {MatDialog} from '@angular/material/dialog';
 import {NAE_NEW_CASE_DIALOG_COMPONENT} from '../../../dialog/injection-tokens';
+import {NAE_DYNAMIC_DEFAULT_SORT} from "../models/dynamic-default-sort-token";
+import {SortChangeDescription} from "../../../header/models/user-changes/sort-change-description";
 
 @Injectable()
 export class CaseViewService extends AbstractSortableViewComponent implements OnDestroy {
@@ -65,6 +67,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
                 protected _processService: ProcessService,
                 resolver: SearchIndexResolverService,
                 @Optional() @Inject(NAE_NEW_CASE_DIALOG_COMPONENT) protected _newCaseComponent: any,
+                @Optional() @Inject(NAE_DYNAMIC_DEFAULT_SORT) protected _dynamicDefaultSort$: Observable<SortChangeDescription>,
                 @Optional() @Inject(NAE_NEW_CASE_CONFIGURATION) newCaseConfig: NewCaseConfiguration,
                 protected _permissionService: PermissionService) {
         super(resolver);
@@ -74,6 +77,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
             Object.assign(this._newCaseConfiguration, newCaseConfig);
         }
         this._loading$ = new LoadingWithFilterEmitter();
+        // todo 2454 sub leak
         this._searchService.activeFilter$.subscribe(() => {
             this.reload();
         });
@@ -84,9 +88,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
             totalPages: undefined,
             number: -1
         };
-        this._nextPage$ = new BehaviorSubject<PageLoadRequestContext>(
-            new PageLoadRequestContext(this.activeFilter, Object.assign({}, this._pagination, {number: 0}))
-        );
+        this._nextPage$ = new BehaviorSubject<PageLoadRequestContext>(null);
 
         const casesMap = this._nextPage$.pipe(
             mergeMap(p => this.loadPage(p)),
@@ -117,6 +119,15 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
             map(v => Object.values(v) as Array<Case>),
             tap(cases => this._cases = cases as Array<Case>),
         );
+
+        if (!!this._dynamicDefaultSort$ && this._lastHeaderSearchState.fieldIdentifier === '') {
+            this._dynamicDefaultSort$.subscribe(sortChangeDesc => {
+                this._lastHeaderSearchState = sortChangeDesc;
+                this._nextPage$.next(new PageLoadRequestContext(this.activeFilter, Object.assign({}, this._pagination, {number: 0})));
+            });
+        } else {
+            this._nextPage$.next(new PageLoadRequestContext(this.activeFilter, Object.assign({}, this._pagination, {number: 0})));
+        }
     }
 
     ngOnDestroy(): void {
@@ -220,7 +231,14 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
         if (this.isLoadingRelevantFilter(requestContext) || this._endOfData) {
             return;
         }
-        this._nextPage$.next(requestContext);
+        if (!!this._dynamicDefaultSort$ && this._lastHeaderSearchState.fieldIdentifier === '') {
+            this._dynamicDefaultSort$.subscribe(sortChangeDesc => {
+                this._lastHeaderSearchState = sortChangeDesc;
+                this._nextPage$.next(requestContext);
+            });
+        } else {
+            this._nextPage$.next(requestContext);
+        }
     }
 
     private isLoadingRelevantFilter(requestContext?: PageLoadRequestContext): boolean {

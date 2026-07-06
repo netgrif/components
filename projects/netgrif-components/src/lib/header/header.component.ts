@@ -1,4 +1,4 @@
-import {Component, Inject, Injector, OnInit, Optional} from '@angular/core';
+import {Component, Inject, Injector, Optional} from '@angular/core';
 import {
     AbstractHeaderComponent,
     CaseHeaderService,
@@ -6,7 +6,7 @@ import {
     HeaderSearchService,
     TaskHeaderService,
     WorkflowHeaderService,
-    OverflowService, MultichoiceField, DATA_FIELD_PORTAL_DATA, DataFieldPortalData, EnumerationField, CaseViewService
+    OverflowService, MultichoiceField, DATA_FIELD_PORTAL_DATA, DataFieldPortalData, CaseViewService
 } from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 

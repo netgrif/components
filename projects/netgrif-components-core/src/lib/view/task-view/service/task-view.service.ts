@@ -28,6 +28,8 @@ import {TaskViewConfiguration} from '../models/task-view-configuration';
 import {ChangedFieldsMap} from '../../../event/services/interfaces/changed-fields-map';
 import {PaginationParams} from '../../../utility/pagination/pagination-params';
 import {createSortParam, PaginationSort} from '../../../utility/pagination/pagination-sort';
+import {NAE_DYNAMIC_DEFAULT_SORT} from "../../case-view/models/dynamic-default-sort-token";
+import {SortChangeDescription} from "../../../header/models/user-changes/sort-change-description";
 
 
 @Injectable()
@@ -61,6 +63,7 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
                 private _userComparator: UserComparatorService,
                 resolver: SearchIndexResolverService,
                 @Optional() @Inject(NAE_PREFERRED_TASK_ENDPOINT) protected readonly _preferredEndpoint: TaskEndpoint = null,
+                @Optional() @Inject(NAE_DYNAMIC_DEFAULT_SORT) protected _dynamicDefaultSort$: Observable<SortChangeDescription>,
                 @Optional() @Inject(NAE_TASK_VIEW_CONFIGURATION) taskViewConfig: TaskViewConfiguration = null) {
         super(resolver);
         this._tasks$ = new Subject<Array<TaskPanelData>>();
@@ -74,9 +77,7 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
             totalPages: undefined,
             number: -1
         };
-        this._requestedPage$ = new BehaviorSubject<PageLoadRequestContext>(
-            new PageLoadRequestContext(this.activeFilter, Object.assign({}, this._pagination, {number: 0}))
-        );
+        this._requestedPage$ = new BehaviorSubject<PageLoadRequestContext>(null);
         this._panelUpdate$ = new BehaviorSubject<Array<TaskPanelData>>([]);
         this._closeTab$ = new ReplaySubject<void>(1);
         this._preferredEndpoint = taskViewConfig?.preferredEndpoint ?? (this._preferredEndpoint ?? TaskEndpoint.MONGO);
@@ -149,6 +150,15 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
         this._subCloseTask = (taskViewConfig?.closeTaskTabOnNoTasks ?? of(true)).subscribe(bool => {
             this._closeTaskTabOnNoTasks = bool;
         });
+
+        if (!!this._dynamicDefaultSort$ && this._lastHeaderSearchState.fieldIdentifier === '') {
+            this._dynamicDefaultSort$.subscribe(sortChangeDesc => {
+                this._lastHeaderSearchState = sortChangeDesc;
+                this._requestedPage$.next(new PageLoadRequestContext(this.activeFilter, Object.assign({}, this._pagination, {number: 0})));
+            });
+        } else {
+            this._requestedPage$.next(new PageLoadRequestContext(this.activeFilter, Object.assign({}, this._pagination, {number: 0})));
+        }
     }
 
     ngOnDestroy(): void {
@@ -297,7 +307,14 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
         }
 
         if (renderedRange.end === totalLoaded) {
-            this._requestedPage$.next(requestContext);
+            if (!!this._dynamicDefaultSort$ && this._lastHeaderSearchState.fieldIdentifier === '') {
+                this._dynamicDefaultSort$.subscribe(sortChangeDesc => {
+                    this._lastHeaderSearchState = sortChangeDesc;
+                    this._requestedPage$.next(requestContext);
+                });
+            } else {
+                this._requestedPage$.next(requestContext);
+            }
         }
     }
 
@@ -311,7 +328,14 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
         if (this.isLoadingRelevantFilter(requestContext) || this._endOfData) {
             return;
         }
-        this._requestedPage$.next(requestContext);
+        if (!!this._dynamicDefaultSort$ && this._lastHeaderSearchState.fieldIdentifier === '') {
+            this._dynamicDefaultSort$.subscribe(sortChangeDesc => {
+                this._lastHeaderSearchState = sortChangeDesc;
+                this._requestedPage$.next(requestContext);
+            });
+        } else {
+            this._requestedPage$.next(requestContext);
+        }
     }
 
     private isLoadingRelevantFilter(requestContext?: PageLoadRequestContext): boolean {

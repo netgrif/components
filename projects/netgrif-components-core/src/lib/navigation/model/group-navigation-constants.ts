@@ -247,6 +247,26 @@ export enum GroupNavigationConstants {
     ITEM_FIELD_TASK_INHERIT_ALLOWED_NETS = "task_inherit_allowed_nets",
 
     /**
+     * Text field, which contains identifier of active column in header for sorting
+     */
+    ITEM_FIELD_CASE_HEADERS_SORT_MODE_ACTIVE = "case_headers_sort_mode_active",
+
+    /**
+     * Enumeration map field, which contains default direction for sorting
+     */
+    ITEM_FIELD_CASE_HEADERS_SORT_MODE_DIRECTION = "case_headers_sort_mode_direction",
+
+    /**
+     * Text field, which contains identifier of active column in header for sorting
+     */
+    ITEM_FIELD_TASK_HEADERS_SORT_MODE_ACTIVE = "task_headers_sort_mode_active",
+
+    /**
+     * Enumeration map field, which contains default direction for sorting
+     */
+    ITEM_FIELD_TASK_HEADERS_SORT_MODE_DIRECTION = "task_headers_sort_mode_direction",
+
+    /**
      * Transition ID, which contains all configuration data
      */
     ITEM_TRANS_ID_ALL_DATA = "all_menu_data",
