@@ -3,7 +3,7 @@ import {CaseMetaField} from "../case-header/case-menta-enum";
 import {TaskMetaField} from "../task-header/task-meta-enum";
 import {WorkflowMetaField} from "../workflow-header/workflow-meta-enum";
 
-// todo 2454 doc
+/** Returns meta-headers for case view */
 export function getCaseMetaHeaders(): HeaderColumn[] {
     return [
         new HeaderColumn(HeaderColumnType.META, CaseMetaField.VISUAL_ID, 'headers.caseMeta.visualID', 'text'),
@@ -16,7 +16,7 @@ export function getCaseMetaHeaders(): HeaderColumn[] {
     ];
 }
 
-// todo 2454 doc
+/** Returns meta-headers for task view */
 export function getTaskMetaHeaders(): HeaderColumn[] {
     return [
         new HeaderColumn(HeaderColumnType.META, TaskMetaField.CASE, 'headers.taskMeta.case', 'text'),
@@ -29,7 +29,7 @@ export function getTaskMetaHeaders(): HeaderColumn[] {
     ];
 }
 
-// todo 2454 doc
+/** Returns meta-headers for workflow view */
 export function getWorkflowMetaHeaders(): HeaderColumn[] {
     return [
         new HeaderColumn(HeaderColumnType.META, WorkflowMetaField.INITIALS, 'headers.workflowMeta.initials', 'text'),

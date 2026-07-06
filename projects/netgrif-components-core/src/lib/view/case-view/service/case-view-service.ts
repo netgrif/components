@@ -1,6 +1,6 @@
 import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
 import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
-import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, of, Subject, Subscription} from 'rxjs';
 import {HttpParams} from '@angular/common/http';
 import {Case} from '../../../resources/interface/case';
 import {LoggerService} from '../../../logger/services/logger.service';
@@ -56,6 +56,8 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
     protected _newCaseConfiguration: NewCaseConfiguration;
     protected _paginationView: boolean = false;
 
+    protected _activeFilterSub: Subscription;
+
     constructor(protected _allowedNetsService: AllowedNetsService,
                 protected _dialog: MatDialog,
                 protected _caseResourceService: CaseResourceService,
@@ -77,8 +79,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
             Object.assign(this._newCaseConfiguration, newCaseConfig);
         }
         this._loading$ = new LoadingWithFilterEmitter();
-        // todo 2454 sub leak
-        this._searchService.activeFilter$.subscribe(() => {
+        this._activeFilterSub = this._searchService.activeFilter$.subscribe(() => {
             this.reload();
         });
         this._endOfData = false;
@@ -134,6 +135,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
         super.ngOnDestroy();
         this._loading$.complete();
         this._nextPage$.complete();
+        this._activeFilterSub?.unsubscribe();
     }
 
     public get loading(): boolean {

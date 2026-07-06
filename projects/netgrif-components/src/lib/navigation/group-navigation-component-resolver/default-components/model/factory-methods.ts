@@ -47,12 +47,22 @@ export function filterCaseTabbedDataAllowedNetsServiceFactory(allowedNetsService
     return navigationItemTaskAllowedNetsServiceFactory(allowedNetsServiceFactory, baseAllowedNets, true, tabData.navigationItemTaskData);
 }
 
-// todo 2454 doc
+/**
+ * Builds {@link SortChangeDescription} based on dynamic menu item data for case view. This can be used for default
+ * sorting when the view is being initialized
+ *
+ * @return Observable of sort change description or undefined if the data is wrong or no data provided
+ */
 export function buildDynamicSortChangeDescriptionForCase$(menuItemData: Array<DataGroup>, processService: ProcessService): Observable<SortChangeDescription> | undefined {
     return buildDynamicSortChangeDescription$(menuItemData, processService, 'case');
 }
 
-// todo 2454 doc
+/**
+ * Builds {@link SortChangeDescription} based on dynamic menu item data for task view. This can be used for default
+ * sorting when the view is being initialized
+ *
+ * @return Observable of sort change description or undefined if the data is wrong or no data provided
+ */
 export function buildDynamicSortChangeDescriptionForTask$(menuItemData: Array<DataGroup>, processService: ProcessService): Observable<SortChangeDescription> | undefined {
     return buildDynamicSortChangeDescription$(menuItemData, processService, 'task');
 }
