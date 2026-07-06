@@ -1,7 +1,7 @@
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {CommonModule} from '@angular/common';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, Injector} from '@angular/core';
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -40,6 +40,9 @@ import {CaseResourceService} from "../../resources/engine-endpoint/case-resource
 import {MockCaseResourceService} from "../../utility/tests/mocks/mock-case-resource.service";
 import {DoubleDrawerNavigationService} from "./service/double-drawer-navigation.service";
 import {RedirectService} from "../../routing/redirect-service/redirect.service";
+import {ProcessService} from "../../process/process.service";
+import {SnackBarService} from "../../snack-bar/services/snack-bar.service";
+import {MatDialog} from "@angular/material/dialog";
 
 xdescribe('AbstractNavigationDoubleDrawerComponent', () => {
     let component: TestDrawerComponent;
@@ -150,15 +153,19 @@ class TestDrawerComponent extends AbstractNavigationDoubleDrawerComponent {
                 _log: LoggerService,
                 _config: ConfigurationService,
                 _uriService: UriService,
+                _processService: ProcessService,
                 _caseResourceService: CaseResourceService,
                 _impersonationUserSelect: ImpersonationUserSelectService,
                 _impersonation: ImpersonationService,
                 _dynamicRouteProviderService: DynamicNavigationRouteProviderService,
                 _redirectService: RedirectService,
+                _snackBarService: SnackBarService,
+                _dialog: MatDialog,
+                _injector: Injector,
                 _navigationService: DoubleDrawerNavigationService) {
         super(_router, _activatedRoute, _breakpoint, _languageService, _translateService, _userService, _accessService,
-            _log, _config, _uriService, _caseResourceService, _impersonationUserSelect, _impersonation,
-            _dynamicRouteProviderService, _redirectService, _navigationService);
+            _log, _config, _uriService, _processService, _caseResourceService, _impersonationUserSelect, _impersonation,
+            _dynamicRouteProviderService, _redirectService, _snackBarService, _dialog, _injector, _navigationService);
     }
 }
 

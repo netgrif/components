@@ -38,7 +38,7 @@ describe('TaskViewDialogComponent', () => {
                 MatDialogModule
             ],
             providers: [
-                { provide: MAT_DIALOG_DATA, useValue: {} },
+                { provide: MAT_DIALOG_DATA, useValue: { searchBody: {}} },
                 { provide: MatDialogRef, useValue: {} },
                 { provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService },
                 { provide: ConfigurationService, useClass: TestConfigurationService },
