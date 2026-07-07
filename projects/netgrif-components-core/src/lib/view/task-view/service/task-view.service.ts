@@ -370,10 +370,18 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
         if (!!this._dynamicDefaultSort$ && this._lastHeaderSearchState.fieldIdentifier === '') {
             this._dynamicDefaultSort$.subscribe(sortChangeDesc => {
                 this._lastHeaderSearchState = sortChangeDesc;
-                this._requestedPage$.next(requestContext);
+                this.requestNextPage(requestContext);
             });
         } else {
-            this._requestedPage$.next(requestContext);
+            this.requestNextPage(requestContext);
+        }
+    }
+
+    protected requestNextPage(page: PageLoadRequestContext) {
+        if (!this._requestedPage$) {
+            this._requestedPage$ = new BehaviorSubject(page);
+        } else {
+            this._requestedPage$.next(page);
         }
     }
 }

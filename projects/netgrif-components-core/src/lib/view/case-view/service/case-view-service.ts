@@ -374,10 +374,18 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
         if (!!this._dynamicDefaultSort$ && this._lastHeaderSearchState.fieldIdentifier === '') {
             this._dynamicDefaultSort$.subscribe(sortChangeDesc => {
                 this._lastHeaderSearchState = sortChangeDesc;
-                this._nextPage$.next(requestContext);
+                this.requestNextPage(requestContext);
             });
         } else {
-            this._nextPage$.next(requestContext);
+            this.requestNextPage(requestContext);
+        }
+    }
+
+    protected requestNextPage(page: PageLoadRequestContext) {
+        if (!this._nextPage$) {
+            this._nextPage$ = new BehaviorSubject(page);
+        } else {
+            this._nextPage$.next(page);
         }
     }
 }
