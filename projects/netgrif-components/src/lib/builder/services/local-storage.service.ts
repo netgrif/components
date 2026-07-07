@@ -15,7 +15,7 @@ export class LocalStorageService {
         return this._prefix;
     }
 
-    public getItem(key: string): string {
+    public getItem(key: string): string | null {
         return localStorage.getItem(this._prefix + key);
     }
 

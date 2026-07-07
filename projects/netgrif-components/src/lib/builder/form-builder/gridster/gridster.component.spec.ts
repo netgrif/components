@@ -10,6 +10,7 @@ import {ExportService} from '@netgrif/petriflow';
 import {GridsterService} from './gridster.service';
 import {FieldListService} from '../field-list/field-list.service';
 import {GridsterComponent} from './gridster.component';
+import {LocalStorageService} from "../../services/local-storage.service";
 
 describe('GridsterComponent', () => {
     beforeEach(() => {
@@ -24,6 +25,7 @@ describe('GridsterComponent', () => {
                 BuilderModeService,
                 HistoryService,
                 ExportService,
+                LocalStorageService,
                 {provide: Router, useValue: {}},
             ],
             schemas: [NO_ERRORS_SCHEMA],

@@ -97,7 +97,7 @@ export class BuilderIntegrationService {
     }
 
     get loading$(): Observable<boolean> {
-        return this._loading;
+        return this._loading.asObservable();
     }
 
     public isLoading(): boolean {
