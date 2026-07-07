@@ -153,19 +153,20 @@ class TestDrawerComponent extends AbstractNavigationDoubleDrawerComponent {
                 _log: LoggerService,
                 _config: ConfigurationService,
                 _uriService: UriService,
-                _processService: ProcessService,
                 _caseResourceService: CaseResourceService,
                 _impersonationUserSelect: ImpersonationUserSelectService,
                 _impersonation: ImpersonationService,
                 _dynamicRouteProviderService: DynamicNavigationRouteProviderService,
                 _redirectService: RedirectService,
+                _navigationService: DoubleDrawerNavigationService,
+                _processService: ProcessService,
                 _snackBarService: SnackBarService,
                 _dialog: MatDialog,
-                _injector: Injector,
-                _navigationService: DoubleDrawerNavigationService) {
+                _injector: Injector) {
         super(_router, _activatedRoute, _breakpoint, _languageService, _translateService, _userService, _accessService,
-            _log, _config, _uriService, _processService, _caseResourceService, _impersonationUserSelect, _impersonation,
-            _dynamicRouteProviderService, _redirectService, _snackBarService, _dialog, _injector, _navigationService);
+            _log, _config, _uriService, _caseResourceService, _impersonationUserSelect, _impersonation,
+            _dynamicRouteProviderService, _redirectService, _navigationService, _processService, _snackBarService,
+            _dialog, _injector, undefined);
     }
 }
 
