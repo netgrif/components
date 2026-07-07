@@ -100,7 +100,6 @@ function buildDynamicSortChangeDescription$(menuItemData: Array<DataGroup>, proc
 
     if (!!processIdentifier) {
         return processService.getNet(processIdentifier).pipe(
-            take(1),
             map(net => {
                 let fieldType: string = net.immediateData.find(data => data.stringId === colIdentifier)?.type
                 return {
@@ -110,7 +109,8 @@ function buildDynamicSortChangeDescription$(menuItemData: Array<DataGroup>, proc
                     columnIdentifier: -1,
                     fieldType: !!fieldType ? fieldType : 'text'
                 }
-            })
+            }),
+            take(1)
         )
     } else {
         return of({
@@ -119,7 +119,7 @@ function buildDynamicSortChangeDescription$(menuItemData: Array<DataGroup>, proc
             sortDirection: direction,
             columnIdentifier: -1,
             fieldType: determineMetaFieldType(viewType, colIdentifier)
-        });
+        }).pipe(take(1));
     }
 }
 

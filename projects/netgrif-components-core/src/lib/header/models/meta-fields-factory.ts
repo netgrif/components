@@ -1,5 +1,5 @@
 import {HeaderColumn, HeaderColumnType} from "./header-column";
-import {CaseMetaField} from "../case-header/case-menta-enum";
+import {CaseMetaField} from "../case-header/case-meta-enum";
 import {TaskMetaField} from "../task-header/task-meta-enum";
 import {WorkflowMetaField} from "../workflow-header/workflow-meta-enum";
 

@@ -1,10 +1,9 @@
 import {Component, Input, Optional} from '@angular/core';
-import {Observable} from 'rxjs';
 import {Case} from '../../resources/interface/case';
 import {toMoment} from '../../resources/types/nae-date-type';
 import {HeaderColumn} from '../../header/models/header-column';
 import {DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
-import {CaseMetaField} from '../../header/case-header/case-menta-enum';
+import {CaseMetaField} from '../../header/case-header/case-meta-enum';
 import {CaseResourceService} from '../../resources/engine-endpoint/case-resource.service';
 import {CaseViewService} from '../../view/case-view/service/case-view-service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';

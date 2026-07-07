@@ -8,7 +8,7 @@ import {
     SearchService,
     SimpleFilter,
     TaskViewService,
-    TaskViewInjectionData,
+    TaskViewDialogInjectionData,
     TaskEventNotification,
     AbstractTaskViewComponent, TaskEvent,
 } from '@netgrif/components-core';
@@ -19,11 +19,11 @@ import {
     localAllowedNetsFactory
 } from "../../filter-field-content/filter-field-tabbed-case-view/filter-field-tabbed-case-view.component";
 
-export function taskViewFilterFactory(dialogControl: TaskViewInjectionData): BaseFilter {
+export function taskViewFilterFactory(dialogControl: TaskViewDialogInjectionData): BaseFilter {
     if (!dialogControl) {
         throw new Error('NewFilterCaseId was not provided in the side menu injection data');
     }
-    const injectedData = dialogControl as TaskViewInjectionData;
+    const injectedData = dialogControl as TaskViewDialogInjectionData;
 
     return {
         filter: SimpleFilter.fromTaskQuery(injectedData.searchBody)
@@ -52,16 +52,16 @@ export function taskViewFilterFactory(dialogControl: TaskViewInjectionData): Bas
 export class TaskViewDialogComponent extends AbstractTaskViewComponent implements AfterViewInit {
 
     @ViewChild('header') public taskHeaderComponent: HeaderComponent;
-    protected _injectedData: TaskViewInjectionData;
+    protected _injectedData: TaskViewDialogInjectionData;
 
     constructor(protected _dialogRef: MatDialogRef<TaskViewDialogComponent>,
-                @Inject(MAT_DIALOG_DATA) protected _data: TaskViewInjectionData,
+                @Inject(MAT_DIALOG_DATA) protected _data: TaskViewDialogInjectionData,
                 protected _log: LoggerService,
                 taskViewService: TaskViewService,
                 _activatedRoute?: ActivatedRoute) {
         super(taskViewService, _activatedRoute);
         if (this._data) {
-            this._injectedData = this._data as TaskViewInjectionData;
+            this._injectedData = this._data as TaskViewDialogInjectionData;
         }
     }
 
@@ -70,7 +70,7 @@ export class TaskViewDialogComponent extends AbstractTaskViewComponent implement
     }
 
     public processTaskEvents(notification: TaskEventNotification): void {
-        if (!notification.success || !this._injectedData['autoCloseOnEvent']) {
+        if (!notification.success || !this._injectedData.autoCloseOnEvent) {
             return;
         }
 

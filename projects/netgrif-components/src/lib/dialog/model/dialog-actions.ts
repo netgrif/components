@@ -3,7 +3,8 @@ import {
     FrontActionDefinition,
     FrontAction,
     NAE_TASK_VIEW_COMPONENT,
-    TaskViewInjectionData, reloadTaskAction
+    TaskViewDialogInjectionData,
+    reloadTaskAction
 } from '@netgrif/components-core';
 import {MatDialog} from "@angular/material/dialog";
 
@@ -15,7 +16,7 @@ export const openTaskDialog: FrontActionDefinition = {
             panelClass: "dialog-task-responsive",
             data: {
                 searchBody: { stringId: frontAction.args[0] }
-            } as TaskViewInjectionData,
+            } as TaskViewDialogInjectionData,
         });
         ref.afterClosed().subscribe(event => {
             reloadTaskAction.call(injector, frontAction)

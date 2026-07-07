@@ -11,7 +11,11 @@ import {
     NAE_NEW_CASE_DIALOG_COMPONENT,
     NAE_USER_IMPERSONATE_DIALOG_COMPONENT,
     FrontActionRegistryService,
-    NAE_TASK_VIEW_COMPONENT, UtilityModule, NAE_MULTI_USER_ASSIGN_DIALOG_COMPONENT, NAE_IMPORT_NET_DIALOG_COMPONENT, NAE_SINGLE_TASK_VIEW_COMPONENT
+    NAE_TASK_VIEW_COMPONENT,
+    UtilityModule,
+    NAE_MULTI_USER_ASSIGN_DIALOG_COMPONENT,
+    NAE_IMPORT_NET_DIALOG_COMPONENT,
+    NAE_SINGLE_TASK_VIEW_COMPONENT
 } from '@netgrif/components-core';
 import {A11yModule} from '@angular/cdk/a11y';
 import {
@@ -42,7 +46,6 @@ import { MultiUserAssignDialogComponent } from './multi-user-assign-dialog/multi
 import { SingleTaskViewDialogComponent } from './single-task-view-dialog/single-task-view-dialog.component';
 import { TaskViewDialogComponent } from './task-view-dialog/task-view-dialog.component';
 import {openTaskDialog} from "./model/dialog-actions";
-import {TranslateModule} from "@ngx-translate/core";
 
 @NgModule({
     declarations: [
@@ -89,7 +92,6 @@ import {TranslateModule} from "@ngx-translate/core";
         PanelComponentModule,
         HotkeyModule.forRoot(),
         UtilityModule,
-        TranslateModule
     ],
     providers: [
         {provide: NAE_USER_ASSIGN_DIALOG_COMPONENT, useValue: UserAssignDialogComponent},

@@ -9,7 +9,7 @@ import {
     SimpleFilter,
     TaskEventNotification,
     TaskViewService,
-    TaskViewInjectionData,
+    TaskViewDialogInjectionData,
     AbstractSingleTaskViewComponent,
     TaskEvent
 } from '@netgrif/components-core';
@@ -20,11 +20,11 @@ import {
     localAllowedNetsFactory
 } from "../../filter-field-content/filter-field-tabbed-case-view/filter-field-tabbed-case-view.component";
 
-export function singleTaskViewFilterFactory(dialogControl: TaskViewInjectionData): BaseFilter {
+export function singleTaskViewFilterFactory(dialogControl: TaskViewDialogInjectionData): BaseFilter {
     if (!dialogControl) {
         throw new Error('NewFilterCaseId was not provided in the side menu injection data');
     }
-    const injectedData = dialogControl as TaskViewInjectionData;
+    const injectedData = dialogControl as TaskViewDialogInjectionData;
 
     return {
         filter: SimpleFilter.fromTaskQuery(injectedData.searchBody)
@@ -53,16 +53,16 @@ export function singleTaskViewFilterFactory(dialogControl: TaskViewInjectionData
 export class SingleTaskViewDialogComponent extends AbstractSingleTaskViewComponent implements AfterViewInit {
 
     @ViewChild('header') public taskHeaderComponent: HeaderComponent;
-    protected _injectedData: TaskViewInjectionData;
+    protected _injectedData: TaskViewDialogInjectionData;
 
     constructor(protected _dialogRef: MatDialogRef<SingleTaskViewDialogComponent>,
-                @Inject(MAT_DIALOG_DATA) protected _data: TaskViewInjectionData,
+                @Inject(MAT_DIALOG_DATA) protected _data: TaskViewDialogInjectionData,
                 protected _log: LoggerService,
                 taskViewService: TaskViewService,
                 _activatedRoute?: ActivatedRoute) {
         super(taskViewService, _activatedRoute);
         if (this._data) {
-            this._injectedData = this._data as TaskViewInjectionData;
+            this._injectedData = this._data as TaskViewDialogInjectionData;
         }
     }
 

@@ -67,7 +67,6 @@ export class DoubleDrawerNavigationService implements OnDestroy {
     protected _rightLoading$: LoadingEmitter;
     protected _nodeLoading$: LoadingEmitter;
     protected _currentNodeSubscription: Subscription;
-    protected _userSubscription: Subscription;
     /**
      * Currently display uri
      * Siblings of the node are on the left, children are on the right
@@ -109,7 +108,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
         this.itemLoaded = new EventEmitter<MenuItemLoadedEvent>();
 
         this._currentNodeSubscription = this._userService.user$.pipe(
-            filter(user => !!user && user.id !== ''),
+            filter(user => !this._userService.isUserEmpty(user)),
             switchMap(() => this._uriService.activeNode$)
         ).subscribe(node => {
             this.currentNode = node;
@@ -118,7 +117,6 @@ export class DoubleDrawerNavigationService implements OnDestroy {
 
     public ngOnDestroy(): void {
         this._currentNodeSubscription?.unsubscribe();
-        this._userSubscription?.unsubscribe();
         this._leftLoading$.complete();
         this._rightLoading$.complete();
         this._nodeLoading$.complete();
@@ -147,13 +145,15 @@ export class DoubleDrawerNavigationService implements OnDestroy {
                 node.parent = this._uriService.root;
             } else {
                 this._nodeLoading$.on();
-                this._uriService.getNodeByPath(this._uriService.resolveParentPath(node)).pipe(take(1)).subscribe(n => {
-                    node.parent = !n ? this._uriService.root : n;
-                    this._nodeLoading$.off();
-                }, error => {
-                    this._log.error(error);
-                    this._nodeLoading$.off();
-                });
+                this._uriService.getNodeByPath(this._uriService.resolveParentPath(node)).pipe(take(1)).subscribe({
+                    next: n => {
+                        node.parent = !n ? this._uriService.root : n;
+                        this._nodeLoading$.off();
+                    },
+                    error: error => {
+                        this._log.error(error);
+                        this._nodeLoading$.off();
+                    }});
             }
         }
         if (this._nodeLoading$.isActive) {
@@ -276,18 +276,20 @@ export class DoubleDrawerNavigationService implements OnDestroy {
         } else {
             const path = item.resource.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_NODE_PATH)?.value;
             if (DoubleDrawerUtils.isFolder(item) && !this._leftLoading$.isActive && !this._rightLoading$.isActive) {
-                this._uriService.getNodeByPath(path).pipe(take(1)).subscribe(node => {
-                    this._uriService.activeNode = node;
-                    this.itemClicked.emit({uriNode: this._uriService.activeNode, isHome: false});
-                    this._rightLoading$.pipe(
-                        filter(isRightLoading => isRightLoading === false),
-                        take(1)
-                    ).subscribe(()=> {
-                        this.openAvailableView();
-                    })
-                }, error => {
-                    this._log.error(error);
-                });
+                this._uriService.getNodeByPath(path).pipe(take(1)).subscribe({
+                    next: node => {
+                        this._uriService.activeNode = node;
+                        this.itemClicked.emit({uriNode: this._uriService.activeNode, isHome: false});
+                        this._rightLoading$.pipe(
+                            filter(isRightLoading => isRightLoading === false),
+                            take(1)
+                        ).subscribe(()=> {
+                            this.openAvailableView();
+                        })
+                    },
+                    error: error => {
+                        this._log.error(error);
+                    }});
             } else if (!path.includes(this.currentNode.uriPath)) {
                 this._uriService.activeNode = this._currentNode.parent;
                 this.itemClicked.emit({uriNode: this._uriService.activeNode, isHome: false});
@@ -341,7 +343,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
     public initializeCustomViewsOfView(view: View, viewConfigPath: string): void {
         if (!view || this.customItemsInitialized || this.hiddenCustomItemsInitialized) return;
 
-        this._userSubscription = this._userService.user$.pipe(filter(user => !!user && user.id !== '')).subscribe(user => {
+        this._userService.user$.pipe(filter(user => !this._userService.isUserEmpty(user)), take(1)).subscribe(user => {
             Object.entries(view.children).forEach(([key, childView]) => {
                 const childViewConfigPath: string = viewConfigPath + '/' + key;
                 this.resolveUriForChildViews(childViewConfigPath, childView);
@@ -380,85 +382,91 @@ export class DoubleDrawerNavigationService implements OnDestroy {
             return;
         }
         this._leftLoading$.on();
-        this._uriService.getItemCaseByNodePath(this.currentNode.parent).pipe(take(1)).subscribe(page => {
-            let childCases$;
-            let targetItem;
-            let orderedChildCaseIds;
+        this._uriService.getItemCaseByNodePath(this.currentNode.parent).pipe(take(1)).subscribe({
+            next: page => {
+                let childCases$;
+                let targetItem;
+                let orderedChildCaseIds;
 
-            if (page?.pagination?.totalElements === 0) {
-                childCases$ = of([]);
-            } else {
-                targetItem = page.content[0];
-                orderedChildCaseIds = DoubleDrawerUtils.extractChildCaseIds(targetItem);
-                childCases$ = this.getItemCasesByIdsInOnePage(orderedChildCaseIds).pipe(
-                    map(p => p.content),
-                );
-            }
+                if (page?.pagination?.totalElements === 0) {
+                    childCases$ = of([]);
+                } else {
+                    targetItem = page.content[0];
+                    orderedChildCaseIds = DoubleDrawerUtils.extractChildCaseIds(targetItem);
+                    childCases$ = this.getItemCasesByIdsInOnePage(orderedChildCaseIds).pipe(
+                        map(p => p.content),
+                    );
+                }
 
-            childCases$.pipe(take(1)).subscribe(result => {
-                result = result.map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i);
-                this._leftItems$.next(result.sort((a, b) => orderedChildCaseIds.indexOf(a.resource.stringId) - orderedChildCaseIds.indexOf(b.resource.stringId)));
-                this.resolveCustomViewsInLeftSide();
-                this._leftLoading$.off();
-                this.itemLoaded.emit({menu: 'left', items: this.leftItems});
-            }, error => {
+                childCases$.pipe(take(1)).subscribe({
+                    next: result => {
+                        result = result.map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i);
+                        this._leftItems$.next(result.sort((a, b) => orderedChildCaseIds.indexOf(a.resource.stringId) - orderedChildCaseIds.indexOf(b.resource.stringId)));
+                        this.resolveCustomViewsInLeftSide();
+                        this._leftLoading$.off();
+                        this.itemLoaded.emit({menu: 'left', items: this.leftItems});
+                    },
+                    error: error => {
+                        this._log.error(error);
+                        this._leftItems$.next([])
+                        this.resolveCustomViewsInLeftSide();
+                        this._leftLoading$.off();
+                    }});
+            },
+            error: error => {
                 this._log.error(error);
                 this._leftItems$.next([])
                 this.resolveCustomViewsInLeftSide();
                 this._leftLoading$.off();
-            });
-        }, error => {
-            this._log.error(error);
-            this._leftItems$.next([])
-            this.resolveCustomViewsInLeftSide();
-            this._leftLoading$.off();
-        });
+            }});
     }
 
     protected loadRightSide() {
         this._rightLoading$.on();
         this._moreItems$.next([])
-        this._uriService.getItemCaseByNodePath(this.currentNode).pipe(take(1)).subscribe(page => {
-            let childCases$;
-            let targetItem;
-            let orderedChildCaseIds;
+        this._uriService.getItemCaseByNodePath(this.currentNode).pipe(take(1)).subscribe({
+            next: page => {
+                let childCases$;
+                let targetItem;
+                let orderedChildCaseIds;
 
-            if (page?.pagination?.totalElements === 0) {
-                childCases$ = of([]);
-            } else {
-                targetItem = page.content[0];
-                orderedChildCaseIds = DoubleDrawerUtils.extractChildCaseIds(targetItem);
-                childCases$ = this.getItemCasesByIdsInOnePage(orderedChildCaseIds).pipe(
-                    map(p => p.content),
-                );
-            }
-
-            childCases$.pipe(take(1)).subscribe(result => {
-                result = (result as Case[]).sort((a, b) => orderedChildCaseIds.indexOf(a.stringId) - orderedChildCaseIds.indexOf(b.stringId));
-                if (result.length > RIGHT_SIDE_INIT_PAGE_SIZE) {
-                    const rawRightItems: Case[] = result.splice(0, RIGHT_SIDE_INIT_PAGE_SIZE);
-                    this._rightItems$.next(rawRightItems.map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i));
-                    this._moreItems$.next(result.map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i));
+                if (page?.pagination?.totalElements === 0) {
+                    childCases$ = of([]);
                 } else {
-                    this._rightItems$.next(result.map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i));
+                    targetItem = page.content[0];
+                    orderedChildCaseIds = DoubleDrawerUtils.extractChildCaseIds(targetItem);
+                    childCases$ = this.getItemCasesByIdsInOnePage(orderedChildCaseIds).pipe(
+                        map(p => p.content),
+                    );
                 }
-                this.resolveCustomViewsInRightSide();
-                this._rightLoading$.off();
-                this.itemLoaded.emit({menu: 'right', items: this.rightItems});
-            }, error => {
+
+                childCases$.pipe(take(1)).subscribe(result => {
+                    result = (result as Case[]).sort((a, b) => orderedChildCaseIds.indexOf(a.stringId) - orderedChildCaseIds.indexOf(b.stringId));
+                    if (result.length > RIGHT_SIDE_INIT_PAGE_SIZE) {
+                        const rawRightItems: Case[] = result.splice(0, RIGHT_SIDE_INIT_PAGE_SIZE);
+                        this._rightItems$.next(rawRightItems.map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i));
+                        this._moreItems$.next(result.map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i));
+                    } else {
+                        this._rightItems$.next(result.map(folder => this.resolveItemCaseToNavigationItem(folder)).filter(i => !!i));
+                    }
+                    this.resolveCustomViewsInRightSide();
+                    this._rightLoading$.off();
+                    this.itemLoaded.emit({menu: 'right', items: this.rightItems});
+                }, error => {
+                    this._log.error(error);
+                    this._rightItems$.next([]);
+                    this._moreItems$.next([]);
+                    this.resolveCustomViewsInRightSide();
+                    this._rightLoading$.off();
+                });
+            },
+            error: error => {
                 this._log.error(error);
                 this._rightItems$.next([]);
                 this._moreItems$.next([]);
                 this.resolveCustomViewsInRightSide();
                 this._rightLoading$.off();
-            });
-        }, error => {
-            this._log.error(error);
-            this._rightItems$.next([]);
-            this._moreItems$.next([]);
-            this.resolveCustomViewsInRightSide();
-            this._rightLoading$.off();
-        });
+            }});
     }
 
     protected getItemCasesByIdsInOnePage(caseIds: string[]): Observable<Page<Case>> {

@@ -77,7 +77,6 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
             totalPages: undefined,
             number: -1
         };
-        this._requestedPage$ = new BehaviorSubject<PageLoadRequestContext>(null);
         this._panelUpdate$ = new BehaviorSubject<Array<TaskPanelData>>([]);
         this._closeTab$ = new ReplaySubject<void>(1);
         this._preferredEndpoint = taskViewConfig?.preferredEndpoint ?? (this._preferredEndpoint ?? TaskEndpoint.MONGO);
@@ -87,6 +86,8 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
         this._subSearch = this._searchService.activeFilter$.subscribe(() => {
             this.reload();
         });
+
+        this.requestPageWithDynamicSort(new PageLoadRequestContext(this.activeFilter, Object.assign({}, this._pagination, {number: 0})));
 
         const tasksMap$ = this._requestedPage$.pipe(
             mergeMap(p => this.loadPage(p)),
@@ -150,15 +151,6 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
         this._subCloseTask = (taskViewConfig?.closeTaskTabOnNoTasks ?? of(true)).subscribe(bool => {
             this._closeTaskTabOnNoTasks = bool;
         });
-
-        if (!!this._dynamicDefaultSort$ && this._lastHeaderSearchState.fieldIdentifier === '') {
-            this._dynamicDefaultSort$.subscribe(sortChangeDesc => {
-                this._lastHeaderSearchState = sortChangeDesc;
-                this._requestedPage$.next(new PageLoadRequestContext(this.activeFilter, Object.assign({}, this._pagination, {number: 0})));
-            });
-        } else {
-            this._requestedPage$.next(new PageLoadRequestContext(this.activeFilter, Object.assign({}, this._pagination, {number: 0})));
-        }
     }
 
     ngOnDestroy(): void {
@@ -307,14 +299,7 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
         }
 
         if (renderedRange.end === totalLoaded) {
-            if (!!this._dynamicDefaultSort$ && this._lastHeaderSearchState.fieldIdentifier === '') {
-                this._dynamicDefaultSort$.subscribe(sortChangeDesc => {
-                    this._lastHeaderSearchState = sortChangeDesc;
-                    this._requestedPage$.next(requestContext);
-                });
-            } else {
-                this._requestedPage$.next(requestContext);
-            }
+            this.requestPageWithDynamicSort(requestContext);
         }
     }
 
@@ -328,14 +313,7 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
         if (this.isLoadingRelevantFilter(requestContext) || this._endOfData) {
             return;
         }
-        if (!!this._dynamicDefaultSort$ && this._lastHeaderSearchState.fieldIdentifier === '') {
-            this._dynamicDefaultSort$.subscribe(sortChangeDesc => {
-                this._lastHeaderSearchState = sortChangeDesc;
-                this._requestedPage$.next(requestContext);
-            });
-        } else {
-            this._requestedPage$.next(requestContext);
-        }
+        this.requestPageWithDynamicSort(requestContext);
     }
 
     private isLoadingRelevantFilter(requestContext?: PageLoadRequestContext): boolean {
@@ -386,5 +364,16 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
         params = params.set(PaginationParams.PAGE_SIZE, `${pagination.size}`);
         params = params.set(PaginationParams.PAGE_NUMBER, `${pagination.number}`);
         return params;
+    }
+
+    protected requestPageWithDynamicSort(requestContext: PageLoadRequestContext) {
+        if (!!this._dynamicDefaultSort$ && this._lastHeaderSearchState.fieldIdentifier === '') {
+            this._dynamicDefaultSort$.subscribe(sortChangeDesc => {
+                this._lastHeaderSearchState = sortChangeDesc;
+                this._requestedPage$.next(requestContext);
+            });
+        } else {
+            this._requestedPage$.next(requestContext);
+        }
     }
 }

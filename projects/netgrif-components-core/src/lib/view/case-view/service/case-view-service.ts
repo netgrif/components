@@ -9,7 +9,7 @@ import {SearchService} from '../../../search/search-service/search.service';
 import {TranslateService} from '@ngx-translate/core';
 import {catchError, concatMap, filter, map, mergeMap, scan, switchMap, tap} from 'rxjs/operators';
 import {Pagination} from '../../../resources/interface/pagination';
-import {CaseMetaField} from '../../../header/case-header/case-menta-enum';
+import {CaseMetaField} from '../../../header/case-header/case-meta-enum';
 import {PageLoadRequestContext} from '../../abstract/page-load-request-context';
 import {Filter} from '../../../filter/models/filter';
 import {ListRange} from '@angular/cdk/collections';
@@ -89,7 +89,8 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
             totalPages: undefined,
             number: -1
         };
-        this._nextPage$ = new BehaviorSubject<PageLoadRequestContext>(null);
+
+        this.requestPageWithDynamicSort(new PageLoadRequestContext(this.activeFilter, Object.assign({}, this._pagination, {number: 0})));
 
         const casesMap = this._nextPage$.pipe(
             mergeMap(p => this.loadPage(p)),
@@ -120,15 +121,6 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
             map(v => Object.values(v) as Array<Case>),
             tap(cases => this._cases = cases as Array<Case>),
         );
-
-        if (!!this._dynamicDefaultSort$ && this._lastHeaderSearchState.fieldIdentifier === '') {
-            this._dynamicDefaultSort$.subscribe(sortChangeDesc => {
-                this._lastHeaderSearchState = sortChangeDesc;
-                this._nextPage$.next(new PageLoadRequestContext(this.activeFilter, Object.assign({}, this._pagination, {number: 0})));
-            });
-        } else {
-            this._nextPage$.next(new PageLoadRequestContext(this.activeFilter, Object.assign({}, this._pagination, {number: 0})));
-        }
     }
 
     ngOnDestroy(): void {
@@ -233,14 +225,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
         if (this.isLoadingRelevantFilter(requestContext) || this._endOfData) {
             return;
         }
-        if (!!this._dynamicDefaultSort$ && this._lastHeaderSearchState.fieldIdentifier === '') {
-            this._dynamicDefaultSort$.subscribe(sortChangeDesc => {
-                this._lastHeaderSearchState = sortChangeDesc;
-                this._nextPage$.next(requestContext);
-            });
-        } else {
-            this._nextPage$.next(requestContext);
-        }
+        this.requestPageWithDynamicSort(requestContext);
     }
 
     private isLoadingRelevantFilter(requestContext?: PageLoadRequestContext): boolean {
@@ -383,5 +368,16 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
      */
     public viewEnabled(aCase: Case): boolean {
         return this._permissionService.hasCasePermission(aCase, PermissionType.VIEW);
+    }
+
+    protected requestPageWithDynamicSort(requestContext: PageLoadRequestContext) {
+        if (!!this._dynamicDefaultSort$ && this._lastHeaderSearchState.fieldIdentifier === '') {
+            this._dynamicDefaultSort$.subscribe(sortChangeDesc => {
+                this._lastHeaderSearchState = sortChangeDesc;
+                this._nextPage$.next(requestContext);
+            });
+        } else {
+            this._nextPage$.next(requestContext);
+        }
     }
 }
