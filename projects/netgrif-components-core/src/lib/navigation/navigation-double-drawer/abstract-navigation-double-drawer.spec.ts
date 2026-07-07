@@ -1,7 +1,7 @@
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {CommonModule} from '@angular/common';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {Component, CUSTOM_ELEMENTS_SCHEMA, Injector} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -161,12 +161,11 @@ class TestDrawerComponent extends AbstractNavigationDoubleDrawerComponent {
                 _navigationService: DoubleDrawerNavigationService,
                 _processService: ProcessService,
                 _snackBarService: SnackBarService,
-                _dialog: MatDialog,
-                _injector: Injector) {
+                _dialog: MatDialog) {
         super(_router, _activatedRoute, _breakpoint, _languageService, _translateService, _userService, _accessService,
             _log, _config, _uriService, _caseResourceService, _impersonationUserSelect, _impersonation,
             _dynamicRouteProviderService, _redirectService, _navigationService, _processService, _snackBarService,
-            _dialog, _injector, undefined);
+            _dialog, undefined);
     }
 }
 

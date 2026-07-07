@@ -1,4 +1,4 @@
-import {Component, Inject, Injector} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {
@@ -81,12 +81,11 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
                 _processService: ProcessService,
                 _snackBarService: SnackBarService,
                 _dialog: MatDialog,
-                _injector: Injector,
                 @Inject(NAE_TASK_VIEW_COMPONENT) _taskView: ComponentType<unknown>) {
         super(_router, _activatedRoute, _breakpoint, _languageService, _translateService, _userService, _accessService,
             _log, _config, _uriService, _caseResourceService, _impersonationUserSelect, _impersonation,
             _dynamicRouteProviderService, _redirectService, _navigationService, _processService, _snackBarService, _dialog,
-            _injector, _taskView);
+            _taskView);
     }
 
     public toggleSection(section: string): void {

@@ -1,5 +1,5 @@
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
-import {Component, EventEmitter, Inject, Injector, Input, OnDestroy, OnInit, Output, TemplateRef} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output, TemplateRef} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {ResizeEvent} from 'angular-resizable-element';
@@ -116,7 +116,6 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                           protected _processService: ProcessService,
                           protected _snackBarService: SnackBarService,
                           protected _dialog: MatDialog,
-                          protected _injector: Injector,
                           @Inject(NAE_TASK_VIEW_COMPONENT) protected _taskView: ComponentType<unknown>) {
         let configUrl: string = this._config.getServicesConfiguration()?.doubleDrawer?.url;
         if (configUrl !== undefined && !configUrl.startsWith('/')) {
