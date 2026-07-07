@@ -82,7 +82,6 @@ import {openTaskDialog} from "./model/dialog-actions";
         FlexModule,
         FormsModule,
         SnackBarModule,
-        TranslateLibModule,
         SideMenuUserAssignComponentModule,
         SideMenuAdminImpersonateComponentModule,
         SideMenuFilterSelectorComponentModule,
