@@ -288,7 +288,8 @@ export class SearchService implements OnDestroy {
     protected updateActiveFilter(): void {
         let additionalFilter: Filter;
         if (!this._rootPredicate.query.isEmpty) {
-            additionalFilter = new SimpleFilter('', this._baseFilter.type, {query: this._rootPredicate.query.value});
+            additionalFilter = new SimpleFilter('', this._baseFilter.type, {query: this._rootPredicate.query.value},
+                undefined, this._baseFilter.isPfql);
         }
         if (this._fullTextFilter) {
             if (additionalFilter) {

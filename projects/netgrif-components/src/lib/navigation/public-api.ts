@@ -28,6 +28,10 @@ export * from './group-navigation-component-resolver/default-components/public/d
 export * from './group-navigation-component-resolver/default-components/refs/default-case-ref-list-view/default-case-ref-list-view.component';
 export * from './dashboard/dashboard.component';
 
+/* SERVICES */
+export * from './group-navigation-component-resolver/default-group-navigation-component-resolver.service';
+
+
 /* FUNCTIONS */
 export * from './group-navigation-component-resolver/default-components/model/factory-methods';
 export * from './group-navigation-component-resolver/default-components/model/injected-tabbed-case-view-data-with-navigation-item-task-data';
