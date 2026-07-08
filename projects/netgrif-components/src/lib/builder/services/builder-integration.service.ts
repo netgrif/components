@@ -3,10 +3,10 @@ import {HistoryService} from "../modeler/services/history/history.service";
 import {
     Case,
     extractFieldValueFromData,
+    LoadingEmitter,
     LoggerService,
     TaskEventOutcome,
-    TaskResourceService,
-    LoadingEmitter
+    TaskResourceService
 } from "@netgrif/components-core";
 import {ExportService, PetriNet} from "@netgrif/petriflow";
 import {HistoryChange} from "../modeler/services/history/history-change";
@@ -114,11 +114,15 @@ export class BuilderIntegrationService {
             type: 'text',
             value: this._exportService.exportXml(history.record)
         };
-        this._taskResourceService.setData(this._editTaskId, body).subscribe(outcome => {
-            if ((outcome.outcome as TaskEventOutcome)?.task?.user?.email !== undefined) {
-                this._isAssigned = true;
+        this._taskResourceService.setData(this._editTaskId, body).subscribe({
+            next: outcome => {
+                if ((outcome.outcome as TaskEventOutcome)?.task?.user?.email !== undefined) {
+                    this._isAssigned = true;
+                }
+                this._log.debug('Data set successfully');
+            }, error: error => {
+                this._log.error('Data set failed', error.message);
             }
-            this._log.debug('Data set successfully');
         });
     }
 
@@ -161,15 +165,17 @@ export class BuilderIntegrationService {
                 value: this._exportService.exportXml(model)
             };
             this._loading.next(true);
-            this._taskResourceService.setData(this._editTaskId, body).subscribe(outcome => {
-                this._loading.next(false);
-                if ((outcome.outcome as TaskEventOutcome)?.task?.user?.email !== undefined) {
-                    this._isAssigned = true;
+            this._taskResourceService.setData(this._editTaskId, body).subscribe({
+                next: outcome => {
+                    this._loading.next(false);
+                    if ((outcome.outcome as TaskEventOutcome)?.task?.user?.email !== undefined) {
+                        this._isAssigned = true;
+                    }
+                    this._log.debug('Data set successfully');
+                }, error: error => {
+                    this._loading.next(false);
+                    this._log.error('Data set failed', error.message);
                 }
-                this._log.debug('Data set successfully');
-            }, error => {
-                this._loading.next(false);
-                this._log.debug('Data set failed', error.message);
             });
         }
     }
