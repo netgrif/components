@@ -62,7 +62,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      */
     // {{baseUrl}}/api/task/assign/:id
     public assignTask(taskId: string): Observable<EventOutcomeMessageResource> {
-        return this._resourceProvider.get$('task/assign/' + taskId, this.SERVER_URL)
+        return this._resourceProvider.get$('task/assign/' + taskId + "?fields=outcomes,outcome,task(stringId)", this.SERVER_URL)
             .pipe(map(r => this.changeType(r, undefined)));
     }
 
@@ -72,7 +72,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      */
     // {{baseUrl}}/api/task/cancel/:id
     public cancelTask(taskId: string): Observable<EventOutcomeMessageResource> {
-        return this._resourceProvider.get$('task/cancel/' + taskId, this.SERVER_URL)
+        return this._resourceProvider.get$('task/cancel/' + taskId + "?fields=outcomes,outcome,task(stringId)", this.SERVER_URL)
             .pipe(map(r => this.changeType(r, undefined)));
     }
 
@@ -82,7 +82,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      */
     // {{baseUrl}}/api/task/delegate/:id
     public delegateTask(taskId: string, body: object): Observable<EventOutcomeMessageResource> {
-        return this._resourceProvider.post$('task/delegate/' + taskId, this.SERVER_URL, body, undefined, {'Content-Type': 'text/plain'})
+        return this._resourceProvider.post$('task/delegate/' + taskId + "?fields=outcomes,outcome,task(stringId)", this.SERVER_URL, body, undefined, {'Content-Type': 'text/plain'})
             .pipe(map(r => this.changeType(r, undefined)));
     }
 
@@ -92,7 +92,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      */
     // {{baseUrl}}/api/task/finish/:id
     public finishTask(taskId: string): Observable<EventOutcomeMessageResource> {
-        return this._resourceProvider.get$('task/finish/' + taskId, this.SERVER_URL)
+        return this._resourceProvider.get$('task/finish/' + taskId + "?fields=outcomes,outcome,task(stringId)", this.SERVER_URL)
             .pipe(map(r => this.changeType(r, undefined)));
     }
 
@@ -188,7 +188,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      */
     // {{baseUrl}}/api/task/:id/data
     public rawGetData(taskId: string): Observable<EventOutcomeMessageResource> {
-        return this._resourceProvider.get$('task/' + taskId + '/data', this.SERVER_URL)
+        return this._resourceProvider.get$('task/' + taskId + '/data/?fields=outcomes,task(stringId),data', this.SERVER_URL)
             .pipe(map(r => this.changeType(r, undefined)));
     }
 
@@ -254,7 +254,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      */
     // {{baseUrl}}/api/task/:id/data
     public setData(taskId: string, body: TaskSetDataRequestBody): Observable<EventOutcomeMessageResource> {
-        return this._resourceProvider.post$('task/' + taskId + '/data', this.SERVER_URL, body)
+        return this._resourceProvider.post$('task/' + taskId + '/data?fields=outcomes,task(stringId),data', this.SERVER_URL, body)
             .pipe(map(r => this.changeType(r, undefined)));
     }
 

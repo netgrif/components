@@ -70,7 +70,7 @@ export class CaseResourceService extends AbstractResourceService implements Coun
      * {{baseUrl}}/api/workflow/case/:id
      */
     public deleteCase(caseID: string, deleteSubtree = false): Observable<EventOutcomeMessageResource> {
-        return this._resourceProvider.delete$('workflow/case/' + caseID,
+        return this._resourceProvider.delete$('workflow/case/?fields=outcomes,case(stringId)' + caseID,
             this.SERVER_URL,
             deleteSubtree ? {deleteSubtree: deleteSubtree.toString()} : {})
             .pipe(map(r => this.changeType(r, undefined)));
@@ -95,7 +95,7 @@ export class CaseResourceService extends AbstractResourceService implements Coun
      * {{baseUrl}}/api/workflow/case
      */
     public createCase(body: CreateCaseRequestBody): Observable<EventOutcomeMessageResource> {
-        return this._resourceProvider.post$('workflow/case/', this.SERVER_URL, body).pipe(map(r => this.changeType(r, undefined)));
+        return this._resourceProvider.post$('workflow/case/?fields=outcomes,case(stringId)', this.SERVER_URL, body).pipe(map(r => this.changeType(r, undefined)));
     }
 
     /**
