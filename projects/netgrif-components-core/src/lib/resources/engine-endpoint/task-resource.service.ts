@@ -208,7 +208,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
             params = new HttpParams();
             params = params.set('fields', 'outcomes,task(stringId),data');
         }
-        return this._resourceProvider.get$('task/' + taskId + "/data/", this.SERVER_URL, params)
+        return this._resourceProvider.get$('task/' + taskId + "/data", this.SERVER_URL, params)
             .pipe(map(r => this.changeType(r, undefined)));
     }
 
@@ -279,7 +279,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
             params = new HttpParams();
             params = params.set('fields', 'outcomes,outcome,case(stringId),task(stringId),changedFields');
         }
-        return this._resourceProvider.post$('task/' + taskId + "/data/", this.SERVER_URL, body, params)
+        return this._resourceProvider.post$('task/' + taskId + "/data", this.SERVER_URL, body, params)
             .pipe(map(r => this.changeType(r, undefined)));
     }
 

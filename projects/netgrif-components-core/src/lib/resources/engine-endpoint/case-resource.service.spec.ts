@@ -75,7 +75,7 @@ describe('CaseResourceService', () => {
     it('should deleteCase', (done) => {
         inject([HttpTestingController],
                 (httpMock: HttpTestingController) => {
-                    service.deleteCase('id').subscribe(res => {
+                    service.deleteCase('id', false, new HttpParams()).subscribe(res => {
                         expect(res.success).toEqual('Done');
                         done();
                     });
@@ -113,7 +113,7 @@ describe('CaseResourceService', () => {
                     service.createCase({
                         title: '',
                         netId: ''
-                    }).subscribe(res => {
+                    }, new HttpParams()).subscribe(res => {
                         expect((res.outcome as CreateCaseEventOutcome).aCase.stringId).toEqual('string');
                         done();
                     });
