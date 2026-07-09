@@ -34,6 +34,7 @@ import {SnackBarModule} from '../../snack-bar/snack-bar.module';
 import {NAE_BASE_FILTER} from '../../search/models/base-filter-injection-token';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
+import {DeploymentState} from "../../resources/interface/petri-net-reference";
 
 describe('CaseHeaderService', () => {
     let service: CaseHeaderService;
@@ -87,7 +88,8 @@ describe('CaseHeaderService', () => {
             defaultCaseName: 'string',
             createdDate: [2020, 1, 1, 10, 0],
             author: {email: 'email', fullName: 'fullName'},
-            immediateData: [{stringId: 'string', title: 'string', type: 'string'}]
+            immediateData: [{stringId: 'string', title: 'string', type: 'string'}],
+            deploymentState: DeploymentState.DEPLOYED
         }]);
         expect(service.fieldsGroup.length).toEqual(2);
     });
