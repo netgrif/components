@@ -37,6 +37,7 @@ import {PaginationParams} from '../../../utility/pagination/pagination-params';
 import {createSortParam, PaginationSort} from '../../../utility/pagination/pagination-sort';
 import {MatDialog} from '@angular/material/dialog';
 import {NAE_NEW_CASE_DIALOG_COMPONENT} from '../../../dialog/injection-tokens';
+import {DeploymentState} from "../../../resources/interface/petri-net-reference";
 
 @Injectable()
 export class CaseViewService extends AbstractSortableViewComponent implements OnDestroy {
@@ -291,6 +292,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
         if (this._newCaseConfiguration.useCachedProcesses) {
             return this._allowedNetsService.allowedNets$.pipe(
                 map(net => net.filter(n => blockNets.indexOf(n.identifier) === -1)),
+                map(net => net.filter(n => n.deploymentState === DeploymentState.DEPLOYED)),
                 map(net => net.filter(n => this._permissionService.hasNetPermission(PermissionType.CREATE, n)))
             );
         } else {
@@ -298,6 +300,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
                 switchMap(allowedNets => {
                     return this._processService.getNetReferences(allowedNets.map(net => net.identifier)).pipe(
                         map(net => net.filter(n => blockNets.indexOf(n.identifier) === -1)),
+                        map(net => net.filter(n => n.deploymentState === DeploymentState.DEPLOYED)),
                         map(net => net.filter(n => this._permissionService.hasNetPermission(PermissionType.CREATE, n)))
                     );
                 })
