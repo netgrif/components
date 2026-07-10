@@ -14,6 +14,7 @@ export * from './engine-endpoint/public/public-petri-net-resource.service';
 export * from './engine-endpoint/public/public-task-resource.service';
 
 export * from './interface/author';
+export * from './interface/assignee';
 export * from './interface/immediate-data';
 export * from './interface/response-data';
 export * from './interface/case';

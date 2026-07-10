@@ -77,7 +77,7 @@ describe('AssignTaskService', () => {
             title: '',
             caseColor: '',
             caseTitle: '',
-            userId: undefined,
+            assignee: undefined,
             userRefs: undefined,
             roles: {},
             startDate: [1],

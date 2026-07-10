@@ -70,5 +70,5 @@ export enum SearchIndex {
      *
      * Used by User and UserListFields
      */
-    USER_ID = 'userIdValue',
+    ACTOR_ID = 'actorIdValue',
 }

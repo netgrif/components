@@ -37,6 +37,11 @@ export abstract class AbstractMultichoiceAutocompleteFieldComponentComponent ext
     }
 
     add(event: MatChipInputEvent): void {
+        if (this.formControlRef.disabled) {
+            this.input.nativeElement.value = '';
+            return;
+        }
+
         const value = event['key'] ?? '';
 
         if (value) {
@@ -53,6 +58,10 @@ export abstract class AbstractMultichoiceAutocompleteFieldComponentComponent ext
     }
 
     remove(value: string): void {
+        if (this.formControlRef.disabled) {
+            return;
+        }
+
         const index = this.dataField.value.indexOf(value);
 
         if (index >= 0) {
@@ -64,6 +73,11 @@ export abstract class AbstractMultichoiceAutocompleteFieldComponentComponent ext
     }
 
     change() {
+        if (this.formControlRef.disabled) {
+            this.filteredOptions = of([]);
+            return;
+        }
+
         if (this.input.nativeElement.value !== undefined) {
             this.filteredOptions = of(this._filter(this.input.nativeElement.value).filter((option) => !this.dataField.value?.includes(option.key)));
         }

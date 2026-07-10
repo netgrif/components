@@ -7,6 +7,7 @@ import {Component, ComponentPrefixes} from '../../models/component';
 import {Validation} from '../../models/validation';
 
 export class UserField extends DataField<UserValue> {
+    // todo rebranding to actor-field
     constructor(stringId: string, title: string, behavior: Behavior, value: UserValue, private _roles: Array<ProcessRole>,
                 placeholder?: string, description?: string, layout?: Layout, validations?: Array<Validation>, component?: Component,
                 parentTaskId?: string) {

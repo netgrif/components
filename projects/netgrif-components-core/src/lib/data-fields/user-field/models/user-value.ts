@@ -10,9 +10,11 @@ export class UserValue {
      * @param _realmId the id of the selected user realm
      * @param _firstName the first name of the selected user
      * @param _lastName the surname of the selected user
+     * @param _fullName the full name of the selected user
      * @param _username email of the selected user
      */
-    constructor(private _id: string, private _realmId: string, private _firstName: string, private _lastName: string, private _username: string) {
+    constructor(private _id: string, private _realmId: string, private _firstName: string, private _lastName: string,
+                private _fullName: string, private _username: string) {
     }
 
     get id(): string {
@@ -32,7 +34,7 @@ export class UserValue {
     }
 
     get fullName(): string {
-        return this._firstName + ' ' + this._lastName;
+        return this._fullName;
     }
 
     get username(): string {

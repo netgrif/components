@@ -32,13 +32,13 @@ export function checkJsonParamsForSidenav(args: CreateViewArguments, addViewToSe
             }
         }
         if (sidenav.user !== undefined || sidenav.navigation !== undefined || sidenav.quickPanel !== undefined) {
-            sidenav = addDefaultVaulues(sidenav);
+            sidenav = addDefaultValues(sidenav);
         }
     }
     return sidenav;
 }
 
-function addDefaultVaulues(sidenav: SidenavPromptOptions): SidenavPromptOptions {
+function addDefaultValues(sidenav: SidenavPromptOptions): SidenavPromptOptions {
     if (sidenav.user === undefined)
         sidenav.user = false;
     if (sidenav.quickPanel === undefined)

@@ -65,13 +65,17 @@ import {NAE_TASK_FORCE_OPEN} from '../../view/task-view/models/injection-token-t
 import {FrontActionService} from "../../actions/services/front-action.service";
 import {NAE_TAB_DATA} from '../../tabs/tab-data-injection-token/tab-data-injection-token';
 import {InjectedTabData} from '../../tabs/interfaces';
+import {UserComparatorService} from '../../user/services/user-comparator.service';
+import {AfterAction} from '../../utility/call-chain/after-action';
 
 describe('AbtsractTaskPanelComponent', () => {
     let component: TestTaskPanelComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
     let assignSpy: jasmine.Spy;
+    let tabSelected$: Subject<boolean>;
 
     beforeEach(waitForAsync(() => {
+        tabSelected$ = new Subject<boolean>();
         const mockAssignPolicyService = {
             performAssignPolicy: () => {
             }
@@ -117,6 +121,10 @@ describe('AbtsractTaskPanelComponent', () => {
                 OverflowService,
                 FrontActionService,
                 {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
+                {
+                    provide: NAE_TAB_DATA,
+                    useFactory: () => ({tabSelected$: tabSelected$.asObservable()})
+                },
                 {
                     provide: AllowedNetsService,
                     useFactory: TestTaskViewAllowedNetsFactory,
@@ -174,6 +182,21 @@ describe('AbtsractTaskPanelComponent', () => {
         expect(component.canFinish()).toBeFalse();
     });
 
+    it('should block fields after reloading an expanded unassigned task on tab selection', () => {
+        const taskDataService = TestBed.inject(TaskDataService);
+        const taskContentService = TestBed.inject(TaskContentService);
+        const blockFieldsSpy = spyOn(taskContentService, 'blockFields');
+        spyOn(component, 'isExpanded').and.returnValue(true);
+        spyOn(taskDataService, 'initializeTaskDataFields').and.callFake((afterAction: AfterAction) => {
+            afterAction.resolve(true);
+        });
+        (component as any)._canReload = true;
+
+        tabSelected$.next(true);
+
+        expect(blockFieldsSpy).toHaveBeenCalledOnceWith(true);
+    });
+
     afterEach(() => {
         TestBed.resetTestingModule();
     });
@@ -208,13 +231,14 @@ class TestTaskPanelComponent extends AbstractTaskPanelComponent implements After
                 protected _currencyPipe: CurrencyPipe,
                 protected _changedFieldsService: ChangedFieldsService,
                 protected _permissionService: PermissionService,
+                protected _userComparator: UserComparatorService,
                 @Optional() overflowService: OverflowService,
                 @Optional() @Inject(NAE_TASK_FORCE_OPEN) protected _taskForceOpen: boolean,
                 @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData) {
         super(_taskContentService, _log, _taskViewService, _paperView, _taskEventService, _assignTaskService,
             _delegateTaskService, _cancelTaskService, _finishTaskService, _taskState, _taskDataService,
             _assignPolicyService, _finishPolicyService, _callChain, _taskOperations, undefined, _translate,
-            _currencyPipe, _changedFieldsService, _permissionService, overflowService, _taskForceOpen, injectedTabData);
+            _currencyPipe, _changedFieldsService, _permissionService, _userComparator, overflowService, _taskForceOpen, injectedTabData);
     }
 
     ngAfterViewInit() {
@@ -242,7 +266,7 @@ class TestWrapperComponent {
             delegateTitle: 'string',
             caseColor: 'string',
             caseTitle: 'string',
-            userId: undefined,
+            assignee: undefined,
             roles: {},
             startDate: undefined,
             finishDate: undefined,
@@ -293,7 +317,7 @@ class MyTaskResources {
                         title: 'string',
                         caseColor: 'string',
                         caseTitle: 'string',
-                        userId: undefined,
+                        assignee: undefined,
                         roles: {},
                         startDate: undefined,
                         finishDate: undefined,
@@ -344,7 +368,7 @@ class MyTaskResources {
                         title: 'string',
                         caseColor: 'string',
                         caseTitle: 'string',
-                        userId: undefined,
+                        assignee: undefined,
                         roles: {},
                         startDate: undefined,
                         finishDate: undefined,

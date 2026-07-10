@@ -282,7 +282,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
             return;
         }
 
-        if (this._safeTask.userId === undefined) {
+        if (this._safeTask.assignee === undefined) {
             this._log.debug('current task is not assigned...');
             afterAction.resolve(false);
             return;
@@ -367,10 +367,10 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         if (!this.isTaskPresent()) {
             return false;
         }
-        if (this._safeTask.userId === undefined) {
+        if (this._safeTask.assignee === undefined) {
             return false;
         }
-        if (!this._userComparator.compareUsers(this._safeTask.userId)) {
+        if (!this._userComparator.compareUsers(this._safeTask.assignee.id)) {
             return false;
         }
         const taskIdsInRequest: Array<string> = Object.keys(request);

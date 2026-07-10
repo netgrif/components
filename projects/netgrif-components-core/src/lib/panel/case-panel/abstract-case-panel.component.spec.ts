@@ -142,7 +142,7 @@ class TestWrapperComponent {
                 delete: true
             }
         },
-        users: {},
+        actors: {},
         color: 'color',
         creationDate: [],
         lastModified: [],

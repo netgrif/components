@@ -1,12 +1,12 @@
 {
     "name": "@netgrif/components-core",
-    "version": "7.0.0-rc.15",
+    "version": "7.0.0",
     "description": "Netgrif Application engine frontend core Angular library",
     "homepage": "https://components.netgrif.com",
     "license": "SEE LICENSE IN LICENSE",
     "repository": {
         "type": "git",
-        "url": "https://github.com/netgrif/components.git"
+        "url": "git+https://github.com/netgrif/components.git"
     },
     "bugs": {
         "url": "https://github.com/netgrif/components/issues"
