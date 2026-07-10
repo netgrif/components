@@ -1,13 +1,13 @@
 import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
 import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
-import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, of, Subject, Subscription} from 'rxjs';
 import {HttpParams} from '@angular/common/http';
 import {Case} from '../../../resources/interface/case';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {SearchService} from '../../../search/search-service/search.service';
 import {TranslateService} from '@ngx-translate/core';
-import {catchError, concatMap, filter, map, mergeMap, scan, switchMap, tap} from 'rxjs/operators';
+import {catchError, concatMap, filter, map, mergeMap, scan, switchMap, take, tap} from 'rxjs/operators';
 import {Pagination} from '../../../resources/interface/pagination';
 import {CaseMetaField} from '../../../header/case-header/case-menta-enum';
 import {PageLoadRequestContext} from '../../abstract/page-load-request-context';
@@ -37,6 +37,7 @@ import {PaginationParams} from '../../../utility/pagination/pagination-params';
 import {createSortParam, PaginationSort} from '../../../utility/pagination/pagination-sort';
 import {MatDialog} from '@angular/material/dialog';
 import {NAE_NEW_CASE_DIALOG_COMPONENT} from '../../../dialog/injection-tokens';
+import {DeploymentState} from "../../../resources/interface/petri-net-reference";
 
 @Injectable()
 export class CaseViewService extends AbstractSortableViewComponent implements OnDestroy {
@@ -53,6 +54,8 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
     protected _pagination: Pagination;
     protected _newCaseConfiguration: NewCaseConfiguration;
     protected _paginationView: boolean = false;
+
+    protected _activeFilterSub: Subscription;
 
     constructor(protected _allowedNetsService: AllowedNetsService,
                 protected _dialog: MatDialog,
@@ -74,7 +77,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
             Object.assign(this._newCaseConfiguration, newCaseConfig);
         }
         this._loading$ = new LoadingWithFilterEmitter();
-        this._searchService.activeFilter$.subscribe(() => {
+        this._activeFilterSub = this._searchService.activeFilter$.subscribe(() => {
             this.reload();
         });
         this._endOfData = false;
@@ -123,6 +126,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
         super.ngOnDestroy();
         this._loading$.complete();
         this._nextPage$.complete();
+        this._activeFilterSub?.unsubscribe();
     }
 
     public get loading(): boolean {
@@ -241,7 +245,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
                 newCaseCreationConfiguration
             },
         });
-        dialogRef.afterClosed().subscribe($event => {
+        dialogRef.afterClosed().pipe(take(1)).subscribe($event => {
             if ($event?.data) {
                 this._log.debug($event.message, $event.data);
                 this.reload();
@@ -257,40 +261,49 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
         isCaseTitleRequired: true
     }): Observable<Case> {
         const myCase = new Subject<Case>();
-        this.getNewCaseAllowedNets(newCaseCreationConfiguration.blockNets).subscribe((nets: Array<PetriNetReferenceWithPermissions>) => {
-            if (!nets || nets.length === 0) {
-                const errorMessage = this._translate.instant('side-menu.new-case.noNets');
+        this.getNewCaseAllowedNets(newCaseCreationConfiguration.blockNets).pipe(take(1)).subscribe({
+            next: (nets: Array<PetriNetReferenceWithPermissions>) => {
+                if (!nets || nets.length === 0) {
+                    const errorMessage = this._translate.instant('side-menu.new-case.noNets');
+                    this._snackBarService.openErrorSnackBar(errorMessage);
+                    this._log.error('No nets available for case creation. Ensure the allowed nets configuration is correct.');
+                    myCase.complete();
+                    return;
+                }
+                this._caseResourceService.createCase({
+                    title: null,
+                    color: 'panel-primary-icon',
+                    netId: nets[0].stringId
+                }).pipe(take(1)).subscribe({
+                    next: (response: EventOutcomeMessageResource) => {
+                        this._snackBarService.openSuccessSnackBar(this._translate.instant('side-menu.new-case.createCase')
+                            + ' ' + this._translate.instant('side-menu.new-case.defaultCaseName'));
+                        this.reload();
+                        myCase.next((response.outcome as CreateCaseEventOutcome).aCase);
+                        myCase.complete();
+                    },
+                    error: error => {
+                        const errorMessage = error.message ? error.message : this._translate.instant('side-menu.new-case.createCaseError');
+                        this._snackBarService.openErrorSnackBar(errorMessage);
+                        this._log.error('Error occurred during case creation: ' + errorMessage);
+                        myCase.complete();
+                    }
+                });
+            },
+            error: error => {
+                const errorMessage = error.message || this._translate.instant('side-menu.new-case.errorCreate');
+                this._log.error('Failed to fetch allowed nets. Error: ' + errorMessage);
                 this._snackBarService.openErrorSnackBar(errorMessage);
-                this._log.error('No nets available for case creation. Ensure the allowed nets configuration is correct.');
-                return;
-            }
-            this._caseResourceService.createCase({
-                title: null,
-                color: 'panel-primary-icon',
-                netId: nets[0].stringId
-            }).subscribe((response: EventOutcomeMessageResource) => {
-                this._snackBarService.openSuccessSnackBar(this._translate.instant('side-menu.new-case.createCase')
-                    + ' ' + this._translate.instant('side-menu.new-case.defaultCaseName'));
-                this.reload();
-                myCase.next((response.outcome as CreateCaseEventOutcome).aCase);
                 myCase.complete();
-            }, error => {
-                const errorMessage = error.message ? error.message : this._translate.instant('side-menu.new-case.createCaseError');
-                this._snackBarService.openErrorSnackBar(errorMessage);
-                this._log.error('Error occurred during case creation: ' + errorMessage);
-            });
-        }, error => {
-            const errorMessage = error.message || this._translate.instant('side-menu.new-case.errorCreate');
-            this._log.error('Failed to fetch allowed nets. Error: ' + errorMessage);
-            this._snackBarService.openErrorSnackBar(errorMessage);
-        });
-        return myCase;
+            }});
+        return myCase.asObservable();
     }
 
     public getNewCaseAllowedNets(blockNets: string[] = []): Observable<Array<PetriNetReferenceWithPermissions>> {
         if (this._newCaseConfiguration.useCachedProcesses) {
             return this._allowedNetsService.allowedNets$.pipe(
                 map(net => net.filter(n => blockNets.indexOf(n.identifier) === -1)),
+                map(net => net.filter(n => n.deploymentState === DeploymentState.DEPLOYED)),
                 map(net => net.filter(n => this._permissionService.hasNetPermission(PermissionType.CREATE, n)))
             );
         } else {
@@ -298,6 +311,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
                 switchMap(allowedNets => {
                     return this._processService.getNetReferences(allowedNets.map(net => net.identifier)).pipe(
                         map(net => net.filter(n => blockNets.indexOf(n.identifier) === -1)),
+                        map(net => net.filter(n => n.deploymentState === DeploymentState.DEPLOYED)),
                         map(net => net.filter(n => this._permissionService.hasNetPermission(PermissionType.CREATE, n)))
                     );
                 })
