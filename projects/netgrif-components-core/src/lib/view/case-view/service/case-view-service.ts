@@ -267,6 +267,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
                     const errorMessage = this._translate.instant('side-menu.new-case.noNets');
                     this._snackBarService.openErrorSnackBar(errorMessage);
                     this._log.error('No nets available for case creation. Ensure the allowed nets configuration is correct.');
+                    myCase.complete();
                     return;
                 }
                 this._caseResourceService.createCase({
@@ -285,6 +286,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
                         const errorMessage = error.message ? error.message : this._translate.instant('side-menu.new-case.createCaseError');
                         this._snackBarService.openErrorSnackBar(errorMessage);
                         this._log.error('Error occurred during case creation: ' + errorMessage);
+                        myCase.complete();
                     }
                 });
             },
@@ -292,8 +294,9 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
                 const errorMessage = error.message || this._translate.instant('side-menu.new-case.errorCreate');
                 this._log.error('Failed to fetch allowed nets. Error: ' + errorMessage);
                 this._snackBarService.openErrorSnackBar(errorMessage);
+                myCase.complete();
             }});
-        return myCase;
+        return myCase.asObservable();
     }
 
     public getNewCaseAllowedNets(blockNets: string[] = []): Observable<Array<PetriNetReferenceWithPermissions>> {
