@@ -366,14 +366,12 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         });
     }
 
-    public createMenuItem() {
+    public createMenuItem(additionalParams?: {[k: string]: string}) {
+        const baseParams = { "dest_uri_path": this.currentNode.uriPath };
+        let mergedParams: {[k: string]: string} = !!additionalParams ? {...baseParams, ...additionalParams} : baseParams;
         this._processService.getNet('menu_item').pipe(
             switchMap(net => {
-                return this._caseResourceService.createCase({
-                    netId: net.stringId,
-                    title: 'New menu item',
-                    params: { "dest_uri_path": this.currentNode.uriPath }
-                });
+                return this._caseResourceService.createCase({ netId: net.stringId, title: 'New menu item', params: mergedParams });
             }),
             take(1)
         ).subscribe({
