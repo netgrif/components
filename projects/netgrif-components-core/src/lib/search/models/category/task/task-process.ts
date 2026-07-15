@@ -19,6 +19,7 @@ export class TaskProcess extends NoConfigurationAutocompleteCategory<string> {
     constructor(operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
         super(['processId'],
             [operators.getOperator(Equals), operators.getOperator(NotEquals)],
+            // todo 2466 contains, lt, gt, lte, gte, in list
             `${TaskProcess._i18n}.name`,
             logger,
             operators);

@@ -10,6 +10,8 @@ import {Categories} from '../categories';
 
 export class TaskRole extends TaskNetAttributeAutocompleteCategory {
 
+    // todo 2466 impossible in pfql
+
     private static readonly _i18n = 'search.category.task.role';
 
     constructor(operators: OperatorService, logger: LoggerService, optionalDependencies: OptionalDependencies) {

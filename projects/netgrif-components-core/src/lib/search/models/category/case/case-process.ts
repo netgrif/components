@@ -21,6 +21,7 @@ export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
     constructor(operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
         super([CaseSearch.PROCESS_IDENTIFIER],
             [operators.getOperator(Equals), operators.getOperator(NotEquals)],
+            // todo 2466 contains, lt, gt, lte, gte, in list
             `${CaseProcess._i18n}.name`,
             logger,
             operators);

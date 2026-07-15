@@ -16,6 +16,7 @@ export class TaskTask extends TaskNetAttributeAutocompleteCategory {
     constructor(operators: OperatorService, logger: LoggerService, optionalDependencies: OptionalDependencies) {
         super(['transitionId'],
             [operators.getOperator(Equals), operators.getOperator(NotEquals)],
+            // todo 2466 contains, lt, gt, lte, gte, in list, in range
             `${TaskTask._i18n}.name`,
             logger,
             operators,

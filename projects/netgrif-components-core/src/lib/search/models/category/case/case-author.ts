@@ -15,6 +15,7 @@ export class CaseAuthor extends NoConfigurationUserAutocompleteCategory {
     constructor(operators: OperatorService, logger: LoggerService, optionalDependencies: OptionalDependencies) {
         super([CaseSearch.AUTHOR],
             [operators.getOperator(Equals), operators.getOperator(NotEquals)],
+            // todo 2466 contains, lt, gt, lte, gte, in list
             `${CaseAuthor._i18n}.name`,
             logger,
             operators,

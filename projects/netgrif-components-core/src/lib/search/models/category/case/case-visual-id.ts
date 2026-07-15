@@ -11,6 +11,8 @@ import {OptionalDependencies} from '../../../category-factory/optional-dependenc
 
 export class CaseVisualId extends NoConfigurationCategory<string> {
 
+    // todo 2466 impossible in pfql
+
     private static readonly _i18n = 'search.category.case.visualId';
 
     constructor(operators: OperatorService, logger: LoggerService, protected _optionalDependencies?: OptionalDependencies) {

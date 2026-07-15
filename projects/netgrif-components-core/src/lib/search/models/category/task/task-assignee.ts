@@ -14,7 +14,12 @@ export class TaskAssignee extends NoConfigurationUserAutocompleteCategory {
 
     constructor(operators: OperatorService, logger: LoggerService, optionalDependencies: OptionalDependencies) {
         super(['userId'],
-            [operators.getOperator(Equals), operators.getOperator(NotEquals), operators.getOperator(IsNull)],
+            [
+                operators.getOperator(Equals),
+                operators.getOperator(NotEquals),
+                operators.getOperator(IsNull) // todo 2466 no such operator IsNull in PFQL
+            ],
+            // todo 2466 contains, lt, gt, lte, gte, in list
             `${TaskAssignee._i18n}.name`,
             logger,
             operators,

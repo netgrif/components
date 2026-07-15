@@ -18,6 +18,8 @@ import {NotEqualsDateTime} from '../../operator/not-equals-date-time';
 
 export class CaseCreationDateTime extends NoConfigurationCategory<Moment> {
 
+    // todo 2466 mb only one creationDate component is enough?
+
     private static readonly _i18n = 'search.category.case.creationDateTime';
 
     constructor(operators: OperatorService, logger: LoggerService) {

@@ -11,6 +11,8 @@ import {CaseSearch} from './case-search.enum';
 
 export class CaseTask extends CaseNetAttributeAutocompleteCategory {
 
+    // todo 2466 impossible in PFQL
+
     private static readonly _i18n = 'search.category.case.task';
 
     constructor(operators: OperatorService, logger: LoggerService, optionalDependencies: OptionalDependencies) {

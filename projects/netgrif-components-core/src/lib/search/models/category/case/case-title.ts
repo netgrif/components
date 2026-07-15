@@ -20,8 +20,9 @@ export class CaseTitle extends NoConfigurationCategory<string> {
                 operators.getOperator(Substring),
                 operators.getOperator(Equals),
                 operators.getOperator(NotEquals),
-                operators.getOperator(Like)
+                operators.getOperator(Like) // todo 2466 no such operat Like in pfql
             ],
+            // todo 2466 in list, lt, gt, lte, gte
             `${CaseTitle._i18n}.name`,
             SearchInputType.TEXT,
             logger,

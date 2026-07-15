@@ -15,10 +15,11 @@ export class CaseStringId extends NoConfigurationCategory<string> {
     constructor(operators: OperatorService, logger: LoggerService) {
         super([CaseSearch.STRING_ID],
             [
-                operators.getOperator(Substring),
+                operators.getOperator(Substring),// todo 2466 pfql has missing substring operator on case id
                 operators.getOperator(Equals),
                 operators.getOperator(NotEquals)
             ],
+            // todo 2466 in list
             `${CaseStringId._i18n}.name`,
             SearchInputType.TEXT,
             logger,

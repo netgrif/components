@@ -30,6 +30,7 @@ export class CaseCreationDate extends NoConfigurationCategory<Moment> {
                 operators.getOperator(LessThanEqualDate),
                 operators.getOperator(InRangeDate)
             ],
+            // todo 2466 in list
             `${CaseCreationDate._i18n}.name`,
             SearchInputType.DATE,
             logger,
