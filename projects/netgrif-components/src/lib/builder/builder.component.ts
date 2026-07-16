@@ -1,11 +1,11 @@
-import {ChangeDetectionStrategy, Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional} from '@angular/core';
 import {BuilderMode, BuilderModeService} from "./services/builder-mode.service";
 import {ModelService} from "./modeler/services/model/model.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
 import {HttpClient} from "@angular/common/http";
 import {HistoryService} from "./modeler/services/history/history.service";
-import {CaseResourceService, LoadingEmitter, NAE_TAB_DATA, ImmediateData} from "@netgrif/components-core";
+import {CaseResourceService, LoadingEmitter, NAE_TAB_DATA, ImmediateData, DATA_FIELD_PORTAL_DATA, CaseRefField, DataFieldPortalData} from "@netgrif/components-core";
 import {InjectedTabbedBuilderViewData} from "./injected-builder-data";
 import {FieldListService} from './form-builder/field-list/field-list.service';
 import {GridsterService} from './form-builder/gridster/gridster.service';
@@ -126,7 +126,8 @@ export class BuilderComponent {
                 public builderModeService: BuilderModeService,
                 protected _caseResourceService: CaseResourceService,
                 protected _builderIntegrationService: BuilderIntegrationService,
-                @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedBuilderViewData) {
+                @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedBuilderViewData,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<CaseRefField>) {
         this.loading = new LoadingEmitter(true);
         if (injectedTabData?.processCase) {
             this._builderIntegrationService.isIntegrated = true;
@@ -134,6 +135,19 @@ export class BuilderComponent {
             this.resolveIntegratedMode();
             this._builderIntegrationService.reloadCase.subscribe(() => {
                 this._caseResourceService.getOneCase(this._builderIntegrationService.processCase.stringId).subscribe(processCase => {
+                    this._builderIntegrationService.processCase = processCase;
+                    this.resolveIntegratedMode()
+                    this._builderIntegrationService.reloadModes = true;
+                })
+            });
+        } else if (dataFieldPortalData?.dataField?.value?.length > 0) {
+            this._builderIntegrationService.isIntegrated = true;
+            this._caseResourceService.getOneCase(dataFieldPortalData?.dataField?.value[0]).subscribe(processCase => {
+                this._builderIntegrationService.processCase = processCase;
+                this.resolveIntegratedMode();
+            })
+            this._builderIntegrationService.reloadCase.subscribe(() => {
+                this._caseResourceService.getOneCase(this._builderIntegrationService.processCase?.stringId).subscribe(processCase => {
                     this._builderIntegrationService.processCase = processCase;
                     this.resolveIntegratedMode()
                     this._builderIntegrationService.reloadModes = true;
