@@ -45,6 +45,7 @@ import {BuilderModeService} from '../../services/builder-mode.service';
 import {CanvasToolContext} from './services/modes/canvas-tool-context';
 import {ProcessActionsTool} from "../actions-mode/tools/process-actions-tool";
 import {BuilderIntegrationService} from "../../services/builder-integration.service";
+import {LocalStorageService} from '../../services/local-storage.service';
 
 @Injectable()
 export class EditModeService extends CanvasModeService<CanvasTool> {
@@ -76,7 +77,8 @@ export class EditModeService extends CanvasModeService<CanvasTool> {
         protected _actionMode: ActionsModeService,
         protected _actionsMasterDetail: ActionsMasterDetailService,
         protected _processActionsTool: ProcessActionsTool,
-        protected _builderIntegrationService: BuilderIntegrationService
+        protected _builderIntegrationService: BuilderIntegrationService,
+        protected _localStorageService: LocalStorageService
     ) {
         super(_arcFactory, modelService, _canvasService);
         this.mode = new Mode(
@@ -90,7 +92,7 @@ export class EditModeService extends CanvasModeService<CanvasTool> {
             this._tutorialService.modeler,
             this._parentInjector
         );
-        const context = new CanvasToolContext(modelService, dialog, this, router, transitionService, _actionMode, _actionsMasterDetail, _builderModeService, _processActionsTool, _builderIntegrationService);
+        const context = new CanvasToolContext(modelService, dialog, this, router, transitionService, _actionMode, _actionsMasterDetail, _builderModeService, _processActionsTool, _builderIntegrationService, _localStorageService);
         this.switchTools = new ToolGroup<CanvasTool>(
             new ClearModelTool(context),
             new ResetPositionAndZoomTool(context),

@@ -26,6 +26,7 @@ export interface ManagePermissionData {
     processUserRefs?: Array<ProcessPermissionRef>;
     modelService: ModelService;
     historyService: HistoryService;
+    localStorageService: LocalStorageService;
 }
 
 @Component({
@@ -51,13 +52,14 @@ export class DialogManageRolesComponent implements OnInit, OnDestroy {
 
     private modelService: ModelService;
     private historyService: HistoryService;
+    private _localStorageService: LocalStorageService;
 
     constructor(
-        @Inject(MAT_DIALOG_DATA) public data: ManagePermissionData,
-        protected _localStorageService: LocalStorageService
+        @Inject(MAT_DIALOG_DATA) public data: ManagePermissionData
     ) {
         this.modelService = data.modelService;
         this.historyService = data.historyService;
+        this._localStorageService = data.localStorageService;
         if (this.data.type === RoleRefType.TRANSITION) {
             const arrayRoleRefs = [...this.data.rolesRefs];
             this.addDefaultRoleRefs(arrayRoleRefs);
