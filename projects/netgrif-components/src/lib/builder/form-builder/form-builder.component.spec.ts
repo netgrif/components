@@ -1,11 +1,11 @@
 import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {PetriNet} from '@netgrif/petriflow';
-import {BuilderModeService} from '../builder-mode.service';
+import {BuilderModeService} from '../services/builder-mode.service';
 import {ModelService} from '../modeler/services/model/model.service';
 import {SelectedTransitionService} from '../modeler/selected-transition.service';
 import {FormBuilderComponent} from './form-builder.component';
-import {BuilderIntegrationService} from "../builder-integration.service";
+import {BuilderIntegrationService} from "../services/builder-integration.service";
 import {HistoryService} from "../modeler/services/history/history.service";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {RouterTestingModule} from "@angular/router/testing";

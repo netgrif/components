@@ -5,12 +5,14 @@ import {AbstractMasterDetailService} from '../components/master-detail/abstract-
 import {ModelerConfig} from '../modeler-config';
 import {HistoryService} from '../services/history/history.service';
 import {ModelService} from '../services/model/model.service';
+import {LocalStorageService} from "../../services/local-storage.service";
 
 @Injectable()
 export class RoleMasterDetailService extends AbstractMasterDetailService<Role> {
 
     constructor(protected _modelService: ModelService,
-                protected _historyService: HistoryService) {
+                protected _historyService: HistoryService,
+                protected _localStorageService: LocalStorageService) {
         super();
     }
 
@@ -51,12 +53,12 @@ export class RoleMasterDetailService extends AbstractMasterDetailService<Role> {
     }
 
     getSortFromLocalStorage(): Sort {
-        return {active: localStorage.getItem(ModelerConfig.LOCALSTORAGE.MASTER_DETAIL.ROLE_SORT),
-            direction: localStorage.getItem(ModelerConfig.LOCALSTORAGE.MASTER_DETAIL.ROLE_DIRECTION)} as Sort;
+        return {active: this._localStorageService.getItem(ModelerConfig.LOCALSTORAGE.MASTER_DETAIL.ROLE_SORT),
+            direction: this._localStorageService.getItem(ModelerConfig.LOCALSTORAGE.MASTER_DETAIL.ROLE_DIRECTION)} as Sort;
     }
 
     setSortToLocalStorage(sort: Sort) {
-        localStorage.setItem(ModelerConfig.LOCALSTORAGE.MASTER_DETAIL.ROLE_SORT, sort.active);
-        localStorage.setItem(ModelerConfig.LOCALSTORAGE.MASTER_DETAIL.ROLE_DIRECTION, sort.direction);
+        this._localStorageService.setItem(ModelerConfig.LOCALSTORAGE.MASTER_DETAIL.ROLE_SORT, sort.active);
+        this._localStorageService.setItem(ModelerConfig.LOCALSTORAGE.MASTER_DETAIL.ROLE_DIRECTION, sort.direction);
     }
 }

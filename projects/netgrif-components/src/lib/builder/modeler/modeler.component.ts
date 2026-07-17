@@ -9,7 +9,7 @@ import {EditModeService} from './edit-mode/edit-mode.service';
 import {HistoryService} from './services/history/history.service';
 import {ModelService} from './services/model/model.service';
 import {ControlPanelService} from "./control-panel/control-panel.service";
-import {BuilderModeService, BuilderMode} from "../builder-mode.service";
+import {BuilderModeService, BuilderMode} from "../services/builder-mode.service";
 
 @Component({
     selector: 'nc-builder-modeler',
