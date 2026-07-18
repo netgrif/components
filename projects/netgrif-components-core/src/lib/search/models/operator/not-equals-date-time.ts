@@ -14,12 +14,12 @@ export class NotEqualsDateTime extends Operator<Moment> {
         this.equals = operators.getOperator(EqualsDateTime) as EqualsDateTime;
     }
 
-    createQuery(elasticKeywords: Array<string>, args: Array<Moment>): Query {
-        const equalsQuery = this.equals.createQuery(elasticKeywords, args);
+    createQuery(pfqlKeywords: Array<string>, args: Array<Moment>): Query {
+        const equalsQuery = this.equals.createQuery(pfqlKeywords, args);
         if (equalsQuery.isEmpty) {
             return equalsQuery;
         }
-        return new Query(`(!${equalsQuery.value})`);
+        return new Query(`not (${equalsQuery.value})`);
     }
 
     getOperatorNameTemplate(): Array<string> {

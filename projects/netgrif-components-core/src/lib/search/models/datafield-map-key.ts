@@ -5,7 +5,7 @@ import {SearchAutocompleteOption} from './category/search-autocomplete-option';
  *
  * Since javascript maps don't support objects as keys this class has a serialized form, that is used as a `string` key.
  *
- * This class also acts as an autocomplete option when the target datafield is selected. The real data fields are then extracted from the
+ * This class also acts as an autocomplete option when the target data field is selected. The real data fields are then extracted from the
  * map to which this object is a key.
  */
 export class DatafieldMapKey implements SearchAutocompleteOption<string> {

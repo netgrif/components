@@ -10,9 +10,9 @@ export class InRange extends Operator<number> {
         super(2);
     }
 
-    createQuery(elasticKeywords: Array<string>, args: Array<number>): Query {
+    createQuery(pfqlKeywords: Array<string>, args: Array<number>): Query {
         this.checkArgumentsCount(args);
-        return Operator.forEachKeyword(elasticKeywords, keyword => new Query(`(${keyword}:[${args[0]} TO ${args[1]}])`));
+        return Operator.forEachKeyword(pfqlKeywords, keyword => new Query(`${keyword} in (${args[0]} : ${args[1]})`));
     }
 
     getOperatorNameTemplate(): Array<string> {

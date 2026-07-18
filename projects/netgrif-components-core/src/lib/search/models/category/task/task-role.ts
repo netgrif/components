@@ -7,6 +7,7 @@ import {TaskNetAttributeAutocompleteCategory} from './task-net-attribute-autocom
 import {Net} from '../../../../process/net';
 import {NameIdPair} from '../name-id-pair';
 import {Categories} from '../categories';
+import {ResourceTypeQueryPrefix} from "../resource-type-query-prefix";
 
 export class TaskRole extends TaskNetAttributeAutocompleteCategory {
 
@@ -20,7 +21,8 @@ export class TaskRole extends TaskNetAttributeAutocompleteCategory {
             `${TaskRole._i18n}.name`,
             logger,
             operators,
-            optionalDependencies);
+            optionalDependencies,
+            ResourceTypeQueryPrefix.TASKS);
     }
 
     protected extractAttributes(petriNet: Net): Array<NameIdPair> {

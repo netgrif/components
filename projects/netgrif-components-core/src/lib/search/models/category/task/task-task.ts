@@ -7,6 +7,7 @@ import {TaskNetAttributeAutocompleteCategory} from './task-net-attribute-autocom
 import {Net} from '../../../../process/net';
 import {NameIdPair} from '../name-id-pair';
 import {Categories} from '../categories';
+import {ResourceTypeQueryPrefix} from "../resource-type-query-prefix";
 
 
 export class TaskTask extends TaskNetAttributeAutocompleteCategory {
@@ -16,11 +17,11 @@ export class TaskTask extends TaskNetAttributeAutocompleteCategory {
     constructor(operators: OperatorService, logger: LoggerService, optionalDependencies: OptionalDependencies) {
         super(['transitionId'],
             [operators.getOperator(Equals), operators.getOperator(NotEquals)],
-            // todo 2466 contains, lt, gt, lte, gte, in list, in range
             `${TaskTask._i18n}.name`,
             logger,
             operators,
-            optionalDependencies);
+            optionalDependencies,
+            ResourceTypeQueryPrefix.TASKS);
     }
 
     protected extractAttributes(petriNet: Net): Array<NameIdPair> {

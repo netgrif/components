@@ -2,11 +2,11 @@ import {Operator} from './operator';
 import {Operators} from './operators';
 
 /**
- * A strict greater than operator for numeric fields.
+ * A strict greater than operator for numeric or string fields.
  */
-export class MoreThan extends Operator<number> {
+export class MoreThan extends Operator<number | string> {
     constructor() {
-        super(1, '>');
+        super(1, 'gt');
     }
 
     getOperatorNameTemplate(): Array<string> {

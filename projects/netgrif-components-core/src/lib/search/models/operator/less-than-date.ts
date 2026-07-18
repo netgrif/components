@@ -2,7 +2,6 @@ import {Operator} from './operator';
 import moment, {Moment} from 'moment';
 import {OperatorService} from '../../operator-service/operator.service';
 import {Query} from '../query/query';
-import {clearTimeInformation} from '../../../utility/clear-time-information';
 import {LessThan} from './less-than';
 import {Operators} from './operators';
 
@@ -18,11 +17,10 @@ export class LessThanDate extends Operator<Moment> {
         this.lessThan = operators.getOperator(LessThan) as LessThan;
     }
 
-    createQuery(elasticKeywords: Array<string>, args: Array<Moment>): Query {
+    createQuery(pfqlKeywords: Array<string>, args: Array<Moment>): Query {
         this.checkArgumentsCount(args);
         const arg = moment(args[0]);
-        clearTimeInformation(arg);
-        return this.lessThan.createQuery(elasticKeywords, [arg.valueOf()]);
+        return this.lessThan.createQuery(pfqlKeywords, [arg.format('YYYY-MM-DD')], false, false);
     }
 
     getOperatorNameTemplate(): Array<string> {

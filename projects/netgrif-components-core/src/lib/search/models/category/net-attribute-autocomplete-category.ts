@@ -10,6 +10,7 @@ import {Category} from './category';
 import {Subscription} from 'rxjs';
 import {OperatorService} from '../../operator-service/operator.service';
 import {OptionalDependencies} from '../../category-factory/optional-dependencies';
+import {ResourceTypeQueryPrefix} from "./resource-type-query-prefix";
 
 /**
  * A utility class for autocomplete search categories that are net specific, such as searching by roles, or tasks.
@@ -21,13 +22,14 @@ export abstract class NetAttributeAutocompleteCategory extends NoConfigurationAu
     private _allowedNetsSub: Subscription;
     private _destroyed: boolean;
 
-    protected constructor(elasticKeywords: Array<string>,
+    protected constructor(pfqlKeywords: Array<string>,
                           allowedOperators: Array<Operator<any>>,
                           translationPath: string,
                           log: LoggerService,
                           operatorService: OperatorService,
-                          protected _optionalDependencies: OptionalDependencies) {
-        super(elasticKeywords, allowedOperators, translationPath, log, operatorService);
+                          protected _optionalDependencies: OptionalDependencies,
+                          resourceTypePrefix: ResourceTypeQueryPrefix) {
+        super(pfqlKeywords, allowedOperators, translationPath, log, operatorService, resourceTypePrefix);
     }
 
     destroy() {
@@ -101,10 +103,11 @@ export abstract class NetAttributeAutocompleteCategory extends NoConfigurationAu
         const matchingPairs = userInput[0];
 
         const queries = matchingPairs.map(pair => {
-            const taskQuery = this.selectedOperator.createQuery(this.elasticKeywords, [pair.attributeId]);
+            const taskQuery = this.selectedOperator.createQuery(this.pfqlKeywords, [pair.attributeId]);
             const netQuery = this.getProcessCategory().generatePredicate([[pair.netId]]).query;
             return Query.combineQueries([taskQuery, netQuery], BooleanOperator.AND);
         });
-        return Query.combineQueries(queries, BooleanOperator.OR);
+        const query: Query = Query.combineQueries(queries, BooleanOperator.OR);
+        return query.addPrefixAndGet(this._resourceTypePrefix);
     }
 }

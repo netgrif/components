@@ -42,7 +42,6 @@ export * from './models/category/case/case-visual-id';
 export * from './models/category/case/case-author';
 export * from './models/category/case/case-process';
 export * from './models/category/case/case-role';
-export * from './models/category/case/case-task';
 export * from './models/category/case/case-creation-date';
 export * from './models/category/case/case-creation-date-time';
 export * from './models/category/case/case-dataset';
@@ -53,6 +52,7 @@ export * from './models/category/task/task-assignee';
 export * from './models/category/task/task-process';
 export * from './models/category/task/task-role';
 export * from './models/category/task/task-task';
+export * from './models/category/resource-type-query-prefix';
 
 export * from './models/datafield-map-key';
 export * from './models/operator-template-part';

@@ -55,8 +55,8 @@ export class OperatorResolverService {
                 return InRangeDate;
             case Operators.IN_RANGE_DATE_TIME:
                 return InRangeDateTime;
-            case Operators.IS_NULL:
-                return IsNull;
+            // case Operators.IS_NULL: todo 2466
+            //     return IsNull;
             case Operators.LESS_THAN:
                 return LessThan;
             case Operators.LESS_THAN_DATE:
@@ -69,8 +69,8 @@ export class OperatorResolverService {
                 return LessThanEqualDate;
             case Operators.LESS_THAN_EQUAL_DATE_TIME:
                 return LessThanEqualDateTime;
-            case Operators.LIKE:
-                return Like;
+            // case Operators.LIKE: todo 2466
+            //     return Like;
             case Operators.MORE_THAN:
                 return MoreThan;
             case Operators.MORE_THAN_DATE:

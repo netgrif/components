@@ -9,6 +9,11 @@ import {Like} from '../../operator/like';
 import {Categories} from '../categories';
 import {CaseSearch} from './case-search.enum';
 import {OptionalDependencies} from '../../../category-factory/optional-dependencies';
+import {ResourceTypeQueryPrefix} from "../resource-type-query-prefix";
+import {MoreThan} from "../../operator/more-than";
+import {MoreThanEqual} from "../../operator/more-than-equal";
+import {LessThan} from "../../operator/less-than";
+import {LessThanEqual} from "../../operator/less-than-equal";
 
 export class CaseTitle extends NoConfigurationCategory<string> {
 
@@ -20,13 +25,17 @@ export class CaseTitle extends NoConfigurationCategory<string> {
                 operators.getOperator(Substring),
                 operators.getOperator(Equals),
                 operators.getOperator(NotEquals),
-                operators.getOperator(Like) // todo 2466 no such operat Like in pfql
+                operators.getOperator(MoreThan),
+                operators.getOperator(MoreThanEqual),
+                operators.getOperator(LessThan),
+                operators.getOperator(LessThanEqual),
+                // operators.getOperator(Like) todo 2466 impossible in PFQL
             ],
-            // todo 2466 in list, lt, gt, lte, gte
             `${CaseTitle._i18n}.name`,
             SearchInputType.TEXT,
             logger,
-            operators);
+            operators,
+            ResourceTypeQueryPrefix.CASES);
     }
 
     get inputPlaceholder(): string {
@@ -41,12 +50,7 @@ export class CaseTitle extends NoConfigurationCategory<string> {
         return Categories.CASE_TITLE;
     }
 
-    protected get elasticKeywords(): Array<string> {
-        if (!!this._optionalDependencies) {
-            const resolver = this._optionalDependencies.searchIndexResolver;
-            return [resolver.getCoreIndex(CaseSearch.TITLE, this.isSelectedOperator(Substring))];
-        } else {
-            return this._elasticKeywords;
-        }
+    protected get pfqlKeywords(): Array<string> {
+        return this._pfqlKeywords;
     }
 }

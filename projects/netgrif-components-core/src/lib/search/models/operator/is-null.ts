@@ -9,6 +9,8 @@ import {Operators} from './operators';
  * Consult the [createQueryWithConstraint()]{@link IsNull#createQueryWithConstraint} method for more information.
  */
 export class IsNull extends Operator<any> {
+    // todo 2466 impossible in PFQL
+
     constructor() {
         super(0);
     }
@@ -77,6 +79,7 @@ export class IsNull extends Operator<any> {
     }
 
     serialize(): Operators | string {
-        return Operators.IS_NULL;
+        return 'is_null';
+        // return Operators.IS_NULL;
     }
 }

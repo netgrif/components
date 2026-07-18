@@ -8,6 +8,7 @@ import {NoConfigurationAutocompleteCategory} from '../no-configuration-autocompl
 import {NotEquals} from '../../operator/not-equals';
 import {Categories} from '../categories';
 import {Subscription} from 'rxjs';
+import {ResourceTypeQueryPrefix} from "../resource-type-query-prefix";
 
 export class TaskProcess extends NoConfigurationAutocompleteCategory<string> {
 
@@ -19,10 +20,10 @@ export class TaskProcess extends NoConfigurationAutocompleteCategory<string> {
     constructor(operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
         super(['processId'],
             [operators.getOperator(Equals), operators.getOperator(NotEquals)],
-            // todo 2466 contains, lt, gt, lte, gte, in list
             `${TaskProcess._i18n}.name`,
             logger,
-            operators);
+            operators,
+            ResourceTypeQueryPrefix.TASKS);
     }
 
     destroy() {
@@ -52,8 +53,8 @@ export class TaskProcess extends NoConfigurationAutocompleteCategory<string> {
             throw new Error('Only unary operators are currently supported by the TaskProcess implementation');
         }
         const operand = userInput[0];
-        const queries = operand.map(id => this.selectedOperator.createQuery(this.elasticKeywords, [id]));
-        return Query.combineQueries(queries, BooleanOperator.OR);
+        const queries = operand.map(id => this.selectedOperator.createQuery(this.pfqlKeywords, [id]));
+        return Query.combineQueries(queries, BooleanOperator.OR).addPrefixAndGet(ResourceTypeQueryPrefix.TASKS);
     }
 
     get inputPlaceholder(): string {

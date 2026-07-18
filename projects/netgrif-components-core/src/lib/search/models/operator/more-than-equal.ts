@@ -2,12 +2,12 @@ import {Operator} from './operator';
 import {Operators} from './operators';
 
 /**
- * Greater or equal than operator for numeric fields
+ * Greater or equal than operator for numeric or string fields
  */
-export class MoreThanEqual extends Operator<number> {
+export class MoreThanEqual extends Operator<number | string> {
 
     constructor() {
-        super(1, '>=');
+        super(1, 'gte');
     }
 
     getOperatorNameTemplate(): Array<string> {

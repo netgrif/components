@@ -17,14 +17,14 @@ export class MoreThanDateTime extends Operator<Moment> {
         this.moreThan = operators.getOperator(MoreThan) as MoreThan;
     }
 
-    createQuery(elasticKeywords: Array<string>, args: Array<Moment>): Query {
+    createQuery(pfqlKeywords: Array<string>, args: Array<Moment>): Query {
         this.checkArgumentsCount(args);
         const arg = moment(args[0]);
         arg.milliseconds(0);
         arg.seconds(0);
         arg.minutes(arg.minutes() + 1);
         arg.milliseconds(-1);
-        return this.moreThan.createQuery(elasticKeywords, [arg.valueOf()]);
+        return this.moreThan.createQuery(pfqlKeywords, [arg.format('YYYY-MM-DDTHH:mm:ss')], false, false);
     }
 
     getOperatorNameTemplate(): Array<string> {

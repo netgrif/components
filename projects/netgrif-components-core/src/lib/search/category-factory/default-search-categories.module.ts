@@ -4,9 +4,7 @@ import {CaseDataset} from '../models/category/case/case-dataset';
 import {CaseTitle} from '../models/category/case/case-title';
 import {CaseCreationDate} from '../models/category/case/case-creation-date';
 import {CaseProcess} from '../models/category/case/case-process';
-import {CaseTask} from '../models/category/case/case-task';
 import {CaseAuthor} from '../models/category/case/case-author';
-import {CaseVisualId} from '../models/category/case/case-visual-id';
 import {TaskAssignee} from '../models/category/task/task-assignee';
 import {TaskTask} from '../models/category/task/task-task';
 import {TaskProcess} from '../models/category/task/task-process';
@@ -27,9 +25,7 @@ import {CaseStringId} from '../models/category/case/case-string-id';
                 CaseCreationDate,
                 CaseCreationDateTime,
                 CaseProcess,
-                CaseTask,
                 CaseAuthor,
-                CaseVisualId,
                 CaseStringId,
             ]
         }, {

@@ -9,6 +9,7 @@ import {NotEquals} from '../../operator/not-equals';
 import {Categories} from '../categories';
 import {Subscription} from 'rxjs';
 import {CaseSearch} from './case-search.enum';
+import {ResourceTypeQueryPrefix} from "../resource-type-query-prefix";
 
 export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
 
@@ -21,10 +22,10 @@ export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
     constructor(operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
         super([CaseSearch.PROCESS_IDENTIFIER],
             [operators.getOperator(Equals), operators.getOperator(NotEquals)],
-            // todo 2466 contains, lt, gt, lte, gte, in list
             `${CaseProcess._i18n}.name`,
             logger,
-            operators);
+            operators,
+            ResourceTypeQueryPrefix.CASES);
         this._uniqueOptionsMap = new Map<string, Set<string>>();
     }
 
@@ -76,8 +77,8 @@ export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
             throw new Error('Only unary operators are currently supported by the CaseProcess implementation');
         }
         const operand = userInput[0];
-        const queries = operand.map(id => this.selectedOperator.createQuery(this.elasticKeywords, [id]));
-        return Query.combineQueries(queries, BooleanOperator.OR);
+        const queries = operand.map(id => this.selectedOperator.createQuery(this.pfqlKeywords, [id]));
+        return Query.combineQueries(queries, BooleanOperator.OR).addPrefixAndGet(ResourceTypeQueryPrefix.CASES);
     }
 
     get inputPlaceholder(): string {

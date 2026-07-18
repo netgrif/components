@@ -1,12 +1,12 @@
 import {OperatorService} from '../../../operator-service/operator.service';
 import {LoggerService} from '../../../../logger/services/logger.service';
-import {Substring} from '../../operator/substring';
 import {SearchInputType} from '../search-input-type';
 import {NoConfigurationCategory} from '../no-configuration-category';
 import {Equals} from '../../operator/equals';
 import {NotEquals} from '../../operator/not-equals';
 import {Categories} from '../categories';
 import {CaseSearch} from './case-search.enum';
+import {ResourceTypeQueryPrefix} from "../resource-type-query-prefix";
 
 export class CaseStringId extends NoConfigurationCategory<string> {
 
@@ -15,15 +15,14 @@ export class CaseStringId extends NoConfigurationCategory<string> {
     constructor(operators: OperatorService, logger: LoggerService) {
         super([CaseSearch.STRING_ID],
             [
-                operators.getOperator(Substring),// todo 2466 pfql has missing substring operator on case id
                 operators.getOperator(Equals),
                 operators.getOperator(NotEquals)
             ],
-            // todo 2466 in list
             `${CaseStringId._i18n}.name`,
             SearchInputType.TEXT,
             logger,
-            operators);
+            operators,
+            ResourceTypeQueryPrefix.CASES);
     }
 
     get inputPlaceholder(): string {

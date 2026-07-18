@@ -4,6 +4,7 @@ import {FilterMetadata} from './filter-metadata';
  * The bare minimum of information necessary for the reconstruction of a saved filter
  */
 export interface FilterMetadataAllowedNets {
+    // todo 2466 remove?
     /**
      * Allowed nets used to create the filter
      */

@@ -15,6 +15,8 @@ import {SearchIndex} from '../models/search-index';
 })
 export class SearchIndexResolverService {
 
+    // todo 2466 needed?
+
     public readonly KEYWORD = '.keyword';
 
     constructor() { }

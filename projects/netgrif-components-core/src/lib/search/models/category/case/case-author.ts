@@ -6,6 +6,7 @@ import {Categories} from '../categories';
 import {CaseSearch} from './case-search.enum';
 import {OptionalDependencies} from '../../../category-factory/optional-dependencies';
 import {NoConfigurationUserAutocompleteCategory} from '../no-configuration-user-autocomplete-category';
+import {ResourceTypeQueryPrefix} from "../resource-type-query-prefix";
 
 
 export class CaseAuthor extends NoConfigurationUserAutocompleteCategory {
@@ -15,12 +16,12 @@ export class CaseAuthor extends NoConfigurationUserAutocompleteCategory {
     constructor(operators: OperatorService, logger: LoggerService, optionalDependencies: OptionalDependencies) {
         super([CaseSearch.AUTHOR],
             [operators.getOperator(Equals), operators.getOperator(NotEquals)],
-            // todo 2466 contains, lt, gt, lte, gte, in list
             `${CaseAuthor._i18n}.name`,
             logger,
             operators,
             'CaseAuthor',
-            optionalDependencies);
+            optionalDependencies,
+            ResourceTypeQueryPrefix.CASES);
     }
 
     get inputPlaceholder(): string {

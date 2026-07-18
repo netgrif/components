@@ -6,6 +6,7 @@ import {NotEquals} from '../../operator/not-equals';
 import {IsNull} from '../../operator/is-null';
 import {Categories} from '../categories';
 import {NoConfigurationUserAutocompleteCategory} from '../no-configuration-user-autocomplete-category';
+import {ResourceTypeQueryPrefix} from "../resource-type-query-prefix";
 
 
 export class TaskAssignee extends NoConfigurationUserAutocompleteCategory {
@@ -17,14 +18,14 @@ export class TaskAssignee extends NoConfigurationUserAutocompleteCategory {
             [
                 operators.getOperator(Equals),
                 operators.getOperator(NotEquals),
-                operators.getOperator(IsNull) // todo 2466 no such operator IsNull in PFQL
+                // operators.getOperator(IsNull) todo 2466 impossible in PFQL
             ],
-            // todo 2466 contains, lt, gt, lte, gte, in list
             `${TaskAssignee._i18n}.name`,
             logger,
             operators,
             'TaskAssignee',
-            optionalDependencies);
+            optionalDependencies,
+            ResourceTypeQueryPrefix.TASKS);
     }
 
     get inputPlaceholder(): string {

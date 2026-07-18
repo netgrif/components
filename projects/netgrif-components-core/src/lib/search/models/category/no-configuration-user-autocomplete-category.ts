@@ -8,15 +8,17 @@ import {Observable} from 'rxjs';
 import {SearchAutocompleteOption} from './search-autocomplete-option';
 import {Query} from '../query/query';
 import {FormControl} from '@angular/forms';
+import {ResourceTypeQueryPrefix} from "./resource-type-query-prefix";
 
 export abstract class NoConfigurationUserAutocompleteCategory extends NoConfigurationAutocompleteCategory<string> {
 
     private _userAutocomplete: UserAutocomplete;
 
-    protected constructor(elasticKeywords: Array<string>, allowedOperators: Array<Operator<any>>,
+    protected constructor(pfqlKeywords: Array<string>, allowedOperators: Array<Operator<any>>,
                           translationPath: string, log: LoggerService, operatorService: OperatorService,
-                          private _className, protected _optionalDependencies: OptionalDependencies) {
-        super(elasticKeywords, allowedOperators, translationPath, log, operatorService);
+                          private _className, protected _optionalDependencies: OptionalDependencies,
+                          resourceTypePrefix: ResourceTypeQueryPrefix) {
+        super(pfqlKeywords, allowedOperators, translationPath, log, operatorService, resourceTypePrefix);
         this._userAutocomplete = new UserAutocomplete(this._optionalDependencies);
     }
 
@@ -33,7 +35,8 @@ export abstract class NoConfigurationUserAutocompleteCategory extends NoConfigur
         if (this.selectedOperator.numberOfOperands !== 1) {
             throw new Error(`Only unary operators are currently supported by the ${this._className} implementation`);
         }
-        return this.selectedOperator.createQuery(this.elasticKeywords, Array.isArray(userInput[0]) ? userInput[0] : userInput, false);
+        return this.selectedOperator.createQuery(this.pfqlKeywords, Array.isArray(userInput[0]) ? userInput[0] : userInput, false)
+            .addPrefixAndGet(this._resourceTypePrefix);
     }
 
     protected serializeOperandValue(valueFormControl: FormControl): any {

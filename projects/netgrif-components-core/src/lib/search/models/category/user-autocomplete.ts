@@ -18,7 +18,7 @@ export class UserAutocomplete implements AutocompleteOptions {
 
     public static readonly USER_ME_ICON = 'person_pin_circle'; // person_pin, person_pin_circle
 
-    public static readonly USER_ME_TEMPLATE = '<<me>>';
+    public static readonly USER_ME_TEMPLATE = 'loggedUser.id';
 
     private static readonly _i18n = 'search.category.userMe';
 

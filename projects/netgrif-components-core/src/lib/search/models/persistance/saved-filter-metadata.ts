@@ -6,6 +6,7 @@ import {FilterMetadataAllowedNets} from './filter-metadata-allowed-nets';
  * All the necessary data for full reconstruction of a saved filter
  */
 export interface SavedFilterMetadata extends FilterMetadataAllowedNets {
+    // todo 2466 remove?
     /**
      * The view ID of the view the filter was created in
      */

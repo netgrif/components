@@ -7,9 +7,7 @@ import {CaseDataset} from '../models/category/case/case-dataset';
 import {CaseProcess} from '../models/category/case/case-process';
 import {CaseRole} from '../models/category/case/case-role';
 import {CaseSimpleDataset} from '../models/category/case/case-simple-dataset';
-import {CaseTask} from '../models/category/case/case-task';
 import {CaseTitle} from '../models/category/case/case-title';
-import {CaseVisualId} from '../models/category/case/case-visual-id';
 import {CaseStringId} from '../models/category/case/case-string-id';
 import {TaskAssignee} from '../models/category/task/task-assignee';
 import {TaskProcess} from '../models/category/task/task-process';
@@ -36,7 +34,7 @@ export class CategoryResolverService {
     }
 
     /**
-     * Registers the default class - serialisation pairings for all the {@link Category} classes provided by this library.
+     * Registers the default class - serialization pairings for all the {@link Category} classes provided by this library.
      */
     private registerDefaultPairings(): void {
         [
@@ -63,14 +61,8 @@ export class CategoryResolverService {
                 classReference: CaseSimpleDataset,
                 serialized: Categories.CASE_SIMPLE_DATASET
             }, {
-                classReference: CaseTask,
-                serialized: Categories.CASE_TASK
-            }, {
                 classReference: CaseTitle,
                 serialized: Categories.CASE_TITLE
-            }, {
-                classReference: CaseVisualId,
-                serialized: Categories.CASE_VISUAL_ID
             }, {
                 classReference: CaseStringId,
                 serialized: Categories.CASE_STRING_ID

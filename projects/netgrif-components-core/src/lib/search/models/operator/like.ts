@@ -12,6 +12,7 @@ import {Operators} from './operators';
  * for more information.
  */
 export class Like extends Operator<string> {
+    // todo 2466 impossible in PFQL
     constructor() {
         super(1);
     }
@@ -28,6 +29,7 @@ export class Like extends Operator<string> {
     }
 
     serialize(): Operators | string {
-        return Operators.LIKE;
+        return 'like';
+        // return Operators.LIKE;
     }
 }

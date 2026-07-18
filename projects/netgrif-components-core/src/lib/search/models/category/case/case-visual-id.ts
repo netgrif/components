@@ -8,6 +8,7 @@ import {NotEquals} from '../../operator/not-equals';
 import {Categories} from '../categories';
 import {CaseSearch} from './case-search.enum';
 import {OptionalDependencies} from '../../../category-factory/optional-dependencies';
+import {ResourceTypeQueryPrefix} from "../resource-type-query-prefix";
 
 export class CaseVisualId extends NoConfigurationCategory<string> {
 
@@ -21,7 +22,8 @@ export class CaseVisualId extends NoConfigurationCategory<string> {
             `${CaseVisualId._i18n}.name`,
             SearchInputType.TEXT,
             logger,
-            operators);
+            operators,
+            ResourceTypeQueryPrefix.CASES);
     }
 
     get inputPlaceholder(): string {
@@ -36,12 +38,12 @@ export class CaseVisualId extends NoConfigurationCategory<string> {
         return Categories.CASE_VISUAL_ID;
     }
 
-    protected get elasticKeywords(): Array<string> {
+    protected get pfqlKeywords(): Array<string> {
         if (!!this._optionalDependencies) {
             const resolver = this._optionalDependencies.searchIndexResolver;
             return [resolver.getCoreIndex(CaseSearch.VISUAL_ID, this.isSelectedOperator(Substring))];
         } else {
-            return this._elasticKeywords;
+            return this._pfqlKeywords;
         }
     }
 }

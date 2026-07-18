@@ -18,8 +18,6 @@ import { NotEquals } from '../../operator/not-equals';
 import { MoreThan } from '../../operator/more-than';
 import { LessThan } from '../../operator/less-than';
 import { InRange } from '../../operator/in-range';
-import { IsNull } from '../../operator/is-null';
-import { Like } from '../../operator/like';
 import { NotEqualsDate } from '../../operator/not-equals-date';
 import { MoreThanDate } from '../../operator/more-than-date';
 import { LessThanDate } from '../../operator/less-than-date';
@@ -29,7 +27,6 @@ import { LessThanDateTime } from '../../operator/less-than-date-time';
 import { InRangeDateTime } from '../../operator/in-range-date-time';
 import { AutocompleteOptions } from '../autocomplete-options';
 import { ConfigurationInput } from '../../configuration-input';
-import { SearchIndex } from '../../search-index';
 import { Categories } from '../categories';
 import { FormControl } from '@angular/forms';
 import moment, { Moment } from 'moment';
@@ -42,6 +39,8 @@ import { MoreThanEqualDateTime } from '../../operator/more-than-equal-date-time'
 import { LessThanEqualDateTime } from '../../operator/less-than-equal-date-time';
 import { FilterTextSegment } from '../../persistance/filter-text-segment';
 import { UserAutocomplete } from '../user-autocomplete';
+import {ResourceTypeQueryPrefix} from "../resource-type-query-prefix";
+import {FieldTypeResource} from "../../../../task-content/model/field-type-resource";
 
 interface Datafield {
     netIdentifier: string;
@@ -52,7 +51,9 @@ interface Datafield {
 export class CaseDataset extends Category<Datafield> implements AutocompleteOptions {
 
     private static readonly _i18n = 'search.category.case.dataset';
-    protected static DISABLED_TYPES = ['button', 'taskRef', 'caseRef', 'filter'];
+    protected static DISABLED_TYPES = [FieldTypeResource.BOOLEAN.valueOf(), FieldTypeResource.TASK_REF.valueOf(),
+        FieldTypeResource.CASE_REF.valueOf(), FieldTypeResource.CASE_FILTER.valueOf(), FieldTypeResource.TASK_FILTER.valueOf(),
+        FieldTypeResource.PROCESS_FILTER.valueOf()];
     protected static readonly DATAFIELD_METADATA = 'datafield';
     private static readonly AUTOCOMPLETE_ICON = 'account_circle';
 
@@ -70,15 +71,15 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
 
     public static FieldTypeToInputType(fieldType: string): SearchInputType {
         switch (fieldType) {
-            case 'date':
+            case FieldTypeResource.DATE.valueOf():
                 return SearchInputType.DATE;
-            case 'dateTime':
+            case FieldTypeResource.DATE_TIME.valueOf():
                 return SearchInputType.DATE_TIME;
-            case 'number':
+            case FieldTypeResource.NUMBER.valueOf():
                 return SearchInputType.NUMBER;
-            case 'boolean':
+            case FieldTypeResource.BOOLEAN.valueOf():
                 return SearchInputType.BOOLEAN;
-            case 'user':
+            case FieldTypeResource.USER.valueOf():
                 return SearchInputType.AUTOCOMPLETE;
             default:
                 return SearchInputType.TEXT;
@@ -91,7 +92,8 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
             `${CaseDataset._i18n}.name`,
             undefined,
             logger,
-            operators);
+            operators,
+            ResourceTypeQueryPrefix.CASES);
 
         this._processCategory = this._optionalDependencies.categoryFactory.get(CaseProcess) as CaseProcess;
         this._processCategory.selectDefaultOperator();
@@ -157,7 +159,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
             return [];
         }
         switch (this._selectedDatafields[0].fieldType) {
-            case 'number':
+            case FieldTypeResource.NUMBER.valueOf():
                 return [
                     this._operatorService.getOperator(Equals),
                     this._operatorService.getOperator(NotEquals),
@@ -166,21 +168,21 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
                     this._operatorService.getOperator(LessThan),
                     this._operatorService.getOperator(LessThanEqual),
                     this._operatorService.getOperator(InRange),
-                    this._operatorService.getOperator(IsNull)
+                    // this._operatorService.getOperator(IsNull) todo 2466
                 ];
-            case 'boolean':
+            case FieldTypeResource.BOOLEAN.valueOf():
                 return [
                     this._operatorService.getOperator(Equals),
                     this._operatorService.getOperator(NotEquals)
                 ];
-            case 'user':
-            case 'userList':
+            case FieldTypeResource.USER.valueOf():
+            case FieldTypeResource.USER_LIST.valueOf():
                 return [
                     this._operatorService.getOperator(Equals),
                     this._operatorService.getOperator(NotEquals),
-                    this._operatorService.getOperator(IsNull)
+                    // this._operatorService.getOperator(IsNull) todo 2466
                 ];
-            case 'date':
+            case FieldTypeResource.DATE.valueOf():
                 return [
                     this._operatorService.getOperator(EqualsDate),
                     this._operatorService.getOperator(NotEqualsDate),
@@ -189,9 +191,9 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
                     this._operatorService.getOperator(LessThanDate),
                     this._operatorService.getOperator(LessThanEqualDate),
                     this._operatorService.getOperator(InRangeDate),
-                    this._operatorService.getOperator(IsNull)
+                    // this._operatorService.getOperator(IsNull) todo 2466
                 ];
-            case 'dateTime':
+            case FieldTypeResource.DATE_TIME.valueOf():
                 return [
                     this._operatorService.getOperator(EqualsDateTime),
                     this._operatorService.getOperator(MoreThanDateTime),
@@ -199,15 +201,19 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
                     this._operatorService.getOperator(LessThanDateTime),
                     this._operatorService.getOperator(LessThanEqualDateTime),
                     this._operatorService.getOperator(InRangeDateTime),
-                    this._operatorService.getOperator(IsNull)
+                    // this._operatorService.getOperator(IsNull) todo 2466
                 ];
             default:
                 return [
                     this._operatorService.getOperator(Substring),
                     this._operatorService.getOperator(Equals),
                     this._operatorService.getOperator(NotEquals),
-                    this._operatorService.getOperator(IsNull),
-                    this._operatorService.getOperator(Like)
+                    this._operatorService.getOperator(MoreThan),
+                    this._operatorService.getOperator(MoreThanEqual),
+                    this._operatorService.getOperator(LessThan),
+                    this._operatorService.getOperator(LessThanEqual),
+                    // this._operatorService.getOperator(IsNull), todo 2466
+                    // this._operatorService.getOperator(Like)
                 ];
         }
     }
@@ -236,39 +242,11 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
         return new CaseDataset(this._operatorService, this._log, this._optionalDependencies);
     }
 
-    protected get elasticKeywords(): Array<string> {
+    protected get pfqlKeywords(): Array<string> {
         if (!this.hasSelectedDatafields) {
             return [];
         } else {
-            return this._selectedDatafields.map(datafield => this.resolveElasticKeyword(datafield));
-        }
-    }
-
-    protected resolveElasticKeyword(datafield: Datafield): string {
-        const resolver = this._optionalDependencies.searchIndexResolver;
-        switch (datafield.fieldType) {
-            case 'number':
-                return resolver.getIndex(datafield.fieldId, SearchIndex.NUMBER);
-            case 'date':
-            case 'dateTime':
-                return resolver.getIndex(datafield.fieldId, SearchIndex.TIMESTAMP);
-            case 'boolean':
-                return resolver.getIndex(datafield.fieldId, SearchIndex.BOOLEAN);
-            case 'file':
-            case 'fileList':
-                return resolver.getIndex(datafield.fieldId, SearchIndex.FILE_NAME,
-                    this.isSelectedOperator(Equals) || this.isSelectedOperator(NotEquals) || this.isSelectedOperator(Substring)
-                    || this.isSelectedOperator(IsNull));
-            case 'user':
-            case 'userList':
-                return resolver.getIndex(datafield.fieldId, SearchIndex.USER_ID);
-            case 'i18n':
-                return resolver.getIndex(datafield.fieldId, SearchIndex.TEXT, this.isSelectedOperator(Equals) || this.isSelectedOperator(NotEquals) || this.isSelectedOperator(Substring)
-                    || this.isSelectedOperator(IsNull));
-            default:
-                return resolver.getIndex(datafield.fieldId, SearchIndex.FULLTEXT,
-                    this.isSelectedOperator(Equals) || this.isSelectedOperator(NotEquals) || this.isSelectedOperator(Substring)
-                    || this.isSelectedOperator(IsNull));
+            return this._selectedDatafields.map(dataField => `data.${dataField.fieldId}.value`);
         }
     }
 
@@ -285,9 +263,10 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
 
     protected generateQuery(userInput: Array<unknown>): Query {
         let queryGenerationStrategy;
-        if (this.isSelectedOperator(IsNull)) {
+        // todo 2466 remove if
+        /*if (this.isSelectedOperator(IsNull)) {
             queryGenerationStrategy = (d, _) => this.isNullOperatorQueryGenerationStrategy(d);
-        } else if (this.inputType === SearchInputType.AUTOCOMPLETE) {
+        } else*/ if (this.inputType === SearchInputType.AUTOCOMPLETE) {
             queryGenerationStrategy = (d, ui) => this.standardQueryGenerationStrategy(d, ui[0], false);
         } else {
             queryGenerationStrategy = (d, ui) => this.standardQueryGenerationStrategy(d, ui);
@@ -298,15 +277,17 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
     }
 
     protected standardQueryGenerationStrategy(datafield: Datafield, userInput: Array<unknown>, escapeInput = true): Query {
-        const valueQuery = this.selectedOperator.createQuery(this.elasticKeywords, userInput, escapeInput);
+        const valueQuery = this.selectedOperator.createQuery(this.pfqlKeywords, userInput, escapeInput);
         const netQuery = this.generateNetConstraint(datafield);
-        return Query.combineQueries([valueQuery, netQuery], BooleanOperator.AND);
+        const query: Query = Query.combineQueries([valueQuery, netQuery], BooleanOperator.AND);
+        return query.addPrefixAndGet(ResourceTypeQueryPrefix.CASES);
     }
 
-    protected isNullOperatorQueryGenerationStrategy(datafield: Datafield): Query {
-        const constraint = this.generateNetConstraint(datafield);
-        return (this._operatorService.getOperator(IsNull) as IsNull).createQueryWithConstraint(this.elasticKeywords, constraint);
-    }
+    // todo 2466
+    // protected isNullOperatorQueryGenerationStrategy(datafield: Datafield): Query {
+    //     const constraint = this.generateNetConstraint(datafield);
+    //     return (this._operatorService.getOperator(IsNull) as IsNull).createQueryWithConstraint(this.pfqlKeywords, constraint);
+    // }
 
     protected generateNetConstraint(datafield: Datafield): Query {
         return this._processCategory.generatePredicate([[datafield.netIdentifier]]).query;
@@ -326,9 +307,9 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
                         let type = immediateData.type;
 
                         // for search purposes, enumeration and multichoice maps are equivalent to their simpler counterparts
-                        if (type === 'enumeration_map') {
+                        if (type === FieldTypeResource.ENUMERATION_MAP.valueOf()) {
                             type = 'enumeration';
-                        } else if (type === 'multichoice_map') {
+                        } else if (type === FieldTypeResource.MULTICHOICE_MAP.valueOf()) {
                             type = 'multichoice';
                         }
 

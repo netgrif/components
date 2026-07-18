@@ -1,4 +1,5 @@
 export enum SearchIndex {
+    // todo 2466 later remove?
     /**
      * Indexed as TEXT
      *

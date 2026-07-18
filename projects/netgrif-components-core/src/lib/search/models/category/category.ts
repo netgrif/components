@@ -17,10 +17,11 @@ import {ofVoid} from '../../../utility/of-void';
 import {FilterTextSegment} from '../persistance/filter-text-segment';
 import {DATE_FORMAT_STRING, DATE_TIME_FORMAT_STRING} from '../../../moment/time-formats';
 import {Type} from '@angular/core';
+import {ResourceTypeQueryPrefix} from "./resource-type-query-prefix";
 
 /**
  * The top level of abstraction in search query generation. Represents a set of indexed fields that can be searched.
- * Encapsulates the the state and logic of the query construction process.
+ * Encapsulates the state and logic of the query construction process.
  *
  * As opposed to {@link Operator}s Categories are not stateless and shouldn't be shared.
  * A single Category instance is capable of holding the state of one {@link EditablePredicate},
@@ -84,19 +85,21 @@ export abstract class Category<T> {
      * The constructor fills the values of all protected fields and then calls the [initializeCategory()]{@link Category#initializeCategory}
      * method. If you want to override the category creation behavior override that method.
      *
-     * @param _elasticKeywords Elasticsearch keywords that should be queried by queries generated with this category
+     * @param _pfqlKeywords PFQL keywords that should be queried by queries generated with this category
      * @param _allowedOperators Operators that can be used to generated queries on the above keywords
      * @param translationPath path to the translation string
      * @param _inputType input field type that should be used to enter operator arguments for this category
      * @param _log used to record information about incorrect use of this class
      * @param _operatorService used to resolve serialized operators during deserialization
+     * @param _resourceTypePrefix resource type prefix in PFQL query
      */
-    protected constructor(protected readonly _elasticKeywords: Array<string>,
+    protected constructor(protected readonly _pfqlKeywords: Array<string>,
                           protected readonly _allowedOperators: Array<Operator<any>>,
                           public readonly translationPath: string,
                           protected readonly _inputType: SearchInputType,
                           protected _log: LoggerService,
-                          protected _operatorService: OperatorService) {
+                          protected _operatorService: OperatorService,
+                          protected _resourceTypePrefix: ResourceTypeQueryPrefix) {
         this._OPERATOR_INPUT = new ConfigurationInput(
             SearchInputType.OPERATOR,
             'search.operator.name',
@@ -237,12 +240,12 @@ export abstract class Category<T> {
     }
 
     /**
-     * @returns the set of Elasticsearch keywords that should be queried by queries generated with this category.
+     * @returns the set of PFQL keywords that should be queried by queries generated with this category.
      * The method can be overridden if the keywords are not static and change based on some additional selection (eg. Data fields)
      */
-    protected get elasticKeywords(): Array<string> {
+    protected get pfqlKeywords(): Array<string> {
         const result = [];
-        result.push(...this._elasticKeywords);
+        result.push(...this._pfqlKeywords);
         return result;
     }
 
@@ -251,7 +254,7 @@ export abstract class Category<T> {
      */
     protected get selectedOperatorArity(): number {
         if (!this.isOperatorSelected()) {
-            throw new Error('An operator mus be selected before its arity can be resolved!');
+            throw new Error('An operator must be selected before its arity can be resolved!');
         }
         return this.selectedOperator.numberOfOperands;
     }
@@ -324,7 +327,8 @@ export abstract class Category<T> {
         if (!this.isOperatorSelected()) {
             throw new Error('Category cannot generate a Query if no Operator is selected');
         }
-        return this._operatorFormControl.value.createQuery(this.elasticKeywords, userInput as unknown as Array<string>);
+        let query: Query = this._operatorFormControl.value.createQuery(this.pfqlKeywords, userInput as unknown as Array<string>);
+        return query.addPrefixAndGet(this._resourceTypePrefix);
     }
 
     /**
@@ -485,7 +489,9 @@ export abstract class Category<T> {
             }
         }
 
-        this._generatedPredicate$.next(this.generatePredicate(this._operandsFormControls.map(fc => this.transformCategoryValue(fc.value))));
+        this._generatedPredicate$.next(this.generatePredicate(this._operandsFormControls
+            .filter(fc => !!fc)
+            .map(fc => this.transformCategoryValue(fc.value))));
     }
 
     /**

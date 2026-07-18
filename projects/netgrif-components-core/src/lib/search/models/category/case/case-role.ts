@@ -8,6 +8,7 @@ import {NameIdPair} from '../name-id-pair';
 import {CaseNetAttributeAutocompleteCategory} from './case-net-attribute-autocomplete-category';
 import {Categories} from '../categories';
 import {CaseSearch} from './case-search.enum';
+import {ResourceTypeQueryPrefix} from "../resource-type-query-prefix";
 
 export class CaseRole extends CaseNetAttributeAutocompleteCategory {
 
@@ -21,7 +22,8 @@ export class CaseRole extends CaseNetAttributeAutocompleteCategory {
             `${CaseRole._i18n}.name`,
             logger,
             operators,
-            optionalDependencies);
+            optionalDependencies,
+            ResourceTypeQueryPrefix.CASES);
     }
 
     protected extractAttributes(petriNet: Net): Array<NameIdPair> {

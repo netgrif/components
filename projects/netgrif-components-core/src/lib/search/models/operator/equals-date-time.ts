@@ -20,9 +20,9 @@ export class EqualsDateTime extends Operator<Moment> {
         this.dateTimeRange = operators.getOperator(InRangeDateTime) as InRangeDateTime;
     }
 
-    createQuery(elasticKeywords: Array<string>, args: Array<Moment>): Query {
+    createQuery(pfqlKeywords: Array<string>, args: Array<Moment>): Query {
         this.checkArgumentsCount(args);
-        return this.dateTimeRange.createQuery(elasticKeywords, [args[0], args[0]]);
+        return this.dateTimeRange.createQuery(pfqlKeywords, [args[0], args[0]]);
     }
 
     getOperatorNameTemplate(): Array<string> {

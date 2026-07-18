@@ -6,7 +6,7 @@ import {Operators} from './operators';
 import {Query} from '../query/query';
 
 /**
- * Greater or equal than operator for Datetime fields
+ * Less or equal than operator for Datetime fields
  */
 export class LessThanEqualDateTime extends Operator<Moment> {
 
@@ -17,12 +17,12 @@ export class LessThanEqualDateTime extends Operator<Moment> {
         this.lessThanEqual = operators.getOperator(LessThanEqual) as LessThanEqual;
     }
 
-    createQuery(elasticKeywords: Array<string>, args: Array<moment.Moment>): Query {
+    createQuery(pfqlKeywords: Array<string>, args: Array<moment.Moment>): Query {
         this.checkArgumentsCount(args);
         const arg = moment(args[0]);
         arg.milliseconds(0);
         arg.seconds(0);
-        return this.lessThanEqual.createQuery(elasticKeywords, [arg.valueOf()]);
+        return this.lessThanEqual.createQuery(pfqlKeywords, [arg.format('YYYY-MM-DDTHH:mm:ss')], false, false);
     }
 
     getOperatorNameTemplate(): Array<string> {

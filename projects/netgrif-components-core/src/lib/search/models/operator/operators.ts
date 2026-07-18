@@ -8,14 +8,14 @@ export enum Operators {
     IN_RANGE = 'in_range',
     IN_RANGE_DATE = 'in_range_date',
     IN_RANGE_DATE_TIME = 'in_range_date_time',
-    IS_NULL = 'is_null',
+    // IS_NULL = 'is_null', todo 2466
     LESS_THAN = 'less_than',
     LESS_THAN_DATE = 'less_than_date',
     LESS_THAN_DATE_TIME = 'less_than_date_time',
     LESS_THAN_EQUAL = 'less_than_equal',
     LESS_THAN_EQUAL_DATE = 'less_than_equal_date',
     LESS_THAN_EQUAL_DATE_TIME = 'less_than_equal_date_time',
-    LIKE = 'like',
+    // LIKE = 'like', todo 2466
     MORE_THAN = 'more_than',
     MORE_THAN_DATE = 'more_than_date',
     MORE_THAN_DATE_TIME = 'more_than_date_time',

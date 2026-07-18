@@ -17,12 +17,12 @@ export class MoreThanEqualDateTime extends Operator<Moment> {
         this.moreThanEqual = operators.getOperator(MoreThanEqual) as MoreThanEqual;
     }
 
-    createQuery(elasticKeywords: Array<string>, args: Array<moment.Moment>): Query {
+    createQuery(pfqlKeywords: Array<string>, args: Array<moment.Moment>): Query {
         this.checkArgumentsCount(args);
         const arg = moment(args[0]);
         arg.milliseconds(0);
         arg.seconds(0);
-        return this.moreThanEqual.createQuery(elasticKeywords, [arg.valueOf()]);
+        return this.moreThanEqual.createQuery(pfqlKeywords, [arg.format('YYYY-MM-DDTHH:mm:ss')], false, false);
     }
 
     getOperatorNameTemplate(): Array<string> {
