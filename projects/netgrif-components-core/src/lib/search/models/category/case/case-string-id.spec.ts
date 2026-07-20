@@ -66,4 +66,10 @@ describe('CaseStringId', () => {
             done();
         });
     });
+
+    it('should generate pfql query', () => {
+        configureCategory(category, operatorService, Equals, ['foo']);
+        const predicate = category.generatePredicate(['6a5dc0cd2d68aa051f92cbe5']);
+        expect(predicate.query.value === `cases: id eq '6a5dc0cd2d68aa051f92cbe5'`).toBeTrue();
+    });
 });

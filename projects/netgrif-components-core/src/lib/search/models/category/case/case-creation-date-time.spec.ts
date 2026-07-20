@@ -4,10 +4,10 @@ import {configureCategory} from '../../../../utility/tests/utility/configure-cat
 import {Categories} from '../categories';
 import {Operators} from '../../operator/operators';
 import moment from 'moment';
-import {EqualsDate} from '../../operator/equals-date';
 import {CaseCreationDateTime} from './case-creation-date-time';
 import {EqualsDateTime} from '../../operator/equals-date-time';
 import {TestBed} from '@angular/core/testing';
+import {InRangeDateTime} from "../../operator/in-range-date-time";
 
 describe('CaseCreationDateTime', () => {
     let category: CaseCreationDateTime;
@@ -72,5 +72,11 @@ describe('CaseCreationDateTime', () => {
 
             done();
         });
+    });
+
+    it('should generate pfql query', () => {
+        configureCategory(category, operatorService, InRangeDateTime, ['foo']);
+        const predicate = category.generatePredicate([moment('2021-08-17 15:28'), moment('2021-08-18 15:28')]);
+        expect(predicate.query.value === `cases: creationDate in (2021-08-17T15:28:00 : 2021-08-18T15:29:00)`).toBeTrue();
     });
 });

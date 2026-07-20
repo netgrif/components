@@ -10,6 +10,7 @@ import {Substring} from '../../operator/substring';
 import {CaseSearch} from './case-search.enum';
 import {SearchIndexResolverService} from '../../../search-keyword-resolver-service/search-index-resolver.service';
 import {OptionalDependencies} from '../../../category-factory/optional-dependencies';
+import {NotEquals} from "../../operator/not-equals";
 
 describe('CaseTitle', () => {
     let category: CaseTitle;
@@ -76,7 +77,11 @@ describe('CaseTitle', () => {
 
     it('should generate pfql query', () => {
         configureCategory(category, operatorService, Substring, ['foo']);
-        const predicate = category.generatePredicate(['input']);
+        let predicate = category.generatePredicate(['input']);
         expect(predicate.query.value.includes(`cases: ${CaseSearch.TITLE} contains 'input'`)).toBeTrue();
+
+        configureCategory(category, operatorService, NotEquals, ['foo']);
+        predicate = category.generatePredicate(['loggedUser.id']);
+        expect(predicate.query.value === `cases: ${CaseSearch.TITLE} neq loggedUser.id`).toBeTrue();
     });
 });

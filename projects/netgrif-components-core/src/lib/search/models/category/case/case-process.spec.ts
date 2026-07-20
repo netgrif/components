@@ -145,4 +145,10 @@ describe('CaseProcess', () => {
             });
         });
     });
+
+    it('should generate pfql query', () => {
+        configureCategory(category, operatorService, Equals, ['foo']);
+        const predicate = category.generatePredicate([['process']]);
+        expect(predicate.query.value === `cases: processIdentifier eq 'process'`).toBeTrue();
+    });
 });
