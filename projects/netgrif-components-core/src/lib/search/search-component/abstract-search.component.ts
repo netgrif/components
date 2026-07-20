@@ -6,7 +6,6 @@ import {NAE_SEARCH_COMPONENT_CONFIGURATION} from '../models/component-configurat
 import {Component, EventEmitter, Inject, Input, OnInit, Optional, Output, Type} from '@angular/core';
 import {SearchComponentConfiguration} from '../models/component-configuration/search-component-configuration';
 import {SearchMode} from '../models/component-configuration/search-mode';
-import {UserFiltersService} from '../../filter/user-filters.service';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 import {NAE_SEARCH_CATEGORIES} from '../category-factory/search-categories-injection-token';
 import {Category} from '../models/category/category';
@@ -14,7 +13,6 @@ import {SavedFilterMetadata} from '../models/persistance/saved-filter-metadata';
 import {ViewIdService} from '../../user/services/view-id.service';
 import {NAE_FILTERS_FILTER} from '../../filter/models/filters-filter-injection-token';
 import {Filter} from '../../filter/models/filter';
-import {TaskSetDataRequestFields} from '../../resources/interface/task-set-data-request-body';
 import {NAE_NAVIGATION_ITEM_TASK_DATA} from '../../navigation/model/filter-case-injection-token';
 import {DataGroup} from '../../resources/interface/data-groups';
 
@@ -47,11 +45,6 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
     private _initialSearchMode = SearchMode.FULLTEXT;
 
     @Input() public disabled: boolean;
-    /**
-     * Set data request body, that is sent to the filter in addition to the default body.
-     * The default body is applied first and can be overridden by this argument.
-     */
-    @Input() additionalFilterData: TaskSetDataRequestFields = {};
 
     /**
      * The emitted data contains the filter case object
@@ -66,7 +59,6 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
                           protected _logger: LoggerService,
                           protected _dialogService: DialogService,
                           protected _translate: TranslateService,
-                          protected _userFilterService: UserFiltersService,
                           protected _allowedNetsService: AllowedNetsService,
                           protected _viewIdService: ViewIdService,
                           @Inject(NAE_SEARCH_CATEGORIES) protected _searchCategories: Array<Type<Category<any>>>,
@@ -146,35 +138,5 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
 
     public showHelp(): void {
         this._dialogService.openAlertDialog(this._translate.instant('search.help.title'), this._translate.instant('search.help.text'));
-    }
-
-    /**
-     * The saved filter data are emitted into the [filterSaved]{@link AbstractSearchComponent#filterSaved} `EventEmitter`
-     */
-    public saveFilter(): void {
-        this._userFilterService.save(
-            this._searchService,
-            this._allowedNetsService.allowedNetsIdentifiers,
-            this._searchCategories,
-            this._viewIdService.viewId,
-            this.additionalFilterData,
-            this._configuration.saveFilterWithDefaultCategories ?? true,
-            this._configuration.inheritAllowedNets ?? true,
-            this._navigationItemTaskData).subscribe(savedFilterData => {
-                if (savedFilterData) {
-                    this.filterSaved.emit(savedFilterData);
-                }
-        });
-    }
-
-    /**
-     * The loaded filter data are emitted into the [filterLoaded]{@link AbstractSearchComponent#filterLoaded} `EventEmitter`
-     */
-    public loadFilter(): void {
-        this._userFilterService.load(this._searchService.filterType, this._filtersFilter ?? undefined).subscribe(savedFilterData => {
-            if (savedFilterData) {
-                this.filterLoaded.emit(savedFilterData);
-            }
-        });
     }
 }

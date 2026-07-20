@@ -86,7 +86,7 @@ export class OverflowService {
 
         const item = localStorage.getItem(viewId + '-' + id);
         if (item !== null) {
-            if (id.includes('columnCount')) {
+            if (id?.includes('columnCount')) {
                 this._initializedCount = true;
             }
             return item;

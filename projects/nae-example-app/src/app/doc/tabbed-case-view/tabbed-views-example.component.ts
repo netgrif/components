@@ -3,6 +3,9 @@ import {NAE_TASK_FORCE_OPEN, NAE_VIEW_ID_SEGMENT, TabContent, ViewIdService} fro
 import {TabbedCaseViewComponent} from './tabbed-case-view/tabbed-case-view.component';
 import {TabbedTaskViewComponent} from './tabbed-task-view/tabbed-task-view.component';
 import {ReplaySubject} from 'rxjs';
+import {
+    DefaultTabbedSingleTaskViewComponent
+} from "@netgrif/components";
 
 @Component({
     selector: 'nae-app-tabbed-views-example',
@@ -22,6 +25,8 @@ export class TabbedViewsExampleComponent implements OnInit {
 
     constructor() {
         const stream = new ReplaySubject<number>(1);
+        const streamTest = new ReplaySubject<number>(1);
+        streamTest.next(255)
         this.tabs = [
             {
                 label: {
@@ -32,7 +37,7 @@ export class TabbedViewsExampleComponent implements OnInit {
                 canBeClosed: false,
                 tabContentComponent: TabbedCaseViewComponent,
                 injectedObject: {
-                    tabViewComponent: TabbedTaskViewComponent,
+                    tabViewComponent: DefaultTabbedSingleTaskViewComponent,
                     tabViewOrder: 0,
                     exampleUseCache: true
                 }
@@ -40,7 +45,8 @@ export class TabbedViewsExampleComponent implements OnInit {
             {
                 label: {
                     text: 'process cache disabled',
-                    icon: 'storage'
+                    icon: 'storage',
+                    count: streamTest
                 },
                 canBeClosed: false,
                 tabContentComponent: TabbedCaseViewComponent,

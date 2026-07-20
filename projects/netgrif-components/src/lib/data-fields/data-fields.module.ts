@@ -1,6 +1,6 @@
 import {Injector, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {FlexLayoutModule} from '@angular/flex-layout';
+import {FlexLayoutModule} from '@ngbracket/ngx-layout';
 import {
     CovalentModule,
     CurrencyModule,
@@ -74,7 +74,6 @@ import {I18nFieldComponent} from './i18n-field/i18n-field.component';
 import {I18nDividerFieldComponent} from './i18n-field/i18n-divider-field/i18n-divider-field.component';
 import {I18nTextFieldComponent} from './i18n-field/i18n-text-field/i18n-text-field.component';
 import {EasymdeWrapperComponent} from './text-field/rich-textarea-field/easymde-wrapper/easymde-wrapper.component';
-import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
     MultichoiceAutocompleteFieldComponent
@@ -127,6 +126,7 @@ import {
 import {SignaturePadFieldComponent} from './text-field/signature-pad-field/signature-pad-field.component';
 import { StringCollectionDefaultFieldComponent } from './string-collection-field/string-collection-default-field/string-collection-default-field.component';
 import {ComponentPortal} from "@angular/cdk/portal";
+import { FilterStringQueryFieldComponent } from './filter-field/filter-string-query-field/filter-string-query-field.component';
 
 @NgModule({
     declarations: [
@@ -192,7 +192,8 @@ import {ComponentPortal} from "@angular/cdk/portal";
         EnumerationCaserefFieldComponent,
         StringCollectionDefaultFieldComponent,
         SignaturePadFieldComponent,
-        NumberDecimalFieldComponent
+        NumberDecimalFieldComponent,
+        FilterStringQueryFieldComponent
     ],
     exports: [
         DataFieldTemplateComponent
@@ -215,7 +216,6 @@ import {ComponentPortal} from "@angular/cdk/portal";
         AdvancedSearchComponentModule,
         MatProgressSpinnerModule,
         CurrencyModule,
-        BrowserModule,
         BrowserAnimationsModule,
         DashboardComponentModule,
         RouterModule,
@@ -244,6 +244,7 @@ export class DataFieldsComponentModule {
         registry.register("file-list-default", (injector: Injector) => new ComponentPortal<any>(FileListDefaultFieldComponent, null, injector));
         registry.register("filter-default", (injector: Injector) => new ComponentPortal<any>(FilterDefaultFieldComponent, null, injector));
         registry.register("filter-filter-tab-view", (injector: Injector) => new ComponentPortal<any>(FilterDefaultFieldComponent, null, injector));
+        registry.register("filter-string_query", (injector: Injector) => new ComponentPortal<any>(FilterStringQueryFieldComponent, null, injector));
         registry.register("i18n-divider", (injector: Injector) => new ComponentPortal<any>(I18nDividerFieldComponent, null, injector));
         registry.register("i18n-text", (injector: Injector) => new ComponentPortal<any>(I18nTextFieldComponent, null, injector));
         registry.register("i18n-default", (injector: Injector) => new ComponentPortal<any>(I18nTextFieldComponent, null, injector));

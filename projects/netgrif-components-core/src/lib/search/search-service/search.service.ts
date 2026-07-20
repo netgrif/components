@@ -257,7 +257,7 @@ export class SearchService implements OnDestroy {
      * @param searchedSubstring value that should be searched on all full text fields
      */
     public setFullTextFilter(searchedSubstring: string): void {
-        const whiteSpacedSubstring = searchedSubstring.replace(/ /g, '\\ ');
+        const whiteSpacedSubstring = searchedSubstring?.replace(/ /g, '\\ ');
         this._fullTextFilter = new SimpleFilter('', this._baseFilter.type, {fullText: whiteSpacedSubstring});
         this.updateActiveFilter();
     }
@@ -288,7 +288,8 @@ export class SearchService implements OnDestroy {
     protected updateActiveFilter(): void {
         let additionalFilter: Filter;
         if (!this._rootPredicate.query.isEmpty) {
-            additionalFilter = new SimpleFilter('', this._baseFilter.type, {query: this._rootPredicate.query.value});
+            additionalFilter = new SimpleFilter('', this._baseFilter.type, {query: this._rootPredicate.query.value},
+                undefined, this._baseFilter.isPfql);
         }
         if (this._fullTextFilter) {
             if (additionalFilter) {

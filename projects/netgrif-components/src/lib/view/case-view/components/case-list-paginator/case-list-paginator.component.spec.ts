@@ -16,7 +16,6 @@ import {CaseListPaginatorComponent} from './case-list-paginator.component';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {PanelComponentModule} from '../../../../panel/panel.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {RouterModule} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
 import {of} from 'rxjs';
 
@@ -32,7 +31,6 @@ describe('CaseListPaginatorComponent', () => {
                 TranslateLibModule,
                 PanelComponentModule,
                 NoopAnimationsModule,
-                RouterModule.forRoot([]),
                 RouterTestingModule.withRoutes([])
             ],
             providers: [

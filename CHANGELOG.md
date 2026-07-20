@@ -5,8 +5,38 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres
 to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-Full Changelog: [https://github.com/netgrif/components/commits/v6.4.2](https://github.com/netgrif/components/commits/v6.4.2)
+## [6.5.0](https://github.com/netgrif/components/releases/tag/v6.5.0) (2026-07-20)
 
+### Fixed
+
+- [NAE-2413] Minor CSS changes & fixes
+- [NAE-2056] Fix NAE-2048 in release 6.4.1
+
+### Added
+
+- [NAE-2033] Welcome dashboard
+- [NAE-2041] Implementing Ticket View
+- [NAE-2439] Implement new filter data types
+- [ETASK-23] Dynamic view configuration
+- [ETASK-33] Builder integration
+- [ETASK-29] Menu item creation in menu
+- [NAE-2450] Filter field PFQL support
+
+### Changed
+
+- [NAE-2051] Implement configurable view in menu items
+- [NAE-2034] Open first view
+- [NAE-2038] Public View
+- [NAE-2035] Implement Single-Task-View
+- [NAE-2036] Task-List-View to open Case by link
+- [NAE-2040] Search in role management
+- [NAE-2052] Integrate ticket view with menu items
+- [NAE-2039] Search in workflow view
+- [NAE-2063] Action API 6.5.0
+- [NAE-2060] Merge 6.2.10, 6.4.2 into 6.5.0
+- [NAE-2444] Upgrade Angular to 17
+- [NAE-2463] Builder change localStorage sets
+ 
 ## [6.4.2](https://github.com/netgrif/components/releases/tag/v6.4.2) (2026-04-02)
 
 ### Fixed

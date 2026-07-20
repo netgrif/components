@@ -22,6 +22,7 @@ import {AllowedNetsService} from '../../../../allowed-nets/services/allowed-nets
 import {AllowedNetsServiceFactory} from '../../../../allowed-nets/services/factory/allowed-nets-service-factory';
 import {ActivatedRoute} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
+import {LanguageService} from "../../../../translate/language.service";
 
 
 describe('AbstractCaseListComponent', () => {
@@ -77,8 +78,9 @@ class TestCaseComponent extends AbstractCaseListComponent {
     constructor(protected _caseViewService: CaseViewService,
                 protected _log: LoggerService,
                 @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData,
+                protected _selectLangService: LanguageService,
                 protected _route: ActivatedRoute) {
-        super(_caseViewService, _log, injectedTabData, _route);
+        super(_caseViewService, _log, injectedTabData, _selectLangService, _route);
     }
 }
 

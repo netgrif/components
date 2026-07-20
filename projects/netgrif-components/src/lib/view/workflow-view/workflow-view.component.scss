@@ -38,3 +38,47 @@
     padding-left: 1px;
     padding-right: 1px;
 }
+
+.workflow-search-container {
+    margin-top: 16px;
+    margin-bottom: 2px;
+    padding: 0;
+    max-height: 50%;
+}
+
+.search-width {
+    width: 100%;
+}
+
+.search-fix {
+    min-height: calc(100% + 2px);
+    max-height: 100%;
+    overflow-y: auto;
+}
+
+.max-height {
+    max-height: 100%
+}
+
+.prefix-icon {
+    font-size: 18px;
+    color: #64748B;
+}
+
+.fulltext-search {
+    background: white;
+    min-width: 360px;
+    border-radius: 6px;
+}
+
+.full-size{
+    width: 100%;
+    height: 100%;
+}
+
+@media only screen and (max-width: 599px) {
+    .fulltext-search {
+        min-width: unset;
+    }
+}
+

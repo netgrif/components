@@ -9,7 +9,7 @@
                 </span>
                 <div fxFlex="5"></div>
 
-                <div fxLayout="row" fxLayoutAlign="start center" class="netgrif-input netgrif-input-search-fix">
+                <div fxLayout="row" fxLayoutAlign="start center" class="netgrif-input netgrif-input-search-fix netgrif-input-primary-search-fix">
                     <mat-form-field fxFlex="100" class="ldapGroup-assign-search" color="primary" appearance="outline">
                         <mat-icon matPrefix class="prefix-icon">search</mat-icon>
                         <input matInput [formControl]="searchLdapGroupControl" placeholder="{{ 'side-menu.ldapGroup.choose' | translate }}">
@@ -44,9 +44,9 @@
                                      [value]="ldapGroup"
                                      [ngClass]="{'list-item-selected':ldapGroup.selected}"
                                      (click)="ldapGroup.toggle();autoSelectRoles()" fxLayoutAlign="start center" fxLayout="row">
-                        <h3 matLine class="primary-color-line">{{ldapGroup.cn}}</h3>
-                        <p *ngIf="ldapGroup.description !== undefined" matLine class="paragraph-fix">DN: {{ldapGroup.dn}}, Description: {{ldapGroup.description}}</p>
-                        <p *ngIf="ldapGroup.description === undefined" matLine class="paragraph-fix">DN: {{ldapGroup.dn}}</p>
+                        <h3 matLine class="primary-color-line margin-none">{{ldapGroup.cn}}</h3>
+                        <p *ngIf="ldapGroup.description !== undefined" matLine class="paragraph-fix margin-none">DN: {{ldapGroup.dn}}, Description: {{ldapGroup.description}}</p>
+                        <p *ngIf="ldapGroup.description === undefined" matLine class="paragraph-fix margin-none">DN: {{ldapGroup.dn}}</p>
                     </mat-list-option>
 
                     <div *ngIf="ldapGroup.loading$ | async" fxLayout="column" fxLayoutAlign="center center">
@@ -65,6 +65,20 @@
 
         <mat-toolbar color="primary" class="min-height-radius">
             <span>{{'admin.process-list.listTitle' | translate}}</span>
+            <div fxFlex="5"></div>
+
+            <div fxLayout="row" fxLayoutAlign="start center" class="netgrif-input netgrif-input-search-fix">
+                <mat-form-field fxFlex="100" class="ldapGroup-assign-search" color="primary" appearance="outline">
+                    <mat-icon matPrefix class="prefix-icon">search</mat-icon>
+                    <mat-label>{{ 'side-menu.import-net.search' | translate }}</mat-label>
+                    <input matInput [formControl]="searchNetControl">
+                    <button *ngIf="searchNetControl.value" matSuffix mat-icon-button
+                            (click)="searchNetControl.setValue('')" color="warn">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </mat-form-field>
+            </div>
+
             <span style="flex: 1 1 auto;"></span>
             <mat-spinner *ngIf="ldapGroup.updating$ | async" color="accent" diameter="30"></mat-spinner>
         </mat-toolbar>
@@ -77,7 +91,7 @@
 
         <mat-accordion class="full-width margin-top-default process-list-accordion" multi fxFlex>
 
-            <mat-expansion-panel *ngFor="let item of nets.processes; let last = last;" (afterExpand)="nets.loadProcessItemRoles(item)"
+            <mat-expansion-panel *ngFor="let item of filteredProcesses; let last = last;" (afterExpand)="nets.loadProcessItemRoles(item)"
                                  (afterCollapse)="nets.prepareToTryAgainToLoadRoles(item)" class="panel-body" [ngClass]="{'panel-last':last}">
 
                 <mat-expansion-panel-header class="role-header panel-color">
@@ -126,7 +140,7 @@
                             <mat-list-option *ngFor="let role of net.roles" checkboxPosition="before"
                                              [selected]="role.selected" (click)="role.toggle();update(role)"
                                              fxFlex="50">
-                                <h3 matLine>{{role.name}}</h3>
+                                <h3 matLine class="margin-none">{{role.name}}</h3>
                             </mat-list-option>
                         </mat-selection-list>
                     </div>

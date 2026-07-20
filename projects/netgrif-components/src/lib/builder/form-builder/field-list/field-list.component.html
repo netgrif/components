@@ -1,0 +1,78 @@
+<mat-list class="noselect">
+    <h3 class="field-list-heading">Data fields</h3>
+
+    <mat-expansion-panel #existingFieldPanel class="field-list-expansion-panel expansion-panel-compact">
+        <mat-expansion-panel-header class="field-list-expansion-header">
+            <mat-panel-title class="field-list-expansion-title">
+                Existing fields
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div fxLayoutAlign="start center" class="netgrif-input builder-field-input existing-field-search">
+            <mat-form-field appearance="outline" fxFlex>
+                <mat-icon matPrefix>search</mat-icon>
+                <input matInput type="text" placeholder="search" [(ngModel)]="existingFieldsSearchInput">
+                <button matSuffix (click)="existingFieldsSearchInput=''"  mat-icon-button
+                        *ngIf="existingFieldsSearchInput.length > 0">
+                    <mat-icon color="warn">close</mat-icon>
+                </button>
+            </mat-form-field>
+
+        </div>
+        <ng-container *ngFor="let item of existingDataFields">
+            <mat-list-item class="field-list-mat-list-item mat-list-item-compact" *ngIf="!isPlaced(item) && containsSearchExpression(item)"
+                           draggable="true"
+                           (dragstart)="dragStartHandlerExisting($event, item)"
+                           (click)="addExistingField(item)">
+                <div class="field-list-mat-list-item-title" matTooltip="{{item.title?.value}} [{{item.id}}]" matTooltipShowDelay="500">
+                    <mat-icon class="icon-color">drag_indicator</mat-icon>
+                    <mat-icon class="icon-color icon-delete" (click)="deleteField(item, $event)">delete</mat-icon>
+                    <span>
+                        {{item.title?.value}} [{{item.id}}]
+                    </span>
+                </div>
+            </mat-list-item>
+        </ng-container>
+        <ng-container *ngFor="let item of existingDataFields">
+            <mat-list-item *ngIf="isPlaced(item) && containsSearchExpression(item)" class="field-list-mat-list-item mat-list-item-compact">
+                <div class="field-list-mat-list-item-disabled-title" matTooltip="{{item.title?.value}} [{{item.id}}]" matTooltipShowDelay="500">
+                    <span>{{item.title?.value}} [{{item.id}}]</span>
+                </div>
+            </mat-list-item>
+        </ng-container>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel #newFieldsPanel class="field-list-expansion-panel">
+        <mat-expansion-panel-header class="field-list-expansion-header">
+            <mat-panel-title class="field-list-expansion-title">
+                Create new fields
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <mat-accordion multi="true">
+            <mat-expansion-panel class="field-list-expansion-panel" *ngFor="let fieldType of dataFieldTypesList">
+                <mat-expansion-panel-header class="field-list-expansion-header">
+                    <mat-panel-title class="field-list-expansion-title">
+                        {{typeTitle(fieldType.type)}}
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <mat-list-item class="field-list-mat-list-item" *ngFor="let component of fieldType.components"
+                               draggable="true"
+                               (dragstart)="dragStartHandlerNew($event, fieldType.type, component)"
+                               (click)="addNewField(fieldType.type, component)">
+                    <div class="field-list-mat-list-item-title">
+                        <mat-icon class="icon-color">drag_indicator</mat-icon>
+                        <span>{{component.title}}</span>
+                    </div>
+                </mat-list-item>
+            </mat-expansion-panel>
+        </mat-accordion>
+
+    </mat-expansion-panel>
+
+    <div class="save-back-div">
+        <button mat-stroked-button class="back-button button-text" (click)="backModeler()">
+            <mat-icon>keyboard_backspace</mat-icon>
+            <span>Back</span>
+        </button>
+    </div>
+</mat-list>

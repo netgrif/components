@@ -36,15 +36,6 @@ describe('SnackBarService', () => {
                 ErrorSnackBarComponent,
                 SuccessSnackBarComponent
             ]
-        }).overrideModule(BrowserDynamicTestingModule, {
-            set: {
-                entryComponents: [
-                    GenericSnackBarComponent,
-                    WarningSnackBarComponent,
-                    ErrorSnackBarComponent,
-                    SuccessSnackBarComponent
-                ]
-            }
         });
         service = TestBed.inject(SnackBarService);
         snackSpy = spyOn(TestBed.inject(MatSnackBar), 'openFromComponent');

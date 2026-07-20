@@ -1,0 +1,242 @@
+import {Component, Inject} from '@angular/core';
+import {
+    DataGroup,
+    extractIconAndTitle,
+    FilterType,
+    extractSearchTypeFromData,
+    extractFieldValueFromData,
+    groupNavigationViewIdSegmentFactory,
+    NAE_NAVIGATION_ITEM_TASK_DATA,
+    NAE_VIEW_ID_SEGMENT,
+    NewCaseCreationConfigurationData,
+    SearchComponentConfiguration,
+    SearchMode,
+    TabContent,
+    ViewIdService,
+    FilterExtractionService,
+    GroupNavigationConstants,
+    hasView,
+    I18nFieldValue
+} from '@netgrif/components-core';
+import {DefaultTabbedCaseViewComponent} from '../default-tabbed-case-view/default-tabbed-case-view.component';
+import {DefaultTabbedTaskViewComponent} from '../default-tabbed-task-view/default-tabbed-task-view.component';
+import {ActivatedRoute} from '@angular/router';
+import {TranslateService} from "@ngx-translate/core";
+import {DefaultTicketViewComponent} from "../default-ticket-view/default-ticket-view.component";
+import {
+    DefaultTabbedSingleTaskViewComponent
+} from "../default-tabbed-single-task-view/default-tabbed-single-task-view.component";
+
+@Component({
+    selector: 'nc-default-tab-view',
+    templateUrl: './default-tab-view.component.html',
+    styleUrls: ['./default-tab-view.component.scss'],
+    providers: [
+        ViewIdService,
+        {provide: NAE_VIEW_ID_SEGMENT, useFactory: groupNavigationViewIdSegmentFactory, deps: [ActivatedRoute]}
+    ]
+})
+export class DefaultTabViewComponent {
+
+    tabs: Array<TabContent>;
+
+    constructor(@Inject(NAE_NAVIGATION_ITEM_TASK_DATA) protected _navigationItemTaskData: Array<DataGroup>,
+                protected translateService: TranslateService,
+                protected extractionService: FilterExtractionService,
+                protected activatedRoute: ActivatedRoute) {
+        this.tabs = this.getTabs();
+    }
+
+    protected getTabs(): TabContent[] {
+        const menuItemDataGroups: Array<DataGroup> = this._navigationItemTaskData.slice(0, 1);
+        const viewDataGroups: Array<DataGroup> = this._navigationItemTaskData.slice(1, this._navigationItemTaskData.length);
+
+        const viewType: string = extractFieldValueFromData<string>(menuItemDataGroups, "view_configuration_type");
+        switch (viewType) {
+            case "single_task_view":
+                return this.getSingleTaskTabs(menuItemDataGroups, viewDataGroups);
+            case "case_view":
+                return this.getCaseTabs(menuItemDataGroups, viewDataGroups);
+            case "task_view":
+                return this.getTaskTabs(menuItemDataGroups, viewDataGroups);
+            case "tabbed_ticket_view":
+                return this.getTicketTabs(menuItemDataGroups, viewDataGroups);
+            default:
+                throw new Error(`Cannot resolve tabs for '${viewType}' view type`);
+        }
+    }
+
+    protected getCaseTabs(menuItemDataGroups: Array<DataGroup>, viewDataGroups: Array<DataGroup>): TabContent[] {
+        const labelData = extractIconAndTitle(menuItemDataGroups, this.translateService);
+
+        const blockNetsString = extractFieldValueFromData<string>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_CASE_BANNED_PROCESS_CREATION);
+        const blockNets = blockNetsString === undefined ? [] : blockNetsString.split(',');
+        const createCaseButtonTitle: I18nFieldValue = extractFieldValueFromData<I18nFieldValue>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_CREATE_CASE_BUTTON_TITLE);
+        const createCaseButtonIcon: string = extractFieldValueFromData<string>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_CREATE_CASE_BUTTON_ICON);
+        const requireTitle: boolean = extractFieldValueFromData<boolean>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_CASE_TITLE_IN_CREATION);
+        const showCreateCaseButton: boolean = extractFieldValueFromData<boolean>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_SHOW_CREATE_CASE_BUTTON);
+        const newCaseButtonConfig: NewCaseCreationConfigurationData = {
+            enableCaseTitle: requireTitle,
+            isCaseTitleRequired: requireTitle,
+            newCaseButtonConfig: {
+                createCaseButtonTitle: this.getTranslation(createCaseButtonTitle),
+                createCaseButtonIcon: createCaseButtonIcon,
+                showCreateCaseButton: showCreateCaseButton,
+            },
+            blockNets: blockNets
+        };
+        const caseSearchType = extractSearchTypeFromData(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_CASE_VIEW_SEARCH_TYPE);
+        const caseSearchTypeConfig: SearchComponentConfiguration = {
+            showSearchIcon: true,
+            showSearchToggleButton: caseSearchType === SearchMode.ADVANCED,
+            initialSearchMode: (caseSearchType === undefined) ? undefined : SearchMode.FULLTEXT,
+        }
+        const caseShowMoreMenu = extractFieldValueFromData<boolean>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_CASE_SHOW_MORE_MENU);
+        const caseViewHeadersChangeable = extractFieldValueFromData<boolean>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_CASE_HEADERS_CHANGEABLE);
+        const caseViewHeadersMode = extractFieldValueFromData<string[]>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_CASE_HEADERS_MODE);
+        const caseViewAllowTableMode = extractFieldValueFromData<boolean>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_CASE_ALLOW_TABLE_MODE);
+        const caseViewDefaultHeadersMode = extractFieldValueFromData<string[]>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_CASE_DEFAULT_HEADERS_MODE);
+        const caseViewAllowExport = extractFieldValueFromData<boolean[]>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_CASE_ALLOW_EXPORT);
+
+        if (!hasView(viewDataGroups)) {
+            throw new Error(`Case view has missing configuration for task view.`);
+        }
+
+        const taskSearchType = extractSearchTypeFromData(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_TASK_VIEW_SEARCH_TYPE);
+        const taskShowMoreMenu = extractFieldValueFromData<boolean>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_TASK_SHOW_MORE_MENU);
+        const taskSearchTypeConfig: SearchComponentConfiguration = {
+            showSearchIcon: true,
+            showSearchToggleButton: taskSearchType === SearchMode.ADVANCED,
+            initialSearchMode: (taskSearchType === undefined) ? undefined : SearchMode.FULLTEXT,
+        }
+        const taskViewHeadersChangeable = extractFieldValueFromData<boolean>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_TASK_HEADERS_CHANGEABLE);
+        const taskViewHeadersMode = extractFieldValueFromData<string[]>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_TASK_HEADERS_MODE);
+        const taskViewAllowTableMode = extractFieldValueFromData<boolean>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_TASK_ALLOW_TABLE_MODE);
+        const taskViewDefaultHeadersMode = extractFieldValueFromData<string[]>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_TASK_DEFAULT_HEADERS_MODE);
+        const taskViewFilter = this.extractionService.extractCompleteFilterFromData(viewDataGroups, undefined, undefined, GroupNavigationConstants.ITEM_FIELD_TASK_FILTER, FilterType.TASK);
+        const mergeWithBaseFilter = extractFieldValueFromData<boolean>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_MERGE_FILTERS);
+        const taskViewAllowedNets = this.extractionService.extractTaskFilterAllowedNets(viewDataGroups)?.allowedNetsIdentifiers;
+
+        return [
+            {
+                label: {text: labelData.name, icon: labelData.icon},
+                canBeClosed: false,
+                tabContentComponent: DefaultTabbedCaseViewComponent,
+                injectedObject: {
+                    tabViewComponent: DefaultTabbedTaskViewComponent,
+                    tabViewOrder: 0,
+                    navigationItemTaskData: this._navigationItemTaskData,
+
+                    newCaseButtonConfiguration: newCaseButtonConfig,
+                    caseViewSearchTypeConfiguration: caseSearchTypeConfig,
+                    caseViewShowMoreMenu: caseShowMoreMenu,
+                    caseViewHeadersChangeable: caseViewHeadersChangeable,
+                    caseViewHeadersMode: caseViewHeadersMode,
+                    caseViewAllowTableMode: caseViewAllowTableMode,
+                    caseViewDefaultHeadersMode: caseViewDefaultHeadersMode,
+                    caseViewAllowExport: caseViewAllowExport,
+
+                    taskViewSearchTypeConfiguration: taskSearchTypeConfig,
+                    taskViewShowMoreMenu: taskShowMoreMenu,
+                    taskViewHeadersChangeable: taskViewHeadersChangeable,
+                    taskViewHeadersMode: taskViewHeadersMode,
+                    taskViewAllowTableMode: taskViewAllowTableMode,
+                    taskViewDefaultHeadersMode: taskViewDefaultHeadersMode,
+                    taskViewMergeWithBaseFilter: mergeWithBaseFilter,
+                    taskViewFilter: taskViewFilter,
+                    taskViewAllowedNets: taskViewAllowedNets
+                }
+            }
+        ];
+    }
+
+    protected getTaskTabs(menuItemDataGroups: Array<DataGroup>, viewDataGroups: Array<DataGroup>): TabContent[] {
+        const labelData = extractIconAndTitle(menuItemDataGroups, this.translateService);
+        const taskSearchType = extractSearchTypeFromData(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_TASK_VIEW_SEARCH_TYPE);
+        const headersChangeable = extractFieldValueFromData<boolean>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_TASK_HEADERS_CHANGEABLE);
+        const headersMode = extractFieldValueFromData<string[]>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_TASK_HEADERS_MODE);
+        const allowTableMode = extractFieldValueFromData<boolean>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_TASK_ALLOW_TABLE_MODE);
+        const defaultHeadersMode = extractFieldValueFromData<string[]>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_TASK_DEFAULT_HEADERS_MODE);
+        const showToggleButton = taskSearchType === SearchMode.ADVANCED
+        const searchTypeConfig: SearchComponentConfiguration = {
+            showSearchIcon: true,
+            showSearchToggleButton: showToggleButton,
+            initialSearchMode: (taskSearchType === undefined) ? undefined : SearchMode.FULLTEXT,
+        }
+        const showMoreMenu = extractFieldValueFromData<boolean>(viewDataGroups, GroupNavigationConstants.ITEM_FIELD_ID_TASK_SHOW_MORE_MENU);
+
+        const filter = this.extractionService.extractCompleteFilterFromData(viewDataGroups, undefined, undefined, GroupNavigationConstants.ITEM_FIELD_TASK_FILTER, FilterType.TASK);
+        return [
+            {
+                label: {text: labelData.name, icon: labelData.icon},
+                canBeClosed: false,
+                tabContentComponent: DefaultTabbedTaskViewComponent,
+                injectedObject: {
+                    navigationItemTaskData: this._navigationItemTaskData,
+                    baseFilter: filter,
+                    searchTypeConfiguration: searchTypeConfig,
+                    showMoreMenu: showMoreMenu,
+                    headersChangeable: headersChangeable,
+                    headersMode: headersMode,
+                    allowTableMode: allowTableMode,
+                    defaultHeadersMode: defaultHeadersMode
+                }
+            }
+        ];
+    }
+
+    protected getTicketTabs(menuItemDataGroups: Array<DataGroup>, viewDataGroups: Array<DataGroup>): TabContent[] {
+        if (!hasView(viewDataGroups)) {
+            throw new Error(`Ticket view has missing configuration for single task view.`);
+        }
+
+        const labelData = extractIconAndTitle(menuItemDataGroups, this.translateService);
+        const taskViewFilter = this.extractionService.extractCompleteFilterFromData(viewDataGroups, undefined, undefined, GroupNavigationConstants.ITEM_FIELD_TASK_FILTER, FilterType.TASK);
+        return [
+            {
+                label: {text: labelData.name, icon: labelData.icon},
+                canBeClosed: false,
+                tabContentComponent: DefaultTicketViewComponent,
+                injectedObject: {
+                    navigationItemTaskData: this._navigationItemTaskData,
+                    taskViewFilter: taskViewFilter,
+                    tabViewComponent: DefaultTabbedSingleTaskViewComponent,
+                    tabViewOrder: 0,
+                }
+            }
+        ];
+    }
+
+    protected getSingleTaskTabs(menuItemDataGroups: Array<DataGroup>, viewDataGroups: Array<DataGroup>): TabContent[] {
+        const labelData = extractIconAndTitle(menuItemDataGroups, this.translateService);
+        const taskViewFilter = this.extractionService.extractCompleteFilterFromData(viewDataGroups, undefined, undefined, GroupNavigationConstants.ITEM_FIELD_TASK_FILTER, FilterType.TASK);
+        const taskViewAllowedNets = this.extractionService.extractTaskFilterAllowedNets(viewDataGroups)?.allowedNetsIdentifiers;
+        return [
+            {
+                label: {text: labelData.name, icon: labelData.icon},
+                canBeClosed: false,
+                tabContentComponent: DefaultTabbedSingleTaskViewComponent,
+                injectedObject: {
+                    navigationItemTaskData: this._navigationItemTaskData,
+                    baseFilter: taskViewFilter,
+                    taskViewAllowedNets: taskViewAllowedNets
+                }
+            }
+        ];
+    }
+
+    protected getTranslation(i18nValue: I18nFieldValue): string | undefined {
+        if (!i18nValue) {
+            return undefined;
+        }
+        if (typeof i18nValue === 'string') {
+            return i18nValue;
+        }
+        const locale = this.translateService.currentLang;
+        const language = locale?.split('-')[0];
+        return i18nValue.translations?.[locale]
+            ?? (language ? i18nValue.translations?.[language] : undefined)
+            ?? i18nValue.defaultValue;
+    }
+
+}

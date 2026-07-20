@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ImportNetComponent} from './import-net.component';
-import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
+import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
 import {FormsModule} from '@angular/forms';
 import {CovalentModule, MaterialModule, NAE_IMPORT_NET_COMPONENT, TranslateLibModule} from '@netgrif/components-core';
 

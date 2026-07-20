@@ -1,7 +1,7 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {EmailSubmissionFormComponent} from './email-submission-form.component';
 import {FormBuilder} from '@angular/forms';
-import {FlexLayoutModule} from '@angular/flex-layout';
+import {FlexLayoutModule} from '@ngbracket/ngx-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ConfigurationService, MaterialModule, TestConfigurationService, TranslateLibModule} from '@netgrif/components-core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';

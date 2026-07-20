@@ -7,7 +7,7 @@ import {
     TestViewService,
     ViewService
 } from '@netgrif/components-core';
-import {RouterModule} from "@angular/router";
+import {RouterTestingModule} from "@angular/router/testing";
 
 describe('DefaultGroupNavigationComponentResolverService', () => {
     let service: DefaultGroupNavigationComponentResolverService;
@@ -16,7 +16,7 @@ describe('DefaultGroupNavigationComponentResolverService', () => {
         TestBed.configureTestingModule({
             imports: [
                 TestMockDependenciesModule,
-                RouterModule.forRoot([], {relativeLinkResolution: 'legacy'})
+                RouterTestingModule.withRoutes([])
             ],
             providers: [
                 DefaultGroupNavigationComponentResolverService,
@@ -25,6 +25,10 @@ describe('DefaultGroupNavigationComponentResolverService', () => {
             ]
         });
         service = TestBed.inject(DefaultGroupNavigationComponentResolverService);
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 
     it('should be created', () => {

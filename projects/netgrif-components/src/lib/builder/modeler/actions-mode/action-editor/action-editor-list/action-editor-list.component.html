@@ -1,0 +1,11 @@
+<mat-accordion class="panel-area-padding" multi="true">
+  <ng-template [ngForOf]="leafNode.actions" let-action let-i="index" ngFor>
+    <nc-builder-action-editor (actionChanged)="actionChangedListener($event)"
+                       (drawerOpened)="drawerChanged($event)"
+                       [action]="action"
+                       [index]="i"
+                       [leafNode]="leafNode"
+                       [name]="action.event + '_' + action.phase + '_' + i"
+    ></nc-builder-action-editor>
+  </ng-template>
+</mat-accordion>

@@ -49,7 +49,8 @@
             "finish": "Dokončiť",
             "cancel": "Zrušiť",
             "noData": "Táto úloha nemá žiadne údaje. Stlačte dokončiť pre pokračovanie.",
-            "redirecting": "Presmerovanie..."
+            "redirecting": "Presmerovanie...",
+            "closeTab": "Zavrieť"
         },
         "footer": {
             "defaultText": "NETGRIF, s.r.o. © 2022"
@@ -70,7 +71,8 @@
         "import-net": {
             "upload": "Nahrať model",
             "choose": "Vyberte súbor s procesom",
-            "done": "Dokončiť"
+            "done": "Dokončiť",
+            "search": "Vyhľadajte proces"
         },
         "new-case": {
             "case": "Nový prípad",
@@ -346,7 +348,9 @@
             "visualID": "Vizuálne ID",
             "title": "Názov",
             "author": "Autor",
-            "creationDate": "Dátum vytvorenia"
+            "creationDate": "Dátum vytvorenia",
+            "processIdentifier": "Identifikátor procesu",
+            "petriNetId": "Proces ID"
         },
         "taskMeta": {
             "case": "Prípad",
@@ -466,7 +470,8 @@
             "deleteError": "Proces sa nepodarilo zmazať",
             "uploadFailed": "Súbor procesu sa nepodarilo nahrať.",
             "uploadSuccess": "Súbor procesu bol úspešne nahraný"
-        }
+        },
+        "new-process": "Vytvor nový proces"
     },
     "legal": {
         "byClicking": "Kliknutím na tlačidlo '{{buttonName}}'",

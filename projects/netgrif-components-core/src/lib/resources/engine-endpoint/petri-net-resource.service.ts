@@ -169,6 +169,18 @@ export class PetriNetResourceService extends AbstractResourceService {
     }
 
     /**
+     * search PetriNets
+     *
+     * **Request Type:** POST
+     *
+     * **Request URL:** {{baseUrl}}/api/petrinet/search
+     */
+    public searchElasticPetriNets(body: PetriNetRequestBody, params?: Params): Observable<Page<PetriNetReference>> {
+        return this._resourceProvider.post$('petrinet/search_elastic', this.SERVER_URL, body, params)
+            .pipe(map(r => this.getResourcePage<PetriNetReference>(r, 'petriNetReferences')));
+    }
+
+    /**
      * delete PetriNet
      *
      * **Request Type:** DELETE

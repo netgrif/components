@@ -14,7 +14,7 @@ import {filter, map, startWith} from 'rxjs/operators';
  */
 export class ConfigurationInput {
 
-    protected _formControl: FormControl;
+    protected _formControl: FormControl<any>;
 
     protected _filteredOptions$: Observable<Array<SearchAutocompleteOption<unknown>>>;
 
@@ -43,7 +43,7 @@ export class ConfigurationInput {
         );
     }
 
-    public get formControl(): FormControl {
+    public get formControl(): FormControl<any> {
         return this._formControl;
     }
 

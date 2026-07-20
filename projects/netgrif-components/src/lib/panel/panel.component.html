@@ -1,6 +1,6 @@
 <mat-expansion-panel [@.disabled]="expansionDisabled" hideToggle (afterExpand)="emitExpand()"
                      (afterCollapse)="emitCollapse()" #matExpansionPanel class="panel-body"
-                     [ngClass]="{'margin-bottom':last, 'panel-last':last}" [disabled]='preventCollapse'>
+                     [ngClass]="{'margin-bottom':last, 'panel-last':last, 'panel-first': first}" [disabled]='preventCollapse'>
     <mat-expansion-panel-header *ngIf="showPanelHeader()"
                                 (click)="expandPanel()" class="panel-color header-padding header-min-height"
                                 [ngStyle]="{'background': caseColor, 'color': getCaseFontColor()}">

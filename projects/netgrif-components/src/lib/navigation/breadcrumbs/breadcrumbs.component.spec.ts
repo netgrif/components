@@ -8,9 +8,9 @@ import {
     ConfigurationService,
     MaterialModule,
     MockAuthenticationMethodService,
-    TestConfigurationService, TranslateLibModule,
+    TestConfigurationService, TranslateLibModule, AuthenticationModule
 } from '@netgrif/components-core';
-import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
+import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
@@ -28,7 +28,8 @@ describe('BreadcrumbsComponent', () => {
                 FlexModule,
                 FlexLayoutModule,
                 HttpClientTestingModule,
-                TranslateLibModule
+                TranslateLibModule,
+                AuthenticationModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
@@ -43,6 +44,10 @@ describe('BreadcrumbsComponent', () => {
         fixture = TestBed.createComponent(BreadcrumbsComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 
     it('should create', () => {

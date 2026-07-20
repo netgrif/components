@@ -6,14 +6,15 @@ import {
     NAE_TAB_DATA,
     NAE_VIEW_ID_SEGMENT,
     OverflowService,
-    TestMockDependenciesModule, UserFilterConstants
-} from 'netgrif-components-core';
+    TestMockDependenciesModule,
+    GroupNavigationConstants,
+} from '@netgrif/components-core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
 import {of} from 'rxjs';
 import {
     DefaultTabbedTaskViewComponent
-} from '../../../navigation/group-navigation-component-resolver/default-components/default-tabbed-task-view/default-tabbed-task-view.component';
+} from '../../../navigation/group-navigation-component-resolver/default-components/tabbed/default-tabbed-task-view/default-tabbed-task-view.component';
 import {Component} from '@angular/core';
 
 describe('EnumerationCaserefFieldComponent', () => {
@@ -43,7 +44,7 @@ describe('EnumerationCaserefFieldComponent', () => {
                         navigationItemTaskData: [{fields: []}, {
                             fields: [
                                 new FilterField(
-                                    `${UserFilterConstants.FILTER_FIELD_ID}`,
+                                    `${GroupNavigationConstants.ITEM_FIELD_CASE_FILTER}`,
                                     '',
                                     '',
                                     {
@@ -69,6 +70,10 @@ describe('EnumerationCaserefFieldComponent', () => {
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
         fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 
     it('should create', () => {

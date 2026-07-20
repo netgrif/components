@@ -1,28 +1,35 @@
 import {Injectable, Type} from '@angular/core';
 import {
     DataGroup,
-    extractFilterFromData,
-    FilterType,
     GroupNavigationComponentResolverService,
     LoggerService,
     TaskResourceService,
+    CaseResourceService,
     ConfigurationService,
     View,
     ViewService,
     extractFieldValueFromData,
-    RoutingBuilderService,
-    GroupNavigationConstants
+    hasView,
+    RoutingBuilderService
 } from '@netgrif/components-core';
-import {DefaultTabViewComponent} from './default-components/default-tab-view/default-tab-view.component';
+import {DefaultTabViewComponent} from './default-components/tabbed/default-tab-view/default-tab-view.component';
+import {DefaultSingleTaskViewComponent} from './default-components/simple-views/default-single-task-view/default-single-task-view.component';
 import {
     DefaultNoFilterProvidedComponent
 } from "./default-components/default-no-filter-provided/default-no-filter-provided.component";
+import {
+    DefaultSimpleTaskViewComponent
+} from "./default-components/simple-views/default-simple-task-view/default-simple-task-view.component";
+import {
+    DefaultSimpleCaseViewComponent
+} from "./default-components/simple-views/default-simple-case-view/default-simple-case-view.component";
 
 @Injectable()
 export class DefaultGroupNavigationComponentResolverService extends GroupNavigationComponentResolverService {
 
-    constructor(taskResourceService: TaskResourceService, log: LoggerService, private _configService: ConfigurationService, private _viewService: ViewService,) {
-        super(taskResourceService, log);
+    constructor(taskResourceService: TaskResourceService, caseResourceService: CaseResourceService, log: LoggerService,
+                protected _configService: ConfigurationService, protected _viewService: ViewService,) {
+        super(taskResourceService, caseResourceService, log);
     }
 
     public resolveViewComponent(navItemData: Array<DataGroup>): Type<any> {
@@ -44,7 +51,7 @@ export class DefaultGroupNavigationComponentResolverService extends GroupNavigat
     }
 
     protected resolveComponentClass(view: View, configPath: string): Type<any> | undefined {
-        let result;
+        let result: Type<any>;
         if (!!view.component) {
             result = this._viewService.resolveNameToClass(view.component.class);
         } else if (!!view.layout) {
@@ -64,22 +71,30 @@ export class DefaultGroupNavigationComponentResolverService extends GroupNavigat
     }
 
     protected resolveDefaultComponent(navItemData: Array<DataGroup>): Type<any> {
-        const filterTaskRefValue = extractFieldValueFromData<string[]>(navItemData, GroupNavigationConstants.ITEM_FIELD_ID_FILTER_TASKREF);
-        if (filterTaskRefValue == undefined || filterTaskRefValue.length == 0) {
-            return DefaultNoFilterProvidedComponent
+        if (!hasView(navItemData)) {
+            return DefaultNoFilterProvidedComponent;
         }
 
-        const filter = extractFilterFromData(navItemData);
-        if (filter === undefined) {
-            throw new Error('Provided navigation item task data does not contain a filter field');
+        const isTabbed: boolean = extractFieldValueFromData(navItemData, 'use_tabbed_view');
+        if (!!isTabbed) {
+            return DefaultTabViewComponent;
+        } else {
+            return this.getUntabbedDefaultComponent(navItemData);
         }
+    }
 
-        switch (filter.type) {
-            case FilterType.CASE:
-            case FilterType.TASK:
-                return DefaultTabViewComponent;
+    protected getUntabbedDefaultComponent(navItemData: Array<DataGroup>): Type<any> {
+        const menuItemDataGroups: Array<DataGroup> = navItemData.slice(0, 1);
+        const viewType: string = extractFieldValueFromData<string>(menuItemDataGroups, "view_configuration_type");
+        switch (viewType) {
+            case "single_task_view":
+                return DefaultSingleTaskViewComponent;
+            case "case_view":
+                return DefaultSimpleCaseViewComponent;
+            case "task_view":
+                return DefaultSimpleTaskViewComponent;
             default:
-                throw new Error(`Cannot resolve navigation component from '${filter.type}' filter type`);
+                return DefaultNoFilterProvidedComponent;
         }
     }
 }

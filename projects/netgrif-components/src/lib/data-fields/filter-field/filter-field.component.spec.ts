@@ -30,12 +30,6 @@ describe('FilterFieldComponent', () => {
                 FilterFieldContentComponent,
                 TestWrapperComponent
             ]
-        }).overrideModule(BrowserDynamicTestingModule, {
-            set: {
-                entryComponents: [
-                    FilterFieldContentComponent
-                ]
-            }
         }).compileComponents();
     });
 

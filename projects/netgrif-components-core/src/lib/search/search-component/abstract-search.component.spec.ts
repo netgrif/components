@@ -21,7 +21,6 @@ import {NAE_SEARCH_COMPONENT_CONFIGURATION} from '../models/component-configurat
 import {SearchComponentConfiguration} from '../models/component-configuration/search-component-configuration';
 import {NAE_BASE_FILTER} from '../models/base-filter-injection-token';
 import {TestCaseBaseFilterProvider, TestNoAllowedNetsFactory} from '../../utility/tests/test-factory-methods';
-import {UserFiltersService} from '../../filter/user-filters.service';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 import {NAE_DEFAULT_CASE_SEARCH_CATEGORIES, NAE_SEARCH_CATEGORIES} from '../category-factory/search-categories-injection-token';
 import {Category} from '../models/category/category';
@@ -97,13 +96,12 @@ class TestSearchComponent extends AbstractSearchComponent {
                 logger: LoggerService,
                 dialogService: DialogService,
                 translate: TranslateService,
-                userFilterService: UserFiltersService,
                 allowedNetsService: AllowedNetsService,
                 viewIdService: ViewIdService,
                 @Inject(NAE_SEARCH_CATEGORIES) searchCategories: Array<Type<Category<any>>>,
                 @Optional() @Inject(NAE_SEARCH_COMPONENT_CONFIGURATION) configuration: SearchComponentConfiguration,
                 @Optional() @Inject(NAE_FILTERS_FILTER) filtersFilter: Filter) {
-        super(searchService, logger, dialogService, translate, userFilterService, allowedNetsService, viewIdService,
+        super(searchService, logger, dialogService, translate, allowedNetsService, viewIdService,
             searchCategories, configuration, filtersFilter);
     }
 }

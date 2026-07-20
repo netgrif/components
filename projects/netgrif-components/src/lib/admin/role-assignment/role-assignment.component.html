@@ -9,7 +9,7 @@
                 </span>
                 <div fxFlex="5"></div>
 
-                <div fxLayout="row" fxLayoutAlign="start center" class="netgrif-input netgrif-input-search-fix">
+                <div fxLayout="row" fxLayoutAlign="start center" class="netgrif-input netgrif-input-search-fix netgrif-input-primary-search-fix">
                     <mat-form-field fxFlex="100" class="user-assign-search" color="primary" appearance="outline">
                         <mat-icon matPrefix class="prefix-icon">search</mat-icon>
                         <mat-label>{{ 'side-menu.user.choose' | translate }}</mat-label>
@@ -50,8 +50,8 @@
                                      [value]="user"
                                      [ngClass]="{'list-item-selected':user.selected}"
                                      (click)="user.toggle();autoSelectRoles()" fxLayoutAlign="start center" fxLayout="row">
-                        <h3 matLine class="primary-color-line">{{user.fullName}}</h3>
-                        <p matLine class="paragraph-fix">ID: {{user.id}}, Email: {{user.email}}</p>
+                        <h3 matLine class="primary-color-line margin-none">{{user.fullName}}</h3>
+                        <p matLine class="paragraph-fix margin-none">ID: {{user.id}}, Email: {{user.email}}</p>
                     </mat-list-option>
 
                     <div *ngIf="users.loading$ | async" fxLayout="column" fxLayoutAlign="center center">
@@ -70,6 +70,20 @@
 
         <mat-toolbar color="primary" class="min-height-radius">
             <span>{{'admin.process-list.listTitle' | translate}}</span>
+            <div fxFlex="5"></div>
+
+            <div fxLayout="row" fxLayoutAlign="start center" class="netgrif-input netgrif-input-search-fix  netgrif-input-primary-search-fix">
+                <mat-form-field fxFlex="100" class="user-assign-search" color="primary" appearance="outline">
+                    <mat-icon matPrefix class="prefix-icon">search</mat-icon>
+                    <mat-label>{{ 'side-menu.import-net.search' | translate }}</mat-label>
+                    <input matInput [formControl]="searchNetControl">
+                    <button *ngIf="searchNetControl.value" matSuffix mat-icon-button
+                            (click)="searchNetControl.setValue('')" color="warn">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </mat-form-field>
+            </div>
+
             <span style="flex: 1 1 auto;"></span>
             <mat-spinner *ngIf="users.updating$ | async" color="accent" diameter="30"></mat-spinner>
         </mat-toolbar>
@@ -82,7 +96,7 @@
 
         <mat-accordion class="full-width margin-top-default process-list-accordion" multi fxFlex>
 
-            <mat-expansion-panel *ngFor="let item of nets.processes; let last = last;" (afterExpand)="nets.loadProcessItemRoles(item)"
+            <mat-expansion-panel *ngFor="let item of filteredProcesses; let last = last;" (afterExpand)="nets.loadProcessItemRoles(item)"
                                  (afterCollapse)="nets.prepareToTryAgainToLoadRoles(item)" class="panel-body" [ngClass]="{'panel-last':last}">
 
                 <mat-expansion-panel-header class="role-header panel-color">
@@ -133,7 +147,7 @@
                             <mat-list-option *ngFor="let role of net.roles" checkboxPosition="before"
                                              [selected]="role.selected" (click)="role.toggle();update(role)"
                                              fxFlex="50">
-                                <h3 matLine>{{role.name}}</h3>
+                                <h3 matLine class="margin-none">{{role.name}}</h3>
                             </mat-list-option>
                         </mat-selection-list>
                     </div>

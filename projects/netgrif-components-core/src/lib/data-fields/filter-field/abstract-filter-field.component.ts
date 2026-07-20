@@ -12,7 +12,7 @@ import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token
 })
 export abstract class AbstractFilterFieldComponent extends AbstractDataFieldComponent implements OnInit {
 
-    @Input() dataField: FilterField;
+    @Input() declare dataField: FilterField;
 
     protected constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
         super(informAboutInvalidData);

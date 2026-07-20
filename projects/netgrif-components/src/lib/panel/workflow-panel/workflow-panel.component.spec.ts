@@ -3,7 +3,7 @@ import {WorkflowPanelComponent} from './workflow-panel.component';
 import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
 import {PanelComponent} from '../panel.component';
 import {CommonModule} from '@angular/common';
-import {FlexModule} from '@angular/flex-layout';
+import {FlexModule} from '@ngbracket/ngx-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {DataFieldsComponentModule} from '../../data-fields/data-fields.module';
 import {of} from 'rxjs';
@@ -26,7 +26,6 @@ import {
     WorkflowViewService
 } from '@netgrif/components-core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import { RouterModule } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
 

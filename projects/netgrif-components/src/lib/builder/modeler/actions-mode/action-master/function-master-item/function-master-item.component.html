@@ -1,0 +1,19 @@
+<mat-list-item class="item-bottom-border"
+               [ngClass]="{'item-selected': this.selected && this.selected === item}"
+               (click)="select()"
+               (mouseenter)="showIcons = true" (mouseleave)="showIcons = false">
+    <div fxFlex="40" fxLayoutAlign="start center">
+        <span class="text-ellipsis" matTooltip="{{item.name}}">
+            {{ item.name }}
+        </span>
+    </div>
+    <div fxFlex="50" fxLayoutAlign="start center">
+        <span  class="text-ellipsis" matTooltip="{{item.scope}}">
+        {{ item.scope }}
+    </span>
+    </div>
+    <button mat-icon-button matTooltip="Delete function" (click)="onDelete($event, item)"
+            [ngClass]="{'function-list-icon-hidden': !showIcons}">
+        <mat-icon>delete</mat-icon>
+    </button>
+</mat-list-item>

@@ -19,7 +19,7 @@ import {A11yModule} from '@angular/cdk/a11y';
 import {
     SideMenuUserAssignComponentModule
 } from '../side-menu/content-components/user-assign/side-menu-user-assign-component.module';
-import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
+import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
 import {FormsModule} from '@angular/forms';
 import {HotkeyModule} from 'angular2-hotkeys';
 import {ImportNetDialogComponent} from './import-net-dialog/import-net-dialog.component';
@@ -36,15 +36,7 @@ import {FilterSelectorDialogComponent} from './filter-selector-dialog/filter-sel
 import {
     SideMenuFilterSelectorComponentModule
 } from '../side-menu/content-components/filter-selector/side-menu-filter-selector-component.module';
-import {LoadFilterDialogComponent} from './load-filter-dialog/load-filter-dialog.component';
-import {SaveFilterDialogComponent} from './save-filter-dialog/save-filter-dialog.component';
 import {PanelComponentModule} from '../panel/panel.module';
-import {
-    SideMenuLoadFilterComponentModule
-} from '../side-menu/content-components/load-filter/side-menu-load-filter-component.module';
-import {
-    SideMenuSaveFilterComponentModule
-} from '../side-menu/content-components/save-filter/side-menu-save-filter-component.module';
 import {
     SideMenuMultiUserAssignComponentModule
 } from '../side-menu/content-components/multi-user-assign/side-menu-multi-user-assign-component.module';
@@ -60,8 +52,6 @@ import {openTaskDialog} from "./model/dialog-actions";
         AdminImpersonateDialogComponent,
         UserImpersonateDialogComponent,
         FilterSelectorDialogComponent,
-        LoadFilterDialogComponent,
-        SaveFilterDialogComponent,
         MultiUserAssignDialogComponent,
         TaskViewDialogComponent
     ],
@@ -72,8 +62,6 @@ import {openTaskDialog} from "./model/dialog-actions";
         AdminImpersonateDialogComponent,
         UserImpersonateDialogComponent,
         FilterSelectorDialogComponent,
-        LoadFilterDialogComponent,
-        SaveFilterDialogComponent,
         MultiUserAssignDialogComponent,
         TaskViewDialogComponent
     ],
@@ -93,8 +81,6 @@ import {openTaskDialog} from "./model/dialog-actions";
         SideMenuUserAssignComponentModule,
         SideMenuAdminImpersonateComponentModule,
         SideMenuFilterSelectorComponentModule,
-        SideMenuLoadFilterComponentModule,
-        SideMenuSaveFilterComponentModule,
         SideMenuMultiUserAssignComponentModule,
         CaseViewComponentModule,
         HeaderComponentModule,
@@ -109,8 +95,6 @@ import {openTaskDialog} from "./model/dialog-actions";
         {provide: NAE_ADMIN_IMPERSONATE_DIALOG_COMPONENT, useValue: AdminImpersonateDialogComponent},
         {provide: NAE_USER_IMPERSONATE_DIALOG_COMPONENT, useValue: UserImpersonateDialogComponent},
         {provide: NAE_NEW_CASE_DIALOG_COMPONENT, useValue: NewCaseDialogComponent},
-        {provide: NAE_SAVE_FILTER_DIALOG_COMPONENT, useValue: SaveFilterDialogComponent},
-        {provide: NAE_LOAD_FILTER_DIALOG_COMPONENT, useValue: LoadFilterDialogComponent},
         {provide: NAE_TASK_VIEW_COMPONENT, useValue: TaskViewDialogComponent}
     ]
 })

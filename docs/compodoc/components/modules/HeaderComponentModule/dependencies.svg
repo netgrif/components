@@ -28,13 +28,13 @@
 <title>cluster_HeaderComponentModule_declarations</title>
 <polygon fill="none" stroke="black" points="20,-143 20,-195 818,-195 818,-143 20,-143"/>
 </g>
-<g id="clust4" class="cluster">
-<title>cluster_HeaderComponentModule_HeaderComponent_providers</title>
-<polygon fill="none" stroke="black" points="16,-78 16,-130 1006,-130 1006,-78 16,-78"/>
-</g>
 <g id="clust9" class="cluster">
 <title>cluster_HeaderComponentModule_exports</title>
 <polygon fill="none" stroke="black" points="16,-273 16,-325 830,-325 830,-273 16,-273"/>
+</g>
+<g id="clust4" class="cluster">
+<title>cluster_HeaderComponentModule_HeaderComponent_providers</title>
+<polygon fill="none" stroke="black" points="16,-78 16,-130 1006,-130 1006,-78 16,-78"/>
 </g>
 <!-- EditModeComponent -->
 <g id="node1" class="node">

@@ -1,0 +1,9 @@
+<ngx-dropzone (change)="onDropZone($event)" multiple="false" accept=".xml" disableClick="true" class="outer">
+    <div class="outer">
+        <petriflow-svg-canvas
+            [panzoomConfiguration]="editModeService.panzoomConfiguration"
+            [gridConfiguration]="editModeService.canvasService.gridConfiguration">
+        </petriflow-svg-canvas>
+    </div>
+</ngx-dropzone>
+<nc-builder-context-menu class="nab-menu" #contextMenu></nc-builder-context-menu>

@@ -207,6 +207,17 @@
                 "path": "drawer"
             }
         },
+        "demo-dashboard": {
+            "component": {
+                "class": "NavigationDashboardExampleComponent",
+                "from": "./doc/navigation-dashboard-example/navigation-dashboard-example.component"
+            },
+            "access": "private",
+            "navigation": true,
+            "routing": {
+                "path": "dashboard"
+            }
+        },
         "demo-double-drawer": {
             "component": {
                 "class": "DoubleDrawerExampleComponent",
@@ -227,6 +238,36 @@
                         "path": "group-nav"
                     }
                 },
+                "builder-example": {
+                    "component": {
+                        "class": "BuilderComponent",
+                        "from": "@netgrif/components"
+                    },
+                    "navigation": {
+                        "title": "Builder",
+                        "icon": "device_hub"
+                    },
+                    "access": "private",
+                    "routing": {
+                        "path": "builder"
+                    },
+                    "processUri": "/"
+                },
+                "demo-builder-tabs-view": {
+                    "component": {
+                        "class": "BuilderTabsExampleComponent",
+                        "from": ""
+                    },
+                    "access": "private",
+                    "navigation": {
+                        "title": "Builder tabs",
+                        "icon": "device_hub"
+                    },
+                    "routing": {
+                        "path": "builder-tabs-view"
+                    },
+                    "processUri": "/"
+                },
                 "custom-view": {
                     "component": {
                         "class": "TaskViewComponent",
@@ -241,6 +282,15 @@
                         "path": "task-view"
                     },
                     "processUri": "/"
+                },
+                "task-list-view": {
+                    "component": {
+                        "class": "DefaultSimpleTaskViewComponent"
+                    },
+                    "access": "private",
+                    "routing": {
+                        "path": "task-list/:singleCaseId"
+                    }
                 },
                 "hidden-workflow-view": {
                     "component": {
@@ -260,6 +310,21 @@
                     "routing": {
                         "path": "workflow-view"
                     }
+                },
+                "ticket-view": {
+                    "component": {
+                        "class": "TabbedTicketView",
+                        "from": "@netgrif/components"
+                    },
+                    "access": "private",
+                    "navigation": {
+                        "title": "Custom ticket view",
+                        "icon": "add"
+                    },
+                    "routing": {
+                        "path": "ticket-view"
+                    },
+                    "processUri": "/test"
                 },
                 "hidden-active-group": {
                     "component": {
@@ -286,6 +351,34 @@
                     "routing": {
                         "path": "breadcrumbs"
                     }
+                },
+                "double-menu-tabbed-views": {
+                    "component": {
+                        "class": "TabbedViewsExampleComponent",
+                        "from": "./doc/tabbed-case-view/tabbed-views-example.component"
+                    },
+                    "access": "private",
+                    "navigation": {
+                        "title": "Custom Tabbed View",
+                        "icon": "tab"
+                    },
+                    "routing": {
+                        "path": "double-menu-tabbed-views"
+                    },
+                    "children": {
+                        "custom-redirect": {
+                            "component": {
+                                "class": "TabbedViewsExampleComponent",
+                                "from": "./doc/tabbed-case-view/tabbed-views-example.component"
+                            },
+                            "access": "private",
+                            "navigation": false,
+                            "routing": {
+                                "path": "**"
+                            }
+                        }
+                    },
+                    "processUri": "/"
                 }
             }
         },
@@ -1302,6 +1395,9 @@
         },
         "groupNavigation": {
             "groupNavigationRoute": "group-nav"
+        },
+        "doubleDrawer": {
+            "url": "drawer-double"
         }
     }
 }

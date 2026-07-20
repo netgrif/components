@@ -113,14 +113,32 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
+                        "allowedCommonJsDependencies": [
+                            "moment",
+                            "buffer",
+                            "easymde",
+                            "semver",
+                            "rfdc",
+                            "escape-string-regexp"
+                        ],
                         "outputPath": "dist/nae-example-app",
                         "index": "projects/nae-example-app/src/index.html",
                         "main": "projects/nae-example-app/src/main.ts",
-                        "polyfills": "projects/nae-example-app/src/polyfills.ts",
+                        "polyfills": ["zone.js"],
                         "tsConfig": "projects/nae-example-app/tsconfig.app.json",
                         "assets": [
                             "projects/nae-example-app/src/favicon.ico",
-                            "projects/nae-example-app/src/assets"
+                            "projects/nae-example-app/src/assets",
+                            {
+                                "glob": "**/*",
+                                "input": "node_modules/monaco-editor/min-maps",
+                                "output": "assets/monaco/min-maps"
+                            },
+                            {
+                                "glob": "**/*",
+                                "input": "node_modules/monaco-editor/min",
+                                "output": "assets/monaco/min"
+                            }
                         ],
                         "styles": [
                             "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
@@ -168,25 +186,25 @@
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "nae-example-app:build"
+                        "buildTarget": "nae-example-app:build"
                     },
                     "configurations": {
                         "production": {
-                            "browserTarget": "nae-example-app:build:production"
+                            "buildTarget": "nae-example-app:build:production"
                         }
                     }
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "nae-example-app:build"
+                        "buildTarget": "nae-example-app:build"
                     }
                 },
                 "test": {
                     "builder": "@angular-devkit/build-angular:karma",
                     "options": {
                         "main": "projects/nae-example-app/src/test.ts",
-                        "polyfills": "projects/nae-example-app/src/polyfills.ts",
+                        "polyfills": ["zone.js"],
                         "tsConfig": "projects/nae-example-app/tsconfig.spec.json",
                         "karmaConfig": "projects/nae-example-app/karma.conf.js",
                         "assets": [
@@ -227,7 +245,6 @@
             }
         }
     },
-    "defaultProject": "nae-example-app",
     "cli": {
         "analytics": false,
         "defaultCollection": "@angular-eslint/schematics"

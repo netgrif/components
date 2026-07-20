@@ -3,22 +3,24 @@ import {
     AllowedNetsServiceFactory,
     BaseFilter,
     BaseAllowedNetsService,
-    Category,
     navigationItemTaskAllowedNetsServiceFactory,
     navigationItemTaskFilterFactory,
-    navigationItemTaskCategoryFactory, CategoryResolverService, FilterExtractionService
+    FilterType,
+    FilterExtractionService, GroupNavigationConstants
 } from '@netgrif/components-core';
 import {InjectedTabbedCaseViewDataWithNavigationItemTaskData} from './injected-tabbed-case-view-data-with-navigation-item-task-data';
-import {Type} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 
 /**
  * Converts a navigation item case task data injected by the {@link NAE_TAB_DATA} injection token into a {@link BaseFilter} instance
  * @param extractionService
  * @param tabData the injected data containing the navigation item case task data
+ * @param activatedRoute
  */
 export function filterCaseTabbedDataFilterFactory(extractionService: FilterExtractionService,
-                                                  tabData: InjectedTabbedCaseViewDataWithNavigationItemTaskData): BaseFilter {
-    return navigationItemTaskFilterFactory(extractionService, tabData.navigationItemTaskData, tabData.loadFilter);
+                                                  tabData: InjectedTabbedCaseViewDataWithNavigationItemTaskData,
+                                                  activatedRoute: ActivatedRoute): BaseFilter {
+    return navigationItemTaskFilterFactory(extractionService, GroupNavigationConstants.ITEM_FIELD_CASE_FILTER, activatedRoute, tabData.navigationItemTaskData, tabData.loadFilter, FilterType.CASE);
 }
 
 /**
@@ -33,24 +35,5 @@ export function filterCaseTabbedDataAllowedNetsServiceFactory(allowedNetsService
                                                               tabData: InjectedTabbedCaseViewDataWithNavigationItemTaskData)
     : AllowedNetsService {
 
-    return navigationItemTaskAllowedNetsServiceFactory(allowedNetsServiceFactory, baseAllowedNets, tabData.navigationItemTaskData);
-}
-
-/**
- * Converts a navigation item case task data injected by the {@link NAE_TAB_DATA} injection token into an array of {@link Category} classes
- * @param categoryResolverService
- * @param tabData the injected data containing the navigation item case task data
- * @param defaultCaseSearchCategories the default case search categories
- * @param defaultTaskSearchCategories the default task search categories
- */
-export function filterCaseTabbedDataSearchCategoriesFactory(categoryResolverService: CategoryResolverService,
-                                                            tabData: InjectedTabbedCaseViewDataWithNavigationItemTaskData,
-                                                            defaultCaseSearchCategories: Array<Type<Category<any>>>,
-                                                            defaultTaskSearchCategories: Array<Type<Category<any>>>)
-    : Array<Type<Category<any>>> {
-
-    return navigationItemTaskCategoryFactory(categoryResolverService,
-        tabData.navigationItemTaskData,
-        defaultCaseSearchCategories,
-        defaultTaskSearchCategories);
+    return navigationItemTaskAllowedNetsServiceFactory(allowedNetsServiceFactory, baseAllowedNets, true, tabData.navigationItemTaskData);
 }

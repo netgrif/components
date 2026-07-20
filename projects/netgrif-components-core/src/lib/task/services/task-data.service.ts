@@ -187,7 +187,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
                     }
                 } else if (dataGroupParentCaseId === this._safeTask.caseId
                     && parentTaskId !== this._safeTask.stringId
-                    && !this._taskContentService.referencedTaskAndCaseIds[dataGroupParentCaseId].includes(parentTaskId)) {
+                    && !this._taskContentService.referencedTaskAndCaseIds[dataGroupParentCaseId]?.includes(parentTaskId)) {
                     this._taskContentService.referencedTaskAndCaseIds[dataGroupParentCaseId].push(group.parentTaskId);
                 }
                 if (group.fields.length > 0 && !this._taskContentService.taskFieldsIndex[parentTaskId]) {
@@ -381,7 +381,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         }
         const taskIdsInRequest: Array<string> = Object.keys(request);
         for (const taskId of taskIdsInRequest) {
-            if (!Object.keys(this._taskContentService.taskFieldsIndex).includes(taskId)) {
+            if (!Object.keys(this._taskContentService.taskFieldsIndex)?.includes(taskId)) {
                 this._log.error(`Task id ${taskId} is not present in task fields index`);
                 return false;
             }
@@ -623,7 +623,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
     protected revertToPreviousValue(context: TaskSetDataRequestContext): void {
         this._safeTask.dataGroups.forEach(dataGroup => {
             dataGroup.fields.forEach(field => {
-                if (field.initialized && field.valid && Object.keys(context.previousValues).includes(field.stringId)) {
+                if (field.initialized && field.valid && Object.keys(context.previousValues)?.includes(field.stringId)) {
                     field.revertToPreviousValue();
                 }
             });

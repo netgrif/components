@@ -1,0 +1,16 @@
+<div class="modelerWrapper" id="modeler_area" fxFill fxLayout="column">
+    <mat-toolbar class="modelerToolbar" fxFlex="nogrow">
+        <nc-builder-control-panel></nc-builder-control-panel>
+    </mat-toolbar>
+    <div [ngSwitch]="controlPanelService.activeMode?.id" class="height-modeler">
+        <nc-builder-simulation-mode *ngSwitchCase="'simulation'"></nc-builder-simulation-mode>
+        <nc-builder-data-mode *ngSwitchCase="'data'"></nc-builder-data-mode>
+        <nc-builder-role-mode *ngSwitchCase="'roles'"></nc-builder-role-mode>
+        <nc-builder-actions-mode *ngSwitchCase="'actions'"></nc-builder-actions-mode>
+        <nc-builder-i18n-mode *ngSwitchCase="'i18n'"></nc-builder-i18n-mode>
+        <nc-builder-history-mode *ngSwitchCase="'history'"></nc-builder-history-mode>
+        <nc-builder-task-mode *ngSwitchCase="'task'"></nc-builder-task-mode>
+        <nc-builder-edit-mode *ngSwitchDefault></nc-builder-edit-mode>
+    </div>
+
+</div>

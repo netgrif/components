@@ -49,7 +49,8 @@
             "finish": "Finish",
             "cancel": "Cancel",
             "noData": "This task has no data. Finish to continue.",
-            "redirecting": "Redirecting..."
+            "redirecting": "Redirecting...",
+            "closeTab": "Close"
         },
         "footer": {
             "defaultText": "NETGRIF, s.r.o. © 2022"
@@ -70,7 +71,8 @@
         "import-net": {
             "upload": "Upload model",
             "choose": "Choose a process file",
-            "done": "Done"
+            "done": "Done",
+            "search": "Search for process"
         },
         "new-case": {
             "case": "New Case",
@@ -346,7 +348,9 @@
             "visualID": "Visual ID",
             "title": "Title",
             "author": "Author",
-            "creationDate": "Creation date"
+            "creationDate": "Creation date",
+            "processIdentifier": "Process identifier",
+            "petriNetId": "Petri net ID"
         },
         "taskMeta": {
             "case": "Case",
@@ -467,7 +471,8 @@
             "deleteError": "Process could not be deleted",
             "uploadFailed": "Process file could not be uploaded.",
             "uploadSuccess": "Process file uploaded successfully"
-        }
+        },
+        "new-process": "Create new Process"
     },
     "legal": {
         "byClicking": "By clicking '{{buttonName}}',",

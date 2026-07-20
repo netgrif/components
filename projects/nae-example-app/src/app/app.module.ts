@@ -22,7 +22,7 @@ import {
     FrontActionModule, NAE_ASYNC_RENDERING_CONFIGURATION
 } from '@netgrif/components-core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
+import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
 import {DocumentationComponent} from './doc/documentation/documentation.component';
 import {NaeExampleAppConfigurationService} from './nae-example-app-configuration.service';
 import {AuthenticationComponent} from './doc/authentication/authentication.component';
@@ -90,7 +90,8 @@ import {
     FilterFieldTabViewComponent,
     FilterFieldTabbedCaseViewComponent,
     FilterFieldTabbedTaskViewComponent,
-    DialogComponentsModule
+    DialogComponentsModule,
+    BuilderModule
 } from '@netgrif/components';
 import {UserInviteComponent} from './doc/user-invite/user-invite.component';
 import {ExamplePortalCardComponent} from './doc/dashboard-example/piechart-card/example-portal-card.component';
@@ -129,6 +130,15 @@ import {
 } from './doc/single-tabbed-view/single-tabbed-task-view/single-tabbed-task-view.component';
 import {ImpersonationDemoComponent} from './doc/impersonation-demo/impersonation-demo.component';
 import { ChangePasswordComponent } from './doc/forms/change-password/change-password.component';
+import { NavigationDashboardExampleComponent } from './doc/navigation-dashboard-example/navigation-dashboard-example.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatListModule } from '@angular/material/list';
+import { TabbedTicketViewComponent } from './doc/tabbed-ticket-view/tabbed-ticket-view.component';
+import {BuilderTabsExampleComponent} from "./doc/builder-example/builder-tabs-example.component";
+import {
+    BuilderTabbedCaseViewComponent
+} from "./doc/builder-example/builder-tabbed-case-view/builder-tabbed-case-view.component";
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -189,7 +199,11 @@ export function HttpLoaderFactory(http: HttpClient) {
         SingleTabbedCaseViewComponent,
         SingleTabbedTaskViewComponent,
         BreadcrumbsExampleComponent,
-        ChangePasswordComponent
+        ChangePasswordComponent,
+        NavigationDashboardExampleComponent,
+        TabbedTicketViewComponent,
+        BuilderTabsExampleComponent,
+        BuilderTabbedCaseViewComponent
     ],
     imports: [
         BrowserModule,
@@ -242,7 +256,11 @@ export function HttpLoaderFactory(http: HttpClient) {
         RedirectComponentModule,
         FilterFieldContentModule,
         DialogComponentsModule,
-        FrontActionModule
+        FrontActionModule,
+        LayoutModule,
+        MatToolbarModule,
+        MatListModule,
+        BuilderModule
     ],
     providers: [{
         provide: ConfigurationService,

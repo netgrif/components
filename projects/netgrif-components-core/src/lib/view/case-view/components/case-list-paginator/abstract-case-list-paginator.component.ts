@@ -7,6 +7,8 @@ import {LoggerService} from '../../../../logger/services/logger.service';
 import {NAE_TAB_DATA} from '../../../../tabs/tab-data-injection-token/tab-data-injection-token';
 import {InjectedTabData} from '../../../../tabs/interfaces';
 import {AbstractDefaultCaseListComponent} from '../default-case-list/abstract-default-case-list.component';
+import {I18nFieldValue} from "../../../../data-fields/i18n-field/models/i18n-field-value";
+import {LanguageService} from "../../../../translate/language.service";
 
 @Component({
     selector: 'ncc-abstract-case-list-paginator',
@@ -20,10 +22,13 @@ export abstract class AbstractCaseListPaginatorComponent extends AbstractDefault
     public pageSizeOptions: number[] = [10, 20, 50, 100];
     @Input() public approval: boolean;
     @Input() public disabled: boolean;
+    @Input() emptyContentText: I18nFieldValue | undefined;
+    @Input() emptyContentIcon: string = 'storage';
 
     constructor(protected _caseViewService: CaseViewService,
                 protected _log: LoggerService,
                 @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData,
+                protected _selectLangService: LanguageService,
                 protected route?: ActivatedRoute) {
         super(_caseViewService, _log, injectedTabData, route);
         this._caseViewService.nextPagePagination(this.pageSize, this.pageIndex);
@@ -43,5 +48,27 @@ export abstract class AbstractCaseListPaginatorComponent extends AbstractDefault
 
     public trackById(_index: number, caze: Case) {
         return caze.stringId;
+    }
+
+    public hasEmptyContentText(): boolean {
+        const text: string = this.getEmptyContentText();
+        return text !== undefined && text !== '';
+    }
+
+    public getEmptyContentText(): string | undefined {
+        if (!this.emptyContentText) {
+            return undefined;
+        }
+        const lang: string = this._selectLangService.getLanguage();
+        const translations = this.emptyContentText.translations ?? {};
+        let resultText: string | undefined = translations[lang];
+        if (!resultText) {
+            resultText = this.emptyContentText.defaultValue;
+        }
+        return resultText;
+    }
+
+    public getEmptyContentIcon(): string {
+        return !!this.emptyContentIcon && this.emptyContentIcon !== '' ? this.emptyContentIcon : 'storage';
     }
 }

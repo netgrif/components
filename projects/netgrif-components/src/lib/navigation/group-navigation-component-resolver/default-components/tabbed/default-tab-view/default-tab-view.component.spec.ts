@@ -1,0 +1,232 @@
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {DefaultTabViewComponent} from './default-tab-view.component';
+import {NavigationComponentModule} from '../../../../navigation.module';
+import {
+    BooleanField,
+    EnumerationField,
+    FilterField,
+    FilterType,
+    GroupNavigationConstants,
+    I18nField,
+    LanguageService,
+    MultichoiceField,
+    NAE_NAVIGATION_ITEM_TASK_DATA,
+    OverflowService,
+    TaskRefField,
+    TestMockDependenciesModule,
+    TestViewService,
+    TextField,
+    TranslateLibModule,
+    AuthenticationModule,
+    ViewService,
+    StringCollectionField
+} from '@netgrif/components-core';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {RouterTestingModule} from "@angular/router/testing";
+
+describe('DefaultTabViewComponent', () => {
+    let component: DefaultTabViewComponent;
+    let fixture: ComponentFixture<DefaultTabViewComponent>;
+    let service: LanguageService;
+
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            imports: [
+                NavigationComponentModule,
+                TestMockDependenciesModule,
+                RouterTestingModule.withRoutes([]),
+                NoopAnimationsModule,
+                TranslateLibModule,
+                AuthenticationModule
+            ],
+            providers: [
+                {   provide: ViewService, useClass: TestViewService},
+                OverflowService,
+                {
+                    provide: NAE_NAVIGATION_ITEM_TASK_DATA,
+                    useValue: [
+                        {
+                            fields: [
+                                new EnumerationField(
+                                    "view_configuration_type",
+                                    '',"case_view",[],{visible: true}
+                                ),
+                                new I18nField(
+                                    GroupNavigationConstants.NAVIGATION_ENTRY_TITLE_FIELD_ID_SUFFIX,
+                                    '',
+                                    {defaultValue: 'Default translation', translations: {en: 'English translation'}},
+                                    {visible: true}
+                                ),
+                            ]
+                        },
+                        {
+                            fields: [
+                                new TaskRefField(
+                                    "view_configuration_form",
+                                    '',["thisistaskid"],{visible: true}
+                                ),
+                                new BooleanField(
+                                    GroupNavigationConstants.NAVIGATION_ENTRY_ICON_ENABLED_FIELD_ID_SUFFIX,
+                                    '',false,{visible: true}
+                                ),
+                                new TextField(
+                                    GroupNavigationConstants.ITEM_FIELD_ID_CASE_BANNED_PROCESS_CREATION,
+                                    '',"",{visible: true}
+                                ),
+                                new TextField(
+                                    GroupNavigationConstants.ITEM_FIELD_ID_CREATE_CASE_BUTTON_TITLE,
+                                    '',"",{visible: true}
+                                ),
+                                new TextField(
+                                    GroupNavigationConstants.ITEM_FIELD_ID_CREATE_CASE_BUTTON_ICON,
+                                    '',"",{visible: true}
+                                ),
+                                new BooleanField(
+                                    GroupNavigationConstants.ITEM_FIELD_ID_CASE_TITLE_IN_CREATION,
+                                    '',true,{visible: true}
+                                ),
+                                new EnumerationField(
+                                    GroupNavigationConstants.ITEM_FIELD_ID_CASE_VIEW_SEARCH_TYPE,
+                                    '',"fulltext",[],{visible: true}
+                                ),
+                                new BooleanField(
+                                    GroupNavigationConstants.ITEM_FIELD_ID_CASE_SHOW_MORE_MENU,
+                                    '',true,{visible: true}
+                                ),
+                                new BooleanField(
+                                    GroupNavigationConstants.ITEM_FIELD_ID_CASE_HEADERS_CHANGEABLE,
+                                    '',true,{visible: true}
+                                ),
+                                new MultichoiceField(
+                                    GroupNavigationConstants.ITEM_FIELD_ID_CASE_HEADERS_MODE,
+                                    '',["sort"],[],{visible: true}
+                                ),
+                                new BooleanField(
+                                    GroupNavigationConstants.ITEM_FIELD_ID_CASE_ALLOW_TABLE_MODE,
+                                    '',true,{visible: true}
+                                ),
+                                new EnumerationField(
+                                    GroupNavigationConstants.ITEM_FIELD_ID_CASE_DEFAULT_HEADERS_MODE,
+                                    '',"sort", [],{visible: true}
+                                ),
+                                new BooleanField(
+                                    GroupNavigationConstants.ITEM_FIELD_ID_USE_CASE_DEFAULT_HEADERS,
+                                    '',true, {visible: true}
+                                ),
+                                new TextField(
+                                    GroupNavigationConstants.ITEM_FIELD_ID_CASE_DEFAULT_HEADERS,
+                                    '','', {visible: true}
+                                ),
+                                new EnumerationField(
+                                    GroupNavigationConstants.ITEM_FIELD_ID_TASK_VIEW_SEARCH_TYPE,
+                                    '',"fulltext", [],{visible: true}
+                                ),
+                                new BooleanField(
+                                    GroupNavigationConstants.ITEM_FIELD_ID_TASK_SHOW_MORE_MENU,
+                                    '',true,{visible: true}
+                                ),
+                                new BooleanField(
+                                    GroupNavigationConstants.ITEM_FIELD_ID_TASK_HEADERS_CHANGEABLE,
+                                    '',true,{visible: true}
+                                ),
+                                new MultichoiceField(
+                                    GroupNavigationConstants.ITEM_FIELD_ID_TASK_HEADERS_MODE,
+                                    '',["sort"], [],{visible: true}
+                                ),
+                                new BooleanField(
+                                    GroupNavigationConstants.ITEM_FIELD_ID_TASK_ALLOW_TABLE_MODE,
+                                    '',true,{visible: true}
+                                ),
+                                new EnumerationField(
+                                    GroupNavigationConstants.ITEM_FIELD_ID_TASK_DEFAULT_HEADERS_MODE,
+                                    '',"sort", [],{visible: true}
+                                ),
+                                new BooleanField(
+                                    GroupNavigationConstants.ITEM_FIELD_ID_MERGE_FILTERS,
+                                    '',false,{visible: true}
+                                ),
+                                new FilterField(
+                                    GroupNavigationConstants.ITEM_FIELD_TASK_FILTER,
+                                    '',
+                                    '',
+                                    {
+                                        filterType: FilterType.TASK,
+                                        predicateMetadata: [],
+                                        searchCategories: []
+                                    },
+                                    [],
+                                    {visible: true},
+                                    '',
+                                    ''
+                                ),
+                                new BooleanField(
+                                    GroupNavigationConstants.ITEM_FIELD_ID_SHOW_CREATE_CASE_BUTTON,
+                                    '',true,{visible: true}
+                                ),
+                                new FilterField(
+                                    GroupNavigationConstants.ITEM_FIELD_CASE_FILTER,
+                                    '',
+                                    '',
+                                    {
+                                        filterType: FilterType.CASE,
+                                        predicateMetadata: [],
+                                        searchCategories: []
+                                    },
+                                    [],
+                                    {visible: true},
+                                    '',
+                                    ''
+                                ),
+                                new I18nField(
+                                    GroupNavigationConstants.ITEM_FIELD_ID_CASE_EMPTY_CONTENT_TEXT,
+                                    '',
+                                    '',
+                                    {visible: true}
+                                ),
+                                new TextField(
+                                    GroupNavigationConstants.ITEM_FIELD_ID_CASE_EMPTY_CONTENT_ICON,
+                                    '',
+                                    '',
+                                    {visible: true}
+                                ),
+                                new StringCollectionField(
+                                    GroupNavigationConstants.ITEM_FIELD_CASE_ALLOWED_NETS,
+                                    '',
+                                    [],
+                                    {visible: true}
+                                ),
+                                new StringCollectionField(
+                                    GroupNavigationConstants.ITEM_FIELD_TASK_ALLOWED_NETS,
+                                    '',
+                                    [],
+                                    {visible: true}
+                                ),
+                                new BooleanField(
+                                    GroupNavigationConstants.ITEM_FIELD_ID_CASE_ALLOW_EXPORT,
+                                    '',true,{visible: true}
+                                ),
+                            ]
+                        }
+                    ]
+                }
+            ]
+        })
+            .compileComponents();
+        service = TestBed.inject(LanguageService);
+        service.setLanguage('en-US');
+    });
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(DefaultTabViewComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
+    });
+
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
+});

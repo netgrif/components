@@ -1,0 +1,40 @@
+.not-resizable {
+    resize: none;
+}
+
+.editor-area-height-constraints {
+    height: 600px;
+}
+
+mat-sidenav-content {
+    background: white;
+}
+
+.full-size-editor {
+    .editor-container {
+        height: calc(100vh - 100px);
+    }
+    height: calc(100vh - 157px);
+    border: 1px solid #0000001f;
+    border-radius: 4px;
+}
+
+#description {
+    position: fixed;
+    z-index: 999;
+    max-height: calc(100vh + 100px);
+    min-width: 112px;
+    left: 50px;
+    top: 250px;
+    max-width: 500px;
+    min-height: 64px;
+}
+
+#description-content {
+    position: relative;
+}
+
+
+.mat-action-row {
+    padding: 4px 16px 4px 16px;
+}

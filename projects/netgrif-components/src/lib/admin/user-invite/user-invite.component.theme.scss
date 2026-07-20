@@ -1,0 +1,7 @@
+@mixin user-invite-typography($typography-config) {
+    .user-invite-container {
+        font: {
+            family: unquote(map-get($typography-config, font-family));
+        }
+    }
+}

@@ -1,0 +1,18 @@
+<div class="description-card" #descriptionCard>
+    <mat-card *ngIf="descriptionVisible" tabindex="0" class="description-tooltip">
+        <mat-card-header fxLayout="row" fxLayoutAlign="start center">
+            <b fxFlex>{{action.header}}</b>
+            <button mat-icon-button color="warn" (click)="closeDescription()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-card-header>
+        <mat-card-content >
+            <div [innerHTML]="action.description"></div>
+            <br>
+            <b>Example:</b>
+            <div class="code">
+                <code class="code-example">{{action.example}}</code>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

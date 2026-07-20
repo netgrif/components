@@ -1,0 +1,27 @@
+<div fxLayout="column" *ngFor="let dataVariable of model.getDataSet(); let i = index">
+<!--    @defer (on viewport) {-->
+        <div>
+            <h3 class="margin-none">{{dataVariable.title.value}} [{{dataVariable.id}}]</h3>
+            <nc-builder-i18n-field [field]="dataVariable.title" [name]="'Title'" [translation]="translation"></nc-builder-i18n-field>
+            <nc-builder-i18n-field [field]="dataVariable.placeholder" [name]="'Placeholder'" [translation]="translation"></nc-builder-i18n-field>
+            <nc-builder-i18n-field [field]="dataVariable.desc" [name]="'Description'" [translation]="translation"></nc-builder-i18n-field>
+            <nc-builder-i18n-field *ngIf="isI18nField(dataVariable)" [field]="dataVariable.init" [name]="'Init'" [translation]="translation"></nc-builder-i18n-field>
+            <div *ngIf="dataVariable.options?.length > 0">
+                <h4>Options:</h4>
+                <nc-builder-i18n-field *ngFor="let option of dataVariable.options" [field]="option.value"
+                                [name]="option.key" class="options" [translation]="translation"></nc-builder-i18n-field>
+            </div>
+            <div *ngIf="dataVariable.validations?.length > 0">
+                <h4>Validations:</h4>
+                <nc-builder-i18n-field *ngFor="let validation of dataVariable.validations" [field]="validation.message"
+                                [name]="validation.expression.expression" class="options" [translation]="translation"></nc-builder-i18n-field>
+            </div>
+            <mat-divider *ngIf="notLast(i)"></mat-divider>
+        </div>
+<!--    } @placeholder {-->
+<!--        <div>-->
+<!--            <h3 class="margin-none">{{dataVariable.title.value}} [{{dataVariable.id}}]</h3>-->
+<!--            <mat-spinner></mat-spinner>-->
+<!--        </div>-->
+<!--    }-->
+</div>

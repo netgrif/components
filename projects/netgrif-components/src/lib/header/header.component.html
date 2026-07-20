@@ -1,5 +1,5 @@
 <mat-card [ngClass]="{'padding-custom': headerService.headerState.mode === headerModeEnum.SORT}" class="header-color header-card">
-    <div fxLayout="row">
+    <div fxLayout="row" class="header-content-container">
         <div fxLayout="row" fxFlex="95" class="header-content-container flex-95" fxLayoutAlign="start center"
              [ngSwitch]="headerService.headerState.mode" *ngIf="!headerService.loading.isActive">
             <div *ngSwitchCase="headerModeEnum.SORT" fxFlex="100" fxLayout="row">
@@ -43,8 +43,8 @@
                     <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu  #headerMenu="matMenu" class="mat-menu-border-radius mat-menu-padding">
-                    <div *ngIf="headerService.headerState.mode !== headerModeEnum.EDIT && showSortButton">
-                        <button mat-menu-item
+                    <div *ngIf="headerService.headerState.mode !== headerModeEnum.EDIT">
+                        <button *ngIf="showSortButton" mat-menu-item
                                 [ngClass]="{'active-header-item': headerService.headerState.mode === headerModeEnum.SORT}"
                                 (click)="headerService.changeMode(headerModeEnum.SORT, false)">
                             <mat-icon>sort</mat-icon>

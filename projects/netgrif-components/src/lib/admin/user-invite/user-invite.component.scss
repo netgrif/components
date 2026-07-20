@@ -1,4 +1,4 @@
-@import "projects/netgrif-components/src/styles/core";
+@import "../../../../src/styles/core";
 
 .flex-class {
     flex: 1 1 auto;
@@ -18,6 +18,13 @@
     white-space: nowrap;
     border: 1px solid #eeeeee;
     background: white;
+}
+
+.user-assign-search {
+    width: 100%;
+    color: #64748B;
+    min-width: 250px;
+    border-radius: 6px;
 }
 
 .invited-card-font, .invited-card-font h1, .invited-card-font h2, .invited-card-font h3, .invited-card-font h4, .invited-card-font h5, .invited-card-font h6 {

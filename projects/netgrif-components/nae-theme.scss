@@ -15,6 +15,7 @@
 @import "src/lib/search/advanced-search/advanced-search-component/advanced-search.component.theme";
 @import "src/lib/search/search-component/search.component-theme.scss";
 @import "src/lib/dialog/dialog.theme";
+@import "src/lib/builder/builder.theme";
 
 @mixin nae-lib-theme($app-theme, $app-typography-config) {
     @include nae-typography($app-typography-config);
@@ -35,13 +36,26 @@
     @include advanced-search-theme($app-theme);
     @include advanced-search-icon($app-theme);
     @include dialog-theme($app-theme);
+    @include netgrif-builder-theme($app-theme);
 }
 
-.mat-tab-group.nae-tab-fill-height .mat-tab-body-wrapper {
+.mat-mdc-tab-group.nae-tab-fill-height .mat-mdc-tab-body-wrapper {
     flex: 1 1 100%;
 }
 
-.panel-expanded-spacing mat-expansion-panel.mat-expanded {
+.panel-expanded-spacing mat-expansion-panel.mat-mdc-expanded {
     margin-top: 0 !important;
     margin-bottom: 0 !important;
+}
+
+.mdc-button {
+    letter-spacing: normal;
+}
+
+.mat-mdc-card {
+    padding: 24px;
+}
+
+.mat-paginator {
+    background: transparent !important;
 }

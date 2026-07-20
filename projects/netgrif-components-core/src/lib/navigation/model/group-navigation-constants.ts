@@ -4,9 +4,9 @@ export enum GroupNavigationConstants {
      */
     GROUP_NAVIGATION_OUTLET = 'groupNavigation',
     /**
-     * Name of the router param that is used to provide information about the selected filter to the group navigation view component
+     * Name of the router param that is used to provide information about the selected item to the group navigation view component
      */
-    GROUP_NAVIGATION_ROUTER_PARAM = 'filterCaseId',
+    GROUP_NAVIGATION_ROUTER_PARAM = 'itemCaseId',
     /**
      * Field id, that contains the tab name of the navigation item.
      */
@@ -19,11 +19,6 @@ export enum GroupNavigationConstants {
      * Text field id, that contains the id of the used material icon.
      */
     NAVIGATION_ENTRY_ICON_FIELD_ID_SUFFIX = 'tab_icon',
-
-    /**
-     * TaskRef field, that contains taskId of filter task
-     * */
-    ITEM_FIELD_ID_FILTER_TASKREF = 'current_filter_preview',
 
     /**
      * Text field id, that contains title of create case button
@@ -56,11 +51,6 @@ export enum GroupNavigationConstants {
     ITEM_FIELD_ID_MERGE_FILTERS = 'merge_filters',
 
     /**
-     * TaskRef field, that contains taskId of custom filter for task view
-     * */
-    ITEM_FIELD_ID_ADDITIONAL_FILTER_TASKREF = 'current_additional_filter_preview',
-
-    /**
      * Boolean field, that is true if the user wants to see more menu for case item in case view
      * */
     ITEM_FIELD_ID_CASE_SHOW_MORE_MENU = 'case_show_more_menu',
@@ -68,12 +58,12 @@ export enum GroupNavigationConstants {
     /**
      * Boolean field, that is true if no input for title in case creation is shown
      * */
-    ITEM_FIELD_ID_CASE_TITLE_IN_CREATION = 'case_require_title_in_creation',
+    ITEM_FIELD_ID_CASE_TITLE_IN_CREATION = 'require_title_in_creation',
 
     /**
      * Text field, that contains banned processes in case creation as a value
      * */
-    ITEM_FIELD_ID_CASE_BANNED_PROCESS_CREATION = 'case_banned_nets_in_creation',
+    ITEM_FIELD_ID_CASE_BANNED_PROCESS_CREATION = 'banned_nets_in_creation',
 
     /**
      * Boolean field, that is true if the user wants to see more menu for task item in task view
@@ -106,9 +96,30 @@ export enum GroupNavigationConstants {
     ITEM_FIELD_ID_CASE_HEADERS_CHANGEABLE = 'case_is_header_mode_changeable',
 
     /**
+    * I18nString field containing text about empty case-view's content
+    */
+    ITEM_FIELD_ID_CASE_EMPTY_CONTENT_TEXT = 'case_empty_content_text',
+
+    /**
+     * Text field with icon for empty case-view's content
+     */
+    ITEM_FIELD_ID_CASE_EMPTY_CONTENT_ICON = 'case_empty_content_icon',
+
+
+    /**
      * MultichoiceMap field, that contains selected header modes for task view as a value
      * */
     ITEM_FIELD_ID_TASK_HEADERS_MODE = 'task_headers_mode',
+
+    /**
+     * I18nString field containing text about empty task-view's content
+     */
+    ITEM_FIELD_ID_TASK_EMPTY_CONTENT_TEXT = 'task_empty_content_text',
+
+    /**
+     * Text field with icon for empty task-view's content
+     */
+    ITEM_FIELD_ID_TASK_EMPTY_CONTENT_ICON = 'task_empty_content_icon',
 
     /**
      * Boolean field, that is true if table mode can be applied in task view
@@ -179,5 +190,65 @@ export enum GroupNavigationConstants {
      * CaseField containing stringIds of child instances of process preference_item
      * */
     ITEM_FIELD_ID_CHILD_ITEM_IDS = 'childItemIds',
+
+    /**
+     * Boolean field, that is true if item contains view, that should be automatically opened.
+     * */
+    ITEM_FIELD_ID_IS_AUTO_SELECT = 'is_auto_select',
+
+    /**
+     * Boolean field, that is true if single task view should show header.
+     * */
+    ITEM_FIELD_SHOW_PAGE_HEADER = 'show_page_header',
+
+    /**
+     * Boolean field, that is true if single task view should show footer.
+     * */
+    ITEM_FIELD_SHOW_PAGE_FOOTER = 'show_page_footer',
+
+    /**
+     * Filter field for case view
+     */
+    ITEM_FIELD_CASE_FILTER = "case_filter",
+
+    /**
+     * Filter field for task view
+     */
+    ITEM_FIELD_TASK_FILTER = "task_filter",
+
+    /**
+     * String collection field, that contains allowed nets
+     */
+    ITEM_FIELD_CASE_ALLOWED_NETS = "case_allowed_nets",
+
+    /**
+     * Boolean field, that is true if all nets are allowed
+     */
+    ITEM_FIELD_CASE_ALL_ALLOWED_NETS = "case_all_allowed_nets",
+
+    /**
+     * Boolean field, that is true when the allowed nets are inherited from base view
+     */
+    ITEM_FIELD_CASE_INHERIT_ALLOWED_NETS = "case_inherit_allowed_nets",
+
+    /**
+     * String collection field, that contains allowed nets
+     */
+    ITEM_FIELD_TASK_ALLOWED_NETS = "task_allowed_nets",
+
+    /**
+     * Boolean field, that is true if all nets are allowed
+     */
+    ITEM_FIELD_TASK_ALL_ALLOWED_NETS = "task_all_allowed_nets",
+
+    /**
+     * Boolean field, that is true when the allowed nets are inherited from base view
+     */
+    ITEM_FIELD_TASK_INHERIT_ALLOWED_NETS = "task_inherit_allowed_nets",
+
+    /**
+     * Transition ID, which contains all configuration data
+     */
+    ITEM_TRANS_ID_ALL_DATA = "all_menu_data",
 
 }

@@ -1,0 +1,14 @@
+<div class="control" style="display: flex; flex-direction: row; justify-content: start; align-items: center">
+<!-- TODO: panel height: 40px, button height: 28px, margin (l,r): 1px -->
+    <nc-builder-control-panel-mode *ngFor="let mode of getRegistryItems()"
+                            [mode]="mode"></nc-builder-control-panel-mode>
+
+    <mat-divider [vertical]="true" *ngIf="globalToolRegistry.getToolPortals()?.length > 0" class="style-fix"></mat-divider>
+
+    <ng-template *ngFor="let portal of globalToolRegistry.getToolPortals()" [cdkPortalOutlet]="portal"></ng-template>
+
+    <mat-divider [vertical]="true" *ngIf="controlPanelService.activeMode?.tools?.getToolPortals()?.length > 0" class="style-fix"></mat-divider>
+
+    <ng-template *ngFor="let portal of controlPanelService.activeMode?.tools?.getToolPortals()"
+                 [cdkPortalOutlet]="portal"></ng-template>
+</div>

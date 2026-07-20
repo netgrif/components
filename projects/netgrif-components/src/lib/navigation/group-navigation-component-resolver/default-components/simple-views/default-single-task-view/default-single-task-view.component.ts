@@ -1,0 +1,94 @@
+import {Component, Inject, Optional, Type} from '@angular/core';
+import {
+    AbstractSingleTaskViewComponent,
+    AllowedNetsService,
+    AllowedNetsServiceFactory, BaseAllowedNetsService,
+    ChangedFieldsService, DataGroup, extractFieldValueFromData, FilterExtractionService,
+    FinishTaskService,
+    FrontActionService, GroupNavigationConstants,
+    NAE_BASE_FILTER, NAE_NAVIGATION_ITEM_TASK_DATA,
+    NAE_TASK_OPERATIONS,
+    NAE_VIEW_ID_SEGMENT, navigationItemTaskAllowedNetsServiceFactory, navigationItemTaskFilterFactory,
+    RedirectService,
+    SearchService,
+    SubjectTaskOperations,
+    TaskDataService,
+    TaskEventService,
+    TaskRequestStateService,
+    TaskViewService,
+    ViewIdService,
+    FilterType,
+    BaseFilter
+} from "@netgrif/components-core";
+import {ActivatedRoute} from "@angular/router";
+import {AsyncPipe} from "@angular/common";
+
+function baseFilterFactory(extractionService: FilterExtractionService,
+                           activatedRoute?: ActivatedRoute,
+                           navigationItemTaskData?: Array<DataGroup>): BaseFilter {
+    return navigationItemTaskFilterFactory(extractionService, GroupNavigationConstants.ITEM_FIELD_TASK_FILTER, activatedRoute,
+        navigationItemTaskData, undefined, FilterType.TASK);
+}
+
+function allowedNetsFactory(factory: AllowedNetsServiceFactory,
+                            baseAllowedNets: BaseAllowedNetsService,
+                            navigationItemTaskData?: Array<DataGroup>): AllowedNetsService {
+    return navigationItemTaskAllowedNetsServiceFactory(factory, baseAllowedNets, false, navigationItemTaskData);
+}
+
+@Component({
+    selector: 'nc-default-single-task-view',
+    templateUrl: './default-single-task-view.component.html',
+    styleUrls: ['./default-single-task-view.component.scss'],
+    providers: [
+        TaskViewService,
+        SearchService,
+        RedirectService,
+        ChangedFieldsService,
+        {
+            provide: NAE_BASE_FILTER,
+            useFactory: baseFilterFactory,
+            deps: [FilterExtractionService, ActivatedRoute, [new Optional(), NAE_NAVIGATION_ITEM_TASK_DATA]]
+        },
+        {provide: NAE_VIEW_ID_SEGMENT, useValue: 'publicTaskView'},
+        {provide: AllowedNetsServiceFactory, useClass: AllowedNetsServiceFactory},
+        {
+            provide: AllowedNetsService,
+            useFactory: allowedNetsFactory,
+            deps: [AllowedNetsServiceFactory, BaseAllowedNetsService, [new Optional(), NAE_NAVIGATION_ITEM_TASK_DATA]]
+        },
+        ViewIdService,
+        TaskDataService,
+        FrontActionService,
+        FinishTaskService,
+        TaskRequestStateService,
+        TaskEventService,
+        {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
+        AsyncPipe
+    ]
+})
+export class DefaultSingleTaskViewComponent extends AbstractSingleTaskViewComponent {
+
+    hidePanelHeader = true;
+    hideActionRow = false;
+    showPageHeader: boolean = true;
+    showPageFooter: boolean = false;
+    actionRowJustifyContent: "center" = "center";
+    showFinishButton: boolean = true;
+
+    constructor(taskViewService: TaskViewService,
+                @Optional() @Inject(NAE_NAVIGATION_ITEM_TASK_DATA) protected _navigationItemTaskData: Array<DataGroup>,
+                activatedRoute: ActivatedRoute) {
+        super(taskViewService, activatedRoute);
+        if (!!this._navigationItemTaskData) {
+            this.showPageHeader = extractFieldValueFromData<boolean>(this._navigationItemTaskData,
+                GroupNavigationConstants.ITEM_FIELD_SHOW_PAGE_HEADER) ?? this.showPageHeader;
+            this.showPageFooter = extractFieldValueFromData<boolean>(this._navigationItemTaskData,
+                GroupNavigationConstants.ITEM_FIELD_SHOW_PAGE_FOOTER) ?? this.showPageFooter;
+        }
+    }
+
+    public getFinishTitle(): string {
+        return (this.finishTitle === '' || this.finishTitle) ? this.finishTitle : 'tasks.view.finish';
+    }
+}

@@ -4,7 +4,22 @@
     "assets": [
         "./src/assets",
         "**/*theme.scss",
-        "./nae-typography.scss"
+        "./nae-typography.scss",
+        {
+            "glob": "**/*",
+            "input": "node_modules/monaco-editor/min",
+            "output": "assets/monaco/min"
+        },
+        {
+            "glob": "**/*",
+            "input": "node_modules/monaco-editor/min-maps",
+            "output": "assets/monaco/min-maps"
+        },
+        {
+            "glob": "**/*",
+            "input": "./src/assets/fonts",
+            "output": "assets/fonts"
+        }
     ],
     "lib": {
         "entryFile": "src/public-api.ts"

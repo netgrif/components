@@ -13,7 +13,7 @@ import {MaterialModule} from '../../../material/material.module';
 import {Component, Inject} from '@angular/core';
 import {AbstractMultiUserAssignComponent} from "./abstract-multi-user-assign.component";
 import {UserValue} from "../../../data-fields/user-field/models/user-value";
-import {expect} from "@angular/flex-layout/_private-utils/testing";
+import {expect} from "@ngbracket/ngx-layout/_private-utils/testing";
 
 describe('AbstractMultiUserAssignComponent', () => {
     let component: TestUserComponent;

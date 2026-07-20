@@ -54,21 +54,17 @@ describe('NewCaseDialogComponent', () => {
         declarations: [
             NewCaseDialogComponent,
         ],
-    }).overrideModule(BrowserDynamicTestingModule, {
-        set: {
-            entryComponents: [
-                ErrorSnackBarComponent,
-                SuccessSnackBarComponent
-            ]
-        }
-    })
-    .compileComponents();
+    }).compileComponents();
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(NewCaseDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    TestBed.resetTestingModule();
   });
 
   it('should create', () => {

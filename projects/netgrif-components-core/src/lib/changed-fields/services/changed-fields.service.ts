@@ -30,7 +30,7 @@ export class ChangedFieldsService implements OnDestroy {
     public parseChangedFieldsByCaseAndTaskIds(caseId: string, taskIds: Array<string>,
                                               changedFieldsMap: ChangedFieldsMap): Array<ChangedFields> {
         const changedFields: Array<ChangedFields> = [];
-        const filteredTaskIds: Array<string> = Object.keys(changedFieldsMap[caseId]).filter(taskId => taskIds.includes(taskId));
+        const filteredTaskIds: Array<string> = Object.keys(changedFieldsMap[caseId]).filter(taskId => taskIds?.includes(taskId));
         filteredTaskIds.forEach(taskId => {
             changedFields.push(changedFieldsMap[caseId][taskId]);
         });

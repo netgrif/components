@@ -2,7 +2,7 @@ import {AbstractGroupNavigationComponentResolverComponent} from './abstract-grou
 import {Component, Injector} from '@angular/core';
 import {LoggerService} from '../../logger/services/logger.service';
 import {GroupNavigationComponentResolverService} from './group-navigation-component-resolver.service';
-import {ActivatedRoute, Router, RouterModule} from '@angular/router';
+import {ActivatedRoute, convertToParamMap, Router, RouterModule} from '@angular/router';
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {MaterialModule} from '../../material/material.module';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
@@ -11,6 +11,8 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {TestGroupNavigationComponentResolverService} from './group-navigation-component-resolver.service.spec';
+import {DataGroup} from "../../resources/interface/data-groups";
+import {of, Observable} from "rxjs";
 
 describe('AbstractGroupNavigationComponentResolverComponent', () => {
     let component: TestAbstractGroupNavigationComponentResolverComponent;
@@ -23,11 +25,19 @@ describe('AbstractGroupNavigationComponentResolverComponent', () => {
                 TranslateLibModule,
                 HttpClientTestingModule,
                 NoopAnimationsModule,
-                RouterModule.forRoot([], { relativeLinkResolution: 'legacy' })
+                RouterModule.forRoot([])
             ],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: GroupNavigationComponentResolverService, useClass: TestGroupNavigationComponentResolverService}
+                {provide: GroupNavigationComponentResolverService, useClass: TestGroupNavigationComponentResolverService},
+                {
+                    provide: ActivatedRoute,
+                    useValue: {
+                        snapshot: {
+                            paramMap: convertToParamMap({itemCaseId: 'thisIsEncodedCaseId'})
+                        }
+                    }
+                }
             ],
             declarations: [
                 TestAbstractGroupNavigationComponentResolverComponent,
@@ -49,7 +59,6 @@ describe('AbstractGroupNavigationComponentResolverComponent', () => {
         expect(component).toBeTruthy();
     });
 });
-
 
 @Component({
     selector: 'ncc-test-group-navigation',
