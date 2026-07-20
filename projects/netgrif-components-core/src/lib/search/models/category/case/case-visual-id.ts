@@ -35,7 +35,8 @@ export class CaseVisualId extends NoConfigurationCategory<string> {
     }
 
     serializeClass(): Categories | string {
-        return Categories.CASE_VISUAL_ID;
+        return "visualId";
+        // return Categories.CASE_VISUAL_ID; todo 2466
     }
 
     protected get pfqlKeywords(): Array<string> {

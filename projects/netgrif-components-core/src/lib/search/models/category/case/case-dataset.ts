@@ -51,7 +51,7 @@ interface Datafield {
 export class CaseDataset extends Category<Datafield> implements AutocompleteOptions {
 
     private static readonly _i18n = 'search.category.case.dataset';
-    protected static DISABLED_TYPES = [FieldTypeResource.BOOLEAN.valueOf(), FieldTypeResource.TASK_REF.valueOf(),
+    protected static DISABLED_TYPES = [FieldTypeResource.BUTTON.valueOf(), FieldTypeResource.TASK_REF.valueOf(),
         FieldTypeResource.CASE_REF.valueOf(), FieldTypeResource.CASE_FILTER.valueOf(), FieldTypeResource.TASK_FILTER.valueOf(),
         FieldTypeResource.PROCESS_FILTER.valueOf()];
     protected static readonly DATAFIELD_METADATA = 'datafield';

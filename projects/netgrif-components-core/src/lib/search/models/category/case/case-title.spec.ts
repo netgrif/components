@@ -74,9 +74,9 @@ describe('CaseTitle', () => {
         });
     });
 
-    it('should use keyword index', () => {
+    it('should generate pfql query', () => {
         configureCategory(category, operatorService, Substring, ['foo']);
         const predicate = category.generatePredicate(['input']);
-        expect(predicate.query.value.includes(`${CaseSearch.TITLE}${deps.searchIndexResolver.KEYWORD}`)).toBeTrue();
+        expect(predicate.query.value.includes(`cases: ${CaseSearch.TITLE} contains 'input'`)).toBeTrue();
     });
 });

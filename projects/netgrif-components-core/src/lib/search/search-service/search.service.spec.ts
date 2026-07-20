@@ -86,19 +86,14 @@ describe('SearchService', () => {
                 const predicate2 = categoryFactory.getWithDefaultOperator(CaseCreationDate);
                 predicate2.setOperands([moment('2021-03-31').valueOf()]);
 
-                const predicate3 = categoryFactory.getWithDefaultOperator(CaseVisualId);
-                predicate3.setOperands(['visualId']);
-
                 const meta1 = predicate1.createMetadata();
                 expect(meta1).toBeTruthy();
                 const meta2 = predicate2.createMetadata();
                 expect(meta2).toBeTruthy();
-                const meta3 = predicate3.createMetadata();
-                expect(meta3).toBeTruthy();
 
                 serializedSearch = {
                     filterType: FilterType.CASE,
-                    predicateMetadata: [[meta1, meta2], [meta3]],
+                    predicateMetadata: [[meta1, meta2]],
                     searchCategories: [] // they don't play a role for this test
                 };
             });

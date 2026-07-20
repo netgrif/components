@@ -3,7 +3,6 @@ import {OperatorService} from '../../../operator-service/operator.service';
 import {OperatorResolverService} from '../../../operator-service/operator-resolver.service';
 import {configureCategory} from '../../../../utility/tests/utility/configure-category';
 import {Equals} from '../../operator/equals';
-import {Categories} from '../categories';
 import {Operators} from '../../operator/operators';
 import {TestBed} from '@angular/core/testing';
 import {Substring} from '../../operator/substring';
@@ -47,7 +46,7 @@ describe('CaseVisualId', () => {
         const metadata = category.createMetadata();
         expect(metadata).toBeTruthy();
         expect(metadata.values).toEqual(['foo']);
-        expect(metadata.category).toBe(Categories.CASE_VISUAL_ID);
+        expect(metadata.category).toBe("visualId");
         expect(metadata.configuration?.operator).toBe(Operators.EQUALS);
     });
 
