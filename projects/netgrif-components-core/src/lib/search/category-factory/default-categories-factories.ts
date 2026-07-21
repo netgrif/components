@@ -8,7 +8,6 @@ import {CaseCreationDate} from '../models/category/case/case-creation-date';
 import {CaseDataset} from '../models/category/case/case-dataset';
 import {TaskAssignee} from '../models/category/task/task-assignee';
 import {TaskProcess} from '../models/category/task/task-process';
-import {TaskRole} from '../models/category/task/task-role';
 import {TaskTask} from '../models/category/task/task-task';
 import {CaseCreationDateTime} from '../models/category/case/case-creation-date-time';
 
@@ -49,8 +48,7 @@ export function defaultCaseSearchCategoriesFactory(factory: CategoryFactory): Ar
  * caused by uncompleted Subjects. They should only be used to create new Category instances with the help of the
  * [duplicate()]{@link Category#duplicate} method.
  *
- * @returns an Array containing the default task search categories: {@link TaskAssignee}, {@link TaskTask}, {@link TaskProcess}
- * and {@link TaskRole}
+ * @returns an Array containing the default task search categories: {@link TaskAssignee}, {@link TaskTask} and {@link TaskProcess}
  *
  * @deprecated in 5.6.0 - Use the {@link NAE_DEFAULT_TASK_SEARCH_CATEGORIES} injection token instead
  */
@@ -59,7 +57,6 @@ export function defaultTaskSearchCategoriesFactory(factory: CategoryFactory): Ar
         factory.get(TaskAssignee),
         factory.get(TaskTask),
         factory.get(TaskProcess),
-        factory.get(TaskRole),
     ];
     cats.forEach(cat => cat.destroy());
     return cats;

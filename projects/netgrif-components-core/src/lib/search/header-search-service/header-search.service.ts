@@ -10,7 +10,6 @@ import {SearchChangeDescription} from '../../header/models/user-changes/search-c
 import {HeaderColumnType} from '../../header/models/header-column';
 import {CaseMetaField} from '../../header/case-header/case-menta-enum';
 import {CategoryFactory} from '../category-factory/category-factory';
-import {CaseVisualId} from '../models/category/case/case-visual-id';
 import {Category} from '../models/category/category';
 import {CaseAuthor} from '../models/category/case/case-author';
 import {CaseCreationDate} from '../models/category/case/case-creation-date';
@@ -73,7 +72,6 @@ export class HeaderSearchService implements OnDestroy {
         this._columnToConfiguration = new Map<number, HeaderConfiguration>();
         this._typeToCategory = new Map<string, Category<any>>();
         [
-            {k: CaseMetaField.VISUAL_ID, v: CaseVisualId},
             {k: CaseMetaField.TITLE, v: CaseTitle},
             {k: CaseMetaField.CREATION_DATE, v: CaseCreationDate},
             {k: CaseMetaField.AUTHOR, v: CaseAuthor},

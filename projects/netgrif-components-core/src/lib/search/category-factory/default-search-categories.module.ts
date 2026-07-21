@@ -8,7 +8,6 @@ import {CaseAuthor} from '../models/category/case/case-author';
 import {TaskAssignee} from '../models/category/task/task-assignee';
 import {TaskTask} from '../models/category/task/task-task';
 import {TaskProcess} from '../models/category/task/task-process';
-import {TaskRole} from '../models/category/task/task-role';
 import {CaseCreationDateTime} from '../models/category/case/case-creation-date-time';
 import {CaseStringId} from '../models/category/case/case-string-id';
 
@@ -34,7 +33,6 @@ import {CaseStringId} from '../models/category/case/case-string-id';
                 TaskAssignee,
                 TaskTask,
                 TaskProcess,
-                TaskRole,
             ]
         }
     ]

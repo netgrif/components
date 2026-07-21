@@ -8,15 +8,12 @@ export enum Categories {
     CASE_CREATION_DATE_TIME = 'case_creation_date_time',
     CASE_DATASET = 'case_dataset',
     CASE_PROCESS = 'case_process',
-    CASE_ROLE = 'case_role',
     CASE_SIMPLE_DATASET = 'case_simple_dataset',
     CASE_TITLE = 'case_title',
-    // CASE_VISUAL_ID = 'case_visual_id', // todo 2466
     CASE_STRING_ID = 'case_string_id',
 
     // Task categories
     TASK_ASSIGNEE = 'task_assignee',
     TASK_PROCESS = 'task_process',
-    TASK_ROLE = 'task_role',
     TASK_TASK = 'task_task',
 }
