@@ -15,6 +15,7 @@ import { Equals } from '../../operator/equals';
 import { BehaviorSubject, Observable, of, ReplaySubject, Subscription } from 'rxjs';
 import { Category } from '../category';
 import { NotEquals } from '../../operator/not-equals';
+import { IsNull } from '../../operator/is-null';
 import { MoreThan } from '../../operator/more-than';
 import { LessThan } from '../../operator/less-than';
 import { InRange } from '../../operator/in-range';
@@ -168,7 +169,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
                     this._operatorService.getOperator(LessThan),
                     this._operatorService.getOperator(LessThanEqual),
                     this._operatorService.getOperator(InRange),
-                    // this._operatorService.getOperator(IsNull) todo 2466
+                    this._operatorService.getOperator(IsNull)
                 ];
             case FieldTypeResource.BOOLEAN.valueOf():
                 return [
@@ -180,7 +181,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
                 return [
                     this._operatorService.getOperator(Equals),
                     this._operatorService.getOperator(NotEquals),
-                    // this._operatorService.getOperator(IsNull) todo 2466
+                    this._operatorService.getOperator(IsNull)
                 ];
             case FieldTypeResource.DATE.valueOf():
                 return [
@@ -191,7 +192,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
                     this._operatorService.getOperator(LessThanDate),
                     this._operatorService.getOperator(LessThanEqualDate),
                     this._operatorService.getOperator(InRangeDate),
-                    // this._operatorService.getOperator(IsNull) todo 2466
+                    this._operatorService.getOperator(IsNull)
                 ];
             case FieldTypeResource.DATE_TIME.valueOf():
                 return [
@@ -201,7 +202,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
                     this._operatorService.getOperator(LessThanDateTime),
                     this._operatorService.getOperator(LessThanEqualDateTime),
                     this._operatorService.getOperator(InRangeDateTime),
-                    // this._operatorService.getOperator(IsNull) todo 2466
+                    this._operatorService.getOperator(IsNull)
                 ];
             default:
                 return [
@@ -212,8 +213,8 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
                     this._operatorService.getOperator(MoreThanEqual),
                     this._operatorService.getOperator(LessThan),
                     this._operatorService.getOperator(LessThanEqual),
-                    // this._operatorService.getOperator(IsNull), todo 2466
-                    // this._operatorService.getOperator(Like)
+                    this._operatorService.getOperator(IsNull)
+                    // this._operatorService.getOperator(Like) todo 2466
                 ];
         }
     }
@@ -263,10 +264,9 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
 
     protected generateQuery(userInput: Array<unknown>): Query {
         let queryGenerationStrategy;
-        // todo 2466 remove if
-        /*if (this.isSelectedOperator(IsNull)) {
+        if (this.isSelectedOperator(IsNull)) {
             queryGenerationStrategy = (d, _) => this.isNullOperatorQueryGenerationStrategy(d);
-        } else*/ if (this.inputType === SearchInputType.AUTOCOMPLETE) {
+        } else if (this.inputType === SearchInputType.AUTOCOMPLETE) {
             queryGenerationStrategy = (d, ui) => this.standardQueryGenerationStrategy(d, ui[0], false);
         } else {
             queryGenerationStrategy = (d, ui) => this.standardQueryGenerationStrategy(d, ui);
@@ -283,11 +283,11 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
         return query.addPrefixAndGet(ResourceTypeQueryPrefix.CASES);
     }
 
-    // todo 2466
-    // protected isNullOperatorQueryGenerationStrategy(datafield: Datafield): Query {
-    //     const constraint = this.generateNetConstraint(datafield);
-    //     return (this._operatorService.getOperator(IsNull) as IsNull).createQueryWithConstraint(this.pfqlKeywords, constraint);
-    // }
+    protected isNullOperatorQueryGenerationStrategy(datafield: Datafield): Query {
+        const constraint = this.generateNetConstraint(datafield);
+        return (this._operatorService.getOperator(IsNull) as IsNull).createQueryWithConstraint(this.pfqlKeywords, constraint)
+            .addPrefixAndGet(ResourceTypeQueryPrefix.CASES);
+    }
 
     protected generateNetConstraint(datafield: Datafield): Query {
         return this._processCategory.generatePredicate([[datafield.netIdentifier]]).query;

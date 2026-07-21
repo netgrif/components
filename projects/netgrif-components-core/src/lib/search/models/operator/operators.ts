@@ -8,7 +8,7 @@ export enum Operators {
     IN_RANGE = 'in_range',
     IN_RANGE_DATE = 'in_range_date',
     IN_RANGE_DATE_TIME = 'in_range_date_time',
-    // IS_NULL = 'is_null', todo 2466
+    IS_NULL = 'is_null',
     LESS_THAN = 'less_than',
     LESS_THAN_DATE = 'less_than_date',
     LESS_THAN_DATE_TIME = 'less_than_date_time',

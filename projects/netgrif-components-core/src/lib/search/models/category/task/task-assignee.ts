@@ -18,7 +18,7 @@ export class TaskAssignee extends NoConfigurationUserAutocompleteCategory {
             [
                 operators.getOperator(Equals),
                 operators.getOperator(NotEquals),
-                // operators.getOperator(IsNull) todo 2466 impossible in PFQL
+                operators.getOperator(IsNull)
             ],
             `${TaskAssignee._i18n}.name`,
             logger,

@@ -78,6 +78,7 @@ export class Query {
         const combinedQuery = realQueries
             .map(q => q.valueWithoutPrefix)
             .filter(q => q !== '')
+            .map(q => '(' + q + ')')
             .join(` ${operator} `);
         const fullValue = commonPrefix ? commonPrefix + Query.PREFIX_DELIMETER + combinedQuery : combinedQuery;
         return new Query(fullValue, commonPrefix);

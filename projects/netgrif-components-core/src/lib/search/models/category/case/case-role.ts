@@ -12,7 +12,7 @@ import {ResourceTypeQueryPrefix} from "../resource-type-query-prefix";
 
 export class CaseRole extends CaseNetAttributeAutocompleteCategory {
 
-    // todo 2466 impossible in pfql
+    // todo 2466 impossible in pfql - prec
 
     private static readonly _i18n = 'search.category.case.role';
 
