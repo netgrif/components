@@ -1,9 +1,10 @@
-import {Injectable, Injector} from '@angular/core';
+import {Injectable, Injector, NgZone, Optional, Inject} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {CanvasConfiguration} from '@netgrif/petri.svg';
 import {Arc, ArcType, NodeElement, Place, Transition} from '@netgrif/petriflow';
 import {PetriflowCanvasService, PetriflowNode} from '@netgrif/petriflow.svg';
+import {InjectedTabData, NAE_TAB_DATA} from '@netgrif/components-core';
 import {PanzoomOptions} from '@panzoom/panzoom';
 import {BehaviorSubject} from 'rxjs';
 import {ChangedArc} from '../../dialogs/dialog-arc-edit/changed-arc';
@@ -76,9 +77,11 @@ export class EditModeService extends CanvasModeService<CanvasTool> {
         protected _actionMode: ActionsModeService,
         protected _actionsMasterDetail: ActionsMasterDetailService,
         protected _processActionsTool: ProcessActionsTool,
-        protected _builderIntegrationService: BuilderIntegrationService
+        protected _builderIntegrationService: BuilderIntegrationService,
+        private _ngZone: NgZone,
+        @Optional() @Inject(NAE_TAB_DATA) _tabData?: InjectedTabData
     ) {
-        super(_arcFactory, modelService, _canvasService);
+        super(_arcFactory, modelService, _canvasService, _tabData);
         this.mode = new Mode(
             'modeler',
             new ControlPanelButton(
@@ -90,7 +93,7 @@ export class EditModeService extends CanvasModeService<CanvasTool> {
             this._tutorialService.modeler,
             this._parentInjector
         );
-        const context = new CanvasToolContext(modelService, dialog, this, router, transitionService, _actionMode, _actionsMasterDetail, _builderModeService, _processActionsTool, _builderIntegrationService);
+        const context = new CanvasToolContext(modelService, dialog, this, router, transitionService, _actionMode, _actionsMasterDetail, _builderModeService, _processActionsTool, _builderIntegrationService, this._ngZone);
         this.switchTools = new ToolGroup<CanvasTool>(
             new ClearModelTool(context),
             new ResetPositionAndZoomTool(context),

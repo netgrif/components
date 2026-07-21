@@ -1,9 +1,10 @@
-import {Injectable, Injector} from '@angular/core';
+import {Injectable, Injector, NgZone, Optional, Inject} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {Arc, BasicSimulation, ImportUtils, PetriNet, Place, Transition} from '@netgrif/petriflow';
 import {PetriflowCanvasService} from '@netgrif/petriflow.svg';
 import {BehaviorSubject} from 'rxjs';
+import {InjectedTabData, NAE_TAB_DATA} from '@netgrif/components-core';
 import {TutorialService} from '../../tutorial/tutorial-service';
 import {ToolGroup} from '../control-panel/tools/tool-group';
 import {ArcFactory} from '../edit-mode/domain/arc-builders/arc-factory.service';
@@ -42,8 +43,10 @@ export class SimulationModeService extends CanvasModeService<SimulationTool> {
         transitionService: SelectedTransitionService,
         private tutorialService: TutorialService,
         private parentInjector: Injector,
+        private _ngZone: NgZone,
+        @Optional() @Inject(NAE_TAB_DATA) _tabData?: InjectedTabData,
     ) {
-        super(_arcFactory, _modelService, _canvasService);
+        super(_arcFactory, _modelService, _canvasService, _tabData);
         this._data = new Map<string, number>();
         this.mode = new SimulationMode(
             this.tutorialService.simulator,
@@ -66,19 +69,19 @@ export class SimulationModeService extends CanvasModeService<SimulationTool> {
             }
             return '';
         };
-        this.defaultTool = new TaskSimulationTool(this._modelService, dialog, this, router, transitionService);
+        this.defaultTool = new TaskSimulationTool(this._modelService, dialog, this, router, transitionService, this._ngZone);
         this.switchTools = new ToolGroup<SimulationTool>(
-            new ResetSimulationTool(this._modelService, dialog, this, router, transitionService),
-            new ChangeDataTool(this._modelService, dialog, this, router, transitionService),
-            new ResetPositionAndZoomTool(this._modelService, dialog, this, router, transitionService),
-            new GridTool(this._modelService, dialog, this, router, transitionService),
-            new SwitchLabelTool(this._modelService, dialog, this, router, transitionService),
+            new ResetSimulationTool(this._modelService, dialog, this, router, transitionService, this._ngZone),
+            new ChangeDataTool(this._modelService, dialog, this, router, transitionService, this._ngZone),
+            new ResetPositionAndZoomTool(this._modelService, dialog, this, router, transitionService, this._ngZone),
+            new GridTool(this._modelService, dialog, this, router, transitionService, this._ngZone),
+            new SwitchLabelTool(this._modelService, dialog, this, router, transitionService, this._ngZone),
         );
         this.switchTools.tools.forEach(t => t.bind());
         this.tools = [
             new ToolGroup<SimulationTool>(
                 this.defaultTool,
-                new EventSimulationTool(this._modelService, dialog, this, router, transitionService),
+                new EventSimulationTool(this._modelService, dialog, this, router, transitionService, this._ngZone),
             ),
             this.switchTools,
         ];

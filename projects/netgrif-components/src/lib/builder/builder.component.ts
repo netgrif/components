@@ -1,4 +1,4 @@
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional, Type} from '@angular/core';
 import {BuilderMode, BuilderModeService} from "./services/builder-mode.service";
 import {ModelService} from "./modeler/services/model/model.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -55,6 +55,7 @@ import {I18nControlService} from './modeler/i18n-mode/i18n-control.service';
 import {BuilderIntegrationService} from "./services/builder-integration.service";
 import {TaskModeService} from "./modeler/task-mode/task-mode.service";
 import {LocalStorageService} from "./services/local-storage.service";
+import {PetriflowCanvasService} from '@netgrif/petriflow.svg';
 
 @Component({
     selector: 'nc-builder',
@@ -110,7 +111,11 @@ import {LocalStorageService} from "./services/local-storage.service";
         I18nControlService,
         BuilderIntegrationService,
         TaskModeService,
-        LocalStorageService
+        LocalStorageService,
+        // PetriflowCanvasService is `providedIn: 'root'` in @netgrif/petriflow.svg, which would make it a
+        // single instance shared by every open builder tab (wrong canvas/model rendered on tab switch).
+        // Re-provided here so each <nc-builder> instance gets its own canvas/panzoom state.
+        {provide: PetriflowCanvasService, useClass: PetriflowCanvasService as unknown as Type<PetriflowCanvasService>}
     ]
 })
 export class BuilderComponent {
@@ -129,7 +134,7 @@ export class BuilderComponent {
                 @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedBuilderViewData,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<CaseRefField>) {
         this.loading = new LoadingEmitter(true);
-        if (injectedTabData?.processCase) {
+        if (injectedTabData !== null && injectedTabData?.processCase) {
             this._builderIntegrationService.isIntegrated = true;
             this._builderIntegrationService.processCase = injectedTabData.processCase;
             this.resolveIntegratedMode();
@@ -140,7 +145,7 @@ export class BuilderComponent {
                     this._builderIntegrationService.reloadModes = true;
                 })
             });
-        } else if (dataFieldPortalData?.dataField?.value?.length > 0) {
+        } else if (dataFieldPortalData !== null && dataFieldPortalData?.dataField?.value?.length > 0) {
             this._builderIntegrationService.isIntegrated = true;
             this._caseResourceService.getOneCase(dataFieldPortalData?.dataField?.value[0]).subscribe(processCase => {
                 this._builderIntegrationService.processCase = processCase;
