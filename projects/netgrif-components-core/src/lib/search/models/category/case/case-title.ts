@@ -29,7 +29,7 @@ export class CaseTitle extends NoConfigurationCategory<string> {
                 operators.getOperator(MoreThanEqual),
                 operators.getOperator(LessThan),
                 operators.getOperator(LessThanEqual),
-                // operators.getOperator(Like) todo 2466 impossible in PFQL
+                operators.getOperator(Like)
             ],
             `${CaseTitle._i18n}.name`,
             SearchInputType.TEXT,

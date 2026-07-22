@@ -8,20 +8,17 @@ import {Operators} from './operators';
  * Behaves differently for strings with spaces and without.
  * With spaces searches for matches containing the tokenized strings.
  * Without spaces searches for strings within the default edit distance.
- * See [docs]{@link https://www.elastic.co/guide/en/elasticsearch/reference/6.6/query-dsl-query-string-query.html#_fuzziness}
- * for more information.
  */
 export class Like extends Operator<string> {
-    // todo 2466 impossible in PFQL
     constructor() {
         super(1);
     }
 
-    createQuery(elasticKeywords: Array<string>, args: Array<string>): Query {
+    createQuery(pfqlKeywords: Array<string>, args: Array<string>): Query {
         this.checkArgumentsCount(args);
-        const escaped = Operator.escapeInput(args[0]);
-        return Operator.forEachKeyword(elasticKeywords,
-            keyword => escaped.wasEscaped ? new Query(`(${keyword}:${escaped.value})`) : new Query(`(${keyword}:${escaped.value}~)`));
+        const escaped = Operator.escapeInput(args[0]); // todo 2466 escape?
+        return Operator.forEachKeyword(pfqlKeywords,
+            keyword => escaped.wasEscaped ? new Query(`${keyword} eq '${escaped.value}'`) : new Query(`${keyword} eq '${escaped.value}'*`));
     }
 
     getOperatorNameTemplate(): Array<string> {
@@ -29,7 +26,6 @@ export class Like extends Operator<string> {
     }
 
     serialize(): Operators | string {
-        return 'like';
-        // return Operators.LIKE;
+        return Operators.LIKE;
     }
 }

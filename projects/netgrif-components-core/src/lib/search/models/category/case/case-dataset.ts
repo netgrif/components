@@ -16,6 +16,7 @@ import { BehaviorSubject, Observable, of, ReplaySubject, Subscription } from 'rx
 import { Category } from '../category';
 import { NotEquals } from '../../operator/not-equals';
 import { IsNull } from '../../operator/is-null';
+import { Like } from '../../operator/like';
 import { MoreThan } from '../../operator/more-than';
 import { LessThan } from '../../operator/less-than';
 import { InRange } from '../../operator/in-range';
@@ -213,8 +214,8 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
                     this._operatorService.getOperator(MoreThanEqual),
                     this._operatorService.getOperator(LessThan),
                     this._operatorService.getOperator(LessThanEqual),
-                    this._operatorService.getOperator(IsNull)
-                    // this._operatorService.getOperator(Like) todo 2466
+                    this._operatorService.getOperator(IsNull),
+                    this._operatorService.getOperator(Like)
                 ];
         }
     }

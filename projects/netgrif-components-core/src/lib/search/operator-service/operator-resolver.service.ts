@@ -69,8 +69,8 @@ export class OperatorResolverService {
                 return LessThanEqualDate;
             case Operators.LESS_THAN_EQUAL_DATE_TIME:
                 return LessThanEqualDateTime;
-            // case Operators.LIKE: todo 2466
-            //     return Like;
+            case Operators.LIKE:
+                return Like;
             case Operators.MORE_THAN:
                 return MoreThan;
             case Operators.MORE_THAN_DATE:
