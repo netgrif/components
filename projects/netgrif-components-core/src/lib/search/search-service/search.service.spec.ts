@@ -12,7 +12,6 @@ import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.servi
 import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
 import {CaseCreationDate} from '../models/category/case/case-creation-date';
 import moment from 'moment';
-import {CaseVisualId} from '../models/category/case/case-visual-id';
 import {CaseSearchRequestBody} from '../../filter/models/case-search-request-body';
 import {FilterMetadata} from '../models/persistance/filter-metadata';
 import {FilterType} from '../../filter/models/filter-type';

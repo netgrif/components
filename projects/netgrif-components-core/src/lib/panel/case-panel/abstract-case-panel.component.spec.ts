@@ -125,7 +125,6 @@ class TestCasePanelComponent extends AbstractCasePanelComponent {
 })
 class TestWrapperComponent {
     selectedHeaders = of([
-        new HeaderColumn(HeaderColumnType.META, CaseMetaField.VISUAL_ID, 'string', 'string'),
         new HeaderColumn(HeaderColumnType.META, CaseMetaField.AUTHOR, 'string', 'string'),
         new HeaderColumn(HeaderColumnType.META, CaseMetaField.TITLE, 'string', 'string'),
         new HeaderColumn(HeaderColumnType.IMMEDIATE, 'date', 'string', 'string', true, 'netid'),
