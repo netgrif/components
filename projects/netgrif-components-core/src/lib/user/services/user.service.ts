@@ -66,10 +66,6 @@ export class UserService implements OnDestroy {
         return this._userChange$.asObservable();
     }
 
-    get anonymousUser(): User {
-        return this.anonymousUser;
-    }
-
     get anonymousUser$(): Observable<User> {
         return this._anonymousUserChange$.asObservable();
     }

@@ -24,7 +24,7 @@
         <nc-tab-creation-detector [initializeTabFunction]="initializeTabLambda"
                                   [tabIndex]="i"></nc-tab-creation-detector>
         <ng-template [ngIf]="tab.isTabInitialized" class="full-height">
-            <ng-template matTabContent [cdkPortalOutlet]="tab.portal" class="full-height"></ng-template>
+            <ng-template [cdkPortalOutlet]="tab.portal" class="full-height"></ng-template>
         </ng-template>
     </mat-tab>
 </mat-tab-group>

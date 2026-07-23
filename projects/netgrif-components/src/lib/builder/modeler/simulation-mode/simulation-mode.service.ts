@@ -3,6 +3,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {Arc, BasicSimulation, ImportUtils, PetriNet, Place, Transition} from '@netgrif/petriflow';
 import {PetriflowCanvasService} from '@netgrif/petriflow.svg';
+import {PanzoomOptions} from '@panzoom/panzoom';
 import {BehaviorSubject} from 'rxjs';
 import {InjectedTabData, NAE_TAB_DATA} from '@netgrif/components-core';
 import {TutorialService} from '../../tutorial/tutorial-service';
@@ -33,6 +34,20 @@ export class SimulationModeService extends CanvasModeService<SimulationTool> {
 // TODO: NAB-326 refactor
     public switchTools: ToolGroup<SimulationTool>;
     private _onTransitionDraw: (t: CanvasTransition) => void;
+    /**
+     * `noBind` is required here: pointer events are wired up manually through {@link CanvasListenerTool}
+     * (same as in edit mode). Without it, Panzoom binds its own raw `document` pointermove/pointerup
+     * listeners outside Angular's knowledge, which run on every mouse movement on the whole page.
+     */
+    public panzoomConfiguration: PanzoomOptions = {
+        canvas: true,
+        contain: 'outside',
+        cursor: 'auto',
+        maxScale: 10,
+        minScale: 0.5,
+        step: 0.2,
+        noBind: true
+    };
 
     constructor(
         protected _arcFactory: ArcFactory,
