@@ -34,7 +34,7 @@
         "lint": "ng lint",
         "e2e": "ng e2e",
         "ncc:clean": "node projects/netgrif-components-core/src/scripts/delete-local-build-link.js",
-        "ncc:build": "npm run ncc:clean && ng build netgrif-components-core --configuration production && npm run ncc:build-schematics",
+        "ncc:build": "npm run ncc:clean && ng build netgrif-components-core --configuration production && npm run ncc:build-schematics && npm run pfql:build-grammar",
         "ncc:local-build": "npm run ncc:build && npm i ./dist/netgrif-components-core --save-optional --legacy-peer-deps",
         "ncc:build-schematics": "node projects/netgrif-components-core/src/scripts/build-schematics.js",
         "ncc:lint": "ng lint netgrif-components-core",
@@ -65,7 +65,8 @@
         "project:sonar": "node scripts/sonar-scanner-analysis.js",
         "components:start": "npm run nc:local-build && ng serve",
         "example:start": "ng serve",
-        "example:build": "ng build nae-example-app --configuration production"
+        "example:build": "ng build nae-example-app --configuration production",
+        "pfql:build-grammar": "antlr-ng -Dlanguage=TypeScript -v true -l false -o projects/netgrif-components-core/src/lib/pfql/generated projects/netgrif-components-core/src/lib/pfql/QueryLang.g4"
     },
     "dependencies": {
         "@angular-material-components/datetime-picker": "~16.0.1",
@@ -98,6 +99,7 @@
         "angular-resizable-element": "~7.0.0",
         "angular-resize-event": "~3.2.0",
         "angular2-hotkeys": "~16.0.0",
+        "antlr4ng": "^3.0.16",
         "easymde": "~2.16.1",
         "escape-string-regexp": "^4.0.0",
         "hammerjs": "~2.0.8",
@@ -138,6 +140,7 @@
         "@types/node": "~12.12.29",
         "@typescript-eslint/eslint-plugin": "~6.21.0",
         "@typescript-eslint/parser": "~6.21.0",
+        "antlr-ng": "^1.0.0",
         "commander": "~4.1.1",
         "cspell": "~5.18.4",
         "eslint": "~8.12.0",
