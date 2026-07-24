@@ -5,8 +5,8 @@ import {ModelerConfig} from '../modeler/modeler-config';
 import {ModelerUtils} from '../modeler/modeler-utils';
 import {SelectedTransitionService} from '../modeler/selected-transition.service';
 import {ModelService} from '../modeler/services/model/model.service';
-import {BuilderMode, BuilderModeService} from "../builder-mode.service";
-import {BuilderIntegrationService} from "../builder-integration.service";
+import {BuilderMode, BuilderModeService} from "../services/builder-mode.service";
+import {BuilderIntegrationService} from "../services/builder-integration.service";
 
 @Component({
     selector: 'nc-builder-form-builder',

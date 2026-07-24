@@ -18,7 +18,7 @@ import {CanvasTransition} from '../../domain/canvas-transition';
 import {CanvasTool} from './canvas-tool';
 import {CanvasToolContext} from './canvas-tool-context';
 import {Hotkey} from './domain/hotkey';
-import {BuilderMode} from '../../../../builder-mode.service';
+import {BuilderMode} from '../../../../services/builder-mode.service';
 
 export class SelectTool extends CanvasTool {
 

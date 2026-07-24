@@ -8,9 +8,10 @@ import {ProcessActionsTool} from '../../modeler/actions-mode/tools/process-actio
 import {ModelChange} from '../../modeler/history-mode/model/model/model-change';
 import {ModelService} from '../../modeler/services/model/model.service';
 import {DialogManageRolesComponent, RoleRefType} from '../dialog-manage-roles/dialog-manage-roles.component';
-import {BuilderModeService, BuilderMode} from "../../builder-mode.service";
+import {BuilderModeService, BuilderMode} from "../../services/builder-mode.service";
 import {HistoryService} from "../../modeler/services/history/history.service";
 import {CanvasToolContext} from "../../modeler/edit-mode/services/modes/canvas-tool-context";
+import {LocalStorageService} from '../../services/local-storage.service';
 
 export interface ModelEditData {
     model: ModelChange;
@@ -36,6 +37,7 @@ export class DialogModelEditComponent {
     private _processTool: ProcessActionsTool;
     private _builderModeService: BuilderModeService;
     private historyService: HistoryService;
+    private _localStorageService: LocalStorageService;
 
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: ModelEditData,
@@ -47,6 +49,7 @@ export class DialogModelEditComponent {
         this._processTool = data.context.processTool;
         this._builderModeService = data.context.builderModeService;
         this.historyService = data.context.editModeService.historyService;
+        this._localStorageService = data.context.localStorageService;
 
         this.idCtrl = new FormControl('', [Validators.required]);
         this.versionCtrl = new FormControl('', [
@@ -68,7 +71,8 @@ export class DialogModelEditComponent {
                 processUserRefs: this.modelService.model.getUserRefs(),
                 userLists: this.modelService.model.getDataSet().filter(item => item.type === DataType.USER_LIST),
                 modelService: this.modelService,
-                historyService: this.historyService
+                historyService: this.historyService,
+                localStorageService: this._localStorageService
             }
         });
     }
