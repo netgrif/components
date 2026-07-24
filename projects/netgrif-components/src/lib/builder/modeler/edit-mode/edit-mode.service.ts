@@ -346,7 +346,7 @@ export class EditModeService extends CanvasModeService<CanvasTool> {
         const arcRatio = arcLengthOffset / arcLength;
         const finalX = intersect.x + xLineLength * arcRatio;
         const finalY = intersect.y + yLineLength * arcRatio;
-        arcLine.setAttributeNS(null, 'points', `${intersect.x},${intersect.y} ${finalX ?? 0},${finalY ?? 0}`);
+        arcLine.setAttributeNS(null, 'points', `${intersect.x},${intersect.y} ${isNaN(finalX) ? 0 : finalX},${isNaN(finalY) ? 0 : finalY}`);
     }
 
     // OTHER

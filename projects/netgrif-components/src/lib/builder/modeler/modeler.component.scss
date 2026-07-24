@@ -3,10 +3,11 @@
 
 .modelerToolbar {
     padding-left: 4px;
-    height: 42px;
+    padding-right: 4px;
+    height: 48px;
     border-bottom: 1px solid #DDDDDD;
 }
 
 .height-modeler {
-    height: calc(100% - 42px);
+    height: calc(100% - 48px);
 }
