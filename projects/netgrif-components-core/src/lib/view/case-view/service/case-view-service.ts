@@ -1,6 +1,6 @@
 import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
 import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
-import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, of, Subject, Subscription} from 'rxjs';
 import {HttpParams} from '@angular/common/http';
 import {Case} from '../../../resources/interface/case';
 import {LoggerService} from '../../../logger/services/logger.service';
@@ -9,7 +9,7 @@ import {SearchService} from '../../../search/search-service/search.service';
 import {TranslateService} from '@ngx-translate/core';
 import {catchError, concatMap, filter, map, mergeMap, scan, switchMap, tap} from 'rxjs/operators';
 import {Pagination} from '../../../resources/interface/pagination';
-import {CaseMetaField} from '../../../header/case-header/case-menta-enum';
+import {CaseMetaField} from '../../../header/case-header/case-meta-enum';
 import {PageLoadRequestContext} from '../../abstract/page-load-request-context';
 import {Filter} from '../../../filter/models/filter';
 import {ListRange} from '@angular/cdk/collections';
@@ -37,6 +37,8 @@ import {PaginationParams} from '../../../utility/pagination/pagination-params';
 import {createSortParam, PaginationSort} from '../../../utility/pagination/pagination-sort';
 import {MatDialog} from '@angular/material/dialog';
 import {NAE_NEW_CASE_DIALOG_COMPONENT} from '../../../dialog/injection-tokens';
+import {NAE_DYNAMIC_DEFAULT_SORT} from "../models/dynamic-default-sort-token";
+import {SortChangeDescription} from "../../../header/models/user-changes/sort-change-description";
 
 @Injectable()
 export class CaseViewService extends AbstractSortableViewComponent implements OnDestroy {
@@ -54,6 +56,8 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
     protected _newCaseConfiguration: NewCaseConfiguration;
     protected _paginationView: boolean = false;
 
+    protected _activeFilterSub: Subscription;
+
     constructor(protected _allowedNetsService: AllowedNetsService,
                 protected _dialog: MatDialog,
                 protected _caseResourceService: CaseResourceService,
@@ -65,6 +69,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
                 protected _processService: ProcessService,
                 resolver: SearchIndexResolverService,
                 @Optional() @Inject(NAE_NEW_CASE_DIALOG_COMPONENT) protected _newCaseComponent: any,
+                @Optional() @Inject(NAE_DYNAMIC_DEFAULT_SORT) protected _dynamicDefaultSort$: Observable<SortChangeDescription>,
                 @Optional() @Inject(NAE_NEW_CASE_CONFIGURATION) newCaseConfig: NewCaseConfiguration,
                 protected _permissionService: PermissionService) {
         super(resolver);
@@ -74,7 +79,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
             Object.assign(this._newCaseConfiguration, newCaseConfig);
         }
         this._loading$ = new LoadingWithFilterEmitter();
-        this._searchService.activeFilter$.subscribe(() => {
+        this._activeFilterSub = this._searchService.activeFilter$.subscribe(() => {
             this.reload();
         });
         this._endOfData = false;
@@ -84,9 +89,8 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
             totalPages: undefined,
             number: -1
         };
-        this._nextPage$ = new BehaviorSubject<PageLoadRequestContext>(
-            new PageLoadRequestContext(this.activeFilter, Object.assign({}, this._pagination, {number: 0}))
-        );
+
+        this.requestPageWithDynamicSort(new PageLoadRequestContext(this.activeFilter, Object.assign({}, this._pagination, {number: 0})));
 
         const casesMap = this._nextPage$.pipe(
             mergeMap(p => this.loadPage(p)),
@@ -123,6 +127,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
         super.ngOnDestroy();
         this._loading$.complete();
         this._nextPage$.complete();
+        this._activeFilterSub?.unsubscribe();
     }
 
     public get loading(): boolean {
@@ -220,7 +225,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
         if (this.isLoadingRelevantFilter(requestContext) || this._endOfData) {
             return;
         }
-        this._nextPage$.next(requestContext);
+        this.requestPageWithDynamicSort(requestContext);
     }
 
     private isLoadingRelevantFilter(requestContext?: PageLoadRequestContext): boolean {
@@ -363,5 +368,24 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
      */
     public viewEnabled(aCase: Case): boolean {
         return this._permissionService.hasCasePermission(aCase, PermissionType.VIEW);
+    }
+
+    protected requestPageWithDynamicSort(requestContext: PageLoadRequestContext) {
+        if (!!this._dynamicDefaultSort$ && this._lastHeaderSearchState.fieldIdentifier === '') {
+            this._dynamicDefaultSort$.subscribe(sortChangeDesc => {
+                this._lastHeaderSearchState = sortChangeDesc;
+                this.requestNextPage(requestContext);
+            });
+        } else {
+            this.requestNextPage(requestContext);
+        }
+    }
+
+    protected requestNextPage(page: PageLoadRequestContext) {
+        if (!this._nextPage$) {
+            this._nextPage$ = new BehaviorSubject(page);
+        } else {
+            this._nextPage$.next(page);
+        }
     }
 }

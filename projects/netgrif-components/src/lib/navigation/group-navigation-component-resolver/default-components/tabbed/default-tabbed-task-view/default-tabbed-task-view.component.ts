@@ -23,12 +23,13 @@ import {
     OverflowService,
     extractFieldValueFromData,
     I18nFieldValue,
-    GroupNavigationConstants
+    GroupNavigationConstants, NAE_DYNAMIC_DEFAULT_SORT, ProcessService
 } from '@netgrif/components-core';
 import {HeaderComponent} from '../../../../../header/header.component';
 import {
     InjectedTabbedTaskViewDataWithNavigationItemTaskData
 } from "../../model/injected-tabbed-task-view-data-with-navigation-item-task-data";
+import {buildDynamicSortChangeDescriptionForTask$} from "../../model/factory-methods";
 
 export function baseFilterFactory(injectedTabData: InjectedTabbedTaskViewDataWithNavigationItemTaskData) {
     return {
@@ -47,6 +48,11 @@ export function baseFilterFactory(injectedTabData: InjectedTabbedTaskViewDataWit
         ViewIdService,
         ChangedFieldsService,
         OverflowService,
+        {
+            provide: NAE_DYNAMIC_DEFAULT_SORT,
+            useFactory: buildDynamicSortChangeDescriptionForTask$,
+            deps: [NAE_NAVIGATION_ITEM_TASK_DATA, ProcessService]
+        },
         {
             provide: NAE_BASE_FILTER,
             useFactory: baseFilterFactory,

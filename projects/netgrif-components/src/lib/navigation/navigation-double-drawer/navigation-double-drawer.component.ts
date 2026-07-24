@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {
@@ -7,6 +7,8 @@ import {
     UriService,
     LoggerService,
     UserService,
+    ProcessService,
+    SnackBarService,
     AbstractNavigationDoubleDrawerComponent,
     DynamicNavigationRouteProviderService,
     AccessService,
@@ -14,10 +16,13 @@ import {
     ImpersonationService,
     CaseResourceService,
     RedirectService,
-    DoubleDrawerNavigationService
+    DoubleDrawerNavigationService,
+    NAE_TASK_VIEW_COMPONENT
 } from '@netgrif/components-core';
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {TranslateService} from "@ngx-translate/core";
+import {MatDialog} from "@angular/material/dialog";
+import {ComponentType} from "@angular/cdk/portal";
 
 @Component({
     selector: 'nc-navigation-double-drawer',
@@ -72,10 +77,15 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
                 _impersonation: ImpersonationService,
                 _dynamicRouteProviderService: DynamicNavigationRouteProviderService,
                 _redirectService: RedirectService,
-                _navigationService: DoubleDrawerNavigationService) {
+                _navigationService: DoubleDrawerNavigationService,
+                _processService: ProcessService,
+                _snackBarService: SnackBarService,
+                _dialog: MatDialog,
+                @Inject(NAE_TASK_VIEW_COMPONENT) _taskView: ComponentType<unknown>) {
         super(_router, _activatedRoute, _breakpoint, _languageService, _translateService, _userService, _accessService,
             _log, _config, _uriService, _caseResourceService, _impersonationUserSelect, _impersonation,
-            _dynamicRouteProviderService, _redirectService, _navigationService)
+            _dynamicRouteProviderService, _redirectService, _navigationService, _processService, _snackBarService, _dialog,
+            _taskView);
     }
 
     public toggleSection(section: string): void {
