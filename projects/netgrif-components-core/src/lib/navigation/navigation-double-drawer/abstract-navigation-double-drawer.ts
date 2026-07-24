@@ -165,7 +165,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         this.itemLoaded.complete();
         this.itemClickedSub.unsubscribe();
         this.itemLoadedSub.unsubscribe();
-        this.rightItemsSub.unsubscribe();
+        this.rightItemsSub?.unsubscribe();
     }
 
     public get currentNode(): UriNodeResource {
