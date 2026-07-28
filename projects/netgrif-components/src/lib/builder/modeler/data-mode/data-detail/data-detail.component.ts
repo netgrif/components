@@ -60,6 +60,7 @@ export class DataDetailComponent implements OnDestroy {
         {viewValue: 'Boolean', value: DataType.BOOLEAN},
         {viewValue: 'Button', value: DataType.BUTTON},
         {viewValue: 'Case Ref', value: DataType.CASE_REF},
+        {viewValue: 'Process Ref', value: DataType.PROCESS_REF},
         {viewValue: 'Date', value: DataType.DATE},
         {viewValue: 'Datetime', value: DataType.DATETIME},
         {viewValue: 'Enumeration', value: DataType.ENUMERATION},
@@ -76,7 +77,7 @@ export class DataDetailComponent implements OnDestroy {
         {viewValue: 'Number', value: DataType.NUMBER},
         {viewValue: 'User', value: DataType.USER},
         {viewValue: 'User List', value: DataType.USER_LIST},
-        {viewValue: 'String Collection', value: 'stringCollection'},
+        {viewValue: 'String Collection', value: DataType.STRING_COLLECTION},
         {viewValue: 'Task Ref', value: DataType.TASK_REF},
         {viewValue: 'Text', value: DataType.TEXT}
     ];

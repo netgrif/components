@@ -13,13 +13,13 @@ import {MaterialIconPickerComponent} from './modeler/components/material-icon-pi
 import {BuilderDialogsModule} from './dialogs/dialogs.module';
 import {FlexLayoutModule} from "@ngbracket/ngx-layout";
 import {ComponentPortal} from '@angular/cdk/portal';
-import {CaseRefProcessComponent} from '../data-fields/case-ref-field/case-ref-process/case-ref-process.component';
+import {ProcessRefDefaultComponent} from '../data-fields/process-ref/process-ref-default/process-ref-default.component';
 
 
 @NgModule({
     declarations: [
         BuilderComponent,
-        CaseRefProcessComponent,
+        ProcessRefDefaultComponent,
     ],
     imports: [
         BuilderDialogsModule,
@@ -41,6 +41,6 @@ import {CaseRefProcessComponent} from '../data-fields/case-ref-field/case-ref-pr
 export class BuilderModule {
 
     constructor(registry: ComponentRegistryService) {
-        registry.register("case-ref-process", (injector: Injector) => new ComponentPortal<any>(CaseRefProcessComponent, null, injector));
+        registry.register("process-ref-default", (injector: Injector) => new ComponentPortal<any>(ProcessRefDefaultComponent, null, injector));
     }
 }

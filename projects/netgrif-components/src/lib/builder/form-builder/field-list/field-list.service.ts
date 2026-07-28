@@ -374,6 +374,13 @@ export class FieldListService {
             ]
         },
         {
+            type: DataType.PROCESS_REF,
+            showPlaceholder: true,
+            components: [
+                {title: 'Simple', cols: 4},
+            ]
+        },
+        {
             type: DataType.CASE_REF,
             showPlaceholder: true,
             components: [
@@ -403,7 +410,7 @@ export class FieldListService {
             ]
         },
         {
-            type: 'stringCollection' as DataType,
+            type: DataType.STRING_COLLECTION,
             components: [
                 {title: 'Simple'}
             ],

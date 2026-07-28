@@ -26,6 +26,7 @@ import {UserListValue} from '../../data-fields/user-list-field/models/user-list-
 import {decodeBase64, encodeBase64} from "../../utility/base64";
 import {CaseRefField} from '../../data-fields/case-ref-field/model/case-ref-field';
 import {StringCollectionField} from '../../data-fields/string-collection-field/models/string-collection-field';
+import {ProcessRefField} from '../../data-fields/process-ref-field/model/process-ref-field';
 
 @Injectable({
     providedIn: 'root'
@@ -107,6 +108,9 @@ export class FieldConverterService {
                     item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.CASE_REF:
                 return new CaseRefField(item.stringId, item.name, item.value ? item.value : [], item.behavior,
+                    item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
+            case FieldTypeResource.PROCESS_REF:
+                return new ProcessRefField(item.stringId, item.name, item.value ? item.value : [], item.behavior,
                     item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.CASE_FILTER:
             case FieldTypeResource.TASK_FILTER:

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CaseRefProcessComponent } from './case-ref-process.component';
+import { ProcessRefDefaultComponent } from './process-ref-default.component';
 import {NavigationComponentModule} from '../../../navigation/navigation.module';
 import {
     CaseRefField,
@@ -20,7 +20,7 @@ import {
 import {Component} from '@angular/core';
 
 describe('CaseRefDefaultComponent', () => {
-  let component: CaseRefProcessComponent;
+  let component: ProcessRefDefaultComponent;
   let fixture: ComponentFixture<TestWrapperComponent>;
 
   beforeEach(async () => {
