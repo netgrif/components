@@ -6,7 +6,7 @@ import {Operators} from './operators';
  */
 export class LessThan extends Operator<number | string> {
     constructor() {
-        super(1, 'lt');
+        super(1, Operators.LESS_THAN, 'lt');
     }
 
     getOperatorNameTemplate(): Array<string> {

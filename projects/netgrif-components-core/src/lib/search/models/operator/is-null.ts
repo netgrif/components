@@ -12,7 +12,7 @@ import {BooleanOperator} from "../boolean-operator";
 export class IsNull extends Operator<any> {
 
     constructor() {
-        super(0);
+        super(0, Operators.IS_NULL);
     }
 
     /**

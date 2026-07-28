@@ -7,7 +7,7 @@ import {Operators} from './operators';
  */
 export class Substring extends Operator<string> {
     constructor() {
-        super(1, 'contains');
+        super(1, Operators.SUBSTRING, 'contains');
     }
 
     getOperatorNameTemplate(): Array<string> {

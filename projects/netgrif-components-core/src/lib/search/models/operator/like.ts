@@ -11,7 +11,7 @@ import {Operators} from './operators';
  */
 export class Like extends Operator<string> {
     constructor() {
-        super(1);
+        super(1, Operators.LIKE);
     }
 
     createQuery(pfqlKeywords: Array<string>, args: Array<string>): Query {

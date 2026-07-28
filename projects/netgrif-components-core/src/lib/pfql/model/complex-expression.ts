@@ -1,4 +1,3 @@
-import {LogicalOperator} from "./logical-operator";
 import {QueryItemInterface} from "./query-item-interface";
 import {QueryItem, QueryItemType} from "./query-item-type";
 
@@ -6,12 +5,10 @@ import {QueryItem, QueryItemType} from "./query-item-type";
 export class ComplexExpression implements QueryItemInterface {
     protected _negated: boolean;
     protected _items: QueryItem[];
-    protected _logicalOperator: LogicalOperator;
 
-    public constructor(negated: boolean, items: QueryItem[], logicalOperator: LogicalOperator) {
+    public constructor(negated: boolean, items: QueryItem[]) {
         this._negated = negated;
         this._items = !items ? [] : items;
-        this._logicalOperator = logicalOperator;
     }
 
     public type(): QueryItemType {
@@ -26,12 +23,12 @@ export class ComplexExpression implements QueryItemInterface {
         return this._items;
     }
 
-    public get isNegated(): boolean {
-        return this._negated;
+    public set items(items: QueryItem[]) {
+        this._items = items;
     }
 
-    public get logicalOperator(): LogicalOperator {
-        return this._logicalOperator;
+    public get isNegated(): boolean {
+        return this._negated;
     }
 
     // todo 2466

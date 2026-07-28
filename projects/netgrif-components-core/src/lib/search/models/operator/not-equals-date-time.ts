@@ -10,7 +10,7 @@ export class NotEqualsDateTime extends Operator<Moment> {
     protected equals: EqualsDateTime;
 
     constructor(operators: OperatorService) {
-        super(1);
+        super(1, Operators.NOT_EQUALS_DATE_TIME);
         this.equals = operators.getOperator(EqualsDateTime) as EqualsDateTime;
     }
 

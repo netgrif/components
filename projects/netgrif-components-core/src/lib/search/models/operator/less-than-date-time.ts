@@ -13,7 +13,7 @@ export class LessThanDateTime extends Operator<Moment> {
     protected lessThan: LessThan;
 
     constructor(operators: OperatorService) {
-        super(1);
+        super(1, Operators.LESS_THAN_DATE_TIME);
         this.lessThan = operators.getOperator(LessThan) as LessThan;
     }
 

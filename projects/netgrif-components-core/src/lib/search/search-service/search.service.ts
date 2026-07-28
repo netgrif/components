@@ -1,4 +1,4 @@
-import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
+import {Inject, Injectable, Injector, OnDestroy, Optional} from '@angular/core';
 import {BooleanOperator} from '../models/boolean-operator';
 import {Filter} from '../../filter/models/filter';
 import {BehaviorSubject, forkJoin, Observable, Subject, Subscription} from 'rxjs';
@@ -19,6 +19,11 @@ import {FilterType} from '../../filter/models/filter-type';
 import {LoadingEmitter} from '../../utility/loading-emitter';
 import {FilterMetadata} from '../models/persistance/filter-metadata';
 import {FilterTextSegment} from '../models/persistance/filter-text-segment';
+import {QueryItem, QueryItemType} from "../../pfql/model/query-item-type";
+import {parseQuery} from "../../pfql/pfql-utils";
+import {LogicalOperator} from "../../pfql/model/logical-operator";
+import {SimpleExpression} from "../../pfql/model/simple-expression";
+import {ComplexExpression} from "../../pfql/model/complex-expression";
 
 /**
  * Holds information about the filter that is currently applied to the view component, that provides this services.
@@ -60,10 +65,12 @@ export class SearchService implements OnDestroy {
      * It is required if we want to load predicate filter from saved metadata
      * @param baseFilter Filter that should be applied to the view when no searching is being performed.
      * Injected trough the {@link NAE_BASE_FILTER} injection token.
+     * @param _injector injector from angular core
      */
     constructor(protected _log: LoggerService,
                 @Optional() protected _categoryFactory: CategoryFactory,
-                @Inject(NAE_BASE_FILTER) baseFilter: BaseFilter) {
+                @Inject(NAE_BASE_FILTER) baseFilter: BaseFilter,
+                protected _injector: Injector) {
         if (baseFilter.filter instanceof Filter) {
             this._baseFilter = baseFilter.filter.clone();
         } else if (baseFilter.filter instanceof Observable) {
@@ -370,10 +377,72 @@ export class SearchService implements OnDestroy {
         });
     }
 
+    // todo 2466
+    public loadFromPfql(query: string) {
+        // todo 2466 validate query prefix with filter type
+
+        this.clearPredicates(true);
+        const queryItems: Array<QueryItem> = parseQuery(query, this._injector);
+        if (!queryItems) {
+            this._log.warn(`Could not parse query '${query}. Clearing the search...`)
+            return;
+        }
+
+        // todo 2466 na jednej urovni moze byt len jeden typ operatora
+
+        this.loadExpressionsIntoPredicate(this._rootPredicate, BooleanOperator.AND, queryItems);
+        this.updateActiveFilter();
+    }
+
     /**
      * @returns an Array of filter text segments that correspond to the currently displayed completed predicates
      */
     public createFilterTextSegments(): Array<FilterTextSegment> {
         return this._rootPredicate.createFilterTextSegments();
+    }
+
+    protected loadExpressionsIntoPredicate(predicate: EditableClausePredicateWithGenerators, operatorOfPredicate: BooleanOperator,
+                                           items: Array<QueryItem>) {
+        const expressions: Array<QueryItem> = items.filter(item => item.type() !== QueryItemType.LOGICAL_OPERATOR);
+        for (const expression of expressions) {
+            if (expression.type() === QueryItemType.SIMPLE_EXPRESSION) {
+                if (operatorOfPredicate.valueOf() === BooleanOperator.AND.valueOf()) {
+                    const branchId = predicate.addNewClausePredicate(BooleanOperator.OR);
+                    const localPredicate = predicate.getPredicateMap().get(branchId).getWrappedPredicate() as unknown as EditableClausePredicateWithGenerators;
+                    this.loadSimpleExpressionIntoPredicate(localPredicate, expression as SimpleExpression);
+                } else {
+                    this.loadSimpleExpressionIntoPredicate(predicate, expression as SimpleExpression);
+                }
+            } else if (expression.type() === QueryItemType.COMPLEX_EXPRESSION) {
+                this.loadFromQueryItemsIntoNewPredicate(predicate, (expression as ComplexExpression).items);
+            } else {
+                // todo 2466 warn ignoring
+            }
+        }
+    }
+
+    protected loadFromQueryItemsIntoNewPredicate(parentPredicate: EditableClausePredicateWithGenerators, items: Array<QueryItem>) {
+        const booleanOperator: BooleanOperator = this.determineBooleanOperator(items);
+        const branchId = parentPredicate.addNewClausePredicate(booleanOperator);
+        const branchPredicate = parentPredicate.getPredicateMap().get(branchId).getWrappedPredicate() as unknown as EditableClausePredicateWithGenerators
+        this.loadExpressionsIntoPredicate(branchPredicate, booleanOperator, items);
+    }
+
+    protected determineBooleanOperator(items: Array<QueryItem>): BooleanOperator {
+        const booleanOperators = items.filter(item => item.type() === QueryItemType.LOGICAL_OPERATOR);
+        return booleanOperators.length === 0 ? BooleanOperator.AND : (booleanOperators[0] as LogicalOperator).value;
+    }
+
+    protected loadSimpleExpressionIntoPredicate(predicate: EditableClausePredicateWithGenerators, simpleExpr: SimpleExpression) {
+        const category: Category<any> = simpleExpr.category;
+        const operatorIdx: number = category.allowedOperators.findIndex(op => op.type === simpleExpr.operator.type);
+        if (operatorIdx === -1) {
+            // todo 2466 handle error
+            this._log.error(`Operator '${simpleExpr.operator.type}' is unavailable for this category`);
+            return;
+        }
+        category.selectOperator(operatorIdx);
+        category.setOperands([simpleExpr.operandValue]);
+        predicate.addNewPredicateFromGenerator(category);
     }
 }

@@ -16,7 +16,7 @@ export class EqualsDateTime extends Operator<Moment> {
     protected dateTimeRange: InRangeDateTime;
 
     constructor(operators: OperatorService) {
-        super(1);
+        super(1, Operators.EQUALS_DATE_TIME);
         this.dateTimeRange = operators.getOperator(InRangeDateTime) as InRangeDateTime;
     }
 

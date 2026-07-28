@@ -1,16 +1,12 @@
 import {QueryItemType} from "./query-item-type";
 import {QueryItemInterface} from "./query-item-interface";
-
-export enum LogicalOperatorEnum {
-    AND,
-    OR
-}
+import {BooleanOperator} from "../../search/models/boolean-operator";
 
 // todo 2466
 export class LogicalOperator implements QueryItemInterface {
-    protected _value: LogicalOperatorEnum
+    protected _value: BooleanOperator
 
-    public constructor(value: LogicalOperatorEnum) {
+    public constructor(value: BooleanOperator) {
         this._value = value;
     }
 
@@ -18,7 +14,7 @@ export class LogicalOperator implements QueryItemInterface {
         return QueryItemType.LOGICAL_OPERATOR;
     }
 
-    public get value(): LogicalOperatorEnum {
+    public get value(): BooleanOperator {
         return this._value;
     }
 }

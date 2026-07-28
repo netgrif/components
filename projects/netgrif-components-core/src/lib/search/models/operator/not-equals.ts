@@ -9,7 +9,7 @@ import {Operators} from './operators';
  */
 export class NotEquals extends Operator<string | number> {
     constructor() {
-        super(1, 'neq');
+        super(1, Operators.NOT_EQUALS, 'neq');
     }
 
     getOperatorNameTemplate(): Array<string> {

@@ -7,7 +7,7 @@ import {Operators} from './operators';
  */
 export class InRange extends Operator<number> {
     constructor() {
-        super(2);
+        super(2, Operators.IN_RANGE);
     }
 
     createQuery(pfqlKeywords: Array<string>, args: Array<number>): Query {

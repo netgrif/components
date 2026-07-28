@@ -10,7 +10,7 @@ import {Operators} from './operators';
 export class Equals extends Operator<string | number> {
     constructor() {
         // query string queries don't use a special symbol for strict equality
-        super(1, 'eq');
+        super(1, Operators.EQUALS, 'eq');
     }
 
     getOperatorNameTemplate(): Array<string> {

@@ -12,7 +12,7 @@ import {Operators} from './operators';
  */
 export class InRangeDate extends Operator<Moment> {
     constructor() {
-        super(2);
+        super(2, Operators.IN_RANGE_DATE);
     }
 
     /**

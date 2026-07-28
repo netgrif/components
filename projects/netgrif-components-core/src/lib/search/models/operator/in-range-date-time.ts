@@ -11,7 +11,7 @@ import {Operators} from './operators';
  */
 export class InRangeDateTime extends Operator<Moment> {
     constructor() {
-        super(2);
+        super(2, Operators.IN_RANGE_DATE_TIME);
     }
 
     /**

@@ -42,9 +42,17 @@ export abstract class Operator<T> {
      */
     private readonly _operatorSymbols: string;
 
-    protected constructor(numberOfOperands: number, operatorSymbols = '') {
+    // todo 2466
+    private readonly _type: Operators;
+
+    protected constructor(numberOfOperands: number, type: Operators, operatorSymbols = '') {
         this._numberOfOperands = numberOfOperands;
+        this._type = type;
         this._operatorSymbols = operatorSymbols;
+    }
+
+    public get type(): Operators {
+        return this._type;
     }
 
     /**
@@ -104,7 +112,8 @@ export abstract class Operator<T> {
      * @param canWrap is set to true if the wrapping is allowed
      */
     public static wrapInputWithQuotes(input: string, canWrap: boolean = true): WrapResult {
-        if (typeof input === 'string' && canWrap && input !== UserAutocomplete.USER_ME_TEMPLATE)
+        if (typeof input === 'string' && canWrap && input !== UserAutocomplete.USER_ME_TEMPLATE
+            && !(input.startsWith(`'`) && input.endsWith(`'`)))
             return {value: `'${input}'`, wasWrapped: true};
         else
             return {value: input, wasWrapped: false};

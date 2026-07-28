@@ -13,7 +13,7 @@ export class NotEqualsDate extends Operator<Moment> {
     protected equals: EqualsDate;
 
     constructor(operators: OperatorService) {
-        super(1);
+        super(1, Operators.NOT_EQUALS_DATE);
         this.equals = operators.getOperator(EqualsDate) as EqualsDate;
     }
 

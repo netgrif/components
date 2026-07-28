@@ -8,11 +8,13 @@ export class SimpleExpression implements QueryItemInterface {
     protected _category: Category<any>
     protected _operator: Operator<any>
     protected _operandValue: any;
+    protected _negated: boolean;
 
-    public constructor(category: Category<any>, operator: Operator<any>, operandValue: any) {
-        this._category = category;
+    public constructor(operator: Operator<any>, operandValue: any, negated: boolean, category?: Category<any>) {
         this._operator = operator;
         this._operandValue = operandValue;
+        this._negated = negated;
+        this._category = category;
     }
 
     public type(): QueryItemType {
@@ -23,6 +25,10 @@ export class SimpleExpression implements QueryItemInterface {
         return this._category;
     }
 
+    public set category(cat: Category<any>) {
+        this._category = cat;
+    }
+
     public get operator(): Operator<any> {
         return this._operator;
     }
@@ -31,8 +37,17 @@ export class SimpleExpression implements QueryItemInterface {
         return this._operandValue;
     }
 
+    public get negated(): boolean {
+        return this._negated;
+    }
+
     // todo 2466
     public negate(): void {
+        if (!!this._negated) {
+            this._negated = false;
+            return;
+        }
+        // todo 2466
         // possible only if operator is: EQ, NEQ, GT, GTE, LT, LTE
         // throw if operator is: Substring, IN RANGE
         // throw if calculated operator is: NEQ null

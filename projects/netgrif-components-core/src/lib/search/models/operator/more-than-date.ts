@@ -13,7 +13,7 @@ export class MoreThanDate extends Operator<Moment> {
     protected moreThan: MoreThan;
 
     constructor(operators: OperatorService) {
-        super(1);
+        super(1, Operators.MORE_THAN_DATE);
         this.moreThan = operators.getOperator(MoreThan) as MoreThan;
     }
 

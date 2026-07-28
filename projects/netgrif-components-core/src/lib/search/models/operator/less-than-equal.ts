@@ -7,7 +7,7 @@ import {Operators} from './operators';
 export class LessThanEqual extends Operator<number | string> {
 
     constructor() {
-        super(1, 'lte');
+        super(1, Operators.LESS_THAN_EQUAL, 'lte');
     }
 
     getOperatorNameTemplate(): Array<string> {
