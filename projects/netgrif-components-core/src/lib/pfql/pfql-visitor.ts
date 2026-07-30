@@ -57,6 +57,7 @@ import {CategoryFactory} from "../search/category-factory/category-factory";
 import {AllowedNetsService} from "../allowed-nets/services/allowed-nets.service";
 import {OptionalDependencies} from "../search/category-factory/optional-dependencies";
 import {CaseProcess} from "../search/models/category/case/case-process";
+import {DataSimpleExpression} from "./model/data-simple-expression";
 
 
 // todo 2466 doc
@@ -219,9 +220,11 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
     };
 
     override visitDataString = (ctx: DataStringContext): Array<QueryItem> => {
-        const expr: SimpleExpression = this.handleStringComparisonContext(ctx.stringComparison());
-        expr.category = new CaseDataset(this._operatorService, this._logger, this._categoryOptionalDependencies);
-        return [expr];
+        const simpleExpr: SimpleExpression = this.handleStringComparisonContext(ctx.stringComparison());
+        const dataExpr: DataSimpleExpression = new DataSimpleExpression(ctx.dataValue().getText(), simpleExpr.operator,
+            simpleExpr.operandValue, simpleExpr.negated)
+        dataExpr.category = new CaseDataset(this._operatorService, this._logger, this._categoryOptionalDependencies);
+        return [dataExpr];
     };
 
     override visitDataStringLike = (ctx: DataStringLikeContext): Array<QueryItem> => {

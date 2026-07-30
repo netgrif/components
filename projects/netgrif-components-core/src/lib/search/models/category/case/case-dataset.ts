@@ -12,7 +12,7 @@ import { EqualsDate } from '../../operator/equals-date';
 import { Substring } from '../../operator/substring';
 import { EqualsDateTime } from '../../operator/equals-date-time';
 import { Equals } from '../../operator/equals';
-import { BehaviorSubject, Observable, of, ReplaySubject, Subscription } from 'rxjs';
+import {BehaviorSubject, Observable, of, ReplaySubject, Subject, Subscription} from 'rxjs';
 import { Category } from '../category';
 import { NotEquals } from '../../operator/not-equals';
 import { IsNull } from '../../operator/is-null';
@@ -43,6 +43,9 @@ import { FilterTextSegment } from '../../persistance/filter-text-segment';
 import { UserAutocomplete } from '../user-autocomplete';
 import {ResourceTypeQueryPrefix} from "../resource-type-query-prefix";
 import {FieldTypeResource} from "../../../../task-content/model/field-type-resource";
+import {SimpleExpression} from "../../../../pfql/model/simple-expression";
+import {DataSimpleExpression} from "../../../../pfql/model/data-simple-expression";
+import {take} from "rxjs/operators";
 
 interface Datafield {
     netIdentifier: string;
@@ -349,6 +352,21 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
         }
     }
 
+    public selectDataFieldsByPfqlExpression(expression: DataSimpleExpression): void {
+        let dataFieldMapKey: string | undefined;
+        for (const [key, dataFields] of this._datafieldOptions.entries()) {
+            if (dataFields.some(dataField => dataField.fieldId === expression.dataFieldId)) {
+                dataFieldMapKey = key;
+                break;
+            }
+        }
+        if (dataFieldMapKey === undefined) {
+            this._log.warn(`No data field option found for dataFieldId '${expression.dataFieldId}'`);
+            return;
+        }
+        this._DATAFIELD_INPUT.formControl.setValue(DatafieldMapKey.parse(dataFieldMapKey));
+    }
+
     /**
      * Adds a new entry or pushes value into an existing entry.
      * When a new entry is created, it is created as an Array of one element.
@@ -438,6 +456,26 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
             });
         });
         return result$.asObservable();
+    }
+
+    public override loadFromPfqlExpression(expression: SimpleExpression): Observable<void> {
+        const isDone$ = new Subject<void>();
+        if (!(expression instanceof DataSimpleExpression)) {
+            this._log.error("Cannot load category CaseDataSet from wrong PFQL expression")
+            isDone$.next();
+            isDone$.complete();
+            return isDone$.asObservable();
+        }
+
+        this._datafieldOptionsInitialized$.pipe(take(1)).subscribe(() => {
+            this.selectDataFieldsByPfqlExpression(expression);
+            this.selectOperatorFromPfqlExpression(expression);
+            this.setOperands([expression.operandValue] as any);
+            isDone$.next();
+            isDone$.complete();
+        });
+
+        return isDone$.asObservable();
     }
 
     protected deserializeOperandValue(value: unknown): Observable<any> {
