@@ -1,6 +1,7 @@
 import {QueryLangVisitor} from "./generated/QueryLangVisitor";
 import {
     AuthorBasicContext,
+    BooleanComparisonContext,
     CaseAndExpressionContext,
     CaseComparisonsContext,
     CaseConditionGroupParenthesisContext,
@@ -24,6 +25,9 @@ import {
     DateTimeComparisonContext,
     DateTimeRangeContext,
     IdBasicContext,
+    InRangeNumberComparisonContext,
+    NullComparisonContext,
+    NumberComparisonContext,
     ObjectIdComparisonContext,
     ProcessIdentifierBasicContext,
     StringComparisonContext,
@@ -58,6 +62,8 @@ import {AllowedNetsService} from "../allowed-nets/services/allowed-nets.service"
 import {OptionalDependencies} from "../search/category-factory/optional-dependencies";
 import {CaseProcess} from "../search/models/category/case/case-process";
 import {DataSimpleExpression} from "./model/data-simple-expression";
+import {InRange} from "../search/models/operator/in-range";
+import {IsNull} from "../search/models/operator/is-null";
 
 
 // todo 2466 doc
@@ -222,50 +228,83 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
     override visitDataString = (ctx: DataStringContext): Array<QueryItem> => {
         const simpleExpr: SimpleExpression = this.handleStringComparisonContext(ctx.stringComparison());
         const dataExpr: DataSimpleExpression = new DataSimpleExpression(ctx.dataValue().getText(), simpleExpr.operator,
-            simpleExpr.operandValue, simpleExpr.negated)
+            simpleExpr.operandValue, simpleExpr.negated);
         dataExpr.category = new CaseDataset(this._operatorService, this._logger, this._categoryOptionalDependencies);
         return [dataExpr];
     };
 
     override visitDataStringLike = (ctx: DataStringLikeContext): Array<QueryItem> => {
-        // dataStringLike
-        return [];
+        const simpleExpr: SimpleExpression = this.handleStringLikeComparisonContext(ctx.stringLikeComparison());
+        const dataExpr: DataSimpleExpression = new DataSimpleExpression(ctx.dataValue().getText(), simpleExpr.operator,
+            simpleExpr.operandValue, simpleExpr.negated);
+        dataExpr.category = new CaseDataset(this._operatorService, this._logger, this._categoryOptionalDependencies);
+        return [dataExpr];
     };
 
     override visitDataNumber = (ctx: DataNumberContext): Array<QueryItem> => {
-        // dataNumber
-        return [];
+        const simpleExpr: SimpleExpression = this.handleNumberComparisonContext(ctx.numberComparison());
+        const dataExpr: DataSimpleExpression = new DataSimpleExpression(ctx.dataValue().getText(), simpleExpr.operator,
+            simpleExpr.operandValue, simpleExpr.negated);
+        dataExpr.category = new CaseDataset(this._operatorService, this._logger, this._categoryOptionalDependencies);
+        return [dataExpr];
     };
 
     override visitDataNumberRange = (ctx: DataNumberRangeContext): Array<QueryItem> => {
-        // dataNumberRange
-        return [];
+        const simpleExpr: SimpleExpression = this.handleInRangeNumberComparisonContext(ctx.inRangeNumberComparison());
+        const dataExpr: DataSimpleExpression = new DataSimpleExpression(ctx.dataValue().getText(), simpleExpr.operator,
+            simpleExpr.operandValue, simpleExpr.negated);
+        dataExpr.category = new CaseDataset(this._operatorService, this._logger, this._categoryOptionalDependencies);
+        return [dataExpr];
     };
 
     override visitDataDate = (ctx: DataDateContext): Array<QueryItem> => {
-        // dataDate
-        return [];
+        const simpleExpr: SimpleExpression = this.handleDateComparisonContext(ctx.dateComparison());
+        const dataExpr: DataSimpleExpression = new DataSimpleExpression(ctx.dataValue().getText(), simpleExpr.operator,
+            simpleExpr.operandValue, simpleExpr.negated);
+        dataExpr.category = new CaseDataset(this._operatorService, this._logger, this._categoryOptionalDependencies);
+        return [dataExpr];
     };
 
     override visitDataDateRange = (ctx: DataDateRangeContext): Array<QueryItem> => {
-        // dataDateRange
-        // handles also date time
-        return [];
+        const inRangeCtx = ctx.inRangeDateComparison();
+        let simpleExpr: SimpleExpression;
+        if (!!inRangeCtx.dateRange()) {
+            simpleExpr = this.handleDateRangeContext(inRangeCtx.dateRange(), !!inRangeCtx.NOT());
+        } else if (!!inRangeCtx.dateTimeRange()) {
+            simpleExpr = this.handleDateTimeRangeContext(inRangeCtx.dateTimeRange(), !!inRangeCtx.NOT());
+        } else {
+            this._logger.error("No range values provided for creationDate range comparison");
+            return [];
+        }
+
+        const dataExpr: DataSimpleExpression = new DataSimpleExpression(ctx.dataValue().getText(), simpleExpr.operator,
+            simpleExpr.operandValue, simpleExpr.negated);
+        dataExpr.category = new CaseDataset(this._operatorService, this._logger, this._categoryOptionalDependencies);
+        return [dataExpr];
     };
 
     override visitDataDatetime = (ctx: DataDatetimeContext): Array<QueryItem> => {
-        // dataDatetime
-        return [];
+        const simpleExpr: SimpleExpression = this.handleDateTimeComparisonContext(ctx.dateTimeComparison());
+        const dataExpr: DataSimpleExpression = new DataSimpleExpression(ctx.dataValue().getText(), simpleExpr.operator,
+            simpleExpr.operandValue, simpleExpr.negated);
+        dataExpr.category = new CaseDataset(this._operatorService, this._logger, this._categoryOptionalDependencies);
+        return [dataExpr];
     };
 
     override visitDataBoolean = (ctx: DataBooleanContext): Array<QueryItem> => {
-        // dataBoolean
-        return [];
+        const simpleExpr: SimpleExpression = this.handleBooleanComparisonContext(ctx.booleanComparison());
+        const dataExpr: DataSimpleExpression = new DataSimpleExpression(ctx.dataValue().getText(), simpleExpr.operator,
+            simpleExpr.operandValue, simpleExpr.negated);
+        dataExpr.category = new CaseDataset(this._operatorService, this._logger, this._categoryOptionalDependencies);
+        return [dataExpr];
     };
 
     override visitDataNull = (ctx: DataNullContext): Array<QueryItem> => {
-        // dataNull
-        return [];
+        const simpleExpr: SimpleExpression = this.handleNullComparisonContext(ctx.nullComparison());
+        const dataExpr: DataSimpleExpression = new DataSimpleExpression(ctx.dataValue().getText(), simpleExpr.operator,
+            simpleExpr.operandValue, simpleExpr.negated);
+        dataExpr.category = new CaseDataset(this._operatorService, this._logger, this._categoryOptionalDependencies);
+        return [dataExpr];
     };
 
     // todo 2466 user field comparison ? ... ak je v string comparison mongo id, tak je to mozno user id?
@@ -277,6 +316,8 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
     };
 
     // todo 2466 more visit methods (task comparisons)
+
+    // todo 2466 implement handler dispatcher?
 
     protected handleStringComparisonContext(ctx: StringComparisonContext): SimpleExpression {
         const operator: Operator<any> = getOperatorFromToken(ctx._op);
@@ -328,6 +369,41 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
         const operator: Operator<any> = new InRangeDateTime();
         const value: string[] = ctx.DATETIME()?.map(terminalNode => terminalNode.getText());
         return new SimpleExpression(operator, value, isNegated);
+    }
+
+    protected handleNumberComparisonContext(ctx: NumberComparisonContext): SimpleExpression {
+        const operator: Operator<any> = getOperatorFromToken(ctx._op);
+        let value: number;
+        if (!!ctx.INT()) {
+            value = parseInt(ctx.INT().getText(), 10);
+        } else if (!!ctx.DOUBLE()) {
+            value = parseFloat(ctx.DOUBLE().getText());
+        }
+        return new SimpleExpression(operator, value, !!ctx.NOT());
+    }
+
+    protected handleInRangeNumberComparisonContext(ctx: InRangeNumberComparisonContext): SimpleExpression {
+        const operator: Operator<any> = new InRange();
+        let fromValue: number, toValue: number;
+        if (!!ctx.intRange()) {
+            fromValue = parseInt(ctx.intRange().INT()[0].getText(), 10);
+            toValue = parseInt(ctx.intRange().INT()[1].getText(), 10);
+        } else if (!!ctx.doubleRange()) {
+            fromValue = parseFloat(ctx.doubleRange().DOUBLE()[0].getText());
+            toValue = parseFloat(ctx.doubleRange().DOUBLE()[1].getText());
+        }
+        return new SimpleExpression(operator, [fromValue, toValue], !!ctx.NOT());
+    }
+
+    protected handleBooleanComparisonContext(ctx: BooleanComparisonContext): SimpleExpression {
+        const operator: Operator<any> = getOperatorFromToken(ctx._op);
+        const value: boolean = ctx.BOOLEAN().getText().toLowerCase() === 'true';
+        return new SimpleExpression(operator, value, !!ctx.NOT());
+    }
+
+    protected handleNullComparisonContext(ctx: NullComparisonContext): SimpleExpression {
+        const operator: Operator<any> = new IsNull();
+        return new SimpleExpression(operator, undefined, !!ctx.NOT());
     }
 
     // todo 2466 more handle methods

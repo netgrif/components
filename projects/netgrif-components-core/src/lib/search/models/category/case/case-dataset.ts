@@ -70,9 +70,11 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
 
     protected _datafieldOptions: Map<string, Array<Datafield>>;
 
-    private _datafieldOptionsInitialized$: ReplaySubject<void>;
-    private _allowedNetsSub: Subscription;
-    private _userAutocomplete: UserAutocomplete;
+    protected _datafieldOptionsInitialized$: ReplaySubject<void>;
+    protected _allowedNetsSub: Subscription;
+    protected _userAutocomplete: UserAutocomplete;
+
+    protected _isLoadedFromPfql: boolean = false;
 
     public static FieldTypeToInputType(fieldType: string): SearchInputType {
         switch (fieldType) {
@@ -294,7 +296,8 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
     }
 
     protected generateNetConstraint(datafield: Datafield): Query {
-        return this._processCategory.generatePredicate([[datafield.netIdentifier]]).query;
+        return this._isLoadedFromPfql ? new Query(undefined, ResourceTypeQueryPrefix.CASES, true)
+            : this._processCategory.generatePredicate([[datafield.netIdentifier]]).query;
     }
 
     protected createDatafieldOptions(): void {
@@ -468,9 +471,10 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
         }
 
         this._datafieldOptionsInitialized$.pipe(take(1)).subscribe(() => {
+            this._isLoadedFromPfql = true;
             this.selectDataFieldsByPfqlExpression(expression);
             this.selectOperatorFromPfqlExpression(expression);
-            this.setOperands([expression.operandValue] as any);
+            this.setOperands(Array.isArray(expression.operandValue) ? expression.operandValue : [expression.operandValue]);
             isDone$.next();
             isDone$.complete();
         });
