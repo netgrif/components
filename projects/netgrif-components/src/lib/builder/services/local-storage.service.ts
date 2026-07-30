@@ -8,14 +8,14 @@ export class LocalStorageService {
     protected _prefix = '';
 
     constructor(@Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedBuilderViewData) {
-        this._prefix = injectedTabData?.processCase ? injectedTabData?.processCase + '_' : '';
+        this._prefix = injectedTabData?.processCase ? injectedTabData?.processCase?.stringId + '_' : '';
     }
 
     get prefix(): string {
         return this._prefix;
     }
 
-    public getItem(key: string): string {
+    public getItem(key: string): string | null {
         return localStorage.getItem(this._prefix + key);
     }
 

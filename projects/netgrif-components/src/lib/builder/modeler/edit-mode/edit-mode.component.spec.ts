@@ -8,8 +8,9 @@ import {HistoryService} from '../services/history/history.service';
 import {ModelImportService} from '../model-import-service';
 import {ExportService} from '@netgrif/petriflow';
 import {EditModeComponent} from './edit-mode.component';
+import {LocalStorageService} from "../../services/local-storage.service";
 
-describe('BpmnModeComponent', () => {
+describe('EditModeComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [EditModeComponent],
@@ -18,6 +19,7 @@ describe('BpmnModeComponent', () => {
                 ArcFactory,
                 HistoryService,
                 ExportService,
+                LocalStorageService,
                 {provide: ModelImportService, useValue: {}},
                 {provide: EditModeService, useValue: {}},
                 {provide: MatDialog, useValue: {}},
