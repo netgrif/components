@@ -7,8 +7,9 @@ import {BooleanOperator} from '../../boolean-operator';
 import {NoConfigurationAutocompleteCategory} from '../no-configuration-autocomplete-category';
 import {NotEquals} from '../../operator/not-equals';
 import {Categories} from '../categories';
-import {Subscription} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {ResourceTypeQueryPrefix} from "../resource-type-query-prefix";
+import {SimpleExpression} from "../../../../pfql/model/simple-expression";
 
 export class TaskProcess extends NoConfigurationAutocompleteCategory<string> {
 
@@ -46,6 +47,11 @@ export class TaskProcess extends NoConfigurationAutocompleteCategory<string> {
             });
             this.updateOptions();
         });
+    }
+
+    public override loadFromPfqlExpression(expression: SimpleExpression): Observable<void> {
+        // todo 2466
+        return undefined;
     }
 
     protected generateQuery(userInput: Array<Array<string>>): Query {

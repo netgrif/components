@@ -7,9 +7,11 @@ import {OptionalDependencies} from '../../../category-factory/optional-dependenc
 import {NoConfigurationAutocompleteCategory} from '../no-configuration-autocomplete-category';
 import {NotEquals} from '../../operator/not-equals';
 import {Categories} from '../categories';
-import {Subscription} from 'rxjs';
+import {Observable, Subject, Subscription} from 'rxjs';
 import {CaseSearch} from './case-search.enum';
 import {ResourceTypeQueryPrefix} from "../resource-type-query-prefix";
+import {take, filter} from "rxjs/operators";
+import {SimpleExpression} from "../../../../pfql/model/simple-expression";
 
 export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
 
@@ -51,6 +53,27 @@ export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
             });
             this.updateOptions();
         });
+    }
+
+    public override loadFromPfqlExpression(expression: SimpleExpression): Observable<void> {
+        const isDone$ = new Subject<void>();
+        if (!this.selectOperatorFromPfqlExpression(expression)) {
+            isDone$.next();
+            isDone$.complete();
+            return isDone$.asObservable();
+        }
+        this._options$.pipe(
+            filter(options => options.length > 0),
+            take(1)
+        ).subscribe(options => {
+            const found = options.find(option => option.value.includes(expression.operandValue));
+            if (found) {
+                this.setOperands([found] as any);
+            }
+            isDone$.next();
+            isDone$.complete();
+        });
+        return isDone$.asObservable();
     }
 
     /**

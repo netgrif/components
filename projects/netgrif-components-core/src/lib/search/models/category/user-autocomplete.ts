@@ -78,6 +78,13 @@ export class UserAutocomplete implements AutocompleteOptions {
         return of({...savedOption, icon: this.isUserMeTemplate(savedOption) ? UserAutocomplete.USER_ME_ICON : UserAutocomplete.USER_ICON});
     }
 
+    public getOptionFromExpressionValue$(expressionValue: string): Observable<SearchAutocompleteOption<Array<string>>> {
+        return this._userResourceService.getUser(expressionValue).pipe(
+            map(user => {
+                return {text: user.fullName, value: [user.id], icon: UserAutocomplete.USER_ICON};
+            }));
+    }
+
     private isUserMeTemplate(option: SearchAutocompleteOption<Array<string>>): boolean {
         return !!option?.value
             && Array.isArray(option.value)

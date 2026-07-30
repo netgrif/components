@@ -13,6 +13,19 @@ import {MoreThan} from "../search/models/operator/more-than";
 import {MoreThanEqual} from "../search/models/operator/more-than-equal";
 import {NotEquals} from "../search/models/operator/not-equals";
 import {ComplexExpression} from "./model/complex-expression";
+import {EqualsDate} from "../search/models/operator/equals-date";
+import {NotEqualsDate} from "../search/models/operator/not-equals-date";
+import {LessThanDate} from "../search/models/operator/less-than-date";
+import {LessThanEqualDate} from "../search/models/operator/less-than-equal-date";
+import {MoreThanEqualDate} from "../search/models/operator/more-than-equal-date";
+import {MoreThanDate} from "../search/models/operator/more-than-date";
+import {OperatorService} from "../search/operator-service/operator.service";
+import {EqualsDateTime} from "../search/models/operator/equals-date-time";
+import {NotEqualsDateTime} from "../search/models/operator/not-equals-date-time";
+import {MoreThanDateTime} from "../search/models/operator/more-than-date-time";
+import {MoreThanEqualDateTime} from "../search/models/operator/more-than-equal-date-time";
+import {LessThanDateTime} from "../search/models/operator/less-than-date-time";
+import {LessThanEqualDateTime} from "../search/models/operator/less-than-equal-date-time";
 
 // todo 2466
 export function parseQuery(query: string, injector: Injector): Array<QueryItem> {
@@ -49,6 +62,52 @@ export function getOperatorFromToken(operatorToken: Token | null): Operator<any>
             return new MoreThan();
         case QueryLangParser.GTE:
             return new MoreThanEqual();
+        default:
+            return undefined;
+    }
+}
+
+// todo 2466
+export function getDateOperatorFromToken(operatorToken: Token | null, operatorService: OperatorService): Operator<any> | undefined {
+    if (operatorToken === null) {
+        return undefined;
+    }
+    switch (operatorToken.type) {
+        case QueryLangParser.EQ:
+            return new EqualsDate(operatorService);
+        case QueryLangParser.NEQ:
+            return new NotEqualsDate(operatorService);
+        case QueryLangParser.LT:
+            return new LessThanDate(operatorService);
+        case QueryLangParser.LTE:
+            return new LessThanEqualDate(operatorService);
+        case QueryLangParser.GT:
+            return new MoreThanDate(operatorService);
+        case QueryLangParser.GTE:
+            return new MoreThanEqualDate(operatorService);
+        default:
+            return undefined;
+    }
+}
+
+// todo 2466
+export function getDateTimeOperatorFromToken(operatorToken: Token | null, operatorService: OperatorService): Operator<any> | undefined {
+    if (operatorToken === null) {
+        return undefined;
+    }
+    switch (operatorToken.type) {
+        case QueryLangParser.EQ:
+            return new EqualsDateTime(operatorService);
+        case QueryLangParser.NEQ:
+            return new NotEqualsDateTime(operatorService);
+        case QueryLangParser.LT:
+            return new LessThanDateTime(operatorService);
+        case QueryLangParser.LTE:
+            return new LessThanEqualDateTime(operatorService);
+        case QueryLangParser.GT:
+            return new MoreThanDateTime(operatorService);
+        case QueryLangParser.GTE:
+            return new MoreThanEqualDateTime(operatorService);
         default:
             return undefined;
     }

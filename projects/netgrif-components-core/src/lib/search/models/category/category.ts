@@ -4,7 +4,7 @@ import {Query} from '../query/query';
 import {ElementaryPredicate} from '../predicate/elementary-predicate';
 import {SearchInputType} from './search-input-type';
 import {FormControl} from '@angular/forms';
-import {BehaviorSubject, forkJoin, Observable, of, ReplaySubject} from 'rxjs';
+import {BehaviorSubject, forkJoin, Observable, of, ReplaySubject, Subject} from 'rxjs';
 import {debounceTime, defaultIfEmpty, map} from 'rxjs/operators';
 import {OperatorTemplatePart} from '../operator-template-part';
 import {IncrementingCounter} from '../../../utility/incrementing-counter';
@@ -18,6 +18,7 @@ import {FilterTextSegment} from '../persistance/filter-text-segment';
 import {DATE_FORMAT_STRING, DATE_TIME_FORMAT_STRING} from '../../../moment/time-formats';
 import {Type} from '@angular/core';
 import {ResourceTypeQueryPrefix} from "./resource-type-query-prefix";
+import {SimpleExpression} from "../../../pfql/model/simple-expression";
 
 /**
  * The top level of abstraction in search query generation. Represents a set of indexed fields that can be searched.
@@ -421,6 +422,31 @@ export abstract class Category<T> {
             });
         });
         return result$.asObservable();
+    }
+
+    // todo 2466
+    public loadFromPfqlExpression(expression: SimpleExpression): Observable<void> {
+        const isDone$ = new Subject<void>();
+        if (!this.selectOperatorFromPfqlExpression(expression)) {
+            isDone$.next();
+            isDone$.complete();
+            return isDone$.asObservable();
+        }
+        this.setOperands(Array.isArray(expression.operandValue) ? expression.operandValue : [expression.operandValue]);
+        isDone$.next();
+        isDone$.complete();
+        return isDone$.asObservable();
+    }
+
+    protected selectOperatorFromPfqlExpression(expression: SimpleExpression): boolean {
+        const operatorIdx: number = this.allowedOperators.findIndex(op => op.type === expression.operator.type);
+        if (operatorIdx === -1) {
+            // todo 2466 log also category
+            this._log.error(`Operator '${expression.operator.type}' is unavailable for this category`);
+            return false;
+        }
+        this.selectOperator(operatorIdx);
+        return true;
     }
 
     /**

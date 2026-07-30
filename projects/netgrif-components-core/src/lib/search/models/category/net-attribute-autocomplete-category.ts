@@ -7,10 +7,11 @@ import {NameIdPair} from './name-id-pair';
 import {Query} from '../query/query';
 import {BooleanOperator} from '../boolean-operator';
 import {Category} from './category';
-import {Subscription} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {OperatorService} from '../../operator-service/operator.service';
 import {OptionalDependencies} from '../../category-factory/optional-dependencies';
 import {ResourceTypeQueryPrefix} from "./resource-type-query-prefix";
+import {SimpleExpression} from "../../../pfql/model/simple-expression";
 
 /**
  * A utility class for autocomplete search categories that are net specific, such as searching by roles, or tasks.
@@ -59,6 +60,11 @@ export abstract class NetAttributeAutocompleteCategory extends NoConfigurationAu
             });
             this.updateOptions();
         });
+    }
+
+    public override loadFromPfqlExpression(expression: SimpleExpression): Observable<void> {
+        // todo 2466
+        return undefined;
     }
 
     /**

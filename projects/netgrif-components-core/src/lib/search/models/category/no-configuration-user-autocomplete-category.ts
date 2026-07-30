@@ -4,11 +4,13 @@ import {Operator} from '../operator/operator';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {OperatorService} from '../../operator-service/operator.service';
 import {OptionalDependencies} from '../../category-factory/optional-dependencies';
-import {Observable} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {SearchAutocompleteOption} from './search-autocomplete-option';
 import {Query} from '../query/query';
 import {FormControl} from '@angular/forms';
 import {ResourceTypeQueryPrefix} from "./resource-type-query-prefix";
+import {take} from "rxjs/operators";
+import {SimpleExpression} from "../../../pfql/model/simple-expression";
 
 export abstract class NoConfigurationUserAutocompleteCategory extends NoConfigurationAutocompleteCategory<string> {
 
@@ -46,5 +48,28 @@ export abstract class NoConfigurationUserAutocompleteCategory extends NoConfigur
     protected deserializeOperandValue(savedOption: SearchAutocompleteOption<Array<string>>):
         Observable<SearchAutocompleteOption<Array<string>>> {
         return this._userAutocomplete.deserializeOperandValue(savedOption);
+    }
+
+    public override loadFromPfqlExpression(expression: SimpleExpression): Observable<void> {
+        // todo 2466 check if expressionValue is valid object id hex string
+        const isDone$ = new Subject<void>();
+        if (!this.selectOperatorFromPfqlExpression(expression)) {
+            isDone$.next();
+            isDone$.complete();
+            return isDone$.asObservable();
+        }
+        const optionToBeSelected$ = this._userAutocomplete.getOptionFromExpressionValue$(expression.operandValue);
+        optionToBeSelected$.pipe(take(1)).subscribe({
+            next: optionToBeSelected => {
+                this.setOperands([optionToBeSelected] as any);
+                isDone$.next();
+                isDone$.complete();
+            },
+            error: error => {
+                isDone$.next();
+                isDone$.complete();
+            }
+        });
+        return isDone$.asObservable();
     }
 }

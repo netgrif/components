@@ -382,6 +382,7 @@ export class SearchService implements OnDestroy {
         // todo 2466 validate query prefix with filter type
 
         this.clearPredicates(true);
+        this._loadingFromMetadata$.on();
         const queryItems: Array<QueryItem> = parseQuery(query, this._injector);
         if (!queryItems) {
             this._log.warn(`Could not parse query '${query}. Clearing the search...`)
@@ -390,8 +391,11 @@ export class SearchService implements OnDestroy {
 
         // todo 2466 na jednej urovni moze byt len jeden typ operatora
 
-        this.loadExpressionsIntoPredicate(this._rootPredicate, BooleanOperator.AND, queryItems);
-        this.updateActiveFilter();
+        const categoryLoadings$ = this.loadExpressionsIntoPredicate(this._rootPredicate, BooleanOperator.AND, queryItems);
+        forkJoin(categoryLoadings$).subscribe(() => {
+            this._loadingFromMetadata$.off();
+            this.updateActiveFilter();
+        });
     }
 
     /**
@@ -402,30 +406,35 @@ export class SearchService implements OnDestroy {
     }
 
     protected loadExpressionsIntoPredicate(predicate: EditableClausePredicateWithGenerators, operatorOfPredicate: BooleanOperator,
-                                           items: Array<QueryItem>) {
+                                           items: Array<QueryItem>): Array<Observable<void>> {
         const expressions: Array<QueryItem> = items.filter(item => item.type() !== QueryItemType.LOGICAL_OPERATOR);
+        const categoryLoadings$: Array<Observable<void>> = [];
         for (const expression of expressions) {
             if (expression.type() === QueryItemType.SIMPLE_EXPRESSION) {
+                let categoryLoading$: Observable<void>;
                 if (operatorOfPredicate.valueOf() === BooleanOperator.AND.valueOf()) {
                     const branchId = predicate.addNewClausePredicate(BooleanOperator.OR);
                     const localPredicate = predicate.getPredicateMap().get(branchId).getWrappedPredicate() as unknown as EditableClausePredicateWithGenerators;
-                    this.loadSimpleExpressionIntoPredicate(localPredicate, expression as SimpleExpression);
+                    categoryLoading$ = this.loadSimpleExpressionIntoPredicate(localPredicate, expression as SimpleExpression);
                 } else {
-                    this.loadSimpleExpressionIntoPredicate(predicate, expression as SimpleExpression);
+                    categoryLoading$ = this.loadSimpleExpressionIntoPredicate(predicate, expression as SimpleExpression);
                 }
+                categoryLoadings$.push(categoryLoading$);
             } else if (expression.type() === QueryItemType.COMPLEX_EXPRESSION) {
                 this.loadFromQueryItemsIntoNewPredicate(predicate, (expression as ComplexExpression).items);
             } else {
                 // todo 2466 warn ignoring
             }
         }
+        return categoryLoadings$;
     }
 
-    protected loadFromQueryItemsIntoNewPredicate(parentPredicate: EditableClausePredicateWithGenerators, items: Array<QueryItem>) {
+    protected loadFromQueryItemsIntoNewPredicate(parentPredicate: EditableClausePredicateWithGenerators,
+                                                 items: Array<QueryItem>): Array<Observable<void>> {
         const booleanOperator: BooleanOperator = this.determineBooleanOperator(items);
         const branchId = parentPredicate.addNewClausePredicate(booleanOperator);
         const branchPredicate = parentPredicate.getPredicateMap().get(branchId).getWrappedPredicate() as unknown as EditableClausePredicateWithGenerators
-        this.loadExpressionsIntoPredicate(branchPredicate, booleanOperator, items);
+        return this.loadExpressionsIntoPredicate(branchPredicate, booleanOperator, items);
     }
 
     protected determineBooleanOperator(items: Array<QueryItem>): BooleanOperator {
@@ -433,16 +442,10 @@ export class SearchService implements OnDestroy {
         return booleanOperators.length === 0 ? BooleanOperator.AND : (booleanOperators[0] as LogicalOperator).value;
     }
 
-    protected loadSimpleExpressionIntoPredicate(predicate: EditableClausePredicateWithGenerators, simpleExpr: SimpleExpression) {
+    protected loadSimpleExpressionIntoPredicate(predicate: EditableClausePredicateWithGenerators, simpleExpr: SimpleExpression): Observable<void> {
         const category: Category<any> = simpleExpr.category;
-        const operatorIdx: number = category.allowedOperators.findIndex(op => op.type === simpleExpr.operator.type);
-        if (operatorIdx === -1) {
-            // todo 2466 handle error
-            this._log.error(`Operator '${simpleExpr.operator.type}' is unavailable for this category`);
-            return;
-        }
-        category.selectOperator(operatorIdx);
-        category.setOperands([simpleExpr.operandValue]);
+        const categoryLoading$: Observable<void> = category.loadFromPfqlExpression(simpleExpr);
         predicate.addNewPredicateFromGenerator(category);
+        return categoryLoading$;
     }
 }
