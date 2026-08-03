@@ -1,10 +1,10 @@
-import {Injectable, Injector, NgZone, Optional, Inject} from '@angular/core';
+import {Injectable, Injector, NgZone, Optional, Inject, OnDestroy} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {Arc, BasicSimulation, ImportUtils, PetriNet, Place, Transition} from '@netgrif/petriflow';
 import {PetriflowCanvasService} from '@netgrif/petriflow.svg';
 import {PanzoomOptions} from '@panzoom/panzoom';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Subscription} from 'rxjs';
 import {InjectedTabData, NAE_TAB_DATA} from '@netgrif/components-core';
 import {TutorialService} from '../../tutorial/tutorial-service';
 import {ToolGroup} from '../control-panel/tools/tool-group';

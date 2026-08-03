@@ -16,6 +16,7 @@ import {CanvasPlace} from '../../edit-mode/domain/canvas-place';
 import {CanvasTransition} from '../../edit-mode/domain/canvas-transition';
 import {ModelService} from '../model/model.service';
 import {OnDestroy} from '@angular/core';
+import {Subscription} from 'rxjs';
 
 export abstract class CanvasModeService<T extends Tool> extends ModeService<T> implements OnDestroy {
     protected readonly _elements: CanvasElementCollection;

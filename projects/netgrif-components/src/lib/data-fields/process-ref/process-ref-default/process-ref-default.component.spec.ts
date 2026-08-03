@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProcessRefDefaultComponent } from './process-ref-default.component';
 import {NavigationComponentModule} from '../../../navigation/navigation.module';
 import {
-    CaseRefField,
+    ProcessRefField,
     FilterField, FilterType,
     NAE_TAB_DATA,
     NAE_VIEW_ID_SEGMENT,
@@ -85,10 +85,10 @@ describe('ProcessRefDefaultComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-case-ref-default [dataField]="field"></nc-case-ref-default>'
+    template: '<nc-process-ref-default [dataField]="field"></nc-process-ref-default>'
 })
 class TestWrapperComponent {
-    field = new CaseRefField('', '', ['633c6187bb12a90925e0a17e'], {
+    field = new ProcessRefField('', '', ['633c6187bb12a90925e0a17e'], {
         required: true,
         optional: true,
         visible: true,

@@ -147,10 +147,12 @@ export class BuilderComponent {
             });
         } else if (dataFieldPortalData !== null && dataFieldPortalData?.dataField?.value?.length > 0) {
             this._builderIntegrationService.isIntegrated = true;
-            this._caseResourceService.getOneCase(dataFieldPortalData?.dataField?.value[0]).subscribe(processCase => {
+            this._caseResourceService.getOneCase(dataFieldPortalData?.dataField?.value[0]).subscribe({next: processCase => {
                 this._builderIntegrationService.processCase = processCase;
                 this.resolveIntegratedMode();
-            })
+            }, error: () => {
+                this.loading.off();
+            }})
             this._builderIntegrationService.reloadCase.subscribe(() => {
                 this._caseResourceService.getOneCase(this._builderIntegrationService.processCase?.stringId).subscribe(processCase => {
                     this._builderIntegrationService.processCase = processCase;
