@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { SingleTaskViewDialogComponent } from './single-task-view-dialog.component';
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {NoopAnimationsModule} from "@angular/platform-browser/animations";
 import {PanelComponentModule} from "../../panel/panel.module";
@@ -18,15 +19,14 @@ import {
     MockUserResourceService
 } from '@netgrif/components-core';
 import {HeaderComponentModule} from "../../header/header.module";
-import {TaskViewDialogComponent} from "./task-view-dialog.component";
 
-describe('TaskViewDialogComponent', () => {
-    let component: TaskViewDialogComponent;
-    let fixture: ComponentFixture<TaskViewDialogComponent>;
+describe('SingleTaskViewDialogComponent', () => {
+    let component: SingleTaskViewDialogComponent;
+    let fixture: ComponentFixture<SingleTaskViewDialogComponent>;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [TaskViewDialogComponent],
+            declarations: [SingleTaskViewDialogComponent],
             imports: [
                 MaterialModule,
                 HttpClientTestingModule,
@@ -38,7 +38,7 @@ describe('TaskViewDialogComponent', () => {
                 MatDialogModule
             ],
             providers: [
-                { provide: MAT_DIALOG_DATA, useValue: { searchBody: {}} },
+                { provide: MAT_DIALOG_DATA, useValue: {searchBody: {}} },
                 { provide: MatDialogRef, useValue: {} },
                 { provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService },
                 { provide: ConfigurationService, useClass: TestConfigurationService },
@@ -51,7 +51,7 @@ describe('TaskViewDialogComponent', () => {
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(TaskViewDialogComponent);
+        fixture = TestBed.createComponent(SingleTaskViewDialogComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

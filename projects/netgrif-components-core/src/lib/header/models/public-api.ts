@@ -2,6 +2,7 @@ export * from './header-column';
 export * from './header-mode';
 export * from './header-type';
 export * from './default-headers-token';
+export * from './meta-fields-factory'
 
 export * from './user-changes/header-change';
 export * from './user-changes/header-change-description';

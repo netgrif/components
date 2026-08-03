@@ -1,6 +1,6 @@
 {
     "name": "@netgrif/components",
-    "version": "6.5.0",
+    "version": "6.6.0-rc.1",
     "description": "Netgrif Application Engine frontend Angular components",
     "homepage": "https://components.netgrif.com",
     "license": "SEE LICENSE IN LICENSE",
@@ -29,7 +29,7 @@
         "nae frontend"
     ],
     "peerDependencies": {
-        "@netgrif/components-core": "6.5.0",
+        "@netgrif/components-core": "6.6.0-rc.1",
         "@angular-material-components/datetime-picker": "~16.0.0",
         "@angular-material-components/moment-adapter": "~16.0.0",
         "@angular/animations": "~17.1.0",
@@ -48,7 +48,7 @@
         "@mdi/angular-material": "^7.2.96",
         "@mdi/font": "^7.4.47",
         "@netgrif/petri.svg": "1.1.1",
-        "@netgrif/petriflow": "2.2.3",
+        "@netgrif/petriflow": "2.2.4",
         "@netgrif/petriflow.svg": "1.1.1",
         "@ngx-translate/core": "~15.0.0",
         "@ngx-translate/http-loader": "~8.0.0",
