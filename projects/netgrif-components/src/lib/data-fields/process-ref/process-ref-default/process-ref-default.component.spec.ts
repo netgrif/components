@@ -19,7 +19,7 @@ import {
 } from '../../../navigation/group-navigation-component-resolver/default-components/tabbed/default-tabbed-task-view/default-tabbed-task-view.component';
 import {Component} from '@angular/core';
 
-describe('CaseRefDefaultComponent', () => {
+describe('ProcessRefDefaultComponent', () => {
   let component: ProcessRefDefaultComponent;
   let fixture: ComponentFixture<TestWrapperComponent>;
 

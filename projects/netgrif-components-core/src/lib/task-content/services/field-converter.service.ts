@@ -157,6 +157,8 @@ export class FieldConverterService {
             return FieldTypeResource.I18N;
         } else if (item instanceof CaseRefField) {
             return FieldTypeResource.CASE_REF;
+        } else if (item instanceof ProcessRefField) {
+            return FieldTypeResource.PROCESS_REF;
         } else if (item instanceof StringCollectionField) {
             return FieldTypeResource.STRING_COLLECTION;
         }

@@ -15,11 +15,13 @@ import {CanvasElementCollection} from '../../edit-mode/domain/canvas-element-col
 import {CanvasPlace} from '../../edit-mode/domain/canvas-place';
 import {CanvasTransition} from '../../edit-mode/domain/canvas-transition';
 import {ModelService} from '../model/model.service';
+import {OnDestroy} from '@angular/core';
 
-export abstract class CanvasModeService<T extends Tool> extends ModeService<T> {
+export abstract class CanvasModeService<T extends Tool> extends ModeService<T> implements OnDestroy {
     protected readonly _elements: CanvasElementCollection;
     protected _labelText: (n: NodeElement) => string;
     protected _multiplicityText: (a: CanvasArc) => string;
+    protected _tabSubscription: Subscription;
 
     protected constructor(
         protected _arcFactory: ArcFactory,
@@ -31,7 +33,7 @@ export abstract class CanvasModeService<T extends Tool> extends ModeService<T> {
         // the tab's content (and this service) stays alive while the tab is open but hidden (see NAE-326);
         // panzoom's initial view is computed from live element dimensions, which are wrong while hidden,
         // so re-sync it once the tab becomes visible again.
-        this._tabData?.tabSelected$?.subscribe(selected => {
+        this._tabSubscription = this._tabData?.tabSelected$?.subscribe(selected => {
             if (selected) {
                 this.panzoom?.reset({animate: false});
             }
@@ -47,6 +49,10 @@ export abstract class CanvasModeService<T extends Tool> extends ModeService<T> {
             return '';
         };
         this._elements = new CanvasElementCollection();
+    }
+
+    ngOnDestroy(): void {
+        this._tabSubscription?.unsubscribe();
     }
 
     public renderModel(model: PetriNet = this.model): void {

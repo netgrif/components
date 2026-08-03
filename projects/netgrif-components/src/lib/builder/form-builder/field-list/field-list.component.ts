@@ -142,7 +142,7 @@ export class FieldListComponent implements OnInit, AfterViewInit {
 
     typeTitle(type: DataType): string {
         const name = (type as string)?.replace('_', ' ')?.replace(/([A-Z])/g, ' $1')?.toLowerCase();
-        return name?.charAt(0)?.toUpperCase() + name?.slice(1);
+        return name ? name.charAt(0).toUpperCase() + name.slice(1) : '';
     }
 
     addNewField(type: DataType, meta: any) {

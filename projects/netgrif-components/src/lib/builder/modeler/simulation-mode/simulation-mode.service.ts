@@ -26,7 +26,7 @@ import {SwitchLabelTool} from './tool/switch-label-tool';
 import {TaskSimulationTool} from './tool/task-simulation.tool';
 
 @Injectable()
-export class SimulationModeService extends CanvasModeService<SimulationTool> {
+export class SimulationModeService extends CanvasModeService<SimulationTool> implements OnDestroy {
 
     private _simulation: BasicSimulation;
     private _data: Map<string, number>;
@@ -48,6 +48,7 @@ export class SimulationModeService extends CanvasModeService<SimulationTool> {
         step: 0.2,
         noBind: true
     };
+    private _modelSubscription: Subscription;
 
     constructor(
         protected _arcFactory: ArcFactory,
@@ -101,7 +102,7 @@ export class SimulationModeService extends CanvasModeService<SimulationTool> {
             this.switchTools,
         ];
         this.originalModel = new BehaviorSubject<PetriNet>(this._modelService.model.clone());
-        this.originalModel.subscribe(model => {
+        this._modelSubscription = this.originalModel.subscribe(model => {
             this.data = new Map(model.getArcs().filter(a => !!a.reference && !!model.getData(a.reference))
                 .map(a => {
                     const data = model.getData(a.reference);
@@ -113,6 +114,11 @@ export class SimulationModeService extends CanvasModeService<SimulationTool> {
             this.simulation = new BasicSimulation(model, this.data);
             this.renderModel(model);
         });
+    }
+
+    ngOnDestroy(): void {
+        super.ngOnDestroy();
+        this._modelSubscription?.unsubscribe();
     }
 
     renderModel(model: PetriNet = this.originalModel.value) {

@@ -23,6 +23,7 @@
     display: flex;
     align-items: center;
     flex: 1 1 0%;
+    min-width: 0;
 }
 
 .info-label-icon {
@@ -39,6 +40,7 @@
 }
 
 .info-label-title {
+    overflow-wrap: anywhere;
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
