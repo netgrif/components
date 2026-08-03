@@ -8,6 +8,11 @@ import {Net} from '../../../../process/net';
 import {NameIdPair} from '../name-id-pair';
 import {Categories} from '../categories';
 import {ResourceTypeQueryPrefix} from "../resource-type-query-prefix";
+import {SimpleExpression} from "../../../../pfql/model/simple-expression";
+import {Observable, of, Subject} from "rxjs";
+import {filter, take} from "rxjs/operators";
+import {NetAttributePair} from "../net-attribute-pair";
+import {SearchAutocompleteOption} from "../search-autocomplete-option";
 
 
 export class TaskTask extends TaskNetAttributeAutocompleteCategory {
@@ -26,6 +31,33 @@ export class TaskTask extends TaskNetAttributeAutocompleteCategory {
 
     protected extractAttributes(petriNet: Net): Array<NameIdPair> {
         return petriNet.transitions.map(t => ({id: t.stringId, name: t.title}));
+    }
+
+    public override loadFromPfqlExpression(expression: SimpleExpression): Observable<void> {
+        if (!this.selectOperatorFromPfqlExpression(expression)) {
+            return of(undefined);
+        }
+
+        const isDone$ = new Subject<void>();
+        this._options$.pipe(
+            filter(options => options.length > 0),
+            take(1)
+        ).subscribe(options => {
+            let selectedOption: SearchAutocompleteOption<NetAttributePair[]> | undefined;
+            for (const option of options) {
+                if (option.value.some(pair => pair.attributeId === expression.operandValue)) {
+                    selectedOption = option;
+                    break;
+                }
+            }
+            if (!!selectedOption) {
+                this.setOperands([selectedOption] as any);
+            }
+            isDone$.next();
+            isDone$.complete();
+        })
+
+        return isDone$.asObservable();
     }
 
     get inputPlaceholder(): string {

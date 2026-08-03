@@ -426,16 +426,11 @@ export abstract class Category<T> {
 
     // todo 2466
     public loadFromPfqlExpression(expression: SimpleExpression): Observable<void> {
-        const isDone$ = new Subject<void>();
         if (!this.selectOperatorFromPfqlExpression(expression)) {
-            isDone$.next();
-            isDone$.complete();
-            return isDone$.asObservable();
+            return of(undefined);
         }
         this.setOperands(Array.isArray(expression.operandValue) ? expression.operandValue : [expression.operandValue]);
-        isDone$.next();
-        isDone$.complete();
-        return isDone$.asObservable();
+        return of(undefined);
     }
 
     protected selectOperatorFromPfqlExpression(expression: SimpleExpression): boolean {

@@ -29,13 +29,20 @@ import {
     NullComparisonContext,
     NumberComparisonContext,
     ObjectIdComparisonContext,
+    ProcessIdBasicContext,
     ProcessIdentifierBasicContext,
     StringComparisonContext,
     StringLikeComparisonContext,
+    TaskAndExpressionContext,
+    TaskConditionGroupParenthesisContext,
     TaskConditionsAndPagingContext,
+    TaskOrExpressionContext,
     TaskQueryContext,
     TitleBasicContext,
     TitleLikeContext,
+    TransitionIdBasicContext,
+    UserIdBasicContext,
+    UserIdNullContext,
 } from "./generated/QueryLangParser";
 import {LoggerService} from "../logger/services/logger.service";
 import {CaseTitle} from "../search/models/category/case/case-title";
@@ -64,6 +71,9 @@ import {CaseProcess} from "../search/models/category/case/case-process";
 import {DataSimpleExpression} from "./model/data-simple-expression";
 import {InRange} from "../search/models/operator/in-range";
 import {IsNull} from "../search/models/operator/is-null";
+import {TaskTask} from "../search/models/category/task/task-task";
+import {TaskAssignee} from "../search/models/category/task/task-assignee";
+import {TaskProcess} from "../search/models/category/task/task-process";
 
 
 // todo 2466 doc
@@ -156,7 +166,34 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
         return [new ComplexExpression(isNegated, innerItems)];
     };
 
-    // todo 2466 more task alternatives
+    // todo 2466 doc
+    override visitTaskOrExpression = (ctx: TaskOrExpressionContext): Array<QueryItem> => {
+        const andExpressionContexts = ctx.taskAndExpression();
+        const items: Array<QueryItem> = [...this.visit(andExpressionContexts[0])];
+        for (let i = 1; i < andExpressionContexts.length; i++) {
+            items.push(new LogicalOperator(BooleanOperator.OR));
+            items.push(...this.visit(andExpressionContexts[i]));
+        }
+        return items;
+    };
+
+    // todo 2466 doc
+    override visitTaskAndExpression = (ctx: TaskAndExpressionContext): Array<QueryItem> => {
+        const conditionGroupContexts = ctx.taskConditionGroup();
+        const items: Array<QueryItem> = [...this.visit(conditionGroupContexts[0])];
+        for (let i = 1; i < conditionGroupContexts.length; i++) {
+            items.push(new LogicalOperator(BooleanOperator.AND));
+            items.push(...this.visit(conditionGroupContexts[i]));
+        }
+        return items;
+    };
+
+    // todo 2466 doc
+    override visitTaskConditionGroupParenthesis = (ctx: TaskConditionGroupParenthesisContext): Array<QueryItem> => {
+        const innerItems: Array<QueryItem> = [...this.visit(ctx.taskConditions())];
+        const isNegated: boolean = !!ctx.NOT();
+        return [new ComplexExpression(isNegated, innerItems)];
+    };
 
     override visitTitleBasic = (ctx: TitleBasicContext): Array<QueryItem> => {
         if (ctx.parent instanceof CaseComparisonsContext) {
@@ -315,7 +352,29 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
         return [expr];
     };
 
-    // todo 2466 more visit methods (task comparisons)
+    override visitTransitionIdBasic = (ctx: TransitionIdBasicContext): Array<QueryItem> => {
+        const expr: SimpleExpression = this.handleStringComparisonContext(ctx.stringComparison());
+        expr.category = new TaskTask(this._operatorService, this._logger, this._categoryOptionalDependencies);
+        return [expr];
+    }
+
+    override visitUserIdBasic = (ctx: UserIdBasicContext): Array<QueryItem> => {
+        const expr: SimpleExpression = this.handleStringComparisonContext(ctx.stringComparison());
+        expr.category = new TaskAssignee(this._operatorService, this._logger, this._categoryOptionalDependencies);
+        return [expr];
+    };
+
+    override visitUserIdNull = (ctx: UserIdNullContext): Array<QueryItem> => {
+        const expr: SimpleExpression = this.handleNullComparisonContext(ctx.nullComparison());
+        expr.category = new TaskAssignee(this._operatorService, this._logger, this._categoryOptionalDependencies);
+        return [expr];
+    };
+
+    override visitProcessIdBasic = (ctx: ProcessIdBasicContext): Array<QueryItem> => {
+        const expr: SimpleExpression = this.handleStringComparisonContext(ctx.stringComparison());
+        expr.category = new TaskProcess(this._operatorService, this._logger, this._categoryOptionalDependencies);
+        return [expr];
+    };
 
     // todo 2466 implement handler dispatcher?
 

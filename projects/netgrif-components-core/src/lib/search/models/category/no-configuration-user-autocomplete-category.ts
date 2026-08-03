@@ -4,13 +4,14 @@ import {Operator} from '../operator/operator';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {OperatorService} from '../../operator-service/operator.service';
 import {OptionalDependencies} from '../../category-factory/optional-dependencies';
-import {Observable, Subject} from 'rxjs';
+import {Observable, of, Subject} from 'rxjs';
 import {SearchAutocompleteOption} from './search-autocomplete-option';
 import {Query} from '../query/query';
 import {FormControl} from '@angular/forms';
 import {ResourceTypeQueryPrefix} from "./resource-type-query-prefix";
 import {take} from "rxjs/operators";
 import {SimpleExpression} from "../../../pfql/model/simple-expression";
+import {IsNull} from "../operator/is-null";
 
 export abstract class NoConfigurationUserAutocompleteCategory extends NoConfigurationAutocompleteCategory<string> {
 
@@ -34,11 +35,16 @@ export abstract class NoConfigurationUserAutocompleteCategory extends NoConfigur
     }
 
     protected generateQuery(userInput: Array<Array<string>>): Query {
-        if (this.selectedOperator.numberOfOperands !== 1) {
-            throw new Error(`Only unary operators are currently supported by the ${this._className} implementation`);
+        if (this.selectedOperator.numberOfOperands > 1) {
+            throw new Error(`Only unary or none operators are currently supported by the ${this._className} implementation`);
         }
-        return this.selectedOperator.createQuery(this.pfqlKeywords, Array.isArray(userInput[0]) ? userInput[0] : userInput, false)
-            .addPrefixAndGet(this._resourceTypePrefix);
+        if (this.isSelectedOperator(IsNull)) {
+            return (this.selectedOperator as IsNull).createQuery(this.pfqlKeywords)
+                .addPrefixAndGet(this._resourceTypePrefix);
+        } else {
+            return this.selectedOperator.createQuery(this.pfqlKeywords, Array.isArray(userInput[0]) ? userInput[0] : userInput, false)
+                .addPrefixAndGet(this._resourceTypePrefix);
+        }
     }
 
     protected serializeOperandValue(valueFormControl: FormControl): any {
@@ -52,12 +58,14 @@ export abstract class NoConfigurationUserAutocompleteCategory extends NoConfigur
 
     public override loadFromPfqlExpression(expression: SimpleExpression): Observable<void> {
         // todo 2466 check if expressionValue is valid object id hex string
-        const isDone$ = new Subject<void>();
         if (!this.selectOperatorFromPfqlExpression(expression)) {
-            isDone$.next();
-            isDone$.complete();
-            return isDone$.asObservable();
+            return of(undefined);
         }
+        if (!expression.operandValue) {
+            this._generatedPredicate$.next(this.generatePredicate([]))
+            return of(undefined);
+        }
+        const isDone$ = new Subject<void>();
         const optionToBeSelected$ = this._userAutocomplete.getOptionFromExpressionValue$(expression.operandValue);
         optionToBeSelected$.pipe(take(1)).subscribe({
             next: optionToBeSelected => {

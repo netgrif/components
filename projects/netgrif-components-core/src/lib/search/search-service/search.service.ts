@@ -392,6 +392,11 @@ export class SearchService implements OnDestroy {
         // todo 2466 na jednej urovni moze byt len jeden typ operatora
 
         const categoryLoadings$ = this.loadExpressionsIntoPredicate(this._rootPredicate, BooleanOperator.AND, queryItems);
+        if (categoryLoadings$.length === 0) {
+            this._loadingFromMetadata$.off();
+            this.updateActiveFilter();
+            return;
+        }
         forkJoin(categoryLoadings$).subscribe(() => {
             this._loadingFromMetadata$.off();
             this.updateActiveFilter();

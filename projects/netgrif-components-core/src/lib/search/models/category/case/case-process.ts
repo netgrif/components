@@ -7,7 +7,7 @@ import {OptionalDependencies} from '../../../category-factory/optional-dependenc
 import {NoConfigurationAutocompleteCategory} from '../no-configuration-autocomplete-category';
 import {NotEquals} from '../../operator/not-equals';
 import {Categories} from '../categories';
-import {Observable, Subject, Subscription} from 'rxjs';
+import {Observable, of, Subject, Subscription} from 'rxjs';
 import {CaseSearch} from './case-search.enum';
 import {ResourceTypeQueryPrefix} from "../resource-type-query-prefix";
 import {take, filter} from "rxjs/operators";
@@ -56,12 +56,10 @@ export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
     }
 
     public override loadFromPfqlExpression(expression: SimpleExpression): Observable<void> {
-        const isDone$ = new Subject<void>();
         if (!this.selectOperatorFromPfqlExpression(expression)) {
-            isDone$.next();
-            isDone$.complete();
-            return isDone$.asObservable();
+            return of(undefined);
         }
+        const isDone$ = new Subject<void>();
         this._options$.pipe(
             filter(options => options.length > 0),
             take(1)

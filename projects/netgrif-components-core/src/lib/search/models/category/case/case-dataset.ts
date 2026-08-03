@@ -462,18 +462,20 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
     }
 
     public override loadFromPfqlExpression(expression: SimpleExpression): Observable<void> {
-        const isDone$ = new Subject<void>();
         if (!(expression instanceof DataSimpleExpression)) {
             this._log.error("Cannot load category CaseDataSet from wrong PFQL expression")
-            isDone$.next();
-            isDone$.complete();
-            return isDone$.asObservable();
+            return of(undefined);
         }
 
+        const isDone$ = new Subject<void>();
         this._datafieldOptionsInitialized$.pipe(take(1)).subscribe(() => {
             this._isLoadedFromPfql = true;
             this.selectDataFieldsByPfqlExpression(expression);
-            this.selectOperatorFromPfqlExpression(expression);
+            if (!this.selectOperatorFromPfqlExpression(expression)) {
+                isDone$.next();
+                isDone$.complete();
+                return;
+            }
             this.setOperands(Array.isArray(expression.operandValue) ? expression.operandValue : [expression.operandValue]);
             isDone$.next();
             isDone$.complete();

@@ -7,9 +7,11 @@ import {BooleanOperator} from '../../boolean-operator';
 import {NoConfigurationAutocompleteCategory} from '../no-configuration-autocomplete-category';
 import {NotEquals} from '../../operator/not-equals';
 import {Categories} from '../categories';
-import {Observable, Subscription} from 'rxjs';
+import {Observable, of, Subject, Subscription} from 'rxjs';
 import {ResourceTypeQueryPrefix} from "../resource-type-query-prefix";
 import {SimpleExpression} from "../../../../pfql/model/simple-expression";
+import {filter, take} from "rxjs/operators";
+import {SearchAutocompleteOption} from "../search-autocomplete-option";
 
 export class TaskProcess extends NoConfigurationAutocompleteCategory<string> {
 
@@ -50,8 +52,29 @@ export class TaskProcess extends NoConfigurationAutocompleteCategory<string> {
     }
 
     public override loadFromPfqlExpression(expression: SimpleExpression): Observable<void> {
-        // todo 2466
-        return undefined;
+        if (!this.selectOperatorFromPfqlExpression(expression)) {
+            return of(undefined);
+        }
+        const isDone$ = new Subject<void>();
+        this._options$.pipe(
+            filter(options => options.length > 0),
+            take(1)
+        ).subscribe(options => {
+            let selectedOption: SearchAutocompleteOption<string[]> | undefined;
+            for (const option of options) {
+                if (option.value.some(netId => netId === expression.operandValue)) {
+                    selectedOption = option;
+                    break;
+                }
+            }
+            if (!!selectedOption) {
+                this.setOperands([selectedOption] as any);
+            }
+            isDone$.next();
+            isDone$.complete();
+        })
+
+        return isDone$.asObservable();
     }
 
     protected generateQuery(userInput: Array<Array<string>>): Query {
