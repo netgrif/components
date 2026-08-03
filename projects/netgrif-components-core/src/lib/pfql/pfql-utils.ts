@@ -26,23 +26,40 @@ import {MoreThanDateTime} from "../search/models/operator/more-than-date-time";
 import {MoreThanEqualDateTime} from "../search/models/operator/more-than-equal-date-time";
 import {LessThanDateTime} from "../search/models/operator/less-than-date-time";
 import {LessThanEqualDateTime} from "../search/models/operator/less-than-equal-date-time";
+import {LoggerService} from "../logger/services/logger.service";
 
-// todo 2466
+/**
+ * Parses a PFQL query string into an array of query items.
+ *
+ * @param query - The PFQL query string to parse
+ * @param injector - Angular injector used for dependency injection during parsing
+ * @returns An array of QueryItem objects representing the parsed query structure
+ */
 export function parseQuery(query: string, injector: Injector): Array<QueryItem> {
     // todo 2466 injector as parameter?
-    // todo 2466 logging (also catch error)
-    const inputStream = CharStream.fromString(query);
-    const lexer = new QueryLangLexer(inputStream);
-    const tokenStream = new CommonTokenStream(lexer);
-    const parser = new QueryLangParser(tokenStream);
-    const tree = parser.query();
-    const visitor = new PfqlVisitor(injector);
-    let items: Array<QueryItem> = visitor.visit(tree);
-    // todo 2466 push down negations (also in sub-expressions)
-    return reduceComplexToSimpleExpressions(items);
+    const logger = injector.get(LoggerService);
+    try {
+        const inputStream = CharStream.fromString(query);
+        const lexer = new QueryLangLexer(inputStream);
+        const tokenStream = new CommonTokenStream(lexer);
+        const parser = new QueryLangParser(tokenStream);
+        const tree = parser.query();
+        const visitor = new PfqlVisitor(injector);
+        let items: Array<QueryItem> = visitor.visit(tree);
+        // todo 2466 push down negations (also in sub-expressions)
+        return reduceComplexToSimpleExpressions(items);
+    } catch (error) {
+        logger.error(`Could not parse PFQL query: ${error}`);
+    }
 }
 
-// todo 2466
+/**
+ * Converts a lexer token into the corresponding operator instance for basic comparisons.
+ * Supports equality, inequality, substring, and relational operators.
+ *
+ * @param operatorToken - The token representing the operator, or null
+ * @returns The corresponding Operator instance, or undefined if the token is null or unrecognized
+ */
 export function getOperatorFromToken(operatorToken: Token | null): Operator<any> | undefined {
     if (operatorToken === null) {
         return undefined;
@@ -67,7 +84,14 @@ export function getOperatorFromToken(operatorToken: Token | null): Operator<any>
     }
 }
 
-// todo 2466
+/**
+ * Converts a lexer token into the corresponding date-specific operator instance.
+ * Supports date equality, inequality, and relational operators.
+ *
+ * @param operatorToken - The token representing the operator, or null
+ * @param operatorService - Service providing operator-related functionality
+ * @returns The corresponding date Operator instance, or undefined if the token is null or unrecognized
+ */
 export function getDateOperatorFromToken(operatorToken: Token | null, operatorService: OperatorService): Operator<any> | undefined {
     if (operatorToken === null) {
         return undefined;
@@ -90,7 +114,14 @@ export function getDateOperatorFromToken(operatorToken: Token | null, operatorSe
     }
 }
 
-// todo 2466
+/**
+ * Converts a lexer token into the corresponding datetime-specific operator instance.
+ * Supports datetime equality, inequality, and relational operators.
+ *
+ * @param operatorToken - The token representing the operator, or null
+ * @param operatorService - Service providing operator-related functionality
+ * @returns The corresponding datetime Operator instance, or undefined if the token is null or unrecognized
+ */
 export function getDateTimeOperatorFromToken(operatorToken: Token | null, operatorService: OperatorService): Operator<any> | undefined {
     if (operatorToken === null) {
         return undefined;
@@ -129,7 +160,3 @@ function reduceComplexToSimpleExpressions(items: Array<QueryItem>): Array<QueryI
 function canBeReducedToSimpleExpr(complexExpr: ComplexExpression): boolean {
     return !!complexExpr.items && complexExpr.items.length === 1 && complexExpr.items[0]?.type() === QueryItemType.SIMPLE_EXPRESSION;
 }
-
-// todo 2466 date operators
-
-// todo 2466 date-time operators

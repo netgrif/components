@@ -42,7 +42,9 @@ export abstract class Operator<T> {
      */
     private readonly _operatorSymbols: string;
 
-    // todo 2466
+    /**
+     * Type of the current operator
+     */
     private readonly _type: Operators;
 
     protected constructor(numberOfOperands: number, type: Operators, operatorSymbols = '') {

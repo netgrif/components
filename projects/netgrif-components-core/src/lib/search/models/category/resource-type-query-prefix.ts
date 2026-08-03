@@ -3,7 +3,11 @@
  */
 export enum ResourceTypeQueryPrefix {
     CASES = 'cases',
+    CASE = 'case',
     TASKS = 'tasks',
+    TASK = 'task',
     PROCESSES = 'processes',
-    USERS = 'users'
+    PROCESS = 'process',
+    USERS = 'users',
+    USER = 'user'
 }

@@ -1,7 +1,16 @@
 import {QueryItemInterface} from "./query-item-interface";
 import {QueryItem, QueryItemType} from "./query-item-type";
 
-// todo 2466
+/**
+ * Represents a complex expression in a PFQL (Process Filter Query Language) query.
+ *
+ * A complex expression is a composite query item that contains multiple child query items
+ * (either simple expressions or other complex expressions) and can be negated.
+ * It is used to build hierarchical query structures with logical operations.
+ *
+ * The class supports negation push-down operations to optimize query execution by
+ * distributing negations to inner expressions.
+ */
 export class ComplexExpression implements QueryItemInterface {
     protected _negated: boolean;
     protected _items: QueryItem[];

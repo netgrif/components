@@ -3,7 +3,11 @@ import {Operator} from "../../search/models/operator/operator";
 import {QueryItemInterface} from "./query-item-interface";
 import { QueryItemType } from "./query-item-type";
 
-// todo 2466
+/**
+ * Represents a simple PFQL expression consisting of a category, operator, operand value, and negation flag.
+ * A simple expression is a basic building block of PFQL queries that combines a search category with an operator
+ * and a value to create a single query condition. The expression can also be negated to invert its meaning.
+ */
 export class SimpleExpression implements QueryItemInterface {
     protected _category: Category<any>
     protected _operator: Operator<any>

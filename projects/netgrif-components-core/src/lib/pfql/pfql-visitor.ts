@@ -74,13 +74,25 @@ import {IsNull} from "../search/models/operator/is-null";
 import {TaskTask} from "../search/models/category/task/task-task";
 import {TaskAssignee} from "../search/models/category/task/task-assignee";
 import {TaskProcess} from "../search/models/category/task/task-process";
+import {UserService} from "../user/services/user.service";
 
 
-// todo 2466 doc
+/**
+ * Visitor implementation for traversing and processing PFQL (Process Filter Query Language) parse trees.
+ * This visitor converts parsed PFQL queries into executable query items that can be used to filter cases and tasks.
+ *
+ * The visitor supports:
+ * - Case queries with various search criteria (title, author, creation date, process, data fields)
+ * - Task queries with assignee and transition filters
+ * - Complex boolean expressions with AND, OR operations and parenthesized groups
+ * - Multiple comparison operators (equality, ranges, null checks, like patterns)
+ * - Data field queries with type-specific comparisons
+ */
 export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
     protected _logger: LoggerService;
     protected _operatorService: OperatorService
     protected _userResourceService: UserResourceService;
+    protected _userService: UserService;
     protected _categoryFactory: CategoryFactory;
     protected _allowedNetsService: AllowedNetsService;
 
@@ -91,6 +103,7 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
         this._logger = injector.get(LoggerService);
         this._operatorService = injector.get(OperatorService);
         this._userResourceService = injector.get(UserResourceService);
+        this._userService = injector.get(UserService);
         this._categoryFactory = injector.get(CategoryFactory);
         this._allowedNetsService = injector.get(AllowedNetsService);
         this._categoryOptionalDependencies = {
@@ -101,7 +114,12 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
         };
     }
 
-    // todo 2466 doc
+    /**
+     * Visits the root case query context and extracts query items from case conditions.
+     *
+     * @param ctx - The case query parse tree context
+     * @returns An array of query items representing the case search criteria, or an empty array if no conditions are present
+     */
     override visitCaseQuery = (ctx: CaseQueryContext): Array<QueryItem> => {
         const conditionsAndPaging = ctx.caseConditionsAndPaging();
         if (!conditionsAndPaging) {
@@ -110,7 +128,12 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
         return this.visit(conditionsAndPaging);
     };
 
-    // todo 2466 doc
+    /**
+     * Visits the case conditions and paging context and extracts the case conditions.
+     *
+     * @param ctx - The case conditions and paging parse tree context
+     * @returns An array of query items representing the case conditions, or an empty array if no conditions are present
+     */
     override visitCaseConditionsAndPaging = (ctx: CaseConditionsAndPagingContext): Array<QueryItem> => {
         const conditions = ctx.caseConditions();
         if (!conditions) {
@@ -119,7 +142,12 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
         return this.visit(conditions);
     };
 
-    // todo 2466 doc
+    /**
+     * Visits the root task query context and extracts query items from task conditions.
+     *
+     * @param ctx - The task query parse tree context
+     * @returns An array of query items representing the task search criteria, or an empty array if no conditions are present
+     */
     override visitTaskQuery = (ctx: TaskQueryContext): Array<QueryItem> => {
         const conditionsAndPaging = ctx.taskConditionsAndPaging();
         if (!conditionsAndPaging) {
@@ -128,7 +156,12 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
         return this.visit(conditionsAndPaging);
     };
 
-    // todo 2466 doc
+    /**
+     * Visits the task conditions and paging context and extracts the task conditions.
+     *
+     * @param ctx - The task conditions and paging parse tree context
+     * @returns An array of query items representing the task conditions, or an empty array if no conditions are present
+     */
     override visitTaskConditionsAndPaging = (ctx: TaskConditionsAndPagingContext): Array<QueryItem> => {
         const conditions = ctx.taskConditions();
         if (!conditions) {
@@ -137,7 +170,12 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
         return this.visit(conditions);
     };
 
-    // todo 2466 doc
+    /**
+     * Visits a case OR expression and combines multiple AND expressions with OR logical operators.
+     *
+     * @param ctx - The case OR expression parse tree context
+     * @returns An array of query items with AND expressions joined by OR operators
+     */
     override visitCaseOrExpression = (ctx: CaseOrExpressionContext): Array<QueryItem> => {
         const andExpressionContexts = ctx.caseAndExpression();
         const items: Array<QueryItem> = [...this.visit(andExpressionContexts[0])];
@@ -148,7 +186,12 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
         return items;
     };
 
-    // todo 2466 doc
+    /**
+     * Visits a case AND expression and combines multiple condition groups with AND logical operators.
+     *
+     * @param ctx - The case AND expression parse tree context
+     * @returns An array of query items with condition groups joined by AND operators
+     */
     override visitCaseAndExpression = (ctx: CaseAndExpressionContext): Array<QueryItem> => {
         const conditionGroupContexts = ctx.caseConditionGroup();
         const items: Array<QueryItem> = [...this.visit(conditionGroupContexts[0])];
@@ -159,14 +202,25 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
         return items;
     };
 
-    // todo 2466 doc
+    /**
+     * Visits a parenthesized case condition group and wraps the inner conditions in a complex expression.
+     * Supports negation with the NOT keyword.
+     *
+     * @param ctx - The case condition group parenthesis parse tree context
+     * @returns An array containing a single complex expression with the inner conditions and negation flag
+     */
     override visitCaseConditionGroupParenthesis = (ctx: CaseConditionGroupParenthesisContext): Array<QueryItem> => {
         const innerItems: Array<QueryItem> = [...this.visit(ctx.caseConditions())];
         const isNegated: boolean = !!ctx.NOT();
         return [new ComplexExpression(isNegated, innerItems)];
     };
 
-    // todo 2466 doc
+    /**
+     * Visits a task OR expression and combines multiple AND expressions with OR logical operators.
+     *
+     * @param ctx - The task OR expression parse tree context
+     * @returns An array of query items with AND expressions joined by OR operators
+     */
     override visitTaskOrExpression = (ctx: TaskOrExpressionContext): Array<QueryItem> => {
         const andExpressionContexts = ctx.taskAndExpression();
         const items: Array<QueryItem> = [...this.visit(andExpressionContexts[0])];
@@ -177,7 +231,12 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
         return items;
     };
 
-    // todo 2466 doc
+    /**
+     * Visits a task AND expression and combines multiple condition groups with AND logical operators.
+     *
+     * @param ctx - The task AND expression parse tree context
+     * @returns An array of query items with condition groups joined by AND operators
+     */
     override visitTaskAndExpression = (ctx: TaskAndExpressionContext): Array<QueryItem> => {
         const conditionGroupContexts = ctx.taskConditionGroup();
         const items: Array<QueryItem> = [...this.visit(conditionGroupContexts[0])];
@@ -188,13 +247,25 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
         return items;
     };
 
-    // todo 2466 doc
+    /**
+     * Visits a parenthesized task condition group and wraps the inner conditions in a complex expression.
+     * Supports negation with the NOT keyword.
+     *
+     * @param ctx - The task condition group parenthesis parse tree context
+     * @returns An array containing a single complex expression with the inner conditions and negation flag
+     */
     override visitTaskConditionGroupParenthesis = (ctx: TaskConditionGroupParenthesisContext): Array<QueryItem> => {
         const innerItems: Array<QueryItem> = [...this.visit(ctx.taskConditions())];
         const isNegated: boolean = !!ctx.NOT();
         return [new ComplexExpression(isNegated, innerItems)];
     };
 
+    /**
+     * Visits a basic title comparison and creates a case title search expression.
+     *
+     * @param ctx - The title basic parse tree context
+     * @returns An array containing a single simple expression with case title category, or an empty array if no case comparison context exists
+     */
     override visitTitleBasic = (ctx: TitleBasicContext): Array<QueryItem> => {
         if (ctx.parent instanceof CaseComparisonsContext) {
             const expr: SimpleExpression = this.handleStringComparisonContext(ctx.stringComparison());
@@ -206,6 +277,12 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
         }
     };
 
+    /**
+     * Visits a LIKE title comparison and creates a case title search expression with pattern matching.
+     *
+     * @param ctx - The title LIKE parse tree context
+     * @returns An array containing a single simple expression with case title category and LIKE operator, or an empty array if no case comparison context exists
+     */
     override visitTitleLike = (ctx: TitleLikeContext): Array<QueryItem> => {
         if (ctx.parent instanceof CaseComparisonsContext) {
             const expr: SimpleExpression = this.handleStringLikeComparisonContext(ctx.stringLikeComparison());
@@ -217,6 +294,12 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
         }
     };
 
+    /**
+     * Visits a basic ID comparison and creates a case string ID search expression.
+     *
+     * @param ctx - The ID basic parse tree context
+     * @returns An array containing a single simple expression with case string ID category, or an empty array if no case comparison context exists
+     */
     override visitIdBasic = (ctx: IdBasicContext): Array<QueryItem> => {
         if (ctx.parent instanceof CaseComparisonsContext) {
             const expr: SimpleExpression = this.handleObjectIdComparisonContext(ctx.objectIdComparison());
@@ -228,24 +311,48 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
         }
     };
 
+    /**
+     * Visits a basic author comparison and creates a case author search expression.
+     *
+     * @param ctx - The author basic parse tree context
+     * @returns An array containing a single simple expression with case author category
+     */
     override visitAuthorBasic = (ctx: AuthorBasicContext): Array<QueryItem> => {
         const expr: SimpleExpression = this.handleStringComparisonContext(ctx.stringComparison());
         expr.category = new CaseAuthor(this._operatorService, this._logger, this._categoryOptionalDependencies);
         return [expr];
     };
 
+    /**
+     * Visits a basic creation date comparison and creates a case creation date search expression.
+     *
+     * @param ctx - The creation date basic parse tree context
+     * @returns An array containing a single simple expression with case creation date category
+     */
     override visitCdDateBasic = (ctx: CdDateBasicContext): Array<QueryItem> => {
         const expr: SimpleExpression = this.handleDateComparisonContext(ctx.dateComparison());
         expr.category = new CaseCreationDate(this._operatorService, this._logger);
         return [expr];
     };
 
+    /**
+     * Visits a basic creation datetime comparison and creates a case creation datetime search expression.
+     *
+     * @param ctx - The creation datetime basic parse tree context
+     * @returns An array containing a single simple expression with case creation datetime category
+     */
     override visitCdDateTimeBasic = (ctx: CdDateTimeBasicContext): Array<QueryItem> => {
         const expr: SimpleExpression = this.handleDateTimeComparisonContext(ctx.dateTimeComparison());
         expr.category = new CaseCreationDateTime(this._operatorService, this._logger);
         return [expr];
     };
 
+    /**
+     * Visits a creation date range comparison and creates either a date or datetime range search expression.
+     *
+     * @param ctx - The creation date range parse tree context
+     * @returns An array containing a single simple expression with either case creation date or datetime category, or an empty array if no range values are provided
+     */
     override visitCdDateRange = (ctx: CdDateRangeContext): Array<QueryItem> => {
         const inRangeCtx = ctx.inRangeDateComparison();
         if (!!inRangeCtx.dateRange()) {
@@ -262,6 +369,12 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
         }
     };
 
+    /**
+     * Visits a data string comparison and creates a data field search expression for string values.
+     *
+     * @param ctx - The data string parse tree context
+     * @returns An array containing a single data simple expression with case dataset category
+     */
     override visitDataString = (ctx: DataStringContext): Array<QueryItem> => {
         const simpleExpr: SimpleExpression = this.handleStringComparisonContext(ctx.stringComparison());
         const dataExpr: DataSimpleExpression = new DataSimpleExpression(ctx.dataValue().getText(), simpleExpr.operator,
@@ -270,6 +383,12 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
         return [dataExpr];
     };
 
+    /**
+     * Visits a data string LIKE comparison and creates a data field search expression with pattern matching for string values.
+     *
+     * @param ctx - The data string LIKE parse tree context
+     * @returns An array containing a single data simple expression with case dataset category and LIKE operator
+     */
     override visitDataStringLike = (ctx: DataStringLikeContext): Array<QueryItem> => {
         const simpleExpr: SimpleExpression = this.handleStringLikeComparisonContext(ctx.stringLikeComparison());
         const dataExpr: DataSimpleExpression = new DataSimpleExpression(ctx.dataValue().getText(), simpleExpr.operator,
@@ -278,6 +397,12 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
         return [dataExpr];
     };
 
+    /**
+     * Visits a data number comparison and creates a data field search expression for numeric values.
+     *
+     * @param ctx - The data number parse tree context
+     * @returns An array containing a single data simple expression with case dataset category
+     */
     override visitDataNumber = (ctx: DataNumberContext): Array<QueryItem> => {
         const simpleExpr: SimpleExpression = this.handleNumberComparisonContext(ctx.numberComparison());
         const dataExpr: DataSimpleExpression = new DataSimpleExpression(ctx.dataValue().getText(), simpleExpr.operator,
@@ -286,6 +411,12 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
         return [dataExpr];
     };
 
+    /**
+     * Visits a data number range comparison and creates a data field search expression for numeric range values.
+     *
+     * @param ctx - The data number range parse tree context
+     * @returns An array containing a single data simple expression with case dataset category and range operator
+     */
     override visitDataNumberRange = (ctx: DataNumberRangeContext): Array<QueryItem> => {
         const simpleExpr: SimpleExpression = this.handleInRangeNumberComparisonContext(ctx.inRangeNumberComparison());
         const dataExpr: DataSimpleExpression = new DataSimpleExpression(ctx.dataValue().getText(), simpleExpr.operator,
@@ -294,6 +425,12 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
         return [dataExpr];
     };
 
+    /**
+     * Visits a data date comparison and creates a data field search expression for date values.
+     *
+     * @param ctx - The data date parse tree context
+     * @returns An array containing a single data simple expression with case dataset category
+     */
     override visitDataDate = (ctx: DataDateContext): Array<QueryItem> => {
         const simpleExpr: SimpleExpression = this.handleDateComparisonContext(ctx.dateComparison());
         const dataExpr: DataSimpleExpression = new DataSimpleExpression(ctx.dataValue().getText(), simpleExpr.operator,
@@ -302,6 +439,12 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
         return [dataExpr];
     };
 
+    /**
+     * Visits a data date range comparison and creates a data field search expression for date or datetime range values.
+     *
+     * @param ctx - The data date range parse tree context
+     * @returns An array containing a single data simple expression with case dataset category and range operator, or an empty array if no range values are provided
+     */
     override visitDataDateRange = (ctx: DataDateRangeContext): Array<QueryItem> => {
         const inRangeCtx = ctx.inRangeDateComparison();
         let simpleExpr: SimpleExpression;
@@ -320,6 +463,12 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
         return [dataExpr];
     };
 
+    /**
+     * Visits a data datetime comparison and creates a data field search expression for datetime values.
+     *
+     * @param ctx - The data datetime parse tree context
+     * @returns An array containing a single data simple expression with case dataset category
+     */
     override visitDataDatetime = (ctx: DataDatetimeContext): Array<QueryItem> => {
         const simpleExpr: SimpleExpression = this.handleDateTimeComparisonContext(ctx.dateTimeComparison());
         const dataExpr: DataSimpleExpression = new DataSimpleExpression(ctx.dataValue().getText(), simpleExpr.operator,
@@ -328,6 +477,12 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
         return [dataExpr];
     };
 
+    /**
+     * Visits a data boolean comparison and creates a data field search expression for boolean values.
+     *
+     * @param ctx - The data boolean parse tree context
+     * @returns An array containing a single data simple expression with case dataset category
+     */
     override visitDataBoolean = (ctx: DataBooleanContext): Array<QueryItem> => {
         const simpleExpr: SimpleExpression = this.handleBooleanComparisonContext(ctx.booleanComparison());
         const dataExpr: DataSimpleExpression = new DataSimpleExpression(ctx.dataValue().getText(), simpleExpr.operator,
@@ -336,6 +491,12 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
         return [dataExpr];
     };
 
+    /**
+     * Visits a data null comparison and creates a data field search expression for null checks.
+     *
+     * @param ctx - The data null parse tree context
+     * @returns An array containing a single data simple expression with case dataset category and null operator
+     */
     override visitDataNull = (ctx: DataNullContext): Array<QueryItem> => {
         const simpleExpr: SimpleExpression = this.handleNullComparisonContext(ctx.nullComparison());
         const dataExpr: DataSimpleExpression = new DataSimpleExpression(ctx.dataValue().getText(), simpleExpr.operator,
@@ -346,30 +507,60 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
 
     // todo 2466 user field comparison ? ... ak je v string comparison mongo id, tak je to mozno user id?
 
+    /**
+     * Visits a basic process identifier comparison and creates a case process search expression.
+     *
+     * @param ctx - The process identifier basic parse tree context
+     * @returns An array containing a single simple expression with case process category
+     */
     override visitProcessIdentifierBasic = (ctx: ProcessIdentifierBasicContext): Array<QueryItem> => {
         const expr: SimpleExpression = this.handleStringComparisonContext(ctx.stringComparison());
         expr.category = new CaseProcess(this._operatorService, this._logger, this._categoryOptionalDependencies);
         return [expr];
     };
 
+    /**
+     * Visits a basic transition ID comparison and creates a task task search expression.
+     *
+     * @param ctx - The transition ID basic parse tree context
+     * @returns An array containing a single simple expression with task task category
+     */
     override visitTransitionIdBasic = (ctx: TransitionIdBasicContext): Array<QueryItem> => {
         const expr: SimpleExpression = this.handleStringComparisonContext(ctx.stringComparison());
         expr.category = new TaskTask(this._operatorService, this._logger, this._categoryOptionalDependencies);
         return [expr];
     }
 
+    /**
+     * Visits a basic user ID comparison and creates a task assignee search expression.
+     *
+     * @param ctx - The user ID basic parse tree context
+     * @returns An array containing a single simple expression with task assignee category
+     */
     override visitUserIdBasic = (ctx: UserIdBasicContext): Array<QueryItem> => {
         const expr: SimpleExpression = this.handleStringComparisonContext(ctx.stringComparison());
         expr.category = new TaskAssignee(this._operatorService, this._logger, this._categoryOptionalDependencies);
         return [expr];
     };
 
+    /**
+     * Visits a user ID null comparison and creates a task assignee search expression for null checks.
+     *
+     * @param ctx - The user ID null parse tree context
+     * @returns An array containing a single simple expression with task assignee category and null operator
+     */
     override visitUserIdNull = (ctx: UserIdNullContext): Array<QueryItem> => {
         const expr: SimpleExpression = this.handleNullComparisonContext(ctx.nullComparison());
         expr.category = new TaskAssignee(this._operatorService, this._logger, this._categoryOptionalDependencies);
         return [expr];
     };
 
+    /**
+     * Visits a basic process ID comparison for tasks and creates a task process search expression.
+     *
+     * @param ctx - The process ID basic parse tree context
+     * @returns An array containing a single simple expression with task process category
+     */
     override visitProcessIdBasic = (ctx: ProcessIdBasicContext): Array<QueryItem> => {
         const expr: SimpleExpression = this.handleStringComparisonContext(ctx.stringComparison());
         expr.category = new TaskProcess(this._operatorService, this._logger, this._categoryOptionalDependencies);
@@ -378,20 +569,61 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
 
     // todo 2466 implement handler dispatcher?
 
+    /**
+     * Handles a string comparison context and creates a simple expression with the appropriate operator and value.
+     *
+     * @param ctx - The string comparison parse tree context
+     * @returns A simple expression with the extracted operator, string value, and negation flag
+     */
     protected handleStringComparisonContext(ctx: StringComparisonContext): SimpleExpression {
         const operator: Operator<any> = getOperatorFromToken(ctx._op);
-        const value: string = this.removeSingleQuotesFromString(ctx.STRING()?.getText());
-        // todo 2466 handle logged user placeholder
+        const value: string = this.extractStringValueFromStringComparisonContext(ctx);
         return new SimpleExpression(operator, value, !!ctx.NOT());
     };
 
+    /**
+     * Handles a string LIKE comparison context and creates a simple expression with the LIKE operator.
+     *
+     * @param ctx - The string LIKE comparison parse tree context
+     * @returns A simple expression with the LIKE operator, extracted string value, and negation flag
+     */
     protected handleStringLikeComparisonContext(ctx: StringLikeComparisonContext): SimpleExpression {
         const operator: Operator<any> = new Like();
-        const value: string = this.removeSingleQuotesFromString(ctx.stringComparison().STRING()?.getText());
-        // todo 2466 handle logged user placeholder
+        const value: string = this.extractStringValueFromStringComparisonContext(ctx.stringComparison());
         return new SimpleExpression(operator, value, !!ctx.stringComparison().NOT());
     };
 
+    /**
+     * Extracts the string value from a string comparison context, handling both logged user attributes and literal strings.
+     *
+     * @param ctx - The string comparison parse tree context
+     * @returns The extracted string value, either from logged user attributes or from a quoted string literal
+     */
+    protected extractStringValueFromStringComparisonContext(ctx: StringComparisonContext): string {
+        let value: string;
+        if (!!ctx.loggedUserStringAttribute()) {
+            const loggedUserCtx = ctx.loggedUserStringAttribute();
+            const user = this._userService.user;
+            if (!!loggedUserCtx.LOGGED_USER_ID()) {
+                value = user?.id;
+            } else if (!!loggedUserCtx.LOGGED_USER_FULLNAME()) {
+                value = user?.fullName;
+            } else if (!!loggedUserCtx.LOGGED_USER_USERNAME()) {
+                value = user?.email;
+            }
+        }
+        if (!value) {
+            value = this.removeSingleQuotesFromString(ctx.STRING()?.getText());
+        }
+        return value;
+    }
+
+    /**
+     * Removes single quotes from the beginning and end of a string if they are present.
+     *
+     * @param value - The string value that may be enclosed in single quotes
+     * @returns The string with single quotes removed, or the original string if not enclosed in quotes
+     */
     protected removeSingleQuotesFromString(value: string): string {
         if (value && value.length >= 2 && value.startsWith("'") && value.endsWith("'")) {
             return value.substring(1, value.length - 1);
@@ -399,37 +631,75 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
         return value;
     }
 
+    /**
+     * Handles an object ID comparison context and creates a simple expression with the appropriate operator and ID value.
+     *
+     * @param ctx - The object ID comparison parse tree context
+     * @returns A simple expression with the extracted operator, object ID value (either logged user ID or string literal), and negation flag
+     */
     protected handleObjectIdComparisonContext(ctx: ObjectIdComparisonContext): SimpleExpression {
         const operator: Operator<any> = getOperatorFromToken(ctx._op);
-        const value: string = this.removeSingleQuotesFromString(ctx.STRING()?.getText())
-        // todo 2466 handle logged user id placeholder
+        const value: string = !!ctx.LOGGED_USER_ID() ? this._userService.user?.id
+            : this.removeSingleQuotesFromString(ctx.STRING()?.getText());
         return new SimpleExpression(operator, value, !!ctx.NOT());
     }
 
+    /**
+     * Handles a date comparison context and creates a simple expression with the appropriate date operator and date value.
+     *
+     * @param ctx - The date comparison parse tree context
+     * @returns A simple expression with the date operator, extracted date value, and negation flag
+     */
     protected handleDateComparisonContext(ctx: DateComparisonContext): SimpleExpression {
         const operator: Operator<any> = getDateOperatorFromToken(ctx._op, this._operatorService);
         const value: string = ctx.DATE()?.getText();
         return new SimpleExpression(operator, value, !!ctx.NOT());
     }
 
+    /**
+     * Handles a datetime comparison context and creates a simple expression with the appropriate datetime operator and datetime value.
+     *
+     * @param ctx - The datetime comparison parse tree context
+     * @returns A simple expression with the datetime operator, extracted datetime value, and negation flag
+     */
     protected handleDateTimeComparisonContext(ctx: DateTimeComparisonContext): SimpleExpression {
         const operator: Operator<any> = getDateTimeOperatorFromToken(ctx._op, this._operatorService);
         const value: string = ctx.DATETIME()?.getText();
         return new SimpleExpression(operator, value, !!ctx.NOT());
     }
 
+    /**
+     * Handles a date range context and creates a simple expression with the InRangeDate operator and date range values.
+     *
+     * @param ctx - The date range parse tree context
+     * @param isNegated - Whether the range comparison is negated
+     * @returns A simple expression with the InRangeDate operator, array of date values, and negation flag
+     */
     protected handleDateRangeContext(ctx: DateRangeContext, isNegated: boolean): SimpleExpression {
         const operator: Operator<any> = new InRangeDate();
         const value: string[] = ctx.DATE()?.map(terminalNode => terminalNode.getText());
         return new SimpleExpression(operator, value, isNegated);
     }
 
+    /**
+     * Handles a datetime range context and creates a simple expression with the InRangeDateTime operator and datetime range values.
+     *
+     * @param ctx - The datetime range parse tree context
+     * @param isNegated - Whether the range comparison is negated
+     * @returns A simple expression with the InRangeDateTime operator, array of datetime values, and negation flag
+     */
     protected handleDateTimeRangeContext(ctx: DateTimeRangeContext, isNegated: boolean): SimpleExpression {
         const operator: Operator<any> = new InRangeDateTime();
         const value: string[] = ctx.DATETIME()?.map(terminalNode => terminalNode.getText());
         return new SimpleExpression(operator, value, isNegated);
     }
 
+    /**
+     * Handles a number comparison context and creates a simple expression with the appropriate operator and numeric value.
+     *
+     * @param ctx - The number comparison parse tree context
+     * @returns A simple expression with the extracted operator, numeric value (integer or double), and negation flag
+     */
     protected handleNumberComparisonContext(ctx: NumberComparisonContext): SimpleExpression {
         const operator: Operator<any> = getOperatorFromToken(ctx._op);
         let value: number;
@@ -441,6 +711,12 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
         return new SimpleExpression(operator, value, !!ctx.NOT());
     }
 
+    /**
+     * Handles a number range comparison context and creates a simple expression with the InRange operator and numeric range values.
+     *
+     * @param ctx - The in-range number comparison parse tree context
+     * @returns A simple expression with the InRange operator, array of numeric values (integer or double range), and negation flag
+     */
     protected handleInRangeNumberComparisonContext(ctx: InRangeNumberComparisonContext): SimpleExpression {
         const operator: Operator<any> = new InRange();
         let fromValue: number, toValue: number;
@@ -454,16 +730,26 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
         return new SimpleExpression(operator, [fromValue, toValue], !!ctx.NOT());
     }
 
+    /**
+     * Handles a boolean comparison context and creates a simple expression with the appropriate operator and boolean value.
+     *
+     * @param ctx - The boolean comparison parse tree context
+     * @returns A simple expression with the extracted operator, boolean value, and negation flag
+     */
     protected handleBooleanComparisonContext(ctx: BooleanComparisonContext): SimpleExpression {
         const operator: Operator<any> = getOperatorFromToken(ctx._op);
         const value: boolean = ctx.BOOLEAN().getText().toLowerCase() === 'true';
         return new SimpleExpression(operator, value, !!ctx.NOT());
     }
 
+    /**
+     * Handles a null comparison context and creates a simple expression with the IsNull operator.
+     *
+     * @param ctx - The null comparison parse tree context
+     * @returns A simple expression with the IsNull operator, undefined value, and negation flag
+     */
     protected handleNullComparisonContext(ctx: NullComparisonContext): SimpleExpression {
         const operator: Operator<any> = new IsNull();
         return new SimpleExpression(operator, undefined, !!ctx.NOT());
     }
-
-    // todo 2466 more handle methods
 }

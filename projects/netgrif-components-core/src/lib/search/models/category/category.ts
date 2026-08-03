@@ -424,7 +424,15 @@ export abstract class Category<T> {
         return result$.asObservable();
     }
 
-    // todo 2466
+    /**
+     * Loads the category state from a PFQL expression.
+     *
+     * This method attempts to select an operator based on the expression's operator type and then sets the operands
+     * from the expression's operand values. If the operator cannot be selected, the method returns immediately.
+     *
+     * @param expression the PFQL simple expression containing the operator and operand values
+     * @returns an Observable that emits void when the loading is complete
+     */
     public loadFromPfqlExpression(expression: SimpleExpression): Observable<void> {
         if (!this.selectOperatorFromPfqlExpression(expression)) {
             return of(undefined);
@@ -433,10 +441,18 @@ export abstract class Category<T> {
         return of(undefined);
     }
 
+    /**
+     * Selects an operator from the category's allowed operators based on the PFQL expression's operator type.
+     *
+     * This method searches for an operator in the allowed operators array that matches the type specified in the
+     * PFQL expression. If a matching operator is found, it is selected. If no match is found, an error is logged.
+     *
+     * @param expression the PFQL simple expression containing the operator type to select
+     * @returns `true` if a matching operator was found and selected, `false` otherwise
+     */
     protected selectOperatorFromPfqlExpression(expression: SimpleExpression): boolean {
         const operatorIdx: number = this.allowedOperators.findIndex(op => op.type === expression.operator.type);
         if (operatorIdx === -1) {
-            // todo 2466 log also category
             this._log.error(`Operator '${expression.operator.type}' is unavailable for this category`);
             return false;
         }

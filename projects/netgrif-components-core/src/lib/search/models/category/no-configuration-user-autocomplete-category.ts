@@ -57,7 +57,6 @@ export abstract class NoConfigurationUserAutocompleteCategory extends NoConfigur
     }
 
     public override loadFromPfqlExpression(expression: SimpleExpression): Observable<void> {
-        // todo 2466 check if expressionValue is valid object id hex string
         if (!this.selectOperatorFromPfqlExpression(expression)) {
             return of(undefined);
         }
