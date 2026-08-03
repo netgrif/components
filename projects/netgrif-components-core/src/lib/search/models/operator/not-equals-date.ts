@@ -12,9 +12,9 @@ export class NotEqualsDate extends Operator<Moment> {
 
     protected equals: EqualsDate;
 
-    constructor(operators: OperatorService) {
+    constructor(protected _operators: OperatorService) {
         super(1, Operators.NOT_EQUALS_DATE);
-        this.equals = operators.getOperator(EqualsDate) as EqualsDate;
+        this.equals = this._operators.getOperator(EqualsDate) as EqualsDate;
     }
 
     createQuery(pfqlKeywords: Array<string>, args: Array<Moment>): Query {
@@ -31,5 +31,9 @@ export class NotEqualsDate extends Operator<Moment> {
 
     serialize(): Operators | string {
         return Operators.NOT_EQUALS_DATE;
+    }
+
+    negated(): Operator<any> {
+        return new EqualsDate(this._operators);
     }
 }

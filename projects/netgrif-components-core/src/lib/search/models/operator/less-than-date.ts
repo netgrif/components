@@ -4,6 +4,7 @@ import {OperatorService} from '../../operator-service/operator.service';
 import {Query} from '../query/query';
 import {LessThan} from './less-than';
 import {Operators} from './operators';
+import {MoreThanEqualDate} from "./more-than-equal-date";
 
 /**
  * A strict less than operator for Date fields
@@ -12,9 +13,9 @@ export class LessThanDate extends Operator<Moment> {
 
     protected lessThan: LessThan;
 
-    constructor(operators: OperatorService) {
+    constructor(protected _operators: OperatorService) {
         super(1, Operators.LESS_THAN_DATE);
-        this.lessThan = operators.getOperator(LessThan) as LessThan;
+        this.lessThan = this._operators.getOperator(LessThan) as LessThan;
     }
 
     createQuery(pfqlKeywords: Array<string>, args: Array<Moment>): Query {
@@ -29,5 +30,9 @@ export class LessThanDate extends Operator<Moment> {
 
     serialize(): Operators | string {
         return Operators.LESS_THAN_DATE;
+    }
+
+    negated(): Operator<any> {
+        return new MoreThanEqualDate(this._operators);
     }
 }

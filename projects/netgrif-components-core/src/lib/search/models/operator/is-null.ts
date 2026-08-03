@@ -74,4 +74,8 @@ export class IsNull extends Operator<any> {
     serialize(): Operators | string {
         return Operators.IS_NULL;
     }
+
+    negated(): Operator<any> {
+        throw new Error("Operator IsNull cannot be negated");
+    }
 }

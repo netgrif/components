@@ -1,5 +1,6 @@
 import {Operator} from './operator';
 import {Operators} from './operators';
+import {LessThanEqual} from "./less-than-equal";
 
 /**
  * A strict greater than operator for numeric or string fields.
@@ -15,5 +16,9 @@ export class MoreThan extends Operator<number | string> {
 
     serialize(): Operators | string {
         return Operators.MORE_THAN;
+    }
+
+    negated(): Operator<any> {
+        return new LessThanEqual();
     }
 }

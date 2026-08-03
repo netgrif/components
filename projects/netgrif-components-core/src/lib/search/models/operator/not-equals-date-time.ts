@@ -9,9 +9,9 @@ export class NotEqualsDateTime extends Operator<Moment> {
 
     protected equals: EqualsDateTime;
 
-    constructor(operators: OperatorService) {
+    constructor(protected _operators: OperatorService) {
         super(1, Operators.NOT_EQUALS_DATE_TIME);
-        this.equals = operators.getOperator(EqualsDateTime) as EqualsDateTime;
+        this.equals = this._operators.getOperator(EqualsDateTime) as EqualsDateTime;
     }
 
     createQuery(pfqlKeywords: Array<string>, args: Array<Moment>): Query {
@@ -28,5 +28,9 @@ export class NotEqualsDateTime extends Operator<Moment> {
 
     serialize(): Operators | string {
         return Operators.NOT_EQUALS_DATE_TIME;
+    }
+
+    negated(): Operator<any> {
+        return new EqualsDateTime(this._operators);
     }
 }

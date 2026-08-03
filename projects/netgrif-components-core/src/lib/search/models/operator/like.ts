@@ -28,4 +28,8 @@ export class Like extends Operator<string> {
     serialize(): Operators | string {
         return Operators.LIKE;
     }
+
+    negated(): Operator<any> {
+        throw new Error("Operator Like cannot be negated");
+    }
 }

@@ -57,6 +57,9 @@ export abstract class Operator<T> {
         return this._type;
     }
 
+    // todo 2466 doc
+    public abstract negated(): Operator<any>;
+
     /**
      * Escapes all escapable Elasticsearch symbols. Removes all unescapable Elasticsearch symbols.
      *

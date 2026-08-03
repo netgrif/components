@@ -27,4 +27,8 @@ export class LogicalOperator implements QueryItemInterface {
     public get value(): BooleanOperator {
         return this._value;
     }
+
+    public isNegatable(): boolean {
+        return false;
+    }
 }

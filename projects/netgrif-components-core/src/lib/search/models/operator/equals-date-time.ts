@@ -4,6 +4,7 @@ import {Moment} from 'moment';
 import {Query} from '../query/query';
 import {Operator} from './operator';
 import {Operators} from './operators';
+import {NotEqualsDateTime} from "./not-equals-date-time";
 
 /**
  * Equality operator for indexed fields that store a date time object in timestamp format.
@@ -15,9 +16,9 @@ export class EqualsDateTime extends Operator<Moment> {
 
     protected dateTimeRange: InRangeDateTime;
 
-    constructor(operators: OperatorService) {
+    constructor(protected _operators: OperatorService) {
         super(1, Operators.EQUALS_DATE_TIME);
-        this.dateTimeRange = operators.getOperator(InRangeDateTime) as InRangeDateTime;
+        this.dateTimeRange = this._operators.getOperator(InRangeDateTime) as InRangeDateTime;
     }
 
     createQuery(pfqlKeywords: Array<string>, args: Array<Moment>): Query {
@@ -31,5 +32,9 @@ export class EqualsDateTime extends Operator<Moment> {
 
     serialize(): Operators | string {
         return Operators.EQUALS_DATE_TIME;
+    }
+
+    override negated(): Operator<any> {
+        return new NotEqualsDateTime(this._operators);
     }
 }

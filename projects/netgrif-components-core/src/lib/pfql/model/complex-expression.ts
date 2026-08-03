@@ -1,5 +1,6 @@
 import {QueryItemInterface} from "./query-item-interface";
 import {QueryItem, QueryItemType} from "./query-item-type";
+import {Negatable} from "./negatable";
 
 /**
  * Represents a complex expression in a PFQL (Process Filter Query Language) query.
@@ -11,7 +12,7 @@ import {QueryItem, QueryItemType} from "./query-item-type";
  * The class supports negation push-down operations to optimize query execution by
  * distributing negations to inner expressions.
  */
-export class ComplexExpression implements QueryItemInterface {
+export class ComplexExpression implements QueryItemInterface, Negatable {
     protected _negated: boolean;
     protected _items: QueryItem[];
 
@@ -40,8 +41,13 @@ export class ComplexExpression implements QueryItemInterface {
         return this._negated;
     }
 
-    // todo 2466
+    public isNegatable(): boolean {
+        return true;
+    }
+
+    // todo 2466 doc
     public pushDownNegation(): void {
+        // todo 2466
         // negate inner expressions
         // set _negated to false
     }
