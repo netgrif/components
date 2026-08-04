@@ -279,10 +279,11 @@ export class TabView implements TabViewInterface {
     }
 
     public tabChange(event: MatTabChangeEvent) {
-        this._pendingTabUniqueId = this.openedTabs[event.index]?.uniqueId;
-        if (this._pendingTabUniqueId === undefined) {
+        const pendingTabUniqueId = this.openedTabs[event.index]?.uniqueId;
+        if (pendingTabUniqueId === undefined) {
             return;
         }
+        this._pendingTabUniqueId = pendingTabUniqueId;
         if (this._switching) {
             return; // an update is already being processed; the pending value will be picked up after
         }
