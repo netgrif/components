@@ -36,7 +36,7 @@ export class TabView implements TabViewInterface {
 
     private _switching = false;
 
-    private _pendingIndex: number;
+    private _pendingTabUniqueId: string | undefined;
 
     /**
      * @ignore
@@ -279,7 +279,10 @@ export class TabView implements TabViewInterface {
     }
 
     public tabChange(event: MatTabChangeEvent) {
-        this._pendingIndex = event.index;
+        this._pendingTabUniqueId = this.openedTabs[event.index]?.uniqueId;
+        if (this._pendingTabUniqueId === undefined) {
+            return;
+        }
         if (this._switching) {
             return; // an update is already being processed; the pending value will be picked up after
         }
@@ -288,9 +291,10 @@ export class TabView implements TabViewInterface {
 
     private _processSwitch() {
         this._switching = true;
-        const index = this._pendingIndex!;
+        const uniqueId = this._pendingTabUniqueId;
+        const index = this.openedTabs.findIndex(tab => tab.uniqueId === uniqueId);
 
-        if (index !== this.selectedIndex.value) {
+        if (index !== -1 && index !== this.selectedIndex.value) {
             let tab = this.openedTabs[this.selectedIndex.value];
             if (tab) {
                 tab.tabSelected$.next(false);
@@ -304,7 +308,7 @@ export class TabView implements TabViewInterface {
 
         setTimeout(() => {
             this._switching = false;
-            if (this._pendingIndex !== index) {
+            if (this._pendingTabUniqueId !== uniqueId) {
                 this._processSwitch();
             }
         }, 150);
