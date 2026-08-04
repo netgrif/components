@@ -33,6 +33,11 @@ export class TabView implements TabViewInterface {
     public selectedIndex: FormControl<number>;
 
     private uniqueIdCounter = new IncrementingCounter();
+
+    private _switching = false;
+
+    private _pendingTabUniqueId: string | undefined;
+
     /**
      * @ignore
      * Holds a reference to an object that hides some public attributes and methods from tabs.
@@ -274,17 +279,40 @@ export class TabView implements TabViewInterface {
     }
 
     public tabChange(event: MatTabChangeEvent) {
-        if (event.index !== this.selectedIndex.value) {
+        const pendingTabUniqueId = this.openedTabs[event.index]?.uniqueId;
+        if (pendingTabUniqueId === undefined) {
+            return;
+        }
+        this._pendingTabUniqueId = pendingTabUniqueId;
+        if (this._switching) {
+            return; // an update is already being processed; the pending value will be picked up after
+        }
+        this._processSwitch();
+    }
+
+    private _processSwitch() {
+        this._switching = true;
+        const uniqueId = this._pendingTabUniqueId;
+        const index = this.openedTabs.findIndex(tab => tab.uniqueId === uniqueId);
+
+        if (index !== -1 && index !== this.selectedIndex.value) {
             let tab = this.openedTabs[this.selectedIndex.value];
             if (tab) {
                 tab.tabSelected$.next(false);
             }
-            tab = this.openedTabs[event.index];
+            tab = this.openedTabs[index];
             if (tab) {
                 tab.tabSelected$.next(true);
             }
-            this.selectedIndex.setValue(event.index);
+            this.selectedIndex.setValue(index);
         }
+
+        setTimeout(() => {
+            this._switching = false;
+            if (this._pendingTabUniqueId !== uniqueId) {
+                this._processSwitch();
+            }
+        }, 150);
     }
 
     /**
