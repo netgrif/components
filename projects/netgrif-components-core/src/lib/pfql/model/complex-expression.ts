@@ -1,6 +1,7 @@
 import {QueryItemInterface} from "./query-item-interface";
 import {QueryItem, QueryItemType} from "./query-item-type";
 import {Negatable} from "./negatable";
+import {LogicalOperator} from "./logical-operator";
 
 /**
  * Represents a complex expression in a PFQL (Process Filter Query Language) query.
@@ -25,10 +26,6 @@ export class ComplexExpression implements QueryItemInterface, Negatable {
         return QueryItemType.COMPLEX_EXPRESSION;
     }
 
-    public pushItems(items: QueryItem[]) {
-        this._items.push(...items);
-    }
-
     public get items(): QueryItem[] {
         return this._items;
     }
@@ -47,8 +44,40 @@ export class ComplexExpression implements QueryItemInterface, Negatable {
 
     // todo 2466 doc
     public pushDownNegation(): void {
-        // todo 2466
-        // negate inner expressions
-        // set _negated to false
+        this.pushDownNegationForInnerItems();
+        this._negated = false; // must be set after the push-down call
+    }
+
+    // todo 2466 doc
+    public negate(): void {
+        if (this._negated) {
+            this._negated = false; // forces push-down for items
+            this.pushDownNegationForInnerItems();
+            return;
+        }
+        this.negateInnerItems();
+    }
+
+    // todo 2466 doc
+    protected pushDownNegationForInnerItems(): void {
+        for (const item of this._items) {
+            if (!item.isNegatable()) {
+                continue
+            }
+            const expression: Negatable = item as Negatable;
+            this._negated ? expression.negate() : expression.pushDownNegation();
+        }
+    }
+
+    // todo 2466 doc
+    protected negateInnerItems(): void {
+        for (let item of this._items) {
+            if (item.type() === QueryItemType.LOGICAL_OPERATOR) {
+                item = (item as LogicalOperator).opposite(); // todo 2466 test: vymeni to referenciu v poli?
+            } else if (item.isNegatable()) {
+                const expression = item as Negatable;
+                expression.negate();
+            }
+        }
     }
 }

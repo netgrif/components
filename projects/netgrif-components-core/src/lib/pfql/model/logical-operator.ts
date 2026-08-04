@@ -31,4 +31,9 @@ export class LogicalOperator implements QueryItemInterface {
     public isNegatable(): boolean {
         return false;
     }
+
+    // todo 2466 doc
+    public opposite(): LogicalOperator {
+        return this.value === BooleanOperator.OR ? new LogicalOperator(BooleanOperator.AND) : new LogicalOperator(BooleanOperator.OR);
+    }
 }
