@@ -60,20 +60,23 @@ export class ComplexExpression implements QueryItemInterface, Negatable {
 
     // todo 2466 doc
     protected pushDownNegationForInnerItems(): void {
-        for (const item of this._items) {
-            if (!item.isNegatable()) {
-                continue
+        for (let i = 0; i < this._items.length; i++) {
+            const item = this._items[i];
+            if (this._negated && item.type() === QueryItemType.LOGICAL_OPERATOR) {
+                this._items[i] = (item as LogicalOperator).opposite();
+            } else if (item.isNegatable()) {
+                const expression: Negatable = item as Negatable;
+                this._negated ? expression.negate() : expression.pushDownNegation();
             }
-            const expression: Negatable = item as Negatable;
-            this._negated ? expression.negate() : expression.pushDownNegation();
         }
     }
 
     // todo 2466 doc
     protected negateInnerItems(): void {
-        for (let item of this._items) {
+        for (let i = 0; i < this._items.length; i++) {
+            const item = this._items[i];
             if (item.type() === QueryItemType.LOGICAL_OPERATOR) {
-                item = (item as LogicalOperator).opposite(); // todo 2466 test: vymeni to referenciu v poli?
+                this._items[i] = (item as LogicalOperator).opposite();
             } else if (item.isNegatable()) {
                 const expression = item as Negatable;
                 expression.negate();

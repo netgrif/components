@@ -147,6 +147,9 @@ export function getDateTimeOperatorFromToken(operatorToken: Token | null, operat
 }
 
 function reduceComplexToSimpleExpressions(items: Array<QueryItem>): Array<QueryItem> {
+    if (isSingleComplexExpr(items)) {
+        items = (items[0] as ComplexExpression).items;
+    }
     return items?.map(queryItem => {
         if (queryItem.type() === QueryItemType.COMPLEX_EXPRESSION) {
             const complexExpr: ComplexExpression = queryItem as ComplexExpression;
@@ -161,6 +164,10 @@ function reduceComplexToSimpleExpressions(items: Array<QueryItem>): Array<QueryI
 
 function canBeReducedToSimpleExpr(complexExpr: ComplexExpression): boolean {
     return !!complexExpr.items && complexExpr.items.length === 1 && complexExpr.items[0]?.type() === QueryItemType.SIMPLE_EXPRESSION;
+}
+
+function isSingleComplexExpr(items: Array<QueryItem>): boolean {
+    return !!items && items.length === 1 && items[0].type() === QueryItemType.COMPLEX_EXPRESSION;
 }
 
 function pushDownNegations(items: Array<QueryItem>): void {
