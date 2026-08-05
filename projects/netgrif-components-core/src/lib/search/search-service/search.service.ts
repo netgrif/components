@@ -498,7 +498,15 @@ export class SearchService implements OnDestroy {
     }
 
     /**
-     * todo 2466 doc
+     * Loads query items into the root predicate of the search service.
+     *
+     * Validates that all boolean operators in the query items are of the same type (all AND or all OR).
+     * Determines the appropriate boolean operator from the items and loads expressions accordingly.
+     * If the operator is OR, creates a new branch predicate under the root; otherwise loads directly into root.
+     *
+     * @param items the array of query items (expressions and operators) to load into the root predicate
+     * @returns an array of observables that emit when category data is loaded for each simple expression
+     * @throws Error if the query items contain different boolean operator types in the same group
      */
     protected loadFromQueryItemsIntoRootPredicate(items: Array<QueryItem>): Array<Observable<void>> {
         if (!this.areBooleanOperatorsOfSingleType(items)) {

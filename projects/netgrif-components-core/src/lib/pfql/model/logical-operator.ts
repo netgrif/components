@@ -32,7 +32,17 @@ export class LogicalOperator implements QueryItemInterface {
         return false;
     }
 
-    // todo 2466 doc
+    /**
+     * Returns the logical opposite of the current operator.
+     *
+     * This method returns a new LogicalOperator instance with the opposite boolean operator:
+     * - If the current operator is OR, returns AND
+     * - If the current operator is AND, returns OR
+     *
+     * Note: This method does not handle the NOT operator as it operates only on binary operators (AND/OR).
+     *
+     * @returns a new LogicalOperator instance with the opposite operator value
+     */
     public opposite(): LogicalOperator {
         return this.value === BooleanOperator.OR ? new LogicalOperator(BooleanOperator.AND) : new LogicalOperator(BooleanOperator.OR);
     }
