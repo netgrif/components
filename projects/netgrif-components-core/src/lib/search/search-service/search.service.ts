@@ -405,7 +405,7 @@ export class SearchService implements OnDestroy {
             return;
         }
 
-        const categoryLoadings$ = this.loadExpressionsIntoPredicate(this._rootPredicate, BooleanOperator.AND, queryItems);
+        const categoryLoadings$ = this.loadFromQueryItemsIntoRootPredicate(queryItems);
         if (categoryLoadings$.length === 0) {
             this._loadingFromMetadata$.off();
             this.updateActiveFilter();
@@ -463,7 +463,9 @@ export class SearchService implements OnDestroy {
                 }
                 categoryLoadings$.push(categoryLoading$);
             } else if (expression.type() === QueryItemType.COMPLEX_EXPRESSION) {
-                this.loadFromQueryItemsIntoNewPredicate(predicate, (expression as ComplexExpression).items);
+                const subCategoryLoadings$: Array<Observable<void>> = this.loadFromQueryItemsIntoNewPredicate(predicate,
+                    (expression as ComplexExpression).items);
+                categoryLoadings$.push(...subCategoryLoadings$);
             }
         }
         return categoryLoadings$;
@@ -481,10 +483,31 @@ export class SearchService implements OnDestroy {
      */
     protected loadFromQueryItemsIntoNewPredicate(parentPredicate: EditableClausePredicateWithGenerators,
                                                  items: Array<QueryItem>): Array<Observable<void>> {
+        if (!this.areBooleanOperatorsOfSingleType(items)) {
+            throw new Error("Cannot load the PFQL query. There are different boolean operators in the same group of expressions")
+        }
         const booleanOperator: BooleanOperator = this.determineBooleanOperator(items);
         const branchId = parentPredicate.addNewClausePredicate(booleanOperator);
         const branchPredicate = parentPredicate.getPredicateMap().get(branchId).getWrappedPredicate() as unknown as EditableClausePredicateWithGenerators
         return this.loadExpressionsIntoPredicate(branchPredicate, booleanOperator, items);
+    }
+
+    /**
+     * todo 2466 doc
+     */
+    protected loadFromQueryItemsIntoRootPredicate(items: Array<QueryItem>): Array<Observable<void>> {
+        if (!this.areBooleanOperatorsOfSingleType(items)) {
+            throw new Error("Cannot load the PFQL query. There are different boolean operators in the same group of expressions")
+        }
+        const booleanOperator: BooleanOperator = this.determineBooleanOperator(items);
+        let targetPredicate = this.rootPredicate;
+
+        if (booleanOperator === BooleanOperator.OR) {
+            const branchId = this.rootPredicate.addNewClausePredicate(booleanOperator);
+            targetPredicate = this.rootPredicate.getPredicateMap().get(branchId).getWrappedPredicate() as unknown as EditableClausePredicateWithGenerators
+        }
+
+        return this.loadExpressionsIntoPredicate(targetPredicate, booleanOperator, items);
     }
 
     /**
@@ -516,5 +539,12 @@ export class SearchService implements OnDestroy {
         const categoryLoading$: Observable<void> = category.loadFromPfqlExpression(simpleExpr);
         predicate.addNewPredicateFromGenerator(category);
         return categoryLoading$;
+    }
+
+    protected areBooleanOperatorsOfSingleType(items: Array<QueryItem>): boolean {
+        const operators: Array<LogicalOperator> = items.filter(item => item.type() === QueryItemType.LOGICAL_OPERATOR)
+            .map(operator => operator as LogicalOperator);
+
+        return operators.length === 0 || operators.every(op => op.value === operators[0].value);
     }
 }
