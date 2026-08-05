@@ -464,7 +464,7 @@ export class SearchService implements OnDestroy {
                 categoryLoadings$.push(categoryLoading$);
             } else if (expression.type() === QueryItemType.COMPLEX_EXPRESSION) {
                 const subCategoryLoadings$: Array<Observable<void>> = this.loadFromQueryItemsIntoNewPredicate(predicate,
-                    (expression as ComplexExpression).items);
+                    operatorOfPredicate, (expression as ComplexExpression).items);
                 categoryLoadings$.push(...subCategoryLoadings$);
             }
         }
@@ -478,15 +478,20 @@ export class SearchService implements OnDestroy {
      * with that operator, and recursively loads the expressions into the new predicate.
      *
      * @param parentPredicate the parent predicate under which to create the new branch
+     * @param operatorOfParentPredicate boolean operator of the parentPredicate
      * @param items the array of query items to load into the new predicate branch
      * @returns an array of observables that emit when category data is loaded for each simple expression
      */
     protected loadFromQueryItemsIntoNewPredicate(parentPredicate: EditableClausePredicateWithGenerators,
+                                                 operatorOfParentPredicate: BooleanOperator,
                                                  items: Array<QueryItem>): Array<Observable<void>> {
         if (!this.areBooleanOperatorsOfSingleType(items)) {
             throw new Error("Cannot load the PFQL query. There are different boolean operators in the same group of expressions")
         }
         const booleanOperator: BooleanOperator = this.determineBooleanOperator(items);
+        if (operatorOfParentPredicate === booleanOperator) {
+            return this.loadExpressionsIntoPredicate(parentPredicate, booleanOperator, items);
+        }
         const branchId = parentPredicate.addNewClausePredicate(booleanOperator);
         const branchPredicate = parentPredicate.getPredicateMap().get(branchId).getWrappedPredicate() as unknown as EditableClausePredicateWithGenerators
         return this.loadExpressionsIntoPredicate(branchPredicate, booleanOperator, items);
