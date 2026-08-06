@@ -7,7 +7,7 @@ import {SimpleFilter} from '../../filter/models/simple-filter';
 import {MergeOperator} from '../../filter/models/merge-operator';
 import {PredicateRemovalEvent} from '../models/predicate-removal-event';
 import {Query} from '../models/query/query';
-import {distinctUntilChanged, map, tap} from 'rxjs/operators';
+import {distinctUntilChanged, map, tap, filter} from 'rxjs/operators';
 import {EditableClausePredicateWithGenerators} from '../models/predicate/editable-clause-predicate-with-generators';
 import {Category} from '../models/category/category';
 import {PredicateTreeMetadata} from '../models/persistance/generator-metadata';
@@ -53,11 +53,13 @@ export class SearchService implements OnDestroy {
      */
     protected _predicateRemoved$: Subject<PredicateRemovalEvent>;
     protected _loadingFromMetadata$: LoadingEmitter;
+    protected _loadingFromPfql$: LoadingEmitter;
     /**
      * The `rootPredicate` uses this stream to notify the search service about changes to the held query
      */
     private readonly _predicateQueryChanged$: Subject<void>;
     private readonly subFilter: Subscription;
+    private readonly subPredicateChanged: Subscription;
 
     /**
      * The {@link Predicate} tree root uses an [AND]{@link BooleanOperator#AND} operator to combine the Predicates.
@@ -85,6 +87,7 @@ export class SearchService implements OnDestroy {
         this._activeFilter = new BehaviorSubject<Filter>(this._baseFilter);
         this._predicateRemoved$ = new Subject<PredicateRemovalEvent>();
         this._loadingFromMetadata$ = new LoadingEmitter();
+        this._loadingFromPfql$ = new LoadingEmitter();
 
         if (baseFilter.filter instanceof Observable) {
             this.subFilter = baseFilter.filter.subscribe((filter) => {
@@ -93,7 +96,7 @@ export class SearchService implements OnDestroy {
             });
         }
 
-        this.predicateQueryChanged$.subscribe(() => {
+        this.subPredicateChanged = this.predicateQueryChanged$.pipe(filter(() => !this._loadingFromPfql$.value)).subscribe(() => {
             this.updateActiveFilter();
         });
     }
@@ -105,7 +108,9 @@ export class SearchService implements OnDestroy {
         if (this.subFilter) {
             this.subFilter.unsubscribe();
         }
+        this.subPredicateChanged?.unsubscribe();
         this._loadingFromMetadata$.complete();
+        this._loadingFromPfql$.complete();
         this._rootPredicate.destroy();
     }
 
@@ -182,6 +187,15 @@ export class SearchService implements OnDestroy {
     }
 
     /**
+     * @returns whether the search service is currently loading its state from PFQL query or not.
+     *
+     * See [loadFromPfql()]{@link SearchService#loadFromPfql}
+     */
+    public get loadingFromPfql(): boolean {
+        return this._loadingFromPfql$.value;
+    }
+
+    /**
      * @returns an `Observable` that emits `true` if the search service is currently loading its state from metadata,
      * emits `false` otherwise.
      *
@@ -189,6 +203,16 @@ export class SearchService implements OnDestroy {
      */
     public get loadingFromMetadata$(): Observable<boolean> {
         return this._loadingFromMetadata$.asObservable();
+    }
+
+    /**
+     * @returns an `Observable` that emits `true` if the search service is currently loading its state from PFQL query,
+     * emits `false` otherwise.
+     *
+     See [loadFromPfql()]{@link SearchService#loadFromPfql}
+     */
+    public get loadingFromPfql$(): Observable<boolean> {
+        return this._loadingFromPfql$.asObservable();
     }
 
     /**
@@ -247,15 +271,18 @@ export class SearchService implements OnDestroy {
      * Removes all {@link Predicate} objects that contribute to the search. Updates the active Filter if it was affected.
      *
      * @param clearHidden whether the hidden predicates should be cleared as well
+     * @param updateActiveFilter whether the filter should be updated
      */
-    public clearPredicates(clearHidden = false): void {
+    public clearPredicates(clearHidden = false, updateActiveFilter = true): void {
         if (this._rootPredicate.getPredicateMap().size > 0) {
             for (const [id, predicate] of this._rootPredicate.getPredicateMap().entries()) {
                 if (clearHidden || predicate.isVisible) {
                     this.removePredicate(id);
                 }
             }
-            this.updateActiveFilter();
+            if (updateActiveFilter) {
+                this.updateActiveFilter();
+            }
         }
     }
 
@@ -397,8 +424,8 @@ export class SearchService implements OnDestroy {
             return;
         }
 
-        this.clearPredicates(true);
-        this._loadingFromMetadata$.on();
+        this._loadingFromPfql$.on();
+        this.clearPredicates(true, false);
         const queryItems: Array<QueryItem> = parseQuery(query, this._injector);
         if (!queryItems) {
             this._log.warn(`Could not parse query '${query}. Clearing the search...`)
@@ -407,12 +434,12 @@ export class SearchService implements OnDestroy {
 
         const categoryLoadings$ = this.loadFromQueryItemsIntoRootPredicate(queryItems);
         if (categoryLoadings$.length === 0) {
-            this._loadingFromMetadata$.off();
+            this._loadingFromPfql$.off();
             this.updateActiveFilter();
             return;
         }
         forkJoin(categoryLoadings$).subscribe(() => {
-            this._loadingFromMetadata$.off();
+            this._loadingFromPfql$.off();
             this.updateActiveFilter();
         });
     }
