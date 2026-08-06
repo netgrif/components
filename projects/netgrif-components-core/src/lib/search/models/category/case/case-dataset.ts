@@ -45,7 +45,7 @@ import {ResourceTypeQueryPrefix} from "../resource-type-query-prefix";
 import {FieldTypeResource} from "../../../../task-content/model/field-type-resource";
 import {SimpleExpression} from "../../../../pfql/model/simple-expression";
 import {DataSimpleExpression} from "../../../../pfql/model/data-simple-expression";
-import {take} from "rxjs/operators";
+import {take, map} from "rxjs/operators";
 
 interface Datafield {
     netIdentifier: string;
@@ -467,21 +467,17 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
             return of(undefined);
         }
 
-        const isDone$ = new Subject<void>();
-        this._datafieldOptionsInitialized$.pipe(take(1)).subscribe(() => {
-            this._isLoadedFromPfql = true;
-            this.selectDataFieldsByPfqlExpression(expression);
-            if (!this.selectOperatorFromPfqlExpression(expression)) {
-                isDone$.next();
-                isDone$.complete();
-                return;
-            }
-            this.setOperands(Array.isArray(expression.operandValue) ? expression.operandValue : [expression.operandValue]);
-            isDone$.next();
-            isDone$.complete();
-        });
-
-        return isDone$.asObservable();
+        return this._datafieldOptionsInitialized$.pipe(
+            take(1),
+            map(() => {
+                this._isLoadedFromPfql = true;
+                this.selectDataFieldsByPfqlExpression(expression);
+                if (!this.selectOperatorFromPfqlExpression(expression)) {
+                    return;
+                }
+                this.setOperands(Array.isArray(expression.operandValue) ? expression.operandValue : [expression.operandValue]);
+            })
+        );
     }
 
     protected deserializeOperandValue(value: unknown): Observable<any> {
