@@ -19,12 +19,4 @@ export interface QueryItemInterface {
      * complex expression, or logical operator.
      */
     type(): QueryItemType;
-
-    /**
-     * Indicates whether this query item supports negation operations.
-     *
-     * @returns `true` if this item implements {@link Negatable} and can be negated, `false` otherwise.
-     * Logical operators typically return `false`, while expressions return `true`.
-     */
-    isNegatable(): boolean;
 }

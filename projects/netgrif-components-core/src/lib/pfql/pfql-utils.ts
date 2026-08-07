@@ -27,7 +27,6 @@ import {MoreThanEqualDateTime} from "../search/models/operator/more-than-equal-d
 import {LessThanDateTime} from "../search/models/operator/less-than-date-time";
 import {LessThanEqualDateTime} from "../search/models/operator/less-than-equal-date-time";
 import {LoggerService} from "../logger/services/logger.service";
-import {Negatable} from "./model/negatable";
 
 /**
  * Parses a PFQL query string into an array of query items.
@@ -48,7 +47,6 @@ export function parseQuery(query: string, injector: Injector): Array<QueryItem> 
         const visitor = new PfqlVisitor(injector);
 
         let items: Array<QueryItem> = visitor.visit(tree);
-        pushDownNegations(items);
         return reduceComplexToSimpleExpressions(items);
     } catch (error) {
         logger.error(`Could not parse PFQL query: ${error}`);
@@ -168,9 +166,4 @@ function canBeReducedToSimpleExpr(complexExpr: ComplexExpression): boolean {
 
 function isSingleComplexExpr(items: Array<QueryItem>): boolean {
     return !!items && items.length === 1 && items[0].type() === QueryItemType.COMPLEX_EXPRESSION;
-}
-
-function pushDownNegations(items: Array<QueryItem>): void {
-    items.filter(item => item.isNegatable())
-        .forEach(item => (item as Negatable).pushDownNegation());
 }
