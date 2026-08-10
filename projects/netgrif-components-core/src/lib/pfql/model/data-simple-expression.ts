@@ -12,8 +12,8 @@ import {Category} from "../../search/models/category/category";
 export class DataSimpleExpression extends SimpleExpression {
     protected _dataFieldId: string;
 
-    public constructor(dataFieldPath: string, operator: Operator<any>, operandValue: any, negated: boolean, category?: Category<any>) {
-        super(operator, operandValue, negated, category);
+    public constructor(dataFieldPath: string, operator: Operator<any>, operandValue: any, category?: Category<any>) {
+        super(operator, operandValue, category);
 
         const parts = dataFieldPath.split('.');
         this._dataFieldId = parts.length >= 3 && parts[0] === 'data' ? parts[1] : dataFieldPath;

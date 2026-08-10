@@ -5,18 +5,13 @@ import {QueryItem, QueryItemType} from "./query-item-type";
  * Represents a complex expression in a PFQL (Process Filter Query Language) query.
  *
  * A complex expression is a composite query item that contains multiple child query items
- * (either simple expressions or other complex expressions) and can be negated.
+ * (either simple expressions or other complex expressions).
  * It is used to build hierarchical query structures with logical operations.
- *
- * The class supports negation push-down operations to optimize query execution by
- * distributing negations to inner expressions.
  */
 export class ComplexExpression implements QueryItemInterface {
-    protected _negated: boolean;
     protected _items: QueryItem[];
 
-    public constructor(negated: boolean, items: QueryItem[]) {
-        this._negated = negated;
+    public constructor(items: QueryItem[]) {
         this._items = !items ? [] : items;
     }
 
@@ -30,9 +25,5 @@ export class ComplexExpression implements QueryItemInterface {
 
     public set items(items: QueryItem[]) {
         this._items = items;
-    }
-
-    public get isNegated(): boolean {
-        return this._negated;
     }
 }

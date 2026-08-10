@@ -4,20 +4,18 @@ import {QueryItemInterface} from "./query-item-interface";
 import { QueryItemType } from "./query-item-type";
 
 /**
- * Represents a simple PFQL expression consisting of a category, operator, operand value, and negation flag.
+ * Represents a simple PFQL expression consisting of a category, operator, and operand value.
  * A simple expression is a basic building block of PFQL queries that combines a search category with an operator
- * and a value to create a single query condition. The expression can also be negated to invert its meaning.
+ * and a value to create a single query condition.
  */
 export class SimpleExpression implements QueryItemInterface {
     protected _category: Category<any>
     protected _operator: Operator<any>
     protected _operandValue: any;
-    protected _negated: boolean;
 
-    public constructor(operator: Operator<any>, operandValue: any, negated: boolean, category?: Category<any>) {
+    public constructor(operator: Operator<any>, operandValue: any, category?: Category<any>) {
         this._operator = operator;
         this._operandValue = operandValue;
-        this._negated = negated;
         this._category = category;
     }
 
@@ -39,9 +37,5 @@ export class SimpleExpression implements QueryItemInterface {
 
     public get operandValue(): any {
         return this._operandValue;
-    }
-
-    public get negated(): boolean {
-        return this._negated;
     }
 }

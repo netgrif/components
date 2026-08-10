@@ -8,6 +8,7 @@ import {OperatorService} from "../../operator-service/operator.service";
 import {LoggerService} from "../../../logger/services/logger.service";
 import {SearchInputType} from "./search-input-type";
 import {ResourceTypeQueryPrefix} from "./resource-type-query-prefix";
+import {RawExpression} from "../../../pfql/model/raw-expression";
 
 export abstract class PlainQueryCategory extends Category<string> {
     private static readonly _title = 'search.category.plainText'; // todo 2466 add translation
@@ -44,6 +45,11 @@ export abstract class PlainQueryCategory extends Category<string> {
             .filter(fc => !!fc)
             .map(fc => this.transformCategoryValue(fc.value))))
         return;
+    }
+
+    public loadFromPfqlRawExpression(expression: RawExpression): Observable<void> {
+        this.setOperands([expression.rawQuery]);
+        return of(undefined);
     }
 
     get configurationInputs$(): Observable<ConfigurationInput[]> {

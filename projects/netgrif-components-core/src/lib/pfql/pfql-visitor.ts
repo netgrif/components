@@ -26,7 +26,6 @@ import {
     DateTimeRangeContext,
     IdBasicContext,
     InRangeNumberComparisonContext,
-    NullComparisonContext,
     NumberComparisonContext,
     ObjectIdComparisonContext,
     ProcessIdBasicContext,
@@ -75,6 +74,9 @@ import {TaskTask} from "../search/models/category/task/task-task";
 import {TaskAssignee} from "../search/models/category/task/task-assignee";
 import {TaskProcess} from "../search/models/category/task/task-process";
 import {UserService} from "../user/services/user.service";
+import {CasePlainQuery} from "../search/models/category/case/case-plain-query";
+import {RawExpression} from "./model/raw-expression";
+import {TaskPlainQuery} from "../search/models/category/task/task-plain-query";
 
 
 /**
@@ -171,19 +173,11 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
     };
 
     /**
-     * Visits a case OR expression and combines multiple AND expressions with OR logical operators.
-     *
-     * @param ctx - The case OR expression parse tree context
-     * @returns An array of query items with AND expressions joined by OR operators
+     * todo 2466 doc
      */
     override visitCaseOrExpression = (ctx: CaseOrExpressionContext): Array<QueryItem> => {
         const andExpressionContexts = ctx.caseAndExpression();
-        const items: Array<QueryItem> = [...this.visit(andExpressionContexts[0])];
-        for (let i = 1; i < andExpressionContexts.length; i++) {
-            items.push(new LogicalOperator(BooleanOperator.OR));
-            items.push(...this.visit(andExpressionContexts[i]));
-        }
-        return items;
+        return andExpressionContexts.length === 1 ? [...this.visit(andExpressionContexts[0])] : [this.handleCaseRawQuery(ctx.getText())]
     };
 
     /**
@@ -204,31 +198,24 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
 
     /**
      * Visits a parenthesized case condition group and wraps the inner conditions in a complex expression.
-     * Supports negation with the NOT keyword.
      *
      * @param ctx - The case condition group parenthesis parse tree context
-     * @returns An array containing a single complex expression with the inner conditions and negation flag
+     * @returns An array containing a single complex expression with the inner conditions
      */
     override visitCaseConditionGroupParenthesis = (ctx: CaseConditionGroupParenthesisContext): Array<QueryItem> => {
         const innerItems: Array<QueryItem> = [...this.visit(ctx.caseConditions())];
-        const isNegated: boolean = !!ctx.NOT();
-        return [new ComplexExpression(isNegated, innerItems)];
+        if (!!ctx.NOT()) {
+            return [this.handleCaseRawQuery(ctx.getText())];
+        }
+        return [new ComplexExpression(innerItems)];
     };
 
     /**
-     * Visits a task OR expression and combines multiple AND expressions with OR logical operators.
-     *
-     * @param ctx - The task OR expression parse tree context
-     * @returns An array of query items with AND expressions joined by OR operators
+     * todo 2466 doc
      */
     override visitTaskOrExpression = (ctx: TaskOrExpressionContext): Array<QueryItem> => {
         const andExpressionContexts = ctx.taskAndExpression();
-        const items: Array<QueryItem> = [...this.visit(andExpressionContexts[0])];
-        for (let i = 1; i < andExpressionContexts.length; i++) {
-            items.push(new LogicalOperator(BooleanOperator.OR));
-            items.push(...this.visit(andExpressionContexts[i]));
-        }
-        return items;
+        return andExpressionContexts.length === 1 ? [...this.visit(andExpressionContexts[0])] : [this.handleTaskRawQuery(ctx.getText())]
     };
 
     /**
@@ -256,8 +243,10 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
      */
     override visitTaskConditionGroupParenthesis = (ctx: TaskConditionGroupParenthesisContext): Array<QueryItem> => {
         const innerItems: Array<QueryItem> = [...this.visit(ctx.taskConditions())];
-        const isNegated: boolean = !!ctx.NOT();
-        return [new ComplexExpression(isNegated, innerItems)];
+        if (!!ctx.NOT()) {
+            return [this.handleTaskRawQuery(ctx.getText())];
+        }
+        return [new ComplexExpression(innerItems)];
     };
 
     /**
@@ -268,6 +257,9 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
      */
     override visitTitleBasic = (ctx: TitleBasicContext): Array<QueryItem> => {
         if (ctx.parent instanceof CaseComparisonsContext) {
+            if (!!ctx.stringComparison().NOT()) {
+                return [this.handleCaseRawQuery(ctx.getText())];
+            }
             const expr: SimpleExpression = this.handleStringComparisonContext(ctx.stringComparison());
             expr.category = new CaseTitle(this._operatorService, this._logger);
             return [expr];
@@ -285,6 +277,9 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
      */
     override visitTitleLike = (ctx: TitleLikeContext): Array<QueryItem> => {
         if (ctx.parent instanceof CaseComparisonsContext) {
+            if (!!ctx.stringLikeComparison().stringComparison().NOT()) {
+                return [this.handleCaseRawQuery(ctx.getText())];
+            }
             const expr: SimpleExpression = this.handleStringLikeComparisonContext(ctx.stringLikeComparison());
             expr.category = new CaseTitle(this._operatorService, this._logger);
             return [expr];
@@ -302,6 +297,9 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
      */
     override visitIdBasic = (ctx: IdBasicContext): Array<QueryItem> => {
         if (ctx.parent instanceof CaseComparisonsContext) {
+            if (!!ctx.objectIdComparison().NOT()) {
+                return [this.handleCaseRawQuery(ctx.getText())];
+            }
             const expr: SimpleExpression = this.handleObjectIdComparisonContext(ctx.objectIdComparison());
             expr.category = new CaseStringId(this._operatorService, this._logger);
             return [expr];
@@ -318,6 +316,9 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
      * @returns An array containing a single simple expression with case author category
      */
     override visitAuthorBasic = (ctx: AuthorBasicContext): Array<QueryItem> => {
+        if (!!ctx.stringComparison().NOT()) {
+            return [this.handleCaseRawQuery(ctx.getText())];
+        }
         const expr: SimpleExpression = this.handleStringComparisonContext(ctx.stringComparison());
         expr.category = new CaseAuthor(this._operatorService, this._logger, this._categoryOptionalDependencies);
         return [expr];
@@ -330,6 +331,9 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
      * @returns An array containing a single simple expression with case creation date category
      */
     override visitCdDateBasic = (ctx: CdDateBasicContext): Array<QueryItem> => {
+        if (!!ctx.dateComparison().NOT()) {
+            return [this.handleCaseRawQuery(ctx.getText())];
+        }
         const expr: SimpleExpression = this.handleDateComparisonContext(ctx.dateComparison());
         expr.category = new CaseCreationDate(this._operatorService, this._logger);
         return [expr];
@@ -342,6 +346,9 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
      * @returns An array containing a single simple expression with case creation datetime category
      */
     override visitCdDateTimeBasic = (ctx: CdDateTimeBasicContext): Array<QueryItem> => {
+        if (!!ctx.dateTimeComparison().NOT()) {
+            return [this.handleCaseRawQuery(ctx.getText())];
+        }
         const expr: SimpleExpression = this.handleDateTimeComparisonContext(ctx.dateTimeComparison());
         expr.category = new CaseCreationDateTime(this._operatorService, this._logger);
         return [expr];
@@ -355,12 +362,15 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
      */
     override visitCdDateRange = (ctx: CdDateRangeContext): Array<QueryItem> => {
         const inRangeCtx = ctx.inRangeDateComparison();
+        if (!!inRangeCtx.NOT()) {
+            return [this.handleCaseRawQuery(ctx.getText())];
+        }
         if (!!inRangeCtx.dateRange()) {
-            const expr: SimpleExpression = this.handleDateRangeContext(inRangeCtx.dateRange(), !!inRangeCtx.NOT());
+            const expr: SimpleExpression = this.handleDateRangeContext(inRangeCtx.dateRange());
             expr.category = new CaseCreationDate(this._operatorService, this._logger);
             return [expr];
         } else if (!!inRangeCtx.dateTimeRange()) {
-            const expr: SimpleExpression = this.handleDateTimeRangeContext(inRangeCtx.dateTimeRange(), !!inRangeCtx.NOT());
+            const expr: SimpleExpression = this.handleDateTimeRangeContext(inRangeCtx.dateTimeRange());
             expr.category = new CaseCreationDateTime(this._operatorService, this._logger);
             return [expr];
         } else {
@@ -376,9 +386,12 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
      * @returns An array containing a single data simple expression with case dataset category
      */
     override visitDataString = (ctx: DataStringContext): Array<QueryItem> => {
+        if (!!ctx.stringComparison().NOT()) {
+            return [this.handleCaseRawQuery(ctx.getText())];
+        }
         const simpleExpr: SimpleExpression = this.handleStringComparisonContext(ctx.stringComparison());
         const dataExpr: DataSimpleExpression = new DataSimpleExpression(ctx.dataValue().getText(), simpleExpr.operator,
-            simpleExpr.operandValue, simpleExpr.negated);
+            simpleExpr.operandValue);
         dataExpr.category = new CaseDataset(this._operatorService, this._logger, this._categoryOptionalDependencies);
         return [dataExpr];
     };
@@ -390,9 +403,12 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
      * @returns An array containing a single data simple expression with case dataset category and LIKE operator
      */
     override visitDataStringLike = (ctx: DataStringLikeContext): Array<QueryItem> => {
+        if (!!ctx.stringLikeComparison().stringComparison().NOT()) {
+            return [this.handleCaseRawQuery(ctx.getText())];
+        }
         const simpleExpr: SimpleExpression = this.handleStringLikeComparisonContext(ctx.stringLikeComparison());
         const dataExpr: DataSimpleExpression = new DataSimpleExpression(ctx.dataValue().getText(), simpleExpr.operator,
-            simpleExpr.operandValue, simpleExpr.negated);
+            simpleExpr.operandValue);
         dataExpr.category = new CaseDataset(this._operatorService, this._logger, this._categoryOptionalDependencies);
         return [dataExpr];
     };
@@ -404,9 +420,12 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
      * @returns An array containing a single data simple expression with case dataset category
      */
     override visitDataNumber = (ctx: DataNumberContext): Array<QueryItem> => {
+        if (!!ctx.numberComparison().NOT()) {
+            return [this.handleCaseRawQuery(ctx.getText())];
+        }
         const simpleExpr: SimpleExpression = this.handleNumberComparisonContext(ctx.numberComparison());
         const dataExpr: DataSimpleExpression = new DataSimpleExpression(ctx.dataValue().getText(), simpleExpr.operator,
-            simpleExpr.operandValue, simpleExpr.negated);
+            simpleExpr.operandValue);
         dataExpr.category = new CaseDataset(this._operatorService, this._logger, this._categoryOptionalDependencies);
         return [dataExpr];
     };
@@ -418,9 +437,12 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
      * @returns An array containing a single data simple expression with case dataset category and range operator
      */
     override visitDataNumberRange = (ctx: DataNumberRangeContext): Array<QueryItem> => {
+        if (!!ctx.inRangeNumberComparison().NOT()) {
+            return [this.handleCaseRawQuery(ctx.getText())];
+        }
         const simpleExpr: SimpleExpression = this.handleInRangeNumberComparisonContext(ctx.inRangeNumberComparison());
         const dataExpr: DataSimpleExpression = new DataSimpleExpression(ctx.dataValue().getText(), simpleExpr.operator,
-            simpleExpr.operandValue, simpleExpr.negated);
+            simpleExpr.operandValue);
         dataExpr.category = new CaseDataset(this._operatorService, this._logger, this._categoryOptionalDependencies);
         return [dataExpr];
     };
@@ -432,9 +454,12 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
      * @returns An array containing a single data simple expression with case dataset category
      */
     override visitDataDate = (ctx: DataDateContext): Array<QueryItem> => {
+        if (!!ctx.dateComparison().NOT()) {
+            return [this.handleCaseRawQuery(ctx.getText())];
+        }
         const simpleExpr: SimpleExpression = this.handleDateComparisonContext(ctx.dateComparison());
         const dataExpr: DataSimpleExpression = new DataSimpleExpression(ctx.dataValue().getText(), simpleExpr.operator,
-            simpleExpr.operandValue, simpleExpr.negated);
+            simpleExpr.operandValue);
         dataExpr.category = new CaseDataset(this._operatorService, this._logger, this._categoryOptionalDependencies);
         return [dataExpr];
     };
@@ -447,18 +472,21 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
      */
     override visitDataDateRange = (ctx: DataDateRangeContext): Array<QueryItem> => {
         const inRangeCtx = ctx.inRangeDateComparison();
+        if (!!inRangeCtx.NOT()) {
+            return [this.handleCaseRawQuery(ctx.getText())];
+        }
         let simpleExpr: SimpleExpression;
         if (!!inRangeCtx.dateRange()) {
-            simpleExpr = this.handleDateRangeContext(inRangeCtx.dateRange(), !!inRangeCtx.NOT());
+            simpleExpr = this.handleDateRangeContext(inRangeCtx.dateRange());
         } else if (!!inRangeCtx.dateTimeRange()) {
-            simpleExpr = this.handleDateTimeRangeContext(inRangeCtx.dateTimeRange(), !!inRangeCtx.NOT());
+            simpleExpr = this.handleDateTimeRangeContext(inRangeCtx.dateTimeRange());
         } else {
             this._logger.error("No range values provided for creationDate range comparison");
             return [];
         }
 
         const dataExpr: DataSimpleExpression = new DataSimpleExpression(ctx.dataValue().getText(), simpleExpr.operator,
-            simpleExpr.operandValue, simpleExpr.negated);
+            simpleExpr.operandValue);
         dataExpr.category = new CaseDataset(this._operatorService, this._logger, this._categoryOptionalDependencies);
         return [dataExpr];
     };
@@ -470,9 +498,12 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
      * @returns An array containing a single data simple expression with case dataset category
      */
     override visitDataDatetime = (ctx: DataDatetimeContext): Array<QueryItem> => {
+        if (!!ctx.dateTimeComparison().NOT()) {
+            return [this.handleCaseRawQuery(ctx.getText())];
+        }
         const simpleExpr: SimpleExpression = this.handleDateTimeComparisonContext(ctx.dateTimeComparison());
         const dataExpr: DataSimpleExpression = new DataSimpleExpression(ctx.dataValue().getText(), simpleExpr.operator,
-            simpleExpr.operandValue, simpleExpr.negated);
+            simpleExpr.operandValue);
         dataExpr.category = new CaseDataset(this._operatorService, this._logger, this._categoryOptionalDependencies);
         return [dataExpr];
     };
@@ -484,9 +515,12 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
      * @returns An array containing a single data simple expression with case dataset category
      */
     override visitDataBoolean = (ctx: DataBooleanContext): Array<QueryItem> => {
+        if (!!ctx.booleanComparison().NOT()) {
+            return [this.handleCaseRawQuery(ctx.getText())];
+        }
         const simpleExpr: SimpleExpression = this.handleBooleanComparisonContext(ctx.booleanComparison());
         const dataExpr: DataSimpleExpression = new DataSimpleExpression(ctx.dataValue().getText(), simpleExpr.operator,
-            simpleExpr.operandValue, simpleExpr.negated);
+            simpleExpr.operandValue);
         dataExpr.category = new CaseDataset(this._operatorService, this._logger, this._categoryOptionalDependencies);
         return [dataExpr];
     };
@@ -498,9 +532,12 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
      * @returns An array containing a single data simple expression with case dataset category and null operator
      */
     override visitDataNull = (ctx: DataNullContext): Array<QueryItem> => {
-        const simpleExpr: SimpleExpression = this.handleNullComparisonContext(ctx.nullComparison());
+        if (!!ctx.nullComparison().NOT()) {
+            return [this.handleCaseRawQuery(ctx.getText())];
+        }
+        const simpleExpr: SimpleExpression = this.handleNullComparisonContext();
         const dataExpr: DataSimpleExpression = new DataSimpleExpression(ctx.dataValue().getText(), simpleExpr.operator,
-            simpleExpr.operandValue, simpleExpr.negated);
+            simpleExpr.operandValue);
         dataExpr.category = new CaseDataset(this._operatorService, this._logger, this._categoryOptionalDependencies);
         return [dataExpr];
     };
@@ -514,6 +551,9 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
      * @returns An array containing a single simple expression with case process category
      */
     override visitProcessIdentifierBasic = (ctx: ProcessIdentifierBasicContext): Array<QueryItem> => {
+        if (!!ctx.stringComparison().NOT()) {
+            return [this.handleCaseRawQuery(ctx.getText())];
+        }
         const expr: SimpleExpression = this.handleStringComparisonContext(ctx.stringComparison());
         expr.category = new CaseProcess(this._operatorService, this._logger, this._categoryOptionalDependencies);
         return [expr];
@@ -526,6 +566,9 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
      * @returns An array containing a single simple expression with task task category
      */
     override visitTransitionIdBasic = (ctx: TransitionIdBasicContext): Array<QueryItem> => {
+        if (!!ctx.stringComparison().NOT()) {
+            return [this.handleTaskRawQuery(ctx.getText())];
+        }
         const expr: SimpleExpression = this.handleStringComparisonContext(ctx.stringComparison());
         expr.category = new TaskTask(this._operatorService, this._logger, this._categoryOptionalDependencies);
         return [expr];
@@ -538,6 +581,9 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
      * @returns An array containing a single simple expression with task assignee category
      */
     override visitUserIdBasic = (ctx: UserIdBasicContext): Array<QueryItem> => {
+        if (!!ctx.stringComparison().NOT()) {
+            return [this.handleTaskRawQuery(ctx.getText())];
+        }
         const expr: SimpleExpression = this.handleStringComparisonContext(ctx.stringComparison());
         expr.category = new TaskAssignee(this._operatorService, this._logger, this._categoryOptionalDependencies);
         return [expr];
@@ -550,7 +596,10 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
      * @returns An array containing a single simple expression with task assignee category and null operator
      */
     override visitUserIdNull = (ctx: UserIdNullContext): Array<QueryItem> => {
-        const expr: SimpleExpression = this.handleNullComparisonContext(ctx.nullComparison());
+        if (!!ctx.nullComparison().NOT()) {
+            return [this.handleTaskRawQuery(ctx.getText())];
+        }
+        const expr: SimpleExpression = this.handleNullComparisonContext();
         expr.category = new TaskAssignee(this._operatorService, this._logger, this._categoryOptionalDependencies);
         return [expr];
     };
@@ -562,6 +611,9 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
      * @returns An array containing a single simple expression with task process category
      */
     override visitProcessIdBasic = (ctx: ProcessIdBasicContext): Array<QueryItem> => {
+        if (!!ctx.stringComparison().NOT()) {
+            return [this.handleTaskRawQuery(ctx.getText())];
+        }
         const expr: SimpleExpression = this.handleStringComparisonContext(ctx.stringComparison());
         expr.category = new TaskProcess(this._operatorService, this._logger, this._categoryOptionalDependencies);
         return [expr];
@@ -578,7 +630,7 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
     protected handleStringComparisonContext(ctx: StringComparisonContext): SimpleExpression {
         const operator: Operator<any> = getOperatorFromToken(ctx._op);
         const value: string = this.extractStringValueFromStringComparisonContext(ctx);
-        return new SimpleExpression(operator, value, !!ctx.NOT());
+        return new SimpleExpression(operator, value);
     };
 
     /**
@@ -590,7 +642,7 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
     protected handleStringLikeComparisonContext(ctx: StringLikeComparisonContext): SimpleExpression {
         const operator: Operator<any> = new Like();
         const value: string = this.extractStringValueFromStringComparisonContext(ctx.stringComparison());
-        return new SimpleExpression(operator, value, !!ctx.stringComparison().NOT());
+        return new SimpleExpression(operator, value);
     };
 
     /**
@@ -641,7 +693,7 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
         const operator: Operator<any> = getOperatorFromToken(ctx._op);
         const value: string = !!ctx.LOGGED_USER_ID() ? this._userService.user?.id
             : this.removeSingleQuotesFromString(ctx.STRING()?.getText());
-        return new SimpleExpression(operator, value, !!ctx.NOT());
+        return new SimpleExpression(operator, value);
     }
 
     /**
@@ -653,7 +705,7 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
     protected handleDateComparisonContext(ctx: DateComparisonContext): SimpleExpression {
         const operator: Operator<any> = getDateOperatorFromToken(ctx._op, this._operatorService);
         const value: string = ctx.DATE()?.getText();
-        return new SimpleExpression(operator, value, !!ctx.NOT());
+        return new SimpleExpression(operator, value);
     }
 
     /**
@@ -665,33 +717,31 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
     protected handleDateTimeComparisonContext(ctx: DateTimeComparisonContext): SimpleExpression {
         const operator: Operator<any> = getDateTimeOperatorFromToken(ctx._op, this._operatorService);
         const value: string = ctx.DATETIME()?.getText();
-        return new SimpleExpression(operator, value, !!ctx.NOT());
+        return new SimpleExpression(operator, value);
     }
 
     /**
      * Handles a date range context and creates a simple expression with the InRangeDate operator and date range values.
      *
      * @param ctx - The date range parse tree context
-     * @param isNegated - Whether the range comparison is negated
-     * @returns A simple expression with the InRangeDate operator, array of date values, and negation flag
+     * @returns A simple expression with the InRangeDate operator, and array of date values
      */
-    protected handleDateRangeContext(ctx: DateRangeContext, isNegated: boolean): SimpleExpression {
+    protected handleDateRangeContext(ctx: DateRangeContext): SimpleExpression {
         const operator: Operator<any> = new InRangeDate();
         const value: string[] = ctx.DATE()?.map(terminalNode => terminalNode.getText());
-        return new SimpleExpression(operator, value, isNegated);
+        return new SimpleExpression(operator, value);
     }
 
     /**
      * Handles a datetime range context and creates a simple expression with the InRangeDateTime operator and datetime range values.
      *
      * @param ctx - The datetime range parse tree context
-     * @param isNegated - Whether the range comparison is negated
-     * @returns A simple expression with the InRangeDateTime operator, array of datetime values, and negation flag
+     * @returns A simple expression with the InRangeDateTime operator, and array of datetime values
      */
-    protected handleDateTimeRangeContext(ctx: DateTimeRangeContext, isNegated: boolean): SimpleExpression {
+    protected handleDateTimeRangeContext(ctx: DateTimeRangeContext): SimpleExpression {
         const operator: Operator<any> = new InRangeDateTime();
         const value: string[] = ctx.DATETIME()?.map(terminalNode => terminalNode.getText());
-        return new SimpleExpression(operator, value, isNegated);
+        return new SimpleExpression(operator, value);
     }
 
     /**
@@ -708,7 +758,7 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
         } else if (!!ctx.DOUBLE()) {
             value = parseFloat(ctx.DOUBLE().getText());
         }
-        return new SimpleExpression(operator, value, !!ctx.NOT());
+        return new SimpleExpression(operator, value);
     }
 
     /**
@@ -727,7 +777,7 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
             fromValue = parseFloat(ctx.doubleRange().DOUBLE()[0].getText());
             toValue = parseFloat(ctx.doubleRange().DOUBLE()[1].getText());
         }
-        return new SimpleExpression(operator, [fromValue, toValue], !!ctx.NOT());
+        return new SimpleExpression(operator, [fromValue, toValue]);
     }
 
     /**
@@ -739,17 +789,28 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
     protected handleBooleanComparisonContext(ctx: BooleanComparisonContext): SimpleExpression {
         const operator: Operator<any> = getOperatorFromToken(ctx._op);
         const value: boolean = ctx.BOOLEAN().getText().toLowerCase() === 'true';
-        return new SimpleExpression(operator, value, !!ctx.NOT());
+        return new SimpleExpression(operator, value);
     }
 
     /**
      * Handles a null comparison context and creates a simple expression with the IsNull operator.
      *
-     * @param ctx - The null comparison parse tree context
-     * @returns A simple expression with the IsNull operator, undefined value, and negation flag
+     * @returns A simple expression with the IsNull operator
      */
-    protected handleNullComparisonContext(ctx: NullComparisonContext): SimpleExpression {
+    protected handleNullComparisonContext(): SimpleExpression {
         const operator: Operator<any> = new IsNull();
-        return new SimpleExpression(operator, undefined, !!ctx.NOT());
+        return new SimpleExpression(operator, undefined);
+    }
+
+    // todo 2466 doc
+    protected handleCaseRawQuery(query: string): RawExpression {
+        const category: CasePlainQuery = new CasePlainQuery(this._operatorService, this._logger);
+        return new RawExpression(category, query);
+    }
+
+    // todo 2466 doc
+    protected handleTaskRawQuery(query: string): RawExpression {
+        const category: TaskPlainQuery = new TaskPlainQuery(this._operatorService, this._logger);
+        return new RawExpression(category, query);
     }
 }

@@ -7,7 +7,7 @@ import {SimpleFilter} from '../../filter/models/simple-filter';
 import {MergeOperator} from '../../filter/models/merge-operator';
 import {PredicateRemovalEvent} from '../models/predicate-removal-event';
 import {Query} from '../models/query/query';
-import {distinctUntilChanged, map, tap, filter} from 'rxjs/operators';
+import {distinctUntilChanged, filter, map, tap} from 'rxjs/operators';
 import {EditableClausePredicateWithGenerators} from '../models/predicate/editable-clause-predicate-with-generators';
 import {Category} from '../models/category/category';
 import {PredicateTreeMetadata} from '../models/persistance/generator-metadata';
@@ -21,10 +21,11 @@ import {FilterMetadata} from '../models/persistance/filter-metadata';
 import {FilterTextSegment} from '../models/persistance/filter-text-segment';
 import {QueryItem, QueryItemType} from "../../pfql/model/query-item-type";
 import {parseQuery} from "../../pfql/pfql-utils";
-import {LogicalOperator} from "../../pfql/model/logical-operator";
 import {SimpleExpression} from "../../pfql/model/simple-expression";
 import {ComplexExpression} from "../../pfql/model/complex-expression";
 import {ResourceTypeQueryPrefix} from "../models/category/resource-type-query-prefix";
+import {RawExpression} from "../../pfql/model/raw-expression";
+import {PlainQueryCategory} from "../models/category/plain-query-category";
 
 /**
  * Holds information about the filter that is currently applied to the view component, that provides this services.
@@ -432,7 +433,7 @@ export class SearchService implements OnDestroy {
             return;
         }
 
-        const categoryLoadings$ = this.loadFromQueryItemsIntoRootPredicate(queryItems);
+        const categoryLoadings$ = this.loadExpressionsIntoPredicate(this.rootPredicate, queryItems);
         if (categoryLoadings$.length === 0) {
             this._loadingFromPfql$.off();
             this.updateActiveFilter();
@@ -464,104 +465,25 @@ export class SearchService implements OnDestroy {
     }
 
     /**
-     * Recursively loads query items (expressions and operators) into a predicate tree node.
-     *
-     * Processes simple expressions by loading them into predicates (creating branch predicates for AND operators),
-     * and recursively handles complex expressions by creating new nested predicates.
-     *
-     * @param predicate the predicate node into which the expressions should be loaded
-     * @param operatorOfPredicate the boolean operator used by the predicate node
-     * @param items the array of query items (expressions and operators) to process
-     * @returns an array of observables that emit when category data is loaded for each simple expression
+     * todo 2466
      */
-    protected loadExpressionsIntoPredicate(predicate: EditableClausePredicateWithGenerators, operatorOfPredicate: BooleanOperator,
-                                           items: Array<QueryItem>): Array<Observable<void>> {
+    protected loadExpressionsIntoPredicate(predicate: EditableClausePredicateWithGenerators, items: Array<QueryItem>): Array<Observable<void>> {
         const expressions: Array<QueryItem> = items.filter(item => item.type() !== QueryItemType.LOGICAL_OPERATOR);
         const categoryLoadings$: Array<Observable<void>> = [];
         for (const expression of expressions) {
             if (expression.type() === QueryItemType.SIMPLE_EXPRESSION) {
-                let categoryLoading$: Observable<void>;
-                if (operatorOfPredicate.valueOf() === BooleanOperator.AND.valueOf()) {
-                    const branchId = predicate.addNewClausePredicate(BooleanOperator.OR);
-                    const localPredicate = predicate.getPredicateMap().get(branchId).getWrappedPredicate() as unknown as EditableClausePredicateWithGenerators;
-                    categoryLoading$ = this.loadSimpleExpressionIntoPredicate(localPredicate, expression as SimpleExpression);
-                } else {
-                    categoryLoading$ = this.loadSimpleExpressionIntoPredicate(predicate, expression as SimpleExpression);
-                }
+                const categoryLoading$ = this.loadSimpleExpressionIntoPredicate(predicate, expression as SimpleExpression);
                 categoryLoadings$.push(categoryLoading$);
             } else if (expression.type() === QueryItemType.COMPLEX_EXPRESSION) {
-                const subCategoryLoadings$: Array<Observable<void>> = this.loadFromQueryItemsIntoNewPredicate(predicate,
-                    operatorOfPredicate, (expression as ComplexExpression).items);
+                const complexExpression: ComplexExpression = expression as ComplexExpression;
+                const subCategoryLoadings$: Array<Observable<void>> = this.loadExpressionsIntoPredicate(predicate, complexExpression.items)
                 categoryLoadings$.push(...subCategoryLoadings$);
+            } else if (expression.type() === QueryItemType.RAW_EXPRESSION) {
+                const categoryLoading$ = this.loadPlainQueryIntoPredicate(predicate, expression as RawExpression);
+                categoryLoadings$.push(categoryLoading$);
             }
         }
         return categoryLoadings$;
-    }
-
-    /**
-     * Creates a new branch predicate under the parent and loads query items into it.
-     *
-     * Determines the appropriate boolean operator from the query items, creates a new clause predicate
-     * with that operator, and recursively loads the expressions into the new predicate.
-     *
-     * @param parentPredicate the parent predicate under which to create the new branch
-     * @param operatorOfParentPredicate boolean operator of the parentPredicate
-     * @param items the array of query items to load into the new predicate branch
-     * @returns an array of observables that emit when category data is loaded for each simple expression
-     */
-    protected loadFromQueryItemsIntoNewPredicate(parentPredicate: EditableClausePredicateWithGenerators,
-                                                 operatorOfParentPredicate: BooleanOperator,
-                                                 items: Array<QueryItem>): Array<Observable<void>> {
-        if (!this.areBooleanOperatorsOfSingleType(items)) {
-            throw new Error("Cannot load the PFQL query. There are different boolean operators in the same group of expressions")
-        }
-        const booleanOperator: BooleanOperator = this.determineBooleanOperator(items);
-        if (operatorOfParentPredicate === booleanOperator) {
-            return this.loadExpressionsIntoPredicate(parentPredicate, booleanOperator, items);
-        }
-        const branchId = parentPredicate.addNewClausePredicate(booleanOperator);
-        const branchPredicate = parentPredicate.getPredicateMap().get(branchId).getWrappedPredicate() as unknown as EditableClausePredicateWithGenerators
-        return this.loadExpressionsIntoPredicate(branchPredicate, booleanOperator, items);
-    }
-
-    /**
-     * Loads query items into the root predicate of the search service.
-     *
-     * Validates that all boolean operators in the query items are of the same type (all AND or all OR).
-     * Determines the appropriate boolean operator from the items and loads expressions accordingly.
-     * If the operator is OR, creates a new branch predicate under the root; otherwise loads directly into root.
-     *
-     * @param items the array of query items (expressions and operators) to load into the root predicate
-     * @returns an array of observables that emit when category data is loaded for each simple expression
-     * @throws Error if the query items contain different boolean operator types in the same group
-     */
-    protected loadFromQueryItemsIntoRootPredicate(items: Array<QueryItem>): Array<Observable<void>> {
-        if (!this.areBooleanOperatorsOfSingleType(items)) {
-            throw new Error("Cannot load the PFQL query. There are different boolean operators in the same group of expressions")
-        }
-        const booleanOperator: BooleanOperator = this.determineBooleanOperator(items);
-        let targetPredicate = this.rootPredicate;
-
-        if (booleanOperator === BooleanOperator.OR) {
-            const branchId = this.rootPredicate.addNewClausePredicate(booleanOperator);
-            targetPredicate = this.rootPredicate.getPredicateMap().get(branchId).getWrappedPredicate() as unknown as EditableClausePredicateWithGenerators
-        }
-
-        return this.loadExpressionsIntoPredicate(targetPredicate, booleanOperator, items);
-    }
-
-    /**
-     * Determines the boolean operator to use for combining query items.
-     *
-     * Extracts logical operators from the query items array. If no logical operators are found,
-     * defaults to AND. If logical operators are present, uses the first one found.
-     *
-     * @param items the array of query items to examine
-     * @returns the boolean operator (AND or OR) determined from the query items
-     */
-    protected determineBooleanOperator(items: Array<QueryItem>): BooleanOperator {
-        const booleanOperators = items.filter(item => item.type() === QueryItemType.LOGICAL_OPERATOR);
-        return booleanOperators.length === 0 ? BooleanOperator.AND : (booleanOperators[0] as LogicalOperator).value;
     }
 
     /**
@@ -575,16 +497,21 @@ export class SearchService implements OnDestroy {
      * @returns an observable that emits when the category data has been loaded from the expression
      */
     protected loadSimpleExpressionIntoPredicate(predicate: EditableClausePredicateWithGenerators, simpleExpr: SimpleExpression): Observable<void> {
+        const branchId = predicate.addNewClausePredicate(BooleanOperator.OR);
+        const localPredicate = predicate.getPredicateMap().get(branchId).getWrappedPredicate() as unknown as EditableClausePredicateWithGenerators;
         const category: Category<any> = simpleExpr.category;
         const categoryLoading$: Observable<void> = category.loadFromPfqlExpression(simpleExpr);
-        predicate.addNewPredicateFromGenerator(category);
+        localPredicate.addNewPredicateFromGenerator(category);
         return categoryLoading$;
     }
 
-    protected areBooleanOperatorsOfSingleType(items: Array<QueryItem>): boolean {
-        const operators: Array<LogicalOperator> = items.filter(item => item.type() === QueryItemType.LOGICAL_OPERATOR)
-            .map(operator => operator as LogicalOperator);
-
-        return operators.length === 0 || operators.every(op => op.value === operators[0].value);
+    // todo 2466 doc
+    protected loadPlainQueryIntoPredicate(predicate: EditableClausePredicateWithGenerators, expression: RawExpression): Observable<void>{
+        const branchId = predicate.addNewClausePredicate(BooleanOperator.OR);
+        const localPredicate = predicate.getPredicateMap().get(branchId).getWrappedPredicate() as unknown as EditableClausePredicateWithGenerators;
+        const category: PlainQueryCategory = expression.category;
+        const categoryLoading$: Observable<void> = category.loadFromPfqlRawExpression(expression);
+        localPredicate.addNewPredicateFromGenerator(category);
+        return categoryLoading$;
     }
 }
