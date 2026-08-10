@@ -11,9 +11,11 @@ export enum Categories {
     CASE_SIMPLE_DATASET = 'case_simple_dataset',
     CASE_TITLE = 'case_title',
     CASE_STRING_ID = 'case_string_id',
+    CASE_PLAIN_QUERY = 'case_plain_query',
 
     // Task categories
     TASK_ASSIGNEE = 'task_assignee',
     TASK_PROCESS = 'task_process',
     TASK_TASK = 'task_task',
+    TASK_PLAIN_QUERY = 'task_plain_query',
 }

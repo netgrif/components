@@ -10,6 +10,8 @@ import {TaskTask} from '../models/category/task/task-task';
 import {TaskProcess} from '../models/category/task/task-process';
 import {CaseCreationDateTime} from '../models/category/case/case-creation-date-time';
 import {CaseStringId} from '../models/category/case/case-string-id';
+import {CasePlainQuery} from "../models/category/case/case-plain-query";
+import {TaskPlainQuery} from "../models/category/task/task-plain-query";
 
 
 @NgModule({
@@ -26,6 +28,7 @@ import {CaseStringId} from '../models/category/case/case-string-id';
                 CaseProcess,
                 CaseAuthor,
                 CaseStringId,
+                CasePlainQuery,
             ]
         }, {
             provide: NAE_DEFAULT_TASK_SEARCH_CATEGORIES,
@@ -33,6 +36,7 @@ import {CaseStringId} from '../models/category/case/case-string-id';
                 TaskAssignee,
                 TaskTask,
                 TaskProcess,
+                TaskPlainQuery,
             ]
         }
     ]

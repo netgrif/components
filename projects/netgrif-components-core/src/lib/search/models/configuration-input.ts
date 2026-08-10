@@ -26,7 +26,7 @@ export class ConfigurationInput {
      * @param filterOptions a method that receives the keys of the available options and should return
      * the appropriately filtered autocomplete options
      */
-    constructor(public type: SearchInputType.AUTOCOMPLETE | SearchInputType.OPERATOR,
+    constructor(public type: SearchInputType.AUTOCOMPLETE | SearchInputType.OPERATOR | SearchInputType.PLAIN_QUERY,
                 public label: string,
                 public displayBold: boolean,
                 protected _autocompleteOptions: Map<string, Array<unknown>>,
@@ -38,7 +38,6 @@ export class ConfigurationInput {
             filter(newValue => typeof newValue === 'string'),
             map(newValue => {
                 return filterOptions(Array.from(this._autocompleteOptions.keys()), newValue);
-
             })
         );
     }

@@ -225,6 +225,13 @@ export abstract class Category<T> {
     }
 
     /**
+     * todo 2466 doc
+     */
+    public get operandsFormControls(): Array<FormControl> {
+        return this._operandsFormControls;
+    }
+
+    /**
      * A new value is emitted whenever the selected operator changes. `undefined` is emitted if no operator is selected.
      *
      * @returns [operators template]{@link Operator#getOperatorNameTemplate} in processed form fit for GUI rendering

@@ -127,10 +127,6 @@
                     "name": "Fallname",
                     "placeholder": "Geben Sie den Fallnamen ein"
                 },
-                "visualId": {
-                    "name": "Visuelle ID",
-                    "placeholder": "Geben Sie die visuelle ID ein"
-                },
                 "stringId": {
                     "name": "Fall ID",
                     "placeholder": "Geben Sie die Fall ID ein"
@@ -142,10 +138,6 @@
                 "process": {
                     "name": "Prozess",
                     "placeholder": "Wählen Sie den Prozess aus"
-                },
-                "role": {
-                    "name": "Prozessrolle",
-                    "placeholder": "Wählen Sie die Prozessrolle aus"
                 },
                 "task": {
                     "name": "Fallaufgabe",
@@ -176,14 +168,14 @@
                     "name": "Prozess",
                     "placeholder": "Wählen Sie den Prozess aus"
                 },
-                "role": {
-                    "name": "Aufgabenprocessrolle",
-                    "placeholder": "Wählen Sie die Prozessrolle der Aufgabe aus"
-                },
                 "task": {
                     "name": "Aufgabe",
                     "placeholder": "Wählen Sie die Aufgabe aus"
                 }
+            },
+            "plainText": {
+                "name": "Klartext",
+                "placeholder": "Schreiben Sie eine gültige PFQL-Abfrage auf."
             },
             "select": "Suchkategorie",
             "userMe": "ICH"

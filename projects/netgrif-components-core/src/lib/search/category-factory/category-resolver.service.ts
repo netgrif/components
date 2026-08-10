@@ -13,6 +13,8 @@ import {TaskProcess} from '../models/category/task/task-process';
 import {TaskTask} from '../models/category/task/task-task';
 import {CaseCreationDateTime} from '../models/category/case/case-creation-date-time';
 import {CategorySerialisationPair} from './category-serialisation-pair';
+import {CasePlainQuery} from "../models/category/case/case-plain-query";
+import {TaskPlainQuery} from "../models/category/task/task-plain-query";
 
 /**
  * A service that resolves {@link Categories} (or custom string) into a concrete {@link Category} implementation class and vice versa.
@@ -61,6 +63,9 @@ export class CategoryResolverService {
             }, {
                 classReference: CaseStringId,
                 serialized: Categories.CASE_STRING_ID
+            }, {
+                classReference: CasePlainQuery,
+                serialized: Categories.CASE_PLAIN_QUERY
             },
             // Task
             {
@@ -72,6 +77,9 @@ export class CategoryResolverService {
             }, {
                 classReference: TaskTask,
                 serialized: Categories.TASK_TASK
+            }, {
+                classReference: TaskPlainQuery,
+                serialized: Categories.TASK_PLAIN_QUERY
             }
         ].forEach(pair => this.registerPair(pair));
     }

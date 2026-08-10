@@ -3,6 +3,12 @@
 <ng-template #operandSelection>
     <div [ngSwitch]="inputType">
         <ng-template [ngSwitchCase]="searchInputType.TEXT">
+            <ng-container *ngTemplateOutlet="textInput"></ng-container>
+        </ng-template>
+        <ng-template [ngSwitchCase]="searchInputType.PLAIN_QUERY">
+            <ng-container *ngTemplateOutlet="textInput"></ng-container>
+        </ng-template>
+        <ng-template #textInput>
             <mat-form-field appearance="outline">
                 <input type="text" matInput autocomplete="off"
                        [formControl]="inputFormControl"
@@ -98,7 +104,7 @@
 </ng-template>
 
 <ng-template #operandDisplay>
-    <div [ngSwitch]="inputType" (click)="editInput()" class="bold-text">
+    <div [ngSwitch]="inputType" (click)="editInput()" [ngClass]="{'bold-text': inputType !== searchInputType.PLAIN_QUERY}">
         <div *ngSwitchCase="searchInputType.AUTOCOMPLETE">
             {{inputFormControl.value.text | translate}}
         </div>

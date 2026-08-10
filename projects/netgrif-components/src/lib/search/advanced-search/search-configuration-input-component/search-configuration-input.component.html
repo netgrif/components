@@ -90,4 +90,13 @@
             </div>
         </ng-template>
     </ng-template>
+    <ng-template [ngSwitchCase]="searchInputType.PLAIN_QUERY">
+        <div class="text-margin" (click)="$event.stopPropagation()">
+            <nc-search-operand-input [inputFormControl]="selectedCategory.operandsFormControls[0]"
+                                     [inputType]="selectedCategory.inputType"
+                                     [first]="true"
+                                     [filterOptionsFunction]="filterOptions"
+                                     [editable]="editable"></nc-search-operand-input>
+        </div>
+    </ng-template>
 </div>

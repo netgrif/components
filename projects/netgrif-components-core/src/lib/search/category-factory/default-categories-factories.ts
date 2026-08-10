@@ -10,6 +10,8 @@ import {TaskAssignee} from '../models/category/task/task-assignee';
 import {TaskProcess} from '../models/category/task/task-process';
 import {TaskTask} from '../models/category/task/task-task';
 import {CaseCreationDateTime} from '../models/category/case/case-creation-date-time';
+import {CasePlainQuery} from "../models/category/case/case-plain-query";
+import {TaskPlainQuery} from "../models/category/task/task-plain-query";
 
 /**
  * Creates the default case search categories.
@@ -21,7 +23,7 @@ import {CaseCreationDateTime} from '../models/category/case/case-creation-date-t
  * [duplicate()]{@link Category#duplicate} method.
  *
  * @returns an Array containing the default case search categories: {@link CaseDataset}, {@link CaseTitle}, {@link CaseCreationDate},
- * {@link CaseProcess}, {@link CaseAuthor}, and {@link CaseStringId}
+ * {@link CaseProcess}, {@link CaseAuthor}, {@link CaseStringId} and {@link CasePlainQuery}
  *
  * @deprecated in 5.6.0 - Use the {@link NAE_DEFAULT_CASE_SEARCH_CATEGORIES} injection token instead
  */
@@ -34,6 +36,7 @@ export function defaultCaseSearchCategoriesFactory(factory: CategoryFactory): Ar
         factory.get(CaseProcess),
         factory.get(CaseAuthor),
         factory.get(CaseStringId),
+        factory.get(CasePlainQuery),
     ];
     cats.forEach(cat => cat.destroy());
     return cats;
@@ -48,7 +51,7 @@ export function defaultCaseSearchCategoriesFactory(factory: CategoryFactory): Ar
  * caused by uncompleted Subjects. They should only be used to create new Category instances with the help of the
  * [duplicate()]{@link Category#duplicate} method.
  *
- * @returns an Array containing the default task search categories: {@link TaskAssignee}, {@link TaskTask} and {@link TaskProcess}
+ * @returns an Array containing the default task search categories: {@link TaskAssignee}, {@link TaskTask}, {@link TaskProcess} and {@link TaskPlainQuery}
  *
  * @deprecated in 5.6.0 - Use the {@link NAE_DEFAULT_TASK_SEARCH_CATEGORIES} injection token instead
  */
@@ -57,6 +60,7 @@ export function defaultTaskSearchCategoriesFactory(factory: CategoryFactory): Ar
         factory.get(TaskAssignee),
         factory.get(TaskTask),
         factory.get(TaskProcess),
+        factory.get(TaskPlainQuery),
     ];
     cats.forEach(cat => cat.destroy());
     return cats;

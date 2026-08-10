@@ -127,10 +127,6 @@
                     "name": "Case title",
                     "placeholder": "Enter case title"
                 },
-                "visualId": {
-                    "name": "Case visual ID",
-                    "placeholder": "Enter case visual ID"
-                },
                 "stringId": {
                     "name": "Case ID",
                     "placeholder": "Enter case ID"
@@ -142,10 +138,6 @@
                 "process": {
                     "name": "Case process",
                     "placeholder": "Select case process"
-                },
-                "role": {
-                    "name": "Process role",
-                    "placeholder": "Select process role"
                 },
                 "task": {
                     "name": "Case task",
@@ -176,14 +168,14 @@
                     "name": "Task process",
                     "placeholder": "Select task process"
                 },
-                "role": {
-                    "name": "Task process role",
-                    "placeholder": "Select task process role"
-                },
                 "task": {
                     "name": "Task",
                     "placeholder": "Select task"
                 }
+            },
+            "plainText": {
+                "name": "Plain query",
+                "placeholder": "Write down valid PFQL query"
             },
             "select": "Search category",
             "userMe": "ME"
