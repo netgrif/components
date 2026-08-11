@@ -6,6 +6,7 @@ import {SimpleFilter} from '../../filter/models/simple-filter';
 import {FilterType} from '../../filter/models/filter-type';
 import {TaskResourceService} from './task-resource.service';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {HttpParams} from "@angular/common/http";
 
 describe('TaskResourceService', () => {
     let service: TaskResourceService;
@@ -57,7 +58,7 @@ describe('TaskResourceService', () => {
     it('should assignTask', (done) => {
             inject([HttpTestingController],
                 (httpMock: HttpTestingController) => {
-                    service.assignTask('id').subscribe(res => {
+                    service.assignTask('id', new HttpParams()).subscribe(res => {
                         expect(res.success).toEqual('Success');
                         done();
                     });
@@ -73,7 +74,7 @@ describe('TaskResourceService', () => {
     it('should cancelTask', (done) => {
             inject([HttpTestingController],
                 (httpMock: HttpTestingController) => {
-                    service.cancelTask('id').subscribe(res => {
+                    service.cancelTask('id', new HttpParams()).subscribe(res => {
                         expect(res.success).toEqual('Success');
                         done();
                     });
@@ -89,7 +90,7 @@ describe('TaskResourceService', () => {
     it('should delegateTask', (done) => {
             inject([HttpTestingController],
                 (httpMock: HttpTestingController) => {
-                    service.delegateTask('id', {userId: 5}).subscribe(res => {
+                    service.delegateTask('id', {userId: 5}, new HttpParams()).subscribe(res => {
                         expect(res.success).toEqual('Success');
                         done();
                     });
@@ -105,7 +106,7 @@ describe('TaskResourceService', () => {
     it('should finishTask', (done) => {
             inject([HttpTestingController],
                 (httpMock: HttpTestingController) => {
-                    service.finishTask('id').subscribe(res => {
+                    service.finishTask('id', new HttpParams()).subscribe(res => {
                         expect(res.success).toEqual('Success');
                         done();
                     });
@@ -217,7 +218,7 @@ describe('TaskResourceService', () => {
     it('should getData', (done) => {
             inject([HttpTestingController],
                 (httpMock: HttpTestingController) => {
-                    service.getData('id').subscribe(res => {
+                    service.getData('id', new HttpParams()).subscribe(res => {
                         expect(res.length).toEqual(0);
                         done();
                     });
@@ -242,7 +243,7 @@ describe('TaskResourceService', () => {
     it('should setData', (done) => {
             inject([HttpTestingController],
                 (httpMock: HttpTestingController) => {
-                    service.setData('id', {}).subscribe(res => {
+                    service.setData('id', {}, new HttpParams()).subscribe(res => {
                         expect(res.outcome).toBeTruthy();
                         done();
                     });
