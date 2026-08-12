@@ -219,7 +219,7 @@ export class SearchService implements OnDestroy {
     /**
      * @returns an Observable that emits whenever the root predicates query changes
      */
-    protected get predicateQueryChanged$(): Observable<Query> {
+    public get predicateQueryChanged$(): Observable<Query> {
         return this._predicateQueryChanged$.asObservable().pipe(
             map(() => this._rootPredicate.query),
             distinctUntilChanged((prev, curr) => prev && prev.equals(curr))

@@ -3,23 +3,45 @@ import {
     AbstractFilterFieldContentComponent,
     SearchService,
     AllowedNetsService,
-    AllowedNetsServiceFactory, FilterField, NAE_FILTER_FIELD, NAE_BASE_FILTER, BaseFilter,
-    SimpleFilter, CategoryResolverService, NAE_SEARCH_CATEGORIES, Category, CategoryFactory
+    AllowedNetsServiceFactory,
+    FilterField,
+    NAE_FILTER_FIELD,
+    NAE_BASE_FILTER,
+    BaseFilter,
+    SimpleFilter,
+    NAE_SEARCH_CATEGORIES,
+    Category,
+    CategoryFactory,
+    FilterType,
+    FieldTypeResource,
+    NAE_DEFAULT_CASE_SEARCH_CATEGORIES,
+    NAE_DEFAULT_TASK_SEARCH_CATEGORIES
 } from '@netgrif/components-core';
 
 export function filterFieldBaseFilterFactory(filterField: FilterField): BaseFilter {
+    let filterType: FilterType;
+    if (filterField.filterType === FieldTypeResource.CASE_FILTER) {
+        filterType = FilterType.CASE;
+    } else if (filterField.filterType === FieldTypeResource.TASK_FILTER) {
+        filterType = FilterType.TASK;
+    }
     return {
-        filter: SimpleFilter.empty(filterField.filterMetadata.filterType)
+        filter: SimpleFilter.empty(filterType)
     };
 }
 
 export function filterFieldAllowedNetsFactory(factory: AllowedNetsServiceFactory, filterField: FilterField): AllowedNetsService {
-    return factory.createFromArray(filterField.allowedNets);
+    return factory.createFromArray(filterField.allowedNets ? filterField.allowedNets : []);
 }
 
-export function filterFieldCategoriesFactory(factory: CategoryResolverService, filterField: FilterField): Array<Type<Category<any>>> {
-    const result = filterField.filterMetadata.searchCategories.map(c => factory.toClass(c));
-    return result;
+export function filterFieldCategoriesFactory(filterField: FilterField, caseCategories: Array<Type<Category<any>>>,
+                                             taskCategories: Array<Type<Category<any>>>): Array<Type<Category<any>>> {
+    if (filterField.filterType === FieldTypeResource.CASE_FILTER) {
+        return caseCategories;
+    } else if (filterField.filterType === FieldTypeResource.TASK_FILTER) {
+        return taskCategories;
+    }
+    return [];
 }
 
 @Component({
@@ -30,7 +52,8 @@ export function filterFieldCategoriesFactory(factory: CategoryResolverService, f
         {provide: NAE_BASE_FILTER, useFactory: filterFieldBaseFilterFactory, deps: [NAE_FILTER_FIELD]},
         {provide: AllowedNetsService, useFactory: filterFieldAllowedNetsFactory, deps: [AllowedNetsServiceFactory, NAE_FILTER_FIELD]},
         CategoryFactory,
-        {provide: NAE_SEARCH_CATEGORIES, useFactory: filterFieldCategoriesFactory, deps: [CategoryResolverService, NAE_FILTER_FIELD]},
+        {provide: NAE_SEARCH_CATEGORIES, useFactory: filterFieldCategoriesFactory, deps: [NAE_FILTER_FIELD,
+                NAE_DEFAULT_CASE_SEARCH_CATEGORIES, NAE_DEFAULT_TASK_SEARCH_CATEGORIES]},
         SearchService
     ]
 })

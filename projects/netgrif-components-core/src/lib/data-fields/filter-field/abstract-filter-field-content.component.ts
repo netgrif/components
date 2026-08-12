@@ -3,7 +3,8 @@ import {NAE_FILTER_FIELD} from './models/filter-field-injection-token';
 import {FilterField} from './models/filter-field';
 import {SearchService} from '../../search/search-service/search.service';
 import {filter, take} from 'rxjs/operators';
-import {Subscription} from 'rxjs';
+import {Subscription, Observable} from 'rxjs';
+import {Query} from "../../search/models/query/query";
 
 @Component({
     selector: 'ncc-abstract-filtercontent-field',
@@ -17,8 +18,8 @@ export abstract class AbstractFilterFieldContentComponent implements OnDestroy {
 
     protected constructor(@Inject(NAE_FILTER_FIELD) protected _filterField: FilterField,
                           protected _fieldSearchService: SearchService) {
-        this._fieldSearchService.loadFromMetadata(this._filterField.filterMetadata);
-        this._searchServiceSub = this._fieldSearchService.loadingFromMetadata$.pipe(filter(loading => !loading), take(1)).subscribe(() => {
+        this._fieldSearchService.loadFromPfql(this._filterField.value);
+        this._searchServiceSub = this._fieldSearchService.loadingFromPfql$.pipe(filter(loading => !loading), take(1)).subscribe(() => {
             this.filterLoaded = true;
         });
     }
@@ -31,6 +32,10 @@ export abstract class AbstractFilterFieldContentComponent implements OnDestroy {
         if (this._searchServiceSub && !this._searchServiceSub.closed) {
             this._searchServiceSub.unsubscribe();
         }
+    }
+
+    public predicateQueryChanged$(): Observable<Query> {
+        return this._fieldSearchService.predicateQueryChanged$;
     }
 
 }

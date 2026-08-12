@@ -7,8 +7,11 @@ import {
     DataFieldPortalData,
     FilterField,
     AbstractFilterFieldContentComponent,
-    Dashboard, AbstractFilterDefaultFieldComponent
+    Dashboard,
+    AbstractFilterDefaultFieldComponent,
+    AbstractFilterStringQueryFieldComponent
 } from '@netgrif/components-core';
+import {FilterStringQueryFieldComponent} from "../filter-string-query-field/filter-string-query-field.component";
 
 @Component({
   selector: 'nc-filter-default-field',
@@ -22,11 +25,16 @@ export class FilterDefaultFieldComponent extends AbstractFilterDefaultFieldCompo
         super(parentInjector, dataFieldPortalData);
     }
 
-    protected getFilterContentComponent(): ComponentType<AbstractFilterFieldContentComponent> {
-        if (this.dataField.component?.name === Dashboard.FILTER_TAB_VIEW_COMPONENT_ID) {
+    protected override getFilterContentComponent(): ComponentType<AbstractFilterFieldContentComponent | AbstractFilterStringQueryFieldComponent> {
+        const componentName: string = this.dataField.component?.name;
+        if (componentName === Dashboard.FILTER_TAB_VIEW_COMPONENT_ID) {
             return FilterFieldTabViewContentComponent;
+        } else if (componentName === 'string-query') {
+            return FilterStringQueryFieldComponent;
+        } else if (componentName === 'advanced-search-query') {
+            return FilterFieldContentComponent;
         }
-        return FilterFieldContentComponent;
+        return FilterStringQueryFieldComponent;
     }
 
 }
