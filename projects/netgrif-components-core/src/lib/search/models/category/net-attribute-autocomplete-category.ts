@@ -76,7 +76,7 @@ export abstract class NetAttributeAutocompleteCategory extends NoConfigurationAu
      *
      *  Currently it can be either the {@link CaseProcess} or the {@link TaskProcess} category class.
      */
-    protected abstract getProcessCategory(): Category<Array<string>>;
+    protected abstract getProcessCategory(): Category<Array<string> | string>;
 
     /**
      * This method should return the appropriate identifier of a PetriNet.

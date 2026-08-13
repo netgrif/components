@@ -31,7 +31,7 @@ export abstract class TaskNetAttributeAutocompleteCategory extends NetAttributeA
         this._processCategory.destroy();
     }
 
-    protected getProcessCategory(): Category<Array<string>> {
+    protected getProcessCategory(): Category<Array<string> | string> {
         return this._processCategory;
     }
 

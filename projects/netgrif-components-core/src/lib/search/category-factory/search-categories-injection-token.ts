@@ -25,3 +25,6 @@ export const NAE_DEFAULT_CASE_SEARCH_CATEGORIES = new InjectionToken<Array<Type<
  * The default search categories can be overridden by providing this injection token with a new set of categories in the `AppComponent`.
  */
 export const NAE_DEFAULT_TASK_SEARCH_CATEGORIES = new InjectionToken<Array<Type<Category<any>>>>('NaeDefaultTaskSearchCategories');
+
+// todo 2466
+export const NAE_IGNORE_NETS_ON_AUTOCOMPLETE_CATEGORY = new InjectionToken<boolean>('NaeIgnoreNetsOnAutocompleteCategory')

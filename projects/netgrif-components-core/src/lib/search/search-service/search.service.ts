@@ -26,6 +26,7 @@ import {ComplexExpression} from "../../pfql/model/complex-expression";
 import {ResourceTypeQueryPrefix} from "../models/category/resource-type-query-prefix";
 import {RawExpression} from "../../pfql/model/raw-expression";
 import {PlainQueryCategory} from "../models/category/plain-query-category";
+import { NAE_IGNORE_NETS_ON_AUTOCOMPLETE_CATEGORY } from "../category-factory/search-categories-injection-token";
 
 /**
  * Holds information about the filter that is currently applied to the view component, that provides this services.
@@ -69,11 +70,13 @@ export class SearchService implements OnDestroy {
      * It is required if we want to load predicate filter from saved metadata
      * @param baseFilter Filter that should be applied to the view when no searching is being performed.
      * Injected trough the {@link NAE_BASE_FILTER} injection token.
+     * @param _ignoreNetsOnAutocompleteCategories todo 2466
      * @param _injector injector from angular core
      */
     constructor(protected _log: LoggerService,
                 @Optional() protected _categoryFactory: CategoryFactory,
                 @Inject(NAE_BASE_FILTER) baseFilter: BaseFilter,
+                @Optional() @Inject(NAE_IGNORE_NETS_ON_AUTOCOMPLETE_CATEGORY) protected _ignoreNetsOnAutocompleteCategories: boolean,
                 protected _injector: Injector) {
         if (baseFilter.filter instanceof Filter) {
             this._baseFilter = baseFilter.filter.clone();
@@ -476,7 +479,7 @@ export class SearchService implements OnDestroy {
                 categoryLoadings$.push(categoryLoading$);
             } else if (expression.type() === QueryItemType.COMPLEX_EXPRESSION) {
                 const complexExpression: ComplexExpression = expression as ComplexExpression;
-                const subCategoryLoadings$: Array<Observable<void>> = this.loadExpressionsIntoPredicate(predicate, complexExpression.items)
+                const subCategoryLoadings$: Array<Observable<void>> = this.loadExpressionsIntoPredicate(predicate, complexExpression.items);
                 categoryLoadings$.push(...subCategoryLoadings$);
             } else if (expression.type() === QueryItemType.RAW_EXPRESSION) {
                 const categoryLoading$ = this.loadPlainQueryIntoPredicate(predicate, expression as RawExpression);
@@ -500,7 +503,7 @@ export class SearchService implements OnDestroy {
         const branchId = predicate.addNewClausePredicate(BooleanOperator.OR);
         const localPredicate = predicate.getPredicateMap().get(branchId).getWrappedPredicate() as unknown as EditableClausePredicateWithGenerators;
         const category: Category<any> = simpleExpr.category;
-        const categoryLoading$: Observable<void> = category.loadFromPfqlExpression(simpleExpr);
+        const categoryLoading$: Observable<void> = category.loadFromPfqlExpression(simpleExpr); // todo 2466 auto
         localPredicate.addNewPredicateFromGenerator(category);
         return categoryLoading$;
     }

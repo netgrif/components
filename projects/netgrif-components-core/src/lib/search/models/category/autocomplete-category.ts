@@ -15,7 +15,7 @@ import {ResourceTypeQueryPrefix} from "./resource-type-query-prefix";
  *
  * @typeparam T type of the object that the autocomplete option values use and in turn is used to generate queries
  */
-export abstract class AutocompleteCategory<T> extends Category<Array<T>> implements AutocompleteOptions {
+export abstract class AutocompleteCategory<T> extends Category<Array<T> | string> implements AutocompleteOptions {
 
     /**
      * Autocomplete categories usually require a map to represent mapping of display names
@@ -136,6 +136,10 @@ export abstract class AutocompleteCategory<T> extends Category<Array<T>> impleme
     }
 
     protected isOperandValueSelected(newValue: SearchAutocompleteOption<Array<T>> | string): boolean {
+        if (this.inputType === SearchInputType.TEXT) {
+            return !!newValue;
+        }
+
         return !(!newValue || typeof newValue === 'string');
     }
 
@@ -147,8 +151,11 @@ export abstract class AutocompleteCategory<T> extends Category<Array<T>> impleme
      * @param value the FormControlValue
      * @returns the value used for query generation
      */
-    protected transformCategoryValue(value: SearchAutocompleteOption<Array<T>>): Array<T> {
-        return value.value;
+    protected transformCategoryValue(value: SearchAutocompleteOption<Array<T>> | string): Array<T> | string {
+        if (this.inputType === SearchInputType.TEXT) {
+            return value as string;
+        }
+        return (value as SearchAutocompleteOption<Array<T>>).value;
     }
 
     protected serializeOperandValue(valueFormControl: FormControl): unknown {

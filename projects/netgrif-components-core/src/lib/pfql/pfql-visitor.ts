@@ -112,7 +112,8 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
             categoryFactory: this._categoryFactory,
             searchIndexResolver: undefined,
             allowedNetsService: this._allowedNetsService,
-            userResourceService: this._userResourceService
+            userResourceService: this._userResourceService,
+            ignoreNetsOnAutocompleteCategories: undefined, // todo 2466 auto
         };
     }
 

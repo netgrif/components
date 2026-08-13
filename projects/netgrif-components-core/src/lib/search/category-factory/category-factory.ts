@@ -1,4 +1,4 @@
-import {Injectable, Optional, Type} from '@angular/core';
+import {Inject, Injectable, Optional, Type} from '@angular/core';
 import {LoggerService} from '../../logger/services/logger.service';
 import {OperatorService} from '../operator-service/operator.service';
 import {Category} from '../models/category/category';
@@ -9,6 +9,7 @@ import {CategoryGeneratorMetadata} from '../models/persistance/generator-metadat
 import {CategoryResolverService} from './category-resolver.service';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 import {Observable, ReplaySubject} from 'rxjs';
+import {NAE_IGNORE_NETS_ON_AUTOCOMPLETE_CATEGORY} from "./search-categories-injection-token";
 
 /**
  * Can be used to generate {@link Category} class instances.
@@ -28,12 +29,14 @@ export class CategoryFactory {
                 protected _searchIndexResolverService: SearchIndexResolverService,
                 protected _categoryResolver: CategoryResolverService,
                 protected _allowedNetsService: AllowedNetsService,
-                @Optional() protected _userResourceService: UserResourceService) {
+                @Optional() protected _userResourceService: UserResourceService,
+                @Optional() @Inject(NAE_IGNORE_NETS_ON_AUTOCOMPLETE_CATEGORY) protected _ignoreNetsOnAutocompleteCategories: boolean) {
         this._optionalDependencies = {
             categoryFactory: this,
             searchIndexResolver: this._searchIndexResolverService,
             allowedNetsService: this._allowedNetsService,
             userResourceService: this._userResourceService,
+            ignoreNetsOnAutocompleteCategories: this._ignoreNetsOnAutocompleteCategories,
         };
     }
 

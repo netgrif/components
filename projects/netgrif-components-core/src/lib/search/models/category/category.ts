@@ -97,7 +97,7 @@ export abstract class Category<T> {
     protected constructor(protected readonly _pfqlKeywords: Array<string>,
                           protected readonly _allowedOperators: Array<Operator<any>>,
                           public readonly translationPath: string,
-                          protected readonly _inputType: SearchInputType,
+                          protected _inputType: SearchInputType,
                           protected _log: LoggerService,
                           protected _operatorService: OperatorService,
                           protected _resourceTypePrefix: ResourceTypeQueryPrefix) {
@@ -197,6 +197,13 @@ export abstract class Category<T> {
      */
     public get inputType(): SearchInputType {
         return this._inputType;
+    }
+
+    /**
+     * todo 2466 doc
+     */
+    public set inputType(inputType: SearchInputType) {
+        this._inputType = inputType;
     }
 
     /**

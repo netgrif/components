@@ -12,6 +12,7 @@ import {CaseSearch} from './case-search.enum';
 import {ResourceTypeQueryPrefix} from "../resource-type-query-prefix";
 import {take, filter} from "rxjs/operators";
 import {SimpleExpression} from "../../../../pfql/model/simple-expression";
+import {SearchInputType} from "../search-input-type";
 
 export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
 
@@ -29,6 +30,9 @@ export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
             operators,
             ResourceTypeQueryPrefix.CASES);
         this._uniqueOptionsMap = new Map<string, Set<string>>();
+        if (!!this._optionalDependencies.ignoreNetsOnAutocompleteCategories) {
+            this.inputType = SearchInputType.TEXT;
+        }
     }
 
     destroy() {
@@ -93,11 +97,14 @@ export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
         }
     }
 
-    protected generateQuery(userInput: Array<Array<string>>): Query {
+    protected generateQuery(userInput: Array<Array<string> | string>): Query {
         if (this.selectedOperator.numberOfOperands !== 1) {
             throw new Error('Only unary operators are currently supported by the CaseProcess implementation');
         }
-        const operand = userInput[0];
+        let operand = userInput[0];
+        if (!Array.isArray(operand)) {
+           operand = [operand];
+        }
         const queries = operand.map(id => this.selectedOperator.createQuery(this.pfqlKeywords, [id]));
         return Query.combineQueries(queries, BooleanOperator.OR).addPrefixAndGet(ResourceTypeQueryPrefix.CASES);
     }

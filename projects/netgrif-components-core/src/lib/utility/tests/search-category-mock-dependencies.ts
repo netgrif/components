@@ -31,7 +31,8 @@ export const createMockDependencies: (
                 searchIndexResolver,
                 new CategoryResolverService(),
                 allowedNetsService,
-                userResourceService
+                userResourceService,
+                false
             ),
             searchIndexResolver,
             userResourceService,

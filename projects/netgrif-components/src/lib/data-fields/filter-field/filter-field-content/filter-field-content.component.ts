@@ -15,7 +15,8 @@ import {
     FilterType,
     FieldTypeResource,
     NAE_DEFAULT_CASE_SEARCH_CATEGORIES,
-    NAE_DEFAULT_TASK_SEARCH_CATEGORIES
+    NAE_DEFAULT_TASK_SEARCH_CATEGORIES,
+    NAE_IGNORE_NETS_ON_AUTOCOMPLETE_CATEGORY
 } from '@netgrif/components-core';
 
 export function filterFieldBaseFilterFactory(filterField: FilterField): BaseFilter {
@@ -50,6 +51,7 @@ export function filterFieldCategoriesFactory(filterField: FilterField, caseCateg
     styleUrls: ['./filter-field-content.component.scss'],
     providers: [
         {provide: NAE_BASE_FILTER, useFactory: filterFieldBaseFilterFactory, deps: [NAE_FILTER_FIELD]},
+        {provide: NAE_IGNORE_NETS_ON_AUTOCOMPLETE_CATEGORY, useValue: true},
         {provide: AllowedNetsService, useFactory: filterFieldAllowedNetsFactory, deps: [AllowedNetsServiceFactory, NAE_FILTER_FIELD]},
         CategoryFactory,
         {provide: NAE_SEARCH_CATEGORIES, useFactory: filterFieldCategoriesFactory, deps: [NAE_FILTER_FIELD,

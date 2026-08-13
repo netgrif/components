@@ -20,4 +20,6 @@ export interface OptionalDependencies {
      * If the {@link CategoryFactory} cannot inject an instance of this service into itself `null` will be provided.
      */
     userResourceService: UserResourceService | null;
+    // todo 2466
+    ignoreNetsOnAutocompleteCategories?: boolean;
 }
