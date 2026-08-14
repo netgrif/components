@@ -12,6 +12,7 @@ import {ResourceTypeQueryPrefix} from "../resource-type-query-prefix";
 import {SimpleExpression} from "../../../../pfql/model/simple-expression";
 import {filter, take} from "rxjs/operators";
 import {SearchAutocompleteOption} from "../search-autocomplete-option";
+import {SearchInputType} from "../search-input-type";
 
 export class TaskProcess extends NoConfigurationAutocompleteCategory<string> {
 
@@ -27,6 +28,9 @@ export class TaskProcess extends NoConfigurationAutocompleteCategory<string> {
             logger,
             operators,
             ResourceTypeQueryPrefix.TASKS);
+        if (!!this._optionalDependencies.ignoreNetsOnAutocompleteCategories) {
+            this.inputType = SearchInputType.TEXT;
+        }
     }
 
     destroy() {
@@ -81,7 +85,10 @@ export class TaskProcess extends NoConfigurationAutocompleteCategory<string> {
         if (this.selectedOperator.numberOfOperands !== 1) {
             throw new Error('Only unary operators are currently supported by the TaskProcess implementation');
         }
-        const operand = userInput[0];
+        let operand = userInput[0];
+        if (!Array.isArray(operand)) {
+            operand = [operand];
+        }
         const queries = operand.map(id => this.selectedOperator.createQuery(this.pfqlKeywords, [id]));
         return Query.combineQueries(queries, BooleanOperator.OR).addPrefixAndGet(ResourceTypeQueryPrefix.TASKS);
     }
