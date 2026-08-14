@@ -45,7 +45,7 @@ import {ResourceTypeQueryPrefix} from "../resource-type-query-prefix";
 import {FieldTypeResource} from "../../../../task-content/model/field-type-resource";
 import {SimpleExpression} from "../../../../pfql/model/simple-expression";
 import {DataSimpleExpression} from "../../../../pfql/model/data-simple-expression";
-import {take, map} from "rxjs/operators";
+import {take, map, debounceTime} from "rxjs/operators";
 
 interface Datafield {
     netIdentifier: string;
@@ -101,7 +101,6 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
             logger,
             operators,
             ResourceTypeQueryPrefix.CASES);
-
         this._processCategory = this._optionalDependencies.categoryFactory.get(CaseProcess) as CaseProcess;
         this._processCategory.selectDefaultOperator();
 
@@ -109,23 +108,37 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
         this._userAutocomplete = new UserAutocomplete(this._optionalDependencies);
         this.createDatafieldOptions();
 
-        this._DATAFIELD_INPUT = new ConfigurationInput(
-            SearchInputType.AUTOCOMPLETE,
-            'search.category.case.dataset.placeholder.field',
-            true,
-            this._datafieldOptions,
-            (mapKeys, newValue) => {
-                return mapKeys.map(serializedMapKey => DatafieldMapKey.parse(serializedMapKey))
-                    .filter(mapKey => mapKey.title.toLocaleLowerCase().startsWith(newValue));
-            }
-        );
+        let dataFieldInputDebounceTime = 1;
+        if (!!this._optionalDependencies.ignoreNetsOnAutocompleteCategories) {
+            this._DATAFIELD_INPUT = new ConfigurationInput(
+                SearchInputType.TEXT,
+                'search.category.case.dataset.placeholder.plainField',
+                true,
+                new Map<string, Array<unknown>>(),
+                () => { return [] }
+            );
+            dataFieldInputDebounceTime = 600;
+        } else {
+            this._DATAFIELD_INPUT = new ConfigurationInput(
+                SearchInputType.AUTOCOMPLETE,
+                'search.category.case.dataset.placeholder.field',
+                true,
+                this._datafieldOptions,
+                (mapKeys, newValue) => {
+                    return mapKeys.map(serializedMapKey => DatafieldMapKey.parse(serializedMapKey))
+                        .filter(mapKey => mapKey.title.toLocaleLowerCase().startsWith(newValue));
+                }
+            );
+        }
 
         this._configurationInputs$ = new BehaviorSubject<Array<ConfigurationInput>>([this._DATAFIELD_INPUT]);
 
-        this._DATAFIELD_INPUT.valueChanges$().subscribe(newValue => {
-            if (newValue === undefined || typeof newValue === 'string') {
+        this._DATAFIELD_INPUT.valueChanges$().pipe(debounceTime(dataFieldInputDebounceTime)).subscribe(newValue => {
+            if (newValue === undefined
+                || (this._DATAFIELD_INPUT.type === SearchInputType.AUTOCOMPLETE && typeof newValue === 'string')) {
                 this._configurationInputs$.next([this._DATAFIELD_INPUT]);
-            } else if (this._configurationInputs$.getValue().length === 1) {
+            } else if (this._configurationInputs$.getValue().length === 1
+                || (this._DATAFIELD_INPUT.type === SearchInputType.TEXT && typeof newValue === 'string')) {
                 this._configurationInputs$.next([this._DATAFIELD_INPUT, this._OPERATOR_INPUT]);
             }
             this._operatorFormControl.setValue(undefined);
@@ -150,6 +163,9 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
         if (!this.hasSelectedDatafields) {
             throw new Error('Input type of arguments cannot be determined before selecting a data field during the configuration.');
         }
+        if (!this._selectedDatafields) {
+            return SearchInputType.TEXT;
+        }
         return CaseDataset.FieldTypeToInputType(this._selectedDatafields[0].fieldType);
     }
 
@@ -164,6 +180,21 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
     public get allowedOperators(): Array<Operator<any>> {
         if (!this.hasSelectedDatafields) {
             return [];
+        }
+        const defaultOperators = [
+            this._operatorService.getOperator(Substring),
+            this._operatorService.getOperator(Equals),
+            this._operatorService.getOperator(NotEquals),
+            this._operatorService.getOperator(MoreThan),
+            this._operatorService.getOperator(MoreThanEqual),
+            this._operatorService.getOperator(LessThan),
+            this._operatorService.getOperator(LessThanEqual),
+            this._operatorService.getOperator(IsNull),
+            this._operatorService.getOperator(Like)
+        ];
+
+        if (!this._selectedDatafields) {
+            return defaultOperators;
         }
         switch (this._selectedDatafields[0].fieldType) {
             case FieldTypeResource.NUMBER.valueOf():
@@ -211,17 +242,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
                     this._operatorService.getOperator(IsNull)
                 ];
             default:
-                return [
-                    this._operatorService.getOperator(Substring),
-                    this._operatorService.getOperator(Equals),
-                    this._operatorService.getOperator(NotEquals),
-                    this._operatorService.getOperator(MoreThan),
-                    this._operatorService.getOperator(MoreThanEqual),
-                    this._operatorService.getOperator(LessThan),
-                    this._operatorService.getOperator(LessThanEqual),
-                    this._operatorService.getOperator(IsNull),
-                    this._operatorService.getOperator(Like)
-                ];
+                return defaultOperators;
         }
     }
 
@@ -252,6 +273,9 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
     protected get pfqlKeywords(): Array<string> {
         if (!this.hasSelectedDatafields) {
             return [];
+        } else if (!this._selectedDatafields) {
+            const fieldId: string = this._DATAFIELD_INPUT.formControl.value
+            return [`data.${fieldId}.value`];
         } else {
             return this._selectedDatafields.map(dataField => `data.${dataField.fieldId}.value`);
         }
@@ -278,7 +302,15 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
             queryGenerationStrategy = (d, ui) => this.standardQueryGenerationStrategy(d, ui);
         }
 
-        const queries = this._selectedDatafields.map(datafield => queryGenerationStrategy(datafield, userInput));
+        let queries;
+        if (!this._selectedDatafields) {
+            queries = [queryGenerationStrategy({
+                netIdentifier: undefined,
+                fieldId: this._DATAFIELD_INPUT.formControl.value,
+                fieldType: 'string'}, userInput)];
+        } else {
+            queries = this._selectedDatafields.map(datafield => queryGenerationStrategy(datafield, userInput));
+        }
         return Query.combineQueries(queries, BooleanOperator.OR);
     }
 
@@ -296,7 +328,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
     }
 
     protected generateNetConstraint(datafield: Datafield): Query {
-        return this._isLoadedFromPfql ? new Query(undefined, ResourceTypeQueryPrefix.CASES, true)
+        return this._isLoadedFromPfql || this._DATAFIELD_INPUT.type === SearchInputType.TEXT ? new Query(undefined, ResourceTypeQueryPrefix.CASES, true)
             : this._processCategory.generatePredicate([[datafield.netIdentifier]]).query;
     }
 

@@ -155,6 +155,7 @@
                     "name": "Dáta prípadu",
                     "placeholder": {
                         "field": "Vyberte dátovú položku",
+                        "plainField": "Zadajte data field",
                         "value": "Zadajte hodnotu dátovej položky"
                     }
                 }

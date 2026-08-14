@@ -155,6 +155,7 @@
                     "name": "Case data",
                     "placeholder": {
                         "field": "Select data field",
+                        "plainField": "Enter data field",
                         "value": "Enter data field value"
                     }
                 }

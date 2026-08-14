@@ -155,6 +155,7 @@
                     "name": "Falldatei",
                     "placeholder": {
                         "field": "Wählen Sie das Datenfeld aus",
+                        "plainField": "Eingeben data field",
                         "value": "Geben Sie den Wert des Datenfeldes ein"
                     }
                 }
