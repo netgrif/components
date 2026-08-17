@@ -41,6 +41,10 @@ export class TaskTask extends TaskNetAttributeAutocompleteCategory {
         if (!this.selectOperatorFromPfqlExpression(expression)) {
             return of(undefined);
         }
+        if (this._optionalDependencies.ignoreNetsOnAutocompleteCategories) {
+            this.setOperands([expression.operandValue]);
+            return of(undefined);
+        }
 
         const isDone$ = new Subject<void>();
         this._options$.pipe(
