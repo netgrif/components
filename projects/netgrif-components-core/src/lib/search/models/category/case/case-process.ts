@@ -106,7 +106,7 @@ export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
            operand = [operand];
         }
         const queries = operand.map(id => this.selectedOperator.createQuery(this.pfqlKeywords, [id]));
-        return Query.combineQueries(queries, BooleanOperator.OR).addPrefixAndGet(ResourceTypeQueryPrefix.CASES);
+        return Query.combineQueries(queries, BooleanOperator.OR).ensurePrefixAndGet(ResourceTypeQueryPrefix.CASES);
     }
 
     get inputPlaceholder(): string {

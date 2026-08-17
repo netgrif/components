@@ -37,7 +37,7 @@ export abstract class PlainQueryCategory extends Category<string> {
             return new Query('', this._resourceTypePrefix);
         }
         const pfqlQueryString: string = userInput[0];
-        return new Query(pfqlQueryString).addPrefixAndGet(this._resourceTypePrefix);
+        return new Query(pfqlQueryString).ensurePrefixAndGet(this._resourceTypePrefix);
     }
 
     protected override operandValueChanges(operandIndex: number) {

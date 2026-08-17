@@ -40,10 +40,10 @@ export abstract class NoConfigurationUserAutocompleteCategory extends NoConfigur
         }
         if (this.isSelectedOperator(IsNull)) {
             return (this.selectedOperator as IsNull).createQuery(this.pfqlKeywords)
-                .addPrefixAndGet(this._resourceTypePrefix);
+                .ensurePrefixAndGet(this._resourceTypePrefix);
         } else {
             return this.selectedOperator.createQuery(this.pfqlKeywords, Array.isArray(userInput[0]) ? userInput[0] : userInput, false)
-                .addPrefixAndGet(this._resourceTypePrefix);
+                .ensurePrefixAndGet(this._resourceTypePrefix);
         }
     }
 

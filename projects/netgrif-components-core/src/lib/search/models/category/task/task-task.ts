@@ -13,6 +13,7 @@ import {Observable, of, Subject} from "rxjs";
 import {filter, take} from "rxjs/operators";
 import {NetAttributePair} from "../net-attribute-pair";
 import {SearchAutocompleteOption} from "../search-autocomplete-option";
+import {SearchInputType} from "../search-input-type";
 
 
 export class TaskTask extends TaskNetAttributeAutocompleteCategory {
@@ -27,6 +28,9 @@ export class TaskTask extends TaskNetAttributeAutocompleteCategory {
             operators,
             optionalDependencies,
             ResourceTypeQueryPrefix.TASKS);
+        if (!!this._optionalDependencies.ignoreNetsOnAutocompleteCategories) {
+            this.inputType = SearchInputType.TEXT;
+        }
     }
 
     protected extractAttributes(petriNet: Net): Array<NameIdPair> {

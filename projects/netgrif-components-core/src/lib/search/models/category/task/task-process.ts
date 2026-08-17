@@ -90,7 +90,7 @@ export class TaskProcess extends NoConfigurationAutocompleteCategory<string> {
             operand = [operand];
         }
         const queries = operand.map(id => this.selectedOperator.createQuery(this.pfqlKeywords, [id]));
-        return Query.combineQueries(queries, BooleanOperator.OR).addPrefixAndGet(ResourceTypeQueryPrefix.TASKS);
+        return Query.combineQueries(queries, BooleanOperator.OR).ensurePrefixAndGet(ResourceTypeQueryPrefix.TASKS);
     }
 
     get inputPlaceholder(): string {

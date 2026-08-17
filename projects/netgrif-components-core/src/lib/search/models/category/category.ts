@@ -343,7 +343,7 @@ export abstract class Category<T> {
             throw new Error('Category cannot generate a Query if no Operator is selected');
         }
         let query: Query = this._operatorFormControl.value.createQuery(this.pfqlKeywords, userInput as unknown as Array<string>);
-        return query.addPrefixAndGet(this._resourceTypePrefix);
+        return query.ensurePrefixAndGet(this._resourceTypePrefix);
     }
 
     /**

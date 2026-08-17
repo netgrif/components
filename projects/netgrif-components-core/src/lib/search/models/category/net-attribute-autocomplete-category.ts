@@ -11,6 +11,7 @@ import {Subscription} from 'rxjs';
 import {OperatorService} from '../../operator-service/operator.service';
 import {OptionalDependencies} from '../../category-factory/optional-dependencies';
 import {ResourceTypeQueryPrefix} from "./resource-type-query-prefix";
+import {SearchInputType} from "./search-input-type";
 
 /**
  * A utility class for autocomplete search categories that are net specific, such as searching by roles, or tasks.
@@ -100,6 +101,10 @@ export abstract class NetAttributeAutocompleteCategory extends NoConfigurationAu
             throw new Error('NetAttributeAutocompleteCategories currently doesn\'t support operators with arity other than 1!');
         }
 
+        if (this.inputType === SearchInputType.TEXT && !!userInput[0]) {
+            return this.selectedOperator.createQuery(this.pfqlKeywords, [userInput[0]]).ensurePrefixAndGet(this._resourceTypePrefix);
+        }
+
         const matchingPairs = userInput[0];
 
         const queries = matchingPairs.map(pair => {
@@ -108,6 +113,6 @@ export abstract class NetAttributeAutocompleteCategory extends NoConfigurationAu
             return Query.combineQueries([taskQuery, netQuery], BooleanOperator.AND);
         });
         const query: Query = Query.combineQueries(queries, BooleanOperator.OR);
-        return query.addPrefixAndGet(this._resourceTypePrefix);
+        return query.ensurePrefixAndGet(this._resourceTypePrefix);
     }
 }

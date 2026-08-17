@@ -124,7 +124,7 @@ export class CaseSimpleDataset extends NoConfigurationCategory<string> {
             this._netIdentifiers.map(id => this._processCategory.generatePredicate([[id]]).query),
             BooleanOperator.OR
         );
-        return Query.combineQueries([valueQuery, netsQuery], BooleanOperator.AND).addPrefixAndGet(ResourceTypeQueryPrefix.CASES);
+        return Query.combineQueries([valueQuery, netsQuery], BooleanOperator.AND).ensurePrefixAndGet(ResourceTypeQueryPrefix.CASES);
     }
 
     serializeClass(): Categories | string {

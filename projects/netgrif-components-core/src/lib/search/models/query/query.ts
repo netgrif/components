@@ -115,7 +115,7 @@ export class Query {
      * @param resourceTypePrefix the resource type prefix to add to the query
      * @returns this Query instance with the updated value
      */
-    public addPrefixAndGet(resourceTypePrefix: ResourceTypeQueryPrefix): Query {
+    public ensurePrefixAndGet(resourceTypePrefix: ResourceTypeQueryPrefix): Query {
         if (this.isEmpty) {
             this._value = resourceTypePrefix;
             return this;

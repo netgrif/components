@@ -318,13 +318,13 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
         const valueQuery = this.selectedOperator.createQuery(this.pfqlKeywords, userInput, escapeInput);
         const netQuery = this.generateNetConstraint(datafield);
         const query: Query = Query.combineQueries([valueQuery, netQuery], BooleanOperator.AND);
-        return query.addPrefixAndGet(ResourceTypeQueryPrefix.CASES);
+        return query.ensurePrefixAndGet(ResourceTypeQueryPrefix.CASES);
     }
 
     protected isNullOperatorQueryGenerationStrategy(datafield: Datafield): Query {
         const constraint = this.generateNetConstraint(datafield);
         return (this._operatorService.getOperator(IsNull) as IsNull).createQueryWithConstraint(this.pfqlKeywords, constraint)
-            .addPrefixAndGet(ResourceTypeQueryPrefix.CASES);
+            .ensurePrefixAndGet(ResourceTypeQueryPrefix.CASES);
     }
 
     protected generateNetConstraint(datafield: Datafield): Query {
