@@ -4,7 +4,6 @@ import {Query} from '../query/query';
 import {MoreThan} from './more-than';
 import moment, {Moment} from 'moment';
 import {Operators} from './operators';
-import {LessThanEqualDate} from "./less-than-equal-date";
 
 /**
  * A strict greater than operator for Date fields
@@ -32,9 +31,5 @@ export class MoreThanDate extends Operator<Moment> {
 
     serialize(): Operators | string {
         return Operators.MORE_THAN_DATE;
-    }
-
-    negated(): Operator<any> {
-        return new LessThanEqualDate(this._operators);
     }
 }

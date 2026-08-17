@@ -43,8 +43,4 @@ export class InRangeDateTime extends Operator<Moment> {
     serialize(): Operators | string {
         return Operators.IN_RANGE_DATE_TIME;
     }
-
-    negated(): Operator<any> {
-        throw new Error("Operator InRangeDateTime cannot be negated");
-    }
 }

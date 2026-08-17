@@ -7,17 +7,15 @@ import {SimpleFilter} from '../../filter/models/simple-filter';
 import {MergeOperator} from '../../filter/models/merge-operator';
 import {PredicateRemovalEvent} from '../models/predicate-removal-event';
 import {Query} from '../models/query/query';
-import {distinctUntilChanged, filter, map, tap} from 'rxjs/operators';
+import {distinctUntilChanged, filter, map} from 'rxjs/operators';
 import {EditableClausePredicateWithGenerators} from '../models/predicate/editable-clause-predicate-with-generators';
 import {Category} from '../models/category/category';
-import {PredicateTreeMetadata} from '../models/persistance/generator-metadata';
 import {NAE_BASE_FILTER} from '../models/base-filter-injection-token';
 import {BaseFilter} from '../models/base-filter';
 import {LoggerService} from '../../logger/services/logger.service';
 import {CategoryFactory} from '../category-factory/category-factory';
 import {FilterType} from '../../filter/models/filter-type';
 import {LoadingEmitter} from '../../utility/loading-emitter';
-import {FilterMetadata} from '../models/persistance/filter-metadata';
 import {FilterTextSegment} from '../models/persistance/filter-text-segment';
 import {QueryItem, QueryItemType} from "../../pfql/model/query-item-type";
 import {parseQuery} from "../../pfql/pfql-utils";
@@ -54,7 +52,6 @@ export class SearchService implements OnDestroy {
      * The index of a removed {@link Predicate} is emmited into this stream
      */
     protected _predicateRemoved$: Subject<PredicateRemovalEvent>;
-    protected _loadingFromMetadata$: LoadingEmitter;
     protected _loadingFromPfql$: LoadingEmitter;
     /**
      * The `rootPredicate` uses this stream to notify the search service about changes to the held query
@@ -90,7 +87,6 @@ export class SearchService implements OnDestroy {
         this._rootPredicate = new EditableClausePredicateWithGenerators(BooleanOperator.AND, this._predicateQueryChanged$, undefined, true);
         this._activeFilter = new BehaviorSubject<Filter>(this._baseFilter);
         this._predicateRemoved$ = new Subject<PredicateRemovalEvent>();
-        this._loadingFromMetadata$ = new LoadingEmitter();
         this._loadingFromPfql$ = new LoadingEmitter();
 
         if (baseFilter.filter instanceof Observable) {
@@ -113,7 +109,6 @@ export class SearchService implements OnDestroy {
             this.subFilter.unsubscribe();
         }
         this.subPredicateChanged?.unsubscribe();
-        this._loadingFromMetadata$.complete();
         this._loadingFromPfql$.complete();
         this._rootPredicate.destroy();
     }
@@ -182,31 +177,12 @@ export class SearchService implements OnDestroy {
     }
 
     /**
-     * @returns whether the search service is currently loading its state from metadata or not.
-     *
-     * See [loadFromMetadata()]{@link SearchService#loadFromMetadata}
-     */
-    public get loadingFromMetadata(): boolean {
-        return this._loadingFromMetadata$.value;
-    }
-
-    /**
      * @returns whether the search service is currently loading its state from PFQL query or not.
      *
      * See [loadFromPfql()]{@link SearchService#loadFromPfql}
      */
     public get loadingFromPfql(): boolean {
         return this._loadingFromPfql$.value;
-    }
-
-    /**
-     * @returns an `Observable` that emits `true` if the search service is currently loading its state from metadata,
-     * emits `false` otherwise.
-     *
-     * See [loadFromMetadata()]{@link SearchService#loadFromMetadata}
-     */
-    public get loadingFromMetadata$(): Observable<boolean> {
-        return this._loadingFromMetadata$.asObservable();
     }
 
     /**
@@ -350,63 +326,6 @@ export class SearchService implements OnDestroy {
      */
     public updateWithFullFilter(newFilter: Filter): void {
         this._activeFilter.next(newFilter);
-    }
-
-    /**
-     * @returns `undefined` if the predicate tree contains no complete query.
-     * Otherwise returns the serialized form of the completed queries in the predicate tree.
-     */
-    public createPredicateMetadata(): PredicateTreeMetadata | undefined {
-        return this._rootPredicate.createGeneratorMetadata() as PredicateTreeMetadata;
-    }
-
-    /**
-     * Replaces the current predicate filter by the one corresponding to the provided generator metadata.
-     *
-     * The {@link CategoryFactory} instance must be provided for this service if we want to use this method. Logs an error and does nothing.
-     *
-     * The `filterType` of this search service must match the `filterType` of the provided metadata. Otherwise an error is thrown.
-     *
-     * @param metadata the serialized state of the predicate tree that should be restored to this search service
-     */
-    public loadFromMetadata(metadata: FilterMetadata) {
-        if (this._categoryFactory === null) {
-            this._log.error('A CategoryFactory instance must be provided for the SearchService'
-                + ' if you want to reconstruct a predicate filter from saved metadata');
-            return;
-        }
-
-        if (metadata.filterType !== this.filterType) {
-            throw Error(`The filter type of the provided metadata (${metadata.filterType
-            }) does not match the filter type of the search service (${this.filterType})!`);
-        }
-
-        this.clearPredicates(true);
-        this._loadingFromMetadata$.on();
-
-        const generatorObservables = [];
-        if (Array.isArray(metadata.predicateMetadata)) {
-            for (const clause of metadata.predicateMetadata) {
-                const branchId = this._rootPredicate.addNewClausePredicate(BooleanOperator.OR);
-                const branchPredicate = (
-                    this._rootPredicate.getPredicateMap().get(branchId)
-                        .getWrappedPredicate() as unknown as EditableClausePredicateWithGenerators
-                );
-                for (const predicate of clause) {
-                    const localBranchReference = branchPredicate;
-                    generatorObservables.push(
-                        this._categoryFactory.getFromMetadata(predicate).pipe(tap(generator => {
-                            localBranchReference.addNewPredicateFromGenerator(generator);
-                        }))
-                    );
-                }
-            }
-        }
-
-        forkJoin(generatorObservables).subscribe(() => {
-            this._loadingFromMetadata$.off();
-            this.updateActiveFilter();
-        });
     }
 
     /**

@@ -4,7 +4,6 @@ import {Query} from '../query/query';
 import {OperatorService} from '../../operator-service/operator.service';
 import {InRangeDate} from './in-range-date';
 import {Operators} from './operators';
-import {NotEqualsDate} from "./not-equals-date";
 
 /**
  * Equality operator for indexed fields that store a date in timestamp format.
@@ -32,9 +31,5 @@ export class EqualsDate extends Operator<Moment> {
 
     serialize(): Operators | string {
         return Operators.EQUALS_DATE;
-    }
-
-    negated(): Operator<any> {
-        return new NotEqualsDate(this._operators);
     }
 }

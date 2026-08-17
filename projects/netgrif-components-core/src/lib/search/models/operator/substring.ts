@@ -17,8 +17,4 @@ export class Substring extends Operator<string> {
     serialize(): Operators | string {
         return Operators.SUBSTRING;
     }
-
-    negated(): Operator<any> {
-        throw new Error("Operator Substring cannot be negated");
-    }
 }

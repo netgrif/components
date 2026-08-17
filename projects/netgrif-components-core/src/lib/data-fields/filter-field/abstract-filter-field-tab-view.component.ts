@@ -21,8 +21,9 @@ export abstract class AbstractFilterFieldTabViewComponent {
         this.tabs = [
             {
                 label: {
-                    text: this._filterField.filterMetadata[Dashboard.FILTER_TAB_VIEW_TITLE_KEY] ?? this._filterField.title,
-                    icon: this._filterField.filterMetadata[Dashboard.FILTER_TAB_VIEW_ICON_KEY] ?? 'home'
+                    // todo 2466 dynamic label
+                    text: /*this._filterField.filterMetadata[Dashboard.FILTER_TAB_VIEW_TITLE_KEY] ??*/ this._filterField.title,
+                    icon: /*this._filterField.filterMetadata[Dashboard.FILTER_TAB_VIEW_ICON_KEY] ??*/ 'home'
                 },
                 canBeClosed: false,
                 tabContentComponent: this.tabContentComponent(),

@@ -4,16 +4,13 @@ import {Query} from '../query/query';
 import {ElementaryPredicate} from '../predicate/elementary-predicate';
 import {SearchInputType} from './search-input-type';
 import {FormControl} from '@angular/forms';
-import {BehaviorSubject, forkJoin, Observable, of, ReplaySubject, Subject} from 'rxjs';
-import {debounceTime, defaultIfEmpty, map} from 'rxjs/operators';
+import {BehaviorSubject, Observable, of, ReplaySubject} from 'rxjs';
+import {debounceTime, map} from 'rxjs/operators';
 import {OperatorTemplatePart} from '../operator-template-part';
 import {IncrementingCounter} from '../../../utility/incrementing-counter';
 import {ConfigurationInput} from '../configuration-input';
-import {CategoryGeneratorMetadata, CategoryMetadataConfiguration} from '../persistance/generator-metadata';
 import {Categories} from './categories';
 import {OperatorService} from '../../operator-service/operator.service';
-import {Operators} from '../operator/operators';
-import {ofVoid} from '../../../utility/of-void';
 import {FilterTextSegment} from '../persistance/filter-text-segment';
 import {DATE_FORMAT_STRING, DATE_TIME_FORMAT_STRING} from '../../../moment/time-formats';
 import {Type} from '@angular/core';
@@ -38,11 +35,6 @@ import {SimpleExpression} from "../../../pfql/model/simple-expression";
  * @typeparam T type of objects the category expects to generate queries from
  */
 export abstract class Category<T> {
-
-    /**
-     * The {@link CategoryMetadataConfiguration} key for this Category's {@link Operator}
-     */
-    protected static readonly OPERATOR_METADATA = 'operator';
 
     /**
      * Contains the `FormControl` object that is used to drive the operator selection.
@@ -400,45 +392,6 @@ export abstract class Category<T> {
     public abstract duplicate(): Category<T>;
 
     /**
-     * Provides the necessary information for the serialisation of this category's state.
-     *
-     * Not every state must be preservable. The default library implementation supports only the preservation of the final state when the
-     * Category is generating a predicate object.
-     *
-     * @returns an object containing all the necessary information for the reconstruction of this category's state,
-     * barring information about allowed nets. Returns `undefined` if the category is not in a state that generates a predicate.
-     * See [providesPredicate()]{@link Category#providesPredicate}.
-     */
-    public createMetadata(): CategoryGeneratorMetadata | undefined {
-        if (!this.providesPredicate) {
-            return undefined;
-        }
-        return {
-            category: this.serializeClass(),
-            configuration: this.createMetadataConfiguration(),
-            values: this.createMetadataValues()
-        };
-    }
-
-    /**
-     * Restores the saved state contained in the provided metadata.
-     *
-     * @param metadata the metadata created by calling the [createMetadata()]{@link Category#createMetadata} method
-     *
-     * @returns an Observable. When the Observable emits the category has finished restoring its state.
-     */
-    public loadFromMetadata(metadata: CategoryGeneratorMetadata): Observable<void> {
-        const result$ = new ReplaySubject<void>(1);
-        this.loadConfigurationFromMetadata(metadata.configuration).subscribe(() => {
-            this.loadValuesFromMetadata(metadata.values).subscribe(() => {
-                result$.next();
-                result$.complete();
-            });
-        });
-        return result$.asObservable();
-    }
-
-    /**
      * Loads the category state from a PFQL expression.
      *
      * This method attempts to select an operator based on the expression's operator type and then sets the operands
@@ -553,90 +506,11 @@ export abstract class Category<T> {
     abstract serializeClass(): Categories | string;
 
     /**
-     * The default implementation serializes only the operator.
-     * If the category contains additional configuration, this method must be extended.
-     *
-     * @returns an object containing all the necessary information for the reconstruction of the configuration of this category instance
-     */
-    protected createMetadataConfiguration(): CategoryMetadataConfiguration {
-        return {
-            [Category.OPERATOR_METADATA]: this.selectedOperator.serialize()
-        };
-    }
-
-    /**
-     * The default implementation returns the value of all operand form control objects up to the current number of operands.
-     * To serialize value of each operand the [serializeOperandValue()]{@link Category#serializeOperandValue} method is used.
-     *
-     * If the values used by this category are not serializable, then either this method, or the `serializeOperandValue` method,
-     * must be overridden.
-     *
-     * @returns an array containing values input by the user in a serializable form
-     */
-    protected createMetadataValues(): Array<unknown> {
-        const result = [];
-        for (let i = 0; i < this.selectedOperatorArity; i++) {
-            result.push(this.serializeOperandValue(this._operandsFormControls[i]));
-        }
-        return result;
-    }
-
-    /**
      * @param valueFormControl FormControl object of one operand
      * @returns the value of the operand in a serialized form. The default implementation returns the FormControls `value` attribute.
      */
     protected serializeOperandValue(valueFormControl: FormControl): unknown {
         return valueFormControl.value;
-    }
-
-    /**
-     * Restored the saved configuration from the metadata created by the
-     * [createMetadataConfiguration()]{@link Category#createMetadataConfiguration} method.
-     *
-     * The default implementation restores only the saved operator.
-     *
-     * If the Category overrides the serialization method, it must override this method as well.
-     *
-     * @param configuration the serialized configuration
-     *
-     * @returns an Observable. When the Observable emits the category has finished loading its configuration.
-     */
-    protected loadConfigurationFromMetadata(configuration: CategoryMetadataConfiguration): Observable<void> {
-        const resolvedOperator = this._operatorService.getFromMetadata(configuration[Category.OPERATOR_METADATA] as Operators | string);
-        this.selectOperator(this.allowedOperators.findIndex(op => op === resolvedOperator));
-        return ofVoid();
-    }
-
-    /**
-     * The default implementation sets the provided values into this Category's operand form controls.
-     *
-     * An operator must be set before calling this method! Otherwise an error will be thrown.
-     *
-     * If the number of values doesn't match the arity of the selected operator an error will be thrown!
-     *
-     * If this Category overrides the [serializeOperandValue()]{@link Category#serializeOperandValue}, it must also
-     * override its deserialization counterpart - [deserializeOperandValue()]{@link #Category#deserializeOperandValue}!
-     *
-     * @param values the serialized values that should be loaded into this Category instance
-     *
-     * @returns an Observable. When the Observable emits the category has finished loading its values.
-     */
-    protected loadValuesFromMetadata(values: Array<unknown>): Observable<void> {
-        if (!this.isOperatorSelected()) {
-            throw new Error('An operator must be selected before Category values can be resolved from metadata!');
-        }
-        if (this.selectedOperatorArity !== values.length) {
-            throw new Error(`The arity of the selected operator (${this.selectedOperatorArity
-            }) doesn't match the number of the provided values (${values.length})!`);
-        }
-        const deserializedValuesObservables = values.map(v => this.deserializeOperandValue(v));
-        const result$ = new ReplaySubject<void>(1);
-        forkJoin(deserializedValuesObservables).pipe(defaultIfEmpty([])).subscribe(deserializedValues => {
-            this.setOperands(deserializedValues);
-            result$.next();
-            result$.complete();
-        });
-        return result$.asObservable();
     }
 
     /**

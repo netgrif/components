@@ -13,8 +13,6 @@ import {NoConfigurationCategory} from '../no-configuration-category';
 import {CaseDataset} from './case-dataset';
 import {DatafieldMapKey} from '../../datafield-map-key';
 import {Categories} from '../categories';
-import {CategoryGeneratorMetadata} from '../../persistance/generator-metadata';
-import {Observable} from 'rxjs';
 import {ResourceTypeQueryPrefix} from "../resource-type-query-prefix";
 import {FieldTypeResource} from "../../../../task-content/model/field-type-resource";
 
@@ -129,19 +127,5 @@ export class CaseSimpleDataset extends NoConfigurationCategory<string> {
 
     serializeClass(): Categories | string {
         return Categories.CASE_SIMPLE_DATASET;
-    }
-
-    /**
-     * Serialization is not supported. Throws an error.
-     */
-    createMetadata(): never {
-        throw new Error('CaseSimpleDataset does not support serialization!');
-    }
-
-    /**
-     * Deserialization is not supported. Throws an error.
-     */
-    loadFromMetadata(metadata: CategoryGeneratorMetadata): Observable<void> {
-        throw new Error('CaseSimpleDataset does not support deserialization!');
     }
 }

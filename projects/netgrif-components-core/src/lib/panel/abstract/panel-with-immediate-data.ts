@@ -79,11 +79,6 @@ export abstract class AbstractPanelWithImmediateDataComponent extends AbstractPa
                                 ? immediate.name.defaultValue : this._translate.instant('dialog.submit')),
                         icon: undefined, type: immediate.type
                     };
-                case 'filter':
-                    return {
-                        value: undefined, icon: undefined, type: immediate.type,
-                        filterMetadata: {filterMetadata: immediate.filterMetadata, allowedNets: immediate.allowedNets}
-                    };
                 case 'number':
                     if (immediate.format !== undefined) {
                         return this.formatCurrencyPipe(immediate.value, immediate.format.code, immediate.format.fractionSize,

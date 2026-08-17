@@ -32,8 +32,4 @@ export class NotEqualsDate extends Operator<Moment> {
     serialize(): Operators | string {
         return Operators.NOT_EQUALS_DATE;
     }
-
-    negated(): Operator<any> {
-        return new EqualsDate(this._operators);
-    }
 }

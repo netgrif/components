@@ -1,6 +1,5 @@
 import {Operator} from './operator';
 import {Operators} from './operators';
-import {Equals} from "./equals";
 
 /**
  * Inequality operator. Will match if the field has a different value than the input.
@@ -19,9 +18,5 @@ export class NotEquals extends Operator<string | number> {
 
     serialize(): Operators | string {
         return Operators.NOT_EQUALS;
-    }
-
-    negated(): Operator<any> {
-        return new Equals();
     }
 }

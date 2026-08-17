@@ -32,7 +32,6 @@ import { ConfigurationInput } from '../../configuration-input';
 import { Categories } from '../categories';
 import { FormControl } from '@angular/forms';
 import moment, { Moment } from 'moment';
-import { CategoryMetadataConfiguration } from '../../persistance/generator-metadata';
 import { MoreThanEqual } from '../../operator/more-than-equal';
 import { LessThanEqual } from '../../operator/less-than-equal';
 import { MoreThanEqualDate } from '../../operator/more-than-equal-date';
@@ -473,29 +472,6 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
             default:
                 return super.serializeOperandValue(valueFormControl);
         }
-    }
-
-    protected createMetadataConfiguration(): CategoryMetadataConfiguration {
-        const config = super.createMetadataConfiguration();
-        config[CaseDataset.DATAFIELD_METADATA] = (this._DATAFIELD_INPUT.formControl.value as DatafieldMapKey).toSerializedForm();
-        return config;
-    }
-
-    protected loadConfigurationFromMetadata(configuration: CategoryMetadataConfiguration): Observable<void> {
-        const result$ = new ReplaySubject<void>(1);
-        this.datafieldOptionsInitialized$.subscribe(() => {
-            const serializedMapKey = configuration[CaseDataset.DATAFIELD_METADATA] as string;
-            this.selectDatafields(serializedMapKey, false);
-            if (!this.hasSelectedDatafields) {
-                throw new Error(`Searched data fields cannot be restored from the provided configuration (${serializedMapKey
-                }). Make sure, that the correct allowed nets are provided in this view.`);
-            }
-            super.loadConfigurationFromMetadata(configuration).subscribe(() => {
-                result$.next();
-                result$.complete();
-            });
-        });
-        return result$.asObservable();
     }
 
     public override loadFromPfqlExpression(expression: SimpleExpression): Observable<void> {

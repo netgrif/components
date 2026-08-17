@@ -1,8 +1,7 @@
 import {InjectionToken} from '@angular/core';
-import {FilterMetadataAllowedNets} from '../../../search/models/persistance/filter-metadata-allowed-nets';
 
 export interface FilterTextConfiguration {
-    metadata: FilterMetadataAllowedNets;
+    query: string;
     ellipsis: boolean;
 }
 

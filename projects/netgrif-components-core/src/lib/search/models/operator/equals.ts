@@ -1,6 +1,5 @@
 import {Operator} from './operator';
 import {Operators} from './operators';
-import {NotEquals} from "./not-equals";
 
 /**
  * Strict equality operator. Will match if the field has the exact same value as the input.
@@ -20,10 +19,6 @@ export class Equals extends Operator<string | number> {
 
     serialize(): Operators | string {
         return Operators.EQUALS;
-    }
-
-    negated(): Operator<any> {
-        return new NotEquals();
     }
 
 }

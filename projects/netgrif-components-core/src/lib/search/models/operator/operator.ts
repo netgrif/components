@@ -58,20 +58,6 @@ export abstract class Operator<T> {
     }
 
     /**
-     * Returns a new operator instance that represents the logical negation of this operator.
-     *
-     * This method creates a negated version of the current operator, which can be used to
-     * construct inverse queries. For example, an "equals" operator would return a "not equals"
-     * operator, and vice versa.
-     *
-     * The returned operator should have the same arity as the original but produce logically
-     * opposite query results when applied to the same arguments.
-     *
-     * @returns a new Operator instance that represents the negation of this operator
-     */
-    public abstract negated(): Operator<any>;
-
-    /**
      * Escapes all escapable Elasticsearch symbols. Removes all unescapable Elasticsearch symbols.
      *
      * For a list of symbols see Elasticsearch's Query string query

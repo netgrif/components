@@ -65,11 +65,7 @@ export * from './models/category/net-attribute-pair';
 export * from './models/category/name-id-pair';
 export * from './models/component-configuration/search-component-configuration';
 export * from './models/base-filter';
-export * from './models/persistance/generator-metadata';
-export * from './models/persistance/filter-metadata';
-export * from './models/persistance/saved-filter-metadata';
 export * from './models/persistance/filter-text-segment';
-export * from './models/persistance/filter-metadata-allowed-nets';
 
 export * from './category-factory/optional-dependencies';
 export * from './category-factory/category-serialisation-pair';

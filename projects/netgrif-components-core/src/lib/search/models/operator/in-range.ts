@@ -22,8 +22,4 @@ export class InRange extends Operator<number> {
     serialize(): Operators | string {
         return Operators.IN_RANGE;
     }
-
-    negated(): Operator<any> {
-        throw new Error("Operator InRange cannot be negated");
-    }
 }
