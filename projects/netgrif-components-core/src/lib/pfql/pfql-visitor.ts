@@ -77,6 +77,7 @@ import {UserService} from "../user/services/user.service";
 import {CasePlainQuery} from "../search/models/category/case/case-plain-query";
 import {RawExpression} from "./model/raw-expression";
 import {TaskPlainQuery} from "../search/models/category/task/task-plain-query";
+import {NAE_IGNORE_NETS_ON_AUTOCOMPLETE_CATEGORY} from "../search/category-factory/search-categories-injection-token";
 
 
 /**
@@ -113,7 +114,7 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
             searchIndexResolver: undefined,
             allowedNetsService: this._allowedNetsService,
             userResourceService: this._userResourceService,
-            ignoreNetsOnAutocompleteCategories: undefined, // todo 2466 auto
+            ignoreNetsOnAutocompleteCategories: injector.get(NAE_IGNORE_NETS_ON_AUTOCOMPLETE_CATEGORY),
         };
     }
 

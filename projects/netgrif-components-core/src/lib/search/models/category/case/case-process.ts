@@ -63,6 +63,10 @@ export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
         if (!this.selectOperatorFromPfqlExpression(expression)) {
             return of(undefined);
         }
+        if (this._optionalDependencies.ignoreNetsOnAutocompleteCategories) {
+            this.setOperands([expression.operandValue]);
+            return of(undefined);
+        }
         const isDone$ = new Subject<void>();
         this._options$.pipe(
             filter(options => options.length > 0),

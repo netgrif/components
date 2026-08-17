@@ -75,6 +75,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
     protected _userAutocomplete: UserAutocomplete;
 
     protected _isLoadedFromPfql: boolean = false;
+    protected _operatorWasLoadedFromPfql = false;
 
     public static FieldTypeToInputType(fieldType: string): SearchInputType {
         switch (fieldType) {
@@ -108,7 +109,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
         this._userAutocomplete = new UserAutocomplete(this._optionalDependencies);
         this.createDatafieldOptions();
 
-        let dataFieldInputDebounceTime = 1;
+        let dataFieldInputDebounceTime = 0;
         if (!!this._optionalDependencies.ignoreNetsOnAutocompleteCategories) {
             this._DATAFIELD_INPUT = new ConfigurationInput(
                 SearchInputType.TEXT,
@@ -117,7 +118,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
                 new Map<string, Array<unknown>>(),
                 () => { return [] }
             );
-            dataFieldInputDebounceTime = 600;
+            dataFieldInputDebounceTime = 500;
         } else {
             this._DATAFIELD_INPUT = new ConfigurationInput(
                 SearchInputType.AUTOCOMPLETE,
@@ -141,7 +142,11 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
                 || (this._DATAFIELD_INPUT.type === SearchInputType.TEXT && typeof newValue === 'string')) {
                 this._configurationInputs$.next([this._DATAFIELD_INPUT, this._OPERATOR_INPUT]);
             }
-            this._operatorFormControl.setValue(undefined);
+            if (this._operatorWasLoadedFromPfql) {
+                this._operatorWasLoadedFromPfql = false;
+            } else {
+                this._operatorFormControl.setValue(undefined);
+            }
         });
     }
 
@@ -496,6 +501,17 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
     public override loadFromPfqlExpression(expression: SimpleExpression): Observable<void> {
         if (!(expression instanceof DataSimpleExpression)) {
             this._log.error("Cannot load category CaseDataSet from wrong PFQL expression")
+            return of(undefined);
+        }
+
+        if (this._DATAFIELD_INPUT.type === SearchInputType.TEXT) {
+            this._DATAFIELD_INPUT.formControl.setValue(expression.dataFieldId);
+            this._DATAFIELD_INPUT.confirmInput();
+            if (!this.selectOperatorFromPfqlExpression(expression)) {
+                return of(undefined);
+            }
+            this._operatorWasLoadedFromPfql = true;
+            this.setOperands([expression.operandValue]);
             return of(undefined);
         }
 
