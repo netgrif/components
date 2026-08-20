@@ -90,6 +90,17 @@ export abstract class AbstractEditModeComponent extends AbstractHeaderModeCompon
         return header ? this._translate.instant(header.title) : '';
     }
 
+    public setSort(header: HeaderColumn) {
+        if (header?.sortDirection === 'asc') {
+            header.sortDirection = 'desc';
+        } else if (header?.sortDirection === 'desc') {
+            header.sortDirection = null;
+        } else if (!!header) {
+            header.sortDirection = 'asc';
+        }
+
+    }
+
     private checkImmediateTitle(option: HeaderColumn): boolean {
         if (option.title === undefined || option.title === '') {
             this._log.warn('Immediate field in column [' + option.uniqueId + '] does not have a title');

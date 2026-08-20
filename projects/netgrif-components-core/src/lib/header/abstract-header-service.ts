@@ -389,7 +389,12 @@ export abstract class AbstractHeaderService implements OnDestroy {
         const viewId = this.getViewId();
         if (!!viewId) {
             const headers = this.headerState.selectedHeaders;
-            this._preferences.setHeaders(viewId, headers.map(header => !!header ? header.uniqueId : ''));
+            this._preferences.setHeaders(viewId, headers.map(header => !!header ? header.uniqueId : ''), headers.reduce((acc, header) => {
+                        if (!!header) {
+                            acc[header.uniqueId] = header.sortDirection;
+                        }
+                        return acc;
+                    }, {}));
         }
         this._headerChange$.next(change);
     }

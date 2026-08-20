@@ -17,4 +17,10 @@ export interface Preferences {
     headers: {
         [viewId: string]: Array<string>
     };
+
+    sorts: {
+        [viewId: string]: {
+            [headerId: string]: string
+        }
+    }
 }

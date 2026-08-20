@@ -9,6 +9,7 @@ import {SearchModeComponent} from './header-modes/search-mode/search-mode.compon
 import {LoadingModeComponent} from './header-modes/loading-mode/loading-mode.component';
 import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-picker';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatIcon} from "@angular/material/icon";
 
 @NgModule({
     declarations: [
@@ -32,7 +33,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
         TranslateLibModule,
         MaterialModule,
         NgxMatDatetimePickerModule,
-        MatFormFieldModule
+        MatFormFieldModule,
+        MatIcon
     ]
 })
 export class HeaderComponentModule {

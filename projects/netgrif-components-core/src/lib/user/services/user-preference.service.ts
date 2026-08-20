@@ -93,8 +93,9 @@ export class UserPreferenceService implements OnDestroy {
         return this._preferences.caseFilters[viewId];
     }
 
-    public setHeaders(viewId: string, value: Array<string>): void {
-        this._preferences.headers[viewId] = value;
+    public setHeaders(viewId: string, headers: Array<string>, sorts?: { [key: string]: string }): void {
+        this._preferences.headers[viewId] = headers;
+        this._preferences.sorts[viewId] = sorts;
         this._savePreferences();
     }
 
@@ -150,7 +151,8 @@ export class UserPreferenceService implements OnDestroy {
             drawerWidth: DRAWER_DEFAULT_WIDTH,
             headers: {},
             caseFilters: {},
-            taskFilters: {}
+            taskFilters: {},
+            sorts: {}
         };
     }
 }
