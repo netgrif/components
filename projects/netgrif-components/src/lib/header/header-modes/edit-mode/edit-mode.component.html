@@ -6,7 +6,7 @@
     <mat-icon *ngIf="approval && typeApproval === 'enumeration'" color="warn"
               (click)="setValue();$event.stopPropagation();" class="checkbox-padding cursor-fix">close
     </mat-icon>
-    <span fxLayout="row" fxLayoutAlign="center center" fxFlex fxLayoutGap="8px"
+    <span fxLayout="row" fxLayoutAlign="start center" fxFlex
           *ngFor="let header of this.headerService.selectedHeaders$ | async; let i = index"
           class="header-field-icon-container">
         <mat-form-field fxLayout="row" fxLayoutAlign="center" [ngStyle]="{'min-width': getMinWidth()}"
@@ -30,7 +30,7 @@
                 </mat-optgroup>
             </mat-autocomplete>
         </mat-form-field>
-        <mat-icon class="icon-padding cursor-pointer"
+        <mat-icon class="icon-padding-fixed cursor-pointer"
                   (click)="setSort(header)"
             [ngClass]="{
                 'active': header?.sortDirection
