@@ -32,9 +32,9 @@ export class PublicTaskResourceService extends TaskResourceService {
      * Assign task
      * GET
      */
-    // {{baseUrl}}/api/public/task/assign/:id
+    // {{baseUrl}}/api/task/public/assign/:id
     public assignTask(taskId: string): Observable<EventOutcomeMessageResource> {
-        return this._provider.get$('public/task/assign/' + taskId, this.SERVER_URL)
+        return this._provider.get$('task/public/assign/' + taskId, this.SERVER_URL)
             .pipe(map(r => this.changeType(r, undefined)));
     }
 
@@ -42,9 +42,9 @@ export class PublicTaskResourceService extends TaskResourceService {
      * Cancel task
      * GET
      */
-    // {{baseUrl}}/api/public/task/cancel/:id
+    // {{baseUrl}}/api/task/public/cancel/:id
     public cancelTask(taskId: string): Observable<EventOutcomeMessageResource> {
-        return this._provider.get$('public/task/cancel/' + taskId, this.SERVER_URL)
+        return this._provider.get$('task/public/cancel/' + taskId, this.SERVER_URL)
             .pipe(map(r => this.changeType(r, undefined)));
     }
 
@@ -52,9 +52,9 @@ export class PublicTaskResourceService extends TaskResourceService {
      * Finish task
      * GET
      */
-    // {{baseUrl}}/api/public/task/finish/:id
+    // {{baseUrl}}/api/task/public/finish/:id
     public finishTask(taskId: string): Observable<EventOutcomeMessageResource> {
-        return this._provider.get$('public/task/finish/' + taskId, this.SERVER_URL)
+        return this._provider.get$('task/public/finish/' + taskId, this.SERVER_URL)
             .pipe(map(r => this.changeType(r, undefined)));
     }
 
@@ -62,9 +62,18 @@ export class PublicTaskResourceService extends TaskResourceService {
      * Get tasks of the case
      * GET
      */
-    // {{baseUrl}}/api/public/task/case/:id
+    public getAllTasksByCases(caseIds: string[]): Observable<Page<Task>> {
+        return this._resourceProvider.post$('task/public/case', this.SERVER_URL, caseIds)
+            .pipe(map(r => this.getResourcePage<Task>(r, 'tasks')));
+    }
+
+    /**
+     * Get tasks of the case
+     * GET
+     */
+    // {{baseUrl}}/api/task/public/case/:id
     public getAllTasksByCase(caseId: string): Observable<Array<TaskReference>> {
-        return this._provider.get$('public/task/case/' + caseId, this.SERVER_URL)
+        return this._provider.get$('task/public/case/' + caseId, this.SERVER_URL)
             .pipe(map(r => this.changeType(r, undefined)));
     }
 
@@ -77,9 +86,9 @@ export class PublicTaskResourceService extends TaskResourceService {
      *
      * @returns the raw backend response without any additional processing
      */
-    // {{baseUrl}}/api/public/task/:id/data
+    // {{baseUrl}}/api/task/public/:id/data
     public rawGetData(taskId: string): Observable<EventOutcomeMessageResource> {
-        return this._provider.get$('public/task/' + taskId + '/data', this.SERVER_URL)
+        return this._provider.get$('task/public/' + taskId + '/data', this.SERVER_URL)
             .pipe(map(r => this.changeType(r, 'dataGroups')));
     }
 
@@ -87,9 +96,9 @@ export class PublicTaskResourceService extends TaskResourceService {
      * Set task data
      * POST
      */
-    // {{baseUrl}}/api/public/task/:id/data
+    // {{baseUrl}}/api/task/public/:id/data
     public setData(taskId: string, body: TaskSetDataRequestBody): Observable<EventOutcomeMessageResource> {
-        return this._provider.post$('public/task/' + taskId + '/data', this.SERVER_URL, body)
+        return this._provider.post$('task/public/' + taskId + '/data', this.SERVER_URL, body)
             .pipe(map(r => this.changeType(r, undefined)));
     }
 
@@ -101,7 +110,7 @@ export class PublicTaskResourceService extends TaskResourceService {
      * Attempting to use it will display a warning and remove the attribute from the request.
      * @param params Additional request parameters
      */
-    // {{baseUrl}}/api/public/task/search
+    // {{baseUrl}}/api/task/public/search
     public getTasks(filterParam: Filter, params?: Params): Observable<Page<Task>> {
         if (filterParam.type !== FilterType.TASK) {
             throw new Error('Provided filter doesn\'t have type TASK');
@@ -112,7 +121,7 @@ export class PublicTaskResourceService extends TaskResourceService {
         }
 
         params = ResourceProvider.combineParams(filterParam.getRequestParams(), params);
-        return this._provider.post$('public/task/search', this.SERVER_URL, filterParam.getRequestBody(), params)
+        return this._provider.post$('task/public/search', this.SERVER_URL, filterParam.getRequestBody(), params)
             .pipe(map(r => this.getResourcePage<Task>(r, 'tasks')));
     }
 
@@ -121,7 +130,7 @@ export class PublicTaskResourceService extends TaskResourceService {
      * GET
      */
     public downloadFile(taskId: string, params: HttpParams): Observable<ProviderProgress | Blob> {
-        const url = `public/task/${taskId}/file${params?.has("fileName") ? '/named' : ''}`;
+        const url = `task/public/${taskId}/file${params?.has("fileName") ? '/named' : ''}`;
         return this._resourceProvider.getBlob$(url, this.SERVER_URL, params).pipe(
             map(event => {
                 switch (event.type) {
@@ -143,7 +152,7 @@ export class PublicTaskResourceService extends TaskResourceService {
      */
     public uploadFile(taskId: string, body: object, multipleFiles: boolean):
         Observable<ProviderProgress | EventOutcomeMessageResource> {
-        const url = `public/task/${taskId}/${multipleFiles ? 'files' : 'file'}`;
+        const url = `task/public/${taskId}/${multipleFiles ? 'files' : 'file'}`;
         return this._resourceProvider.postWithEvent$<EventOutcomeMessageResource>(url, this.SERVER_URL, body).pipe(
             map(event => {
                 switch (event.type) {
@@ -164,7 +173,7 @@ export class PublicTaskResourceService extends TaskResourceService {
      * DELETE
      */
     public deleteFile(taskId: string, body: FileFieldRequest): Observable<MessageResource> {
-        const url = `public/task/${taskId}/file${body.fileName ? '/named' : ''}`;
+        const url = `task/public/${taskId}/file${body.fileName ? '/named' : ''}`;
         return this._resourceProvider.delete$(url, this.SERVER_URL, {}, {}, 'json', body).pipe(
             map(r => this.changeType(r, undefined))
         );
@@ -175,7 +184,7 @@ export class PublicTaskResourceService extends TaskResourceService {
      * GET
      */
     public downloadFilePreview(taskId: string, params: HttpParams): Observable<ProviderProgress | Blob> {
-        const url = `public/task/${taskId}/file_preview`;
+        const url = `task/public/${taskId}/file_preview`;
         return this._resourceProvider.getBlob$(url, this.SERVER_URL, params).pipe(
             map(event => {
                 switch (event.type) {
