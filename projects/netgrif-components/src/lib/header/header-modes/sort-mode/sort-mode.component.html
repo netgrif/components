@@ -1,4 +1,4 @@
-<div matSort (matSortChange)="sortHeaderChanged($event)" fxFlex="100" fxLayout="row" fxLayoutAlign=" center">
+<div matSort fxFlex="100" fxLayout="row" fxLayoutAlign=" center">
     <mat-checkbox *ngIf="approval && typeApproval === 'multichoice'" [formControl]="approvalFormControl" [indeterminate]="indeterminate"
                   (click)="$event.stopPropagation();" color='primary' class="checkbox-padding"></mat-checkbox>
     <mat-icon *ngIf="approval && typeApproval === 'enumeration'" color="warn" (click)="setValue();$event.stopPropagation();" class="checkbox-padding cursor-fix">close</mat-icon>
@@ -9,9 +9,15 @@
          [fxHide.lt-sm]="i >= 1 && this.headerService.responsiveHeaders && !this.headerService.overflowMode">
         <div *ngIf="!!header; then thenBlock else elseBlock" fxFlex></div>
         <ng-template #thenBlock>
-            <span fxFlex class="header-text mat-sort-header-arrow"
-                  mat-sort-header="{{i}}-{{header.uniqueId}}">
+            <span fxLayout="row" fxLayoutAlign="start center" class="header-text header-field-icon-container">
             {{ header.title | translate}}
+                <mat-icon class="icon-padding-fixed cursor-pointer"
+                          (click)="sortingHeaderSelected(header)"
+                          [ngClass]="{
+                                'active': header?.sortDirection
+                          }">
+                    {{ header?.sortDirection === 'asc' ? 'arrow_upward' : (header?.sortDirection === 'desc' ? 'arrow_downward' : 'swap_vert') }}
+                </mat-icon>
             </span>
         </ng-template>
         <ng-template #elseBlock>

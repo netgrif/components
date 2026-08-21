@@ -104,6 +104,15 @@ export class UserPreferenceService implements OnDestroy {
         return this._preferences.headers[viewId];
     }
 
+    public setSorts(viewId: string, sorts: Array<SortingHeader>): void {
+        this._preferences.sorts[viewId] = sorts;
+    }
+
+    public setSortsAndSave(viewId: string, sorts: Array<SortingHeader>): void {
+        this.setSorts(viewId, sorts);
+        this._savePreferences();
+    }
+
     public getSorts(viewId: string): Array<SortingHeader> | undefined {
         return this._preferences.sorts[viewId];
     }

@@ -75,7 +75,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
     }
 
     get selectedSorts$(): Observable<Array<HeaderColumn>> {
-        return this._headerState.selectedHeaders$;
+        return this._headerState.selectedSorts$;
     }
 
     get headerState(): HeaderStateInterface {
@@ -443,6 +443,18 @@ export abstract class AbstractHeaderService implements OnDestroy {
         this._headerChange$.next(change);
     }
 
+    public updateSortMode(): void {
+        const change = this.modeChangeAfterSort();
+        const viewId = this.getViewId();
+        if (!!viewId) {
+            const sorts = this.headerState.selectedSorts;
+            this._preferences.setSorts(viewId, sorts.map(sort => {
+                return {headerUniqueId: sort.uniqueId, sortDirection: sort.sortDirection} as SortingHeader;
+            }));
+        }
+        this._headerChange$.next(change);
+    }
+
     /**
      * When user cancels the edit mode, the last saved headers state is loaded and emitted
      * Last mode in header is reloaded as well. Possible reloaded modes: sort or search
@@ -484,6 +496,10 @@ export abstract class AbstractHeaderService implements OnDestroy {
      */
     protected modeChangeAfterEdit(): HeaderChange {
         return this.createModeChange(HeaderMode.EDIT, this._headerState.mode);
+    }
+
+    protected modeChangeAfterSort(): HeaderChange {
+        return this.createModeChange(HeaderMode.SORT, this._headerState.mode);
     }
 
     /**
