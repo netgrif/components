@@ -310,10 +310,6 @@ export abstract class AbstractHeaderService implements OnDestroy {
                     return;
                 }
             }
-            // no match found
-            newSorts.push(null);
-            this._logger.warn(
-                `Could not restore sorting with ID '${sortingHeader.headerUniqueId}' from preferences. It is not one of the available headers for this view.`);
         });
         this._headerState.updateSelectedSorts(newSorts);
     }
