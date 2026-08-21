@@ -432,7 +432,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
         if (!!viewId) {
             const headers = this.headerState.selectedHeaders;
             const sorts = this.headerState.selectedSorts;
-            this._preferences.setHeaders(viewId, headers.map(header => !!header ? header.uniqueId : ''), sorts.map(sort => {
+            this._preferences.setHeadersAndSorts(viewId, headers.map(header => !!header ? header.uniqueId : ''), sorts.map(sort => {
                 return {headerUniqueId: sort.uniqueId, sortDirection: sort.sortDirection} as SortingHeader;
             }));
         }

@@ -94,10 +94,14 @@ export class UserPreferenceService implements OnDestroy {
         return this._preferences.caseFilters[viewId];
     }
 
-    public setHeaders(viewId: string, headers: Array<string>, sorts?: Array<SortingHeader>): void {
+    public setHeaders(viewId: string, headers: Array<string>): void {
         this._preferences.headers[viewId] = headers;
-        this._preferences.sorts[viewId] = sorts;
         this._savePreferences();
+    }
+
+    public setHeadersAndSorts(viewId: string, headers: Array<string>, sorts?: Array<SortingHeader>): void {
+        this._preferences.sorts[viewId] = sorts;
+        this.setHeaders(viewId, headers);
     }
 
     public getHeaders(viewId: string): Array<string> | undefined {
