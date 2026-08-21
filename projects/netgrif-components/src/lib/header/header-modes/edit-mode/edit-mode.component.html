@@ -6,15 +6,13 @@
     <mat-icon *ngIf="approval && typeApproval === 'enumeration'" color="warn"
               (click)="setValue();$event.stopPropagation();" class="checkbox-padding cursor-fix">close
     </mat-icon>
-    <span fxLayout="row" fxLayoutAlign="start center" fxFlex
-          *ngFor="let header of this.headerService.selectedHeaders$ | async; let i = index"
-          class="header-field-icon-container">
+    <span fxLayout="row" fxLayoutAlign="start center" fxFlex *ngFor="let header of this.headerService.selectedHeaders$ | async; let i = index" class="header-field-icon-container"
+          [fxHide.lt-xl]="i >= 4 && this.headerService.responsiveHeaders && !this.headerService.overflowMode"
+          [fxHide.lt-lg]="i >= 3 && this.headerService.responsiveHeaders && !this.headerService.overflowMode"
+          [fxHide.lt-md]="i >= 2 && this.headerService.responsiveHeaders && !this.headerService.overflowMode"
+          [fxHide.lt-sm]="i >= 1 && this.headerService.responsiveHeaders && !this.headerService.overflowMode">
         <mat-form-field fxLayout="row" fxLayoutAlign="center" [ngStyle]="{'min-width': getMinWidth()}"
-                        appearance="outline"
-                        [fxHide.lt-xl]="i >= 4 && this.headerService.responsiveHeaders && !this.headerService.overflowMode"
-                        [fxHide.lt-lg]="i >= 3 && this.headerService.responsiveHeaders && !this.headerService.overflowMode"
-                        [fxHide.lt-md]="i >= 2 && this.headerService.responsiveHeaders && !this.headerService.overflowMode"
-                        [fxHide.lt-sm]="i >= 1 && this.headerService.responsiveHeaders && !this.headerService.overflowMode">
+                        appearance="outline">
             <mat-label *ngIf="!header">{{ 'headers.newHeader' | translate }}</mat-label>
             <input type="text"
                    aria-label="Autocomplete"
@@ -31,7 +29,7 @@
             </mat-autocomplete>
         </mat-form-field>
         <mat-icon class="icon-padding-fixed cursor-pointer"
-                  (click)="setSort(header)"
+                  (click)="sortingHeaderSelected(header)"
             [ngClass]="{
                 'active': header?.sortDirection
             }">

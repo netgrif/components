@@ -10,6 +10,7 @@ import {Page} from '../interface/page';
 import {GroupsInterface} from '../interface/group';
 import {AbstractResourceService} from '../abstract-endpoint/abstract-resource.service';
 import {UserResource} from '../interface/user-resource';
+import {PreferenceResource} from "../interface/preference-resource";
 
 @Injectable({
     providedIn: 'root',
@@ -124,7 +125,7 @@ export class UserResourceService extends AbstractResourceService {
      *
      * **Request URL:** {{baseUrl}}/api/users/preferences
      */
-    public getPreferences(params?: Params): Observable<Preferences> {
+    public getPreferences(params?: Params): Observable<PreferenceResource> {
         return this._resourceProvider.get$('users/preferences', this.SERVER_URL, params)
             .pipe(map(r => this.changeType(r, undefined)));
     }
@@ -148,7 +149,7 @@ export class UserResourceService extends AbstractResourceService {
      *
      * **Request URL:** {{baseUrl}}/api/users/preferences
      */
-    public getPublicPreferences(params?: Params): Observable<Preferences> {
+    public getPublicPreferences(params?: Params): Observable<PreferenceResource> {
         return this._resourceProvider.get$('public/users/preferences', this.SERVER_URL, params)
             .pipe(map(r => this.changeType(r, undefined)));
     }

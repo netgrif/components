@@ -90,15 +90,15 @@ export abstract class AbstractEditModeComponent extends AbstractHeaderModeCompon
         return header ? this._translate.instant(header.title) : '';
     }
 
-    public setSort(header: HeaderColumn) {
-        if (header?.sortDirection === 'asc') {
-            header.sortDirection = 'desc';
-        } else if (header?.sortDirection === 'desc') {
-            header.sortDirection = null;
-        } else if (!!header) {
-            header.sortDirection = 'asc';
+    public sortingHeaderSelected(newSortingColumn: HeaderColumn) {
+        if (newSortingColumn?.sortDirection === 'asc') {
+            newSortingColumn.sortDirection = 'desc';
+        } else if (newSortingColumn?.sortDirection === 'desc') {
+            newSortingColumn.sortDirection = null;
+        } else if (!!newSortingColumn) {
+            newSortingColumn.sortDirection = 'asc';
         }
-
+        this.headerService.sortingColumnSelected(newSortingColumn);
     }
 
     private checkImmediateTitle(option: HeaderColumn): boolean {

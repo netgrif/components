@@ -17,6 +17,7 @@ import {HeaderChangeType} from './models/user-changes/header-change-type';
 import {ViewIdService} from '../user/services/view-id.service';
 import {Net} from '../process/net';
 import {OverflowService} from './services/overflow.service';
+import {SortingHeader} from "../resources/interface/sorting-header";
 
 @Injectable()
 export abstract class AbstractHeaderService implements OnDestroy {
@@ -56,6 +57,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
 
         this._preferences.preferencesChanged$.subscribe(() => {
             this.loadHeadersFromPreferences();
+            this.loadSortsFromPreferences();
         });
 
         this.initializeHeaderState();
@@ -69,6 +71,10 @@ export abstract class AbstractHeaderService implements OnDestroy {
     }
 
     get selectedHeaders$(): Observable<Array<HeaderColumn>> {
+        return this._headerState.selectedHeaders$;
+    }
+
+    get selectedSorts$(): Observable<Array<HeaderColumn>> {
         return this._headerState.selectedHeaders$;
     }
 
@@ -170,6 +176,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
             this._headerState.updateSelectedHeaders(defaultHeaders);
         }
         this.loadHeadersFromPreferences();
+        this.loadSortsFromPreferences();
     }
 
     /**
@@ -284,6 +291,33 @@ export abstract class AbstractHeaderService implements OnDestroy {
         this._headerState.updateSelectedHeaders(newHeaders);
     }
 
+    protected loadSortsFromPreferences(): void {
+        const viewId = this.getViewId();
+        if (!viewId) {
+            return;
+        }
+        const preferredSorts = this._preferences.getSorts(viewId);
+        if (!preferredSorts) {
+            return;
+        }
+        const newSorts = [];
+        preferredSorts.forEach(sortingHeader => {
+            for (const fieldGroup of this.fieldsGroup) {
+                const header = fieldGroup.fields.find(header => header.uniqueId === sortingHeader.headerUniqueId);
+                if (!!header) {
+                    header.sortDirection = sortingHeader.sortDirection;
+                    newSorts.push(header);
+                    return;
+                }
+            }
+            // no match found
+            newSorts.push(null);
+            this._logger.warn(
+                `Could not restore sorting with ID '${sortingHeader.headerUniqueId}' from preferences. It is not one of the available headers for this view.`);
+        });
+        this._headerState.updateSelectedSorts(newSorts);
+    }
+
     protected abstract createMetaHeaders(): Array<HeaderColumn>;
 
     /**
@@ -361,6 +395,18 @@ export abstract class AbstractHeaderService implements OnDestroy {
         });
     }
 
+    public sortingColumnSelected(newHeaderColumn: HeaderColumn): void {
+        const newSortingHeaders: Array<HeaderColumn> = [];
+        newSortingHeaders.push(...this._headerState.selectedSorts);
+        if (newSortingHeaders.indexOf(newHeaderColumn) !== -1 || !newHeaderColumn.sortDirection) {
+            newSortingHeaders.splice(newSortingHeaders.indexOf(newHeaderColumn), 1);
+        }
+        if (!!newHeaderColumn.sortDirection) {
+            newSortingHeaders.push(newHeaderColumn);
+        }
+        this._headerState.updateSelectedSorts(newSortingHeaders);
+    }
+
     /**
      * Change selected header mode there are three possible modes: SORT, SEARCH and EDIT
      * @param newMode the mode that the header should change to
@@ -389,12 +435,10 @@ export abstract class AbstractHeaderService implements OnDestroy {
         const viewId = this.getViewId();
         if (!!viewId) {
             const headers = this.headerState.selectedHeaders;
-            this._preferences.setHeaders(viewId, headers.map(header => !!header ? header.uniqueId : ''), headers.reduce((acc, header) => {
-                        if (!!header) {
-                            acc[header.uniqueId] = header.sortDirection;
-                        }
-                        return acc;
-                    }, {}));
+            const sorts = this.headerState.selectedSorts;
+            this._preferences.setHeaders(viewId, headers.map(header => !!header ? header.uniqueId : ''), sorts.map(sort => {
+                return {headerUniqueId: sort.uniqueId, sortDirection: sort.sortDirection} as SortingHeader;
+            }));
         }
         this._headerChange$.next(change);
     }

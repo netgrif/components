@@ -30,6 +30,7 @@ export class TaskHeaderService extends AbstractHeaderService implements OnDestro
                 this.initializeDefaultHeaderState();
             } else {
                 this.loadHeadersFromPreferences();
+                this.loadSortsFromPreferences();
             }
             this.loading.off();
         });

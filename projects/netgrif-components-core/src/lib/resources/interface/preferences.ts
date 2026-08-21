@@ -1,3 +1,5 @@
+import {SortingHeader} from "./sorting-header";
+
 export interface Preferences {
     locale?: string;
 
@@ -19,8 +21,6 @@ export interface Preferences {
     };
 
     sorts: {
-        [viewId: string]: {
-            [headerId: string]: string
-        }
+        [viewId: string]: Array<SortingHeader>
     }
 }

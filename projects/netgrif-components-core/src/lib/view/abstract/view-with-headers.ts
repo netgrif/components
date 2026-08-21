@@ -27,7 +27,12 @@ export abstract class AbstractViewWithHeadersComponent implements OnDestroy {
     }
 
     protected initializeHeader(headerComponent: AbstractHeaderComponent): void {
-        headerComponent.headerService.selectedHeaders$.subscribe(selectedHeaders => this._selectedHeaders$.next(selectedHeaders));
+        headerComponent.headerService.selectedHeaders$.subscribe(selectedHeaders => {
+            this._selectedHeaders$.next(selectedHeaders);
+        });
+        headerComponent.headerService.selectedSorts$.subscribe(selectedSorts => {
+            this._sortableView.registerPreferredSortableHeaders(selectedSorts);
+        });
         if (!!this._sortableView) {
             this._sortableView.registerHeaderChange(headerComponent.headerService.headerChange$);
         }
