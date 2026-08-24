@@ -41,6 +41,7 @@ export abstract class AbstractSortableViewComponent implements OnDestroy {
     }
 
     public registerPreferredSortableHeaders(headers: Array<HeaderColumn>): void {
+        this._lastHeaderSearchState.sortDirection = '';
         this._preferredSortableHeaders = [];
         headers.forEach(header => {
             if (!header || !header.sortDirection || header.sortDirection === '' as SortDirection) {

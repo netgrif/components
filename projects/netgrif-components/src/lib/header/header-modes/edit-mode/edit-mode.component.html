@@ -28,14 +28,19 @@
                 </mat-optgroup>
             </mat-autocomplete>
         </mat-form-field>
-        <span *ngIf="header">
-            <mat-icon class="icon-padding-fixed cursor-pointer"
-                      (click)="sortingHeaderSelected(header)"
-                      [ngClass]="{
-                          'active': header.sortDirection
-                      }">
-                {{ header.sortDirection === 'asc' ? 'arrow_upward' : (header.sortDirection === 'desc' ? 'arrow_downward' : 'swap_vert') }}
-            </mat-icon><sub *ngIf="sortingPriority(header) as priority" class="sort-priority">{{ priority }}</sub>
+        <span *ngIf="header" class="sort-control-container">
+            <button type="button"
+                    class="sort-control"
+                    (click)="sortingHeaderSelected(header)"
+                    [attr.aria-label]="'Sort ' + (header.title | translate)">
+                <mat-icon class="icon-padding-fixed"
+                          aria-hidden="true"
+                          [ngClass]="{
+                              'active': header.sortDirection
+                          }">
+                    {{ header.sortDirection === 'asc' ? 'arrow_upward' : (header.sortDirection === 'desc' ? 'arrow_downward' : 'swap_vert') }}
+                </mat-icon>
+            </button><sub *ngIf="sortingPriority(header) as priority" class="sort-priority">{{ priority }}</sub>
         </span>
     </span>
 </div>

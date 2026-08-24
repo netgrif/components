@@ -13,6 +13,29 @@
     cursor: pointer;
 }
 
+.sort-control-container {
+    display: inline-flex;
+    align-items: center;
+}
+
+.sort-control {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0 0 4px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    line-height: 0;
+
+    &:focus-visible {
+        outline: 2px solid currentColor;
+        outline-offset: 2px;
+    }
+}
+
 ::ng-deep .header-field-icon-container {
     .mat-mdc-text-field-wrapper {
         padding: 0 8px;
@@ -26,7 +49,6 @@
     font-size: 16px;
     height: 16px;
     width: 16px;
-    margin-left: 4px;
 }
 
 .sort-priority {

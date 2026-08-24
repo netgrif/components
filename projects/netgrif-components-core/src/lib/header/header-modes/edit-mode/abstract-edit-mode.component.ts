@@ -116,6 +116,22 @@ export abstract class AbstractEditModeComponent extends AbstractHeaderModeCompon
         return index === -1 ? null : index + 1;
     }
 
+    protected removeHiddenSorts(visibleHeaderCount: number): void {
+        const visibleHeaders = new Set(this.headerService.headerState.selectedHeaders.slice(0, visibleHeaderCount));
+        const hiddenSorts = this.headerService.headerState.selectedSorts
+            .filter(header => !visibleHeaders.has(header));
+
+        if (hiddenSorts.length === 0) {
+            return;
+        }
+
+        hiddenSorts.forEach(header => {
+            header.sortDirection = '';
+            this.headerService.sortingColumnSelected(header);
+        });
+        this.headerService.applySelectedSorts();
+    }
+
     private checkImmediateTitle(option: HeaderColumn): boolean {
         if (option.title === undefined || option.title === '') {
             this._log.warn('Immediate field in column [' + option.uniqueId + '] does not have a title');

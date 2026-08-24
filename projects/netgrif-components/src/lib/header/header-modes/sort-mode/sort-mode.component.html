@@ -11,13 +11,18 @@
         <ng-template #thenBlock>
             <span fxLayout="row" fxLayoutAlign="start center" class="header-text header-field-icon-container">
             {{ header.title | translate}}
-                <mat-icon class="icon-padding-fixed cursor-pointer"
-                          (click)="sortingHeaderSelected(header)"
-                          [ngClass]="{
-                                'active': header?.sortDirection
-                          }">
-                    {{ header?.sortDirection === 'asc' ? 'arrow_upward' : (header?.sortDirection === 'desc' ? 'arrow_downward' : 'swap_vert') }}
-                </mat-icon>
+                <button type="button"
+                        class="sort-control"
+                        (click)="sortingHeaderSelected(header)"
+                        [attr.aria-label]="'Sort ' + (header.title | translate)">
+                    <mat-icon class="icon-padding-fixed"
+                              aria-hidden="true"
+                              [ngClass]="{
+                                    'active': header?.sortDirection
+                              }">
+                        {{ header?.sortDirection === 'asc' ? 'arrow_upward' : (header?.sortDirection === 'desc' ? 'arrow_downward' : 'swap_vert') }}
+                    </mat-icon>
+                </button>
             </span>
         </ng-template>
         <ng-template #elseBlock>

@@ -1,6 +1,6 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {EditModeComponent} from './edit-mode.component';
-import {FlexLayoutModule, FlexModule} from '@ngbracket/ngx-layout';
+import {FlexLayoutModule, FlexModule, MediaObserver} from '@ngbracket/ngx-layout';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {Component} from '@angular/core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
@@ -22,9 +22,12 @@ import {
     UserResourceService,
     ViewService,
     HeaderSortingMode,
-    NAE_HEADER_SORTING_MODE
+    NAE_HEADER_SORTING_MODE,
+    LoggerService,
+    HeaderMode
 } from '@netgrif/components-core';
 import {RouterTestingModule} from '@angular/router/testing';
+import {TranslateService} from '@ngx-translate/core';
 
 describe('EditModeComponent', () => {
     let component: EditModeComponent;
@@ -83,6 +86,36 @@ describe('EditModeComponent', () => {
             .map(element => element.textContent.trim());
 
         expect(priorities).toEqual(['1', '2']);
+    });
+
+    it('should remove hidden sorts when edit mode opens on a responsive display', () => {
+        const service = TestBed.inject(CaseHeaderService);
+        const firstHeader = service.headerState.selectedHeaders[0];
+        const secondHeader = service.headerState.selectedHeaders[1];
+        const responsiveComponent = new EditModeComponent(
+            TestBed.inject(TranslateService),
+            TestBed.inject(LoggerService),
+            {isActive: alias => alias === 'lt-sm'} as MediaObserver
+        );
+        responsiveComponent.headerService = service;
+        firstHeader.sortDirection = 'asc';
+        secondHeader.sortDirection = 'desc';
+        service.sortingColumnSelected(firstHeader);
+        service.sortingColumnSelected(secondHeader);
+        service.changeMode(HeaderMode.EDIT);
+
+        responsiveComponent.ngOnInit();
+
+        expect(service.headerState.selectedSorts).toEqual([firstHeader]);
+        expect(firstHeader.sortDirection).toBe('asc');
+        expect(secondHeader.sortDirection).toBe('');
+
+        service.revertEditMode();
+
+        expect(service.headerState.selectedSorts).toEqual([firstHeader, secondHeader]);
+        expect(firstHeader.sortDirection).toBe('asc');
+        expect(secondHeader.sortDirection).toBe('desc');
+        responsiveComponent.ngOnDestroy();
     });
 
     afterEach(() => {
