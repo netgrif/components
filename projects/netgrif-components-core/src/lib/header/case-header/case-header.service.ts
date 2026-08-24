@@ -10,6 +10,8 @@ import {Subscription} from 'rxjs';
 import {OverflowService} from '../services/overflow.service';
 import {ViewIdService} from '../../user/services/view-id.service';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
+import {HeaderSortingMode} from '../models/header-sorting-mode';
+import {NAE_HEADER_SORTING_MODE} from '../models/header-sorting-mode-injection-token';
 
 
 @Injectable()
@@ -21,8 +23,9 @@ export class CaseHeaderService extends AbstractHeaderService implements OnDestro
                 logger: LoggerService,
                 @Optional() viewIdService: ViewIdService,
                 @Optional() protected overflowService: OverflowService,
-                @Optional() @Inject(NAE_DEFAULT_HEADERS) naeDefaultHeaders: Array<string>) {
-        super(HeaderType.CASE, preferences, logger, viewIdService, overflowService);
+                @Optional() @Inject(NAE_DEFAULT_HEADERS) naeDefaultHeaders: Array<string>,
+                @Optional() @Inject(NAE_HEADER_SORTING_MODE) sortingMode: HeaderSortingMode = HeaderSortingMode.SINGLE) {
+        super(HeaderType.CASE, preferences, logger, viewIdService, overflowService, sortingMode);
         this.subAllowedNets = _allowedNetsService.allowedNets$.subscribe(allowedNets => {
             this.setAllowedNets(allowedNets);
             if (naeDefaultHeaders && Array.isArray(naeDefaultHeaders) && naeDefaultHeaders.length > 0) {

@@ -10,6 +10,8 @@ import {SearchIndex} from '../../search/models/search-index';
 import {PaginationParams} from '../../utility/pagination/pagination-params';
 import {PreferredSortableHeader} from "../../header/models/user-changes/preferred-sortable-header";
 import {SortDirection} from "@angular/material/sort";
+import {ModeChangeDescription} from '../../header/models/user-changes/mode-change-description';
+import {HeaderMode} from '../../header/models/header-mode';
 
 @Component({
     selector: 'ncc-abstract-sortable-view',
@@ -53,7 +55,14 @@ export abstract class AbstractSortableViewComponent implements OnDestroy {
             if (!header) {
                 return;
             }
-            if (header.changeType === HeaderChangeType.MODE_CHANGED || header.changeType === HeaderChangeType.SORT || header.changeType === HeaderChangeType.SEARCH) {
+            const isModeChange = header.changeType === HeaderChangeType.MODE_CHANGED;
+            if (isModeChange) {
+                const modeChange = header.description as ModeChangeDescription;
+                if (modeChange.previousMode === HeaderMode.EDIT || modeChange.previousMode === modeChange.currentMode) {
+                    return;
+                }
+            }
+            if (isModeChange || header.changeType === HeaderChangeType.SORT || header.changeType === HeaderChangeType.SEARCH) {
                 if (header.changeType === HeaderChangeType.SORT) {
                     this._lastHeaderSearchState = header.description as SortChangeDescription;
                 }

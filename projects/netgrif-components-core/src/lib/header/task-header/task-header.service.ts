@@ -10,6 +10,8 @@ import {NAE_DEFAULT_HEADERS} from '../models/default-headers-token';
 import {ViewIdService} from '../../user/services/view-id.service';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 import {OverflowService} from '../services/overflow.service';
+import {HeaderSortingMode} from '../models/header-sorting-mode';
+import {NAE_HEADER_SORTING_MODE} from '../models/header-sorting-mode-injection-token';
 
 
 @Injectable()
@@ -21,8 +23,9 @@ export class TaskHeaderService extends AbstractHeaderService implements OnDestro
                 logger: LoggerService,
                 @Optional() viewIdService: ViewIdService,
                 @Optional() overflowService: OverflowService,
-                @Optional() @Inject(NAE_DEFAULT_HEADERS) naeDefaultHeaders: Array<string>) {
-        super(HeaderType.TASK, preferences, logger, viewIdService, overflowService);
+                @Optional() @Inject(NAE_DEFAULT_HEADERS) naeDefaultHeaders: Array<string>,
+                @Optional() @Inject(NAE_HEADER_SORTING_MODE) sortingMode: HeaderSortingMode = HeaderSortingMode.SINGLE) {
+        super(HeaderType.TASK, preferences, logger, viewIdService, overflowService, sortingMode);
         this.subAllowedNets = _allowedNetsService.allowedNets$.subscribe(allowedNets => {
             this.setTaskAllowedNets(allowedNets);
             if (naeDefaultHeaders && Array.isArray(naeDefaultHeaders) && naeDefaultHeaders.length > 0) {

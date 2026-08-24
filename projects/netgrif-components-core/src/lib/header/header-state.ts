@@ -28,10 +28,12 @@ export class HeaderState implements HeaderStateInterface {
     protected _selectedSorts$: BehaviorSubject<Array<HeaderColumn>>;
     private _lastSelectedHeaders: Array<HeaderColumn>;
     private _lastSelectedSorts: Array<HeaderColumn>;
+    private _lastSortDirections: Map<HeaderColumn, HeaderColumn['sortDirection']>;
 
     constructor(initialHeaders: Array<HeaderColumn>) {
         this._lastSelectedHeaders = new Array<HeaderColumn>();
         this._lastSelectedSorts = new Array<HeaderColumn>();
+        this._lastSortDirections = new Map<HeaderColumn, HeaderColumn['sortDirection']>();
         this._selectedHeaders$ = new BehaviorSubject<Array<HeaderColumn>>(initialHeaders);
         this._selectedSorts$ = new BehaviorSubject<Array<HeaderColumn>>([]);
     }
@@ -62,7 +64,11 @@ export class HeaderState implements HeaderStateInterface {
 
     public saveState(): void {
         this._lastMode = this.mode;
-        this._lastSelectedHeaders = this._selectedHeaders$.getValue();
+        this._lastSelectedHeaders = [...this._selectedHeaders$.getValue()];
+        this._lastSelectedSorts = [...this._selectedSorts$.getValue()];
+        this._lastSortDirections = new Map(
+            this._lastSelectedSorts.map(header => [header, header.sortDirection])
+        );
     }
 
     public restoreLastMode(): void {
@@ -71,8 +77,17 @@ export class HeaderState implements HeaderStateInterface {
 
     public restoreLastState(): void {
         this.mode = this._lastMode;
-        this._selectedHeaders$.next(this._lastSelectedHeaders);
-        this._selectedSorts$.next(this._lastSelectedSorts);
+        const affectedHeaders = new Set<HeaderColumn>([
+            ...this._selectedHeaders$.getValue().filter(header => !!header),
+            ...this._selectedSorts$.getValue(),
+            ...this._lastSelectedSorts
+        ]);
+        affectedHeaders.forEach(header => header.sortDirection = '');
+        this._lastSelectedSorts.forEach(header => {
+            header.sortDirection = this._lastSortDirections.get(header) ?? '';
+        });
+        this._selectedHeaders$.next([...this._lastSelectedHeaders]);
+        this._selectedSorts$.next([...this._lastSelectedSorts]);
     }
 
     public restoreLastHeadersToIndex(count: number): void {

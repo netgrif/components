@@ -69,6 +69,14 @@ describe('AbstractSortModeComponent', () => {
         expect(headerSpy).toHaveBeenCalledWith(7, 'hello', 'asc');
     });
 
+    it('should ignore sorting selection for an empty header slot', () => {
+        const sortingSpy = spyOn(TestBed.inject(CaseHeaderService), 'sortingColumnSelected');
+
+        component.sortingHeaderSelected(null);
+
+        expect(sortingSpy).not.toHaveBeenCalled();
+    });
+
     afterEach(() => {
         TestBed.resetTestingModule();
         headerSpy.calls.reset();
@@ -93,4 +101,3 @@ class TestWrapperComponent {
     constructor(public service: CaseHeaderService) {
     }
 }
-

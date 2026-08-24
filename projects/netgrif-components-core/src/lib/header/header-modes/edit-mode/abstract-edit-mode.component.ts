@@ -9,6 +9,7 @@ import {orderBy} from 'natural-orderby';
 import {Observable, Subscription} from 'rxjs';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {AbstractHeaderModeComponent} from '../abstract-header-mode.component';
+import {HeaderSortingMode} from '../../models/header-sorting-mode';
 
 export interface HeaderOption {
     groupTitle: string;
@@ -90,15 +91,29 @@ export abstract class AbstractEditModeComponent extends AbstractHeaderModeCompon
         return header ? this._translate.instant(header.title) : '';
     }
 
-    public sortingHeaderSelected(newSortingColumn: HeaderColumn) {
-        if (newSortingColumn?.sortDirection === 'asc') {
+    public sortingHeaderSelected(newSortingColumn: HeaderColumn | null | undefined): void {
+        if (!newSortingColumn) {
+            return;
+        }
+
+        if (newSortingColumn.sortDirection === 'asc') {
             newSortingColumn.sortDirection = 'desc';
-        } else if (newSortingColumn?.sortDirection === 'desc') {
-            newSortingColumn.sortDirection = null;
-        } else if (!!newSortingColumn) {
+        } else if (newSortingColumn.sortDirection === 'desc') {
+            newSortingColumn.sortDirection = '';
+        } else {
             newSortingColumn.sortDirection = 'asc';
         }
         this.headerService.sortingColumnSelected(newSortingColumn);
+        this.headerService.applySelectedSorts();
+    }
+
+    public sortingPriority(header: HeaderColumn | null | undefined): number | null {
+        if (!header?.sortDirection || this.headerService.sortingMode === HeaderSortingMode.SINGLE) {
+            return null;
+        }
+
+        const index = this.headerService.headerState.selectedSorts.indexOf(header);
+        return index === -1 ? null : index + 1;
     }
 
     private checkImmediateTitle(option: HeaderColumn): boolean {

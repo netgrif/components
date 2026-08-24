@@ -29,6 +29,7 @@ import {SearchService} from '../../search/search-service/search.service';
 import {NAE_BASE_FILTER} from '../../search/models/base-filter-injection-token';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
+import {HeaderSortingMode} from '../models/header-sorting-mode';
 
 describe('TaskHeaderService', () => {
     let service: TaskHeaderService;
@@ -64,6 +65,10 @@ describe('TaskHeaderService', () => {
 
     it('should be created', () => {
         expect(service).toBeTruthy();
+    });
+
+    it('should use single sorting when no sorting mode is provided', () => {
+        expect(service.sortingMode).toBe(HeaderSortingMode.SINGLE);
     });
 
     afterEach(() => {

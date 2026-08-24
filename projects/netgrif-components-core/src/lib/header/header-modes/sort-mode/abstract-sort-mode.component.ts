@@ -26,12 +26,16 @@ export abstract class AbstractSortModeComponent extends AbstractHeaderModeCompon
             sortEvent.direction);
     }
 
-    public sortingHeaderSelected(newSortingColumn: HeaderColumn) {
-        if (newSortingColumn?.sortDirection === 'asc') {
+    public sortingHeaderSelected(newSortingColumn: HeaderColumn | null | undefined): void {
+        if (!newSortingColumn) {
+            return;
+        }
+
+        if (newSortingColumn.sortDirection === 'asc') {
             newSortingColumn.sortDirection = 'desc';
-        } else if (newSortingColumn?.sortDirection === 'desc') {
-            newSortingColumn.sortDirection = null;
-        } else if (!!newSortingColumn) {
+        } else if (newSortingColumn.sortDirection === 'desc') {
+            newSortingColumn.sortDirection = '';
+        } else {
             newSortingColumn.sortDirection = 'asc';
         }
         this.headerService.sortingColumnSelected(newSortingColumn);
@@ -39,5 +43,4 @@ export abstract class AbstractSortModeComponent extends AbstractHeaderModeCompon
     }
 
 }
-
 

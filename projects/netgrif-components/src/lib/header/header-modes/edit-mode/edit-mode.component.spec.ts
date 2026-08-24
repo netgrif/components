@@ -20,7 +20,9 @@ import {
     TestViewService,
     TranslateLibModule,
     UserResourceService,
-    ViewService
+    ViewService,
+    HeaderSortingMode,
+    NAE_HEADER_SORTING_MODE
 } from '@netgrif/components-core';
 import {RouterTestingModule} from '@angular/router/testing';
 
@@ -54,6 +56,7 @@ describe('EditModeComponent', () => {
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: ViewService, useClass: TestViewService},
+                {provide: NAE_HEADER_SORTING_MODE, useValue: HeaderSortingMode.MULTI},
                 {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ]
         })
@@ -68,6 +71,18 @@ describe('EditModeComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
+    });
+
+    it('should render sort priorities as subscripts in multi mode', () => {
+        const service = TestBed.inject(CaseHeaderService);
+        component.sortingHeaderSelected(service.headerState.selectedHeaders[0]);
+        component.sortingHeaderSelected(service.headerState.selectedHeaders[1]);
+        fixture.detectChanges();
+
+        const priorities = Array.from<HTMLElement>(fixture.nativeElement.querySelectorAll('sub.sort-priority'))
+            .map(element => element.textContent.trim());
+
+        expect(priorities).toEqual(['1', '2']);
     });
 
     afterEach(() => {
