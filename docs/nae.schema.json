@@ -741,6 +741,10 @@
                                 "icon": {
                                     "type": "string"
                                 },
+                                "order": {
+                                    "description": "Optional ascending menu order. Equal values preserve their original relative order. Items without a value are displayed last.",
+                                    "type": "number"
+                                },
                                 "title": {
                                     "type": "string"
                                 }
