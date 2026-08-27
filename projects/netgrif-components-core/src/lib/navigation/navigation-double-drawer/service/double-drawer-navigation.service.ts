@@ -375,11 +375,14 @@ export class DoubleDrawerNavigationService implements OnDestroy {
         if (this.itemsOrder === MenuOrder.Descending) {
             multiplier = -1;
         }
-        let currentRightItems = this.rightItems;
-        let currentLeftItems = this.leftItems;
-        currentRightItems.sort((a, b) => multiplier * (a?.navigation as NavigationItem)?.title.localeCompare((b?.navigation as NavigationItem)?.title));
-        currentLeftItems.sort((a, b) => multiplier * (a?.navigation as NavigationItem)?.title.localeCompare((b?.navigation as NavigationItem)?.title));
-        this.rightItems$.next(currentRightItems);
+        const allRightItems = this.rightItems.concat(this.moreItems).sort((a, b) =>
+            multiplier * (a?.navigation as NavigationItem)?.title.localeCompare((b?.navigation as NavigationItem)?.title)
+        );
+        const currentLeftItems = [...this.leftItems].sort((a, b) =>
+            multiplier * (a?.navigation as NavigationItem)?.title.localeCompare((b?.navigation as NavigationItem)?.title)
+        );
+        this.rightItems$.next(allRightItems.slice(0, RIGHT_SIDE_INIT_PAGE_SIZE));
+        this.moreItems$.next(allRightItems.slice(RIGHT_SIDE_INIT_PAGE_SIZE));
         this.leftItems$.next(currentLeftItems);
     }
 
@@ -577,13 +580,9 @@ export class DoubleDrawerNavigationService implements OnDestroy {
             ? Object.values(this._childCustomViews[this._currentPath])
             : [];
 
-        const combinedItems = currentRightItems.concat(customItems, currentMoreItems);
-        if (!combinedItems.some(item => DoubleDrawerUtils.resolveOrder(item) !== undefined)) {
-            this._rightItems$.next(currentRightItems.concat(customItems));
-            this._moreItems$.next(currentMoreItems);
-            return;
-        }
-
+        // childItemIds defines the process fallback order. Custom items follow in nae.json declaration order.
+        // Explicit order is applied to the complete list before it is split into visible and "more" pages.
+        const combinedItems = currentRightItems.concat(currentMoreItems, customItems);
         const orderedItems = DoubleDrawerUtils.sortByOrder(combinedItems);
         this._rightItems$.next(orderedItems.slice(0, RIGHT_SIDE_INIT_PAGE_SIZE));
         this._moreItems$.next(orderedItems.slice(RIGHT_SIDE_INIT_PAGE_SIZE));

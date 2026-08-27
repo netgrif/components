@@ -41,7 +41,9 @@ export class DoubleDrawerUtils {
     }
 
     /**
-     * Orders configured items first and keeps the original relative position for equal or missing order values.
+     * Applies optional explicit order over the caller-provided fallback order. Process items must be supplied in
+     * childItemIds order; custom nae.json items follow in their declaration order. Equal or missing values keep that
+     * stable fallback, while every item without an explicit order is placed after explicitly ordered items.
      */
     public static sortByOrder(items: Array<NavigationItem>): Array<NavigationItem> {
         return items
