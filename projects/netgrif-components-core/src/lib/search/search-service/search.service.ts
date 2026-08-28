@@ -387,7 +387,17 @@ export class SearchService implements OnDestroy {
     }
 
     /**
-     * todo 2466
+     * Recursively loads an array of query items (expressions and logical operators) into a predicate node.
+     *
+     * Processes each query item in the array:
+     * - For simple expressions: loads them as individual predicates using {@link loadSimpleExpressionIntoPredicate}
+     * - For complex expressions: recursively processes their nested items
+     * - For raw expressions: loads them as plain query predicates using {@link loadPlainQueryIntoPredicate}
+     * - Logical operators are filtered out and not processed
+     *
+     * @param predicate the predicate node into which the query items should be loaded
+     * @param items array of query items to process and load into the predicate tree
+     * @returns an array of observables that emit when each category's data has been loaded from its expression
      */
     protected loadExpressionsIntoPredicate(predicate: EditableClausePredicateWithGenerators, items: Array<QueryItem>): Array<Observable<void>> {
         const expressions: Array<QueryItem> = items.filter(item => item.type() !== QueryItemType.LOGICAL_OPERATOR);
@@ -422,12 +432,22 @@ export class SearchService implements OnDestroy {
         const branchId = predicate.addNewClausePredicate(BooleanOperator.OR);
         const localPredicate = predicate.getPredicateMap().get(branchId).getWrappedPredicate() as unknown as EditableClausePredicateWithGenerators;
         const category: Category<any> = simpleExpr.category;
-        const categoryLoading$: Observable<void> = category.loadFromPfqlExpression(simpleExpr); // todo 2466 auto
+        const categoryLoading$: Observable<void> = category.loadFromPfqlExpression(simpleExpr);
         localPredicate.addNewPredicateFromGenerator(category);
         return categoryLoading$;
     }
 
-    // todo 2466 doc
+    /**
+     * Loads a raw PFQL expression into a predicate node.
+     *
+     * Creates a new clause predicate branch, extracts the plain query category from the raw expression,
+     * loads the expression data into the category, and adds the category as a new predicate generator
+     * to the created branch.
+     *
+     * @param predicate the predicate node into which the raw expression should be loaded
+     * @param expression the raw expression to load
+     * @returns an observable that emits when the category data has been loaded from the expression
+     */
     protected loadPlainQueryIntoPredicate(predicate: EditableClausePredicateWithGenerators, expression: RawExpression): Observable<void>{
         const branchId = predicate.addNewClausePredicate(BooleanOperator.OR);
         const localPredicate = predicate.getPredicateMap().get(branchId).getWrappedPredicate() as unknown as EditableClausePredicateWithGenerators;

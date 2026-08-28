@@ -175,7 +175,16 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
     };
 
     /**
-     * todo 2466 doc
+     /**
+     * Visits a case OR expression and processes multiple AND expressions joined by OR operators.
+     *
+     * When multiple AND expressions are connected with OR operators, the entire expression is treated
+     * as a raw query string and wrapped in a case plain query, since complex OR logic requires
+     * special handling beyond simple query composition.
+     *
+     * @param ctx - The case OR expression parse tree context
+     * @returns An array containing either the visited AND expression items if there's only one,
+     *          or a single raw expression wrapping the entire query text if multiple OR-connected expressions exist
      */
     override visitCaseOrExpression = (ctx: CaseOrExpressionContext): Array<QueryItem> => {
         const andExpressionContexts = ctx.caseAndExpression();
@@ -213,7 +222,15 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
     };
 
     /**
-     * todo 2466 doc
+     * Visits a task OR expression and processes multiple AND expressions joined by OR operators.
+     *
+     * When multiple AND expressions are connected with OR operators, the entire expression is treated
+     * as a raw query string and wrapped in a task plain query, since complex OR logic requires
+     * special handling beyond simple query composition.
+     *
+     * @param ctx - The task OR expression parse tree context
+     * @returns An array containing either the visited AND expression items if there's only one,
+     *          or a single raw expression wrapping the entire query text if multiple OR-connected expressions exist
      */
     override visitTaskOrExpression = (ctx: TaskOrExpressionContext): Array<QueryItem> => {
         const andExpressionContexts = ctx.taskAndExpression();
@@ -804,13 +821,31 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
         return new SimpleExpression(operator, undefined);
     }
 
-    // todo 2466 doc
+    /**
+     * Handles a case raw query by wrapping it in a case plain query expression.
+     *
+     * This method is used when the query contains complex expressions that cannot be parsed
+     * into structured query items (e.g., complex OR expressions with multiple branches or negations).
+     * The raw query text is preserved and processed as a plain text query.
+     *
+     * @param query - The raw query string to be wrapped
+     * @returns A raw expression containing the case plain query category and the original query text
+     */
     protected handleCaseRawQuery(query: string): RawExpression {
         const category: CasePlainQuery = new CasePlainQuery(this._operatorService, this._logger);
         return new RawExpression(category, query);
     }
 
-    // todo 2466 doc
+    /**
+     * Handles a task raw query by wrapping it in a task plain query expression.
+     *
+     * This method is used when the query contains complex expressions that cannot be parsed
+     * into structured query items (e.g., complex OR expressions with multiple branches or negations).
+     * The raw query text is preserved and processed as a plain text query.
+     *
+     * @param query - The raw query string to be wrapped
+     * @returns A raw expression containing the task plain query category and the original query text
+     */
     protected handleTaskRawQuery(query: string): RawExpression {
         const category: TaskPlainQuery = new TaskPlainQuery(this._operatorService, this._logger);
         return new RawExpression(category, query);

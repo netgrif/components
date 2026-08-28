@@ -5,7 +5,11 @@ import {ResourceTypeQueryPrefix} from "../resource-type-query-prefix";
 import {Categories} from "../categories";
 import {PlainQueryCategory} from "../plain-query-category";
 
-// todo 2466 doc
+/**
+ * Represents a plain query category for case resources.
+ * This class extends PlainQueryCategory and provides case-specific query functionality
+ * with serialization support for the CASES resource type.
+ */
 export class CasePlainQuery extends PlainQueryCategory {
 
     constructor(operators: OperatorService, logger: LoggerService) {

@@ -192,7 +192,12 @@ export abstract class Category<T> {
     }
 
     /**
-     * todo 2466 doc
+     * Sets the required input type for arguments for this category.
+     *
+     * This setter allows changing the input type dynamically, which can be useful when the argument input type
+     * depends on runtime conditions (e.g., in {@link CaseDataset} category where the input type depends on the selected data field type).
+     *
+     * @param inputType the new input type to be set for this category
      */
     public set inputType(inputType: SearchInputType) {
         this._inputType = inputType;
@@ -224,7 +229,11 @@ export abstract class Category<T> {
     }
 
     /**
-     * todo 2466 doc
+     * Returns the current array of `FormControl` objects that contains as many controls as is the arity of the selected operator.
+     * Unlike the [operandsFormControls$]{@link Category#operandsFormControls$} observable, this getter returns the actual array
+     * instance directly without wrapping it in an observable.
+     *
+     * @returns an array of `FormControl` objects for the operands, or an empty array if no operator is selected
      */
     public get operandsFormControls(): Array<FormControl> {
         return this._operandsFormControls;
