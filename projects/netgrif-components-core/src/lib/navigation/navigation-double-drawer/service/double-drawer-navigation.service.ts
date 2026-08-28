@@ -32,6 +32,7 @@ import {
 import { UriNodeResource } from '../../model/uri-resource';
 import {MenuItemClickEvent, MenuItemLoadedEvent} from '../../model/navigation-menu-events';
 import {GroupNavigationConstants} from "../../model/group-navigation-constants";
+import {SessionClearService} from '../../../authentication/session/services/session-clear.service';
 import {UserService} from "../../../user/services/user.service";
 
 /**
@@ -81,6 +82,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
     protected hiddenCustomItemsInitialized: boolean;
     protected itemClicked: EventEmitter<MenuItemClickEvent>;
     protected itemLoaded: EventEmitter<MenuItemLoadedEvent>;
+    protected _sessionClearSubscription: Subscription;
 
     constructor(protected _uriService: UriService,
                 protected _log: LoggerService,
@@ -91,7 +93,8 @@ export class DoubleDrawerNavigationService implements OnDestroy {
                 protected _accessService: AccessService,
                 protected _translateService: TranslateService,
                 protected _dynamicRoutingService: DynamicNavigationRouteProviderService,
-                protected _redirectService: RedirectService) {
+                protected _redirectService: RedirectService,
+                private _sessionClearService: SessionClearService) {
         this._leftItems$ = new BehaviorSubject([]);
         this._rightItems$ = new BehaviorSubject([]);
         this._moreItems$ = new BehaviorSubject([]);
@@ -113,10 +116,21 @@ export class DoubleDrawerNavigationService implements OnDestroy {
         ).subscribe(node => {
             this.currentNode = node;
         });
+
+        this._sessionClearSubscription = this._sessionClearService.sessionCleared.subscribe({
+            next: () => {
+                this._currentNavigationItem = null;
+                this._childCustomViews = {};
+                this.customItemsInitialized = false;
+                this.hiddenCustomItemsInitialized = false;
+                this._currentNode = null;
+            }
+        });
     }
 
     public ngOnDestroy(): void {
         this._currentNodeSubscription?.unsubscribe();
+        this._sessionClearSubscription?.unsubscribe();
         this._leftLoading$.complete();
         this._rightLoading$.complete();
         this._nodeLoading$.complete();
