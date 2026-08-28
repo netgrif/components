@@ -67,7 +67,8 @@ export class SearchService implements OnDestroy {
      * It is required if we want to load predicate filter from saved metadata
      * @param baseFilter Filter that should be applied to the view when no searching is being performed.
      * Injected trough the {@link NAE_BASE_FILTER} injection token.
-     * @param _ignoreNetsOnAutocompleteCategories todo 2466
+     * @param _ignoreNetsOnAutocompleteCategories boolean flag that determines whether net-related categories should be ignored
+     * when providing autocomplete suggestions. Injected through the {@link NAE_IGNORE_NETS_ON_AUTOCOMPLETE_CATEGORY} injection token.
      * @param _injector injector from angular core
      */
     constructor(protected _log: LoggerService,
