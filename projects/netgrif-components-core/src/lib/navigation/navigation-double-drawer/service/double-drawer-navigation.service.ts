@@ -130,6 +130,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
 
     public ngOnDestroy(): void {
         this._currentNodeSubscription?.unsubscribe();
+        this._sessionClearSubscription?.unsubscribe();
         this._leftLoading$.complete();
         this._rightLoading$.complete();
         this._nodeLoading$.complete();
