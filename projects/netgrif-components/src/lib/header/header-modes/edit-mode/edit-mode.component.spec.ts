@@ -28,6 +28,8 @@ import {
 } from '@netgrif/components-core';
 import {RouterTestingModule} from '@angular/router/testing';
 import {TranslateService} from '@ngx-translate/core';
+import {Observable, of} from "rxjs";
+import {MediaChange} from "@ngbracket/ngx-layout/core/media-change";
 
 describe('EditModeComponent', () => {
     let component: EditModeComponent;
@@ -95,7 +97,7 @@ describe('EditModeComponent', () => {
         const responsiveComponent = new EditModeComponent(
             TestBed.inject(TranslateService),
             TestBed.inject(LoggerService),
-            {isActive: alias => alias === 'lt-sm'} as MediaObserver
+            {asObservable: () => of([] as MediaChange[]), isActive: alias => alias === 'lt-sm'} as MediaObserver
         );
         responsiveComponent.headerService = service;
         firstHeader.sortDirection = 'asc';
