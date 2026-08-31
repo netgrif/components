@@ -32,7 +32,7 @@
             <button type="button"
                     class="sort-control"
                     (click)="sortingHeaderSelected(header)"
-                    [attr.aria-label]="'Sort ' + (header.title | translate)">
+                    [attr.aria-label]="sortLabel(header)">
                 <mat-icon class="icon-padding-fixed"
                           aria-hidden="true"
                           [ngClass]="{

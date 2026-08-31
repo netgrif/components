@@ -92,17 +92,10 @@ export abstract class AbstractEditModeComponent extends AbstractHeaderModeCompon
     }
 
     public sortingHeaderSelected(newSortingColumn: HeaderColumn | null | undefined): void {
-        if (!newSortingColumn) {
+        if (!this.advanceSortDirection(newSortingColumn)) {
             return;
         }
 
-        if (newSortingColumn.sortDirection === 'asc') {
-            newSortingColumn.sortDirection = 'desc';
-        } else if (newSortingColumn.sortDirection === 'desc') {
-            newSortingColumn.sortDirection = '';
-        } else {
-            newSortingColumn.sortDirection = 'asc';
-        }
         this.headerService.sortingColumnSelected(newSortingColumn);
         this.headerService.applySelectedSorts();
     }

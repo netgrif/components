@@ -129,6 +129,23 @@ describe('DoubleDrawerNavigationService', () => {
         );
     });
 
+    it('orders hidden nae.json rail items and keeps missing order last', () => {
+        const hiddenItem = (id: string, order?: number) => ({
+            navigation: {title: id, hidden: true, ...(order === undefined ? {} : {order})},
+            routing: {path: id},
+        }) as any;
+
+        (service as any).resolveHiddenMenuItemFromChildViews('/hidden-10', hiddenItem('hidden-10', 10));
+        (service as any).resolveHiddenMenuItemFromChildViews('/hidden-none', hiddenItem('hidden-none'));
+        (service as any).resolveHiddenMenuItemFromChildViews('/hidden-1', hiddenItem('hidden-1', 1));
+
+        expect(service.hiddenCustomItems.map(item => item.id)).toEqual([
+            '/hidden-1',
+            '/hidden-10',
+            '/hidden-none',
+        ]);
+    });
+
     it('alphabetically sorts the complete right side and paginates the result', () => {
         const items = Array.from({length: 25}, (_, index) => navigationItem(String(25 - index).padStart(2, '0')));
         service.rightItems$.next(items.slice(0, 20));

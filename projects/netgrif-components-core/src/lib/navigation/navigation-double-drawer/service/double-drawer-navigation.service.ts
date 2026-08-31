@@ -604,12 +604,14 @@ export class DoubleDrawerNavigationService implements OnDestroy {
         if (!childView.navigation) return;
         if (!this._accessService.canAccessView(childView, configPath)) return;
         if (!!((childView?.navigation as any)?.hidden)) {
-            let currentHiddenCustomItems = this._hiddenCustomItems$.getValue();
-            currentHiddenCustomItems.push({
+            const hiddenItem = {
                 id: configPath,
                 ...childView,
-            });
-            this._hiddenCustomItems$.next(currentHiddenCustomItems);
+            } as NavigationItem;
+            this._hiddenCustomItems$.next(DoubleDrawerUtils.sortByOrder([
+                ...this._hiddenCustomItems$.getValue(),
+                hiddenItem
+            ]));
         }
     }
 

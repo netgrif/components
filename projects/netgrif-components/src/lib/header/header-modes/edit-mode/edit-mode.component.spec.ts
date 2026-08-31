@@ -28,6 +28,7 @@ import {
 } from '@netgrif/components-core';
 import {RouterTestingModule} from '@angular/router/testing';
 import {TranslateService} from '@ngx-translate/core';
+import {of, Subject} from 'rxjs';
 
 describe('EditModeComponent', () => {
     let component: EditModeComponent;
@@ -95,7 +96,10 @@ describe('EditModeComponent', () => {
         const responsiveComponent = new EditModeComponent(
             TestBed.inject(TranslateService),
             TestBed.inject(LoggerService),
-            {isActive: alias => alias === 'lt-sm'} as MediaObserver
+            {
+                isActive: alias => alias === 'lt-sm',
+                asObservable: () => of([]),
+            } as MediaObserver
         );
         responsiveComponent.headerService = service;
         firstHeader.sortDirection = 'asc';
@@ -116,6 +120,40 @@ describe('EditModeComponent', () => {
         expect(firstHeader.sortDirection).toBe('asc');
         expect(secondHeader.sortDirection).toBe('desc');
         responsiveComponent.ngOnDestroy();
+    });
+
+    it('should remove newly hidden sorts after a breakpoint change', () => {
+        const service = TestBed.inject(CaseHeaderService);
+        const firstHeader = service.headerState.selectedHeaders[0];
+        const secondHeader = service.headerState.selectedHeaders[1];
+        const mediaChanges = new Subject<any>();
+        let activeAlias: string;
+        const responsiveComponent = new EditModeComponent(
+            TestBed.inject(TranslateService),
+            TestBed.inject(LoggerService),
+            {
+                isActive: alias => alias === activeAlias,
+                asObservable: () => mediaChanges.asObservable(),
+            } as MediaObserver
+        );
+        responsiveComponent.headerService = service;
+        firstHeader.sortDirection = 'asc';
+        secondHeader.sortDirection = 'desc';
+        service.sortingColumnSelected(firstHeader);
+        service.sortingColumnSelected(secondHeader);
+        service.changeMode(HeaderMode.EDIT);
+        responsiveComponent.ngOnInit();
+
+        expect(service.headerState.selectedSorts).toEqual([firstHeader, secondHeader]);
+
+        activeAlias = 'lt-sm';
+        mediaChanges.next([]);
+
+        expect(service.headerState.selectedSorts).toEqual([firstHeader]);
+        expect(secondHeader.sortDirection).toBe('');
+
+        responsiveComponent.ngOnDestroy();
+        mediaChanges.complete();
     });
 
     afterEach(() => {

@@ -118,6 +118,35 @@ describe('CaseHeaderService', () => {
         multiService.ngOnDestroy();
     });
 
+    it('should replace a logically identical sort represented by another HeaderColumn instance', () => {
+        const injector = Injector.create({
+            providers: [
+                CaseHeaderService,
+                {provide: NAE_HEADER_SORTING_MODE, useValue: HeaderSortingMode.MULTI}
+            ],
+            parent: TestBed.inject(Injector)
+        });
+        const multiService = injector.get(CaseHeaderService);
+        const original = multiService.headerState.selectedHeaders[0];
+        const replacement = new HeaderColumn(
+            original.type,
+            original.fieldIdentifier,
+            original.title,
+            original.fieldType,
+            original.initial,
+            original.petriNetIdentifier
+        );
+        original.sortDirection = 'asc';
+        replacement.sortDirection = 'desc';
+
+        multiService.sortingColumnSelected(original);
+        multiService.sortingColumnSelected(replacement);
+
+        expect(original.sortDirection).toBe('');
+        expect(multiService.headerState.selectedSorts).toEqual([replacement]);
+        multiService.ngOnDestroy();
+    });
+
     it('should combine multi sorting in edit mode with single sorting in normal mode', () => {
         const injector = Injector.create({
             providers: [
@@ -173,6 +202,38 @@ describe('CaseHeaderService', () => {
             done();
         });
         service.sortHeaderChanged(0, '', 'asc');
+    });
+
+    it('restores a regular sort after edit mode is cancelled', () => {
+        const sortedHeader = service.headerState.selectedHeaders[0];
+        service.sortHeaderChanged(0, sortedHeader.uniqueId, 'asc');
+
+        expect(service.headerState.selectedSorts).toEqual([sortedHeader]);
+        service.changeMode(HeaderMode.EDIT);
+
+        sortedHeader.sortDirection = 'desc';
+        service.sortingColumnSelected(sortedHeader);
+        service.revertEditMode();
+
+        expect(service.headerState.selectedSorts).toEqual([sortedHeader]);
+        expect(sortedHeader.sortDirection).toBe('asc');
+    });
+
+    it('restores only the first resolvable preference in single sorting mode', () => {
+        const preferences = TestBed.inject(UserPreferenceService);
+        const firstHeader = service.headerState.selectedHeaders[0];
+        const secondHeader = service.headerState.selectedHeaders[1];
+        preferences.setSorts('case-view', [
+            {headerUniqueId: 'meta-missing', sortDirection: 'asc'},
+            {headerUniqueId: firstHeader.uniqueId, sortDirection: 'desc'},
+            {headerUniqueId: secondHeader.uniqueId, sortDirection: 'asc'}
+        ]);
+
+        (service as any).loadSortsFromPreferences();
+
+        expect(service.headerState.selectedSorts).toEqual([firstHeader]);
+        expect(firstHeader.sortDirection).toBe('desc');
+        expect(secondHeader.sortDirection).toBe('');
     });
 
     it('call search input changed', (done) => {
