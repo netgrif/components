@@ -29,10 +29,9 @@ export class EditModeComponent extends AbstractEditModeComponent implements OnIn
 
     ngOnDestroy() {
         super.ngOnDestroy();
-        this.removeHiddenSorts(this.visibleHeaderCount());
-        this.mediaSubscription = this.mediaObserver.asObservable().subscribe(() => {
-            this.removeHiddenSorts(this.visibleHeaderCount());
-        });
+        if (!!this.mediaSubscription) {
+            this.mediaSubscription.unsubscribe();
+        }
     }
 
     public setValue() {
