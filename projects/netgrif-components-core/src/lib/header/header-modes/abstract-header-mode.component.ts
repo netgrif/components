@@ -3,6 +3,7 @@ import {FormControl} from '@angular/forms';
 import {HeaderColumn} from "../models/header-column";
 import {AbstractHeaderService} from "../abstract-header-service";
 import {HeaderSortingMode} from "../models/header-sorting-mode";
+import {HeaderMode} from "../models/header-mode";
 
 @Component({
     selector: 'ncc-abstract-header-mode',
@@ -41,7 +42,7 @@ export abstract class AbstractHeaderModeComponent {
     }
 
     public sortingPriority(header: HeaderColumn | null | undefined): number | null {
-        if (!header?.sortDirection || this.headerService.sortingMode === HeaderSortingMode.SINGLE) {
+        if (!header?.sortDirection || this.headerService.sortingMode === HeaderSortingMode.SINGLE || (this.headerService.sortingMode === HeaderSortingMode.COMBINED && this.headerService.headerState.mode === HeaderMode.SORT)) {
             return null;
         }
 
