@@ -1,7 +1,9 @@
 import {InjectionToken} from '@angular/core';
+import {FilterType} from "../../../filter/models/filter-type";
 
 export interface FilterTextConfiguration {
     query: string;
+    type: FilterType;
     ellipsis: boolean;
 }
 

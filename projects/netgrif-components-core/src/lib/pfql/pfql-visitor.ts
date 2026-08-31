@@ -638,8 +638,6 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
         return [expr];
     };
 
-    // todo 2466 implement handler dispatcher?
-
     /**
      * Handles a string comparison context and creates a simple expression with the appropriate operator and value.
      *

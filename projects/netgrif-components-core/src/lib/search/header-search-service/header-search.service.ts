@@ -21,6 +21,7 @@ import {CaseSimpleDataset} from '../models/category/case/case-simple-dataset';
 import {TranslateService} from '@ngx-translate/core';
 import {LoggerService} from '../../logger/services/logger.service';
 import {Subscription} from 'rxjs';
+import {CaseProcess} from "../models/category/case/case-process";
 
 /**
  * Holds the Id of the predicate in the {@link SearchService}
@@ -75,7 +76,8 @@ export class HeaderSearchService implements OnDestroy {
             {k: CaseMetaField.TITLE, v: CaseTitle},
             {k: CaseMetaField.CREATION_DATE, v: CaseCreationDate},
             {k: CaseMetaField.AUTHOR, v: CaseAuthor},
-            {k: CaseMetaField.MONGO_ID, v: CaseStringId}
+            {k: CaseMetaField.MONGO_ID, v: CaseStringId},
+            {k: CaseMetaField.PROCESS_IDENTIFIER, v: CaseProcess},
         ].forEach(pair => {
             this._typeToCategory.set(pair.k, this._categoryFactory.getWithDefaultOperator(pair.v));
         });

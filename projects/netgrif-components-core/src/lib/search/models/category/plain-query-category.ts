@@ -11,7 +11,7 @@ import {ResourceTypeQueryPrefix} from "./resource-type-query-prefix";
 import {RawExpression} from "../../../pfql/model/raw-expression";
 
 export abstract class PlainQueryCategory extends Category<string> {
-    private static readonly _title = 'search.category.plainText'; // todo 2466 add translation
+    private static readonly _title = 'search.category.plainText';
 
     protected _configurationInput: ConfigurationInput;
 
@@ -19,7 +19,7 @@ export abstract class PlainQueryCategory extends Category<string> {
         super([], [], `${PlainQueryCategory._title}.name`, SearchInputType.PLAIN_QUERY, logger, operators, resourceType);
         this._configurationInput = new ConfigurationInput(
             SearchInputType.PLAIN_QUERY,
-            'search.category.plainText.name',
+            `${PlainQueryCategory._title}.name`,
             false,
             new Map<string, Array<unknown>>(),
             () => {

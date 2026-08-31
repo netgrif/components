@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, Type} from '@angular/core';
 import {
     AbstractImmediateFilterTextContentComponent,
     NAE_FILTER_TEXT,
@@ -7,29 +7,30 @@ import {
     NAE_BASE_FILTER,
     BaseFilter,
     SimpleFilter,
-    AllowedNetsServiceFactory,
-    AllowedNetsService,
     CategoryFactory,
     Category,
     NAE_SEARCH_CATEGORIES,
+    NAE_IGNORE_NETS_ON_AUTOCOMPLETE_CATEGORY,
+    FilterType,
+    NAE_DEFAULT_CASE_SEARCH_CATEGORIES,
+    NAE_DEFAULT_TASK_SEARCH_CATEGORIES,
 } from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 
 export function filterTextBaseFilterFactory(configuration: FilterTextConfiguration): BaseFilter {
     return {
-        filter: SimpleFilter.empty(configuration.metadata.filterMetadata.filterType)
+        filter: SimpleFilter.empty(configuration.type)
     };
 }
 
-export function filterTextAllowedNetsFactory(factory: AllowedNetsServiceFactory,
-                                             configuration: FilterTextConfiguration): AllowedNetsService {
-    return factory.createFromArray(configuration.metadata.allowedNets);
-}
-
-export function filterTextCategoriesFactory(factory: CategoryFactory, configuration: FilterTextConfiguration): Array<Category<any>> {
-    const categories = configuration.metadata.filterMetadata.searchCategories.map(c => factory.getByNameWithDefaultOperator(c));
-    categories.forEach(c => c.destroy());
-    return categories;
+export function filterTextCategoriesFactory(configuration: FilterTextConfiguration, caseCategories: Array<Type<Category<any>>>,
+                                            taskCategories: Array<Type<Category<any>>>): Array<Type<Category<any>>> {
+    if (configuration.type === FilterType.CASE) {
+        return caseCategories;
+    } else if (configuration.type === FilterType.TASK) {
+        return taskCategories;
+    }
+    return [];
 }
 
 @Component({
@@ -38,8 +39,9 @@ export function filterTextCategoriesFactory(factory: CategoryFactory, configurat
     styleUrls: ['./immediate-filter-text-content.component.scss'],
     providers: [
         {provide: NAE_BASE_FILTER, useFactory: filterTextBaseFilterFactory, deps: [NAE_FILTER_TEXT]},
-        {provide: AllowedNetsService, useFactory: filterTextAllowedNetsFactory, deps: [AllowedNetsServiceFactory, NAE_FILTER_TEXT]},
-        {provide: NAE_SEARCH_CATEGORIES, useFactory: filterTextCategoriesFactory, deps: [CategoryFactory, NAE_FILTER_TEXT]},
+        {provide: NAE_IGNORE_NETS_ON_AUTOCOMPLETE_CATEGORY, useValue: true},
+        {provide: NAE_SEARCH_CATEGORIES, useFactory: filterTextCategoriesFactory, deps: [NAE_FILTER_TEXT,
+                NAE_DEFAULT_CASE_SEARCH_CATEGORIES, NAE_DEFAULT_TASK_SEARCH_CATEGORIES]},
         CategoryFactory,
         SearchService,
     ]

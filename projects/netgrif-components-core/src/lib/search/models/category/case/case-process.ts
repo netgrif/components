@@ -13,6 +13,7 @@ import {ResourceTypeQueryPrefix} from "../resource-type-query-prefix";
 import {take, filter} from "rxjs/operators";
 import {SimpleExpression} from "../../../../pfql/model/simple-expression";
 import {SearchInputType} from "../search-input-type";
+import {Substring} from "../../operator/substring";
 
 export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
 
@@ -24,7 +25,7 @@ export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
 
     constructor(operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
         super([CaseSearch.PROCESS_IDENTIFIER],
-            [operators.getOperator(Equals), operators.getOperator(NotEquals)],
+            [operators.getOperator(Substring), operators.getOperator(Equals), operators.getOperator(NotEquals)],
             `${CaseProcess._i18n}.name`,
             logger,
             operators,

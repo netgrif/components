@@ -88,6 +88,10 @@ export abstract class AbstractPanelWithImmediateDataComponent extends AbstractPa
                             immediate.component.properties['fractionSize'], immediate.component.properties['locale'], immediate.type);
                     }
                     return {value: immediate.value, icon: undefined, type: immediate.type};
+                case 'caseFilter':
+                case 'taskFilter':
+                    const pretty: boolean = !!immediate.component && immediate.component.name === 'advanced-search-query';
+                    return {value: immediate.value, icon: undefined, type: immediate.type, pretty: pretty};
                 default:
                     return {value: immediate.value, icon: undefined, type: immediate.type};
             }

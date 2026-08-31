@@ -18,7 +18,6 @@ import {
     NAE_DEFAULT_HEADERS,
     NAE_SEARCH_CATEGORIES,
     NAE_TAB_DATA,
-    SavedFilterMetadata,
     SearchMode,
     SearchService,
     SimpleFilter,
@@ -135,19 +134,6 @@ export class DefaultTabbedCaseViewComponent extends AbstractTabbedCaseViewCompon
     ngAfterViewInit(): void {
         super.initializeHeader(this.caseHeaderComponent);
         this.caseHeaderComponent.changeHeadersMode(this.defaultHeadersMode, false);
-    }
-
-    loadFilter(filterData: SavedFilterMetadata) {
-        this._injectedTabData.tabViewRef.openTab({
-            label: {
-                text: filterData.filter.title
-            },
-            canBeClosed: true,
-            tabContentComponent: DefaultTabbedCaseViewComponent,
-            injectedObject: {...this._injectedTabData, loadFilter: filterData.filter},
-            order: this._injectedTabData.tabViewOrder,
-            parentUniqueId: this._injectedTabData.tabUniqueId
-        }, this._autoswitchToTaskTab, this._openExistingTab);
     }
 
     protected openTab(openCase: Case) {
