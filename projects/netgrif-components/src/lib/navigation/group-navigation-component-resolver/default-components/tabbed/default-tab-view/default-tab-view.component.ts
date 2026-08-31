@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, OnDestroy, ViewChild} from '@angular/core';
 import {
     DataGroup,
     extractIconAndTitle,
@@ -25,6 +25,8 @@ import {DefaultTicketViewComponent} from "../default-ticket-view/default-ticket-
 import {
     DefaultTabbedSingleTaskViewComponent
 } from "../default-tabbed-single-task-view/default-tabbed-single-task-view.component";
+import {Subscription} from 'rxjs';
+import {TabViewComponent} from '../../../../../tabs/tab-view/tab-view.component';
 
 @Component({
     selector: 'nc-default-tab-view',
@@ -35,15 +37,38 @@ import {
         {provide: NAE_VIEW_ID_SEGMENT, useFactory: groupNavigationViewIdSegmentFactory, deps: [ActivatedRoute]}
     ]
 })
-export class DefaultTabViewComponent {
+export class DefaultTabViewComponent implements OnDestroy {
 
     tabs: Array<TabContent>;
+    @ViewChild(TabViewComponent) protected tabViewComponent: TabViewComponent;
+    protected languageChangeSubscription: Subscription;
 
     constructor(@Inject(NAE_NAVIGATION_ITEM_TASK_DATA) protected _navigationItemTaskData: Array<DataGroup>,
                 protected translationService: TranslateService,
                 protected extractionService: FilterExtractionService,
                 protected activatedRoute: ActivatedRoute) {
         this.tabs = this.getTabs();
+        this.languageChangeSubscription = this.translationService.onLangChange.subscribe(() => {
+            this.refreshTabTitle();
+        });
+    }
+
+    ngOnDestroy(): void {
+        this.languageChangeSubscription?.unsubscribe();
+    }
+
+    protected refreshTabTitle(): void {
+        const tab = this.tabs[0];
+        if (!tab) {
+            return;
+        }
+
+        const labelData = extractIconAndTitle(this._navigationItemTaskData.slice(0, 4), this.translationService);
+        tab.label = {
+            ...tab.label,
+            text: labelData.name,
+        };
+        this.tabViewComponent?.tabView?.openedTabs[0]?.setText(labelData.name);
     }
 
     protected getTabs(): TabContent[] {

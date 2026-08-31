@@ -12,7 +12,8 @@ export class MockUserResourceService {
             headers: {},
             caseFilters: {},
             taskFilters: {},
-            other: {}
+            other: {},
+            sorts: {}
         });
     }
 

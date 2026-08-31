@@ -68,6 +68,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
     protected _rightLoading$: LoadingEmitter;
     protected _nodeLoading$: LoadingEmitter;
     protected _currentPathSubscription: Subscription;
+    protected _languageChangeSubscription: Subscription;
     /**
      * Currently display uri
      * Siblings of the node are on the left, children are on the right
@@ -110,10 +111,14 @@ export class DoubleDrawerNavigationService implements OnDestroy {
         this.hiddenCustomItemsInitialized = false;
         this.itemClicked = new EventEmitter<MenuItemClickEvent>();
         this.itemLoaded = new EventEmitter<MenuItemLoadedEvent>();
+        this._languageChangeSubscription = this._translateService.onLangChange.subscribe(() => {
+            this.refreshMenuItemTranslations();
+        });
     }
 
     public ngOnDestroy(): void {
         this._currentPathSubscription?.unsubscribe();
+        this._languageChangeSubscription?.unsubscribe();
         this._leftLoading$.complete();
         this._rightLoading$.complete();
         this._nodeLoading$.complete();
@@ -370,11 +375,14 @@ export class DoubleDrawerNavigationService implements OnDestroy {
         if (this.itemsOrder === MenuOrder.Descending) {
             multiplier = -1;
         }
-        let currentRightItems = this.rightItems;
-        let currentLeftItems = this.leftItems;
-        currentRightItems.sort((a, b) => multiplier * (a?.navigation as NavigationItem)?.title.localeCompare((b?.navigation as NavigationItem)?.title));
-        currentLeftItems.sort((a, b) => multiplier * (a?.navigation as NavigationItem)?.title.localeCompare((b?.navigation as NavigationItem)?.title));
-        this.rightItems$.next(currentRightItems);
+        const allRightItems = this.rightItems.concat(this.moreItems).sort((a, b) =>
+            multiplier * (a?.navigation as NavigationItem)?.title.localeCompare((b?.navigation as NavigationItem)?.title)
+        );
+        const currentLeftItems = [...this.leftItems].sort((a, b) =>
+            multiplier * (a?.navigation as NavigationItem)?.title.localeCompare((b?.navigation as NavigationItem)?.title)
+        );
+        this.rightItems$.next(allRightItems.slice(0, RIGHT_SIDE_INIT_PAGE_SIZE));
+        this.moreItems$.next(allRightItems.slice(RIGHT_SIDE_INIT_PAGE_SIZE));
         this.leftItems$.next(currentLeftItems);
     }
 
@@ -506,7 +514,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
             access: {},
             navigation: {
                 icon: itemCase.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_MENU_ICON)?.value || this.defaultViewIcon,
-                title: this.getTranslation(itemCase.immediateData.find(f => f.stringId === GroupNavigationConstants.ITEM_FIELD_ID_MENU_NAME)?.value) || itemCase.title,
+                title: this.resolveMenuItemTitle(itemCase),
             },
             routing: {
                 path: this.getItemRoutingPath(itemCase),
@@ -522,20 +530,62 @@ export class DoubleDrawerNavigationService implements OnDestroy {
         return item;
     }
 
-    protected resolveCustomViewsInLeftSide() {
-        if (!!this.extractParentPath(this.currentPath) && !!this._childCustomViews[this.extractParentPath(this.currentPath)]) {
-            let currentLeftItems = this._leftItems$.getValue();
-            currentLeftItems.push(...Object.values(this._childCustomViews[this.extractParentPath(this.currentPath)]));
-            this._leftItems$.next(currentLeftItems);
+    protected refreshMenuItemTranslations(): void {
+        this._leftItems$.next(this.refreshItemTranslations(this.leftItems));
+        this._rightItems$.next(this.refreshItemTranslations(this.rightItems));
+        this._moreItems$.next(this.refreshItemTranslations(this.moreItems));
+
+        if (this._currentNavigationItem?.resource) {
+            this._currentNavigationItem = this.refreshItemTranslation(this._currentNavigationItem);
         }
     }
 
-    protected resolveCustomViewsInRightSide() {
-        if (!!this._currentPath && !!this._childCustomViews[this._currentPath]) {
-            let currentRightItems = this._rightItems$.getValue();
-            currentRightItems.push(...Object.values(this._childCustomViews[this._currentPath]));
-            this._rightItems$.next(currentRightItems);
+    protected refreshItemTranslations(items: Array<NavigationItem>): Array<NavigationItem> {
+        return items.map(item => this.refreshItemTranslation(item));
+    }
+
+    protected refreshItemTranslation(item: NavigationItem): NavigationItem {
+        if (!item.resource) {
+            return item;
         }
+
+        const navigation = typeof item.navigation === 'object' ? item.navigation : {};
+        return {
+            ...item,
+            navigation: {
+                ...navigation,
+                title: this.resolveMenuItemTitle(item.resource),
+            },
+        };
+    }
+
+    protected resolveMenuItemTitle(itemCase: Case): string {
+        const menuName = itemCase.immediateData
+            .find(field => field.stringId === GroupNavigationConstants.ITEM_FIELD_ID_MENU_NAME)?.value;
+        return this.getTranslation(menuName) || itemCase.title;
+    }
+
+    protected resolveCustomViewsInLeftSide() {
+        let currentLeftItems = this._leftItems$.getValue().filter(item => item.resource !== undefined);
+        if (!!this.extractParentPath(this.currentPath) && !!this._childCustomViews[this.extractParentPath(this.currentPath)]) {
+            currentLeftItems.push(...Object.values(this._childCustomViews[this.extractParentPath(this.currentPath)]));
+        }
+        this._leftItems$.next(DoubleDrawerUtils.sortByOrder(currentLeftItems));
+    }
+
+    protected resolveCustomViewsInRightSide() {
+        const currentRightItems = this._rightItems$.getValue().filter(item => item.resource !== undefined);
+        const currentMoreItems = this._moreItems$.getValue().filter(item => item.resource !== undefined);
+        const customItems = !!this._currentPath && !!this._childCustomViews[this._currentPath]
+            ? Object.values(this._childCustomViews[this._currentPath])
+            : [];
+
+        // childItemIds defines the process fallback order. Custom items follow in nae.json declaration order.
+        // Explicit order is applied to the complete list before it is split into visible and "more" pages.
+        const combinedItems = currentRightItems.concat(currentMoreItems, customItems);
+        const orderedItems = DoubleDrawerUtils.sortByOrder(combinedItems);
+        this._rightItems$.next(orderedItems.slice(0, RIGHT_SIDE_INIT_PAGE_SIZE));
+        this._moreItems$.next(orderedItems.slice(RIGHT_SIDE_INIT_PAGE_SIZE));
     }
 
     protected resolveUriForChildViews(configPath: string, childView: View): void {
@@ -554,18 +604,26 @@ export class DoubleDrawerNavigationService implements OnDestroy {
         if (!childView.navigation) return;
         if (!this._accessService.canAccessView(childView, configPath)) return;
         if (!!((childView?.navigation as any)?.hidden)) {
-            let currentHiddenCustomItems = this._hiddenCustomItems$.getValue();
-            currentHiddenCustomItems.push({
+            const hiddenItem = {
                 id: configPath,
                 ...childView,
-            });
-            this._hiddenCustomItems$.next(currentHiddenCustomItems);
+            } as NavigationItem;
+            this._hiddenCustomItems$.next(DoubleDrawerUtils.sortByOrder([
+                ...this._hiddenCustomItems$.getValue(),
+                hiddenItem
+            ]));
         }
     }
 
-    protected getTranslation(value: I18nFieldValue): string {
-        const locale = this._translateService.currentLang.split('-')[0];
-        return locale in value.translations ? value.translations[locale] : value.defaultValue;
+    protected getTranslation(value: I18nFieldValue): string | undefined {
+        if (!value) {
+            return undefined;
+        }
+
+        const locale = this._translateService.currentLang?.split('-')[0];
+        return locale && value.translations && locale in value.translations
+            ? value.translations[locale]
+            : value.defaultValue;
     }
 
     public getItemRoutingPath(itemCase: Case) {
