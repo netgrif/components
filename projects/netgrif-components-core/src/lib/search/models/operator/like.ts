@@ -16,7 +16,7 @@ export class Like extends Operator<string> {
 
     createQuery(pfqlKeywords: Array<string>, args: Array<string>): Query {
         this.checkArgumentsCount(args);
-        const escaped = Operator.escapeInput(args[0]); // todo 2466 escape?
+        const escaped = Operator.escapeInput(args[0]);
         return Operator.forEachKeyword(pfqlKeywords,
             keyword => escaped.wasEscaped ? new Query(`${keyword} eq '${escaped.value}'`) : new Query(`${keyword} eq '${escaped.value}'*`));
     }

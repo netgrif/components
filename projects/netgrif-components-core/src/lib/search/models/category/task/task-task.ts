@@ -9,8 +9,8 @@ import {NameIdPair} from '../name-id-pair';
 import {Categories} from '../categories';
 import {ResourceTypeQueryPrefix} from "../resource-type-query-prefix";
 import {SimpleExpression} from "../../../../pfql/model/simple-expression";
-import {Observable, of, Subject} from "rxjs";
-import {filter, take} from "rxjs/operators";
+import {Observable, of} from "rxjs";
+import {filter, take, map} from "rxjs/operators";
 import {NetAttributePair} from "../net-attribute-pair";
 import {SearchAutocompleteOption} from "../search-autocomplete-option";
 import {SearchInputType} from "../search-input-type";
@@ -45,27 +45,22 @@ export class TaskTask extends TaskNetAttributeAutocompleteCategory {
             this.setOperands([expression.operandValue]);
             return of(undefined);
         }
-
-        const isDone$ = new Subject<void>();
-        this._options$.pipe(
+        return this._options$.pipe(
             filter(options => options.length > 0),
-            take(1)
-        ).subscribe(options => {
-            let selectedOption: SearchAutocompleteOption<NetAttributePair[]> | undefined;
-            for (const option of options) {
-                if (option.value.some(pair => pair.attributeId === expression.operandValue)) {
-                    selectedOption = option;
-                    break;
+            take(1),
+            map(options => {
+                let selectedOption: SearchAutocompleteOption<NetAttributePair[]> | undefined;
+                for (const option of options) {
+                    if (option.value.some(pair => pair.attributeId === expression.operandValue)) {
+                        selectedOption = option;
+                        break;
+                    }
                 }
-            }
-            if (!!selectedOption) {
-                this.setOperands([selectedOption] as any);
-            }
-            isDone$.next();
-            isDone$.complete();
-        })
-
-        return isDone$.asObservable();
+                if (!!selectedOption) {
+                    this.setOperands([selectedOption] as any);
+                }
+            })
+        );
     }
 
     get inputPlaceholder(): string {

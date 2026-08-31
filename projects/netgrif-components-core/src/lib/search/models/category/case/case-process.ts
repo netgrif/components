@@ -7,10 +7,10 @@ import {OptionalDependencies} from '../../../category-factory/optional-dependenc
 import {NoConfigurationAutocompleteCategory} from '../no-configuration-autocomplete-category';
 import {NotEquals} from '../../operator/not-equals';
 import {Categories} from '../categories';
-import {Observable, of, Subject, Subscription} from 'rxjs';
+import {Observable, of, Subscription} from 'rxjs';
 import {CaseSearch} from './case-search.enum';
 import {ResourceTypeQueryPrefix} from "../resource-type-query-prefix";
-import {take, filter} from "rxjs/operators";
+import {take, filter, map} from "rxjs/operators";
 import {SimpleExpression} from "../../../../pfql/model/simple-expression";
 import {SearchInputType} from "../search-input-type";
 import {Substring} from "../../operator/substring";
@@ -68,19 +68,16 @@ export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
             this.setOperands([expression.operandValue]);
             return of(undefined);
         }
-        const isDone$ = new Subject<void>();
-        this._options$.pipe(
+        return this._options$.pipe(
             filter(options => options.length > 0),
-            take(1)
-        ).subscribe(options => {
-            const found = options.find(option => option.value.includes(expression.operandValue));
-            if (found) {
-                this.setOperands([found] as any);
-            }
-            isDone$.next();
-            isDone$.complete();
-        });
-        return isDone$.asObservable();
+            take(1),
+            map(options => {
+                const found = options.find(option => option.value.includes(expression.operandValue));
+                if (found) {
+                    this.setOperands([found] as any);
+                }
+            })
+        );
     }
 
     /**

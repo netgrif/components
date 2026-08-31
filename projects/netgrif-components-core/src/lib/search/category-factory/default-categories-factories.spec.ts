@@ -55,7 +55,7 @@ describe('Default search categories factory methods', () => {
             expect(testService).toBeTruthy();
             expect(testService.searchCategories).toBeTruthy();
             expect(Array.isArray(testService.searchCategories)).toBeTrue();
-            expect(testService.searchCategories.length).toBe(7);
+            expect(testService.searchCategories.length).toBe(8);
             for (const category of testService.searchCategories) {
                 expect(category).toBeTruthy();
             }
@@ -93,7 +93,7 @@ describe('Default search categories factory methods', () => {
             expect(testService).toBeTruthy();
             expect(testService.searchCategories).toBeTruthy();
             expect(Array.isArray(testService.searchCategories)).toBeTrue();
-            expect(testService.searchCategories.length).toBe(3);
+            expect(testService.searchCategories.length).toBe(4);
             for (const category of testService.searchCategories) {
                 expect(category).toBeTruthy();
             }

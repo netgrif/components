@@ -15,11 +15,13 @@ const opService = new OperatorService(opResolver);
 export const createMockDependencies: (
     allowedNets$?: Observable<Array<Net>>,
     operatorService?: OperatorService,
-    userResourceService?: UserResourceService) => OptionalDependencies =
+    userResourceService?: UserResourceService,
+    ignoreNetsOnAutocompleteCategory?: boolean) => OptionalDependencies =
     (
         allowedNets$: Observable<Array<Net>> = of([]),
         operatorService?: OperatorService,
-        userResourceService = {getAll: () => of({content: [], pagination: {}})} as UserResourceService
+        userResourceService = {getAll: () => of({content: [], pagination: {}})} as UserResourceService,
+        ignoreNetsOnAutocompleteCategory: boolean = false
     ) => {
         const searchIndexResolver = new SearchIndexResolverService();
         const allowedNetsService = {allowedNets$} as AllowedNetsService;
@@ -32,10 +34,11 @@ export const createMockDependencies: (
                 new CategoryResolverService(),
                 allowedNetsService,
                 userResourceService,
-                false
+                ignoreNetsOnAutocompleteCategory
             ),
             searchIndexResolver,
             userResourceService,
-            allowedNetsService
+            allowedNetsService,
+            ignoreNetsOnAutocompleteCategories: ignoreNetsOnAutocompleteCategory,
         };
     };

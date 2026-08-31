@@ -4,10 +4,10 @@ import {FilterField} from './models/filter-field';
 import {SearchService} from '../../search/search-service/search.service';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {NAE_FILTER_FIELD} from './models/filter-field-injection-token';
-import {FilterType} from '../../filter/models/filter-type';
 import {Subject} from 'rxjs';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {FieldTypeResource} from "../../task-content/model/field-type-resource";
 
 describe('AbstractFilterFieldContentComponent', () => {
     let component: TestFilterContentComponent;
@@ -17,13 +17,11 @@ describe('AbstractFilterFieldContentComponent', () => {
     let mockSearchService;
 
     beforeEach(() => {
-        field = new FilterField('', '', '', {
-            filterType: FilterType.CASE, predicateMetadata: [], searchCategories: []
-        }, [], {}, '', '');
+        field = new FilterField('', '', '', FieldTypeResource.CASE_FILTER, [], {}, '', '');
 
         mockSearchService = {
-            loadFromMetadata: () => {},
-            loadingFromMetadata$: new Subject<boolean>()
+            loadFromPfql: () => {},
+            loadingFromPfql$: new Subject<boolean>()
         };
 
         TestBed.configureTestingModule({
@@ -42,7 +40,7 @@ describe('AbstractFilterFieldContentComponent', () => {
     });
 
     afterEach(() => {
-        mockSearchService.loadingFromMetadata$.complete();
+        mockSearchService.loadingFromPfql$.complete();
         TestBed.resetTestingModule();
     });
 
@@ -53,7 +51,7 @@ describe('AbstractFilterFieldContentComponent', () => {
     it('should finish loading', () => {
         expect(component).toBeTruthy();
         expect(component.filterLoaded).toBeFalse();
-        mockSearchService.loadingFromMetadata$.next(false);
+        mockSearchService.loadingFromPfql$.next(false);
         expect(component.filterLoaded).toBeTrue();
     });
 

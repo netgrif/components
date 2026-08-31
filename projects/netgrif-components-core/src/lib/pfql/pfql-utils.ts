@@ -36,7 +36,6 @@ import {LoggerService} from "../logger/services/logger.service";
  * @returns An array of QueryItem objects representing the parsed query structure
  */
 export function parseQuery(query: string, injector: Injector): Array<QueryItem> {
-    // todo 2466 injector as parameter?
     const logger = injector.get(LoggerService);
     try {
         const inputStream = CharStream.fromString(query);

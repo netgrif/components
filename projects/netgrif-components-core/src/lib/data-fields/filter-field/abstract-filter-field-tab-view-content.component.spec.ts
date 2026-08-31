@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AbstractFilterFieldTabViewContentComponent } from './abstract-filter-field-tab-view-content.component';
 import { Component, Inject, Injector } from '@angular/core';
 import { FilterField } from './models/filter-field';
-import { FilterType } from '../../filter/models/filter-type';
 import { NAE_FILTER_FIELD } from './models/filter-field-injection-token';
 import { SearchService } from '../../search/search-service/search.service';
 import { Subject } from 'rxjs';
@@ -11,6 +10,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Dashboard } from '../text-field/dashboard-portal-text-field/dashboard-view-constants';
 import { ComponentPortal } from '@angular/cdk/portal';
 import {ComponentRegistryService} from "../../registry/component-registry.service";
+import {FieldTypeResource} from "../../task-content/model/field-type-resource";
 
 describe('AbstractFilterFieldTabViewContentComponent', () => {
     let component: TestFilterFieldTabViewContentComponent;
@@ -22,13 +22,11 @@ describe('AbstractFilterFieldTabViewContentComponent', () => {
     let registry: ComponentRegistryService;
 
     beforeEach(async () => {
-        field = new FilterField('', '', '', {
-            filterType: FilterType.CASE, predicateMetadata: [], searchCategories: []
-        }, [], {}, '', '');
+        field = new FilterField('', '', '', FieldTypeResource.CASE_FILTER, [], {}, '', '');
 
         mockSearchService = {
-            loadFromMetadata: () => {},
-            loadingFromMetadata$: new Subject<boolean>()
+            loadFromPfql: () => {},
+            loadingFromPfql$: new Subject<boolean>()
         };
 
         await TestBed.configureTestingModule({
@@ -51,7 +49,7 @@ describe('AbstractFilterFieldTabViewContentComponent', () => {
     });
 
     afterEach(() => {
-        mockSearchService.loadingFromMetadata$.complete();
+        mockSearchService.loadingFromPfql$.complete();
         TestBed.resetTestingModule();
     });
 

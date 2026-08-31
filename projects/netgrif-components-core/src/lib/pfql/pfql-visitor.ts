@@ -561,8 +561,6 @@ export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
         return [dataExpr];
     };
 
-    // todo 2466 user field comparison ? ... ak je v string comparison mongo id, tak je to mozno user id?
-
     /**
      * Visits a basic process identifier comparison and creates a case process search expression.
      *

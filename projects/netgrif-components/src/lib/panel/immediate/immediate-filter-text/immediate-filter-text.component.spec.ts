@@ -3,9 +3,7 @@ import {ImmediateFilterTextComponent} from './immediate-filter-text.component';
 import {
     MaterialModule,
     ConfigurationService,
-    TestConfigurationService,
-    FilterMetadataAllowedNets,
-    FilterType
+    TestConfigurationService, AllowedNetsService,
 } from '@netgrif/components-core';
 import {PanelComponentModule} from '../../panel.module';
 import {Component} from '@angular/core';
@@ -21,6 +19,7 @@ describe('ImmediateFilterTextComponent', () => {
                 MaterialModule,
                 PanelComponentModule
             ], providers: [
+                AllowedNetsService,
                 {provide: ConfigurationService, useClass: TestConfigurationService},
             ]
         })
@@ -44,18 +43,9 @@ describe('ImmediateFilterTextComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-immediate-filter-text [ellipsis]="true" [filterMetadata]="filterMetadata"></nc-immediate-filter-text>'
+    template: '<nc-immediate-filter-text [ellipsis]="true" [query]="\'cases: creationDate eq 2026-08-31\'" [type]="\'case\'" ></nc-immediate-filter-text>'
 })
 class TestWrapperComponent {
-
-    public filterMetadata: FilterMetadataAllowedNets = {
-        allowedNets: [],
-        filterMetadata: {
-            predicateMetadata: [],
-            filterType: FilterType.CASE,
-            searchCategories: []
-        }
-    };
 
     constructor() {
     }

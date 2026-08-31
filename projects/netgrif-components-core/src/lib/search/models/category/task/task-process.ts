@@ -10,7 +10,7 @@ import {Categories} from '../categories';
 import {Observable, of, Subject, Subscription} from 'rxjs';
 import {ResourceTypeQueryPrefix} from "../resource-type-query-prefix";
 import {SimpleExpression} from "../../../../pfql/model/simple-expression";
-import {filter, take} from "rxjs/operators";
+import {filter, take, map} from "rxjs/operators";
 import {SearchAutocompleteOption} from "../search-autocomplete-option";
 import {SearchInputType} from "../search-input-type";
 
@@ -63,26 +63,22 @@ export class TaskProcess extends NoConfigurationAutocompleteCategory<string> {
             this.setOperands([expression.operandValue]);
             return of(undefined);
         }
-        const isDone$ = new Subject<void>();
-        this._options$.pipe(
+        return this._options$.pipe(
             filter(options => options.length > 0),
-            take(1)
-        ).subscribe(options => {
-            let selectedOption: SearchAutocompleteOption<string[]> | undefined;
-            for (const option of options) {
-                if (option.value.some(netId => netId === expression.operandValue)) {
-                    selectedOption = option;
-                    break;
+            take(1),
+            map(options => {
+                let selectedOption: SearchAutocompleteOption<string[]> | undefined;
+                for (const option of options) {
+                    if (option.value.some(netId => netId === expression.operandValue)) {
+                        selectedOption = option;
+                        break;
+                    }
                 }
-            }
-            if (!!selectedOption) {
-                this.setOperands([selectedOption] as any);
-            }
-            isDone$.next();
-            isDone$.complete();
-        })
-
-        return isDone$.asObservable();
+                if (!!selectedOption) {
+                    this.setOperands([selectedOption] as any);
+                }
+            })
+        );
     }
 
     protected generateQuery(userInput: Array<Array<string>>): Query {

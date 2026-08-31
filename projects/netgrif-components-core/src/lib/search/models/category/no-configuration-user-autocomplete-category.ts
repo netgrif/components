@@ -4,12 +4,12 @@ import {Operator} from '../operator/operator';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {OperatorService} from '../../operator-service/operator.service';
 import {OptionalDependencies} from '../../category-factory/optional-dependencies';
-import {Observable, of, Subject} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {SearchAutocompleteOption} from './search-autocomplete-option';
 import {Query} from '../query/query';
 import {FormControl} from '@angular/forms';
 import {ResourceTypeQueryPrefix} from "./resource-type-query-prefix";
-import {take} from "rxjs/operators";
+import {map, take} from "rxjs/operators";
 import {SimpleExpression} from "../../../pfql/model/simple-expression";
 import {IsNull} from "../operator/is-null";
 
@@ -64,19 +64,11 @@ export abstract class NoConfigurationUserAutocompleteCategory extends NoConfigur
             this._generatedPredicate$.next(this.generatePredicate([]))
             return of(undefined);
         }
-        const isDone$ = new Subject<void>();
-        const optionToBeSelected$ = this._userAutocomplete.getOptionFromExpressionValue$(expression.operandValue);
-        optionToBeSelected$.pipe(take(1)).subscribe({
-            next: optionToBeSelected => {
+        return this._userAutocomplete.getOptionFromExpressionValue$(expression.operandValue).pipe(
+            take(1),
+            map(optionToBeSelected => {
                 this.setOperands([optionToBeSelected] as any);
-                isDone$.next();
-                isDone$.complete();
-            },
-            error: error => {
-                isDone$.next();
-                isDone$.complete();
-            }
-        });
-        return isDone$.asObservable();
+            })
+        );
     }
 }

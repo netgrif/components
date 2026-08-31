@@ -3,7 +3,7 @@ import { FilterFieldTabViewComponent } from './filter-field-tab-view.component';
 import {
     ConfigurationService,
     FilterField,
-    FilterType,
+    FieldTypeResource,
     NAE_FILTER_FIELD,
     TestConfigurationService
 } from '@netgrif/components-core';
@@ -15,9 +15,7 @@ describe('FilterFieldTabViewComponent', () => {
     let fixture: ComponentFixture<FilterFieldTabViewComponent>;
 
     beforeEach(async () => {
-        const field = new FilterField('', '', '', {
-            filterType: FilterType.CASE, predicateMetadata: [], searchCategories: []
-        }, [], {}, '', '');
+        const field = new FilterField('', '', '', FieldTypeResource.CASE_FILTER, [], {}, '', '');
 
         await TestBed.configureTestingModule({
             imports: [

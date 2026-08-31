@@ -2,11 +2,10 @@ import {CaseCreationDate} from './case-creation-date';
 import {OperatorService} from '../../../operator-service/operator.service';
 import {OperatorResolverService} from '../../../operator-service/operator-resolver.service';
 import {configureCategory} from '../../../../utility/tests/utility/configure-category';
-import {Categories} from '../categories';
-import {Operators} from '../../operator/operators';
 import moment from 'moment';
 import {EqualsDate} from '../../operator/equals-date';
 import {TestBed} from '@angular/core/testing';
+import {SimpleExpression} from "../../../../pfql/model/simple-expression";
 
 describe('CaseCreationDate', () => {
     let category: CaseCreationDate;
@@ -32,44 +31,29 @@ describe('CaseCreationDate', () => {
         expect(category.isOperatorSelected()).toBeTrue();
     });
 
-    it('should not serialize incomplete instance', () => {
-        expect(category.createMetadata()).toBeUndefined();
-    });
-
-    it('should serialize complete instance', () => {
+    it('should load pfql expression', (done) => {
         configureCategory(category, operatorService, EqualsDate, [moment('2021-03-23')]);
 
-        const metadata = category.createMetadata();
-        expect(metadata).toBeTruthy();
-        expect(metadata.values).toEqual([moment('2021-03-23').valueOf()]);
-        expect(metadata.category).toBe(Categories.CASE_CREATION_DATE);
-        expect(metadata.configuration?.operator).toBe(Operators.EQUALS_DATE);
-    });
-
-    it('should deserialize stored instance', (done) => {
-        configureCategory(category, operatorService, EqualsDate, [moment('2021-03-23')]);
-
-        const metadata = category.createMetadata();
-        expect(metadata).toBeTruthy();
-        const deserialized = new CaseCreationDate(operatorService, null);
-        deserialized.loadFromMetadata(metadata).subscribe(() => {
-            expect(deserialized.isOperatorSelected()).toBeTrue();
-            expect(deserialized.providesPredicate).toBeTrue();
+        const loadedCategory = new CaseCreationDate(operatorService, null);
+        const expression = new SimpleExpression(new EqualsDate(operatorService), moment('2021-03-23'), category);
+        loadedCategory.loadFromPfqlExpression(expression).subscribe(() => {
+            expect(loadedCategory.isOperatorSelected()).toBeTrue();
+            expect(loadedCategory.providesPredicate).toBeTrue();
 
             const originalMoment = (category as any)._operandsFormControls[0].value;
-            const deserializedMoment = (deserialized as any)._operandsFormControls[0].value;
+            const loadedMoment = (loadedCategory as any)._operandsFormControls[0].value;
 
             expect(moment.isMoment(originalMoment)).toBeTrue();
-            expect(moment.isMoment(deserializedMoment)).toBeTrue();
-            expect(deserializedMoment.isSame(originalMoment)).toBeTrue();
-
-            const deserializedMetadata = deserialized.createMetadata();
-            expect(deserializedMetadata).toBeTruthy();
-            expect(deserializedMetadata.configuration).toEqual(metadata.configuration);
-            expect(deserializedMetadata.category).toEqual(metadata.category);
-            expect(deserializedMetadata.values).toEqual(metadata.values);
+            expect(moment.isMoment(loadedMoment)).toBeTrue();
+            expect(loadedMoment.isSame(originalMoment)).toBeTrue();
 
             done();
         });
+    });
+
+    it('should generate pfql query', () => {
+        configureCategory(category, operatorService, EqualsDate, [moment('2021-03-23')]);
+        const predicate = category.generatePredicate([moment('2021-03-23')]);
+        expect(predicate.query.value).toEqual(`cases: creationDate in (2021-03-23 : 2021-03-24)`);
     });
 });

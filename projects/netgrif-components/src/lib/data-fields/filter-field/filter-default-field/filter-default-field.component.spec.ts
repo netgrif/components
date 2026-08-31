@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FilterDefaultFieldComponent } from './filter-default-field.component';
 import {
     ConfigurationService,
-    DATA_FIELD_PORTAL_DATA, DataFieldPortalData, FilterField, FilterType,
+    DATA_FIELD_PORTAL_DATA, DataFieldPortalData, FilterField, FieldTypeResource,
     MaterialModule,
     TestConfigurationService, WrappedBoolean
 } from "@netgrif/components-core";
@@ -29,9 +29,7 @@ describe('FilterDefaultFieldComponent', () => {
         providers: [
             {provide: ConfigurationService, useClass: TestConfigurationService},
             {provide: DATA_FIELD_PORTAL_DATA, useValue: {
-                    dataField: new FilterField('', '', '', {
-                        filterType: FilterType.CASE, predicateMetadata: [], searchCategories: []
-                    }, [], {}, '', ''),
+                    dataField: new FilterField('', '', '', FieldTypeResource.CASE_FILTER, [], {}, '', ''),
                     formControlRef: new FormControl(),
                     showLargeLayout: new WrappedBoolean()
                 } as DataFieldPortalData<FilterField>

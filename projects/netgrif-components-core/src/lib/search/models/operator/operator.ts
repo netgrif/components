@@ -66,7 +66,6 @@ export abstract class Operator<T> {
      * @returns user input with the escapable characters escaped and the unescapable characters removed
      */
     public static escapeInput(input: string): EscapeResult {
-        // todo 2466 escaping?
         if (typeof input === 'string') {
             let escaped = false;
             let output = '';
@@ -138,7 +137,6 @@ export abstract class Operator<T> {
     public createQuery(pfqlKeywords: Array<string>, args: Array<T>, escapeArgs = true, wrapInQuotes = true): Query {
         this.checkArgumentsCount(args);
         return Operator.forEachKeyword(pfqlKeywords, (keyword: string) => {
-            // todo 2466 escape?
             const escapedValue = escapeArgs ?
                 Operator.escapeInput(args[0] as unknown as string) : ({value: args[0] as unknown as string, wasEscaped: false});
             const wrappedValue = Operator.wrapInputWithQuotes(escapedValue.value, wrapInQuotes);

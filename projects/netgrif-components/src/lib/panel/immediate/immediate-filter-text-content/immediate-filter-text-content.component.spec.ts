@@ -6,7 +6,7 @@ import {
     TestConfigurationService,
     ConfigurationService,
     NAE_FILTER_TEXT,
-    FilterType
+    FilterType, AllowedNetsService
 } from '@netgrif/components-core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 
@@ -24,6 +24,7 @@ describe('ImmediateFilterTextContentComponent', () => {
             ],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
+                AllowedNetsService,
                 {
                     provide: NAE_FILTER_TEXT,
                     useValue: {
