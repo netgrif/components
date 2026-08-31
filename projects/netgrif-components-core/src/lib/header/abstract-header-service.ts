@@ -431,7 +431,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
             [...this._headerState.selectedSorts] : [];
         if (!multiSelection) {
             this._headerState.selectedSorts
-                .filter(header => header !== newHeaderColumn)
+                .filter(header => header.uniqueId !== newHeaderColumn.uniqueId)
                 .forEach(header => header.sortDirection = '');
         }
         const existingIndex = newSortingHeaders.indexOf(newHeaderColumn);
