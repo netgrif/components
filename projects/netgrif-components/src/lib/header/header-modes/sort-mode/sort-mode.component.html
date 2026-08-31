@@ -22,7 +22,7 @@
                               }">
                         {{ header?.sortDirection === 'asc' ? 'arrow_upward' : (header?.sortDirection === 'desc' ? 'arrow_downward' : 'swap_vert') }}
                     </mat-icon>
-                </button>
+                </button><sub *ngIf="sortingPriority(header) as priority" class="sort-priority">{{ priority }}</sub>
             </span>
         </ng-template>
         <ng-template #elseBlock>
