@@ -38,7 +38,9 @@ export abstract class AbstractHeaderModeComponent {
             newSortingColumn.sortDirection = 'asc';
         }
         this.headerService.sortingColumnSelected(newSortingColumn);
-        this.headerService.applySelectedSorts();
+        if (this.headerService.headerState.mode !== HeaderMode.EDIT) {
+            this.headerService.applySelectedSorts();
+        }
     }
 
     public sortingPriority(header: HeaderColumn | null | undefined): number | null {
