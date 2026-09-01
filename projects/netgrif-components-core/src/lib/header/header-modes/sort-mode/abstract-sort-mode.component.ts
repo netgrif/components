@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {Sort} from '@angular/material/sort';
 import {AbstractHeaderModeComponent} from '../abstract-header-mode.component';
+import {HeaderColumn} from "../../models/header-column";
 
 
 @Component({
@@ -20,5 +21,14 @@ export abstract class AbstractSortModeComponent extends AbstractHeaderModeCompon
             sortEvent.active.substr(firstDash + 1, sortEvent.active.length),
             sortEvent.direction);
     }
-}
 
+    public sortingHeaderSelected(newSortingColumn: HeaderColumn | null | undefined): void {
+        if (!this.advanceSortDirection(newSortingColumn)) {
+            return;
+        }
+
+        this.headerService.sortingColumnSelected(newSortingColumn);
+        this.headerService.updateSortMode();
+    }
+
+}

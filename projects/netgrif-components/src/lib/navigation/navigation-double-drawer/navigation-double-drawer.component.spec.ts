@@ -34,7 +34,7 @@ describe('NavigationDoubleDrawerComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [NavigationDrawerComponent, NavigationTreeComponent],
+            declarations: [NavigationDoubleDrawerComponent, NavigationDrawerComponent, NavigationTreeComponent],
             imports: [
                 CommonModule,
                 RouterTestingModule.withRoutes([]),

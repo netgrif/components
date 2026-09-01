@@ -372,7 +372,13 @@
         "editMode": "Zapnúť editačný mód",
         "overflowMode": "Tabuľkový mód",
         "columnWidth": "Šírka stĺpca",
-        "columnCount": "Počet stĺpcov"
+        "columnCount": "Počet stĺpcov",
+        "sortControl": "Zoradiť {{title}}. Aktuálne poradie: {{current}}. Aktivovaním nastavíte {{next}}.",
+        "sortDirections": {
+            "none": "bez zoradenia",
+            "ascending": "vzostupné poradie",
+            "descending": "zostupné poradie"
+        }
     },
     "panel": {
         "case": {

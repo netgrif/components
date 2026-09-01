@@ -321,20 +321,23 @@ export abstract class AbstractHeaderService implements OnDestroy {
             this.applySelectedSorts();
             return;
         }
-        const newSorts: Array<HeaderColumn> = [];
-        for (const sortingHeader of preferredSorts) {
-            for (const fieldGroup of this.fieldsGroup) {
-                const header = fieldGroup.fields.find(header => header.uniqueId === sortingHeader.headerUniqueId);
-                if (!!header) {
-                    header.sortDirection = sortingHeader.sortDirection;
-                    newSorts.push(header);
-                    break;
-                }
+        const headersByUniqueId = new Map<string, HeaderColumn>();
+        this.fieldsGroup.forEach(fieldGroup => fieldGroup.fields.forEach(header => {
+            if (!headersByUniqueId.has(header.uniqueId)) {
+                headersByUniqueId.set(header.uniqueId, header);
             }
-            if (this._sortingMode === HeaderSortingMode.SINGLE && newSorts.length > 0) {
-                break;
-            }
-        }
+        }));
+        const resolvedSorts = preferredSorts
+            .map(preference => ({
+                header: headersByUniqueId.get(preference.headerUniqueId),
+                direction: preference.sortDirection
+            }))
+            .filter((resolved): resolved is {header: HeaderColumn; direction: SortDirection} => !!resolved.header);
+        const applicableSorts = this._sortingMode === HeaderSortingMode.SINGLE
+            ? resolvedSorts.slice(0, 1)
+            : resolvedSorts;
+        applicableSorts.forEach(sort => sort.header.sortDirection = sort.direction);
+        const newSorts = applicableSorts.map(sort => sort.header);
         this._headerState.updateSelectedSorts(newSorts);
         this.applySelectedSorts();
     }
@@ -349,24 +352,23 @@ export abstract class AbstractHeaderService implements OnDestroy {
      * @param direction Represent one of sort modes: asd, desc and ''
      */
     public sortHeaderChanged(columnIndex: number, active: string, direction: SortDirection): void {
-        let sortChangeDescription: SortChangeDescription;
-        let foundFirstMatch = false; // column can feature in the header in multiple positions => we don't want to send multiple events
-        this.headerState.selectedHeaders.filter(header => !!header).forEach(header => {
-            if (header.uniqueId === active && !foundFirstMatch) {
-                sortChangeDescription = {
-                    sortDirection: direction,
-                    columnType: header.type,
-                    fieldIdentifier: header.fieldIdentifier,
-                    petriNetIdentifier: header.petriNetIdentifier,
-                    columnIdentifier: columnIndex,
-                    fieldType: header.fieldType
-                };
-                header.sortDirection = direction;
-                foundFirstMatch = true;
-            } else {
-                header.sortDirection = '';
-            }
-        });
+        const selectedHeaders = this.headerState.selectedHeaders.filter(header => !!header);
+        const sortingHeader = selectedHeaders.find(header => header.uniqueId === active);
+        const headersWithSortState = new Set<HeaderColumn>([
+            ...selectedHeaders,
+            ...this._headerState.selectedSorts
+        ]);
+        headersWithSortState.forEach(header => header.sortDirection = header === sortingHeader ? direction : '');
+        this._headerState.updateSelectedSorts(sortingHeader && direction ? [sortingHeader] : []);
+
+        const sortChangeDescription: SortChangeDescription = sortingHeader ? {
+            sortDirection: direction,
+            columnType: sortingHeader.type,
+            fieldIdentifier: sortingHeader.fieldIdentifier,
+            petriNetIdentifier: sortingHeader.petriNetIdentifier,
+            columnIdentifier: columnIndex,
+            fieldType: sortingHeader.fieldType
+        } : undefined;
         this._headerChange$.next({
             headerType: this.headerType,
             changeType: HeaderChangeType.SORT,
@@ -428,16 +430,11 @@ export abstract class AbstractHeaderService implements OnDestroy {
         const multiSelection = this._sortingMode === HeaderSortingMode.MULTI ||
             (this._sortingMode === HeaderSortingMode.COMBINED && this._headerState.mode === HeaderMode.EDIT);
         const newSortingHeaders = multiSelection ?
-            [...this._headerState.selectedSorts] : [];
-        if (!multiSelection) {
-            this._headerState.selectedSorts
-                .filter(header => header.uniqueId !== newHeaderColumn.uniqueId)
-                .forEach(header => header.sortDirection = '');
-        }
-        const existingIndex = newSortingHeaders.indexOf(newHeaderColumn);
-        if (existingIndex !== -1) {
-            newSortingHeaders.splice(existingIndex, 1);
-        }
+            this._headerState.selectedSorts.filter(header => header.uniqueId !== newHeaderColumn.uniqueId) : [];
+        this._headerState.selectedSorts
+            .filter(header => header !== newHeaderColumn &&
+                (!multiSelection || header.uniqueId === newHeaderColumn.uniqueId))
+            .forEach(header => header.sortDirection = '');
 
         if (!!newHeaderColumn.sortDirection) {
             newSortingHeaders.push(newHeaderColumn);

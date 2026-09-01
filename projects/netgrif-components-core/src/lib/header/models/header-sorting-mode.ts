@@ -1,19 +1,11 @@
-/**
- * Represents the possible modes of sorting that can be used for a header.
- */
+/** Configures how many header columns can participate in sorting. */
 export enum HeaderSortingMode {
-    /**
-     * Allows sorting by a single column at a time.
-     */
+    /** Only the most recently selected column is sorted in every header mode. */
     SINGLE = 'single',
 
-    /**
-     * Allows sorting by multiple columns independently.
-     */
+    /** Multiple columns can be sorted; their selection order defines their sorting priority. */
     MULTI = 'multi',
 
-    /**
-     * Combines multiple sorting operations into a single effective result.
-     */
+    /** Multiple columns can be configured in edit mode, while normal sort mode selects only one column. */
     COMBINED = 'combined'
 }
