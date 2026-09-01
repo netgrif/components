@@ -1,5 +1,7 @@
 export * from './header-column';
 export * from './header-mode';
+export * from './header-sorting-mode';
+export * from './header-sorting-mode-injection-token';
 export * from './header-type';
 export * from './default-headers-token';
 

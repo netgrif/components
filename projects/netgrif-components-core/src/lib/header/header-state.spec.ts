@@ -35,6 +35,24 @@ describe('HeaderState', () => {
         expect(head.selectedHeaders).toEqual([new HeaderColumn(HeaderColumnType.META, TaskMetaField.CASE, 'string', 'string')]);
     });
 
+    it('should restore selected sorts and their directions', () => {
+        const caseHeader = new HeaderColumn(HeaderColumnType.META, TaskMetaField.CASE, 'Case', 'text');
+        const titleHeader = new HeaderColumn(HeaderColumnType.META, TaskMetaField.TITLE, 'Title', 'text');
+        const state = new HeaderState([caseHeader, titleHeader]);
+        caseHeader.sortDirection = 'asc';
+        state.updateSelectedSorts([caseHeader]);
+        state.saveState();
+
+        caseHeader.sortDirection = 'desc';
+        titleHeader.sortDirection = 'asc';
+        state.updateSelectedSorts([titleHeader, caseHeader]);
+        state.restoreLastState();
+
+        expect(state.selectedSorts).toEqual([caseHeader]);
+        expect(caseHeader.sortDirection).toBe('asc');
+        expect(titleHeader.sortDirection).toBe('');
+    });
+
     afterEach(() => {
         TestBed.resetTestingModule();
     });

@@ -29,6 +29,10 @@ export class MockUserPreferenceService {
         return undefined;
     }
 
+    public getSorts(viewId: string): Array<string> | undefined {
+        return undefined;
+    }
+
     public setLocale(locale: string): void {
     }
 

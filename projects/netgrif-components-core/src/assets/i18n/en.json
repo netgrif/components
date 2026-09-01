@@ -372,7 +372,13 @@
         "editMode": "Enable edit mode",
         "overflowMode": "Table mode",
         "columnWidth": "Column width",
-        "columnCount": "Number of columns"
+        "columnCount": "Number of columns",
+        "sortControl": "Sort {{title}}. Current direction: {{current}}. Activate to set {{next}}.",
+        "sortDirections": {
+            "none": "not sorted",
+            "ascending": "ascending",
+            "descending": "descending"
+        }
     },
     "panel": {
         "case": {

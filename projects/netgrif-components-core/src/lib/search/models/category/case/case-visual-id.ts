@@ -37,7 +37,7 @@ export class CaseVisualId extends NoConfigurationCategory<string> {
     protected get elasticKeywords(): Array<string> {
         if (!!this._optionalDependencies) {
             const resolver = this._optionalDependencies.searchIndexResolver;
-            return [resolver.getCoreIndex(CaseSearch.VISUAL_ID, this.isSelectedOperator(Substring))];
+            return [resolver.getCoreIndex(CaseSearch.VISUAL_ID, this.isSelectedOperator(Substring) || this.isSelectedOperator(Equals))];
         } else {
             return this._elasticKeywords;
         }

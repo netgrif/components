@@ -3,16 +3,22 @@ import {Observable, of} from 'rxjs';
 import {Preferences} from '../../../resources/interface/preferences';
 import {MessageResource} from '../../../resources/interface/message-resource';
 import {UserResource} from '../../../resources/interface/user-resource';
+import {PreferenceResource} from "../../../resources/interface/preference-resource";
 
 @Injectable()
 export class MockUserResourceService {
 
-    public getPreferences(): Observable<Preferences> {
+    public getPreferences(): Observable<PreferenceResource> {
         return of({
-            headers: {},
-            caseFilters: {},
-            taskFilters: {},
-            other: {}
+            preferences: {
+                headers: {},
+                caseFilters: {},
+                taskFilters: {},
+                other: {},
+                sorts: {}
+            },
+            error: '',
+            message: ''
         });
     }
 

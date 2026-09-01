@@ -52,8 +52,8 @@ import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import { FinishPolicyService } from '../../task/services/finish-policy.service';
 import {NAE_TAB_DATA} from '../../tabs/tab-data-injection-token/tab-data-injection-token';
 import {InjectedTabData} from '../../tabs/interfaces';
-import {AfterAction} from '../../utility/call-chain/after-action';
 import {UnlimitedTaskContentService} from "../../task-content/services/unlimited-task-content.service";
+import {UserComparatorService} from '../../user/services/user-comparator.service';
 
 @Component({
     selector: 'ncc-abstract-legal-notice',
@@ -145,6 +145,7 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
                           protected _currencyPipe: CurrencyPipe,
                           protected _changedFieldsService: ChangedFieldsService,
                           protected _permissionService: PermissionService,
+                          protected _userComparator: UserComparatorService,
                           @Optional() overflowService: OverflowService,
                           @Optional() @Inject(NAE_TASK_FORCE_OPEN) protected _taskForceOpen: boolean,
                           @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData) {
@@ -198,7 +199,12 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
                 filter(bool => bool && this.isExpanded())
             ).subscribe( () => {
                 if (this._canReload) {
-                    this._taskDataService.initializeTaskDataFields(new AfterAction(), true)
+                    this._taskDataService.initializeTaskDataFields(this._callChain.create(() => {
+                        const task = this._taskContentService.task;
+                        const taskShouldBeBlocked = !task?.assignee
+                            || !this._userComparator.compareUsers(task.assignee.id);
+                        this._taskContentService.blockFields(taskShouldBeBlocked);
+                    }), true);
                 } else {
                     this._canReload = true;
                 }

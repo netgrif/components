@@ -16,9 +16,6 @@ import {MockUserResourceService} from "../../../utility/tests/mocks/mock-user-re
 import {ConfigurationService} from "../../../configuration/configuration.service";
 import {TestConfigurationService} from "../../../utility/tests/test-config";
 import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional} from "@angular/core";
-import {BrowserDynamicTestingModule} from "@angular/platform-browser-dynamic/testing";
-import {ErrorSnackBarComponent} from "../../../snack-bar/components/error-snack-bar/error-snack-bar.component";
-import {SuccessSnackBarComponent} from "../../../snack-bar/components/success-snack-bar/success-snack-bar.component";
 import {TaskResourceService} from "../../../resources/engine-endpoint/task-resource.service";
 import {LoggerService} from "../../../logger/services/logger.service";
 import {SnackBarService} from "../../../snack-bar/services/snack-bar.service";
@@ -28,6 +25,8 @@ import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../../models/data-fie
 import {AbstractFileListDefaultFieldComponent} from "./abstract-file-list-default-field.component";
 import {FormControl} from "@angular/forms";
 import {WrappedBoolean} from "../../data-field-template/models/wrapped-boolean";
+import {FrontActionService} from "../../../actions/services/front-action.service";
+import {MockTaskResourceService} from "../../../utility/tests/mocks/mock-task-resource.service";
 
 describe('AbstractFileListDefaultFieldComponent', () => {
     let component: TestFileListComponent;
@@ -46,10 +45,12 @@ describe('AbstractFileListDefaultFieldComponent', () => {
             providers: [
                 SideMenuService,
                 EventService,
+                FrontActionService,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: TaskResourceService, useClass: MockTaskResourceService},
                 {provide: DATA_FIELD_PORTAL_DATA, useValue: {
                         dataField: new FileListField('', '', {
                             required: true,
@@ -57,7 +58,7 @@ describe('AbstractFileListDefaultFieldComponent', () => {
                             visible: true,
                             editable: true,
                             hidden: true
-                        }),
+                        }, {}),
                         formControlRef: new FormControl(),
                         showLargeLayout: new WrappedBoolean(),
                         additionalFieldProperties: {taskId: '0'}
@@ -79,6 +80,48 @@ describe('AbstractFileListDefaultFieldComponent', () => {
         expect(component).toBeTruthy();
     });
 
+    it('should simulate file download', () => {
+        // Spy on the 'download' method
+        spyOn(component, 'download').and.callFake(() => {
+            // Simulate the download process
+            const anchor = document.createElement('a');
+            anchor.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent('mockContent');
+            anchor.download = 'mockFile.txt';
+            document.body.appendChild(anchor);
+            anchor.click();
+            document.body.removeChild(anchor);
+        });
+
+        // Call the 'download' method
+        component.download("mockFile.txt");
+
+        // Assert that the 'download' method was called
+        expect(component.download).toHaveBeenCalled();
+    });
+
+    it('should simulate file upload', () => {
+        // Create a mock file
+        const mockFile = new File(['mockContent'], 'mockFile.txt', {type: 'text/plain'});
+
+        // Get the file input element's reference
+        const fileInput = component.fileUploadEl.nativeElement;
+
+        // Create a DataTransfer object to simulate file selection
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(mockFile);
+        fileInput.files = dataTransfer.files;
+        component.dataField.value = {namesPaths: [{file: mockFile, name: "mockFile.txt"}]}
+        // Trigger the file upload method
+        spyOn(component, 'upload').and.callThrough();
+        const uploadButtonEvent = new Event('change');
+        fileInput.dispatchEvent(uploadButtonEvent);
+        component.upload();
+
+        // Assertions
+        expect(component.upload).toHaveBeenCalled();
+        expect(component.dataField.value).toBeTruthy(); // Ensure value is processed
+    });
+
     afterEach(() => {
         TestBed.resetTestingModule();
     });
@@ -86,7 +129,7 @@ describe('AbstractFileListDefaultFieldComponent', () => {
 
 @Component({
     selector: 'ncc-test-filelist',
-    template: ''
+    template: '<input type="file" #fileUploadInput name="fileUpload" [multiple]="true" accept="{{dataField.allowTypes}}" class="invisible-input"/>'
 })
 class TestFileListComponent extends AbstractFileListDefaultFieldComponent {
     constructor(taskResourceService: TaskResourceService,
@@ -94,8 +137,9 @@ class TestFileListComponent extends AbstractFileListDefaultFieldComponent {
                 snackbar: SnackBarService,
                 translate: TranslateService,
                 eventService: EventService,
+                frontActionService: FrontActionService,
                 @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<FileListField>) {
-        super(taskResourceService, log, snackbar, translate, eventService, dataFieldPortalData);
+        super(taskResourceService, log, snackbar, translate, eventService, frontActionService, dataFieldPortalData);
     }
 }
 

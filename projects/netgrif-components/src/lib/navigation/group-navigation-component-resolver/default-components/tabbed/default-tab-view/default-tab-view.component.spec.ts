@@ -52,7 +52,13 @@ describe('DefaultTabViewComponent', () => {
                                 new I18nField(
                                     GroupNavigationConstants.NAVIGATION_ENTRY_TITLE_FIELD_ID_SUFFIX,
                                     '',
-                                    {defaultValue: 'Default translation', translations: {en: 'English translation'}},
+                                    {
+                                        defaultValue: 'I18N menu test',
+                                        translations: {
+                                            en: 'I18N test – English',
+                                            sk: 'I18N test – Slovenčina'
+                                        }
+                                    },
                                     {visible: true}
                                 ),
                             ]
@@ -206,4 +212,22 @@ describe('DefaultTabViewComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    it('updates the rendered I18N tab title after a language change', () => {
+        expect(renderedTabTitle()).toBe('I18N test – English');
+
+        service.setLanguage('sk');
+        fixture.detectChanges();
+
+        expect(renderedTabTitle()).toBe('I18N test – Slovenčina');
+
+        service.setLanguage('en');
+        fixture.detectChanges();
+
+        expect(renderedTabTitle()).toBe('I18N test – English');
+    });
+
+    function renderedTabTitle(): string {
+        return fixture.nativeElement.querySelector('.custom-badge').childNodes[0].textContent.trim();
+    }
 });
