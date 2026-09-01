@@ -1,4 +1,4 @@
-import {TestBed} from '@angular/core/testing';
+import {TestBed, waitForAsync} from '@angular/core/testing';
 import {SearchService} from './search.service';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {CategoryFactory} from '../category-factory/category-factory';
@@ -10,13 +10,20 @@ import {NAE_BASE_FILTER} from '../models/base-filter-injection-token';
 import {TestCaseBaseFilterProvider, TestNoAllowedNetsFactory} from '../../utility/tests/test-factory-methods';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
-import {CaseCreationDate} from '../models/category/case/case-creation-date';
-import moment from 'moment';
 import {CaseSearchRequestBody} from '../../filter/models/case-search-request-body';
 import {FilterType} from '../../filter/models/filter-type';
 import {of} from 'rxjs';
 import {SimpleFilter} from '../../filter/models/simple-filter';
 import {PetriNetRequestBody} from '../../resources/interface/petri-net-request-body';
+import {TaskSearchRequestBody} from "../../filter/models/task-search-request-body";
+import {
+    AuthenticationMethodService,
+    MockAuthenticationMethodService,
+    MockUserService,
+    User,
+    UserService
+} from "@netgrif/components-core";
+import {Injectable} from "@angular/core";
 
 describe('SearchService', () => {
     let service: SearchService;
@@ -33,11 +40,10 @@ describe('SearchService', () => {
                 providers: [
                     CategoryFactory,
                     SearchService,
-                    {
-                        provide: NAE_BASE_FILTER,
-                        useFactory: TestCaseBaseFilterProvider
-                    },
+                    {provide: NAE_BASE_FILTER, useFactory: TestCaseBaseFilterProvider},
                     {provide: ConfigurationService, useClass: TestConfigurationService},
+                    {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                    {provide: UserService, useClass: CustomMockUserService},
                     {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
                 ]
             });
@@ -74,66 +80,41 @@ describe('SearchService', () => {
             expect(service.rootPredicate.getPredicateMap().get(id)).toBeTruthy();
         });
 
-        // todo 2466 major test for pfql loading
-        // describe('serialization / deserialization', () => {
-            // let serializedSearch: FilterMetadata;
-            //
-            // beforeEach(() => {
-            //     const predicate1 = categoryFactory.getWithDefaultOperator(CaseTitle);
-            //     predicate1.setOperands(['title']);
-            //
-            //     const predicate2 = categoryFactory.getWithDefaultOperator(CaseCreationDate);
-            //     predicate2.setOperands([moment('2021-03-31').valueOf()]);
-            //
-            //     const meta1 = predicate1.createMetadata();
-            //     expect(meta1).toBeTruthy();
-            //     const meta2 = predicate2.createMetadata();
-            //     expect(meta2).toBeTruthy();
-            //
-            //     serializedSearch = {
-            //         filterType: FilterType.CASE,
-            //         predicateMetadata: [[meta1, meta2]],
-            //         searchCategories: [] // they don't play a role for this test
-            //     };
-            // });
-            //
-            // it('should deserialize saved search', (done) => {
-            //     expect(service.additionalFiltersApplied).toBeFalse();
-            //
-            //     service.loadFromMetadata(serializedSearch);
-            //     service.activeFilter$.subscribe(f => {
-            //         expect(service.additionalFiltersApplied).toBeTrue();
-            //
-            //         expect(f).toBeTruthy();
-            //         const filters = f.getRequestBody() as Array<CaseSearchRequestBody>;
-            //         expect(Array.isArray(filters)).toBeTrue();
-            //         expect(filters.length).toBe(2);
-            //         expect(filters[0]).toEqual({});
-            //         expect(filters[1].query).toBeTruthy();
-            //
-            //         done();
-            //     });
-            // });
-            //
-            // it('should serialize search', (done) => {
-            //     expect(service.additionalFiltersApplied).toBeFalse();
-            //
-            //     service.loadFromMetadata(serializedSearch);
-            //     service.activeFilter$.subscribe(f => {
-            //         expect(service.additionalFiltersApplied).toBeTrue();
-            //
-            //         const serialized = service.createPredicateMetadata();
-            //         expect(serialized).toBeTruthy();
-            //         expect(serialized).toEqual(serializedSearch.predicateMetadata);
-            //
-            //         done();
-            //     });
-            // });
-            //
-            // afterEach(() => {
-            //     TestBed.resetTestingModule();
-            // });
-        // });
+        it('should load pfql query in case category', (done) => {
+            expect(service.additionalFiltersApplied).toBeFalse();
+
+            service.loadFromPfql('cases: title neq \'someOtherTitle\'');
+            service.activeFilter$.subscribe(f => {
+                expect(service.additionalFiltersApplied).toBeTrue();
+
+                expect(f).toBeTruthy();
+                const filters = f.getRequestBody() as Array<CaseSearchRequestBody>;
+                expect(Array.isArray(filters)).toBeTrue();
+                expect(filters.length).toBe(2);
+                expect(filters[0]).toEqual({});
+                expect(filters[1].query).toEqual('cases: title neq \'someOtherTitle\'');
+
+                done();
+            });
+        });
+
+        it('should load pfql query in task category', (done) => {
+            expect(service.additionalFiltersApplied).toBeFalse();
+
+            service.loadFromPfql('tasks: title eq \'myTitle\'');
+            service.activeFilter$.subscribe(f => {
+                expect(service.additionalFiltersApplied).toBeTrue();
+
+                expect(f).toBeTruthy();
+                const filters = f.getRequestBody() as Array<TaskSearchRequestBody>;
+                expect(Array.isArray(filters)).toBeTrue();
+                expect(filters.length).toBe(2);
+                expect(filters[0]).toEqual({});
+                expect(filters[1].query).toEqual('tasks: title eq \'myTitle\'');
+
+                done();
+            });
+        });
 
         afterEach(() => {
             TestBed.resetTestingModule();
@@ -190,3 +171,19 @@ describe('SearchService', () => {
         TestBed.resetTestingModule();
     });
 });
+
+@Injectable()
+class CustomMockUserService extends MockUserService {
+    constructor() {
+        super();
+        this._user = new User('123', 'test@netgrif.com', 'Test', 'User', ['ROLE_USER'], [{
+            stringId: 'id',
+            name: 'id',
+            description: '',
+            importId: 'id',
+            netImportId: 'identifier',
+            netVersion: '1.0.0',
+            netStringId: 'stringId',
+        }]);
+    }
+}
