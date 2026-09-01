@@ -4,7 +4,6 @@ import {HeaderColumn} from "../models/header-column";
 import {AbstractHeaderService} from "../abstract-header-service";
 import {HeaderSortingMode} from "../models/header-sorting-mode";
 import {HeaderMode} from "../models/header-mode";
-import {HeaderColumn} from '../models/header-column';
 
 @Component({
     selector: 'ncc-abstract-header-mode',
