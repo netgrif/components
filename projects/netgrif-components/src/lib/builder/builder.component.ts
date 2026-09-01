@@ -1,11 +1,11 @@
-import {ChangeDetectionStrategy, Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional, Type} from '@angular/core';
 import {BuilderMode, BuilderModeService} from "./services/builder-mode.service";
 import {ModelService} from "./modeler/services/model/model.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
 import {HttpClient} from "@angular/common/http";
 import {HistoryService} from "./modeler/services/history/history.service";
-import {CaseResourceService, LoadingEmitter, NAE_TAB_DATA, ImmediateData} from "@netgrif/components-core";
+import {CaseResourceService, LoadingEmitter, NAE_TAB_DATA, ImmediateData, DATA_FIELD_PORTAL_DATA, CaseRefField, DataFieldPortalData} from "@netgrif/components-core";
 import {InjectedTabbedBuilderViewData} from "./injected-builder-data";
 import {FieldListService} from './form-builder/field-list/field-list.service';
 import {GridsterService} from './form-builder/gridster/gridster.service';
@@ -55,6 +55,7 @@ import {I18nControlService} from './modeler/i18n-mode/i18n-control.service';
 import {BuilderIntegrationService} from "./services/builder-integration.service";
 import {TaskModeService} from "./modeler/task-mode/task-mode.service";
 import {LocalStorageService} from "./services/local-storage.service";
+import {PetriflowCanvasService} from '@netgrif/petriflow.svg';
 
 @Component({
     selector: 'nc-builder',
@@ -110,7 +111,11 @@ import {LocalStorageService} from "./services/local-storage.service";
         I18nControlService,
         BuilderIntegrationService,
         TaskModeService,
-        LocalStorageService
+        LocalStorageService,
+        // PetriflowCanvasService is `providedIn: 'root'` in @netgrif/petriflow.svg, which would make it a
+        // single instance shared by every open builder tab (wrong canvas/model rendered on tab switch).
+        // Re-provided here so each <nc-builder> instance gets its own canvas/panzoom state.
+        {provide: PetriflowCanvasService, useClass: PetriflowCanvasService as unknown as Type<PetriflowCanvasService>}
     ]
 })
 export class BuilderComponent {
@@ -126,14 +131,30 @@ export class BuilderComponent {
                 public builderModeService: BuilderModeService,
                 protected _caseResourceService: CaseResourceService,
                 protected _builderIntegrationService: BuilderIntegrationService,
-                @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedBuilderViewData) {
+                @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedBuilderViewData,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<CaseRefField>) {
         this.loading = new LoadingEmitter(true);
-        if (injectedTabData?.processCase) {
+        if (injectedTabData !== null && injectedTabData?.processCase) {
             this._builderIntegrationService.isIntegrated = true;
             this._builderIntegrationService.processCase = injectedTabData.processCase;
             this.resolveIntegratedMode();
             this._builderIntegrationService.reloadCase.subscribe(() => {
                 this._caseResourceService.getOneCase(this._builderIntegrationService.processCase.stringId).subscribe(processCase => {
+                    this._builderIntegrationService.processCase = processCase;
+                    this.resolveIntegratedMode()
+                    this._builderIntegrationService.reloadModes = true;
+                })
+            });
+        } else if (dataFieldPortalData !== null && dataFieldPortalData?.dataField?.value?.length > 0) {
+            this._builderIntegrationService.isIntegrated = true;
+            this._caseResourceService.getOneCase(dataFieldPortalData?.dataField?.value[0]).subscribe({next: processCase => {
+                this._builderIntegrationService.processCase = processCase;
+                this.resolveIntegratedMode();
+            }, error: () => {
+                this.loading.off();
+            }})
+            this._builderIntegrationService.reloadCase.subscribe(() => {
+                this._caseResourceService.getOneCase(this._builderIntegrationService.processCase?.stringId).subscribe(processCase => {
                     this._builderIntegrationService.processCase = processCase;
                     this.resolveIntegratedMode()
                     this._builderIntegrationService.reloadModes = true;

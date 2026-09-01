@@ -43,7 +43,7 @@ export abstract class CanvasTool extends CanvasListenerTool {
         button: ControlPanelButton,
         protected _context: CanvasToolContext,
     ) {
-        super(id, button, _context.modelService, _context.dialog, _context.router, _context.transitionService);
+        super(id, button, _context.modelService, _context.dialog, _context.router, _context.transitionService, _context.ngZone);
         this._editModeService = _context.editModeService;
         this.actionMode = _context.actionMode;
         this.actionsMasterDetail = _context.actionsMasterDetail;

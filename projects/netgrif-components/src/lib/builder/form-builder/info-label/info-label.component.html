@@ -1,19 +1,32 @@
-<mat-toolbar *ngIf="selectedTransition" color="primary">
-  <mat-toolbar-row class="margins-sides">
-    <mat-icon *ngIf="selectedTransition.icon" aria-label="Transition icon"
-              class="icon">{{ selectedTransition.icon }}
-    </mat-icon>
-    <span>ID: {{ selectedTransition.id }}</span>
-    <span fxFlex></span>
-    <span class="spacer">Label: {{ selectedTransition.label?.value }}</span>
-  </mat-toolbar-row>
-</mat-toolbar>
-<mat-toolbar *ngIf="!selectedTransition" color="primary">
-  <mat-toolbar-row class="margins-sides">
+<ng-container *ngIf="selectedTransition">
+    <div class="info-label-header">
+        <div class="info-label-group">
+            <span class="info-label-header-text">Process</span>
+        </div>
+        <div class="info-label-group">
+            <span class="info-label-header-text">Task</span>
+        </div>
+        <div class="info-label-group">
+            <span class="info-label-header-text">ID</span>
+        </div>
+    </div>
+    <div class="info-label-panel">
+        <div class="info-label-group">
+            <mat-icon *ngIf="model?.icon" class="info-label-icon" aria-label="Process icon">{{ model.icon }}</mat-icon>
+            <span class="info-label-title">{{ model?.title?.value }}</span>
+        </div>
+        <div class="info-label-group">
+            <span class="info-label-title">{{ selectedTransition.label?.value }}</span>
+        </div>
+        <div class="info-label-group">
+            <span class="info-label-title">{{ selectedTransition.id }}</span>
+        </div>
+    </div>
+</ng-container>
+<div class="info-label-panel" *ngIf="!selectedTransition">
     <span>You have no selected transition!</span>
-    <div fxFlex></div>
+    <span fxFlex></span>
     <button (click)="redirect()" aria-label="Close form builder" mat-icon-button>
-      <mat-icon>close</mat-icon>
+        <mat-icon>close</mat-icon>
     </button>
-  </mat-toolbar-row>
-</mat-toolbar>
+</div>

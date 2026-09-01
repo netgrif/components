@@ -1,3 +1,4 @@
+import {NgZone} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {ActionsMasterDetailService} from '../../../actions-mode/actions-master-detail.service';
@@ -22,6 +23,7 @@ export class CanvasToolContext {
         public readonly builderModeService: BuilderModeService,
         public readonly processTool: ProcessActionsTool,
         public readonly builderIntegrationService: BuilderIntegrationService,
-        public readonly localStorageService: LocalStorageService,
+        public readonly ngZone: NgZone,
+        public readonly localStorageService: LocalStorageService
     ) {}
 }
