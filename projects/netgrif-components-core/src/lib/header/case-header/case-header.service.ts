@@ -1,8 +1,7 @@
 import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
 import {AbstractHeaderService} from '../abstract-header-service';
 import {HeaderType} from '../models/header-type';
-import {HeaderColumn, HeaderColumnType} from '../models/header-column';
-import {CaseMetaField} from './case-menta-enum';
+import {HeaderColumn} from '../models/header-column';
 import {UserPreferenceService} from '../../user/services/user-preference.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {NAE_DEFAULT_HEADERS} from '../models/default-headers-token';
@@ -10,6 +9,7 @@ import {Subscription} from 'rxjs';
 import {OverflowService} from '../services/overflow.service';
 import {ViewIdService} from '../../user/services/view-id.service';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
+import {getCaseMetaHeaders} from "../models/meta-fields-factory";
 
 
 @Injectable()
@@ -36,14 +36,7 @@ export class CaseHeaderService extends AbstractHeaderService implements OnDestro
     }
 
     protected createMetaHeaders(): Array<HeaderColumn> {
-        return [
-            new HeaderColumn(HeaderColumnType.META, CaseMetaField.MONGO_ID, 'headers.caseMeta.mongoID', 'text', false),
-            new HeaderColumn(HeaderColumnType.META, CaseMetaField.TITLE, 'headers.caseMeta.title', 'text'),
-            new HeaderColumn(HeaderColumnType.META, CaseMetaField.AUTHOR, 'headers.caseMeta.author', 'user'),
-            new HeaderColumn(HeaderColumnType.META, CaseMetaField.CREATION_DATE, 'headers.caseMeta.creationDate', 'date'),
-            new HeaderColumn(HeaderColumnType.META, CaseMetaField.PROCESS_IDENTIFIER, 'headers.caseMeta.processIdentifier', 'text'),
-            new HeaderColumn(HeaderColumnType.META, CaseMetaField.PETRI_NET_ID, 'headers.caseMeta.petriNetId', 'text'),
-        ];
+        return getCaseMetaHeaders();
     }
 
     ngOnDestroy(): void {

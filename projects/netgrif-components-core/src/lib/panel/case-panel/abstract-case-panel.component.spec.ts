@@ -7,7 +7,7 @@ import {Component, NO_ERRORS_SCHEMA, Optional} from '@angular/core';
 import {of} from 'rxjs';
 import {AbstractCasePanelComponent} from './abstract-case-panel.component';
 import {HeaderColumn, HeaderColumnType} from '../../header/models/header-column';
-import {CaseMetaField} from '../../header/case-header/case-menta-enum';
+import {CaseMetaField} from '../../header/case-header/case-meta-enum';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {MaterialModule} from '../../material/material.module';
 import {CaseViewService} from '../../view/case-view/service/case-view-service';

@@ -15,7 +15,7 @@ import {
     TextField,
     I18nField,
     AuthenticationModule,
-    StringCollectionField,
+    StringCollectionField, EnumerationField,
 } from '@netgrif/components-core';
 import {of} from 'rxjs';
 import {DefaultTabbedTaskViewComponent} from '../default-tabbed-task-view/default-tabbed-task-view.component';
@@ -87,6 +87,19 @@ describe('DefaultTabbedCaseViewComponent', () => {
                                     [],
                                     {visible: true}
                                 ),
+                                new TextField(
+                                    GroupNavigationConstants.ITEM_FIELD_CASE_HEADERS_SORT_MODE_ACTIVE,
+                                    '',
+                                    '',
+                                    {visible: true}
+                                ),
+                                new EnumerationField(
+                                    GroupNavigationConstants.ITEM_FIELD_CASE_HEADERS_SORT_MODE_DIRECTION,
+                                    '',
+                                    '',
+                                    [],
+                                    {visible: true}
+                                ),
                                 new StringCollectionField(
                                     GroupNavigationConstants.ITEM_FIELD_TASK_ALLOWED_NETS,
                                     '',
@@ -128,6 +141,19 @@ describe('DefaultTabbedCaseViewComponent', () => {
                                 ),
                                 new StringCollectionField(
                                     GroupNavigationConstants.ITEM_FIELD_CASE_ALLOWED_NETS,
+                                    '',
+                                    [],
+                                    {visible: true}
+                                ),
+                                new TextField(
+                                    GroupNavigationConstants.ITEM_FIELD_CASE_HEADERS_SORT_MODE_ACTIVE,
+                                    '',
+                                    '',
+                                    {visible: true}
+                                ),
+                                new EnumerationField(
+                                    GroupNavigationConstants.ITEM_FIELD_CASE_HEADERS_SORT_MODE_DIRECTION,
+                                    '',
                                     '',
                                     [],
                                     {visible: true}

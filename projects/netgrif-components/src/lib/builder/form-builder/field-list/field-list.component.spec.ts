@@ -4,7 +4,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Router} from '@angular/router';
 import {PetriNet} from '@netgrif/petriflow';
-import {BuilderModeService} from '../../builder-mode.service';
+import {BuilderModeService} from '../../services/builder-mode.service';
 import {ModelService} from '../../modeler/services/model/model.service';
 import {SelectedTransitionService} from '../../modeler/selected-transition.service';
 import {GridsterService} from '../gridster/gridster.service';

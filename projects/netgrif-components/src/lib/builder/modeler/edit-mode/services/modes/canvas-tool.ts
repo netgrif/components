@@ -28,7 +28,7 @@ import {CanvasPlace} from '../../domain/canvas-place';
 import {CanvasTransition} from '../../domain/canvas-transition';
 import {EditModeService} from '../../edit-mode.service';
 import {Hotkey} from './domain/hotkey';
-import {BuilderModeService} from '../../../../builder-mode.service';
+import {BuilderModeService} from '../../../../services/builder-mode.service';
 import {CanvasToolContext} from './canvas-tool-context';
 
 export abstract class CanvasTool extends CanvasListenerTool {

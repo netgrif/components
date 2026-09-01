@@ -197,6 +197,32 @@ describe('DefaultTabViewComponent', () => {
                                     GroupNavigationConstants.ITEM_FIELD_ID_CASE_ALLOW_EXPORT,
                                     '',true,{visible: true}
                                 ),
+                                new TextField(
+                                    GroupNavigationConstants.ITEM_FIELD_CASE_HEADERS_SORT_MODE_ACTIVE,
+                                    '',
+                                    '',
+                                    {visible: true}
+                                ),
+                                new EnumerationField(
+                                    GroupNavigationConstants.ITEM_FIELD_CASE_HEADERS_SORT_MODE_DIRECTION,
+                                    '',
+                                    '',
+                                    [],
+                                    {visible: true}
+                                ),
+                                new TextField(
+                                    GroupNavigationConstants.ITEM_FIELD_TASK_HEADERS_SORT_MODE_ACTIVE,
+                                    '',
+                                    '',
+                                    {visible: true}
+                                ),
+                                new EnumerationField(
+                                    GroupNavigationConstants.ITEM_FIELD_TASK_HEADERS_SORT_MODE_DIRECTION,
+                                    '',
+                                    '',
+                                    [],
+                                    {visible: true}
+                                ),
                             ]
                         }
                     ]

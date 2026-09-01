@@ -484,7 +484,14 @@
         "filterNotFound": "Diese Ansicht hat keinen Filter",
         "loadMoreItems": "Mehr",
         "ascending": "Aufsteigend",
-        "descending": "Absteigend"
+        "descending": "Absteigend",
+        "editModeOff": "Bearbeitungsmodus deaktivieren",
+        "editModeOn": "Bearbeitungsmodus aktivieren",
+        "createMenuItemBtn": "Neuen Menüpunkt erstellen",
+        "editMenuItem": "Bearbeiten",
+        "snackbar": {
+            "failedItemCreation": "Fehler beim Erstellen des Artikels"
+        }
     },
     "impersonation": {
         "user": {

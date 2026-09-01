@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, HostListener, OnDestroy, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, HostListener, OnDestroy, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {NgxDropzoneChangeEvent} from 'ngx-dropzone';
 import {ModelImportService} from '../model-import-service';
@@ -12,7 +12,8 @@ import {EditModeService} from './edit-mode.service';
 @Component({
     selector: 'nc-builder-edit-mode',
     templateUrl: './edit-mode.component.html',
-    styleUrls: ['./edit-mode.component.scss']
+    styleUrls: ['./edit-mode.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditModeComponent implements AfterViewInit, OnDestroy {
 

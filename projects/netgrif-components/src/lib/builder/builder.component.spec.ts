@@ -5,7 +5,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ImportService} from '@netgrif/petriflow';
 import {of} from 'rxjs';
-import {BuilderModeService} from './builder-mode.service';
+import {BuilderModeService} from './services/builder-mode.service';
 import {ArcFactory} from './modeler/edit-mode/domain/arc-builders/arc-factory.service';
 import {EditModeService} from './modeler/edit-mode/edit-mode.service';
 import {ExportService} from '@netgrif/petriflow';
