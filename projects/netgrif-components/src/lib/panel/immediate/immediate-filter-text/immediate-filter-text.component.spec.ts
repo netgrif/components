@@ -3,7 +3,7 @@ import {ImmediateFilterTextComponent} from './immediate-filter-text.component';
 import {
     MaterialModule,
     ConfigurationService,
-    TestConfigurationService, AllowedNetsService,
+    TestConfigurationService, AllowedNetsService, TestNoAllowedNetsFactory, AllowedNetsServiceFactory,
 } from '@netgrif/components-core';
 import {PanelComponentModule} from '../../panel.module';
 import {Component} from '@angular/core';
@@ -19,7 +19,7 @@ describe('ImmediateFilterTextComponent', () => {
                 MaterialModule,
                 PanelComponentModule
             ], providers: [
-                AllowedNetsService,
+                {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
             ]
         })

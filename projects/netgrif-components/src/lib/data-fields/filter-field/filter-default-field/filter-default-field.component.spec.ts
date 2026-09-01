@@ -14,6 +14,7 @@ import {RequiredLabelComponent} from "../../required-label/required-label.compon
 import {FilterFieldComponent} from "../filter-field.component";
 import {FilterFieldContentComponent} from "../filter-field-content/filter-field-content.component";
 import {FormControl} from "@angular/forms";
+import {NoopAnimationsModule} from "@angular/platform-browser/animations";
 
 describe('FilterDefaultFieldComponent', () => {
   let component: FilterDefaultFieldComponent;
@@ -24,7 +25,8 @@ describe('FilterDefaultFieldComponent', () => {
         imports: [
             MaterialModule,
             AdvancedSearchComponentModule,
-            HttpClientTestingModule
+            HttpClientTestingModule,
+            NoopAnimationsModule,
         ],
         providers: [
             {provide: ConfigurationService, useClass: TestConfigurationService},

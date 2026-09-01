@@ -3,9 +3,10 @@ import {FilterFieldContentComponent} from './filter-field-content.component';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {
     ConfigurationService, TestConfigurationService, FilterField, FieldTypeResource, NAE_FILTER_FIELD,
-    NAE_DEFAULT_CASE_SEARCH_CATEGORIES, NAE_DEFAULT_TASK_SEARCH_CATEGORIES
+    DefaultSearchCategoriesModule
 } from '@netgrif/components-core';
 import {AdvancedSearchComponentModule} from '../../../search/advanced-search/advanced-search.module';
+import {NoopAnimationsModule} from "@angular/platform-browser/animations";
 
 describe('FilterFieldContentComponent', () => {
     let component: FilterFieldContentComponent;
@@ -17,13 +18,13 @@ describe('FilterFieldContentComponent', () => {
         await TestBed.configureTestingModule({
             imports: [
                 AdvancedSearchComponentModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                DefaultSearchCategoriesModule,
+                NoopAnimationsModule,
             ],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: NAE_FILTER_FIELD, useValue: field},
-                NAE_DEFAULT_CASE_SEARCH_CATEGORIES,
-                NAE_DEFAULT_TASK_SEARCH_CATEGORIES
             ],
             declarations: [
                 FilterFieldContentComponent
