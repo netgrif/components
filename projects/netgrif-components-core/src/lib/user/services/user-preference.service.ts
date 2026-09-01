@@ -100,7 +100,9 @@ export class UserPreferenceService implements OnDestroy {
     }
 
     public setHeadersAndSorts(viewId: string, headers: Array<string>, sorts?: Array<SortingHeader>): void {
-        this._preferences.sorts[viewId] = sorts;
+        if (!!sorts) {
+            this._preferences.sorts[viewId] = sorts;
+        }
         this.setHeaders(viewId, headers);
     }
 

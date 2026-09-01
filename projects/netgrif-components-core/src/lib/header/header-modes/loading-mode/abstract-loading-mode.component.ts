@@ -1,5 +1,4 @@
-import {Component, Input} from '@angular/core';
-import {AbstractHeaderService} from '../../abstract-header-service';
+import {Component} from '@angular/core';
 import {AbstractHeaderModeComponent} from '../abstract-header-mode.component';
 
 @Component({
@@ -7,9 +6,6 @@ import {AbstractHeaderModeComponent} from '../abstract-header-mode.component';
     template: ''
 })
 export abstract class AbstractLoadingModeComponent extends AbstractHeaderModeComponent {
-
-    @Input()
-    public headerService: AbstractHeaderService;
 
     constructor() {
         super();

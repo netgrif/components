@@ -28,7 +28,8 @@ import {
 } from '@netgrif/components-core';
 import {RouterTestingModule} from '@angular/router/testing';
 import {TranslateService} from '@ngx-translate/core';
-import {of, Subject} from 'rxjs';
+import {Observable, of, Subject} from "rxjs";
+import {MediaChange} from "@ngbracket/ngx-layout/core/media-change";
 
 describe('EditModeComponent', () => {
     let component: EditModeComponent;

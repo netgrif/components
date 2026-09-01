@@ -1,5 +1,4 @@
-import {Component, Input} from '@angular/core';
-import {AbstractHeaderService} from '../../abstract-header-service';
+import {Component} from '@angular/core';
 import {Sort} from '@angular/material/sort';
 import {AbstractHeaderModeComponent} from '../abstract-header-mode.component';
 import {HeaderColumn} from "../../models/header-column";
@@ -10,9 +9,6 @@ import {HeaderColumn} from "../../models/header-column";
     template: ''
 })
 export abstract class AbstractSortModeComponent extends AbstractHeaderModeComponent {
-
-    @Input()
-    public headerService: AbstractHeaderService;
 
     constructor() {
         super();
