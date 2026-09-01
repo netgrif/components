@@ -45,24 +45,6 @@ export abstract class AbstractHeaderModeComponent {
         return true;
     }
 
-    public sortingHeaderSelected(newSortingColumn: HeaderColumn | null | undefined): void {
-        if (!newSortingColumn) {
-            return;
-        }
-
-        if (newSortingColumn.sortDirection === 'asc') {
-            newSortingColumn.sortDirection = 'desc';
-        } else if (newSortingColumn.sortDirection === 'desc') {
-            newSortingColumn.sortDirection = '';
-        } else {
-            newSortingColumn.sortDirection = 'asc';
-        }
-        this.headerService.sortingColumnSelected(newSortingColumn);
-        if (this.headerService.headerState.mode !== HeaderMode.EDIT) {
-            this.headerService.applySelectedSorts();
-        }
-    }
-
     public sortingPriority(header: HeaderColumn | null | undefined): number | null {
         if (!header?.sortDirection || this.headerService.sortingMode === HeaderSortingMode.SINGLE || (this.headerService.sortingMode === HeaderSortingMode.COMBINED && this.headerService.headerState.mode === HeaderMode.SORT)) {
             return null;

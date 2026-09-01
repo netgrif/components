@@ -87,6 +87,15 @@ export abstract class AbstractEditModeComponent extends AbstractHeaderModeCompon
         return header ? this._translate.instant(header.title) : '';
     }
 
+    public sortingHeaderSelected(newSortingColumn: HeaderColumn | null | undefined): void {
+        if (!this.advanceSortDirection(newSortingColumn)) {
+            return;
+        }
+
+        this.headerService.sortingColumnSelected(newSortingColumn);
+        this.headerService.applySelectedSorts();
+    }
+
     protected removeHiddenSorts(visibleHeaderCount: number): void {
         const visibleHeaders = new Set(this.headerService.headerState.selectedHeaders.slice(0, visibleHeaderCount));
         const hiddenSorts = this.headerService.headerState.selectedSorts
