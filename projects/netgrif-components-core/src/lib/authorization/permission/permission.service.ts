@@ -113,14 +113,14 @@ export class PermissionService {
             const processedActorIds: Array<string> = [];
             Object.keys(users).forEach(actorId => {
                 if (userPermValue === false || processedActorIds.includes(actorId)
-                    || actorId !== loggedUser.id && !loggedUser.nextGroups?.includes(actorId)) {
+                    || actorId !== loggedUser.id && !loggedUser.groupIds.includes(actorId)) {
                     return;
                 }
                 let currentUserPermission: boolean = this.getPermissionByUserOrGroup(users, permission, loggedUser);
                 if (currentUserPermission !== undefined) {
                     userPermValue = userPermValue === undefined ? currentUserPermission : userPermValue && currentUserPermission;
                 }
-                loggedUser.nextGroups !== undefined ? processedActorIds.push(actorId, ...loggedUser.nextGroups) : processedActorIds.push(actorId);
+                loggedUser.groupIds !== undefined ? processedActorIds.push(actorId, ...loggedUser.groupIds) : processedActorIds.push(actorId);
             });
         }
         return userPermValue;
@@ -131,10 +131,10 @@ export class PermissionService {
         if (permissions[loggedUser.id] !== undefined) {
             userPermValue = permissions[loggedUser.id][permission];
         }
-        if (loggedUser.nextGroups === undefined || loggedUser.nextGroups.length === 0 || userPermValue === false) {
+        if (loggedUser.groupIds === undefined || loggedUser.groupIds.length === 0 || userPermValue === false) {
             return userPermValue;
         }
-        loggedUser.nextGroups.forEach(function(groupId) {
+        loggedUser.groupIds.forEach(function(groupId) {
             if (permissions[groupId] !== undefined && permissions[groupId][permission] !== undefined) {
                 userPermValue = userPermValue === undefined ?
                     permissions[groupId][permission] : userPermValue && permissions[groupId][permission];

@@ -119,7 +119,7 @@ class TestUserService {
 
     public userObj = new User('id', 'mail', '', '', '', '', [], [{stringId: 'role'} as ProcessRole], [], []);
     public userObjAfter = new User(
-        this.userObj.id, this.userObj.username, this.userObj.email, this.userObj.realmId, this.userObj.firstName, this.userObj.lastName, this.userObj.authorities, this.userObj.roles, this.userObj.groups, this.userObj.nextGroups,
+        this.userObj.id, this.userObj.username, this.userObj.email, this.userObj.realmId, this.userObj.firstName, this.userObj.lastName, this.userObj.authorities, this.userObj.roles, this.userObj.groupIds, this.userObj.groups,
         new User('impId', 'mail', '', '', '', '', [], [{stringId: 'role'} as ProcessRole], [], []),
     );
 

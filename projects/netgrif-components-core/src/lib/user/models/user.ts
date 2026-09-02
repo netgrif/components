@@ -1,5 +1,6 @@
 import {ProcessRole} from '../../resources/interface/process-role';
 import {IUser} from './iuser';
+import {Group} from "../../resources/interface/group";
 
 /**
  * The user object that is used by the frontend in its logic.
@@ -15,8 +16,8 @@ export class User implements IUser {
         public lastName: string,
         public authorities: Array<string>,
         public roles: Array<ProcessRole>,
-        public groups?: Array<string>,
-        public nextGroups?: Array<string>,
+        public groupIds?: Array<string>,
+        public groups?: Group[],
         public impersonated?: User
     ) {
     }
@@ -59,5 +60,4 @@ export class User implements IUser {
     public isImpersonating(): boolean {
         return !!this.impersonated;
     }
-
 }
