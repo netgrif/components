@@ -29,6 +29,7 @@ import {Injectable} from "@angular/core";
 import {PfqlVisitor} from "../../pfql/pfql-visitor";
 import {AuthenticationModule} from "../../authentication/authentication.module";
 import {NAE_IGNORE_NETS_ON_AUTOCOMPLETE_CATEGORY} from "../category-factory/search-categories-injection-token";
+import {RouterTestingModule} from "@angular/router/testing";
 
 describe('SearchService', () => {
     let service: SearchService;
@@ -41,7 +42,8 @@ describe('SearchService', () => {
                 imports: [
                     NoopAnimationsModule,
                     HttpClientTestingModule,
-                    AuthenticationModule
+                    AuthenticationModule,
+                    RouterTestingModule.withRoutes([]),
                 ],
                 providers: [
                     CategoryFactory,
@@ -116,7 +118,8 @@ describe('SearchService', () => {
                 imports: [
                     NoopAnimationsModule,
                     HttpClientTestingModule,
-                    AuthenticationModule
+                    AuthenticationModule,
+                    RouterTestingModule.withRoutes([]),
                 ],
                 providers: [
                     CategoryFactory,
@@ -163,7 +166,8 @@ describe('SearchService', () => {
                 imports: [
                     NoopAnimationsModule,
                     HttpClientTestingModule,
-                    AuthenticationModule
+                    AuthenticationModule,
+                    RouterTestingModule.withRoutes([]),
                 ],
                 providers: [
                     CategoryFactory,
