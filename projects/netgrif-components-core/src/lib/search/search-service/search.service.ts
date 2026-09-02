@@ -25,6 +25,7 @@ import {ResourceTypeQueryPrefix} from "../models/category/resource-type-query-pr
 import {RawExpression} from "../../pfql/model/raw-expression";
 import {PlainQueryCategory} from "../models/category/plain-query-category";
 import { NAE_IGNORE_NETS_ON_AUTOCOMPLETE_CATEGORY } from "../category-factory/search-categories-injection-token";
+import { PfqlVisitor } from "../../pfql/pfql-visitor";
 
 /**
  * Holds information about the filter that is currently applied to the view component, that provides this services.
@@ -69,13 +70,13 @@ export class SearchService implements OnDestroy {
      * Injected trough the {@link NAE_BASE_FILTER} injection token.
      * @param _ignoreNetsOnAutocompleteCategories boolean flag that determines whether net-related categories should be ignored
      * when providing autocomplete suggestions. Injected through the {@link NAE_IGNORE_NETS_ON_AUTOCOMPLETE_CATEGORY} injection token.
-     * @param _injector injector from angular core
+     * @param _visitor service to parse query tree into QueryItems
      */
     constructor(protected _log: LoggerService,
                 @Optional() protected _categoryFactory: CategoryFactory,
                 @Inject(NAE_BASE_FILTER) baseFilter: BaseFilter,
                 @Optional() @Inject(NAE_IGNORE_NETS_ON_AUTOCOMPLETE_CATEGORY) protected _ignoreNetsOnAutocompleteCategories: boolean,
-                protected _injector: Injector) {
+                @Optional() protected _visitor: PfqlVisitor) {
         if (baseFilter.filter instanceof Filter) {
             this._baseFilter = baseFilter.filter.clone();
         } else if (baseFilter.filter instanceof Observable) {
@@ -350,7 +351,7 @@ export class SearchService implements OnDestroy {
 
         this._loadingFromPfql$.on();
         this.clearPredicates(true, false);
-        const queryItems: Array<QueryItem> = parseQuery(query, this._injector);
+        const queryItems: Array<QueryItem> = parseQuery(query, this._log, this._visitor);
         if (!queryItems) {
             this._log.warn(`Could not parse query '${query}. Clearing the search...`)
             return;

@@ -32,18 +32,17 @@ import {LoggerService} from "../logger/services/logger.service";
  * Parses a PFQL query string into an array of query items.
  *
  * @param query - The PFQL query string to parse
- * @param injector - Angular injector used for dependency injection during parsing
+ * @param logger - logger service to log messages
+ * @param visitor - service to parse a query tree into QueryItems
  * @returns An array of QueryItem objects representing the parsed query structure
  */
-export function parseQuery(query: string, injector: Injector): Array<QueryItem> {
-    const logger = injector.get(LoggerService);
+export function parseQuery(query: string, logger: LoggerService, visitor: PfqlVisitor): Array<QueryItem> {
     try {
         const inputStream = CharStream.fromString(query);
         const lexer = new QueryLangLexer(inputStream);
         const tokenStream = new CommonTokenStream(lexer);
         const parser = new QueryLangParser(tokenStream);
         const tree = parser.query();
-        const visitor = new PfqlVisitor(injector);
 
         let items: Array<QueryItem> = visitor.visit(tree);
         return reduceComplexToSimpleExpressions(items);

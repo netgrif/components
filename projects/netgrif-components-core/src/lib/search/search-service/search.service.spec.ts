@@ -7,7 +7,11 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NAE_BASE_FILTER} from '../models/base-filter-injection-token';
-import {TestCaseBaseFilterProvider, TestNoAllowedNetsFactory} from '../../utility/tests/test-factory-methods';
+import {
+    TestCaseBaseFilterProvider,
+    TestNoAllowedNetsFactory,
+    TestTaskBaseFilterProvider,
+} from '../../utility/tests/test-factory-methods';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
 import {CaseSearchRequestBody} from '../../filter/models/case-search-request-body';
@@ -17,32 +21,34 @@ import {SimpleFilter} from '../../filter/models/simple-filter';
 import {PetriNetRequestBody} from '../../resources/interface/petri-net-request-body';
 import {TaskSearchRequestBody} from "../../filter/models/task-search-request-body";
 import {
-    AuthenticationMethodService,
-    MockAuthenticationMethodService,
     MockUserService,
     User,
     UserService
 } from "@netgrif/components-core";
 import {Injectable} from "@angular/core";
+import {PfqlVisitor} from "../../pfql/pfql-visitor";
+import {AuthenticationModule} from "../../authentication/authentication.module";
+import {NAE_IGNORE_NETS_ON_AUTOCOMPLETE_CATEGORY} from "../category-factory/search-categories-injection-token";
 
 describe('SearchService', () => {
     let service: SearchService;
     let categoryFactory: CategoryFactory;
 
-    describe('with static base filter', () => {
+    describe('with static case base filter', () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [
                     NoopAnimationsModule,
-                    HttpClientTestingModule
+                    HttpClientTestingModule,
+                    AuthenticationModule
                 ],
                 providers: [
                     CategoryFactory,
                     SearchService,
+                    PfqlVisitor,
                     {provide: NAE_BASE_FILTER, useFactory: TestCaseBaseFilterProvider},
                     {provide: ConfigurationService, useClass: TestConfigurationService},
-                    {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                     {provide: UserService, useClass: CustomMockUserService},
                     {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
                 ]
@@ -98,10 +104,39 @@ describe('SearchService', () => {
             });
         });
 
+        afterEach(() => {
+            TestBed.resetTestingModule();
+        });
+    });
+
+    describe('with static task base filter', () => {
+
+        beforeEach(() => {
+            TestBed.configureTestingModule({
+                imports: [
+                    NoopAnimationsModule,
+                    HttpClientTestingModule,
+                    AuthenticationModule
+                ],
+                providers: [
+                    CategoryFactory,
+                    SearchService,
+                    PfqlVisitor,
+                    {provide: NAE_BASE_FILTER, useFactory: TestTaskBaseFilterProvider},
+                    {provide: ConfigurationService, useClass: TestConfigurationService},
+                    {provide: UserService, useClass: CustomMockUserService},
+                    {provide: NAE_IGNORE_NETS_ON_AUTOCOMPLETE_CATEGORY, useValue: true},
+                    {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
+                ]
+            });
+            service = TestBed.inject(SearchService);
+            categoryFactory = TestBed.inject(CategoryFactory);
+        });
+
         it('should load pfql query in task category', (done) => {
             expect(service.additionalFiltersApplied).toBeFalse();
 
-            service.loadFromPfql('tasks: title eq \'myTitle\'');
+            service.loadFromPfql('tasks: transitionId eq \'myTransition\'');
             service.activeFilter$.subscribe(f => {
                 expect(service.additionalFiltersApplied).toBeTrue();
 
@@ -110,7 +145,7 @@ describe('SearchService', () => {
                 expect(Array.isArray(filters)).toBeTrue();
                 expect(filters.length).toBe(2);
                 expect(filters[0]).toEqual({});
-                expect(filters[1].query).toEqual('tasks: title eq \'myTitle\'');
+                expect(filters[1].query).toEqual('tasks: transitionId eq \'myTransition\'');
 
                 done();
             });
@@ -127,16 +162,19 @@ describe('SearchService', () => {
             TestBed.configureTestingModule({
                 imports: [
                     NoopAnimationsModule,
-                    HttpClientTestingModule
+                    HttpClientTestingModule,
+                    AuthenticationModule
                 ],
                 providers: [
                     CategoryFactory,
                     SearchService,
+                    PfqlVisitor,
                     {
                         provide: NAE_BASE_FILTER,
                         useValue: {filter: of(SimpleFilter.emptyCaseFilter()), filterType: FilterType.CASE}
                     },
                     {provide: ConfigurationService, useClass: TestConfigurationService},
+                    {provide: UserService, useClass: CustomMockUserService},
                     {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
                 ]
             });

@@ -45,7 +45,7 @@ import {
 } from "./generated/QueryLangParser";
 import {LoggerService} from "../logger/services/logger.service";
 import {CaseTitle} from "../search/models/category/case/case-title";
-import {Injector} from "@angular/core";
+import {Injectable, Inject, Optional} from "@angular/core";
 import {OperatorService} from "../search/operator-service/operator.service";
 import {QueryItem} from "./model/query-item-type";
 import {LogicalOperator} from "./model/logical-operator";
@@ -91,30 +91,25 @@ import {NAE_IGNORE_NETS_ON_AUTOCOMPLETE_CATEGORY} from "../search/category-facto
  * - Multiple comparison operators (equality, ranges, null checks, like patterns)
  * - Data field queries with type-specific comparisons
  */
+@Injectable()
 export class PfqlVisitor extends QueryLangVisitor<Array<QueryItem>> {
-    protected _logger: LoggerService;
-    protected _operatorService: OperatorService
-    protected _userResourceService: UserResourceService;
-    protected _userService: UserService;
-    protected _categoryFactory: CategoryFactory;
-    protected _allowedNetsService: AllowedNetsService;
 
     protected _categoryOptionalDependencies: OptionalDependencies;
 
-    public constructor(injector: Injector) {
+    public constructor(protected _logger: LoggerService,
+                       protected _operatorService: OperatorService,
+                       protected _userResourceService: UserResourceService,
+                       protected _userService: UserService,
+                       protected _categoryFactory: CategoryFactory,
+                       protected _allowedNetsService: AllowedNetsService,
+                       @Optional() @Inject(NAE_IGNORE_NETS_ON_AUTOCOMPLETE_CATEGORY) ignoreNetsOnAutocompleteCategory: boolean) {
         super();
-        this._logger = injector.get(LoggerService);
-        this._operatorService = injector.get(OperatorService);
-        this._userResourceService = injector.get(UserResourceService);
-        this._userService = injector.get(UserService);
-        this._categoryFactory = injector.get(CategoryFactory);
-        this._allowedNetsService = injector.get(AllowedNetsService);
         this._categoryOptionalDependencies = {
             categoryFactory: this._categoryFactory,
             searchIndexResolver: undefined,
             allowedNetsService: this._allowedNetsService,
             userResourceService: this._userResourceService,
-            ignoreNetsOnAutocompleteCategories: injector.get(NAE_IGNORE_NETS_ON_AUTOCOMPLETE_CATEGORY),
+            ignoreNetsOnAutocompleteCategories: ignoreNetsOnAutocompleteCategory,
         };
     }
 
