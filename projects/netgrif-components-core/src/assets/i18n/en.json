@@ -127,10 +127,6 @@
                     "name": "Case title",
                     "placeholder": "Enter case title"
                 },
-                "visualId": {
-                    "name": "Case visual ID",
-                    "placeholder": "Enter case visual ID"
-                },
                 "stringId": {
                     "name": "Case ID",
                     "placeholder": "Enter case ID"
@@ -142,10 +138,6 @@
                 "process": {
                     "name": "Case process",
                     "placeholder": "Select case process"
-                },
-                "role": {
-                    "name": "Process role",
-                    "placeholder": "Select process role"
                 },
                 "task": {
                     "name": "Case task",
@@ -163,6 +155,7 @@
                     "name": "Case data",
                     "placeholder": {
                         "field": "Select data field",
+                        "plainField": "Enter data field",
                         "value": "Enter data field value"
                     }
                 }
@@ -176,14 +169,14 @@
                     "name": "Task process",
                     "placeholder": "Select task process"
                 },
-                "role": {
-                    "name": "Task process role",
-                    "placeholder": "Select task process role"
-                },
                 "task": {
                     "name": "Task",
                     "placeholder": "Select task"
                 }
+            },
+            "plainText": {
+                "name": "Plain query",
+                "placeholder": "Write down valid PFQL query"
             },
             "select": "Search category",
             "userMe": "ME"
@@ -213,7 +206,7 @@
         },
         "help": {
             "title": "Advanced search help",
-            "text": "Advanced search can be used to create more complex search queries. Start by selecting a search category. Search category determines, what you want your query to look for. Some categories (like searching in case data) require further configuration. Afterwards you have to select a search operator. The operator determines how the query attempts to match your data. Are you looking for numbers from a specific range? Are you looking for an exact match? Finally you have to enter the searched value. You can combine simpler queries into more complicated ones by binding them with an OR or an AND keyword. Queries combined with OR find results that match at least one sub-query. Queries combined with AND find results that match all sub-queries."
+            "text": "Advanced search can be used to create more complex search queries. Start by selecting a search category. Search category determines, what you want your query to look for. Some categories (like searching in case data) require further configuration. Afterwards you have to select a search operator. The operator determines how the query attempts to match your data. Are you looking for numbers from a specific range? Are you looking for an exact match? Finally you have to enter the searched value. You can combine queries with AND keyword. Queries combined with AND find results that match all sub-queries. If you wish to enter more complex queries you can select plain query category and enter any valid PFQL query."
         },
         "fullText": "Enter searched phrase",
         "and": "and",

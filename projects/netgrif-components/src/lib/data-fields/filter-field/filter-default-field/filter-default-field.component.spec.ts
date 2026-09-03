@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FilterDefaultFieldComponent } from './filter-default-field.component';
 import {
     ConfigurationService,
-    DATA_FIELD_PORTAL_DATA, DataFieldPortalData, FilterField, FilterType,
+    DATA_FIELD_PORTAL_DATA, DataFieldPortalData, FilterField, FieldTypeResource,
     MaterialModule,
     TestConfigurationService, WrappedBoolean
 } from "@netgrif/components-core";
@@ -14,6 +14,7 @@ import {RequiredLabelComponent} from "../../required-label/required-label.compon
 import {FilterFieldComponent} from "../filter-field.component";
 import {FilterFieldContentComponent} from "../filter-field-content/filter-field-content.component";
 import {FormControl} from "@angular/forms";
+import {NoopAnimationsModule} from "@angular/platform-browser/animations";
 
 describe('FilterDefaultFieldComponent', () => {
   let component: FilterDefaultFieldComponent;
@@ -24,14 +25,13 @@ describe('FilterDefaultFieldComponent', () => {
         imports: [
             MaterialModule,
             AdvancedSearchComponentModule,
-            HttpClientTestingModule
+            HttpClientTestingModule,
+            NoopAnimationsModule,
         ],
         providers: [
             {provide: ConfigurationService, useClass: TestConfigurationService},
             {provide: DATA_FIELD_PORTAL_DATA, useValue: {
-                    dataField: new FilterField('', '', '', {
-                        filterType: FilterType.CASE, predicateMetadata: [], searchCategories: []
-                    }, [], {}, '', ''),
+                    dataField: new FilterField('', '', '', FieldTypeResource.CASE_FILTER, [], {}, '', ''),
                     formControlRef: new FormControl(),
                     showLargeLayout: new WrappedBoolean()
                 } as DataFieldPortalData<FilterField>

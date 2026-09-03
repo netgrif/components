@@ -1,5 +1,4 @@
 import {Query} from '../query/query';
-import {GeneratorMetadata} from '../persistance/generator-metadata';
 import {FilterTextSegment} from '../persistance/filter-text-segment';
 import {BooleanOperator} from '../boolean-operator';
 
@@ -12,7 +11,6 @@ import {BooleanOperator} from '../boolean-operator';
 export abstract class Predicate {
 
     protected _visible: boolean;
-    protected _metadataGenerator: () => GeneratorMetadata | undefined;
     protected _filterTextSegmentsGenerator: () => Array<FilterTextSegment>;
 
     /**
@@ -20,9 +18,6 @@ export abstract class Predicate {
      */
     protected constructor(initiallyVisible = true) {
         this._visible = !!initiallyVisible;
-        this._metadataGenerator = () => {
-            throw new Error('This predicate has no metadata generator registered!');
-        };
         this._filterTextSegmentsGenerator = () => {
             return [];
         };
@@ -85,18 +80,6 @@ export abstract class Predicate {
      */
     public show(): void {
         this._visible = true;
-    }
-
-    public setMetadataGenerator(metadataGenerator: () => GeneratorMetadata | undefined) {
-        this._metadataGenerator = metadataGenerator;
-    }
-
-    /**
-     * @returns an object containing the necessary information for the reconstruction of the entire predicate tree in serializable form.
-     * Returns `undefined` if the predicate tree rooted at this node is incomplete and would evaluate into an empty filter.
-     */
-    public createGeneratorMetadata(): GeneratorMetadata | undefined {
-        return this._metadataGenerator();
     }
 
     public setFilterTextSegmentsGenerator(filterTextSegmentsGenerator: () => Array<FilterTextSegment>) {

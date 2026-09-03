@@ -2,7 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { EnumerationCaserefFieldComponent } from './enumeration-caseref-field.component';
 import {NavigationComponentModule} from '../../../navigation/navigation.module';
 import {
-    FilterField, FilterType, MultichoiceField,
+    FilterField,
+    FieldTypeResource,
+    MultichoiceField,
     NAE_TAB_DATA,
     NAE_VIEW_ID_SEGMENT,
     OverflowService,
@@ -47,11 +49,7 @@ describe('EnumerationCaserefFieldComponent', () => {
                                     `${GroupNavigationConstants.ITEM_FIELD_CASE_FILTER}`,
                                     '',
                                     '',
-                                    {
-                                        filterType: FilterType.CASE,
-                                        predicateMetadata: [],
-                                        searchCategories: []
-                                    },
+                                    FieldTypeResource.CASE_FILTER,
                                     [],
                                     {visible: true},
                                     '',

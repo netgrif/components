@@ -12,11 +12,9 @@ import {BooleanOperator} from '../../boolean-operator';
 import {NoConfigurationCategory} from '../no-configuration-category';
 import {CaseDataset} from './case-dataset';
 import {DatafieldMapKey} from '../../datafield-map-key';
-import {SearchIndex} from '../../search-index';
 import {Categories} from '../categories';
-import {CategoryGeneratorMetadata} from '../../persistance/generator-metadata';
-import {Observable} from 'rxjs';
-import { NotEquals } from '../../operator/not-equals';
+import {ResourceTypeQueryPrefix} from "../resource-type-query-prefix";
+import {FieldTypeResource} from "../../../../task-content/model/field-type-resource";
 
 /**
  * This class aims to be a simpler more limited version of the {@link CaseDataset} {@link Category} implementation.
@@ -35,7 +33,7 @@ export class CaseSimpleDataset extends NoConfigurationCategory<string> {
     protected _fieldId: string;
     protected _fieldType: string;
     protected _netIdentifiers: Array<string>;
-    protected _elasticKeyword: string;
+    protected _pfqlKeyword: string;
 
     protected _processCategory: CaseProcess;
 
@@ -47,7 +45,8 @@ export class CaseSimpleDataset extends NoConfigurationCategory<string> {
             `${CaseSimpleDataset._i18n}.name`,
             undefined,
             logger,
-            operators);
+            operators,
+            ResourceTypeQueryPrefix.CASES);
 
         this._processCategory = _optionalDependencies.categoryFactory.getWithDefaultOperator(CaseProcess) as CaseProcess;
     }
@@ -69,57 +68,28 @@ export class CaseSimpleDataset extends NoConfigurationCategory<string> {
         this._fieldId = fieldId;
         this._fieldType = fieldType;
         this._netIdentifiers = netIdentifiers;
-        this.resolveElasticKeyword();
+        this._pfqlKeyword = `data.${fieldId}.value`
     }
 
-    protected resolveElasticKeyword(): void {
-        const resolver = this._optionalDependencies.searchIndexResolver;
-        switch (this._fieldType) {
-            case 'number':
-                this._elasticKeyword = resolver.getIndex(this._fieldId, SearchIndex.NUMBER);
-                break;
-            case 'date':
-            case 'dateTime':
-                this._elasticKeyword = resolver.getIndex(this._fieldId, SearchIndex.TIMESTAMP);
-                break;
-            case 'boolean':
-                this._elasticKeyword = resolver.getIndex(this._fieldId, SearchIndex.BOOLEAN);
-                break;
-            case 'file':
-            case 'fileList':
-                this._elasticKeyword = resolver.getIndex(this._fieldId, SearchIndex.FILE_NAME, this.isSelectedOperator(Substring));
-                break;
-            case 'user':
-            case 'userList':
-                this._elasticKeyword = resolver.getIndex(this._fieldId, SearchIndex.USER_ID);
-                break;
-            case 'i18n':
-                this._elasticKeyword = resolver.getIndex(this._fieldId, SearchIndex.TEXT, this.isSelectedOperator(Equals) || this.isSelectedOperator(NotEquals) || this.isSelectedOperator(Substring))
-                break;
-            default:
-                this._elasticKeyword = resolver.getIndex(this._fieldId, SearchIndex.FULLTEXT, this.isSelectedOperator(Substring));
-        }
-    }
-
-    protected get elasticKeywords(): Array<string> {
+    protected get pfqlKeywords(): Array<string> {
         if (!this._fieldId) {
             return [];
         } else {
-            return [this._elasticKeyword];
+            return [this._pfqlKeyword];
         }
     }
 
     public get selectedOperator(): Operator<any> {
         switch (this._fieldType) {
-            case 'number':
+            case FieldTypeResource.NUMBER.valueOf():
                 return this._operatorService.getOperator(Equals);
-            case 'boolean':
+            case FieldTypeResource.BOOLEAN.valueOf():
                 return this._operatorService.getOperator(Equals);
-            case 'user':
+            case FieldTypeResource.USER.valueOf():
                 return this._operatorService.getOperator(Equals);
-            case 'date':
+            case FieldTypeResource.DATE.valueOf():
                 return this._operatorService.getOperator(EqualsDate);
-            case 'dateTime':
+            case FieldTypeResource.DATE_TIME.valueOf():
                 return this._operatorService.getOperator(EqualsDateTime);
             default:
                 return this._operatorService.getOperator(Substring);
@@ -147,29 +117,15 @@ export class CaseSimpleDataset extends NoConfigurationCategory<string> {
     }
 
     protected generateQuery(userInput: Array<unknown>): Query {
-        const valueQuery = this.selectedOperator.createQuery(this.elasticKeywords, userInput);
+        const valueQuery = this.selectedOperator.createQuery(this.pfqlKeywords, userInput);
         const netsQuery = Query.combineQueries(
             this._netIdentifiers.map(id => this._processCategory.generatePredicate([[id]]).query),
             BooleanOperator.OR
         );
-        return Query.combineQueries([valueQuery, netsQuery], BooleanOperator.AND);
+        return Query.combineQueries([valueQuery, netsQuery], BooleanOperator.AND).ensurePrefixAndGet(ResourceTypeQueryPrefix.CASES);
     }
 
     serializeClass(): Categories | string {
         return Categories.CASE_SIMPLE_DATASET;
-    }
-
-    /**
-     * Serialization is not supported. Throws an error.
-     */
-    createMetadata(): never {
-        throw new Error('CaseSimpleDataset does not support serialization!');
-    }
-
-    /**
-     * Deserialization is not supported. Throws an error.
-     */
-    loadFromMetadata(metadata: CategoryGeneratorMetadata): Observable<void> {
-        throw new Error('CaseSimpleDataset does not support deserialization!');
     }
 }

@@ -7,8 +7,13 @@ import {OptionalDependencies} from '../../../category-factory/optional-dependenc
 import {NoConfigurationAutocompleteCategory} from '../no-configuration-autocomplete-category';
 import {NotEquals} from '../../operator/not-equals';
 import {Categories} from '../categories';
-import {Subscription} from 'rxjs';
+import {Observable, of, Subscription} from 'rxjs';
 import {CaseSearch} from './case-search.enum';
+import {ResourceTypeQueryPrefix} from "../resource-type-query-prefix";
+import {take, filter, map} from "rxjs/operators";
+import {SimpleExpression} from "../../../../pfql/model/simple-expression";
+import {SearchInputType} from "../search-input-type";
+import {Substring} from "../../operator/substring";
 
 export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
 
@@ -20,11 +25,15 @@ export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
 
     constructor(operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
         super([CaseSearch.PROCESS_IDENTIFIER],
-            [operators.getOperator(Equals), operators.getOperator(NotEquals)],
+            [operators.getOperator(Substring), operators.getOperator(Equals), operators.getOperator(NotEquals)],
             `${CaseProcess._i18n}.name`,
             logger,
-            operators);
+            operators,
+            ResourceTypeQueryPrefix.CASES);
         this._uniqueOptionsMap = new Map<string, Set<string>>();
+        if (!!this._optionalDependencies.ignoreNetsOnAutocompleteCategories) {
+            this.inputType = SearchInputType.TEXT;
+        }
     }
 
     destroy() {
@@ -51,6 +60,26 @@ export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
         });
     }
 
+    public override loadFromPfqlExpression(expression: SimpleExpression): Observable<void> {
+        if (!this.selectOperatorFromPfqlExpression(expression)) {
+            return of(undefined);
+        }
+        if (this._optionalDependencies.ignoreNetsOnAutocompleteCategories) {
+            this.setOperands([expression.operandValue]);
+            return of(undefined);
+        }
+        return this._options$.pipe(
+            filter(options => options.length > 0),
+            take(1),
+            map(options => {
+                const found = options.find(option => option.value.includes(expression.operandValue));
+                if (found) {
+                    this.setOperands([found] as any);
+                }
+            })
+        );
+    }
+
     /**
      * Checks whether the provided option is unique and updates the list of unique options with it.
      * @param key autocomplete option key
@@ -70,13 +99,16 @@ export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
         }
     }
 
-    protected generateQuery(userInput: Array<Array<string>>): Query {
+    protected generateQuery(userInput: Array<Array<string> | string>): Query {
         if (this.selectedOperator.numberOfOperands !== 1) {
             throw new Error('Only unary operators are currently supported by the CaseProcess implementation');
         }
-        const operand = userInput[0];
-        const queries = operand.map(id => this.selectedOperator.createQuery(this.elasticKeywords, [id]));
-        return Query.combineQueries(queries, BooleanOperator.OR);
+        let operand = userInput[0];
+        if (!Array.isArray(operand)) {
+           operand = [operand];
+        }
+        const queries = operand.map(id => this.selectedOperator.createQuery(this.pfqlKeywords, [id]));
+        return Query.combineQueries(queries, BooleanOperator.OR).ensurePrefixAndGet(ResourceTypeQueryPrefix.CASES);
     }
 
     get inputPlaceholder(): string {

@@ -19,7 +19,6 @@ export class PredicateWithGenerator extends Predicate {
     constructor(protected _predicate: Predicate, protected _generator?: Category<any>, initiallyVisible?: boolean) {
         super();
         this._visible = initiallyVisible ?? !_generator;
-        this.initializeMetadataGenerator();
         this.initializeFilterTextSegmentsGenerator();
     }
 
@@ -73,19 +72,6 @@ export class PredicateWithGenerator extends Predicate {
         if (this._generator !== undefined) {
             this.generator.destroy();
         }
-    }
-
-    private initializeMetadataGenerator() {
-        this._metadataGenerator = () => {
-            try {
-                return this._predicate.createGeneratorMetadata();
-            } catch (e) {
-                if (this._generator && this._generator.providesPredicate) {
-                    return this._generator.createMetadata();
-                }
-                throw e;
-            }
-        };
     }
 
     private initializeFilterTextSegmentsGenerator() {

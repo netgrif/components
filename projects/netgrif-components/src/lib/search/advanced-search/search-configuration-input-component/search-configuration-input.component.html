@@ -34,6 +34,26 @@
             </div>
         </ng-template>
     </ng-template>
+    <ng-template [ngSwitchCase]="searchInputType.TEXT">
+        <div *ngIf="!configuration.isOptionSelected; then configurationSelection else configurationDisplay"></div>
+        <ng-template #configurationSelection>
+            <mat-form-field appearance="outline">
+                <mat-label>{{configuration.label | translate}}</mat-label>
+                <input type="text" matInput autocomplete="off"
+                       [formControl]="configuration.formControl"
+                       [disabled]="!editable"
+                       (keydown.enter)="$event.target.blur()"
+                       (blur)="configuration.confirmInput()"
+                       #configurationInput>
+            </mat-form-field>
+        </ng-template>
+        <ng-template #configurationDisplay>
+            <div class="text-margin" [ngClass]="{'bold-text': configuration.displayBold}"
+                 (click)="configuration.editInput(editable)">
+                {{configuration.formControl.value}}
+            </div>
+        </ng-template>
+    </ng-template>
     <ng-template [ngSwitchCase]="searchInputType.OPERATOR">
         <div *ngIf="selectedCategory.isOperatorSelected(); then argumentsSelection; else operatorSelection"></div>
 
@@ -89,5 +109,14 @@
                 </ng-template>
             </div>
         </ng-template>
+    </ng-template>
+    <ng-template [ngSwitchCase]="searchInputType.PLAIN_QUERY">
+        <div class="text-margin" (click)="$event.stopPropagation()">
+            <nc-search-operand-input [inputFormControl]="selectedCategory.operandsFormControls[0]"
+                                     [inputType]="selectedCategory.inputType"
+                                     [first]="true"
+                                     [filterOptionsFunction]="filterOptions"
+                                     [editable]="editable"></nc-search-operand-input>
+        </div>
     </ng-template>
 </div>

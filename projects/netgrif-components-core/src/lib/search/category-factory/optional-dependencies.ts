@@ -20,4 +20,10 @@ export interface OptionalDependencies {
      * If the {@link CategoryFactory} cannot inject an instance of this service into itself `null` will be provided.
      */
     userResourceService: UserResourceService | null;
+    /**
+     * When set to `true`, autocomplete categories will ignore net filtering.
+     * This can be useful when you want autocomplete suggestions to include results from all nets,
+     * regardless of the currently selected net context.
+     */
+    ignoreNetsOnAutocompleteCategories?: boolean;
 }

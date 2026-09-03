@@ -12,16 +12,16 @@ export class LessThanEqualDate extends Operator<Moment> {
 
     protected lessThan: LessThanDate;
 
-    constructor(operators: OperatorService) {
-        super(1);
-        this.lessThan = operators.getOperator(LessThanDate) as LessThanDate;
+    constructor(protected _operators: OperatorService) {
+        super(1, Operators.LESS_THAN_EQUAL_DATE);
+        this.lessThan = this._operators.getOperator(LessThanDate) as LessThanDate;
     }
 
-    createQuery(elasticKeywords: Array<string>, args: Array<Moment>): Query {
+    createQuery(pfqlKeywords: Array<string>, args: Array<Moment>): Query {
         this.checkArgumentsCount(args);
         const arg = moment(args[0]);
         arg.date(arg.date() + 1);
-        return this.lessThan.createQuery(elasticKeywords, [arg]);
+        return this.lessThan.createQuery(pfqlKeywords, [arg]);
     }
 
     getOperatorNameTemplate(): Array<string> {
@@ -31,5 +31,4 @@ export class LessThanEqualDate extends Operator<Moment> {
     serialize(): Operators | string {
         return Operators.LESS_THAN_EQUAL_DATE;
     }
-
 }

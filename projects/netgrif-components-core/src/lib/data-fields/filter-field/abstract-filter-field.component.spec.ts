@@ -3,10 +3,10 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {Component, Inject, Optional} from '@angular/core';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 import {FilterField} from './models/filter-field';
-import {FilterType} from '../../filter/models/filter-type';
-import {of, Subject} from 'rxjs';
+import {Subject} from 'rxjs';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {FieldTypeResource} from "../../task-content/model/field-type-resource";
 
 describe('AbstractFilterFieldComponent', () => {
     let component: TestFilterComponent;
@@ -16,8 +16,8 @@ describe('AbstractFilterFieldComponent', () => {
 
     beforeEach(() => {
         mockSearchService = {
-            loadFromMetadata: () => {},
-            loadingFromMetadata$: new Subject<boolean>()
+            loadFromPfql: () => {},
+            loadingFromPfql$: new Subject<boolean>()
         };
 
         TestBed.configureTestingModule({
@@ -57,7 +57,5 @@ class TestFilterComponent extends AbstractFilterFieldComponent {
     template: '<ncc-test-filter [dataField]="field"></ncc-test-filter>'
 })
 class TestWrapperComponent {
-    field = new FilterField('', '', '', {
-        filterType: FilterType.CASE, predicateMetadata: [], searchCategories: []
-    }, [], {}, '', '');
+    field = new FilterField('', '', '', FieldTypeResource.CASE_FILTER, [], {}, '', '');
 }

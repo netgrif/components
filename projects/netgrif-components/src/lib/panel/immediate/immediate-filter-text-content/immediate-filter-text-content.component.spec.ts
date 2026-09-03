@@ -6,7 +6,9 @@ import {
     TestConfigurationService,
     ConfigurationService,
     NAE_FILTER_TEXT,
-    FilterType
+    AllowedNetsService,
+    TestNoAllowedNetsFactory,
+    AllowedNetsServiceFactory
 } from '@netgrif/components-core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 
@@ -24,14 +26,13 @@ describe('ImmediateFilterTextContentComponent', () => {
             ],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
                 {
                     provide: NAE_FILTER_TEXT,
                     useValue: {
-                        metadata: {
-                            allowedNets: [], filterMetadata: {
-                                filterType: FilterType.CASE, predicateMetadata: [], searchCategories: []
-                            }
-                        }, ellipsis: true
+                        query: 'cases: creationDate eq 2026-09-01',
+                        type: 'case',
+                        ellipsis: true
                     }
                 },
             ]

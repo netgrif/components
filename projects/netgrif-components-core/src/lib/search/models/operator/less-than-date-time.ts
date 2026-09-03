@@ -12,17 +12,17 @@ export class LessThanDateTime extends Operator<Moment> {
 
     protected lessThan: LessThan;
 
-    constructor(operators: OperatorService) {
-        super(1);
-        this.lessThan = operators.getOperator(LessThan) as LessThan;
+    constructor(protected _operators: OperatorService) {
+        super(1, Operators.LESS_THAN_DATE_TIME);
+        this.lessThan = this._operators.getOperator(LessThan) as LessThan;
     }
 
-    createQuery(elasticKeywords: Array<string>, args: Array<Moment>): Query {
+    createQuery(pfqlKeywords: Array<string>, args: Array<Moment>): Query {
         this.checkArgumentsCount(args);
         const arg = moment(args[0]);
         arg.milliseconds(0);
         arg.seconds(0);
-        return this.lessThan.createQuery(elasticKeywords, [arg.valueOf()]);
+        return this.lessThan.createQuery(pfqlKeywords, [arg.format('YYYY-MM-DDTHH:mm:ss')], false, false);
     }
 
     getOperatorNameTemplate(): Array<string> {

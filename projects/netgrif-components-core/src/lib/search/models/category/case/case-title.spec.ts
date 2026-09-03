@@ -3,13 +3,13 @@ import {OperatorService} from '../../../operator-service/operator.service';
 import {OperatorResolverService} from '../../../operator-service/operator-resolver.service';
 import {configureCategory} from '../../../../utility/tests/utility/configure-category';
 import {Equals} from '../../operator/equals';
-import {Categories} from '../categories';
-import {Operators} from '../../operator/operators';
 import {TestBed} from '@angular/core/testing';
 import {Substring} from '../../operator/substring';
 import {CaseSearch} from './case-search.enum';
 import {SearchIndexResolverService} from '../../../search-keyword-resolver-service/search-index-resolver.service';
 import {OptionalDependencies} from '../../../category-factory/optional-dependencies';
+import {NotEquals} from "../../operator/not-equals";
+import {SimpleExpression} from "../../../../pfql/model/simple-expression";
 
 describe('CaseTitle', () => {
     let category: CaseTitle;
@@ -38,45 +38,28 @@ describe('CaseTitle', () => {
         expect(category.isOperatorSelected()).toBeTrue();
     });
 
-    it('should not serialize incomplete instance', () => {
-        expect(category.createMetadata()).toBeUndefined();
-    });
-
-    it('should serialize complete instance', () => {
+    it('should load pfql expression', (done) => {
         configureCategory(category, operatorService, Equals, ['foo']);
 
-        const metadata = category.createMetadata();
-        expect(metadata).toBeTruthy();
-        expect(metadata.values).toEqual(['foo']);
-        expect(metadata.category).toBe(Categories.CASE_TITLE);
-        expect(metadata.configuration?.operator).toBe(Operators.EQUALS);
-    });
+        const loadedCategory = new CaseTitle(operatorService, null);
+        const expression = new SimpleExpression(new Equals(), 'foo', category);
+        loadedCategory.loadFromPfqlExpression(expression).subscribe(() => {
+            expect(loadedCategory.isOperatorSelected()).toBeTrue();
+            expect(loadedCategory.providesPredicate).toBeTrue();
 
-    it('should deserialize stored instance', (done) => {
-        configureCategory(category, operatorService, Equals, ['foo']);
-
-        const metadata = category.createMetadata();
-        expect(metadata).toBeTruthy();
-        const deserialized = new CaseTitle(operatorService, null);
-        deserialized.loadFromMetadata(metadata).subscribe(() => {
-            expect(deserialized.isOperatorSelected()).toBeTrue();
-            expect(deserialized.providesPredicate).toBeTrue();
-
-            expect((deserialized as any)._operandsFormControls[0].value).toEqual((category as any)._operandsFormControls[0].value);
-
-            const deserializedMetadata = deserialized.createMetadata();
-            expect(deserializedMetadata).toBeTruthy();
-            expect(deserializedMetadata.configuration).toEqual(metadata.configuration);
-            expect(deserializedMetadata.category).toEqual(metadata.category);
-            expect(deserializedMetadata.values).toEqual(metadata.values);
+            expect((loadedCategory as any)._operandsFormControls[0].value).toEqual((category as any)._operandsFormControls[0].value);
 
             done();
         });
     });
 
-    it('should use keyword index', () => {
+    it('should generate pfql query', () => {
         configureCategory(category, operatorService, Substring, ['foo']);
-        const predicate = category.generatePredicate(['input']);
-        expect(predicate.query.value.includes(`${CaseSearch.TITLE}${deps.searchIndexResolver.KEYWORD}`)).toBeTrue();
+        let predicate = category.generatePredicate(['input']);
+        expect(predicate.query.value.includes(`cases: ${CaseSearch.TITLE} contains 'input'`)).toBeTrue();
+
+        configureCategory(category, operatorService, NotEquals, ['foo']);
+        predicate = category.generatePredicate(['loggedUser.id']);
+        expect(predicate.query.value === `cases: ${CaseSearch.TITLE} neq loggedUser.id`).toBeTrue();
     });
 });
