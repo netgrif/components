@@ -1,5 +1,5 @@
 import {AbstractFilterFieldContentComponent} from './abstract-filter-field-content.component';
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, Optional} from '@angular/core';
 import {FilterField} from './models/filter-field';
 import {SearchService} from '../../search/search-service/search.service';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
@@ -8,6 +8,9 @@ import {Subject} from 'rxjs';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {FieldTypeResource} from "../../task-content/model/field-type-resource";
+import {DATA_FIELD_PORTAL_DATA} from "@netgrif/components-core";
+import {DataFieldPortalData} from "../models/data-field-portal-data-injection-token";
+import {FormControl} from "@angular/forms";
 
 describe('AbstractFilterFieldContentComponent', () => {
     let component: TestFilterContentComponent;
@@ -28,7 +31,12 @@ describe('AbstractFilterFieldContentComponent', () => {
             imports: [NoopAnimationsModule, HttpClientTestingModule],
             providers: [
                 {provide: NAE_FILTER_FIELD, useValue: field},
-                {provide: SearchService, useValue: mockSearchService}
+                {provide: SearchService, useValue: mockSearchService},
+                {provide: DATA_FIELD_PORTAL_DATA, useValue: {
+                        dataField: field,
+                        formControlRef: new FormControl(),
+                    } as DataFieldPortalData<FilterField>
+                }
             ],
             declarations: [
                 TestFilterContentComponent
@@ -70,7 +78,8 @@ describe('AbstractFilterFieldContentComponent', () => {
 })
 class TestFilterContentComponent extends AbstractFilterFieldContentComponent {
     constructor(@Inject(NAE_FILTER_FIELD) filterField: FilterField,
-                fieldSearchService: SearchService) {
-        super(filterField, fieldSearchService);
+                fieldSearchService: SearchService,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<FilterField>) {
+        super(filterField, fieldSearchService, dataFieldPortalData);
     }
 }

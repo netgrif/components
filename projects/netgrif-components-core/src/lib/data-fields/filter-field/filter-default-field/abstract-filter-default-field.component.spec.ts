@@ -88,6 +88,6 @@ class TestFilterContentComponent extends AbstractFilterFieldContentComponent {
             loadFromMetadata: () => {
             },
             loadingFromMetadata$: of(false)
-        } as unknown as SearchService);
+        } as unknown as SearchService, undefined);
     }
 }

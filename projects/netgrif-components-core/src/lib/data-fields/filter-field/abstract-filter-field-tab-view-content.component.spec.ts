@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AbstractFilterFieldTabViewContentComponent } from './abstract-filter-field-tab-view-content.component';
-import { Component, Inject, Injector } from '@angular/core';
+import { Component, Inject, Injector, Optional } from '@angular/core';
 import { FilterField } from './models/filter-field';
 import { NAE_FILTER_FIELD } from './models/filter-field-injection-token';
 import { SearchService } from '../../search/search-service/search.service';
@@ -11,6 +11,7 @@ import { Dashboard } from '../text-field/dashboard-portal-text-field/dashboard-v
 import { ComponentPortal } from '@angular/cdk/portal';
 import {ComponentRegistryService} from "../../registry/component-registry.service";
 import {FieldTypeResource} from "../../task-content/model/field-type-resource";
+import {DATA_FIELD_PORTAL_DATA, DataFieldPortalData} from "../models/data-field-portal-data-injection-token";
 
 describe('AbstractFilterFieldTabViewContentComponent', () => {
     let component: TestFilterFieldTabViewContentComponent;
@@ -72,8 +73,9 @@ class TestFilterFieldTabViewContentComponent extends AbstractFilterFieldTabViewC
     constructor(registry: ComponentRegistryService,
                 injector: Injector,
                 @Inject(NAE_FILTER_FIELD) filterField: FilterField,
-                searchService: SearchService) {
-        super(registry, injector, filterField, searchService);
+                searchService: SearchService,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<FilterField>) {
+        super(registry, injector, filterField, searchService, dataFieldPortalData);
     }
 }
 

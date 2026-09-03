@@ -29,7 +29,7 @@ export abstract class AbstractFilterFieldContentComponent extends AbstractBaseDa
     }
 
     public get editable(): boolean {
-        return !!this._filterField.behavior.editable && !this.formControlRef.disabled;
+        return !!this._filterField.behavior.editable && !this.formControlRef?.disabled;
     }
 
     ngOnDestroy(): void {
