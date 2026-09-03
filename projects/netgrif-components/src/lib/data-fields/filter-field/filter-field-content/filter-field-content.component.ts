@@ -1,4 +1,4 @@
-import {Component, Inject, Type} from '@angular/core';
+import {Component, Inject, Optional, Type} from '@angular/core';
 import {
     AbstractFilterFieldContentComponent,
     SearchService,
@@ -17,7 +17,8 @@ import {
     NAE_DEFAULT_CASE_SEARCH_CATEGORIES,
     NAE_DEFAULT_TASK_SEARCH_CATEGORIES,
     NAE_IGNORE_NETS_ON_AUTOCOMPLETE_CATEGORY,
-    PfqlVisitor
+    PfqlVisitor,
+    DATA_FIELD_PORTAL_DATA, DataFieldPortalData
 } from '@netgrif/components-core';
 
 export function filterFieldBaseFilterFactory(filterField: FilterField): BaseFilter {
@@ -64,8 +65,9 @@ export function filterFieldCategoriesFactory(filterField: FilterField, caseCateg
 export class FilterFieldContentComponent extends AbstractFilterFieldContentComponent {
 
     constructor(@Inject(NAE_FILTER_FIELD) filterField: FilterField,
-                fieldSearchService: SearchService) {
-        super(filterField, fieldSearchService);
+                fieldSearchService: SearchService,
+                @Optional() @Inject(DATA_FIELD_PORTAL_DATA) dataFieldPortalData: DataFieldPortalData<FilterField>) {
+        super(filterField, fieldSearchService, dataFieldPortalData);
     }
 
 }
