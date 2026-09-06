@@ -14,6 +14,7 @@ import {
     FilterType,
     NAE_DEFAULT_CASE_SEARCH_CATEGORIES,
     NAE_DEFAULT_TASK_SEARCH_CATEGORIES,
+    PfqlVisitor,
 } from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 
@@ -44,6 +45,7 @@ export function filterTextCategoriesFactory(configuration: FilterTextConfigurati
                 NAE_DEFAULT_CASE_SEARCH_CATEGORIES, NAE_DEFAULT_TASK_SEARCH_CATEGORIES]},
         CategoryFactory,
         SearchService,
+        PfqlVisitor,
     ]
 })
 export class ImmediateFilterTextContentComponent extends AbstractImmediateFilterTextContentComponent {
