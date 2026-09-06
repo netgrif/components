@@ -517,6 +517,11 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
     }
 
     protected createConfigurationFilterTextSegments(): Array<FilterTextSegment> {
-        return [{segment: this._configurationInputs$.value[0].formControl.value.text, bold: true}];
+        const configInput = this._configurationInputs$.value[0];
+        let dataFieldId: string = configInput.formControl.value.text;
+        if (!dataFieldId) {
+            dataFieldId = configInput.formControl.value
+        }
+        return [{segment: dataFieldId, bold: true}];
     }
 }

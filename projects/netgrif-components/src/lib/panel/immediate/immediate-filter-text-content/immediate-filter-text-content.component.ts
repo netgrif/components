@@ -46,6 +46,7 @@ export function filterTextCategoriesFactory(configuration: FilterTextConfigurati
         CategoryFactory,
         SearchService,
         PfqlVisitor,
+        {provide: NAE_IGNORE_NETS_ON_AUTOCOMPLETE_CATEGORY, useValue: true},
     ]
 })
 export class ImmediateFilterTextContentComponent extends AbstractImmediateFilterTextContentComponent {
