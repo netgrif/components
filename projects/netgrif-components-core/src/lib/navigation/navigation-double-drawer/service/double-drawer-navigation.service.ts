@@ -314,14 +314,14 @@ export class DoubleDrawerNavigationService implements OnDestroy {
             return;
         }
 
-        if (DoubleDrawerUtils.hasItemView(this._currentNavigationItem)) {
+        if (DoubleDrawerUtils.isNotFolder(this._currentNavigationItem)) {
             // is routed by routerLink on item click
             return;
         }
 
-        let itemsWithView: Array<NavigationItem> = allItems.filter(item => DoubleDrawerUtils.hasItemView(item));
+        let itemsWithView: Array<NavigationItem> = allItems.filter(item => DoubleDrawerUtils.isNotFolder(item));
         if (itemsWithView.length > 0) {
-            this._redirectService.redirect(autoOpenItems[0].routing.path);
+            this._redirectService.redirect(itemsWithView[0].routing.path);
         }
     }
 

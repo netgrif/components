@@ -271,4 +271,9 @@ export enum GroupNavigationConstants {
      */
     ITEM_TRANS_ID_ALL_DATA = "all_menu_data",
 
+    /**
+     * Configuration of a view type
+     */
+    ITEM_FIELD_VIEW_CONFIGURATION_TYPE = "view_configuration_type",
+
 }
