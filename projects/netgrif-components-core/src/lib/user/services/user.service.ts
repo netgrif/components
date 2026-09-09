@@ -153,6 +153,17 @@ export class UserService implements OnDestroy {
         );
     }
 
+    public loginWithApiToken(token: string, realmId?: string): Observable<User> {
+        this._loginCalled = true;
+        return this._authService.loginWithApiToken(token, realmId).pipe(
+            tap((authUser: User) => {
+                this._user = authUser;
+                this._loginCalled = false;
+                this.publishUserChange();
+            })
+        );
+    }
+
     public logout(): Observable<object> {
         return this._authService.logout().pipe(
             tap(() => {

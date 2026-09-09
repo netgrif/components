@@ -30,7 +30,14 @@ export class TestConfigurationService extends ConfigurationService {
                     },
                     sessionBearer: 'X-Auth-Token',
                     sessionTimeoutEnabled: false,
-                    sessionTimeout: 900
+                    sessionTimeout: 900,
+                    apiToken: {
+                        enabled: true,
+                        queryParameter: 'token',
+                        realmQueryParameter: 'realmId',
+                        removeFromUrl: true,
+                        allowedPaths: ['/tabbed-views', '/tabbed-views/**']
+                    }
                 },
                 resources: [
                     {

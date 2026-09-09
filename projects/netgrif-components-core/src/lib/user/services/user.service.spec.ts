@@ -40,6 +40,15 @@ describe('UserService', () => {
         });
     });
 
+    it('should login with an API token', (done) => {
+        service.loginWithApiToken('user-id.secret', 'Admin').subscribe(res => {
+            expect(res.id).toEqual('id');
+            expect(service.user.id).toEqual('id');
+            expect(service.hasAuthority('ADMIN')).toBeTrue();
+            done();
+        });
+    });
+
     it('should logout', (done) => {
         service.logout().subscribe(res => {
             expect(res).toEqual(undefined);

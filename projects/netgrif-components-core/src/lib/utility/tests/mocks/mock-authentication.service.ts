@@ -23,6 +23,10 @@ export class MockAuthenticationService extends AuthenticationService {
         return of(new User('id', 'username', 'mail', 'realmId', 'name', 'surname', ['ADMIN'], [{stringId: 'id', name: 'id', importId: 'id'}]));
     }
 
+    loginWithApiToken(_token: string, _realmId?: string): Observable<User> {
+        return this.login({username: '', password: ''});
+    }
+
     logout(): Observable<object> {
         return of(undefined);
     }

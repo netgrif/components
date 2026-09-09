@@ -20,6 +20,16 @@
             "sessionTimeoutEnabled": false,
             "sessionTimeout": 900,
             "jwtBearer": "X-Jwt-Token",
+            "apiToken": {
+                "enabled": true,
+                "queryParameter": "token",
+                "realmQueryParameter": "realmId",
+                "removeFromUrl": true,
+                "allowedPaths": [
+                    "/tabbed-views",
+                    "/tabbed-views/**"
+                ]
+            },
             "sso": {
                 "enable": false,
                 "clientId": "dev-cluster-worker",
