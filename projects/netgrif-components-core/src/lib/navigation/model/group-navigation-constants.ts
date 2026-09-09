@@ -157,6 +157,11 @@ export enum GroupNavigationConstants {
     ITEM_FIELD_ID_TASK_DEFAULT_HEADERS = 'task_default_headers',
 
     /**
+     * MultichoiceMap field, that contains allowed authorities as value
+     * */
+    ITEM_FIELD_ID_ALLOWED_AUTHORITIES = 'allowed_authorities',
+
+    /**
      * MultichoiceMap field, that contains allowed roles as value
      * */
     ITEM_FIELD_ID_ALLOWED_ROLES = 'allowed_roles',

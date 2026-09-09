@@ -33,6 +33,7 @@ import { UriNodeResource } from '../../model/uri-resource';
 import {MenuItemClickEvent, MenuItemLoadedEvent} from '../../model/navigation-menu-events';
 import {GroupNavigationConstants} from "../../model/group-navigation-constants";
 import {UserService} from "../../../user/services/user.service";
+import {AuthorityGuardService} from "../../../authorization/authority/authority-guard.service";
 
 /**
  * Service for managing navigation in double-drawer
@@ -91,7 +92,8 @@ export class DoubleDrawerNavigationService implements OnDestroy {
                 protected _accessService: AccessService,
                 protected _translateService: TranslateService,
                 protected _dynamicRoutingService: DynamicNavigationRouteProviderService,
-                protected _redirectService: RedirectService) {
+                protected _redirectService: RedirectService,
+                protected _authorityGuardService: AuthorityGuardService) {
         this._leftItems$ = new BehaviorSubject([]);
         this._rightItems$ = new BehaviorSubject([]);
         this._moreItems$ = new BehaviorSubject([]);
@@ -511,6 +513,9 @@ export class DoubleDrawerNavigationService implements OnDestroy {
             id: itemCase.stringId,
             resource: itemCase,
         };
+        if (!this._authorityGuardService.canAccessNavigationItem(item)) {
+            return;
+        }
         const resolvedRoles = DoubleDrawerUtils.resolveAccessRoles(itemCase, GroupNavigationConstants.ITEM_FIELD_ID_ALLOWED_ROLES);
         const resolvedBannedRoles = DoubleDrawerUtils.resolveAccessRoles(itemCase, GroupNavigationConstants.ITEM_FIELD_ID_BANNED_ROLES);
         if (!!resolvedRoles) item.access['role'] = resolvedRoles;
