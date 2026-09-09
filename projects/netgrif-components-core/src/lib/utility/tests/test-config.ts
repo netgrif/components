@@ -30,14 +30,7 @@ export class TestConfigurationService extends ConfigurationService {
                     },
                     sessionBearer: 'X-Auth-Token',
                     sessionTimeoutEnabled: false,
-                    sessionTimeout: 900,
-                    apiToken: {
-                        enabled: true,
-                        queryParameter: 'token',
-                        realmQueryParameter: 'realmId',
-                        removeFromUrl: true,
-                        allowedPaths: ['/tabbed-views', '/tabbed-views/**']
-                    }
+                    sessionTimeout: 900
                 },
                 resources: [
                     {
@@ -451,6 +444,19 @@ export class TestConfigurationService extends ConfigurationService {
                 gateway_url: 'http://localhost:8888/api',
                 resolve_configuration: false
             });
+    }
+}
+
+export class ApiTokenTestConfigurationService extends TestConfigurationService {
+    constructor() {
+        super();
+        this.configuration.providers.auth.apiToken = {
+            enabled: true,
+            queryParameter: 'token',
+            realmQueryParameter: 'realmId',
+            removeFromUrl: true,
+            allowedPaths: ['/tabbed-views', '/tabbed-views/**']
+        };
     }
 }
 

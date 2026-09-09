@@ -5,7 +5,7 @@ import {AuthenticationMethodService} from '../authentication-method.service';
 import {AuthenticationGuardService} from './authentication-guard.service';
 import {AuthenticationService} from '../authentication/authentication.service';
 import {RouterTestingModule} from '@angular/router/testing';
-import {TestConfigurationService} from '../../../utility/tests/test-config';
+import {ApiTokenTestConfigurationService} from '../../../utility/tests/test-config';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {MockAuthenticationMethodService} from '../../../utility/tests/mocks/mock-authentication-method-service';
 import {MockAuthenticationService} from '../../../utility/tests/mocks/mock-authentication.service';
@@ -22,6 +22,7 @@ describe('AuthenticationGuardService', () => {
 
     beforeEach(fakeAsync(() => {
         localStorage.removeItem(SessionService.SESSION_TOKEN_STORAGE_KEY);
+        const configuration = new ApiTokenTestConfigurationService();
         TestBed.configureTestingModule({
             imports: [
                 HttpClientTestingModule,
@@ -30,7 +31,7 @@ describe('AuthenticationGuardService', () => {
                 RouterTestingModule.withRoutes([])
             ],
             providers: [
-                {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: ConfigurationService, useValue: configuration},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 AuthenticationGuardService
