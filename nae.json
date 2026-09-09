@@ -20,11 +20,21 @@
             "sessionTimeoutEnabled": false,
             "sessionTimeout": 900,
             "jwtBearer": "X-Jwt-Token",
+            "apiToken": {
+                "enabled": true,
+                "queryParameter": "token",
+                "realmQueryParameter": "realmId",
+                "removeFromUrl": true,
+                "allowedPaths": [
+                    "/tabbed-views",
+                    "/tabbed-views/**"
+                ]
+            },
             "sso": {
                 "enable": false,
                 "clientId": "dev-cluster-worker",
                 "redirectUrl": "http://localhost:8081/realms/netgrif-cloud-testing/protocol/openid-connect/auth",
-                "refreshUrl": "http://localhost:8800/api/auth/login",
+                "refreshUrl": "http://localhost:8080/api/auth/login",
                 "scopes": ["openid","email","profile","roles"]
             }
         },

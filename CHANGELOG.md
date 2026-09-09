@@ -14,7 +14,94 @@ Full Changelog: [https://github.com/netgrif/components/commits/v6.5.0](https://g
 - [NAE-2019] Bugs after merge with 6.4.0
 
 ### Changed
-- [NAE- 1940] Update to new Angular
+- [NAE-1889] Process list is not refreshed after uploading process file 
+- [NAE-1885] Side panel creates a new case when pressing Enter on date field 
+- [NAE-1687] Factory class as providers 
+- [NAE-1911] Autosave on text area in cooperation with button 
+- [NAE-1497] Frontend actions 
+- [NAE-1915] TaskRef behaviour handling for multiple level 
+- [NAE-1904] Case ref as multichoice and enumeration 
+- [NAE-1908] NAE-1906 Improvements 
+- [NAE-1918] Tags on process resources 
+- [NAE-1921] User field value cannot be cleared 
+- [NAE-1914] revertToPreviousValue - change is always false 
+- [NAE-1925] Panel is not opening 
+- [NAE-1924] Neziadane volanie setData z FE 
+- [NAE-1923] DateTime doesn't have locale and rework validation to isoWeekday 
+- [NAE-1928] Refresh tabs on change 
+- [NAE-1926] Can't close Tab in Tab view 
+- [NAE-1929] Data field type list of strings 
+- [NAE-1933] UserList deleteAll button 
+- [NAE-1939] Problem with Tests 
+- [NAE-1936] Disable create case button using menu items 
+- [NAE-1935] Improved breadcrumbs from menu items 
+- [NAE-1876] Process URI v2 
+- [NAE-1882] Filter folder process 
+- [NAE-1890] Data field component register 
+- [NAE-1901] Taskref rendering update 
+- [NAE-1900] New component design 
+- [NAE-1920]  Injection token NAE_USER_ASSIGN_COMPONENT breaks delegate 
+- [NAE-1879] Language register 
+- [NAE-1905] Add bold on i18n text plainText field 
+- [NAE-1873] Seperator for number field 
+- [NAE-1922] Signature Pad Field 
+- [NAE-1949] Allowed Types for Filefield 
+- [NAE-1813] Field id as path variable in TaskController 
+- [NAE-1957] Allow filter to caseRef field and variants 
+- [NAE-1960] Enumeration Map does not propagate changes when selecting  
+- [NAE-1958] Make component properties changeable 
+- [NAE- 1940] Update to new Angular 
+- [NAE-1983] Public view file handling 
+- [NAE-1999] Broken pagination on paged case view 
+- [NAE-1949] Allowed Types for Filefield 
+- [NAE-2005] Field behavior change does not work correctly with multiple references using taskRef 
+- [NAE-2013] Autocomplete options are set to the first dropdown 
+- [NAE-2013] Autocomplete options are set to the first dropdown 
+- [NAE-2016] Global roles for menu items permissions 
+- [NAE-2018] User list input is not showing dialog 
+- [NAE-2020] Create case error when allowed net blocks are present 
+- [NAE-2021] Outputs for navigation components 
+- [NAE-2022] UI Design Fixes and Improvements 
+- [NAE-2034] Open first view 
+- [NAE-2038] Public View 
+- [NAE-2033] Welcome dashboard 
+- [NAE-2035] Implement Single-Task-View 
+- [NAE-2036] Task-List-View to open Case by link 
+- [NAE-2041] Implementing Ticket View 
+- [NAE-2040] Search in role management 
+- [NAE-2052] Integrate ticket view with menu items 
+- [NAE-2039] Search in workflow view 
+- [NAE-2063] Action API 6.5.0 
+- [NAE-2115] Task search on Search Node #314 
+- [NAE-2119] Fix menuItem 
+- [NAE-2125] Remove URI service usage from admin and menu items #318 
+- [NAE-2116] Frontend remote configuration 
+- [NAE-2085] Refactor User 
+- [NAE-2122] Implement Structured and Efficient Pagination in gRPC 
+- [NAE-2146] Broken hidden menu on frontend 
+- [NAE-2085] Refactor User 
+- [NAE-2118] Implement OpenID Connector Auth for Admin node  
+- [NAE-2165] Broken task list pagination 
+- [NAE-2174] Vanishing menu after few clicks 
+- Refactor case ID usage to replace `stringId` with `id` 
+- [NAE-2188] Wrong remote configuration loading order 
+- [NAE-2197] Wrong elastic sort 
+- [NAE-2205] DefaultCaseRefListViewComponent - headers not displayed when processes exceed single view 
+- [NAE-2202] Post test fixes 
+- [NAE-2218] Misaligned header on case view when displayed below 1920px 
+- [NAE-2224] Title in optional text in case creation button as I18nString 
+- [NAE-2226] Cannot switch between menu items 
+- [NAE-2232] Frontend Actions Task events resolver 
+- [NAE-2233] Fix dashboard menu issue 
+- [NAE-2227] MenuItem default headers not working 
+- [NAE-2234] Fix dashboard menu 
+- [NAE-2217] Single Task View 
+- [NAE-2251] Map field options are not translated 
+- [NAE-2285] Group as a value of userlists 
+- [NAE-2354] Include assignee userRealmId in task response 
+- [NAE-2263] Copy/selection prevention is set to to entire application not just for side menu 
+- [NAE-2435] Enumeration field with no choices does not properly handle validation 
+- [NAE-2416] AbstractFileDefaultFieldComponent does not push upload event
 
 ## [6.5.0](https://github.com/netgrif/components/releases/tag/v6.5.0) (2025-02-18)
 ### Added

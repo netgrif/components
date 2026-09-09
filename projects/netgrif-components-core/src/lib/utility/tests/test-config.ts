@@ -447,6 +447,19 @@ export class TestConfigurationService extends ConfigurationService {
     }
 }
 
+export class ApiTokenTestConfigurationService extends TestConfigurationService {
+    constructor() {
+        super();
+        this.configuration.providers.auth.apiToken = {
+            enabled: true,
+            queryParameter: 'token',
+            realmQueryParameter: 'realmId',
+            removeFromUrl: true,
+            allowedPaths: ['/tabbed-views', '/tabbed-views/**']
+        };
+    }
+}
+
 class TestHttp extends HttpHandler {
     handle(req: HttpRequest<any>): Observable<HttpEvent<any>> {
         return undefined;

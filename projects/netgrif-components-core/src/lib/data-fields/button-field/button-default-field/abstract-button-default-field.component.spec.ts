@@ -57,7 +57,8 @@ describe('AbstractButtonDefaultFieldComponent', () => {
         }).compileComponents();
 
         fixture = TestBed.createComponent(TestWrapperComponent);
-        const initializeLanguage = TestBed.inject(LanguageService);
+        TestBed.inject(LanguageService);
+        TestBed.inject(TranslateService).use('en');
         component = fixture.debugElement.children[0].componentInstance;
         fixture.detectChanges();
     }));

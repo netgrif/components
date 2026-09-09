@@ -103,6 +103,20 @@ export class SimpleFilter extends Filter {
     }
 
     /**
+     * See [Filter.bodyContainsCaseId()]{@link Filter#bodyContainsCaseId}
+     */
+    bodyContainsCaseId(): boolean {
+        return !!this._filter
+            && !!this._filter['case']
+            && ((!Array.isArray(this._filter['case'])
+                && !!this._filter['case'].id
+                && this._filter['case'].id.length > 0)
+            || (Array.isArray(this._filter['case'])
+                    && this._filter['case'].length > 0));
+    }
+
+
+    /**
      * See [Filter.getRequestBody()]{@link Filter#getRequestBody}
      */
     getRequestBody(): TaskSearchRequestBody | CaseSearchRequestBody {

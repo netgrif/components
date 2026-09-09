@@ -71,6 +71,16 @@ export abstract class Filter {
      */
     public abstract bodyContainsQuery(): boolean;
 
+
+    /**
+     * Checks whether any of the filter bodies contains the `caseId` attribute.
+     *
+     * This method analyzes the body of the filter to determine if at least one of its parts includes a `caseId` field.
+     *
+     * @returns `true` if the `caseId` attribute exists in any of the filter bodies; otherwise, `false`.
+     */
+    public abstract bodyContainsCaseId(): boolean;
+
     /**
      * Returns the necessary request params for the filter. Default implementation returns an empty object.
      * The params are added on top of the request when sending it to the backend by the respective service methods.

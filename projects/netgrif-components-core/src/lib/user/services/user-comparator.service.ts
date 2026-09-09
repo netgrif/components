@@ -11,6 +11,6 @@ export class UserComparatorService {
 
   public compareUsers(userId: string, acceptImpersonator: boolean = true): boolean {
       const loggedUser = acceptImpersonator ? this._userService.user.getSelfOrImpersonated() : this._userService.user;
-      return userId === loggedUser.id || this._userService.user.email.includes('anonymous');
+      return userId === loggedUser.id || this._userService.user.isAnonymous();
   }
 }

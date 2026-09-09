@@ -28,7 +28,7 @@ export class AppComponent {
         translate.setTranslation('en', en, true);
         translate.setTranslation('sk', sk, true);
 
-        this.userService.user$.pipe(filter(u => !!u && u.id !== ''), take(1)).subscribe(() => {
+        this.userService.user$.pipe(filter(u => !!u && u.id !== '' && !u.isAnonymous()), take(1)).subscribe(() => {
             const allNets = allowedNetsFactory.createWithAllNets();
             allNets.allowedNetsIdentifiers$.pipe(take(1)).subscribe(nets => {
                 if (this.baseAllowedNets.allowedNets.length !== 0) {
