@@ -13,7 +13,6 @@ import {FormBuilderComponent} from './form-builder.component';
 import {GridsterDataFieldComponent} from './gridster/gridster-datafield/gridster-data-field.component';
 import {GridsterComponent} from './gridster/gridster.component';
 import {InfoLabelComponent} from './info-label/info-label.component';
-import {PaperComponent} from './paper/paper.component';
 import {MaterialModule} from '@netgrif/components-core';
 import {NgxMatDatetimePickerModule} from "@angular-material-components/datetime-picker";
 import {NgxMatMomentModule} from "@angular-material-components/moment-adapter";
@@ -28,7 +27,6 @@ import { DataFieldsComponentModule } from "../../data-fields/data-fields.module"
         GridsterComponent,
         GridsterDataFieldComponent,
         InfoLabelComponent,
-        PaperComponent,
     ],
     exports: [
         FormBuilderComponent

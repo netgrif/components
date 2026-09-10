@@ -75,7 +75,7 @@ export class EditModeComponent implements AfterViewInit, OnDestroy {
     }
 
     onDropZone($event: NgxDropzoneChangeEvent) {
-        $event.addedFiles[0].text().then(originFile => {
+        $event.addedFiles[0]?.text()?.then(originFile => {
             this.importService.importFromXml(originFile);
         });
     }

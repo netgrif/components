@@ -17,6 +17,7 @@ export enum ComponentPrefixes {
     NUMBER = 'number-',
     TASK_REF = 'task-ref-',
     CASE_REF = 'case-ref-',
+    PROCESS_REF = 'process-ref-',
     TEXT = 'text-',
     USER = 'user-',
     USER_LIST = 'user-list-',
