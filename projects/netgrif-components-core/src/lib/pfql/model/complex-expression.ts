@@ -11,7 +11,7 @@ import {QueryItem, QueryItemType} from "./query-item-type";
 export class ComplexExpression implements QueryItemInterface {
     protected _items: QueryItem[];
 
-    public constructor(items: QueryItem[]) {
+    public constructor(items?: QueryItem[]) {
         this._items = !items ? [] : items;
     }
 
