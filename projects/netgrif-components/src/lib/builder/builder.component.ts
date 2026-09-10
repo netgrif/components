@@ -1,4 +1,4 @@
-import {Component, Inject, Optional, Type} from '@angular/core';
+import {Component, Inject, Optional, Type, OnDestroy} from '@angular/core';
 import {BuilderMode, BuilderModeService} from "./services/builder-mode.service";
 import {ModelService} from "./modeler/services/model/model.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -56,6 +56,7 @@ import {BuilderIntegrationService} from "./services/builder-integration.service"
 import {TaskModeService} from "./modeler/task-mode/task-mode.service";
 import {LocalStorageService} from "./services/local-storage.service";
 import {PetriflowCanvasService} from '@netgrif/petriflow.svg';
+import {Subscription} from "rxjs";
 
 @Component({
     selector: 'nc-builder',
@@ -118,9 +119,10 @@ import {PetriflowCanvasService} from '@netgrif/petriflow.svg';
         {provide: PetriflowCanvasService, useClass: PetriflowCanvasService as unknown as Type<PetriflowCanvasService>}
     ]
 })
-export class BuilderComponent {
+export class BuilderComponent implements OnDestroy {
     public typeMode = BuilderMode;
     public loading: LoadingEmitter;
+    protected _reloadSub: Subscription;
 
     constructor(private modelService: ModelService, private router: Router,
                 public dialog: MatDialog,
@@ -138,7 +140,7 @@ export class BuilderComponent {
             this._builderIntegrationService.isIntegrated = true;
             this._builderIntegrationService.processCase = injectedTabData.processCase;
             this.resolveIntegratedMode();
-            this._builderIntegrationService.reloadCase.subscribe(() => {
+            this._reloadSub = this._builderIntegrationService.reloadCase.subscribe(() => {
                 this._caseResourceService.getOneCase(this._builderIntegrationService.processCase.stringId).subscribe(processCase => {
                     this._builderIntegrationService.processCase = processCase;
                     this.resolveIntegratedMode()
@@ -153,7 +155,7 @@ export class BuilderComponent {
             }, error: () => {
                 this.loading.off();
             }})
-            this._builderIntegrationService.reloadCase.subscribe(() => {
+            this._reloadSub = this._builderIntegrationService.reloadCase.subscribe(() => {
                 this._caseResourceService.getOneCase(this._builderIntegrationService.processCase?.stringId).subscribe(processCase => {
                     this._builderIntegrationService.processCase = processCase;
                     this.resolveIntegratedMode()
@@ -168,6 +170,10 @@ export class BuilderComponent {
                 this.historyService.save(`New model has been created.`);
             }
         }
+    }
+
+    ngOnDestroy(): void {
+        this._reloadSub?.unsubscribe();
     }
 
     public onlyTaskMode() {
