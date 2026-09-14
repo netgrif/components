@@ -9,17 +9,17 @@ export class NotEqualsDateTime extends Operator<Moment> {
 
     protected equals: EqualsDateTime;
 
-    constructor(operators: OperatorService) {
-        super(1);
-        this.equals = operators.getOperator(EqualsDateTime) as EqualsDateTime;
+    constructor(protected _operators: OperatorService) {
+        super(1, Operators.NOT_EQUALS_DATE_TIME);
+        this.equals = this._operators.getOperator(EqualsDateTime) as EqualsDateTime;
     }
 
-    createQuery(elasticKeywords: Array<string>, args: Array<Moment>): Query {
-        const equalsQuery = this.equals.createQuery(elasticKeywords, args);
+    createQuery(pfqlKeywords: Array<string>, args: Array<Moment>): Query {
+        const equalsQuery = this.equals.createQuery(pfqlKeywords, args);
         if (equalsQuery.isEmpty) {
             return equalsQuery;
         }
-        return new Query(`(!${equalsQuery.value})`);
+        return new Query(`not (${equalsQuery.value})`);
     }
 
     getOperatorNameTemplate(): Array<string> {

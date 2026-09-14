@@ -9,7 +9,6 @@ import {SearchMode} from '../models/component-configuration/search-mode';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 import {NAE_SEARCH_CATEGORIES} from '../category-factory/search-categories-injection-token';
 import {Category} from '../models/category/category';
-import {SavedFilterMetadata} from '../models/persistance/saved-filter-metadata';
 import {ViewIdService} from '../../user/services/view-id.service';
 import {NAE_FILTERS_FILTER} from '../../filter/models/filters-filter-injection-token';
 import {Filter} from '../../filter/models/filter';
@@ -45,15 +44,6 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
     private _initialSearchMode = SearchMode.FULLTEXT;
 
     @Input() public disabled: boolean;
-
-    /**
-     * The emitted data contains the filter case object
-     */
-    @Output() filterLoaded: EventEmitter<SavedFilterMetadata> = new EventEmitter();
-    /**
-     * The emitted data contains only the saved case's ID
-     */
-    @Output() filterSaved: EventEmitter<SavedFilterMetadata> = new EventEmitter();
 
     protected constructor(protected _searchService: SearchService,
                           protected _logger: LoggerService,

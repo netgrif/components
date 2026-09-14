@@ -3,6 +3,7 @@ import {Query} from '../query/query';
 import {BooleanOperator} from '../boolean-operator';
 import {WrapResult} from '../wrap-result';
 import {Operators} from './operators';
+import {UserAutocomplete} from "../category/user-autocomplete";
 
 /**
  * Represents the low level abstraction of query generation that is responsible for the creation of queries themselves.
@@ -41,9 +42,19 @@ export abstract class Operator<T> {
      */
     private readonly _operatorSymbols: string;
 
-    protected constructor(numberOfOperands: number, operatorSymbols = '') {
+    /**
+     * Type of the current operator
+     */
+    private readonly _type: Operators;
+
+    protected constructor(numberOfOperands: number, type: Operators, operatorSymbols = '') {
         this._numberOfOperands = numberOfOperands;
+        this._type = type;
         this._operatorSymbols = operatorSymbols;
+    }
+
+    public get type(): Operators {
+        return this._type;
     }
 
     /**
@@ -73,39 +84,38 @@ export abstract class Operator<T> {
     }
 
     /**
-     * Creates a Query string query string literal with the provided arguments.
-     * @param elasticKeyword Elasticsearch index keyword for the field you want to query
+     * Creates a PFQL query with the provided arguments.
+     * @param pfqlKeyword PFQL keyword for the field you want to query
      * @param arg The value that you want to query the property for
-     * @param operator The operator you want to use to query the indexed field. Consult the Elasticsearch's
-     * [documentation]{@link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html}
-     * for more information.
-     * @returns combines the input strings by this pattern: `([elasticKeyword]:[operator][arg])`
+     * @param operator The PFQL operator you want to use to query the field.
+     * @returns combines the input strings by this pattern: `[pfqlKeyword] [operator] [arg]`
      */
-    public static query(elasticKeyword: string, arg: string, operator: string): string {
-        return `(${elasticKeyword}:${operator}${arg})`;
+    public static query(pfqlKeyword: string, arg: string, operator: string): string {
+        return `${pfqlKeyword} ${operator} ${arg}`;
     }
 
     /**
      * Applies the provided function to all keywords and combines the resulting queries with an `OR` operator.
-     * @param elasticKeywords keywords that the function is call on
+     * @param pfqlKeywords keywords that the function is call on
      * @param queryConstructor function that generates a `Query` object for each keyword
      */
-    public static forEachKeyword(elasticKeywords: Array<string>, queryConstructor: (keyword: string) => Query): Query {
+    public static forEachKeyword(pfqlKeywords: Array<string>, queryConstructor: (keyword: string) => Query): Query {
         const simpleQueries = [];
-        elasticKeywords.forEach(keyword => {
+        pfqlKeywords.forEach(keyword => {
             simpleQueries.push(queryConstructor(keyword));
         });
         return Query.combineQueries(simpleQueries, BooleanOperator.OR);
     }
 
     /**
-     * If the value contains a space character, or if `force` is set to `true`.
+     * Wraps the input if the value is of a string type and canWrap is set to true
      * @param input user input that should be wrapped with double quotes
-     * @param forceWrap if set to `true` the value will be wrapped regardless of it's content
+     * @param canWrap is set to true if the wrapping is allowed
      */
-    public static wrapInputWithQuotes(input: string, forceWrap = false): WrapResult {
-        if (typeof input === 'string' && (input?.includes(' ') || forceWrap))
-            return {value: `"${input}"`, wasWrapped: true};
+    public static wrapInputWithQuotes(input: string, canWrap: boolean = true): WrapResult {
+        if (typeof input === 'string' && canWrap && input !== UserAutocomplete.USER_ME_TEMPLATE
+            && !(input.startsWith(`'`) && input.endsWith(`'`)))
+            return {value: `'${input}'`, wasWrapped: true};
         else
             return {value: input, wasWrapped: false};
     }
@@ -124,12 +134,12 @@ export abstract class Operator<T> {
      * the results with an `OR` operator.
      * @returns query that wos constructed with the given arguments and keywords. Returns an empty query if no arguments are provided.
      */
-    public createQuery(elasticKeywords: Array<string>, args: Array<T>, escapeArgs = true): Query {
+    public createQuery(pfqlKeywords: Array<string>, args: Array<T>, escapeArgs = true, wrapInQuotes = true): Query {
         this.checkArgumentsCount(args);
-        return Operator.forEachKeyword(elasticKeywords, (keyword: string) => {
+        return Operator.forEachKeyword(pfqlKeywords, (keyword: string) => {
             const escapedValue = escapeArgs ?
                 Operator.escapeInput(args[0] as unknown as string) : ({value: args[0] as unknown as string, wasEscaped: false});
-            const wrappedValue = Operator.wrapInputWithQuotes(escapedValue.value, escapedValue.wasEscaped);
+            const wrappedValue = Operator.wrapInputWithQuotes(escapedValue.value, wrapInQuotes);
             const queryString = Operator.query(keyword, wrappedValue.value, this._operatorSymbols);
             return new Query(queryString);
         });

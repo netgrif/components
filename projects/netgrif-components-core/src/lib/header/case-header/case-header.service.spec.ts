@@ -102,7 +102,7 @@ describe('CaseHeaderService', () => {
             expect(res.changeType).toEqual(HeaderChangeType.SEARCH);
             expect((res.description as SearchChangeDescription).columnIdentifier).toEqual(0);
             expect((res.description as SearchChangeDescription).searchInput).toEqual('hladaj');
-            expect((res.description as SearchChangeDescription).fieldIdentifier).toEqual('visualId');
+            expect((res.description as SearchChangeDescription).fieldIdentifier).toEqual('title');
             expect((res.description as SearchChangeDescription).type).toEqual(HeaderColumnType.META);
             expect((res.description as SearchChangeDescription).fieldType).toEqual('text');
             done();

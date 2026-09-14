@@ -14,7 +14,7 @@ import {
     ViewIdService,
     Filter,
     NAE_NEW_CASE_CONFIGURATION,
-    NAE_BASE_FILTER, AllowedNetsServiceFactory, AllowedNetsService, SavedFilterMetadata, OverflowService
+    NAE_BASE_FILTER, AllowedNetsServiceFactory, AllowedNetsService, OverflowService
 } from '@netgrif/components-core';
 import {HeaderComponent} from '@netgrif/components';
 import {Subject} from 'rxjs';
@@ -88,23 +88,6 @@ export class TabbedCaseViewComponent extends AbstractTabbedCaseViewComponent imp
 
     ngAfterViewInit(): void {
         super.initializeHeader(this.caseHeaderComponent);
-    }
-
-    loadFilter(filterData: SavedFilterMetadata) {
-        this._injectedTabData.tabViewRef.openTab({
-            label: {
-                text: filterData.filter.title
-            },
-            canBeClosed: true,
-            tabContentComponent: TabbedCaseViewComponent,
-            injectedObject: {...this._injectedTabData, loadFilter: filterData.filter},
-            order: this._injectedTabData.tabViewOrder,
-            parentUniqueId: this._injectedTabData.tabUniqueId
-        }, this._autoswitchToTaskTab, this._openExistingTab);
-    }
-
-    saveFilter(filterData: SavedFilterMetadata) {
-        console.log(filterData);
     }
 
 }
