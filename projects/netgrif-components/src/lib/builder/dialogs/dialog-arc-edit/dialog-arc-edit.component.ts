@@ -64,12 +64,14 @@ export class DialogArcEditComponent implements OnInit {
         this.arcTypes = Object.values(XmlArcType);
         this.arcType = this.arcTypeMapping.get(this.arc.arcType);
         this.references = [];
+        // todo 2477 translation
         this.addReferences('Data fields', this.modelService.model.getDataSet()
             .filter(data => data.type === DataType.NUMBER)
             .map(data => {
                 return {id: data.id, label: data.title?.value} as Reference;
             })
             .sort((a, b) => a.label?.localeCompare(b.label)));
+        // todo 2477 translation
         this.addReferences('Places', this.modelService.model.getPlaces()
             .map(place => {
                 return {id: place.id, label: place.label?.value} as Reference;

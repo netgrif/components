@@ -1,7 +1,9 @@
 <h2 mat-dialog-title>Delete referenced place{{data.length > 1 ? 's' : ''}}?</h2>
+<!--todo 2477 dynamic plural-->
 <mat-dialog-content class="mat-typography padding-top-4px">
     <span *ngFor="let refData of data">Place {{placeLabel(refData)}}
         is referenced by arc{{refData.arcs.length > 1 ? 's' : ''}}: {{arcs(refData)}}.</span>
+    <!--todo 2477 dynamic plural-->
 </mat-dialog-content>
 <mat-dialog-actions align="end">
     <button mat-button [mat-dialog-close]="false">Cancel</button>

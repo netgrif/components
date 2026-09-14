@@ -387,7 +387,7 @@ export function functionCompletionProposals(range, languages) {
             range
         },
         {
-            label: 'generatePdfWithLocale(String transitionId, String fileFieldId, Locale locale',
+            label: 'generatePdfWithLocale(String transitionId, String fileFieldId, Locale locale)',
             kind: languages.CompletionItemKind.Function,
             documentation: 'Generate PDF with locale from transition id, save it to file field by fileFieldId',
             insertText: 'generatePdfWithLocale(<transitionId>, <fileFieldId>, <locale>)',
