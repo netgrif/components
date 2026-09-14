@@ -533,292 +533,291 @@
     "builder": {
         "dialogs": {
             "arc-edit": {
-                Multiplicity,
-                Id is required
-                Multiplicity must be a positive integer
-                Reference
-                -- None --
-                Source
-                Destination
-                Save
+                "multiplicity": "Multiplicity",
+                "idRequired": "Id is required",
+                "multiplicityPositive": "Multiplicity must be a positive integer",
+                "reference": "Reference",
+                "none": "-- None --",
+                "source": "Source",
+                "destination": "Destination",
+                "save": "Save"
             },
             "change-data": {
-                Change referenced data value
-                Value is required
-                Value can not be a negative number
-                No referenced data found
-                Save
+                "title": "Change referenced data value",
+                "valueRequired": "Value is required",
+                "valueNotNegative": "Value can not be a negative number",
+                "noData": "No referenced data found",
+                "save": "Save"
             },
             "dead-net": {
-                No executable task
-                There are no executable tasks. Are you sure you want to download the model ?
-                Cancel
-                Download
+                "title": "No executable task",
+                "message": "There are no executable tasks. Are you sure you want to download the model ?",
+                "cancel": "Cancel",
+                "download": "Download"
             },
             "delete": {
-                Delete confirmation
-                Are you sure you want to delete this item?
-                Cancel
-                Confirm
+                "title": "Delete confirmation",
+                "message": "Are you sure you want to delete this item?",
+                "cancel": "Cancel",
+                "confirm": "Confirm"
             },
             "delete-model": {
-                Delete model
-                Are you sure to delete the model? Any unsaved changes will be lost.
-                Cancel
-                Delete
+                "title": "Delete model",
+                "message": "Are you sure to delete the model? Any unsaved changes will be lost.",
+                "cancel": "Cancel",
+                "delete": "Delete"
             },
             "errors": {
-                Import result
-                Errors:
-                Warnings:,
-                Info:
-                Close
+                "title": "Import result",
+                "errors": "Errors:",
+                "warnings": "Warnings:",
+                "info": "Info:",
+                "close": "Close"
             },
             "local-storage-model": {
-                Continue previous work
-                Do you wish to continue work on
-                from
-                Delete old work
-                Load
+                "title": "Continue previous work",
+                "message": "Do you wish to continue work on",
+                "from": "from",
+                "deleteOld": "Delete old work",
+                "load": "Load"
             },
             "manage-roles": {
-                Permissions
-                Role Permissions
-                Id
-                Perform
-                Delegate
-                Cancel
-                Assign
-                Create
-                Delete
-                View
-                User List Permissions
-                Role assignments has been changed.
+                "title": "Permissions",
+                "rolePermissions": "Role Permissions",
+                "id": "Id",
+                "perform": "Perform",
+                "delegate": "Delegate",
+                "cancel": "Cancel",
+                "assign": "Assign",
+                "create": "Create",
+                "delete": "Delete",
+                "view": "View",
+                "userListPermissions": "User List Permissions",
+                "changed": "Role assignments has been changed."
             },
             "marking-change": {
-                Change marking of place
-                Tokens
-                Number of tokens is required
-                Number of tokens must be a non-negative integer
-                Save
+                "title": "Change marking of place",
+                "tokens": "Tokens",
+                "tokensRequired": "Number of tokens is required",
+                "tokensNonNegative": "Number of tokens must be a non-negative integer",
+                "save": "Save"
             },
             "model-edit": {
-                Edit model
-                Id is required
-                Version
-                Version must be in format Major.Minor.Patch,
-                Title
-                Id is required
-                Initials
-                Default role
-                Anonymous role
-                Default case name
-                Tags
-                Key
-                Value
-                Empty
-                Add tag
-                Actions
-                Permissions
-                Save
+                "title": "Edit model",
+                "idRequired": "Id is required",
+                "version": "Version",
+                "versionFormat": "Version must be in format Major.Minor.Patch",
+                "modelTitle": "Title",
+                "idRequired2": "Id is required",
+                "initials": "Initials",
+                "defaultRole": "Default role",
+                "anonymousRole": "Anonymous role",
+                "defaultCaseName": "Default case name",
+                "tags": "Tags",
+                "key": "Key",
+                "value": "Value",
+                "empty": "Empty",
+                "addTag": "Add tag",
+                "actions": "Actions",
+                "permissions": "Permissions",
+                "save": "Save"
             },
             "place-edit": {
-                Edit place
-                Id
-                Id is required
-                Place with given id already exists
-                Label
-                Tokens
-                Number of tokens is required
-                Number of tokens must be a non-negative integer
-                Save
+                "title": "Edit place",
+                "id": "Id",
+                "idRequired": "Id is required",
+                "idExists": "Place with given id already exists",
+                "label": "Label",
+                "tokens": "Tokens",
+                "tokensRequired": "Number of tokens is required",
+                "tokensNonNegative": "Number of tokens must be a non-negative integer",
+                "save": "Save"
             },
             "place-ref-delete": {
-                Delete referenced place
-                Delete referenced places
-                Place
-                is referenced by arc
-                is referenced by arcs
-                Cancel
-                Delete
+                "titleSingle": "Delete referenced place",
+                "titleMultiple": "Delete referenced places",
+                "place": "Place",
+                "referencedByArc": "is referenced by arc",
+                "referencedByArcs": "is referenced by arcs",
+                "cancel": "Cancel",
+                "delete": "Delete"
             },
             "refactor": {
-                Refactor Id
-                Original Id
-                New Id
-                New Id is required!
-                Id can contain only alphanumeric characters, dash or underscore!
-                Id must be unique! Selected Id already exists!
-                WARNING! In actions, field Id will be changed only in the declaration part, Id used as string in the actions statement will not be changed.
-                Close
-                Refactor
+                "title": "Refactor Id",
+                "originalId": "Original Id",
+                "newId": "New Id",
+                "newIdRequired": "New Id is required!",
+                "idCharsOnly": "Id can contain only alphanumeric characters, dash or underscore!",
+                "idUnique": "Id must be unique! Selected Id already exists!",
+                "warning": "WARNING! In actions, field Id will be changed only in the declaration part, Id used as string in the actions statement will not be changed.",
+                "close": "Close",
+                "refactor": "Refactor"
             },
             "transition-edit": {
                 "trigger-tree": {
-                    Set trigger type
-                    Set time type
-                    Set delay
-                    Set exact
-                    toggle
+                    "setTriggerType": "Set trigger type",
+                    "setTimeType": "Set time type",
+                    "setDelay": "Set delay",
+                    "setExact": "Set exact",
+                    "toggle": "toggle"
                 },
-                Edit task
-                Id
-                Id is required
-                Transition with given id already exists
-                Label
-                Assign policy
-                Finish policy
-                Tags
-                Key
-                Value
-                Empty
-                Add tag
-                Form
-                Actions
-                Permissions
-                Save
+                "title": "Edit task",
+                "id": "Id",
+                "idRequired": "Id is required",
+                "idExists": "Transition with given id already exists",
+                "label": "Label",
+                "assignPolicy": "Assign policy",
+                "finishPolicy": "Finish policy",
+                "tags": "Tags",
+                "key": "Key",
+                "value": "Value",
+                "empty": "Empty",
+                "addTag": "Add tag",
+                "form": "Form",
+                "actions": "Actions",
+                "permissions": "Permissions",
+                "save": "Save"
             }
         },
         "form-builder": {
             "edit-panel": {
-                Number of columns
-                Edit Actions
-                Title
-                Message
-                Id
-                Required
-                Immediate
-                Placeholder
-                Description
-                Initial value
-                No options
-                Add option
-                Component Name
-                No properties
-                Add property
-                Copy to DataRef
-                No Icons
-                Add Icon
-                Copy to DataField
-                DataField Actions
-                Template
-                Appearance
-                Field offset
+                "numberOfColumns": "Number of columns",
+                "editActions": "Edit Actions",
+                "title": "Title",
+                "message": "Message",
+                "id": "Id",
+                "required": "Required",
+                "immediate": "Immediate",
+                "placeholder": "Placeholder",
+                "description": "Description",
+                "initialValue": "Initial value",
+                "noOptions": "No options",
+                "addOption": "Add option",
+                "componentName": "Component Name",
+                "noProperties": "No properties",
+                "addProperty": "Add property",
+                "copyToDataRef": "Copy to DataRef",
+                "noIcons": "No Icons",
+                "addIcon": "Add Icon",
+                "copyToDataField": "Copy to DataField",
+                "dataFieldActions": "DataField Actions",
+                "template": "Template",
+                "appearance": "Appearance",
+                "fieldOffset": "Field offset"
             },
             "field-list": {
-                Data fields
-                Existing fields
-                Create new fields
-                Back
-                Simple
-                Area
-                Markdown Editor
-                HTML Editor
-                Password
-                Signature
-                Decimal
-                Currency
-                Select
-                List
-                Stepper
-                Autocomplete
-                Dynamic Autocomplete
-                Icon
-                Case ref
-                Slide
-                Raised
-                Stroked
-                Flat
-                Icon
-                FAB
-                MiniFAB
-                Preview
-                Text
-                Divider
-                Dashboard
+                "dataFields": "Data fields",
+                "existingFields": "Existing fields",
+                "createNewFields": "Create new fields",
+                "back": "Back",
+                "simple": "Simple",
+                "area": "Area",
+                "markdownEditor": "Markdown Editor",
+                "htmlEditor": "HTML Editor",
+                "password": "Password",
+                "signature": "Signature",
+                "decimal": "Decimal",
+                "currency": "Currency",
+                "select": "Select",
+                "list": "List",
+                "stepper": "Stepper",
+                "autocomplete": "Autocomplete",
+                "dynamicAutocomplete": "Dynamic Autocomplete",
+                "icon": "Icon",
+                "caseRef": "Case ref",
+                "slide": "Slide",
+                "raised": "Raised",
+                "stroked": "Stroked",
+                "flat": "Flat",
+                "fab": "FAB",
+                "miniFab": "MiniFAB",
+                "preview": "Preview",
+                "text": "Text",
+                "divider": "Divider",
+                "dashboard": "Dashboard"
             },
             "gridster": {
-                Placeholder for
-                with id
-                DataRefs has been changed
+                "placeholderFor": "Placeholder for",
+                "withId": "with id",
+                "dataRefsChanged": "DataRefs has been changed"
             },
             "info-label": {
-                ID
-                Label
-                You have no selected transition!
+                "id": "ID",
+                "label": "Label",
+                "noTransition": "You have no selected transition!"
             }
         },
         "modeler": {
             "actions-mode": {
                 "action-detail": {
-                    toggle
-                    Scope
-                    No action selected
-                    Actions have been changed.
+                    "toggle": "toggle",
+                    "scope": "Scope",
+                    "noActionSelected": "No action selected",
+                    "actionsChanged": "Actions have been changed."
                 },
                 "action-editor": {
                     "action-editor": {
-                        Functions
-                        References
-                        Transitions
-                        Data fields
-                        Behaviours
-                        visible
-                        hidden
-                        editable
-                        required
-                        optional
-                        Conditions
-                        true
-                        false
-                        Properties
-                        title
-                        color
-                        icon
-                        Values
-                        Empty value
-                        New variable or value
-                        List of objects
-                        Map of objects
-                        List of strings
-                        Map of strings
-                        text
-                        number
-                        date
-                        boolean
-                        file
-                        fileList
-                        enumeration
-                        enumeration_map
-                        multichoice
-                        multichoice_map
-                        userList
-                        tabular
-                        caseRef
-                        dateTime
-                        button
-                        taskRef
-                        filter
-                        i18n
-                        DataSet
-                        One data in set
-                        Process Instance Id
-                        Case predicates
-                        Case ID equals value
-                        Case visual ID equals value
-                        Process identifier equals value
-                        Title equals value
-                        Authors email equals value
-                        Authors id equals value
-                        Authors full name equals value
-                        Task predicates
-                        Task ID equals value
-                        TransitionId equals value
-                        CaseId equals value
-                        Case title equals value
+                        "functions": "Functions",
+                        "references": "References",
+                        "transitions": "Transitions",
+                        "dataFields": "Data fields",
+                        "behaviours": "Behaviours",
+                        "visible": "visible",
+                        "hidden": "hidden",
+                        "editable": "editable",
+                        "required": "required",
+                        "optional": "optional",
+                        "conditions": "Conditions",
+                        "true": "true",
+                        "false": "false",
+                        "properties": "Properties",
+                        "title": "title",
+                        "color": "color",
+                        "icon": "icon",
+                        "values": "Values",
+                        "emptyValue": "Empty value",
+                        "newVariableOrValue": "New variable or value",
+                        "listOfObjects": "List of objects",
+                        "mapOfObjects": "Map of objects",
+                        "listOfStrings": "List of strings",
+                        "mapOfStrings": "Map of strings",
+                        "text": "text",
+                        "number": "number",
+                        "date": "date",
+                        "boolean": "boolean",
+                        "file": "file",
+                        "fileList": "fileList",
+                        "enumeration": "enumeration",
+                        "enumerationMap": "enumeration_map",
+                        "multichoice": "multichoice",
+                        "multichoiceMap": "multichoice_map",
+                        "userList": "userList",
+                        "tabular": "tabular",
+                        "caseRef": "caseRef",
+                        "dateTime": "dateTime",
+                        "button": "button",
+                        "taskRef": "taskRef",
+                        "filter": "filter",
+                        "i18n": "i18n",
+                        "dataSet": "DataSet",
+                        "oneDataInSet": "One data in set",
+                        "processInstanceId": "Process Instance Id",
+                        "casePredicates": "Case predicates",
+                        "caseIdEqualsValue": "Case ID equals value",
+                        "caseVisualIdEqualsValue": "Case visual ID equals value",
+                        "processIdentifierEqualsValue": "Process identifier equals value",
+                        "titleEqualsValue": "Title equals value",
+                        "authorsEmailEqualsValue": "Authors email equals value",
+                        "authorsIdEqualsValue": "Authors id equals value",
+                        "authorsFullNameEqualsValue": "Authors full name equals value",
+                        "taskPredicates": "Task predicates",
+                        "taskIdEqualsValue": "Task ID equals value",
+                        "transitionIdEqualsValue": "TransitionId equals value",
+                        "caseIdEqualsValue2": "CaseId equals value",
+                        "caseTitleEqualsValue": "Case title equals value"
                     },
                     "action-editor-menu": {
-                        Example
+                        "example": "Example"
                     },
                     "classes": {
                         "command-action": {
@@ -1458,8 +1457,8 @@
                     },
                     "definitions": {
                         "declaration-provider": {
-                            ID of DataVariable for declare a varable in Action.
-                            ID of Transition for declare a varable in Action.
+                            "dataVariableId": "ID of DataVariable for declare a varable in Action.",
+                            "transitionId": "ID of Transition for declare a varable in Action."
                         },
                         "function-provider": {
                             "function-provider": {
@@ -1523,316 +1522,315 @@
                             }
                         },
                         "function-editor": {
-                            Functions
-                            References
-                            Transitions
-                            Datafields
-                            Behaviours
-                            Conditions
-                            visible
-                            hidden
-                            editable
-                            required
-                            optional
-                            Conditions
-                            true
-                            false
-                            Properties
-                            Values
-                            Add new variable or value
-                            List of objects
-                            Map of objects
-                            List of strings
-                            Map of strings
+                            "functions": "Functions",
+                            "references": "References",
+                            "transitions": "Transitions",
+                            "datafields": "Datafields",
+                            "behaviours": "Behaviours",
+                            "conditions": "Conditions",
+                            "visible": "visible",
+                            "hidden": "hidden",
+                            "editable": "editable",
+                            "required": "required",
+                            "optional": "optional",
+                            "conditions2": "Conditions",
+                            "true": "true",
+                            "false": "false",
+                            "properties": "Properties",
+                            "values": "Values",
+                            "addNewVariableOrValue": "Add new variable or value",
+                            "listOfObjects": "List of objects",
+                            "mapOfObjects": "Map of objects",
+                            "listOfStrings": "List of strings",
+                            "mapOfStrings": "Map of strings"
                         },
-                        Transition
-                        Role
-                        Case events
-                        Process events
-                        Events
-                        Dataref
+                        "transition": "Transition",
+                        "role": "Role",
+                        "caseEvents": "Case events",
+                        "processEvents": "Process events",
+                        "events": "Events",
+                        "dataref": "Dataref"
                     }
                 },
                 "action-master": {
-                    Name
-                    Add function
+                    "name": "Name",
+                    "addFunction": "Add function"
                 },
                 "tools": {
-                    Data Variables
-                    Functions
-                    Process & Case
-                    Roles
-                    Transitions
+                    "dataVariables": "Data Variables",
+                    "functions": "Functions",
+                    "processAndCase": "Process & Case",
+                    "roles": "Roles",
+                    "transitions": "Transitions"
                 },
-                Actions Edit view
+                "actionsEditView": "Actions Edit view"
             },
             "components": {
                 "master-detail": {
-                    First page
-                    Page size
-                    Last page
-                    Next page
-                    Previous page
-                    of
-                    Add
+                    "firstPage": "First page",
+                    "pageSize": "Page size",
+                    "lastPage": "Last page",
+                    "nextPage": "Next page",
+                    "previousPage": "Previous page",
+                    "of": "of",
+                    "add": "Add"
                 },
                 "material-icon-picker": {
-                    Icon
+                    "icon": "Icon"
                 }
             },
             "control-panel": {
-                Petri net imported successfully
-                Export as XML
-                Choose a file to open
-                Unknown file type
-                Redo
-                Export as SVG
-                Undo
+                "importSuccess": "Petri net imported successfully",
+                "exportXml": "Export as XML",
+                "chooseFile": "Choose a file to open",
+                "unknownFileType": "Unknown file type",
+                "redo": "Redo",
+                "exportSvg": "Export as SVG",
+                "undo": "Undo"
             },
             "data-mode": {
-                Id
-                Title
-                Type
-                Is Immediate?
-                Placeholder
-                Description
-                Component
-                Add component
-                Delete component
-                Encryption
-                Component Name
-                Key
-                Value
-                Empty
-                Add property
-                Initial value
-                Is Init Dynamic?
-                Process identifier
-                Empty
-                Add net
-                Validations
-                Expression
-                Message
-                Empty
-                Add validation
-                Options
-                Option key
-                Option value
-                No options
-                Add option
-                Options Init
-                Edit Actions
-                No data selected
-                Boolean
-                Button
-                Case Ref
-                Date
-                Datetime
-                Enumeration
-                Enumeration Map
-                File
-                File List
-                Case Filter
-                Task Filter
-                Process Filter
-                I18n
-                Multichoice
-                Multichoice Map
-                Number
-                User
-                User List
-                String Collection
-                Task Ref
-                Text
-                DataVariable
-                has been changed.
-                ID has been changed to
-                and has been changed
-                has been created.
-                has been deleted.
-                ID
-                Name
-                Add data variable
-                Data Edit view
+                "id": "Id",
+                "title": "Title",
+                "type": "Type",
+                "isImmediate": "Is Immediate?",
+                "placeholder": "Placeholder",
+                "description": "Description",
+                "component": "Component",
+                "addComponent": "Add component",
+                "deleteComponent": "Delete component",
+                "encryption": "Encryption",
+                "componentName": "Component Name",
+                "key": "Key",
+                "value": "Value",
+                "empty": "Empty",
+                "addProperty": "Add property",
+                "initialValue": "Initial value",
+                "isInitDynamic": "Is Init Dynamic?",
+                "processIdentifier": "Process identifier",
+                "empty2": "Empty",
+                "addNet": "Add net",
+                "validations": "Validations",
+                "expression": "Expression",
+                "message": "Message",
+                "empty3": "Empty",
+                "addValidation": "Add validation",
+                "options": "Options",
+                "optionKey": "Option key",
+                "optionValue": "Option value",
+                "noOptions": "No options",
+                "addOption": "Add option",
+                "optionsInit": "Options Init",
+                "editActions": "Edit Actions",
+                "noDataSelected": "No data selected",
+                "boolean": "Boolean",
+                "button": "Button",
+                "caseRef": "Case Ref",
+                "date": "Date",
+                "datetime": "Datetime",
+                "enumeration": "Enumeration",
+                "enumerationMap": "Enumeration Map",
+                "file": "File",
+                "fileList": "File List",
+                "caseFilter": "Case Filter",
+                "taskFilter": "Task Filter",
+                "processFilter": "Process Filter",
+                "i18n": "I18n",
+                "multichoice": "Multichoice",
+                "multichoiceMap": "Multichoice Map",
+                "number": "Number",
+                "user": "User",
+                "userList": "User List",
+                "stringCollection": "String Collection",
+                "taskRef": "Task Ref",
+                "text": "Text",
+                "dataVariable": "DataVariable",
+                "hasBeenChanged": "has been changed.",
+                "idHasBeenChangedTo": "ID has been changed to",
+                "andHasBeenChanged": "and has been changed",
+                "hasBeenCreated": "has been created.",
+                "hasBeenDeleted": "has been deleted.",
+                "idLabel": "ID",
+                "name": "Name",
+                "addDataVariable": "Add data variable",
+                "dataEditView": "Data Edit view"
             },
             "edit-mode": {
                 "context-menu": {
-                    Delete breakpoint
-                    Edit,
-                    Arc
-                    has been changed.
-                    Edit model
-                    Model has been changed.
-                    Manage process permissions
-                    Place
-                    Edit form
-                    Create new form
-                    Edit Actions
-                    Edit Task
-                    Task
-                    Permissions
-                    Delete
-                    all
-                    Select connected arcs
+                    "deleteBreakpoint": "Delete breakpoint",
+                    "edit": "Edit",
+                    "arc": "Arc",
+                    "hasBeenChanged": "has been changed.",
+                    "editModel": "Edit model",
+                    "modelHasBeenChanged": "Model has been changed.",
+                    "managePermissions": "Manage process permissions",
+                    "place": "Place",
+                    "editForm": "Edit form",
+                    "createNewForm": "Create new form",
+                    "editActions": "Edit Actions",
+                    "editTask": "Edit Task",
+                    "task": "Task",
+                    "permissions": "Permissions",
+                    "delete": "Delete",
+                    "all": "all",
+                    "selectConnectedArcs": "Select connected arcs"
                 },
                 "services": {
-                    Add token
-                    Token has been added to place
-                    Delete model
-                    Model
-                    has been deleted.
-                    New
-                    arc
-                    has been created
-                    Inhibitor Arc
-                    Place
-                    Arc
-                    Read Arc
-                    Reset Arc
-                    Transition
-                    Task
-                    Fast PN
-                    Remove token
-                    Token has been removed from place
-                    Reset canvas position and zoom
-                    Select tool
-                    Elements
-                    has been duplicated
-                    Elements have been deleted
-                    Elements have been moved
-                    Breakpoint added to arc
-                    New model has been created.
-                    Edit view
-                    breakpoint has been deleted.
+                    "addToken": "Add token",
+                    "tokenAdded": "Token has been added to place",
+                    "deleteModel": "Delete model",
+                    "model": "Model",
+                    "hasBeenDeleted": "has been deleted.",
+                    "new": "New",
+                    "arc": "arc",
+                    "hasBeenCreated": "has been created",
+                    "inhibitorArc": "Inhibitor Arc",
+                    "place": "Place",
+                    "arcLabel": "Arc",
+                    "readArc": "Read Arc",
+                    "resetArc": "Reset Arc",
+                    "transition": "Transition",
+                    "task": "Task",
+                    "fastPN": "Fast PN",
+                    "removeToken": "Remove token",
+                    "tokenRemoved": "Token has been removed from place",
+                    "resetCanvas": "Reset canvas position and zoom",
+                    "selectTool": "Select tool",
+                    "elements": "Elements",
+                    "hasBeenDuplicated": "has been duplicated",
+                    "elementsDeleted": "Elements have been deleted",
+                    "elementsMoved": "Elements have been moved",
+                    "breakpointAdded": "Breakpoint added to arc",
+                    "newModelCreated": "New model has been created.",
+                    "editView": "Edit view",
+                    "breakpointDeleted": "breakpoint has been deleted."
                 }
             },
             "history-mode": {
-                Render type
-                Side by side
-                Inline
-                Download
-                Restore
-                No history is selected
-                Model
-                has been changed
-                has been imported
-                Place
-                has been created
-                has been deleted
-                has been moved to
-                Time
-                Change
-                History
+                "renderType": "Render type",
+                "sideBySide": "Side by side",
+                "inline": "Inline",
+                "download": "Download",
+                "restore": "Restore",
+                "noHistorySelected": "No history is selected",
+                "model": "Model",
+                "hasBeenChanged": "has been changed",
+                "hasBeenImported": "has been imported",
+                "place": "Place",
+                "hasBeenCreated": "has been created",
+                "hasBeenDeleted": "has been deleted",
+                "hasBeenMovedTo": "has been moved to",
+                "time": "Time",
+                "change": "Change",
+                "history": "History"
             },
             "i18n-mode": {
-                Remove locale
-                Add new language
-                Add locale
-                Translations
-                Translations has been changed.
-                Languages
-                String Id
-                Default value
-                Translation
-                Title
-                Placeholder
-                Description
-                Init
-                Default case name
-                Message
-                Events
-                No language available, please add new language
-                Select language
-                Model metadata
-                Title, default case name, ...
-                Tasks
-                Label, event messages, ...
-                There are no tasks in the model
-                Data variables
-                Title, placeholder, description, ...
-                There are no data variables in the model
-                Roles
-                Name, event message, ...
-                There are no roles in the model
-                Internationalization view
+                "removeLocale": "Remove locale",
+                "addNewLanguage": "Add new language",
+                "addLocale": "Add locale",
+                "translations": "Translations",
+                "translationsChanged": "Translations has been changed.",
+                "languages": "Languages",
+                "stringId": "String Id",
+                "defaultValue": "Default value",
+                "translation": "Translation",
+                "title": "Title",
+                "placeholder": "Placeholder",
+                "description": "Description",
+                "init": "Init",
+                "defaultCaseName": "Default case name",
+                "message": "Message",
+                "events": "Events",
+                "noLanguageAvailable": "No language available, please add new language",
+                "selectLanguage": "Select language",
+                "modelMetadata": "Model metadata",
+                "modelMetadataHint": "Title, default case name, ...",
+                "tasks": "Tasks",
+                "tasksHint": "Label, event messages, ...",
+                "noTasksInModel": "There are no tasks in the model",
+                "dataVariables": "Data variables",
+                "dataVariablesHint": "Title, placeholder, description, ...",
+                "noDataVariablesInModel": "There are no data variables in the model",
+                "roles": "Roles",
+                "rolesHint": "Name, event message, ...",
+                "noRolesInModel": "There are no roles in the model",
+                "i18nView": "Internationalization view"
             },
             "role-mode": {
-                Id
-                Id is required
-                Role with given id already exists
-                Title
-                Is Global
-                Edit Actions
-                No role selected
-                Role
-                has been changed.
-                Delete role
-                Duplicate role
-                Role
-                has been created.
-                has been deleted.
-                ID
-                Name
-                Add role
-                Role Edit view
+                "id": "Id",
+                "idRequired": "Id is required",
+                "idExists": "Role with given id already exists",
+                "title": "Title",
+                "isGlobal": "Is Global",
+                "editActions": "Edit Actions",
+                "noRoleSelected": "No role selected",
+                "role": "Role",
+                "hasBeenChanged": "has been changed.",
+                "deleteRole": "Delete role",
+                "duplicateRole": "Duplicate role",
+                "hasBeenCreated": "has been created.",
+                "hasBeenDeleted": "has been deleted.",
+                "idLabel": "ID",
+                "name": "Name",
+                "addRole": "Add role",
+                "roleEditView": "Role Edit view"
             },
             "services": {
-                Context menu closed
-                New Process
-                Download Model
+                "contextMenuClosed": "Context menu closed",
+                "newProcess": "New Process",
+                "downloadModel": "Download Model"
             },
             "simulation-mode": {
-                Change data
-                Simulation by Events
-                Hide grid
-                Show grid
-                Reset canvas position and zoom
-                Reset simulation
-                Simulation by Tasks
-                Simulation view
+                "changeData": "Change data",
+                "simulationByEvents": "Simulation by Events",
+                "hideGrid": "Hide grid",
+                "showGrid": "Show grid",
+                "resetCanvas": "Reset canvas position and zoom",
+                "resetSimulation": "Reset simulation",
+                "simulationByTasks": "Simulation by Tasks",
+                "simulationView": "Simulation view"
             },
             "task-mode": {
-                Control Task view
+                "controlTaskView": "Control Task view"
             },
-            Model
-            has been imported.
+            "model": "Model",
+            "hasBeenImported": "has been imported."
         },
         "tutorial": {
-            Welcome to the Netgrif Application Builder v2.2.0
-            Netgrif Application Builder (NAB) is the tool for building process driven applications using Petriflow language. NAB is composed of several modules that help you in different stages of application development.
-            Process Modeler
-            In Process Modeler you can model business processes by defining tasks and their routing. As a modelling formalism for processes Petriflow language uses Petri nets that consist of state variables, tasks and their interconnections. It supports import of processes in BPMN 2.0 and its automatic translation into Petri nets.
-            Process Simulation
-            In Process Simulation you can simulate modeled processes by executing sequences of tasks or task events.
-            Data Editor
-            In Data Editor you can define data variables used in the processes. Petriflow supports all types of data variables you will need for your application, including text, numbers, date, datetime, enumerations and choices, files, images and many others. Validation and initial values of the data variables can be easily specified in Petriflow. Petriflow supports reference to a list of tasks as a data type.
-            Role Editor
-            In Role Editor you can define roles and specify which roles can perform tasks in the process.
-            Actions Editor
-            In Action Editor you can program reactions on events of process instances, its tasks and data fields. Actions use Groovy as a programming language. Types of events that you can catch includes construction of the process instance, assignment of a task to a user, cancellation of a task, finish  of a task, and change of a data field value. In actions that react on events, you can trigger events in different process instances and in this way for example create a new instance when you finish a task, to assign a new task to a user when you finish actual task, to recalculate a value of a data field whenever you change another data field, or hide
-            Internationalization
-            You can add translations for different languages.
-            History
-            You can review recent changes of the model as well as download or revert to previous version of the model.
-            Model import
-            You can import existing model saved in XML file or transform BPMN file into Petriflow model.
-            Model export
-            You can export current model as XML file. In simulation mode this will export the simulated model in current state of simulation.
-            SVG export
-            You can export current model as SVG file. In simulation mode this will export the simulated model exactly as seen on canvas.
-            Netgrif eTask
-            You can deploy your Petriflow models in our eTask application after registration.
-            Netgrif Academy
-            Educational videos and tutorials can be found on our Youtube channel.
-            Netgrif Github
-            Source codes of our community products are available on Github.
-            Mortgage demo process
-            To load a Mortgage demo process click here.
-            Bug report
-            You can use our github issue page to report any bug you encounter while using the Netgrif Application Builder.
+            "welcome": "Welcome to the Netgrif Application Builder v2.2.0",
+            "intro": "Netgrif Application Builder (NAB) is the tool for building process driven applications using Petriflow language. NAB is composed of several modules that help you in different stages of application development.",
+            "processModelerTitle": "Process Modeler",
+            "processModeler": "In Process Modeler you can model business processes by defining tasks and their routing. As a modelling formalism for processes Petriflow language uses Petri nets that consist of state variables, tasks and their interconnections. It supports import of processes in BPMN 2.0 and its automatic translation into Petri nets.",
+            "processSimulationTitle": "Process Simulation",
+            "processSimulation": "In Process Simulation you can simulate modeled processes by executing sequences of tasks or task events.",
+            "dataEditorTitle": "Data Editor",
+            "dataEditor": "In Data Editor you can define data variables used in the processes. Petriflow supports all types of data variables you will need for your application, including text, numbers, date, datetime, enumerations and choices, files, images and many others. Validation and initial values of the data variables can be easily specified in Petriflow. Petriflow supports reference to a list of tasks as a data type.",
+            "roleEditorTitle": "Role Editor",
+            "roleEditor": "In Role Editor you can define roles and specify which roles can perform tasks in the process.",
+            "actionsEditorTitle": "Actions Editor",
+            "actionsEditor": "In Action Editor you can program reactions on events of process instances, its tasks and data fields. Actions use Groovy as a programming language. Types of events that you can catch includes construction of the process instance, assignment of a task to a user, cancellation of a task, finish  of a task, and change of a data field value. In actions that react on events, you can trigger events in different process instances and in this way for example create a new instance when you finish a task, to assign a new task to a user when you finish actual task, to recalculate a value of a data field whenever you change another data field, or hide",
+            "internationalizationTitle": "Internationalization",
+            "internationalization": "You can add translations for different languages.",
+            "historyTitle": "History",
+            "history": "You can review recent changes of the model as well as download or revert to previous version of the model.",
+            "modelImportTitle": "Model import",
+            "modelImport": "You can import existing model saved in XML file or transform BPMN file into Petriflow model.",
+            "modelExportTitle": "Model export",
+            "modelExport": "You can export current model as XML file. In simulation mode this will export the simulated model in current state of simulation.",
+            "svgExportTitle": "SVG export",
+            "svgExport": "You can export current model as SVG file. In simulation mode this will export the simulated model exactly as seen on canvas.",
+            "netgrifEtaskTitle": "Netgrif eTask",
+            "netgrifEtask": "You can deploy your Petriflow models in our eTask application after registration.",
+            "netgrifAcademyTitle": "Netgrif Academy",
+            "netgrifAcademy": "Educational videos and tutorials can be found on our Youtube channel.",
+            "netgrifGithubTitle": "Netgrif Github",
+            "netgrifGithub": "Source codes of our community products are available on Github.",
+            "mortgageDemoTitle": "Mortgage demo process",
+            "mortgageDemo": "To load a Mortgage demo process click here.",
+            "bugReportTitle": "Bug report",
+            "bugReport": "You can use our github issue page to report any bug you encounter while using the Netgrif Application Builder."
         },
-        New model has been created.
-        has been imported.
-        New Model has been created.
+        "newModelCreated": "New model has been created.",
+        "hasBeenImported": "has been imported.",
+        "newModelCreated2": "New Model has been created."
     }
 }
