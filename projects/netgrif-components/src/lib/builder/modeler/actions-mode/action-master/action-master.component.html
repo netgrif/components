@@ -3,7 +3,7 @@
         <div *ngIf="!isFunctionsModeSelected()" class="height-100">
             <div mat-subheader *ngIf="!isProcessAndCase()" class="header-action">
                 <p fxFlex="40" mat-sort-header="id"><strong>ID</strong></p>
-                <p fxFlex mat-sort-header="name">Name</p>
+                <p fxFlex mat-sort-header="name">{{ 'builder.modeler.actions-mode.action-master.name' | translate }}</p>
             </div>
             <mat-action-list class="height-max" >
                 <nc-builder-main-master-item *ngFor="let item of pageData"
@@ -14,9 +14,9 @@
         </div>
         <div *ngIf="isFunctionsModeSelected()" class="height-100">
             <div mat-subheader class="header-action">
-                <p fxFlex="40"><strong>Name</strong></p>
-                <p fxFlex>Scope</p>
-                <button mat-icon-button class="button-line" matTooltip="Add function" (click)="create()">
+                <p fxFlex="40"><strong>{{ 'builder.modeler.actions-mode.action-master.name' | translate }}</strong></p>
+                <p fxFlex>{{ 'builder.modeler.actions-mode.action-master.scope' | translate }}</p>
+                <button mat-icon-button class="button-line" matTooltip="{{ 'builder.modeler.actions-mode.action-master.addFunction' | translate }}" (click)="create()">
                     <mat-icon>add</mat-icon>
                 </button>
             </div>

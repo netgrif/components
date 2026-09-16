@@ -18,6 +18,7 @@ import {actionCompletionProvider} from './definitions/completion-provider';
 import {tokenProvider} from './definitions/tokens';
 import {FunctionEditorComponent} from './function-editor/function-editor.component';
 import {MaterialModule} from '@netgrif/components-core';
+import {TranslateModule} from "@ngx-translate/core";
 
 declare var monaco: any;
 
@@ -59,6 +60,7 @@ const monacoConfig: NgxMonacoEditorConfig = {
         MaterialModule,
         MonacoEditorModule.forRoot(monacoConfig),
         ResizableModule,
+        TranslateModule,
     ]
 })
 export class ActionEditorModule {

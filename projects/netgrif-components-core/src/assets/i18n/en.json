@@ -758,12 +758,14 @@
             "actions-mode": {
                 "action-detail": {
                     "toggle": "toggle",
+                    "name": "Name",
                     "scope": "Scope",
                     "noActionSelected": "No action selected",
                     "actionsChanged": "Actions have been changed."
                 },
                 "action-editor": {
                     "action-editor": {
+                        "action": "Action",
                         "functions": "Functions",
                         "references": "References",
                         "transitions": "Transitions",
@@ -1464,8 +1466,8 @@
                     },
                     "definitions": {
                         "declaration-provider": {
-                            "dataVariableId": "ID of DataVariable for declare a varable in Action.",
-                            "transitionId": "ID of Transition for declare a varable in Action."
+                            "dataVariableId": "ID of DataVariable for declare a variable in Action.",
+                            "transitionId": "ID of Transition for declare a variable in Action."
                         },
                         "function-provider": {
                             "function-provider": {
@@ -1527,40 +1529,41 @@
                                 "changeCaseProperty": "Change case property",
                                 "saveUseCase": "Save useCase"
                             }
-                        },
-                        "function-editor": {
-                            "functions": "Functions",
-                            "references": "References",
-                            "transitions": "Transitions",
-                            "datafields": "Datafields",
-                            "behaviours": "Behaviours",
-                            "conditions": "Conditions",
-                            "visible": "visible",
-                            "hidden": "hidden",
-                            "editable": "editable",
-                            "required": "required",
-                            "optional": "optional",
-                            "conditions2": "Conditions",
-                            "true": "true",
-                            "false": "false",
-                            "properties": "Properties",
-                            "values": "Values",
-                            "addNewVariableOrValue": "Add new variable or value",
-                            "listOfObjects": "List of objects",
-                            "mapOfObjects": "Map of objects",
-                            "listOfStrings": "List of strings",
-                            "mapOfStrings": "Map of strings"
-                        },
-                        "transition": "Transition",
-                        "role": "Role",
-                        "caseEvents": "Case events",
-                        "processEvents": "Process events",
-                        "events": "Events",
-                        "dataref": "Dataref"
-                    }
+                        }
+                    },
+                    "function-editor": {
+                        "functions": "Functions",
+                        "references": "References",
+                        "transitions": "Transitions",
+                        "datafields": "Datafields",
+                        "behaviours": "Behaviours",
+                        "conditions": "Conditions",
+                        "visible": "visible",
+                        "hidden": "hidden",
+                        "editable": "editable",
+                        "required": "required",
+                        "optional": "optional",
+                        "conditions2": "Conditions",
+                        "true": "true",
+                        "false": "false",
+                        "properties": "Properties",
+                        "values": "Values",
+                        "addNewVariableOrValue": "Add new variable or value",
+                        "listOfObjects": "List of objects",
+                        "mapOfObjects": "Map of objects",
+                        "listOfStrings": "List of strings",
+                        "mapOfStrings": "Map of strings"
+                    },
+                    "transition": "Transition",
+                    "role": "Role",
+                    "caseEvents": "Case events",
+                    "processEvents": "Process events",
+                    "events": "Events",
+                    "dataref": "Dataref"
                 },
                 "action-master": {
                     "name": "Name",
+                    "scope": "Scope",
                     "addFunction": "Add function"
                 },
                 "tools": {

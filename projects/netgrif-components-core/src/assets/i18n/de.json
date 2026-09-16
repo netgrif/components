@@ -757,12 +757,14 @@
             "actions-mode": {
                 "action-detail": {
                     "toggle": "umschalten",
+                    "name": "Name",
                     "scope": "Geltungsbereich",
                     "noActionSelected": "Keine Aktion ausgewählt",
                     "actionsChanged": "Aktionen wurden geändert."
                 },
                 "action-editor": {
                     "action-editor": {
+                        "action": "Aktion",
                         "functions": "Funktionen",
                         "references": "Referenzen",
                         "transitions": "Übergänge",
@@ -1526,40 +1528,41 @@
                                 "changeCaseProperty": "Fall-Eigenschaft ändern",
                                 "saveUseCase": "Fall speichern"
                             }
-                        },
-                        "function-editor": {
-                            "functions": "Funktionen",
-                            "references": "Referenzen",
-                            "transitions": "Übergänge",
-                            "datafields": "Datenfelder",
-                            "behaviours": "Verhaltensweisen",
-                            "conditions": "Bedingungen",
-                            "visible": "sichtbar",
-                            "hidden": "verborgen",
-                            "editable": "bearbeitbar",
-                            "required": "erforderlich",
-                            "optional": "optional",
-                            "conditions2": "Bedingungen",
-                            "true": "wahr",
-                            "false": "falsch",
-                            "properties": "Eigenschaften",
-                            "values": "Werte",
-                            "addNewVariableOrValue": "Neue Variable oder Wert hinzufügen",
-                            "listOfObjects": "Liste von Objekten",
-                            "mapOfObjects": "Map von Objekten",
-                            "listOfStrings": "Liste von Zeichenketten",
-                            "mapOfStrings": "Map von Zeichenketten"
-                        },
-                        "transition": "Übergang",
-                        "role": "Rolle",
-                        "caseEvents": "Fall-Ereignisse",
-                        "processEvents": "Prozess-Ereignisse",
-                        "events": "Ereignisse",
-                        "dataref": "Dataref"
-                    }
+                        }
+                    },
+                    "function-editor": {
+                        "functions": "Funktionen",
+                        "references": "Referenzen",
+                        "transitions": "Übergänge",
+                        "datafields": "Datenfelder",
+                        "behaviours": "Verhaltensweisen",
+                        "conditions": "Bedingungen",
+                        "visible": "sichtbar",
+                        "hidden": "verborgen",
+                        "editable": "bearbeitbar",
+                        "required": "erforderlich",
+                        "optional": "optional",
+                        "conditions2": "Bedingungen",
+                        "true": "wahr",
+                        "false": "falsch",
+                        "properties": "Eigenschaften",
+                        "values": "Werte",
+                        "addNewVariableOrValue": "Neue Variable oder Wert hinzufügen",
+                        "listOfObjects": "Liste von Objekten",
+                        "mapOfObjects": "Map von Objekten",
+                        "listOfStrings": "Liste von Zeichenketten",
+                        "mapOfStrings": "Map von Zeichenketten"
+                    },
+                    "transition": "Übergang",
+                    "role": "Rolle",
+                    "caseEvents": "Fall-Ereignisse",
+                    "processEvents": "Prozess-Ereignisse",
+                    "events": "Ereignisse",
+                    "dataref": "Dataref"
                 },
                 "action-master": {
                     "name": "Name",
+                    "scope": "Geltungsbereich",
                     "addFunction": "Funktion hinzufügen"
                 },
                 "tools": {

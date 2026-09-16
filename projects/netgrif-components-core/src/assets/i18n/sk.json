@@ -757,12 +757,14 @@
             "actions-mode": {
                 "action-detail": {
                     "toggle": "prepnúť",
+                    "name": "Názov",
                     "scope": "Rozsah",
                     "noActionSelected": "Nie je vybraná žiadna akcia",
                     "actionsChanged": "Akcie boli zmenené."
                 },
                 "action-editor": {
                     "action-editor": {
+                        "action": "Akcia",
                         "functions": "Funkcie",
                         "references": "Referencie",
                         "transitions": "Prechody",
@@ -1526,40 +1528,41 @@
                                 "changeCaseProperty": "Zmeniť vlastnosť inštancie",
                                 "saveUseCase": "Uložiť inštanciu"
                             }
-                        },
-                        "function-editor": {
-                            "functions": "Funkcie",
-                            "references": "Referencie",
-                            "transitions": "Prechody",
-                            "datafields": "Dátové polia",
-                            "behaviours": "Správania",
-                            "conditions": "Podmienky",
-                            "visible": "viditeľné",
-                            "hidden": "skryté",
-                            "editable": "editovateľné",
-                            "required": "povinné",
-                            "optional": "voliteľné",
-                            "conditions2": "Podmienky",
-                            "true": "pravda",
-                            "false": "nepravda",
-                            "properties": "Vlastnosti",
-                            "values": "Hodnoty",
-                            "addNewVariableOrValue": "Pridať novú premennú alebo hodnotu",
-                            "listOfObjects": "Zoznam objektov",
-                            "mapOfObjects": "Mapa objektov",
-                            "listOfStrings": "Zoznam reťazcov",
-                            "mapOfStrings": "Mapa reťazcov"
-                        },
-                        "transition": "Prechod",
-                        "role": "Rola",
-                        "caseEvents": "Udalosti inštancie",
-                        "processEvents": "Udalosti procesu",
-                        "events": "Udalosti",
-                        "dataref": "Dataref"
-                    }
+                        }
+                    },
+                    "function-editor": {
+                        "functions": "Funkcie",
+                        "references": "Referencie",
+                        "transitions": "Prechody",
+                        "datafields": "Dátové polia",
+                        "behaviours": "Správania",
+                        "conditions": "Podmienky",
+                        "visible": "viditeľné",
+                        "hidden": "skryté",
+                        "editable": "editovateľné",
+                        "required": "povinné",
+                        "optional": "voliteľné",
+                        "conditions2": "Podmienky",
+                        "true": "pravda",
+                        "false": "nepravda",
+                        "properties": "Vlastnosti",
+                        "values": "Hodnoty",
+                        "addNewVariableOrValue": "Pridať novú premennú alebo hodnotu",
+                        "listOfObjects": "Zoznam objektov",
+                        "mapOfObjects": "Mapa objektov",
+                        "listOfStrings": "Zoznam reťazcov",
+                        "mapOfStrings": "Mapa reťazcov"
+                    },
+                    "transition": "Prechod",
+                    "role": "Rola",
+                    "caseEvents": "Udalosti inštancie",
+                    "processEvents": "Udalosti procesu",
+                    "events": "Udalosti",
+                    "dataref": "Dataref"
                 },
                 "action-master": {
                     "name": "Názov",
+                    "scope": "Rozsah",
                     "addFunction": "Pridať funkciu"
                 },
                 "tools": {

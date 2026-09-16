@@ -12,7 +12,7 @@
                              id="{{action.event + '_' + action.phase + '_' + index}}"
                              class="panel-fix">
             <mat-expansion-panel-header class="header">
-                Action: {{action.id}}
+                {{ 'builder.modeler.actions-mode.action-editor.action-editor.action' | translate }}: {{action.id}}
             </mat-expansion-panel-header>
             <ng-template matExpansionPanelContent>
                 <div fxLayout="row">
@@ -29,7 +29,7 @@
                             <mat-icon>
                                 functions
                             </mat-icon>
-                            Functions
+                            {{ 'builder.modeler.actions-mode.action-editor.action-editor.functions' | translate }}
                         </button>
                     </div>
 
@@ -48,7 +48,7 @@
                             <mat-icon>
                                 link
                             </mat-icon>
-                            References
+                            {{ 'builder.modeler.actions-mode.action-editor.action-editor.references' | translate }}
                             <mat-icon *ngIf="referencesTrigger.menuOpen; else closedMenu">
                                 keyboard_arrow_up
                             </mat-icon>
