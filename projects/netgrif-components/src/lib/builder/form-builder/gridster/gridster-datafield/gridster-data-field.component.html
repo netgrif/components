@@ -1,6 +1,6 @@
 <div fxLayout="row" fxLayoutAlign="start center" class="gridster-item-content min-row-height netgrif-input" *ngIf="!isHidden()">
     <span *ngIf="fieldListService.isPlaceholderField(dataField)"
-          class="placeholder-text">Placeholder for {{dataField.dataVariable.type}} with id '{{dataField.dataVariable?.id}}'</span>
+          class="placeholder-text">{{ 'builder.form-builder.gridster.placeholderFor' | translate }} {{dataField.dataVariable.type}} {{ 'builder.form-builder.gridster.withId' | translate }} '{{dataField.dataVariable?.id}}'</span>
 
     <nc-data-field-template *ngIf="!fieldListService.isPlaceholderField(dataField)"
                             [additionalFieldProperties]="{taskId: ''}" [dataField]="engineField" [offset]="0" fxFlex >
