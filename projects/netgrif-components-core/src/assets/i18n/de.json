@@ -1749,6 +1749,8 @@
                 "placeholder": "Platzhalter",
                 "description": "Beschreibung",
                 "init": "Initialisierung",
+                "options": "Optionen",
+                "validations": "Validierungen",
                 "defaultCaseName": "Standardfallname",
                 "message": "Nachricht",
                 "events": "Ereignisse",

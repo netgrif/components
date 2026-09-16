@@ -1749,6 +1749,8 @@
                 "placeholder": "Zástupný text",
                 "description": "Popis",
                 "init": "Inicializácia",
+                "options": "Možnosti",
+                "validations": "Validácie",
                 "defaultCaseName": "Predvolený názov inštancie",
                 "message": "Správa",
                 "events": "Udalosti",

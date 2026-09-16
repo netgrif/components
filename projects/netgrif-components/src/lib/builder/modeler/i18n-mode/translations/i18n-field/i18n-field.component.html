@@ -2,17 +2,17 @@
     <span fxFlex="20">{{name}}</span>
     <div fxFlex="1"></div>
     <mat-form-field appearance="outline" fxFlex="19">
-        <mat-label>String Id</mat-label>
+        <mat-label>{{ 'builder.modeler.i18n-mode.stringId' | translate }}</mat-label>
         <input matInput [(ngModel)]="field.name" disabled>
     </mat-form-field>
     <div fxFlex="1"></div>
     <mat-form-field appearance="outline" fxFlex="29">
-        <mat-label *ngIf="field.value">Default value</mat-label>
+        <mat-label *ngIf="field.value">{{ 'builder.modeler.i18n-mode.defaultValue' | translate }}</mat-label>
         <input matInput [(ngModel)]="field.value" disabled>
     </mat-form-field>
     <div fxFlex="1"></div>
     <mat-form-field appearance="outline" fxFlex="29" *ngIf="translationField">
-        <mat-label>Translation</mat-label>
+        <mat-label>{{ 'builder.modeler.i18n-mode.translation' | translate }}</mat-label>
         <input matInput [(ngModel)]="translationField.value" (change)="changeTranslation()">
     </mat-form-field>
 </div>

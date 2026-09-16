@@ -1750,6 +1750,8 @@
                 "placeholder": "Placeholder",
                 "description": "Description",
                 "init": "Init",
+                "options": "Options",
+                "validations": "Validations",
                 "defaultCaseName": "Default case name",
                 "message": "Message",
                 "events": "Events",
