@@ -542,7 +542,9 @@
                 "none": "-- None --",
                 "source": "Source",
                 "destination": "Destination",
-                "save": "Save"
+                "save": "Save",
+                "dataFields": "Data fields",
+                "places": "Places"
             },
             "change-data": {
                 "title": "Change referenced data value",
@@ -662,7 +664,13 @@
                     "setTimeType": "Set time type",
                     "setDelay": "Set delay",
                     "setExact": "Set exact",
-                    "toggle": "toggle"
+                    "toggle": "toggle",
+                    "triggers": "Triggers",
+                    "exact": "Exact",
+                    "delay": "Delay",
+                    "auto": "Auto",
+                    "user": "User",
+                    "time": "Time"
                 },
                 "title": "Edit task",
                 "id": "Id",

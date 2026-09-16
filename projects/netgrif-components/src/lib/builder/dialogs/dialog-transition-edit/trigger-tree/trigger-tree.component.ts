@@ -4,6 +4,7 @@ import {Component, Input} from '@angular/core';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
 import {DATE_TIME_FORMAT} from '@netgrif/components-core';
 import {Trigger, TriggerType} from '@netgrif/petriflow';
+import {TranslateService} from "@ngx-translate/core";
 
 interface TriggerNode {
     name?: string;
@@ -25,29 +26,35 @@ interface TriggerNode {
 export class TriggerTreeComponent {
     @Input() triggers: Array<Trigger>;
 
-    // todo 2477 translate options
-    typeOptions = [{key: 'auto', value: 'Auto'}, {key: 'user', value: 'User'}, {key: 'time', value: 'Time'}];
-    optionOptions = [{key: 'exact', value: 'Exact'}, {key: 'delay', value: 'Delay'}];
+    typeOptions: { key: string; value: string; }[];
+    optionOptions: { key: string; value: string; }[];
     treeData: Array<TriggerNode>;
     counter: number;
     treeControl = new NestedTreeControl<TriggerNode>(node => node.trigger);
     dataSource = new MatTreeNestedDataSource<TriggerNode>();
 
-    constructor() {
-        // todo 2477 translate
+    constructor(protected _translateService: TranslateService) {
         this.treeData = [{
-            name: 'Triggers',
+            name: this._translateService.instant('builder.dialogs.transition-edit.trigger-tree.triggers'),
             trigger: []
         }];
         this.dataSource.data = this.treeData;
         this.counter = 0;
+        this.typeOptions = [
+            {key: 'auto', value: this._translateService.instant('builder.dialogs.transition-edit.trigger-tree.auto')},
+            {key: 'user', value: this._translateService.instant('builder.dialogs.transition-edit.trigger-tree.user')},
+            {key: 'time', value: this._translateService.instant('builder.dialogs.transition-edit.trigger-tree.time')}
+        ];
+        this.optionOptions = [
+            {key: 'exact', value: this._translateService.instant('builder.dialogs.transition-edit.trigger-tree.exact')},
+            {key: 'delay', value: this._translateService.instant('builder.dialogs.transition-edit.trigger-tree.delay')}
+        ];
     }
 
     import(): void {
         this.counter = 0;
-        // todo 2477 translate
         const tree = [{
-            name: 'Triggers',
+            name: this._translateService.instant('builder.dialogs.transition-edit.trigger-tree.triggers'),
             trigger: []
         }];
         this.dataSource.data = tree;
@@ -77,9 +84,9 @@ export class TriggerTreeComponent {
         }
     }
 
-    hasChildAndNotRoot = (_: number, node: TriggerNode) => !!node.trigger && node.trigger.length > 0 && node.name !== 'Triggers';
+    hasChildAndNotRoot = (_: number, node: TriggerNode) => !!node.trigger && node.trigger.length > 0 && node.name !== this._translateService.instant('builder.dialogs.transition-edit.trigger-tree.triggers');
 
-    isRoot = (_: number, node: TriggerNode) => node.name === 'Triggers';
+    isRoot = (_: number, node: TriggerNode) => node.name === this._translateService.instant('builder.dialogs.transition-edit.trigger-tree.triggers');
 
     refreshTree() {
         const _data = this.dataSource.data;

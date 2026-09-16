@@ -541,7 +541,9 @@
                 "none": "-- Žiadne --",
                 "source": "Zdroj",
                 "destination": "Cieľ",
-                "save": "Uložiť"
+                "save": "Uložiť",
+                "dataFields": "Dátové polia",
+                "places": "Miesta"
             },
             "change-data": {
                 "title": "Zmeniť hodnotu referencovaných dát",
@@ -661,7 +663,13 @@
                     "setTimeType": "Nastaviť časový typ",
                     "setDelay": "Nastaviť oneskorenie",
                     "setExact": "Nastaviť presný čas",
-                    "toggle": "prepnúť"
+                    "toggle": "prepnúť",
+                    "triggers": "Spúšťače",
+                    "exact": "Ihneď",
+                    "delay": "Oneskorenie",
+                    "auto": "Auto",
+                    "user": "Používateľ",
+                    "time": "Čas"
                 },
                 "title": "Upraviť úlohu",
                 "id": "Id",

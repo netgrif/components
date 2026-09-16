@@ -541,7 +541,9 @@
                 "none": "-- Keine --",
                 "source": "Quelle",
                 "destination": "Ziel",
-                "save": "Speichern"
+                "save": "Speichern",
+                "dataFields": "Datenfelder",
+                "places": "Orte"
             },
             "change-data": {
                 "title": "Referenzierten Datenwert ändern",
@@ -661,7 +663,13 @@
                     "setTimeType": "Zeittyp festlegen",
                     "setDelay": "Verzögerung festlegen",
                     "setExact": "Genauen Wert festlegen",
-                    "toggle": "umschalten"
+                    "toggle": "umschalten",
+                    "triggers": "Auslöser",
+                    "exact": "Genau",
+                    "delay": "Verzögerung",
+                    "auto": "Auto",
+                    "user": "Benutzer",
+                    "time": "Zeit"
                 },
                 "title": "Aufgabe bearbeiten",
                 "id": "Id",
