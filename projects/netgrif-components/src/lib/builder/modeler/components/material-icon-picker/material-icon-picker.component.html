@@ -1,12 +1,12 @@
 <div class="icon-select">
     <mat-form-field appearance="outline" fxFlex>
-        <mat-label>Icon</mat-label>
+        <mat-label>{{ 'builder.modeler.components.material-icon-picker.icon' | translate }}</mat-label>
         <input type="text"
                matInput
                [formControl]="formControlRef"
                [matAutocomplete]="auto">
         <mat-autocomplete #auto="matAutocomplete">
-            <mat-option>-- None --</mat-option>
+            <mat-option>{{ 'builder.modeler.components.material-icon-picker.none' | translate }}</mat-option>
             <mat-option *ngFor="let icona of filteredIcons | async" [value]="icona">
                 <mat-icon>{{icona}}</mat-icon>
                 {{icona}}

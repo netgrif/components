@@ -1585,7 +1585,8 @@
                     "add": "Pridať"
                 },
                 "material-icon-picker": {
-                    "icon": "Ikona"
+                    "icon": "Ikona",
+                    "none": "-- Žiadne --"
                 }
             },
             "control-panel": {
@@ -1614,14 +1615,14 @@
                 "empty": "Prázdne",
                 "addProperty": "Pridať vlastnosť",
                 "initialValue": "Počiatočná hodnota",
+                "none": "Žiadne",
                 "isInitDynamic": "Je inicializácia dynamická?",
+                "allowedNets": "Povolené siete",
                 "processIdentifier": "Identifikátor procesu",
-                "empty2": "Prázdne",
                 "addNet": "Pridať sieť",
                 "validations": "Validácie",
                 "expression": "Výraz",
                 "message": "Správa",
-                "empty3": "Prázdne",
                 "addValidation": "Pridať validáciu",
                 "options": "Možnosti",
                 "optionKey": "Kľúč možnosti",
@@ -1661,7 +1662,9 @@
                 "idLabel": "ID",
                 "name": "Názov",
                 "addDataVariable": "Pridať dátovú premennú",
-                "dataEditView": "Zobrazenie úpravy dát"
+                "dataEditView": "Zobrazenie úpravy dát",
+                "deleteDataField": "Vymazať dátové pole",
+                "duplicateDataField": "Duplikovať dátové pole"
             },
             "edit-mode": {
                 "context-menu": {

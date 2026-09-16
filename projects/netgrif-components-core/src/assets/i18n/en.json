@@ -1586,7 +1586,8 @@
                     "add": "Add"
                 },
                 "material-icon-picker": {
-                    "icon": "Icon"
+                    "icon": "Icon",
+                    "none": "-- None --"
                 }
             },
             "control-panel": {
@@ -1615,14 +1616,14 @@
                 "empty": "Empty",
                 "addProperty": "Add property",
                 "initialValue": "Initial value",
+                "none": "None",
                 "isInitDynamic": "Is Init Dynamic?",
+                "allowedNets": "Allowed Nets",
                 "processIdentifier": "Process identifier",
-                "empty2": "Empty",
                 "addNet": "Add net",
                 "validations": "Validations",
                 "expression": "Expression",
                 "message": "Message",
-                "empty3": "Empty",
                 "addValidation": "Add validation",
                 "options": "Options",
                 "optionKey": "Option key",
@@ -1662,7 +1663,9 @@
                 "idLabel": "ID",
                 "name": "Name",
                 "addDataVariable": "Add data variable",
-                "dataEditView": "Data Edit view"
+                "dataEditView": "Data Edit view",
+                "deleteDataField": "Delete data field",
+                "duplicateDataField": "Duplicate data field"
             },
             "edit-mode": {
                 "context-menu": {

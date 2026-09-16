@@ -1585,7 +1585,8 @@
                     "add": "Hinzufügen"
                 },
                 "material-icon-picker": {
-                    "icon": "Symbol"
+                    "icon": "Symbol",
+                    "none": "-- Keine --"
                 }
             },
             "control-panel": {
@@ -1614,14 +1615,14 @@
                 "empty": "Leer",
                 "addProperty": "Eigenschaft hinzufügen",
                 "initialValue": "Anfangswert",
+                "none": "Keine",
                 "isInitDynamic": "Ist Initialisierung dynamisch?",
+                "allowedNets": "Zulässige Netze",
                 "processIdentifier": "Prozessidentifikator",
-                "empty2": "Leer",
                 "addNet": "Netz hinzufügen",
                 "validations": "Validierungen",
                 "expression": "Ausdruck",
                 "message": "Nachricht",
-                "empty3": "Leer",
                 "addValidation": "Validierung hinzufügen",
                 "options": "Optionen",
                 "optionKey": "Optionsschlüssel",
@@ -1661,7 +1662,9 @@
                 "idLabel": "ID",
                 "name": "Name",
                 "addDataVariable": "Datenvariable hinzufügen",
-                "dataEditView": "Daten-Bearbeitungsansicht"
+                "dataEditView": "Daten-Bearbeitungsansicht",
+                "deleteDataField": "Datenfeld löschen",
+                "duplicateDataField": "Datenfeld duplizieren"
             },
             "edit-mode": {
                 "context-menu": {
