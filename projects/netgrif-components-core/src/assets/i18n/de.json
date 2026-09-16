@@ -528,5 +528,1308 @@
     },
     "export": {
         "errorExportDownload": "Datei konnte nicht heruntergeladen werden!"
+    },
+    "builder": {
+        "dialogs": {
+            "arc-edit": {
+                "multiplicity": "Multiplizität",
+                "idRequired": "Id ist erforderlich",
+                "multiplicityPositive": "Multiplizität muss eine positive ganze Zahl sein",
+                "reference": "Referenz",
+                "none": "-- Keine --",
+                "source": "Quelle",
+                "destination": "Ziel",
+                "save": "Speichern"
+            },
+            "change-data": {
+                "title": "Referenzierten Datenwert ändern",
+                "valueRequired": "Wert ist erforderlich",
+                "valueNotNegative": "Wert darf keine negative Zahl sein",
+                "noData": "Keine referenzierten Daten gefunden",
+                "save": "Speichern"
+            },
+            "dead-net": {
+                "title": "Keine ausführbare Aufgabe",
+                "message": "Es gibt keine ausführbaren Aufgaben. Sind Sie sicher, dass Sie das Modell herunterladen möchten?",
+                "cancel": "Stornieren",
+                "download": "Herunterladen"
+            },
+            "delete": {
+                "title": "Löschbestätigung",
+                "message": "Sind Sie sicher, dass Sie dieses Element löschen möchten?",
+                "cancel": "Stornieren",
+                "confirm": "Bestätigen"
+            },
+            "delete-model": {
+                "title": "Modell löschen",
+                "message": "Sind Sie sicher, dass Sie das Modell löschen möchten? Alle nicht gespeicherten Änderungen gehen verloren.",
+                "cancel": "Stornieren",
+                "delete": "Löschen"
+            },
+            "errors": {
+                "title": "Importergebnis",
+                "errors": "Fehler:",
+                "warnings": "Warnungen:",
+                "info": "Info:",
+                "close": "Schließen"
+            },
+            "local-storage-model": {
+                "title": "Vorherige Arbeit fortsetzen",
+                "message": "Möchten Sie die Arbeit an",
+                "from": "von",
+                "deleteOld": "Alte Arbeit löschen",
+                "load": "Laden"
+            },
+            "manage-roles": {
+                "title": "Berechtigungen",
+                "rolePermissions": "Rollenberechtigungen",
+                "id": "Id",
+                "perform": "Ausführen",
+                "delegate": "Delegieren",
+                "cancel": "Stornieren",
+                "assign": "Zuweisen",
+                "create": "Erstellen",
+                "delete": "Löschen",
+                "view": "Ansehen",
+                "userListPermissions": "Benutzerlistenberechtigungen",
+                "changed": "Rollenzuweisungen wurden geändert."
+            },
+            "marking-change": {
+                "title": "Markierung der Stelle ändern",
+                "tokens": "Token",
+                "tokensRequired": "Anzahl der Token ist erforderlich",
+                "tokensNonNegative": "Anzahl der Token muss eine nicht negative ganze Zahl sein",
+                "save": "Speichern"
+            },
+            "model-edit": {
+                "title": "Modell bearbeiten",
+                "idRequired": "Id ist erforderlich",
+                "version": "Version",
+                "versionFormat": "Version muss im Format Major.Minor.Patch sein",
+                "modelTitle": "Titel",
+                "idRequired2": "Id ist erforderlich",
+                "initials": "Initialen",
+                "defaultRole": "Standardrolle",
+                "anonymousRole": "Anonyme Rolle",
+                "defaultCaseName": "Standardfallname",
+                "tags": "Tags",
+                "key": "Schlüssel",
+                "value": "Wert",
+                "empty": "Leer",
+                "addTag": "Tag hinzufügen",
+                "actions": "Aktionen",
+                "permissions": "Berechtigungen",
+                "save": "Speichern"
+            },
+            "place-edit": {
+                "title": "Stelle bearbeiten",
+                "id": "Id",
+                "idRequired": "Id ist erforderlich",
+                "idExists": "Eine Stelle mit der angegebenen Id existiert bereits",
+                "label": "Beschriftung",
+                "tokens": "Token",
+                "tokensRequired": "Anzahl der Token ist erforderlich",
+                "tokensNonNegative": "Anzahl der Token muss eine nicht negative ganze Zahl sein",
+                "save": "Speichern"
+            },
+            "place-ref-delete": {
+                "titleSingle": "Referenzierte Stelle löschen",
+                "titleMultiple": "Referenzierte Stellen löschen",
+                "place": "Stelle",
+                "referencedByArc": "wird durch Kante referenziert",
+                "referencedByArcs": "wird durch Kanten referenziert",
+                "cancel": "Stornieren",
+                "delete": "Löschen"
+            },
+            "refactor": {
+                "title": "Id refaktorieren",
+                "originalId": "Ursprüngliche Id",
+                "newId": "Neue Id",
+                "newIdRequired": "Neue Id ist erforderlich!",
+                "idCharsOnly": "Id darf nur alphanumerische Zeichen, Bindestriche oder Unterstriche enthalten!",
+                "idUnique": "Id muss eindeutig sein! Die ausgewählte Id existiert bereits!",
+                "warning": "WARNUNG! In Aktionen wird die Feld-Id nur im Deklarationsteil geändert. Die als Zeichenkette verwendete Id in der Aktionsanweisung wird nicht geändert.",
+                "close": "Schließen",
+                "refactor": "Refaktorieren"
+            },
+            "transition-edit": {
+                "trigger-tree": {
+                    "setTriggerType": "Auslösertyp festlegen",
+                    "setTimeType": "Zeittyp festlegen",
+                    "setDelay": "Verzögerung festlegen",
+                    "setExact": "Genauen Wert festlegen",
+                    "toggle": "umschalten"
+                },
+                "title": "Aufgabe bearbeiten",
+                "id": "Id",
+                "idRequired": "Id ist erforderlich",
+                "idExists": "Ein Übergang mit der angegebenen Id existiert bereits",
+                "label": "Beschriftung",
+                "assignPolicy": "Zuweisungsrichtlinie",
+                "finishPolicy": "Abschlussrichtlinie",
+                "tags": "Tags",
+                "key": "Schlüssel",
+                "value": "Wert",
+                "empty": "Leer",
+                "addTag": "Tag hinzufügen",
+                "form": "Formular",
+                "actions": "Aktionen",
+                "permissions": "Berechtigungen",
+                "save": "Speichern"
+            }
+        },
+        "form-builder": {
+            "edit-panel": {
+                "numberOfColumns": "Spaltenanzahl",
+                "editActions": "Aktionen bearbeiten",
+                "title": "Titel",
+                "message": "Nachricht",
+                "id": "Id",
+                "required": "Pflichtfeld",
+                "immediate": "Sofortig",
+                "placeholder": "Platzhalter",
+                "description": "Beschreibung",
+                "initialValue": "Anfangswert",
+                "noOptions": "Keine Optionen",
+                "addOption": "Option hinzufügen",
+                "componentName": "Komponentenname",
+                "noProperties": "Keine Eigenschaften",
+                "addProperty": "Eigenschaft hinzufügen",
+                "copyToDataRef": "In DataRef kopieren",
+                "noIcons": "Keine Symbole",
+                "addIcon": "Symbol hinzufügen",
+                "copyToDataField": "In DataField kopieren",
+                "dataFieldActions": "DataField-Aktionen",
+                "template": "Vorlage",
+                "appearance": "Darstellung",
+                "fieldOffset": "Feldversatz"
+            },
+            "field-list": {
+                "dataFields": "Datenfelder",
+                "existingFields": "Vorhandene Felder",
+                "createNewFields": "Neue Felder erstellen",
+                "back": "Zurück",
+                "simple": "Einfach",
+                "area": "Bereich",
+                "markdownEditor": "Markdown-Editor",
+                "htmlEditor": "HTML-Editor",
+                "password": "Passwort",
+                "signature": "Unterschrift",
+                "decimal": "Dezimalzahl",
+                "currency": "Währung",
+                "select": "Auswählen",
+                "list": "Liste",
+                "stepper": "Schrittzähler",
+                "autocomplete": "Autocomplete",
+                "dynamicAutocomplete": "Dynamisches Autocomplete",
+                "icon": "Symbol",
+                "caseRef": "Fall-Referenz",
+                "slide": "Schieberegler",
+                "raised": "Erhöht",
+                "stroked": "Umrandet",
+                "flat": "Flach",
+                "fab": "FAB",
+                "miniFab": "MiniFAB",
+                "preview": "Vorschau",
+                "text": "Text",
+                "divider": "Trennlinie",
+                "dashboard": "Dashboard"
+            },
+            "gridster": {
+                "placeholderFor": "Platzhalter für",
+                "withId": "mit Id",
+                "dataRefsChanged": "DataRefs wurden geändert"
+            },
+            "info-label": {
+                "id": "ID",
+                "label": "Beschriftung",
+                "noTransition": "Sie haben keinen Übergang ausgewählt!"
+            }
+        },
+        "modeler": {
+            "actions-mode": {
+                "action-detail": {
+                    "toggle": "umschalten",
+                    "scope": "Geltungsbereich",
+                    "noActionSelected": "Keine Aktion ausgewählt",
+                    "actionsChanged": "Aktionen wurden geändert."
+                },
+                "action-editor": {
+                    "action-editor": {
+                        "functions": "Funktionen",
+                        "references": "Referenzen",
+                        "transitions": "Übergänge",
+                        "dataFields": "Datenfelder",
+                        "behaviours": "Verhaltensweisen",
+                        "visible": "sichtbar",
+                        "hidden": "verborgen",
+                        "editable": "bearbeitbar",
+                        "required": "erforderlich",
+                        "optional": "optional",
+                        "conditions": "Bedingungen",
+                        "true": "wahr",
+                        "false": "falsch",
+                        "properties": "Eigenschaften",
+                        "title": "titel",
+                        "color": "farbe",
+                        "icon": "symbol",
+                        "values": "Werte",
+                        "emptyValue": "Leerer Wert",
+                        "newVariableOrValue": "Neue Variable oder Wert",
+                        "listOfObjects": "Liste von Objekten",
+                        "mapOfObjects": "Map von Objekten",
+                        "listOfStrings": "Liste von Zeichenketten",
+                        "mapOfStrings": "Map von Zeichenketten",
+                        "text": "text",
+                        "number": "number",
+                        "date": "date",
+                        "boolean": "boolean",
+                        "file": "file",
+                        "fileList": "fileList",
+                        "enumeration": "enumeration",
+                        "enumerationMap": "enumeration_map",
+                        "multichoice": "multichoice",
+                        "multichoiceMap": "multichoice_map",
+                        "userList": "userList",
+                        "tabular": "tabular",
+                        "caseRef": "caseRef",
+                        "dateTime": "dateTime",
+                        "button": "button",
+                        "taskRef": "taskRef",
+                        "filter": "filter",
+                        "i18n": "i18n",
+                        "dataSet": "DataSet",
+                        "oneDataInSet": "Ein Datenelement im Set",
+                        "processInstanceId": "Prozessinstanz-Id",
+                        "casePredicates": "Fall-Prädikate",
+                        "caseIdEqualsValue": "Fall-ID ist gleich Wert",
+                        "caseVisualIdEqualsValue": "Visuelle Fall-ID ist gleich Wert",
+                        "processIdentifierEqualsValue": "Prozessidentifikator ist gleich Wert",
+                        "titleEqualsValue": "Titel ist gleich Wert",
+                        "authorsEmailEqualsValue": "E-Mail des Autors ist gleich Wert",
+                        "authorsIdEqualsValue": "Id des Autors ist gleich Wert",
+                        "authorsFullNameEqualsValue": "Vollständiger Name des Autors ist gleich Wert",
+                        "taskPredicates": "Aufgaben-Prädikate",
+                        "taskIdEqualsValue": "Aufgaben-ID ist gleich Wert",
+                        "transitionIdEqualsValue": "Übergangs-Id ist gleich Wert",
+                        "caseIdEqualsValue2": "Fall-Id ist gleich Wert",
+                        "caseTitleEqualsValue": "Falltitel ist gleich Wert"
+                    },
+                    "action-editor-menu": {
+                        "example": "Beispiel"
+                    },
+                    "classes": {
+                        "command-action": {
+                            "basicFunctions": {
+                                "label": "Grundlegende Funktionen",
+                                "ifElseStatement": {
+                                    "label": "If/Else-Anweisung",
+                                    "description": "Diese Anweisung funktioniert so, dass zunächst eine Bedingung in der if-Anweisung ausgewertet wird. Wenn die Bedingung wahr ist, werden die nachfolgenden Anweisungen ausgeführt und die else-Bedingung übersprungen. Wenn die Bedingung falsch ist, werden die Anweisungen im else-Block ausgeführt."
+                                },
+                                "nestedIfStatement": {
+                                    "label": "Verschachtelte If-Anweisung",
+                                    "description": "Diese Anweisung funktioniert so, dass zunächst eine Bedingung in der if-Anweisung ausgewertet wird. Wenn die Bedingung wahr ist, werden die nachfolgenden Anweisungen ausgeführt und die else-Bedingung übersprungen. Wenn die Bedingung falsch ist, werden die Anweisungen in den else-if-Blöcken und schließlich im else-Block ausgeführt."
+                                },
+                                "switchStatement": {
+                                    "label": "Switch-Anweisung",
+                                    "description": "Die verschachtelte if-else-Anweisung ist so verbreitet, dass eine einfachere Anweisung namens Switch-Anweisung entwickelt wurde."
+                                },
+                                "whileStatement": {
+                                    "label": "While-Anweisung",
+                                    "description": "Die While-Anweisung wird ausgeführt, indem zunächst der Bedingungsausdruck (ein boolescher Wert) ausgewertet wird. Wenn das Ergebnis wahr ist, werden die Anweisungen in der While-Schleife ausgeführt. Dieser Vorgang wird wiederholt, bis die Bedingung falsch wird."
+                                },
+                                "forInStatement": {
+                                    "label": "For-in-Anweisung",
+                                    "description": "Die For-in-Anweisung wird verwendet, um eine Menge von Werten zu durchlaufen."
+                                },
+                                "groovyTutorial": {
+                                    "label": "Groovy-Tutorial",
+                                    "description": "Link zu den Groovy Tutorials: https://www.tutorialspoint.com/groovy/index.htm"
+                                }
+                            },
+                            "dataFields": {
+                                "label": "Datenfelder",
+                                "changeValue": {
+                                    "label": "Wert ändern",
+                                    "description": "Setzt einen neuen Wert für das Datenfeld f, der vom Berechnungsabschluss zurückgegeben wird. Wenn der zurückgegebene Wert null ist, wird der Feldwert auf den Standardwert gesetzt. Wenn der zurückgegebene Wert unverändert ist, wird der Feldwert nicht geändert und Aktionen mit einem auf das Feld gesetzten Auslöser werden nicht ausgelöst."
+                                },
+                                "changeChoices": {
+                                    "label": "Auswahlmöglichkeiten ändern",
+                                    "description": "Setzt eine neue Menge von Auswahlmöglichkeiten für das Datenfeld f."
+                                },
+                                "changeOptions": {
+                                    "label": "Optionen ändern",
+                                    "description": "Setzt eine neue Map von Optionen für das Datenfeld f."
+                                },
+                                "changeAllowedNets": {
+                                    "label": "Erlaubte Netze ändern",
+                                    "description": "Setzt eine neue Map von Optionen für das Datenfeld f."
+                                },
+                                "changeBehaviour": {
+                                    "label": "Verhalten ändern",
+                                    "description": "Ändert das Verhalten des angegebenen Datenfeldes f beim Übergang t, wenn die Bedingung wahr zurückgibt."
+                                },
+                                "changeMultipleBehaviour": {
+                                    "label": "Mehrfaches Verhalten ändern",
+                                    "description": "Ändert das Verhalten der angegebenen Datenfelder f bei Aufgaben t, wenn die Bedingung wahr zurückgibt. Aufgaben können durch eine Liste von Übergangsreferenzen, eine Liste von Aufgaben-Ids oder eine Liste von Aufgabenreferenzen referenziert werden."
+                                },
+                                "setDataByTransition": {
+                                    "label": "Datenfelder nach Übergang setzen",
+                                    "description": "Setzt Werte von Datenfeldern auf die Aufgabe des Übergangs im aktuellen Fall. Werte werden mithilfe der Import-Id des Datenfeldes als Schlüssel auf Datenfelder im dataSet abgebildet."
+                                },
+                                "setDataByTask": {
+                                    "label": "Datenfelder nach Aufgabe setzen",
+                                    "description": "Setzt Werte von Datenfeldern auf die Aufgabe. Werte werden mithilfe der Import-Id des Datenfeldes als Schlüssel auf Datenfelder im dataSet abgebildet."
+                                },
+                                "setDataByTransitionId": {
+                                    "label": "Datenfelder nach transitionId setzen",
+                                    "description": "Setzt Werte von Datenfeldern auf die Aufgabe, die durch transitionId des angegebenen Falls identifiziert wird. Werte werden mithilfe der Import-Id des Datenfeldes als Schlüssel auf Datenfelder im dataSet abgebildet."
+                                },
+                                "setDataByTaskId": {
+                                    "label": "Datenfelder nach Aufgabe setzen",
+                                    "description": "Setzt Werte von Datenfeldern auf die Aufgabe, die durch ihre Id identifiziert wird. Werte werden mithilfe der Import-Id des Datenfeldes als Schlüssel auf Datenfelder im dataSet abgebildet."
+                                },
+                                "getDataByTransition": {
+                                    "label": "Datenfelder nach Übergang abrufen",
+                                    "description": "Ruft alle Datenfelder der Aufgabe des Übergangs im aktuellen Fall ab, geordnet nach Import-Id."
+                                },
+                                "getDataByTransitionId": {
+                                    "label": "Datenfelder nach transitionId abrufen",
+                                    "description": "Ruft alle Datenfelder der Aufgabe ab, die durch ihre transitionId im angegebenen Fall definiert ist, geordnet nach Import-Id."
+                                },
+                                "getDataByTask": {
+                                    "label": "Datenfelder nach Übergang abrufen",
+                                    "description": "Ruft alle Datenfelder der Aufgabe ab, geordnet nach Import-Id."
+                                },
+                                "getDataByTaskId": {
+                                    "label": "Datenfelder nach Übergang abrufen",
+                                    "description": "Ruft alle Datenfelder der Aufgabe des Übergangs im aktuellen Fall ab, geordnet nach Import-Id."
+                                }
+                            },
+                            "processInstances": {
+                                "label": "Prozessinstanzen / Fälle",
+                                "createCaseByIdentifier": {
+                                    "label": "Neue Prozessinstanz mit Prozessidentifikator erstellen",
+                                    "description": "Erstellt eine neue Instanz der neuesten Version des durch den Identifikator identifizierten Prozesses. Wenn Titel, Farbe, Autor oder Sprache nicht angegeben sind, wird der Standardwert verwendet."
+                                },
+                                "createCaseByReference": {
+                                    "label": "Neue Prozessinstanz mit Prozessreferenz erstellen",
+                                    "description": "Erstellt eine neue Instanz des angegebenen Prozesses. Wenn Titel, Farbe, Autor oder Sprache nicht angegeben sind, wird der Standardwert verwendet."
+                                },
+                                "changeCaseProperty": {
+                                    "label": "Eigenschaft des Falls ändern",
+                                    "description": "Ändert die Eigenschaft des aktuellen Falls. Der neue Wert wird vom Lieferanten generiert."
+                                }
+                            },
+                            "tasks": {
+                                "label": "Aufgaben",
+                                "getTaskId": {
+                                    "label": "Aufgaben-Id nach transitionId abrufen",
+                                    "description": "Gibt die Aufgaben-Id zurück, wenn eine Aufgabe mit der angegebenen transitionId im Fall existiert."
+                                },
+                                "assignTaskByTransitionId": {
+                                    "label": "Aufgabe nach transitionId zuweisen",
+                                    "description": "Weist die Aufgabe mit der angegebenen transitionId des angegebenen Falls dem angegebenen Benutzer zu. Wenn Fall oder Benutzer nicht angegeben sind, wird der Standardwert verwendet."
+                                },
+                                "assignTaskByTask": {
+                                    "label": "Aufgabe nach Aufgabe zuweisen",
+                                    "description": "Weist die Aufgabe dem Benutzer zu. Der optionale Parameter Benutzer identifiziert den Akteur, der die Zuweisung durchführt."
+                                },
+                                "assignTaskByTasks": {
+                                    "label": "Aufgabe nach Aufgaben zuweisen",
+                                    "description": "Weist die Aufgaben dem Benutzer zu."
+                                },
+                                "cancelTaskByTransitionId": {
+                                    "label": "Aufgabe nach transitionId stornieren",
+                                    "description": "Storniert die Aufgabe mit der angegebenen transitionId in einem Fall."
+                                },
+                                "cancelTaskByTask": {
+                                    "label": "Aufgabe nach Aufgabe stornieren",
+                                    "description": "Storniert die angegebene Aufgabe. Der optionale Parameter Benutzer identifiziert den Akteur, der den Abbruch durchführt."
+                                },
+                                "cancelTasks": {
+                                    "label": "Aufgaben stornieren",
+                                    "description": "Storniert alle angegebenen Aufgaben. Der optionale Parameter Benutzer identifiziert den Akteur, der den Abbruch durchführt."
+                                },
+                                "finishTaskByTransitionId": {
+                                    "label": "Aufgabe nach transitionId abschließen",
+                                    "description": "Schließt die Aufgabe im aktuellen Fall mit der angegebenen transitionId ab. Der optionale Parameter aCase identifiziert den Fall, zu dem die Aufgabe gehört. Der optionale Parameter Benutzer identifiziert den Akteur."
+                                },
+                                "finishTaskByTask": {
+                                    "label": "Aufgabe nach Aufgabe abschließen",
+                                    "description": "Schließt die angegebene Aufgabe ab. Der optionale Parameter Benutzer identifiziert den Akteur, der den Abschluss durchführt."
+                                },
+                                "finishTasksByList": {
+                                    "label": "Aufgaben nach Aufgabenliste abschließen",
+                                    "description": "Schließt alle angegebenen Aufgaben ab. Der optionale Parameter Benutzer identifiziert den Akteur, der den Abschluss durchführt."
+                                },
+                                "executeTask": {
+                                    "label": "Aufgabe ausführen",
+                                    "description": "Führt eine Aufgabe aus, die durch ihre transitionId gefunden wird. Die Aufgabe wird gefunden, dann zugewiesen, mit Daten befüllt und schließlich vom System abgeschlossen."
+                                },
+                                "executeTransitions": {
+                                    "label": "Übergänge ausführen",
+                                    "description": "Führt alle ausführbaren Übergänge aus, die durch transitionId in allen Fällen identifiziert werden, bei denen das Prädikat wahr zurückgibt. Für jede Aufgabe werden folgende Aktionen aufgerufen: Zuweisung an den Systembenutzer, Speichern neuer Datenwerte, Abschließen."
+                                }
+                            },
+                            "search": {
+                                "label": "Suche",
+                                "findCases": {
+                                    "label": "Fälle suchen",
+                                    "description": "Findet alle Fälle, die dem angegebenen Prädikat entsprechen. Das Prädikat ist ein Groovy-Abschluss, der ein QCase-Objekt akzeptiert und ein QueryDSL-Prädikat zurückgibt."
+                                },
+                                "findCasesPageable": {
+                                    "label": "Fälle seitenweise suchen",
+                                    "description": "Findet alle Fälle, die dem angegebenen Prädikat entsprechen, mit Seitennavigation. Das Prädikat ist ein Groovy-Abschluss, der ein QCase-Objekt akzeptiert und ein QueryDSL-Prädikat zurückgibt."
+                                },
+                                "findCase": {
+                                    "label": "Fall suchen",
+                                    "description": "Findet den ersten Fall, der dem angegebenen Prädikat entspricht. Das Prädikat ist ein Groovy-Abschluss, der ein QCase-Objekt akzeptiert und ein QueryDSL-Prädikat zurückgibt."
+                                },
+                                "findTasks": {
+                                    "label": "Aufgaben suchen",
+                                    "description": "Findet alle Aufgaben, die dem angegebenen Prädikat entsprechen. Das Prädikat ist ein Groovy-Abschluss, der ein QCase-Objekt akzeptiert und ein QueryDSL-Prädikat zurückgibt."
+                                },
+                                "findTasksWithPagination": {
+                                    "label": "Aufgaben mit Seitennavigation suchen",
+                                    "description": "Findet alle Aufgaben, die dem angegebenen Prädikat entsprechen, mit Seitennavigation. Das Prädikat ist ein Groovy-Abschluss, der ein QCase-Objekt akzeptiert und ein QueryDSL-Prädikat zurückgibt."
+                                },
+                                "findTask": {
+                                    "label": "Aufgabe suchen",
+                                    "description": "Findet die erste Aufgabe, die dem angegebenen Prädikat entspricht. Das Prädikat ist ein Groovy-Abschluss, der ein QCase-Objekt akzeptiert und ein QueryDSL-Prädikat zurückgibt."
+                                },
+                                "findTaskById": {
+                                    "label": "Aufgabe nach Id suchen",
+                                    "description": "Findet eine Aufgabe mit der angegebenen Id."
+                                },
+                                "findCaseElastic": {
+                                    "label": "Fall in Elasticsearch suchen",
+                                    "description": "Sucht in Elasticsearch mit einer Zeichenkettenanfrage nach dem ersten Vorkommen."
+                                },
+                                "findCasesElastic": {
+                                    "label": "Fälle in Elasticsearch suchen",
+                                    "description": "Sucht in Elasticsearch mit einer Zeichenkettenanfrage."
+                                },
+                                "countCasesElastic": {
+                                    "label": "Fälle in Elasticsearch zählen",
+                                    "description": "Gibt die Anzahl der Fälle für eine Suchanfrage zurück."
+                                }
+                            },
+                            "async": {
+                                "label": "Asynchron",
+                                "asyncRun": {
+                                    "label": "Asynchrone Ausführung mit Aufgabenausführung",
+                                    "description": ""
+                                }
+                            },
+                            "roles": {
+                                "label": "Rollen",
+                                "assignRole": {
+                                    "label": "Rolle zuweisen",
+                                    "description": "Weist dem Benutzer die durch roleId identifizierte Rolle zu. Benutzer ist ein optionaler Parameter, der Standardwert ist der aktuell angemeldete Benutzer. Gibt das aktualisierte Benutzerobjekt zurück."
+                                },
+                                "assignRoleByImportIdAndIdentifier": {
+                                    "label": "Rolle nach Import-Id und Prozessidentifikator zuweisen",
+                                    "description": "Weist dem Benutzer die durch Import-Id und netId identifizierte Rolle zu. Benutzer ist ein optionaler Parameter, der Standardwert ist der aktuell angemeldete Benutzer. Gibt das aktualisierte Benutzerobjekt zurück."
+                                },
+                                "assignRoleByImportIdAndProcess": {
+                                    "label": "Rolle nach Import-Id und Prozess zuweisen",
+                                    "description": "Weist dem Benutzer die durch Import-Id und Prozessreferenz identifizierte Rolle zu. Benutzer ist ein optionaler Parameter, der Standardwert ist der aktuell angemeldete Benutzer. Gibt das aktualisierte Benutzerobjekt zurück."
+                                },
+                                "assignRoleByImportIdIdentifierAndVersion": {
+                                    "label": "Rolle nach Import-Id, Prozessidentifikator und Version zuweisen",
+                                    "description": "Weist dem Benutzer die durch Import-Id, Prozessidentifikator und Version identifizierte Rolle zu. Benutzer ist ein optionaler Parameter, der Standardwert ist der aktuell angemeldete Benutzer. Gibt das aktualisierte Benutzerobjekt zurück."
+                                },
+                                "removeRole": {
+                                    "label": "Rolle entfernen",
+                                    "description": "Entfernt die durch roleId identifizierte Rolle vom Benutzer. Benutzer ist ein optionaler Parameter, der Standardwert ist der aktuell angemeldete Benutzer. Gibt das aktualisierte Benutzerobjekt zurück."
+                                },
+                                "removeRoleByImportIdAndIdentifier": {
+                                    "label": "Rolle nach Import-Id und Prozessidentifikator entfernen",
+                                    "description": "Entfernt die durch Import-Id und netId identifizierte Rolle vom Benutzer. Benutzer ist ein optionaler Parameter, der Standardwert ist der aktuell angemeldete Benutzer. Gibt das aktualisierte Benutzerobjekt zurück."
+                                },
+                                "removeRoleByImportIdAndProcess": {
+                                    "label": "Rolle nach Import-Id und Prozess entfernen",
+                                    "description": "Entfernt die durch Import-Id und Prozessreferenz identifizierte Rolle vom Benutzer. Benutzer ist ein optionaler Parameter, der Standardwert ist der aktuell angemeldete Benutzer. Gibt das aktualisierte Benutzerobjekt zurück."
+                                },
+                                "removeRoleByImportIdIdentifierAndVersion": {
+                                    "label": "Rolle nach Import-Id, Prozessidentifikator und Version entfernen",
+                                    "description": "Entfernt die durch Import-Id, Prozessidentifikator und Version identifizierte Rolle vom Benutzer. Benutzer ist ein optionaler Parameter, der Standardwert ist der aktuell angemeldete Benutzer. Gibt das aktualisierte Benutzerobjekt zurück."
+                                }
+                            },
+                            "users": {
+                                "label": "Benutzer",
+                                "loggedUser": {
+                                    "label": "Angemeldeter Benutzer",
+                                    "description": "Gibt den aktuell angemeldeten Benutzer zurück."
+                                },
+                                "findByEmail": {
+                                    "label": "Nach E-Mail suchen",
+                                    "description": "Gibt den Benutzer mit der angegebenen E-Mail zurück oder null, wenn kein Benutzer mit dieser E-Mail existiert."
+                                },
+                                "findById": {
+                                    "label": "Nach Id suchen",
+                                    "description": "Gibt den Benutzer mit der angegebenen Id zurück oder wirft eine IllegalArgumentException, wenn kein Benutzer mit dieser Id existiert."
+                                },
+                                "changeEmailByEmail": {
+                                    "label": "E-Mail ändern",
+                                    "description": "Ändert die E-Mail des Benutzers."
+                                },
+                                "changeNameByEmail": {
+                                    "label": "Namen ändern",
+                                    "description": "Ändert den Namen des Benutzers."
+                                },
+                                "changeSurnameByEmail": {
+                                    "label": "Nachnamen ändern",
+                                    "description": "Ändert den Nachnamen des Benutzers."
+                                },
+                                "changeTelByEmail": {
+                                    "label": "Telefonnummer ändern",
+                                    "description": "Ändert die Telefonnummer des Benutzers."
+                                },
+                                "changeEmailById": {
+                                    "label": "E-Mail ändern",
+                                    "description": "Ändert die E-Mail des Benutzers."
+                                },
+                                "changeNameById": {
+                                    "label": "Namen ändern",
+                                    "description": "Ändert den Namen des Benutzers."
+                                },
+                                "changeSurnameById": {
+                                    "label": "Nachnamen ändern",
+                                    "description": "Ändert den Nachnamen des Benutzers."
+                                },
+                                "changeTelById": {
+                                    "label": "Telefonnummer ändern",
+                                    "description": "Ändert die Telefonnummer des Benutzers."
+                                },
+                                "changeEmailByRef": {
+                                    "label": "E-Mail ändern",
+                                    "description": "Ändert die E-Mail des Benutzers."
+                                },
+                                "changeNameByRef": {
+                                    "label": "Namen ändern",
+                                    "description": "Ändert den Namen des Benutzers."
+                                },
+                                "changeSurnameByRef": {
+                                    "label": "Nachnamen ändern",
+                                    "description": "Ändert den Nachnamen des Benutzers."
+                                },
+                                "changeTelByRef": {
+                                    "label": "Tel. ändern",
+                                    "description": "Ändert die Telefonnummer des Benutzers."
+                                },
+                                "inviteByEmail": {
+                                    "label": "Per E-Mail einladen",
+                                    "description": "Lädt den Benutzer per E-Mail ein."
+                                },
+                                "inviteByRequest": {
+                                    "label": "Per Anfrage einladen",
+                                    "description": "Lädt den Benutzer über ein NewUserRequest-Objekt ein."
+                                },
+                                "deleteUserByEmail": {
+                                    "label": "Benutzer per E-Mail löschen",
+                                    "description": "Löscht den Benutzer per E-Mail. Alle diesem Benutzer zugewiesenen Aufgaben werden storniert und von diesem Benutzer erstellte Fälle werden anonymisiert."
+                                },
+                                "deleteUserByRef": {
+                                    "label": "Benutzer per Referenz löschen",
+                                    "description": "Löscht den Benutzer per Referenz. Alle diesem Benutzer zugewiesenen Aufgaben werden storniert und von diesem Benutzer erstellte Fälle werden anonymisiert."
+                                }
+                            },
+                            "frontendFunctions": {
+                                "label": "Frontend-Funktionen",
+                                "reloadTaskData": {
+                                    "label": "Aufgabendaten neu laden",
+                                    "description": "Zwingt die Webanwendung, die aktuellen Aufgabendaten neu zu laden."
+                                },
+                                "validateTaskData": {
+                                    "label": "Aufgabendaten validieren",
+                                    "description": "Zwingt die Webanwendung, die angegebenen Aufgabendaten zu validieren."
+                                },
+                                "redirectToRoute": {
+                                    "label": "Zur Route weiterleiten",
+                                    "description": "Leitet den Benutzer zur angegebenen Route weiter. Die Route muss ein bekannter Pfad der Webanwendung sein, externe URLs werden ignoriert."
+                                }
+                            },
+                            "pdf": {
+                                "label": "PDF",
+                                "generatePdf1": {
+                                    "label": "PDF generieren",
+                                    "description": "Generiert PDF aus dem Übergang mit <transitionId> (der Übergang muss ausführbar sein) und speichert es im Dateifeld mit <fileFieldId>."
+                                },
+                                "generatePdf2": {
+                                    "label": "PDF generieren",
+                                    "description": "Generiert PDF aus dem Übergang mit <transitionId> (der Übergang muss ausführbar sein) und speichert es im Dateifeld mit <fileFieldId>."
+                                },
+                                "generatePdf3": {
+                                    "label": "PDF generieren",
+                                    "description": "Generiert PDF aus dem Übergang <transition> (der Übergang muss ausführbar sein) und speichert es im Dateifeld <datafield>."
+                                },
+                                "generatePdf4": {
+                                    "label": "PDF generieren",
+                                    "description": "Generiert PDF aus dem Übergang mit <transitionId> (der Übergang muss ausführbar sein) und speichert es im Dateifeld mit <fieldId>. Felder in der excludedFields-Liste werden ignoriert."
+                                },
+                                "generatePdf5": {
+                                    "label": "PDF generieren",
+                                    "description": "Generiert PDF aus dem Übergang mit <transitionId> (der Übergang muss ausführbar sein) und speichert es im Dateifeld mit <fieldId>. Felder in der excludedFields-Liste werden ignoriert."
+                                },
+                                "generatePdfWithTemplate": {
+                                    "label": "PDF generieren",
+                                    "description": "Generiert PDF aus dem Übergang mit <transitionId> (der Übergang muss ausführbar sein) unter Verwendung einer PDF-Vorlage im angegebenen Pfad und speichert es im Dateifeld mit <fieldId>."
+                                },
+                                "generatePdfWithLocale": {
+                                    "label": "PDF generieren",
+                                    "description": "Generiert PDF aus dem Übergang mit <transitionId> (der Übergang muss ausführbar sein) und speichert es im Dateifeld mit <fieldId>. I18n-Zeichenketten werden mit der angegebenen Sprache übersetzt."
+                                },
+                                "generatePdfWithZoneId": {
+                                    "label": "PDF generieren",
+                                    "description": "Generiert PDF aus dem Übergang mit <transitionId> (der Übergang muss ausführbar sein) und speichert es im Dateifeld mit <fieldId>. Datums- und Datums-Uhrzeit-Felder werden mit der angegebenen ZoneId formatiert."
+                                }
+                            },
+                            "email": {
+                                "label": "E-Mail",
+                                "sendEmailPlainText": {
+                                    "label": "E-Mail senden",
+                                    "description": "Sendet eine E-Mail an die angegebene Empfängerliste. Der Inhalt wird als reiner Text behandelt."
+                                },
+                                "sendEmailWithAttachments": {
+                                    "label": "E-Mail senden",
+                                    "description": "Sendet eine E-Mail mit Anhängen an die angegebene Empfängerliste. Der Inhalt wird als reiner Text behandelt."
+                                },
+                                "sendMail": {
+                                    "label": "E-Mail senden",
+                                    "description": "Sendet eine durch das mailDraft-Objekt definierte E-Mail."
+                                }
+                            },
+                            "filters": {
+                                "label": "Filter",
+                                "findFilter": {
+                                    "label": "Filter suchen",
+                                    "description": "Gibt den ersten Filter mit dem angegebenen Titel zurück."
+                                },
+                                "findFilters": {
+                                    "label": "Filter suchen",
+                                    "description": "Sucht Filter mittels Volltextsuche."
+                                },
+                                "findAllFilters": {
+                                    "label": "Alle Filter suchen",
+                                    "description": "Gibt alle Filter zurück."
+                                },
+                                "exportFilters": {
+                                    "label": "Filter exportieren",
+                                    "description": "Exportiert Filter mit den angegebenen Ids in einen Dateifeld-Wert."
+                                },
+                                "findDefaultFilters": {
+                                    "label": "Standardfilter suchen",
+                                    "description": "Gibt die Standardfilter des aktuell angemeldeten Benutzers zurück."
+                                },
+                                "createCaseFilter": {
+                                    "label": "Fallfilter erstellen",
+                                    "description": "Erstellt eine Filterinstanz vom Typ Fall."
+                                },
+                                "createTaskFilter": {
+                                    "label": "Aufgabenfilter erstellen",
+                                    "description": "Erstellt eine Filterinstanz vom Typ Aufgabe."
+                                },
+                                "createFilter": {
+                                    "label": "Filter erstellen",
+                                    "description": "Erstellt eine Filterinstanz des angegebenen Typs."
+                                },
+                                "changeFilterQuery": {
+                                    "label": "Filteranfrage ändern",
+                                    "description": "Ändert die Anfrage der angegebenen Filterinstanz."
+                                },
+                                "changeFilterVisibility": {
+                                    "label": "Filtersichtbarkeit ändern",
+                                    "description": "Ändert die Sichtbarkeit der angegebenen Filterinstanz."
+                                },
+                                "changeFilterAllowedNets": {
+                                    "label": "Erlaubte Netze des Filters ändern",
+                                    "description": "Ändert die erlaubten Netze der angegebenen Filterinstanz."
+                                },
+                                "changeFilterMetadata": {
+                                    "label": "Filtermetadaten ändern",
+                                    "description": "Ändert die Metadaten der angegebenen Filterinstanz."
+                                },
+                                "changeFilterTitle": {
+                                    "label": "Filtertitel ändern",
+                                    "description": "Ändert den Titel der angegebenen Filterinstanz."
+                                },
+                                "changeFilterIcon": {
+                                    "label": "Filtersymbol ändern",
+                                    "description": "Ändert das Symbol der angegebenen Filterinstanz."
+                                },
+                                "changeFilterUri": {
+                                    "label": "Filter-URI ändern",
+                                    "description": "Ändert die URI der angegebenen Filterinstanz."
+                                },
+                                "deleteFilter": {
+                                    "label": "Filter löschen",
+                                    "description": "Löscht die angegebene Filterinstanz."
+                                },
+                                "createFilterInMenu1": {
+                                    "label": "Filter im Menü erstellen",
+                                    "description": "Erstellt Filter- und preference_item-Instanzen mit den angegebenen Parametern."
+                                },
+                                "createFilterInMenu2": {
+                                    "label": "Filter im Menü erstellen",
+                                    "description": "Erstellt Filter- und preference_item-Instanzen mit den angegebenen Parametern."
+                                }
+                            },
+                            "menuItems": {
+                                "label": "Menüpunkte",
+                                "createMenuItem1": {
+                                    "label": "Menüpunkt erstellen",
+                                    "description": "Erstellt einen Eintrag im Menü mit den angegebenen Parametern."
+                                },
+                                "changeMenuItemAllowedRoles": {
+                                    "label": "Erlaubte Rollen des Menüpunkts ändern",
+                                    "description": "Ändert die erlaubten Rollen der angegebenen Menüpunkt-Instanz."
+                                },
+                                "changeMenuItemBannedRoles": {
+                                    "label": "Verbotene Rollen des Menüpunkts ändern",
+                                    "description": "Ändert die verbotenen Rollen der angegebenen Menüpunkt-Instanz."
+                                },
+                                "changeMenuItemCaseDefaultHeaders": {
+                                    "label": "Standard-Fall-Kopfzeilen des Menüpunkts ändern",
+                                    "description": "Ändert die Standard-Fall-Kopfzeilen der angegebenen Menüpunkt-Instanz."
+                                },
+                                "changeMenuItemTaskDefaultHeaders": {
+                                    "label": "Standard-Aufgaben-Kopfzeilen des Menüpunkts ändern",
+                                    "description": "Ändert die Standard-Aufgaben-Kopfzeilen der angegebenen Menüpunkt-Instanz."
+                                },
+                                "changeMenuItemFilter": {
+                                    "label": "Filter des Menüpunkts ändern",
+                                    "description": "Ändert den Filter der angegebenen Menüpunkt-Instanz."
+                                },
+                                "changeMenuItemUri": {
+                                    "label": "URI des Menüpunkts ändern",
+                                    "description": "Ändert die URI der angegebenen Menüpunkt-Instanz."
+                                },
+                                "changeMenuItemMenuIcon": {
+                                    "label": "Menüsymbol des Menüpunkts ändern",
+                                    "description": "Ändert das Menüsymbol der angegebenen Menüpunkt-Instanz."
+                                },
+                                "changeMenuItemTabIcon": {
+                                    "label": "Tab-Symbol des Menüpunkts ändern",
+                                    "description": "Ändert das Tab-Symbol der angegebenen Menüpunkt-Instanz."
+                                },
+                                "changeMenuItemRequireTitleInCreation": {
+                                    "label": "Titelerfordernis bei Erstellung des Menüpunkts ändern",
+                                    "description": "Ändert den Wert des Titelerfordernisses bei der Erstellung der angegebenen Menüpunkt-Instanz."
+                                },
+                                "changeMenuItemUseCustomView": {
+                                    "label": "Benutzerdefinierte Ansicht des Menüpunkts ändern",
+                                    "description": "Ändert den Wert der benutzerdefinierten Ansicht der angegebenen Menüpunkt-Instanz."
+                                },
+                                "changeMenuItemCustomViewSelector": {
+                                    "label": "Selektor der benutzerdefinierten Ansicht des Menüpunkts ändern",
+                                    "description": "Ändert den Selektor der benutzerdefinierten Ansicht der angegebenen Menüpunkt-Instanz."
+                                },
+                                "deleteMenuItem": {
+                                    "label": "Menüpunkt löschen",
+                                    "description": "Löscht den angegebenen Menüpunkt."
+                                },
+                                "createMenuItem2": {
+                                    "label": "Menüpunkt erstellen",
+                                    "description": "Erstellt einen neuen Menüpunkt basierend auf der angegebenen Konfiguration."
+                                },
+                                "moveMenuItem": {
+                                    "label": "Menüpunkt verschieben",
+                                    "description": "Ändert den Speicherort eines Menüpunkts. Wenn ein nicht vorhandener Speicherort angegeben wird, wird der neue Speicherort erstellt und der Eintrag dann verschoben. Zyklische Zielpfade sind verboten."
+                                },
+                                "duplicateMenuItem": {
+                                    "label": "Menüpunkt duplizieren",
+                                    "description": "Dupliziert den Menüpunkt. Es wird eine neue preference_item-Instanz mit demselben dataSet wie die angegebene Elementinstanz erstellt."
+                                },
+                                "findMenuItem1": {
+                                    "label": "Menüpunkt suchen",
+                                    "description": "Sucht einen Menüpunkt anhand eines eindeutigen Bezeichners."
+                                },
+                                "findMenuItemByUriAndName": {
+                                    "label": "Menüpunkt nach URI und Name suchen",
+                                    "description": "Sucht einen Menüpunkt anhand von URI und Name in der Standardgruppe."
+                                },
+                                "findMenuItemByUriAndIdentifier": {
+                                    "label": "Menüpunkt nach URI und Bezeichner suchen",
+                                    "description": "Sucht einen Menüpunkt anhand von URI und Bezeichner."
+                                },
+                                "existsMenuItem": {
+                                    "label": "Menüpunkt existiert",
+                                    "description": "Prüft, ob der Menüpunkt vorhanden ist."
+                                },
+                                "getFilterFromMenuItem": {
+                                    "label": "Filter aus Menüpunkt abrufen",
+                                    "description": "Ruft die Filterinstanz aus der preference_item-Instanz ab."
+                                },
+                                "createOrUpdateMenuItem1": {
+                                    "label": "Menüpunkt erstellen oder aktualisieren",
+                                    "description": "Erstellt oder aktualisiert den Menüpunkt mit dem angegebenen Bezeichner."
+                                },
+                                "createOrUpdateMenuItemAndFilter1": {
+                                    "label": "Menüpunkt und Filter erstellen oder aktualisieren",
+                                    "description": "Erstellt oder aktualisiert den Menüpunkt mit dem angegebenen Bezeichner zusammen mit der Filterinstanz. Es ist sicher, dies auf einer vorhandenen Menüpunkt-Instanz zu verwenden, die keinen Filter enthält. In diesem Fall wird der fehlende Filter mit den angegebenen Parametern erstellt."
+                                },
+                                "createOrUpdateMenuItem2": {
+                                    "label": "Menüpunkt erstellen oder aktualisieren",
+                                    "description": "Erstellt oder aktualisiert den Menüpunkt mit dem angegebenen Bezeichner."
+                                },
+                                "createOrUpdateMenuItemAndFilter2": {
+                                    "label": "Menüpunkt und Filter erstellen oder aktualisieren",
+                                    "description": "Erstellt oder aktualisiert den Menüpunkt mit dem angegebenen Bezeichner zusammen mit der Filterinstanz."
+                                },
+                                "createOrIgnoreMenuItem": {
+                                    "label": "Menüpunkt erstellen oder ignorieren",
+                                    "description": "Erstellt oder aktualisiert den Menüpunkt mit dem angegebenen Bezeichner."
+                                },
+                                "createOrIgnoreMenuItemAndFilter": {
+                                    "label": "Menüpunkt und Filter erstellen oder ignorieren",
+                                    "description": "Erstellt den Menüpunkt oder ignoriert ihn, wenn er bereits vorhanden ist. Wenn der vorhandene Eintrag keinen Filter enthält, wird die Filterinstanz mit den angegebenen Parametern erstellt."
+                                },
+                                "updateMenuItem": {
+                                    "label": "Menüpunkt und Filter erstellen oder ignorieren",
+                                    "description": "Aktualisiert den vorhandenen Menüpunkt mit den angegebenen Werten."
+                                },
+                                "defaultFilterMetadata": {
+                                    "label": "Standard-Filtermetadaten",
+                                    "description": "Gibt eine Map mit Standard-Filterfeld-Metadaten für den angegebenen Filtertyp (\"Fall\" oder \"Aufgabe\") zurück."
+                                }
+                            },
+                            "importExport": {
+                                "label": "Import & Export",
+                                "exportCasesToFile": {
+                                    "label": "Fälle in Datei exportieren",
+                                    "description": "Exportiert die durch das Prädikat angegebenen Fälle in eine CSV-Datei im angegebenen Pfad. Zusätzliche Konfiguration und Seitengröße können angegeben werden."
+                                },
+                                "exportCasesToStream": {
+                                    "label": "Fälle in Stream exportieren",
+                                    "description": "Exportiert die durch das Prädikat angegebenen Fälle in einen Ausgabestream. Zusätzliche Konfiguration und Seitengröße können angegeben werden."
+                                },
+                                "exportCasesToFileAsUser": {
+                                    "label": "Fälle als Benutzer in Datei exportieren",
+                                    "description": "Exportiert die durch die Suchanfragen angegebenen Fälle in eine CSV-Datei im angegebenen Pfad. Die Benutzerberechtigungen werden zum Filtern der exportierten Fälle verwendet."
+                                },
+                                "exportCasesToStreamAsUser": {
+                                    "label": "Fälle als Benutzer in Stream exportieren",
+                                    "description": "Exportiert die durch die Suchanfragen angegebenen Fälle in einen Ausgabestream. Die Benutzerberechtigungen werden zum Filtern der exportierten Fälle verwendet."
+                                },
+                                "exportTasksToFile": {
+                                    "label": "Aufgaben in Datei exportieren",
+                                    "description": "Exportiert die durch das Prädikat angegebenen Aufgaben in eine CSV-Datei im angegebenen Pfad. Zusätzliche Konfiguration kann angegeben werden."
+                                },
+                                "exportTasksToStream": {
+                                    "label": "Aufgaben in Stream exportieren",
+                                    "description": "Exportiert die durch das Prädikat angegebenen Aufgaben in einen Ausgabestream. Zusätzliche Konfiguration kann angegeben werden."
+                                },
+                                "exportTasksToFileAsUser": {
+                                    "label": "Aufgaben als Benutzer in Datei exportieren",
+                                    "description": "Exportiert die durch die Suchanfragen angegebenen Aufgaben in eine CSV-Datei im angegebenen Pfad. Die Benutzerberechtigungen werden zum Filtern der exportierten Aufgaben verwendet."
+                                },
+                                "exportTasksToStreamAsUser": {
+                                    "label": "Aufgaben als Benutzer in Stream exportieren",
+                                    "description": "Exportiert die durch die Suchanfragen angegebenen Aufgaben in einen Ausgabestream. Die Benutzerberechtigungen werden zum Filtern der exportierten Aufgaben verwendet."
+                                }
+                            },
+                            "uri": {
+                                "label": "URI",
+                                "getUriNode": {
+                                    "label": "URI-Knoten abrufen",
+                                    "description": "Ruft den UriNode basierend auf der URI ab."
+                                },
+                                "createUriNode": {
+                                    "label": "URI-Knoten erstellen",
+                                    "description": "Erstellt einen neuen UriNode aus dem URI-Pfad oder ruft einen vorhandenen ab."
+                                },
+                                "moveUriNode": {
+                                    "label": "URI-Knoten verschieben",
+                                    "description": "Verschiebt den UriNode an ein anderes Ziel."
+                                },
+                                "makeUrl": {
+                                    "label": "URL erstellen",
+                                    "description": "Erstellt eine URL für die öffentliche Ansicht des angegebenen, mit Base64 kodierten Prozessidentifikators."
+                                }
+                            },
+                            "customFunctions": {
+                                "label": "Benutzerdefinierte Funktionen"
+                            }
+                        }
+                    },
+                    "definitions": {
+                        "declaration-provider": {
+                            "dataVariableId": "ID der DataVariable zur Deklaration einer Variablen in einer Aktion.",
+                            "transitionId": "ID des Übergangs zur Deklaration einer Variablen in einer Aktion."
+                        },
+                        "function-provider": {
+                            "function-provider": {
+                                "taskService": "TaskService",
+                                "dataService": "DataService",
+                                "workflowService": "WorkflowService",
+                                "userService": "UserService",
+                                "petriNetService": "PetriNetService",
+                                "groupService": "GroupService",
+                                "pdfGenerator": "PDF-Generator",
+                                "mailService": "MailService",
+                                "useCase": "Aktueller Fall",
+                                "copyBehavior": "Verhalten kopieren",
+                                "makeFieldBehavior": "Verhalten für Feld beim Übergang gemäß Bedingung festlegen",
+                                "executeByTaskId": "Aufgabe nach taskId ausführen",
+                                "executeTasks": "Mehrere Aufgaben ausführen und Daten setzen",
+                                "executeTask": "Aufgabe ausführen und Daten setzen",
+                                "searchCases": "Fälle suchen und deren stringIDs zurückgeben",
+                                "changeFieldValue": "Feldwert ändern",
+                                "changeFieldChoices": "Feldauswahlmöglichkeiten ändern",
+                                "changeFieldAllowedNets": "Erlaubte Netze des Feldes ändern",
+                                "changeFieldOptions": "Feldoptionen ändern",
+                                "psc": "psc nach Eingabe und Abschluss suchen",
+                                "findCases": "Fälle suchen und List<Case> zurückgeben",
+                                "findCasesPageable": "Fälle suchen und List<Case> zurückgeben",
+                                "findCase": "Fall suchen und zurückgeben",
+                                "createCaseByIdentifier": "Fall erstellen und zurückgeben",
+                                "createCaseByNet": "Fall erstellen und zurückgeben",
+                                "assignTaskByTransitionId": "Aufgabe zuweisen und zurückgeben",
+                                "assignTaskByTask": "Aufgabe zuweisen und zurückgeben",
+                                "assignTasks": "Mehrere Aufgaben zuweisen",
+                                "cancelTaskByTransitionId": "Aufgabe stornieren",
+                                "cancelTaskByTask": "Aufgabe stornieren",
+                                "cancelTasks": "Aufgaben stornieren",
+                                "finishTaskByTransitionId": "Aufgabe abschließen",
+                                "finishTaskByTask": "Aufgabe abschließen",
+                                "finishTasks": "Aufgaben abschließen",
+                                "findTasks": "Aufgaben suchen und List<Task> zurückgeben",
+                                "findTasksPageable": "Aufgaben suchen und List<Task> zurückgeben",
+                                "findTaskByClosure": "Aufgabe suchen und zurückgeben",
+                                "findTaskByMongoId": "Aufgabe suchen und zurückgeben",
+                                "getTaskId": "TaskId aus transitionId abrufen",
+                                "assignRole": "Rolle dem Benutzer zuweisen",
+                                "setDataByTask": "Daten für Aufgabe setzen",
+                                "setDataByTransition": "Daten nach Übergang setzen",
+                                "setDataByTransitionId": "Daten nach Übergangs-Id und Fall setzen",
+                                "setDataWithPropagationByTransitionId": "Daten nach Übergangs-Id und Fall setzen",
+                                "setDataWithPropagationByTask": "Daten für Aufgabe setzen",
+                                "setDataWithPropagationByTaskId": "Daten für Aufgabe setzen",
+                                "getDataByTask": "Daten der Aufgabe abrufen",
+                                "getDataByTransition": "Daten des Übergangs abrufen",
+                                "getDataByTransitionId": "Daten des Übergangs abrufen",
+                                "loggedUser": "Angemeldeten Benutzer abrufen",
+                                "generatePDF1": "PDF aus Übergangs-Id generieren und im Dateifeld mit fileFieldId speichern",
+                                "generatePDF2": "PDF aus Übergangs-Id generieren und im Dateifeld mit fileFieldId speichern",
+                                "generatePdfWithTemplate": "PDF mit Vorlage aus Übergangs-Id generieren und im Dateifeld mit fileFieldId speichern",
+                                "generatePdfWithLocale": "PDF mit Sprache aus Übergangs-Id generieren und im Dateifeld mit fileFieldId speichern",
+                                "generateIntoField": "In Feld generieren",
+                                "changeCaseProperty": "Fall-Eigenschaft ändern",
+                                "saveUseCase": "Fall speichern"
+                            }
+                        },
+                        "function-editor": {
+                            "functions": "Funktionen",
+                            "references": "Referenzen",
+                            "transitions": "Übergänge",
+                            "datafields": "Datenfelder",
+                            "behaviours": "Verhaltensweisen",
+                            "conditions": "Bedingungen",
+                            "visible": "sichtbar",
+                            "hidden": "verborgen",
+                            "editable": "bearbeitbar",
+                            "required": "erforderlich",
+                            "optional": "optional",
+                            "conditions2": "Bedingungen",
+                            "true": "wahr",
+                            "false": "falsch",
+                            "properties": "Eigenschaften",
+                            "values": "Werte",
+                            "addNewVariableOrValue": "Neue Variable oder Wert hinzufügen",
+                            "listOfObjects": "Liste von Objekten",
+                            "mapOfObjects": "Map von Objekten",
+                            "listOfStrings": "Liste von Zeichenketten",
+                            "mapOfStrings": "Map von Zeichenketten"
+                        },
+                        "transition": "Übergang",
+                        "role": "Rolle",
+                        "caseEvents": "Fall-Ereignisse",
+                        "processEvents": "Prozess-Ereignisse",
+                        "events": "Ereignisse",
+                        "dataref": "Dataref"
+                    }
+                },
+                "action-master": {
+                    "name": "Name",
+                    "addFunction": "Funktion hinzufügen"
+                },
+                "tools": {
+                    "dataVariables": "Datenvariablen",
+                    "functions": "Funktionen",
+                    "processAndCase": "Prozess & Fall",
+                    "roles": "Rollen",
+                    "transitions": "Übergänge"
+                },
+                "actionsEditView": "Aktionen-Bearbeitungsansicht"
+            },
+            "components": {
+                "master-detail": {
+                    "firstPage": "Vorderseite",
+                    "pageSize": "Seitengröße",
+                    "lastPage": "Letzte Seite",
+                    "nextPage": "Nächste Seite",
+                    "previousPage": "Vorherige Seite",
+                    "of": "von",
+                    "add": "Hinzufügen"
+                },
+                "material-icon-picker": {
+                    "icon": "Symbol"
+                }
+            },
+            "control-panel": {
+                "importSuccess": "Petri-Netz erfolgreich importiert",
+                "exportXml": "Als XML exportieren",
+                "chooseFile": "Datei zum Öffnen auswählen",
+                "unknownFileType": "Unbekannter Dateityp",
+                "redo": "Wiederholen",
+                "exportSvg": "Als SVG exportieren",
+                "undo": "Rückgängig"
+            },
+            "data-mode": {
+                "id": "Id",
+                "title": "Titel",
+                "type": "Typ",
+                "isImmediate": "Ist sofortig?",
+                "placeholder": "Platzhalter",
+                "description": "Beschreibung",
+                "component": "Komponente",
+                "addComponent": "Komponente hinzufügen",
+                "deleteComponent": "Komponente löschen",
+                "encryption": "Verschlüsselung",
+                "componentName": "Komponentenname",
+                "key": "Schlüssel",
+                "value": "Wert",
+                "empty": "Leer",
+                "addProperty": "Eigenschaft hinzufügen",
+                "initialValue": "Anfangswert",
+                "isInitDynamic": "Ist Initialisierung dynamisch?",
+                "processIdentifier": "Prozessidentifikator",
+                "empty2": "Leer",
+                "addNet": "Netz hinzufügen",
+                "validations": "Validierungen",
+                "expression": "Ausdruck",
+                "message": "Nachricht",
+                "empty3": "Leer",
+                "addValidation": "Validierung hinzufügen",
+                "options": "Optionen",
+                "optionKey": "Optionsschlüssel",
+                "optionValue": "Optionswert",
+                "noOptions": "Keine Optionen",
+                "addOption": "Option hinzufügen",
+                "optionsInit": "Optionsinitialisierung",
+                "editActions": "Aktionen bearbeiten",
+                "noDataSelected": "Keine Daten ausgewählt",
+                "boolean": "Boolean",
+                "button": "Schaltfläche",
+                "caseRef": "Fall-Referenz",
+                "date": "Datum",
+                "datetime": "Datum und Uhrzeit",
+                "enumeration": "Enumeration",
+                "enumerationMap": "Enumerations-Map",
+                "file": "Datei",
+                "fileList": "Dateiliste",
+                "caseFilter": "Fallfilter",
+                "taskFilter": "Aufgabenfilter",
+                "processFilter": "Prozessfilter",
+                "i18n": "I18n",
+                "multichoice": "Mehrfachauswahl",
+                "multichoiceMap": "Mehrfachauswahl-Map",
+                "number": "Zahl",
+                "user": "Benutzer",
+                "userList": "Benutzerliste",
+                "stringCollection": "Zeichenkettensammlung",
+                "taskRef": "Aufgaben-Referenz",
+                "text": "Text",
+                "dataVariable": "Datenvariable",
+                "hasBeenChanged": "wurde geändert.",
+                "idHasBeenChangedTo": "ID wurde geändert zu",
+                "andHasBeenChanged": "und wurde geändert",
+                "hasBeenCreated": "wurde erstellt.",
+                "hasBeenDeleted": "wurde gelöscht.",
+                "idLabel": "ID",
+                "name": "Name",
+                "addDataVariable": "Datenvariable hinzufügen",
+                "dataEditView": "Daten-Bearbeitungsansicht"
+            },
+            "edit-mode": {
+                "context-menu": {
+                    "deleteBreakpoint": "Haltepunkt löschen",
+                    "edit": "Bearbeiten",
+                    "arc": "Kante",
+                    "hasBeenChanged": "wurde geändert.",
+                    "editModel": "Modell bearbeiten",
+                    "modelHasBeenChanged": "Modell wurde geändert.",
+                    "managePermissions": "Prozessberechtigungen verwalten",
+                    "place": "Stelle",
+                    "editForm": "Formular bearbeiten",
+                    "createNewForm": "Neues Formular erstellen",
+                    "editActions": "Aktionen bearbeiten",
+                    "editTask": "Aufgabe bearbeiten",
+                    "task": "Aufgabe",
+                    "permissions": "Berechtigungen",
+                    "delete": "Löschen",
+                    "all": "alle",
+                    "selectConnectedArcs": "Verbundene Kanten auswählen"
+                },
+                "services": {
+                    "addToken": "Token hinzufügen",
+                    "tokenAdded": "Token wurde zur Stelle hinzugefügt",
+                    "deleteModel": "Modell löschen",
+                    "model": "Modell",
+                    "hasBeenDeleted": "wurde gelöscht.",
+                    "new": "Neu",
+                    "arc": "kante",
+                    "hasBeenCreated": "wurde erstellt",
+                    "inhibitorArc": "Inhibitorkante",
+                    "place": "Stelle",
+                    "arcLabel": "Kante",
+                    "readArc": "Lesekante",
+                    "resetArc": "Rücksetzkante",
+                    "transition": "Übergang",
+                    "task": "Aufgabe",
+                    "fastPN": "Schnelles PN",
+                    "removeToken": "Token entfernen",
+                    "tokenRemoved": "Token wurde von der Stelle entfernt",
+                    "resetCanvas": "Leinwandposition und Zoom zurücksetzen",
+                    "selectTool": "Werkzeug auswählen",
+                    "elements": "Elemente",
+                    "hasBeenDuplicated": "wurde dupliziert",
+                    "elementsDeleted": "Elemente wurden gelöscht",
+                    "elementsMoved": "Elemente wurden verschoben",
+                    "breakpointAdded": "Haltepunkt zur Kante hinzugefügt",
+                    "newModelCreated": "Neues Modell wurde erstellt.",
+                    "editView": "Bearbeitungsansicht",
+                    "breakpointDeleted": "Haltepunkt wurde gelöscht."
+                }
+            },
+            "history-mode": {
+                "renderType": "Darstellungstyp",
+                "sideBySide": "Nebeneinander",
+                "inline": "Inline",
+                "download": "Herunterladen",
+                "restore": "Wiederherstellen",
+                "noHistorySelected": "Kein Verlauf ausgewählt",
+                "model": "Modell",
+                "hasBeenChanged": "wurde geändert",
+                "hasBeenImported": "wurde importiert",
+                "place": "Stelle",
+                "hasBeenCreated": "wurde erstellt",
+                "hasBeenDeleted": "wurde gelöscht",
+                "hasBeenMovedTo": "wurde verschoben nach",
+                "time": "Uhrzeit",
+                "change": "Änderung",
+                "history": "Verlauf"
+            },
+            "i18n-mode": {
+                "removeLocale": "Sprache entfernen",
+                "addNewLanguage": "Neue Sprache hinzufügen",
+                "addLocale": "Sprache hinzufügen",
+                "translations": "Übersetzungen",
+                "translationsChanged": "Übersetzungen wurden geändert.",
+                "languages": "Sprachen",
+                "stringId": "Zeichenketten-Id",
+                "defaultValue": "Standardwert",
+                "translation": "Übersetzung",
+                "title": "Titel",
+                "placeholder": "Platzhalter",
+                "description": "Beschreibung",
+                "init": "Initialisierung",
+                "defaultCaseName": "Standardfallname",
+                "message": "Nachricht",
+                "events": "Ereignisse",
+                "noLanguageAvailable": "Keine Sprache verfügbar, bitte fügen Sie eine neue Sprache hinzu",
+                "selectLanguage": "Sprache auswählen",
+                "modelMetadata": "Modell-Metadaten",
+                "modelMetadataHint": "Titel, Standardfallname, ...",
+                "tasks": "Aufgaben",
+                "tasksHint": "Beschriftung, Ereignisnachrichten, ...",
+                "noTasksInModel": "Es gibt keine Aufgaben im Modell",
+                "dataVariables": "Datenvariablen",
+                "dataVariablesHint": "Titel, Platzhalter, Beschreibung, ...",
+                "noDataVariablesInModel": "Es gibt keine Datenvariablen im Modell",
+                "roles": "Rollen",
+                "rolesHint": "Name, Ereignisnachricht, ...",
+                "noRolesInModel": "Es gibt keine Rollen im Modell",
+                "i18nView": "Internationalisierungsansicht"
+            },
+            "role-mode": {
+                "id": "Id",
+                "idRequired": "Id ist erforderlich",
+                "idExists": "Eine Rolle mit der angegebenen Id existiert bereits",
+                "title": "Titel",
+                "isGlobal": "Ist global",
+                "editActions": "Aktionen bearbeiten",
+                "noRoleSelected": "Keine Rolle ausgewählt",
+                "role": "Rolle",
+                "hasBeenChanged": "wurde geändert.",
+                "deleteRole": "Rolle löschen",
+                "duplicateRole": "Rolle duplizieren",
+                "hasBeenCreated": "wurde erstellt.",
+                "hasBeenDeleted": "wurde gelöscht.",
+                "idLabel": "ID",
+                "name": "Name",
+                "addRole": "Rolle hinzufügen",
+                "roleEditView": "Rollen-Bearbeitungsansicht"
+            },
+            "services": {
+                "contextMenuClosed": "Kontextmenü geschlossen",
+                "newProcess": "Neuer Prozess",
+                "downloadModel": "Modell herunterladen"
+            },
+            "simulation-mode": {
+                "changeData": "Daten ändern",
+                "simulationByEvents": "Simulation nach Ereignissen",
+                "hideGrid": "Raster ausblenden",
+                "showGrid": "Raster anzeigen",
+                "resetCanvas": "Leinwandposition und Zoom zurücksetzen",
+                "resetSimulation": "Simulation zurücksetzen",
+                "simulationByTasks": "Simulation nach Aufgaben",
+                "simulationView": "Simulationsansicht"
+            },
+            "task-mode": {
+                "controlTaskView": "Aufgaben-Steuerungsansicht"
+            },
+            "model": "Modell",
+            "hasBeenImported": "wurde importiert."
+        },
+        "tutorial": {
+            "welcome": "Willkommen beim Netgrif Application Builder v2.2.0",
+            "intro": "Der Netgrif Application Builder (NAB) ist ein Werkzeug zum Erstellen prozessgesteuerter Anwendungen mit der Petriflow-Sprache. NAB besteht aus mehreren Modulen, die Sie in verschiedenen Phasen der Anwendungsentwicklung unterstützen.",
+            "processModelerTitle": "Prozessmodellierer",
+            "processModeler": "Im Prozessmodellierer können Sie Geschäftsprozesse modellieren, indem Sie Aufgaben und deren Routing definieren. Als Modellierungsformalismus für Prozesse verwendet die Petriflow-Sprache Petri-Netze, die aus Zustandsvariablen, Aufgaben und deren Verbindungen bestehen. Er unterstützt den Import von Prozessen im BPMN-2.0-Format und deren automatische Übersetzung in Petri-Netze.",
+            "processSimulationTitle": "Prozesssimulation",
+            "processSimulation": "In der Prozesssimulation können Sie modellierte Prozesse simulieren, indem Sie Abfolgen von Aufgaben oder Aufgabenereignissen ausführen.",
+            "dataEditorTitle": "Daten-Editor",
+            "dataEditor": "Im Daten-Editor können Sie Datenvariablen definieren, die in den Prozessen verwendet werden. Petriflow unterstützt alle Arten von Datenvariablen, die Sie für Ihre Anwendung benötigen, einschließlich Text, Zahlen, Datum, Datum und Uhrzeit, Enumerationen und Auswahlmöglichkeiten, Dateien, Bilder und viele andere. Validierung und Anfangswerte der Datenvariablen können in Petriflow einfach angegeben werden. Petriflow unterstützt Verweise auf eine Liste von Aufgaben als Datentyp.",
+            "roleEditorTitle": "Rollen-Editor",
+            "roleEditor": "Im Rollen-Editor können Sie Rollen definieren und festlegen, welche Rollen Aufgaben im Prozess ausführen können.",
+            "actionsEditorTitle": "Aktionen-Editor",
+            "actionsEditor": "Im Aktionen-Editor können Sie Reaktionen auf Ereignisse von Prozessinstanzen, deren Aufgaben und Datenfelder programmieren. Aktionen verwenden Groovy als Programmiersprache. Zu den Ereignistypen, die Sie abfangen können, gehören: Erstellung einer Prozessinstanz, Zuweisung einer Aufgabe an einen Benutzer, Stornierung einer Aufgabe, Abschluss einer Aufgabe und Änderung eines Datenfeldwertes.",
+            "internationalizationTitle": "Internationalisierung",
+            "internationalization": "Sie können Übersetzungen für verschiedene Sprachen hinzufügen.",
+            "historyTitle": "Verlauf",
+            "history": "Sie können aktuelle Änderungen am Modell einsehen sowie eine frühere Version des Modells herunterladen oder wiederherstellen.",
+            "modelImportTitle": "Modell-Import",
+            "modelImport": "Sie können ein vorhandenes Modell aus einer XML-Datei importieren oder eine BPMN-Datei in ein Petriflow-Modell umwandeln.",
+            "modelExportTitle": "Modell-Export",
+            "modelExport": "Sie können das aktuelle Modell als XML-Datei exportieren. Im Simulationsmodus wird das simulierte Modell im aktuellen Simulationszustand exportiert.",
+            "svgExportTitle": "SVG-Export",
+            "svgExport": "Sie können das aktuelle Modell als SVG-Datei exportieren. Im Simulationsmodus wird das simulierte Modell genau so exportiert, wie es auf der Leinwand zu sehen ist.",
+            "netgrifEtaskTitle": "Netgrif eTask",
+            "netgrifEtask": "Sie können Ihre Petriflow-Modelle nach der Registrierung in unserer eTask-Anwendung bereitstellen.",
+            "netgrifAcademyTitle": "Netgrif Academy",
+            "netgrifAcademy": "Lehrvideos und Tutorials finden Sie auf unserem Youtube-Kanal.",
+            "netgrifGithubTitle": "Netgrif Github",
+            "netgrifGithub": "Quellcodes unserer Community-Produkte sind auf Github verfügbar.",
+            "mortgageDemoTitle": "Hypotheken-Demoprozess",
+            "mortgageDemo": "Um den Hypotheken-Demoprozess zu laden, klicken Sie hier.",
+            "bugReportTitle": "Fehler melden",
+            "bugReport": "Sie können unsere Github-Issues-Seite nutzen, um Fehler zu melden, die Sie bei der Verwendung des Netgrif Application Builders entdecken."
+        },
+        "newModelCreated": "Neues Modell wurde erstellt.",
+        "hasBeenImported": "wurde importiert.",
+        "newModelCreated2": "Neues Modell wurde erstellt."
     }
 }
