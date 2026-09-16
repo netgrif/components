@@ -25,6 +25,7 @@ interface TriggerNode {
 export class TriggerTreeComponent {
     @Input() triggers: Array<Trigger>;
 
+    // todo 2477 translate options
     typeOptions = [{key: 'auto', value: 'Auto'}, {key: 'user', value: 'User'}, {key: 'time', value: 'Time'}];
     optionOptions = [{key: 'exact', value: 'Exact'}, {key: 'delay', value: 'Delay'}];
     treeData: Array<TriggerNode>;
@@ -33,6 +34,7 @@ export class TriggerTreeComponent {
     dataSource = new MatTreeNestedDataSource<TriggerNode>();
 
     constructor() {
+        // todo 2477 translate
         this.treeData = [{
             name: 'Triggers',
             trigger: []
@@ -43,6 +45,7 @@ export class TriggerTreeComponent {
 
     import(): void {
         this.counter = 0;
+        // todo 2477 translate
         const tree = [{
             name: 'Triggers',
             trigger: []

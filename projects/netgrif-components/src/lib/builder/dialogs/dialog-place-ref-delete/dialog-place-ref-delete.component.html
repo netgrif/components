@@ -1,11 +1,9 @@
-<h2 mat-dialog-title>Delete referenced place{{data.length > 1 ? 's' : ''}}?</h2>
-<!--todo 2477 dynamic plural-->
+<h2 mat-dialog-title>{{ data.length > 1 ? ('builder.dialogs.place-ref-delete.titleMultiple' | translate) : ('builder.dialogs.place-ref-delete.titleSingle' | translate) }}</h2>
 <mat-dialog-content class="mat-typography padding-top-4px">
-    <span *ngFor="let refData of data">Place {{placeLabel(refData)}}
-        is referenced by arc{{refData.arcs.length > 1 ? 's' : ''}}: {{arcs(refData)}}.</span>
-    <!--todo 2477 dynamic plural-->
+    <span *ngFor="let refData of data">{{ 'builder.dialogs.place-ref-delete.place' | translate }} {{placeLabel(refData)}}
+        {{ refData.arcs.length > 1 ? ('builder.dialogs.place-ref-delete.referencedByArcs' | translate) : ('builder.dialogs.place-ref-delete.referencedByArc' | translate) }}: {{arcs(refData)}}.</span>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-button [mat-dialog-close]="false">Cancel</button>
-    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Delete</button>
+    <button mat-button [mat-dialog-close]="false">{{ 'builder.dialogs.place-ref-delete.cancel' | translate }}</button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>{{ 'builder.dialogs.place-ref-delete.delete' | translate }}</button>
 </mat-dialog-actions>

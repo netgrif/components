@@ -533,8 +533,10 @@
     "builder": {
         "dialogs": {
             "arc-edit": {
+                "editArc": "Edit arc",
                 "multiplicity": "Multiplicity",
                 "idRequired": "Id is required",
+                "type": "Type",
                 "multiplicityPositive": "Multiplicity must be a positive integer",
                 "reference": "Reference",
                 "none": "-- None --",
@@ -544,6 +546,7 @@
             },
             "change-data": {
                 "title": "Change referenced data value",
+                "titleMulti": "Change referenced data values",
                 "valueRequired": "Value is required",
                 "valueNotNegative": "Value can not be a negative number",
                 "noData": "No referenced data found",

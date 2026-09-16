@@ -532,8 +532,10 @@
     "builder": {
         "dialogs": {
             "arc-edit": {
+                "editArc": "Kante bearbeiten",
                 "multiplicity": "Multiplizität",
                 "idRequired": "Id ist erforderlich",
+                "type": "Typ",
                 "multiplicityPositive": "Multiplizität muss eine positive ganze Zahl sein",
                 "reference": "Referenz",
                 "none": "-- Keine --",
@@ -543,6 +545,7 @@
             },
             "change-data": {
                 "title": "Referenzierten Datenwert ändern",
+                "titleMulti": "Referenzierten Datenwert ändern",
                 "valueRequired": "Wert ist erforderlich",
                 "valueNotNegative": "Wert darf keine negative Zahl sein",
                 "noData": "Keine referenzierten Daten gefunden",

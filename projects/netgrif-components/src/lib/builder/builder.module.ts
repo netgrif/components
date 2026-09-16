@@ -12,6 +12,7 @@ import {TaskContentComponentModule} from '../task-content/task-content.module';
 import {MaterialIconPickerComponent} from './modeler/components/material-icon-picker/material-icon-picker.component';
 import {BuilderDialogsModule} from './dialogs/dialogs.module';
 import {FlexLayoutModule} from "@ngbracket/ngx-layout";
+import {TranslateModule} from "@ngx-translate/core";
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import {FlexLayoutModule} from "@ngbracket/ngx-layout";
         MatNativeDateModule,
         MaterialIconPickerComponent,
         FlexLayoutModule,
+        TranslateModule,
     ],
     exports: [BuilderComponent]
 })
