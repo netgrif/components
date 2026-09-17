@@ -13,11 +13,12 @@ import {ActionGroup} from './classes/action-group';
 import {ActionType, EditableAction} from './classes/editable-action';
 import {LeafNode, TreeNode} from './classes/leaf-node';
 import {EventType} from './event-type';
+import {TranslateService} from "@ngx-translate/core";
 
 @Injectable()
 export class ActionEditorTreeService {
 
-  constructor(private actionEditorService: ActionEditorService) {
+  constructor(private actionEditorService: ActionEditorService, private _translateService: TranslateService) {
   }
 
   private static subscribeToChildStreams(parent: TreeNode): void {
@@ -30,7 +31,7 @@ export class ActionEditorTreeService {
   public createTransitionTreeStructure(actionGroups: Array<ActionGroup>, collapseCallback: (leaf: TreeNode, actionCount: number) => void): Array<TreeNode> {
     const transitionActionGroup = actionGroups.find(it => it.actionsType === ActionType.TRANSITION);
     const transitionNode = {
-      title: 'Events',
+      title: this._translateService.instant('builder.modeler.actions-mode.action-editor.events'),
       type: ActionType.TRANSITION,
       actionCount: null,
       children: this.separateActionsByType(ActionType.TRANSITION, TransitionEventType, transitionActionGroup.editableActions, collapseCallback),
@@ -40,7 +41,7 @@ export class ActionEditorTreeService {
     const tree: Array<TreeNode> = [transitionNode];
     actionGroups.filter(it => it.actionsType !== ActionType.TRANSITION).forEach(group => {
       const datarefNode = {
-        title: `Dataref ${group.parentName}`,
+        title: this._translateService.instant('builder.modeler.actions-mode.action-editor.dataref') + ` ${group.parentName}`,
         id: group.parentName,
         type: ActionType.DATAREF,
         actionCount: null,

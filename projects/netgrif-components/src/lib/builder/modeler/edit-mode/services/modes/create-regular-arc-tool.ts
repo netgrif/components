@@ -7,19 +7,21 @@ import {CanvasPlace} from '../../domain/canvas-place';
 import {CanvasTransition} from '../../domain/canvas-transition';
 import {CreateArcTool} from './create-arc-tool';
 import {CanvasToolContext} from './canvas-tool-context';
+import {TranslateService} from "@ngx-translate/core";
 
 export class CreateRegularArcTool extends CreateArcTool<CanvasPlace | CanvasTransition> {
 
     public static ID = 'CreateRegularArcTool';
 
-    constructor(context: CanvasToolContext) {
+    constructor(context: CanvasToolContext, translateService: TranslateService) {
         super(
             CreateRegularArcTool.ID,
             new ControlPanelButton(
                 new ControlPanelIcon('arc', true),
-                'Arc',
+                translateService.instant('builder.modeler.edit-mode.services.arcLabel'),
             ),
-            context
+            context,
+            translateService
         );
     }
 

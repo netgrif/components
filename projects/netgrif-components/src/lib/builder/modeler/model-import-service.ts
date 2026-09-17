@@ -9,6 +9,7 @@ import {HistoryService} from './services/history/history.service';
 import {ModelService} from './services/model/model.service';
 import {BuilderMode, BuilderModeService} from "../services/builder-mode.service";
 import {BuilderIntegrationService} from "../services/builder-integration.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Injectable()
 export class ModelImportService {
@@ -21,7 +22,8 @@ export class ModelImportService {
         private router: Router,
         private historyService: HistoryService,
         private _builderModeService: BuilderModeService,
-        protected _builderIntegrationService: BuilderIntegrationService
+        protected _builderIntegrationService: BuilderIntegrationService,
+        protected _translateService: TranslateService
     ) {
     }
 
@@ -48,7 +50,7 @@ export class ModelImportService {
         if (petriNetResult.model !== undefined) {
 
             this.modelService.model = petriNetResult.model;
-            this.historyService.save(`Model ${this.modelService.model.id} has been imported.`)
+            this.historyService.save(this._translateService.instant('builder.modeler.model')` ${this.modelService.model.id} ` + this._translateService.instant('builder.modeler.hasBeenImported'))
             this._builderIntegrationService.setModelData(this.modelService.model);
         }
         this._builderModeService.mode = BuilderMode.MODELER;

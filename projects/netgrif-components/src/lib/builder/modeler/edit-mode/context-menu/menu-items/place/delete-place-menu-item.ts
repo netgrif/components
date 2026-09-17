@@ -5,10 +5,11 @@ import {
 import {CanvasPlace} from '../../../domain/canvas-place';
 import {CanvasTool} from '../../../services/modes/canvas-tool';
 import {DeleteMenuItem} from '../delete-menu-item';
+import {TranslateService} from "@ngx-translate/core";
 
 export class DeletePlaceMenuItem extends DeleteMenuItem {
 
-    constructor(canvasPlace: CanvasPlace, tool: CanvasTool) {
+    constructor(canvasPlace: CanvasPlace, tool: CanvasTool, translateService: TranslateService) {
         super(() => {
                 const referenced = tool.model.getArcs().filter(a => a.reference === canvasPlace.id);
                 if (referenced.length === 0) {
@@ -26,7 +27,7 @@ export class DeletePlaceMenuItem extends DeleteMenuItem {
                     }
                 });
 
-            }
+            }, translateService
         );
     }
 }

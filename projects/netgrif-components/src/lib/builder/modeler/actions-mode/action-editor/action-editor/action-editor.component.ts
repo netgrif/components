@@ -12,6 +12,7 @@ import {ActionEditorService} from '../action-editor.service';
 import {ChangeType, EditableAction} from '../classes/editable-action';
 import {LeafNode} from '../classes/leaf-node';
 import {ActionChangedEvent} from "../action-editor-list/action-changed-event";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'nc-builder-action-editor',
@@ -59,7 +60,8 @@ export class ActionEditorComponent implements OnInit {
     constructor(
         private actionEditorService: ActionEditorService,
         private modelService: ModelService,
-        private deleteDialog: MatDialog
+        private deleteDialog: MatDialog,
+        private _translateService: TranslateService
     ) {
         this.formControl = new FormControl(undefined, {updateOn: 'blur'});
         this.actionChanged = new EventEmitter<ActionChangedEvent>();
@@ -135,7 +137,7 @@ export class ActionEditorComponent implements OnInit {
             this.saveAction(value);
         });
         this.transitionItemsConfiguration = new MenuItemConfiguration(
-            'Transitions',
+            this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.transitions'),
             'transition',
             ['<transition>', '<transitionId>', '<task>'],
             this.editor,
@@ -143,7 +145,7 @@ export class ActionEditorComponent implements OnInit {
             this.modelService.model.getTransitions().map(t => new MenuItem(t.id, `${t.label?.value} [${t.id}]`))
         );
         this.dataFieldItemsConfiguration = new MenuItemConfiguration(
-            'Data fields',
+            this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.dataFields'),
             'datafield',
             // TODO: NAB-326 choicefield, optionfield = different menu items
             ['<datafield>', '<datafieldId>'],
@@ -152,28 +154,28 @@ export class ActionEditorComponent implements OnInit {
             this.modelService.model.getDataSet().map(f => new MenuItem(f.id, `${f.title?.value} [${f.id}]`))
         );
         this.behaviourItemsConfiguration = new MenuItemConfiguration(
-            'Behaviours',
+            this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.behaviours'),
             'behaviour',
             ['<behaviour>'],
             this.editor,
             this,
             [
-                new MenuItem('visible', 'visible'),
-                new MenuItem('hidden', 'hidden'),
-                new MenuItem('editable', 'editable'),
-                new MenuItem('required', 'required'),
-                new MenuItem('optional', 'optional')
+                new MenuItem('visible', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.visible')),
+                new MenuItem('hidden', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.hidden')),
+                new MenuItem('editable', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.editable')),
+                new MenuItem('required', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.required')),
+                new MenuItem('optional', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.optional'))
             ]
         );
         this.conditionItemsConfiguration = new MenuItemConfiguration(
-            'Conditions',
+            this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.conditions'),
             'condition',
             ['<condition>'],
             this.editor,
             this,
             [
-                new MenuItem('true', 'true'),
-                new MenuItem('false', 'false'),
+                new MenuItem('true', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.true')),
+                new MenuItem('false', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.false')),
                 new MenuItem('<datafield>.value == <datafield>.value', '&lt;datafield&gt;.value <b>==</b> &lt;datafield&gt;.value'),
                 new MenuItem('<datafield>.value != <datafield>.value', '&lt;datafield&gt;.value <b>!=</b> &lt;datafield&gt;.value'),
                 new MenuItem('<datafield>.value > <datafield>.value', '&lt;datafield&gt;.value <b>&gt;</b> &lt;datafield&gt;.value'),
@@ -189,19 +191,19 @@ export class ActionEditorComponent implements OnInit {
             ]
         );
         this.propertyItemsConfiguration = new MenuItemConfiguration(
-            'Properties',
+            this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.properties'),
             'property',
             ['<property>'],
             this.editor,
             this,
             [
-                new MenuItem('"title"', 'title'),
-                new MenuItem('"color"', 'color'),
-                new MenuItem('"icon"', 'icon'),
+                new MenuItem('"title"', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.title')),
+                new MenuItem('"color"', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.color')),
+                new MenuItem('"icon"', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.icon')),
             ]
         );
         this.valueItemsConfiguration = new MenuItemConfiguration(
-            'Values',
+            this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.values'),
             'value',
             ['<value>', '<choices>', '<options>'],
             this.editor,
@@ -210,66 +212,66 @@ export class ActionEditorComponent implements OnInit {
                 new MenuItem('<datafield>.value', '&lt;datafield&gt;.value'),
                 new MenuItem('<datafield>.choices', '&lt;datafield&gt;.choices'),
                 new MenuItem('<datafield>.options', '&lt;datafield&gt;.options'),
-                new MenuItem('true', 'true'),
-                new MenuItem('false', 'false'),
-                new MenuItem(' ', 'Empty value'),
-                new MenuItem('', 'New variable or value'),
-                new MenuItem('[a,b,c]', 'List of objects'),
-                new MenuItem('[a:a,b:b]', 'Map of objects'),
-                new MenuItem('["a","b","c"]', 'List of strings'),
-                new MenuItem('["a":"a","b":"b"]', 'Map of strings')
+                new MenuItem('true', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.true')),
+                new MenuItem('false', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.false')),
+                new MenuItem(' ', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.emptyValue')),
+                new MenuItem('', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.newVariableOrValue')),
+                new MenuItem('[a,b,c]', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.listOfObjects')),
+                new MenuItem('[a:a,b:b]', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.mapOfObjects')),
+                new MenuItem('["a","b","c"]', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.listOfStrings')),
+                new MenuItem('["a":"a","b":"b"]', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.mapOfStrings'))
             ]
         );
         this.typeItemsConfiguration = new MenuItemConfiguration(
-            'Types',
+            this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.types'),
             'types',
             ['<type>'],
             this.editor,
             this,
             [
-                new MenuItem('"text"', 'text'),
-                new MenuItem('"number"', 'number'),
-                new MenuItem('"date"', 'date'),
-                new MenuItem('"boolean"', 'boolean'),
-                new MenuItem('"file"', 'file'),
-                new MenuItem('"fileList"', 'fileList'),
-                new MenuItem('"enumeration"', 'enumeration'),
-                new MenuItem('"enumeration_map"', 'enumeration_map'),
-                new MenuItem('"multichoice"', 'multichoice'),
-                new MenuItem('"multichoice_map"', 'multichoice_map'),
-                new MenuItem('"userList"', 'userList'),
-                new MenuItem('"tabular"', 'tabular'),
-                new MenuItem('"caseRef"', 'caseRef'),
-                new MenuItem('"dateTime"', 'dateTime'),
-                new MenuItem('"button"', 'button'),
-                new MenuItem('"taskRef"', 'taskRef'),
-                new MenuItem('"filter"', 'filter'),
-                new MenuItem('"i18n"', 'i18n')
+                new MenuItem('"text"', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.text')),
+                new MenuItem('"number"', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.number')),
+                new MenuItem('"date"', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.date')),
+                new MenuItem('"boolean"', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.boolean')),
+                new MenuItem('"file"', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.file')),
+                new MenuItem('"fileList"', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.fileList')),
+                new MenuItem('"enumeration"', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.enumeration')),
+                new MenuItem('"enumeration_map"', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.enumeration_map')),
+                new MenuItem('"multichoice"', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.multichoice')),
+                new MenuItem('"multichoice_map"', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.multichoice_map')),
+                new MenuItem('"userList"', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.userList')),
+                new MenuItem('"tabular"', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.tabular')),
+                new MenuItem('"caseRef"', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.caseRef')),
+                new MenuItem('"dateTime"', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.dateTime')),
+                new MenuItem('"button"', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.button')),
+                new MenuItem('"taskRef"', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.taskRef')),
+                new MenuItem('"filter"', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.filter')),
+                new MenuItem('"i18n"', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.i18n'))
             ]
         );
         this.dataSetItemsConfiguration = new MenuItemConfiguration(
-            'DataSet',
+            this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.dataSet'),
             'dataSet',
             ['<dataSet>'],
             this.editor,
             this,
             [
-                new MenuItem('[<datafieldId>: ["value": <value>,"type": <type>]]', 'One data in set'),
-                new MenuItem('[<datafieldId>: ["value": <value>,"type": <type>],\n \t\t\t   <datafieldId>: ["value": <value>,"type": <type>]]', 'Two data in set'),
+                new MenuItem('[<datafieldId>: ["value": <value>,"type": <type>]]', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.oneDataInSet')),
+                new MenuItem('[<datafieldId>: ["value": <value>,"type": <type>],\n \t\t\t   <datafieldId>: ["value": <value>,"type": <type>]]', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.twoDataInSet')),
             ]
         );
         this.processInstanceIdItemsConfiguration = new MenuItemConfiguration(
-            'Process Instance Id',
+            this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.processInstanceId'),
             'processInstanceId',
             ['<processInstanceId>'],
             this.editor,
             this,
             [
-                new MenuItem(' //Process instance ID can be found in your NAE app', 'Process Instance Id'),
+                new MenuItem(' //Process instance ID can be found in your NAE app', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.processInstanceId')),
             ]
         );
         this.casePredicateItemsConfiguration = new MenuItemConfiguration(
-            'Case predicates',
+            this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.casePredicates'),
             'casePredicate',
             ['<casePredicate>'],
             this.editor,
@@ -277,17 +279,17 @@ export class ActionEditorComponent implements OnInit {
             [
                 new MenuItem('<casePredicate>.and<casePredicate>', '<b>Predicate</b> and <b>Predicate</b>'),
                 new MenuItem('<casePredicate>.or<casePredicate>', '<b>Predicate</b> or <b>Predicate</b>'),
-                new MenuItem('{it.id.eq(<value>)}', 'Case ID equals value'),
-                new MenuItem('{it.visualId.eq(<value>)}', 'Case visual ID equals value'),
-                new MenuItem('{it.processIdentifier.eq(<processInstanceId>)}', 'Process identifier equals value'),
-                new MenuItem('{it.title.eq(<value>)}', 'Title equals value'),
-                new MenuItem('{it.author.email.eq(<value>)}', 'Authors email equals value'),
-                new MenuItem('{it.author.id.eq(<value>)}', 'Authors id equals value'),
-                new MenuItem('{it.author.fullName.eq(<value>)}', 'Authors full name equals value'),
+                new MenuItem('{it.id.eq(<value>)}', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.caseIdEqualsValue')),
+                new MenuItem('{it.visualId.eq(<value>)}', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.caseVisualIdEqualsValue')),
+                new MenuItem('{it.processIdentifier.eq(<processInstanceId>)}', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.processIdentifierEqualsValue')),
+                new MenuItem('{it.title.eq(<value>)}', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.titleEqualsValue')),
+                new MenuItem('{it.author.email.eq(<value>)}', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.authorsEmailEqualsValue')),
+                new MenuItem('{it.author.id.eq(<value>)}', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.authorsIdEqualsValue')),
+                new MenuItem('{it.author.fullName.eq(<value>)}', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.authorsFullNameEqualsValue')),
             ]
         );
         this.taskPredicateItemsConfiguration = new MenuItemConfiguration(
-            'Task predicates',
+            this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.taskPredicates'),
             'taskPredicate',
             ['<taskPredicate>'],
             this.editor,
@@ -295,10 +297,10 @@ export class ActionEditorComponent implements OnInit {
             [
                 new MenuItem('<taskPredicate>.and<taskPredicate>', '<b>Predicate</b> and <b>Predicate</b>'),
                 new MenuItem('<taskPredicate>.or<taskPredicate>', '<b>Predicate</b> or <b>Predicate</b>'),
-                new MenuItem('{it.id.eq(<value>)}', 'Task ID equals value'),
-                new MenuItem('{it.transitionId.eq(<value>)}', 'TransitionId equals value'),
-                new MenuItem('{it.caseId.eq(<value>)}', 'CaseId equals value'),
-                new MenuItem('{it.caseTitle.eq(<value>)}', 'Case title equals value'),
+                new MenuItem('{it.id.eq(<value>)}', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.taskIdEqualsValue')),
+                new MenuItem('{it.transitionId.eq(<value>)}', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.transitionIdEqualsValue')),
+                new MenuItem('{it.caseId.eq(<value>)}', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.caseIdEqualsValue2')),
+                new MenuItem('{it.caseTitle.eq(<value>)}', this._translateService.instant('builder.modeler.actions-node.action-editor.action-editor.caseTitleEqualsValue')),
             ]
         );
         this.editorConfigurations = [

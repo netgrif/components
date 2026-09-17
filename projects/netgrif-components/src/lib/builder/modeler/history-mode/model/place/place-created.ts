@@ -3,6 +3,7 @@ import {PlaceChange} from './place-change';
 
 export class PlaceCreated extends PlaceChange {
 
+    // todo 2477
     constructor(place: Place, model: PetriNet) {
         super(undefined, place, model, `New place ${place.id} has been created`);
     }

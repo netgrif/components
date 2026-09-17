@@ -4,19 +4,21 @@ import {PlaceChange} from '../../../history-mode/model/place/place-change';
 import {CanvasPlace} from '../../domain/canvas-place';
 import {CanvasTool} from './canvas-tool';
 import {CanvasToolContext} from './canvas-tool-context';
+import {TranslateService} from "@ngx-translate/core";
 
 export class AddTokenTool extends CanvasTool {
 
     public static readonly ID = 'AddTokenTool';
 
-    constructor(context: CanvasToolContext) {
+    constructor(context: CanvasToolContext, translateService: TranslateService) {
         super(
             AddTokenTool.ID,
             new ControlPanelButton(
                 new ControlPanelIcon('add_circle_outline', false, true),
-                'Add token',
+                translateService.instant('builder.modeler.edit-mode.services.addToken'),
             ),
-            context
+            context,
+            translateService
         );
     }
 
@@ -31,6 +33,6 @@ export class AddTokenTool extends CanvasTool {
         const changed = new PlaceChange(place.modelPlace, place.modelPlace, undefined);
         changed.place.marking += 1;
         this.modelService.updatePlace(changed);
-        this.historyService.save(`Token has been added to place ${place.id}.`);
+        this.historyService.save(this._translateService.instant('builder.modeler.edit-mode.services.tokenAdded') + ` ${place.id}.`);
     }
 }

@@ -1,4 +1,5 @@
 
+// todo 2477
 export function functionCompletionProposals(range, languages) {
     return [
         {

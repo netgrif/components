@@ -6,13 +6,15 @@ import {ModelerConfig} from '../modeler-config';
 import {HistoryService} from '../services/history/history.service';
 import {ModelService} from '../services/model/model.service';
 import {LocalStorageService} from "../../services/local-storage.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Injectable()
 export class DataMasterDetailService extends AbstractMasterDetailService<DataVariable> {
 
     constructor(protected _modelService: ModelService,
                 protected _historyService: HistoryService,
-                protected _localStorageService: LocalStorageService) {
+                protected _localStorageService: LocalStorageService,
+                protected _translateService: TranslateService) {
         super();
     }
 
@@ -24,14 +26,14 @@ export class DataMasterDetailService extends AbstractMasterDetailService<DataVar
         const data = new DataVariable(this._modelService.nextDataId(), DataType.TEXT);
         this._modelService.model.addData(data);
         this._create.next(data);
-        this._historyService.save(`DataVariable ${data.id} has been created.`)
+        this._historyService.save(`DataVariable ${data.id} ` + this._translateService.instant('builder.modeler.data-mode.hasBeenCreated'))
         return data;
     }
 
     public delete(item: DataVariable): void {
         this._modelService.removeDataVariable(item);
         this._delete.next(item);
-        this._historyService.save(`DataVariable ${item.id} has been deleted.`)
+        this._historyService.save(`DataVariable ${item.id} ` + this._translateService.instant('builder.modeler.data-mode.hasBeenDeleted'))
     }
 
     public duplicate(item: DataVariable): DataVariable {
@@ -39,7 +41,7 @@ export class DataMasterDetailService extends AbstractMasterDetailService<DataVar
         data.id = this._modelService.nextDataId();
         this._modelService.model.addData(data);
         this._create.next(data);
-        this._historyService.save(`DataVariable ${data.id} has been created.`)
+        this._historyService.save(`DataVariable ${data.id} ` + this._translateService.instant('builder.modeler.data-mode.hasBeenCreated'))
         return data;
     }
 

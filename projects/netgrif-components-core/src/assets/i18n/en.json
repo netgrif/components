@@ -769,6 +769,8 @@
                     "name": "Name",
                     "scope": "Scope",
                     "noActionSelected": "No action selected",
+                    "process": "Process",
+                    "namespace": "Namespace",
                     "actionsChanged": "Actions have been changed."
                 },
                 "action-editor": {
@@ -798,6 +800,7 @@
                         "mapOfObjects": "Map of objects",
                         "listOfStrings": "List of strings",
                         "mapOfStrings": "Map of strings",
+                        "types": "Types",
                         "text": "text",
                         "number": "number",
                         "date": "date",
@@ -818,6 +821,7 @@
                         "i18n": "i18n",
                         "dataSet": "DataSet",
                         "oneDataInSet": "One data in set",
+                        "twoDataInSet": "Two data in set",
                         "processInstanceId": "Process Instance Id",
                         "casePredicates": "Case predicates",
                         "caseIdEqualsValue": "Case ID equals value",
@@ -862,6 +866,7 @@
                                 },
                                 "groovyTutorial": {
                                     "label": "Groovy tutorial",
+                                    "header": "Groovy tutorials point",
                                     "description": "Link to the Groovy Tutorials Point: https://www.tutorialspoint.com/groovy/index.htm"
                                 }
                             },
@@ -1551,10 +1556,12 @@
                         "editable": "editable",
                         "required": "required",
                         "optional": "optional",
-                        "conditions2": "Conditions",
                         "true": "true",
                         "false": "false",
                         "properties": "Properties",
+                        "title": "title",
+                        "color": "color",
+                        "icon": "icon",
                         "values": "Values",
                         "addNewVariableOrValue": "Add new variable or value",
                         "listOfObjects": "List of objects",
@@ -1723,7 +1730,11 @@
                     "breakpointAdded": "Breakpoint added to arc",
                     "newModelCreated": "New model has been created.",
                     "editView": "Edit view",
-                    "breakpointDeleted": "breakpoint has been deleted."
+                    "breakpointDeleted": "breakpoint has been deleted.",
+                    "hideGrid": "Hide grid",
+                    "showGrid": "Show grid",
+                    "showIds": "Show IDs",
+                    "showLabels": "Show labels"
                 }
             },
             "history-mode": {
@@ -1749,7 +1760,7 @@
                 "addNewLanguage": "Add new language",
                 "addLocale": "Add locale",
                 "translations": "Translations",
-                "translationsChanged": "Translations has been changed.",
+                "translationsChanged": "Translations have been changed.",
                 "languages": "Languages",
                 "stringId": "String Id",
                 "defaultValue": "Default value",
@@ -1810,7 +1821,9 @@
                 "resetCanvas": "Reset canvas position and zoom",
                 "resetSimulation": "Reset simulation",
                 "simulationByTasks": "Simulation by Tasks",
-                "simulationView": "Simulation view"
+                "simulationView": "Simulation view",
+                "showIds": "Show IDs",
+                "showLabels": "Show labels"
             },
             "task-mode": {
                 "controlTaskView": "Control Task view"

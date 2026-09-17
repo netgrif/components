@@ -768,6 +768,8 @@
                     "name": "Name",
                     "scope": "Geltungsbereich",
                     "noActionSelected": "Keine Aktion ausgewählt",
+                    "process": "Prozess",
+                    "namespace": "Namespace",
                     "actionsChanged": "Aktionen wurden geändert."
                 },
                 "action-editor": {
@@ -797,6 +799,7 @@
                         "mapOfObjects": "Map von Objekten",
                         "listOfStrings": "Liste von Zeichenketten",
                         "mapOfStrings": "Map von Zeichenketten",
+                        "types": "Typen",
                         "text": "text",
                         "number": "number",
                         "date": "date",
@@ -817,6 +820,7 @@
                         "i18n": "i18n",
                         "dataSet": "DataSet",
                         "oneDataInSet": "Ein Datenelement im Set",
+                        "twoDataInSet": "Zwei Datenelementen im Set",
                         "processInstanceId": "Prozessinstanz-Id",
                         "casePredicates": "Fall-Prädikate",
                         "caseIdEqualsValue": "Fall-ID ist gleich Wert",
@@ -861,6 +865,7 @@
                                 },
                                 "groovyTutorial": {
                                     "label": "Groovy-Tutorial",
+                                    "header": "Groovy tutorials point",
                                     "description": "Link zu den Groovy Tutorials: https://www.tutorialspoint.com/groovy/index.htm"
                                 }
                             },
@@ -1550,10 +1555,12 @@
                         "editable": "bearbeitbar",
                         "required": "erforderlich",
                         "optional": "optional",
-                        "conditions2": "Bedingungen",
                         "true": "wahr",
                         "false": "falsch",
                         "properties": "Eigenschaften",
+                        "title": "Titel",
+                        "color": "Farbe",
+                        "icon": "Ikone",
                         "values": "Werte",
                         "addNewVariableOrValue": "Neue Variable oder Wert hinzufügen",
                         "listOfObjects": "Liste von Objekten",
@@ -1722,7 +1729,11 @@
                     "breakpointAdded": "Haltepunkt zur Kante hinzugefügt",
                     "newModelCreated": "Neues Modell wurde erstellt.",
                     "editView": "Bearbeitungsansicht",
-                    "breakpointDeleted": "Haltepunkt wurde gelöscht."
+                    "breakpointDeleted": "Haltepunkt wurde gelöscht.",
+                    "hideGrid": "Raster ausblenden",
+                    "showGrid": "Raster anzeigen",
+                    "showIds": "IDs anzeigen",
+                    "showLabels": "Beschriftungen anzeigen"
                 }
             },
             "history-mode": {
@@ -1809,7 +1820,9 @@
                 "resetCanvas": "Leinwandposition und Zoom zurücksetzen",
                 "resetSimulation": "Simulation zurücksetzen",
                 "simulationByTasks": "Simulation nach Aufgaben",
-                "simulationView": "Simulationsansicht"
+                "simulationView": "Simulationsansicht",
+                "showIds": "IDs anzeigen",
+                "showLabels": "Beschriftungen anzeigen"
             },
             "task-mode": {
                 "controlTaskView": "Aufgaben-Steuerungsansicht"

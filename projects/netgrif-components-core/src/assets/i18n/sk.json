@@ -768,6 +768,8 @@
                     "name": "Názov",
                     "scope": "Rozsah",
                     "noActionSelected": "Nie je vybraná žiadna akcia",
+                    "process": "Proces",
+                    "namespace": "Namespace",
                     "actionsChanged": "Akcie boli zmenené."
                 },
                 "action-editor": {
@@ -797,11 +799,12 @@
                         "mapOfObjects": "Mapa objektov",
                         "listOfStrings": "Zoznam reťazcov",
                         "mapOfStrings": "Mapa reťazcov",
+                        "types": "Typy",
                         "text": "text",
-                        "number": "číslo",
-                        "date": "dátum",
+                        "number": "number",
+                        "date": "date",
                         "boolean": "boolean",
-                        "file": "súbor",
+                        "file": "file",
                         "fileList": "fileList",
                         "enumeration": "enumeration",
                         "enumerationMap": "enumeration_map",
@@ -816,7 +819,8 @@
                         "filter": "filter",
                         "i18n": "i18n",
                         "dataSet": "DataSet",
-                        "oneDataInSet": "Jedna dáta v sete",
+                        "oneDataInSet": "Jedny dáta v množine",
+                        "twoDataInSet": "Dve dáta v množine",
                         "processInstanceId": "Id inštancie procesu",
                         "casePredicates": "Predikáty inštancie",
                         "caseIdEqualsValue": "ID inštancie sa rovná hodnote",
@@ -861,6 +865,7 @@
                                 },
                                 "groovyTutorial": {
                                     "label": "Groovy tutoriál",
+                                    "header": "Groovy tutorials point",
                                     "description": "Odkaz na Groovy návody: https://www.tutorialspoint.com/groovy/index.htm"
                                 }
                             },
@@ -1550,10 +1555,12 @@
                         "editable": "editovateľné",
                         "required": "povinné",
                         "optional": "voliteľné",
-                        "conditions2": "Podmienky",
                         "true": "pravda",
                         "false": "nepravda",
                         "properties": "Vlastnosti",
+                        "title": "názov",
+                        "color": "farba",
+                        "icon": "ikona",
                         "values": "Hodnoty",
                         "addNewVariableOrValue": "Pridať novú premennú alebo hodnotu",
                         "listOfObjects": "Zoznam objektov",
@@ -1722,7 +1729,11 @@
                     "breakpointAdded": "Bod prerušenia bol pridaný na hranu",
                     "newModelCreated": "Nový model bol vytvorený.",
                     "editView": "Zobrazenie úpravy",
-                    "breakpointDeleted": "bod prerušenia bol vymazaný."
+                    "breakpointDeleted": "bod prerušenia bol vymazaný.",
+                    "hideGrid": "Schovať mriežku",
+                    "showGrid": "Zobraziť mriežku",
+                    "showIds": "Zobraziť identifikátory",
+                    "showLabels": "Zobraziť štítok"
                 }
             },
             "history-mode": {
@@ -1809,7 +1820,9 @@
                 "resetCanvas": "Resetovať pozíciu a priblíženie plátna",
                 "resetSimulation": "Resetovať simuláciu",
                 "simulationByTasks": "Simulácia podľa úloh",
-                "simulationView": "Zobrazenie simulácie"
+                "simulationView": "Zobrazenie simulácie",
+                "showIds": "Zobraziť identifikátory",
+                "showLabels": "Zobraziť štítok"
             },
             "task-mode": {
                 "controlTaskView": "Zobrazenie ovládania úlohy"

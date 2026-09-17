@@ -8,14 +8,15 @@ import {CanvasPlace} from '../../domain/canvas-place';
 import {CanvasTransition} from '../../domain/canvas-transition';
 import {CanvasTool} from './canvas-tool';
 import {CanvasToolContext} from './canvas-tool-context';
+import {TranslateService} from "@ngx-translate/core";
 
 export abstract class CreateArcTool<T extends CanvasNodeElement<NodeElement, PetriflowNode<SvgNodeElement>>> extends CanvasTool {
 
     private _source: T;
     private _arcLine: SVGElement;
 
-    constructor(_id: string, button: ControlPanelButton, context: CanvasToolContext) {
-        super(_id, button, context);
+    constructor(_id: string, button: ControlPanelButton, context: CanvasToolContext, translateService: TranslateService) {
+        super(_id, button, context, translateService);
     }
 
     abstract startDrawingArc(node: CanvasPlace | CanvasTransition): void;
@@ -65,7 +66,7 @@ export abstract class CreateArcTool<T extends CanvasNodeElement<NodeElement, Pet
     createArc(type: ArcType, source: CanvasNodeElement<any, any>, destination: CanvasNodeElement<any, any>): CanvasArc {
         const modelArc = this.modelService.newArc(source.modelElement, destination.modelElement, type);
         const svgArc = this.editModeService.newSvgArc(modelArc);
-        this.historyService.save(`New ${this.modelService.toXmlArcType(modelArc.type)} arc ${modelArc.id} has been created`);
+        this.historyService.save(this._translateService.instant('builder.modeler.edit-mode.services.new') + ` ${this.modelService.toXmlArcType(modelArc.type)} ` + this._translateService.instant('builder.modeler.edit-mode.services.arc') + ` ${modelArc.id} ` + this._translateService.instant('builder.modeler.edit-mode.services.hasBeenCreated'));
         return svgArc;
     }
 
