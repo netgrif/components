@@ -1866,7 +1866,6 @@
             "bugReport": "You can use our github issue page to report any bug you encounter while using the Netgrif Application Builder."
         },
         "newModelCreated": "New model has been created.",
-        "hasBeenImported": "has been imported.",
-        "newModelCreated2": "New Model has been created."
+        "hasBeenImported": "has been imported."
     }
 }

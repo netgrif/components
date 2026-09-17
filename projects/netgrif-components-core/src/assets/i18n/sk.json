@@ -1865,7 +1865,6 @@
             "bugReport": "Na nahlásenie akejkoľvek chyby, ktorú narazíte pri používaní Netgrif Application Builder, môžete použiť našu stránku github issues."
         },
         "newModelCreated": "Nový model bol vytvorený.",
-        "hasBeenImported": "bol importovaný.",
-        "newModelCreated2": "Nový model bol vytvorený."
+        "hasBeenImported": "bol importovaný."
     }
 }

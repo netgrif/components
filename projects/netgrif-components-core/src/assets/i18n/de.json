@@ -1865,7 +1865,6 @@
             "bugReport": "Sie können unsere Github-Issues-Seite nutzen, um Fehler zu melden, die Sie bei der Verwendung des Netgrif Application Builders entdecken."
         },
         "newModelCreated": "Neues Modell wurde erstellt.",
-        "hasBeenImported": "wurde importiert.",
-        "newModelCreated2": "Neues Modell wurde erstellt."
+        "hasBeenImported": "wurde importiert."
     }
 }
