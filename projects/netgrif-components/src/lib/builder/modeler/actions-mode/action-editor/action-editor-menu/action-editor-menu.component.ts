@@ -24,12 +24,12 @@ export class ActionEditorMenuComponent implements OnInit {
     constructor(
         private actionItemProviderService: ActionItemProviderService,
         private modelService: ModelService,
-        private _translateService: TranslateService
+        translateService: TranslateService
     ) {
+        this.menuItems = getActions(translateService);
     }
 
     ngOnInit(): void {
-        this.menuItems = getActions(this._translateService);
         this.menuItems[this.menuItems.length - 1].actions = this.modelService.model.functions.map(fn => {
             return {
                 label: fn.name,

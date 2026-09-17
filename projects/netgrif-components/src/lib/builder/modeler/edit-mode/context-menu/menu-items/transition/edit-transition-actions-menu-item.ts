@@ -10,7 +10,7 @@ export class EditTransitionActionsMenuItem extends MenuItem {
                 tool: CanvasTool,
                 translateService: TranslateService) {
         super(
-            translateService.instant('builder.modeler.edit-mode.context-menu.createNewForm') + ` (${tool.modelService.numberOfTransitionActions(transition.modelTransition)})`,
+            translateService.instant('builder.modeler.edit-mode.context-menu.editActions') + ` (${tool.modelService.numberOfTransitionActions(transition.modelTransition)})`,
             'code',
             () => {
                 tool.actionMode.activate(tool.actionMode.transitionActionsTool);

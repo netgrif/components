@@ -837,7 +837,8 @@
                         "caseTitleEqualsValue": "Falltitel ist gleich Wert"
                     },
                     "action-editor-menu": {
-                        "example": "Beispiel"
+                        "example": "Beispiel",
+                        "no": "Keine"
                     },
                     "classes": {
                         "command-action": {

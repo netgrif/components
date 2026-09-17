@@ -837,7 +837,8 @@
                         "caseTitleEqualsValue": "Názov inštancie sa rovná hodnote"
                     },
                     "action-editor-menu": {
-                        "example": "Príklad"
+                        "example": "Príklad",
+                        "no": "Žiadne"
                     },
                     "classes": {
                         "command-action": {

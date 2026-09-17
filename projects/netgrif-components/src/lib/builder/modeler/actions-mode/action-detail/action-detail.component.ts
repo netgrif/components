@@ -40,15 +40,15 @@ export class ActionDetailComponent implements OnInit, OnDestroy {
                 private _translateService: TranslateService) {
         this._actions = getActions(this._translateService);
         this.functionScopes = [
-            {viewValue: this._translateService.instant('builder.modeler.actions-node.action-detail.process'), value: FunctionScope.PROCESS},
-            {viewValue: this._translateService.instant('builder.modeler.actions-node.action-detail.namespace'), value: FunctionScope.NAMESPACE},
+            {viewValue: this._translateService.instant('builder.modeler.actions-mode.action-detail.process'), value: FunctionScope.PROCESS},
+            {viewValue: this._translateService.instant('builder.modeler.actions-mode.action-detail.namespace'), value: FunctionScope.NAMESPACE},
         ];
     }
 
     ngOnInit(): void {
         this._masterService.getSelected$().subscribe(item => {
             if (this.actionEditorService.historySave) {
-                this._historyService.save(this._translateService.instant('builder.modeler.actions-node.action-detail.actionsChanged'));
+                this._historyService.save(this._translateService.instant('builder.modeler.actions-mode.action-detail.actionsChanged'));
                 this.actionEditorService.historySave = false;
             }
             if (item instanceof Transition) {
@@ -92,7 +92,7 @@ export class ActionDetailComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         if (this.actionEditorService.historySave) {
-            this._historyService.save(this._translateService.instant('builder.modeler.actions-node.action-detail.actionsChanged'));
+            this._historyService.save(this._translateService.instant('builder.modeler.actions-mode.action-detail.actionsChanged'));
             this.actionEditorService.historySave = false;
         }
     }

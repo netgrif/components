@@ -838,7 +838,8 @@
                         "caseTitleEqualsValue": "Case title equals value"
                     },
                     "action-editor-menu": {
-                        "example": "Example"
+                        "example": "Example",
+                        "no": "No"
                     },
                     "classes": {
                         "command-action": {
