@@ -1,11 +1,14 @@
 import {TestBed} from '@angular/core/testing';
 import {BuilderMode, BuilderModeService} from './builder-mode.service';
+import {TranslateService} from "@ngx-translate/core";
 
 describe('BuilderModeService', () => {
     let service: BuilderModeService;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({providers: [BuilderModeService]});
+        TestBed.configureTestingModule({providers: [BuilderModeService,
+                {provide: TranslateService, useValue: { instant: (key: string) => `translated-${key}` }}
+            ]});
         service = TestBed.inject(BuilderModeService);
     });
 

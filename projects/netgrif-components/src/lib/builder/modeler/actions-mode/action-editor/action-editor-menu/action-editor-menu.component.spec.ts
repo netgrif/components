@@ -4,12 +4,15 @@ import {ArcFactory} from '../../../edit-mode/domain/arc-builders/arc-factory.ser
 import {ModelService} from '../../../services/model/model.service';
 import {ActionItemProviderService} from '../action-item-provider.service';
 import {ActionEditorMenuComponent} from './action-editor-menu.component';
+import {TranslateService} from "@ngx-translate/core";
 
 describe('ActionEditorMenuComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [ActionEditorMenuComponent],
-            providers: [ActionItemProviderService, ModelService, ArcFactory],
+            providers: [ActionItemProviderService, ModelService, ArcFactory,
+                {provide: TranslateService, useValue: { instant: (key: string) => `translated-${key}` }}
+            ],
             schemas: [NO_ERRORS_SCHEMA],
         });
     });

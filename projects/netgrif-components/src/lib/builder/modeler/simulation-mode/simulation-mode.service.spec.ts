@@ -9,6 +9,7 @@ import {ModelService} from '../services/model/model.service';
 import {SelectedTransitionService} from '../selected-transition.service';
 import {TutorialService} from '../../tutorial/tutorial-service';
 import {SimulationModeService} from './simulation-mode.service';
+import {TranslateService} from "@ngx-translate/core";
 
 describe('SimulationModeService', () => {
     let service: SimulationModeService;
@@ -31,6 +32,7 @@ describe('SimulationModeService', () => {
                     transitionChange: new Subject(),
                     arcChange: new Subject(),
                 }},
+                {provide: TranslateService, useValue: { instant: (key: string) => `translated-${key}` }}
             ],
         });
         service = TestBed.inject(SimulationModeService);
