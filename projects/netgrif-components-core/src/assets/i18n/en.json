@@ -1580,7 +1580,8 @@
                 "action-master": {
                     "name": "Name",
                     "scope": "Scope",
-                    "addFunction": "Add function"
+                    "addFunction": "Add function",
+                    "deleteFunction": "Delete function"
                 },
                 "tools": {
                     "dataVariables": "Data Variables",

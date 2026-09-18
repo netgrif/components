@@ -1579,7 +1579,8 @@
                 "action-master": {
                     "name": "Name",
                     "scope": "Geltungsbereich",
-                    "addFunction": "Funktion hinzufügen"
+                    "addFunction": "Funktion hinzufügen",
+                    "deleteFunction": "Funktion löschen"
                 },
                 "tools": {
                     "dataVariables": "Datenvariablen",

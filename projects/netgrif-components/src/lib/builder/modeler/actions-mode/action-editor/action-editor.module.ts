@@ -18,16 +18,18 @@ import {actionCompletionProvider} from './definitions/completion-provider';
 import {tokenProvider} from './definitions/tokens';
 import {FunctionEditorComponent} from './function-editor/function-editor.component';
 import {MaterialModule} from '@netgrif/components-core';
-import {TranslateModule} from "@ngx-translate/core";
+import {TranslateModule, TranslateService} from "@ngx-translate/core";
 
 declare var monaco: any;
+
+let translateService: TranslateService;
 
 export function onMonacoLoad() {
     monaco.languages.register({id: 'petriflow'});
     monaco.languages.setMonarchTokensProvider('petriflow', tokenProvider() as any);
     monaco.languages.registerCompletionItemProvider('petriflow', {
         provideCompletionItems(model, position) {
-            return actionCompletionProvider(model, position, monaco.languages)  ;
+            return actionCompletionProvider(model, position, monaco.languages, translateService)  ;
         }
     } as any);
 }
@@ -64,4 +66,7 @@ const monacoConfig: NgxMonacoEditorConfig = {
     ]
 })
 export class ActionEditorModule {
+    constructor(_translateService: TranslateService) {
+        translateService = _translateService;
+    }
 }

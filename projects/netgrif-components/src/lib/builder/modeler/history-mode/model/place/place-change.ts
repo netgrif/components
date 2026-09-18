@@ -3,7 +3,6 @@ import {ElementChange} from '../element-change';
 
 export class PlaceChange extends ElementChange<Place> {
 
-    // todo 2477
     constructor(originalPlace: Place, place: Place, model: PetriNet, message = `Place ${place.id} has been changed`) {
         super(originalPlace, place, model, message);
     }

@@ -3,7 +3,6 @@ import {PlaceChange} from './place-change';
 
 export class PlaceMoved extends PlaceChange {
 
-    // todo 2477
     constructor(place: Place, model: PetriNet,) {
         super(place, place, model, `Place ${place.id} has been moved to [${place.x}, ${place.y}]`);
     }
