@@ -4,6 +4,7 @@ import {ControlPanelButton} from '../control-panel-button';
 import {ControlPanelIcon} from '../control-panel-icon';
 import {Tool} from '../tools/tool';
 import {ToolComponent} from "../tools/tool-component/tool.component";
+import {TranslateService} from "@ngx-translate/core";
 
 @Injectable()
 export class RedoTool extends Tool {
@@ -11,13 +12,14 @@ export class RedoTool extends Tool {
     public static readonly ID = 'redo';
 
     constructor(
-        private history: HistoryService
+        private history: HistoryService,
+        translateService: TranslateService
     ) {
         super(
             RedoTool.ID,
             new ControlPanelButton(
                 new ControlPanelIcon('redo', false, true),
-                'Redo'
+                translateService.instant('builder.modeler.control-panel.redo')
             ),
             ToolComponent
         );

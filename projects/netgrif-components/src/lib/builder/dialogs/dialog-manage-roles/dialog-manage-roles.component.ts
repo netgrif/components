@@ -8,8 +8,8 @@ import {DataVariable, ProcessPermissionRef, Role, TransitionPermissionRef} from 
 import {ModelerConfig} from '../../modeler/modeler-config';
 import {HistoryService} from '../../modeler/services/history/history.service';
 import {ModelService} from '../../modeler/services/model/model.service';
-import {CanvasToolContext} from "../../modeler/edit-mode/services/modes/canvas-tool-context";
 import {LocalStorageService} from "../../services/local-storage.service";
+import {TranslateService} from "@ngx-translate/core";
 
 export enum RoleRefType {
     TRANSITION = 'transition',
@@ -55,7 +55,8 @@ export class DialogManageRolesComponent implements OnInit, OnDestroy {
     private _localStorageService: LocalStorageService;
 
     constructor(
-        @Inject(MAT_DIALOG_DATA) public data: ManagePermissionData
+        @Inject(MAT_DIALOG_DATA) public data: ManagePermissionData,
+        protected _translateService: TranslateService
     ) {
         this.modelService = data.modelService;
         this.historyService = data.historyService;
@@ -265,7 +266,7 @@ export class DialogManageRolesComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         if (this.historyChange) {
-            this.historyService.save("Role assignments has been changed.");
+            this.historyService.save(this._translateService.instant('builder.dialogs.manage-roles.changed'));
         }
     }
 }

@@ -21,6 +21,7 @@ import {MaterialIconPickerComponent} from "../modeler/components/material-icon-p
 import {TriggerTreeComponent} from "./dialog-transition-edit/trigger-tree/trigger-tree.component";
 import {NgxMatDatetimePickerModule} from "@angular-material-components/datetime-picker";
 import {NgxMatMomentModule} from "@angular-material-components/moment-adapter";
+import {TranslateModule} from "@ngx-translate/core";
 
 const DIALOG_COMPONENTS = [
     DialogArcEditComponent,
@@ -51,6 +52,7 @@ const DIALOG_COMPONENTS = [
         MaterialIconPickerComponent,
         NgxMatDatetimePickerModule,
         NgxMatMomentModule,
+        TranslateModule,
     ],
 })
 export class BuilderDialogsModule {

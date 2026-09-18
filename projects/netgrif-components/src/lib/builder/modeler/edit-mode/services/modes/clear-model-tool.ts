@@ -3,19 +3,21 @@ import {ControlPanelButton} from '../../../control-panel/control-panel-button';
 import {ControlPanelIcon} from '../../../control-panel/control-panel-icon';
 import {CanvasTool} from './canvas-tool';
 import {CanvasToolContext} from './canvas-tool-context';
+import {TranslateService} from "@ngx-translate/core";
 
 export class ClearModelTool extends CanvasTool {
 
     public static readonly ID = 'ClearModelTool'
 
-    constructor(context: CanvasToolContext) {
+    constructor(context: CanvasToolContext, translateService: TranslateService) {
         super(
             ClearModelTool.ID,
             new ControlPanelButton(
                 new ControlPanelIcon('delete_forever', false, true),
-                'Delete model',
+                translateService.instant('builder.modeler.edit-mode.services.deleteModel'),
             ),
-            context
+            context,
+            translateService
         );
     }
 
@@ -26,7 +28,7 @@ export class ClearModelTool extends CanvasTool {
             if (result === true) {
                 const oldId = this.modelService.model.id;
                 this.modelService.model = this.modelService.newModel();
-                this.historyService.save(`Model ${oldId} has been deleted.`);
+                this.historyService.save(this._translateService.instant('builder.modeler.edit-mode.services.model') + ` ${oldId} ` + this._translateService.instant('builder.modeler.edit-mode.services.hasBeenDeleted'));
             }
         });
     }

@@ -3,12 +3,13 @@ import {ArcEditData, DialogArcEditComponent} from '../../../../../dialogs/dialog
 import {CanvasArc} from '../../../domain/canvas-arc';
 import {CanvasTool} from '../../../services/modes/canvas-tool';
 import {MenuItem} from '../menu-item';
+import {TranslateService} from "@ngx-translate/core";
 
 export class EditArcMenuItem extends MenuItem {
 
-    constructor(arc: CanvasArc, tool: CanvasTool) {
+    constructor(arc: CanvasArc, tool: CanvasTool, translateService: TranslateService) {
         super(
-            'Edit',
+            translateService.instant('builder.modeler.edit-mode.context-menu.edit'),
             'edit',
             () => {
                 tool.openDialog(DialogArcEditComponent, {
@@ -21,7 +22,7 @@ export class EditArcMenuItem extends MenuItem {
                 }, (editedArc: ChangedArc) => {
                     tool.modelService.updateArc(editedArc);
                     if (editedArc) {
-                        tool.historyService.save(`Arc ${arc.id} has been changed.`);
+                        tool.historyService.save(translateService.instant('builder.modeler.edit-mode.context-menu.arc') + ` ${arc.id} ` + translateService.instant('builder.modeler.edit-mode.context-menu.hasBeenChanged'));
                     }
                 });
             }

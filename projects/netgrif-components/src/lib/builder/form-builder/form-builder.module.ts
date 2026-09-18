@@ -19,6 +19,7 @@ import {NgxMatDatetimePickerModule} from "@angular-material-components/datetime-
 import {NgxMatMomentModule} from "@angular-material-components/moment-adapter";
 import {MatNativeDateModule} from "@angular/material/core";
 import { DataFieldsComponentModule } from "../../data-fields/data-fields.module";
+import {TranslateModule} from "@ngx-translate/core";
 
 @NgModule({
     declarations: [
@@ -48,6 +49,7 @@ import { DataFieldsComponentModule } from "../../data-fields/data-fields.module"
         NgxMatDatetimePickerModule,
         NgxMatMomentModule,
         MatNativeDateModule,
+        TranslateModule,
     ]
 })
 export class FormBuilderModule {

@@ -8,6 +8,7 @@ import {FieldListService} from '../field-list/field-list.service';
 import {GridsterDataField} from './classes/gridster-data-field';
 import {GridsterService} from './gridster.service';
 import {BuilderModeService, BuilderMode} from "../../services/builder-mode.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'nc-builder-gridster-component',
@@ -24,7 +25,8 @@ export class GridsterComponent implements OnInit, OnDestroy {
                 private router: Router,
                 private transitionService: SelectedTransitionService,
                 private historyService: HistoryService,
-                private _builderModeService: BuilderModeService) {
+                private _builderModeService: BuilderModeService,
+                protected _translateService: TranslateService) {
     }
 
     ngOnInit() {
@@ -43,7 +45,7 @@ export class GridsterComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         if (this.gridsterService.historySave) {
             this.gridsterService.historySave = false;
-            this.historyService.save('DataRefs has been changed');
+            this.historyService.save(this._translateService.instant('builder.form-builder.gridster.dataRefsChanged'));
         }
     }
 

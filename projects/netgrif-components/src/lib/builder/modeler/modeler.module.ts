@@ -71,6 +71,7 @@ import { DataFieldsComponentModule } from "../../data-fields/data-fields.module"
 import {TaskContentComponentModule} from "../../task-content/task-content.module";
 import {MaterialIconPickerComponent} from "./components/material-icon-picker/material-icon-picker.component";
 import {TaskModeComponent} from "./task-mode/task-mode.component";
+import {TranslateModule} from "@ngx-translate/core";
 
 @NgModule({
     declarations: [
@@ -142,7 +143,8 @@ import {TaskModeComponent} from "./task-mode/task-mode.component";
         NgxMatMomentModule,
         MatNativeDateModule,
         MaterialIconPickerComponent,
-        TaskModeComponent
+        TaskModeComponent,
+        TranslateModule,
     ]
 })
 export class ModelerModule {

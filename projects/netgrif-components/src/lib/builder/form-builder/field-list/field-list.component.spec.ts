@@ -10,10 +10,17 @@ import {SelectedTransitionService} from '../../modeler/selected-transition.servi
 import {GridsterService} from '../gridster/gridster.service';
 import {FieldListService} from './field-list.service';
 import {FieldListComponent} from './field-list.component';
+import {TranslateService} from "@ngx-translate/core";
+import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {TranslateLibModule} from "@netgrif/components-core";
 
 describe('FieldListComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
+            imports: [
+                TranslateLibModule,
+                HttpClientTestingModule,
+            ],
             declarations: [FieldListComponent],
             providers: [
                 BuilderModeService,
@@ -24,6 +31,7 @@ describe('FieldListComponent', () => {
                 {provide: MatDialog, useValue: {}},
                 {provide: Router, useValue: {}},
                 {provide: MatSnackBar, useValue: {}},
+                {provide: TranslateService, useValue: { instant: (key: string) => `translated-${key}` }}
             ],
             schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
         });

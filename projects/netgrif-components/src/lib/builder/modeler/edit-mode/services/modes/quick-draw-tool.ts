@@ -13,6 +13,7 @@ import {CanvasPlace} from '../../domain/canvas-place';
 import {CanvasTransition} from '../../domain/canvas-transition';
 import {CanvasTool} from './canvas-tool';
 import {CanvasToolContext} from './canvas-tool-context';
+import {TranslateService} from "@ngx-translate/core";
 
 enum Step {
     PLACE,
@@ -28,14 +29,15 @@ export class QuickDrawTool extends CanvasTool {
     private source: CanvasNodeElement<NodeElement, PetriflowNode<SvgNodeElement>>;
     private arcLine: SVGElement;
 
-    constructor(context: CanvasToolContext) {
+    constructor(context: CanvasToolContext, translateService: TranslateService) {
         super(
             QuickDrawTool.ID,
             new ControlPanelButton(
                 new ControlPanelIcon('bolt'),
-                'Fast PN',
+                translateService.instant('builder.modeler.edit-mode.services.fastPN'),
             ),
-            context
+            context,
+            translateService
         );
     }
 
@@ -63,12 +65,12 @@ export class QuickDrawTool extends CanvasTool {
         if (this.isLeftButtonClick(event)) {
             if (this.step === Step.PLACE) {
                 const canvasPlace = this.editModeService.createPlace(this.mousePosition(event));
-                this.historyService.save(`Place ${canvasPlace.id} has been created.`);
+                this.historyService.save(this._translateService.instant('builder.modeler.edit-mode.services.place') + ` ${canvasPlace.id} ` + this._translateService.instant('builder.modeler.edit-mode.services.hasBeenCreated'));
                 this.bindPlace(canvasPlace);
                 this.onPlaceUp(event, canvasPlace);
             } else if (this.step === Step.TRANSITION) {
                 const canvasTransition = this.editModeService.createTransition(this.mousePosition(event));
-                this.historyService.save(`Task ${canvasTransition.id} has been created.`);
+                this.historyService.save(this._translateService.instant('builder.modeler.edit-mode.services.task') + ` ${canvasTransition.id} ` + this._translateService.instant('builder.modeler.edit-mode.services.hasBeenCreated'));
                 this.bindTransition(canvasTransition);
                 this.onTransitionUp(event, canvasTransition);
             }
@@ -90,7 +92,7 @@ export class QuickDrawTool extends CanvasTool {
             if (this.source) {
                 const canvasArc = this.editModeService.createNewRegularTransitionPlaceArc(this.source as CanvasTransition, canvasPlace);
                 this.editModeService.removeTemporaryArc(this.arcLine);
-                this.historyService.save(`New ${this.modelService.toXmlArcType(canvasArc.modelArc.type)} arc ${canvasArc.id} has been created`);
+                this.historyService.save(this._translateService.instant('builder.modeler.edit-mode.services.new') + ` ${this.modelService.toXmlArcType(canvasArc.modelArc.type)} ` + this._translateService.instant('builder.modeler.edit-mode.services.arc') + ` ${canvasArc.id} ` + this._translateService.instant('builder.modeler.edit-mode.services.hasBeenCreated'));
                 this.bindArc(canvasArc);
             }
             this.source = canvasPlace;
@@ -116,7 +118,7 @@ export class QuickDrawTool extends CanvasTool {
             }
             if (this.step === Step.TRANSITION && this.source) {
                 const canvasArc = this.editModeService.createNewRegularPlaceTransitionArc(this.source as CanvasPlace, canvasTransition);
-                this.historyService.save(`New ${this.modelService.toXmlArcType(canvasArc.modelArc.type)} arc ${canvasArc.id} has been created`);
+                this.historyService.save(this._translateService.instant('builder.modeler.edit-mode.services.new') + ` ${this.modelService.toXmlArcType(canvasArc.modelArc.type)} ` + this._translateService.instant('builder.modeler.edit-mode.services.arc') + ` ${canvasArc.id} ` + this._translateService.instant('builder.modeler.edit-mode.services.hasBeenCreated'));
                 this.editModeService.removeTemporaryArc(this.arcLine);
                 this.bindArc(canvasArc);
             }

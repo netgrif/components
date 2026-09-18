@@ -5,6 +5,7 @@ import {ArcFactory} from '../edit-mode/domain/arc-builders/arc-factory.service';
 import {ModelService} from '../services/model/model.service';
 import {SimulationModeService} from './simulation-mode.service';
 import {SimulationModeComponent} from './simulation-mode.component';
+import {TranslateService} from "@ngx-translate/core";
 
 describe('SimulationModeComponent', () => {
     beforeEach(() => {
@@ -15,6 +16,7 @@ describe('SimulationModeComponent', () => {
                 ArcFactory,
                 {provide: SimulationModeService, useValue: {}},
                 {provide: PetriflowCanvasService, useValue: {}},
+                {provide: TranslateService, useValue: { instant: (key: string) => `translated-${key}` }}
             ],
             schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
         });

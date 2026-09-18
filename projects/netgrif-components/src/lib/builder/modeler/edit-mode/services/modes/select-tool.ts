@@ -19,6 +19,7 @@ import {CanvasTool} from './canvas-tool';
 import {CanvasToolContext} from './canvas-tool-context';
 import {Hotkey} from './domain/hotkey';
 import {BuilderMode} from '../../../../services/builder-mode.service';
+import {TranslateService} from "@ngx-translate/core";
 
 export class SelectTool extends CanvasTool {
 
@@ -33,14 +34,15 @@ export class SelectTool extends CanvasTool {
     private arcPointIndex: number;
     private lastClickTimestamp: number = 0;
 
-    constructor(context: CanvasToolContext) {
+    constructor(context: CanvasToolContext, translateService: TranslateService) {
         super(
             SelectTool.ID,
             new ControlPanelButton(
                 new ControlPanelIcon('cursor-default-outline', true),
-                'Select tool',
+                translateService.instant('builder.modeler.edit-mode.services.selectTool'),
             ),
-            context
+            context,
+            translateService
         );
         this._selectedElements = new CanvasElementCollection();
         this._clipboardElements = new CanvasElementCollection();
@@ -135,7 +137,7 @@ export class SelectTool extends CanvasTool {
         });
         this.deselectAll();
         this.selectAll(copiedElements);
-        this.historyService.save(`Elements (${copiedElements.totalSize()}) has been duplicated`);
+        this.historyService.save(this._translateService.instant('builder.modeler.edit-mode.services.elements') + ` (${copiedElements.totalSize()}) ` + this._translateService.instant('builder.modeler.edit-mode.services.hasBeenDuplicated'));
     }
 
     selectAll(collection = this.editModeService.elements): void {
@@ -183,7 +185,7 @@ export class SelectTool extends CanvasTool {
             this.deleteArc(a);
         });
         this.deselectAll();
-        this.historyService.save(`Elements have been deleted`);
+        this.historyService.save(this._translateService.instant('builder.modeler.edit-mode.services.elementsDeleted'));
     }
 
     undo(): void {
@@ -469,7 +471,7 @@ export class SelectTool extends CanvasTool {
                 this.editModeService.moveArcBreakpoint(a, index);
             });
         });
-        this.historyService.save(`Elements have been moved`);
+        this.historyService.save(this._translateService.instant('builder.modeler.edit-mode.services.elementsMoved'));
     }
 
     isDraggingOnlyArc(): boolean {
@@ -496,7 +498,7 @@ export class SelectTool extends CanvasTool {
     private insertBreakpoint(arc: CanvasArc, point: DOMPoint, index: number): void {
         this.arcPointIndex = index;
         this.editModeService.createArcBreakpoint(arc, point, index);
-        this.historyService.save(`Breakpoint added to arc ${arc.id}`);
+        this.historyService.save(this._translateService.instant('builder.modeler.edit-mode.services.breakpointAdded') + ` ${arc.id}`);
     }
 
     private isBetween(first: DOMPoint, second: DOMPoint, mouse: DOMPoint): boolean {
@@ -514,13 +516,13 @@ export class SelectTool extends CanvasTool {
 
     placeContextMenu(place: CanvasPlace, event: PointerEvent): ContextMenu {
         const menu = this.replaceDeleteMenuItem(super.placeContextMenu(place, event));
-        menu.items.push(new SelectArcsMenuItem(this, place));
+        menu.items.push(new SelectArcsMenuItem(this, place, this._translateService));
         return menu;
     }
 
     transitionContextMenu(transition: CanvasTransition, event: PointerEvent): ContextMenu {
         const menu = this.replaceDeleteMenuItem(super.transitionContextMenu(transition, event));
-        menu.items.push(new SelectArcsMenuItem(this, transition));
+        menu.items.push(new SelectArcsMenuItem(this, transition, this._translateService));
         return menu;
     }
 
@@ -541,7 +543,7 @@ export class SelectTool extends CanvasTool {
     private replaceDeleteMenuItem(menuItem: ContextMenu): ContextMenu {
         const index = menuItem.items.findIndex(value => value instanceof DeleteMenuItem);
         if (index >= 0) {
-            menuItem.items[index] = new DeleteSelectedMenuItem(this);
+            menuItem.items[index] = new DeleteSelectedMenuItem(this, this._translateService);
         }
         return menuItem;
     }

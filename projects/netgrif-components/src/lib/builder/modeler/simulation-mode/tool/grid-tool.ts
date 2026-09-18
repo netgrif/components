@@ -6,27 +6,27 @@ import {SelectedTransitionService} from '../../selected-transition.service';
 import {ModelService} from '../../services/model/model.service';
 import {SimulationModeService} from '../simulation-mode.service';
 import {SimulationTool} from './simulation-tool';
+import {TranslateService} from "@ngx-translate/core";
 
 export class GridTool extends SimulationTool {
 
     public static readonly ID = 'GridTool';
     public static readonly ICON_ON = 'grid_on';
-    public static readonly TOOLTIP_ON = 'Hide grid';
     public static readonly ICON_OFF = 'grid_off';
-    public static readonly TOOLTIP_OFF = 'Show grid';
 
     constructor(
         modelService: ModelService,
         dialog: MatDialog,
         simulationModeService: SimulationModeService,
         router: Router,
-        transitionService: SelectedTransitionService
+        transitionService: SelectedTransitionService,
+        private _translateService: TranslateService
     ) {
         super(
             GridTool.ID,
             new ControlPanelButton(
                 new ControlPanelIcon(GridTool.ICON_ON, false, true),
-                GridTool.TOOLTIP_ON,
+                _translateService.instant('builder.modeler.simulation-mode.hideGrid'),
             ),
             modelService,
             dialog,
@@ -39,10 +39,10 @@ export class GridTool extends SimulationTool {
     onClick(): void {
         this.canvasService.gridOnOff();
         let newIcon = GridTool.ICON_OFF;
-        let newTooltip = GridTool.TOOLTIP_OFF;
+        let newTooltip = this._translateService.instant('builder.modeler.simulation-mode.showGrid');
         if (this.canvasService.gridConfiguration.enabled) {
             newIcon = GridTool.ICON_ON;
-            newTooltip = GridTool.TOOLTIP_ON;
+            newTooltip = this._translateService.instant('builder.modeler.simulation-mode.hideGrid');
         }
         this.icon.name = newIcon;
         this.tooltip = newTooltip;

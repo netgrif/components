@@ -5,13 +5,14 @@ import {I18nString, I18nTranslations} from '@netgrif/petriflow';
 import {I18nControlService} from "../../i18n-control.service";
 import {MatFormField, MatInput, MatLabel} from "@angular/material/input";
 import {FlexLayoutModule} from "@ngbracket/ngx-layout";
+import {TranslateModule} from "@ngx-translate/core";
 
 @Component({
     selector: 'nc-builder-i18n-field',
     templateUrl: './i18n-field.component.html',
     styleUrls: ['./i18n-field.component.scss'],
     standalone: true,
-    imports: [MaterialModule, CommonModule, MatFormField, MatLabel, FlexLayoutModule, MatInput,]
+    imports: [MaterialModule, CommonModule, MatFormField, MatLabel, FlexLayoutModule, MatInput, TranslateModule,]
 })
 export class I18nFieldComponent implements OnInit {
 

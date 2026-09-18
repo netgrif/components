@@ -33,6 +33,7 @@ import {HistoryService} from '../../services/history/history.service';
 import {ModelService} from '../../services/model/model.service';
 import {DataMasterDetailService} from '../data-master-detail.service';
 import {BuilderModeService, BuilderMode} from "../../../services/builder-mode.service";
+import {TranslateService} from "@ngx-translate/core";
 
 export interface TypeArray {
     viewValue: string;
@@ -56,30 +57,7 @@ export class DataDetailComponent implements OnDestroy {
     componentNameFormCtrl: FormControl;
     transitionOptions: Array<EnumerationFieldValue>;
     filteredOptions: Observable<Array<EnumerationFieldValue>>;
-    typeArray: Array<TypeArray> = [
-        {viewValue: 'Boolean', value: DataType.BOOLEAN},
-        {viewValue: 'Button', value: DataType.BUTTON},
-        {viewValue: 'Case Ref', value: DataType.CASE_REF},
-        {viewValue: 'Date', value: DataType.DATE},
-        {viewValue: 'Datetime', value: DataType.DATETIME},
-        {viewValue: 'Enumeration', value: DataType.ENUMERATION},
-        {viewValue: 'Enumeration Map', value: DataType.ENUMERATION_MAP},
-        {viewValue: 'File', value: DataType.FILE},
-        {viewValue: 'File List', value: DataType.FILE_LIST},
-        {viewValue: 'Filter (deprecated)', value: DataType.FILTER},
-        {viewValue: 'Case Filter', value: DataType.CASE_FILTER},
-        {viewValue: 'Task Filter', value: DataType.TASK_FILTER},
-        {viewValue: 'Process Filter', value: DataType.PROCESS_FILTER},
-        {viewValue: 'I18n', value: DataType.I18N},
-        {viewValue: 'Multichoice', value: DataType.MULTICHOICE},
-        {viewValue: 'Multichoice Map', value: DataType.MULTICHOICE_MAP},
-        {viewValue: 'Number', value: DataType.NUMBER},
-        {viewValue: 'User', value: DataType.USER},
-        {viewValue: 'User List', value: DataType.USER_LIST},
-        {viewValue: 'String Collection', value: 'stringCollection'},
-        {viewValue: 'Task Ref', value: DataType.TASK_REF},
-        {viewValue: 'Text', value: DataType.TEXT}
-    ];
+    typeArray: Array<TypeArray>;
     historyDataSave: HistoryDataSave;
 
     public constructor(
@@ -91,14 +69,15 @@ export class DataDetailComponent implements OnDestroy {
         private _actionMode: ActionsModeService,
         private _actionsMasterDetail: ActionsMasterDetailService,
         private _historyService: HistoryService,
-        private _builderModeService: BuilderModeService
+        private _builderModeService: BuilderModeService,
+        private _translateService: TranslateService
     ) {
         this.formControlRef = new FormControl();
         this.componentNameFormCtrl = new FormControl();
         this.transitionOptions = this.createTransOptions();
         this._masterService.getSelected$().subscribe(obj => {
             if (this.historyDataSave?.save) {
-                this._historyService.save(`DataVariable ${this.historyDataSave.item.id} has been changed.`);
+                this._historyService.save(`DataVariable ${this.historyDataSave.item.id} ` + this._translateService.instant('builder.modeler.data-mode.hasBeenChanged'));
             }
             if (obj) {
                 if (!obj.init) {
@@ -130,11 +109,35 @@ export class DataDetailComponent implements OnDestroy {
             startWith(''),
             map(value => this._filter(value))
         );
+        this.typeArray = [
+            {viewValue: this._translateService.instant('builder.modeler.data-mode.boolean'), value: DataType.BOOLEAN},
+            {viewValue: this._translateService.instant('builder.modeler.data-mode.button'), value: DataType.BUTTON},
+            {viewValue: this._translateService.instant('builder.modeler.data-mode.caseRef'), value: DataType.CASE_REF},
+            {viewValue: this._translateService.instant('builder.modeler.data-mode.date'), value: DataType.DATE},
+            {viewValue: this._translateService.instant('builder.modeler.data-mode.datetime'), value: DataType.DATETIME},
+            {viewValue: this._translateService.instant('builder.modeler.data-mode.enumeration'), value: DataType.ENUMERATION},
+            {viewValue: this._translateService.instant('builder.modeler.data-mode.enumerationMap'), value: DataType.ENUMERATION_MAP},
+            {viewValue: this._translateService.instant('builder.modeler.data-mode.file'), value: DataType.FILE},
+            {viewValue: this._translateService.instant('builder.modeler.data-mode.fileList'), value: DataType.FILE_LIST},
+            {viewValue: 'Filter (deprecated)', value: DataType.FILTER},
+            {viewValue: this._translateService.instant('builder.modeler.data-mode.caseFilter'), value: DataType.CASE_FILTER},
+            {viewValue: this._translateService.instant('builder.modeler.data-mode.taskFilter'), value: DataType.TASK_FILTER},
+            {viewValue: this._translateService.instant('builder.modeler.data-mode.processFilter'), value: DataType.PROCESS_FILTER},
+            {viewValue: this._translateService.instant('builder.modeler.data-mode.i18n'), value: DataType.I18N},
+            {viewValue: this._translateService.instant('builder.modeler.data-mode.multichoice'), value: DataType.MULTICHOICE},
+            {viewValue: this._translateService.instant('builder.modeler.data-mode.multichoiceMap'), value: DataType.MULTICHOICE_MAP},
+            {viewValue: this._translateService.instant('builder.modeler.data-mode.number'), value: DataType.NUMBER},
+            {viewValue: this._translateService.instant('builder.modeler.data-mode.user'), value: DataType.USER},
+            {viewValue: this._translateService.instant('builder.modeler.data-mode.userList'), value: DataType.USER_LIST},
+            {viewValue: this._translateService.instant('builder.modeler.data-mode.stringCollection'), value: 'stringCollection'},
+            {viewValue: this._translateService.instant('builder.modeler.data-mode.taskRef'), value: DataType.TASK_REF},
+            {viewValue: this._translateService.instant('builder.modeler.data-mode.text'), value: DataType.TEXT}
+        ];
     }
 
     ngOnDestroy() {
         if (this.historyDataSave?.save) {
-            this._historyService.save(`DataVariable ${this.historyDataSave.item.id} has been changed.`);
+            this._historyService.save(`DataVariable ${this.historyDataSave.item.id} ` + this._translateService.instant('builder.modeler.data-mode.hasBeenChanged'));
         }
     }
 
@@ -156,7 +159,7 @@ export class DataDetailComponent implements OnDestroy {
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result !== undefined) {
-                this._historyService.save(`DataVariable ${this.item.id} ID has been changed to ${result} ${this.historyDataSave.save ? ', and has been changed' : ''}.`);
+                this._historyService.save(`DataVariable ${this.item.id} ` + this._translateService.instant('builder.modeler.data-mode.idHasBeenChangedTo') + ` ${result} ${this.historyDataSave.save ? ', ' + this._translateService.instant('builder.modeler.data-mode.andHasBeenChanged') : ''}.`);
                 this.historyDataSave.save = false;
                 this.item.id = result;
             }

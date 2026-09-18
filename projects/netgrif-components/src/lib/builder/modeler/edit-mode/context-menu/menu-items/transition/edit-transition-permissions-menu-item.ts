@@ -6,12 +6,13 @@ import {
 import {CanvasTransition} from '../../../domain/canvas-transition';
 import {CanvasTool} from '../../../services/modes/canvas-tool';
 import {MenuItem} from '../menu-item';
+import {TranslateService} from "@ngx-translate/core";
 
 export class EditTransitionPermissionsMenuItem extends MenuItem {
 
-    constructor(transition: CanvasTransition, tool: CanvasTool) {
+    constructor(transition: CanvasTransition, tool: CanvasTool, translateService: TranslateService) {
         super(
-            `Permissions (${tool.modelService.numberOfTransitionPermissions(transition.modelTransition)})`,
+            translateService.instant('builder.modeler.edit-mode.context-menu.permissions') + ` (${tool.modelService.numberOfTransitionPermissions(transition.modelTransition)})`,
             'people',
             () => {
                 tool.openDialog(DialogManageRolesComponent, {

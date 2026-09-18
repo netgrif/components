@@ -5,7 +5,7 @@
 
         <div fxFlex="45" fxLayoutAlign="start start">
             <mat-form-field appearance="outline" fxFlex>
-                <mat-label>Id</mat-label>
+                <mat-label>{{ 'builder.modeler.data-mode.id' | translate }}</mat-label>
                 <input matInput disabled [(ngModel)]="item.id">
             </mat-form-field>
 
@@ -20,7 +20,7 @@
         <div fxFlex="2.5"></div>
 
         <mat-form-field appearance="outline" fxFlex="45">
-            <mat-label>Title</mat-label>
+            <mat-label>{{ 'builder.modeler.data-mode.title' | translate }}</mat-label>
             <input matInput [ngModel]="item?.title?.value" (change)="setValue($event,'name')">
         </mat-form-field>
 
@@ -31,7 +31,7 @@
         <div fxFlex="2.5"></div>
 
         <mat-form-field appearance="outline" fxFlex="45">
-            <mat-label>Type</mat-label>
+            <mat-label>{{ 'builder.modeler.data-mode.type' | translate }}</mat-label>
             <mat-select [(value)]="item.type" (selectionChange)="setValue($event,'type')">
                 <mat-option *ngFor="let opt of typeArray" [value]="opt.value">{{ opt.viewValue }}</mat-option>
             </mat-select>
@@ -39,7 +39,7 @@
 
         <div fxFlex="2.5"></div>
 
-        <div fxFlex="20">Is Immediate?</div>
+        <div fxFlex="20">{{ 'builder.modeler.data-mode.isImmediate' | translate }}</div>
 
         <div fxFlex="25">
             <mat-checkbox [(ngModel)]="item.immediate"
@@ -53,7 +53,7 @@
         <div fxFlex="2.5"></div>
 
         <mat-form-field appearance="outline" fxFlex="45">
-            <mat-label>Placeholder</mat-label>
+            <mat-label>{{ 'builder.modeler.data-mode.placeholder' | translate }}</mat-label>
             <input matInput [ngModel]="item?.placeholder?.value"
                    (change)="setValue($event,'placeholder')">
         </mat-form-field>
@@ -61,7 +61,7 @@
         <div fxFlex="2.5"></div>
 
         <mat-form-field appearance="outline" fxFlex="45">
-            <mat-label>Description</mat-label>
+            <mat-label>{{ 'builder.modeler.data-mode.description' | translate }}</mat-label>
             <textarea matInput [ngModel]="item?.desc.value"
                       (change)="setValue($event,'desc')"></textarea>
         </mat-form-field>
@@ -73,18 +73,18 @@
 
         <div fxFlex="2.5"></div>
 
-        <div fxFlex="20">Component</div>
+        <div fxFlex="20">{{ 'builder.modeler.data-mode.component' | translate }}</div>
 
         <div fxFlex="25">
             <button mat-stroked-button color="primary" (click)="createOrDelete()">
-                {{ item?.component === undefined ? 'Add component' : 'Delete component' }}
+                {{ item?.component === undefined ? ('builder.modeler.data-mode.addComponent' | translate) : ('builder.modeler.data-mode.deleteComponent' | translate) }}
             </button>
         </div>
 
         <div fxFlex="2.5"></div>
 
         <mat-form-field appearance="outline" fxFlex="45">
-            <mat-label>Encryption</mat-label>
+            <mat-label>{{ 'builder.modeler.data-mode.encryption' | translate }}</mat-label>
             <input matInput [(ngModel)]="item.encryption"
                    (change)="setValue($event,'encryption')">
         </mat-form-field>
@@ -97,7 +97,7 @@
         <div fxFlex="2.5"></div>
 
         <mat-form-field appearance="outline" fxFlex="45">
-            <mat-label>Component Name</mat-label>
+            <mat-label>{{ 'builder.modeler.data-mode.componentName' | translate }}</mat-label>
             <input matInput [(ngModel)]="item.component.name" (change)="setValue($event,'component-name')"
                     [formControl]="componentNameFormCtrl" [matAutocomplete]="componentAutocomplete">
             <mat-autocomplete #componentAutocomplete="matAutocomplete">
@@ -114,7 +114,7 @@
                 <div *ngIf="item.component.properties.length > 0">
                     <div *ngFor="let property of item.component.properties; let i = index" class="margin-html">
                         <mat-form-field appearance="outline" fxFlex="50" class="margin-right8px">
-                            <mat-label>Key</mat-label>
+                            <mat-label>{{ 'builder.modeler.data-mode.key' | translate }}</mat-label>
                             <input matInput (change)="setValue($event,'property_key', i)" type="text"
                                    [value]="property.key" [matAutocomplete]="propertyAutocomplete">
                             <mat-autocomplete #propertyAutocomplete="matAutocomplete" (optionSelected)="setValue($event, 'property_key', i)">
@@ -124,7 +124,7 @@
                             </mat-autocomplete>
                         </mat-form-field>
                         <mat-form-field appearance="outline" fxFlex="50" class="margin-right8px">
-                            <mat-label>Value</mat-label>
+                            <mat-label>{{ 'builder.modeler.data-mode.value' | translate }}</mat-label>
                             <input matInput (change)="setValue($event,'property_value', i)"
                                    type="text" [value]="property.value">
                         </mat-form-field>
@@ -135,12 +135,12 @@
                 </div>
                 <div fxLayoutAlign="center center" *ngIf="item.component.properties.length === 0"
                      class="no-options">
-                    <span>Empty</span>
+                    <span>{{ 'builder.modeler.data-mode.empty' | translate }}</span>
                 </div>
             </div>
             <button mat-stroked-button class="button-text margin-html" (click)="addProperty()">
                 <mat-icon>add</mat-icon>
-                Add property
+                {{ 'builder.modeler.data-mode.addProperty' | translate }}
             </button>
         </div>
 
@@ -153,7 +153,7 @@
         <div fxFlex="2.5"></div>
 
         <mat-form-field appearance="outline" fxFlex="45" *ngIf="isItemInitDynamic();else static_init">
-            <mat-label>Initial value</mat-label>
+            <mat-label>{{ 'builder.modeler.data-mode.initialValue' | translate }}</mat-label>
             <input matInput [ngModel]="item?.init?.value" (change)="setValue($event, 'init')">
         </mat-form-field>
 
@@ -161,7 +161,7 @@
             @switch (item.type) {
                 @case (DataType.BOOLEAN) {
                     <div fxFlex="45" class="full-width">
-                        <span>Initial value </span>
+                        <span>{{ 'builder.modeler.data-mode.initialValue' | translate }}</span>
                         <mat-slide-toggle [checked]="item.init.value === 'true'" (change)="setBooleanValue($event)">
                             {{item.init.value}}
                         </mat-slide-toggle>
@@ -169,13 +169,13 @@
                 }
                 @case (DataType.NUMBER) {
                     <mat-form-field appearance="outline" fxFlex="45" class="full-width">
-                        <mat-label>Initial value</mat-label>
+                        <mat-label>{{ 'builder.modeler.data-mode.initialValue' | translate }}</mat-label>
                         <input matInput type="number" [(ngModel)]="item.init.value" (change)="setNumberValue($event)">
                     </mat-form-field>
                 }
                 @case (DataType.DATE) {
                     <mat-form-field appearance="outline" fxFlex="45" class="full-width">
-                        <mat-label>Initial value</mat-label>
+                        <mat-label>{{ 'builder.modeler.data-mode.initialValue' | translate }}</mat-label>
                         <mat-datepicker-toggle matPrefix [for]="datepicker"></mat-datepicker-toggle>
                         <input matInput (dateChange)="formatDate($event);"
                                [matDatepicker]="datepicker"
@@ -188,7 +188,7 @@
                 }
                 @case (DataType.DATETIME) {
                     <mat-form-field appearance="outline" fxFlex="45" class="full-width">
-                        <mat-label>Initial value</mat-label>
+                        <mat-label>{{ 'builder.modeler.data-mode.initialValue' | translate }}</mat-label>
                         <input matInput
                                [ngxMatDatetimePicker]="picker"
                                [(ngModel)]="item.init.value"
@@ -210,9 +210,9 @@
                 }
                 @case ((item.type === DataType.ENUMERATION || item.type === DataType.ENUMERATION_MAP) ? item.type : '') {
                     <mat-form-field appearance="outline" fxFlex="45" class="full-width">
-                        <mat-label>Initial value</mat-label>
+                        <mat-label>{{ 'builder.modeler.data-mode.initialValue' | translate }}</mat-label>
                         <mat-select [(ngModel)]="item.init.value">
-                            <mat-option>None</mat-option>
+                            <mat-option>{{ 'builder.modeler.data-mode.none' | translate }}</mat-option>
                             <mat-option *ngFor="let opt of item.options" [value]="opt.key">
                                 {{ opt.value?.value }}
                             </mat-option>
@@ -221,7 +221,7 @@
                 }
                 @case ((item.type === DataType.MULTICHOICE || item.type === DataType.MULTICHOICE_MAP) ? item.type : '') {
                     <mat-form-field appearance="outline" fxFlex="45" class="full-width">
-                        <mat-label>Initial value</mat-label>
+                        <mat-label>{{ 'builder.modeler.data-mode.initialValue' | translate }}</mat-label>
                         <mat-select (valueChange)="changeInitsValue($event)"
                                     [value]="getInitsValue()" multiple>
                             <mat-option *ngFor="let opt of item.options" [value]="opt.key">
@@ -232,7 +232,7 @@
                 }
                 @default {
                     <mat-form-field appearance="outline" fxFlex="45">
-                        <mat-label>Initial value</mat-label>
+                        <mat-label>{{ 'builder.modeler.data-mode.initialValue' | translate }}</mat-label>
                         <input matInput [ngModel]="item?.init?.value"
                                (change)="setValue($event, 'init')">
                     </mat-form-field>
@@ -243,7 +243,7 @@
         <div fxFlex="2.5"></div>
 
         <div fxFlex="20">
-            Is Init Dynamic?
+            {{ 'builder.modeler.data-mode.isInitDynamic' | translate }}
         </div>
 
         <div fxFlex="25">
@@ -257,14 +257,14 @@
     <div fxLayout="row wrap" fxLayoutAlign="start center"
          *ngIf="item.type === 'caseRef' || item.type === 'filter'" class="builder-field-input">
         <div fxFlex="2.5"></div>
-        <div fxFlexAlign="start" fxFlex="20">Allowed Nets</div>
+        <div fxFlexAlign="start" fxFlex="20">{{ 'builder.modeler.data-mode.allowedNets' | translate }}</div>
         <div fxFlex="2.5"></div>
         <div fxFlex="72.5" fxLayout="column">
             <div class="margin-html">
                 <div *ngIf="item.allowedNets?.length > 0">
                     <div *ngFor="let net of item.allowedNets; let i = index; trackBy:trackByFn">
                         <mat-form-field appearance="outline" class=" margin-right8px margin-html" fxFlex="100">
-                            <mat-label>Process identifier</mat-label>
+                            <mat-label>{{ 'builder.modeler.data-mode.processIdentifier' | translate }}</mat-label>
                             <input matInput  type="text"
                                    [(ngModel)]="item.allowedNets[i]">
                         </mat-form-field>
@@ -275,12 +275,12 @@
                 </div>
                 <div fxLayoutAlign="center center" *ngIf="item.allowedNets.length === 0"
                      class="no-options">
-                    <span>Empty</span>
+                    <span>{{ 'builder.modeler.data-mode.empty' | translate }}</span>
                 </div>
             </div>
             <button mat-stroked-button class="button-text margin-html" (click)="addAllowedNet()">
                 <mat-icon>add</mat-icon>
-                Add net
+                {{ 'builder.modeler.data-mode.addNet' | translate }}
             </button>
         </div>
         <div fxFlex="2.5"></div>
@@ -290,18 +290,18 @@
                         && item.type !== 'enumeration_map' && item.type !== 'multichoice_map'" >
         <div fxFlex="2.5"></div>
 
-        <div fxFlex="20">Validations</div>
+        <div fxFlex="20">{{ 'builder.modeler.data-mode.validations' | translate }}</div>
 
         <div fxFlex="75" fxLayout="column">
             <div class="margin-html">
                 <div *ngIf="item.validations?.length > 0">
                     <div *ngFor="let validation of item.validations; let i = index" class="builder-field-input">
                         <mat-form-field appearance="outline" fxFlex="50" class="margin-right8px">
-                            <mat-label>Expression</mat-label>
+                            <mat-label>{{ 'builder.modeler.data-mode.expression' | translate }}</mat-label>
                             <input matInput type="text" [(ngModel)]="validation.expression.expression">
                         </mat-form-field>
                         <mat-form-field appearance="outline" fxFlex="50" class="margin-right8px">
-                            <mat-label>Message</mat-label>
+                            <mat-label>{{ 'builder.modeler.data-mode.message' | translate }}</mat-label>
                             <input matInput type="text"
                                    [(ngModel)]="validation.message.value">
                         </mat-form-field>
@@ -312,12 +312,12 @@
                 </div>
                 <div fxLayoutAlign="center center" *ngIf="item.validations?.length === 0"
                      class="no-options">
-                    <span>Empty</span>
+                    <span>{{ 'builder.modeler.data-mode.empty' | translate }}</span>
                 </div>
             </div>
             <button mat-stroked-button class="button-text margin-html" (click)="addValidation()">
                 <mat-icon>add</mat-icon>
-                Add validation
+                {{ 'builder.modeler.data-mode.addValidation' | translate }}
             </button>
         </div>
 
@@ -327,7 +327,7 @@
     <div class="options builder-field-input" *ngIf="isOptionField()"
          fxLayout="row wrap" fxLayoutAlign="start center">
         <div fxFlex="2.5"></div>
-        <div fxFlex="20">Options</div>
+        <div fxFlex="20">{{ 'builder.modeler.data-mode.options' | translate }}</div>
         <div fxFlex="2.5"></div>
         <div fxFlex="72.5" fxLayout="column">
             <div cdkDropList class="drag-list margin-html" (cdkDropListDropped)="dropOption($event)">
@@ -337,11 +337,11 @@
                         <mat-form-field appearance="outline" class=" margin-right8px option-input"
                                         *ngIf="!hasSimpleOptions()">
                             <input matInput (change)="setValue($event,'options-key', i)" type="text"
-                                   placeholder="Option key" [value]="item.key">
+                                   placeholder="{{ 'builder.modeler.data-mode.optionKey' | translate }}" [value]="item.key">
                         </mat-form-field>
                         <mat-form-field appearance="outline" class=" margin-right8px option-input">
                             <input matInput (change)="setValue($event,'options-value', i)"
-                                   type="text" placeholder="Option value" [value]="item.value?.value">
+                                   type="text" placeholder="{{ 'builder.modeler.data-mode.optionValue' | translate }}" [value]="item.value?.value">
                         </mat-form-field>
                         <button mat-icon-button (click)="deleteOption(i)">
                             <mat-icon>delete</mat-icon>
@@ -350,12 +350,12 @@
                 </div>
                 <div fxLayoutAlign="center center" *ngIf="item.options.length === 0"
                      class="no-options">
-                    <span>No options</span>
+                    <span>{{ 'builder.modeler.data-mode.noOptions' | translate }}</span>
                 </div>
             </div>
             <button mat-stroked-button class="button-text margin-html" (click)="addOption()">
                 <mat-icon>add</mat-icon>
-                Add option
+                {{ 'builder.modeler.data-mode.addOption' | translate }}
             </button>
         </div>
         <div fxFlex="2.5"></div>
@@ -366,7 +366,7 @@
 
         <div fxFlex="2.5"></div>
 
-        <div fxFlex="20">Options Init</div>
+        <div fxFlex="20">{{ 'builder.modeler.data-mode.optionsInit' | translate }}</div>
 
         <mat-form-field appearance="outline" fxFlex="75">
             <input matInput [ngModel]="getItemOptionsInitExpression()"
@@ -381,7 +381,7 @@
 
         <button mat-stroked-button color="primary" (click)="openActions()" mat-dialog-close>
             <mat-icon>code</mat-icon>
-            <span>Edit Actions ({{numberOfActions()}})</span>
+            <span>{{ 'builder.modeler.data-mode.editActions' | translate }} ({{numberOfActions()}})</span>
         </button>
 
         <div fxFlex></div>
@@ -390,6 +390,6 @@
 
 <ng-template #elseBlock>
     <div fxLayoutAlign="center center" class="height-fix full-width">
-        <span>No data selected</span>
+        <span>{{ 'builder.modeler.data-mode.noDataSelected' | translate }}</span>
     </div>
 </ng-template>

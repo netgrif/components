@@ -7,6 +7,7 @@ import {SelectedTransitionService} from '../../selected-transition.service';
 import {ModelService} from '../../services/model/model.service';
 import {SimulationModeService} from '../simulation-mode.service';
 import {SimulationTool} from './simulation-tool';
+import {TranslateService} from "@ngx-translate/core";
 
 export class TaskSimulationTool extends SimulationTool {
 
@@ -15,13 +16,14 @@ export class TaskSimulationTool extends SimulationTool {
         dialog: MatDialog,
         simulationModeService: SimulationModeService,
         router: Router,
-        transitionService: SelectedTransitionService
+        transitionService: SelectedTransitionService,
+        translateService: TranslateService
     ) {
         super(
             'simulation',
             new ControlPanelButton(
                 new ControlPanelIcon('play_arrow', false, true),
-                'Simulation by Tasks'
+                translateService.instant('builder.modeler.simulation-mode.simulationByTasks')
             ),
             modelService,
             dialog,

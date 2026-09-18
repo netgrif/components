@@ -8,6 +8,7 @@ import {ModelService} from '../services/model/model.service';
 import {ContextMenu} from './context-menu/context-menu';
 import {ContextMenuComponent} from './context-menu/context-menu.component';
 import {EditModeService} from './edit-mode.service';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'nc-builder-edit-mode',
@@ -25,7 +26,8 @@ export class EditModeComponent implements AfterViewInit, OnDestroy {
         private _modelService: ModelService,
         private _editModeService: EditModeService,
         private historyService: HistoryService,
-        public dialog: MatDialog
+        public dialog: MatDialog,
+        private _translateService: TranslateService
     ) {
     }
 
@@ -54,7 +56,7 @@ export class EditModeComponent implements AfterViewInit, OnDestroy {
         setTimeout(() => {
             if (this._modelService.model === undefined) {
                 this._modelService.model = this._modelService.newModel();
-                this.historyService.save(`New model has been created.`);
+                this.historyService.save(this._translateService.instant('builder.modeler.edit-mode.services.newModelCreated'));
             } else {
                 this._editModeService.renderModel();
             }

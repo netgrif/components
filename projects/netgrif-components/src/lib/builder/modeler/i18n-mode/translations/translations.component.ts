@@ -6,6 +6,7 @@ import {Locale} from '../classes/locale';
 import {LanguageSelectService} from '../languages/language-select.service';
 import {TranslationGroupConfiguration, Type} from './translation-group/translation-group-configuration';
 import {I18nControlService} from "../i18n-control.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'nc-builder-translations',
@@ -24,7 +25,8 @@ export class TranslationsComponent implements OnInit, OnDestroy {
     constructor(private i18nService: I18nControlService,
                 private modelService: ModelService,
                 private historyService: HistoryService,
-                protected _languageSelect: LanguageSelectService) {
+                protected _languageSelect: LanguageSelectService,
+                protected _translateService: TranslateService) {
         if (this._languageSelect.locale !== undefined) {
             this.locale = this._languageSelect.locale;
             this._translation = this.modelService.model.getI18n(this.locale?.languageCode);
@@ -36,41 +38,41 @@ export class TranslationsComponent implements OnInit, OnDestroy {
         this.modelMetadataConfig = new TranslationGroupConfiguration(
             Type.MODEL,
             'device_hub',
-            'Model metadata',
-            'Title, default case name, ...',
+            this._translateService.instant('builder.modeler.i18n-mode.modelMetadata'),
+            this._translateService.instant('builder.modeler.i18n-mode.modelMetadataHint'),
             () => false,
             ''
         );
         this.taskMetadataConfig = new TranslationGroupConfiguration(
             Type.TASK,
             'auto_awesome_motion',
-            'Tasks',
-            'Label, event messages, ...',
+            this._translateService.instant('builder.modeler.i18n-mode.tasks'),
+            this._translateService.instant('builder.modeler.i18n-mode.tasksHint'),
             () => this.modelService.model.getTransitions().length === 0,
-            'There are no tasks in the model'
+            this._translateService.instant('builder.modeler.i18n-mode.noTasksInModel')
         );
         this.dataMetadataConfig = new TranslationGroupConfiguration(
             Type.DATA,
             'all_inbox',
-            'Data variables',
-            'Title, placeholder, description, ...',
+            this._translateService.instant('builder.modeler.i18n-mode.dataVariables'),
+            this._translateService.instant('builder.modeler.i18n-mode.dataVariablesHint'),
             () => this.modelService.model.getDataSet().length === 0,
-            'There are no data variables in the model'
+            this._translateService.instant('builder.modeler.i18n-mode.noDataVariablesInModel')
         );
         this.roleMetadataConfig = new TranslationGroupConfiguration(
             Type.ROLE,
             'person',
-            'Roles',
-            'Name, event message, ...',
+            this._translateService.instant('builder.modeler.i18n-mode.roles'),
+            this._translateService.instant('builder.modeler.i18n-mode.rolesHint'),
             () => this.modelService.model.getRoles().length === 0,
-            'There are no roles in the model'
+            this._translateService.instant('builder.modeler.i18n-mode.noRolesInModel')
         );
     }
 
     ngOnDestroy() {
         if (this.i18nService.translationsSave) {
             this.i18nService.translationsSave = false;
-            this.historyService.save("Translations has been changed.")
+            this.historyService.save(this._translateService.instant('builder.modeler.i18n-mode.translationsChanged'))
         }
     }
 
