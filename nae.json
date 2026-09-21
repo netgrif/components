@@ -293,7 +293,7 @@
                     },
                     "access": {
                         "authority": [
-                            "ADMIN"
+                            "ROLE_ADMIN"
                         ]
                     },
                     "navigation": {
