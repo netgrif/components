@@ -20,9 +20,6 @@ export class SearchOperandInputComponent extends AbstractSearchOperandInputCompo
     // make enum accessible in HTMl
     public searchInputType = SearchInputType;
 
-    public dateFormat = DATE_FORMAT_STRING;
-    public dateTimeFormat = DATE_TIME_FORMAT_STRING;
-
     constructor() {
         super();
     }

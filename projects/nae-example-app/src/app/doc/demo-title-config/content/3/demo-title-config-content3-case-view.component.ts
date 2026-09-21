@@ -14,7 +14,7 @@ import {
     Filter,
     FilterType,
     NAE_BASE_FILTER,
-    AllowedNetsServiceFactory, SavedFilterMetadata, AllowedNetsService
+    AllowedNetsServiceFactory, AllowedNetsService
 } from '@netgrif/components-core';
 import {HeaderComponent} from '@netgrif/components';
 import {Subject} from 'rxjs';
@@ -83,23 +83,6 @@ export class DemoTitleConfigContent3CaseViewComponent extends AbstractTabbedCase
 
     ngAfterViewInit(): void {
         super.initializeHeader(this.caseHeaderComponent);
-    }
-
-    loadFilter(filterData: SavedFilterMetadata) {
-        this._injectedTabData.tabViewRef.openTab({
-            label: {
-                text: filterData.filter.title
-            },
-            canBeClosed: true,
-            tabContentComponent: DemoTitleConfigContent3CaseViewComponent,
-            injectedObject: {...this._injectedTabData, loadFilter: filterData.filter},
-            order: this._injectedTabData.tabViewOrder,
-            parentUniqueId: this._injectedTabData.tabUniqueId
-        }, this._autoswitchToTaskTab, this._openExistingTab);
-    }
-
-    saveFilter(filterData: SavedFilterMetadata) {
-        console.log(filterData);
     }
 
 }

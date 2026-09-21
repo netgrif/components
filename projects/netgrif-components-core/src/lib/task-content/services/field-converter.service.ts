@@ -111,7 +111,7 @@ export class FieldConverterService {
             case FieldTypeResource.CASE_FILTER:
             case FieldTypeResource.TASK_FILTER:
             case FieldTypeResource.PROCESS_FILTER:
-                return new FilterField(item.stringId, item.name, item.value ?? '', item.filterMetadata, item.allowedNets,
+                return new FilterField(item.stringId, item.name, item.value ?? '', item.type, item.allowedNets,
                     item.behavior, item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.I18N:
                 return new I18nField(item.stringId, item.name, item.value ?? {defaultValue: ''}, item.behavior, item.placeholder,

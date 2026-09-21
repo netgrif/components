@@ -48,4 +48,5 @@ export * from './lib/impersonation/public-api';
 export * from './lib/registry/public-api';
 export * from './lib/actions/public-api';
 export * from './lib/providers/public-api';
-export * from './lib/export/public-api'
+export * from './lib/export/public-api';
+export * from './lib/pfql/public-api';

@@ -3,7 +3,6 @@ import {OperatorService} from '../../operator-service/operator.service';
 import {Query} from '../query/query';
 import {MoreThan} from './more-than';
 import moment, {Moment} from 'moment';
-import {clearTimeInformation} from '../../../utility/clear-time-information';
 import {Operators} from './operators';
 
 /**
@@ -13,18 +12,17 @@ export class MoreThanDate extends Operator<Moment> {
 
     protected moreThan: MoreThan;
 
-    constructor(operators: OperatorService) {
-        super(1);
-        this.moreThan = operators.getOperator(MoreThan) as MoreThan;
+    constructor(protected _operators: OperatorService) {
+        super(1, Operators.MORE_THAN_DATE);
+        this.moreThan = this._operators.getOperator(MoreThan) as MoreThan;
     }
 
-    createQuery(elasticKeywords: Array<string>, args: Array<Moment>): Query {
+    createQuery(pfqlKeywords: Array<string>, args: Array<Moment>): Query {
         this.checkArgumentsCount(args);
         const arg = moment(args[0]);
-        clearTimeInformation(arg);
         arg.date(arg.date() + 1);
         arg.milliseconds(-1);
-        return this.moreThan.createQuery(elasticKeywords, [arg.valueOf()]);
+        return this.moreThan.createQuery(pfqlKeywords, [arg.format('YYYY-MM-DD')], false, false);
     }
 
     getOperatorNameTemplate(): Array<string> {
