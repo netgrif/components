@@ -9,7 +9,7 @@ export * from './modeler/actions-mode/action-editor/action-editor-list/action-ed
 
 
 // SERVICES
-export * from './builder-mode.service';
+export * from './services/builder-mode.service';
 export * from './modeler/gridster-field-to-engine-field.service';
 export * from './modeler/model-import-service';
 export * from './modeler/mortgage.service';

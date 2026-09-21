@@ -11,10 +11,9 @@ import {
     SimpleFilter,
     AbstractTabbedCaseViewComponent,
     ViewIdService, NAE_DEFAULT_HEADERS,
-    NAE_BASE_FILTER, AllowedNetsServiceFactory, AllowedNetsService,  OverflowService
+    NAE_BASE_FILTER, AllowedNetsServiceFactory, AllowedNetsService,  OverflowService, Case
 } from '@netgrif/components-core';
 import {HeaderComponent} from '@netgrif/components';
-import {Case} from "../../../../../../netgrif-components-core/src/lib/resources/interface/case";
 import {TranslateService} from "@ngx-translate/core";
 
 const baseFilterFactory = (injectedData: InjectedTabbedCaseViewData) => {

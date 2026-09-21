@@ -24,7 +24,8 @@ export class EditTransitionPermissionsMenuItem extends MenuItem {
                         userRefs: transition.modelTransition.userRefs,
                         userLists: tool.modelService.model.getDataSet().filter(item => item.type === DataType.USER_LIST),
                         modelService: tool.modelService,
-                        historyService: tool.editModeService.historyService
+                        historyService: tool.editModeService.historyService,
+                        localStorageService: tool.context.localStorageService
                     }
                 });
             }

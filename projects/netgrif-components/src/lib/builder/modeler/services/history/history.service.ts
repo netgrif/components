@@ -7,6 +7,7 @@ import {ModelerConfig} from '../../modeler-config';
 import {ModelService} from '../model/model.service';
 import {History} from './history';
 import {HistoryChange} from './history-change';
+import {LocalStorageService} from "../../../services/local-storage.service";
 
 @Injectable()
 export class HistoryService {
@@ -17,6 +18,7 @@ export class HistoryService {
     constructor(
         private modelService: ModelService,
         private exportService: ExportService,
+        protected _localStorageService: LocalStorageService
     ) {
         this._history = new History<PetriNet>();
         this._historyChange = new Subject();
@@ -61,10 +63,12 @@ export class HistoryService {
     }
 
     async saveToLocalStorage(model: PetriNet): Promise<void> {
-        localStorage.setItem(ModelerConfig.LOCALSTORAGE.DRAFT_MODEL.KEY, this.exportService.exportXml(model));
-        localStorage.setItem(ModelerConfig.LOCALSTORAGE.DRAFT_MODEL.TIMESTAMP, new Date().toLocaleString());
-        localStorage.setItem(ModelerConfig.LOCALSTORAGE.DRAFT_MODEL.ID, `${model.id}`);
-        localStorage.setItem(ModelerConfig.LOCALSTORAGE.DRAFT_MODEL.TITLE, `${model.title.value}`);
+        if (this._localStorageService.prefix === '') {
+            this._localStorageService.setItem(ModelerConfig.LOCALSTORAGE.DRAFT_MODEL.KEY, this.exportService.exportXml(model));
+            this._localStorageService.setItem(ModelerConfig.LOCALSTORAGE.DRAFT_MODEL.TIMESTAMP, new Date().toLocaleString());
+            this._localStorageService.setItem(ModelerConfig.LOCALSTORAGE.DRAFT_MODEL.ID, `${model.id}`);
+            this._localStorageService.setItem(ModelerConfig.LOCALSTORAGE.DRAFT_MODEL.TITLE, `${model.title.value}`);
+        }
     }
 
     get historyChange(): Subject<HistoryChange<PetriNet>> {

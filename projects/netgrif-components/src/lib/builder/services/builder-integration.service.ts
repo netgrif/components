@@ -1,25 +1,37 @@
 import {Injectable} from "@angular/core";
-import {HistoryService} from "./modeler/services/history/history.service";
-import {Case, LoggerService, TaskResourceService, extractFieldValueFromData, TaskEventOutcome} from "@netgrif/components-core";
+import {HistoryService} from "../modeler/services/history/history.service";
+import {
+    Case,
+    extractFieldValueFromData,
+    LoadingEmitter,
+    LoggerService,
+    TaskEventOutcome,
+    TaskResourceService
+} from "@netgrif/components-core";
 import {ExportService, PetriNet} from "@netgrif/petriflow";
-import {HistoryChange} from "./modeler/services/history/history-change";
+import {HistoryChange} from "../modeler/services/history/history-change";
 import {Observable, of, Subject} from "rxjs";
 
 @Injectable()
 export class BuilderIntegrationService {
-    protected _isIntegrated: boolean = false;
+    protected _isIntegrated: boolean;
     protected _processCase: Case;
     protected _editTaskId: string;
-    protected _isAssigned: boolean = false;
-    private _onlyTaskView: boolean = true;
+    protected _isAssigned: boolean;
+    protected _onlyTaskView: boolean;
 
-    protected _reloadCase: Subject<boolean> = new Subject<boolean>();
-    protected _reloadModes: Subject<boolean> = new Subject<boolean>();
+    protected _reloadCase: Subject<boolean>;
+    protected _reloadModes: Subject<boolean>;
+    protected _loading: LoadingEmitter;
 
     constructor(protected _historyService: HistoryService,
                 protected _taskResourceService: TaskResourceService,
                 protected _exportService: ExportService,
                 protected _log: LoggerService) {
+        this._onlyTaskView = true;
+        this._reloadCase = new Subject<boolean>();
+        this._reloadModes = new Subject<boolean>();
+        this._loading = new LoadingEmitter();
         this._historyService.historyChange.subscribe(history => {
             if (this._isIntegrated && this._editTaskId) {
                 if (!this._isAssigned) {
@@ -30,7 +42,7 @@ export class BuilderIntegrationService {
                         this.setData(history);
                     });
                 } else {
-                   this.setData(history);
+                    this.setData(history);
                 }
             }
         });
@@ -84,18 +96,33 @@ export class BuilderIntegrationService {
         this._reloadModes.next(value);
     }
 
+    get loading$(): Observable<boolean> {
+        return this._loading.asObservable();
+    }
+
+    public isLoading(): boolean {
+        return this._loading.value;
+    }
+
     protected setData(history: HistoryChange<PetriNet>) {
+        if (this._loading.value) {
+            return;
+        }
         const body = {};
         body[this._editTaskId] = {};
         body[this._editTaskId]['xml_text'] = {
             type: 'text',
             value: this._exportService.exportXml(history.record)
         };
-        this._taskResourceService.setData(this._editTaskId, body).subscribe(outcome => {
-            if ((outcome.outcome as TaskEventOutcome)?.task?.user?.email !== undefined) {
-                this._isAssigned = true;
+        this._taskResourceService.setData(this._editTaskId, body).subscribe({
+            next: outcome => {
+                if ((outcome.outcome as TaskEventOutcome)?.task?.user?.email !== undefined) {
+                    this._isAssigned = true;
+                }
+                this._log.debug('Data set successfully');
+            }, error: error => {
+                this._log.error('Data set failed', error.message);
             }
-            this._log.debug('Data set successfully');
         });
     }
 
@@ -133,11 +160,22 @@ export class BuilderIntegrationService {
                 type: 'text',
                 value: model.title?.value
             };
-            this._taskResourceService.setData(this._editTaskId, body).subscribe(outcome => {
-                if ((outcome.outcome as TaskEventOutcome)?.task?.user?.email !== undefined) {
-                    this._isAssigned = true;
+            body[this._editTaskId]['xml_text'] = {
+                type: 'text',
+                value: this._exportService.exportXml(model)
+            };
+            this._loading.next(true);
+            this._taskResourceService.setData(this._editTaskId, body).subscribe({
+                next: outcome => {
+                    this._loading.next(false);
+                    if ((outcome.outcome as TaskEventOutcome)?.task?.user?.email !== undefined) {
+                        this._isAssigned = true;
+                    }
+                    this._log.debug('Data set successfully');
+                }, error: error => {
+                    this._loading.next(false);
+                    this._log.error('Data set failed', error.message);
                 }
-                this._log.debug('Data set successfully');
             });
         }
     }

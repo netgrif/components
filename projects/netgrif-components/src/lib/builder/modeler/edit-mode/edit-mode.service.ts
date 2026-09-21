@@ -41,10 +41,11 @@ import {RemoveTokenTool} from './services/modes/remove-token-tool';
 import {ResetPositionAndZoomTool} from './services/modes/reset-position-and-zoom-tool';
 import {SelectTool} from './services/modes/select-tool';
 import {SwitchLabelTool} from './services/modes/switch-label-tool';
-import {BuilderModeService} from '../../builder-mode.service';
+import {BuilderModeService} from '../../services/builder-mode.service';
 import {CanvasToolContext} from './services/modes/canvas-tool-context';
 import {ProcessActionsTool} from "../actions-mode/tools/process-actions-tool";
-import {BuilderIntegrationService} from "../../builder-integration.service";
+import {BuilderIntegrationService} from "../../services/builder-integration.service";
+import {LocalStorageService} from '../../services/local-storage.service';
 
 @Injectable()
 export class EditModeService extends CanvasModeService<CanvasTool> {
@@ -76,7 +77,8 @@ export class EditModeService extends CanvasModeService<CanvasTool> {
         protected _actionMode: ActionsModeService,
         protected _actionsMasterDetail: ActionsMasterDetailService,
         protected _processActionsTool: ProcessActionsTool,
-        protected _builderIntegrationService: BuilderIntegrationService
+        protected _builderIntegrationService: BuilderIntegrationService,
+        protected _localStorageService: LocalStorageService
     ) {
         super(_arcFactory, modelService, _canvasService);
         this.mode = new Mode(
@@ -90,7 +92,7 @@ export class EditModeService extends CanvasModeService<CanvasTool> {
             this._tutorialService.modeler,
             this._parentInjector
         );
-        const context = new CanvasToolContext(modelService, dialog, this, router, transitionService, _actionMode, _actionsMasterDetail, _builderModeService, _processActionsTool, _builderIntegrationService);
+        const context = new CanvasToolContext(modelService, dialog, this, router, transitionService, _actionMode, _actionsMasterDetail, _builderModeService, _processActionsTool, _builderIntegrationService, _localStorageService);
         this.switchTools = new ToolGroup<CanvasTool>(
             new ClearModelTool(context),
             new ResetPositionAndZoomTool(context),
@@ -343,7 +345,7 @@ export class EditModeService extends CanvasModeService<CanvasTool> {
         const arcRatio = arcLengthOffset / arcLength;
         const finalX = intersect.x + xLineLength * arcRatio;
         const finalY = intersect.y + yLineLength * arcRatio;
-        arcLine.setAttributeNS(null, 'points', `${intersect.x},${intersect.y} ${finalX},${finalY}`);
+        arcLine.setAttributeNS(null, 'points', `${intersect.x},${intersect.y} ${finalX ?? 0},${finalY ?? 0}`);
     }
 
     // OTHER
