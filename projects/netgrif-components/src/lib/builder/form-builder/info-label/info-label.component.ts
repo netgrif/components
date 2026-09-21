@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {PetriNet, Transition} from '@netgrif/petriflow';
 import {SelectedTransitionService} from '../../modeler/selected-transition.service';
 import {ModelService} from '../../modeler/services/model/model.service';
-import {BuilderModeService, BuilderMode} from "../../builder-mode.service";
+import {BuilderModeService, BuilderMode} from "../../services/builder-mode.service";
 
 @Component({
     selector: 'nc-builder-info-label',

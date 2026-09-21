@@ -7,8 +7,8 @@ import {DialogErrorsComponent} from '../dialogs/dialog-errors/dialog-errors.comp
 import {ImportSuccessfulComponent} from './control-panel/import-successful/import-successful.component';
 import {HistoryService} from './services/history/history.service';
 import {ModelService} from './services/model/model.service';
-import {BuilderMode, BuilderModeService} from "../builder-mode.service";
-import {BuilderIntegrationService} from "../builder-integration.service";
+import {BuilderMode, BuilderModeService} from "../services/builder-mode.service";
+import {BuilderIntegrationService} from "../services/builder-integration.service";
 
 @Injectable()
 export class ModelImportService {
@@ -46,6 +46,7 @@ export class ModelImportService {
         }
 
         if (petriNetResult.model !== undefined) {
+
             this.modelService.model = petriNetResult.model;
             this.historyService.save(`Model ${this.modelService.model.id} has been imported.`)
             this._builderIntegrationService.setModelData(this.modelService.model);

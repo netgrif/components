@@ -12,12 +12,14 @@ import {FunctionsTool} from './tools/functions-tool';
 import {ProcessActionsTool} from './tools/process-actions-tool';
 import {RoleActionsTool} from './tools/role-actions-tool';
 import {TransitionActionsTool} from './tools/transition-actions-tool';
+import {LocalStorageService} from "../../services/local-storage.service";
 
 @Injectable()
 export class ActionsMasterDetailService extends AbstractMasterDetailService<Transition | DataVariable | MasterItem | Role | PetriflowFunction> {
 
     constructor(protected _modelService: ModelService,
-                protected _actionsModeService: ActionsModeService) {
+                protected _actionsModeService: ActionsModeService,
+                protected _localStorageService: LocalStorageService) {
         super();
     }
 
@@ -79,17 +81,17 @@ export class ActionsMasterDetailService extends AbstractMasterDetailService<Tran
 
     getSortFromLocalStorage(): Sort {
         if (this._actionsModeService.activeTool.id === DataActionsTool.ID &&
-            localStorage.getItem(ModelerConfig.LOCALSTORAGE.MASTER_DETAIL.DATA_ACTION_SORT) !== null) {
-            return {active: localStorage.getItem(ModelerConfig.LOCALSTORAGE.MASTER_DETAIL.DATA_ACTION_SORT),
-                direction: localStorage.getItem(ModelerConfig.LOCALSTORAGE.MASTER_DETAIL.DATA_ACTION_DIRECTION)} as Sort;
+            this._localStorageService.getItem(ModelerConfig.LOCALSTORAGE.MASTER_DETAIL.DATA_ACTION_SORT) !== null) {
+            return {active: this._localStorageService.getItem(ModelerConfig.LOCALSTORAGE.MASTER_DETAIL.DATA_ACTION_SORT),
+                direction: this._localStorageService.getItem(ModelerConfig.LOCALSTORAGE.MASTER_DETAIL.DATA_ACTION_DIRECTION)} as Sort;
         } else if (this._actionsModeService.activeTool.id === RoleActionsTool.ID &&
-            localStorage.getItem(ModelerConfig.LOCALSTORAGE.MASTER_DETAIL.ROLE_ACTION_SORT) !== null) {
-            return {active: localStorage.getItem(ModelerConfig.LOCALSTORAGE.MASTER_DETAIL.ROLE_ACTION_SORT),
-                direction: localStorage.getItem(ModelerConfig.LOCALSTORAGE.MASTER_DETAIL.ROLE_ACTION_DIRECTION)} as Sort;
+            this._localStorageService.getItem(ModelerConfig.LOCALSTORAGE.MASTER_DETAIL.ROLE_ACTION_SORT) !== null) {
+            return {active: this._localStorageService.getItem(ModelerConfig.LOCALSTORAGE.MASTER_DETAIL.ROLE_ACTION_SORT),
+                direction: this._localStorageService.getItem(ModelerConfig.LOCALSTORAGE.MASTER_DETAIL.ROLE_ACTION_DIRECTION)} as Sort;
         } else if (this._actionsModeService.activeTool.id === TransitionActionsTool.ID &&
-            localStorage.getItem(ModelerConfig.LOCALSTORAGE.MASTER_DETAIL.TRANS_ACTION_SORT) !== null) {
-            return {active: localStorage.getItem(ModelerConfig.LOCALSTORAGE.MASTER_DETAIL.TRANS_ACTION_SORT),
-                direction: localStorage.getItem(ModelerConfig.LOCALSTORAGE.MASTER_DETAIL.TRANS_ACTION_DIRECTION)} as Sort;
+            this._localStorageService.getItem(ModelerConfig.LOCALSTORAGE.MASTER_DETAIL.TRANS_ACTION_SORT) !== null) {
+            return {active: this._localStorageService.getItem(ModelerConfig.LOCALSTORAGE.MASTER_DETAIL.TRANS_ACTION_SORT),
+                direction: this._localStorageService.getItem(ModelerConfig.LOCALSTORAGE.MASTER_DETAIL.TRANS_ACTION_DIRECTION)} as Sort;
         } else {
             return {active: 'id', direction: 'asc'}
         }
@@ -97,14 +99,14 @@ export class ActionsMasterDetailService extends AbstractMasterDetailService<Tran
 
     setSortToLocalStorage(sort: Sort) {
         if (this._actionsModeService.activeTool.id === DataActionsTool.ID) {
-            localStorage.setItem(ModelerConfig.LOCALSTORAGE.MASTER_DETAIL.DATA_ACTION_SORT, sort.active);
-            localStorage.setItem(ModelerConfig.LOCALSTORAGE.MASTER_DETAIL.DATA_ACTION_DIRECTION, sort.direction);
+            this._localStorageService.setItem(ModelerConfig.LOCALSTORAGE.MASTER_DETAIL.DATA_ACTION_SORT, sort.active);
+            this._localStorageService.setItem(ModelerConfig.LOCALSTORAGE.MASTER_DETAIL.DATA_ACTION_DIRECTION, sort.direction);
         } else if (this._actionsModeService.activeTool.id === RoleActionsTool.ID) {
-            localStorage.setItem(ModelerConfig.LOCALSTORAGE.MASTER_DETAIL.ROLE_ACTION_SORT, sort.active);
-            localStorage.setItem(ModelerConfig.LOCALSTORAGE.MASTER_DETAIL.ROLE_ACTION_DIRECTION, sort.direction);
+            this._localStorageService.setItem(ModelerConfig.LOCALSTORAGE.MASTER_DETAIL.ROLE_ACTION_SORT, sort.active);
+            this._localStorageService.setItem(ModelerConfig.LOCALSTORAGE.MASTER_DETAIL.ROLE_ACTION_DIRECTION, sort.direction);
         } else if (this._actionsModeService.activeTool.id === TransitionActionsTool.ID) {
-            localStorage.setItem(ModelerConfig.LOCALSTORAGE.MASTER_DETAIL.TRANS_ACTION_SORT, sort.active);
-            localStorage.setItem(ModelerConfig.LOCALSTORAGE.MASTER_DETAIL.TRANS_ACTION_DIRECTION, sort.direction);
+            this._localStorageService.setItem(ModelerConfig.LOCALSTORAGE.MASTER_DETAIL.TRANS_ACTION_SORT, sort.active);
+            this._localStorageService.setItem(ModelerConfig.LOCALSTORAGE.MASTER_DETAIL.TRANS_ACTION_DIRECTION, sort.direction);
         }
     }
 }

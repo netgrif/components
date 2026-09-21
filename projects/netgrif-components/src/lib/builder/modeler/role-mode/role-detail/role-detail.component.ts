@@ -9,7 +9,7 @@ import {HistoryService} from '../../services/history/history.service';
 import {ModelService} from '../../services/model/model.service';
 import {RoleMasterDetailService} from '../role-master-detail.service';
 import {ChangedRole} from './changed-role';
-import {BuilderMode, BuilderModeService} from "../../../builder-mode.service";
+import {BuilderMode, BuilderModeService} from "../../../services/builder-mode.service";
 
 @Component({
     selector: 'nc-builder-role-detail',

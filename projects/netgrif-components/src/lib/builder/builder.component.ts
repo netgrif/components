@@ -1,5 +1,5 @@
-import {Component, Inject, Optional} from '@angular/core';
-import {BuilderMode, BuilderModeService} from "./builder-mode.service";
+import {ChangeDetectionStrategy, Component, Inject, Optional} from '@angular/core';
+import {BuilderMode, BuilderModeService} from "./services/builder-mode.service";
 import {ModelService} from "./modeler/services/model/model.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
@@ -52,8 +52,9 @@ import {MatPaginatorIntl} from '@angular/material/paginator';
 import {BuilderPaginatorIntl} from './modeler/components/master-detail/main-master/builder-paginator-inpl';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 import {I18nControlService} from './modeler/i18n-mode/i18n-control.service';
-import {BuilderIntegrationService} from "./builder-integration.service";
+import {BuilderIntegrationService} from "./services/builder-integration.service";
 import {TaskModeService} from "./modeler/task-mode/task-mode.service";
+import {LocalStorageService} from "./services/local-storage.service";
 
 @Component({
     selector: 'nc-builder',
@@ -108,7 +109,8 @@ import {TaskModeService} from "./modeler/task-mode/task-mode.service";
         BuilderModeService,
         I18nControlService,
         BuilderIntegrationService,
-        TaskModeService
+        TaskModeService,
+        LocalStorageService
     ]
 })
 export class BuilderComponent {

@@ -34,6 +34,7 @@ import {MenuItemClickEvent, MenuItemLoadedEvent} from '../../model/navigation-me
 import {GroupNavigationConstants} from "../../model/group-navigation-constants";
 import {SessionClearService} from '../../../authentication/session/services/session-clear.service';
 import {UserService} from "../../../user/services/user.service";
+import {AuthorityGuardService} from "../../../authorization/authority/authority-guard.service";
 
 /**
  * Service for managing navigation in double-drawer
@@ -94,6 +95,7 @@ export class DoubleDrawerNavigationService implements OnDestroy {
                 protected _translateService: TranslateService,
                 protected _dynamicRoutingService: DynamicNavigationRouteProviderService,
                 protected _redirectService: RedirectService,
+                protected _authorityGuardService: AuthorityGuardService,
                 private _sessionClearService: SessionClearService) {
         this._leftItems$ = new BehaviorSubject([]);
         this._rightItems$ = new BehaviorSubject([]);
@@ -328,14 +330,14 @@ export class DoubleDrawerNavigationService implements OnDestroy {
             return;
         }
 
-        if (DoubleDrawerUtils.hasItemView(this._currentNavigationItem)) {
+        if (DoubleDrawerUtils.isNotFolder(this._currentNavigationItem)) {
             // is routed by routerLink on item click
             return;
         }
 
-        let itemsWithView: Array<NavigationItem> = allItems.filter(item => DoubleDrawerUtils.hasItemView(item));
+        let itemsWithView: Array<NavigationItem> = allItems.filter(item => DoubleDrawerUtils.isNotFolder(item));
         if (itemsWithView.length > 0) {
-            this._redirectService.redirect(autoOpenItems[0].routing.path);
+            this._redirectService.redirect(itemsWithView[0].routing.path);
         }
     }
 
@@ -525,6 +527,9 @@ export class DoubleDrawerNavigationService implements OnDestroy {
             id: itemCase.stringId,
             resource: itemCase,
         };
+        if (!this._authorityGuardService.canAccessNavigationItem(item)) {
+            return;
+        }
         const resolvedRoles = DoubleDrawerUtils.resolveAccessRoles(itemCase, GroupNavigationConstants.ITEM_FIELD_ID_ALLOWED_ROLES);
         const resolvedBannedRoles = DoubleDrawerUtils.resolveAccessRoles(itemCase, GroupNavigationConstants.ITEM_FIELD_ID_BANNED_ROLES);
         if (!!resolvedRoles) item.access['role'] = resolvedRoles;

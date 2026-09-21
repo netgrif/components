@@ -16,9 +16,9 @@ import {SvgExportTool} from './modes/svg-export-tool';
 import {UndoTool} from './modes/undo-tool';
 import {GlobalToolRegistry} from './tools/global-tool-registry';
 import {Tool} from './tools/tool';
-import {BuilderModeService} from "../../builder-mode.service";
+import {BuilderModeService} from "../../services/builder-mode.service";
 import {TaskModeService} from "../task-mode/task-mode.service";
-import {BuilderIntegrationService} from "../../builder-integration.service";
+import {BuilderIntegrationService} from "../../services/builder-integration.service";
 
 @Injectable()
 export class ControlPanelService {
