@@ -23,7 +23,7 @@ import {
     UserResourceService,
     WorkflowMetaField,
     OverflowService,
-    WorkflowViewService
+    WorkflowViewService, DeploymentState
 } from '@netgrif/components-core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -96,6 +96,7 @@ class TestWrapperComponent {
         stringId: '',
         title: '',
         version: '',
-        uriNodeId: ''
+        uriNodeId: '',
+        deploymentState: DeploymentState.DEPLOYED
     };
 }
