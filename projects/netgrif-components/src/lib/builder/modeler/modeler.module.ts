@@ -66,7 +66,6 @@ import {CdkPortalOutlet} from '@angular/cdk/portal';
 import {CdkTreeModule} from '@angular/cdk/tree';
 import {NgxMatDatetimePickerModule} from "@angular-material-components/datetime-picker";
 import {NgxMatMomentModule} from "@angular-material-components/moment-adapter";
-import {MatNativeDateModule} from "@angular/material/core";
 import { DataFieldsComponentModule } from "../../data-fields/data-fields.module";
 import {TaskContentComponentModule} from "../../task-content/task-content.module";
 import {MaterialIconPickerComponent} from "./components/material-icon-picker/material-icon-picker.component";
@@ -140,7 +139,6 @@ import {TaskModeComponent} from "./task-mode/task-mode.component";
         CdkTreeModule,
         NgxMatDatetimePickerModule,
         NgxMatMomentModule,
-        MatNativeDateModule,
         MaterialIconPickerComponent,
         TaskModeComponent
     ]
