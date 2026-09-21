@@ -157,6 +157,11 @@ export enum GroupNavigationConstants {
     ITEM_FIELD_ID_TASK_DEFAULT_HEADERS = 'task_default_headers',
 
     /**
+     * MultichoiceMap field, that contains allowed authorities as value
+     * */
+    ITEM_FIELD_ID_ALLOWED_AUTHORITIES = 'allowed_authorities',
+
+    /**
      * MultichoiceMap field, that contains allowed roles as value
      * */
     ITEM_FIELD_ID_ALLOWED_ROLES = 'allowed_roles',
@@ -270,5 +275,10 @@ export enum GroupNavigationConstants {
      * Transition ID, which contains all configuration data
      */
     ITEM_TRANS_ID_ALL_DATA = "all_menu_data",
+
+    /**
+     * Configuration of a view type
+     */
+    ITEM_FIELD_VIEW_CONFIGURATION_TYPE = "view_configuration_type",
 
 }
