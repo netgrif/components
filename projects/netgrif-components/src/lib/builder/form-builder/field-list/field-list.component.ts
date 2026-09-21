@@ -11,7 +11,7 @@ import {SelectedTransitionService} from '../../modeler/selected-transition.servi
 import {ModelService} from '../../modeler/services/model/model.service';
 import {GridsterService} from '../gridster/gridster.service';
 import {ComponentDef, FieldListService} from './field-list.service';
-import {BuilderModeService, BuilderMode} from "../../builder-mode.service";
+import {BuilderModeService, BuilderMode} from "../../services/builder-mode.service";
 
 export interface Data {
     title: string;

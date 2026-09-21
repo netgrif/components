@@ -492,7 +492,14 @@
         "filterNotFound": "This view has no filter",
         "loadMoreItems": "More",
         "ascending": "Ascending",
-        "descending": "Descending"
+        "descending": "Descending",
+        "editModeOff": "Disable edit mode",
+        "editModeOn": "Enable edit mode",
+        "createMenuItemBtn": "Create new menu item",
+        "editMenuItem": "Edit",
+        "snackbar": {
+            "failedItemCreation": "Failed to create menu item"
+        }
     },
     "impersonation": {
         "user": {

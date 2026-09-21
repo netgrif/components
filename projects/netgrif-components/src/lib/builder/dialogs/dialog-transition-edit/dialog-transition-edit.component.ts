@@ -9,9 +9,10 @@ import {SelectedTransitionService} from '../../modeler/selected-transition.servi
 import {ModelService} from '../../modeler/services/model/model.service';
 import {DialogManageRolesComponent, RoleRefType} from '../dialog-manage-roles/dialog-manage-roles.component';
 import {ChangedTransition} from './changed-transition';
-import {BuilderModeService, BuilderMode} from '../../builder-mode.service';
+import {BuilderModeService, BuilderMode} from '../../services/builder-mode.service';
 import {HistoryService} from "../../modeler/services/history/history.service";
 import {CanvasToolContext} from "../../modeler/edit-mode/services/modes/canvas-tool-context";
+import {LocalStorageService} from '../../services/local-storage.service';
 
 export interface TransitionEditData {
     transitionId: string;
@@ -37,6 +38,7 @@ export class DialogTransitionEditComponent implements OnInit {
     private _actionsMasterDetail: ActionsMasterDetailService;
     private _builderModeService: BuilderModeService;
     private _historyService: HistoryService;
+    private _localStorageService: LocalStorageService;
 
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: TransitionEditData,
@@ -49,6 +51,7 @@ export class DialogTransitionEditComponent implements OnInit {
         this._actionsMasterDetail = data.context.actionsMasterDetail;
         this._builderModeService = data.context.builderModeService;
         this._historyService = data.context.editModeService.historyService;
+        this._localStorageService = data.context.localStorageService;
 
         this.transition = new ChangedTransition(undefined, this._modelService.model.getTransition(data.transitionId).clone());
         this.form = new FormControl('', [
@@ -96,7 +99,8 @@ export class DialogTransitionEditComponent implements OnInit {
                 userRefs: this.transition.transition.userRefs,
                 userLists: this._modelService.model.getDataSet().filter(item => item.type === DataType.USER_LIST),
                 modelService: this._modelService,
-                historyService: this._historyService
+                historyService: this._historyService,
+                localStorageService: this._localStorageService
             }
         });
     }

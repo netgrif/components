@@ -76,6 +76,16 @@
                     <mat-icon>{{ item.navigation.icon }}</mat-icon>
                     <span>{{ item.navigation.title }}</span>
                 </button>
+                <div *ngIf="canEditMenu()">
+                    <button mat-menu-item *ngIf="!editModeEnabled" (click)="setMenuEditMode(true)">
+                        <mat-icon color="primary">edit</mat-icon>
+                        {{ 'dynamicNavigation.editModeOn' | translate }}
+                    </button>
+                    <button mat-menu-item *ngIf="editModeEnabled" (click)="setMenuEditMode(false)">
+                        <mat-icon color="primary">edit</mat-icon>
+                        {{ 'dynamicNavigation.editModeOff' | translate }}
+                    </button>
+                </div>
             </mat-menu>
             <!--            <div fxLayout="row" class="margin-bottom-x2 icon-container" matTooltip="Otvoriť menu"-->
             <!--                 matTooltipPosition="right"-->
@@ -84,7 +94,7 @@
             <!--                    <mat-icon class="icon-large sidemenu-icon">more_vert</mat-icon>-->
             <!--                </button>-->
             <!--            </div>-->
-            <button mat-icon-button *ngIf="hiddenCustomItems && hiddenCustomItems.length > 0"
+            <button mat-icon-button *ngIf="(hiddenCustomItems && hiddenCustomItems.length > 0) || canEditMenu()"
                     [matMenuTriggerFor]="railMenu"
                     class="menu-button mat-typography menu-font-color margin-bottom-x2"
                     [matTooltip]="'toolbar.menu.open' | translate"
@@ -167,17 +177,28 @@
 <!--                <mat-icon>{{ isAscending() ? "expand_more" : "expand_less" }}</mat-icon>-->
 <!--            </button>-->
 <!--        </div>-->
-        <div *ngFor='let item of rightItems$ | async; trackBy: itemsTrackBy' (click)="onItemClick(item)"
-             class="tree-node mat-typography mat-body-2" fxLayoutAlign="start center" [routerLink]='item.routing.path'
-             routerLinkActive="active-tree-node">
-            <mat-icon class="tree-node-icon">{{ item.navigation.icon }}</mat-icon>
-            <span>{{ item.navigation.title }}</span>
-            <span class="menu-item-focus-overlay"></span>
+        <div *ngFor='let item of rightItems$ | async; trackBy: itemsTrackBy' fxLayoutAlign="start center"
+             [ngClass]="{'menu-tree-node': !editModeEnabled}">
+            <div (click)="onItemClick(item)"
+                 class="tree-node width-menu mat-typography mat-body-2" fxLayoutAlign="start center"  [routerLink]='item.routing.path'
+                 routerLinkActive="active-tree-node">
+                <mat-icon class="tree-node-icon">{{ item.navigation.icon }}</mat-icon>
+                <span>{{ item.navigation.title }}</span>
+                <span class="menu-item-focus-overlay"></span>
+            </div>
+            <button mat-icon-button *ngIf="editModeEnabled" class="cursor-pointer" [matTooltip]="'dynamicNavigation.editMenuItem' | translate" matTooltipPosition="right" (click)="editMenuItem(item.resource)" fxLayoutAlign="end">
+                <mat-icon>edit</mat-icon>
+            </button>
         </div>
         <div *ngIf="moreItems.length > 0">
             <button mat-button color="primary"
                     (click)="loadMoreItems()">{{ 'dynamicNavigation.loadMoreItems' | translate }}
             </button>
+        </div>
+        <div *ngIf="editModeEnabled" class="tree-node mat-typography mat-body-2" fxLayoutAlign="start center" (click)="createMenuItem()">
+            <mat-icon class="tree-node-icon">add</mat-icon>
+            <span>{{ 'dynamicNavigation.createMenuItemBtn' | translate }}</span>
+            <span class="menu-item-focus-overlay"></span>
         </div>
     </div>
     <div *ngIf="(rightLoading$ | async)" fxLayout="column" fxLayoutAlign="center center" class="margin-top-default">

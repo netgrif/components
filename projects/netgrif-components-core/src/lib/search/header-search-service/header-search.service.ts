@@ -8,7 +8,7 @@ import {HeaderMode} from '../../header/models/header-mode';
 import {ModeChangeDescription} from '../../header/models/user-changes/mode-change-description';
 import {SearchChangeDescription} from '../../header/models/user-changes/search-change-description';
 import {HeaderColumnType} from '../../header/models/header-column';
-import {CaseMetaField} from '../../header/case-header/case-menta-enum';
+import {CaseMetaField} from '../../header/case-header/case-meta-enum';
 import {CategoryFactory} from '../category-factory/category-factory';
 import {CaseVisualId} from '../models/category/case/case-visual-id';
 import {Category} from '../models/category/category';

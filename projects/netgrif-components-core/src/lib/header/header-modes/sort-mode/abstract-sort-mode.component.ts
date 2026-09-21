@@ -13,7 +13,7 @@ export abstract class AbstractSortModeComponent extends AbstractHeaderModeCompon
     @Input()
     public headerService: AbstractHeaderService;
 
-    constructor() {
+    protected constructor() {
         super();
     }
 

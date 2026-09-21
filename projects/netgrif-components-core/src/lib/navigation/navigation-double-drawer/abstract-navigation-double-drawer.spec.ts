@@ -40,6 +40,9 @@ import {CaseResourceService} from "../../resources/engine-endpoint/case-resource
 import {MockCaseResourceService} from "../../utility/tests/mocks/mock-case-resource.service";
 import {DoubleDrawerNavigationService} from "./service/double-drawer-navigation.service";
 import {RedirectService} from "../../routing/redirect-service/redirect.service";
+import {ProcessService} from "../../process/process.service";
+import {SnackBarService} from "../../snack-bar/services/snack-bar.service";
+import {MatDialog} from "@angular/material/dialog";
 
 xdescribe('AbstractNavigationDoubleDrawerComponent', () => {
     let component: TestDrawerComponent;
@@ -155,10 +158,14 @@ class TestDrawerComponent extends AbstractNavigationDoubleDrawerComponent {
                 _impersonation: ImpersonationService,
                 _dynamicRouteProviderService: DynamicNavigationRouteProviderService,
                 _redirectService: RedirectService,
-                _navigationService: DoubleDrawerNavigationService) {
+                _navigationService: DoubleDrawerNavigationService,
+                _processService: ProcessService,
+                _snackBarService: SnackBarService,
+                _dialog: MatDialog) {
         super(_router, _activatedRoute, _breakpoint, _languageService, _translateService, _userService, _accessService,
             _log, _config, _uriService, _caseResourceService, _impersonationUserSelect, _impersonation,
-            _dynamicRouteProviderService, _redirectService, _navigationService);
+            _dynamicRouteProviderService, _redirectService, _navigationService, _processService, _snackBarService,
+            _dialog, undefined);
     }
 }
 

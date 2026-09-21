@@ -7,7 +7,7 @@ import {AbstractEditModeComponent} from './abstract-edit-mode.component';
 import {TranslateService} from '@ngx-translate/core';
 import {CaseHeaderService} from '../../case-header/case-header.service';
 import {HeaderColumn, HeaderColumnType} from '../../models/header-column';
-import {CaseMetaField} from '../../case-header/case-menta-enum';
+import {CaseMetaField} from '../../case-header/case-meta-enum';
 import {ViewService} from '../../../routing/view-service/view.service';
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {MaterialModule} from '../../../material/material.module';

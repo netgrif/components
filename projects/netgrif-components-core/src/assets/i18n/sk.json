@@ -491,7 +491,14 @@
         "filterNotFound": "Toto zobrazenie neobsahuje filter",
         "loadMoreItems": "Viac",
         "ascending": "Vzostupne",
-        "descending": "Zostupne"
+        "descending": "Zostupne",
+        "editModeOff": "Vypnutie editačného módu",
+        "editModeOn": "Zapnutie editačného módu",
+        "createMenuItemBtn": "Vytvoriť novú položku v menu",
+        "editMenuItem": "Upraviť",
+        "snackbar": {
+            "failedItemCreation": "Nastala chyba pri vytváraní položky"
+        }
     },
     "impersonation": {
         "user": {

@@ -157,6 +157,11 @@ export enum GroupNavigationConstants {
     ITEM_FIELD_ID_TASK_DEFAULT_HEADERS = 'task_default_headers',
 
     /**
+     * MultichoiceMap field, that contains allowed authorities as value
+     * */
+    ITEM_FIELD_ID_ALLOWED_AUTHORITIES = 'allowed_authorities',
+
+    /**
      * MultichoiceMap field, that contains allowed roles as value
      * */
     ITEM_FIELD_ID_ALLOWED_ROLES = 'allowed_roles',
@@ -182,9 +187,9 @@ export enum GroupNavigationConstants {
     ITEM_FIELD_ID_NODE_PATH = 'nodePath',
 
     /**
-     * Boolean field, that is true if item contains child items
+     * Boolean field, that is true if the item represents a folder
      * */
-    ITEM_FIELD_ID_HAS_CHILDREN = 'hasChildren',
+    ITEM_FIELD_ID_IS_FOLDER = 'is_folder',
 
     /**
      * CaseField containing stringIds of child instances of process preference_item
@@ -247,8 +252,33 @@ export enum GroupNavigationConstants {
     ITEM_FIELD_TASK_INHERIT_ALLOWED_NETS = "task_inherit_allowed_nets",
 
     /**
+     * Text field, which contains identifier of active column in header for sorting
+     */
+    ITEM_FIELD_CASE_HEADERS_SORT_MODE_ACTIVE = "case_headers_sort_mode_active",
+
+    /**
+     * Enumeration map field, which contains default direction for sorting
+     */
+    ITEM_FIELD_CASE_HEADERS_SORT_MODE_DIRECTION = "case_headers_sort_mode_direction",
+
+    /**
+     * Text field, which contains identifier of active column in header for sorting
+     */
+    ITEM_FIELD_TASK_HEADERS_SORT_MODE_ACTIVE = "task_headers_sort_mode_active",
+
+    /**
+     * Enumeration map field, which contains default direction for sorting
+     */
+    ITEM_FIELD_TASK_HEADERS_SORT_MODE_DIRECTION = "task_headers_sort_mode_direction",
+
+    /**
      * Transition ID, which contains all configuration data
      */
     ITEM_TRANS_ID_ALL_DATA = "all_menu_data",
+
+    /**
+     * Configuration of a view type
+     */
+    ITEM_FIELD_VIEW_CONFIGURATION_TYPE = "view_configuration_type",
 
 }

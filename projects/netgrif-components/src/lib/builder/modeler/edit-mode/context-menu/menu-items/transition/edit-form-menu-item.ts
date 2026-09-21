@@ -1,7 +1,7 @@
 import {CanvasTransition} from '../../../domain/canvas-transition';
 import {CanvasTool} from '../../../services/modes/canvas-tool';
 import {MenuItem} from '../menu-item';
-import {BuilderMode} from "../../../../../builder-mode.service";
+import {BuilderMode} from "../../../../../services/builder-mode.service";
 
 export class EditFormMenuItem extends MenuItem {
 

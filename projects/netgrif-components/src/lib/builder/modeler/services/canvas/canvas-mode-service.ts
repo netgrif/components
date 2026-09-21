@@ -64,7 +64,7 @@ export abstract class CanvasModeService<T extends Tool> extends ModeService<T> {
         const svgTransition = new PetriflowSvgTransition(new SvgTransition(modelTransition.id, this.labelText(modelTransition), new DOMPoint(modelTransition.x, modelTransition.y)), modelTransition.icon);
         const canvasTransition = new CanvasTransition(modelTransition, svgTransition);
         this.elements.addTransition(canvasTransition);
-        this.canvas.addTransition(svgTransition.canvasElement);
+        this.canvas?.addTransition(svgTransition.canvasElement);
         return canvasTransition;
     }
 
@@ -72,7 +72,7 @@ export abstract class CanvasModeService<T extends Tool> extends ModeService<T> {
         const svgPlace = new PetriflowSvgPlace(new SvgPlace(modelPlace.id, this.labelText(modelPlace), modelPlace.marking, new DOMPoint(modelPlace.x, modelPlace.y)));
         const canvasPlace = new CanvasPlace(modelPlace, svgPlace);
         this.elements.addPlace(canvasPlace);
-        this.canvas.addPlace(svgPlace.canvasElement);
+        this.canvas?.addPlace(svgPlace.canvasElement);
         return canvasPlace;
     }
 
@@ -84,7 +84,7 @@ export abstract class CanvasModeService<T extends Tool> extends ModeService<T> {
         const canvasArc = new CanvasArc(modelArc, svgArc);
         svgArc.setMultiplicity(this.multiplicityText(canvasArc));
         this.elements.addArc(canvasArc);
-        this.canvas.addArc(svgArc.element);
+        this.canvas?.addArc(svgArc.element);
         return canvasArc;
     }
 

@@ -19,7 +19,7 @@ import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resou
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {ViewService} from '../../routing/view-service/view.service';
 import {TestViewService} from '../../utility/tests/test-view-service';
-import {CaseMetaField} from './case-menta-enum';
+import {CaseMetaField} from './case-meta-enum';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatIconModule} from '@angular/material/icon';
 import {HeaderChangeType} from '../models/user-changes/header-change-type';

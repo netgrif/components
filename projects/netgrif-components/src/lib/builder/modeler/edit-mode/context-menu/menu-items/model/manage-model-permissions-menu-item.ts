@@ -23,7 +23,8 @@ export class ManageModelPermissionsMenuItem extends MenuItem {
                         processUserRefs: tool.model.getUserRefs(),
                         userLists: tool.model.getDataSet().filter(item => item.type === DataType.USER_LIST),
                         modelService: tool.modelService,
-                        historyService: tool.editModeService.historyService
+                        historyService: tool.editModeService.historyService,
+                        localStorageService: tool.context.localStorageService
                     }
                 });
             }
